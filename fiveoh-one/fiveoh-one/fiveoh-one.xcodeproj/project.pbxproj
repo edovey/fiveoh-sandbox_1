@@ -1,0 +1,365 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CB13493313FC48D000979662 /* TapDetectingWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CB13493213FC48D000979662 /* TapDetectingWindow.m */; };
+		CB60127513FAABE5004FD84D /* sample.html in Resources */ = {isa = PBXBuildFile; fileRef = CB60127413FAABE5004FD84D /* sample.html */; };
+		CB98313913FC93C200BC6EE1 /* EditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = CB98313713FC93C200BC6EE1 /* EditorView.m */; };
+		CB98313A13FC93C200BC6EE1 /* EditorView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB98313813FC93C200BC6EE1 /* EditorView_iPad.xib */; };
+		CB98313C13FC93F100BC6EE1 /* EditorView_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB98313B13FC93F100BC6EE1 /* EditorView_iPhone.xib */; };
+		CB9F722113F9E43400C8D6EF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB9F722013F9E43400C8D6EF /* UIKit.framework */; };
+		CB9F722313F9E43400C8D6EF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB9F722213F9E43400C8D6EF /* Foundation.framework */; };
+		CB9F722913F9E43400C8D6EF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CB9F722713F9E43400C8D6EF /* InfoPlist.strings */; };
+		CB9F722B13F9E43400C8D6EF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CB9F722A13F9E43400C8D6EF /* main.m */; };
+		CB9F722F13F9E43400C8D6EF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CB9F722E13F9E43400C8D6EF /* AppDelegate.m */; };
+		CB9F723213F9E43400C8D6EF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB9F723113F9E43400C8D6EF /* ViewController.m */; };
+		CB9F723513F9E43400C8D6EF /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB9F723313F9E43400C8D6EF /* ViewController_iPhone.xib */; };
+		CB9F723813F9E43400C8D6EF /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB9F723613F9E43400C8D6EF /* ViewController_iPad.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		CB13493113FC48D000979662 /* TapDetectingWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapDetectingWindow.h; sourceTree = "<group>"; };
+		CB13493213FC48D000979662 /* TapDetectingWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapDetectingWindow.m; sourceTree = "<group>"; };
+		CB60127413FAABE5004FD84D /* sample.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = sample.html; sourceTree = "<group>"; };
+		CB98313613FC93C200BC6EE1 /* EditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorView.h; sourceTree = "<group>"; };
+		CB98313713FC93C200BC6EE1 /* EditorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditorView.m; sourceTree = "<group>"; };
+		CB98313813FC93C200BC6EE1 /* EditorView_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditorView_iPad.xib; sourceTree = "<group>"; };
+		CB98313B13FC93F100BC6EE1 /* EditorView_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditorView_iPhone.xib; sourceTree = "<group>"; };
+		CB9F721C13F9E43400C8D6EF /* fiveoh-one.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fiveoh-one.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB9F722013F9E43400C8D6EF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		CB9F722213F9E43400C8D6EF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		CB9F722613F9E43400C8D6EF /* fiveoh-one-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "fiveoh-one-Info.plist"; sourceTree = "<group>"; };
+		CB9F722813F9E43400C8D6EF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CB9F722A13F9E43400C8D6EF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		CB9F722C13F9E43400C8D6EF /* fiveoh-one-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "fiveoh-one-Prefix.pch"; sourceTree = "<group>"; };
+		CB9F722D13F9E43400C8D6EF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		CB9F722E13F9E43400C8D6EF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		CB9F723013F9E43400C8D6EF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		CB9F723113F9E43400C8D6EF /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		CB9F723413F9E43400C8D6EF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
+		CB9F723713F9E43400C8D6EF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CB9F721913F9E43400C8D6EF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB9F722113F9E43400C8D6EF /* UIKit.framework in Frameworks */,
+				CB9F722313F9E43400C8D6EF /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CB98312F13FC8A1E00BC6EE1 /* Graphics */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Graphics;
+			sourceTree = "<group>";
+		};
+		CB98313113FC8A3A00BC6EE1 /* Data Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Data Model";
+			sourceTree = "<group>";
+		};
+		CB98313213FC8A4C00BC6EE1 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				CB98313113FC8A3A00BC6EE1 /* Data Model */,
+				CB98313513FC8AF500BC6EE1 /* Other */,
+				CB98313313FC8A7B00BC6EE1 /* Views */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		CB98313313FC8A7B00BC6EE1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CB98313613FC93C200BC6EE1 /* EditorView.h */,
+				CB98313713FC93C200BC6EE1 /* EditorView.m */,
+				CB98313813FC93C200BC6EE1 /* EditorView_iPad.xib */,
+				CB98313B13FC93F100BC6EE1 /* EditorView_iPhone.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		CB98313413FC8AAB00BC6EE1 /* Embedded Files */ = {
+			isa = PBXGroup;
+			children = (
+				CB60127413FAABE5004FD84D /* sample.html */,
+			);
+			name = "Embedded Files";
+			sourceTree = "<group>";
+		};
+		CB98313513FC8AF500BC6EE1 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+		CB9F721113F9E43400C8D6EF = {
+			isa = PBXGroup;
+			children = (
+				CB9F722413F9E43400C8D6EF /* fiveoh-one */,
+				CB9F721F13F9E43400C8D6EF /* Frameworks */,
+				CB9F721D13F9E43400C8D6EF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CB9F721D13F9E43400C8D6EF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CB9F721C13F9E43400C8D6EF /* fiveoh-one.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CB9F721F13F9E43400C8D6EF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CB9F722013F9E43400C8D6EF /* UIKit.framework */,
+				CB9F722213F9E43400C8D6EF /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CB9F722413F9E43400C8D6EF /* fiveoh-one */ = {
+			isa = PBXGroup;
+			children = (
+				CB98313413FC8AAB00BC6EE1 /* Embedded Files */,
+				CB98313213FC8A4C00BC6EE1 /* Classes */,
+				CB98312F13FC8A1E00BC6EE1 /* Graphics */,
+				CB9F722D13F9E43400C8D6EF /* AppDelegate.h */,
+				CB9F722E13F9E43400C8D6EF /* AppDelegate.m */,
+				CB9F723013F9E43400C8D6EF /* ViewController.h */,
+				CB9F723113F9E43400C8D6EF /* ViewController.m */,
+				CB9F723313F9E43400C8D6EF /* ViewController_iPhone.xib */,
+				CB9F723613F9E43400C8D6EF /* ViewController_iPad.xib */,
+				CB13493113FC48D000979662 /* TapDetectingWindow.h */,
+				CB13493213FC48D000979662 /* TapDetectingWindow.m */,
+				CB9F722513F9E43400C8D6EF /* Supporting Files */,
+			);
+			path = "fiveoh-one";
+			sourceTree = "<group>";
+		};
+		CB9F722513F9E43400C8D6EF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CB9F722613F9E43400C8D6EF /* fiveoh-one-Info.plist */,
+				CB9F722713F9E43400C8D6EF /* InfoPlist.strings */,
+				CB9F722A13F9E43400C8D6EF /* main.m */,
+				CB9F722C13F9E43400C8D6EF /* fiveoh-one-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CB9F721B13F9E43400C8D6EF /* fiveoh-one */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB9F723B13F9E43400C8D6EF /* Build configuration list for PBXNativeTarget "fiveoh-one" */;
+			buildPhases = (
+				CB9F721813F9E43400C8D6EF /* Sources */,
+				CB9F721913F9E43400C8D6EF /* Frameworks */,
+				CB9F721A13F9E43400C8D6EF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "fiveoh-one";
+			productName = "fiveoh-one";
+			productReference = CB9F721C13F9E43400C8D6EF /* fiveoh-one.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CB9F721313F9E43400C8D6EF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "TLA Digital Projects";
+			};
+			buildConfigurationList = CB9F721613F9E43400C8D6EF /* Build configuration list for PBXProject "fiveoh-one" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = CB9F721113F9E43400C8D6EF;
+			productRefGroup = CB9F721D13F9E43400C8D6EF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CB9F721B13F9E43400C8D6EF /* fiveoh-one */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CB9F721A13F9E43400C8D6EF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB9F722913F9E43400C8D6EF /* InfoPlist.strings in Resources */,
+				CB9F723513F9E43400C8D6EF /* ViewController_iPhone.xib in Resources */,
+				CB9F723813F9E43400C8D6EF /* ViewController_iPad.xib in Resources */,
+				CB60127513FAABE5004FD84D /* sample.html in Resources */,
+				CB98313A13FC93C200BC6EE1 /* EditorView_iPad.xib in Resources */,
+				CB98313C13FC93F100BC6EE1 /* EditorView_iPhone.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CB9F721813F9E43400C8D6EF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB9F722B13F9E43400C8D6EF /* main.m in Sources */,
+				CB9F722F13F9E43400C8D6EF /* AppDelegate.m in Sources */,
+				CB9F723213F9E43400C8D6EF /* ViewController.m in Sources */,
+				CB13493313FC48D000979662 /* TapDetectingWindow.m in Sources */,
+				CB98313913FC93C200BC6EE1 /* EditorView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		CB9F722713F9E43400C8D6EF /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CB9F722813F9E43400C8D6EF /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		CB9F723313F9E43400C8D6EF /* ViewController_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CB9F723413F9E43400C8D6EF /* en */,
+			);
+			name = ViewController_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		CB9F723613F9E43400C8D6EF /* ViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CB9F723713F9E43400C8D6EF /* en */,
+			);
+			name = ViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CB9F723913F9E43400C8D6EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CB9F723A13F9E43400C8D6EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CB9F723C13F9E43400C8D6EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "fiveoh-one/fiveoh-one-Prefix.pch";
+				INFOPLIST_FILE = "fiveoh-one/fiveoh-one-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		CB9F723D13F9E43400C8D6EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "fiveoh-one/fiveoh-one-Prefix.pch";
+				INFOPLIST_FILE = "fiveoh-one/fiveoh-one-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CB9F721613F9E43400C8D6EF /* Build configuration list for PBXProject "fiveoh-one" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB9F723913F9E43400C8D6EF /* Debug */,
+				CB9F723A13F9E43400C8D6EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB9F723B13F9E43400C8D6EF /* Build configuration list for PBXNativeTarget "fiveoh-one" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB9F723C13F9E43400C8D6EF /* Debug */,
+				CB9F723D13F9E43400C8D6EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CB9F721313F9E43400C8D6EF /* Project object */;
+}

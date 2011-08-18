@@ -13,16 +13,19 @@
     UIWebView *webView;
     UIButton *boldButton;
     UIButton *unorderedListButton;
+    UIButton *saveButton;
     UIButton *orderedListButton;
 }
 @property (strong, nonatomic) IBOutlet UIButton *orderedListButton;
 @property (strong, nonatomic) IBOutlet UIButton *boldButton;
 @property (strong, nonatomic) IBOutlet UIButton *unorderedListButton;
+@property (strong, nonatomic) IBOutlet UIButton *saveButton;
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 
 - (IBAction)boldAction:(id)sender;
 - (IBAction)orderedListAction:(id)sender;
 - (IBAction)unorderedListAction:(id)sender;
+- (IBAction)saveAction:(id)sender;
 
 
 @end

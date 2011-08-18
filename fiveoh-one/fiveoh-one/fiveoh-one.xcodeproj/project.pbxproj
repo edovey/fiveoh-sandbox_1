@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		CB13493313FC48D000979662 /* TapDetectingWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CB13493213FC48D000979662 /* TapDetectingWindow.m */; };
 		CB60127513FAABE5004FD84D /* sample.html in Resources */ = {isa = PBXBuildFile; fileRef = CB60127413FAABE5004FD84D /* sample.html */; };
+		CB69986F13FDB0B000F9AADD /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB69986E13FDB0B000F9AADD /* CoreData.framework */; };
 		CB98313913FC93C200BC6EE1 /* EditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = CB98313713FC93C200BC6EE1 /* EditorView.m */; };
 		CB98313A13FC93C200BC6EE1 /* EditorView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB98313813FC93C200BC6EE1 /* EditorView_iPad.xib */; };
 		CB98313C13FC93F100BC6EE1 /* EditorView_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB98313B13FC93F100BC6EE1 /* EditorView_iPhone.xib */; };
@@ -20,12 +21,15 @@
 		CB9F723213F9E43400C8D6EF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB9F723113F9E43400C8D6EF /* ViewController.m */; };
 		CB9F723513F9E43400C8D6EF /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB9F723313F9E43400C8D6EF /* ViewController_iPhone.xib */; };
 		CB9F723813F9E43400C8D6EF /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB9F723613F9E43400C8D6EF /* ViewController_iPad.xib */; };
+		CBA66DF313FDAC41005A27BE /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = CBA66DF213FDAC41005A27BE /* DataController.m */; };
+		CBA66DF613FDADCD005A27BE /* fiveoh-one.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBA66DF413FDADCD005A27BE /* fiveoh-one.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		CB13493113FC48D000979662 /* TapDetectingWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapDetectingWindow.h; sourceTree = "<group>"; };
 		CB13493213FC48D000979662 /* TapDetectingWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapDetectingWindow.m; sourceTree = "<group>"; };
 		CB60127413FAABE5004FD84D /* sample.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = sample.html; sourceTree = "<group>"; };
+		CB69986E13FDB0B000F9AADD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		CB98313613FC93C200BC6EE1 /* EditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorView.h; sourceTree = "<group>"; };
 		CB98313713FC93C200BC6EE1 /* EditorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditorView.m; sourceTree = "<group>"; };
 		CB98313813FC93C200BC6EE1 /* EditorView_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditorView_iPad.xib; sourceTree = "<group>"; };
@@ -43,6 +47,9 @@
 		CB9F723113F9E43400C8D6EF /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		CB9F723413F9E43400C8D6EF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
 		CB9F723713F9E43400C8D6EF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
+		CBA66DF113FDAC41005A27BE /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataController.h; sourceTree = "<group>"; };
+		CBA66DF213FDAC41005A27BE /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataController.m; sourceTree = "<group>"; };
+		CBA66DF513FDADCD005A27BE /* fiveoh-one.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "fiveoh-one.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB69986F13FDB0B000F9AADD /* CoreData.framework in Frameworks */,
 				CB9F722113F9E43400C8D6EF /* UIKit.framework in Frameworks */,
 				CB9F722313F9E43400C8D6EF /* Foundation.framework in Frameworks */,
 			);
@@ -68,6 +76,9 @@
 		CB98313113FC8A3A00BC6EE1 /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
+				CBA66DF113FDAC41005A27BE /* DataController.h */,
+				CBA66DF213FDAC41005A27BE /* DataController.m */,
+				CBA66DF413FDADCD005A27BE /* fiveoh-one.xcdatamodeld */,
 			);
 			name = "Data Model";
 			sourceTree = "<group>";
@@ -128,6 +139,7 @@
 		CB9F721F13F9E43400C8D6EF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CB69986E13FDB0B000F9AADD /* CoreData.framework */,
 				CB9F722013F9E43400C8D6EF /* UIKit.framework */,
 				CB9F722213F9E43400C8D6EF /* Foundation.framework */,
 			);
@@ -236,6 +248,8 @@
 				CB9F723213F9E43400C8D6EF /* ViewController.m in Sources */,
 				CB13493313FC48D000979662 /* TapDetectingWindow.m in Sources */,
 				CB98313913FC93C200BC6EE1 /* EditorView.m in Sources */,
+				CBA66DF313FDAC41005A27BE /* DataController.m in Sources */,
+				CBA66DF613FDADCD005A27BE /* fiveoh-one.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,10 +333,12 @@
 		CB9F723C13F9E43400C8D6EF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Karl Schulze (PKD77ZK2K5)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "fiveoh-one/fiveoh-one-Prefix.pch";
 				INFOPLIST_FILE = "fiveoh-one/fiveoh-one-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1F76E99B-992F-480D-B20D-E957FC0330B6";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
@@ -331,10 +347,12 @@
 		CB9F723D13F9E43400C8D6EF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Karl Schulze (PKD77ZK2K5)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "fiveoh-one/fiveoh-one-Prefix.pch";
 				INFOPLIST_FILE = "fiveoh-one/fiveoh-one-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1F76E99B-992F-480D-B20D-E957FC0330B6";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
@@ -362,6 +380,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		CBA66DF413FDADCD005A27BE /* fiveoh-one.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CBA66DF513FDADCD005A27BE /* fiveoh-one.xcdatamodel */,
+			);
+			currentVersion = CBA66DF513FDADCD005A27BE /* fiveoh-one.xcdatamodel */;
+			path = "fiveoh-one.xcdatamodeld";
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = CB9F721313F9E43400C8D6EF /* Project object */;
 }

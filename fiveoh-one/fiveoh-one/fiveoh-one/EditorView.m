@@ -22,6 +22,7 @@
 @synthesize orderedListButton;
 @synthesize boldButton;
 @synthesize unorderedListButton;
+@synthesize saveButton;
 @synthesize webView;
 
 - (void)didReceiveMemoryWarning
@@ -137,6 +138,7 @@
     [self setBoldButton:nil];
     [self setOrderedListButton:nil];
     [self setUnorderedListButton:nil];
+    [self setSaveButton:nil];
     [super viewDidUnload];
 }
 
@@ -158,5 +160,8 @@
 - (IBAction)unorderedListAction:(id)sender 
 {
     [self unorderedList:sender];
+}
+
+- (IBAction)saveAction:(id)sender {
 }
 @end

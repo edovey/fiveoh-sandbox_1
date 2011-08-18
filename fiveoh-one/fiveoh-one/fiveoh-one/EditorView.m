@@ -8,20 +8,20 @@
 
 #import "EditorView.h"
 
+@interface EditorView()
+{
+@private
+    BOOL keyboardIsShown;
+}
+
+- (void) moveTextViewForKeyboard:(NSNotification*)theNotification show:(BOOL)show;
+
+@end
+
 @implementation EditorView
 @synthesize boldButton;
 @synthesize webView;
 
-/*
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-*/
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -36,6 +36,56 @@
 	[self.webView stringByEvaluatingJavaScriptFromString:@"document.execCommand('Bold')"];
 }
 
+#pragma mark - Keyboard Handler
+
+// http://stackoverflow.com/questions/2807339/uikeyboardboundsuserinfokey-is-deprecated-what-to-use-instead
+
+- (void)keyboardWillShow:(NSNotification *)theNotification 
+{
+    [self moveTextViewForKeyboard:theNotification show:YES];
+}
+
+- (void)keyboardWillHide:(NSNotification *)theNotification 
+{
+    [self moveTextViewForKeyboard:theNotification show:NO]; 
+}
+
+- (void) moveTextViewForKeyboard:(NSNotification*)theNotification show:(BOOL)show
+{
+    if (show && keyboardIsShown) {
+        return;
+    }
+    
+    NSDictionary* userInfo = [theNotification userInfo];
+    
+    // Get animation info from userInfo
+    NSTimeInterval animationDuration;
+    UIViewAnimationCurve animationCurve;
+    
+    CGRect keyboardEndFrame;
+    
+    [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&animationCurve];
+    [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
+    
+    
+    [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardEndFrame];
+    
+    // Animate up or down
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    [UIView setAnimationCurve:animationCurve];
+    
+    CGRect newFrame = self.webView.frame;
+    CGRect keyboardFrame = [self.view convertRect:keyboardEndFrame toView:nil];
+    
+    newFrame.size.height -= keyboardFrame.size.height * (show? 1 : -1);
+    self.webView.frame = newFrame;
+    
+    keyboardIsShown = show;
+    
+    [UIView commitAnimations];
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -45,10 +95,32 @@
     NSBundle *bundle = [NSBundle mainBundle];
     NSURL *sampleFileURL = [bundle URLForResource:@"sample" withExtension:@"html"];
     [self.webView loadRequest:[NSURLRequest requestWithURL:sampleFileURL]];
+    
+    
+    // register for keyboard notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(keyboardWillShow:) 
+                                                 name:UIKeyboardWillShowNotification 
+                                               object:self.view.window];
+    // register for keyboard notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(keyboardWillHide:) 
+                                                 name:UIKeyboardWillHideNotification 
+                                               object:self.view.window];
+    keyboardIsShown = NO;
 }
 
 - (void)viewDidUnload
-{
+{    
+    // unregister for keyboard notifications while not visible.
+    [[NSNotificationCenter defaultCenter] removeObserver:self 
+                                                    name:UIKeyboardWillShowNotification 
+                                                  object:nil]; 
+    // unregister for keyboard notifications while not visible.
+    [[NSNotificationCenter defaultCenter] removeObserver:self 
+                                                    name:UIKeyboardWillHideNotification 
+                                                  object:nil];  
+    
     [self setWebView:nil];
     [self setBoldButton:nil];
     [super viewDidUnload];

@@ -19,7 +19,9 @@
 @end
 
 @implementation EditorView
+@synthesize orderedListButton;
 @synthesize boldButton;
+@synthesize unorderedListButton;
 @synthesize webView;
 
 - (void)didReceiveMemoryWarning
@@ -33,7 +35,17 @@
 #pragma mark - Formatting
 -(void)bold:(id)sender 
 {
-	[self.webView stringByEvaluatingJavaScriptFromString:@"document.execCommand('Bold')"];
+	[self.webView stringByEvaluatingJavaScriptFromString:@"document.execCommand('bold')"];
+}
+
+-(void)orderedList:(id)sender
+{
+    [self.webView stringByEvaluatingJavaScriptFromString:@"document.execCommand('insertOrderedList')"];
+}
+
+-(void)unorderedList:(id)sender
+{
+    [self.webView stringByEvaluatingJavaScriptFromString:@"document.execCommand('insertUnorderedList')"];
 }
 
 #pragma mark - Keyboard Handler
@@ -123,6 +135,8 @@
     
     [self setWebView:nil];
     [self setBoldButton:nil];
+    [self setOrderedListButton:nil];
+    [self setUnorderedListButton:nil];
     [super viewDidUnload];
 }
 
@@ -134,5 +148,15 @@
 - (IBAction)boldAction:(id)sender 
 {
     [self bold:sender];
+}
+
+- (IBAction)orderedListAction:(id)sender 
+{
+    [self orderedList:sender];
+}
+
+- (IBAction)unorderedListAction:(id)sender 
+{
+    [self unorderedList:sender];
 }
 @end

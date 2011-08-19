@@ -17,6 +17,7 @@
     UIButton            *indentButton;
     UIButton            *outdentButton;
     UIButton            *saveButton;
+    UISwitch *settingsSwitch;
     UIButton            *orderedListButton;
     
     @private
@@ -32,6 +33,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *indentButton;
 @property (strong, nonatomic) IBOutlet UIButton *outdentButton;
 @property (strong, nonatomic) IBOutlet UIButton *saveButton;
+@property (strong, nonatomic) IBOutlet UISwitch *settingsSwitch;
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 
 - (void)assignDocumentUuid:(NSString *)theUuid;
@@ -42,6 +44,7 @@
 - (IBAction)indentAction:(id)sender;
 - (IBAction)outdentAction:(id)sender;
 - (IBAction)saveAction:(id)sender;
+- (IBAction)settingsToggle:(id)sender;
 
 
 @end

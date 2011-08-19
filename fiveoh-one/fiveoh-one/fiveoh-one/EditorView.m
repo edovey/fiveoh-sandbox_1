@@ -29,6 +29,7 @@
 @synthesize indentButton;
 @synthesize outdentButton;
 @synthesize saveButton;
+@synthesize settingsSwitch;
 @synthesize webView;
 
 - (void)assignDocumentUuid:(NSString *)theUuid
@@ -86,7 +87,7 @@
 {
     NSLog(@"Hide: %@", theNotification);
 
-    [self moveTextViewForKeyboard:theNotification show:YES]; 
+    [self moveTextViewForKeyboard:theNotification show:NO]; 
 }
 
 - (void)keyboardDidChangeFrame:(NSNotification *)theNotification
@@ -96,6 +97,11 @@
 
 - (void) moveTextViewForKeyboard:(NSNotification*)theNotification show:(BOOL)show
 {
+    if(!self.settingsSwitch.on)
+    {
+        return;
+    }
+    
     if (show && keyboardIsShown) 
     {
         return;
@@ -192,6 +198,7 @@
     [self setSaveButton:nil];
     [self setIndentButton:nil];
     [self setOutdentButton:nil];
+    [self setSettingsSwitch:nil];
     [super viewDidUnload];
 }
 
@@ -236,6 +243,11 @@
     self.editorDocument.documentText = [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
     
     [[DataController sharedInstance] saveContext];
+}
+
+- (IBAction)settingsToggle:(id)sender 
+{
+    
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "EditorView.h"
+#import "EditorDocument.h"
 
 @interface EditorView()
 {
@@ -19,11 +20,22 @@
 @end
 
 @implementation EditorView
+
+@synthesize editorDocument;
+
 @synthesize orderedListButton;
 @synthesize boldButton;
 @synthesize unorderedListButton;
 @synthesize saveButton;
 @synthesize webView;
+
+- (void)assignDocumentUuid:(NSString *)theUuid
+{
+    if (nil != theUuid)
+    {
+        self.editorDocument = [EditorDocument retrieveWithUUID:theUuid];
+    }
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -105,10 +117,16 @@
 {
     [super viewDidLoad];
     
-    NSBundle *bundle = [NSBundle mainBundle];
-    NSURL *sampleFileURL = [bundle URLForResource:@"sample" withExtension:@"html"];
-    [self.webView loadRequest:[NSURLRequest requestWithURL:sampleFileURL]];
-    
+    if (nil != self.editorDocument)
+    {
+        [self.webView loadHTMLString:self.editorDocument.documentText baseURL:[NSURL URLWithString:@""]];
+    }
+    else
+    {
+        NSBundle *bundle = [NSBundle mainBundle];
+        NSURL *sampleFileURL = [bundle URLForResource:@"sample" withExtension:@"html"];
+        [self.webView loadRequest:[NSURLRequest requestWithURL:sampleFileURL]];
+    }
     
     // register for keyboard notifications
     [[NSNotificationCenter defaultCenter] addObserver:self 
@@ -162,6 +180,16 @@
     [self unorderedList:sender];
 }
 
-- (IBAction)saveAction:(id)sender {
+- (IBAction)saveAction:(id)sender 
+{
+    if(nil == self.editorDocument)
+    {
+        self.editorDocument = [EditorDocument create];
+    }
+    self.editorDocument.modifiedDate = [NSDate date];
+
+    self.editorDocument.documentText = [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
+    
+    [[DataController sharedInstance] saveContext];
 }
 @end

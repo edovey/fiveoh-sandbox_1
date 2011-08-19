@@ -52,6 +52,117 @@
     }
 }
 
+- (NSManagedObject *)retrieveManagedObject:(NSString *)entityName 
+                                      uuid:(NSString *)uuid 
+                                 targetMOC:(NSManagedObjectContext *)moc
+{
+	if (uuid == nil)
+	{
+		return nil;
+	}
+    
+    return [self retrieveManagedObjectForValue:entityName 
+                                       withKey:@"uuid" 
+                                     withValue:uuid 
+                                       withMOC:moc];
+    
+}
+
+- (NSManagedObject *)retrieveManagedObjectForValue:(NSString *)theEntityName 
+                                           withKey:(NSString *)theKey 
+                                         withValue:(NSString *)theValue 
+                                           withMOC:(NSManagedObjectContext *)theMOC
+{
+   	if (nil == theMOC)
+	{
+		theMOC = [self managedObjectContext];
+	}
+	
+	NSPredicate *pred;
+	pred = [NSPredicate predicateWithFormat:@"(%K == %@)", theKey, theValue];
+	
+	NSEntityDescription *entity = [NSEntityDescription entityForName:theEntityName inManagedObjectContext:theMOC];
+	
+	// And, of course, a fetch request. This time we give it both the entity
+	// description and the predicate we've just created.
+	
+	NSFetchRequest *req = [[NSFetchRequest alloc] init];
+	[req setEntity:entity];	
+	[req setPredicate:pred];
+	[req setFetchBatchSize:1];
+	
+	// We declare an NSError and handle errors by raising an exception,
+	// just like in the previous method
+	
+	NSError *error = nil;
+	NSArray *array = [theMOC executeFetchRequest:req
+                                           error:&error];   
+	if (array == nil)
+	{
+		NSException *exception = [NSException 
+								  exceptionWithName:@"MTCoreDataException" /*MTCoreDataExeption*/ 
+								  reason:[error localizedDescription] 
+								  userInfo:nil];
+		[exception raise];
+	}
+		
+	if ([array count] > 0)
+	{
+		return [array objectAtIndex:0];
+	}
+	
+	return nil;
+}
+
+- (NSMutableArray *)allInstancesOf:(NSString *)entityName 
+						 orderedBy:(NSString *)orderName 
+						  loadData:(BOOL)loadDataFlag
+						 targetMOC:(NSManagedObjectContext *)moc
+{
+	return [self allInstancesOf:entityName 
+					  orderedBy:orderName 
+					isAscending:YES 
+					   loadData:loadDataFlag 
+					  targetMOC:moc];
+}
+
+- (NSMutableArray *)allInstancesOf:(NSString *)entityName 
+						 orderedBy:(NSString *)orderName 
+					   isAscending:(BOOL)orderAscending
+						  loadData:(BOOL)loadDataFlag
+						 targetMOC:(NSManagedObjectContext *)moc
+{
+	if (moc == nil)
+	{
+		moc = [self managedObjectContext];
+	}
+	
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    
+    [request setEntity:[NSEntityDescription entityForName:entityName
+								   inManagedObjectContext:moc]];
+	
+	if(loadDataFlag == YES)
+	{
+		[request setReturnsObjectsAsFaults:NO];
+	}
+	
+    if (orderName) 
+	{
+        NSSortDescriptor *sd = [[NSSortDescriptor alloc] initWithKey:orderName
+                                                           ascending:orderAscending];
+        
+        NSArray *sortDescriptors = [NSArray arrayWithObject:sd];
+        
+        [request setSortDescriptors:sortDescriptors];
+    }
+    
+    NSError *error;
+	NSMutableArray *mutableFetchResults = [[moc executeFetchRequest:request error:&error] mutableCopy];
+	    
+	return mutableFetchResults;
+}
+
 #pragma mark - Core Data stack
 
 /**
@@ -84,7 +195,7 @@
     {
         return __managedObjectModel;
     }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"fiveoh_one" withExtension:@"momd"];
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"fiveoh-one" withExtension:@"momd"];
     __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];    
     return __managedObjectModel;
 }
@@ -100,7 +211,7 @@
         return __persistentStoreCoordinator;
     }
     
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"fiveoh_one.sqlite"];
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"fiveoh-one.sqlite"];
     
     NSError *error = nil;
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];

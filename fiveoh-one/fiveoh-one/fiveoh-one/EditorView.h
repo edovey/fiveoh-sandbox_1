@@ -7,20 +7,30 @@
 //
 
 #import <UIKit/UIKit.h>
+@class EditorDocument;
 
 @interface EditorView : UIViewController 
 {
-    UIWebView *webView;
-    UIButton *boldButton;
-    UIButton *unorderedListButton;
-    UIButton *saveButton;
-    UIButton *orderedListButton;
+    UIWebView           *webView;
+    UIButton            *boldButton;
+    UIButton            *unorderedListButton;
+    UIButton            *saveButton;
+    UIButton            *orderedListButton;
+    
+    @private
+    EditorDocument      *editorDocument;
+    
 }
+
+@property (strong, nonatomic) EditorDocument    *editorDocument;
+
 @property (strong, nonatomic) IBOutlet UIButton *orderedListButton;
 @property (strong, nonatomic) IBOutlet UIButton *boldButton;
 @property (strong, nonatomic) IBOutlet UIButton *unorderedListButton;
 @property (strong, nonatomic) IBOutlet UIButton *saveButton;
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
+
+- (void)assignDocumentUuid:(NSString *)theUuid;
 
 - (IBAction)boldAction:(id)sender;
 - (IBAction)orderedListAction:(id)sender;

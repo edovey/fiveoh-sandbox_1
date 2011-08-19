@@ -8,6 +8,11 @@
 
 #import "ViewController.h"
 #import "EditorView.h"
+#import "EditorDocument.h"
+
+@interface ViewController()
+-(NSString *)retrieveUuidOfFirstEditorDocument;
+@end
 
 @implementation ViewController
 @synthesize mainTableView;
@@ -113,6 +118,8 @@
             {
                 view = [[EditorView alloc] initWithNibName:@"EditorView_iPad" bundle:nil]; 
             }
+            NSString *documentUuid = [self retrieveUuidOfFirstEditorDocument];
+            [view assignDocumentUuid:documentUuid];
             [self.navigationController pushViewController:view animated:YES];
 
             break;
@@ -120,6 +127,20 @@
         default:
             break;
     }
+}
 
+-(NSString *)retrieveUuidOfFirstEditorDocument
+{
+    NSMutableArray *array = [[DataController sharedInstance] allInstancesOf:@"EditorDocument" 
+                                                                  orderedBy:nil 
+                                                                   loadData:NO 
+                                                                  targetMOC:nil];
+    NSString *result = nil;
+    if([array count] > 0)
+    {
+        EditorDocument *document = [array objectAtIndex:0];
+        result = document.uuid;
+    }
+    return result;
 }
 @end

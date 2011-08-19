@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="fiveoh-one" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="858" systemVersion="11A511" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="858" systemVersion="11A511" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="EditorDocument" representedClassName="EditorDocument">
+        <attribute name="createdBy" optional="YES" attributeType="String"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date"/>
+        <attribute name="documentText" optional="YES" attributeType="String"/>
+        <attribute name="inUseBy" optional="YES" attributeType="String"/>
+        <attribute name="lastModifiedBy" optional="YES" attributeType="String"/>
+        <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
+        <attribute name="uuid" optional="YES" attributeType="String" indexed="YES"/>
+    </entity>
+    <elements>
+        <element name="EditorDocument" positionX="160" positionY="192" width="128" height="150"/>
+    </elements>
 </model>

@@ -10,6 +10,8 @@
 		CB13493313FC48D000979662 /* TapDetectingWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CB13493213FC48D000979662 /* TapDetectingWindow.m */; };
 		CB60127513FAABE5004FD84D /* sample.html in Resources */ = {isa = PBXBuildFile; fileRef = CB60127413FAABE5004FD84D /* sample.html */; };
 		CB69986F13FDB0B000F9AADD /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB69986E13FDB0B000F9AADD /* CoreData.framework */; };
+		CB69987313FDB4B000F9AADD /* EditorDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = CB69987213FDB4B000F9AADD /* EditorDocument.m */; };
+		CB69987613FDB5D000F9AADD /* NSString+UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = CB69987513FDB5D000F9AADD /* NSString+UUID.m */; };
 		CB98313913FC93C200BC6EE1 /* EditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = CB98313713FC93C200BC6EE1 /* EditorView.m */; };
 		CB98313A13FC93C200BC6EE1 /* EditorView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB98313813FC93C200BC6EE1 /* EditorView_iPad.xib */; };
 		CB98313C13FC93F100BC6EE1 /* EditorView_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB98313B13FC93F100BC6EE1 /* EditorView_iPhone.xib */; };
@@ -30,6 +32,10 @@
 		CB13493213FC48D000979662 /* TapDetectingWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapDetectingWindow.m; sourceTree = "<group>"; };
 		CB60127413FAABE5004FD84D /* sample.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = sample.html; sourceTree = "<group>"; };
 		CB69986E13FDB0B000F9AADD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		CB69987113FDB4B000F9AADD /* EditorDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorDocument.h; sourceTree = "<group>"; };
+		CB69987213FDB4B000F9AADD /* EditorDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditorDocument.m; sourceTree = "<group>"; };
+		CB69987413FDB5D000F9AADD /* NSString+UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UUID.h"; sourceTree = "<group>"; };
+		CB69987513FDB5D000F9AADD /* NSString+UUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UUID.m"; sourceTree = "<group>"; };
 		CB98313613FC93C200BC6EE1 /* EditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorView.h; sourceTree = "<group>"; };
 		CB98313713FC93C200BC6EE1 /* EditorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditorView.m; sourceTree = "<group>"; };
 		CB98313813FC93C200BC6EE1 /* EditorView_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditorView_iPad.xib; sourceTree = "<group>"; };
@@ -76,9 +82,11 @@
 		CB98313113FC8A3A00BC6EE1 /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
+				CBA66DF413FDADCD005A27BE /* fiveoh-one.xcdatamodeld */,
 				CBA66DF113FDAC41005A27BE /* DataController.h */,
 				CBA66DF213FDAC41005A27BE /* DataController.m */,
-				CBA66DF413FDADCD005A27BE /* fiveoh-one.xcdatamodeld */,
+				CB69987113FDB4B000F9AADD /* EditorDocument.h */,
+				CB69987213FDB4B000F9AADD /* EditorDocument.m */,
 			);
 			name = "Data Model";
 			sourceTree = "<group>";
@@ -115,6 +123,8 @@
 		CB98313513FC8AF500BC6EE1 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				CB69987413FDB5D000F9AADD /* NSString+UUID.h */,
+				CB69987513FDB5D000F9AADD /* NSString+UUID.m */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -250,6 +260,8 @@
 				CB98313913FC93C200BC6EE1 /* EditorView.m in Sources */,
 				CBA66DF313FDAC41005A27BE /* DataController.m in Sources */,
 				CBA66DF613FDADCD005A27BE /* fiveoh-one.xcdatamodeld in Sources */,
+				CB69987313FDB4B000F9AADD /* EditorDocument.m in Sources */,
+				CB69987613FDB5D000F9AADD /* NSString+UUID.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

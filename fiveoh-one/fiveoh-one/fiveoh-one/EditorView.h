@@ -14,6 +14,8 @@
     UIWebView           *webView;
     UIButton            *boldButton;
     UIButton            *unorderedListButton;
+    UIButton            *indentButton;
+    UIButton            *outdentButton;
     UIButton            *saveButton;
     UIButton            *orderedListButton;
     
@@ -27,6 +29,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *orderedListButton;
 @property (strong, nonatomic) IBOutlet UIButton *boldButton;
 @property (strong, nonatomic) IBOutlet UIButton *unorderedListButton;
+@property (strong, nonatomic) IBOutlet UIButton *indentButton;
+@property (strong, nonatomic) IBOutlet UIButton *outdentButton;
 @property (strong, nonatomic) IBOutlet UIButton *saveButton;
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 
@@ -35,6 +39,8 @@
 - (IBAction)boldAction:(id)sender;
 - (IBAction)orderedListAction:(id)sender;
 - (IBAction)unorderedListAction:(id)sender;
+- (IBAction)indentAction:(id)sender;
+- (IBAction)outdentAction:(id)sender;
 - (IBAction)saveAction:(id)sender;
 
 

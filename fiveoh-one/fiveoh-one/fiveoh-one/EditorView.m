@@ -26,6 +26,8 @@
 @synthesize orderedListButton;
 @synthesize boldButton;
 @synthesize unorderedListButton;
+@synthesize indentButton;
+@synthesize outdentButton;
 @synthesize saveButton;
 @synthesize webView;
 
@@ -61,23 +63,41 @@
     [self.webView stringByEvaluatingJavaScriptFromString:@"document.execCommand('insertUnorderedList')"];
 }
 
-#pragma mark - Keyboard Handler
+-(void)indent:(id)sender
+{
+    [self.webView stringByEvaluatingJavaScriptFromString:@"document.execCommand('indent')"];
+}
 
-// http://stackoverflow.com/questions/2807339/uikeyboardboundsuserinfokey-is-deprecated-what-to-use-instead
+-(void)outdent:(id)sender
+{
+    [self.webView stringByEvaluatingJavaScriptFromString:@"document.execCommand('outdent')"];
+}
+
+#pragma mark - Keyboard Handler
 
 - (void)keyboardWillShow:(NSNotification *)theNotification 
 {
+    NSLog(@"Show: %@", theNotification);
+    
     [self moveTextViewForKeyboard:theNotification show:YES];
 }
 
 - (void)keyboardWillHide:(NSNotification *)theNotification 
 {
-    [self moveTextViewForKeyboard:theNotification show:NO]; 
+    NSLog(@"Hide: %@", theNotification);
+
+    [self moveTextViewForKeyboard:theNotification show:YES]; 
+}
+
+- (void)keyboardDidChangeFrame:(NSNotification *)theNotification
+{
+    NSLog(@"KDC: %@", theNotification);
 }
 
 - (void) moveTextViewForKeyboard:(NSNotification*)theNotification show:(BOOL)show
 {
-    if (show && keyboardIsShown) {
+    if (show && keyboardIsShown) 
+    {
         return;
     }
     
@@ -88,7 +108,6 @@
     UIViewAnimationCurve animationCurve;
     
     CGRect keyboardEndFrame;
-    
     [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&animationCurve];
     [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
     
@@ -133,30 +152,46 @@
                                              selector:@selector(keyboardWillShow:) 
                                                  name:UIKeyboardWillShowNotification 
                                                object:self.view.window];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(keyboardDidChangeFrame:) 
+                                                 name:UIKeyboardDidChangeFrameNotification 
+                                               object:self.view.window];
+    
     // register for keyboard notifications
     [[NSNotificationCenter defaultCenter] addObserver:self 
                                              selector:@selector(keyboardWillHide:) 
                                                  name:UIKeyboardWillHideNotification 
                                                object:self.view.window];
     keyboardIsShown = NO;
+    
+    
 }
 
 - (void)viewDidUnload
 {    
     // unregister for keyboard notifications while not visible.
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self 
                                                     name:UIKeyboardWillShowNotification 
                                                   object:nil]; 
+    
     // unregister for keyboard notifications while not visible.
     [[NSNotificationCenter defaultCenter] removeObserver:self 
                                                     name:UIKeyboardWillHideNotification 
                                                   object:nil];  
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self 
+                                                    name:UIKeyboardDidChangeFrameNotification 
+                                                  object:nil];  
+
     [self setWebView:nil];
     [self setBoldButton:nil];
     [self setOrderedListButton:nil];
     [self setUnorderedListButton:nil];
     [self setSaveButton:nil];
+    [self setIndentButton:nil];
+    [self setOutdentButton:nil];
     [super viewDidUnload];
 }
 
@@ -180,6 +215,16 @@
     [self unorderedList:sender];
 }
 
+- (IBAction)indentAction:(id)sender 
+{
+    [self indent:sender];
+}
+
+- (IBAction)outdentAction:(id)sender 
+{
+    [self outdent:sender];
+}
+
 - (IBAction)saveAction:(id)sender 
 {
     if(nil == self.editorDocument)
@@ -192,4 +237,5 @@
     
     [[DataController sharedInstance] saveContext];
 }
+
 @end

@@ -5,6 +5,6 @@
       location = "group:fourthree-one/fourthree-one.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:fiveoh-one/fiveoh-one/fiveoh-one.xcodeproj">
+      location = "group:fiveoh-one/fiveoh-one.xcodeproj">
    </FileRef>
 </Workspace>

@@ -242,6 +242,8 @@
 
     self.editorDocument.documentText = [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
     
+    NSLog(@"Document HTML = [%@]", self.editorDocument.documentText);
+    
     [[DataController sharedInstance] saveContext];
 }
 

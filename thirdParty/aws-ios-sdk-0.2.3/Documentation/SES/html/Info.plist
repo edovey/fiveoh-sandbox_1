@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"
+"http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+     <key>CFBundleName</key>
+     <string>Amazon SES</string>
+     <key>CFBundleIdentifier</key>
+     <string>com.amazon.aws.SES.docset</string>
+     <key>DocSetFeedName</key>
+     <string>Amazon SES Documentation</string>
+     <key>DocSetPublisherIdentifier</key>
+     <string>com.amazon.aws</string>
+     <key>DocSetPublisherName</key>
+     <string>Amazon Web Services</string>
+</dict>
+</plist>

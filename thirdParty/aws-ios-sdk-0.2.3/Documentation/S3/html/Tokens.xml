@@ -1,0 +1,2953 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+  <Token>
+    <TokenIdentifier>
+      <Name>listBuckets</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>a5c5fa7d6dbb986b94c544a1ad93e2b11</Anchor>
+    <Abstract>Returns a list of all Amazon S3 buckets that the authenticated sender of the request owns...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>listBuckets:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>a417ec6da4ea5443a7d28d52542727e4f</Anchor>
+    <Abstract>Returns a list of all Amazon S3 buckets that the authenticated sender of the request owns...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>createBucket:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>ad5d884e219d0b1034d18d03fb00fa0a9</Anchor>
+    <Abstract>Creates a bucket using the the specified request object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>createBucketWithName:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>ad3d64a90f4a52319255703c2fb31c986</Anchor>
+    <Abstract>Creates a bucket using the the specified bucket name.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>deleteBucket:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>ae38458ea0556e01f041ac6b6b85528ac</Anchor>
+    <Abstract>Deletes a bucket with the specified name.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>deleteBucketWithName:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>ae47017f12157404865d2c1e9e3583d2e</Anchor>
+    <Abstract>Deletes a bucket with the specified name.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>getBucketLocation:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>a0e86186aa05496dccc157c81754da879</Anchor>
+    <Abstract>Takes in a bucket&amp;#39;s name and lists the location of the bucket.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>getObjectMetadata:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>a303ef46eafcde78fb07e925e23ecd48b</Anchor>
+    <Abstract>Retrieve metadata from an object without returning the object itself.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>putObject:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>a56e97200963155d5b1dc33899ed64348</Anchor>
+    <Abstract>Upload an object to S3.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>getObject:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>aeb8447c77c409c350f16d9df3b70c12c</Anchor>
+    <Abstract>Fetch the most recent version of an S3 object from the specified S3 bucket.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>deleteObject:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>aceea039cc796742f7c9b27cc9d4d1a49</Anchor>
+    <Abstract>Removes the specified object from Amazon S3.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>deleteObjectWithKey:withBucket:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>af8fe5c5c96db1bce17eac9ea97189554</Anchor>
+    <Abstract>Removes the specified object from Amazon S3.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>listObjects:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>a8b4548bce4e4f89e923af7ef84ed855a</Anchor>
+    <Abstract>List the objects in a bucket.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>listObjectsInBucket:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>ae190d28b9526f4af318d4e7d86fb1cfd</Anchor>
+    <Abstract>List the objects in a bucket.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>copyObject:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>a79bda4681fdeb4f73b2ea1d2b014a6a8</Anchor>
+    <Abstract>Create a copy of an object that is already stored in Amazon S3.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>getACL:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>aacca4a1a6063bc874ca2453825a0a3f2</Anchor>
+    <Abstract>Gets the access control list for a given bucket or object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>setACL:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>a352b7c61e8ace1c4c389e57582b91550</Anchor>
+    <Abstract>Sets the S3AccessControlList for a given bucket or object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>getBucketPolicy:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>aa538c5d6b32b8189562840cd1585ac23</Anchor>
+    <Abstract>Gets the policy for the specified bucket.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>setBucketPolicy:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>abb010ebfa88ce8112d51021d91194ca9</Anchor>
+    <Abstract>Sets the policy associated with the specified bucket.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>deleteBucketPolicy:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>a2a627a0c84fc714d2f580b6d7f81f9ef</Anchor>
+    <Abstract>Deletes the policy associated with the specified bucket.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>getBucketVersioningConfiguration:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>af99087d63a9d2282ccdaab3a97d246ee</Anchor>
+    <Abstract>Returns the versioning configuration for the specified bucket.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>setBucketVersioningConfiguration:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>a6aad21cc695d5973a836bfd045d56200</Anchor>
+    <Abstract>Sets the versioning configuration for the specified bucket.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>deleteVersion:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>a200ec59075230752204540be305d1866</Anchor>
+    <Abstract>Deletes a specific version of an object in the specified bucket.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>listVersions:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>a299a61e8320b5af528604155e8f9892c</Anchor>
+    <Abstract>Returns a list of summary information about the versions in the specified bucket.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initiateMultipartUpload:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>a9401ea9a0c04e124ca4e9516d822dec3</Anchor>
+    <Abstract>Initiates a multipart upload and returns an InitiateMultipartUploadResponse.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initiateMultipartUploadWithKey:withBucket:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>ac63c7e3fe1d496bab0274c03934aae5e</Anchor>
+    <Abstract>Initiates a multipart upload and returns an MultipartUpload instance which contains an upload ID...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>abortMultipartUpload:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>a4ef74e9496db37d62c177907f8796929</Anchor>
+    <Abstract>Aborts a multipart upload.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>abortMultipartUploadWithUploadId:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>a833d37010fe488c73ae9f69243f33ec4</Anchor>
+    <Abstract>Aborts a multipart upload for a given uploadId.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>listMultipartUploads:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>a687ee2f35dae57445b0faf1d8a4b6130</Anchor>
+    <Abstract>This operation lists in-progress multipart uploads.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>uploadPart:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>abc0247829564c383bcfd1ac1e65e2861</Anchor>
+    <Abstract>Uploads a part in a multipart upload.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>listParts:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>a3dbeae103458de5408e69979dc2adf34</Anchor>
+    <Abstract>Lists the parts that have been uploaded for a particular multipart upload.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>completeMultipartUpload:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>accd289f4a80cf3e36701774697a44130</Anchor>
+    <Abstract>Completes a multipart upload by assembling previously uploaded parts.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>getPreSignedURL:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>aac8d2d288baaa29377bcc1737850afdc</Anchor>
+    <Abstract>Creates a signed http request.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>invoke:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>a872b43fbe9d4d04e4899b0d78bb37f0f</Anchor>
+    <Abstract>Utility method that sends the raw S3 Request to be processed.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>constructResponseFromRequest:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>a4016b862d2ac9d2675ea03acbcee6a1a</Anchor>
+    <Abstract>Constructs an empty response object of the appropriate type to match the given request object...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>apiVersion</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>abf6b237a6c8b28793ccfc5d63fc3f1d1</Anchor>
+    <Abstract>Return the version of the S3 API.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initializeResponseObjects</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_amazon_s3_client.html</Path>
+    <Anchor>a2b2880f25f3efe83aea7d26e5f20eb05</Anchor>
+    <Abstract>Ensure that all response classes have been loaded by the runtime.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>requestFormat</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_n_s_date_07_with_s3_request_format_08.html</Path>
+    <Anchor>a9aa85539aed69818300940c5bbb0f0d9</Anchor>
+    <Abstract>Format a date for use with Amazon S3 requests.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initWithMultipartUpload:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_abort_multipart_upload_request.html</Path>
+    <Anchor>ac262bb918b3d11faeb98e1f945981459</Anchor>
+    <Abstract>Initializes the instance with the bucket, key, and uploadId from an S3MultipartUpload instance return...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>uploadId</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_abort_multipart_upload_request.html</Path>
+    <Anchor>a8626b48c1f9a4956cc42b23f579be6fc</Anchor>
+    <Abstract>The id of the upload to abort.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>addMetadataWithValue:forKey:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_abstract_put_request.html</Path>
+    <Anchor>ada4d7bd32c06013050cf4d88642186e1</Anchor>
+    <Abstract>Add a key-value metadata pair to the request.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>metadata</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_abstract_put_request.html</Path>
+    <Anchor>a7fe662e82a82a24a7befa33d982ad0f7</Anchor>
+    <Abstract>Get the metadata dictionary of key-value pairs.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>cannedACL</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_abstract_put_request.html</Path>
+    <Anchor>aafeaed634b2f4ce1e27e8a7ddfcdae3f</Anchor>
+    <Abstract>A canned access control list to apply to the object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>storageClass</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_abstract_put_request.html</Path>
+    <Anchor>a54282183f67358020321218eb203b4b2</Anchor>
+    <Abstract>The storage class for the object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initWithOwner:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_access_control_list.html</Path>
+    <Anchor>a39ae9f2680ce8299f47322cd0532058e</Anchor>
+    <Abstract>Initialize the object with an owner.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>addGrant:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_access_control_list.html</Path>
+    <Anchor>a2b77b06a48e017efbf22b96a42242301</Anchor>
+    <Abstract>Adds the grant to the grant list.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>toXml</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_access_control_list.html</Path>
+    <Anchor>a6c5f9af0eb3bbdc83a2d45ea55a008b2</Anchor>
+    <Abstract>Returns the XML represenation of the ACL.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>owner</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_access_control_list.html</Path>
+    <Anchor>ae9a88cafc769b272e5222ca6396c1a26</Anchor>
+    <Abstract>Gets and sets the owner.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>grantList</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_access_control_list.html</Path>
+    <Anchor>aef60c0e276f89caf301f33642c8fbae5</Anchor>
+    <Abstract>Returns the current grant list.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>name</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_bucket.html</Path>
+    <Anchor>a42094fd49737d0890685abdedc6ac748</Anchor>
+    <Abstract>Gets and sets the BucketName property.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>creationDate</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_bucket.html</Path>
+    <Anchor>a253a5d0971991f061c1e7c91d09d79dd</Anchor>
+    <Abstract>Gets and sets the CreationDate property.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>validateBucketName:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_bucket_name_utilities.html</Path>
+    <Anchor>acdae30a8abd43b871a4eb5c5efa2256e</Anchor>
+    <Abstract>Validate that the supplied bucket name conforms to Amazon S3 bucket name constraints.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initWithPolicy:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_bucket_policy.html</Path>
+    <Anchor>aab729f3989f5eb9271af1392a8e89f02</Anchor>
+    <Abstract>Initialize the object with a policy.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>policyText</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_bucket_policy.html</Path>
+    <Anchor>a0907cc3fd01bc9d362d2b880f46848b2</Anchor>
+    <Abstract>The raw, policy JSON text, as returned by Amazon S3.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>bucket</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_bucket_unmarshaller.html</Path>
+    <Anchor>ae121b05c28f6e0c773701af08e24c3d4</Anchor>
+    <Abstract>The S3Bucket represented by the XML.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initWithStatus:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_bucket_versioning_configuration.html</Path>
+    <Anchor>a8c8cf7c6565a8e4003c93d547ac5216f</Anchor>
+    <Abstract>Initialize the object with a status.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>status</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_bucket_versioning_configuration.html</Path>
+    <Anchor>a946ab72123dab50fb55f8b283132844b</Anchor>
+    <Abstract>The current status of versioning.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>isMfaDeleteEnabled</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_bucket_versioning_configuration.html</Path>
+    <Anchor>a80e4e5e133cf83acce020cf49a8d763b</Anchor>
+    <Abstract>Indicates if the optional Multi-Factor Authentication Delete control is enabled for this bucket versi...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>versioningConfiguration</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_bucket_versioning_configuration_unmarshaller.html</Path>
+    <Anchor>a8d72fc657c574dd8263a0750f0af8ada</Anchor>
+    <Abstract>The S3BucketVersioningConfiguration represented by the XML.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>private</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_canned_a_c_l.html</Path>
+    <Anchor>a6ef0159cf8b99e8fa7ecf38c094f494b</Anchor>
+    <Abstract>Owner gets FULL_CONTROL.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>publicRead</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_canned_a_c_l.html</Path>
+    <Anchor>acbf264e59374858bfdd71e18d2c5482d</Anchor>
+    <Abstract>Owner gets FULL_CONTROL and the anonymous principal is granted READ access.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>publicReadWrite</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_canned_a_c_l.html</Path>
+    <Anchor>a2de0134ee1fece59a5fcd1e33ed83cbd</Anchor>
+    <Abstract>Owner gets FULL_CONTROL, the anonymous principal is granted READ and WRITE access.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>authenticatedRead</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_canned_a_c_l.html</Path>
+    <Anchor>ad6e84bf3cd40d7ca5412c79ac059cbf1</Anchor>
+    <Abstract>Owner gets FULL_CONTROL, and any principal authenticated as a registered Amazon S3 user is granted RE...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>bucketOwnerRead</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_canned_a_c_l.html</Path>
+    <Anchor>a2aa0e8069aa8ec083199e4047e3b79c8</Anchor>
+    <Abstract>Object Owner gets FULL_CONTROL, Bucket Owner gets READ.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>bucketOwnerFullControl</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_canned_a_c_l.html</Path>
+    <Anchor>a52576d55a1938e15747e3562195675fd</Anchor>
+    <Abstract>Object Owner gets FULL_CONTROL, Bucket Owner gets FULL_CONTROL.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>commonPrefixes</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_common_prefixes_unmarshaller.html</Path>
+    <Anchor>ad0cc12fd548c86696943030f05a6d782</Anchor>
+    <Abstract>The Common Prefixes represented by the XML.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initWithMultipartUpload:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_complete_multipart_upload_request.html</Path>
+    <Anchor>adb4ec3f30bc713e9f350f25632b07088</Anchor>
+    <Abstract>Initialize the instance with the bucket, key, and uploadId from an S3MultipartUpload instance...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>addPartWithPartNumber:withETag:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_complete_multipart_upload_request.html</Path>
+    <Anchor>ae7871b323be88c0fe516129d75eda60b</Anchor>
+    <Abstract>Add a part by part number and the ETag that was returned by uploadPart.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>requestBody</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_complete_multipart_upload_request.html</Path>
+    <Anchor>ad9a6f876ba7e2dc13609864f36df223f</Anchor>
+    <Abstract>Build the request body for the request.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>location</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_complete_multipart_upload_result.html</Path>
+    <Anchor>a001a3f3128aa65959b4d32696dc210d7</Anchor>
+    <Abstract>The URI that identifies the newly created object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>bucket</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_complete_multipart_upload_result.html</Path>
+    <Anchor>acfb59dfe41b0be0cb8edd8e9ab255677</Anchor>
+    <Abstract>The name of the bucket that contains the newly created object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>key</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_complete_multipart_upload_result.html</Path>
+    <Anchor>a14e7a99bd72ba4ff92cb228aba912e1b</Anchor>
+    <Abstract>The object key of the newly created object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>etag</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_complete_multipart_upload_result.html</Path>
+    <Anchor>ab2a05c317d96783e8eb44ba562e075ea</Anchor>
+    <Abstract>Entity tag that identifies the newly created object&amp;#39;s data.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initWithSourceKey:sourceBucket:destinationKey:destinationBucket:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_copy_object_request.html</Path>
+    <Anchor>a70bec29279a0dc2fa2f00f31f0438ff6</Anchor>
+    <Abstract>intializes the request with source and destination.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>sourceKey</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_copy_object_request.html</Path>
+    <Anchor>a0f5053115b5d5239b9906aa3d4e9260e</Anchor>
+    <Abstract>The name of the source object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>sourceBucket</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_copy_object_request.html</Path>
+    <Anchor>a0a5548a85e189f52f33f3ca1ffbede25</Anchor>
+    <Abstract>The bucket of the source object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>metadataDirective</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_copy_object_request.html</Path>
+    <Anchor>a52f88ab9ec6f43a9a1a98d345ea97461</Anchor>
+    <Abstract>Whether to copy or replace the metadata.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>ifMatch</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_copy_object_request.html</Path>
+    <Anchor>ab6c5ef56e77a2f0c73b7ce176ebf4bce</Anchor>
+    <Abstract>Copies the object if its entity tag (ETag) matches the specified tag.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>ifNoneMatch</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_copy_object_request.html</Path>
+    <Anchor>a7bf7df1c34d62fe08038423a2cd2bf95</Anchor>
+    <Abstract>Copies the object if its entity tag (ETag) is different than the specified ETag.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>ifModifiedSince</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_copy_object_request.html</Path>
+    <Anchor>ad76e22b42ff22f48aa22ab6ed13f6126</Anchor>
+    <Abstract>Copies the object if it has been modified since the specified time.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>ifUnmodifiedSince</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_copy_object_request.html</Path>
+    <Anchor>aece4754f5d88d086d8677b5cde8230c3</Anchor>
+    <Abstract>Copies the object if it hasn&amp;#39;t been modified since the specified time.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>lastModified</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_copy_object_result.html</Path>
+    <Anchor>a1852f7f34aa9ef6b5539323846305dbe</Anchor>
+    <Abstract>Gets and sets the lastModified property.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>etag</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_copy_object_result.html</Path>
+    <Anchor>a5663712ab57e7ec356b09ef4c099f073</Anchor>
+    <Abstract>Gets and sets the etag property.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initWithName:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_create_bucket_request.html</Path>
+    <Anchor>a96f85bd4c29280c1fdf5491b35f5b147</Anchor>
+    <Abstract>Initializes the request with a bucket name.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initWithName:andRegion:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_create_bucket_request.html</Path>
+    <Anchor>ab90d90c925d9cd3395e499a890377d27</Anchor>
+    <Abstract>Initializes the request with a bucket name and region.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>region</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_create_bucket_request.html</Path>
+    <Anchor>ac93d0b6e45dea2a01f5b7c2e6d07f26e</Anchor>
+    <Abstract>Region where the bucket should be created.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>createBucketConfiguration</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_create_bucket_request.html</Path>
+    <Anchor>a1ca7dbac4b65c0738b8f53550f18160d</Anchor>
+    <Abstract>The body of the request if there is a region specified.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>cannedACL</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_create_bucket_request.html</Path>
+    <Anchor>ab57438f78c787332ee8cfcf77b973b6c</Anchor>
+    <Abstract>The canned access control list to apply to the bucket.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>mfaAuth</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_delete_object_request.html</Path>
+    <Anchor>ac31ac0b808342030e94c733b6c45a9a0</Anchor>
+    <Abstract>The concatenation of the multi-factor authentication device&amp;#39;s serial number, a space...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>versionId</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_delete_version_request.html</Path>
+    <Anchor>a1510dd30d2b489b5f916e8ab4810665f</Anchor>
+    <Abstract>The version ID uniquely identifying which version of the object to delete.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>mfa</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_delete_version_request.html</Path>
+    <Anchor>a57cffde20bd1a6696ec21b2ff0310c3d</Anchor>
+    <Abstract>The optional Multi-Factor Authentication information to include with this request.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initWithStatusCode:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_error_response_handler.html</Path>
+    <Anchor>a51ba0bdd911267778c3924b6c59aa339</Anchor>
+    <Abstract>Initialize the object with the an HTTP status code.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>exception</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_error_response_handler.html</Path>
+    <Anchor>a3b2279c37c44be1ee18fa773567fee80</Anchor>
+    <Abstract>The exception represented by the XML.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>acl</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_a_c_l_response.html</Path>
+    <Anchor>a5a5ef3ed8f5dd36ece75ad47d3737bf6</Anchor>
+    <Abstract>Gets the access control list.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>policy</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_bucket_policy_response.html</Path>
+    <Anchor>a89e92dab58392b5add975d13667be95b</Anchor>
+    <Abstract>Gets the bucket policy.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>versioningConfiguration</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_bucket_versioning_configuration_response.html</Path>
+    <Anchor>a83647caff3e450c2934391fbed76bf81</Anchor>
+    <Abstract>The Bucket Versioning Configuration.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>setValue:forHTTPHeaderField:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_object_metadata_response.html</Path>
+    <Anchor>a73410cb633ce10f3ed59e3df3f73f992</Anchor>
+    <Abstract>Sets a value in the response for the given HTTP header.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>missingMeta</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_object_metadata_response.html</Path>
+    <Anchor>a2b9d280f9971af5a736e194a0b286179</Anchor>
+    <Abstract>How many metadata items were not returned in the response.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initWithKey:withBucket:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_object_request.html</Path>
+    <Anchor>a85fa0aba8b111e52668d7a0252424081</Anchor>
+    <Abstract>Initialize the request setting the key and bucketName properties.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>setRangeStart:rangeEnd:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_object_request.html</Path>
+    <Anchor>a6a32ee7d546fc5cd3689b410d9413364</Anchor>
+    <Abstract>sets the start and end of the range.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>getRange</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_object_request.html</Path>
+    <Anchor>af257695d034d3a8b3611928b689d8f65</Anchor>
+    <Abstract>returns the range in the form &amp;#39;bytes=start:end&amp;#39;</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>rangeStart</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_object_request.html</Path>
+    <Anchor>a73108e0d24bab72a02aa18abea3ab843</Anchor>
+    <Abstract>Specifies the starting index of the byte range to download.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>rangeEnd</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_object_request.html</Path>
+    <Anchor>a0fb937b8964d321e5e19a866dc56ee3b</Anchor>
+    <Abstract>Specifies the end index of the byte range to download.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>ifModifiedSince</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_object_request.html</Path>
+    <Anchor>a67d3a1f4b611b4ee7efa63eeda69c72c</Anchor>
+    <Abstract>Return the object only if it has been modified since the specified time, otherwise return a 304 (not ...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>ifUnmodifiedSince</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_object_request.html</Path>
+    <Anchor>a3513c787b6906028f974d24ffd0c44ca</Anchor>
+    <Abstract>Return the object only if it has not been modified since the specified time, otherwise return a 412 (...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>ifMatch</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_object_request.html</Path>
+    <Anchor>a49d41bd8481b0165f6a1e7be82320d0a</Anchor>
+    <Abstract>Return the object only if its entity tag (ETag) is the same as the one specified, otherwise return a ...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>ifNoneMatch</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_object_request.html</Path>
+    <Anchor>a285fc3cb3d55b5c5d656a5d9a7bb5eb7</Anchor>
+    <Abstract>Return the object only if its entity tag (ETag) is different from the one specified, otherwise return a 304 (not modified).</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>outputStream</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_object_request.html</Path>
+    <Anchor>acb37b2c416126e68a7d41b6ceb0d5d8f</Anchor>
+    <Abstract>Gets and Sets the output stream for the response data.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>responseHeaderOverrides</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_object_request.html</Path>
+    <Anchor>af99770b62f28da850a7cf99a26e36752</Anchor>
+    <Abstract>Specify one or more overrides to headers in the response to this request.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>getMetadataForKey:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_object_response.html</Path>
+    <Anchor>aab7d6e5fff58848070e619e24ebbcc11</Anchor>
+    <Abstract>Get the value for a user-defined metadata key.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>setOutputStream:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_object_response.html</Path>
+    <Anchor>a9b3de5aaa179c6bb1eb9caeb05609c59</Anchor>
+    <Abstract>Set the output stream for the response data.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>lastModified</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_object_response.html</Path>
+    <Anchor>a1fb8949c937931088bcac985cfb72bd8</Anchor>
+    <Abstract>The value of the Last-Modified header, indicating the date and time at which Amazon S3 last recorded ...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>contentType</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_object_response.html</Path>
+    <Anchor>a3e79dc0cd6655f54f9101888a33ae563</Anchor>
+    <Abstract>The Content-Type HTTP header, which indicates the type of content stored in the associated object...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>expires</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_pre_signed_u_r_l_request.html</Path>
+    <Anchor>a98018eeec039961a50704e1e3511be50</Anchor>
+    <Abstract>Gets and sets the expires property for this request.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>protocol</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_pre_signed_u_r_l_request.html</Path>
+    <Anchor>ae3fbc02a89512fcf7b358e5ee781a3f4</Anchor>
+    <Abstract>Gets and sets the protocol property for this request.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>httpVerb</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_pre_signed_u_r_l_request.html</Path>
+    <Anchor>ab7e22783fb3918bd2a5763728f87e827</Anchor>
+    <Abstract>Gets and sets the verb property.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>accessKey</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_pre_signed_u_r_l_request.html</Path>
+    <Anchor>a0873aa65aa4222e3a61f904c2f9eb76d</Anchor>
+    <Abstract>Sets the access key used in the pre signed URL.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>responseHeaderOverrides</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_get_pre_signed_u_r_l_request.html</Path>
+    <Anchor>a1e43422e69c35ca390ca13b2d2d976db</Anchor>
+    <Abstract>Specify one or more overrides to headers in the response to this request.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initWithGrantee:withPermission:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_grant.html</Path>
+    <Anchor>a6b37ebee0c54bc247721e193ce49162d</Anchor>
+    <Abstract>Initializes the object with the specified grantee and permission.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>toXml</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_grant.html</Path>
+    <Anchor>a316aa9119d14c3c3a39bcf15e672cb32</Anchor>
+    <Abstract>Returns the XML represenation of the grant.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>grantWithGrantee:withPermission:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_grant.html</Path>
+    <Anchor>a045f499aeee35cd413fcb8e543cc96e0</Anchor>
+    <Abstract>Returns an initialized instance with the specified grantee and permission.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>grantee</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_grant.html</Path>
+    <Anchor>aa1e1f7bebb4f934bcf95b8f98c6b8dd5</Anchor>
+    <Abstract>Gets and sets the grantee for the grant.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>permission</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_grant.html</Path>
+    <Anchor>a3efacf79b961ac53586d24c0f376b5fc</Anchor>
+    <Abstract>Gets and sets the permission for the grant.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>toXml</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_grantee.html</Path>
+    <Anchor>ad922463321f46be4e1e87de70f6f654f</Anchor>
+    <Abstract>Returns the XML representation of the grantee.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>granteeWithID:withDisplayName:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_grantee.html</Path>
+    <Anchor>ab45931ea443d08845ca217e6209da4c0</Anchor>
+    <Abstract>Returns an initialized S3Grantee object representing a CanonicalUser with the specified ID and displa...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>granteeWithURI:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_grantee.html</Path>
+    <Anchor>afcf0db5da2f5385b0a1be02228203655</Anchor>
+    <Abstract>Returns an initialized S3Grantee representing a group with the specified URI.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>granteeWithEmailAddress:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_grantee.html</Path>
+    <Anchor>ae45bc7770d55b7021ca2ac11c31a924e</Anchor>
+    <Abstract>Returns an initialized S3Grantee representing a user with the specified email address.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>allUsers</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_grantee.html</Path>
+    <Anchor>a6dddd79bb4d666b62a65dc87cbdd62a4</Anchor>
+    <Abstract>Represents the group of all users.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>authenticatedUsers</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_grantee.html</Path>
+    <Anchor>a4d155f54a0f97eb11f8f73df99a07aa7</Anchor>
+    <Abstract>Represents the group of authenticated users.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>URI</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_grantee.html</Path>
+    <Anchor>a233adecf0eec800994fd92970ef0d72f</Anchor>
+    <Abstract>Gets and sets the URI property for group grantees.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>emailAddress</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_grantee.html</Path>
+    <Anchor>a13aea33aa0f4829afe86c8d443fbcb8e</Anchor>
+    <Abstract>Gets and sets the emailAddress property for user grantees.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>cacheControl</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_initiate_multipart_upload_request.html</Path>
+    <Anchor>a73b1ce97a4a2ec9adc34724c9831b866</Anchor>
+    <Abstract>Can be used to specify caching behavior along the request/reply chain.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>contentDisposition</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_initiate_multipart_upload_request.html</Path>
+    <Anchor>aadcd0604d6e919053e173d2ae440bc46</Anchor>
+    <Abstract>Specifies presentational information for the object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>contentEncoding</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_initiate_multipart_upload_request.html</Path>
+    <Anchor>aa362ab3e7f4a5731d49bb25488837141</Anchor>
+    <Abstract>Specifies what content encodings have been applied to the object and thus what decoding mechanisms mu...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>expires</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_initiate_multipart_upload_request.html</Path>
+    <Anchor>a736f4defd7b582b5b55ff6c868dc2f3a</Anchor>
+    <Abstract>Number of milliseconds before expiration.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>multipartUpload</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_initiate_multipart_upload_response.html</Path>
+    <Anchor>ae83310e6489068a303716e1b97376c64</Anchor>
+    <Abstract>An object representing the multipart upload.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>objectListing</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_bucket_result_unmarshaller.html</Path>
+    <Anchor>a39a17ddd60eea96a9f14964d08b21053</Anchor>
+    <Abstract>The result object represented by the XML.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>listBucketsResult</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_buckets_response.html</Path>
+    <Anchor>ac11a4c0bb8abf82adfab2b00a6548b33</Anchor>
+    <Abstract>The result of the listBuckets operations.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>owner</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_buckets_result.html</Path>
+    <Anchor>ac2d9c117041a0917cf3be55578a908dd</Anchor>
+    <Abstract>The owner of the buckets.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>buckets</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_buckets_result.html</Path>
+    <Anchor>a5080a0ca59ac3411b60490ee03879992</Anchor>
+    <Abstract>The list of buckets.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>listBucketsResult</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_buckets_result_unmarshaller.html</Path>
+    <Anchor>a5a3e9f34e3ba4c725279bba128286325</Anchor>
+    <Abstract>The result object represented by the XML.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>delimiter</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_multipart_uploads_request.html</Path>
+    <Anchor>a1d5f6a9d3574e2cc9042f309b092b99a</Anchor>
+    <Abstract>Gets and sets the delimiter property.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>keyMarker</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_multipart_uploads_request.html</Path>
+    <Anchor>a5921656ae381683fc12c6dd313036042</Anchor>
+    <Abstract>Gets and sets the keyMarker property.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>prefix</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_multipart_uploads_request.html</Path>
+    <Anchor>ae74fafd36ccf9e505f6276944a169416</Anchor>
+    <Abstract>Gets and sets the Prefix property.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>uploadIdMarker</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_multipart_uploads_request.html</Path>
+    <Anchor>a0e4c65290bd053254e9288c058e15f96</Anchor>
+    <Abstract>Gets and sets the uploadIdMarker property.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>maxUploads</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_multipart_uploads_request.html</Path>
+    <Anchor>a63c93b51ac5aa33db8b91439221d02d6</Anchor>
+    <Abstract>Gets and sets the maximum number of multipart uploads to return in the response.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>bucket</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_multipart_uploads_result.html</Path>
+    <Anchor>a3bcd186a293d0dd998edf2addc2c14f6</Anchor>
+    <Abstract>The name of the bucket to list uploads.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>keyMarker</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_multipart_uploads_result.html</Path>
+    <Anchor>af2db5edab2f9461a4e97a843c7c47af5</Anchor>
+    <Abstract>The key at or after which the listing began.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>uploadIdMarker</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_multipart_uploads_result.html</Path>
+    <Anchor>a98c5a5c8efcf4a75e00a05888be77b9a</Anchor>
+    <Abstract>Upload ID after which listing began.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>nextKeyMarker</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_multipart_uploads_result.html</Path>
+    <Anchor>a8dddc88a67a508d4bbe4add41925e05a</Anchor>
+    <Abstract>Specifies the value that should be used for the key-marker request parameter in a subsequent request...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>nextUploadIdMarker</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_multipart_uploads_result.html</Path>
+    <Anchor>a0237fed03d7d0c03b602576e9837f8f9</Anchor>
+    <Abstract>Specifies the value that should be used for the upload-id-marker request parameter in a subsequent re...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>delimiter</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_multipart_uploads_result.html</Path>
+    <Anchor>a6cbc48117b3da61e284fe86d6a32ae66</Anchor>
+    <Abstract>Contains the delimiter that was specified in the request.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>prefix</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_multipart_uploads_result.html</Path>
+    <Anchor>a810a1c4bba91bcf470ec074048df8a9e</Anchor>
+    <Abstract>Contains the prefix that was specified in the request.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>commonPrefixes</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_multipart_uploads_result.html</Path>
+    <Anchor>a6552107ce3edde9df55a95445bb777d6</Anchor>
+    <Abstract>If you specify a delimiter in the request, then the result returns each distinct key prefix containin...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>uploads</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_multipart_uploads_result.html</Path>
+    <Anchor>a2fd01bbcc21d02e4b8fa1318ce97ebb6</Anchor>
+    <Abstract>The list of S3MultipartUPload instance returned in the response.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>maxUploads</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_multipart_uploads_result.html</Path>
+    <Anchor>a81554ef376238eb8fcb7909d5d7cfb6f</Anchor>
+    <Abstract>The maxUploads that was specified in the request.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>isTruncated</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_multipart_uploads_result.html</Path>
+    <Anchor>a6c776de2b4bdeea791d5c9f03d114b29</Anchor>
+    <Abstract>Indicates whether the returned list of multipart uploads is truncated.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>prefix</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_objects_request.html</Path>
+    <Anchor>a463e832ae0bbca77306ea7169b8c7158</Anchor>
+    <Abstract>Limits the response to keys that begin with the specified prefix.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>marker</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_objects_request.html</Path>
+    <Anchor>ae7c07ffb50f0a90e7d8fa4a81e0b1503</Anchor>
+    <Abstract>Specifies the key to start with when listing objects in a bucket.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>delimiter</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_objects_request.html</Path>
+    <Anchor>a3ec86797ef6774d083139f30679d533e</Anchor>
+    <Abstract>A delimiter is a character you use to group keys.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>maxKeys</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_objects_request.html</Path>
+    <Anchor>adfd1ab0e11489edb3f06ce4dfa4b7ba0</Anchor>
+    <Abstract>Sets the maximum number of keys returned in the response body.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>listObjectsResult</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_objects_response.html</Path>
+    <Anchor>a7c7ad7150c03142b91ef959a3e8d7f58</Anchor>
+    <Abstract>The result object which contains the response elements from the request.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>objectSummaries</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_objects_result.html</Path>
+    <Anchor>a8e43edcb99f2af211dd72e0716b34820</Anchor>
+    <Abstract>The list of buckets.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>bucketName</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_objects_result.html</Path>
+    <Anchor>a4625855be4a5f469a480e6daafd0a14a</Anchor>
+    <Abstract>The bucket name.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>prefix</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_objects_result.html</Path>
+    <Anchor>a369243a1e9f1b3e203146a28ac749927</Anchor>
+    <Abstract>The prefix parameter originally specified by the caller.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>marker</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_objects_result.html</Path>
+    <Anchor>a301e56d853c3c153695c67e9b4204bac</Anchor>
+    <Abstract>The marker parameter originally specified by the caller.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>maxKeys</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_objects_result.html</Path>
+    <Anchor>ac4286e382b0befe1afa249d9b5358a18</Anchor>
+    <Abstract>The maxKeys parameter originally specified by the caller.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>delimiter</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_objects_result.html</Path>
+    <Anchor>a836882bf52cdbd95b4a13d7cd146fbac</Anchor>
+    <Abstract>The delimiter parameter originally specified by the caller.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>isTruncated</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_objects_result.html</Path>
+    <Anchor>af94211868ddb9f8d95413c0fcfbb11a2</Anchor>
+    <Abstract>Indicates if this is a complete listing or if caller needs to make additional requests.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>commonPrefixes</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_objects_result.html</Path>
+    <Anchor>a5be6aac2e097039e960508fecec8e847</Anchor>
+    <Abstract>A list of common prefixes.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initWithMultipartUpload:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_parts_request.html</Path>
+    <Anchor>aaf2d2f6dc1bef27b237c80a173b9e8e9</Anchor>
+    <Abstract>Initializes the instance with the bucket, key, and uploadId from an S3MultipartUpload instance return...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>uploadId</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_parts_request.html</Path>
+    <Anchor>abaf81963f0f32e28158d4f416fec805a</Anchor>
+    <Abstract>The uploadId of the multipart upload to list.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>maxParts</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_parts_request.html</Path>
+    <Anchor>a0d72b75be240eb2fac01a639cbf68897</Anchor>
+    <Abstract>The maximum number of parts to return.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>partNumberMarker</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_parts_request.html</Path>
+    <Anchor>adad327d09c013074cf3cb6952f396a97</Anchor>
+    <Abstract>The part after which to start the listing.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>bucket</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_parts_result.html</Path>
+    <Anchor>ac4f7ad265769fde4c56920e82628c42c</Anchor>
+    <Abstract>The name of the bucket to which the multipart upload was initiated.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>key</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_parts_result.html</Path>
+    <Anchor>aa87d5d9748b96f172e34ac398cda3089</Anchor>
+    <Abstract>Tthe object key for which the multipart upload was initiated.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>uploadId</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_parts_result.html</Path>
+    <Anchor>a402762ba9e0fcd2a91abd01e54bb9244</Anchor>
+    <Abstract>The upload ID identifying the multipart upload whose parts are being listed.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>storageClass</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_parts_result.html</Path>
+    <Anchor>a1a0980581567ff724aee1e6a0f4f7d93</Anchor>
+    <Abstract>The class of storage used to store the uploaded object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>owner</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_parts_result.html</Path>
+    <Anchor>a2a974985ea3d647b1c02178923908fb5</Anchor>
+    <Abstract>The owner of the object that will be created from the parts.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initiator</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_parts_result.html</Path>
+    <Anchor>a4e2387886e3ab9c389363fed15811d8f</Anchor>
+    <Abstract>The initiator of the multipart upload.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>partNumberMarker</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_parts_result.html</Path>
+    <Anchor>a31ecbd2def8b0e877ca42f4d0c1eac68</Anchor>
+    <Abstract>The part number after which listing begins.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>nextPartNumberMarker</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_parts_result.html</Path>
+    <Anchor>ab5e208bb5ba89da43ad569fd43284c8b</Anchor>
+    <Abstract>When a list is truncated, specifies the last part that should be skipped over to resume listing...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>maxParts</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_parts_result.html</Path>
+    <Anchor>a8fc9fee3ff3aa791933a3a9edcebc356</Anchor>
+    <Abstract>The maxParts which was supplied in the request.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>isTruncated</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_parts_result.html</Path>
+    <Anchor>ae90e94586506512b7f20867b7b6d3e38</Anchor>
+    <Abstract>Indicates whether the returned list of parts is truncated.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>parts</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_parts_result.html</Path>
+    <Anchor>acc185007e3b9c2dbc5191549db9a6193</Anchor>
+    <Abstract>The list of S3Part objects representing the parts.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>prefix</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_versions_request.html</Path>
+    <Anchor>a1d2f87d0302faedf11d7dd2eae971e06</Anchor>
+    <Abstract>Optional parameter restricting the response to keys which begin with the specified prefix...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>keyMarker</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_versions_request.html</Path>
+    <Anchor>a48d9bc00ad1ded33471616958d3a2953</Anchor>
+    <Abstract>Optional parameter indicating where in the sorted list of all versions in the specified bucket to beg...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>versionIdMarker</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_versions_request.html</Path>
+    <Anchor>a5802202da804190b26b6a52fc0f1cdee</Anchor>
+    <Abstract>Optional parameter indicating where in the sorted list of all versions in the specified bucket to beg...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>delimiter</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_versions_request.html</Path>
+    <Anchor>ae8b02d61d8a5419bf53a3d08704cbc72</Anchor>
+    <Abstract>Optional parameter that causes keys that contain the same string between the prefix and the first occ...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>maxKeys</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_versions_request.html</Path>
+    <Anchor>a1bb77d518a1874d0ce06a88a1258f5bb</Anchor>
+    <Abstract>Optional parameter indicating the maximum number of results to include in the response.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>versionSummaries</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_versions_result.html</Path>
+    <Anchor>af04c0e221c870f8364fca18f63e00e3a</Anchor>
+    <Abstract>A list of summary information describing the versions stored in the bucket.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>name</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_versions_result.html</Path>
+    <Anchor>a754cf441689a1b3f80fdd88a1a0a2627</Anchor>
+    <Abstract>The name of the Amazon S3 bucket containing the listed versions.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>prefix</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_versions_result.html</Path>
+    <Anchor>a95c0292c0e92891b6505d97988df7acc</Anchor>
+    <Abstract>The prefix parameter originally specified by the caller.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>keyMarker</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_versions_result.html</Path>
+    <Anchor>ad319dbfee88821f9796b09a0b73ada93</Anchor>
+    <Abstract>The key marker parameter originally specified by the caller.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>nextKeyMarker</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_versions_result.html</Path>
+    <Anchor>ab2a829211b49f482a730bc5098922e48</Anchor>
+    <Abstract>When the number of responses exceeds the value of MaxKeys, NextKeyMarker specifies the first key not ...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>versionIdMarker</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_versions_result.html</Path>
+    <Anchor>a9719f065a26a6b99ba3cfdd393dcdaf1</Anchor>
+    <Abstract>The version id marker parameter originally specified by the caller.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>nextVersionIdMarker</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_versions_result.html</Path>
+    <Anchor>a4f2708be8a814400fb798b9d047c52dc</Anchor>
+    <Abstract>When the number of responses exceeds the value of MaxKeys, NextVersionIdMarker specifies the first ob...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>maxKeys</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_versions_result.html</Path>
+    <Anchor>aacb7f3c2599f0ef3ffe567ebcc40f856</Anchor>
+    <Abstract>The maxKeys parameter originally specified by the caller.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>delimiter</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_versions_result.html</Path>
+    <Anchor>a8a51d09272a179806047db24afe389be</Anchor>
+    <Abstract>The delimiter parameter originally specified by the caller.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>isTruncated</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_versions_result.html</Path>
+    <Anchor>a4b194c60d258381a9e7ea8141fb89ea7</Anchor>
+    <Abstract>Indicates if this is a complete listing or if caller needs to make additional requests.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>commonPrefixes</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_versions_result.html</Path>
+    <Anchor>a433b3bf56b0b1c79acfff262e94ca089</Anchor>
+    <Abstract>A list of common prefixes.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>listVersionsResult</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_list_versions_result_unmarshaller.html</Path>
+    <Anchor>a98b989b818f0ae868aaa9a5e1d9b2063</Anchor>
+    <Abstract>The S3ListVersionsResult represented by the XML.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initWithSerialNumber:andToken:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_multi_factor_authentication.html</Path>
+    <Anchor>a015937ed7f66fa8a922f9467d77b33e2</Anchor>
+    <Abstract>Initialize the object with the device serial number and token.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>deviceSerialNumber</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_multi_factor_authentication.html</Path>
+    <Anchor>a49c2587d1f707fc363bc4b2df95fe6c7</Anchor>
+    <Abstract>The serial number of the Multi-Factor Authentication device associated with your AWS account...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>token</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_multi_factor_authentication.html</Path>
+    <Anchor>a842755a8bf8efd895a4459e8506ddad3</Anchor>
+    <Abstract>The current, unique Multi-Factor Authentication (MFA) token generated by the MFA device associated wi...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>key</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_multipart_upload.html</Path>
+    <Anchor>a3047da7f5884f1a6707346fe44d4c160</Anchor>
+    <Abstract>Object key for which the multipart upload was initiated.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>bucket</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_multipart_upload.html</Path>
+    <Anchor>ac6c3d7fef643cb51858a470eab09888f</Anchor>
+    <Abstract>Name of the bucket to which the multipart upload was initiated.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>uploadId</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_multipart_upload.html</Path>
+    <Anchor>af732847a7ddc52c5f84de6e9590b14f0</Anchor>
+    <Abstract>ID for the initiated multipart upload.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>storageClass</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_multipart_upload.html</Path>
+    <Anchor>ac2bd04de5b6b063da52803bd9f0f4a31</Anchor>
+    <Abstract>The class of storage (STANDARD or REDUCED_REDUDANCY) that will be used to store the object when the m...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initiator</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_multipart_upload.html</Path>
+    <Anchor>a1ab0b49f5eb1072f6af5cface9efc0ba</Anchor>
+    <Abstract>Who initiated the multipart upload.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>owner</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_multipart_upload.html</Path>
+    <Anchor>a93f94b2e1eed9f60855bb54bdceb1958</Anchor>
+    <Abstract>Container element that identifies the object owner, after the object is created.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initiated</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_multipart_upload.html</Path>
+    <Anchor>a5d00e5afcf40825f42fde687f7acfef9</Anchor>
+    <Abstract>Date and time at which the multipart upload was initiated.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>description</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_object_summary.html</Path>
+    <Anchor>a7ea1b691c33fdd95d1b01ca336a92230</Anchor>
+    <Abstract>The string representation of the S3ObjectSummary.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>key</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_object_summary.html</Path>
+    <Anchor>adee19972603feb279bb418c66df1eadc</Anchor>
+    <Abstract>The key of the Amazon S3 object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>etag</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_object_summary.html</Path>
+    <Anchor>af0c9156f04abe00ba2bcf1e98020ffa3</Anchor>
+    <Abstract>The ETag of the Amazon S3 object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>size</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_object_summary.html</Path>
+    <Anchor>a1a0ed6680e8fab48b541d35f7737e798</Anchor>
+    <Abstract>The size of the Amazon S3 object, in bytes.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>lastModified</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_object_summary.html</Path>
+    <Anchor>afb4d9b64561f7795bc1be9a3f5e2a132</Anchor>
+    <Abstract>The date this object was last modified.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>storageClass</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_object_summary.html</Path>
+    <Anchor>afd2ce91b306c0362e005fd8861b21fcd</Anchor>
+    <Abstract>The class of storage used by this object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>owner</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_object_summary.html</Path>
+    <Anchor>a245abeea1b514e2235a495485b211dd7</Anchor>
+    <Abstract>The owner of this object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>ID</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_owner.html</Path>
+    <Anchor>a140712146b00a1af41f795ba68b8564c</Anchor>
+    <Abstract>Gets and sets the owner ID.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>displayName</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_owner.html</Path>
+    <Anchor>ac9253d5b618dcc7700243437ad06f5ef</Anchor>
+    <Abstract>Gets and sets the owner display name.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>owner</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_owner_unmarshaller.html</Path>
+    <Anchor>a8a089707c6f6105631aa208aa9441a17</Anchor>
+    <Abstract>The S3Owner represented by the XML.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>etag</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_part.html</Path>
+    <Anchor>aa2dc8339f1230ab14329a401179c2676</Anchor>
+    <Abstract>The entity tag returned when the part was uploaded.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>lastModified</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_part.html</Path>
+    <Anchor>acfb13db6530731e6d360a16182ae86f3</Anchor>
+    <Abstract>The date and time at which the part was uploaded.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>partNumber</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_part.html</Path>
+    <Anchor>a51e7ea5a5964f6bf93cff5ce207fc6cf</Anchor>
+    <Abstract>The unique part number identifying the part.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>size</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_part.html</Path>
+    <Anchor>a62fb8e46bd97de56da82424f529bc253</Anchor>
+    <Abstract>The size of the uploaded part data.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>readPermission</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_permission.html</Path>
+    <Anchor>ab64bec562aae2a177dc273f0012a5a66</Anchor>
+    <Abstract>Read Permission.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>writePermission</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_permission.html</Path>
+    <Anchor>ae3b4c5620bbb039d19c1eb16978161b4</Anchor>
+    <Abstract>Write permission.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>fullControlPermission</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_permission.html</Path>
+    <Anchor>abdc2106ebabbf9cb19e8bb5ec8176374</Anchor>
+    <Abstract>The union of the other permissions.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>readAcpPermission</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_permission.html</Path>
+    <Anchor>a8a7e1479584b44ae19ec4389654e0ad6</Anchor>
+    <Abstract>Grants permission to read the ACL for the applicable bucket or object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>writeAcpPermission</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_permission.html</Path>
+    <Anchor>a9f7195fef056c5b673682b74a20cac69</Anchor>
+    <Abstract>Gives permission to overwrite the Access Control Policy for the applicable bucket or object...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>permissionWithString:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_permission.html</Path>
+    <Anchor>a35620f871a192196f6d94f5bec51eb3b</Anchor>
+    <Abstract>Get the permission by the string supplied.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initWithKey:inBucket:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_put_object_request.html</Path>
+    <Anchor>ae04c09ce34408c893a716d4eb91d8933</Anchor>
+    <Abstract>Initializes the request with the key and bucket name.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>cacheControl</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_put_object_request.html</Path>
+    <Anchor>a77e8593f0f16adfb3fa24ea371942bf0</Anchor>
+    <Abstract>Can be used to specify caching behavior along the request/reply chain.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>contentDisposition</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_put_object_request.html</Path>
+    <Anchor>a8166c4ad8010b55e7f07a19043418048</Anchor>
+    <Abstract>Specifies presentational information for the object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>contentEncoding</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_put_object_request.html</Path>
+    <Anchor>abe6e7363ca6e93825c860ea11b168a43</Anchor>
+    <Abstract>Specifies what content encodings have been applied to the object and thus what decoding mechanisms mu...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>contentMD5</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_put_object_request.html</Path>
+    <Anchor>aa62efbc35c6c17cfc078325a907e0faf</Anchor>
+    <Abstract>The base64 encoded 128-bit MD5 digest of the message (without the headers) according to RFC 1864...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>generateMD5</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_put_object_request.html</Path>
+    <Anchor>ab5cd0f4058e41a6139764489ed622c77</Anchor>
+    <Abstract>If this property is set and the contentMD5 property is nil, the MD5 will be calculated as part of the...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>expect</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_put_object_request.html</Path>
+    <Anchor>ac6783f665ffec51311b4faa10bfdc111</Anchor>
+    <Abstract>When your application uses 100-continue, it does not send the request body until it receives an ackno...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>data</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_put_object_request.html</Path>
+    <Anchor>a16ee47b2e61913c6d546ab3f6d2136b5</Anchor>
+    <Abstract>The that represents the object to be uploaded.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>stream</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_put_object_request.html</Path>
+    <Anchor>a505c8572bcdcb0d87b58b2dd555036a0</Anchor>
+    <Abstract>The stream from which to read the object to be uploaded.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>expires</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_put_object_request.html</Path>
+    <Anchor>a12bf15cf4937e943798bfd0cd384ddb0</Anchor>
+    <Abstract>Number of milliseconds before expiration.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>filename</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_put_object_request.html</Path>
+    <Anchor>a7a288407a41fee0591ad7006d254ba02</Anchor>
+    <Abstract>Path of file in the filesystem to be uploaded.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initWithStringValue:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_region.html</Path>
+    <Anchor>a662d8e8f512c973fc95d90fe7661b647</Anchor>
+    <Abstract>Returns an S3Region initialized with the supplied string value.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>USStandard</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_region.html</Path>
+    <Anchor>aa1db2586959e83ce852906a7345aa2d3</Anchor>
+    <Abstract>The US Standard Amazon S3 Region.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>USWest</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_region.html</Path>
+    <Anchor>aed96d82f2d0459e80f43fc3be640a2b4</Anchor>
+    <Abstract>The US-West (Northern California) Amazon S3 Region.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>EUIreland</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_region.html</Path>
+    <Anchor>a8cc7c1e4adc20b75b5e9f534c4b48731</Anchor>
+    <Abstract>The EU (Ireland) Amazon S3 Region.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>APSingapore</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_region.html</Path>
+    <Anchor>aaffac12e76f1b6e448b0b997e2980901</Anchor>
+    <Abstract>The Asia Pacific (Singapore) Region.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>APJapan</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_region.html</Path>
+    <Anchor>affa24470b07e19455ada23c4fa5954e9</Anchor>
+    <Abstract>The Asia Pacific (Japan) Region.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>regionWithString:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>clm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_region.html</Path>
+    <Anchor>a8b03d29dd765b8c1f45aece25d494262</Anchor>
+    <Abstract>Convert a string describing an Amazon S3 region to the corresponding S3Region.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>configureURLRequest</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_request.html</Path>
+    <Anchor>a739f295f553299c8ee9ee2db6f71fbf2</Anchor>
+    <Abstract>Add appropriate headers to the URL Request object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>timestamp</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_request.html</Path>
+    <Anchor>a456e522c2eb0bb4f8bd9bed791c4b7e6</Anchor>
+    <Abstract>The current date and time in a format which can be supplied in Amazon S3 requests.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>protocol</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_request.html</Path>
+    <Anchor>ad0f7ace57d3993bcd3afbc5f6a80831d</Anchor>
+    <Abstract>Returns the protocol portion of the endpoint, either &amp;#39;http&amp;#39; or &amp;#39;https&amp;#39;.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>endpointHost</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_request.html</Path>
+    <Anchor>a61885783312dc175ef1cc01d3b8c28f7</Anchor>
+    <Abstract>Returns the host portion of the endpoint.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>authorization</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_request.html</Path>
+    <Anchor>ade9ba3a1c63e81b9221d5b6360de23a1</Anchor>
+    <Abstract>The information required for request authentication.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>contentLength</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_request.html</Path>
+    <Anchor>aaafc404e80dc4b370808847f114a0d53</Anchor>
+    <Abstract>Length of the message (without the headers) according to RFC 2616.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>contentType</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_request.html</Path>
+    <Anchor>ae10b11aab9bb2e126342f86ea576fdac</Anchor>
+    <Abstract>The content type of the resource.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>date</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_request.html</Path>
+    <Anchor>a3e92f4f2a7e83390e027b3cd8d5e4a7a</Anchor>
+    <Abstract>The current date and time according to the requester.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>host</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_request.html</Path>
+    <Anchor>abe00d67e2d8c601c5946ea02a32e4137</Anchor>
+    <Abstract>For path-style requests, the value is s3.amazonaws.com.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>securityToken</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_request.html</Path>
+    <Anchor>a8c348e62bc7b401de90dc0f68e0cfc33</Anchor>
+    <Abstract>The security tokens for operations that use Amazon DevPay.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>bucket</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_request.html</Path>
+    <Anchor>a85c261760a6909155e90b15f43d4b229</Anchor>
+    <Abstract>The name of the bucket.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>key</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_request.html</Path>
+    <Anchor>a72915ab552743d94b8a844683ee98084</Anchor>
+    <Abstract>The name of the S3 object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>subResource</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_request.html</Path>
+    <Anchor>ab6004f9585ba450c874fcf2310189db7</Anchor>
+    <Abstract>The sub-resource (i.e.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>url</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_request.html</Path>
+    <Anchor>abffa2ba2bb6ee366deb39ceefda1eac6</Anchor>
+    <Abstract>The URL for the resource.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>setValue:forHTTPHeaderField:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_response.html</Path>
+    <Anchor>acdef5799493fbef2d560291ccc302d6b</Anchor>
+    <Abstract>Sets the value in the response corresponding to the HTTP header.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>valueForHTTPHeaderField:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_response.html</Path>
+    <Anchor>a70d0713655cc1a6b3ede787d3308e099</Anchor>
+    <Abstract>Gets the value in the response corresponding to the HTTP header.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>parseDateHeader:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_response.html</Path>
+    <Anchor>a059bb12a318b2144d7bb2e182722b865</Anchor>
+    <Abstract>Parses a date from an S3 response.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>getTypeOfPropertyNamed:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_response.html</Path>
+    <Anchor>a63dbdd1c2e162685b9d5887b97a4b90b</Anchor>
+    <Abstract>Determines the type of a property in a response.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>connectionState</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_response.html</Path>
+    <Anchor>a0b3b626085ef83755ec89fb2c55d1bf3</Anchor>
+    <Abstract>Specfies whether the connection to the server is open or closed.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>etag</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_response.html</Path>
+    <Anchor>aaa6f50b33f89167a8485a058e59226ec</Anchor>
+    <Abstract>The entity tag is an MD5 hash of the object that you can use to do conditional GET operations using t...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>server</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_response.html</Path>
+    <Anchor>a312ef37541c76ed22818b5e1fab9ce31</Anchor>
+    <Abstract>The name of the server that created the response.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>id2</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_response.html</Path>
+    <Anchor>a7eb03f83678eac2b57b483f33b6fdc2b</Anchor>
+    <Abstract>A special token that helps AWS troubleshoot problems.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>versionId</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_response.html</Path>
+    <Anchor>a8ada76cea52a692d07be2921e12e75bf</Anchor>
+    <Abstract>The version of the object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>date</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_response.html</Path>
+    <Anchor>a6317f17afb24527d50b7c8ef8eceaf05</Anchor>
+    <Abstract>The date and time Amazon S3 responded.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>deleteMarker</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_response.html</Path>
+    <Anchor>a388015eafbb42754ed6f4e48366a0064</Anchor>
+    <Abstract>Specifies whether the object returned was (true) or was not (false) a Delete Marker.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>contentLength</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_response.html</Path>
+    <Anchor>ab452dcdaf49927c4037fd479e9cc8bd9</Anchor>
+    <Abstract>The length in bytes of the body in the response.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>contentType</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_response_header_overrides.html</Path>
+    <Anchor>a5ce4e251b3f7e4600df88137abe120a7</Anchor>
+    <Abstract>The Content-Type header to be included on the response.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>contentLanguage</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_response_header_overrides.html</Path>
+    <Anchor>a244fd51eee323da26daefe36dc10fb60</Anchor>
+    <Abstract>The Content-Language header to be included on the response.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>expires</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_response_header_overrides.html</Path>
+    <Anchor>a73c69348a1395727a09bdcbac99d45df</Anchor>
+    <Abstract>The Expires header to be included on the response.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>cacheControl</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_response_header_overrides.html</Path>
+    <Anchor>a405cf4d4b93116cae5514890dbfe3078</Anchor>
+    <Abstract>The Cache-Control header to be included on the response.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>contentDisposition</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_response_header_overrides.html</Path>
+    <Anchor>a5f2f39d0f339d729790d565b0796e939</Anchor>
+    <Abstract>The Content-Disposition header to be included on the response.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>contentEncoding</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_response_header_overrides.html</Path>
+    <Anchor>a10ef54ef21fbd6e9265366329feced1f</Anchor>
+    <Abstract>The Content-Encoding header to be included on the response.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>queryString</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_response_header_overrides.html</Path>
+    <Anchor>a3f6333e7845bcb8175d71c1e3674b1e3</Anchor>
+    <Abstract>The partial querystring for the request.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>acl</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_set_a_c_l_request.html</Path>
+    <Anchor>ad13f44ac850266f9775353ab617a1274</Anchor>
+    <Abstract>Gets and sets the access control list (ACL) to set on the bucket or object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>policy</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_set_bucket_policy_request.html</Path>
+    <Anchor>a4834802df766b34ed4c99c873d12aa96</Anchor>
+    <Abstract>The bucket policy.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initWithMultipartUpload:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_upload_part_request.html</Path>
+    <Anchor>a29e466cbc43a9b1f638d43a0656340fb</Anchor>
+    <Abstract>Initializes the instance with the bucket, key, and uploadId from an S3MultipartUpload instance return...</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>partNumber</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_upload_part_request.html</Path>
+    <Anchor>a2a0232934edf512abbb3b6e0dd27a50b</Anchor>
+    <Abstract>Identifies which part this is.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>contentMD5</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_upload_part_request.html</Path>
+    <Anchor>ac1006c0f830ccd7d16303387227fa26e</Anchor>
+    <Abstract>The base64-encoded 128-bit MD5 digest of the part data.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>uploadId</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_upload_part_request.html</Path>
+    <Anchor>aa29fd6c6a8e3d9f9ed31da86ec85ca08</Anchor>
+    <Abstract>The uploadId of the multipart upload that this part is for.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>data</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_upload_part_request.html</Path>
+    <Anchor>a105920239e82678e8e6eee6a5be95294</Anchor>
+    <Abstract>The data for the part.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>description</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_version_summary.html</Path>
+    <Anchor>a12caaca90822af89485d9cd08b18bb37</Anchor>
+    <Abstract>The string representation of the S3VersionSummary.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>versionId</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_version_summary.html</Path>
+    <Anchor>acd86dc2256741f43ed18219529c1051d</Anchor>
+    <Abstract>The version ID uniquely identifying this version of an object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>isLatest</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_version_summary.html</Path>
+    <Anchor>a25f052320e0e20c71f7153aa891d82aa</Anchor>
+    <Abstract>True if this is the latest version of the associated object.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>isDeleteMarker</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_version_summary.html</Path>
+    <Anchor>a697d136ad6dbf0c2afcebf9dcf199795</Anchor>
+    <Abstract>True if this object is a delete marker.</Abstract>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>summary</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instp</Type>
+    </TokenIdentifier>
+    <Path>interface_s3_version_summary_unmarshaller.html</Path>
+    <Anchor>a2473a8f6b09b9de7189a620f53279d36</Anchor>
+    <Abstract>The S3VersionSummary represented by the XML.</Abstract>
+  </Token>
+</Tokens>

@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "EditorView.h"
 #import "EditorDocument.h"
+#import "PrototypeView.h"
 
 @interface ViewController()
 -(NSString *)retrieveUuidOfFirstEditorDocument;
@@ -76,7 +77,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -87,8 +88,21 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    
-    cell.textLabel.text = @"Editor";
+    switch (indexPath.row) 
+    {
+        case 0:
+        {
+            cell.textLabel.text = @"Editor";
+        }
+            break;
+        case 1:
+        {
+            cell.textLabel.text = @"Prototype";
+        }
+            break;
+        default:
+            break;
+    }
     
     return cell;
 }
@@ -123,6 +137,20 @@
             [self.navigationController pushViewController:view animated:YES];
 
             break;
+        }
+        case 1:
+        {
+            PrototypeView *view;
+            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) 
+            {
+                //view = [[PrototypeView alloc] initWithNibName:@"PrototypeView_iPhone" bundle:nil]; 
+            } 
+            else 
+            {
+                view = [[PrototypeView alloc] initWithNibName:@"PrototypeView_iPad" bundle:nil]; 
+            }
+            [self.navigationController pushViewController:view animated:YES];
+
         }
         default:
             break;

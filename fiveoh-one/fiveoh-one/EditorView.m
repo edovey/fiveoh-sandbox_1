@@ -236,7 +236,7 @@
 {
     if(nil == self.editorDocument)
     {
-        self.editorDocument = [EditorDocument create];
+        self.editorDocument = [EditorDocument retrieveWithUUID:[EditorDocument create]];
     }
     self.editorDocument.modifiedDate = [NSDate date];
 

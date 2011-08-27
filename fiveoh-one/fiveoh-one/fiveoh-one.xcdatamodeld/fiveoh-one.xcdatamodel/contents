@@ -1,15 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="858" systemVersion="11A511" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="858" systemVersion="11B26" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Bd_editorDocument" representedClassName="Bd_editorDocument">
+        <attribute name="inUseBy" optional="YES" attributeType="String"/>
+        <attribute name="itemName" optional="YES" attributeType="String" indexed="YES"/>
+        <attribute name="modifiedDate" optional="YES" attributeType="Date" indexed="YES"/>
+    </entity>
     <entity name="EditorDocument" representedClassName="EditorDocument">
         <attribute name="createdBy" optional="YES" attributeType="String"/>
         <attribute name="createdDate" optional="YES" attributeType="Date"/>
+        <attribute name="deprecated" optional="YES" attributeType="Boolean" defaultValueString="NO"/>
         <attribute name="documentText" optional="YES" attributeType="String"/>
         <attribute name="inUseBy" optional="YES" attributeType="String"/>
-        <attribute name="lastModifiedBy" optional="YES" attributeType="String"/>
-        <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
+        <attribute name="modifiedBy" optional="YES" attributeType="String"/>
+        <attribute name="modifiedDate" optional="YES" attributeType="Date" indexed="YES"/>
+        <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="storageKey" optional="YES" attributeType="String"/>
         <attribute name="uuid" optional="YES" attributeType="String" indexed="YES"/>
     </entity>
+    <entity name="QueueEntry" representedClassName="QueueEntry">
+        <attribute name="action" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="objectEntityName" optional="YES" attributeType="String"/>
+        <attribute name="objectUuid" optional="YES" attributeType="String"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date"/>
+        <attribute name="uuid" optional="YES" attributeType="String"/>
+    </entity>
     <elements>
-        <element name="EditorDocument" positionX="160" positionY="192" width="128" height="150"/>
+        <element name="Bd_editorDocument" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="EditorDocument" positionX="160" positionY="192" width="128" height="195"/>
+        <element name="QueueEntry" positionX="160" positionY="192" width="128" height="120"/>
     </elements>
 </model>

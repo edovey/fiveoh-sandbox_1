@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		CB13493313FC48D000979662 /* TapDetectingWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CB13493213FC48D000979662 /* TapDetectingWindow.m */; };
+		CB166E4914045F6B009C760E /* AWSiOSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB165C5014044F79009C760E /* AWSiOSSDK.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		CB166E4C14046110009C760E /* RepositoryConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = CB166E4B14046110009C760E /* RepositoryConstants.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CB166E4F14053C16009C760E /* QueueEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = CB166E4E14053C16009C760E /* QueueEntry.m */; };
+		CB166E5214053C17009C760E /* Bd_editorDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = CB166E5114053C17009C760E /* Bd_editorDocument.m */; };
+		CB166E5614055C3D009C760E /* RepositoryHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = CB166E5514055C3D009C760E /* RepositoryHandler.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CB60127513FAABE5004FD84D /* sample.html in Resources */ = {isa = PBXBuildFile; fileRef = CB60127413FAABE5004FD84D /* sample.html */; };
 		CB69986F13FDB0B000F9AADD /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB69986E13FDB0B000F9AADD /* CoreData.framework */; };
 		CB69987313FDB4B000F9AADD /* EditorDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = CB69987213FDB4B000F9AADD /* EditorDocument.m */; };
@@ -25,11 +30,26 @@
 		CB9F723813F9E43400C8D6EF /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB9F723613F9E43400C8D6EF /* ViewController_iPad.xib */; };
 		CBA66DF313FDAC41005A27BE /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = CBA66DF213FDAC41005A27BE /* DataController.m */; };
 		CBA66DF613FDADCD005A27BE /* fiveoh-one.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBA66DF413FDADCD005A27BE /* fiveoh-one.xcdatamodeld */; };
+		CBB7C8651406A5C90026FC16 /* ProjectConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = CBB7C8641406A5C90026FC16 /* ProjectConstants.m */; };
+		CBB7C8691406B5D00026FC16 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = CBB7C8681406B5D00026FC16 /* Utility.m */; };
+		CBB7C8761406BC890026FC16 /* S3RequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CBB7C8731406BC890026FC16 /* S3RequestDelegate.m */; };
+		CBB7C8771406BC890026FC16 /* SdbRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CBB7C8751406BC890026FC16 /* SdbRequestDelegate.m */; };
+		CBB7C8821407DD5F0026FC16 /* PrototypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = CBB7C8801407DD5F0026FC16 /* PrototypeView.m */; };
+		CBB7C8831407DD5F0026FC16 /* PrototypeView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CBB7C8811407DD5F0026FC16 /* PrototypeView_iPad.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		CB13493113FC48D000979662 /* TapDetectingWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapDetectingWindow.h; sourceTree = "<group>"; };
 		CB13493213FC48D000979662 /* TapDetectingWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapDetectingWindow.m; sourceTree = "<group>"; };
+		CB165C5014044F79009C760E /* AWSiOSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSiOSSDK.framework; path = "../../aws-ios-sdk-0.2.3/AWSiOSSDK.framework"; sourceTree = "<group>"; };
+		CB166E4A14046110009C760E /* RepositoryConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepositoryConstants.h; sourceTree = "<group>"; };
+		CB166E4B14046110009C760E /* RepositoryConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepositoryConstants.m; sourceTree = "<group>"; };
+		CB166E4D14053C16009C760E /* QueueEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueEntry.h; sourceTree = "<group>"; };
+		CB166E4E14053C16009C760E /* QueueEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueueEntry.m; sourceTree = "<group>"; };
+		CB166E5014053C17009C760E /* Bd_editorDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bd_editorDocument.h; sourceTree = "<group>"; };
+		CB166E5114053C17009C760E /* Bd_editorDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bd_editorDocument.m; sourceTree = "<group>"; };
+		CB166E5414055C3D009C760E /* RepositoryHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepositoryHandler.h; sourceTree = "<group>"; };
+		CB166E5514055C3D009C760E /* RepositoryHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepositoryHandler.m; sourceTree = "<group>"; };
 		CB60127413FAABE5004FD84D /* sample.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = sample.html; sourceTree = "<group>"; };
 		CB69986E13FDB0B000F9AADD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		CB69987113FDB4B000F9AADD /* EditorDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorDocument.h; sourceTree = "<group>"; };
@@ -56,6 +76,17 @@
 		CBA66DF113FDAC41005A27BE /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataController.h; sourceTree = "<group>"; };
 		CBA66DF213FDAC41005A27BE /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataController.m; sourceTree = "<group>"; };
 		CBA66DF513FDADCD005A27BE /* fiveoh-one.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "fiveoh-one.xcdatamodel"; sourceTree = "<group>"; };
+		CBB7C8631406A5C90026FC16 /* ProjectConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectConstants.h; sourceTree = "<group>"; };
+		CBB7C8641406A5C90026FC16 /* ProjectConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectConstants.m; sourceTree = "<group>"; };
+		CBB7C8671406B5D00026FC16 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
+		CBB7C8681406B5D00026FC16 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
+		CBB7C8721406BC890026FC16 /* S3RequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = S3RequestDelegate.h; sourceTree = "<group>"; };
+		CBB7C8731406BC890026FC16 /* S3RequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = S3RequestDelegate.m; sourceTree = "<group>"; };
+		CBB7C8741406BC890026FC16 /* SdbRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SdbRequestDelegate.h; sourceTree = "<group>"; };
+		CBB7C8751406BC890026FC16 /* SdbRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SdbRequestDelegate.m; sourceTree = "<group>"; };
+		CBB7C87F1407DD5F0026FC16 /* PrototypeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrototypeView.h; sourceTree = "<group>"; };
+		CBB7C8801407DD5F0026FC16 /* PrototypeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrototypeView.m; sourceTree = "<group>"; };
+		CBB7C8811407DD5F0026FC16 /* PrototypeView_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrototypeView_iPad.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,12 +97,24 @@
 				CB69986F13FDB0B000F9AADD /* CoreData.framework in Frameworks */,
 				CB9F722113F9E43400C8D6EF /* UIKit.framework in Frameworks */,
 				CB9F722313F9E43400C8D6EF /* Foundation.framework in Frameworks */,
+				CB166E4914045F6B009C760E /* AWSiOSSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CB166E5314055BB4009C760E /* Remote Repository */ = {
+			isa = PBXGroup;
+			children = (
+				CB166E4A14046110009C760E /* RepositoryConstants.h */,
+				CB166E4B14046110009C760E /* RepositoryConstants.m */,
+				CB166E5414055C3D009C760E /* RepositoryHandler.h */,
+				CB166E5514055C3D009C760E /* RepositoryHandler.m */,
+			);
+			name = "Remote Repository";
+			sourceTree = "<group>";
+		};
 		CB98312F13FC8A1E00BC6EE1 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +128,10 @@
 				CBA66DF413FDADCD005A27BE /* fiveoh-one.xcdatamodeld */,
 				CBA66DF113FDAC41005A27BE /* DataController.h */,
 				CBA66DF213FDAC41005A27BE /* DataController.m */,
+				CB166E5014053C17009C760E /* Bd_editorDocument.h */,
+				CB166E5114053C17009C760E /* Bd_editorDocument.m */,
+				CB166E4D14053C16009C760E /* QueueEntry.h */,
+				CB166E4E14053C16009C760E /* QueueEntry.m */,
 				CB69987113FDB4B000F9AADD /* EditorDocument.h */,
 				CB69987213FDB4B000F9AADD /* EditorDocument.m */,
 			);
@@ -94,6 +141,7 @@
 		CB98313213FC8A4C00BC6EE1 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				CB166E5314055BB4009C760E /* Remote Repository */,
 				CB98313113FC8A3A00BC6EE1 /* Data Model */,
 				CB98313513FC8AF500BC6EE1 /* Other */,
 				CB98313313FC8A7B00BC6EE1 /* Views */,
@@ -108,6 +156,13 @@
 				CB98313713FC93C200BC6EE1 /* EditorView.m */,
 				CB98313813FC93C200BC6EE1 /* EditorView_iPad.xib */,
 				CB98313B13FC93F100BC6EE1 /* EditorView_iPhone.xib */,
+				CB9F723013F9E43400C8D6EF /* ViewController.h */,
+				CB9F723113F9E43400C8D6EF /* ViewController.m */,
+				CB9F723313F9E43400C8D6EF /* ViewController_iPhone.xib */,
+				CB9F723613F9E43400C8D6EF /* ViewController_iPad.xib */,
+				CBB7C87F1407DD5F0026FC16 /* PrototypeView.h */,
+				CBB7C8801407DD5F0026FC16 /* PrototypeView.m */,
+				CBB7C8811407DD5F0026FC16 /* PrototypeView_iPad.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -123,8 +178,12 @@
 		CB98313513FC8AF500BC6EE1 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				CBB7C8631406A5C90026FC16 /* ProjectConstants.h */,
+				CBB7C8641406A5C90026FC16 /* ProjectConstants.m */,
 				CB69987413FDB5D000F9AADD /* NSString+UUID.h */,
 				CB69987513FDB5D000F9AADD /* NSString+UUID.m */,
+				CBB7C8671406B5D00026FC16 /* Utility.h */,
+				CBB7C8681406B5D00026FC16 /* Utility.m */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -149,6 +208,7 @@
 		CB9F721F13F9E43400C8D6EF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CB165C5014044F79009C760E /* AWSiOSSDK.framework */,
 				CB69986E13FDB0B000F9AADD /* CoreData.framework */,
 				CB9F722013F9E43400C8D6EF /* UIKit.framework */,
 				CB9F722213F9E43400C8D6EF /* Foundation.framework */,
@@ -159,18 +219,14 @@
 		CB9F722413F9E43400C8D6EF /* fiveoh-one */ = {
 			isa = PBXGroup;
 			children = (
+				CBB7C86A1406BB6B0026FC16 /* Third Party */,
 				CB98313413FC8AAB00BC6EE1 /* Embedded Files */,
 				CB98313213FC8A4C00BC6EE1 /* Classes */,
 				CB98312F13FC8A1E00BC6EE1 /* Graphics */,
 				CB9F722D13F9E43400C8D6EF /* AppDelegate.h */,
 				CB9F722E13F9E43400C8D6EF /* AppDelegate.m */,
-				CB9F723013F9E43400C8D6EF /* ViewController.h */,
-				CB9F723113F9E43400C8D6EF /* ViewController.m */,
-				CB9F723313F9E43400C8D6EF /* ViewController_iPhone.xib */,
-				CB9F723613F9E43400C8D6EF /* ViewController_iPad.xib */,
-				CB13493113FC48D000979662 /* TapDetectingWindow.h */,
-				CB13493213FC48D000979662 /* TapDetectingWindow.m */,
 				CB9F722513F9E43400C8D6EF /* Supporting Files */,
+				CBB7C8791407DCBD0026FC16 /* PearlHarbor */,
 			);
 			path = "fiveoh-one";
 			sourceTree = "<group>";
@@ -184,6 +240,34 @@
 				CB9F722C13F9E43400C8D6EF /* fiveoh-one-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CBB7C86A1406BB6B0026FC16 /* Third Party */ = {
+			isa = PBXGroup;
+			children = (
+				CBB7C86B1406BB780026FC16 /* AWS */,
+			);
+			name = "Third Party";
+			sourceTree = "<group>";
+		};
+		CBB7C86B1406BB780026FC16 /* AWS */ = {
+			isa = PBXGroup;
+			children = (
+				CBB7C8721406BC890026FC16 /* S3RequestDelegate.h */,
+				CBB7C8731406BC890026FC16 /* S3RequestDelegate.m */,
+				CBB7C8741406BC890026FC16 /* SdbRequestDelegate.h */,
+				CBB7C8751406BC890026FC16 /* SdbRequestDelegate.m */,
+			);
+			name = AWS;
+			sourceTree = "<group>";
+		};
+		CBB7C8791407DCBD0026FC16 /* PearlHarbor */ = {
+			isa = PBXGroup;
+			children = (
+				CB13493113FC48D000979662 /* TapDetectingWindow.h */,
+				CB13493213FC48D000979662 /* TapDetectingWindow.m */,
+			);
+			name = PearlHarbor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -243,6 +327,7 @@
 				CB60127513FAABE5004FD84D /* sample.html in Resources */,
 				CB98313A13FC93C200BC6EE1 /* EditorView_iPad.xib in Resources */,
 				CB98313C13FC93F100BC6EE1 /* EditorView_iPhone.xib in Resources */,
+				CBB7C8831407DD5F0026FC16 /* PrototypeView_iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +347,15 @@
 				CBA66DF613FDADCD005A27BE /* fiveoh-one.xcdatamodeld in Sources */,
 				CB69987313FDB4B000F9AADD /* EditorDocument.m in Sources */,
 				CB69987613FDB5D000F9AADD /* NSString+UUID.m in Sources */,
+				CB166E4C14046110009C760E /* RepositoryConstants.m in Sources */,
+				CB166E4F14053C16009C760E /* QueueEntry.m in Sources */,
+				CB166E5214053C17009C760E /* Bd_editorDocument.m in Sources */,
+				CB166E5614055C3D009C760E /* RepositoryHandler.m in Sources */,
+				CBB7C8651406A5C90026FC16 /* ProjectConstants.m in Sources */,
+				CBB7C8691406B5D00026FC16 /* Utility.m in Sources */,
+				CBB7C8761406BC890026FC16 /* S3RequestDelegate.m in Sources */,
+				CBB7C8771406BC890026FC16 /* SdbRequestDelegate.m in Sources */,
+				CBB7C8821407DD5F0026FC16 /* PrototypeView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,6 +440,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Karl Schulze (PKD77ZK2K5)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../aws-ios-sdk-0.2.3\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "fiveoh-one/fiveoh-one-Prefix.pch";
 				INFOPLIST_FILE = "fiveoh-one/fiveoh-one-Info.plist";
@@ -361,6 +459,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Karl Schulze (PKD77ZK2K5)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../aws-ios-sdk-0.2.3\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "fiveoh-one/fiveoh-one-Prefix.pch";
 				INFOPLIST_FILE = "fiveoh-one/fiveoh-one-Info.plist";

@@ -193,6 +193,8 @@
         {
             EditorDocument *document = [EditorDocument retrieveWithUUID:queueEntry.objectUuid];
             
+            document.inUseBy = @"";
+            
             SimpleDBPutAttributesRequest *sdbPutRequest = [self sdbPutAttributeRequestWithEditorDocument:document];
             [[RepositoryConstants sdb] putAttributes:sdbPutRequest];
             

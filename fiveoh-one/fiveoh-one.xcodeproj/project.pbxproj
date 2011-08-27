@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CB13493313FC48D000979662 /* TapDetectingWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CB13493213FC48D000979662 /* TapDetectingWindow.m */; };
+		CB13A0CF14096FEA00BC0608 /* PrototypeView_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB13A0CE14096FEA00BC0608 /* PrototypeView_iPhone.xib */; };
 		CB166E4914045F6B009C760E /* AWSiOSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB165C5014044F79009C760E /* AWSiOSSDK.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		CB166E4C14046110009C760E /* RepositoryConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = CB166E4B14046110009C760E /* RepositoryConstants.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CB166E4F14053C16009C760E /* QueueEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = CB166E4E14053C16009C760E /* QueueEntry.m */; };
@@ -41,6 +42,7 @@
 /* Begin PBXFileReference section */
 		CB13493113FC48D000979662 /* TapDetectingWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapDetectingWindow.h; sourceTree = "<group>"; };
 		CB13493213FC48D000979662 /* TapDetectingWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapDetectingWindow.m; sourceTree = "<group>"; };
+		CB13A0CE14096FEA00BC0608 /* PrototypeView_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrototypeView_iPhone.xib; sourceTree = "<group>"; };
 		CB165C5014044F79009C760E /* AWSiOSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSiOSSDK.framework; path = "../../aws-ios-sdk-0.2.3/AWSiOSSDK.framework"; sourceTree = "<group>"; };
 		CB166E4A14046110009C760E /* RepositoryConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepositoryConstants.h; sourceTree = "<group>"; };
 		CB166E4B14046110009C760E /* RepositoryConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepositoryConstants.m; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				CBB7C87F1407DD5F0026FC16 /* PrototypeView.h */,
 				CBB7C8801407DD5F0026FC16 /* PrototypeView.m */,
 				CBB7C8811407DD5F0026FC16 /* PrototypeView_iPad.xib */,
+				CB13A0CE14096FEA00BC0608 /* PrototypeView_iPhone.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -328,6 +331,7 @@
 				CB98313A13FC93C200BC6EE1 /* EditorView_iPad.xib in Resources */,
 				CB98313C13FC93F100BC6EE1 /* EditorView_iPhone.xib in Resources */,
 				CBB7C8831407DD5F0026FC16 /* PrototypeView_iPad.xib in Resources */,
+				CB13A0CF14096FEA00BC0608 /* PrototypeView_iPhone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -40,7 +40,7 @@
     document.createdBy = [[UIDevice currentDevice] uniqueIdentifier];
     document.modifiedDate = document.createdDate;
     document.modifiedBy = [[UIDevice currentDevice] uniqueIdentifier];
-    document.inUseBy = [[UIDevice currentDevice] uniqueIdentifier];
+    document.inUseBy = nil;
     document.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_EDITORDOCUMENT intValue]];
     document.deprecated = [NSNumber numberWithBool:NO];
     

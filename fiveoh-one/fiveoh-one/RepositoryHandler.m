@@ -17,11 +17,6 @@
 #import "EditorDocument.h"
 
 @interface RepositoryHandler()
-{
-@private
-//    SdbRequestDelegate              *sdbDelegate;
-//    SimpleDBPutAttributesRequest    *sdbPutRequest;
-}
 
 -(SimpleDBPutAttributesRequest *)sdbPutAttributeRequestWithEditorDocument:(EditorDocument *)editorDocument;
 -(int)pushQueuedEntries;
@@ -146,10 +141,7 @@
                         NSLog(@"%@", documentText);
                         document.documentText = documentText;
                         [[DataController sharedInstance] saveContext];
-                    }
-                    
-//                    [s3ObjectResponse release];
-//                    [s3ObjectRequest release];
+                    }                    
                 }
                 @catch (AmazonServiceException *exception) 
                 {
@@ -157,10 +149,6 @@
                 }
             }
         }
-        
-//        [selectRequest release];
-//        [selectResponse release];
-
     }
     @catch (AmazonServiceException *exception) 
     {
@@ -203,7 +191,6 @@
             S3PutObjectRequest *putObjectRequest = [[S3PutObjectRequest alloc] initWithKey:document.storageKey 
                                                                                   inBucket:BUCKET_EDITORDOCUMENT];
             putObjectRequest.contentType = @"text/plain";
-//            NSString *textToEncode = ([document.documentText length] == 0) ? @"<body></body>" : document.documentText;
             
             putObjectRequest.data = [document.documentText dataUsingEncoding:NSUTF8StringEncoding];
             
@@ -213,6 +200,7 @@
             
             [[[DataController sharedInstance] managedObjectContext] deleteObject:queueEntry];
             [queueEntries removeObjectAtIndex:0];
+            [putObjectRequest release];
         }
         else
         {
@@ -311,13 +299,4 @@
     return documentUUID;
 }
 
-/*
--(void)dealloc
-{
-    
-    [sdbDelegate dealloc];
-    [sdbPutRequest release];
-    [super dealloc];
-}
-*/
 @end

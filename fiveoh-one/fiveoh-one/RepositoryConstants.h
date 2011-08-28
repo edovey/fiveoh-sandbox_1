@@ -43,6 +43,4 @@
 +(AmazonSQSClient *)sqs;
 +(AmazonSNSClient *)sns;
 
-+(UIAlertView *)credentialsAlert;
-
 @end

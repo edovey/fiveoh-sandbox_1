@@ -31,7 +31,7 @@
 @property (nonatomic, retain) NSString  * uuid;
 @property (nonatomic, retain) NSDate    * createdDate;
 @property (nonatomic, retain) NSDate    * modifiedDate;
-@property (nonatomic, retain) NSString  * documentText; // Stored in S3 as refeferenced by storageURL
+@property (nonatomic, retain) NSString  * documentText; // Stored in S3 as refeferenced by storageKey
 @property (nonatomic, retain) NSString  * createdBy;
 @property (nonatomic, retain) NSString  * modifiedBy;
 @property (nonatomic, retain) NSString  * inUseBy;

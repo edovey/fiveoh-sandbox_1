@@ -7,12 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CB13493313FC48D000979662 /* TapDetectingWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CB13493213FC48D000979662 /* TapDetectingWindow.m */; };
 		CB13A0CF14096FEA00BC0608 /* PrototypeView_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB13A0CE14096FEA00BC0608 /* PrototypeView_iPhone.xib */; };
 		CB166E4914045F6B009C760E /* AWSiOSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB165C5014044F79009C760E /* AWSiOSSDK.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		CB166E4C14046110009C760E /* RepositoryConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = CB166E4B14046110009C760E /* RepositoryConstants.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CB166E4F14053C16009C760E /* QueueEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = CB166E4E14053C16009C760E /* QueueEntry.m */; };
-		CB166E5214053C17009C760E /* Bd_editorDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = CB166E5114053C17009C760E /* Bd_editorDocument.m */; };
 		CB166E5614055C3D009C760E /* RepositoryHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = CB166E5514055C3D009C760E /* RepositoryHandler.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CB60127513FAABE5004FD84D /* sample.html in Resources */ = {isa = PBXBuildFile; fileRef = CB60127413FAABE5004FD84D /* sample.html */; };
 		CB69986F13FDB0B000F9AADD /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB69986E13FDB0B000F9AADD /* CoreData.framework */; };
@@ -40,16 +38,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CB13493113FC48D000979662 /* TapDetectingWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapDetectingWindow.h; sourceTree = "<group>"; };
-		CB13493213FC48D000979662 /* TapDetectingWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapDetectingWindow.m; sourceTree = "<group>"; };
 		CB13A0CE14096FEA00BC0608 /* PrototypeView_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrototypeView_iPhone.xib; sourceTree = "<group>"; };
 		CB165C5014044F79009C760E /* AWSiOSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSiOSSDK.framework; path = "../../aws-ios-sdk-0.2.3/AWSiOSSDK.framework"; sourceTree = "<group>"; };
 		CB166E4A14046110009C760E /* RepositoryConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepositoryConstants.h; sourceTree = "<group>"; };
 		CB166E4B14046110009C760E /* RepositoryConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepositoryConstants.m; sourceTree = "<group>"; };
 		CB166E4D14053C16009C760E /* QueueEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueEntry.h; sourceTree = "<group>"; };
 		CB166E4E14053C16009C760E /* QueueEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueueEntry.m; sourceTree = "<group>"; };
-		CB166E5014053C17009C760E /* Bd_editorDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bd_editorDocument.h; sourceTree = "<group>"; };
-		CB166E5114053C17009C760E /* Bd_editorDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bd_editorDocument.m; sourceTree = "<group>"; };
 		CB166E5414055C3D009C760E /* RepositoryHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepositoryHandler.h; sourceTree = "<group>"; };
 		CB166E5514055C3D009C760E /* RepositoryHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepositoryHandler.m; sourceTree = "<group>"; };
 		CB60127413FAABE5004FD84D /* sample.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = sample.html; sourceTree = "<group>"; };
@@ -130,8 +124,6 @@
 				CBA66DF413FDADCD005A27BE /* fiveoh-one.xcdatamodeld */,
 				CBA66DF113FDAC41005A27BE /* DataController.h */,
 				CBA66DF213FDAC41005A27BE /* DataController.m */,
-				CB166E5014053C17009C760E /* Bd_editorDocument.h */,
-				CB166E5114053C17009C760E /* Bd_editorDocument.m */,
 				CB166E4D14053C16009C760E /* QueueEntry.h */,
 				CB166E4E14053C16009C760E /* QueueEntry.m */,
 				CB69987113FDB4B000F9AADD /* EditorDocument.h */,
@@ -267,8 +259,6 @@
 		CBB7C8791407DCBD0026FC16 /* PearlHarbor */ = {
 			isa = PBXGroup;
 			children = (
-				CB13493113FC48D000979662 /* TapDetectingWindow.h */,
-				CB13493213FC48D000979662 /* TapDetectingWindow.m */,
 			);
 			name = PearlHarbor;
 			sourceTree = "<group>";
@@ -345,7 +335,6 @@
 				CB9F722B13F9E43400C8D6EF /* main.m in Sources */,
 				CB9F722F13F9E43400C8D6EF /* AppDelegate.m in Sources */,
 				CB9F723213F9E43400C8D6EF /* ViewController.m in Sources */,
-				CB13493313FC48D000979662 /* TapDetectingWindow.m in Sources */,
 				CB98313913FC93C200BC6EE1 /* EditorView.m in Sources */,
 				CBA66DF313FDAC41005A27BE /* DataController.m in Sources */,
 				CBA66DF613FDADCD005A27BE /* fiveoh-one.xcdatamodeld in Sources */,
@@ -353,7 +342,6 @@
 				CB69987613FDB5D000F9AADD /* NSString+UUID.m in Sources */,
 				CB166E4C14046110009C760E /* RepositoryConstants.m in Sources */,
 				CB166E4F14053C16009C760E /* QueueEntry.m in Sources */,
-				CB166E5214053C17009C760E /* Bd_editorDocument.m in Sources */,
 				CB166E5614055C3D009C760E /* RepositoryHandler.m in Sources */,
 				CBB7C8651406A5C90026FC16 /* ProjectConstants.m in Sources */,
 				CBB7C8691406B5D00026FC16 /* Utility.m in Sources */,

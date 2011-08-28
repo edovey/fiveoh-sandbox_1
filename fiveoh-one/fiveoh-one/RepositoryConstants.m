@@ -55,9 +55,4 @@ static AmazonSNSClient      *sns = nil;
     return sns;
 }
 
-+(UIAlertView *)credentialsAlert
-{
-    return [[UIAlertView alloc] initWithTitle:@"AWS Credentials" message:CREDENTIALS_ALERT_MESSAGE delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-}
-
 @end

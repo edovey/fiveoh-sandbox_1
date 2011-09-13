@@ -151,6 +151,7 @@
 		CB3CCE56141E9EB6007F5529 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = "TLA Digital Projects";
 			};
 			buildConfigurationList = CB3CCE59141E9EB6007F5529 /* Build configuration list for PBXProject "fourthree-two" */;
@@ -310,6 +311,7 @@
 				CB3CCE82141E9EB6007F5529 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

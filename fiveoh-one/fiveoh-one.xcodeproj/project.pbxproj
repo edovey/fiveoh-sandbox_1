@@ -39,7 +39,7 @@
 
 /* Begin PBXFileReference section */
 		CB13A0CE14096FEA00BC0608 /* PrototypeView_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrototypeView_iPhone.xib; sourceTree = "<group>"; };
-		CB165C5014044F79009C760E /* AWSiOSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSiOSSDK.framework; path = "../../aws-ios-sdk-0.2.3/AWSiOSSDK.framework"; sourceTree = "<group>"; };
+		CB165C5014044F79009C760E /* AWSiOSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSiOSSDK.framework; path = "../thirdParty/aws-ios-sdk-0.2.3/AWSiOSSDK.framework"; sourceTree = SOURCE_ROOT; };
 		CB166E4A14046110009C760E /* RepositoryConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepositoryConstants.h; sourceTree = "<group>"; };
 		CB166E4B14046110009C760E /* RepositoryConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepositoryConstants.m; sourceTree = "<group>"; };
 		CB166E4D14053C16009C760E /* QueueEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueEntry.h; sourceTree = "<group>"; };

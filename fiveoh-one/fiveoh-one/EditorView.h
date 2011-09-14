@@ -28,8 +28,8 @@
 @property (strong, nonatomic) EditorDocument    *editorDocument;
 
 @property (strong, nonatomic) IBOutlet UIButton *orderedListButton;
-@property (strong, nonatomic) IBOutlet UIButton *boldButton;
 @property (strong, nonatomic) IBOutlet UIButton *unorderedListButton;
+@property (strong, nonatomic) IBOutlet UIButton *boldButton;
 @property (strong, nonatomic) IBOutlet UIButton *indentButton;
 @property (strong, nonatomic) IBOutlet UIButton *outdentButton;
 @property (strong, nonatomic) IBOutlet UIButton *saveButton;
@@ -37,6 +37,7 @@
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 
 - (void)assignDocumentUuid:(NSString *)theUuid;
+- (NSArray *)generateMenuItems;
 
 - (IBAction)boldAction:(id)sender;
 - (IBAction)orderedListAction:(id)sender;

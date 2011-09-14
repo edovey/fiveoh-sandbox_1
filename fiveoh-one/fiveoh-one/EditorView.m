@@ -48,7 +48,7 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-#pragma mark - Formatting
+#pragma mark - Formatting methods
 -(void)bold:(id)sender 
 {
 	[self.webView stringByEvaluatingJavaScriptFromString:@"document.execCommand('bold')"];
@@ -74,25 +74,40 @@
     [self.webView stringByEvaluatingJavaScriptFromString:@"document.execCommand('outdent')"];
 }
 
+-(void)subscript:(id)sender
+{
+    [self.webView stringByEvaluatingJavaScriptFromString:@"document.execCommand('subscript')"];
+}
+
+-(void)superscript:(id)sender 
+{
+    [self.webView stringByEvaluatingJavaScriptFromString:@"document.execCommand('superscript')"];    
+}
+
+-(void)insertHTML:(id)sender
+{
+    [self.webView stringByEvaluatingJavaScriptFromString:@"document.execCommand('insertHTML')"];
+}
+
 #pragma mark - Keyboard Handler
 
 - (void)keyboardWillShow:(NSNotification *)theNotification 
 {
-    NSLog(@"Show: %@", theNotification);
+    //NSLog(@"Show: %@", theNotification);
     
     [self moveTextViewForKeyboard:theNotification show:YES];
 }
 
 - (void)keyboardWillHide:(NSNotification *)theNotification 
 {
-    NSLog(@"Hide: %@", theNotification);
+    //NSLog(@"Hide: %@", theNotification);
 
     [self moveTextViewForKeyboard:theNotification show:NO]; 
 }
 
 - (void)keyboardDidChangeFrame:(NSNotification *)theNotification
 {
-    NSLog(@"KDC: %@", theNotification);
+   // NSLog(@"KDC: %@", theNotification);
 }
 
 - (void) moveTextViewForKeyboard:(NSNotification*)theNotification show:(BOOL)show
@@ -171,7 +186,9 @@
                                                object:self.view.window];
     keyboardIsShown = NO;
     
-    
+    UIMenuController *controller = [UIMenuController sharedMenuController];
+    controller.menuItems = [self generateMenuItems];
+
 }
 
 - (void)viewDidUnload
@@ -207,6 +224,8 @@
     // Return YES for supported orientations
 	return YES;
 }
+
+#pragma mark - Button Actions
 - (IBAction)boldAction:(id)sender 
 {
     [self bold:sender];
@@ -250,6 +269,39 @@
 - (IBAction)settingsToggle:(id)sender 
 {
     
+}
+
+#pragma mark - Instance methods
+
+-(void)insertSymbol {
+    // do fancy stuff here...figure out the symbol, then call insertHTML
+    NSString *beta = @"&#946";
+    NSString *execCommand = [NSString stringWithFormat:@"document.execCommand(\'insertHTML\', false, \'%@\')",beta];
+    NSLog(@"html string: %@", execCommand);
+    [self.webView stringByEvaluatingJavaScriptFromString:execCommand];
+    NSLog(@"Document HTML = [%@]", [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"]);
+
+//    [self.webView stringByEvaluatingJavaScriptFromString:@"document.execCommand(\'insertHTML\',false, \'&#946\')"];
+//    NSLog(@"Document HTML = [%@]", [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"]);
+
+}
+
+-(NSArray *)generateMenuItems {
+    NSMutableArray *tmpArray = [[NSMutableArray alloc] initWithCapacity:0];
+    
+    UIMenuItem *miBold = [[UIMenuItem alloc] initWithTitle:@"Bold" action:@selector(bold:)];
+    [tmpArray addObject:miBold];
+    
+    UIMenuItem *miSymbol = [[UIMenuItem alloc] initWithTitle:@"\u03B2" action:@selector(insertSymbol)];
+    [tmpArray addObject:miSymbol];
+    
+    UIMenuItem *miSubscript = [[UIMenuItem alloc] initWithTitle:@"Subscript" action:@selector(subscript:)];
+    [tmpArray addObject:miSubscript];
+    
+    UIMenuItem *miSuperscript = [[UIMenuItem alloc] initWithTitle:@"Superscript" action:@selector(superscript:)];
+    [tmpArray addObject:miSuperscript];
+    
+    return [NSArray arrayWithArray:tmpArray];
 }
 
 @end

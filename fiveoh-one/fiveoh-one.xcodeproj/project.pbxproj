@@ -39,7 +39,7 @@
 
 /* Begin PBXFileReference section */
 		CB13A0CE14096FEA00BC0608 /* PrototypeView_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrototypeView_iPhone.xib; sourceTree = "<group>"; };
-		CB165C5014044F79009C760E /* AWSiOSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSiOSSDK.framework; path = "../../aws-ios-sdk-0.2.3/AWSiOSSDK.framework"; sourceTree = "<group>"; };
+		CB165C5014044F79009C760E /* AWSiOSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSiOSSDK.framework; path = "../thirdParty/aws-ios-sdk-0.2.3/AWSiOSSDK.framework"; sourceTree = SOURCE_ROOT; };
 		CB166E4A14046110009C760E /* RepositoryConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepositoryConstants.h; sourceTree = "<group>"; };
 		CB166E4B14046110009C760E /* RepositoryConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepositoryConstants.m; sourceTree = "<group>"; };
 		CB166E4D14053C16009C760E /* QueueEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueEntry.h; sourceTree = "<group>"; };
@@ -431,18 +431,23 @@
 		CB9F723C13F9E43400C8D6EF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Karl Schulze (PKD77ZK2K5)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../aws-ios-sdk-0.2.3\"",
-				);
+				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch (*) CVS .svn .git *.xcodeproj *.xcode *.pbproj *.pbxproj";
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../thirdParty\"/**";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "fiveoh-one/fiveoh-one-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../thirdParty\"/**";
 				INFOPLIST_FILE = "fiveoh-one/fiveoh-one-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../thirdParty\"/**",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7A9EB59E-DF38-4C5B-B811-332B790C1938";
 				TARGETED_DEVICE_FAMILY = 2;
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -450,18 +455,23 @@
 		CB9F723D13F9E43400C8D6EF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Karl Schulze (PKD77ZK2K5)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../aws-ios-sdk-0.2.3\"",
-				);
+				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch (*) CVS .svn .git *.xcodeproj *.xcode *.pbproj *.pbxproj";
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../thirdParty\"/**";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "fiveoh-one/fiveoh-one-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../thirdParty\"/**";
 				INFOPLIST_FILE = "fiveoh-one/fiveoh-one-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../thirdParty\"/**",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7A9EB59E-DF38-4C5B-B811-332B790C1938";
 				TARGETED_DEVICE_FAMILY = 2;
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

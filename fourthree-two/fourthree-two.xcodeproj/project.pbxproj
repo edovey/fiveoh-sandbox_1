@@ -18,6 +18,11 @@
 		CB3CCE7D141E9EB6007F5529 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB3CCE7B141E9EB6007F5529 /* RootViewController.xib */; };
 		CB3CCE89141EA12F007F5529 /* RenderTestView.m in Sources */ = {isa = PBXBuildFile; fileRef = CB3CCE87141EA12F007F5529 /* RenderTestView.m */; };
 		CB3CCE8A141EA12F007F5529 /* RenderTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB3CCE88141EA12F007F5529 /* RenderTestView.xib */; };
+		CBCA74A8141FBBB600B51D61 /* LoremIpsum.txt in Resources */ = {isa = PBXBuildFile; fileRef = CBCA74A7141FBBB600B51D61 /* LoremIpsum.txt */; };
+		CBCA74AA141FC03C00B51D61 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBCA74A9141FC03C00B51D61 /* CoreText.framework */; };
+		CBCA74AE141FC81F00B51D61 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = CBCA74AD141FC81F00B51D61 /* Utility.m */; };
+		CBCA74B0141FDCE000B51D61 /* WordExport.htm in Resources */ = {isa = PBXBuildFile; fileRef = CBCA74AF141FDCE000B51D61 /* WordExport.htm */; };
+		CBCA74B21420008500B51D61 /* sample.html in Resources */ = {isa = PBXBuildFile; fileRef = CBCA74B11420008500B51D61 /* sample.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +43,12 @@
 		CB3CCE86141EA12F007F5529 /* RenderTestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderTestView.h; sourceTree = "<group>"; };
 		CB3CCE87141EA12F007F5529 /* RenderTestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderTestView.m; sourceTree = "<group>"; };
 		CB3CCE88141EA12F007F5529 /* RenderTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RenderTestView.xib; sourceTree = "<group>"; };
+		CBCA74A7141FBBB600B51D61 /* LoremIpsum.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LoremIpsum.txt; path = supportFiles/LoremIpsum.txt; sourceTree = "<group>"; };
+		CBCA74A9141FC03C00B51D61 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		CBCA74AC141FC81F00B51D61 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
+		CBCA74AD141FC81F00B51D61 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
+		CBCA74AF141FDCE000B51D61 /* WordExport.htm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = WordExport.htm; path = supportFiles/WordExport.htm; sourceTree = "<group>"; };
+		CBCA74B11420008500B51D61 /* sample.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = sample.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBCA74AA141FC03C00B51D61 /* CoreText.framework in Frameworks */,
 				CB3CCE64141E9EB6007F5529 /* UIKit.framework in Frameworks */,
 				CB3CCE66141E9EB6007F5529 /* Foundation.framework in Frameworks */,
 				CB3CCE68141E9EB6007F5529 /* CoreGraphics.framework in Frameworks */,
@@ -74,6 +86,7 @@
 		CB3CCE62141E9EB6007F5529 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CBCA74A9141FC03C00B51D61 /* CoreText.framework */,
 				CB3CCE63141E9EB6007F5529 /* UIKit.framework */,
 				CB3CCE65141E9EB6007F5529 /* Foundation.framework */,
 				CB3CCE67141E9EB6007F5529 /* CoreGraphics.framework */,
@@ -84,6 +97,7 @@
 		CB3CCE69141E9EB6007F5529 /* fourthree-two */ = {
 			isa = PBXGroup;
 			children = (
+				CBCA74A5141FBB9A00B51D61 /* Embedded Files */,
 				CB3CCE84141EA069007F5529 /* Classes */,
 				CB3CCE72141E9EB6007F5529 /* fourthree_twoAppDelegate.h */,
 				CB3CCE73141E9EB6007F5529 /* fourthree_twoAppDelegate.m */,
@@ -107,6 +121,7 @@
 		CB3CCE84141EA069007F5529 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				CBCA74AB141FC80000B51D61 /* Other */,
 				CB3CCE85141EA07F007F5529 /* Views */,
 			);
 			name = Classes;
@@ -123,6 +138,25 @@
 				CB3CCE88141EA12F007F5529 /* RenderTestView.xib */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		CBCA74A5141FBB9A00B51D61 /* Embedded Files */ = {
+			isa = PBXGroup;
+			children = (
+				CBCA74B11420008500B51D61 /* sample.html */,
+				CBCA74AF141FDCE000B51D61 /* WordExport.htm */,
+				CBCA74A7141FBBB600B51D61 /* LoremIpsum.txt */,
+			);
+			name = "Embedded Files";
+			sourceTree = "<group>";
+		};
+		CBCA74AB141FC80000B51D61 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				CBCA74AC141FC81F00B51D61 /* Utility.h */,
+				CBCA74AD141FC81F00B51D61 /* Utility.m */,
+			);
+			name = Other;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -179,6 +213,9 @@
 				CB3CCE77141E9EB6007F5529 /* MainWindow.xib in Resources */,
 				CB3CCE7D141E9EB6007F5529 /* RootViewController.xib in Resources */,
 				CB3CCE8A141EA12F007F5529 /* RenderTestView.xib in Resources */,
+				CBCA74A8141FBBB600B51D61 /* LoremIpsum.txt in Resources */,
+				CBCA74B0141FDCE000B51D61 /* WordExport.htm in Resources */,
+				CBCA74B21420008500B51D61 /* sample.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,6 +230,7 @@
 				CB3CCE74141E9EB6007F5529 /* fourthree_twoAppDelegate.m in Sources */,
 				CB3CCE7A141E9EB6007F5529 /* RootViewController.m in Sources */,
 				CB3CCE89141EA12F007F5529 /* RenderTestView.m in Sources */,
+				CBCA74AE141FC81F00B51D61 /* Utility.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +348,7 @@
 				CB3CCE82141E9EB6007F5529 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

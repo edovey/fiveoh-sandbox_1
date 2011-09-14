@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreText/CoreText.h>
+@class UIPrintInteractionController;
 
 @interface RenderTestView : UIViewController
+{
+    UIPrintInteractionController            *printController;
+    UIWebView                               *webView;
+}
+@property (nonatomic, retain) IBOutlet UIWebView *webView;
+
+- (IBAction)outputTestOneAction:(id)sender;
+- (IBAction)outputTestTwoAction:(id)sender;
 
 @end

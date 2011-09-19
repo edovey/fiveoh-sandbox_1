@@ -6,16 +6,16 @@
 //  Copyright (c) 2011 TLA Digital Projects. All rights reserved.
 //
 
-#import "EditorDocument.h"
+#import "LinkedNote.h"
 #import "NSString+UUID.h"
 #import "QueueEntry.h"
 
-@interface EditorDocument()
+@interface LinkedNote()
 -(NSString *)generateStorageKey;
 @end
 
 
-@implementation EditorDocument
+@implementation LinkedNote
 
 @dynamic uuid;
 @dynamic createdDate;
@@ -31,9 +31,9 @@
 +(NSString *)create
 {
     NSManagedObjectContext *moc = [[DataController sharedInstance] managedObjectContext]; 
-    NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_EDITORDOCUMENT inManagedObjectContext:moc];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_LINKEDNOTE inManagedObjectContext:moc];
 
-	EditorDocument *document = [[EditorDocument alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+	LinkedNote *document = [[LinkedNote alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
 
     document.uuid = [NSString UUIDCreate];
     document.createdDate = [NSDate date];
@@ -41,13 +41,13 @@
     document.modifiedDate = document.createdDate;
     document.modifiedBy = [[UIDevice currentDevice] uniqueIdentifier];
     document.inUseBy = nil;
-    document.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_EDITORDOCUMENT intValue]];
+    document.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_LINKEDNOTE intValue]];
     document.deprecated = [NSNumber numberWithBool:NO];
     
     document.storageKey = [NSString stringWithFormat:@"bd~%@.txt", document.uuid];
     
     [QueueEntry createWithObjectUuid:document.uuid 
-                      withEntityName:ENTITYNAME_EDITORDOCUMENT 
+                      withEntityName:ENTITYNAME_LINKEDNOTE 
                           withAction:CREATE_QueueEntryActionType 
                             withSave:NO];
     
@@ -57,9 +57,9 @@
     return uuid;
 }
 
-+(EditorDocument *)retrieveWithUUID:(NSString *)theUUID
++(LinkedNote *)retrieveWithUUID:(NSString *)theUUID
 {
-    return (EditorDocument *)[[DataController sharedInstance] retrieveManagedObject:ENTITYNAME_EDITORDOCUMENT 
+    return (LinkedNote *)[[DataController sharedInstance] retrieveManagedObject:ENTITYNAME_LINKEDNOTE 
                                                                                uuid:theUUID 
                                                                           targetMOC:nil];
 }
@@ -72,28 +72,28 @@
 	[dateFormatter setTimeStyle:NSDateFormatterFullStyle];
 	[dateFormatter setDateFormat:DATETIMEFORMAT];
 
-    NSString *uuid = [theAttributeDictionary valueForKey:ED_UUID];
-    NSDate *modifedDate = [dateFormatter dateFromString:[theAttributeDictionary valueForKey:ED_MODIFIEDDATE]];
+    NSString *uuid = [theAttributeDictionary valueForKey:LN_UUID];
+    NSDate *modifedDate = [dateFormatter dateFromString:[theAttributeDictionary valueForKey:LN_MODIFIEDDATE]];
     
-    EditorDocument *document = [EditorDocument retrieveWithUUID:uuid];
+    LinkedNote *document = [LinkedNote retrieveWithUUID:uuid];
     if(nil == document)
     {
         NSManagedObjectContext *moc = [[DataController sharedInstance] managedObjectContext]; 
-        NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_EDITORDOCUMENT 
+        NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_LINKEDNOTE 
                                                   inManagedObjectContext:moc];
         
-        document = [[EditorDocument alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+        document = [[LinkedNote alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
         document.uuid = uuid;
         
     }
     
-    NSLog(@"Local Document Modified Date:%@", [dateFormatter stringFromDate:document.modifiedDate]);
-    NSLog(@"Repository Document Modified Date:%@", [dateFormatter stringFromDate:modifedDate]);
+    NSLog(@"Local Linked Note Modified Date:%@", [dateFormatter stringFromDate:document.modifiedDate]);
+    NSLog(@"Repository Linked Note Modified Date:%@", [dateFormatter stringFromDate:modifedDate]);
     
     if ( (nil == document.modifiedDate) 
         || ( ([document.modifiedDate compare:modifedDate] == NSOrderedAscending) || (overwriteNewer) ) )
     {
-        int schemaVersion = [[theAttributeDictionary valueForKey:ED_SCHEMAVERSION] intValue];
+        int schemaVersion = [[theAttributeDictionary valueForKey:LN_SCHEMAVERSION] intValue];
         
         document.schemaVersion = [NSNumber numberWithInt:schemaVersion];
         
@@ -102,13 +102,13 @@
             case 1:
             default:
             {
-                document.createdBy = [theAttributeDictionary valueForKey:ED_CREATEDBY];
-                document.createdDate = [dateFormatter dateFromString:[theAttributeDictionary valueForKey:ED_CREATEDDATE]];
-                document.modifiedBy  = [theAttributeDictionary valueForKey:ED_MODIFIEDBY];
+                document.createdBy = [theAttributeDictionary valueForKey:LN_CREATEDBY];
+                document.createdDate = [dateFormatter dateFromString:[theAttributeDictionary valueForKey:LN_CREATEDDATE]];
+                document.modifiedBy  = [theAttributeDictionary valueForKey:LN_MODIFIEDBY];
                 document.modifiedDate = modifedDate;
-                document.inUseBy = [theAttributeDictionary valueForKey:ED_INUSEBY];
-                document.storageKey = [theAttributeDictionary valueForKey:ED_STORAGEKEY];   
-                document.deprecated = [NSNumber numberWithBool:[[theAttributeDictionary valueForKey:ED_DEPRECATED] boolValue]];
+                document.inUseBy = [theAttributeDictionary valueForKey:LN_INUSEBY];
+                document.storageKey = [theAttributeDictionary valueForKey:LN_STORAGEKEY];   
+                document.deprecated = [NSNumber numberWithBool:[[theAttributeDictionary valueForKey:LN_DEPRECATED] boolValue]];
             }
                 break;
         }
@@ -143,7 +143,7 @@
     
     
     [QueueEntry createWithObjectUuid:self.uuid 
-                      withEntityName:ENTITYNAME_EDITORDOCUMENT 
+                      withEntityName:ENTITYNAME_LINKEDNOTE 
                           withAction:UPDATE_QueueEntryActionType 
                             withSave:NO];
 

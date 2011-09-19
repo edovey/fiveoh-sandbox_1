@@ -9,16 +9,16 @@
 #import "RepositoryHandler.h"
 #import "RepositoryConstants.h"
 #import "QueueEntry.h"
-#import "EditorDocument.h"
+#import "LinkedNote.h"
 
 #import <AWSiOSSDK/SimpleDB/AmazonSimpleDBClient.h>
 #import "SdbRequestDelegate.h"
 
-#import "EditorDocument.h"
+#import "LinkedNote.h"
 
 @interface RepositoryHandler()
 
--(SimpleDBPutAttributesRequest *)sdbPutAttributeRequestWithEditorDocument:(EditorDocument *)editorDocument;
+-(SimpleDBPutAttributesRequest *)sdbPutAttributeRequestWithEditorDocument:(LinkedNote *)editorDocument;
 -(int)pushQueuedEntries;
 -(NSString *)loadEditorDocumentwithItemName:(NSString *)theItemName;
 
@@ -44,7 +44,7 @@
     //TODO: overall structure
     
     // EditorDocuments
-    NSString *selectExpression = [NSString stringWithFormat:@"select itemName() from `%@`", DOMAIN_EDITORDOCUMENT];
+    NSString *selectExpression = [NSString stringWithFormat:@"select itemName() from `%@`", DOMAIN_LINKEDNOTE];
     
     @try 
     {
@@ -103,11 +103,11 @@
 
     if(nil == refreshDateString)
     {
-        selectExpression = [NSString stringWithFormat:@"select itemName() from %@", DOMAIN_EDITORDOCUMENT];
+        selectExpression = [NSString stringWithFormat:@"select itemName() from %@", DOMAIN_LINKEDNOTE];
     }
     else
     {
-        selectExpression = [NSString stringWithFormat:@"select itemName() from %@ where %@ > '%@'", DOMAIN_EDITORDOCUMENT, ED_MODIFIEDDATE, refreshDateString];
+        selectExpression = [NSString stringWithFormat:@"select itemName() from %@ where %@ > '%@'", DOMAIN_LINKEDNOTE, LN_MODIFIEDDATE, refreshDateString];
     }
     @try 
     {
@@ -118,7 +118,7 @@
         
         for (SimpleDBItem *item in selectResponse.items) 
         {            
-            EditorDocument *document = [EditorDocument retrieveWithUUID:[handler loadEditorDocumentwithItemName:item.name]];
+            LinkedNote *document = [LinkedNote retrieveWithUUID:[handler loadEditorDocumentwithItemName:item.name]];
             
             if ((nil != document) && (nil != document.storageKey) && ([document.storageKey length] > 0))
             {
@@ -127,7 +127,7 @@
                 @try 
                 {
                     S3GetObjectRequest  *s3ObjectRequest  = [[S3GetObjectRequest alloc] initWithKey:document.storageKey 
-                                                                                           withBucket:BUCKET_EDITORDOCUMENT];
+                                                                                           withBucket:BUCKET_LINKEDNOTE];
                     
                     S3GetObjectResponse *s3ObjectResponse = [[RepositoryConstants s3] getObject:s3ObjectRequest];
                     
@@ -177,9 +177,9 @@
     {
         QueueEntry *queueEntry = [queueEntries objectAtIndex:0];
         
-        if ([queueEntry.objectEntityName isEqualToString:ENTITYNAME_EDITORDOCUMENT]) 
+        if ([queueEntry.objectEntityName isEqualToString:ENTITYNAME_LINKEDNOTE]) 
         {
-            EditorDocument *document = [EditorDocument retrieveWithUUID:queueEntry.objectUuid];
+            LinkedNote *document = [LinkedNote retrieveWithUUID:queueEntry.objectUuid];
             
             document.inUseBy = @"";
             
@@ -189,7 +189,7 @@
             // Put the file as an object in the bucket.
 
             S3PutObjectRequest *putObjectRequest = [[S3PutObjectRequest alloc] initWithKey:document.storageKey 
-                                                                                  inBucket:BUCKET_EDITORDOCUMENT];
+                                                                                  inBucket:BUCKET_LINKEDNOTE];
             putObjectRequest.contentType = @"text/plain";
             
             putObjectRequest.data = [document.documentText dataUsingEncoding:NSUTF8StringEncoding];
@@ -215,7 +215,7 @@
     return processCount;
 }
 
--(SimpleDBPutAttributesRequest *)sdbPutAttributeRequestWithEditorDocument:(EditorDocument *)editorDocument
+-(SimpleDBPutAttributesRequest *)sdbPutAttributeRequestWithEditorDocument:(LinkedNote *)editorDocument
 {
 
     NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
@@ -226,44 +226,44 @@
     NSLog(@"ItemName to push:%@", itemName);
     NSMutableArray *attributes = [[NSMutableArray alloc] initWithCapacity:8];
     
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:ED_UUID 
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_UUID 
                                                                     andValue:editorDocument.uuid 
                                                                   andReplace:YES] autorelease]];
     
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:ED_SCHEMAVERSION 
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_SCHEMAVERSION 
                                                                     andValue:[NSString stringWithFormat:@"%d", [editorDocument.schemaVersion intValue]]
                                                                   andReplace:YES] autorelease]];
     
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:ED_STORAGEKEY 
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_STORAGEKEY 
                                                                      andValue:(nil == editorDocument.storageKey) ? @"" : editorDocument.storageKey
                                                                    andReplace:YES] autorelease]];
 
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:ED_INUSEBY 
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_INUSEBY 
                                                                      andValue:(nil == editorDocument.inUseBy) ? @"" : editorDocument.inUseBy
                                                                    andReplace:YES] autorelease]];
 
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:ED_CREATEDDATE 
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_CREATEDDATE 
                                                                     andValue:[dateFormatter stringFromDate:editorDocument.createdDate] 
                                                                   andReplace:YES] autorelease]];
     
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:ED_CREATEDBY 
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_CREATEDBY 
                                                                      andValue:(nil == editorDocument.createdBy) ? @"" : editorDocument.createdBy
                                                                   andReplace:YES] autorelease]];
     
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:ED_MODIFIEDDATE 
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_MODIFIEDDATE 
                                                                     andValue:[dateFormatter stringFromDate:editorDocument.modifiedDate] 
                                                                   andReplace:YES] autorelease]];
     
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:ED_MODIFIEDBY 
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_MODIFIEDBY 
                                                                      andValue:(nil == editorDocument.modifiedBy) ? @"" : editorDocument.modifiedBy
                                                                   andReplace:YES] autorelease]];
     
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:ED_DEPRECATED 
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_DEPRECATED 
                                                                     andValue:[Utility nsNumberBoolToString:editorDocument.deprecated]
                                                                   andReplace:YES] autorelease]];
     
     SimpleDBPutAttributesRequest *sdbPutRequest = [[SimpleDBPutAttributesRequest alloc] 
-                                                   initWithDomainName:DOMAIN_EDITORDOCUMENT 
+                                                   initWithDomainName:DOMAIN_LINKEDNOTE 
                                                    andItemName:itemName 
                                                    andAttributes:attributes];
     
@@ -277,7 +277,7 @@
     NSString * documentUUID = nil;
     @try 
     {
-        SimpleDBGetAttributesRequest  *request = [[[SimpleDBGetAttributesRequest alloc] initWithDomainName:DOMAIN_EDITORDOCUMENT 
+        SimpleDBGetAttributesRequest  *request = [[[SimpleDBGetAttributesRequest alloc] initWithDomainName:DOMAIN_LINKEDNOTE 
                                                                                            andItemName:theItemName] autorelease];
         
         SimpleDBGetAttributesResponse *response = [[RepositoryConstants sdb] getAttributes:request];
@@ -290,7 +290,7 @@
                                     forKey:attr.name];
         }
         
-        documentUUID = [EditorDocument loadWithAttributes:attributeDictionary withOverwriteNewerFlag:NO];        
+        documentUUID = [LinkedNote loadWithAttributes:attributeDictionary withOverwriteNewerFlag:NO];        
     }
     @catch (AmazonServiceException *exception) {
         NSLog(@"Exception = %@", exception);

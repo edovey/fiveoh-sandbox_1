@@ -9,6 +9,19 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+#define SCHEMAVERSION_SECTION @"1"
+#define DOMAIN_SECTION @"bd_test2"
+#define BUCKET_SECTION @"bdDataStore"
+#define ENTITYNAME_SECTION @"Section"
+
+#define SN_UUID @"sn_uuid"
+#define SN_SCHEMAVERSION @"sn_schemaVersion"
+#define SN_CREATEDDATE @"sn_createdDate"
+#define SN_CREATEDBY @"sn_createdBy"
+#define SN_MODIFIEDDATE @"sn_modifiedDate"
+#define SN_MODIFIEDBY @"sn_modifiedBy"
+#define SN_DEPRECATED @"sn_deprecated"
+#define SN_INUSEBY @"sn_inUseBy"
 
 @interface Section : NSManagedObject
 
@@ -20,6 +33,13 @@
 @property (nonatomic, retain) NSString * inUseBy;
 @property (nonatomic, retain) NSString * modifiedBy;
 @property (nonatomic, retain) NSDate * modifiedDate;
-@property (nonatomic, retain) NSString * schemaVersion;
+@property (nonatomic, retain) NSNumber * schemaVersion;
 
++(NSString *)create;
++(Section *)retrieveWithUUID:(NSString *)theUUID;
++(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
+         withOverwriteNewerFlag:(BOOL)overwriteNewer; 
+
+-(void)commitChanges;
 @end
+

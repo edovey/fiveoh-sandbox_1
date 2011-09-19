@@ -7,7 +7,7 @@
 //
 
 #import "EditorView.h"
-#import "EditorDocument.h"
+#import "LinkedNote.h"
 
 @interface EditorView()
 {
@@ -36,7 +36,7 @@
 {
     if (nil != theUuid)
     {
-        self.editorDocument = [EditorDocument retrieveWithUUID:theUuid];
+        self.editorDocument = [LinkedNote retrieveWithUUID:theUuid];
     }
 }
 
@@ -255,7 +255,7 @@
 {
     if(nil == self.editorDocument)
     {
-        self.editorDocument = [EditorDocument retrieveWithUUID:[EditorDocument create]];
+        self.editorDocument = [LinkedNote retrieveWithUUID:[LinkedNote create]];
     }
     self.editorDocument.modifiedDate = [NSDate date];
 

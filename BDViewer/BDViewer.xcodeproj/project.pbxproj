@@ -1,0 +1,312 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6EC50001142AA6BA003232D1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC50000142AA6BA003232D1 /* UIKit.framework */; };
+		6EC50003142AA6BA003232D1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC50002142AA6BA003232D1 /* Foundation.framework */; };
+		6EC50005142AA6BA003232D1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC50004142AA6BA003232D1 /* CoreGraphics.framework */; };
+		6EC50007142AA6BA003232D1 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC50006142AA6BA003232D1 /* CoreData.framework */; };
+		6EC5000D142AA6BA003232D1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6EC5000B142AA6BA003232D1 /* InfoPlist.strings */; };
+		6EC5000F142AA6BA003232D1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EC5000E142AA6BA003232D1 /* main.m */; };
+		6EC50013142AA6BA003232D1 /* BDViewerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EC50012142AA6BA003232D1 /* BDViewerAppDelegate.m */; };
+		6EC50016142AA6BA003232D1 /* BDViewer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6EC50014142AA6BA003232D1 /* BDViewer.xcdatamodeld */; };
+		6EC50019142AA6BA003232D1 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6EC50017142AA6BA003232D1 /* MainWindow.xib */; };
+		6EC5001C142AA6BA003232D1 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EC5001B142AA6BA003232D1 /* RootViewController.m */; };
+		6EC5001F142AA6BB003232D1 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6EC5001D142AA6BB003232D1 /* RootViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		6EC50000142AA6BA003232D1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		6EC50002142AA6BA003232D1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		6EC50004142AA6BA003232D1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		6EC50006142AA6BA003232D1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		6EC5000A142AA6BA003232D1 /* BDViewer-Info.plist */ = {isa = PBXFileReference; path = "BDViewer-Info.plist"; sourceTree = "<group>"; };
+		6EC5000C142AA6BA003232D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		6EC5000E142AA6BA003232D1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		6EC50010142AA6BA003232D1 /* BDViewer-Prefix.pch */ = {isa = PBXFileReference; path = "BDViewer-Prefix.pch"; sourceTree = "<group>"; };
+		6EC50011142AA6BA003232D1 /* BDViewerAppDelegate.h */ = {isa = PBXFileReference; path = BDViewerAppDelegate.h; sourceTree = "<group>"; };
+		6EC50012142AA6BA003232D1 /* BDViewerAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BDViewerAppDelegate.m; sourceTree = "<group>"; };
+		6EC50015142AA6BA003232D1 /* BDViewer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BDViewer.xcdatamodel; sourceTree = "<group>"; };
+		6EC50018142AA6BA003232D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		6EC5001A142AA6BA003232D1 /* RootViewController.h */ = {isa = PBXFileReference; path = RootViewController.h; sourceTree = "<group>"; };
+		6EC5001B142AA6BA003232D1 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		6EC5001E142AA6BB003232D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RootViewController.xib; sourceTree = "<group>"; };
+		6EC5FFFC142AA6BA003232D1 /* BDViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BDViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6EC5FFF9142AA6BA003232D1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6EC50001142AA6BA003232D1 /* UIKit.framework in Frameworks */,
+				6EC50003142AA6BA003232D1 /* Foundation.framework in Frameworks */,
+				6EC50005142AA6BA003232D1 /* CoreGraphics.framework in Frameworks */,
+				6EC50007142AA6BA003232D1 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6EC50008142AA6BA003232D1 /* BDViewer */ = {
+			isa = PBXGroup;
+			children = (
+				6EC50011142AA6BA003232D1 /* BDViewerAppDelegate.h */,
+				6EC50012142AA6BA003232D1 /* BDViewerAppDelegate.m */,
+				6EC50017142AA6BA003232D1 /* MainWindow.xib */,
+				6EC5001A142AA6BA003232D1 /* RootViewController.h */,
+				6EC5001B142AA6BA003232D1 /* RootViewController.m */,
+				6EC5001D142AA6BB003232D1 /* RootViewController.xib */,
+				6EC50014142AA6BA003232D1 /* BDViewer.xcdatamodeld */,
+				6EC50009142AA6BA003232D1 /* Supporting Files */,
+			);
+			path = BDViewer;
+			sourceTree = "<group>";
+		};
+		6EC50009142AA6BA003232D1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6EC5000A142AA6BA003232D1 /* BDViewer-Info.plist */,
+				6EC5000B142AA6BA003232D1 /* InfoPlist.strings */,
+				6EC5000E142AA6BA003232D1 /* main.m */,
+				6EC50010142AA6BA003232D1 /* BDViewer-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6EC5FFF1142AA6BA003232D1 = {
+			isa = PBXGroup;
+			children = (
+				6EC50008142AA6BA003232D1 /* BDViewer */,
+				6EC5FFFF142AA6BA003232D1 /* Frameworks */,
+				6EC5FFFD142AA6BA003232D1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6EC5FFFD142AA6BA003232D1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6EC5FFFC142AA6BA003232D1 /* BDViewer.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6EC5FFFF142AA6BA003232D1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6EC50000142AA6BA003232D1 /* UIKit.framework */,
+				6EC50002142AA6BA003232D1 /* Foundation.framework */,
+				6EC50004142AA6BA003232D1 /* CoreGraphics.framework */,
+				6EC50006142AA6BA003232D1 /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6EC5FFFB142AA6BA003232D1 /* BDViewer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6EC50022142AA6BB003232D1 /* Build configuration list for PBXNativeTarget "BDViewer" */;
+			buildPhases = (
+				6EC5FFF8142AA6BA003232D1 /* Sources */,
+				6EC5FFF9142AA6BA003232D1 /* Frameworks */,
+				6EC5FFFA142AA6BA003232D1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BDViewer;
+			productName = BDViewer;
+			productReference = 6EC5FFFC142AA6BA003232D1 /* BDViewer.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6EC5FFF3142AA6BA003232D1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "875953 Alberta, Inc.";
+			};
+			buildConfigurationList = 6EC5FFF6142AA6BA003232D1 /* Build configuration list for PBXProject "BDViewer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 6EC5FFF1142AA6BA003232D1;
+			productRefGroup = 6EC5FFFD142AA6BA003232D1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6EC5FFFB142AA6BA003232D1 /* BDViewer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6EC5FFFA142AA6BA003232D1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6EC5000D142AA6BA003232D1 /* InfoPlist.strings in Resources */,
+				6EC50019142AA6BA003232D1 /* MainWindow.xib in Resources */,
+				6EC5001F142AA6BB003232D1 /* RootViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6EC5FFF8142AA6BA003232D1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6EC5000F142AA6BA003232D1 /* main.m in Sources */,
+				6EC50013142AA6BA003232D1 /* BDViewerAppDelegate.m in Sources */,
+				6EC50016142AA6BA003232D1 /* BDViewer.xcdatamodeld in Sources */,
+				6EC5001C142AA6BA003232D1 /* RootViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		6EC5000B142AA6BA003232D1 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6EC5000C142AA6BA003232D1 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		6EC50017142AA6BA003232D1 /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6EC50018142AA6BA003232D1 /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		6EC5001D142AA6BB003232D1 /* RootViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6EC5001E142AA6BB003232D1 /* en */,
+			);
+			name = RootViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6EC50020142AA6BB003232D1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		6EC50021142AA6BB003232D1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6EC50023142AA6BB003232D1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BDViewer/BDViewer-Prefix.pch";
+				INFOPLIST_FILE = "BDViewer/BDViewer-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		6EC50024142AA6BB003232D1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BDViewer/BDViewer-Prefix.pch";
+				INFOPLIST_FILE = "BDViewer/BDViewer-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6EC50022142AA6BB003232D1 /* Build configuration list for PBXNativeTarget "BDViewer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6EC50023142AA6BB003232D1 /* Debug */,
+				6EC50024142AA6BB003232D1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		6EC5FFF6142AA6BA003232D1 /* Build configuration list for PBXProject "BDViewer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6EC50020142AA6BB003232D1 /* Debug */,
+				6EC50021142AA6BB003232D1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		6EC50014142AA6BA003232D1 /* BDViewer.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				6EC50015142AA6BA003232D1 /* BDViewer.xcdatamodel */,
+			);
+			currentVersion = 6EC50015142AA6BA003232D1 /* BDViewer.xcdatamodel */;
+			path = BDViewer.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 6EC5FFF3142AA6BA003232D1 /* Project object */;
+}

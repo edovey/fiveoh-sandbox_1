@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "EditorView.h"
-#import "EditorDocument.h"
+#import "LinkedNote.h"
 #import "PrototypeView.h"
 
 @interface ViewController()
@@ -166,7 +166,7 @@
     NSString *result = nil;
     if([array count] > 0)
     {
-        EditorDocument *document = [array objectAtIndex:0];
+        LinkedNote *document = [array objectAtIndex:0];
         result = document.uuid;
     }
     return result;

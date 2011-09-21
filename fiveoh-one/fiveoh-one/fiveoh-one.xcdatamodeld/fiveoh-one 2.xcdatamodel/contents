@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="858" systemVersion="11A494a" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Category" representedClassName="Category">
+        <attribute name="createdBy" optional="YES" attributeType="String"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date"/>
+        <attribute name="deprecated" attributeType="Boolean" defaultValueString="NO"/>
+        <attribute name="inUseBy" optional="YES" attributeType="String"/>
+        <attribute name="modifiedBy" optional="YES" attributeType="String"/>
+        <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="sectionId" optional="YES" attributeType="String"/>
+        <attribute name="uuid" attributeType="String"/>
+    </entity>
+    <entity name="Disease">
+        <attribute name="createdBy" optional="YES" attributeType="String"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date"/>
+        <attribute name="deprecated" attributeType="Boolean" defaultValueString="NO"/>
+        <attribute name="inUseBy" optional="YES" attributeType="String"/>
+        <attribute name="modifiedBy" optional="YES" attributeType="String"/>
+        <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="overview" optional="YES" attributeType="String"/>
+        <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="subcategoryId" attributeType="String"/>
+        <attribute name="uuid" attributeType="String"/>
+    </entity>
+    <entity name="LinkedNote" representedClassName="EditorDocument">
+        <attribute name="contextPropertyName" optional="YES" attributeType="String"/>
+        <attribute name="createdBy" optional="YES" attributeType="String"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date"/>
+        <attribute name="deprecated" optional="YES" attributeType="Boolean" defaultValueString="NO"/>
+        <attribute name="documentText" optional="YES" attributeType="String"/>
+        <attribute name="inUseBy" optional="YES" attributeType="String"/>
+        <attribute name="modifiedBy" optional="YES" attributeType="String"/>
+        <attribute name="modifiedDate" optional="YES" attributeType="Date" indexed="YES"/>
+        <attribute name="parentId" optional="YES" attributeType="String"/>
+        <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="storageKey" optional="YES" attributeType="String"/>
+        <attribute name="uuid" optional="YES" attributeType="String" indexed="YES"/>
+    </entity>
+    <entity name="Pathogen">
+        <attribute name="createdBy" optional="YES" attributeType="String"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date"/>
+        <attribute name="deprecated" attributeType="Boolean" defaultValueString="NO"/>
+        <attribute name="inUseBy" optional="YES" attributeType="String"/>
+        <attribute name="modifiedBy" optional="YES" attributeType="String"/>
+        <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="presentationId" attributeType="String"/>
+        <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="uuid" attributeType="String"/>
+    </entity>
+    <entity name="Presentation">
+        <attribute name="createdBy" optional="YES" attributeType="String"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date"/>
+        <attribute name="deprecated" attributeType="Boolean" defaultValueString="NO"/>
+        <attribute name="diseaseId" attributeType="String"/>
+        <attribute name="inUseBy" optional="YES" attributeType="String"/>
+        <attribute name="modifiedBy" optional="YES" attributeType="String"/>
+        <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
+        <attribute name="overview" optional="YES" attributeType="String"/>
+        <attribute name="presentationGroupId" optional="YES" attributeType="String"/>
+        <attribute name="presentationGroupJoin" optional="YES" attributeType="String"/>
+        <attribute name="presentationGroupOrder" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="uuid" attributeType="String"/>
+    </entity>
+    <entity name="PresentationGroup">
+        <attribute name="createdBy" optional="YES" attributeType="String"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date"/>
+        <attribute name="deprecated" attributeType="Boolean" defaultValueString="NO"/>
+        <attribute name="diseaseId" optional="YES" attributeType="String"/>
+        <attribute name="inUseBy" optional="YES" attributeType="String"/>
+        <attribute name="modifiedBy" optional="YES" attributeType="String"/>
+        <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
+        <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="uuid" attributeType="String"/>
+    </entity>
+    <entity name="QueueEntry" representedClassName="QueueEntry">
+        <attribute name="action" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="objectEntityName" optional="YES" attributeType="String"/>
+        <attribute name="objectUuid" optional="YES" attributeType="String"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date"/>
+        <attribute name="uuid" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Section" representedClassName="Section">
+        <attribute name="createdBy" optional="YES" attributeType="String"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date"/>
+        <attribute name="deprecated" optional="YES" attributeType="Boolean"/>
+        <attribute name="inUseBy" optional="YES" attributeType="String"/>
+        <attribute name="modifiedBy" optional="YES" attributeType="String"/>
+        <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="uuid" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Subcategory" representedClassName="Subcategory">
+        <attribute name="createdBy" optional="YES" attributeType="String"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date"/>
+        <attribute name="deprecated" attributeType="Boolean" defaultValueString="NO"/>
+        <attribute name="inUseBy" optional="YES" attributeType="String"/>
+        <attribute name="modifedBy" optional="YES" attributeType="String"/>
+        <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="uuid" attributeType="String"/>
+    </entity>
+    <entity name="Therapy">
+        <attribute name="createdBy" optional="YES" attributeType="String"/>
+        <attribute name="createdDate" optional="YES" attributeType="String"/>
+        <attribute name="deprecated" attributeType="Boolean" defaultValueString="NO"/>
+        <attribute name="dosage" optional="YES" attributeType="String"/>
+        <attribute name="duration" optional="YES" attributeType="String"/>
+        <attribute name="modifiedBy" optional="YES" attributeType="String"/>
+        <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="therapyGroupId" optional="YES" attributeType="String"/>
+        <attribute name="therapyGroupJoin" optional="YES" attributeType="String"/>
+        <attribute name="therapyGroupOrder" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="uuid" attributeType="String"/>
+    </entity>
+    <entity name="TherapyGroup">
+        <attribute name="createdBy" optional="YES" attributeType="String"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date"/>
+        <attribute name="deprecated" attributeType="Boolean" defaultValueString="NO"/>
+        <attribute name="inUseBy" optional="YES" attributeType="String"/>
+        <attribute name="modifiedBy" optional="YES" attributeType="String"/>
+        <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
+        <attribute name="pathogenId" attributeType="String"/>
+        <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="therapyNote" optional="YES" attributeType="String"/>
+        <attribute name="uuid" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="LinkedNote" positionX="-144" positionY="45" width="128" height="225"/>
+        <element name="QueueEntry" positionX="160" positionY="192" width="128" height="120"/>
+        <element name="Category" positionX="-180" positionY="-522" width="128" height="195"/>
+        <element name="Disease" positionX="-407" positionY="-288" width="128" height="210"/>
+        <element name="Presentation" positionX="-117" positionY="-288" width="128" height="240"/>
+        <element name="Pathogen" positionX="153" positionY="-279" width="128" height="195"/>
+        <element name="Section" positionX="-180" positionY="-744" width="128" height="180"/>
+        <element name="Subcategory" positionX="-9" positionY="-525" width="128" height="180"/>
+        <element name="TherapyGroup" positionX="288" positionY="-261" width="128" height="195"/>
+        <element name="Therapy" positionX="423" positionY="-267" width="128" height="240"/>
+        <element name="PresentationGroup" positionX="-254" positionY="-288" width="128" height="180"/>
+    </elements>
+</model>

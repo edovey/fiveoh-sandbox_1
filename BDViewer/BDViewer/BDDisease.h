@@ -28,7 +28,7 @@
 #define DI_OVERVIEW @"di_overview"
 
 
-@interface Disease : NSManagedObject {
+@interface BDDisease : NSManagedObject {
 @private
 }
 @property (nonatomic, retain) NSString * createdBy;
@@ -45,7 +45,7 @@
 @property (nonatomic, retain) NSString * categoryId;
 
 +(NSString *) create;
-+(Disease *) retrieveWithUUID:(NSString *)theUUID;
++(BDDisease *) retrieveWithUUID:(NSString *)theUUID;
 +(NSString *) loadWithAttributes:(NSDictionary *)theAttributeDictionary withOverwriteNewerFlag:(BOOL)overwriteNewer;
 
 -(void)commitChanges;

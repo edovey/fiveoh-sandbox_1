@@ -6,11 +6,11 @@
 //  Copyright (c) 2011 875953 Alberta, Inc. All rights reserved.
 //
 
-#import "Disease.h"
+#import "BDDisease.h"
 #import "NSString+UUID.h"
-#import "QueueEntry.h"
+#import "BDQueueEntry.h"
 
-@implementation Disease
+@implementation BDDisease
 @dynamic createdBy;
 @dynamic createdDate;
 @dynamic deprecated;
@@ -29,7 +29,7 @@
     NSManagedObjectContext *moc = [[DataController sharedInstance] managedObjectContext]; 
     NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_DISEASE inManagedObjectContext:moc];
     
-	Disease *disease = [[Disease alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+	BDDisease *disease = [[BDDisease alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
     
     disease.uuid = [NSString UUIDCreate];
     disease.createdDate = [NSDate date];
@@ -40,7 +40,7 @@
     disease.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_DISEASE intValue]];
     disease.deprecated = [NSNumber numberWithBool:NO];
     
-    [QueueEntry createWithObjectUuid:disease.uuid 
+    [BDQueueEntry createWithObjectUuid:disease.uuid 
                       withEntityName:ENTITYNAME_DISEASE 
                           withAction:CREATE_QueueEntryActionType 
                             withSave:NO];
@@ -51,9 +51,9 @@
     return uuid;
 }
 
-+(Disease *)retrieveWithUUID:(NSString *)theUUID
++(BDDisease *)retrieveWithUUID:(NSString *)theUUID
 {
-    return (Disease *)[[DataController sharedInstance] retrieveManagedObject:ENTITYNAME_DISEASE 
+    return (BDDisease *)[[DataController sharedInstance] retrieveManagedObject:ENTITYNAME_DISEASE 
                                                                            uuid:theUUID 
                                                                       targetMOC:nil];
 }
@@ -69,14 +69,14 @@
     NSString *uuid = [theAttributeDictionary valueForKey:DI_UUID];
     NSDate *modifedDate = [dateFormatter dateFromString:[theAttributeDictionary valueForKey:DI_MODIFIEDDATE]];
     
-    Disease *disease = [Disease retrieveWithUUID:uuid];
+    BDDisease *disease = [BDDisease retrieveWithUUID:uuid];
     if(nil == disease)
     {
         NSManagedObjectContext *moc = [[DataController sharedInstance] managedObjectContext]; 
         NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_DISEASE 
                                                   inManagedObjectContext:moc];
         
-        disease = [[Disease alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+        disease = [[BDDisease alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
         disease.uuid = uuid;
         
     }
@@ -129,7 +129,7 @@
     self.modifiedBy = [[UIDevice currentDevice] uniqueIdentifier];
     
     
-    [QueueEntry createWithObjectUuid:self.uuid 
+    [BDQueueEntry createWithObjectUuid:self.uuid 
                       withEntityName:ENTITYNAME_DISEASE 
                           withAction:UPDATE_QueueEntryActionType 
                             withSave:NO];

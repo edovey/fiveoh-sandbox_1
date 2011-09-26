@@ -27,7 +27,7 @@
 
 #define S3_LN_DOCUMENTTEXT @"ln_documentText"
 
-@interface LinkedNote : NSManagedObject
+@interface BDLinkedNote : NSManagedObject
 
 @property (nonatomic, retain) NSString  * uuid;
 @property (nonatomic, retain) NSDate    * createdDate;
@@ -42,7 +42,7 @@
 
 
 +(NSString *)create;
-+(LinkedNote *)retrieveWithUUID:(NSString *)theUUID;
++(BDLinkedNote *)retrieveWithUUID:(NSString *)theUUID;
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
          withOverwriteNewerFlag:(BOOL)overwriteNewer; 
 

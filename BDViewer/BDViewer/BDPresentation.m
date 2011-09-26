@@ -6,12 +6,12 @@
 //  Copyright (c) 2011 875953 Alberta, Inc. All rights reserved.
 //
 
-#import "Presentation.h"
+#import "BDPresentation.h"
 #import "NSString+UUID.h"
-#import "QueueEntry.h"
+#import "BDQueueEntry.h"
 
 
-@implementation Presentation
+@implementation BDPresentation
 @dynamic createdBy;
 @dynamic createdDate;
 @dynamic deprecated;
@@ -30,7 +30,7 @@
     NSManagedObjectContext *moc = [[DataController sharedInstance] managedObjectContext]; 
     NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_PRESENTATION inManagedObjectContext:moc];
     
-	Presentation *presentation = [[Presentation alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+	BDPresentation *presentation = [[BDPresentation alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
     
     presentation.uuid = [NSString UUIDCreate];
     presentation.createdDate = [NSDate date];
@@ -41,7 +41,7 @@
     presentation.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_PRESENTATION intValue]];
     presentation.deprecated = [NSNumber numberWithBool:NO];
     
-    [QueueEntry createWithObjectUuid:presentation.uuid 
+    [BDQueueEntry createWithObjectUuid:presentation.uuid 
                       withEntityName:ENTITYNAME_PRESENTATION 
                           withAction:CREATE_QueueEntryActionType 
                             withSave:NO];
@@ -52,9 +52,9 @@
     return uuid;
 }
 
-+(Presentation *)retrieveWithUUID:(NSString *)theUUID
++(BDPresentation *)retrieveWithUUID:(NSString *)theUUID
 {
-    return (Presentation *)[[DataController sharedInstance] retrieveManagedObject:ENTITYNAME_PRESENTATION
+    return (BDPresentation *)[[DataController sharedInstance] retrieveManagedObject:ENTITYNAME_PRESENTATION
                                                                            uuid:theUUID 
                                                                       targetMOC:nil];
 }
@@ -70,14 +70,14 @@
     NSString *uuid = [theAttributeDictionary valueForKey:PR_UUID];
     NSDate *modifedDate = [dateFormatter dateFromString:[theAttributeDictionary valueForKey:PR_MODIFIEDDATE]];
     
-    Presentation *presentation = [Presentation retrieveWithUUID:uuid];
+    BDPresentation *presentation = [BDPresentation retrieveWithUUID:uuid];
     if(nil == presentation)
     {
         NSManagedObjectContext *moc = [[DataController sharedInstance] managedObjectContext]; 
         NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_PRESENTATION 
                                                   inManagedObjectContext:moc];
         
-        presentation = [[Presentation alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+        presentation = [[BDPresentation alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
         presentation.uuid = uuid;
         
     }
@@ -129,7 +129,7 @@
     self.modifiedDate = [NSDate date];
     self.modifiedBy = [[UIDevice currentDevice] uniqueIdentifier];
     
-    [QueueEntry createWithObjectUuid:self.uuid 
+    [BDQueueEntry createWithObjectUuid:self.uuid 
                       withEntityName:ENTITYNAME_PRESENTATION 
                           withAction:UPDATE_QueueEntryActionType 
                             withSave:NO];

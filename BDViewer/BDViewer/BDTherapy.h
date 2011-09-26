@@ -31,7 +31,7 @@
 #define TH_DURATION @"th_duration"
 #define TH_NAME @"th_name"
 
-@interface Therapy : NSManagedObject {
+@interface BDTherapy : NSManagedObject {
 @private
 }
 @property (nonatomic, retain) NSString * createdBy;
@@ -50,7 +50,7 @@
 @property (nonatomic, retain) NSString * uuid;
 
 +(NSString *)create;
-+(Therapy *)retrieveWithUUID:(NSString *)theUUID;
++(BDTherapy *)retrieveWithUUID:(NSString *)theUUID;
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
          withOverwriteNewerFlag:(BOOL)overwriteNewer; 
 

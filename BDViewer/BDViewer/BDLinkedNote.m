@@ -6,16 +6,16 @@
 //  Copyright (c) 2011 TLA Digital Projects. All rights reserved.
 //
 
-#import "LinkedNote.h"
+#import "BDLinkedNote.h"
 #import "NSString+UUID.h"
-#import "QueueEntry.h"
+#import "BDQueueEntry.h"
 
-@interface LinkedNote()
+@interface BDLinkedNote()
 -(NSString *)generateStorageKey;
 @end
 
 
-@implementation LinkedNote
+@implementation BDLinkedNote
 
 @dynamic uuid;
 @dynamic createdDate;
@@ -33,7 +33,7 @@
     NSManagedObjectContext *moc = [[DataController sharedInstance] managedObjectContext]; 
     NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_LINKEDNOTE inManagedObjectContext:moc];
 
-	LinkedNote *document = [[LinkedNote alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+	BDLinkedNote *document = [[BDLinkedNote alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
 
     document.uuid = [NSString UUIDCreate];
     document.createdDate = [NSDate date];
@@ -46,7 +46,7 @@
     
     document.storageKey = [NSString stringWithFormat:@"bd~%@.txt", document.uuid];
     
-    [QueueEntry createWithObjectUuid:document.uuid 
+    [BDQueueEntry createWithObjectUuid:document.uuid 
                       withEntityName:ENTITYNAME_LINKEDNOTE 
                           withAction:CREATE_QueueEntryActionType 
                             withSave:NO];
@@ -57,9 +57,9 @@
     return uuid;
 }
 
-+(LinkedNote *)retrieveWithUUID:(NSString *)theUUID
++(BDLinkedNote *)retrieveWithUUID:(NSString *)theUUID
 {
-    return (LinkedNote *)[[DataController sharedInstance] retrieveManagedObject:ENTITYNAME_LINKEDNOTE 
+    return (BDLinkedNote *)[[DataController sharedInstance] retrieveManagedObject:ENTITYNAME_LINKEDNOTE 
                                                                                uuid:theUUID 
                                                                           targetMOC:nil];
 }
@@ -75,14 +75,14 @@
     NSString *uuid = [theAttributeDictionary valueForKey:LN_UUID];
     NSDate *modifedDate = [dateFormatter dateFromString:[theAttributeDictionary valueForKey:LN_MODIFIEDDATE]];
     
-    LinkedNote *document = [LinkedNote retrieveWithUUID:uuid];
+    BDLinkedNote *document = [BDLinkedNote retrieveWithUUID:uuid];
     if(nil == document)
     {
         NSManagedObjectContext *moc = [[DataController sharedInstance] managedObjectContext]; 
         NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_LINKEDNOTE 
                                                   inManagedObjectContext:moc];
         
-        document = [[LinkedNote alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+        document = [[BDLinkedNote alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
         document.uuid = uuid;
         
     }
@@ -142,7 +142,7 @@
     
     
     
-    [QueueEntry createWithObjectUuid:self.uuid 
+    [BDQueueEntry createWithObjectUuid:self.uuid 
                       withEntityName:ENTITYNAME_LINKEDNOTE 
                           withAction:UPDATE_QueueEntryActionType 
                             withSave:NO];

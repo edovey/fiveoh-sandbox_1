@@ -26,7 +26,7 @@
 #define PA_PRESENTATIONID @"pa_presentationId"
 #define PA_NAME @"pa_name"
 
-@interface Pathogen : NSManagedObject {
+@interface BDPathogen : NSManagedObject {
 @private
 }
 @property (nonatomic, retain) NSString * createdBy;
@@ -41,7 +41,7 @@
 @property (nonatomic, retain) NSString * uuid;
 
 +(NSString *)create;
-+(Pathogen *)retrieveWithUUID:(NSString *)theUUID;
++(BDPathogen *)retrieveWithUUID:(NSString *)theUUID;
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
          withOverwriteNewerFlag:(BOOL)overwriteNewer; 
 

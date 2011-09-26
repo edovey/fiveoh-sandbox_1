@@ -7,7 +7,7 @@
 //
 
 #import "PrototypeView.h"
-#import "LinkedNote.h"
+#import "BDLinkedNote.h"
 #import "RepositoryHandler.h"
 
 @implementation PrototypeView
@@ -77,14 +77,14 @@
     NSString *uuid = self.infoLabel.text;
     NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) 
     {
-        LinkedNote *linkeNote = evaluatedObject;
+        BDLinkedNote *linkeNote = evaluatedObject;
         return ([linkeNote.uuid isEqualToString:uuid]);
     } ];
     
     NSArray *documentArray = [self.documentArray filteredArrayUsingPredicate:predicate];
     if([documentArray count] > 0)
     {
-        LinkedNote *document = [documentArray objectAtIndex:0];
+        BDLinkedNote *document = [documentArray objectAtIndex:0];
         document.storageKey = self.repositoryUrlTextField.text;
         document.documentText = self.documentTextTextView.text;
         [document commitChanges];
@@ -111,7 +111,7 @@
 
 - (IBAction)createAction:(id)sender 
 {
-    NSString *uuid = [LinkedNote create];
+    NSString *uuid = [BDLinkedNote create];
     NSLog(@"new uuid %@", uuid);
     
     self.documentArray = [[DataController sharedInstance] allInstancesOf:ENTITYNAME_LINKEDNOTE 
@@ -145,7 +145,7 @@
     }
     
     // Configure the cell...
-    LinkedNote *entry = [self.documentArray objectAtIndex:indexPath.row];
+    BDLinkedNote *entry = [self.documentArray objectAtIndex:indexPath.row];
     cell.textLabel.text = entry.uuid;
     
     return cell;
@@ -159,7 +159,7 @@
 	[dateFormatter setTimeStyle:NSDateFormatterFullStyle];
 	[dateFormatter setDateFormat:DATETIMEFORMAT];
 
-    LinkedNote *entry = [self.documentArray objectAtIndex:indexPath.row];
+    BDLinkedNote *entry = [self.documentArray objectAtIndex:indexPath.row];
     self.infoLabel.text = entry.uuid;
     self.repositoryUrlTextField.text = entry.storageKey;
     self.documentTextTextView.text = entry.documentText;

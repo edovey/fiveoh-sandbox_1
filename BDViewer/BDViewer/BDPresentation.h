@@ -29,7 +29,7 @@
 #define PR_NAME @"pr_name"
 
 
-@interface Presentation : NSManagedObject {
+@interface BDPresentation : NSManagedObject {
 @private
 }
 @property (nonatomic, retain) NSString * createdBy;
@@ -46,7 +46,7 @@
 @property (nonatomic, retain) NSString * uuid;
 
 +(NSString *)create;
-+(Presentation *)retrieveWithUUID:(NSString *)theUUID;
++(BDPresentation *)retrieveWithUUID:(NSString *)theUUID;
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
          withOverwriteNewerFlag:(BOOL)overwriteNewer; 
 

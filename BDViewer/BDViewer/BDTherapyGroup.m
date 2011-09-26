@@ -6,12 +6,12 @@
 //  Copyright (c) 2011 875953 Alberta, Inc. All rights reserved.
 //
 
-#import "TherapyGroup.h"
+#import "BDTherapyGroup.h"
 #import "NSString+UUID.h"
-#import "QueueEntry.h"
+#import "BDQueueEntry.h"
 
 
-@implementation TherapyGroup
+@implementation BDTherapyGroup
 @dynamic createdBy;
 @dynamic createdDate;
 @dynamic deprecated;
@@ -29,7 +29,7 @@
     NSManagedObjectContext *moc = [[DataController sharedInstance] managedObjectContext]; 
     NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_THERAPYGROUP inManagedObjectContext:moc];
     
-	TherapyGroup *therapyGroup = [[TherapyGroup alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+	BDTherapyGroup *therapyGroup = [[BDTherapyGroup alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
     
     therapyGroup.uuid = [NSString UUIDCreate];
     therapyGroup.createdDate = [NSDate date];
@@ -40,7 +40,7 @@
     therapyGroup.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_THERAPYGROUP intValue]];
     therapyGroup.deprecated = [NSNumber numberWithBool:NO];
     
-    [QueueEntry createWithObjectUuid:therapyGroup.uuid 
+    [BDQueueEntry createWithObjectUuid:therapyGroup.uuid 
                       withEntityName:ENTITYNAME_THERAPYGROUP 
                           withAction:CREATE_QueueEntryActionType 
                             withSave:NO];
@@ -51,9 +51,9 @@
     return uuid;
 }
 
-+(TherapyGroup *)retrieveWithUUID:(NSString *)theUUID
++(BDTherapyGroup *)retrieveWithUUID:(NSString *)theUUID
 {
-    return (TherapyGroup *)[[DataController sharedInstance] retrieveManagedObject:ENTITYNAME_THERAPYGROUP
+    return (BDTherapyGroup *)[[DataController sharedInstance] retrieveManagedObject:ENTITYNAME_THERAPYGROUP
                                                                            uuid:theUUID 
                                                                       targetMOC:nil];
 }
@@ -69,14 +69,14 @@
     NSString *uuid = [theAttributeDictionary valueForKey:TG_UUID];
     NSDate *modifedDate = [dateFormatter dateFromString:[theAttributeDictionary valueForKey:TG_MODIFIEDDATE]];
     
-    TherapyGroup *therapyGroup = [TherapyGroup retrieveWithUUID:uuid];
+    BDTherapyGroup *therapyGroup = [BDTherapyGroup retrieveWithUUID:uuid];
     if(nil == therapyGroup)
     {
         NSManagedObjectContext *moc = [[DataController sharedInstance] managedObjectContext]; 
         NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_THERAPYGROUP 
                                                   inManagedObjectContext:moc];
         
-        therapyGroup = [[TherapyGroup alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+        therapyGroup = [[BDTherapyGroup alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
         therapyGroup.uuid = uuid;
         
     }
@@ -132,7 +132,7 @@
     self.modifiedDate = [NSDate date];
     self.modifiedBy = [[UIDevice currentDevice] uniqueIdentifier];
     
-    [QueueEntry createWithObjectUuid:self.uuid 
+    [BDQueueEntry createWithObjectUuid:self.uuid 
                       withEntityName:ENTITYNAME_THERAPYGROUP 
                           withAction:UPDATE_QueueEntryActionType 
                             withSave:NO];

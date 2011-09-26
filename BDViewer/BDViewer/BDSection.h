@@ -1,5 +1,5 @@
 //
-//  Category.h
+//  Section.h
 //  BDViewer
 //
 //  Created by GrubbyHedgehog on 11-09-19.
@@ -9,27 +9,24 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-#define SCHEMAVERSION_CATEGORY @"1"
-#define DOMAIN_CATEGORY @"bd_test2"
-#define BUCKET_CATEGORY @"bdDataStore"
-#define ENTITYNAME_CATEGORY @"Category"
+#define SCHEMAVERSION_SECTION @"1"
+#define DOMAIN_SECTION @"bd_test2"
+#define BUCKET_SECTION @"bdDataStore"
+#define ENTITYNAME_SECTION @"Section"
 
-#define CT_UUID @"ct_uuid"
-#define CT_SCHEMAVERSION @"ct_schemaVersion"
-#define CT_CREATEDDATE @"ct_createdDate"
-#define CT_CREATEDBY @"ct_createdBy"
-#define CT_MODIFIEDDATE @"ct_modifiedDate"
-#define CT_MODIFIEDBY @"ct_modifiedBy"
-#define CT_STORAGEKEY @"ct_storageKey"
-#define CT_DEPRECATED @"ct_deprecated"
-#define CT_INUSEBY @"ct_inUseBy"
-#define CT_SECTIONID @"ct_sectionId"
-#define CT_NAME @"ct_name"
+#define SN_UUID @"sn_uuid"
+#define SN_SCHEMAVERSION @"sn_schemaVersion"
+#define SN_CREATEDDATE @"sn_createdDate"
+#define SN_CREATEDBY @"sn_createdBy"
+#define SN_MODIFIEDDATE @"sn_modifiedDate"
+#define SN_MODIFIEDBY @"sn_modifiedBy"
+#define SN_DEPRECATED @"sn_deprecated"
+#define SN_INUSEBY @"sn_inUseBy"
+#define SN_NAME @"sn_name"
 
-@interface Category : NSManagedObject
+@interface BDSection : NSManagedObject
 
 @property (nonatomic, retain) NSString * uuid;
-@property (nonatomic, retain) NSString * sectionId;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * createdBy;
 @property (nonatomic, retain) NSDate * createdDate;
@@ -40,9 +37,10 @@
 @property (nonatomic, retain) NSNumber * schemaVersion;
 
 +(NSString *)create;
-+(Category *)retrieveWithUUID:(NSString *)theUUID;
++(BDSection *)retrieveWithUUID:(NSString *)theUUID;
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
          withOverwriteNewerFlag:(BOOL)overwriteNewer; 
 
 -(void)commitChanges;
 @end
+

@@ -8,17 +8,22 @@
 
 #import "RepositoryHandler.h"
 #import "RepositoryConstants.h"
-#import "QueueEntry.h"
-#import "LinkedNote.h"
+#import "BDQueueEntry.h"
+#import "BDLinkedNote.h"
+#import "BDSection.h"
+#import "BDCategory.h"
+#import "BDSubcategory.h"
+#import "BDDisease.h"
+#import "BDPresentation.h"
+#import "BDTherapyGroup.h"
+#import "BDTherapy.h"
 
 #import <AWSiOSSDK/SimpleDB/AmazonSimpleDBClient.h>
 #import "SdbRequestDelegate.h"
 
-#import "LinkedNote.h"
-
 @interface RepositoryHandler()
 
--(SimpleDBPutAttributesRequest *)sdbPutAttributeRequestWithEditorDocument:(LinkedNote *)editorDocument;
+-(SimpleDBPutAttributesRequest *)sdbPutAttributeRequestWithEditorDocument:(BDLinkedNote *)editorDocument;
 -(int)pushQueuedEntries;
 -(NSString *)loadEditorDocumentwithItemName:(NSString *)theItemName;
 
@@ -118,7 +123,7 @@
         
         for (SimpleDBItem *item in selectResponse.items) 
         {            
-            LinkedNote *document = [LinkedNote retrieveWithUUID:[handler loadEditorDocumentwithItemName:item.name]];
+            BDLinkedNote *document = [BDLinkedNote retrieveWithUUID:[handler loadEditorDocumentwithItemName:item.name]];
             
             if ((nil != document) && (nil != document.storageKey) && ([document.storageKey length] > 0))
             {
@@ -175,11 +180,11 @@
     int processCount = 0;
     while([queueEntries count] > 0)
     {
-        QueueEntry *queueEntry = [queueEntries objectAtIndex:0];
+        BDQueueEntry *queueEntry = [queueEntries objectAtIndex:0];
         
         if ([queueEntry.objectEntityName isEqualToString:ENTITYNAME_LINKEDNOTE]) 
         {
-            LinkedNote *document = [LinkedNote retrieveWithUUID:queueEntry.objectUuid];
+            BDLinkedNote *document = [BDLinkedNote retrieveWithUUID:queueEntry.objectUuid];
             
             document.inUseBy = @"";
             
@@ -215,7 +220,7 @@
     return processCount;
 }
 
--(SimpleDBPutAttributesRequest *)sdbPutAttributeRequestWithEditorDocument:(LinkedNote *)editorDocument
+-(SimpleDBPutAttributesRequest *)sdbPutAttributeRequestWithEditorDocument:(BDLinkedNote *)editorDocument
 {
 
     NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
@@ -290,7 +295,7 @@
                                     forKey:attr.name];
         }
         
-        documentUUID = [LinkedNote loadWithAttributes:attributeDictionary withOverwriteNewerFlag:NO];        
+        documentUUID = [BDLinkedNote loadWithAttributes:attributeDictionary withOverwriteNewerFlag:NO];        
     }
     @catch (AmazonServiceException *exception) {
         NSLog(@"Exception = %@", exception);

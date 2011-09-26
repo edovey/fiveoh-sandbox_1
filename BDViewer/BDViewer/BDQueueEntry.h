@@ -18,7 +18,7 @@ typedef enum
     DEPRECATE_QueueEntryActionType = 2
 } QueueEntryActionType;
 
-@interface QueueEntry : NSManagedObject
+@interface BDQueueEntry : NSManagedObject
 
 @property (nonatomic, retain) NSString      * uuid;
 @property (nonatomic, retain) NSDate        * timestamp;
@@ -31,6 +31,6 @@ typedef enum
                  withAction:(QueueEntryActionType)theActionType 
                    withSave:(BOOL)save;
 
-+(QueueEntry *)retrieveForObjectUuid:(NSString *)theUuid;
++(BDQueueEntry *)retrieveForObjectUuid:(NSString *)theUuid;
 
 @end

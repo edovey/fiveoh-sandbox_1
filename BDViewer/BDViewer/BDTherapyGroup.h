@@ -27,7 +27,7 @@
 #define TG_THERAPYNOTE @"tg_therapyNote"
 #define TG_DISPLAYORDER @"tg_displayOrder"
 
-@interface TherapyGroup : NSManagedObject {
+@interface BDTherapyGroup : NSManagedObject {
 @private
 }
 @property (nonatomic, retain) NSString * createdBy;
@@ -43,7 +43,7 @@
 @property (nonatomic, retain) NSString * uuid;
 
 +(NSString *)create;
-+(TherapyGroup *)retrieveWithUUID:(NSString *)theUUID;
++(BDTherapyGroup *)retrieveWithUUID:(NSString *)theUUID;
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
          withOverwriteNewerFlag:(BOOL)overwriteNewer; 
 

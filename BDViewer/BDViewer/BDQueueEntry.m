@@ -6,9 +6,9 @@
 //  Copyright (c) 2011 TLA Digital Projects. All rights reserved.
 //
 
-#import "QueueEntry.h"
+#import "BDQueueEntry.h"
 
-@implementation QueueEntry
+@implementation BDQueueEntry
 
 @dynamic uuid;
 @dynamic timestamp;
@@ -21,13 +21,13 @@
                   withAction:(QueueEntryActionType)theActionType 
                     withSave:(BOOL)save
 {
-    QueueEntry *existingEntry = [QueueEntry retrieveForObjectUuid:theUuid];
+    BDQueueEntry *existingEntry = [BDQueueEntry retrieveForObjectUuid:theUuid];
     if(nil == existingEntry)
     {
         NSManagedObjectContext *moc = [[DataController sharedInstance] managedObjectContext]; 
         NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_QUEUEENTRY inManagedObjectContext:moc];
         
-        QueueEntry *entry = [[QueueEntry alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+        BDQueueEntry *entry = [[BDQueueEntry alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
         entry.uuid = [NSString UUIDCreate];
         entry.timestamp = [NSDate date];
         entry.objectUuid = theUuid;
@@ -37,9 +37,9 @@
     }
 }
 
-+(QueueEntry *)retrieveForObjectUuid:(NSString *)theUuid
++(BDQueueEntry *)retrieveForObjectUuid:(NSString *)theUuid
 {    
-    return (QueueEntry *)[[DataController sharedInstance] retrieveManagedObjectForValue:ENTITYNAME_QUEUEENTRY withKey:@"objectUuid" withValue:theUuid withMOC:nil];
+    return (BDQueueEntry *)[[DataController sharedInstance] retrieveManagedObjectForValue:ENTITYNAME_QUEUEENTRY withKey:@"objectUuid" withValue:theUuid withMOC:nil];
 }
 
 @end

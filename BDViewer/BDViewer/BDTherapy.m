@@ -6,12 +6,12 @@
 //  Copyright (c) 2011 875953 Alberta, Inc. All rights reserved.
 //
 
-#import "Therapy.h"
+#import "BDTherapy.h"
 #import "NSString+UUID.h"
-#import "QueueEntry.h"
+#import "BDQueueEntry.h"
 
 
-@implementation Therapy
+@implementation BDTherapy
 @dynamic createdBy;
 @dynamic createdDate;
 @dynamic deprecated;
@@ -32,7 +32,7 @@
     NSManagedObjectContext *moc = [[DataController sharedInstance] managedObjectContext]; 
     NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_THERAPY inManagedObjectContext:moc];
     
-	Therapy *therapy = [[Therapy alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+	BDTherapy *therapy = [[BDTherapy alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
     
     therapy.uuid = [NSString UUIDCreate];
     therapy.createdDate = [NSDate date];
@@ -43,7 +43,7 @@
     therapy.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_THERAPY intValue]];
     therapy.deprecated = [NSNumber numberWithBool:NO];
     
-    [QueueEntry createWithObjectUuid:therapy.uuid 
+    [BDQueueEntry createWithObjectUuid:therapy.uuid 
                       withEntityName:ENTITYNAME_THERAPY 
                           withAction:CREATE_QueueEntryActionType 
                             withSave:NO];
@@ -54,9 +54,9 @@
     return uuid;
 }
 
-+(Therapy *)retrieveWithUUID:(NSString *)theUUID
++(BDTherapy *)retrieveWithUUID:(NSString *)theUUID
 {
-    return (Therapy *)[[DataController sharedInstance] retrieveManagedObject:ENTITYNAME_THERAPY 
+    return (BDTherapy *)[[DataController sharedInstance] retrieveManagedObject:ENTITYNAME_THERAPY 
                                                                            uuid:theUUID 
                                                                       targetMOC:nil];
 }
@@ -72,14 +72,14 @@
     NSString *uuid = [theAttributeDictionary valueForKey:TH_UUID];
     NSDate *modifedDate = [dateFormatter dateFromString:[theAttributeDictionary valueForKey:TH_MODIFIEDDATE]];
     
-    Therapy *therapy = [Therapy retrieveWithUUID:uuid];
+    BDTherapy *therapy = [BDTherapy retrieveWithUUID:uuid];
     if(nil == therapy)
     {
         NSManagedObjectContext *moc = [[DataController sharedInstance] managedObjectContext]; 
         NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_THERAPY 
                                                   inManagedObjectContext:moc];
         
-        therapy = [[Therapy alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+        therapy = [[BDTherapy alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
         therapy.uuid = uuid;
         
     }
@@ -134,7 +134,7 @@
     self.modifiedBy = [[UIDevice currentDevice] uniqueIdentifier];
     
    
-    [QueueEntry createWithObjectUuid:self.uuid 
+    [BDQueueEntry createWithObjectUuid:self.uuid 
                       withEntityName:ENTITYNAME_THERAPY
                           withAction:UPDATE_QueueEntryActionType 
                             withSave:NO];

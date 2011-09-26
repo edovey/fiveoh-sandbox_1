@@ -6,12 +6,12 @@
 //  Copyright (c) 2011 TLA Digital Projects. All rights reserved.
 //
 
-#import "Subcategory.h"
+#import "BDSubcategory.h"
 #import "NSString+UUID.h"
-#import "QueueEntry.h"
+#import "BDQueueEntry.h"
 
 
-@implementation Subcategory
+@implementation BDSubcategory
 
 @dynamic uuid;
 @dynamic name;
@@ -29,7 +29,7 @@
     NSManagedObjectContext *moc = [[DataController sharedInstance] managedObjectContext]; 
     NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_SUBCATEGORY inManagedObjectContext:moc];
     
-	Subcategory *subcategory = [[Subcategory alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+	BDSubcategory *subcategory = [[BDSubcategory alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
     
     subcategory.uuid = [NSString UUIDCreate];
     subcategory.name = nil;
@@ -43,7 +43,7 @@
     subcategory.deprecated = [NSNumber numberWithBool:NO];
     
 
-    [QueueEntry createWithObjectUuid:subcategory.uuid 
+    [BDQueueEntry createWithObjectUuid:subcategory.uuid 
                       withEntityName:ENTITYNAME_SUBCATEGORY 
                           withAction:CREATE_QueueEntryActionType 
                             withSave:NO];
@@ -54,9 +54,9 @@
     return uuid;
 }
 
-+(Subcategory *)retrieveWithUUID:(NSString *)theUUID
++(BDSubcategory *)retrieveWithUUID:(NSString *)theUUID
 {
-    return (Subcategory *)[[DataController sharedInstance] retrieveManagedObject:ENTITYNAME_SUBCATEGORY 
+    return (BDSubcategory *)[[DataController sharedInstance] retrieveManagedObject:ENTITYNAME_SUBCATEGORY 
                                                                            uuid:theUUID 
                                                                       targetMOC:nil];
 }
@@ -72,14 +72,14 @@
     NSString *uuid = [theAttributeDictionary valueForKey:SC_UUID];
     NSDate *modifedDate = [dateFormatter dateFromString:[theAttributeDictionary valueForKey:SC_MODIFIEDDATE]];
     
-    Subcategory *subcategory = [Subcategory retrieveWithUUID:uuid];
+    BDSubcategory *subcategory = [BDSubcategory retrieveWithUUID:uuid];
     if(nil == subcategory)
     {
         NSManagedObjectContext *moc = [[DataController sharedInstance] managedObjectContext]; 
         NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_SUBCATEGORY 
                                                   inManagedObjectContext:moc];
         
-        subcategory = [[Subcategory alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+        subcategory = [[BDSubcategory alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
         subcategory.uuid = uuid;
         
     }
@@ -135,7 +135,7 @@
     self.modifiedBy = [[UIDevice currentDevice] uniqueIdentifier];
     
     
-    [QueueEntry createWithObjectUuid:self.uuid 
+    [BDQueueEntry createWithObjectUuid:self.uuid 
                       withEntityName:ENTITYNAME_SUBCATEGORY 
                           withAction:UPDATE_QueueEntryActionType 
                             withSave:NO];

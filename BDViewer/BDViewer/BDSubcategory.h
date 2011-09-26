@@ -1,5 +1,5 @@
 //
-//  Section.h
+//  Subcategory.h
 //  BDViewer
 //
 //  Created by GrubbyHedgehog on 11-09-19.
@@ -9,25 +9,29 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-#define SCHEMAVERSION_SECTION @"1"
-#define DOMAIN_SECTION @"bd_test2"
-#define BUCKET_SECTION @"bdDataStore"
-#define ENTITYNAME_SECTION @"Section"
 
-#define SN_UUID @"sn_uuid"
-#define SN_SCHEMAVERSION @"sn_schemaVersion"
-#define SN_CREATEDDATE @"sn_createdDate"
-#define SN_CREATEDBY @"sn_createdBy"
-#define SN_MODIFIEDDATE @"sn_modifiedDate"
-#define SN_MODIFIEDBY @"sn_modifiedBy"
-#define SN_DEPRECATED @"sn_deprecated"
-#define SN_INUSEBY @"sn_inUseBy"
-#define SN_NAME @"sn_name"
+#define SCHEMAVERSION_SUBCATEGORY @"1"
+#define DOMAIN_SUBCATEGORY @"bd_test2"
+#define BUCKET_SUBCATEGORY @"bdDataStore"
+#define ENTITYNAME_SUBCATEGORY @"LinkedNote"
 
-@interface Section : NSManagedObject
+#define SC_UUID @"sc_uuid"
+#define SC_NAME @"sc_name"
+#define SC_SCHEMAVERSION @"sc_schemaVersion"
+#define SC_CREATEDDATE @"sc_createdDate"
+#define SC_CREATEDBY @"sc_createdBy"
+#define SC_MODIFIEDDATE @"sc_modifiedDate"
+#define SC_MODIFIEDBY @"sc_modifiedBy"
+#define SC_STORAGEKEY @"sc_storageKey"
+#define SC_DEPRECATED @"sc_deprecated"
+#define SC_INUSEBY @"sc_inUseBy"
+#define SC_CATEGORYID @"sc_categoryId"
+
+@interface BDSubcategory : NSManagedObject
 
 @property (nonatomic, retain) NSString * uuid;
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString * categoryId;
 @property (nonatomic, retain) NSString * createdBy;
 @property (nonatomic, retain) NSDate * createdDate;
 @property (nonatomic, retain) NSNumber * deprecated;
@@ -37,10 +41,9 @@
 @property (nonatomic, retain) NSNumber * schemaVersion;
 
 +(NSString *)create;
-+(Section *)retrieveWithUUID:(NSString *)theUUID;
++(BDSubcategory *)retrieveWithUUID:(NSString *)theUUID;
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
          withOverwriteNewerFlag:(BOOL)overwriteNewer; 
 
 -(void)commitChanges;
 @end
-

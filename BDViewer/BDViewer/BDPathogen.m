@@ -6,12 +6,12 @@
 //  Copyright (c) 2011 875953 Alberta, Inc. All rights reserved.
 //
 
-#import "Pathogen.h"
+#import "BDPathogen.h"
 #import "NSString+UUID.h"
-#import "QueueEntry.h"
+#import "BDQueueEntry.h"
 
 
-@implementation Pathogen
+@implementation BDPathogen
 @dynamic createdBy;
 @dynamic createdDate;
 @dynamic deprecated;
@@ -28,7 +28,7 @@
     NSManagedObjectContext *moc = [[DataController sharedInstance] managedObjectContext]; 
     NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_PATHOGEN inManagedObjectContext:moc];
     
-	Pathogen *pathogen = [[Pathogen alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+	BDPathogen *pathogen = [[BDPathogen alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
     
     pathogen.uuid = [NSString UUIDCreate];
     pathogen.createdDate = [NSDate date];
@@ -39,7 +39,7 @@
     pathogen.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_PATHOGEN intValue]];
     pathogen.deprecated = [NSNumber numberWithBool:NO];
       
-    [QueueEntry createWithObjectUuid:pathogen.uuid 
+    [BDQueueEntry createWithObjectUuid:pathogen.uuid 
                       withEntityName:ENTITYNAME_PATHOGEN 
                           withAction:CREATE_QueueEntryActionType 
                             withSave:NO];
@@ -50,9 +50,9 @@
     return uuid;
 }
 
-+(Pathogen *)retrieveWithUUID:(NSString *)theUUID
++(BDPathogen *)retrieveWithUUID:(NSString *)theUUID
 {
-    return (Pathogen *)[[DataController sharedInstance] retrieveManagedObject:ENTITYNAME_PATHOGEN 
+    return (BDPathogen *)[[DataController sharedInstance] retrieveManagedObject:ENTITYNAME_PATHOGEN 
                                                                            uuid:theUUID 
                                                                       targetMOC:nil];
 }
@@ -69,14 +69,14 @@
     NSString *uuid = [theAttributeDictionary valueForKey:PA_UUID];
     NSDate *modifedDate = [dateFormatter dateFromString:[theAttributeDictionary valueForKey:PA_MODIFIEDDATE]];
     
-    Pathogen *pathogen = [Pathogen retrieveWithUUID:uuid];
+    BDPathogen *pathogen = [BDPathogen retrieveWithUUID:uuid];
     if(nil == pathogen)
     {
         NSManagedObjectContext *moc = [[DataController sharedInstance] managedObjectContext]; 
         NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_PATHOGEN 
                                                   inManagedObjectContext:moc];
         
-        pathogen = [[Pathogen alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+        pathogen = [[BDPathogen alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
         pathogen.uuid = uuid;
         
     }
@@ -126,7 +126,7 @@
     self.modifiedDate = [NSDate date];
     self.modifiedBy = [[UIDevice currentDevice] uniqueIdentifier];
     
-    [QueueEntry createWithObjectUuid:self.uuid 
+    [BDQueueEntry createWithObjectUuid:self.uuid 
                       withEntityName:ENTITYNAME_PATHOGEN 
                           withAction:UPDATE_QueueEntryActionType 
                             withSave:NO];

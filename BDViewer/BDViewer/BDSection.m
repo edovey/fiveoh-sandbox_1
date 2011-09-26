@@ -6,11 +6,11 @@
 //  Copyright (c) 2011 TLA Digital Projects. All rights reserved.
 //
 
-#import "Section.h"
+#import "BDSection.h"
 #import "NSString+UUID.h"
-#import "QueueEntry.h"
+#import "BDQueueEntry.h"
 
-@implementation Section
+@implementation BDSection
 
 @dynamic uuid;
 @dynamic name;
@@ -28,7 +28,7 @@
     NSManagedObjectContext *moc = [[DataController sharedInstance] managedObjectContext]; 
     NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_SECTION inManagedObjectContext:moc];
     
-	Section  *section = [[Section alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+	BDSection  *section = [[BDSection alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
     
     section.uuid = [NSString UUIDCreate];
     section.createdDate = [NSDate date];
@@ -39,7 +39,7 @@
     section.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_SECTION intValue]];
     section.deprecated = [NSNumber numberWithBool:NO];
         
-    [QueueEntry createWithObjectUuid:section.uuid 
+    [BDQueueEntry createWithObjectUuid:section.uuid 
                       withEntityName:ENTITYNAME_SECTION
                           withAction:CREATE_QueueEntryActionType 
                             withSave:NO];
@@ -50,9 +50,9 @@
     return uuid;
 }
 
-+(Section *)retrieveWithUUID:(NSString *)theUUID
++(BDSection *)retrieveWithUUID:(NSString *)theUUID
 {
-    return (Section *)[[DataController sharedInstance] retrieveManagedObject:ENTITYNAME_SECTION
+    return (BDSection *)[[DataController sharedInstance] retrieveManagedObject:ENTITYNAME_SECTION
                                                                            uuid:theUUID 
                                                                       targetMOC:nil];
 }
@@ -68,14 +68,14 @@
     NSString *uuid = [theAttributeDictionary valueForKey:SN_UUID];
     NSDate *modifedDate = [dateFormatter dateFromString:[theAttributeDictionary valueForKey:SN_MODIFIEDDATE]];
     
-    Section *section = [Section retrieveWithUUID:uuid];
+    BDSection *section = [BDSection retrieveWithUUID:uuid];
     if(nil == section)
     {
         NSManagedObjectContext *moc = [[DataController sharedInstance] managedObjectContext]; 
         NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_SECTION
                                                   inManagedObjectContext:moc];
         
-        section = [[Section alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+        section = [[BDSection alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
         section.uuid = uuid;
         
     }
@@ -131,7 +131,7 @@
     
     
     
-    [QueueEntry createWithObjectUuid:self.uuid 
+    [BDQueueEntry createWithObjectUuid:self.uuid 
                       withEntityName:ENTITYNAME_SECTION 
                           withAction:UPDATE_QueueEntryActionType 
                             withSave:NO];

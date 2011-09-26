@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class LinkedNote;
+@class BDLinkedNote;
 
 @interface EditorView : UIViewController 
 {
@@ -21,12 +21,12 @@
     UIButton            *orderedListButton;
     
     @private
-    LinkedNote      *editorDocument;
+    BDLinkedNote      *editorDocument;
     BOOL keyboardIsShown;
 
 }
 
-@property (nonatomic, retain) LinkedNote    *editorDocument;
+@property (nonatomic, retain) BDLinkedNote    *editorDocument;
 
 @property (nonatomic, retain) IBOutlet UIButton *orderedListButton;
 @property (nonatomic, retain) IBOutlet UIButton *unorderedListButton;

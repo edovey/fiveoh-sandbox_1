@@ -29,6 +29,11 @@
 		6E2EA37B142BB6FE00908103 /* EditorView_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E2EA377142BB6FE00908103 /* EditorView_iPhone.xib */; };
 		6E2EA37C142BB6FE00908103 /* EditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA379142BB6FE00908103 /* EditorView.m */; };
 		6E9685C2142BBE15004C5DED /* BDViewer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6E9685C0142BBE15004C5DED /* BDViewer.xcdatamodeld */; };
+		6EA646C31430C2F000A693A4 /* Disease.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EA646C21430C2F000A693A4 /* Disease.m */; };
+		6EA646C71430C33700A693A4 /* Presentation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EA646C61430C33700A693A4 /* Presentation.m */; };
+		6EA646CA1430C36500A693A4 /* Pathogen.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EA646C91430C36500A693A4 /* Pathogen.m */; };
+		6EA646CD1430C3A400A693A4 /* TherapyGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EA646CC1430C3A400A693A4 /* TherapyGroup.m */; };
+		6EA646D01430C3D700A693A4 /* Therapy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EA646CF1430C3D700A693A4 /* Therapy.m */; };
 		6EC50001142AA6BA003232D1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC50000142AA6BA003232D1 /* UIKit.framework */; };
 		6EC50003142AA6BA003232D1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC50002142AA6BA003232D1 /* Foundation.framework */; };
 		6EC50005142AA6BA003232D1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC50004142AA6BA003232D1 /* CoreGraphics.framework */; };
@@ -80,6 +85,16 @@
 		6E2EA378142BB6FE00908103 /* EditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorView.h; sourceTree = "<group>"; };
 		6E2EA379142BB6FE00908103 /* EditorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditorView.m; sourceTree = "<group>"; };
 		6E9685C1142BBE15004C5DED /* BDViewer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BDViewer.xcdatamodel; sourceTree = "<group>"; };
+		6EA646C11430C2F000A693A4 /* Disease.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Disease.h; sourceTree = "<group>"; };
+		6EA646C21430C2F000A693A4 /* Disease.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Disease.m; sourceTree = "<group>"; };
+		6EA646C51430C33700A693A4 /* Presentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Presentation.h; sourceTree = "<group>"; };
+		6EA646C61430C33700A693A4 /* Presentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Presentation.m; sourceTree = "<group>"; };
+		6EA646C81430C36500A693A4 /* Pathogen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pathogen.h; sourceTree = "<group>"; };
+		6EA646C91430C36500A693A4 /* Pathogen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pathogen.m; sourceTree = "<group>"; };
+		6EA646CB1430C3A400A693A4 /* TherapyGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TherapyGroup.h; sourceTree = "<group>"; };
+		6EA646CC1430C3A400A693A4 /* TherapyGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TherapyGroup.m; sourceTree = "<group>"; };
+		6EA646CE1430C3D700A693A4 /* Therapy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Therapy.h; sourceTree = "<group>"; };
+		6EA646CF1430C3D700A693A4 /* Therapy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Therapy.m; sourceTree = "<group>"; };
 		6EC50000142AA6BA003232D1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6EC50002142AA6BA003232D1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6EC50004142AA6BA003232D1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -178,14 +193,24 @@
 				6E2EA34E142B9E3B00908103 /* DataController.m */,
 				6E2EA34A142B9E0500908103 /* Category.h */,
 				6E2EA34B142B9E0500908103 /* Category.m */,
+				6EA646C11430C2F000A693A4 /* Disease.h */,
+				6EA646C21430C2F000A693A4 /* Disease.m */,
 				6E2EA341142B9DF200908103 /* LinkedNote.h */,
 				6E2EA342142B9DF200908103 /* LinkedNote.m */,
+				6EA646C81430C36500A693A4 /* Pathogen.h */,
+				6EA646C91430C36500A693A4 /* Pathogen.m */,
+				6EA646C51430C33700A693A4 /* Presentation.h */,
+				6EA646C61430C33700A693A4 /* Presentation.m */,
 				6E2EA350142B9EB700908103 /* QueueEntry.h */,
 				6E2EA351142B9EB700908103 /* QueueEntry.m */,
 				6E2EA343142B9DF200908103 /* Section.h */,
 				6E2EA344142B9DF200908103 /* Section.m */,
 				6E2EA345142B9DF200908103 /* Subcategory.h */,
 				6E2EA346142B9DF200908103 /* Subcategory.m */,
+				6EA646CE1430C3D700A693A4 /* Therapy.h */,
+				6EA646CF1430C3D700A693A4 /* Therapy.m */,
+				6EA646CB1430C3A400A693A4 /* TherapyGroup.h */,
+				6EA646CC1430C3A400A693A4 /* TherapyGroup.m */,
 			);
 			name = "Data Model";
 			sourceTree = "<group>";
@@ -373,6 +398,11 @@
 				6E2EA375142BB6EB00908103 /* PrototypeView.m in Sources */,
 				6E2EA37C142BB6FE00908103 /* EditorView.m in Sources */,
 				6E9685C2142BBE15004C5DED /* BDViewer.xcdatamodeld in Sources */,
+				6EA646C31430C2F000A693A4 /* Disease.m in Sources */,
+				6EA646C71430C33700A693A4 /* Presentation.m in Sources */,
+				6EA646CA1430C36500A693A4 /* Pathogen.m in Sources */,
+				6EA646CD1430C3A400A693A4 /* TherapyGroup.m in Sources */,
+				6EA646D01430C3D700A693A4 /* Therapy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

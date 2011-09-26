@@ -9,6 +9,24 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+#define SCHEMAVERSION_DISEASE @"1"
+#define DOMAIN_DISEASE @"bd_test2"
+#define BUCKET_DISEASE @"bdDataStore"
+#define ENTITYNAME_DISEASE @"Disease"
+
+#define DI_UUID @"di_uuid"
+#define DI_SCHEMAVERSION @"di_schemaVersion"
+#define DI_CREATEDDATE @"di_createdDate"
+#define DI_CREATEDBY @"di_createdBy"
+#define DI_MODIFIEDDATE @"di_modifiedDate"
+#define DI_MODIFIEDBY @"di_modifiedBy"
+#define DI_DEPRECATED @"di_deprecated"
+#define DI_INUSEBY @"di_inUseBy"
+#define DI_SUBCATEGORYID @"di_subcategoryId"
+#define DI_CATEGORYID @ "di_categoryId"
+#define DI_NAME @"di_name"
+#define DI_OVERVIEW @"di_overview"
+
 
 @interface Disease : NSManagedObject {
 @private
@@ -25,5 +43,11 @@
 @property (nonatomic, retain) NSString * subcategoryId;
 @property (nonatomic, retain) NSString * uuid;
 @property (nonatomic, retain) NSString * categoryId;
+
++(NSString *) create;
++(Disease *) retrieveWithUUID:(NSString *)theUUID;
++(NSString *) loadWithAttributes:(NSDictionary *)theAttributeDictionary withOverwriteNewerFlag:(BOOL)overwriteNewer;
+
+-(void)commitChanges;
 
 @end

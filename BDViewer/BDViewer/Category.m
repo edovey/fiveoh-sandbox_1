@@ -95,15 +95,15 @@
             case 1:
             default:
             {
-                category.name = [theAttributeDictionary valueForKey:CT_NAME];
-                category.sectionId = [theAttributeDictionary valueForKey:CT_SECTIONID];
                 category.createdBy = [theAttributeDictionary valueForKey:CT_CREATEDBY];
                 category.createdDate = [dateFormatter dateFromString:[theAttributeDictionary valueForKey:CT_CREATEDDATE]];
                 category.modifiedBy  = [theAttributeDictionary valueForKey:CT_MODIFIEDBY];
                 category.modifiedDate = modifedDate;
                 category.inUseBy = [theAttributeDictionary valueForKey:CT_INUSEBY];
                 category.deprecated = [NSNumber numberWithBool:[[theAttributeDictionary valueForKey:CT_DEPRECATED] boolValue]];
+
                 category.sectionId = [theAttributeDictionary valueForKey:CT_SECTIONID];
+                category.name = [theAttributeDictionary valueForKey:CT_NAME];
             }
                 break;
         }

@@ -22,6 +22,7 @@
 #define SN_MODIFIEDBY @"sn_modifiedBy"
 #define SN_DEPRECATED @"sn_deprecated"
 #define SN_INUSEBY @"sn_inUseBy"
+#define SN_NAME @"sn_name"
 
 @interface Section : NSManagedObject
 

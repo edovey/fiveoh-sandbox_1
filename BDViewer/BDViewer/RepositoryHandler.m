@@ -286,7 +286,7 @@
         
         for (SimpleDBAttribute *attr in response.attributes) 
         {
-            [attributeDictionary setObject:(nil == attr.value) ? [NSNull null] : attr.value
+            [attributeDictionary setObject:(nil == attr.value) ? nil : attr.value
                                     forKey:attr.name];
         }
         

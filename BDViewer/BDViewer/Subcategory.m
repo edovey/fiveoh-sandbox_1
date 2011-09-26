@@ -99,14 +99,15 @@
             case 1:
             default:
             {
-                subcategory.name = [theAttributeDictionary valueForKey:SC_NAME];
-                subcategory.categoryId = [theAttributeDictionary valueForKey:SC_CATEGORYID];
                 subcategory.createdBy = [theAttributeDictionary valueForKey:SC_CREATEDBY];
                 subcategory.createdDate = [dateFormatter dateFromString:[theAttributeDictionary valueForKey:SC_CREATEDDATE]];
                 subcategory.modifiedBy  = [theAttributeDictionary valueForKey:SC_MODIFIEDBY];
                 subcategory.modifiedDate = modifedDate;
                 subcategory.inUseBy = [theAttributeDictionary valueForKey:SC_INUSEBY];
                 subcategory.deprecated = [NSNumber numberWithBool:[[theAttributeDictionary valueForKey:SC_DEPRECATED] boolValue]];
+
+                subcategory.categoryId = [theAttributeDictionary valueForKey:SC_CATEGORYID];
+                subcategory.name = [theAttributeDictionary valueForKey:SC_NAME];
             }
                 break;
         }

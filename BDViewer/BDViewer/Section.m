@@ -101,6 +101,8 @@
                 section.modifiedDate = modifedDate;
                 section.inUseBy = [theAttributeDictionary valueForKey:SN_INUSEBY];
                 section.deprecated = [NSNumber numberWithBool:[[theAttributeDictionary valueForKey:SN_DEPRECATED] boolValue]];
+                
+                section.name = [theAttributeDictionary valueForKey:SN_NAME];
             }
                 break;
         }

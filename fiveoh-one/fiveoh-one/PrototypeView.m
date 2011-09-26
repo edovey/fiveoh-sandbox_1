@@ -7,7 +7,7 @@
 //
 
 #import "PrototypeView.h"
-#import "EditorDocument.h"
+#import "LinkedNote.h"
 #import "RepositoryHandler.h"
 
 @implementation PrototypeView
@@ -61,7 +61,7 @@
 {
     [super viewWillAppear:animated];
     
-    self.documentArray = [[DataController sharedInstance] allInstancesOf:ENTITYNAME_EDITORDOCUMENT 
+    self.documentArray = [[DataController sharedInstance] allInstancesOf:ENTITYNAME_LINKEDNOTE 
                                                                orderedBy:nil 
                                                                 loadData:NO 
                                                                targetMOC:nil];
@@ -77,14 +77,14 @@
     NSString *uuid = self.infoLabel.text;
     NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) 
     {
-        EditorDocument *document = evaluatedObject;
-        return ([document.uuid isEqualToString:uuid]);
+        LinkedNote *linkeNote = evaluatedObject;
+        return ([linkeNote.uuid isEqualToString:uuid]);
     } ];
     
     NSArray *documentArray = [self.documentArray filteredArrayUsingPredicate:predicate];
     if([documentArray count] > 0)
     {
-        EditorDocument *document = [documentArray objectAtIndex:0];
+        LinkedNote *document = [documentArray objectAtIndex:0];
         document.storageKey = self.repositoryUrlTextField.text;
         document.documentText = self.documentTextTextView.text;
         [document commitChanges];
@@ -101,7 +101,7 @@
 {
     [RepositoryHandler pullLatest];
     
-    self.documentArray = [[DataController sharedInstance] allInstancesOf:ENTITYNAME_EDITORDOCUMENT 
+    self.documentArray = [[DataController sharedInstance] allInstancesOf:ENTITYNAME_LINKEDNOTE 
                                                                orderedBy:nil 
                                                                 loadData:NO 
                                                                targetMOC:nil];
@@ -111,10 +111,10 @@
 
 - (IBAction)createAction:(id)sender 
 {
-    NSString *uuid = [EditorDocument create];
+    NSString *uuid = [LinkedNote create];
     NSLog(@"new uuid %@", uuid);
     
-    self.documentArray = [[DataController sharedInstance] allInstancesOf:ENTITYNAME_EDITORDOCUMENT 
+    self.documentArray = [[DataController sharedInstance] allInstancesOf:ENTITYNAME_LINKEDNOTE 
                                                                orderedBy:nil 
                                                                 loadData:NO 
                                                                targetMOC:nil];
@@ -145,7 +145,7 @@
     }
     
     // Configure the cell...
-    EditorDocument *entry = [self.documentArray objectAtIndex:indexPath.row];
+    LinkedNote *entry = [self.documentArray objectAtIndex:indexPath.row];
     cell.textLabel.text = entry.uuid;
     
     return cell;
@@ -159,7 +159,7 @@
 	[dateFormatter setTimeStyle:NSDateFormatterFullStyle];
 	[dateFormatter setDateFormat:DATETIMEFORMAT];
 
-    EditorDocument *entry = [self.documentArray objectAtIndex:indexPath.row];
+    LinkedNote *entry = [self.documentArray objectAtIndex:indexPath.row];
     self.infoLabel.text = entry.uuid;
     self.repositoryUrlTextField.text = entry.storageKey;
     self.documentTextTextView.text = entry.documentText;

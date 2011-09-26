@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class EditorDocument;
+@class LinkedNote;
 
 @interface EditorView : UIViewController 
 {
@@ -21,11 +21,11 @@
     UIButton            *orderedListButton;
     
     @private
-    EditorDocument      *editorDocument;
+    LinkedNote      *editorDocument;
     
 }
 
-@property (strong, nonatomic) EditorDocument    *editorDocument;
+@property (strong, nonatomic) LinkedNote    *editorDocument;
 
 @property (strong, nonatomic) IBOutlet UIButton *orderedListButton;
 @property (strong, nonatomic) IBOutlet UIButton *unorderedListButton;

@@ -9,24 +9,25 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-#define SCHEMAVERSION_EDITORDOCUMENT @"1"
-#define DOMAIN_EDITORDOCUMENT @"bd_test2"
-#define BUCKET_EDITORDOCUMENT @"bdDataStore"
-#define ENTITYNAME_EDITORDOCUMENT @"EditorDocument"
+#define SCHEMAVERSION_LINKEDNOTE @"1"
+#define DOMAIN_LINKEDNOTE @"bd_test2"
+#define BUCKET_LINKEDNOTE @"bdDataStore"
+#define ENTITYNAME_LINKEDNOTE @"LinkedNote"
 
-#define ED_UUID @"ed_uuid"
-#define ED_SCHEMAVERSION @"ed_schemaVersion"
-#define ED_CREATEDDATE @"ed_createdDate"
-#define ED_CREATEDBY @"ed_createdBy"
-#define ED_MODIFIEDDATE @"ed_modifiedDate"
-#define ED_MODIFIEDBY @"ed_modifiedBy"
-#define ED_STORAGEKEY @"ed_storageKey"
-#define ED_DEPRECATED @"ed_deprecated"
-#define ED_INUSEBY @"ed_inUseBy"
+#define LN_UUID @"ln_uuid"
+#define LN_SCHEMAVERSION @"ln_schemaVersion"
+#define LN_CREATEDDATE @"ln_createdDate"
+#define LN_CREATEDBY @"ln_createdBy"
+#define LN_MODIFIEDDATE @"ln_modifiedDate"
+#define LN_MODIFIEDBY @"ln_modifiedBy"
+#define LN_STORAGEKEY @"ln_storageKey"
+#define LN_DEPRECATED @"ln_deprecated"
+#define LN_INUSEBY @"ln_inUseBy"
+#define LN_PARENTID @"ln_parentId"
 
-#define S3_ED_DOCUMENTTEXT @"ed_documentText"
+#define S3_LN_DOCUMENTTEXT @"ln_documentText"
 
-@interface EditorDocument : NSManagedObject
+@interface LinkedNote : NSManagedObject
 
 @property (nonatomic, retain) NSString  * uuid;
 @property (nonatomic, retain) NSDate    * createdDate;
@@ -41,7 +42,7 @@
 
 
 +(NSString *)create;
-+(EditorDocument *)retrieveWithUUID:(NSString *)theUUID;
++(LinkedNote *)retrieveWithUUID:(NSString *)theUUID;
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
          withOverwriteNewerFlag:(BOOL)overwriteNewer; 
 

@@ -87,10 +87,10 @@
 {
     NSBundle *bundle = [NSBundle mainBundle];
     NSURL *sampleFileURL = [bundle URLForResource:@"WordExport" withExtension:@"htm"];
-    NSString *filePath = [bundle pathForResource:@"WordExport" ofType:@"htm"];
+//    NSString *filePath = [bundle pathForResource:@"WordExport" ofType:@"htm"];
 
     
-    NSError *error;
+//    NSError *error;
     NSString *htmlText = [NSString stringWithContentsOfURL:sampleFileURL encoding:NSUTF8StringEncoding error:NULL];
     
 //    [self.webView loadRequest:[NSURLRequest requestWithURL:sampleFileURL]];

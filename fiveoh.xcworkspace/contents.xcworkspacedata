@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:BDViewer/BDViewer.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:fourthree-two/fourthree-two.xcodeproj">
    </FileRef>
    <FileRef

@@ -7,6 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E2EA337142B95DC00908103 /* S3RequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA334142B95DC00908103 /* S3RequestDelegate.m */; };
+		6E2EA338142B95DC00908103 /* SdbRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA336142B95DC00908103 /* SdbRequestDelegate.m */; };
+		6E2EA33A142B95F600908103 /* sample.html in Resources */ = {isa = PBXBuildFile; fileRef = 6E2EA339142B95F600908103 /* sample.html */; };
+		6E2EA33F142B967A00908103 /* RepositoryConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA33C142B967A00908103 /* RepositoryConstants.m */; };
+		6E2EA340142B967A00908103 /* RepositoryHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA33E142B967A00908103 /* RepositoryHandler.m */; };
+		6E2EA347142B9DF200908103 /* LinkedNote.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA342142B9DF200908103 /* LinkedNote.m */; };
+		6E2EA348142B9DF200908103 /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA344142B9DF200908103 /* Section.m */; };
+		6E2EA349142B9DF200908103 /* Subcategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA346142B9DF200908103 /* Subcategory.m */; };
+		6E2EA34C142B9E0500908103 /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA34B142B9E0500908103 /* Category.m */; };
+		6E2EA34F142B9E3B00908103 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA34E142B9E3B00908103 /* DataController.m */; };
+		6E2EA352142B9EB700908103 /* QueueEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA351142B9EB700908103 /* QueueEntry.m */; };
+		6E2EA359142B9F9300908103 /* NSString+UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA354142B9F9300908103 /* NSString+UUID.m */; };
+		6E2EA35A142B9F9300908103 /* ProjectConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA356142B9F9300908103 /* ProjectConstants.m */; };
+		6E2EA35B142B9F9300908103 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA358142B9F9300908103 /* Utility.m */; };
+		6E2EA35F142BA0F800908103 /* AWSiOSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E2EA35E142BA0F800908103 /* AWSiOSSDK.framework */; };
+		6E2EA373142BB6EB00908103 /* PrototypeView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E2EA36F142BB6EB00908103 /* PrototypeView_iPad.xib */; };
+		6E2EA374142BB6EB00908103 /* PrototypeView_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E2EA370142BB6EB00908103 /* PrototypeView_iPhone.xib */; };
+		6E2EA375142BB6EB00908103 /* PrototypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA372142BB6EB00908103 /* PrototypeView.m */; };
+		6E2EA37A142BB6FE00908103 /* EditorView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E2EA376142BB6FE00908103 /* EditorView_iPad.xib */; };
+		6E2EA37B142BB6FE00908103 /* EditorView_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E2EA377142BB6FE00908103 /* EditorView_iPhone.xib */; };
+		6E2EA37C142BB6FE00908103 /* EditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA379142BB6FE00908103 /* EditorView.m */; };
+		6E9685C2142BBE15004C5DED /* BDViewer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6E9685C0142BBE15004C5DED /* BDViewer.xcdatamodeld */; };
 		6EC50001142AA6BA003232D1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC50000142AA6BA003232D1 /* UIKit.framework */; };
 		6EC50003142AA6BA003232D1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC50002142AA6BA003232D1 /* Foundation.framework */; };
 		6EC50005142AA6BA003232D1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC50004142AA6BA003232D1 /* CoreGraphics.framework */; };
@@ -14,29 +36,66 @@
 		6EC5000D142AA6BA003232D1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6EC5000B142AA6BA003232D1 /* InfoPlist.strings */; };
 		6EC5000F142AA6BA003232D1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EC5000E142AA6BA003232D1 /* main.m */; };
 		6EC50013142AA6BA003232D1 /* BDViewerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EC50012142AA6BA003232D1 /* BDViewerAppDelegate.m */; };
-		6EC50016142AA6BA003232D1 /* BDViewer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6EC50014142AA6BA003232D1 /* BDViewer.xcdatamodeld */; };
-		6EC50019142AA6BA003232D1 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6EC50017142AA6BA003232D1 /* MainWindow.xib */; };
 		6EC5001C142AA6BA003232D1 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EC5001B142AA6BA003232D1 /* RootViewController.m */; };
-		6EC5001F142AA6BB003232D1 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6EC5001D142AA6BB003232D1 /* RootViewController.xib */; };
+		6ECA7030142CDB0B00C54BA7 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6ECA702E142CDB0B00C54BA7 /* RootViewController.xib */; };
+		6ECA7049142D3C4800C54BA7 /* MainWindow~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6ECA7047142D3C4800C54BA7 /* MainWindow~iPad.xib */; };
+		6ECA704C142D3CDA00C54BA7 /* MainWindow-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6ECA704A142D3CDA00C54BA7 /* MainWindow-iPhone.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6E2EA333142B95DC00908103 /* S3RequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = S3RequestDelegate.h; sourceTree = "<group>"; };
+		6E2EA334142B95DC00908103 /* S3RequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = S3RequestDelegate.m; sourceTree = "<group>"; };
+		6E2EA335142B95DC00908103 /* SdbRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SdbRequestDelegate.h; sourceTree = "<group>"; };
+		6E2EA336142B95DC00908103 /* SdbRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SdbRequestDelegate.m; sourceTree = "<group>"; };
+		6E2EA339142B95F600908103 /* sample.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = sample.html; sourceTree = "<group>"; };
+		6E2EA33B142B967A00908103 /* RepositoryConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepositoryConstants.h; sourceTree = "<group>"; };
+		6E2EA33C142B967A00908103 /* RepositoryConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepositoryConstants.m; sourceTree = "<group>"; };
+		6E2EA33D142B967A00908103 /* RepositoryHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepositoryHandler.h; sourceTree = "<group>"; };
+		6E2EA33E142B967A00908103 /* RepositoryHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepositoryHandler.m; sourceTree = "<group>"; };
+		6E2EA341142B9DF200908103 /* LinkedNote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedNote.h; sourceTree = "<group>"; };
+		6E2EA342142B9DF200908103 /* LinkedNote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkedNote.m; sourceTree = "<group>"; };
+		6E2EA343142B9DF200908103 /* Section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Section.h; sourceTree = "<group>"; };
+		6E2EA344142B9DF200908103 /* Section.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Section.m; sourceTree = "<group>"; };
+		6E2EA345142B9DF200908103 /* Subcategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Subcategory.h; sourceTree = "<group>"; };
+		6E2EA346142B9DF200908103 /* Subcategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Subcategory.m; sourceTree = "<group>"; };
+		6E2EA34A142B9E0500908103 /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
+		6E2EA34B142B9E0500908103 /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
+		6E2EA34D142B9E3B00908103 /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataController.h; sourceTree = "<group>"; };
+		6E2EA34E142B9E3B00908103 /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataController.m; sourceTree = "<group>"; };
+		6E2EA350142B9EB700908103 /* QueueEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueueEntry.h; sourceTree = "<group>"; };
+		6E2EA351142B9EB700908103 /* QueueEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueueEntry.m; sourceTree = "<group>"; };
+		6E2EA353142B9F9300908103 /* NSString+UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UUID.h"; sourceTree = "<group>"; };
+		6E2EA354142B9F9300908103 /* NSString+UUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UUID.m"; sourceTree = "<group>"; };
+		6E2EA355142B9F9300908103 /* ProjectConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectConstants.h; sourceTree = "<group>"; };
+		6E2EA356142B9F9300908103 /* ProjectConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectConstants.m; sourceTree = "<group>"; };
+		6E2EA357142B9F9300908103 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
+		6E2EA358142B9F9300908103 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
+		6E2EA35E142BA0F800908103 /* AWSiOSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSiOSSDK.framework; path = "../thirdParty/aws-ios-sdk-0.2.3/AWSiOSSDK.framework"; sourceTree = "<group>"; };
+		6E2EA36F142BB6EB00908103 /* PrototypeView_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrototypeView_iPad.xib; sourceTree = "<group>"; };
+		6E2EA370142BB6EB00908103 /* PrototypeView_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrototypeView_iPhone.xib; sourceTree = "<group>"; };
+		6E2EA371142BB6EB00908103 /* PrototypeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrototypeView.h; sourceTree = "<group>"; };
+		6E2EA372142BB6EB00908103 /* PrototypeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrototypeView.m; sourceTree = "<group>"; };
+		6E2EA376142BB6FE00908103 /* EditorView_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditorView_iPad.xib; sourceTree = "<group>"; };
+		6E2EA377142BB6FE00908103 /* EditorView_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditorView_iPhone.xib; sourceTree = "<group>"; };
+		6E2EA378142BB6FE00908103 /* EditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorView.h; sourceTree = "<group>"; };
+		6E2EA379142BB6FE00908103 /* EditorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditorView.m; sourceTree = "<group>"; };
+		6E9685C1142BBE15004C5DED /* BDViewer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BDViewer.xcdatamodel; sourceTree = "<group>"; };
 		6EC50000142AA6BA003232D1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6EC50002142AA6BA003232D1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6EC50004142AA6BA003232D1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		6EC50006142AA6BA003232D1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		6EC5000A142AA6BA003232D1 /* BDViewer-Info.plist */ = {isa = PBXFileReference; path = "BDViewer-Info.plist"; sourceTree = "<group>"; };
+		6EC5000A142AA6BA003232D1 /* BDViewer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BDViewer-Info.plist"; sourceTree = "<group>"; };
 		6EC5000C142AA6BA003232D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6EC5000E142AA6BA003232D1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		6EC50010142AA6BA003232D1 /* BDViewer-Prefix.pch */ = {isa = PBXFileReference; path = "BDViewer-Prefix.pch"; sourceTree = "<group>"; };
-		6EC50011142AA6BA003232D1 /* BDViewerAppDelegate.h */ = {isa = PBXFileReference; path = BDViewerAppDelegate.h; sourceTree = "<group>"; };
+		6EC50010142AA6BA003232D1 /* BDViewer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BDViewer-Prefix.pch"; sourceTree = "<group>"; };
+		6EC50011142AA6BA003232D1 /* BDViewerAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BDViewerAppDelegate.h; sourceTree = "<group>"; };
 		6EC50012142AA6BA003232D1 /* BDViewerAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BDViewerAppDelegate.m; sourceTree = "<group>"; };
-		6EC50015142AA6BA003232D1 /* BDViewer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BDViewer.xcdatamodel; sourceTree = "<group>"; };
-		6EC50018142AA6BA003232D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
-		6EC5001A142AA6BA003232D1 /* RootViewController.h */ = {isa = PBXFileReference; path = RootViewController.h; sourceTree = "<group>"; };
+		6EC5001A142AA6BA003232D1 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		6EC5001B142AA6BA003232D1 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
-		6EC5001E142AA6BB003232D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RootViewController.xib; sourceTree = "<group>"; };
 		6EC5FFFC142AA6BA003232D1 /* BDViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BDViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6ECA702E142CDB0B00C54BA7 /* RootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
+		6ECA7048142D3C4800C54BA7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/MainWindow~iPad.xib"; sourceTree = "<group>"; };
+		6ECA704B142D3CDA00C54BA7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/MainWindow-iPhone.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E2EA35F142BA0F800908103 /* AWSiOSSDK.framework in Frameworks */,
 				6EC50001142AA6BA003232D1 /* UIKit.framework in Frameworks */,
 				6EC50003142AA6BA003232D1 /* Foundation.framework in Frameworks */,
 				6EC50005142AA6BA003232D1 /* CoreGraphics.framework in Frameworks */,
@@ -54,16 +114,132 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6EC50008142AA6BA003232D1 /* BDViewer */ = {
+		6E2EA328142B919100908103 /* Third Party */ = {
+			isa = PBXGroup;
+			children = (
+				6E2EA32D142B948800908103 /* AWS */,
+			);
+			name = "Third Party";
+			sourceTree = "<group>";
+		};
+		6E2EA32A142B919F00908103 /* Embedded Files */ = {
+			isa = PBXGroup;
+			children = (
+				6E2EA339142B95F600908103 /* sample.html */,
+			);
+			name = "Embedded Files";
+			sourceTree = "<group>";
+		};
+		6E2EA32B142B91AD00908103 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				6E2EA32E142B94A300908103 /* Remote Repository */,
+				6E2EA32F142B94B100908103 /* Data Model */,
+				6E2EA331142B94D800908103 /* Views */,
+				6E2EA330142B94C700908103 /* Other */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		6E2EA32C142B91C500908103 /* Graphics */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Graphics;
+			sourceTree = "<group>";
+		};
+		6E2EA32D142B948800908103 /* AWS */ = {
+			isa = PBXGroup;
+			children = (
+				6E2EA333142B95DC00908103 /* S3RequestDelegate.h */,
+				6E2EA334142B95DC00908103 /* S3RequestDelegate.m */,
+				6E2EA335142B95DC00908103 /* SdbRequestDelegate.h */,
+				6E2EA336142B95DC00908103 /* SdbRequestDelegate.m */,
+			);
+			name = AWS;
+			sourceTree = "<group>";
+		};
+		6E2EA32E142B94A300908103 /* Remote Repository */ = {
+			isa = PBXGroup;
+			children = (
+				6E2EA33B142B967A00908103 /* RepositoryConstants.h */,
+				6E2EA33C142B967A00908103 /* RepositoryConstants.m */,
+				6E2EA33D142B967A00908103 /* RepositoryHandler.h */,
+				6E2EA33E142B967A00908103 /* RepositoryHandler.m */,
+			);
+			name = "Remote Repository";
+			sourceTree = "<group>";
+		};
+		6E2EA32F142B94B100908103 /* Data Model */ = {
+			isa = PBXGroup;
+			children = (
+				6E9685C0142BBE15004C5DED /* BDViewer.xcdatamodeld */,
+				6E2EA34D142B9E3B00908103 /* DataController.h */,
+				6E2EA34E142B9E3B00908103 /* DataController.m */,
+				6E2EA34A142B9E0500908103 /* Category.h */,
+				6E2EA34B142B9E0500908103 /* Category.m */,
+				6E2EA341142B9DF200908103 /* LinkedNote.h */,
+				6E2EA342142B9DF200908103 /* LinkedNote.m */,
+				6E2EA350142B9EB700908103 /* QueueEntry.h */,
+				6E2EA351142B9EB700908103 /* QueueEntry.m */,
+				6E2EA343142B9DF200908103 /* Section.h */,
+				6E2EA344142B9DF200908103 /* Section.m */,
+				6E2EA345142B9DF200908103 /* Subcategory.h */,
+				6E2EA346142B9DF200908103 /* Subcategory.m */,
+			);
+			name = "Data Model";
+			sourceTree = "<group>";
+		};
+		6E2EA330142B94C700908103 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				6E2EA353142B9F9300908103 /* NSString+UUID.h */,
+				6E2EA354142B9F9300908103 /* NSString+UUID.m */,
+				6E2EA355142B9F9300908103 /* ProjectConstants.h */,
+				6E2EA356142B9F9300908103 /* ProjectConstants.m */,
+				6E2EA357142B9F9300908103 /* Utility.h */,
+				6E2EA358142B9F9300908103 /* Utility.m */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+		6E2EA331142B94D800908103 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6ECA704A142D3CDA00C54BA7 /* MainWindow-iPhone.xib */,
+				6ECA7047142D3C4800C54BA7 /* MainWindow~iPad.xib */,
+				6E2EA376142BB6FE00908103 /* EditorView_iPad.xib */,
+				6E2EA377142BB6FE00908103 /* EditorView_iPhone.xib */,
+				6E2EA378142BB6FE00908103 /* EditorView.h */,
+				6E2EA379142BB6FE00908103 /* EditorView.m */,
+				6E2EA36F142BB6EB00908103 /* PrototypeView_iPad.xib */,
+				6E2EA370142BB6EB00908103 /* PrototypeView_iPhone.xib */,
+				6E2EA371142BB6EB00908103 /* PrototypeView.h */,
+				6E2EA372142BB6EB00908103 /* PrototypeView.m */,
+				6EC5001A142AA6BA003232D1 /* RootViewController.h */,
+				6EC5001B142AA6BA003232D1 /* RootViewController.m */,
+				6ECA702E142CDB0B00C54BA7 /* RootViewController.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		6E2EA332142B94EE00908103 /* App Delegate */ = {
 			isa = PBXGroup;
 			children = (
 				6EC50011142AA6BA003232D1 /* BDViewerAppDelegate.h */,
 				6EC50012142AA6BA003232D1 /* BDViewerAppDelegate.m */,
-				6EC50017142AA6BA003232D1 /* MainWindow.xib */,
-				6EC5001A142AA6BA003232D1 /* RootViewController.h */,
-				6EC5001B142AA6BA003232D1 /* RootViewController.m */,
-				6EC5001D142AA6BB003232D1 /* RootViewController.xib */,
-				6EC50014142AA6BA003232D1 /* BDViewer.xcdatamodeld */,
+			);
+			name = "App Delegate";
+			sourceTree = "<group>";
+		};
+		6EC50008142AA6BA003232D1 /* BDViewer */ = {
+			isa = PBXGroup;
+			children = (
+				6E2EA332142B94EE00908103 /* App Delegate */,
+				6E2EA328142B919100908103 /* Third Party */,
+				6E2EA32A142B919F00908103 /* Embedded Files */,
+				6E2EA32B142B91AD00908103 /* Classes */,
+				6E2EA32C142B91C500908103 /* Graphics */,
 				6EC50009142AA6BA003232D1 /* Supporting Files */,
 			);
 			path = BDViewer;
@@ -100,6 +276,7 @@
 		6EC5FFFF142AA6BA003232D1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6E2EA35E142BA0F800908103 /* AWSiOSSDK.framework */,
 				6EC50000142AA6BA003232D1 /* UIKit.framework */,
 				6EC50002142AA6BA003232D1 /* Foundation.framework */,
 				6EC50004142AA6BA003232D1 /* CoreGraphics.framework */,
@@ -159,8 +336,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				6EC5000D142AA6BA003232D1 /* InfoPlist.strings in Resources */,
-				6EC50019142AA6BA003232D1 /* MainWindow.xib in Resources */,
-				6EC5001F142AA6BB003232D1 /* RootViewController.xib in Resources */,
+				6E2EA33A142B95F600908103 /* sample.html in Resources */,
+				6E2EA373142BB6EB00908103 /* PrototypeView_iPad.xib in Resources */,
+				6E2EA374142BB6EB00908103 /* PrototypeView_iPhone.xib in Resources */,
+				6E2EA37A142BB6FE00908103 /* EditorView_iPad.xib in Resources */,
+				6E2EA37B142BB6FE00908103 /* EditorView_iPhone.xib in Resources */,
+				6ECA7030142CDB0B00C54BA7 /* RootViewController.xib in Resources */,
+				6ECA7049142D3C4800C54BA7 /* MainWindow~iPad.xib in Resources */,
+				6ECA704C142D3CDA00C54BA7 /* MainWindow-iPhone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,8 +356,23 @@
 			files = (
 				6EC5000F142AA6BA003232D1 /* main.m in Sources */,
 				6EC50013142AA6BA003232D1 /* BDViewerAppDelegate.m in Sources */,
-				6EC50016142AA6BA003232D1 /* BDViewer.xcdatamodeld in Sources */,
 				6EC5001C142AA6BA003232D1 /* RootViewController.m in Sources */,
+				6E2EA337142B95DC00908103 /* S3RequestDelegate.m in Sources */,
+				6E2EA338142B95DC00908103 /* SdbRequestDelegate.m in Sources */,
+				6E2EA33F142B967A00908103 /* RepositoryConstants.m in Sources */,
+				6E2EA340142B967A00908103 /* RepositoryHandler.m in Sources */,
+				6E2EA347142B9DF200908103 /* LinkedNote.m in Sources */,
+				6E2EA348142B9DF200908103 /* Section.m in Sources */,
+				6E2EA349142B9DF200908103 /* Subcategory.m in Sources */,
+				6E2EA34C142B9E0500908103 /* Category.m in Sources */,
+				6E2EA34F142B9E3B00908103 /* DataController.m in Sources */,
+				6E2EA352142B9EB700908103 /* QueueEntry.m in Sources */,
+				6E2EA359142B9F9300908103 /* NSString+UUID.m in Sources */,
+				6E2EA35A142B9F9300908103 /* ProjectConstants.m in Sources */,
+				6E2EA35B142B9F9300908103 /* Utility.m in Sources */,
+				6E2EA375142BB6EB00908103 /* PrototypeView.m in Sources */,
+				6E2EA37C142BB6FE00908103 /* EditorView.m in Sources */,
+				6E9685C2142BBE15004C5DED /* BDViewer.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,20 +387,20 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		6EC50017142AA6BA003232D1 /* MainWindow.xib */ = {
+		6ECA7047142D3C4800C54BA7 /* MainWindow~iPad.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				6EC50018142AA6BA003232D1 /* en */,
+				6ECA7048142D3C4800C54BA7 /* en */,
 			);
-			name = MainWindow.xib;
+			name = "MainWindow~iPad.xib";
 			sourceTree = "<group>";
 		};
-		6EC5001D142AA6BB003232D1 /* RootViewController.xib */ = {
+		6ECA704A142D3CDA00C54BA7 /* MainWindow-iPhone.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				6EC5001E142AA6BB003232D1 /* en */,
+				6ECA704B142D3CDA00C54BA7 /* en */,
 			);
-			name = RootViewController.xib;
+			name = "MainWindow-iPhone.xib";
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -215,6 +413,8 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch *.xcode* (*) CVS .svn .git";
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../thirdParty\"/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -227,7 +427,9 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../thirdParty\"/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../thirdParty\"/**";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -239,12 +441,16 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch *.xcode* (*) CVS .svn .git";
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../thirdParty\"/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../thirdParty\"/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../thirdParty\"/**";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -254,10 +460,20 @@
 		6EC50023142AA6BB003232D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../thirdParty/aws-ios-sdk-0.2.3\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BDViewer/BDViewer-Prefix.pch";
 				INFOPLIST_FILE = "BDViewer/BDViewer-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../thirdParty/aws-ios-sdk-0.2.3/AWSiOSSDK.framework/Versions/A\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -265,10 +481,20 @@
 		6EC50024142AA6BB003232D1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../thirdParty/aws-ios-sdk-0.2.3\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BDViewer/BDViewer-Prefix.pch";
 				INFOPLIST_FILE = "BDViewer/BDViewer-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../thirdParty/aws-ios-sdk-0.2.3/AWSiOSSDK.framework/Versions/A\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -283,6 +509,7 @@
 				6EC50024142AA6BB003232D1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6EC5FFF6142AA6BA003232D1 /* Build configuration list for PBXProject "BDViewer" */ = {
 			isa = XCConfigurationList;
@@ -296,12 +523,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		6EC50014142AA6BA003232D1 /* BDViewer.xcdatamodeld */ = {
+		6E9685C0142BBE15004C5DED /* BDViewer.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				6EC50015142AA6BA003232D1 /* BDViewer.xcdatamodel */,
+				6E9685C1142BBE15004C5DED /* BDViewer.xcdatamodel */,
 			);
-			currentVersion = 6EC50015142AA6BA003232D1 /* BDViewer.xcdatamodel */;
+			currentVersion = 6E9685C1142BBE15004C5DED /* BDViewer.xcdatamodel */;
 			path = BDViewer.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

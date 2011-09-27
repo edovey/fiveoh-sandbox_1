@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-#define ENTITYNAME_QUEUEENTRY @"QueueEntry"
+#define ENTITYNAME_QUEUEENTRY @"BDQueueEntry"
 
 typedef enum
 {

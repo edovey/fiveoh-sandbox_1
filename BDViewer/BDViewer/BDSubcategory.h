@@ -1,6 +1,6 @@
-//
 //  Subcategory.h
 //  BDViewer
+//
 //
 //  Created by GrubbyHedgehog on 11-09-19.
 //  Copyright (c) 2011 TLA Digital Projects. All rights reserved.
@@ -13,10 +13,9 @@
 #define SCHEMAVERSION_SUBCATEGORY @"1"
 #define DOMAIN_SUBCATEGORY @"bd_test2"
 #define BUCKET_SUBCATEGORY @"bdDataStore"
-#define ENTITYNAME_SUBCATEGORY @"LinkedNote"
+#define ENTITYNAME_SUBCATEGORY @"BDSubcategory"
 
 #define SC_UUID @"sc_uuid"
-#define SC_NAME @"sc_name"
 #define SC_SCHEMAVERSION @"sc_schemaVersion"
 #define SC_CREATEDDATE @"sc_createdDate"
 #define SC_CREATEDBY @"sc_createdBy"
@@ -26,6 +25,7 @@
 #define SC_DEPRECATED @"sc_deprecated"
 #define SC_INUSEBY @"sc_inUseBy"
 #define SC_CATEGORYID @"sc_categoryId"
+#define SC_NAME @"sc_name"
 
 @interface BDSubcategory : NSManagedObject
 

@@ -12,7 +12,7 @@
 #define SCHEMAVERSION_THERAPY @"1"
 #define DOMAIN_THERAPY @"bd_test2"
 #define BUCKET_THERAPY @"bdDataStore"
-#define ENTITYNAME_THERAPY @"LinkedNote"
+#define ENTITYNAME_THERAPY @"BDTherapy"
 
 #define TH_UUID @"th_uuid"
 #define TH_SCHEMAVERSION @"th_schemaVersion"
@@ -26,7 +26,7 @@
 #define TH_INUSEBY @"th_inUseBy"
 #define TH_THERAPYGROUPID @"th_therapyGroupId"
 #define TH_THERAPYGROUPJOINTYPE @"th_therapyGroupJoinType"
-#define TH_DISPAYORDER @"th_displayOrder"
+#define TH_DISPLAYORDER @"th_displayOrder"
 #define TH_DOSAGE @"th_dosage"
 #define TH_DURATION @"th_duration"
 #define TH_NAME @"th_name"

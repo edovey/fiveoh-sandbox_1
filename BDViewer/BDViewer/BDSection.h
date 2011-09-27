@@ -12,7 +12,7 @@
 #define SCHEMAVERSION_SECTION @"1"
 #define DOMAIN_SECTION @"bd_test2"
 #define BUCKET_SECTION @"bdDataStore"
-#define ENTITYNAME_SECTION @"Section"
+#define ENTITYNAME_SECTION @"BDSection"
 
 #define SN_UUID @"sn_uuid"
 #define SN_SCHEMAVERSION @"sn_schemaVersion"

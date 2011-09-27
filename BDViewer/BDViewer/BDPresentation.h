@@ -12,7 +12,7 @@
 #define SCHEMAVERSION_PRESENTATION @"1"
 #define DOMAIN_PRESENTATION @"bd_test2"
 #define BUCKET_PRESENTATION @"bdDataStore"
-#define ENTITYNAME_PRESENTATION @"Presentation"
+#define ENTITYNAME_PRESENTATION @"BDPresentation"
 
 #define PR_UUID @"pr_uuid"
 #define PR_SCHEMAVERSION @"pr_schemaVersion"

@@ -12,7 +12,7 @@
 #define SCHEMAVERSION_THERAPYGROUP @"1"
 #define DOMAIN_THERAPYGROUP @"bd_test2"
 #define BUCKET_THERAPYGROUP @"bdDataStore"
-#define ENTITYNAME_THERAPYGROUP @"TherapyGroup"
+#define ENTITYNAME_THERAPYGROUP @"BDTherapyGroup"
 
 #define TG_UUID @"tg_uuid"
 #define TG_SCHEMAVERSION @"tg_schemaVersion"

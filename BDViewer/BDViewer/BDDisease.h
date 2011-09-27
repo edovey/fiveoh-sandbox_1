@@ -12,7 +12,7 @@
 #define SCHEMAVERSION_DISEASE @"1"
 #define DOMAIN_DISEASE @"bd_test2"
 #define BUCKET_DISEASE @"bdDataStore"
-#define ENTITYNAME_DISEASE @"Disease"
+#define ENTITYNAME_DISEASE @"BDDisease"
 
 #define DI_UUID @"di_uuid"
 #define DI_SCHEMAVERSION @"di_schemaVersion"

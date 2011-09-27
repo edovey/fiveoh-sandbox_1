@@ -126,15 +126,15 @@
         <attribute name="uuid" attributeType="String"/>
     </entity>
     <elements>
-        <element name="BDCategory" positionX="160" positionY="192" width="128" height="195"/>
-        <element name="BDDisease" positionX="160" positionY="192" width="128" height="225"/>
-        <element name="BDLinkedNote" positionX="160" positionY="192" width="128" height="225"/>
-        <element name="BDPathogen" positionX="160" positionY="192" width="128" height="195"/>
-        <element name="BDPresentation" positionX="160" positionY="192" width="128" height="225"/>
-        <element name="BDQueueEntry" positionX="160" positionY="192" width="128" height="120"/>
-        <element name="BDSection" positionX="160" positionY="192" width="128" height="180"/>
-        <element name="BDSubcategory" positionX="160" positionY="192" width="128" height="195"/>
-        <element name="BDTherapy" positionX="160" positionY="192" width="128" height="255"/>
-        <element name="BDTherapyGroup" positionX="160" positionY="192" width="128" height="210"/>
+        <element name="BDCategory" positionX="-488" positionY="-24" width="128" height="195"/>
+        <element name="BDDisease" positionX="-648" positionY="225" width="128" height="225"/>
+        <element name="BDLinkedNote" positionX="-27" positionY="216" width="128" height="225"/>
+        <element name="BDPathogen" positionX="-162" positionY="-24" width="128" height="195"/>
+        <element name="BDPresentation" positionX="-495" positionY="225" width="128" height="225"/>
+        <element name="BDQueueEntry" positionX="-47" positionY="510" width="128" height="120"/>
+        <element name="BDSection" positionX="-648" positionY="-9" width="128" height="180"/>
+        <element name="BDSubcategory" positionX="-324" positionY="-24" width="128" height="195"/>
+        <element name="BDTherapy" positionX="-189" positionY="216" width="128" height="255"/>
+        <element name="BDTherapyGroup" positionX="-342" positionY="231" width="128" height="210"/>
     </elements>
 </model>

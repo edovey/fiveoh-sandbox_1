@@ -12,7 +12,7 @@
 #define SCHEMAVERSION_LINKEDNOTE @"1"
 #define DOMAIN_LINKEDNOTE @"bd_test2"
 #define BUCKET_LINKEDNOTE @"bdDataStore"
-#define ENTITYNAME_LINKEDNOTE @"LinkedNote"
+#define ENTITYNAME_LINKEDNOTE @"BDLinkedNote"
 
 #define LN_UUID @"ln_uuid"
 #define LN_SCHEMAVERSION @"ln_schemaVersion"

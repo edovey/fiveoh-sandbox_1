@@ -12,7 +12,7 @@
 #define SCHEMAVERSION_PATHOGEN @"1"
 #define DOMAIN_PATHOGEN @"bd_test2"
 #define BUCKET_PATHOGEN @"bdDataStore"
-#define ENTITYNAME_PATHOGEN @"Pathogen"
+#define ENTITYNAME_PATHOGEN @"BDPathogen"
 
 #define PA_UUID @"pa_uuid"
 #define PA_SCHEMAVERSION @"pa_schemaVersion"

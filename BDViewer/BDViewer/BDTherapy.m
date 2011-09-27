@@ -111,7 +111,7 @@
                 therapy.name = [theAttributeDictionary valueForKey:TH_NAME];
                 therapy.dosage = [theAttributeDictionary valueForKey:TH_DOSAGE];
                 therapy.duration = [theAttributeDictionary valueForKey:TH_DURATION];
-                therapy.displayOrder = [theAttributeDictionary valueForKey:TH_DISPAYORDER];
+                therapy.displayOrder = [theAttributeDictionary valueForKey:TH_DISPLAYORDER];
             }
                 break;
         }

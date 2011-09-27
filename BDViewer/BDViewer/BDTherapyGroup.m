@@ -19,6 +19,7 @@
 @dynamic inUseBy;
 @dynamic modifiedBy;
 @dynamic modifiedDate;
+@dynamic name;
 @dynamic pathogenId;
 @dynamic schemaVersion;
 @dynamic therapyNote;
@@ -106,6 +107,7 @@
                 therapyGroup.pathogenId = [theAttributeDictionary valueForKey:TG_PATHOGENID];
                 therapyGroup.therapyNote = [theAttributeDictionary valueForKey:TG_THERAPYNOTE];
                 therapyGroup.displayOrder = [theAttributeDictionary valueForKey:TG_DISPLAYORDER];
+                therapyGroup.name = [theAttributeDictionary valueForKey:TG_NAME];
             }
                 break;
         }

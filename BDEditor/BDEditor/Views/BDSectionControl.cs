@@ -24,7 +24,10 @@ namespace BDEditor.Views
             set
             {
                 currentSection = value;
-                tbSectionName.Text = currentSection.name;
+                if (currentSection == null)
+                    tbSectionName.Text = @"";
+                else
+                    tbSectionName.Text = currentSection.name;
             }
         }
 

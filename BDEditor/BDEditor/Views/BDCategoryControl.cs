@@ -23,7 +23,9 @@ namespace BDEditor.Views
             set
             {
                 currentCategory = value;
-                if (currentCategory != null)
+                if (currentCategory == null)
+                    tbCategoryName.Text = @"";
+                else
                     tbCategoryName.Text = currentCategory.name;
             }
         }

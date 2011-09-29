@@ -30,5 +30,54 @@ namespace BDEditor.DataModel
                 return therapy;
             }
         }
+
+        /// <summary>
+        /// Extended Save method that sets the modified date.
+        /// </summary>
+        /// <param name="pTherapy"></param>
+        public static void SaveTherapy(BDTherapy pTherapy)
+        {
+            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
+            {
+                pTherapy.modifiedBy = Guid.Empty;
+                pTherapy.modifiedDate = DateTime.Now;
+
+                context.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Gets all Therapies in the model with the specified Therapy Group ID
+        /// </summary>
+        /// <param name="pTherapyGroupId"></param>
+        /// <returns>List of Therapies</returns>
+        public static List<BDTherapy> GetTherapiesForTherapyGroupId(Guid pTherapyGroupId)
+        {
+            List<BDTherapy> therapyList = new List<BDTherapy>();
+            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
+            {
+                IQueryable<BDTherapy> therapies = (from bdTherapies in context.BDTherapies
+                                                   where bdTherapies.therapyGroupId == pTherapyGroupId
+                                                   select bdTherapies);
+                foreach (BDTherapy therapy in therapies)
+                {
+                    therapyList.Add(therapy);
+                }
+            }
+            return therapyList;
+        }
+
+        public static BDTherapy GetTherapyWithId(Guid pTherapyId)
+        {
+            BDTherapy therapy;
+            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
+            {
+                IQueryable<BDTherapy> therapies = (from bdTherapies in context.BDTherapies
+                                                   where bdTherapies.uuid == pTherapyId
+                                                   select bdTherapies);
+                therapy = therapies.AsQueryable().First<BDTherapy>();
+            }
+            return therapy;
+        }
     }
 }

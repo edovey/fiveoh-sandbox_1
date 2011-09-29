@@ -120,6 +120,7 @@
         <attribute name="inUseBy" optional="YES" attributeType="String"/>
         <attribute name="modifiedBy" optional="YES" attributeType="String"/>
         <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="pathogenId" optional="YES" attributeType="String"/>
         <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
         <attribute name="therapyNote" optional="YES" attributeType="String"/>
@@ -127,14 +128,14 @@
     </entity>
     <elements>
         <element name="BDCategory" positionX="-488" positionY="-24" width="128" height="195"/>
-        <element name="BDDisease" positionX="-648" positionY="225" width="128" height="225"/>
-        <element name="BDLinkedNote" positionX="-27" positionY="216" width="128" height="225"/>
-        <element name="BDPathogen" positionX="-162" positionY="-24" width="128" height="195"/>
-        <element name="BDPresentation" positionX="-495" positionY="225" width="128" height="225"/>
-        <element name="BDQueueEntry" positionX="-47" positionY="510" width="128" height="120"/>
+        <element name="BDDisease" positionX="-164" positionY="-45" width="128" height="225"/>
+        <element name="BDLinkedNote" positionX="-110" positionY="252" width="128" height="225"/>
+        <element name="BDPathogen" positionX="-605" positionY="252" width="128" height="195"/>
+        <element name="BDPresentation" positionX="-2" positionY="-36" width="128" height="225"/>
+        <element name="BDQueueEntry" positionX="135" positionY="294" width="128" height="120"/>
         <element name="BDSection" positionX="-648" positionY="-9" width="128" height="180"/>
         <element name="BDSubcategory" positionX="-324" positionY="-24" width="128" height="195"/>
-        <element name="BDTherapy" positionX="-189" positionY="216" width="128" height="255"/>
-        <element name="BDTherapyGroup" positionX="-342" positionY="231" width="128" height="210"/>
+        <element name="BDTherapy" positionX="-272" positionY="240" width="128" height="255"/>
+        <element name="BDTherapyGroup" positionX="-441" positionY="249" width="128" height="225"/>
     </elements>
 </model>

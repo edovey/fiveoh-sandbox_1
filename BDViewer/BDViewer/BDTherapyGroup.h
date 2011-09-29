@@ -24,6 +24,7 @@
 #define TG_DEPRECATED @"tg_deprecated"
 #define TG_INUSEBY @"tg_inUseBy"
 #define TG_PATHOGENID @"tg_pathogenId"
+#define TG_NAME @"tg_name"
 #define TG_THERAPYNOTE @"tg_therapyNote"
 #define TG_DISPLAYORDER @"tg_displayOrder"
 
@@ -37,6 +38,7 @@
 @property (nonatomic, retain) NSString * inUseBy;
 @property (nonatomic, retain) NSString * modifiedBy;
 @property (nonatomic, retain) NSDate * modifiedDate;
+@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * pathogenId;
 @property (nonatomic, retain) NSNumber * schemaVersion;
 @property (nonatomic, retain) NSString * therapyNote;

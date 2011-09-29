@@ -68,6 +68,8 @@
     <Compile Include="Classes\BDTreeNode.cs" />
     <Compile Include="DataModel\BDCategory.cs" />
     <Compile Include="DataModel\BDDisease.cs" />
+    <Compile Include="DataModel\BDLinkedNote.cs" />
+    <Compile Include="DataModel\BDLinkedNotes.cs" />
     <Compile Include="DataModel\BDPathogen.cs" />
     <Compile Include="DataModel\BDPresentation.cs" />
     <Compile Include="DataModel\BDQueueEntry.cs" />
@@ -136,8 +138,20 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Views\BDCategoryControl.resx">
+      <DependentUpon>BDCategoryControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDDiseaseControl.resx">
+      <DependentUpon>BDDiseaseControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\BDEditView.resx">
       <DependentUpon>BDEditView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDSectionControl.resx">
+      <DependentUpon>BDSectionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDSubCategoryControl.resx">
+      <DependentUpon>BDSubCategoryControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Presentation.resx">
       <DependentUpon>Presentation.cs</DependentUpon>

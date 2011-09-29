@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 09/28/2011 13:50:59
+-- Date Created: 09/29/2011 12:30:55
 -- Generated from EDMX file: C:\Users\Liz Dovey\Documents\Git-SS\fiveoh-sandbox\BDEditor\BDEditor\DataModel\BDModel1.edmx
 -- --------------------------------------------------
 
@@ -43,8 +43,8 @@ GO
 IF OBJECT_ID(N'[dbo].[BDSections]', 'U') IS NOT NULL
     DROP TABLE [dbo].[BDSections];
 GO
-IF OBJECT_ID(N'[dbo].[BDSubCategories]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[BDSubCategories];
+IF OBJECT_ID(N'[dbo].[BDSubcategories]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[BDSubcategories];
 GO
 IF OBJECT_ID(N'[dbo].[BDTherapies]', 'U') IS NOT NULL
     DROP TABLE [dbo].[BDTherapies];
@@ -68,24 +68,26 @@ CREATE TABLE [dbo].[BDCategories] (
     [modifiedDate] datetime  NULL,
     [schemaVersion] smallint  NULL,
     [deprecated] bit  NOT NULL,
-    [inUseBy] uniqueidentifier  NULL
+    [inUseBy] uniqueidentifier  NULL,
+    [displayOrder] smallint  NULL
 );
 GO
 
 -- Creating table 'BDDiseases'
 CREATE TABLE [dbo].[BDDiseases] (
     [uuid] uniqueidentifier  NOT NULL,
-    [createdBy] nvarchar(4000)  NULL,
+    [createdBy] uniqueidentifier  NULL,
     [createdDate] datetime  NULL,
     [deprecated] bit  NOT NULL,
     [inUseBy] nvarchar(4000)  NULL,
-    [modifiedBy] nvarchar(4000)  NULL,
+    [modifiedBy] uniqueidentifier  NULL,
     [modifiedDate] datetime  NULL,
     [name] nvarchar(4000)  NULL,
     [overview] nvarchar(4000)  NULL,
     [schemaVersion] smallint  NULL,
     [subcategoryId] uniqueidentifier  NULL,
-    [categoryId] uniqueidentifier  NULL
+    [categoryId] uniqueidentifier  NULL,
+    [displayOrder] smallint  NULL
 );
 GO
 
@@ -102,22 +104,24 @@ CREATE TABLE [dbo].[BDLinkedNotes] (
     [documentText] nvarchar(4000)  NULL,
     [storageKey] nvarchar(4000)  NULL,
     [contextPropertyName] nvarchar(4000)  NULL,
-    [parentId] uniqueidentifier  NULL
+    [parentId] uniqueidentifier  NULL,
+    [displayOrder] smallint  NULL
 );
 GO
 
 -- Creating table 'BDPathogens'
 CREATE TABLE [dbo].[BDPathogens] (
     [uuid] uniqueidentifier  NOT NULL,
-    [createdBy] nvarchar(4000)  NULL,
+    [createdBy] uniqueidentifier  NULL,
     [createdDate] datetime  NULL,
     [deprecated] bit  NOT NULL,
     [inUseBy] nvarchar(4000)  NULL,
-    [modifiedBy] nvarchar(4000)  NULL,
+    [modifiedBy] uniqueidentifier  NULL,
     [modifiedDate] datetime  NULL,
     [name] nvarchar(4000)  NULL,
     [presentationId] uniqueidentifier  NULL,
-    [schemaVersion] smallint  NULL
+    [schemaVersion] smallint  NULL,
+    [displayOrder] smallint  NULL
 );
 GO
 
@@ -125,12 +129,12 @@ GO
 CREATE TABLE [dbo].[BDPresentations] (
     [uuid] uniqueidentifier  NOT NULL,
     [diseaseId] uniqueidentifier  NULL,
-    [createdBy] nvarchar(4000)  NULL,
+    [createdBy] uniqueidentifier  NULL,
     [createdDate] datetime  NULL,
     [deprecated] bit  NOT NULL,
     [inUseBy] nvarchar(4000)  NULL,
     [displayOrder] smallint  NULL,
-    [modifiedBy] nvarchar(4000)  NULL,
+    [modifiedBy] uniqueidentifier  NULL,
     [modifiedDate] datetime  NULL,
     [name] nvarchar(4000)  NULL,
     [overview] nvarchar(4000)  NULL,
@@ -158,12 +162,13 @@ CREATE TABLE [dbo].[BDSections] (
     [modifiedDate] datetime  NULL,
     [schemaVersion] smallint  NULL,
     [deprecated] bit  NOT NULL,
-    [inUseBy] uniqueidentifier  NULL
+    [inUseBy] uniqueidentifier  NULL,
+    [displayOrder] smallint  NULL
 );
 GO
 
--- Creating table 'BDSubCategories'
-CREATE TABLE [dbo].[BDSubCategories] (
+-- Creating table 'BDSubcategories'
+CREATE TABLE [dbo].[BDSubcategories] (
     [uuid] uniqueidentifier  NOT NULL,
     [categoryId] uniqueidentifier  NULL,
     [name] nvarchar(4000)  NULL,
@@ -173,22 +178,23 @@ CREATE TABLE [dbo].[BDSubCategories] (
     [modifiedDate] datetime  NULL,
     [schemaVersion] smallint  NULL,
     [deprecated] bit  NOT NULL,
-    [inUseBy] uniqueidentifier  NULL
+    [inUseBy] uniqueidentifier  NULL,
+    [displayOrder] smallint  NULL
 );
 GO
 
 -- Creating table 'BDTherapies'
 CREATE TABLE [dbo].[BDTherapies] (
     [uuid] uniqueidentifier  NOT NULL,
-    [createdBy] nvarchar(4000)  NULL,
+    [createdBy] uniqueidentifier  NULL,
     [createdDate] datetime  NULL,
     [deprecated] bit  NOT NULL,
     [displayOrder] smallint  NULL,
     [dosage] nvarchar(4000)  NULL,
     [duration] nvarchar(4000)  NULL,
     [inUseBy] nvarchar(4000)  NULL,
-    [modifiedBy] nvarchar(4000)  NULL,
-    [modifiedDate] datetime  NOT NULL,
+    [modifiedBy] uniqueidentifier  NULL,
+    [modifiedDate] datetime  NULL,
     [name] nvarchar(4000)  NULL,
     [schemaVersion] smallint  NULL,
     [therapyGroupId] uniqueidentifier  NULL,
@@ -199,17 +205,18 @@ GO
 -- Creating table 'BDTherapyGroups'
 CREATE TABLE [dbo].[BDTherapyGroups] (
     [uuid] uniqueidentifier  NOT NULL,
-    [createdBy] nvarchar(4000)  NULL,
+    [createdBy] uniqueidentifier  NULL,
     [createdDate] datetime  NULL,
     [deprecated] bit  NOT NULL,
     [displayOrder] smallint  NULL,
     [inUseBy] nvarchar(4000)  NULL,
-    [modifiedBy] nvarchar(4000)  NULL,
+    [modifiedBy] uniqueidentifier  NULL,
     [modifiedDate] datetime  NULL,
-    [pathogenId] bit  NULL,
+    [pathogenId] uniqueidentifier  NULL,
     [schemalVersion] smallint  NULL,
     [therapyNote] nvarchar(4000)  NULL,
-    [name] nvarchar(4000)  NULL
+    [name] nvarchar(4000)  NULL,
+    [schemaVersion] smallint  NULL
 );
 GO
 
@@ -259,9 +266,9 @@ ADD CONSTRAINT [PK_BDSections]
     PRIMARY KEY CLUSTERED ([uuid] ASC);
 GO
 
--- Creating primary key on [uuid] in table 'BDSubCategories'
-ALTER TABLE [dbo].[BDSubCategories]
-ADD CONSTRAINT [PK_BDSubCategories]
+-- Creating primary key on [uuid] in table 'BDSubcategories'
+ALTER TABLE [dbo].[BDSubcategories]
+ADD CONSTRAINT [PK_BDSubcategories]
     PRIMARY KEY CLUSTERED ([uuid] ASC);
 GO
 

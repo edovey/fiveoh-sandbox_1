@@ -31,7 +31,7 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Extended Save method that includes setting the modification date
+        /// Extended Save method that sets the modification date
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pCategory"></param>
@@ -44,7 +44,7 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Gets all categories in the model with the indicated section ID
+        /// Gets all sections in the model with the specified section ID
         /// </summary>
         /// <param name="pSectionId"></param>
         /// <returns>List of Categories</returns>
@@ -62,6 +62,24 @@ namespace BDEditor.DataModel
                 }
             }
             return catList;
+        }
+
+        /// <summary>
+        /// Get Category with specified ID
+        /// </summary>
+        /// <param name="pCategoryId"></param>
+        /// <returns>BDCategory object.</returns>
+        public static BDCategory GetCategoryWithId(Guid pCategoryId)
+        {
+            BDCategory category;
+            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
+            {
+                IQueryable<BDCategory> categories = (from bdCategories in context.BDCategories
+                                                     where bdCategories.uuid == pCategoryId
+                                                     select bdCategories);
+                category = categories.AsQueryable().First<BDCategory>();
+            }
+            return category;
         }
     }
 }

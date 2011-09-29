@@ -31,5 +31,23 @@ namespace BDEditor.DataModel
 
             pContext.SaveChanges();
         }
+
+        /// <summary>
+        /// Get Section with the specified ID
+        /// </summary>
+        /// <param name="pSectionId"></param>
+        /// <returns>BDSection object.</returns>
+        public static BDSection GetSectionWithId(Guid pSectionId)
+        {
+            BDSection section;
+            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
+            {
+                IQueryable<BDSection> sections = (from bdSections in context.BDSections
+                                                     where bdSections.uuid == pSectionId
+                                                     select bdSections);
+                section = sections.AsQueryable().First<BDSection>();
+            }
+            return section;
+        }
     }
 }

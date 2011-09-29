@@ -11,25 +11,38 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDSection
     {
-        public static BDSection CreateSection(Entities pContext)
+        /// <summary>
+        /// Extended Create method that sets the created date and the schema version
+        /// </summary>
+        /// <returns></returns>
+        public static BDSection CreateSection()
         {
-            Guid pGuid = Guid.NewGuid();
-            BDSection section = CreateBDSection(pGuid, false);
-            section.createdBy = Guid.Empty;
-            section.createdDate = DateTime.Now;
-            section.schemaVersion = 0;
+            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
+            {
+                BDSection section = CreateBDSection(Guid.NewGuid(), false);
+                section.createdBy = Guid.Empty;
+                section.createdDate = DateTime.Now;
+                section.schemaVersion = 0;
 
-            pContext.AddObject("BDSections", section);
-            
-            return section;
+                context.AddObject("BDSections", section);
+
+                return section;
+            }
         }
 
-        public static void SaveSection(Entities pContext, BDSection pSection)
+        /// <summary>
+        /// Extended Save method that sets the modified date
+        /// </summary>
+        /// <param name="pSection"></param>
+        public static void SaveSection(BDSection pSection)
         {
-            pSection.modifiedBy = Guid.Empty;
-            pSection.modifiedDate = DateTime.Now;
+            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
+            {
+                pSection.modifiedBy = Guid.Empty;
+                pSection.modifiedDate = DateTime.Now;
 
-            pContext.SaveChanges();
+                context.SaveChanges();
+            }
         }
 
         /// <summary>

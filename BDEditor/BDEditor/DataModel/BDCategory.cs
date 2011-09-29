@@ -18,29 +18,35 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext"></param>
         /// <returns></returns>
-        public static BDCategory CreateCategory(Entities pContext)
+        public static BDCategory CreateCategory()
         {
-            BDCategory category = CreateBDCategory(Guid.NewGuid(), false);
-            category.createdBy = Guid.Empty;
-            category.createdDate = DateTime.Now;
-            category.schemaVersion = 0;
+            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
+            {
+                BDCategory category = CreateBDCategory(Guid.NewGuid(), false);
+                category.createdBy = Guid.Empty;
+                category.createdDate = DateTime.Now;
+                category.schemaVersion = 0;
 
-            pContext.AddObject("BDCategories", category);
-
-            return category;
+                context.AddObject("BDCategories", category);
+            
+                return category;
+            }
         }
 
         /// <summary>
-        /// Extended Save method that sets the modification date
+        /// Extended Save method that sets the modified date
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pCategory"></param>
-        public static void SaveCategory(Entities pContext, BDCategory pCategory)
+        public static void SaveCategory(BDCategory pCategory)
         {
-            pCategory.modifiedBy = Guid.Empty;
-            pCategory.modifiedDate = DateTime.Now;
+            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
+            {
+                pCategory.modifiedBy = Guid.Empty;
+                pCategory.modifiedDate = DateTime.Now;
 
-            pContext.SaveChanges();
+                context.SaveChanges();
+            }
         }
 
         /// <summary>

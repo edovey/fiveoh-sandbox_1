@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using System.Configuration;
 using BDEditor.DataModel;
 using BDEditor.Properties;
+using BDEditor.Views;
 
 
 namespace BDEditor
@@ -161,6 +162,12 @@ namespace BDEditor
             tbCategoryName.Text = selectedCategory.name;
             btnNewCategory.Enabled = false;
             btnSaveCategory.Enabled = true;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            BDEditView view = new BDEditView();
+            view.Show();
         }
 
     }

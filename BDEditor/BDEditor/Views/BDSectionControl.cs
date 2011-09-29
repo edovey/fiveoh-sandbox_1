@@ -35,7 +35,8 @@ namespace BDEditor.Views
 
         private void BDSectionControl_Load(object sender, EventArgs e)
         {
-
+            if (currentSection != null)
+                tbSectionName.Text = currentSection.name;
         }
     }
 }

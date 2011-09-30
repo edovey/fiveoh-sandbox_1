@@ -126,6 +126,11 @@ namespace BDEditor.Views
 
         }
 
+        public void AssignParentId(Guid pParentId)
+        {
+            throw new NotImplementedException();
+        }
+     
         #endregion
     }
 }

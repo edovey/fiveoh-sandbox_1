@@ -68,6 +68,11 @@ namespace BDEditor.Views
             BDPathogen.SavePathogen(dataContext, currentPathogen);
         }
 
+        public void AssignParentId(Guid pParentId)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         private void btnLink_Click(object sender, EventArgs e)
@@ -75,5 +80,7 @@ namespace BDEditor.Views
             // open context menu for linking to: existing linked note, new linked note, remove link to note
             MessageBox.Show("Will show context menu for working with a linked note");
         }
+
+
     }
 }

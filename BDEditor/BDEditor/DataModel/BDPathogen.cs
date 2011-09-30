@@ -40,7 +40,7 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pPresentationId"></param>
         /// <returns>List of Pathogens</returns>
-        public static List<BDPathogen> GetPathogensForPresentationGroup(Entities pContext, Guid pPathogenGroupId)
+        public static List<BDPathogen> GetPathogensForPathogenGroup(Entities pContext, Guid pPathogenGroupId)
         {
             List<BDPathogen> pathogenList = new List<BDPathogen>();
                 IQueryable<BDPathogen> pathogens = (from bdPathogens in pContext.BDPathogens
@@ -53,6 +53,12 @@ namespace BDEditor.DataModel
             return pathogenList;
         }
 
+        /// <summary>
+        /// Get Pathogen with the specified ID
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pPathogenId"></param>
+        /// <returns></returns>
         public static BDPathogen GetPathogenWithId(Entities pContext, Guid pPathogenId)
         {
             BDPathogen pathogen;

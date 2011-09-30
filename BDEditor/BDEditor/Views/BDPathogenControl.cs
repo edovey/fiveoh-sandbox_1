@@ -69,5 +69,11 @@ namespace BDEditor.Views
         }
 
         #endregion
+
+        private void btnLink_Click(object sender, EventArgs e)
+        {
+            // open context menu for linking to: existing linked note, new linked note, remove link to note
+            MessageBox.Show("Will show context menu for working with a linked note");
+        }
     }
 }

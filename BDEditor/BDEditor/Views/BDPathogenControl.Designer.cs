@@ -59,6 +59,7 @@
             this.btnLink.TabIndex = 2;
             this.btnLink.Text = "Link";
             this.btnLink.UseVisualStyleBackColor = true;
+            this.btnLink.Click += new System.EventHandler(this.btnLink_Click);
             // 
             // BDPathogenControl
             // 

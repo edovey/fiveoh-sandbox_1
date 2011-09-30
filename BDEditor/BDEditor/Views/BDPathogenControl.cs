@@ -10,7 +10,7 @@ using BDEditor.DataModel;
 
 namespace BDEditor.Views
 {
-    public partial class BDPathogenControl : UserControl
+    public partial class BDPathogenControl : UserControl, IBDControl
     {
         private BDPathogen currentPathogen;
 
@@ -34,6 +34,12 @@ namespace BDEditor.Views
         public BDPathogenControl()
         {
             InitializeComponent();
+        }
+
+        public void Save()
+        {
+            Entities context = new Entities();
+            BDPathogen.SavePathogen(context, currentPathogen);
         }
     }
 }

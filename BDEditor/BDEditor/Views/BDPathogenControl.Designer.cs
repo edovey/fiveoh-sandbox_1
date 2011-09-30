@@ -36,24 +36,24 @@
             // lblPathogenName
             // 
             this.lblPathogenName.AutoSize = true;
-            this.lblPathogenName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPathogenName.Location = new System.Drawing.Point(4, 4);
+            this.lblPathogenName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPathogenName.Location = new System.Drawing.Point(2, 3);
             this.lblPathogenName.Name = "lblPathogenName";
-            this.lblPathogenName.Size = new System.Drawing.Size(71, 18);
+            this.lblPathogenName.Size = new System.Drawing.Size(66, 16);
             this.lblPathogenName.TabIndex = 0;
             this.lblPathogenName.Text = "Pathogen";
             // 
             // tbPathogenName
             // 
             this.tbPathogenName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPathogenName.Location = new System.Drawing.Point(7, 26);
+            this.tbPathogenName.Location = new System.Drawing.Point(5, 21);
             this.tbPathogenName.Name = "tbPathogenName";
-            this.tbPathogenName.Size = new System.Drawing.Size(474, 24);
+            this.tbPathogenName.Size = new System.Drawing.Size(274, 24);
             this.tbPathogenName.TabIndex = 1;
             // 
             // btnLink
             // 
-            this.btnLink.Location = new System.Drawing.Point(488, 26);
+            this.btnLink.Location = new System.Drawing.Point(285, 23);
             this.btnLink.Name = "btnLink";
             this.btnLink.Size = new System.Drawing.Size(37, 23);
             this.btnLink.TabIndex = 2;
@@ -68,7 +68,7 @@
             this.Controls.Add(this.tbPathogenName);
             this.Controls.Add(this.lblPathogenName);
             this.Name = "BDPathogenControl";
-            this.Size = new System.Drawing.Size(1013, 55);
+            this.Size = new System.Drawing.Size(325, 50);
             this.ResumeLayout(false);
             this.PerformLayout();
 

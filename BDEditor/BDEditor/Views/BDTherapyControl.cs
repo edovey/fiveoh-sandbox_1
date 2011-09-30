@@ -12,6 +12,7 @@ namespace BDEditor.Views
 {
     public partial class BDTherapyControl : UserControl, IBDControl
     {
+        private Entities dataContext;
         private BDTherapy currentTherapy;
 
         public BDTherapy CurrentTherapy
@@ -71,8 +72,32 @@ namespace BDEditor.Views
         }
 
         // -- IBDControl
+
+        public void AssignDataContext(Entities pDataContext)
+        {
+            dataContext = pDataContext;
+        }
+
         public void Save()
         {
+            currentTherapy.name = tbName.Text;
+            currentTherapy.dosage = tbDosage.Text;
+            currentTherapy.duration = tbDuration.Text;
+
+            if (andRadioButton.Checked)
+            {
+                currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.AndWithNext;
+            }
+            else if (orRadioButton.Checked)
+            {
+                currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.OrWithNext;
+            }
+            else
+            {
+                currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.None;
+            }
+
+            BDTherapy.SaveTherapy(dataContext, currentTherapy);
 
         }
     }

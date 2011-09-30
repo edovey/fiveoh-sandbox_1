@@ -79,6 +79,12 @@
       <DependentUpon>BDModel1.edmx</DependentUpon>
     </Compile>
     <Compile Include="DataModel\BDSubcategory.cs" />
+    <Compile Include="Views\BDLinkedNoteControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDLinkedNoteControl.Designer.cs">
+      <DependentUpon>BDLinkedNoteControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\BDSubCategoryControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -145,6 +151,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDEditView.resx">
       <DependentUpon>BDEditView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDLinkedNoteControl.resx">
+      <DependentUpon>BDLinkedNoteControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDPathogenControl.resx">
+      <DependentUpon>BDPathogenControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDSectionControl.resx">
       <DependentUpon>BDSectionControl.cs</DependentUpon>

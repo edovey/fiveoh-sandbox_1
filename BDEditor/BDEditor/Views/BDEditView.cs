@@ -167,21 +167,36 @@ namespace BDEditor.Views
             BDCategory.SaveCategory(dataContext, category);
 
             BDSubcategory subCategory = BDSubcategory.CreateSubcategory(dataContext);
-            subCategory.name = @"All";
+            subCategory.name = @"Sub Category";
             subCategory.categoryId = category.uuid;
             BDSubcategory.SaveSubcategory(dataContext, subCategory);
+
+            BDDisease disease = BDDisease.CreateDisease(dataContext);
+            disease.name = @"Disease";
+            disease.categoryId = category.uuid;
+            BDDisease.SaveDisease(dataContext, disease);
+
+            BDPresentation presentation = BDPresentation.CreatePresentation(dataContext);
+            presentation.name = @"Presentation";
+            presentation.diseaseId = disease.uuid;
+            BDPresentation.SavePresentation(dataContext, presentation);
+
+            category = BDCategory.CreateCategory(dataContext);
+            category.name = @"Bone & Joint";
+            category.sectionId = section.uuid;
+            BDCategory.SaveCategory(dataContext, category);
 
             category = BDCategory.CreateCategory(dataContext);
             category.name = @"Respiratory";
             category.sectionId = section.uuid;
             BDCategory.SaveCategory(dataContext, category);
 
-            BDDisease disease = BDDisease.CreateDisease(dataContext);
+            disease = BDDisease.CreateDisease(dataContext);
             disease.name = @"Pharygtis";
             disease.categoryId = category.uuid;
             BDDisease.SaveDisease(dataContext, disease);
 
-            BDPresentation presentation = BDPresentation.CreatePresentation(dataContext);
+            presentation = BDPresentation.CreatePresentation(dataContext);
             presentation.name = @"Acute";
             presentation.diseaseId = disease.uuid;
             BDPresentation.SavePresentation(dataContext, presentation);
@@ -195,6 +210,11 @@ namespace BDEditor.Views
             presentation.name = @"Late Relapse / Recurrent";
             presentation.diseaseId = disease.uuid;
             BDPresentation.SavePresentation(dataContext, presentation);
+
+            dataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, dataContext.BDSections);
+            sectionDropDown.DataSource = null;
+            sectionDropDown.DataSource = dataContext.BDSections;
+            sectionDropDown.SelectedIndex = -1;
         }
 
         private void createTestDataButton_Click(object sender, EventArgs e)

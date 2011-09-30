@@ -175,6 +175,9 @@
     <EmbeddedResource Include="Views\BDPathogenGroupControl.resx">
       <DependentUpon>BDPathogenGroupControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDPresentationControl.resx">
+      <DependentUpon>BDPresentationControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\BDSectionControl.resx">
       <DependentUpon>BDSectionControl.cs</DependentUpon>
     </EmbeddedResource>

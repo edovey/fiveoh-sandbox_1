@@ -14,7 +14,7 @@ namespace BDEditor.Views
     {
         private Entities dataContext;
         private BDPathogen currentPathogen;
-        private string title;
+        private string title = @"Pathogen";
 
         public BDPathogen CurrentPathogen
         {

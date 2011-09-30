@@ -75,25 +75,29 @@ namespace BDEditor.Views
                         diseaseNode.Tag = disease;
                         subCategoryNode.Nodes.Add(diseaseNode);
                     }
-                    subCategoryNode.Nodes.Add(new TreeNode(@"<Add Disease Entry>"));
+
                     categoryNode.Nodes.Add(subCategoryNode);
                 }
-                categoryNode.Nodes.Add(new TreeNode(@"<Add SubCategory Entry>"));
 
                 List<BDDisease> categorydiseaseList = BDDisease.GetDiseasesForCategoryId(dataContext, category.uuid);
                 foreach (BDDisease disease in categorydiseaseList)
                 {
                     TreeNode diseaseNode = new TreeNode(disease.name);
                     diseaseNode.Tag = disease;
+
+                    List<BDPresentation> presentationList = BDPresentation.GetPresentationsForDiseaseId(dataContext, disease.uuid);
+                    foreach (BDPresentation presentation in presentationList)
+                    {
+                        TreeNode presentationNode = new TreeNode(presentation.name);
+                        presentationNode.Tag = presentation;
+                        diseaseNode.Nodes.Add(presentationNode);
+                    }
+
                     categoryNode.Nodes.Add(diseaseNode);
                 }
 
-                categoryNode.Nodes.Add(new TreeNode(@"<Add Disease Entry>"));
-
                 sectionTree.Nodes.Add(categoryNode);
             }
-            sectionTree.Nodes.Add(new TreeNode(@"<Add Category>"));
-
         }
 
         private void sectionDropDown_SelectedIndexChanged(object sender, EventArgs e)
@@ -125,6 +129,7 @@ namespace BDEditor.Views
                     {
                         BDSubCategoryControl subCategoryControl = new BDSubCategoryControl();
                         subCategoryControl.Dock = DockStyle.Fill;
+                        subCategoryControl.CurrentSubcategory = selectedNode.Tag as BDSubcategory;
                         splitContainer1.Panel2.Controls.Add(subCategoryControl);
                     }
                     else if (selectedNode.Tag is BDDisease)
@@ -138,7 +143,7 @@ namespace BDEditor.Views
                     {
                         BDPresentationControl presentationControl = new BDPresentationControl();
                         presentationControl.Dock = DockStyle.Fill;
-
+                        presentationControl.CurrentPresentation = selectedNode.Tag as BDPresentation;
                         splitContainer1.Panel2.Controls.Add(presentationControl);
                     }
                     break;

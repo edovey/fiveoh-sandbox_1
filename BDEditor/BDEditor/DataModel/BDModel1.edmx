@@ -74,7 +74,7 @@
           <Key>
             <PropertyRef Name="uuid" />
           </Key>
-          <Property Name="uuid" Type="varbinary" Nullable="false" MaxLength="100" />
+          <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
           <Property Name="createdBy" Type="uniqueidentifier" />
           <Property Name="createdDate" Type="datetime" />
           <Property Name="deprecated" Type="bit" Nullable="false" />
@@ -269,7 +269,7 @@
           <Key>
             <PropertyRef Name="uuid" />
           </Key>
-          <Property Type="Binary" Name="uuid" Nullable="false" MaxLength="100" FixedLength="false" />
+          <Property Type="Guid" Name="uuid" Nullable="false" />
           <Property Type="Guid" Name="createdBy" />
           <Property Type="DateTime" Name="createdDate" />
           <Property Type="Boolean" Name="deprecated" Nullable="false" />

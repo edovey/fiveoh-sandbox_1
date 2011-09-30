@@ -68,10 +68,10 @@ namespace BDEditor.DataModel
         public static BDSubcategory GetSubcategoryWithId(Entities pContext, Guid pSubcategoryId)
         {
             BDSubcategory subcategory;
-                IQueryable<BDSubcategory> subcategories = (from bdSubcategories in pContext.BDSubcategories
-                                                           where bdSubcategories.uuid == pSubcategoryId
-                                                           select bdSubcategories);
-                subcategory = subcategories.AsQueryable().First<BDSubcategory>();
+            IQueryable<BDSubcategory> subcategories = (from bdSubcategories in pContext.BDSubcategories
+                                                        where bdSubcategories.uuid == pSubcategoryId
+                                                        select bdSubcategories);
+            subcategory = subcategories.AsQueryable().First<BDSubcategory>();
             return subcategory;
         }
     }

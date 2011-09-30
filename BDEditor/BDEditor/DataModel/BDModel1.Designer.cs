@@ -1639,7 +1639,7 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="uuid">Initial value of the uuid property.</param>
         /// <param name="deprecated">Initial value of the deprecated property.</param>
-        public static BDPathogenGroup CreateBDPathogenGroup(global::System.Byte[] uuid, global::System.Boolean deprecated)
+        public static BDPathogenGroup CreateBDPathogenGroup(global::System.Guid uuid, global::System.Boolean deprecated)
         {
             BDPathogenGroup bDPathogenGroup = new BDPathogenGroup();
             bDPathogenGroup.uuid = uuid;
@@ -1655,26 +1655,26 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Byte[] uuid
+        public global::System.Guid uuid
         {
             get
             {
-                return StructuralObject.GetValidValue(_uuid);
+                return _uuid;
             }
             set
             {
-                if (!StructuralObject.BinaryEquals(_uuid, value))
+                if (_uuid != value)
                 {
                     OnuuidChanging(value);
                     ReportPropertyChanging("uuid");
-                    _uuid = StructuralObject.SetValidValue(value, false);
+                    _uuid = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("uuid");
                     OnuuidChanged();
                 }
             }
         }
-        private global::System.Byte[] _uuid;
-        partial void OnuuidChanging(global::System.Byte[] value);
+        private global::System.Guid _uuid;
+        partial void OnuuidChanging(global::System.Guid value);
         partial void OnuuidChanged();
     
         /// <summary>

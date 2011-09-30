@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BDEditor.DataModel;
 
 namespace BDEditor.DataModel
 {
@@ -15,34 +14,34 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets the created date and the schema version
         /// </summary>
         /// <returns></returns>
-        public static BDSection CreateSection()
+        public static BDSection CreateSection(Entities pContext)
         {
-            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            {
+            //using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
+            //{
                 BDSection section = CreateBDSection(Guid.NewGuid(), false);
                 section.createdBy = Guid.Empty;
                 section.createdDate = DateTime.Now;
                 section.schemaVersion = 0;
 
-                context.AddObject("BDSections", section);
+                pContext.AddObject("BDSections", section);
 
                 return section;
-            }
+            //}
         }
 
         /// <summary>
         /// Extended Save method that sets the modified date
         /// </summary>
         /// <param name="pSection"></param>
-        public static void SaveSection(BDSection pSection)
+        public static void SaveSection(Entities pContext, BDSection pSection)
         {
-            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            {
+            //using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
+            //{
                 pSection.modifiedBy = Guid.Empty;
                 pSection.modifiedDate = DateTime.Now;
 
-                context.SaveChanges();
-            }
+                pContext.SaveChanges();
+            //}
         }
 
         /// <summary>
@@ -50,16 +49,14 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pSectionId"></param>
         /// <returns>BDSection object.</returns>
-        public static BDSection GetSectionWithId(Guid pSectionId)
+        public static BDSection GetSectionWithId(Entities pContext, Guid pSectionId)
         {
             BDSection section;
-            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            {
-                IQueryable<BDSection> sections = (from bdSections in context.BDSections
+            
+                IQueryable<BDSection> sections = (from bdSections in pContext.BDSections
                                                      where bdSections.uuid == pSectionId
                                                      select bdSections);
                 section = sections.AsQueryable().First<BDSection>();
-            }
             return section;
         }
     }

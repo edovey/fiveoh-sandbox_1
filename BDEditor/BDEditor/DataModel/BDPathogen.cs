@@ -12,33 +12,27 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDPathogen
     {
-        public static BDPathogen CreatePathogen()
+        public static BDPathogen CreatePathogen(Entities pContext)
         {
-            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            {
                 BDPathogen pathogen = CreateBDPathogen(Guid.NewGuid(), false);
                 pathogen.createdBy = Guid.Empty;
                 pathogen.createdDate = DateTime.Now;
                 pathogen.schemaVersion = 0;
 
-                context.AddObject("BDPathogens", pathogen);
+                pContext.AddObject("BDPathogens", pathogen);
                 return pathogen;
-            }
         }
 
         /// <summary>
         /// Extend Save method that sets modified date
         /// </summary>
         /// <param name="pPathogen"></param>
-        public static void SavePathogen(BDPathogen pPathogen)
+        public static void SavePathogen(Entities pContext, BDPathogen pPathogen)
         {
-            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            {
                 pPathogen.modifiedBy = Guid.Empty;
                 pPathogen.modifiedDate = DateTime.Now;
 
-                context.SaveChanges();
-            }
+                pContext.SaveChanges();
         }
 
         /// <summary>
@@ -46,32 +40,26 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pPresentationId"></param>
         /// <returns>List of Pathogens</returns>
-        public static List<BDPathogen> GetPathogensForPresentationId(Guid pPresentationId)
+        public static List<BDPathogen> GetPathogensForPresentationId(Entities pContext, Guid pPresentationId)
         {
             List<BDPathogen> pathogenList = new List<BDPathogen>();
-            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            {
-                IQueryable<BDPathogen> pathogens = (from bdPathogens in context.BDPathogens
+                IQueryable<BDPathogen> pathogens = (from bdPathogens in pContext.BDPathogens
                                                     where bdPathogens.presentationId == pPresentationId
                                                     select bdPathogens);
                 foreach (BDPathogen pathogen in pathogens)
                 {
                     pathogenList.Add(pathogen);
                 }
-            }
             return pathogenList;
         }
 
-        public static BDPathogen GetPathogenWithId(Guid pPathogenId)
+        public static BDPathogen GetPathogenWithId(Entities pContext, Guid pPathogenId)
         {
             BDPathogen pathogen;
-            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            {
-                IQueryable<BDPathogen> pathogens = (from bdPathogens in context.BDPathogens
+                IQueryable<BDPathogen> pathogens = (from bdPathogens in pContext.BDPathogens
                                                     where bdPathogens.uuid == pPathogenId
                                                     select bdPathogens);
                 pathogen = pathogens.AsQueryable().First<BDPathogen>();
-            }
             return pathogen;
         }
     }

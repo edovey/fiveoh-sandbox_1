@@ -12,16 +12,13 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDQueueEntry
     {
-        public static BDQueueEntry GetQueueEntryWithId(Guid pQueueEntryId)
+        public static BDQueueEntry GetQueueEntryWithId(Entities pContext, Guid pQueueEntryId)
         {
             BDQueueEntry queueEntry;
-            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            {
-                IQueryable<BDQueueEntry> queueEntries = (from bdQueueEntries in context.BDQueueEntries
+                IQueryable<BDQueueEntry> queueEntries = (from bdQueueEntries in pContext.BDQueueEntries
                                                          where bdQueueEntries.uuid == pQueueEntryId
                                                          select bdQueueEntries);
                 queueEntry = queueEntries.AsQueryable().First<BDQueueEntry>();
-            }
             return queueEntry;
         }
     }

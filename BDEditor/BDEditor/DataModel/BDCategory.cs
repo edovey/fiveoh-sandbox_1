@@ -4,7 +4,6 @@ using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Linq;
 using System.Text;
-using BDEditor.DataModel;
 
 namespace BDEditor.DataModel
 {
@@ -18,19 +17,16 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext"></param>
         /// <returns></returns>
-        public static BDCategory CreateCategory()
+        public static BDCategory CreateCategory(Entities pContext)
         {
-            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            {
                 BDCategory category = CreateBDCategory(Guid.NewGuid(), false);
                 category.createdBy = Guid.Empty;
                 category.createdDate = DateTime.Now;
                 category.schemaVersion = 0;
 
-                context.AddObject("BDCategories", category);
+                pContext.AddObject("BDCategories", category);
             
                 return category;
-            }
         }
 
         /// <summary>
@@ -38,15 +34,12 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pCategory"></param>
-        public static void SaveCategory(BDCategory pCategory)
+        public static void SaveCategory(Entities pContext, BDCategory pCategory)
         {
-            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            {
                 pCategory.modifiedBy = Guid.Empty;
                 pCategory.modifiedDate = DateTime.Now;
 
-                context.SaveChanges();
-            }
+                pContext.SaveChanges();
         }
 
         /// <summary>
@@ -54,19 +47,16 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pSectionId"></param>
         /// <returns>List of Categories</returns>
-        public static List<BDCategory> GetCategoriesForSectionId(Guid pSectionId)
+        public static List<BDCategory> GetCategoriesForSectionId(Entities pContext, Guid pSectionId)
         {
             List<BDCategory> catList = new List<BDCategory>();
-            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            {
-                IQueryable<BDCategory> categories = (from bdCategories in context.BDCategories
+                IQueryable<BDCategory> categories = (from bdCategories in pContext.BDCategories
                                   where bdCategories.sectionId == pSectionId
                                   select bdCategories);
                 foreach (BDCategory cat in categories)
                 {
                     catList.Add(cat);
                 }
-            }
             return catList;
         }
 
@@ -75,16 +65,13 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pCategoryId"></param>
         /// <returns>BDCategory object.</returns>
-        public static BDCategory GetCategoryWithId(Guid pCategoryId)
+        public static BDCategory GetCategoryWithId(Entities pContext, Guid pCategoryId)
         {
             BDCategory category;
-            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            {
-                IQueryable<BDCategory> categories = (from bdCategories in context.BDCategories
+                IQueryable<BDCategory> categories = (from bdCategories in pContext.BDCategories
                                                      where bdCategories.uuid == pCategoryId
                                                      select bdCategories);
                 category = categories.AsQueryable().First<BDCategory>();
-            }
             return category;
         }
     }

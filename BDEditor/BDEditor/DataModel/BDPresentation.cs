@@ -16,34 +16,28 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets creation date and schema version.
         /// </summary>
         /// <returns></returns>
-        public static BDPresentation CreatePresentation()
+        public static BDPresentation CreatePresentation(Entities pContext)
         {
-            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            {
                 BDPresentation presentation = CreateBDPresentation(Guid.NewGuid(), false);
                 presentation.createdBy = Guid.Empty;
                 presentation.createdDate = DateTime.Now;
                 presentation.schemaVersion = 0;
 
-                context.AddObject("BDPresentations", presentation);
+                pContext.AddObject("BDPresentations", presentation);
 
                 return presentation;
-            }
         }
 
         /// <summary>
         /// Extended Save method that sets modifiedDate.
         /// </summary>
         /// <param name="pPresentation"></param>
-        public static void SavePresentation(BDPresentation pPresentation)
+        public static void SavePresentation(Entities pContext, BDPresentation pPresentation)
         {
-            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            {
                 pPresentation.modifiedBy = Guid.Empty;
                 pPresentation.modifiedDate = DateTime.Now;
 
-                context.SaveChanges();
-            }
+                pContext.SaveChanges();
         }
 
         /// <summary>
@@ -51,20 +45,17 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pDiseaseId"></param>
         /// <returns>List of Presentations</returns>
-        public static List<BDPresentation> GetPresentationsForDiseaseId(Guid pDiseaseId)
+        public static List<BDPresentation> GetPresentationsForDiseaseId(Entities pContext, Guid pDiseaseId)
         {
             List<BDPresentation> presentationList = new List<BDPresentation>();
 
-            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            {
-                IQueryable<BDPresentation> presentations = (from bdPresentations in context.BDPresentations
+                IQueryable<BDPresentation> presentations = (from bdPresentations in pContext.BDPresentations
                                                             where bdPresentations.diseaseId == pDiseaseId
                                                             select bdPresentations);
                 foreach (BDPresentation presentation in presentations)
                 {
                     presentationList.Add(presentation);
                 }
-            }
             return presentationList;
         }
 
@@ -73,16 +64,13 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pPresentationId"></param>
         /// <returns>BDPresentation object</returns>
-        public static BDPresentation GetPresentationWithId(Guid pPresentationId)
+        public static BDPresentation GetPresentationWithId(Entities pContext, Guid pPresentationId)
         {
             BDPresentation presentation;
-            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            {
-                IQueryable<BDPresentation> presentations = (from bdPresentations in context.BDPresentations
+                IQueryable<BDPresentation> presentations = (from bdPresentations in pContext.BDPresentations
                                                             where bdPresentations.uuid == pPresentationId
                                                             select bdPresentations);
                 presentation = presentations.AsQueryable().First<BDPresentation>();
-            }
             return presentation;
         }
     }

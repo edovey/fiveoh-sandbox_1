@@ -12,7 +12,9 @@ namespace BDEditor.Views
 {
     public partial class BDPathogenControl : UserControl, IBDControl
     {
+        private Entities dataContext;
         private BDPathogen currentPathogen;
+        private string title;
 
         public BDPathogen CurrentPathogen
         {
@@ -31,15 +33,41 @@ namespace BDEditor.Views
 
         }
 
+        /// <summary>
+        /// The title that appears on this control
+        /// </summary>
+        public string Title
+        {
+            get
+            {
+                return title;
+            }
+            set
+            {
+                title = value;
+                lblTitle.Text = title;
+            }
+        }
+
         public BDPathogenControl()
         {
             InitializeComponent();
         }
 
+ 
+        #region IBDControl
+
+        public void AssignDataContext(Entities pDataContext)
+        {
+            dataContext = pDataContext;
+        }
+
         public void Save()
         {
             Entities context = new Entities();
-            BDPathogen.SavePathogen(context, currentPathogen);
+            BDPathogen.SavePathogen(dataContext, currentPathogen);
         }
+
+        #endregion
     }
 }

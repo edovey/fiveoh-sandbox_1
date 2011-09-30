@@ -58,5 +58,25 @@ namespace BDEditor.DataModel
                 }
                  return linkedNoteList;                                       
         }
+
+        /// <summary>
+        /// Get all linked notes with the specified parent ID
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pParentId"></param>
+        /// <returns></returns>
+        public static List<BDLinkedNote> GetLinkedNotesForParentId(Entities pContext, Guid pParentId)
+        {
+            List<BDLinkedNote> linkedNoteList = new List<BDLinkedNote>();
+
+            IQueryable<BDLinkedNote> linkedNotes = (from bdLinkedNotes in pContext.BDLinkedNotes
+                                                    where bdLinkedNotes.parentId == pParentId
+                                                    select bdLinkedNotes);
+            foreach (BDLinkedNote linkedNote in linkedNotes)
+            {
+                linkedNoteList.Add(linkedNote);
+            }
+            return linkedNoteList;
+        }
     }
 }

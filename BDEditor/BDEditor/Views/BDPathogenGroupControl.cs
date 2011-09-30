@@ -12,7 +12,10 @@ namespace BDEditor.Views
 {
     public partial class BDPathogenGroupControl : UserControl, IBDControl
     {
+        #region Class properties
+        private Entities dataContext;
         private BDPathogenGroup currentPathogenGroup;
+        private List<BDPathogen> pathogenList;
 
         public BDPathogenGroup CurrentPathogenGroup
         {
@@ -29,9 +32,26 @@ namespace BDEditor.Views
             }
         }
 
+        public List<BDPathogen> PathogenList
+        {
+            get
+            {
+                return pathogenList;
+            }
+
+            set
+            {
+                pathogenList = value;
+                AssignPathogensToView();
+            }
+        }
+
+        #endregion
+
         public BDPathogenGroupControl()
         {
             InitializeComponent();
+            AssignPathogensToView();
         }
 
         private void BDPathogenGroupControl_Load(object sender, EventArgs e)
@@ -39,9 +59,32 @@ namespace BDEditor.Views
 
         }
 
+        private void AssignPathogensToView()
+        {
+
+        }
+
+        private List<BDLinkedNote> GetLinkedNotesForPathogen(BDPathogen pPathogen)
+        {
+            List<BDLinkedNote> linkedNoteList = BDLinkedNote.GetLinkedNotesForParentId(dataContext, pPathogen.uuid);
+            if (linkedNoteList.Count == 0)
+                return null;
+            else
+                return linkedNoteList;
+        }
+
+        #region IBDControl
+        
+        public void AssignDataContext(Entities pDataContext)
+        {
+            dataContext = pDataContext;
+        }
+
         public void Save()
         {
 
         }
+
+        #endregion
     }
 }

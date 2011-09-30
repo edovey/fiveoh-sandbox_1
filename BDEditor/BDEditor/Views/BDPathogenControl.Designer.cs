@@ -28,32 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblPathogenName = new System.Windows.Forms.Label();
+            this.lblTitle = new System.Windows.Forms.Label();
             this.tbPathogenName = new System.Windows.Forms.TextBox();
             this.btnLink = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // lblPathogenName
+            // lblTitle
             // 
-            this.lblPathogenName.AutoSize = true;
-            this.lblPathogenName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPathogenName.Location = new System.Drawing.Point(2, 3);
-            this.lblPathogenName.Name = "lblPathogenName";
-            this.lblPathogenName.Size = new System.Drawing.Size(66, 16);
-            this.lblPathogenName.TabIndex = 0;
-            this.lblPathogenName.Text = "Pathogen";
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.Location = new System.Drawing.Point(2, 3);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(66, 16);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "Pathogen";
             // 
             // tbPathogenName
             // 
             this.tbPathogenName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbPathogenName.Location = new System.Drawing.Point(5, 21);
             this.tbPathogenName.Name = "tbPathogenName";
-            this.tbPathogenName.Size = new System.Drawing.Size(274, 24);
+            this.tbPathogenName.Size = new System.Drawing.Size(239, 24);
             this.tbPathogenName.TabIndex = 1;
             // 
             // btnLink
             // 
-            this.btnLink.Location = new System.Drawing.Point(285, 23);
+            this.btnLink.Location = new System.Drawing.Point(246, 21);
             this.btnLink.Name = "btnLink";
             this.btnLink.Size = new System.Drawing.Size(37, 23);
             this.btnLink.TabIndex = 2;
@@ -66,9 +66,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.btnLink);
             this.Controls.Add(this.tbPathogenName);
-            this.Controls.Add(this.lblPathogenName);
+            this.Controls.Add(this.lblTitle);
             this.Name = "BDPathogenControl";
-            this.Size = new System.Drawing.Size(325, 50);
+            this.Size = new System.Drawing.Size(285, 46);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -76,7 +76,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lblPathogenName;
+        private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.TextBox tbPathogenName;
         private System.Windows.Forms.Button btnLink;
     }

@@ -14,6 +14,7 @@ namespace BDEditor.Views
     {
         private Entities dataContext;
         private BDTherapy currentTherapy;
+        private Guid parentId;
 
         public BDTherapy CurrentTherapy
         {
@@ -99,6 +100,11 @@ namespace BDEditor.Views
 
             BDTherapy.SaveTherapy(dataContext, currentTherapy);
 
+        }
+
+        public void AssignParentId(Guid pParentId)
+        {
+            parentId = pParentId;
         }
     }
 }

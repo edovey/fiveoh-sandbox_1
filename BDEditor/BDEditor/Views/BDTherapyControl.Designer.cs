@@ -168,7 +168,7 @@
             this.Controls.Add(this.tbDosage);
             this.Controls.Add(this.tbName);
             this.Name = "BDTherapyControl";
-            this.Size = new System.Drawing.Size(837, 86);
+            this.Size = new System.Drawing.Size(830, 85);
             this.ResumeLayout(false);
             this.PerformLayout();
 

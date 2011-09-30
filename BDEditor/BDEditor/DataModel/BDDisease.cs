@@ -16,34 +16,28 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets the create date and the schema version
         /// </summary>
         /// <returns>BDDisease object</returns>
-        public static BDDisease CreateDisease()
+        public static BDDisease CreateDisease(Entities pContext)
         {
-            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            {
-                BDDisease disease = CreateBDDisease(Guid.NewGuid(), false);
-                disease.createdBy = Guid.Empty;
-                disease.createdDate = DateTime.Now;
-                disease.schemaVersion = 0;
+            BDDisease disease = CreateBDDisease(Guid.NewGuid(), false);
+            disease.createdBy = Guid.Empty;
+            disease.createdDate = DateTime.Now;
+            disease.schemaVersion = 0;
 
-                context.AddObject("BDDiseases", disease);
+            pContext.AddObject("BDDiseases", disease);
 
-                return disease;
-            }
+            return disease;
         }
 
         /// <summary>
         /// Extended Save method that sets the modification date
         /// </summary>
         /// <param name="pDisease"></param>
-        public static void SaveDisease(BDDisease pDisease)
+        public static void SaveDisease(Entities pContext, BDDisease pDisease)
         {
-            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            {
-                pDisease.modifiedBy = Guid.Empty;
-                pDisease.modifiedDate = DateTime.Now;
+            pDisease.modifiedBy = Guid.Empty;
+            pDisease.modifiedDate = DateTime.Now;
 
-                context.SaveChanges();
-            }
+            pContext.SaveChanges();
         }
 
         /// <summary>
@@ -51,20 +45,17 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pCategoryId"></param>
         /// <returns>List of Diseases</returns>
-        public static List<BDDisease> GetDiseasesForCategoryId(Guid pCategoryId)
+        public static List<BDDisease> GetDiseasesForCategoryId(Entities pContext, Guid pCategoryId)
         {
             List<BDDisease> diseaseList = new List<BDDisease>();
+  
+            IQueryable<BDDisease> diseases = (from bdDiseases in pContext.BDDiseases
+                                        where bdDiseases.categoryId == pCategoryId
+                                        select bdDiseases);
 
-            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            {   
-                IQueryable<BDDisease> diseases = (from bdDiseases in context.BDDiseases
-                                          where bdDiseases.categoryId == pCategoryId
-                                          select bdDiseases);
-
-                foreach (BDDisease disease in diseases)
-                {
-                    diseaseList.Add(disease);
-                }
+            foreach (BDDisease disease in diseases)
+            {
+                diseaseList.Add(disease);
             }
             return diseaseList;
         }
@@ -74,21 +65,19 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pSubcategoryId"></param>
         /// <returns>List of Diseases</returns>
-        public static List<BDDisease> GetDiseasesForSubcategory(Guid pSubcategoryId)
+        public static List<BDDisease> GetDiseasesForSubcategory(Entities pContext, Guid pSubcategoryId)
         {
             List<BDDisease> diseaseList = new List<BDDisease>();
 
-            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            {
-                IQueryable<BDDisease> diseases = (from bdDiseases in context.BDDiseases
-                                                  where bdDiseases.subcategoryId == pSubcategoryId
-                                                  select bdDiseases);
+        IQueryable<BDDisease> diseases = (from bdDiseases in pContext.BDDiseases
+                                                where bdDiseases.subcategoryId == pSubcategoryId
+                                                select bdDiseases);
 
-                foreach (BDDisease disease in diseases)
-                {
-                    diseaseList.Add(disease);
-                }
+            foreach (BDDisease disease in diseases)
+            {
+                diseaseList.Add(disease);
             }
+
             return diseaseList;
         }
 
@@ -97,16 +86,15 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pDiseaseId"></param>
         /// <returns>Disease object</returns>
-        public static BDDisease GetDiseaseWithId(Guid pDiseaseId)
+        public static BDDisease GetDiseaseWithId(Entities pContext, Guid pDiseaseId)
         {
             BDDisease disease;
-            using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            {
-                IQueryable<BDDisease> diseases = (from bdDiseases in context.BDDiseases
-                                                  where bdDiseases.uuid == pDiseaseId
-                                                  select bdDiseases);
-                disease = diseases.AsQueryable().First<BDDisease>();
-            }
+
+            IQueryable<BDDisease> diseases = (from bdDiseases in pContext.BDDiseases
+                                                where bdDiseases.uuid == pDiseaseId
+                                                select bdDiseases);
+            disease = diseases.AsQueryable().First<BDDisease>();
+
             return disease;
         }
     }

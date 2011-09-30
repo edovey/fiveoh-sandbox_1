@@ -110,7 +110,7 @@ namespace BDEditor
 
         private void btnAddSection_Click(object sender, EventArgs e)
         {
-            BDSection newSection = BDSection.CreateSection();
+            BDSection newSection = BDSection.CreateSection(entities);
             newSection.name = tbSectionName.Text;
             selectedSection = newSection;
         }
@@ -118,7 +118,7 @@ namespace BDEditor
         private void btnSaveSection_Click(object sender, EventArgs e)
         {
             selectedSection.name = tbSectionName.Text;
-            BDSection.SaveSection(selectedSection);
+            BDSection.SaveSection(entities, selectedSection);
             selectedSection = null;
             tbSectionName.Text = @"";
         }
@@ -126,13 +126,13 @@ namespace BDEditor
         private void cbSection_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedSection = (BDSection)this.cbSection.SelectedItem;
-            this.listBox1.DataSource = BDCategory.GetCategoriesForSectionId(selectedSection.uuid);
+            this.listBox1.DataSource = BDCategory.GetCategoriesForSectionId(entities, selectedSection.uuid);
             this.listBox1.DisplayMember = @"Name";
         }
 
         private void btnNewCategory_Click(object sender, EventArgs e)
         {
-            BDCategory category = BDCategory.CreateCategory();
+            BDCategory category = BDCategory.CreateCategory(entities);
             category.name = tbCategoryName.Text;
             selectedCategory = category;
         }
@@ -149,7 +149,7 @@ namespace BDEditor
         {
             selectedCategory.name = tbCategoryName.Text;
             selectedCategory.sectionId = selectedSection.uuid;
-            BDCategory.SaveCategory(selectedCategory);
+            BDCategory.SaveCategory(entities, selectedCategory);
             selectedCategory = null;
             tbCategoryName.Text = @"";
            // this.listBox1.DataSource = BDCategory.GetCategoriesForSectionId(selectedSection.uuid);

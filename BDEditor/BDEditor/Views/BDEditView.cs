@@ -24,15 +24,15 @@ namespace BDEditor.Views
 
     public partial class BDEditView : Form
     {
-        BDEditor.DataModel.Entities entities;
+        BDEditor.DataModel.Entities dataContext;
 
         public BDEditView()
         {
             InitializeComponent();
 
-            entities = new DataModel.Entities();
+            dataContext = new DataModel.Entities();
 
-            sectionDropDown.DataSource = entities.BDSections;
+            sectionDropDown.DataSource = dataContext.BDSections;
             sectionDropDown.DisplayMember = "Name";
         }
 
@@ -41,9 +41,9 @@ namespace BDEditor.Views
             switch (context)
             {
                 case BDNodeContextType.Section:
-                    BDSection section = BDSection.CreateSection();
+                    BDSection section = BDSection.CreateSection(dataContext);
                     section.name = @"New Section";
-                    BDSection.SaveSection(section);
+                    BDSection.SaveSection(dataContext,section);
                     break;
 
                 default:
@@ -56,19 +56,19 @@ namespace BDEditor.Views
             sectionTree.Nodes.Clear();
 
             TreeNode rootNode = new TreeNode(pSection.name);
-            List<BDCategory> categoryList = BDCategory.GetCategoriesForSectionId(pSection.uuid);
+            List<BDCategory> categoryList = BDCategory.GetCategoriesForSectionId(dataContext, pSection.uuid);
             foreach (BDCategory category in categoryList)
             {
                 TreeNode categoryNode = new TreeNode(category.name);
                 categoryNode.Tag = category;
 
-                List<BDSubcategory> subCategoryList = BDSubcategory.GetSubcategoriesForCategoryId(category.uuid);
+                List<BDSubcategory> subCategoryList = BDSubcategory.GetSubcategoriesForCategoryId(dataContext, category.uuid);
                 foreach (BDSubcategory subCategory in subCategoryList)
                 {
                     TreeNode subCategoryNode = new TreeNode(subCategory.name);
                     subCategoryNode.Tag = subCategory;
 
-                    List<BDDisease> diseaseList = BDDisease.GetDiseasesForSubcategory(subCategory.uuid);
+                    List<BDDisease> diseaseList = BDDisease.GetDiseasesForSubcategory(dataContext, subCategory.uuid);
                     foreach (BDDisease disease in diseaseList)
                     {
                         TreeNode diseaseNode = new TreeNode(disease.name);
@@ -80,7 +80,7 @@ namespace BDEditor.Views
                 }
                 categoryNode.Nodes.Add(new TreeNode(@"<Add SubCategory Entry>"));
 
-                List<BDDisease> categorydiseaseList = BDDisease.GetDiseasesForCategoryId(category.uuid);
+                List<BDDisease> categorydiseaseList = BDDisease.GetDiseasesForCategoryId(dataContext, category.uuid);
                 foreach (BDDisease disease in categorydiseaseList)
                 {
                     TreeNode diseaseNode = new TreeNode(disease.name);
@@ -121,14 +121,26 @@ namespace BDEditor.Views
                         categoryControl.CurrentCategory = selectedNode.Tag as BDCategory;
                         splitContainer1.Panel2.Controls.Add(categoryControl);
                     }
-                    if (selectedNode.Tag is BDDisease)
+                    else if (selectedNode.Tag is BDSubcategory)
+                    {
+                        BDSubCategoryControl subCategoryControl = new BDSubCategoryControl();
+                        subCategoryControl.Dock = DockStyle.Fill;
+                        splitContainer1.Panel2.Controls.Add(subCategoryControl);
+                    }
+                    else if (selectedNode.Tag is BDDisease)
                     {
                         BDDiseaseControl diseaseControl = new BDDiseaseControl();
                         diseaseControl.Dock = DockStyle.Fill;
                         diseaseControl.CurrentDisease = selectedNode.Tag as BDDisease;
                         splitContainer1.Panel2.Controls.Add(diseaseControl);
                     }
+                    else if (selectedNode.Tag is BDPresentation)
+                    {
+                        BDPresentationControl presentationControl = new BDPresentationControl();
+                        presentationControl.Dock = DockStyle.Fill;
 
+                        splitContainer1.Panel2.Controls.Add(presentationControl);
+                    }
                     break;
                 case TreeViewAction.Collapse:
                 case TreeViewAction.Expand:
@@ -140,44 +152,44 @@ namespace BDEditor.Views
 
         private void createTestData()
         {
-            BDSection section = BDSection.CreateSection();
+            BDSection section = BDSection.CreateSection(dataContext);
             section.name = @"Selected Infection in Adult Patients";
-            BDSection.SaveSection(section);
+            BDSection.SaveSection(dataContext, section);
 
-            BDCategory category = BDCategory.CreateCategory();
+            BDCategory category = BDCategory.CreateCategory(dataContext);
             category.name = @"Skin & Soft Tissue";
             category.sectionId = section.uuid;
-            BDCategory.SaveCategory(category);
+            BDCategory.SaveCategory(dataContext, category);
 
-            BDSubcategory subCategory = BDSubcategory.CreateSubcategory();
+            BDSubcategory subCategory = BDSubcategory.CreateSubcategory(dataContext);
             subCategory.name = @"All";
             subCategory.categoryId = category.uuid;
-            BDSubcategory.SaveSubcategory(subCategory);
+            BDSubcategory.SaveSubcategory(dataContext, subCategory);
 
-            category = BDCategory.CreateCategory();
+            category = BDCategory.CreateCategory(dataContext);
             category.name = @"Respiratory";
             category.sectionId = section.uuid;
-            BDCategory.SaveCategory(category);
+            BDCategory.SaveCategory(dataContext, category);
 
-            BDDisease disease = BDDisease.CreateDisease();
+            BDDisease disease = BDDisease.CreateDisease(dataContext);
             disease.name = @"Pharygtis";
             disease.categoryId = category.uuid;
-            BDDisease.SaveDisease(disease);
+            BDDisease.SaveDisease(dataContext, disease);
 
-            BDPresentation presentation = BDPresentation.CreatePresentation();
+            BDPresentation presentation = BDPresentation.CreatePresentation(dataContext);
             presentation.name = @"Acute";
             presentation.diseaseId = disease.uuid;
-            BDPresentation.SavePresentation(presentation);
+            BDPresentation.SavePresentation(dataContext, presentation);
 
-            presentation = BDPresentation.CreatePresentation();
+            presentation = BDPresentation.CreatePresentation(dataContext);
             presentation.name = @"Non-Responders";
             presentation.diseaseId = disease.uuid;
-            BDPresentation.SavePresentation(presentation);
+            BDPresentation.SavePresentation(dataContext, presentation);
 
-            presentation = BDPresentation.CreatePresentation();
+            presentation = BDPresentation.CreatePresentation(dataContext);
             presentation.name = @"Late Relapse / Recurrent";
             presentation.diseaseId = disease.uuid;
-            BDPresentation.SavePresentation(presentation);
+            BDPresentation.SavePresentation(dataContext, presentation);
         }
 
         private void createTestDataButton_Click(object sender, EventArgs e)

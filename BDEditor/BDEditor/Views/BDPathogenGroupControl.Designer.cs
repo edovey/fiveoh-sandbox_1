@@ -36,6 +36,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "BDPathogenGroupControl";
             this.Size = new System.Drawing.Size(680, 179);
+            this.Load += new System.EventHandler(this.BDPathogenGroupControl_Load);
             this.ResumeLayout(false);
 
         }

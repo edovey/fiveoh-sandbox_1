@@ -53,6 +53,11 @@ namespace BDEditor.Views
                             noneRadioButton.Checked = true;
                             break;
                     }
+
+                    List<BDTherapy> therapyList = BDTherapy.GetTherapiesForTherapyGroupId(dataContext, currentTherapyGroup.uuid);
+
+
+
                 }
             }
         }

@@ -7,6 +7,6 @@ namespace BDEditor.Views
 {
     public interface IBDControl
     {
-        public void Save();
+        void Save();
     }
 }

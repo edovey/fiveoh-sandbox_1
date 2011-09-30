@@ -79,6 +79,12 @@
       <DependentUpon>BDModel1.edmx</DependentUpon>
     </Compile>
     <Compile Include="DataModel\BDSubcategory.cs" />
+    <Compile Include="Views\BDLinkedNoteControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDLinkedNoteControl.Designer.cs">
+      <DependentUpon>BDLinkedNoteControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\BDSubCategoryControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -129,7 +135,9 @@
     <Compile Include="Views\BDTherapyControl.Designer.cs">
       <DependentUpon>BDTherapyControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Presentation.cs" />
+    <Compile Include="Views\Presentation.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Views\Presentation.Designer.cs">
       <DependentUpon>Presentation.cs</DependentUpon>
     </Compile>
@@ -144,8 +152,11 @@
     <EmbeddedResource Include="Views\BDEditView.resx">
       <DependentUpon>BDEditView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\BDPresentationControl.resx">
-      <DependentUpon>BDPresentationControl.cs</DependentUpon>
+    <EmbeddedResource Include="Views\BDLinkedNoteControl.resx">
+      <DependentUpon>BDLinkedNoteControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDPathogenControl.resx">
+      <DependentUpon>BDPathogenControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDSectionControl.resx">
       <DependentUpon>BDSectionControl.cs</DependentUpon>

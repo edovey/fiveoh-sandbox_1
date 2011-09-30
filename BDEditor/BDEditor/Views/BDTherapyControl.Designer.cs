@@ -37,6 +37,9 @@
             this.btnTherapyLink = new System.Windows.Forms.Button();
             this.bthDosageLink = new System.Windows.Forms.Button();
             this.btnDurationLink = new System.Windows.Forms.Button();
+            this.noneRadioButton = new System.Windows.Forms.RadioButton();
+            this.andRadioButton = new System.Windows.Forms.RadioButton();
+            this.orRadioButton = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // tbName
@@ -115,10 +118,46 @@
             this.btnDurationLink.Text = "Link";
             this.btnDurationLink.UseVisualStyleBackColor = true;
             // 
+            // noneRadioButton
+            // 
+            this.noneRadioButton.AutoSize = true;
+            this.noneRadioButton.Location = new System.Drawing.Point(17, 54);
+            this.noneRadioButton.Name = "noneRadioButton";
+            this.noneRadioButton.Size = new System.Drawing.Size(89, 17);
+            this.noneRadioButton.TabIndex = 9;
+            this.noneRadioButton.TabStop = true;
+            this.noneRadioButton.Text = "Next Therapy";
+            this.noneRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // andRadioButton
+            // 
+            this.andRadioButton.AutoSize = true;
+            this.andRadioButton.Location = new System.Drawing.Point(112, 54);
+            this.andRadioButton.Name = "andRadioButton";
+            this.andRadioButton.Size = new System.Drawing.Size(95, 17);
+            this.andRadioButton.TabIndex = 10;
+            this.andRadioButton.TabStop = true;
+            this.andRadioButton.Text = "And (with next)";
+            this.andRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // orRadioButton
+            // 
+            this.orRadioButton.AutoSize = true;
+            this.orRadioButton.Location = new System.Drawing.Point(213, 54);
+            this.orRadioButton.Name = "orRadioButton";
+            this.orRadioButton.Size = new System.Drawing.Size(87, 17);
+            this.orRadioButton.TabIndex = 11;
+            this.orRadioButton.TabStop = true;
+            this.orRadioButton.Text = "Or (with next)";
+            this.orRadioButton.UseVisualStyleBackColor = true;
+            // 
             // BDTherapyControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.orRadioButton);
+            this.Controls.Add(this.andRadioButton);
+            this.Controls.Add(this.noneRadioButton);
             this.Controls.Add(this.btnDurationLink);
             this.Controls.Add(this.bthDosageLink);
             this.Controls.Add(this.btnTherapyLink);
@@ -129,7 +168,7 @@
             this.Controls.Add(this.tbDosage);
             this.Controls.Add(this.tbName);
             this.Name = "BDTherapyControl";
-            this.Size = new System.Drawing.Size(855, 49);
+            this.Size = new System.Drawing.Size(837, 86);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -146,5 +185,8 @@
         private System.Windows.Forms.Button btnTherapyLink;
         private System.Windows.Forms.Button bthDosageLink;
         private System.Windows.Forms.Button btnDurationLink;
+        private System.Windows.Forms.RadioButton noneRadioButton;
+        private System.Windows.Forms.RadioButton andRadioButton;
+        private System.Windows.Forms.RadioButton orRadioButton;
     }
 }

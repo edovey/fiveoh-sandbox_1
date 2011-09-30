@@ -12,6 +12,14 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDTherapyGroup
     {
+
+        public enum TherapyGroupJoinType
+        {
+            None = 0,
+            AndWithNext = 1,
+            OrWithNext = 2
+        }
+
         /// <summary>
         /// Extended Create method that sets creation date and schema version.
         /// </summary>
@@ -22,6 +30,7 @@ namespace BDEditor.DataModel
                 therapyGroup.createdBy = Guid.Empty;
                 therapyGroup.createdDate = DateTime.Now;
                 therapyGroup.schemaVersion = 0;
+                therapyGroup.therapyGroupJoinType = (int)TherapyGroupJoinType.None;
 
                 pContext.AddObject("BDTherapyGroups", therapyGroup);
 

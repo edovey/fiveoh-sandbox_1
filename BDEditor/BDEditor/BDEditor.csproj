@@ -136,6 +136,13 @@
     <Compile Include="Views\BDTherapyControl.Designer.cs">
       <DependentUpon>BDTherapyControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\BDTherapyGroupControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDTherapyGroupControl.Designer.cs">
+      <DependentUpon>BDTherapyGroupControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IBDControl.cs" />
     <Compile Include="Views\Presentation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,6 +174,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDTherapyControl.resx">
       <DependentUpon>BDTherapyControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDTherapyGroupControl.resx">
+      <DependentUpon>BDTherapyGroupControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Presentation.resx">
       <DependentUpon>Presentation.cs</DependentUpon>

@@ -176,7 +176,7 @@
           <Property Name="name" Type="nvarchar" />
           <Property Name="schemaVersion" Type="smallint" />
           <Property Name="therapyGroupId" Type="uniqueidentifier" />
-          <Property Name="therapyGroupJoinType" Type="smallint" />
+          <Property Name="therapyJoinType" Type="int" />
         </EntityType>
         <EntityType Name="BDTherapyGroups">
           <Key>
@@ -195,6 +195,7 @@
           <Property Name="name" Type="nvarchar" />
           <Property Name="schemaVersion" Type="smallint" />
           <Property Name="pathogenGroupId" Type="uniqueidentifier" />
+          <Property Name="therapyGroupJoinType" Type="int" />
         </EntityType>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -371,7 +372,7 @@
           <Property Type="String" Name="name" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Type="Int16" Name="schemaVersion" />
           <Property Type="Guid" Name="therapyGroupId" />
-          <Property Type="Int16" Name="therapyGroupJoinType" />
+          <Property Type="Int32" Name="therapyJoinType" />
         </EntityType>
         <EntityType Name="BDTherapyGroup">
           <Key>
@@ -390,6 +391,7 @@
           <Property Type="String" Name="name" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Type="Int16" Name="schemaVersion" />
           <Property Type="Guid" Name="pathogenGroupId" />
+          <Property Type="Int32" Name="therapyGroupJoinType" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -550,7 +552,7 @@
           <EntitySetMapping Name="BDTherapies">
             <EntityTypeMapping TypeName="BDDataModel.BDTherapy">
               <MappingFragment StoreEntitySet="BDTherapies">
-                <ScalarProperty Name="therapyGroupJoinType" ColumnName="therapyGroupJoinType" />
+                <ScalarProperty Name="therapyJoinType" ColumnName="therapyJoinType" />
                 <ScalarProperty Name="therapyGroupId" ColumnName="therapyGroupId" />
                 <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -570,6 +572,7 @@
           <EntitySetMapping Name="BDTherapyGroups">
             <EntityTypeMapping TypeName="BDDataModel.BDTherapyGroup">
               <MappingFragment StoreEntitySet="BDTherapyGroups">
+                <ScalarProperty Name="therapyGroupJoinType" ColumnName="therapyGroupJoinType" />
                 <ScalarProperty Name="pathogenGroupId" ColumnName="pathogenGroupId" />
                 <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -615,8 +618,8 @@
         <EntityTypeShape EntityType="BDDataModel.BDQueueEntry" Width="1.5" PointX="6.75" PointY="0.75" Height="1.9802864583333246" />
         <EntityTypeShape EntityType="BDDataModel.BDSection" Width="1.5" PointX="6.75" PointY="3.75" Height="2.9417936197916674" />
         <EntityTypeShape EntityType="BDDataModel.BDSubcategory" Width="1.5" PointX="6.75" PointY="7.75" Height="3.1340950520833246" />
-        <EntityTypeShape EntityType="BDDataModel.BDTherapy" Width="1.5" PointX="8.75" PointY="0.75" Height="3.7109993489583246" />
-        <EntityTypeShape EntityType="BDDataModel.BDTherapyGroup" Width="1.5" PointX="8.75" PointY="5.75" Height="3.5186979166666674" />
+        <EntityTypeShape EntityType="BDDataModel.BDTherapy" Width="2.25" PointX="8.75" PointY="0.75" Height="3.2357796223958331" />
+        <EntityTypeShape EntityType="BDDataModel.BDTherapyGroup" Width="2.125" PointX="8.75" PointY="5.75" Height="3.0714322916666656" />
       </Diagram>
     </Diagrams>
   </Designer>

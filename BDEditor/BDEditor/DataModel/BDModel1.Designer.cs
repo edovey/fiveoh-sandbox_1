@@ -3285,24 +3285,24 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> therapyGroupJoinType
+        public Nullable<global::System.Int32> therapyJoinType
         {
             get
             {
-                return _therapyGroupJoinType;
+                return _therapyJoinType;
             }
             set
             {
-                OntherapyGroupJoinTypeChanging(value);
-                ReportPropertyChanging("therapyGroupJoinType");
-                _therapyGroupJoinType = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("therapyGroupJoinType");
-                OntherapyGroupJoinTypeChanged();
+                OntherapyJoinTypeChanging(value);
+                ReportPropertyChanging("therapyJoinType");
+                _therapyJoinType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("therapyJoinType");
+                OntherapyJoinTypeChanged();
             }
         }
-        private Nullable<global::System.Int16> _therapyGroupJoinType;
-        partial void OntherapyGroupJoinTypeChanging(Nullable<global::System.Int16> value);
-        partial void OntherapyGroupJoinTypeChanged();
+        private Nullable<global::System.Int32> _therapyJoinType;
+        partial void OntherapyJoinTypeChanging(Nullable<global::System.Int32> value);
+        partial void OntherapyJoinTypeChanged();
 
         #endregion
     
@@ -3648,6 +3648,30 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Guid> _pathogenGroupId;
         partial void OnpathogenGroupIdChanging(Nullable<global::System.Guid> value);
         partial void OnpathogenGroupIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> therapyGroupJoinType
+        {
+            get
+            {
+                return _therapyGroupJoinType;
+            }
+            set
+            {
+                OntherapyGroupJoinTypeChanging(value);
+                ReportPropertyChanging("therapyGroupJoinType");
+                _therapyGroupJoinType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("therapyGroupJoinType");
+                OntherapyGroupJoinTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _therapyGroupJoinType;
+        partial void OntherapyGroupJoinTypeChanging(Nullable<global::System.Int32> value);
+        partial void OntherapyGroupJoinTypeChanged();
 
         #endregion
     

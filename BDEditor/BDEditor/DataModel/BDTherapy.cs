@@ -12,6 +12,13 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDTherapy
     {
+        public enum TherapyJoinType
+        {
+            None = 0,
+            AndWithNext = 1,
+            OrWithNext = 2
+        }
+
         /// <summary>
         /// Extended Create method that sets created date and schema version
         /// </summary>
@@ -22,6 +29,7 @@ namespace BDEditor.DataModel
             therapy.createdBy = Guid.Empty;
             therapy.createdDate = DateTime.Now;
             therapy.schemaVersion = 0;
+            therapy.therapyJoinType = (int)TherapyJoinType.None;
 
             pContext.AddObject("BDTherapies", therapy);
 

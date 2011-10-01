@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\BDDataLoader.cs" />
     <Compile Include="Classes\BDTreeNode.cs" />
     <Compile Include="DataModel\BDCategory.cs" />
     <Compile Include="DataModel\BDDisease.cs" />

@@ -1,0 +1,79 @@
+Section	Category	Sub Category	Disease	Presentation		
+Selected Infection in Adult Patients						
+	Skin & Soft Tissue					
+	Bone & Joint					
+	Respiratory					
+			Pharyngitis			
+				Acute		
+				Non-responders (after 72 hours of therapy) or Early relapse (2-7 days post therapy)		
+				Late relapse or recurrent		
+				Asymptomatic carrier		
+				Gonococcal		
+			Vincent's Angina			
+			Jugular Vein Septic Phlebitis (Lemierre's Syndrome)			
+			Parapharyngeal space infections (Ludwig's angina)			
+				Normal		
+				Odontogenic		
+			Laryngitis			
+			Rhinitis			
+			Ottis Media			
+				Acute		
+				Failure of first line agents		
+				Chronic		
+				Hospital acquired ottitis		
+				Swimmer's ear		
+				Invasive ottitis externa		
+			Mastoiditis			
+				Acute		
+				Chronic		
+			Sinusitis			
+				Acute		
+				Failure of first line agents		
+				Acute Recurrent		
+				Chronic: Symptoms ? 12 weeks		
+				Hospital Acquired		
+				Fungal		
+			Whooping Cough			
+			Bronchitis			
+				Acute		
+				Acute exacerbation of chronic bronchitis (AECB)		
+				At least 2 of the above criteria and:a		
+				At least 2 of the above criteria and:b		
+				Bronchectiasis / end stage lung disease		
+			Community acquired pneumonia			
+				Outpatient: No comorbid factors		
+				Outpatient:comorbid factors		
+				Outpatient:Failure of 1st line agents		
+				Hospitalized - Moderate		
+				Hospitalized - Severe		
+			Nursing home acquired pneumonia			
+				Treated in nursing home		
+				Transferred to acute care		
+			Influenza			
+			Hospital acquired pneumonia			
+				Early onset		
+				Late onset		
+				Late onset with risk factors		
+				Late onset with risk factor:aspiratiion		
+				Late onset with risk factors		
+			Ventilator associated pneumonia (VAP)			
+				? 7 days		
+				? 7 days		
+			Aspiration pneumonia			
+				Community acquired or nursing home		
+				Community acquired or nursing home with:		
+				Hospital acquired		
+			Lung abscess			
+			Empyema			
+				Acute		
+				Chronic		
+			Pneumocytis jiroveci (previously P. carnii) pneumonia (PJP)			
+				Normal		
+				Prophylaxis and post-treatment suppression		
+			Tuberculosis			
+	Gastrointestinal					
+	Genital					
+	Urinary Tract					
+	Central Nervous System					
+	Vascular					
+	Sepsis					

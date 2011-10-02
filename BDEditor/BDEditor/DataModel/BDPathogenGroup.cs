@@ -49,7 +49,7 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pPresentationId"></param>
         /// <returns></returns>
-        public static List<BDPathogenGroup> GetPathogenGroupForPresentationId(Entities pContext, Guid pPresentationId)
+        public static List<BDPathogenGroup> GetPathogenGroupsForPresentationId(Entities pContext, Guid pPresentationId)
         {
             List<BDPathogenGroup> pathogenGroupList = new List<BDPathogenGroup>();
 

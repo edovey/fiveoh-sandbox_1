@@ -42,21 +42,21 @@
             // 
             this.bdPathogenControl6.BackColor = System.Drawing.SystemColors.ControlDark;
             this.bdPathogenControl6.CurrentPathogen = null;
-            this.bdPathogenControl6.Location = new System.Drawing.Point(291, 58);
+            this.bdPathogenControl6.Location = new System.Drawing.Point(291, 54);
             this.bdPathogenControl6.Name = "bdPathogenControl6";
             this.bdPathogenControl6.Size = new System.Drawing.Size(287, 50);
             this.bdPathogenControl6.TabIndex = 5;
-            this.bdPathogenControl6.Title = null;
+            this.bdPathogenControl6.Title = "Pathogen 6";
             // 
             // bdPathogenControl5
             // 
             this.bdPathogenControl5.BackColor = System.Drawing.SystemColors.ControlDark;
             this.bdPathogenControl5.CurrentPathogen = null;
-            this.bdPathogenControl5.Location = new System.Drawing.Point(4, 58);
+            this.bdPathogenControl5.Location = new System.Drawing.Point(4, 54);
             this.bdPathogenControl5.Name = "bdPathogenControl5";
             this.bdPathogenControl5.Size = new System.Drawing.Size(287, 50);
             this.bdPathogenControl5.TabIndex = 4;
-            this.bdPathogenControl5.Title = null;
+            this.bdPathogenControl5.Title = "Pathogen 5";
             // 
             // bdPathogenControl4
             // 
@@ -66,7 +66,7 @@
             this.bdPathogenControl4.Name = "bdPathogenControl4";
             this.bdPathogenControl4.Size = new System.Drawing.Size(287, 50);
             this.bdPathogenControl4.TabIndex = 3;
-            this.bdPathogenControl4.Title = null;
+            this.bdPathogenControl4.Title = "Pathogen 4";
             // 
             // bdPathogenControl3
             // 
@@ -76,7 +76,7 @@
             this.bdPathogenControl3.Name = "bdPathogenControl3";
             this.bdPathogenControl3.Size = new System.Drawing.Size(287, 50);
             this.bdPathogenControl3.TabIndex = 2;
-            this.bdPathogenControl3.Title = null;
+            this.bdPathogenControl3.Title = "Pathogen 3";
             // 
             // bdPathogenControl2
             // 
@@ -86,7 +86,7 @@
             this.bdPathogenControl2.Name = "bdPathogenControl2";
             this.bdPathogenControl2.Size = new System.Drawing.Size(287, 50);
             this.bdPathogenControl2.TabIndex = 1;
-            this.bdPathogenControl2.Title = null;
+            this.bdPathogenControl2.Title = "Pathogen 2";
             // 
             // bdPathogenControl1
             // 
@@ -96,27 +96,27 @@
             this.bdPathogenControl1.Name = "bdPathogenControl1";
             this.bdPathogenControl1.Size = new System.Drawing.Size(287, 50);
             this.bdPathogenControl1.TabIndex = 0;
-            this.bdPathogenControl1.Title = null;
+            this.bdPathogenControl1.Title = "Pathogen 1";
             // 
             // bdPathogenControl7
             // 
             this.bdPathogenControl7.BackColor = System.Drawing.SystemColors.ControlDark;
             this.bdPathogenControl7.CurrentPathogen = null;
-            this.bdPathogenControl7.Location = new System.Drawing.Point(578, 58);
+            this.bdPathogenControl7.Location = new System.Drawing.Point(578, 54);
             this.bdPathogenControl7.Name = "bdPathogenControl7";
             this.bdPathogenControl7.Size = new System.Drawing.Size(287, 50);
             this.bdPathogenControl7.TabIndex = 6;
-            this.bdPathogenControl7.Title = null;
+            this.bdPathogenControl7.Title = "Pathogen 7";
             // 
             // bdPathogenControl8
             // 
             this.bdPathogenControl8.BackColor = System.Drawing.SystemColors.ControlDark;
             this.bdPathogenControl8.CurrentPathogen = null;
-            this.bdPathogenControl8.Location = new System.Drawing.Point(865, 58);
+            this.bdPathogenControl8.Location = new System.Drawing.Point(865, 54);
             this.bdPathogenControl8.Name = "bdPathogenControl8";
             this.bdPathogenControl8.Size = new System.Drawing.Size(287, 50);
             this.bdPathogenControl8.TabIndex = 7;
-            this.bdPathogenControl8.Title = null;
+            this.bdPathogenControl8.Title = "Pathogen 8";
             // 
             // BDPathogenGroupControl
             // 
@@ -131,7 +131,7 @@
             this.Controls.Add(this.bdPathogenControl2);
             this.Controls.Add(this.bdPathogenControl1);
             this.Name = "BDPathogenGroupControl";
-            this.Size = new System.Drawing.Size(1158, 111);
+            this.Size = new System.Drawing.Size(1158, 108);
             this.Load += new System.EventHandler(this.BDPathogenGroupControl_Load);
             this.ResumeLayout(false);
 

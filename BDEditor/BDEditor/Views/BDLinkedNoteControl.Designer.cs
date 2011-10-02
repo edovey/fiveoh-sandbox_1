@@ -38,24 +38,24 @@
             // lblLinkedNote
             // 
             this.lblLinkedNote.AutoSize = true;
-            this.lblLinkedNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLinkedNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLinkedNote.Location = new System.Drawing.Point(13, 14);
             this.lblLinkedNote.Name = "lblLinkedNote";
-            this.lblLinkedNote.Size = new System.Drawing.Size(87, 18);
+            this.lblLinkedNote.Size = new System.Drawing.Size(65, 13);
             this.lblLinkedNote.TabIndex = 0;
             this.lblLinkedNote.Text = "Linked Note";
             // 
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(122, 10);
+            this.comboBox1.Location = new System.Drawing.Point(90, 10);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(91, 21);
+            this.comboBox1.Size = new System.Drawing.Size(169, 21);
             this.comboBox1.TabIndex = 1;
             // 
             // tbLinkedNote
             // 
-            this.tbLinkedNote.Location = new System.Drawing.Point(16, 39);
+            this.tbLinkedNote.Location = new System.Drawing.Point(16, 35);
             this.tbLinkedNote.Multiline = true;
             this.tbLinkedNote.Name = "tbLinkedNote";
             this.tbLinkedNote.Size = new System.Drawing.Size(743, 72);
@@ -64,16 +64,16 @@
             // lblEndNote
             // 
             this.lblEndNote.AutoSize = true;
-            this.lblEndNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEndNote.Location = new System.Drawing.Point(13, 124);
+            this.lblEndNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEndNote.Location = new System.Drawing.Point(13, 117);
             this.lblEndNote.Name = "lblEndNote";
-            this.lblEndNote.Size = new System.Drawing.Size(70, 18);
+            this.lblEndNote.Size = new System.Drawing.Size(52, 13);
             this.lblEndNote.TabIndex = 3;
             this.lblEndNote.Text = "End Note";
             // 
             // tbEndNote
             // 
-            this.tbEndNote.Location = new System.Drawing.Point(16, 145);
+            this.tbEndNote.Location = new System.Drawing.Point(16, 136);
             this.tbEndNote.Multiline = true;
             this.tbEndNote.Name = "tbEndNote";
             this.tbEndNote.Size = new System.Drawing.Size(743, 41);
@@ -89,7 +89,7 @@
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.lblLinkedNote);
             this.Name = "BDLinkedNoteControl";
-            this.Size = new System.Drawing.Size(843, 198);
+            this.Size = new System.Drawing.Size(764, 182);
             this.ResumeLayout(false);
             this.PerformLayout();
 

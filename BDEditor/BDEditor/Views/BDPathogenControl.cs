@@ -12,10 +12,12 @@ namespace BDEditor.Views
 {
     public partial class BDPathogenControl : UserControl, IBDControl
     {
+        #region Class properties
+
         private Entities dataContext;
         private Guid? pathogenGroupId;
         private BDPathogen currentPathogen;
-        private string title = @"Pathogen";
+        private string title;
 
         public BDPathogen CurrentPathogen
         {
@@ -30,32 +32,34 @@ namespace BDEditor.Views
                 if (currentPathogen == null)
                 {
                     this.BackColor = SystemColors.ControlDark;
-                    tbPathogenName.Text = @"";
+                    this.tbPathogenName.Text = @"";
+                    //this.lblTitle.ForeColor = SystemColors.HotTrack;
                 }
                 else
                 {
                     this.BackColor = SystemColors.Control;
-                    tbPathogenName.Text = currentPathogen.name;
+                    this.tbPathogenName.Text = currentPathogen.name;
                 }
             }
-
         }
 
-        /// <summary>
-        /// The title that appears on this control
-        /// </summary>
         public string Title
         {
             get
             {
                 return title;
             }
+
             set
             {
                 title = value;
-                lblTitle.Text = title;
+                if (title != null && title.Length > 0)
+                    lblTitle.Text = title;
+                else lblTitle.Text = @"Pathogen";
             }
         }
+
+         #endregion
 
         public BDPathogenControl()
         {
@@ -96,10 +100,18 @@ namespace BDEditor.Views
 
         #endregion
 
-        private void btnLink_Click(object sender, EventArgs e)
+        #region Class methods
+        private void CreateLink()
         {
             // open context menu for linking to: existing linked note, new linked note, remove link to note
             MessageBox.Show("Will show context menu for working with a linked note");
+        }
+
+        #endregion
+
+        private void btnLink_Click(object sender, EventArgs e)
+        {
+            CreateLink();
         }
 
         private void textBox_TextChanged(object sender, EventArgs e)

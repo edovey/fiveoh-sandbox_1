@@ -14,6 +14,7 @@ namespace BDEditor.Views
     {
         #region Class properties
         private Entities dataContext;
+        private Guid? presentationId;
         private BDPathogenGroup currentPathogenGroup;
         private List<BDPathogen> pathogenList;
 
@@ -26,12 +27,27 @@ namespace BDEditor.Views
             set
             {
                 currentPathogenGroup = value;
+                if (null == currentPathogenGroup)
+                {
+                    pathogenList = new List<BDPathogen>();
 
-                
-
+                    bdPathogenControl1.CurrentPathogen = null;
+                    bdPathogenControl2.CurrentPathogen = null;
+                    bdPathogenControl3.CurrentPathogen = null;
+                    bdPathogenControl4.CurrentPathogen = null;
+                    bdPathogenControl5.CurrentPathogen = null;
+                    bdPathogenControl6.CurrentPathogen = null;
+                    bdPathogenControl7.CurrentPathogen = null;
+                    bdPathogenControl8.CurrentPathogen = null;
+                }
+                else
+                {
+                    pathogenList = BDPathogen.GetPathogensForPathogenGroup(dataContext, currentPathogenGroup.uuid);
+                }
             }
         }
 
+        
         public List<BDPathogen> PathogenList
         {
             get
@@ -45,14 +61,12 @@ namespace BDEditor.Views
                 AssignPathogensToView();
             }
         }
-
+        
         #endregion
 
         public BDPathogenGroupControl()
         {
             InitializeComponent();
-            if (currentPathogenGroup != null)
-                AssignPathogensToView();
         }
 
         private void BDPathogenGroupControl_Load(object sender, EventArgs e)
@@ -62,44 +76,48 @@ namespace BDEditor.Views
 
         private void AssignPathogensToView()
         {
-            List<BDPathogen> list = BDPathogen.GetPathogensForPathogenGroup(dataContext,currentPathogenGroup.uuid);
-            if (list != null)
+            //List<BDPathogen> list = BDPathogen.GetPathogensForPathogenGroup(dataContext, currentPathogenGroup.uuid);
+            if (null != pathogenList)
             {
-                if (list.Count >= 1)
-                    bdPathogenControl1.CurrentPathogen = list[0];
-                if (list.Count >= 2)
+                if (pathogenList.Count >= 1)
                 {
-                    bdPathogenControl2.CurrentPathogen = list[1];
+                    bdPathogenControl1.CurrentPathogen = pathogenList[0];
+                    bdPathogenControl1.Title = @"Pathogen 1";
+                    
+                }
+                if (pathogenList.Count >= 2)
+                {
+                    bdPathogenControl2.CurrentPathogen = pathogenList[1];
                     bdPathogenControl2.Title = @"Pathogen 2";
                 }
-                if (list.Count >= 3)
+                if (pathogenList.Count >= 3)
                 {
-                    bdPathogenControl3.CurrentPathogen = list[2];
+                    bdPathogenControl3.CurrentPathogen = pathogenList[2];
                     bdPathogenControl3.Title = @"Pathogen 3";
                 }
-                if (list.Count >= 4)
+                if (pathogenList.Count >= 4)
                 {
-                    bdPathogenControl4.CurrentPathogen = list[3];
+                    bdPathogenControl4.CurrentPathogen = pathogenList[3];
                     bdPathogenControl4.Title = @"Pathogen 4";
                 }
-                if (list.Count >= 5)
+                if (pathogenList.Count >= 5)
                 {
-                    bdPathogenControl5.CurrentPathogen = list[4];
+                    bdPathogenControl5.CurrentPathogen = pathogenList[4];
                     bdPathogenControl5.Title = @"Pathogen 5";
                 }
-                if (list.Count >= 6)
+                if (pathogenList.Count >= 6)
                 {
-                    bdPathogenControl6.CurrentPathogen = list[5];
+                    bdPathogenControl6.CurrentPathogen = pathogenList[5];
                     bdPathogenControl6.Title = @"Pathogen 6";
                 }
-                if (list.Count >= 7)
+                if (pathogenList.Count >= 7)
                 {
-                    bdPathogenControl7.CurrentPathogen = list[6];
+                    bdPathogenControl7.CurrentPathogen = pathogenList[6];
                     bdPathogenControl7.Title = @"Pathogen 7";
                 }
-                if (list.Count >= 8)
+                if (pathogenList.Count >= 8)
                 {
-                    bdPathogenControl8.CurrentPathogen = list[7];
+                    bdPathogenControl8.CurrentPathogen = pathogenList[7];
                     bdPathogenControl8.Title = @"Pathogen 8";
                 }
             }
@@ -121,16 +139,50 @@ namespace BDEditor.Views
             dataContext = pDataContext;
         }
 
-        public void Save()
+        public void AssignParentId(Guid? pParentId)
         {
-
+            presentationId = pParentId;
+            this.Enabled = (null != presentationId);
+            bdPathogenControl1.AssignParentId(presentationId);
+            bdPathogenControl2.AssignParentId(presentationId);
+            bdPathogenControl3.AssignParentId(presentationId);
+            bdPathogenControl4.AssignParentId(presentationId);
+            bdPathogenControl5.AssignParentId(presentationId);
+            bdPathogenControl6.AssignParentId(presentationId);
+            bdPathogenControl7.AssignParentId(presentationId);
+            bdPathogenControl8.AssignParentId(presentationId);
         }
 
-        public void AssignParentId(Guid pParentId)
+        public bool Save()
         {
-            throw new NotImplementedException();
+            bool result = false;
+
+            if (null != presentationId)
+            {
+                result = bdPathogenControl1.Save() || result;
+                result = bdPathogenControl2.Save() || result;
+                result = bdPathogenControl3.Save() || result;
+                result = bdPathogenControl4.Save() || result;
+                result = bdPathogenControl5.Save() || result;
+                result = bdPathogenControl6.Save() || result;
+                result = bdPathogenControl7.Save() || result;
+                result = bdPathogenControl8.Save() || result;
+
+                if (result && (null == currentPathogenGroup))
+                {
+                    currentPathogenGroup = BDPathogenGroup.CreatePathogenGroup(dataContext);
+                    currentPathogenGroup.presentationId = presentationId;
+                }
+
+                if (null != currentPathogenGroup)
+                {
+                    BDPathogenGroup.SavePathogenGroup(dataContext, currentPathogenGroup);
+                    result = true;
+                }
+            }
+            return result;
         }
-     
+
         #endregion
     }
 }

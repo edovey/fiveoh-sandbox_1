@@ -35,12 +35,12 @@
             this.andRadioButton = new System.Windows.Forms.RadioButton();
             this.noneRadioButton = new System.Windows.Forms.RadioButton();
             this.panelTherapies = new System.Windows.Forms.Panel();
-            this.bdTherapyControl1 = new BDEditor.Views.BDTherapyControl();
-            this.bdTherapyControl2 = new BDEditor.Views.BDTherapyControl();
-            this.bdTherapyControl3 = new BDEditor.Views.BDTherapyControl();
-            this.bdTherapyControl4 = new BDEditor.Views.BDTherapyControl();
-            this.bdTherapyControl5 = new BDEditor.Views.BDTherapyControl();
             this.bdTherapyControl6 = new BDEditor.Views.BDTherapyControl();
+            this.bdTherapyControl5 = new BDEditor.Views.BDTherapyControl();
+            this.bdTherapyControl4 = new BDEditor.Views.BDTherapyControl();
+            this.bdTherapyControl3 = new BDEditor.Views.BDTherapyControl();
+            this.bdTherapyControl2 = new BDEditor.Views.BDTherapyControl();
+            this.bdTherapyControl1 = new BDEditor.Views.BDTherapyControl();
             this.panelTherapies.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,8 +66,9 @@
             // 
             this.tbName.Location = new System.Drawing.Point(16, 20);
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(213, 20);
+            this.tbName.Size = new System.Drawing.Size(286, 20);
             this.tbName.TabIndex = 7;
+            this.tbName.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
             // orRadioButton
             // 
@@ -120,41 +121,14 @@
             this.panelTherapies.Size = new System.Drawing.Size(868, 520);
             this.panelTherapies.TabIndex = 15;
             // 
-            // bdTherapyControl1
+            // bdTherapyControl6
             // 
-            this.bdTherapyControl1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.bdTherapyControl1.CurrentTherapy = null;
-            this.bdTherapyControl1.Location = new System.Drawing.Point(3, 3);
-            this.bdTherapyControl1.Name = "bdTherapyControl1";
-            this.bdTherapyControl1.Size = new System.Drawing.Size(844, 84);
-            this.bdTherapyControl1.TabIndex = 0;
-            // 
-            // bdTherapyControl2
-            // 
-            this.bdTherapyControl2.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.bdTherapyControl2.CurrentTherapy = null;
-            this.bdTherapyControl2.Location = new System.Drawing.Point(3, 89);
-            this.bdTherapyControl2.Name = "bdTherapyControl2";
-            this.bdTherapyControl2.Size = new System.Drawing.Size(844, 84);
-            this.bdTherapyControl2.TabIndex = 1;
-            // 
-            // bdTherapyControl3
-            // 
-            this.bdTherapyControl3.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.bdTherapyControl3.CurrentTherapy = null;
-            this.bdTherapyControl3.Location = new System.Drawing.Point(3, 175);
-            this.bdTherapyControl3.Name = "bdTherapyControl3";
-            this.bdTherapyControl3.Size = new System.Drawing.Size(844, 84);
-            this.bdTherapyControl3.TabIndex = 2;
-            // 
-            // bdTherapyControl4
-            // 
-            this.bdTherapyControl4.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.bdTherapyControl4.CurrentTherapy = null;
-            this.bdTherapyControl4.Location = new System.Drawing.Point(3, 261);
-            this.bdTherapyControl4.Name = "bdTherapyControl4";
-            this.bdTherapyControl4.Size = new System.Drawing.Size(844, 84);
-            this.bdTherapyControl4.TabIndex = 3;
+            this.bdTherapyControl6.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.bdTherapyControl6.CurrentTherapy = null;
+            this.bdTherapyControl6.Location = new System.Drawing.Point(3, 433);
+            this.bdTherapyControl6.Name = "bdTherapyControl6";
+            this.bdTherapyControl6.Size = new System.Drawing.Size(844, 84);
+            this.bdTherapyControl6.TabIndex = 5;
             // 
             // bdTherapyControl5
             // 
@@ -165,14 +139,41 @@
             this.bdTherapyControl5.Size = new System.Drawing.Size(844, 84);
             this.bdTherapyControl5.TabIndex = 4;
             // 
-            // bdTherapyControl6
+            // bdTherapyControl4
             // 
-            this.bdTherapyControl6.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.bdTherapyControl6.CurrentTherapy = null;
-            this.bdTherapyControl6.Location = new System.Drawing.Point(3, 433);
-            this.bdTherapyControl6.Name = "bdTherapyControl6";
-            this.bdTherapyControl6.Size = new System.Drawing.Size(844, 84);
-            this.bdTherapyControl6.TabIndex = 5;
+            this.bdTherapyControl4.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.bdTherapyControl4.CurrentTherapy = null;
+            this.bdTherapyControl4.Location = new System.Drawing.Point(3, 261);
+            this.bdTherapyControl4.Name = "bdTherapyControl4";
+            this.bdTherapyControl4.Size = new System.Drawing.Size(844, 84);
+            this.bdTherapyControl4.TabIndex = 3;
+            // 
+            // bdTherapyControl3
+            // 
+            this.bdTherapyControl3.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.bdTherapyControl3.CurrentTherapy = null;
+            this.bdTherapyControl3.Location = new System.Drawing.Point(3, 175);
+            this.bdTherapyControl3.Name = "bdTherapyControl3";
+            this.bdTherapyControl3.Size = new System.Drawing.Size(844, 84);
+            this.bdTherapyControl3.TabIndex = 2;
+            // 
+            // bdTherapyControl2
+            // 
+            this.bdTherapyControl2.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.bdTherapyControl2.CurrentTherapy = null;
+            this.bdTherapyControl2.Location = new System.Drawing.Point(3, 89);
+            this.bdTherapyControl2.Name = "bdTherapyControl2";
+            this.bdTherapyControl2.Size = new System.Drawing.Size(844, 84);
+            this.bdTherapyControl2.TabIndex = 1;
+            // 
+            // bdTherapyControl1
+            // 
+            this.bdTherapyControl1.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.bdTherapyControl1.CurrentTherapy = null;
+            this.bdTherapyControl1.Location = new System.Drawing.Point(3, 3);
+            this.bdTherapyControl1.Name = "bdTherapyControl1";
+            this.bdTherapyControl1.Size = new System.Drawing.Size(844, 84);
+            this.bdTherapyControl1.TabIndex = 0;
             // 
             // BDTherapyGroupControl
             // 

@@ -612,7 +612,7 @@
         <EntityTypeShape EntityType="BDDataModel.BDCategory" Width="1.5" PointX="0.75" PointY="0.75" Height="3.1340950520833282" />
         <EntityTypeShape EntityType="BDDataModel.BDDisease" Width="1.5" PointX="2.75" PointY="0.75" Height="3.5186979166666674" />
         <EntityTypeShape EntityType="BDDataModel.BDLinkedNote" Width="1.5" PointX="4.75" PointY="0.75" Height="3.5186979166666674" />
-        <EntityTypeShape EntityType="BDDataModel.BDPathogenGroup" Width="1.5" PointX="0.75" PointY="5.75" Height="2.9417936197916674" />
+        <EntityTypeShape EntityType="BDDataModel.BDPathogenGroup" Width="2" PointX="0.5" PointY="5.75" Height="2.5783902994791656" />
         <EntityTypeShape EntityType="BDDataModel.BDPathogen" Width="1.5" PointX="2.75" PointY="5.75" Height="3.1340950520833246" />
         <EntityTypeShape EntityType="BDDataModel.BDPresentation" Width="1.5" PointX="4.75" PointY="5.75" Height="3.3263964843750102" />
         <EntityTypeShape EntityType="BDDataModel.BDQueueEntry" Width="1.5" PointX="6.75" PointY="0.75" Height="1.9802864583333246" />

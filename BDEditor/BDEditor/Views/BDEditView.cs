@@ -229,8 +229,6 @@ namespace BDEditor.Views
 
         private void createTestDataButton_Click(object sender, EventArgs e)
         {
-            //createTestData();
-
             BDDataLoader dataLoader = new BDDataLoader();
             dataLoader.ImportData(dataContext, @"Resources\BDEditorStructure.txt");
         }

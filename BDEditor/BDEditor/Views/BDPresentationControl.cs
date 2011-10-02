@@ -10,8 +10,10 @@ using BDEditor.DataModel;
 
 namespace BDEditor.Views
 {
-    public partial class BDPresentationControl : UserControl
+    public partial class BDPresentationControl : UserControl, IBDControl
     {
+        private Entities dataContext;
+        private Guid? diseaseId;
         private BDPresentation currentPresentation;
 
         public BDPresentation CurrentPresentation
@@ -37,6 +39,23 @@ namespace BDEditor.Views
         public BDPresentationControl()
         {
             InitializeComponent();
+        }
+
+        public void AssignDataContext(Entities pDataContext)
+        {
+            dataContext = pDataContext;
+        }
+
+        public void AssignParentId(Guid? pParentId)
+        {
+            diseaseId = pParentId;
+
+            this.Enabled = (null != diseaseId);
+        }
+
+        public bool Save()
+        {
+            throw new NotImplementedException();
         }
     }
 }

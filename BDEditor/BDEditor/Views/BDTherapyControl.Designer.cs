@@ -35,7 +35,7 @@
             this.lblDosage = new System.Windows.Forms.Label();
             this.lblDuration = new System.Windows.Forms.Label();
             this.btnTherapyLink = new System.Windows.Forms.Button();
-            this.bthDosageLink = new System.Windows.Forms.Button();
+            this.btnDosageLink = new System.Windows.Forms.Button();
             this.btnDurationLink = new System.Windows.Forms.Button();
             this.noneRadioButton = new System.Windows.Forms.RadioButton();
             this.andRadioButton = new System.Windows.Forms.RadioButton();
@@ -48,6 +48,7 @@
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(218, 20);
             this.tbName.TabIndex = 0;
+            this.tbName.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
             // tbDosage
             // 
@@ -55,6 +56,7 @@
             this.tbDosage.Name = "tbDosage";
             this.tbDosage.Size = new System.Drawing.Size(211, 20);
             this.tbDosage.TabIndex = 1;
+            this.tbDosage.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
             // tbDuration
             // 
@@ -62,6 +64,7 @@
             this.tbDuration.Name = "tbDuration";
             this.tbDuration.Size = new System.Drawing.Size(174, 20);
             this.tbDuration.TabIndex = 2;
+            this.tbDuration.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
             // lblTherapy
             // 
@@ -100,14 +103,14 @@
             this.btnTherapyLink.UseVisualStyleBackColor = true;
             this.btnTherapyLink.Click += new System.EventHandler(this.btnTherapyLink_Click);
             // 
-            // bthDosageLink
+            // btnDosageLink
             // 
-            this.bthDosageLink.Location = new System.Drawing.Point(547, 23);
-            this.bthDosageLink.Name = "bthDosageLink";
-            this.bthDosageLink.Size = new System.Drawing.Size(35, 23);
-            this.bthDosageLink.TabIndex = 7;
-            this.bthDosageLink.Text = "Link";
-            this.bthDosageLink.UseVisualStyleBackColor = true;
+            this.btnDosageLink.Location = new System.Drawing.Point(547, 23);
+            this.btnDosageLink.Name = "btnDosageLink";
+            this.btnDosageLink.Size = new System.Drawing.Size(35, 23);
+            this.btnDosageLink.TabIndex = 7;
+            this.btnDosageLink.Text = "Link";
+            this.btnDosageLink.UseVisualStyleBackColor = true;
             // 
             // btnDurationLink
             // 
@@ -159,7 +162,7 @@
             this.Controls.Add(this.andRadioButton);
             this.Controls.Add(this.noneRadioButton);
             this.Controls.Add(this.btnDurationLink);
-            this.Controls.Add(this.bthDosageLink);
+            this.Controls.Add(this.btnDosageLink);
             this.Controls.Add(this.btnTherapyLink);
             this.Controls.Add(this.lblDuration);
             this.Controls.Add(this.lblDosage);
@@ -183,7 +186,7 @@
         private System.Windows.Forms.Label lblDosage;
         private System.Windows.Forms.Label lblDuration;
         private System.Windows.Forms.Button btnTherapyLink;
-        private System.Windows.Forms.Button bthDosageLink;
+        private System.Windows.Forms.Button btnDosageLink;
         private System.Windows.Forms.Button btnDurationLink;
         private System.Windows.Forms.RadioButton noneRadioButton;
         private System.Windows.Forms.RadioButton andRadioButton;

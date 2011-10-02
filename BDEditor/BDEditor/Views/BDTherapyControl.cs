@@ -14,7 +14,7 @@ namespace BDEditor.Views
     {
         private Entities dataContext;
         private BDTherapy currentTherapy;
-        private Guid parentId;
+        private Guid? therapyGroupId;
 
         public BDTherapy CurrentTherapy
         {
@@ -27,6 +27,8 @@ namespace BDEditor.Views
                 currentTherapy = value;
                 if(currentTherapy == null) 
                 {
+                    this.BackColor = SystemColors.ControlDark;
+
                     tbName.Text = @"";
                     tbDosage.Text = @"";
                     tbDuration.Text = @"";
@@ -34,6 +36,8 @@ namespace BDEditor.Views
                 }
                 else 
                 {
+                    this.BackColor = SystemColors.Control;
+
                     tbName.Text = currentTherapy.name;
                     tbDosage.Text = currentTherapy.dosage;
                     tbDuration.Text = currentTherapy.duration;
@@ -79,32 +83,74 @@ namespace BDEditor.Views
             dataContext = pDataContext;
         }
 
-        public void Save()
+        public bool Save()
         {
-            currentTherapy.name = tbName.Text;
-            currentTherapy.dosage = tbDosage.Text;
-            currentTherapy.duration = tbDuration.Text;
-
-            if (andRadioButton.Checked)
+            bool result = false;
+            if (null != therapyGroupId)
             {
-                currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.AndWithNext;
-            }
-            else if (orRadioButton.Checked)
-            {
-                currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.OrWithNext;
-            }
-            else
-            {
-                currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.None;
+                if ( (null == currentTherapy) && 
+                    ( (tbName.Text != string.Empty) ||
+                    (tbDosage.Text != string.Empty) ||
+                    (tbDuration.Text != string.Empty) ) )
+                {
+                    currentTherapy = BDTherapy.CreateTherapy(dataContext);
+                    currentTherapy.therapyGroupId = therapyGroupId;
+                }
+
+                if (null != currentTherapy)
+                {
+                    currentTherapy.name = tbName.Text;
+                    currentTherapy.dosage = tbDosage.Text;
+                    currentTherapy.duration = tbDuration.Text;
+
+                    if (andRadioButton.Checked)
+                    {
+                        currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.AndWithNext;
+                    }
+                    else if (orRadioButton.Checked)
+                    {
+                        currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.OrWithNext;
+                    }
+                    else
+                    {
+                        currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.None;
+                    }
+
+                    BDTherapy.SaveTherapy(dataContext, currentTherapy);
+                    result = true;
+                }
             }
 
-            BDTherapy.SaveTherapy(dataContext, currentTherapy);
-
+            return result;
         }
 
-        public void AssignParentId(Guid pParentId)
+        public void AssignParentId(Guid? pParentId)
         {
-            parentId = pParentId;
+            therapyGroupId = pParentId;
+            this.Enabled = (null != therapyGroupId);
+
+            /*
+            tbName.Enabled = (null != therapyGroupId);
+            tbDosage.Enabled = (null != therapyGroupId);
+            tbDuration.Enabled = (null != therapyGroupId);
+
+            btnTherapyLink.Enabled = (null != therapyGroupId);
+            btnDosageLink.Enabled = (null != therapyGroupId);
+            btnDurationLink.Enabled = (null != therapyGroupId);
+
+            noneRadioButton.Enabled = (null != therapyGroupId);
+            andRadioButton.Enabled = (null != therapyGroupId);
+            orRadioButton.Enabled = (null != therapyGroupId);
+             * */
+        }
+
+        private void textBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (null != textBox)
+            {
+                this.BackColor = (textBox.Text.Trim() != string.Empty) ? SystemColors.Control : SystemColors.ControlDark;
+            }
         }
     }
 }

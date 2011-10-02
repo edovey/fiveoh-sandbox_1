@@ -62,22 +62,60 @@ namespace BDEditor.Classes
             {
                 bdSection = BDSection.CreateSection(dataContext);
                 bdSection.name = sectionData;
+                BDSection.SaveSection(dataContext, bdSection);
+
+                bdCategory = null;
+                bdSubCategory = null;
+                bdDisease = null;
+                bdPresentation = null;
             }
 
             if ((categoryData != string.Empty) && ((null == bdCategory) || (bdCategory.name != categoryData)))
             {
+                bdCategory = BDCategory.CreateCategory(dataContext);
+                bdCategory.name = categoryData;
+                bdCategory.sectionId = bdSection.uuid;
+                BDCategory.SaveCategory(dataContext, bdCategory);
+
+                bdSubCategory = null;
+                bdDisease = null;
+                bdPresentation = null;
             }
 
             if ((subCategoryData != string.Empty) && ((null == bdSubCategory) || (bdSubCategory.name != subCategoryData)))
             {
+                bdSubCategory = BDSubcategory.CreateSubcategory(dataContext);
+                bdSubCategory.name = subCategoryData;
+                bdSubCategory.categoryId = bdCategory.uuid;
+                BDSubcategory.SaveSubcategory(dataContext, bdSubCategory);
+
+                bdDisease = null;
+                bdPresentation = null;
             }
 
             if ((diseaseData != string.Empty) && ((null == bdDisease) || (bdDisease.name != diseaseData)))
             {
+                bdDisease = BDDisease.CreateDisease(dataContext);
+                bdDisease.name = diseaseData;
+                if (null != bdSubCategory)
+                {
+                    bdDisease.subcategoryId = bdSubCategory.uuid;
+                }
+                else
+                {
+                    bdDisease.categoryId = bdCategory.uuid;
+                }
+                BDDisease.SaveDisease(dataContext, bdDisease);
+
+                bdPresentation = null;
             }
 
             if ((presentationData != string.Empty) && ((null == bdPresentation) || (bdPresentation.name != presentationData)))
             {
+                bdPresentation = BDPresentation.CreatePresentation(dataContext);
+                bdPresentation.name = presentationData;
+                bdPresentation.diseaseId = bdDisease.uuid;
+                BDPresentation.SavePresentation(dataContext, bdPresentation);
             }
 
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Configuration;
+using BDEditor.Views;
 
 namespace BDEditor
 {
@@ -16,7 +17,7 @@ namespace BDEditor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Presentation());
+            Application.Run(new BDEditView());
         }
     }
 }

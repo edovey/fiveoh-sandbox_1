@@ -66,8 +66,9 @@
             // 
             this.tbName.Location = new System.Drawing.Point(16, 20);
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(213, 20);
+            this.tbName.Size = new System.Drawing.Size(286, 20);
             this.tbName.TabIndex = 7;
+            this.tbName.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
             // orRadioButton
             // 

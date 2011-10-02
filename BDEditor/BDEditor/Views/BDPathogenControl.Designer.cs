@@ -50,6 +50,7 @@
             this.tbPathogenName.Name = "tbPathogenName";
             this.tbPathogenName.Size = new System.Drawing.Size(239, 24);
             this.tbPathogenName.TabIndex = 1;
+            this.tbPathogenName.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
             // btnLink
             // 

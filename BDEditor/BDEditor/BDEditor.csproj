@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\BDDataLoader.cs" />
     <Compile Include="Classes\BDTreeNode.cs" />
     <Compile Include="DataModel\BDCategory.cs" />
     <Compile Include="DataModel\BDDisease.cs" />
@@ -229,6 +230,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DataModel\BDModel1.edmx.sql" />
+    <Content Include="Resources\BDEditorStructure.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">

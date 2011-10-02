@@ -33,13 +33,14 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.lblOverview = new System.Windows.Forms.Label();
             this.bdPathogenGroupControl1 = new BDEditor.Views.BDPathogenGroupControl();
+            this.bdTherapyGroupControl1 = new BDEditor.Views.BDTherapyGroupControl();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(21, 12);
+            this.label1.Location = new System.Drawing.Point(3, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(91, 18);
             this.label1.TabIndex = 0;
@@ -48,14 +49,14 @@
             // tbPresentationName
             // 
             this.tbPresentationName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPresentationName.Location = new System.Drawing.Point(24, 33);
+            this.tbPresentationName.Location = new System.Drawing.Point(6, 33);
             this.tbPresentationName.Name = "tbPresentationName";
             this.tbPresentationName.Size = new System.Drawing.Size(475, 24);
             this.tbPresentationName.TabIndex = 2;
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(24, 90);
+            this.richTextBox1.Location = new System.Drawing.Point(3, 90);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(974, 93);
             this.richTextBox1.TabIndex = 3;
@@ -64,7 +65,7 @@
             // lblOverview
             // 
             this.lblOverview.AutoSize = true;
-            this.lblOverview.Location = new System.Drawing.Point(24, 64);
+            this.lblOverview.Location = new System.Drawing.Point(3, 74);
             this.lblOverview.Name = "lblOverview";
             this.lblOverview.Size = new System.Drawing.Size(52, 13);
             this.lblOverview.TabIndex = 4;
@@ -73,23 +74,32 @@
             // bdPathogenGroupControl1
             // 
             this.bdPathogenGroupControl1.CurrentPathogenGroup = null;
-            this.bdPathogenGroupControl1.Location = new System.Drawing.Point(4, 190);
+            this.bdPathogenGroupControl1.Location = new System.Drawing.Point(0, 189);
             this.bdPathogenGroupControl1.Name = "bdPathogenGroupControl1";
             this.bdPathogenGroupControl1.PathogenList = null;
-            this.bdPathogenGroupControl1.Size = new System.Drawing.Size(1142, 100);
+            this.bdPathogenGroupControl1.Size = new System.Drawing.Size(1164, 115);
             this.bdPathogenGroupControl1.TabIndex = 5;
+            // 
+            // bdTherapyGroupControl1
+            // 
+            this.bdTherapyGroupControl1.CurrentTherapyGroup = null;
+            this.bdTherapyGroupControl1.Location = new System.Drawing.Point(3, 310);
+            this.bdTherapyGroupControl1.Name = "bdTherapyGroupControl1";
+            this.bdTherapyGroupControl1.Size = new System.Drawing.Size(880, 614);
+            this.bdTherapyGroupControl1.TabIndex = 6;
             // 
             // BDPresentationControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.bdTherapyGroupControl1);
             this.Controls.Add(this.bdPathogenGroupControl1);
             this.Controls.Add(this.lblOverview);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.tbPresentationName);
             this.Controls.Add(this.label1);
             this.Name = "BDPresentationControl";
-            this.Size = new System.Drawing.Size(1154, 789);
+            this.Size = new System.Drawing.Size(1171, 938);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -102,5 +112,6 @@
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Label lblOverview;
         private BDPathogenGroupControl bdPathogenGroupControl1;
+        private BDTherapyGroupControl bdTherapyGroupControl1;
     }
 }

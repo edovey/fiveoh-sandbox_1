@@ -73,6 +73,16 @@ namespace BDEditor.Views
                     {
                         TreeNode diseaseNode = new TreeNode(disease.name);
                         diseaseNode.Tag = disease;
+
+                        List<BDPresentation> presentationList = BDPresentation.GetPresentationsForDiseaseId(dataContext, disease.uuid);
+                        foreach (BDPresentation presentation in presentationList)
+                        {
+                            TreeNode presentationNode = new TreeNode(presentation.name);
+                            presentationNode.Tag = presentation;
+                            diseaseNode.Nodes.Add(presentationNode);
+                        }
+
+
                         subCategoryNode.Nodes.Add(diseaseNode);
                     }
 
@@ -219,7 +229,8 @@ namespace BDEditor.Views
 
         private void createTestDataButton_Click(object sender, EventArgs e)
         {
-            createTestData();
+            BDDataLoader dataLoader = new BDDataLoader();
+            dataLoader.ImportData(dataContext, @"Resources\BDEditorStructure.txt");
         }
     }
 }

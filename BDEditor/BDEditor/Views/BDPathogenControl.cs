@@ -13,22 +13,30 @@ namespace BDEditor.Views
     public partial class BDPathogenControl : UserControl, IBDControl
     {
         private Entities dataContext;
+        private Guid? pathogenGroupId;
         private BDPathogen currentPathogen;
         private string title = @"Pathogen";
 
         public BDPathogen CurrentPathogen
         {
-            get {
+            get 
+            {
                 return currentPathogen;
             }
-            set {
+            set 
+            {
                 currentPathogen = value;
 
-                if(currentPathogen == null) {
+                if (currentPathogen == null)
+                {
+                    this.BackColor = SystemColors.ControlDark;
                     tbPathogenName.Text = @"";
                 }
                 else
+                {
+                    this.BackColor = SystemColors.Control;
                     tbPathogenName.Text = currentPathogen.name;
+                }
             }
 
         }
@@ -54,7 +62,6 @@ namespace BDEditor.Views
             InitializeComponent();
         }
 
- 
         #region IBDControl
 
         public void AssignDataContext(Entities pDataContext)
@@ -62,15 +69,29 @@ namespace BDEditor.Views
             dataContext = pDataContext;
         }
 
-        public void Save()
+        public bool Save()
         {
-            Entities context = new Entities();
-            BDPathogen.SavePathogen(dataContext, currentPathogen);
+            bool result = false;
+
+            if ((null == currentPathogen) && (tbPathogenName.Text != string.Empty))
+            {
+                currentPathogen = BDPathogen.CreatePathogen(dataContext);
+                currentPathogen.pathogenGroupId = pathogenGroupId;
+            }
+            if (null != currentPathogen)
+            {
+                currentPathogen.name = tbPathogenName.Text;
+                BDPathogen.SavePathogen(dataContext, currentPathogen);
+                result = true;
+            }
+
+            return result;
         }
 
-        public void AssignParentId(Guid pParentId)
+        public void AssignParentId(Guid? pParentId)
         {
-            throw new NotImplementedException();
+            pathogenGroupId = pParentId;
+            this.Enabled = (null != pathogenGroupId);
         }
 
         #endregion
@@ -81,6 +102,13 @@ namespace BDEditor.Views
             MessageBox.Show("Will show context menu for working with a linked note");
         }
 
-
+        private void textBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (null != textBox)
+            {
+                this.BackColor = (textBox.Text.Trim() != string.Empty) ? SystemColors.Control : SystemColors.ControlDark;
+            }
+        }
     }
 }

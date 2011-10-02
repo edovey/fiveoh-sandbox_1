@@ -55,7 +55,7 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pPathogenId"></param>
         /// <returns>List of BDTherapyGroups</returns>
-        public static List<BDTherapyGroup> getTherapyGroupsForPathogenId(Entities pContext, Guid pPathogenGroupId)
+        public static List<BDTherapyGroup> getTherapyGroupsForPathogenGroupId(Entities pContext, Guid pPathogenGroupId)
         {
             List<BDTherapyGroup> therapyGroupList = new List<BDTherapyGroup>();
                 IQueryable<BDTherapyGroup> therapyGroups = (from bdTherapyGroups in pContext.BDTherapyGroups

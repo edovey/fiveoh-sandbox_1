@@ -76,7 +76,6 @@
             this.bdPathogenGroupControl1.CurrentPathogenGroup = null;
             this.bdPathogenGroupControl1.Location = new System.Drawing.Point(0, 189);
             this.bdPathogenGroupControl1.Name = "bdPathogenGroupControl1";
-            this.bdPathogenGroupControl1.PathogenList = null;
             this.bdPathogenGroupControl1.Size = new System.Drawing.Size(1164, 115);
             this.bdPathogenGroupControl1.TabIndex = 5;
             // 

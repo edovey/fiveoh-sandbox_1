@@ -16,7 +16,6 @@ namespace BDEditor.Views
         private Entities dataContext;
         private Guid? presentationId;
         private BDPathogenGroup currentPathogenGroup;
-        private List<BDPathogen> pathogenList;
 
         public BDPathogenGroup CurrentPathogenGroup
         {
@@ -30,32 +29,16 @@ namespace BDEditor.Views
                 if (null == currentPathogenGroup)
                 {
                     this.BackColor = SystemColors.ControlDark;
-                    pathogenList = new List<BDPathogen>();
                     AssignPathogensToView(null);
                 }
                 else
                 {
-                    pathogenList = BDPathogen.GetPathogensForPathogenGroup(dataContext, currentPathogenGroup.uuid);
+                    List<BDPathogen> pathogenList = BDPathogen.GetPathogensForPathogenGroup(dataContext, currentPathogenGroup.uuid);
                     AssignPathogensToView(pathogenList);
                 }
             }
         }
 
-        
-        public List<BDPathogen> PathogenList
-        {
-            get
-            {
-                return pathogenList;
-            }
-
-            set
-            {
-                pathogenList = value;
-                AssignPathogensToView(pathogenList);
-            }
-        }
-        
         #endregion
 
         public BDPathogenGroupControl()
@@ -81,15 +64,6 @@ namespace BDEditor.Views
 
             if (null != pListPathogens)
             {
-                bdPathogenControl1.AssignParentId(currentPathogenGroup.uuid);
-                bdPathogenControl2.AssignParentId(currentPathogenGroup.uuid);
-                bdPathogenControl3.AssignParentId(currentPathogenGroup.uuid);
-                bdPathogenControl4.AssignParentId(currentPathogenGroup.uuid);
-                bdPathogenControl5.AssignParentId(currentPathogenGroup.uuid);
-                bdPathogenControl6.AssignParentId(currentPathogenGroup.uuid);
-                bdPathogenControl7.AssignParentId(currentPathogenGroup.uuid);
-                bdPathogenControl8.AssignParentId(currentPathogenGroup.uuid);
-
                 if (pListPathogens.Count >= 1) bdPathogenControl1.CurrentPathogen = pListPathogens[0];
                 if (pListPathogens.Count >= 2) bdPathogenControl2.CurrentPathogen = pListPathogens[1];
                 if (pListPathogens.Count >= 3) bdPathogenControl3.CurrentPathogen = pListPathogens[2];
@@ -99,7 +73,8 @@ namespace BDEditor.Views
                 if (pListPathogens.Count >= 7) bdPathogenControl7.CurrentPathogen = pListPathogens[6];
                 if (pListPathogens.Count >= 8) bdPathogenControl8.CurrentPathogen = pListPathogens[7];
             }
-            else
+
+            if (null == currentPathogenGroup)
             {
                 bdPathogenControl1.AssignParentId(null);
                 bdPathogenControl2.AssignParentId(null);
@@ -109,6 +84,17 @@ namespace BDEditor.Views
                 bdPathogenControl6.AssignParentId(null);
                 bdPathogenControl7.AssignParentId(null);
                 bdPathogenControl8.AssignParentId(null);
+            }
+            else
+            {
+                bdPathogenControl1.AssignParentId(currentPathogenGroup.uuid);
+                bdPathogenControl2.AssignParentId(currentPathogenGroup.uuid);
+                bdPathogenControl3.AssignParentId(currentPathogenGroup.uuid);
+                bdPathogenControl4.AssignParentId(currentPathogenGroup.uuid);
+                bdPathogenControl5.AssignParentId(currentPathogenGroup.uuid);
+                bdPathogenControl6.AssignParentId(currentPathogenGroup.uuid);
+                bdPathogenControl7.AssignParentId(currentPathogenGroup.uuid);
+                bdPathogenControl8.AssignParentId(currentPathogenGroup.uuid);
             }
         }
 

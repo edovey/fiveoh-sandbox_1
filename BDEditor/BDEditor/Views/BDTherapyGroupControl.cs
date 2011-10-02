@@ -43,6 +43,13 @@ namespace BDEditor.Views
                     bdTherapyControl4.CurrentTherapy = null;
                     bdTherapyControl5.CurrentTherapy = null;
                     bdTherapyControl6.CurrentTherapy = null;
+
+                    bdTherapyControl1.AssignParentId(null);
+                    bdTherapyControl2.AssignParentId(null);
+                    bdTherapyControl3.AssignParentId(null);
+                    bdTherapyControl4.AssignParentId(null);
+                    bdTherapyControl5.AssignParentId(null);
+                    bdTherapyControl6.AssignParentId(null);
                 }
                 else
                 {
@@ -72,6 +79,13 @@ namespace BDEditor.Views
                     if (therapyList.Count > 3) bdTherapyControl1.CurrentTherapy = therapyList[3];
                     if (therapyList.Count > 4) bdTherapyControl1.CurrentTherapy = therapyList[4];
                     if (therapyList.Count > 5) bdTherapyControl1.CurrentTherapy = therapyList[5];
+
+                    bdTherapyControl1.AssignParentId(currentTherapyGroup.uuid);
+                    bdTherapyControl2.AssignParentId(currentTherapyGroup.uuid);
+                    bdTherapyControl3.AssignParentId(currentTherapyGroup.uuid);
+                    bdTherapyControl4.AssignParentId(currentTherapyGroup.uuid);
+                    bdTherapyControl5.AssignParentId(currentTherapyGroup.uuid);
+                    bdTherapyControl6.AssignParentId(currentTherapyGroup.uuid);
                    
                 }
             }
@@ -129,13 +143,6 @@ namespace BDEditor.Views
         {
             pathogenGroupId = pParentId;
             this.Enabled = (null != pathogenGroupId);
-
-            bdTherapyControl1.AssignParentId(pathogenGroupId);
-            bdTherapyControl2.AssignParentId(pathogenGroupId);
-            bdTherapyControl3.AssignParentId(pathogenGroupId);
-            bdTherapyControl4.AssignParentId(pathogenGroupId);
-            bdTherapyControl5.AssignParentId(pathogenGroupId);
-            bdTherapyControl6.AssignParentId(pathogenGroupId);
         }
 
         private void textBox_TextChanged(object sender, EventArgs e)

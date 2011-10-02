@@ -39,10 +39,29 @@ namespace BDEditor.Views
                     bdPathogenControl6.CurrentPathogen = null;
                     bdPathogenControl7.CurrentPathogen = null;
                     bdPathogenControl8.CurrentPathogen = null;
+
+                    bdPathogenControl1.AssignParentId(null);
+                    bdPathogenControl2.AssignParentId(null);
+                    bdPathogenControl3.AssignParentId(null);
+                    bdPathogenControl4.AssignParentId(null);
+                    bdPathogenControl5.AssignParentId(null);
+                    bdPathogenControl6.AssignParentId(null);
+                    bdPathogenControl7.AssignParentId(null);
+                    bdPathogenControl8.AssignParentId(null);
                 }
                 else
                 {
                     pathogenList = BDPathogen.GetPathogensForPathogenGroup(dataContext, currentPathogenGroup.uuid);
+                    AssignPathogensToView();
+
+                    bdPathogenControl1.AssignParentId(currentPathogenGroup.uuid);
+                    bdPathogenControl2.AssignParentId(currentPathogenGroup.uuid);
+                    bdPathogenControl3.AssignParentId(currentPathogenGroup.uuid);
+                    bdPathogenControl4.AssignParentId(currentPathogenGroup.uuid);
+                    bdPathogenControl5.AssignParentId(currentPathogenGroup.uuid);
+                    bdPathogenControl6.AssignParentId(currentPathogenGroup.uuid);
+                    bdPathogenControl7.AssignParentId(currentPathogenGroup.uuid);
+                    bdPathogenControl8.AssignParentId(currentPathogenGroup.uuid);
                 }
             }
         }
@@ -143,14 +162,6 @@ namespace BDEditor.Views
         {
             presentationId = pParentId;
             this.Enabled = (null != presentationId);
-            bdPathogenControl1.AssignParentId(presentationId);
-            bdPathogenControl2.AssignParentId(presentationId);
-            bdPathogenControl3.AssignParentId(presentationId);
-            bdPathogenControl4.AssignParentId(presentationId);
-            bdPathogenControl5.AssignParentId(presentationId);
-            bdPathogenControl6.AssignParentId(presentationId);
-            bdPathogenControl7.AssignParentId(presentationId);
-            bdPathogenControl8.AssignParentId(presentationId);
         }
 
         public bool Save()
@@ -168,7 +179,7 @@ namespace BDEditor.Views
                 result = bdPathogenControl7.Save() || result;
                 result = bdPathogenControl8.Save() || result;
 
-                if (result && (null == currentPathogenGroup))
+                if (result && (null == currentPathogenGroup)) // only create a group if any of the children exist
                 {
                     currentPathogenGroup = BDPathogenGroup.CreatePathogenGroup(dataContext);
                     currentPathogenGroup.presentationId = presentationId;

@@ -51,6 +51,7 @@ namespace BDEditor.Views
             diseaseId = pParentId;
 
             this.Enabled = (null != diseaseId);
+            
         }
 
         public bool Save()

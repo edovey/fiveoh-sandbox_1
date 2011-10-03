@@ -119,21 +119,24 @@ namespace BDEditor.Views
 
                 if (null != currentTherapyGroup)
                 {
-                    currentTherapyGroup.name = tbName.Text;
+                    if(currentTherapyGroup.name != tbName.Text) currentTherapyGroup.name = tbName.Text;
 
                     if (andRadioButton.Checked)
                     {
-                        currentTherapyGroup.therapyGroupJoinType = (int)BDTherapyGroup.TherapyGroupJoinType.AndWithNext;
+                        if(currentTherapyGroup.therapyGroupJoinType != (int)BDTherapyGroup.TherapyGroupJoinType.AndWithNext) 
+                            currentTherapyGroup.therapyGroupJoinType = (int)BDTherapyGroup.TherapyGroupJoinType.AndWithNext;
                     }
                     else if (orRadioButton.Checked)
                     {
-                        currentTherapyGroup.therapyGroupJoinType = (int)BDTherapyGroup.TherapyGroupJoinType.OrWithNext;
+                        if(currentTherapyGroup.therapyGroupJoinType != (int)BDTherapyGroup.TherapyGroupJoinType.OrWithNext) 
+                            currentTherapyGroup.therapyGroupJoinType = (int)BDTherapyGroup.TherapyGroupJoinType.OrWithNext;
                     }
                     else
                     {
-                        currentTherapyGroup.therapyGroupJoinType = (int)BDTherapyGroup.TherapyGroupJoinType.None;
+                        if(currentTherapyGroup.therapyGroupJoinType != (int)BDTherapyGroup.TherapyGroupJoinType.None) 
+                            currentTherapyGroup.therapyGroupJoinType = (int)BDTherapyGroup.TherapyGroupJoinType.None;
                     }
-                    System.Diagnostics.Debug.WriteLine(@"TherapyGroup Control Save");
+                    
                     BDTherapyGroup.SaveTherapyGroup(dataContext, currentTherapyGroup);
                     result = true;
                 }

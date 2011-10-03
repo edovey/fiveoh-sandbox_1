@@ -43,6 +43,7 @@ namespace BDEditor.DataModel
                 pPathogenGroup.modifiedBy = Guid.Empty;
                 pPathogenGroup.modifiedDate = DateTime.Now;
 
+                System.Diagnostics.Debug.WriteLine(@"PathogenGroup Save");
                 pContext.SaveChanges();
             }
         }

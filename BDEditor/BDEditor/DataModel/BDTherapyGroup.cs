@@ -48,7 +48,7 @@ namespace BDEditor.DataModel
             {
                 pTherapyGroup.modifiedBy = Guid.Empty;
                 pTherapyGroup.modifiedDate = DateTime.Now;
-
+                System.Diagnostics.Debug.WriteLine(@"TherapyGroup Save");
                 pContext.SaveChanges();
             }
         }

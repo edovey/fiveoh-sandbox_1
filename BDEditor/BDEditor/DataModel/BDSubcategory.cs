@@ -39,7 +39,7 @@ namespace BDEditor.DataModel
             {
                 pSubcategory.modifiedBy = Guid.Empty;
                 pSubcategory.modifiedDate = DateTime.Now;
-
+                System.Diagnostics.Debug.WriteLine(@"SubCategory Save");
                 pContext.SaveChanges();
             }
         }

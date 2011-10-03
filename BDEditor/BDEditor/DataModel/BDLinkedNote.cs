@@ -53,7 +53,7 @@ namespace BDEditor.DataModel
             {
                 pLinkedNote.modifiedBy = Guid.Empty;
                 pLinkedNote.modifiedDate = DateTime.Now;
-
+                System.Diagnostics.Debug.WriteLine(@"LinkedNote Save");
                 pContext.SaveChanges();
             }
         }

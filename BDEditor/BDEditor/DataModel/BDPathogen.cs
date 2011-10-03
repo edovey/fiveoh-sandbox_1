@@ -34,7 +34,7 @@ namespace BDEditor.DataModel
             {
                 pPathogen.modifiedBy = Guid.Empty;
                 pPathogen.modifiedDate = DateTime.Now;
-
+                System.Diagnostics.Debug.WriteLine(@"Pathogen Save");
                 pContext.SaveChanges();
             }
         }

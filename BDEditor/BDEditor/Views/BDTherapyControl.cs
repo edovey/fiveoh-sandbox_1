@@ -102,24 +102,26 @@ namespace BDEditor.Views
 
                 if (null != currentTherapy)
                 {
-                    currentTherapy.name = tbName.Text;
-                    currentTherapy.dosage = tbDosage.Text;
-                    currentTherapy.duration = tbDuration.Text;
+                    if(currentTherapy.name != tbName.Text) currentTherapy.name = tbName.Text;
+                    if(currentTherapy.dosage != tbDosage.Text) currentTherapy.dosage = tbDosage.Text;
+                    if(currentTherapy.duration != tbDuration.Text) currentTherapy.duration = tbDuration.Text;
 
                     if (andRadioButton.Checked)
                     {
-                        currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.AndWithNext;
+                        if(currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.AndWithNext) 
+                            currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.AndWithNext;
                     }
                     else if (orRadioButton.Checked)
                     {
-                        currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.OrWithNext;
+                        if(currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.OrWithNext) 
+                            currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.OrWithNext;
                     }
                     else
                     {
-                        currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.None;
+                        if(currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.None) 
+                            currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.None;
                     }
 
-                    System.Diagnostics.Debug.WriteLine(@"Therapy Control Save");
                     BDTherapy.SaveTherapy(dataContext, currentTherapy);
 
                     result = true;

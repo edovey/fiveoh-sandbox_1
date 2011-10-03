@@ -40,7 +40,7 @@ namespace BDEditor.DataModel
             {
                 pSection.modifiedBy = Guid.Empty;
                 pSection.modifiedDate = DateTime.Now;
-
+                System.Diagnostics.Debug.WriteLine(@"Section Save");
                 pContext.SaveChanges();
             }
         }

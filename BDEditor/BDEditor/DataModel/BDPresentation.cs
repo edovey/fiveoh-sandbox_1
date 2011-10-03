@@ -42,7 +42,7 @@ namespace BDEditor.DataModel
             {
                 pPresentation.modifiedBy = Guid.Empty;
                 pPresentation.modifiedDate = DateTime.Now;
-
+                System.Diagnostics.Debug.WriteLine(@"Presentation Save");
                 pContext.SaveChanges();
             }
         }

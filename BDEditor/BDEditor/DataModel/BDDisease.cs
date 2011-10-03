@@ -39,7 +39,7 @@ namespace BDEditor.DataModel
             {
                 pDisease.modifiedBy = Guid.Empty;
                 pDisease.modifiedDate = DateTime.Now;
-
+                System.Diagnostics.Debug.WriteLine(@"Disease Save");
                 pContext.SaveChanges();
             }
         }

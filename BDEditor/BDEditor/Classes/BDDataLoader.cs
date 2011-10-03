@@ -56,7 +56,8 @@ namespace BDEditor.Classes
             categoryData = elements[1];
             subCategoryData = elements[2];
             diseaseData = elements[3];
-            presentationData = elements[4];
+            // diseaseOverviewFlag = elements[4];
+            presentationData = elements[5];
 
             if ( (sectionData != string.Empty) && ( (null == bdSection) || (bdSection.name != sectionData) ) )
             {

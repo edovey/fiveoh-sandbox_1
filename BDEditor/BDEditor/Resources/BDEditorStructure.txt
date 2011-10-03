@@ -1,79 +1,191 @@
-Section	Category	Sub Category	Disease	Presentation		
-Selected Infection in Adult Patients						
-	Skin & Soft Tissue					
-	Bone & Joint					
-	Respiratory					
-			Pharyngitis			
-				Acute		
-				Non-responders (after 72 hours of therapy) or Early relapse (2-7 days post therapy)		
-				Late relapse or recurrent		
-				Asymptomatic carrier		
-				Gonococcal		
-			Vincent's Angina			
-			Jugular Vein Septic Phlebitis (Lemierre's Syndrome)			
-			Parapharyngeal space infections (Ludwig's angina)			
-				Normal		
-				Odontogenic		
-			Laryngitis			
-			Rhinitis			
-			Ottis Media			
-				Acute		
-				Failure of first line agents		
-				Chronic		
-				Hospital acquired ottitis		
-				Swimmer's ear		
-				Invasive ottitis externa		
-			Mastoiditis			
-				Acute		
-				Chronic		
-			Sinusitis			
-				Acute		
-				Failure of first line agents		
-				Acute Recurrent		
-				Chronic: Symptoms ? 12 weeks		
-				Hospital Acquired		
-				Fungal		
-			Whooping Cough			
-			Bronchitis			
-				Acute		
-				Acute exacerbation of chronic bronchitis (AECB)		
-				At least 2 of the above criteria and:a		
-				At least 2 of the above criteria and:b		
-				Bronchectiasis / end stage lung disease		
-			Community acquired pneumonia			
-				Outpatient: No comorbid factors		
-				Outpatient:comorbid factors		
-				Outpatient:Failure of 1st line agents		
-				Hospitalized - Moderate		
-				Hospitalized - Severe		
-			Nursing home acquired pneumonia			
-				Treated in nursing home		
-				Transferred to acute care		
-			Influenza			
-			Hospital acquired pneumonia			
-				Early onset		
-				Late onset		
-				Late onset with risk factors		
-				Late onset with risk factor:aspiratiion		
-				Late onset with risk factors		
-			Ventilator associated pneumonia (VAP)			
-				? 7 days		
-				? 7 days		
-			Aspiration pneumonia			
-				Community acquired or nursing home		
-				Community acquired or nursing home with:		
-				Hospital acquired		
-			Lung abscess			
-			Empyema			
-				Acute		
-				Chronic		
-			Pneumocytis jiroveci (previously P. carnii) pneumonia (PJP)			
-				Normal		
-				Prophylaxis and post-treatment suppression		
-			Tuberculosis			
-	Gastrointestinal					
-	Genital					
-	Urinary Tract					
-	Central Nervous System					
-	Vascular					
-	Sepsis					
+Section	Category	Sub Category	Disease	Disease Overview	Presentation	Presentation Description	Presentation Overview	NOTES
+Selected Infection in Adult Patients								
+	Skin & Soft Tissue							
+	Bone & Joint							
+	Respiratory							
+			Pharyngitis	Y				
+					Acute		Y	
+					Non-responders (after 72 hours of therapy) or Early relapse (2-7 days post therapy)			
+					Late relapse or recurrent			
+					Asymptomatic carrier		Y	
+					Gonococcal			
+			Vincent's Angina					
+					SINGLE PRESENTATION			
+			Jugular Vein Septic Phlebitis (Lemierre's Syndrome)					
+					SINGLE PRESENTATION			
+			Parapharyngeal space infections (Ludwig's angina)					
+					Normal			
+					Odontogenic			
+			Laryngitis					
+					SINGLE PRESENTATION			
+			Rhinitis					
+					SINGLE PRESENTATION			
+			Ottis Media					
+					Acute			
+					Failure of first line agents	Y		
+					Chronic			
+					Hospital acquired ottitis			
+					Swimmer's ear		Y	
+					Invasive ottitis externa			
+			Mastoiditis					
+					Acute			
+					Chronic			
+			Sinusitis	Y				
+					Acute	Y		
+					Failure of first line agents	Y		
+					Acute Recurrent	Y		
+					Chronic: Symptoms ? 12 weeks	Y		
+					Hospital Acquired	Y		
+					Fungal	Y		
+			Whooping Cough	Y				
+					SINGLE PRESENTATION			
+			Bronchitis	Y				
+					Acute			
+					Acute exacerbation of chronic bronchitis (AECB)		Y	
+					At least 2 of the above criteria and:a	Y		
+					At least 2 of the above criteria and:b	Y		
+					Bronchectiasis / end stage lung disease			
+			Community acquired pneumonia	Y				
+					Outpatient: No comorbid factors	Y		
+					Outpatient:comorbid factors			
+					Outpatient:Failure of 1st line agents		Y	
+					Hospitalized - Moderate		Y	
+					Hospitalized - Severe		Y	
+								Table 3 - p 214 
+			Nursing home acquired pneumonia	Y				
+					Treated in nursing home			
+					Transferred to acute care		Y	
+			Influenza	Y				
+					SINGLE PRESENTATION			
+			Hospital acquired pneumonia	Y				
+					Early onset	Y		
+					Late onset	Y		
+					Late onset with risk factors	Y		
+					Late onset with risk factor:aspiratiion		Y	
+					Late onset with risk factors	Y		
+			Ventilator associated pneumonia (VAP)	Y				
+					? 7 days	Y		
+					? 7 days	Y		
+			Aspiration pneumonia	Y				
+					Community acquired or nursing home			
+					Community acquired or nursing home with:	Y		
+					Hospital acquired			
+			Lung abscess					
+			Empyema					
+					Acute	Y		
+					Chronic			
+			Pneumocytis jiroveci (previously P. carnii) pneumonia (PJP)					
+					Normal			
+					Prophylaxis and post-treatment suppression		Y	
+			Tuberculosis	Y				
+					SINGLE PRESENTATION			
+	Gastrointestinal							
+			Gastroenteritis	Y				
+					Mild-moderate			
+					Severe			
+			Travellers' diarrhea	Y				
+					Mild-moderate			
+					Severe			
+			Clostridium difficile-associated diarrhea (CDAD)	Y				
+					Mild			
+					Acute	Y		
+					Severe/toxic megacolon			
+					Recurrence - initial			
+					Recurrence - subsequent			
+			Helicobacter pylori associated duodenal/gastric ulcer	Y				
+					Initial therapy			
+					Failure of therapy			
+			Cholecystitis					
+					Acute			
+					Recurrent			
+					Perforation/pericholecystic abscess			
+			Pancreatitis					
+					Acute			
+					Complicated	Y		
+			Liver abscess					
+					Bacterial			
+					Parasitic			
+			Diverticulitis					
+					SINGLE PRESENTATION			
+			Appendicitis Acute					
+					SINGLE PRESENTATION			
+			Peritonitis	Y				
+					Spontaneous bacterial peritonitis (SBP)			
+					Secondary peritonitis	Y		
+					Chronic/complicated peritonitis or Recurrent/Failure of therapy for 2° peritonitis			
+					Peritoneal Dialysis-related peritonitis		Y	
+								Table 4 - p 247-249
+	Genital							
+			Vulvovaginitis 					
+					Candidiasis			
+					Trichomoniasis			
+					Bacterial vaginosis			
+			Lymphogranuloma venereum (LGV)					
+					SINGLE PRESENTATION			
+			Cervicitis					
+					Chlamydial			
+					Gonococcal			
+					Nonchlamydial/nongonococcal			
+			Urethritis (male)					
+					Chlamydial			
+					Gonococcal			
+					Nonchlamydial/nongonococcal			
+			Epididymo-orchitis					
+					Sexually transmitted 	Y		
+					Non-sexually transmitted 			
+			Pelvic inflammatory disease					
+					Mild-moderate			
+					Moderate-severe		Y	
+					Chorioamnionitis	Y		
+			Endometritis					
+					Postpartum Early	Y		
+					Postpartum Late	Y		
+			Septic pelvic vein thrombophlebitis 					
+					SINGLE PRESENTATION	Y		
+			Labial abscess					
+					SINGLE PRESENTATION			
+			Prostatitis					
+					Acute			
+					Chronic			
+			Proctitis					
+					SINGLE PRESENTATION			
+			Genital ulcers/lesions	Y				
+					Herpes primary episode			
+					Herpres recurrent			
+					Herpes pregnancy - primary episode		Y	
+					Herpes pregnancy - recurrent			
+					Syphilis	Y		
+					Syphilis - Latent > 1 year duration (late) or Cardiovascular			
+					Syphilis - Neurosyphilis			
+					Chancroid			
+					Genital Warts		Y	
+					Condyloma acuminata			
+			Scabies					
+			Pubic Lice					
+	Urinary Tract							Category Oveview
+			Asymptomatic Bacteriuria	Y				
+					Adult males/females	Y		
+					Prior to:	Y		
+					Pregnancy		Y	
+					Diabetes (Type I & II) with glycosuria		Y	
+					Cirrhosis		Y	
+			Cystitis 	Y				
+					"Females Sexually active, first episode"		Y	
+					"Females Sexually active, Recurrent cystitis"	Y	Y	
+					Females recurrent - related to coitus	Y		
+					Females  recurrent  - unrelated to coitus			
+					Males		Y	
+					Males - first episode			
+					Males - recurrent			
+			Complicated UTI					
+					Complicating factors:	Y		
+					Abnormality of urinary tract:	Y		
+					Pregnancy		Y	
+					Chronic catheterization		Y	
+			Pyelonephritis					
+					Uncomplicated			
+					Complicated	Y		
+					Pregnancy			
+	Central Nervous System							
+	Vascular							p 289 exceptions
+	Sepsis							

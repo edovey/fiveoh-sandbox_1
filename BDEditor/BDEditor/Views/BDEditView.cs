@@ -237,8 +237,18 @@ namespace BDEditor.Views
 
         private void createTestDataButton_Click(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
             BDDataLoader dataLoader = new BDDataLoader();
             dataLoader.ImportData(dataContext, @"Resources\BDEditorStructure.txt");
+
+            dataContext.Refresh(System.Data.Objects.RefreshMode.ClientWins, dataContext.BDSections);
+            sectionDropDown.DataBindings.Clear();
+            sectionDropDown.DataSource = null;
+            sectionDropDown.DataSource = dataContext.BDSections;
+            sectionDropDown.DisplayMember = "Name";
+
+            this.Cursor = Cursors.Default;
+            
         }
     }
 }

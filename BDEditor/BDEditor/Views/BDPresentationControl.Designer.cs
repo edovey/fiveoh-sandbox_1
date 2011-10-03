@@ -33,6 +33,8 @@
             this.rtbPresentationOverview = new System.Windows.Forms.RichTextBox();
             this.lblOverview = new System.Windows.Forms.Label();
             this.bdPathogenGroupControl1 = new BDEditor.Views.BDPathogenGroupControl();
+            this.fontDialog1 = new System.Windows.Forms.FontDialog();
+            this.btnFont = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -80,18 +82,29 @@
             this.bdPathogenGroupControl1.Size = new System.Drawing.Size(1164, 798);
             this.bdPathogenGroupControl1.TabIndex = 5;
             // 
+            // btnFont
+            // 
+            this.btnFont.Location = new System.Drawing.Point(987, 68);
+            this.btnFont.Name = "btnFont";
+            this.btnFont.Size = new System.Drawing.Size(75, 23);
+            this.btnFont.TabIndex = 6;
+            this.btnFont.Text = "Set Font";
+            this.btnFont.UseVisualStyleBackColor = true;
+            this.btnFont.Click += new System.EventHandler(this.btnFont_Click);
+            // 
             // BDPresentationControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.Controls.Add(this.btnFont);
             this.Controls.Add(this.bdPathogenGroupControl1);
             this.Controls.Add(this.lblOverview);
             this.Controls.Add(this.rtbPresentationOverview);
             this.Controls.Add(this.tbPresentationName);
             this.Controls.Add(this.label1);
             this.Name = "BDPresentationControl";
-            this.Size = new System.Drawing.Size(1120, 887);
+            this.Size = new System.Drawing.Size(1103, 870);
             this.Leave += new System.EventHandler(this.BDPresentationControl_Leave);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -105,5 +118,7 @@
         private System.Windows.Forms.RichTextBox rtbPresentationOverview;
         private System.Windows.Forms.Label lblOverview;
         private BDPathogenGroupControl bdPathogenGroupControl1;
+        private System.Windows.Forms.FontDialog fontDialog1;
+        private System.Windows.Forms.Button btnFont;
     }
 }

@@ -128,5 +128,13 @@ namespace BDEditor.Views
         {
             Save();
         }
+
+        private void btnFont_Click(object sender, EventArgs e)
+        {
+            if (fontDialog1.ShowDialog() == DialogResult.OK)
+            {
+                rtbPresentationOverview.Font = fontDialog1.Font;
+            }
+        }
     }
 }

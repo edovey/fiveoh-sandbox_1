@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Linq;
@@ -34,10 +35,13 @@ namespace BDEditor.DataModel
         /// <param name="pSubcategory"></param>
         public static void SaveSubcategory(Entities pContext, BDSubcategory pSubcategory)
         {
+            if (pSubcategory.EntityState != EntityState.Unchanged)
+            {
                 pSubcategory.modifiedBy = Guid.Empty;
                 pSubcategory.modifiedDate = DateTime.Now;
 
                 pContext.SaveChanges();
+            }
         }
 
         /// <summary>

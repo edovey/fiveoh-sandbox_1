@@ -38,24 +38,24 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(3, 12);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(6, 8);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(91, 18);
+            this.label1.Size = new System.Drawing.Size(66, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Presentation";
             // 
             // tbPresentationName
             // 
-            this.tbPresentationName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPresentationName.Location = new System.Drawing.Point(6, 33);
+            this.tbPresentationName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPresentationName.Location = new System.Drawing.Point(6, 26);
             this.tbPresentationName.Name = "tbPresentationName";
-            this.tbPresentationName.Size = new System.Drawing.Size(475, 24);
+            this.tbPresentationName.Size = new System.Drawing.Size(475, 20);
             this.tbPresentationName.TabIndex = 2;
             // 
             // rtbPresentationOverview
             // 
-            this.rtbPresentationOverview.Location = new System.Drawing.Point(3, 90);
+            this.rtbPresentationOverview.Location = new System.Drawing.Point(6, 68);
             this.rtbPresentationOverview.Name = "rtbPresentationOverview";
             this.rtbPresentationOverview.Size = new System.Drawing.Size(974, 93);
             this.rtbPresentationOverview.TabIndex = 3;
@@ -64,7 +64,7 @@
             // lblOverview
             // 
             this.lblOverview.AutoSize = true;
-            this.lblOverview.Location = new System.Drawing.Point(3, 74);
+            this.lblOverview.Location = new System.Drawing.Point(6, 52);
             this.lblOverview.Name = "lblOverview";
             this.lblOverview.Size = new System.Drawing.Size(52, 13);
             this.lblOverview.TabIndex = 4;
@@ -75,7 +75,7 @@
             this.bdPathogenGroupControl1.AutoScroll = true;
             this.bdPathogenGroupControl1.BackColor = System.Drawing.SystemColors.ControlDark;
             this.bdPathogenGroupControl1.CurrentPathogenGroup = null;
-            this.bdPathogenGroupControl1.Location = new System.Drawing.Point(0, 189);
+            this.bdPathogenGroupControl1.Location = new System.Drawing.Point(0, 165);
             this.bdPathogenGroupControl1.Name = "bdPathogenGroupControl1";
             this.bdPathogenGroupControl1.Size = new System.Drawing.Size(1164, 798);
             this.bdPathogenGroupControl1.TabIndex = 5;
@@ -91,7 +91,7 @@
             this.Controls.Add(this.tbPresentationName);
             this.Controls.Add(this.label1);
             this.Name = "BDPresentationControl";
-            this.Size = new System.Drawing.Size(1137, 904);
+            this.Size = new System.Drawing.Size(1120, 887);
             this.Leave += new System.EventHandler(this.BDPresentationControl_Leave);
             this.ResumeLayout(false);
             this.PerformLayout();

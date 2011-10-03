@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Linq;
@@ -43,10 +44,13 @@ namespace BDEditor.DataModel
         /// <param name="pTherapyGroup"></param>
         public static void SaveTherapyGroup(Entities pContext, BDTherapyGroup pTherapyGroup)
         {
+            if (pTherapyGroup.EntityState != EntityState.Unchanged)
+            {
                 pTherapyGroup.modifiedBy = Guid.Empty;
                 pTherapyGroup.modifiedDate = DateTime.Now;
 
                 pContext.SaveChanges();
+            }
         }
 
 

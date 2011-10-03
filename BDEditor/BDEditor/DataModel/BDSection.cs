@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 
@@ -35,13 +36,13 @@ namespace BDEditor.DataModel
         /// <param name="pSection"></param>
         public static void SaveSection(Entities pContext, BDSection pSection)
         {
-            //using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            //{
+            if (pSection.EntityState != EntityState.Unchanged)
+            {
                 pSection.modifiedBy = Guid.Empty;
                 pSection.modifiedDate = DateTime.Now;
 
                 pContext.SaveChanges();
-            //}
+            }
         }
 
         /// <summary>

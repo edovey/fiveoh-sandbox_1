@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Linq;
@@ -29,10 +30,13 @@ namespace BDEditor.DataModel
         /// <param name="pPathogen"></param>
         public static void SavePathogen(Entities pContext, BDPathogen pPathogen)
         {
+            if (pPathogen.EntityState != EntityState.Unchanged)
+            {
                 pPathogen.modifiedBy = Guid.Empty;
                 pPathogen.modifiedDate = DateTime.Now;
 
                 pContext.SaveChanges();
+            }
         }
 
         /// <summary>

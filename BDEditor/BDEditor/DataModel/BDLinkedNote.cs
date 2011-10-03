@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Linq;
@@ -48,10 +49,13 @@ namespace BDEditor.DataModel
         /// <param name="pLinkedNote"></param>
         public static void SaveLinkedNote(Entities pContext, BDLinkedNote pLinkedNote)
         {
+            if (pLinkedNote.EntityState != EntityState.Unchanged)
+            {
                 pLinkedNote.modifiedBy = Guid.Empty;
                 pLinkedNote.modifiedDate = DateTime.Now;
 
                 pContext.SaveChanges();
+            }
         }
 
         /// <summary>

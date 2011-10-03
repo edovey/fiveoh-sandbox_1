@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.EntityClient;
-using System.Data.Objects;
+using System.Data;
 using System.Linq;
-using System.Text;
 
 namespace BDEditor.DataModel
 {
@@ -40,10 +38,13 @@ namespace BDEditor.DataModel
         /// <param name="pPresentation"></param>
         public static void SavePresentation(Entities pContext, BDPresentation pPresentation)
         {
+            if (pPresentation.EntityState != EntityState.Unchanged)
+            {
                 pPresentation.modifiedBy = Guid.Empty;
                 pPresentation.modifiedDate = DateTime.Now;
 
                 pContext.SaveChanges();
+            }
         }
 
         /// <summary>

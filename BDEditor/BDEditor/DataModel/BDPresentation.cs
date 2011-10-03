@@ -12,6 +12,8 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDPresentation
     {
+        public const string OVERVIEW_NOTE = @"Overview";
+
         /// <summary>
         /// Extended Create method that sets creation date and schema version.
         /// </summary>
@@ -77,5 +79,6 @@ namespace BDEditor.DataModel
                 presentation = presentations.AsQueryable().First<BDPresentation>();
             return presentation;
         }
+
     }
 }

@@ -85,6 +85,7 @@ namespace BDEditor.Views
             if (null != currentPathogen)
             {
                 currentPathogen.name = tbPathogenName.Text;
+                System.Diagnostics.Debug.WriteLine(@"Pathogen Control Save");
                 BDPathogen.SavePathogen(dataContext, currentPathogen);
                 result = true;
             }

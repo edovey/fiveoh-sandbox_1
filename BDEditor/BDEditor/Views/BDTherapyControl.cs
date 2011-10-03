@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using BDEditor.DataModel;
+using System.Diagnostics;
 
 namespace BDEditor.Views
 {
@@ -86,6 +87,7 @@ namespace BDEditor.Views
 
         public bool Save()
         {
+
             bool result = false;
             if (null != therapyGroupId)
             {
@@ -117,7 +119,9 @@ namespace BDEditor.Views
                         currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.None;
                     }
 
+                    System.Diagnostics.Debug.WriteLine(@"Therapy Control Save");
                     BDTherapy.SaveTherapy(dataContext, currentTherapy);
+
                     result = true;
                 }
             }

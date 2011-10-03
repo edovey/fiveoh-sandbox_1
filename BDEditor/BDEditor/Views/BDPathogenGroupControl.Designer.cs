@@ -132,6 +132,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.Controls.Add(this.bdTherapyGroupControl1);
             this.Controls.Add(this.bdPathogenControl8);
             this.Controls.Add(this.bdPathogenControl7);

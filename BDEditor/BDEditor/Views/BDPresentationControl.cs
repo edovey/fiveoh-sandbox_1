@@ -28,6 +28,7 @@ namespace BDEditor.Views
                 if (currentPresentation == null)
                 {
                     tbPresentationName.Text = @"";
+                    rtbPresentationOverview.Rtf = @"";
 
                     bdPathogenGroupControl1.CurrentPathogenGroup = null;
                     bdPathogenGroupControl1.AssignParentId(null);
@@ -35,7 +36,11 @@ namespace BDEditor.Views
                 else
                 {
                     tbPresentationName.Text = currentPresentation.name;
-
+                    List<BDLinkedNote> linkedNoteList = BDLinkedNote.GetLinkedNotesForParentIdAndPropertyName(dataContext, currentPresentation.uuid, BDPresentation.OVERVIEW_NOTE);
+                    if (linkedNoteList.Count > 0)
+                    {
+                        rtbPresentationOverview.Rtf = linkedNoteList[0].documentText;
+                    }
                     List<BDPathogenGroup> pathogenGroupList = BDPathogenGroup.GetPathogenGroupsForPresentationId(dataContext, currentPresentation.uuid);
                     if (pathogenGroupList.Count <= 0)
                     {
@@ -71,7 +76,40 @@ namespace BDEditor.Views
 
         public bool Save()
         {
-            throw new NotImplementedException();
+            bool result = false;
+
+            if (null != diseaseId)
+            {
+                if ((null == currentPresentation) && (tbPresentationName.Text != string.Empty))
+                {
+                    currentPresentation = BDPresentation.CreatePresentation(dataContext);
+                    currentPresentation.diseaseId = diseaseId;
+                }
+                if (null != currentPresentation)
+                {
+                    currentPresentation.name = tbPresentationName.Text;
+
+                    BDLinkedNote overviewNote;
+                    List<BDLinkedNote> linkedNoteList = BDLinkedNote.GetLinkedNotesForParentIdAndPropertyName(dataContext, currentPresentation.uuid, BDPresentation.OVERVIEW_NOTE);
+                    if (linkedNoteList.Count > 0)
+                    {
+                        overviewNote = linkedNoteList[0];
+                    }
+                    else
+                    {
+                        overviewNote = BDLinkedNote.CreateLinkedNote(dataContext, currentPresentation.uuid, BDPresentation.OVERVIEW_NOTE);
+                    }
+                    overviewNote.documentText = rtbPresentationOverview.Rtf;
+                    BDLinkedNote.SaveLinkedNote(dataContext, overviewNote);
+
+                    System.Diagnostics.Debug.WriteLine(@"Presentation Control Save");
+                    BDPresentation.SavePresentation(dataContext, currentPresentation);
+
+                    bdPathogenGroupControl1.Save();
+                }
+            }
+           
+            return result;
         }
 
 
@@ -83,6 +121,11 @@ namespace BDEditor.Views
         public void TriggerCreateAndAssignParentIdToChildControl(IBDControl pControl)
         {
             throw new NotImplementedException();
+        }
+
+        private void BDPresentationControl_Leave(object sender, EventArgs e)
+        {
+            Save();
         }
     }
 }

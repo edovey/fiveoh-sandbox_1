@@ -23,8 +23,23 @@ namespace BDEditor.DataModel
                 linkedNote.createdDate = DateTime.Now;
                 linkedNote.schemaVersion = 0;
 
-                pContext.AddObject(@"BDLinkedNote", linkedNote);
+                pContext.AddObject(@"BDLinkedNotes", linkedNote);
                 return linkedNote;
+        }
+
+        public static BDLinkedNote CreateLinkedNote(Entities pContext, Guid pParentId, string pContextPropertyName)
+        {
+            BDLinkedNote linkedNote = CreateBDLinkedNote(Guid.NewGuid(), false);
+            linkedNote.createdBy = Guid.Empty;
+            linkedNote.createdDate = DateTime.Now;
+            linkedNote.schemaVersion = 0;
+            linkedNote.storageKey = string.Format("bd~{0}.txt", linkedNote.uuid.ToString().ToUpper());
+
+            linkedNote.parentId = pParentId;
+            linkedNote.contextPropertyName = pContextPropertyName;
+
+            pContext.AddObject(@"BDLinkedNotes", linkedNote);
+            return linkedNote;
         }
 
         /// <summary>

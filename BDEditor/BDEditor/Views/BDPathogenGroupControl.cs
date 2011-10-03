@@ -166,6 +166,7 @@ namespace BDEditor.Views
 
                 if (null != currentPathogenGroup)
                 {
+                    System.Diagnostics.Debug.WriteLine(@"PathogenGroup Control Save");
                     bdTherapyGroupControl1.Save();
                     BDPathogenGroup.SavePathogenGroup(dataContext, currentPathogenGroup);
                     result = true;

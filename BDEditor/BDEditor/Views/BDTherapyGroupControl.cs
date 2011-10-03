@@ -133,7 +133,7 @@ namespace BDEditor.Views
                     {
                         currentTherapyGroup.therapyGroupJoinType = (int)BDTherapyGroup.TherapyGroupJoinType.None;
                     }
-
+                    System.Diagnostics.Debug.WriteLine(@"TherapyGroup Control Save");
                     BDTherapyGroup.SaveTherapyGroup(dataContext, currentTherapyGroup);
                     result = true;
                 }

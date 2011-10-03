@@ -86,7 +86,6 @@ namespace BDEditor.Views
             if (null != currentPathogen)
             {
                 if(currentPathogen.name != tbPathogenName.Text) currentPathogen.name = tbPathogenName.Text;
-                System.Diagnostics.Debug.WriteLine(@"Pathogen Control Save");
                 BDPathogen.SavePathogen(dataContext, currentPathogen);
                 result = true;
             }
@@ -132,6 +131,7 @@ namespace BDEditor.Views
             BDLinkedNoteView noteView = new BDLinkedNoteView();
             noteView.AssignDataContext(dataContext);
             noteView.AssignParentId(currentPathogen.uuid);
+            noteView.AssignParentControl(this);
             //noteView.AssignContextPropertyName(@"
 
             if (null != currentPathogen)

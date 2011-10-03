@@ -79,7 +79,14 @@ namespace BDEditor.Views
         public bool Save()
         {
             bool result = false;
-            if (null != parentId)
+            if (null == parentId)
+            {
+                if (null != parentControl)
+                {
+                    parentControl.TriggerCreateAndAssignParentIdToChildControl(this);
+                }
+            }
+            else
             { 
                 if ((null == currentLinkedNote) && (rtfLinkNoteText.Rtf != string.Empty) )
                 {

@@ -65,6 +65,10 @@ namespace BDEditor.Views
         public BDTherapyControl()
         {
             InitializeComponent();
+
+            tbName.Tag = btnTherapyLink;
+            tbDosage.Tag = btnDosageLink;
+            tbDuration.Tag = btnDurationLink;
         }
 
         private void btnTherapyLink_Click(object sender, EventArgs e)
@@ -85,19 +89,17 @@ namespace BDEditor.Views
         {
             BDLinkedNoteView view = new BDLinkedNoteView();
             view.AssignDataContext(dataContext);
-            view.AssignParentId(currentTherapy.uuid);
             view.AssignContextPropertyName(pProperty);
 
             if (null != currentTherapy)
             {
                 BDLinkedNote note = BDLinkedNote.GetLinkedNoteForParentIdAndPropertyName(dataContext, currentTherapy.uuid, pProperty);
-                if (note != null)
-                    view.CurrentLinkNote = note;
-                else
-                    view.CurrentLinkNote = null;
+                view.AssignParentId(currentTherapy.uuid);
+                view.CurrentLinkNote = note;
             }
             else
             {
+                view.AssignParentId(null);
                 view.CurrentLinkNote = null;
             }
 
@@ -168,9 +170,10 @@ namespace BDEditor.Views
             if (null != textBox)
             {
                 this.BackColor = (textBox.Text.Trim() != string.Empty) ? SystemColors.Control : SystemColors.ControlDark;
-                btnTherapyLink.Enabled = true;
-                btnDosageLink.Enabled = true;
-                btnDurationLink.Enabled = true;
+
+                Button linkButton = textBox.Tag as Button;
+                if (null != linkButton)
+                    linkButton.Enabled = true;
 
                 if (null == currentTherapy)
                 {

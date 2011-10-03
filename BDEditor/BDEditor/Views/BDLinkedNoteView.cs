@@ -35,6 +35,11 @@ namespace BDEditor.Views
             bdLinkedNoteControl1.AssignParentId(pParentId);
         }
 
+        public void AssignParentControl(IBDControl pParentControl)
+        {
+            bdLinkedNoteControl1.AssignParentControl(pParentControl);
+        }
+
         public BDLinkedNote CurrentLinkNote
         {
             get

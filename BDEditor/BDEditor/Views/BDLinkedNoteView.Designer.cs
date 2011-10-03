@@ -81,10 +81,8 @@
             // 
             // BDLinkedNoteView
             // 
-            this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(486, 256);
             this.Controls.Add(this.bdLinkedNoteControl1);
             this.Controls.Add(this.panel1);

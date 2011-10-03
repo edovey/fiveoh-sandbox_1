@@ -198,9 +198,13 @@ namespace BDEditor.Views
                 BDPathogenGroup.SavePathogenGroup(dataContext, currentPathogenGroup);
                 pControl.AssignParentId(currentPathogenGroup.uuid);
                 pControl.Save();
-
-                this.BackColor = SystemColors.Control;
             }
+            else
+            {
+                pControl.AssignParentId(currentPathogenGroup.uuid);
+                pControl.Save();
+            }
+            this.BackColor = SystemColors.Control;
         }
         #endregion    
     }

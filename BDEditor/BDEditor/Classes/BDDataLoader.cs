@@ -37,10 +37,12 @@ namespace BDEditor.Classes
             using (StreamReader sr = File.OpenText(pFilename))
             {
                 String input;
-                
+                bool isFirstRow = true;
                 while ((input = sr.ReadLine()) != null)
                 {
-                    ProcessInputLine(input);
+                    if(!isFirstRow)
+                        ProcessInputLine(input);
+                    isFirstRow = false;
                 }
                 Console.WriteLine ("The end of the stream has been reached.");
             }

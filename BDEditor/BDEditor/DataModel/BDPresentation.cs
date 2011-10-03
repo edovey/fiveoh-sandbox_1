@@ -18,14 +18,18 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static BDPresentation CreatePresentation(Entities pContext)
         {
-                BDPresentation presentation = CreateBDPresentation(Guid.NewGuid(), false);
-                presentation.createdBy = Guid.Empty;
-                presentation.createdDate = DateTime.Now;
-                presentation.schemaVersion = 0;
+            BDPresentation presentation = CreateBDPresentation(Guid.NewGuid(), false);
+            presentation.createdBy = Guid.Empty;
+            presentation.createdDate = DateTime.Now;
+            presentation.schemaVersion = 0;
 
-                pContext.AddObject("BDPresentations", presentation);
+            pContext.AddObject("BDPresentations", presentation);
 
-                return presentation;
+            BDPathogenGroup pathogenGroup = BDPathogenGroup.CreatePathogenGroup(pContext);
+            pathogenGroup.presentationId = presentation.uuid;
+            BDPathogenGroup.SavePathogenGroup(pContext, pathogenGroup);
+
+            return presentation;
         }
 
         /// <summary>

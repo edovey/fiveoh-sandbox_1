@@ -28,10 +28,25 @@ namespace BDEditor.Views
                 if (currentPresentation == null)
                 {
                     tbPresentationName.Text = @"";
+
+                    bdPathogenGroupControl1.CurrentPathogenGroup = null;
+                    bdPathogenGroupControl1.AssignParentId(null);
                 }
                 else
                 {
                     tbPresentationName.Text = currentPresentation.name;
+
+                    List<BDPathogenGroup> pathogenGroupList = BDPathogenGroup.GetPathogenGroupsForPresentationId(dataContext, currentPresentation.uuid);
+                    if (pathogenGroupList.Count <= 0)
+                    {
+                        bdPathogenGroupControl1.CurrentPathogenGroup = null;
+                        bdPathogenGroupControl1.AssignParentId(currentPresentation.uuid);
+                    }
+                    else
+                    {
+                        bdPathogenGroupControl1.CurrentPathogenGroup = pathogenGroupList[0];
+                        bdPathogenGroupControl1.AssignParentId(currentPresentation.uuid);
+                    }
                 }
             }
         }
@@ -44,14 +59,14 @@ namespace BDEditor.Views
         public void AssignDataContext(Entities pDataContext)
         {
             dataContext = pDataContext;
+            bdPathogenGroupControl1.AssignDataContext(dataContext);
         }
 
         public void AssignParentId(Guid? pParentId)
         {
             diseaseId = pParentId;
 
-            this.Enabled = (null != diseaseId);
-            
+            this.Enabled = (null != diseaseId); 
         }
 
         public bool Save()

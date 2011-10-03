@@ -145,6 +145,7 @@ namespace BDEditor.Views
                     else if (selectedNode.Tag is BDDisease)
                     {
                         BDDiseaseControl diseaseControl = new BDDiseaseControl();
+                        
                         diseaseControl.Dock = DockStyle.Fill;
                         diseaseControl.CurrentDisease = selectedNode.Tag as BDDisease;
                         splitContainer1.Panel2.Controls.Add(diseaseControl);
@@ -152,8 +153,15 @@ namespace BDEditor.Views
                     else if (selectedNode.Tag is BDPresentation)
                     {
                         BDPresentationControl presentationControl = new BDPresentationControl();
+                        presentationControl.AssignDataContext(dataContext);
                         presentationControl.Dock = DockStyle.Fill;
                         presentationControl.CurrentPresentation = selectedNode.Tag as BDPresentation;
+                        BDDisease disease = selectedNode.Parent.Tag as BDDisease;
+                        if (null != disease)
+                        {
+                            presentationControl.AssignParentId(disease.uuid);
+                        }
+
                         splitContainer1.Panel2.Controls.Add(presentationControl);
                     }
                     break;

@@ -29,10 +29,24 @@ namespace BDEditor.Views
                 if (null == currentPathogenGroup)
                 {
                     this.BackColor = SystemColors.ControlDark;
+                    bdTherapyGroupControl1.AssignParentId(null);
+                    bdTherapyGroupControl1.CurrentTherapyGroup = null;
                     AssignPathogensToView(null);
                 }
                 else
                 {
+                    this.BackColor = SystemColors.Control;
+                    bdTherapyGroupControl1.AssignParentId(currentPathogenGroup.uuid);
+                    List<BDTherapyGroup> therapyGroupList = BDTherapyGroup.getTherapyGroupsForPathogenGroupId(dataContext, currentPathogenGroup.uuid);
+                    if (therapyGroupList.Count <= 0)
+                    {
+                        bdTherapyGroupControl1.CurrentTherapyGroup = null;
+                    }
+                    else
+                    {
+                        bdTherapyGroupControl1.CurrentTherapyGroup = therapyGroupList[0];
+                    }
+
                     List<BDPathogen> pathogenList = BDPathogen.GetPathogensForPathogenGroup(dataContext, currentPathogenGroup.uuid);
                     AssignPathogensToView(pathogenList);
                 }
@@ -112,6 +126,7 @@ namespace BDEditor.Views
         public void AssignDataContext(Entities pDataContext)
         {
             dataContext = pDataContext;
+            bdTherapyGroupControl1.AssignDataContext(dataContext);
         }
 
         public void AssignParentId(Guid? pParentId)
@@ -143,6 +158,7 @@ namespace BDEditor.Views
 
                 if (null != currentPathogenGroup)
                 {
+                    bdTherapyGroupControl1.Save();
                     BDPathogenGroup.SavePathogenGroup(dataContext, currentPathogenGroup);
                     result = true;
                 }

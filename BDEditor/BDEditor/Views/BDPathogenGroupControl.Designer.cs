@@ -28,15 +28,45 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.bdTherapyGroupControl1 = new BDEditor.Views.BDTherapyGroupControl();
+            this.bdPathogenControl8 = new BDEditor.Views.BDPathogenControl();
+            this.bdPathogenControl7 = new BDEditor.Views.BDPathogenControl();
             this.bdPathogenControl6 = new BDEditor.Views.BDPathogenControl();
             this.bdPathogenControl5 = new BDEditor.Views.BDPathogenControl();
             this.bdPathogenControl4 = new BDEditor.Views.BDPathogenControl();
             this.bdPathogenControl3 = new BDEditor.Views.BDPathogenControl();
             this.bdPathogenControl2 = new BDEditor.Views.BDPathogenControl();
             this.bdPathogenControl1 = new BDEditor.Views.BDPathogenControl();
-            this.bdPathogenControl7 = new BDEditor.Views.BDPathogenControl();
-            this.bdPathogenControl8 = new BDEditor.Views.BDPathogenControl();
             this.SuspendLayout();
+            // 
+            // bdTherapyGroupControl1
+            // 
+            this.bdTherapyGroupControl1.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.bdTherapyGroupControl1.CurrentTherapyGroup = null;
+            this.bdTherapyGroupControl1.Location = new System.Drawing.Point(4, 110);
+            this.bdTherapyGroupControl1.Name = "bdTherapyGroupControl1";
+            this.bdTherapyGroupControl1.Size = new System.Drawing.Size(880, 621);
+            this.bdTherapyGroupControl1.TabIndex = 8;
+            // 
+            // bdPathogenControl8
+            // 
+            this.bdPathogenControl8.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.bdPathogenControl8.CurrentPathogen = null;
+            this.bdPathogenControl8.Location = new System.Drawing.Point(865, 54);
+            this.bdPathogenControl8.Name = "bdPathogenControl8";
+            this.bdPathogenControl8.Size = new System.Drawing.Size(287, 50);
+            this.bdPathogenControl8.TabIndex = 7;
+            this.bdPathogenControl8.Title = "Pathogen 8";
+            // 
+            // bdPathogenControl7
+            // 
+            this.bdPathogenControl7.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.bdPathogenControl7.CurrentPathogen = null;
+            this.bdPathogenControl7.Location = new System.Drawing.Point(578, 54);
+            this.bdPathogenControl7.Name = "bdPathogenControl7";
+            this.bdPathogenControl7.Size = new System.Drawing.Size(287, 50);
+            this.bdPathogenControl7.TabIndex = 6;
+            this.bdPathogenControl7.Title = "Pathogen 7";
             // 
             // bdPathogenControl6
             // 
@@ -98,30 +128,11 @@
             this.bdPathogenControl1.TabIndex = 0;
             this.bdPathogenControl1.Title = "Pathogen 1";
             // 
-            // bdPathogenControl7
-            // 
-            this.bdPathogenControl7.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.bdPathogenControl7.CurrentPathogen = null;
-            this.bdPathogenControl7.Location = new System.Drawing.Point(578, 54);
-            this.bdPathogenControl7.Name = "bdPathogenControl7";
-            this.bdPathogenControl7.Size = new System.Drawing.Size(287, 50);
-            this.bdPathogenControl7.TabIndex = 6;
-            this.bdPathogenControl7.Title = "Pathogen 7";
-            // 
-            // bdPathogenControl8
-            // 
-            this.bdPathogenControl8.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.bdPathogenControl8.CurrentPathogen = null;
-            this.bdPathogenControl8.Location = new System.Drawing.Point(865, 54);
-            this.bdPathogenControl8.Name = "bdPathogenControl8";
-            this.bdPathogenControl8.Size = new System.Drawing.Size(287, 50);
-            this.bdPathogenControl8.TabIndex = 7;
-            this.bdPathogenControl8.Title = "Pathogen 8";
-            // 
             // BDPathogenGroupControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.bdTherapyGroupControl1);
             this.Controls.Add(this.bdPathogenControl8);
             this.Controls.Add(this.bdPathogenControl7);
             this.Controls.Add(this.bdPathogenControl6);
@@ -131,7 +142,7 @@
             this.Controls.Add(this.bdPathogenControl2);
             this.Controls.Add(this.bdPathogenControl1);
             this.Name = "BDPathogenGroupControl";
-            this.Size = new System.Drawing.Size(1158, 108);
+            this.Size = new System.Drawing.Size(1158, 739);
             this.Load += new System.EventHandler(this.BDPathogenGroupControl_Load);
             this.ResumeLayout(false);
 
@@ -147,5 +158,6 @@
         private BDPathogenControl bdPathogenControl6;
         private BDPathogenControl bdPathogenControl7;
         private BDPathogenControl bdPathogenControl8;
+        private BDTherapyGroupControl bdTherapyGroupControl1;
     }
 }

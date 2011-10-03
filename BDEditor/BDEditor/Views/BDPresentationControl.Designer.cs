@@ -33,7 +33,6 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.lblOverview = new System.Windows.Forms.Label();
             this.bdPathogenGroupControl1 = new BDEditor.Views.BDPathogenGroupControl();
-            this.bdTherapyGroupControl1 = new BDEditor.Views.BDTherapyGroupControl();
             this.SuspendLayout();
             // 
             // label1
@@ -73,25 +72,17 @@
             // 
             // bdPathogenGroupControl1
             // 
+            this.bdPathogenGroupControl1.BackColor = System.Drawing.SystemColors.ControlDark;
             this.bdPathogenGroupControl1.CurrentPathogenGroup = null;
             this.bdPathogenGroupControl1.Location = new System.Drawing.Point(0, 189);
             this.bdPathogenGroupControl1.Name = "bdPathogenGroupControl1";
-            this.bdPathogenGroupControl1.Size = new System.Drawing.Size(1164, 115);
+            this.bdPathogenGroupControl1.Size = new System.Drawing.Size(1164, 798);
             this.bdPathogenGroupControl1.TabIndex = 5;
-            // 
-            // bdTherapyGroupControl1
-            // 
-            this.bdTherapyGroupControl1.CurrentTherapyGroup = null;
-            this.bdTherapyGroupControl1.Location = new System.Drawing.Point(3, 310);
-            this.bdTherapyGroupControl1.Name = "bdTherapyGroupControl1";
-            this.bdTherapyGroupControl1.Size = new System.Drawing.Size(880, 614);
-            this.bdTherapyGroupControl1.TabIndex = 6;
             // 
             // BDPresentationControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.bdTherapyGroupControl1);
             this.Controls.Add(this.bdPathogenGroupControl1);
             this.Controls.Add(this.lblOverview);
             this.Controls.Add(this.richTextBox1);
@@ -111,6 +102,5 @@
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Label lblOverview;
         private BDPathogenGroupControl bdPathogenGroupControl1;
-        private BDTherapyGroupControl bdTherapyGroupControl1;
     }
 }

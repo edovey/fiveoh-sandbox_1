@@ -111,6 +111,7 @@
             this.btnDosageLink.TabIndex = 7;
             this.btnDosageLink.Text = "Link";
             this.btnDosageLink.UseVisualStyleBackColor = true;
+            this.btnDosageLink.Click += new System.EventHandler(this.btnDosageLink_Click);
             // 
             // btnDurationLink
             // 
@@ -120,6 +121,7 @@
             this.btnDurationLink.TabIndex = 8;
             this.btnDurationLink.Text = "Link";
             this.btnDurationLink.UseVisualStyleBackColor = true;
+            this.btnDurationLink.Click += new System.EventHandler(this.btnDurationLink_Click);
             // 
             // noneRadioButton
             // 

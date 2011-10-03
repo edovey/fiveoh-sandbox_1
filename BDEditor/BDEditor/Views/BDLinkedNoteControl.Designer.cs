@@ -28,79 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblLinkedNote = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.tbLinkedNote = new System.Windows.Forms.TextBox();
-            this.lblEndNote = new System.Windows.Forms.Label();
-            this.tbEndNote = new System.Windows.Forms.TextBox();
+            this.rtfLinkNoteText = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
-            // lblLinkedNote
+            // rtfLinkNoteText
             // 
-            this.lblLinkedNote.AutoSize = true;
-            this.lblLinkedNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLinkedNote.Location = new System.Drawing.Point(13, 14);
-            this.lblLinkedNote.Name = "lblLinkedNote";
-            this.lblLinkedNote.Size = new System.Drawing.Size(65, 13);
-            this.lblLinkedNote.TabIndex = 0;
-            this.lblLinkedNote.Text = "Linked Note";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(90, 10);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(169, 21);
-            this.comboBox1.TabIndex = 1;
-            // 
-            // tbLinkedNote
-            // 
-            this.tbLinkedNote.Location = new System.Drawing.Point(16, 35);
-            this.tbLinkedNote.Multiline = true;
-            this.tbLinkedNote.Name = "tbLinkedNote";
-            this.tbLinkedNote.Size = new System.Drawing.Size(743, 72);
-            this.tbLinkedNote.TabIndex = 2;
-            // 
-            // lblEndNote
-            // 
-            this.lblEndNote.AutoSize = true;
-            this.lblEndNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEndNote.Location = new System.Drawing.Point(13, 117);
-            this.lblEndNote.Name = "lblEndNote";
-            this.lblEndNote.Size = new System.Drawing.Size(52, 13);
-            this.lblEndNote.TabIndex = 3;
-            this.lblEndNote.Text = "End Note";
-            // 
-            // tbEndNote
-            // 
-            this.tbEndNote.Location = new System.Drawing.Point(16, 136);
-            this.tbEndNote.Multiline = true;
-            this.tbEndNote.Name = "tbEndNote";
-            this.tbEndNote.Size = new System.Drawing.Size(743, 41);
-            this.tbEndNote.TabIndex = 4;
+            this.rtfLinkNoteText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtfLinkNoteText.Location = new System.Drawing.Point(3, 3);
+            this.rtfLinkNoteText.Name = "rtfLinkNoteText";
+            this.rtfLinkNoteText.Size = new System.Drawing.Size(620, 86);
+            this.rtfLinkNoteText.TabIndex = 0;
+            this.rtfLinkNoteText.Text = "";
             // 
             // BDLinkedNoteControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.tbEndNote);
-            this.Controls.Add(this.lblEndNote);
-            this.Controls.Add(this.tbLinkedNote);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.lblLinkedNote);
+            this.Controls.Add(this.rtfLinkNoteText);
             this.Name = "BDLinkedNoteControl";
-            this.Size = new System.Drawing.Size(764, 182);
+            this.Padding = new System.Windows.Forms.Padding(3);
+            this.Size = new System.Drawing.Size(626, 92);
+            this.Leave += new System.EventHandler(this.BDLinkedNoteControl_Leave);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label lblLinkedNote;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TextBox tbLinkedNote;
-        private System.Windows.Forms.Label lblEndNote;
-        private System.Windows.Forms.TextBox tbEndNote;
+        private System.Windows.Forms.RichTextBox rtfLinkNoteText;
+
     }
 }

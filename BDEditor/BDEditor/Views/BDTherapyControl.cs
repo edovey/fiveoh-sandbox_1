@@ -69,9 +69,37 @@ namespace BDEditor.Views
 
         private void btnTherapyLink_Click(object sender, EventArgs e)
         {
-            CreateLink();
+            BDLinkedNoteView view = new BDLinkedNoteView();
+            view.AssignDataContext(dataContext);
+            view.AssignParentId(currentTherapy.uuid);
+            view.AssignContextPropertyName(@"Therapy");
+
+            if (null != currentTherapy)
+            {
+                List<BDLinkedNote> noteList = BDLinkedNote.GetLinkedNotesForParentIdAndPropertyName(dataContext, currentTherapy.uuid, @"Therapy");
+                if (noteList.Count > 0)
+                    view.CurrentLinkNote = noteList[0];
+                else
+                    view.CurrentLinkNote = null;
+            }
+            else
+            {
+                view.CurrentLinkNote = null;
+            }
+
+            view.ShowDialog(this);
+
         }
 
+        private void btnDosageLink_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDurationLink_Click(object sender, EventArgs e)
+        {
+
+        }
         private void CreateLink()
         {
             // show context menu when button clicked for possible actions:
@@ -172,5 +200,7 @@ namespace BDEditor.Views
         {
             Save();
         }
+
+
     }
 }

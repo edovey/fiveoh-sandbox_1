@@ -87,6 +87,12 @@
     <Compile Include="Views\BDLinkedNoteControl.Designer.cs">
       <DependentUpon>BDLinkedNoteControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\BDLinkedNoteView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\BDLinkedNoteView.Designer.cs">
+      <DependentUpon>BDLinkedNoteView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\BDPathogenGroupControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -169,6 +175,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDLinkedNoteControl.resx">
       <DependentUpon>BDLinkedNoteControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDLinkedNoteView.resx">
+      <DependentUpon>BDLinkedNoteView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDPathogenControl.resx">
       <DependentUpon>BDPathogenControl.cs</DependentUpon>

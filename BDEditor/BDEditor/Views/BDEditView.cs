@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using BDEditor.DataModel;
 using BDEditor.Classes;
+using System.Diagnostics;
 
 namespace BDEditor.Views
 {
@@ -32,7 +33,9 @@ namespace BDEditor.Views
 
             dataContext = new DataModel.Entities();
 
-            sectionDropDown.DataSource = dataContext.BDSections;
+            LoadSectionDropDown();
+
+            //sectionDropDown.DataSource = dataContext.BDSections;
             sectionDropDown.DisplayMember = "Name";
         }
 
@@ -112,16 +115,20 @@ namespace BDEditor.Views
 
         private void sectionDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            BDSection section = sectionDropDown.SelectedValue as BDSection;
+            //BDSection section = sectionDropDown.SelectedValue as BDSection;
+            BDSection section = sectionDropDown.SelectedItem as BDSection;
             if (null != section)
             {
+                this.Cursor = Cursors.WaitCursor;
                 rebuildTree(section);
+                this.Cursor = Cursors.Default;
             }
 
         }
 
         private void sectionTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
             switch (e.Action)
             {
                 case TreeViewAction.ByKeyboard:
@@ -171,6 +178,7 @@ namespace BDEditor.Views
                 default:
                     break;
             }
+            this.Cursor = Cursors.Default;
         }
 
         private void createTestData()
@@ -241,14 +249,19 @@ namespace BDEditor.Views
             BDDataLoader dataLoader = new BDDataLoader();
             dataLoader.ImportData(dataContext, @"Resources\BDEditorStructure.txt");
 
-            dataContext.Refresh(System.Data.Objects.RefreshMode.ClientWins, dataContext.BDSections);
-            sectionDropDown.DataBindings.Clear();
-            sectionDropDown.DataSource = null;
-            sectionDropDown.DataSource = dataContext.BDSections;
-            sectionDropDown.DisplayMember = "Name";
+            LoadSectionDropDown();
 
             this.Cursor = Cursors.Default;
             
+        }
+
+        private void LoadSectionDropDown()
+        {
+            sectionDropDown.Items.Clear();
+            foreach (BDSection section in dataContext.BDSections)
+            {
+                sectionDropDown.Items.Add(section);
+            }
         }
     }
 }

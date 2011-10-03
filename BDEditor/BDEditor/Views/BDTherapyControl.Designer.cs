@@ -95,6 +95,7 @@
             // 
             // btnTherapyLink
             // 
+            this.btnTherapyLink.Enabled = false;
             this.btnTherapyLink.Location = new System.Drawing.Point(251, 22);
             this.btnTherapyLink.Name = "btnTherapyLink";
             this.btnTherapyLink.Size = new System.Drawing.Size(35, 23);
@@ -105,6 +106,7 @@
             // 
             // btnDosageLink
             // 
+            this.btnDosageLink.Enabled = false;
             this.btnDosageLink.Location = new System.Drawing.Point(547, 23);
             this.btnDosageLink.Name = "btnDosageLink";
             this.btnDosageLink.Size = new System.Drawing.Size(35, 23);
@@ -115,6 +117,7 @@
             // 
             // btnDurationLink
             // 
+            this.btnDurationLink.Enabled = false;
             this.btnDurationLink.Location = new System.Drawing.Point(786, 23);
             this.btnDurationLink.Name = "btnDurationLink";
             this.btnDurationLink.Size = new System.Drawing.Size(35, 23);

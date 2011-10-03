@@ -16,6 +16,7 @@ namespace BDEditor.Views
         private Entities dataContext;
         private Guid? presentationId;
         private BDPathogenGroup currentPathogenGroup;
+        private IBDControl parentControl;
 
         public BDPathogenGroup CurrentPathogenGroup
         {
@@ -141,6 +142,14 @@ namespace BDEditor.Views
         {
             presentationId = pParentId;
             this.Enabled = (null != presentationId);
+            bdPathogenControl1.AssignParentControl(this);
+            bdPathogenControl2.AssignParentControl(this); 
+            bdPathogenControl3.AssignParentControl(this); 
+            bdPathogenControl4.AssignParentControl(this); 
+            bdPathogenControl5.AssignParentControl(this); 
+            bdPathogenControl6.AssignParentControl(this);
+            bdPathogenControl7.AssignParentControl(this);
+            bdPathogenControl8.AssignParentControl(this);
         }
 
         public bool Save()
@@ -177,12 +186,21 @@ namespace BDEditor.Views
 
         public void AssignParentControl(IBDControl pControl)
         {
-            throw new NotImplementedException();
+            parentControl = pControl;
         }
 
         public void TriggerCreateAndAssignParentIdToChildControl(IBDControl pControl)
         {
-            throw new NotImplementedException();
+            if (null == currentPathogenGroup)
+            {
+                currentPathogenGroup = BDPathogenGroup.CreatePathogenGroup(dataContext);
+                currentPathogenGroup.presentationId = presentationId;
+                BDPathogenGroup.SavePathogenGroup(dataContext, currentPathogenGroup);
+                pControl.AssignParentId(currentPathogenGroup.uuid);
+                pControl.Save();
+
+                this.BackColor = SystemColors.Control;
+            }
         }
         #endregion    
     }

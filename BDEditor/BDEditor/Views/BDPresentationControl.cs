@@ -36,11 +36,9 @@ namespace BDEditor.Views
                 else
                 {
                     tbPresentationName.Text = currentPresentation.name;
-                    List<BDLinkedNote> linkedNoteList = BDLinkedNote.GetLinkedNotesForParentIdAndPropertyName(dataContext, currentPresentation.uuid, BDPresentation.OVERVIEW_NOTE);
-                    if (linkedNoteList.Count > 0)
-                    {
-                        rtbPresentationOverview.Rtf = linkedNoteList[0].documentText;
-                    }
+                    BDLinkedNote linkedNote = BDLinkedNote.GetLinkedNoteForParentIdAndPropertyName(dataContext, currentPresentation.uuid, BDPresentation.OVERVIEW_NOTE);
+                    if (linkedNote != null)
+                        rtbPresentationOverview.Rtf = linkedNote.documentText;
                     List<BDPathogenGroup> pathogenGroupList = BDPathogenGroup.GetPathogenGroupsForPresentationId(dataContext, currentPresentation.uuid);
                     if (pathogenGroupList.Count <= 0)
                     {
@@ -90,10 +88,10 @@ namespace BDEditor.Views
                     if(currentPresentation.name != tbPresentationName.Text) currentPresentation.name = tbPresentationName.Text;
 
                     BDLinkedNote overviewNote;
-                    List<BDLinkedNote> linkedNoteList = BDLinkedNote.GetLinkedNotesForParentIdAndPropertyName(dataContext, currentPresentation.uuid, BDPresentation.OVERVIEW_NOTE);
-                    if (linkedNoteList.Count > 0)
+                    BDLinkedNote linkedNote = BDLinkedNote.GetLinkedNoteForParentIdAndPropertyName(dataContext, currentPresentation.uuid, BDPresentation.OVERVIEW_NOTE);
+                    if (linkedNote != null)
                     {
-                        overviewNote = linkedNoteList[0];
+                        overviewNote = linkedNote;
                     }
                     else
                     {

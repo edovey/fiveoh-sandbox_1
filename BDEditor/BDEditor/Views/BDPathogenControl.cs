@@ -18,6 +18,7 @@ namespace BDEditor.Views
         private Guid? pathogenGroupId;
         private BDPathogen currentPathogen;
         private string title;
+        private IBDControl parentControl;
 
         public BDPathogen CurrentPathogen
         {
@@ -101,12 +102,21 @@ namespace BDEditor.Views
 
         public void AssignParentControl(IBDControl pControl)
         {
-            throw new NotImplementedException();
+            parentControl = pControl;
         }
 
         public void TriggerCreateAndAssignParentIdToChildControl(IBDControl pControl)
         {
-            throw new NotImplementedException();
+            if(null == currentPathogen)
+            {
+                currentPathogen = BDPathogen.CreatePathogen(dataContext);
+                currentPathogen.pathogenGroupId = pathogenGroupId;
+                BDPathogen.SavePathogen(dataContext, currentPathogen);
+                pControl.AssignParentId(currentPathogen.uuid);
+                pControl.Save();
+
+                this.BackColor = SystemColors.Control;
+            }
         }
 
         private void BDPathogenControl_Leave(object sender, EventArgs e)
@@ -119,15 +129,32 @@ namespace BDEditor.Views
         #region Class methods
         private void CreateLink()
         {
-            // open context menu for linking to: existing linked note, new linked note, remove link to note
-            MessageBox.Show("Will show context menu for working with a linked note");
+            BDLinkedNoteView noteView = new BDLinkedNoteView();
+            noteView.AssignDataContext(dataContext);
+            noteView.AssignParentId(currentPathogen.uuid);
+            //noteView.AssignContextPropertyName(@"
+
+            if (null != currentPathogen)
+            {
+                BDLinkedNote note = BDLinkedNote.GetLinkedNoteForParentId(dataContext, currentPathogen.uuid);
+                if (note != null)
+                    noteView.CurrentLinkNote = note;
+                else
+                    noteView.CurrentLinkNote = null;
+            }
+            else{
+                noteView.CurrentLinkNote = null;
+            }
+
+            noteView.ShowDialog(this);
         }
 
         #endregion
 
         private void btnLink_Click(object sender, EventArgs e)
         {
-            CreateLink();
+            if(this.Enabled)
+                CreateLink();
         }
 
         private void textBox_TextChanged(object sender, EventArgs e)
@@ -136,7 +163,15 @@ namespace BDEditor.Views
             if (null != textBox)
             {
                 this.BackColor = (textBox.Text.Trim() != string.Empty) ? SystemColors.Control : SystemColors.ControlDark;
+                this.btnLink.Enabled = true;
+                if (null == currentPathogen)
+                {
+                    currentPathogen = BDPathogen.CreatePathogen(dataContext);
+                    currentPathogen.pathogenGroupId = pathogenGroupId;
+                    BDPathogen.SavePathogen(dataContext, currentPathogen);
+                }
             }
+            else this.btnLink.Enabled = false;
         }
     }
 }

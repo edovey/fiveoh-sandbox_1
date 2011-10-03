@@ -64,20 +64,47 @@ namespace BDEditor.DataModel
         /// <param name="pParentId"></param>
         /// <param name="pPropertyName"></param>
         /// <returns>List of Linked Notes</returns>
-        public static List<BDLinkedNote> GetLinkedNotesForParentIdAndPropertyName(Entities pContext, Guid pParentId, string pPropertyName)
+        public static BDLinkedNote GetLinkedNoteForParentIdAndPropertyName(Entities pContext, Guid pParentId, string pPropertyName)
         {
-            List<BDLinkedNote> linkedNoteList = new List<BDLinkedNote>();
-                IQueryable<BDLinkedNote> linkedNotes = (from bdLinkedNotes in pContext.BDLinkedNotes
-                                                        where bdLinkedNotes.parentId == pParentId
-                                                        select bdLinkedNotes);
-                foreach(BDLinkedNote linkedNote in linkedNotes)
+            IQueryable<BDLinkedNote> linkedNotes = (from bdLinkedNotes in pContext.BDLinkedNotes
+                                                    where bdLinkedNotes.parentId == pParentId
+                                                    select bdLinkedNotes);
+
+            if (linkedNotes.Count() == 0)
+                return null;
+            else
+            {
+                foreach(BDLinkedNote note in linkedNotes)
                 {
-                    if (linkedNote.contextPropertyName == pPropertyName)
-                        linkedNoteList.Add(linkedNote);
+                    if (note.contextPropertyName == pPropertyName)
+                        return note;
                 }
-                 return linkedNoteList;                                       
+            }
+            return null;                                       
         }
 
+        /// <summary>
+        /// Get linked note with the specified parent ID
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pParentId"></param>
+        /// <returns></returns>
+        public static BDLinkedNote GetLinkedNoteForParentId(Entities pContext, Guid pParentId)
+        {
+            BDLinkedNote linkedNote;
+
+            IQueryable<BDLinkedNote> linkedNotes = (from bdLinkedNotes in pContext.BDLinkedNotes
+                                                    where bdLinkedNotes.parentId == pParentId
+                                                    select bdLinkedNotes);
+            if (linkedNotes.Count() == 0)
+                return null;
+            else
+            {
+                linkedNote = linkedNotes.AsQueryable().First<BDLinkedNote>();
+            }
+            return linkedNote;                                       
+        }
+        
         /// <summary>
         /// Get all linked notes with the specified parent ID
         /// </summary>

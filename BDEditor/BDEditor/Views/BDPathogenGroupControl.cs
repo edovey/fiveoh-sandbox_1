@@ -127,6 +127,14 @@ namespace BDEditor.Views
         {
             dataContext = pDataContext;
             bdTherapyGroupControl1.AssignDataContext(dataContext);
+            bdPathogenControl1.AssignDataContext(dataContext);
+            bdPathogenControl2.AssignDataContext(dataContext);
+            bdPathogenControl3.AssignDataContext(dataContext);
+            bdPathogenControl4.AssignDataContext(dataContext);
+            bdPathogenControl5.AssignDataContext(dataContext);
+            bdPathogenControl6.AssignDataContext(dataContext);
+            bdPathogenControl7.AssignDataContext(dataContext);
+            bdPathogenControl8.AssignDataContext(dataContext);
         }
 
         public void AssignParentId(Guid? pParentId)
@@ -167,5 +175,16 @@ namespace BDEditor.Views
         }
 
         #endregion
+
+
+        public void AssignParentControl(IBDControl pControl)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerCreateAndAssignParentIdToChildControl(IBDControl pControl)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -71,6 +71,7 @@
             this.Controls.Add(this.lblTitle);
             this.Name = "BDPathogenControl";
             this.Size = new System.Drawing.Size(285, 44);
+            this.Leave += new System.EventHandler(this.BDPathogenControl_Leave);
             this.ResumeLayout(false);
             this.PerformLayout();
 

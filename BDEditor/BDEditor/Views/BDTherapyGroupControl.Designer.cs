@@ -105,9 +105,9 @@
             // 
             // panelTherapies
             // 
-            this.panelTherapies.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelTherapies.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.panelTherapies.AutoScroll = true;
             this.panelTherapies.BackColor = System.Drawing.SystemColors.Control;
             this.panelTherapies.Controls.Add(this.bdTherapyControl6);
@@ -188,6 +188,7 @@
             this.Controls.Add(this.lblTherapyGroupNote);
             this.Name = "BDTherapyGroupControl";
             this.Size = new System.Drawing.Size(880, 621);
+            this.Leave += new System.EventHandler(this.BDTherapyGroupControl_Leave);
             this.panelTherapies.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

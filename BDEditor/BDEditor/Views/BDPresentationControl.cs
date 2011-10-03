@@ -73,5 +73,16 @@ namespace BDEditor.Views
         {
             throw new NotImplementedException();
         }
+
+
+        public void AssignParentControl(IBDControl pControl)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerCreateAndAssignParentIdToChildControl(IBDControl pControl)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

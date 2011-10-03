@@ -122,5 +122,21 @@ namespace BDEditor.Views
                 this.BackColor = (textBox.Text.Trim() != string.Empty) ? SystemColors.Control : SystemColors.ControlDark;
             }
         }
+
+
+        public void AssignParentControl(IBDControl pControl)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerCreateAndAssignParentIdToChildControl(IBDControl pControl)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void BDPathogenControl_Leave(object sender, EventArgs e)
+        {
+            Save();
+        }
     }
 }

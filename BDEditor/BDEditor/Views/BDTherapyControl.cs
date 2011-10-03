@@ -15,6 +15,7 @@ namespace BDEditor.Views
         private Entities dataContext;
         private BDTherapy currentTherapy;
         private Guid? therapyGroupId;
+        private IBDControl parentControl;
 
         public BDTherapy CurrentTherapy
         {
@@ -127,21 +128,6 @@ namespace BDEditor.Views
         public void AssignParentId(Guid? pParentId)
         {
             therapyGroupId = pParentId;
-            this.Enabled = (null != therapyGroupId);
-
-            /*
-            tbName.Enabled = (null != therapyGroupId);
-            tbDosage.Enabled = (null != therapyGroupId);
-            tbDuration.Enabled = (null != therapyGroupId);
-
-            btnTherapyLink.Enabled = (null != therapyGroupId);
-            btnDosageLink.Enabled = (null != therapyGroupId);
-            btnDurationLink.Enabled = (null != therapyGroupId);
-
-            noneRadioButton.Enabled = (null != therapyGroupId);
-            andRadioButton.Enabled = (null != therapyGroupId);
-            orRadioButton.Enabled = (null != therapyGroupId);
-             * */
         }
 
         private void textBox_TextChanged(object sender, EventArgs e)
@@ -150,7 +136,35 @@ namespace BDEditor.Views
             if (null != textBox)
             {
                 this.BackColor = (textBox.Text.Trim() != string.Empty) ? SystemColors.Control : SystemColors.ControlDark;
+                if (null == currentTherapy)
+                {
+                    parentControl.TriggerCreateAndAssignParentIdToChildControl(this);
+                }
             }
+        }
+
+        public void AssignParentControl(IBDControl pControl)
+        {
+            parentControl = pControl;
+        }
+
+        public void TriggerCreateAndAssignParentIdToChildControl(IBDControl pControl)
+        {
+            if (null == currentTherapy)
+            {
+                currentTherapy = BDTherapy.CreateTherapy(dataContext);
+                currentTherapy.therapyGroupId = therapyGroupId;
+                BDTherapy.SaveTherapy(dataContext, currentTherapy);
+                pControl.AssignParentId(currentTherapy.uuid);
+                pControl.Save();
+
+                this.BackColor = SystemColors.Control;
+            }
+        }
+
+        private void BDTherapyControl_Leave(object sender, EventArgs e)
+        {
+            Save();
         }
     }
 }

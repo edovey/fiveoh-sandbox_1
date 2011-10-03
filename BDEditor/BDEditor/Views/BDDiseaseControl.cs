@@ -45,8 +45,8 @@ namespace BDEditor.Views
         {
             if (currentDisease != null)
             {
-                tbDiseaseName.Text = currentDisease.name;
-                tbDiseaseOverview.Text = currentDisease.overview;
+                if(tbDiseaseName.Text != currentDisease.name) tbDiseaseName.Text = currentDisease.name;
+                if(tbDiseaseOverview.Text != currentDisease.overview) tbDiseaseOverview.Text = currentDisease.overview;
             }
         }
 

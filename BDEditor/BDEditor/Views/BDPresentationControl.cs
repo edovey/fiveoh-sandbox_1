@@ -87,7 +87,7 @@ namespace BDEditor.Views
                 }
                 if (null != currentPresentation)
                 {
-                    currentPresentation.name = tbPresentationName.Text;
+                    if(currentPresentation.name != tbPresentationName.Text) currentPresentation.name = tbPresentationName.Text;
 
                     BDLinkedNote overviewNote;
                     List<BDLinkedNote> linkedNoteList = BDLinkedNote.GetLinkedNotesForParentIdAndPropertyName(dataContext, currentPresentation.uuid, BDPresentation.OVERVIEW_NOTE);
@@ -99,7 +99,8 @@ namespace BDEditor.Views
                     {
                         overviewNote = BDLinkedNote.CreateLinkedNote(dataContext, currentPresentation.uuid, BDPresentation.OVERVIEW_NOTE);
                     }
-                    overviewNote.documentText = rtbPresentationOverview.Rtf;
+
+                    if(overviewNote.documentText != rtbPresentationOverview.Rtf) overviewNote.documentText = rtbPresentationOverview.Rtf;
                     BDLinkedNote.SaveLinkedNote(dataContext, overviewNote);
 
                     System.Diagnostics.Debug.WriteLine(@"Presentation Control Save");

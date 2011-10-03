@@ -175,9 +175,6 @@ namespace BDEditor.Views
             return result;
         }
 
-        #endregion
-
-
         public void AssignParentControl(IBDControl pControl)
         {
             throw new NotImplementedException();
@@ -187,5 +184,6 @@ namespace BDEditor.Views
         {
             throw new NotImplementedException();
         }
+        #endregion    
     }
 }

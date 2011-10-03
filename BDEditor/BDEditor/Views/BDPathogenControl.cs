@@ -84,7 +84,7 @@ namespace BDEditor.Views
             }
             if (null != currentPathogen)
             {
-                currentPathogen.name = tbPathogenName.Text;
+                if(currentPathogen.name != tbPathogenName.Text) currentPathogen.name = tbPathogenName.Text;
                 System.Diagnostics.Debug.WriteLine(@"Pathogen Control Save");
                 BDPathogen.SavePathogen(dataContext, currentPathogen);
                 result = true;
@@ -99,6 +99,21 @@ namespace BDEditor.Views
             this.Enabled = (null != pathogenGroupId);
         }
 
+        public void AssignParentControl(IBDControl pControl)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TriggerCreateAndAssignParentIdToChildControl(IBDControl pControl)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void BDPathogenControl_Leave(object sender, EventArgs e)
+        {
+            Save();
+        }        
+        
         #endregion
 
         #region Class methods
@@ -122,22 +137,6 @@ namespace BDEditor.Views
             {
                 this.BackColor = (textBox.Text.Trim() != string.Empty) ? SystemColors.Control : SystemColors.ControlDark;
             }
-        }
-
-
-        public void AssignParentControl(IBDControl pControl)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void TriggerCreateAndAssignParentIdToChildControl(IBDControl pControl)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void BDPathogenControl_Leave(object sender, EventArgs e)
-        {
-            Save();
         }
     }
 }

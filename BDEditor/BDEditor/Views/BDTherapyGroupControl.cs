@@ -36,17 +36,9 @@ namespace BDEditor.Views
 
                     bdTherapyControl1.CurrentTherapy = null;
                     bdTherapyControl2.CurrentTherapy = null;
-                    bdTherapyControl3.CurrentTherapy = null;
-                    bdTherapyControl4.CurrentTherapy = null;
-                    bdTherapyControl5.CurrentTherapy = null;
-                    bdTherapyControl6.CurrentTherapy = null;
 
                     bdTherapyControl1.AssignParentId(null);
                     bdTherapyControl2.AssignParentId(null);
-                    bdTherapyControl3.AssignParentId(null);
-                    bdTherapyControl4.AssignParentId(null);
-                    bdTherapyControl5.AssignParentId(null);
-                    bdTherapyControl6.AssignParentId(null);
                 }
                 else
                 {
@@ -72,18 +64,9 @@ namespace BDEditor.Views
                     List<BDTherapy> therapyList = BDTherapy.GetTherapiesForTherapyGroupId(dataContext, currentTherapyGroup.uuid);
                     if (therapyList.Count > 0) bdTherapyControl1.CurrentTherapy = therapyList[0];
                     if (therapyList.Count > 1) bdTherapyControl2.CurrentTherapy = therapyList[1];
-                    if (therapyList.Count > 2) bdTherapyControl3.CurrentTherapy = therapyList[2];
-                    if (therapyList.Count > 3) bdTherapyControl4.CurrentTherapy = therapyList[3];
-                    if (therapyList.Count > 4) bdTherapyControl5.CurrentTherapy = therapyList[4];
-                    if (therapyList.Count > 5) bdTherapyControl6.CurrentTherapy = therapyList[5];
 
                     bdTherapyControl1.AssignParentId(currentTherapyGroup.uuid);
-                    bdTherapyControl2.AssignParentId(currentTherapyGroup.uuid);
-                    bdTherapyControl3.AssignParentId(currentTherapyGroup.uuid);
-                    bdTherapyControl4.AssignParentId(currentTherapyGroup.uuid);
-                    bdTherapyControl5.AssignParentId(currentTherapyGroup.uuid);
-                    bdTherapyControl6.AssignParentId(currentTherapyGroup.uuid);
-                   
+                    bdTherapyControl2.AssignParentId(currentTherapyGroup.uuid);  
                 }
             }
         }
@@ -93,10 +76,6 @@ namespace BDEditor.Views
             dataContext = pDataContext;
             bdTherapyControl1.AssignDataContext(dataContext);
             bdTherapyControl2.AssignDataContext(dataContext);
-            bdTherapyControl3.AssignDataContext(dataContext);
-            bdTherapyControl4.AssignDataContext(dataContext);
-            bdTherapyControl5.AssignDataContext(dataContext);
-            bdTherapyControl6.AssignDataContext(dataContext);
         }
 
         public bool Save()
@@ -106,10 +85,6 @@ namespace BDEditor.Views
             {
                 result = bdTherapyControl1.Save() || result;
                 result = bdTherapyControl2.Save() || result;
-                result = bdTherapyControl3.Save() || result;
-                result = bdTherapyControl4.Save() || result;
-                result = bdTherapyControl5.Save() || result;
-                result = bdTherapyControl6.Save() || result;
 
                 if (result && (null == currentTherapyGroup))
                 {
@@ -151,10 +126,6 @@ namespace BDEditor.Views
 
             bdTherapyControl1.AssignParentControl(this);
             bdTherapyControl2.AssignParentControl(this);
-            bdTherapyControl3.AssignParentControl(this);
-            bdTherapyControl4.AssignParentControl(this);
-            bdTherapyControl5.AssignParentControl(this);
-            bdTherapyControl6.AssignParentControl(this);
         }
 
         public void AssignParentControl(IBDControl pControl)

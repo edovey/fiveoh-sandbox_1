@@ -35,10 +35,6 @@
             this.andRadioButton = new System.Windows.Forms.RadioButton();
             this.noneRadioButton = new System.Windows.Forms.RadioButton();
             this.panelTherapies = new System.Windows.Forms.Panel();
-            this.bdTherapyControl6 = new BDEditor.Views.BDTherapyControl();
-            this.bdTherapyControl5 = new BDEditor.Views.BDTherapyControl();
-            this.bdTherapyControl4 = new BDEditor.Views.BDTherapyControl();
-            this.bdTherapyControl3 = new BDEditor.Views.BDTherapyControl();
             this.bdTherapyControl2 = new BDEditor.Views.BDTherapyControl();
             this.bdTherapyControl1 = new BDEditor.Views.BDTherapyControl();
             this.panelTherapies.SuspendLayout();
@@ -110,58 +106,18 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.panelTherapies.AutoScroll = true;
             this.panelTherapies.BackColor = System.Drawing.SystemColors.Control;
-            this.panelTherapies.Controls.Add(this.bdTherapyControl6);
-            this.panelTherapies.Controls.Add(this.bdTherapyControl5);
-            this.panelTherapies.Controls.Add(this.bdTherapyControl4);
-            this.panelTherapies.Controls.Add(this.bdTherapyControl3);
             this.panelTherapies.Controls.Add(this.bdTherapyControl2);
             this.panelTherapies.Controls.Add(this.bdTherapyControl1);
             this.panelTherapies.Location = new System.Drawing.Point(6, 91);
             this.panelTherapies.Name = "panelTherapies";
-            this.panelTherapies.Size = new System.Drawing.Size(868, 527);
+            this.panelTherapies.Size = new System.Drawing.Size(868, 178);
             this.panelTherapies.TabIndex = 15;
-            // 
-            // bdTherapyControl6
-            // 
-            this.bdTherapyControl6.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.bdTherapyControl6.CurrentTherapy = null;
-            this.bdTherapyControl6.Location = new System.Drawing.Point(3, 433);
-            this.bdTherapyControl6.Name = "bdTherapyControl6";
-            this.bdTherapyControl6.Size = new System.Drawing.Size(844, 84);
-            this.bdTherapyControl6.TabIndex = 5;
-            // 
-            // bdTherapyControl5
-            // 
-            this.bdTherapyControl5.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.bdTherapyControl5.CurrentTherapy = null;
-            this.bdTherapyControl5.Location = new System.Drawing.Point(3, 347);
-            this.bdTherapyControl5.Name = "bdTherapyControl5";
-            this.bdTherapyControl5.Size = new System.Drawing.Size(844, 84);
-            this.bdTherapyControl5.TabIndex = 4;
-            // 
-            // bdTherapyControl4
-            // 
-            this.bdTherapyControl4.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.bdTherapyControl4.CurrentTherapy = null;
-            this.bdTherapyControl4.Location = new System.Drawing.Point(3, 261);
-            this.bdTherapyControl4.Name = "bdTherapyControl4";
-            this.bdTherapyControl4.Size = new System.Drawing.Size(844, 84);
-            this.bdTherapyControl4.TabIndex = 3;
-            // 
-            // bdTherapyControl3
-            // 
-            this.bdTherapyControl3.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.bdTherapyControl3.CurrentTherapy = null;
-            this.bdTherapyControl3.Location = new System.Drawing.Point(3, 175);
-            this.bdTherapyControl3.Name = "bdTherapyControl3";
-            this.bdTherapyControl3.Size = new System.Drawing.Size(844, 84);
-            this.bdTherapyControl3.TabIndex = 2;
             // 
             // bdTherapyControl2
             // 
             this.bdTherapyControl2.BackColor = System.Drawing.SystemColors.ControlDark;
             this.bdTherapyControl2.CurrentTherapy = null;
-            this.bdTherapyControl2.Location = new System.Drawing.Point(3, 89);
+            this.bdTherapyControl2.Location = new System.Drawing.Point(3, 88);
             this.bdTherapyControl2.Name = "bdTherapyControl2";
             this.bdTherapyControl2.Size = new System.Drawing.Size(844, 84);
             this.bdTherapyControl2.TabIndex = 1;
@@ -187,7 +143,7 @@
             this.Controls.Add(this.therapyGroupName);
             this.Controls.Add(this.lblTherapyGroupNote);
             this.Name = "BDTherapyGroupControl";
-            this.Size = new System.Drawing.Size(880, 621);
+            this.Size = new System.Drawing.Size(880, 272);
             this.Leave += new System.EventHandler(this.BDTherapyGroupControl_Leave);
             this.panelTherapies.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -204,10 +160,6 @@
         private System.Windows.Forms.RadioButton andRadioButton;
         private System.Windows.Forms.RadioButton noneRadioButton;
         private System.Windows.Forms.Panel panelTherapies;
-        private BDTherapyControl bdTherapyControl6;
-        private BDTherapyControl bdTherapyControl5;
-        private BDTherapyControl bdTherapyControl4;
-        private BDTherapyControl bdTherapyControl3;
         private BDTherapyControl bdTherapyControl2;
         private BDTherapyControl bdTherapyControl1;
     }

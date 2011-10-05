@@ -13,6 +13,21 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -35,6 +50,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
@@ -49,19 +65,153 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BDModel1.Designer.cs">
+    <Compile Include="Classes\BDDataLoader.cs" />
+    <Compile Include="Classes\BDTreeNode.cs" />
+    <Compile Include="DataModel\BDCategory.cs" />
+    <Compile Include="DataModel\BDDisease.cs" />
+    <Compile Include="DataModel\BDLinkedNote.cs" />
+    <Compile Include="DataModel\BDPathogen.cs" />
+    <Compile Include="DataModel\BDPathogenGroup.cs" />
+    <Compile Include="DataModel\BDPresentation.cs" />
+    <Compile Include="DataModel\BDQueueEntry.cs" />
+    <Compile Include="DataModel\BDSection.cs" />
+    <Compile Include="DataModel\BDModel1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BDModel1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\BDSubcategory.cs" />
+    <Compile Include="Views\BDLinkedNoteControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDLinkedNoteControl.Designer.cs">
+      <DependentUpon>BDLinkedNoteControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BDLinkedNoteView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\BDLinkedNoteView.Designer.cs">
+      <DependentUpon>BDLinkedNoteView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BDPathogenGroupControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDPathogenGroupControl.Designer.cs">
+      <DependentUpon>BDPathogenGroupControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BDSubCategoryControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDSubCategoryControl.Designer.cs">
+      <DependentUpon>BDSubCategoryControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\BDTherapy.cs" />
+    <Compile Include="DataModel\BDTherapyGroup.cs" />
+    <Compile Include="Views\BDCategoryControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDCategoryControl.Designer.cs">
+      <DependentUpon>BDCategoryControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BDDiseaseControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDDiseaseControl.Designer.cs">
+      <DependentUpon>BDDiseaseControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BDEditView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\BDEditView.Designer.cs">
+      <DependentUpon>BDEditView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BDPathogenControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDPathogenControl.Designer.cs">
+      <DependentUpon>BDPathogenControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BDPresentationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDPresentationControl.Designer.cs">
+      <DependentUpon>BDPresentationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BDSectionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDSectionControl.Designer.cs">
+      <DependentUpon>BDSectionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BDTherapyControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDTherapyControl.Designer.cs">
+      <DependentUpon>BDTherapyControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BDTherapyGroupControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDTherapyGroupControl.Designer.cs">
+      <DependentUpon>BDTherapyGroupControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IBDControl.cs" />
+    <Compile Include="Views\PathogenSet.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\PathogenSet.Designer.cs">
+      <DependentUpon>PathogenSet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Presentation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Presentation.Designer.cs">
+      <DependentUpon>Presentation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Views\BDCategoryControl.resx">
+      <DependentUpon>BDCategoryControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDDiseaseControl.resx">
+      <DependentUpon>BDDiseaseControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDEditView.resx">
+      <DependentUpon>BDEditView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDLinkedNoteControl.resx">
+      <DependentUpon>BDLinkedNoteControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDLinkedNoteView.resx">
+      <DependentUpon>BDLinkedNoteView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDPathogenControl.resx">
+      <DependentUpon>BDPathogenControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDPathogenGroupControl.resx">
+      <DependentUpon>BDPathogenGroupControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDPresentationControl.resx">
+      <DependentUpon>BDPresentationControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDSectionControl.resx">
+      <DependentUpon>BDSectionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDSubCategoryControl.resx">
+      <DependentUpon>BDSubCategoryControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDTherapyControl.resx">
+      <DependentUpon>BDTherapyControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDTherapyGroupControl.resx">
+      <DependentUpon>BDTherapyGroupControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\PathogenSet.resx">
+      <DependentUpon>PathogenSet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Presentation.resx">
+      <DependentUpon>Presentation.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -71,11 +221,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EntityDeploy Include="BDModel1.edmx">
+    <None Include="App.Config" />
+    <EntityDeploy Include="DataModel\BDModel1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>BDModel1.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="App.Config" />
+    <None Include="DataModel\BDModel1.edmx.sqlce" />
+    <None Include="Properties\DataSources\BDEditor.DataModel.Entities.datasource" />
     <None Include="Properties\DataSources\BDModelContainer.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -87,13 +239,45 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Classes\" />
-    <Folder Include="DataModel\" />
-    <Folder Include="Views\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BDDataStore.sdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DataModel\BDModel1.edmx.sql" />
+    <Content Include="Resources\BDEditorStructure.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.SQL.Server.Compact.3.5">
+      <Visible>False</Visible>
+      <ProductName>SQL Server Compact 3.5 SP2</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

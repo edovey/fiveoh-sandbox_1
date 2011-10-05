@@ -47,6 +47,7 @@
             this.tbCategoryName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbCategoryName.Location = new System.Drawing.Point(17, 53);
             this.tbCategoryName.Name = "tbCategoryName";
+            this.tbCategoryName.ReadOnly = true;
             this.tbCategoryName.Size = new System.Drawing.Size(449, 24);
             this.tbCategoryName.TabIndex = 1;
             // 

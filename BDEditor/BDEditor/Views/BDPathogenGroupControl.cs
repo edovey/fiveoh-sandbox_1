@@ -29,14 +29,15 @@ namespace BDEditor.Views
                 currentPathogenGroup = value;
                 if (null == currentPathogenGroup)
                 {
-                    this.BackColor = SystemColors.ControlDark;
+                    //this.BackColor = SystemColors.ControlDark;
                     bdTherapyGroupControl1.AssignParentId(null);
                     bdTherapyGroupControl1.CurrentTherapyGroup = null;
-                    AssignPathogensToView(null);
+                    pathogenSet1.CurrentPathogenGroup = null;
+                    pathogenSet1.AssignParentId(null);
                 }
                 else
                 {
-                    this.BackColor = SystemColors.Control;
+                    //this.BackColor = SystemColors.Control;
                     bdTherapyGroupControl1.AssignParentId(currentPathogenGroup.uuid);
                     List<BDTherapyGroup> therapyGroupList = BDTherapyGroup.getTherapyGroupsForPathogenGroupId(dataContext, currentPathogenGroup.uuid);
                     if (therapyGroupList.Count <= 0)
@@ -48,8 +49,7 @@ namespace BDEditor.Views
                         bdTherapyGroupControl1.CurrentTherapyGroup = therapyGroupList[0];
                     }
 
-                    List<BDPathogen> pathogenList = BDPathogen.GetPathogensForPathogenGroup(dataContext, currentPathogenGroup.uuid);
-                    AssignPathogensToView(pathogenList);
+                    pathogenSet1.CurrentPathogenGroup = currentPathogenGroup;
                 }
             }
         }
@@ -64,45 +64,6 @@ namespace BDEditor.Views
         private void BDPathogenGroupControl_Load(object sender, EventArgs e)
         {
 
-        }
-
-        private void AssignPathogensToView(List<BDPathogen> pListPathogens)
-        {
-            bdPathogenControl1.CurrentPathogen = null;
-            bdPathogenControl2.CurrentPathogen = null;
-            bdPathogenControl3.CurrentPathogen = null;
-            bdPathogenControl4.CurrentPathogen = null;
-            bdPathogenControl5.CurrentPathogen = null;
-            bdPathogenControl6.CurrentPathogen = null;
-
-            if (null != pListPathogens)
-            {
-                if (pListPathogens.Count >= 1) bdPathogenControl1.CurrentPathogen = pListPathogens[0];
-                if (pListPathogens.Count >= 2) bdPathogenControl2.CurrentPathogen = pListPathogens[1];
-                if (pListPathogens.Count >= 3) bdPathogenControl3.CurrentPathogen = pListPathogens[2];
-                if (pListPathogens.Count >= 4) bdPathogenControl4.CurrentPathogen = pListPathogens[3];
-                if (pListPathogens.Count >= 5) bdPathogenControl5.CurrentPathogen = pListPathogens[4];
-                if (pListPathogens.Count >= 6) bdPathogenControl6.CurrentPathogen = pListPathogens[5];
-            }
-
-            if (null == currentPathogenGroup)
-            {
-                bdPathogenControl1.AssignParentId(null);
-                bdPathogenControl2.AssignParentId(null);
-                bdPathogenControl3.AssignParentId(null);
-                bdPathogenControl4.AssignParentId(null);
-                bdPathogenControl5.AssignParentId(null);
-                bdPathogenControl6.AssignParentId(null);
-            }
-            else
-            {
-                bdPathogenControl1.AssignParentId(currentPathogenGroup.uuid);
-                bdPathogenControl2.AssignParentId(currentPathogenGroup.uuid);
-                bdPathogenControl3.AssignParentId(currentPathogenGroup.uuid);
-                bdPathogenControl4.AssignParentId(currentPathogenGroup.uuid);
-                bdPathogenControl5.AssignParentId(currentPathogenGroup.uuid);
-                bdPathogenControl6.AssignParentId(currentPathogenGroup.uuid);
-            }
         }
 
         private List<BDLinkedNote> GetLinkedNotesForPathogen(BDPathogen pPathogen)
@@ -120,24 +81,13 @@ namespace BDEditor.Views
         {
             dataContext = pDataContext;
             bdTherapyGroupControl1.AssignDataContext(dataContext);
-            bdPathogenControl1.AssignDataContext(dataContext);
-            bdPathogenControl2.AssignDataContext(dataContext);
-            bdPathogenControl3.AssignDataContext(dataContext);
-            bdPathogenControl4.AssignDataContext(dataContext);
-            bdPathogenControl5.AssignDataContext(dataContext);
-            bdPathogenControl6.AssignDataContext(dataContext);
+            pathogenSet1.AssignDataContext(dataContext);
         }
 
         public void AssignParentId(Guid? pParentId)
         {
             presentationId = pParentId;
             this.Enabled = (null != presentationId);
-            bdPathogenControl1.AssignParentControl(this);
-            bdPathogenControl2.AssignParentControl(this); 
-            bdPathogenControl3.AssignParentControl(this); 
-            bdPathogenControl4.AssignParentControl(this); 
-            bdPathogenControl5.AssignParentControl(this); 
-            bdPathogenControl6.AssignParentControl(this);
         }
 
         public bool Save()
@@ -146,12 +96,7 @@ namespace BDEditor.Views
 
             if (null != presentationId)
             {
-                result = bdPathogenControl1.Save() || result;
-                result = bdPathogenControl2.Save() || result;
-                result = bdPathogenControl3.Save() || result;
-                result = bdPathogenControl4.Save() || result;
-                result = bdPathogenControl5.Save() || result;
-                result = bdPathogenControl6.Save() || result;
+                result = pathogenSet1.Save() || result;
 
                 if (result && (null == currentPathogenGroup)) // only create a group if any of the children exist
                 {
@@ -190,7 +135,7 @@ namespace BDEditor.Views
                 pControl.AssignParentId(currentPathogenGroup.uuid);
                 pControl.Save();
             }
-            this.BackColor = SystemColors.Control;
+            //this.BackColor = SystemColors.Control;
         }
         #endregion    
     }

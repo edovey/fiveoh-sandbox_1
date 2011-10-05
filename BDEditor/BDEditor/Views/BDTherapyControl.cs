@@ -29,7 +29,7 @@ namespace BDEditor.Views
                 currentTherapy = value;
                 if(currentTherapy == null) 
                 {
-                    this.BackColor = SystemColors.ControlDark;
+                    //this.BackColor = SystemColors.ControlDark;
 
                     tbName.Text = @"";
                     tbDosage.Text = @"";
@@ -169,7 +169,7 @@ namespace BDEditor.Views
             TextBox textBox = sender as TextBox;
             if (null != textBox)
             {
-                this.BackColor = (textBox.Text.Trim() != string.Empty) ? SystemColors.Control : SystemColors.ControlDark;
+                //this.BackColor = (textBox.Text.Trim() != string.Empty) ? SystemColors.Control : SystemColors.ControlDark;
 
                 Button linkButton = textBox.Tag as Button;
                 if (null != linkButton)

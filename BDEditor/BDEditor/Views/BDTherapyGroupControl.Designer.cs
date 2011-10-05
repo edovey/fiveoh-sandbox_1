@@ -115,7 +115,7 @@
             // 
             // bdTherapyControl2
             // 
-            this.bdTherapyControl2.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.bdTherapyControl2.BackColor = System.Drawing.SystemColors.Control;
             this.bdTherapyControl2.CurrentTherapy = null;
             this.bdTherapyControl2.Location = new System.Drawing.Point(3, 88);
             this.bdTherapyControl2.Name = "bdTherapyControl2";
@@ -124,7 +124,7 @@
             // 
             // bdTherapyControl1
             // 
-            this.bdTherapyControl1.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.bdTherapyControl1.BackColor = System.Drawing.SystemColors.Control;
             this.bdTherapyControl1.CurrentTherapy = null;
             this.bdTherapyControl1.Location = new System.Drawing.Point(3, 3);
             this.bdTherapyControl1.Name = "bdTherapyControl1";

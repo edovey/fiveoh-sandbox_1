@@ -28,25 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblTitle = new System.Windows.Forms.Label();
             this.tbPathogenName = new System.Windows.Forms.TextBox();
             this.btnLink = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitle.Location = new System.Drawing.Point(2, 3);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(53, 13);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "Pathogen";
-            // 
             // tbPathogenName
             // 
+            this.tbPathogenName.Dock = System.Windows.Forms.DockStyle.Left;
             this.tbPathogenName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPathogenName.Location = new System.Drawing.Point(5, 17);
+            this.tbPathogenName.Location = new System.Drawing.Point(0, 0);
             this.tbPathogenName.Name = "tbPathogenName";
             this.tbPathogenName.Size = new System.Drawing.Size(239, 20);
             this.tbPathogenName.TabIndex = 1;
@@ -55,9 +45,9 @@
             // btnLink
             // 
             this.btnLink.Enabled = false;
-            this.btnLink.Location = new System.Drawing.Point(246, 17);
+            this.btnLink.Location = new System.Drawing.Point(245, -1);
             this.btnLink.Name = "btnLink";
-            this.btnLink.Size = new System.Drawing.Size(37, 23);
+            this.btnLink.Size = new System.Drawing.Size(37, 20);
             this.btnLink.TabIndex = 2;
             this.btnLink.Text = "Link";
             this.btnLink.UseVisualStyleBackColor = true;
@@ -69,9 +59,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.btnLink);
             this.Controls.Add(this.tbPathogenName);
-            this.Controls.Add(this.lblTitle);
             this.Name = "BDPathogenControl";
-            this.Size = new System.Drawing.Size(285, 44);
+            this.Size = new System.Drawing.Size(285, 21);
             this.Leave += new System.EventHandler(this.BDPathogenControl_Leave);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -80,7 +69,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.TextBox tbPathogenName;
         private System.Windows.Forms.Button btnLink;
     }

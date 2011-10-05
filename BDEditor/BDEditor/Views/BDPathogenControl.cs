@@ -17,7 +17,7 @@ namespace BDEditor.Views
         private Entities dataContext;
         private Guid? pathogenGroupId;
         private BDPathogen currentPathogen;
-        private string title;
+        //private string title;
         private IBDControl parentControl;
 
         public BDPathogen CurrentPathogen
@@ -32,18 +32,19 @@ namespace BDEditor.Views
 
                 if (currentPathogen == null)
                 {
-                    this.BackColor = SystemColors.ControlDark;
+                    //this.BackColor = SystemColors.ControlDark;
                     this.tbPathogenName.Text = @"";
                     //this.lblTitle.ForeColor = SystemColors.HotTrack;
                 }
                 else
                 {
-                    this.BackColor = SystemColors.Control;
+                    //this.BackColor = SystemColors.Control;
                     this.tbPathogenName.Text = currentPathogen.name;
                 }
             }
         }
 
+        /*
         public string Title
         {
             get
@@ -59,7 +60,7 @@ namespace BDEditor.Views
                 else lblTitle.Text = @"Pathogen";
             }
         }
-
+        */
          #endregion
 
         public BDPathogenControl()
@@ -114,7 +115,7 @@ namespace BDEditor.Views
                 pControl.AssignParentId(currentPathogen.uuid);
                 pControl.Save();
 
-                this.BackColor = SystemColors.Control;
+                //this.BackColor = SystemColors.Control;
             }
         }
 
@@ -162,7 +163,7 @@ namespace BDEditor.Views
             TextBox textBox = sender as TextBox;
             if (null != textBox)
             {
-                this.BackColor = (textBox.Text.Trim() != string.Empty) ? SystemColors.Control : SystemColors.ControlDark;
+                //this.BackColor = (textBox.Text.Trim() != string.Empty) ? SystemColors.Control : SystemColors.ControlDark;
                 this.btnLink.Enabled = true;
                 if (null == currentPathogen)
                 {

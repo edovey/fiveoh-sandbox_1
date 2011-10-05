@@ -156,6 +156,12 @@
       <DependentUpon>BDTherapyGroupControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\IBDControl.cs" />
+    <Compile Include="Views\PathogenSet.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\PathogenSet.Designer.cs">
+      <DependentUpon>PathogenSet.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Presentation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -199,6 +205,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDTherapyGroupControl.resx">
       <DependentUpon>BDTherapyGroupControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\PathogenSet.resx">
+      <DependentUpon>PathogenSet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Presentation.resx">
       <DependentUpon>Presentation.cs</DependentUpon>

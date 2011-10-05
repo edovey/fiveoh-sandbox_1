@@ -29,8 +29,6 @@ namespace BDEditor.Views
                 currentTherapyGroup = value;
                 if (null == currentTherapyGroup)
                 {
-                    this.BackColor = SystemColors.ControlDark;
-
                     tbName.Text = @"";
                     noneRadioButton.Checked = true;
 
@@ -42,8 +40,6 @@ namespace BDEditor.Views
                 }
                 else
                 {
-                    this.BackColor = SystemColors.Control;
-
                     tbName.Text = currentTherapyGroup.name;
                     switch ((BDTherapyGroup.TherapyGroupJoinType)currentTherapyGroup.therapyGroupJoinType)
                     {
@@ -142,8 +138,6 @@ namespace BDEditor.Views
                 BDTherapyGroup.SaveTherapyGroup(dataContext, currentTherapyGroup);
                 pControl.AssignParentId(currentTherapyGroup.uuid);
                 pControl.Save();
-
-                this.BackColor = SystemColors.Control;
             }
         }
         private void textBox_TextChanged(object sender, EventArgs e)
@@ -151,7 +145,7 @@ namespace BDEditor.Views
             TextBox textBox = sender as TextBox;
             if (null != textBox)
             {
-                this.BackColor = (textBox.Text.Trim() != string.Empty) ? SystemColors.Control : SystemColors.ControlDark;
+                //this.BackColor = (textBox.Text.Trim() != string.Empty) ? SystemColors.Control : SystemColors.ControlDark;
             }
         }
 

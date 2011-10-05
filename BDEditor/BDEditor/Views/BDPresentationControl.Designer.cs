@@ -32,32 +32,33 @@
             this.tbPresentationName = new System.Windows.Forms.TextBox();
             this.rtbPresentationOverview = new System.Windows.Forms.RichTextBox();
             this.lblOverview = new System.Windows.Forms.Label();
-            this.bdPathogenGroupControl1 = new BDEditor.Views.BDPathogenGroupControl();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.btnFont = new System.Windows.Forms.Button();
+            this.bdPathogenGroupControl1 = new BDEditor.Views.BDPathogenGroupControl();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(6, 8);
+            this.label1.Font = new System.Drawing.Font("Arial", 14.25F);
+            this.label1.Location = new System.Drawing.Point(9, 6);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(66, 13);
+            this.label1.Size = new System.Drawing.Size(116, 22);
             this.label1.TabIndex = 0;
             this.label1.Text = "Presentation";
             // 
             // tbPresentationName
             // 
             this.tbPresentationName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPresentationName.Location = new System.Drawing.Point(6, 26);
+            this.tbPresentationName.Location = new System.Drawing.Point(9, 31);
             this.tbPresentationName.Name = "tbPresentationName";
+            this.tbPresentationName.ReadOnly = true;
             this.tbPresentationName.Size = new System.Drawing.Size(475, 20);
             this.tbPresentationName.TabIndex = 2;
             // 
             // rtbPresentationOverview
             // 
-            this.rtbPresentationOverview.Location = new System.Drawing.Point(6, 68);
+            this.rtbPresentationOverview.Location = new System.Drawing.Point(9, 81);
             this.rtbPresentationOverview.Name = "rtbPresentationOverview";
             this.rtbPresentationOverview.Size = new System.Drawing.Size(753, 93);
             this.rtbPresentationOverview.TabIndex = 3;
@@ -66,21 +67,12 @@
             // lblOverview
             // 
             this.lblOverview.AutoSize = true;
-            this.lblOverview.Location = new System.Drawing.Point(6, 52);
+            this.lblOverview.Font = new System.Drawing.Font("Arial", 14.25F);
+            this.lblOverview.Location = new System.Drawing.Point(9, 56);
             this.lblOverview.Name = "lblOverview";
-            this.lblOverview.Size = new System.Drawing.Size(52, 13);
+            this.lblOverview.Size = new System.Drawing.Size(88, 22);
             this.lblOverview.TabIndex = 4;
             this.lblOverview.Text = "Overview";
-            // 
-            // bdPathogenGroupControl1
-            // 
-            this.bdPathogenGroupControl1.AutoScroll = true;
-            this.bdPathogenGroupControl1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.bdPathogenGroupControl1.CurrentPathogenGroup = null;
-            this.bdPathogenGroupControl1.Location = new System.Drawing.Point(0, 165);
-            this.bdPathogenGroupControl1.Name = "bdPathogenGroupControl1";
-            this.bdPathogenGroupControl1.Size = new System.Drawing.Size(893, 407);
-            this.bdPathogenGroupControl1.TabIndex = 5;
             // 
             // btnFont
             // 
@@ -91,6 +83,16 @@
             this.btnFont.Text = "Set Font";
             this.btnFont.UseVisualStyleBackColor = true;
             this.btnFont.Click += new System.EventHandler(this.btnFont_Click);
+            // 
+            // bdPathogenGroupControl1
+            // 
+            this.bdPathogenGroupControl1.AutoScroll = true;
+            this.bdPathogenGroupControl1.BackColor = System.Drawing.SystemColors.Control;
+            this.bdPathogenGroupControl1.CurrentPathogenGroup = null;
+            this.bdPathogenGroupControl1.Location = new System.Drawing.Point(0, 179);
+            this.bdPathogenGroupControl1.Name = "bdPathogenGroupControl1";
+            this.bdPathogenGroupControl1.Size = new System.Drawing.Size(893, 407);
+            this.bdPathogenGroupControl1.TabIndex = 5;
             // 
             // BDPresentationControl
             // 
@@ -104,7 +106,7 @@
             this.Controls.Add(this.tbPresentationName);
             this.Controls.Add(this.label1);
             this.Name = "BDPresentationControl";
-            this.Size = new System.Drawing.Size(903, 578);
+            this.Size = new System.Drawing.Size(903, 591);
             this.Leave += new System.EventHandler(this.BDPresentationControl_Leave);
             this.ResumeLayout(false);
             this.PerformLayout();

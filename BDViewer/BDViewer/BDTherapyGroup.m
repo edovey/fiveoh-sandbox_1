@@ -20,7 +20,7 @@
 @dynamic modifiedBy;
 @dynamic modifiedDate;
 @dynamic name;
-@dynamic pathogenId;
+@dynamic pathogenGroupId;
 @dynamic schemaVersion;
 @dynamic therapyNote;
 @dynamic uuid;
@@ -104,7 +104,7 @@
                 therapyGroup.inUseBy = [theAttributeDictionary valueForKey:TG_INUSEBY];
                 therapyGroup.deprecated = [NSNumber numberWithBool:[[theAttributeDictionary valueForKey:TG_DEPRECATED] boolValue]];
                 
-                therapyGroup.pathogenId = [theAttributeDictionary valueForKey:TG_PATHOGENID];
+                therapyGroup.pathogenGroupId = [theAttributeDictionary valueForKey:TG_PATHOGENGROUPID];
                 therapyGroup.therapyNote = [theAttributeDictionary valueForKey:TG_THERAPYNOTE];
                 therapyGroup.displayOrder = [theAttributeDictionary valueForKey:TG_DISPLAYORDER];
                 therapyGroup.name = [theAttributeDictionary valueForKey:TG_NAME];

@@ -11,7 +11,7 @@ namespace BDEditor.DataModel
     /// <summary>
     /// Extension of generated BDTherapyGroup
     /// </summary>
-    public partial class BDTherapyGroup
+    public partial class BDTherapyGroup : IBDObject
     {
 
         public enum TherapyGroupJoinType
@@ -70,6 +70,21 @@ namespace BDEditor.DataModel
                     therapyGroupList.Add(therapyGroup);
                 }
             return therapyGroupList;
+        }
+
+        public Guid Uuid
+        {
+            get { return this.uuid; }
+        }
+
+        public string Description
+        {
+            get { return string.Format("[{0}]", this.name); }
+        }
+
+        public string DescriptionForLinkedNote
+        {
+            get { return string.Format("Therapy Group - Name:{0}", this.name); }
         }
     }
 }

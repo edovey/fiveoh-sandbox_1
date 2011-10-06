@@ -11,7 +11,7 @@ namespace BDEditor.DataModel
     /// <summary>
     /// Extension of generated class BDTherapy
     /// </summary>
-    public partial class BDTherapy
+    public partial class BDTherapy: IBDObject
     {
         public enum TherapyJoinType
         {
@@ -81,6 +81,21 @@ namespace BDEditor.DataModel
             therapy = therapies.AsQueryable().First<BDTherapy>();
 
             return therapy;
+        }
+
+        public Guid Uuid
+        {
+            get { return this.uuid; }
+        }
+
+        public string Description
+        {
+            get { return string.Format("[{0}][{1}][{2}]", this.name, this.dosage, this.duration); }
+        }
+
+        public string DescriptionForLinkedNote
+        {
+            get { return string.Format("Therapy - Name:{0} Dosage:{1} Duration:{2}", this.name, this.dosage, this.duration); }
         }
     }
 }

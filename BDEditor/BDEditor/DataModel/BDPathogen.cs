@@ -11,7 +11,7 @@ namespace BDEditor.DataModel
     /// <summary>
     /// Extension of generated BDPathogen
     /// </summary>
-    public partial class BDPathogen
+    public partial class BDPathogen: IBDObject
     {
         public static BDPathogen CreatePathogen(Entities pContext)
         {
@@ -71,6 +71,21 @@ namespace BDEditor.DataModel
                                                     select bdPathogens);
                 pathogen = pathogens.AsQueryable().First<BDPathogen>();
             return pathogen;
+        }
+
+        public Guid Uuid
+        {
+            get { return this.uuid; }
+        }
+
+        public string Description
+        {
+            get { return string.Format("[{0}]", this.name); }
+        }
+
+        public string DescriptionForLinkedNote
+        {
+            get { return string.Format("Pathogen - Name:{0}", this.name); }
         }
     }
 }

@@ -85,6 +85,7 @@
       <DependentUpon>BDModel1.edmx</DependentUpon>
     </Compile>
     <Compile Include="DataModel\BDSubcategory.cs" />
+    <Compile Include="DataModel\IBDObject.cs" />
     <Compile Include="Views\BDLinkedNoteControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

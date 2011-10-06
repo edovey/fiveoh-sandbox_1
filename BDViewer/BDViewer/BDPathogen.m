@@ -19,7 +19,7 @@
 @dynamic modifiedBy;
 @dynamic modifiedDate;
 @dynamic name;
-@dynamic presentationId;
+@dynamic pathogenGroupId;
 @dynamic schemaVersion;
 @dynamic uuid;
 
@@ -103,7 +103,7 @@
                 pathogen.inUseBy = [theAttributeDictionary valueForKey:PA_INUSEBY];
                 pathogen.deprecated = [NSNumber numberWithBool:[[theAttributeDictionary valueForKey:PA_DEPRECATED] boolValue]];
                 
-                pathogen.presentationId = [theAttributeDictionary valueForKey:PA_PRESENTATIONID];
+                pathogen.pathogenGroupId = [theAttributeDictionary valueForKey:PA_PATHOGENGROUPID];
                 pathogen.name = [theAttributeDictionary valueForKey:PA_NAME];
             }
                 break;

@@ -591,8 +591,8 @@
                                                                      andValue:[Utility nsNumberBoolToString:therapyGroup.deprecated]
                                                                    andReplace:YES] autorelease]];
     
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:TG_PATHOGENID                         
-                                                                     andValue:therapyGroup.pathogenId
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:TG_PATHOGENGROUPID                         
+                                                                     andValue:therapyGroup.pathogenGroupId
                                                                    andReplace:YES] autorelease]];
     
     [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:TG_DISPLAYORDER                         

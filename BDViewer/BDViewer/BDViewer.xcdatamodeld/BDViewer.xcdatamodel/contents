@@ -4,6 +4,7 @@
         <attribute name="createdBy" optional="YES" attributeType="String"/>
         <attribute name="createdDate" optional="YES" attributeType="Date"/>
         <attribute name="deprecated" attributeType="Boolean" defaultValueString="NO"/>
+        <attribute name="displayOrder" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
         <attribute name="inUseBy" optional="YES" attributeType="String"/>
         <attribute name="modifiedBy" optional="YES" attributeType="String"/>
         <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
@@ -17,6 +18,7 @@
         <attribute name="createdBy" optional="YES" attributeType="String"/>
         <attribute name="createdDate" optional="YES" attributeType="Date"/>
         <attribute name="deprecated" attributeType="Boolean" defaultValueString="NO"/>
+        <attribute name="displayOrder" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
         <attribute name="inUseBy" optional="YES" attributeType="String"/>
         <attribute name="modifiedBy" optional="YES" attributeType="String"/>
         <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
@@ -31,6 +33,7 @@
         <attribute name="createdBy" optional="YES" attributeType="String"/>
         <attribute name="createdDate" optional="YES" attributeType="Date"/>
         <attribute name="deprecated" attributeType="Boolean" defaultValueString="NO"/>
+        <attribute name="displayOrder" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
         <attribute name="documentText" optional="YES" attributeType="String"/>
         <attribute name="inUseBy" optional="YES" attributeType="String"/>
         <attribute name="modifiedBy" optional="YES" attributeType="String"/>
@@ -44,13 +47,26 @@
         <attribute name="createdBy" optional="YES" attributeType="String"/>
         <attribute name="createdDate" optional="YES" attributeType="Date"/>
         <attribute name="deprecated" attributeType="Boolean" defaultValueString="NO"/>
+        <attribute name="displayOrder" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
         <attribute name="inUseBy" optional="YES" attributeType="String"/>
         <attribute name="modifiedBy" optional="YES" attributeType="String"/>
         <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="presentationId" optional="YES" attributeType="String"/>
+        <attribute name="pathogenGroupId" optional="YES" attributeType="String"/>
         <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
         <attribute name="uuid" attributeType="String"/>
+    </entity>
+    <entity name="BDPathogenGroup" representedClassName="BDPathogenGroup">
+        <attribute name="createdBy" optional="YES" attributeType="String"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date"/>
+        <attribute name="deprecated" optional="YES" attributeType="Boolean"/>
+        <attribute name="displayOrder" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="inUseBy" optional="YES" attributeType="String"/>
+        <attribute name="modifiedBy" optional="YES" attributeType="String"/>
+        <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
+        <attribute name="presentationId" optional="YES" attributeType="String"/>
+        <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="uuid" optional="YES" attributeType="String"/>
     </entity>
     <entity name="BDPresentation" representedClassName="Presentation">
         <attribute name="createdBy" optional="YES" attributeType="String"/>
@@ -77,6 +93,7 @@
         <attribute name="createdBy" optional="YES" attributeType="String"/>
         <attribute name="createdDate" optional="YES" attributeType="Date"/>
         <attribute name="deprecated" attributeType="Boolean" defaultValueString="NO"/>
+        <attribute name="displayOrder" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
         <attribute name="inUseBy" optional="YES" attributeType="String"/>
         <attribute name="modifiedBy" optional="YES" attributeType="String"/>
         <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
@@ -89,6 +106,7 @@
         <attribute name="createdBy" optional="YES" attributeType="String"/>
         <attribute name="createdDate" optional="YES" attributeType="Date"/>
         <attribute name="deprecated" attributeType="Boolean" defaultValueString="NO"/>
+        <attribute name="displayOrder" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
         <attribute name="inUseBy" optional="YES" attributeType="String"/>
         <attribute name="modifiedBy" optional="YES" attributeType="String"/>
         <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
@@ -121,21 +139,23 @@
         <attribute name="modifiedBy" optional="YES" attributeType="String"/>
         <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="pathogenId" optional="YES" attributeType="String"/>
+        <attribute name="pathogenGroupId" optional="YES" attributeType="String"/>
         <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="therapyGroupJoinType" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
         <attribute name="therapyNote" optional="YES" attributeType="String"/>
         <attribute name="uuid" attributeType="String"/>
     </entity>
     <elements>
         <element name="BDCategory" positionX="-488" positionY="-24" width="128" height="195"/>
         <element name="BDDisease" positionX="-164" positionY="-45" width="128" height="225"/>
-        <element name="BDLinkedNote" positionX="-110" positionY="252" width="128" height="225"/>
-        <element name="BDPathogen" positionX="-605" positionY="252" width="128" height="195"/>
+        <element name="BDLinkedNote" positionX="-0" positionY="252" width="128" height="225"/>
+        <element name="BDPathogen" positionX="-461" positionY="252" width="128" height="210"/>
         <element name="BDPresentation" positionX="-2" positionY="-36" width="128" height="225"/>
         <element name="BDQueueEntry" positionX="135" positionY="294" width="128" height="120"/>
         <element name="BDSection" positionX="-648" positionY="-9" width="128" height="180"/>
         <element name="BDSubcategory" positionX="-324" positionY="-24" width="128" height="195"/>
-        <element name="BDTherapy" positionX="-272" positionY="240" width="128" height="255"/>
-        <element name="BDTherapyGroup" positionX="-441" positionY="249" width="128" height="225"/>
+        <element name="BDTherapy" positionX="-155" positionY="234" width="128" height="255"/>
+        <element name="BDTherapyGroup" positionX="-308" positionY="243" width="128" height="225"/>
+        <element name="BDPathogenGroup" positionX="-621" positionY="255" width="128" height="195"/>
     </elements>
 </model>

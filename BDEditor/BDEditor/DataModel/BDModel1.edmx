@@ -190,7 +190,6 @@
           <Property Name="inUseBy" Type="nvarchar" />
           <Property Name="modifiedBy" Type="uniqueidentifier" />
           <Property Name="modifiedDate" Type="datetime" />
-          <Property Name="schemalVersion" Type="smallint" />
           <Property Name="therapyNote" Type="nvarchar" />
           <Property Name="name" Type="nvarchar" />
           <Property Name="schemaVersion" Type="smallint" />
@@ -386,7 +385,6 @@
           <Property Type="String" Name="inUseBy" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Type="Guid" Name="modifiedBy" />
           <Property Type="DateTime" Name="modifiedDate" />
-          <Property Type="Int16" Name="schemalVersion" />
           <Property Type="String" Name="therapyNote" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="name" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Type="Int16" Name="schemaVersion" />
@@ -577,7 +575,6 @@
                 <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="therapyNote" ColumnName="therapyNote" />
-                <ScalarProperty Name="schemalVersion" ColumnName="schemalVersion" />
                 <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
                 <ScalarProperty Name="modifiedBy" ColumnName="modifiedBy" />
                 <ScalarProperty Name="inUseBy" ColumnName="inUseBy" />
@@ -619,7 +616,7 @@
         <EntityTypeShape EntityType="BDDataModel.BDSection" Width="1.5" PointX="6.75" PointY="3.75" Height="2.9417936197916674" />
         <EntityTypeShape EntityType="BDDataModel.BDSubcategory" Width="1.5" PointX="6.75" PointY="7.75" Height="3.1340950520833246" />
         <EntityTypeShape EntityType="BDDataModel.BDTherapy" Width="2.25" PointX="8.75" PointY="0.75" Height="3.2357796223958331" />
-        <EntityTypeShape EntityType="BDDataModel.BDTherapyGroup" Width="2.125" PointX="8.75" PointY="5.75" Height="3.0714322916666656" />
+        <EntityTypeShape EntityType="BDDataModel.BDTherapyGroup" Width="2.125" PointX="8.75" PointY="5.75" Height="3.5186979166666656" />
       </Diagram>
     </Diagrams>
   </Designer>

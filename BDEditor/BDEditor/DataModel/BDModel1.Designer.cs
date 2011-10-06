@@ -3534,30 +3534,6 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> schemalVersion
-        {
-            get
-            {
-                return _schemalVersion;
-            }
-            set
-            {
-                OnschemalVersionChanging(value);
-                ReportPropertyChanging("schemalVersion");
-                _schemalVersion = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("schemalVersion");
-                OnschemalVersionChanged();
-            }
-        }
-        private Nullable<global::System.Int16> _schemalVersion;
-        partial void OnschemalVersionChanging(Nullable<global::System.Int16> value);
-        partial void OnschemalVersionChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
         public global::System.String therapyNote
         {
             get

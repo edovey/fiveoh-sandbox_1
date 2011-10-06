@@ -153,5 +153,32 @@ namespace BDEditor.Views
         {
             Save();
         }
+
+        private void btnTherapyGroupLink_Click(object sender, EventArgs e)
+        {
+            CreateLink(@"TherapyGroup");
+        }
+
+        private void CreateLink(string pProperty)
+        {
+            BDLinkedNoteView view = new BDLinkedNoteView();
+            view.AssignDataContext(dataContext);
+            view.AssignContextPropertyName(pProperty);
+            view.AssignParentControl(this);
+
+            if (null != currentTherapyGroup)
+            {
+                BDLinkedNote note = BDLinkedNote.GetLinkedNoteForParentIdAndPropertyName(dataContext, currentTherapyGroup.uuid, pProperty);
+                view.AssignParentId(currentTherapyGroup.uuid);
+                view.CurrentLinkNote = note;
+            }
+            else
+            {
+                view.AssignParentId(null);
+                view.CurrentLinkNote = null;
+            }
+
+            view.ShowDialog(this);
+        }
     }
 }

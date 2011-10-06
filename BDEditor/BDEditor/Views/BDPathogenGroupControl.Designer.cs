@@ -31,6 +31,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pathogenSet1 = new BDEditor.Views.PathogenSet();
             this.bdTherapyGroupControl1 = new BDEditor.Views.BDTherapyGroupControl();
+            this.bdTherapyGroupControl2 = new BDEditor.Views.BDTherapyGroupControl();
             this.SuspendLayout();
             // 
             // label1
@@ -58,19 +59,29 @@
             this.bdTherapyGroupControl1.CurrentTherapyGroup = null;
             this.bdTherapyGroupControl1.Location = new System.Drawing.Point(3, 119);
             this.bdTherapyGroupControl1.Name = "bdTherapyGroupControl1";
-            this.bdTherapyGroupControl1.Size = new System.Drawing.Size(880, 270);
+            this.bdTherapyGroupControl1.Size = new System.Drawing.Size(804, 254);
             this.bdTherapyGroupControl1.TabIndex = 3;
+            // 
+            // bdTherapyGroupControl2
+            // 
+            this.bdTherapyGroupControl2.BackColor = System.Drawing.SystemColors.Control;
+            this.bdTherapyGroupControl2.CurrentTherapyGroup = null;
+            this.bdTherapyGroupControl2.Location = new System.Drawing.Point(8, 379);
+            this.bdTherapyGroupControl2.Name = "bdTherapyGroupControl2";
+            this.bdTherapyGroupControl2.Size = new System.Drawing.Size(804, 254);
+            this.bdTherapyGroupControl2.TabIndex = 4;
             // 
             // BDPathogenGroupControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.Controls.Add(this.bdTherapyGroupControl2);
             this.Controls.Add(this.pathogenSet1);
             this.Controls.Add(this.bdTherapyGroupControl1);
             this.Controls.Add(this.label1);
             this.Name = "BDPathogenGroupControl";
-            this.Size = new System.Drawing.Size(898, 396);
+            this.Size = new System.Drawing.Size(818, 701);
             this.Load += new System.EventHandler(this.BDPathogenGroupControl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -82,5 +93,6 @@
         private BDTherapyGroupControl bdTherapyGroupControl1;
         private System.Windows.Forms.Label label1;
         private PathogenSet pathogenSet1;
+        private BDTherapyGroupControl bdTherapyGroupControl2;
     }
 }

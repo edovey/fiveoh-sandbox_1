@@ -62,6 +62,17 @@ namespace BDEditor.Views
             }
         }
 
+        public bool DisplayLeftBracket
+        {
+            get { return lbLeftBracket.Visible; }
+            set { lbLeftBracket.Visible = value; }
+        }
+        public bool DisplayRightBracket
+        {
+            get { return lbRightBracket.Visible; }
+            set { lbRightBracket.Visible = value;}
+        }
+
         public BDTherapyControl()
         {
             InitializeComponent();
@@ -90,6 +101,7 @@ namespace BDEditor.Views
             BDLinkedNoteView view = new BDLinkedNoteView();
             view.AssignDataContext(dataContext);
             view.AssignContextPropertyName(pProperty);
+            view.AssignParentControl(this);
 
             if (null != currentTherapy)
             {

@@ -44,23 +44,6 @@ namespace BDEditor.Views
             }
         }
 
-        /*
-        public string Title
-        {
-            get
-            {
-                return title;
-            }
-
-            set
-            {
-                title = value;
-                if (title != null && title.Length > 0)
-                    lblTitle.Text = title;
-                else lblTitle.Text = @"Pathogen";
-            }
-        }
-        */
          #endregion
 
         public BDPathogenControl()

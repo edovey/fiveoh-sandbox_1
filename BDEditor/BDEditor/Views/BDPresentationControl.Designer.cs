@@ -91,7 +91,7 @@
             this.bdPathogenGroupControl1.CurrentPathogenGroup = null;
             this.bdPathogenGroupControl1.Location = new System.Drawing.Point(0, 179);
             this.bdPathogenGroupControl1.Name = "bdPathogenGroupControl1";
-            this.bdPathogenGroupControl1.Size = new System.Drawing.Size(893, 407);
+            this.bdPathogenGroupControl1.Size = new System.Drawing.Size(840, 639);
             this.bdPathogenGroupControl1.TabIndex = 5;
             // 
             // BDPresentationControl
@@ -106,7 +106,7 @@
             this.Controls.Add(this.tbPresentationName);
             this.Controls.Add(this.label1);
             this.Name = "BDPresentationControl";
-            this.Size = new System.Drawing.Size(903, 591);
+            this.Size = new System.Drawing.Size(903, 893);
             this.Leave += new System.EventHandler(this.BDPresentationControl_Leave);
             this.ResumeLayout(false);
             this.PerformLayout();

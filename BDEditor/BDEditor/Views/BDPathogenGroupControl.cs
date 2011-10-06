@@ -32,6 +32,10 @@ namespace BDEditor.Views
                     //this.BackColor = SystemColors.ControlDark;
                     bdTherapyGroupControl1.AssignParentId(null);
                     bdTherapyGroupControl1.CurrentTherapyGroup = null;
+
+                    bdTherapyGroupControl2.AssignParentId(null);
+                    bdTherapyGroupControl2.CurrentTherapyGroup = null;
+
                     pathogenSet1.CurrentPathogenGroup = null;
                     pathogenSet1.AssignParentId(null);
                 }
@@ -39,15 +43,15 @@ namespace BDEditor.Views
                 {
                     //this.BackColor = SystemColors.Control;
                     bdTherapyGroupControl1.AssignParentId(currentPathogenGroup.uuid);
+                    bdTherapyGroupControl2.AssignParentId(currentPathogenGroup.uuid);
                     List<BDTherapyGroup> therapyGroupList = BDTherapyGroup.getTherapyGroupsForPathogenGroupId(dataContext, currentPathogenGroup.uuid);
-                    if (therapyGroupList.Count <= 0)
-                    {
-                        bdTherapyGroupControl1.CurrentTherapyGroup = null;
-                    }
-                    else
-                    {
-                        bdTherapyGroupControl1.CurrentTherapyGroup = therapyGroupList[0];
-                    }
+
+                    bdTherapyGroupControl1.CurrentTherapyGroup = null;
+                    bdTherapyGroupControl2.CurrentTherapyGroup = null;
+
+                    if (therapyGroupList.Count >= 1) bdTherapyGroupControl1.CurrentTherapyGroup = therapyGroupList[0];
+                    if (therapyGroupList.Count >= 2) bdTherapyGroupControl2.CurrentTherapyGroup = therapyGroupList[1];
+
 
                     pathogenSet1.CurrentPathogenGroup = currentPathogenGroup;
                 }
@@ -81,6 +85,7 @@ namespace BDEditor.Views
         {
             dataContext = pDataContext;
             bdTherapyGroupControl1.AssignDataContext(dataContext);
+            bdTherapyGroupControl2.AssignDataContext(dataContext);
             pathogenSet1.AssignDataContext(dataContext);
         }
 
@@ -108,6 +113,7 @@ namespace BDEditor.Views
                 {
                     System.Diagnostics.Debug.WriteLine(@"PathogenGroup Control Save");
                     bdTherapyGroupControl1.Save();
+                    bdTherapyGroupControl2.Save();
                     BDPathogenGroup.SavePathogenGroup(dataContext, currentPathogenGroup);
                     result = true;
                 }

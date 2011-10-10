@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BDEditor", "BDEditor\BDEditor.csproj", "{E0309285-539C-449E-AAE0-02C2964A4933}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "BDEditorSetup", "BDEditorSetup\BDEditorSetup.vdproj", "{2941355A-9AF4-42E2-B4A7-474EA11914FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,6 +15,9 @@ Global
 		{E0309285-539C-449E-AAE0-02C2964A4933}.Debug|x86.Build.0 = Debug|x86
 		{E0309285-539C-449E-AAE0-02C2964A4933}.Release|x86.ActiveCfg = Release|x86
 		{E0309285-539C-449E-AAE0-02C2964A4933}.Release|x86.Build.0 = Release|x86
+		{2941355A-9AF4-42E2-B4A7-474EA11914FA}.Debug|x86.ActiveCfg = Debug
+		{2941355A-9AF4-42E2-B4A7-474EA11914FA}.Debug|x86.Build.0 = Debug
+		{2941355A-9AF4-42E2-B4A7-474EA11914FA}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

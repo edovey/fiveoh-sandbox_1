@@ -10,6 +10,7 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDPresentation
     {
+        public const string ENTITYNAME_FRIENDLY = @"Presentation";
         public const string OVERVIEW_NOTE = @"Overview";
 
         /// <summary>

@@ -13,6 +13,8 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDPathogenGroup
     {
+        public const string ENTITYNAME_FRIENDLY = @"Pathogen Group";
+
         /// <summary>
         /// Extended Create method that sets created date and schema version
         /// </summary>

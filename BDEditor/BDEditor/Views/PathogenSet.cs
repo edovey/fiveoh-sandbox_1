@@ -90,14 +90,14 @@ namespace BDEditor.Views
             }
         }
 
-        private List<BDLinkedNote> GetLinkedNotesForPathogen(BDPathogen pPathogen)
-        {
-            List<BDLinkedNote> linkedNoteList = BDLinkedNote.GetLinkedNotesForParentId(dataContext, pPathogen.uuid);
-            if (linkedNoteList.Count == 0)
-                return null;
-            else
-                return linkedNoteList;
-        }
+        //private List<BDLinkedNote> GetLinkedNotesForPathogen(BDPathogen pPathogen)
+        //{
+        //    List<BDLinkedNote> linkedNoteList = BDLinkedNote.GetLinkedNotesForParentId(dataContext, pPathogen.uuid);
+        //    if (linkedNoteList.Count == 0)
+        //        return null;
+        //    else
+        //        return linkedNoteList;
+        //}
 
         #region IBDControl
         

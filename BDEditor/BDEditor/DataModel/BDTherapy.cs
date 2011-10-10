@@ -13,6 +13,11 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDTherapy: IBDObject
     {
+        public const string ENTITYNAME_FRIENDLY = @"Therapy";
+        public const string PROPERTYNAME_THERAPY = @"Therapy";
+        public const string PROPERTYNAME_DOSAGE = @"Dosage"; 
+        public const string PROPERTYNAME_DURATION = @"Duration";
+
         public enum TherapyJoinType
         {
             None = 0,
@@ -31,6 +36,8 @@ namespace BDEditor.DataModel
             therapy.createdDate = DateTime.Now;
             therapy.schemaVersion = 0;
             therapy.therapyJoinType = (int)TherapyJoinType.None;
+            therapy.leftBracket = false;
+            therapy.rightBracket = false;
 
             pContext.AddObject("BDTherapies", therapy);
 

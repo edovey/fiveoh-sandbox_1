@@ -112,6 +112,7 @@ namespace BDEditor.Views
         #region Class methods
         private void CreateLink()
         {
+            /*
             BDLinkedNoteView noteView = new BDLinkedNoteView();
             noteView.AssignDataContext(dataContext);
             noteView.AssignParentId(currentPathogen.uuid);
@@ -131,6 +132,7 @@ namespace BDEditor.Views
             }
 
             noteView.ShowDialog(this);
+            */
         }
 
         #endregion

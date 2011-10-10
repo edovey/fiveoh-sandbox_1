@@ -17,6 +17,7 @@ namespace BDEditor.Views
         private BDTherapy currentTherapy;
         private Guid? therapyGroupId;
         private IBDControl parentControl;
+        private Guid? scopeId;
 
         public BDTherapy CurrentTherapy
         {
@@ -82,39 +83,45 @@ namespace BDEditor.Views
             tbDuration.Tag = btnDurationLink;
         }
 
+        public void AssignScopeId(Guid? pScopeId)
+        {
+            scopeId = pScopeId;
+        }
+
         private void btnTherapyLink_Click(object sender, EventArgs e)
         {
-            CreateLink(@"Therapy");
+            CreateLink(BDTherapy.PROPERTYNAME_THERAPY);
         }
 
         private void btnDosageLink_Click(object sender, EventArgs e)
         {
-            CreateLink(@"Dosage");
+            CreateLink(BDTherapy.PROPERTYNAME_DOSAGE);
         }
 
         private void btnDurationLink_Click(object sender, EventArgs e)
         {
-            CreateLink(@"Duration");
+            CreateLink(BDTherapy.PROPERTYNAME_DURATION);
         }
+
         private void CreateLink(string pProperty)
         {
+            Save();
             BDLinkedNoteView view = new BDLinkedNoteView();
             view.AssignDataContext(dataContext);
             view.AssignContextPropertyName(pProperty);
             view.AssignParentControl(this);
+            view.AssignContextEntityName(BDTherapy.ENTITYNAME_FRIENDLY);
+            view.AssignScopeId(scopeId);
 
             if (null != currentTherapy)
             {
-                BDLinkedNote note = BDLinkedNote.GetLinkedNoteForParentIdAndPropertyName(dataContext, currentTherapy.uuid, pProperty);
                 view.AssignParentId(currentTherapy.uuid);
-                view.CurrentLinkNote = note;
             }
             else
             {
                 view.AssignParentId(null);
-                view.CurrentLinkNote = null;
             }
-
+            view.PopulateControl();
             view.ShowDialog(this);
         }
 
@@ -127,7 +134,6 @@ namespace BDEditor.Views
 
         public bool Save()
         {
-
             bool result = false;
             if (null != therapyGroupId)
             {

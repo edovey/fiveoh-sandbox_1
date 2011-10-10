@@ -54,7 +54,7 @@
             this.tbDosage.Location = new System.Drawing.Point(290, 3);
             this.tbDosage.Name = "tbDosage";
             this.tbDosage.Size = new System.Drawing.Size(211, 20);
-            this.tbDosage.TabIndex = 1;
+            this.tbDosage.TabIndex = 2;
             this.tbDosage.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
             // tbDuration
@@ -62,7 +62,7 @@
             this.tbDuration.Location = new System.Drawing.Point(548, 3);
             this.tbDuration.Name = "tbDuration";
             this.tbDuration.Size = new System.Drawing.Size(174, 20);
-            this.tbDuration.TabIndex = 2;
+            this.tbDuration.TabIndex = 4;
             this.tbDuration.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
             // btnTherapyLink
@@ -71,7 +71,7 @@
             this.btnTherapyLink.Location = new System.Drawing.Point(249, 2);
             this.btnTherapyLink.Name = "btnTherapyLink";
             this.btnTherapyLink.Size = new System.Drawing.Size(35, 23);
-            this.btnTherapyLink.TabIndex = 6;
+            this.btnTherapyLink.TabIndex = 1;
             this.btnTherapyLink.Text = "Link";
             this.btnTherapyLink.UseVisualStyleBackColor = true;
             this.btnTherapyLink.Click += new System.EventHandler(this.btnTherapyLink_Click);
@@ -82,7 +82,7 @@
             this.btnDosageLink.Location = new System.Drawing.Point(507, 2);
             this.btnDosageLink.Name = "btnDosageLink";
             this.btnDosageLink.Size = new System.Drawing.Size(35, 23);
-            this.btnDosageLink.TabIndex = 7;
+            this.btnDosageLink.TabIndex = 3;
             this.btnDosageLink.Text = "Link";
             this.btnDosageLink.UseVisualStyleBackColor = true;
             this.btnDosageLink.Click += new System.EventHandler(this.btnDosageLink_Click);
@@ -93,7 +93,7 @@
             this.btnDurationLink.Location = new System.Drawing.Point(728, 2);
             this.btnDurationLink.Name = "btnDurationLink";
             this.btnDurationLink.Size = new System.Drawing.Size(35, 23);
-            this.btnDurationLink.TabIndex = 8;
+            this.btnDurationLink.TabIndex = 5;
             this.btnDurationLink.Text = "Link";
             this.btnDurationLink.UseVisualStyleBackColor = true;
             this.btnDurationLink.Click += new System.EventHandler(this.btnDurationLink_Click);
@@ -104,7 +104,7 @@
             this.noneRadioButton.Location = new System.Drawing.Point(30, 27);
             this.noneRadioButton.Name = "noneRadioButton";
             this.noneRadioButton.Size = new System.Drawing.Size(89, 17);
-            this.noneRadioButton.TabIndex = 9;
+            this.noneRadioButton.TabIndex = 6;
             this.noneRadioButton.TabStop = true;
             this.noneRadioButton.Text = "Next Therapy";
             this.noneRadioButton.UseVisualStyleBackColor = true;
@@ -115,7 +115,7 @@
             this.andRadioButton.Location = new System.Drawing.Point(125, 27);
             this.andRadioButton.Name = "andRadioButton";
             this.andRadioButton.Size = new System.Drawing.Size(95, 17);
-            this.andRadioButton.TabIndex = 10;
+            this.andRadioButton.TabIndex = 7;
             this.andRadioButton.TabStop = true;
             this.andRadioButton.Text = "And (with next)";
             this.andRadioButton.UseVisualStyleBackColor = true;
@@ -126,7 +126,7 @@
             this.orRadioButton.Location = new System.Drawing.Point(226, 27);
             this.orRadioButton.Name = "orRadioButton";
             this.orRadioButton.Size = new System.Drawing.Size(87, 17);
-            this.orRadioButton.TabIndex = 11;
+            this.orRadioButton.TabIndex = 8;
             this.orRadioButton.TabStop = true;
             this.orRadioButton.Text = "Or (with next)";
             this.orRadioButton.UseVisualStyleBackColor = true;

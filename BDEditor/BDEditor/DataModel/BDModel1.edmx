@@ -8,6 +8,7 @@
         <EntityContainer Name="BDDataModelStoreContainer">
           <EntitySet Name="BDCategories" EntityType="BDDataModel.Store.BDCategories" store:Type="Tables" />
           <EntitySet Name="BDDiseases" EntityType="BDDataModel.Store.BDDiseases" store:Type="Tables" />
+          <EntitySet Name="BDLinkedNoteAssociations" EntityType="BDDataModel.Store.BDLinkedNoteAssociations" store:Type="Tables" />
           <EntitySet Name="BDLinkedNotes" EntityType="BDDataModel.Store.BDLinkedNotes" store:Type="Tables" />
           <EntitySet Name="BDPathogenGroups" EntityType="BDDataModel.Store.BDPathogenGroups" store:Type="Tables" />
           <EntitySet Name="BDPathogens" EntityType="BDDataModel.Store.BDPathogens" store:Type="Tables" />
@@ -52,6 +53,23 @@
           <Property Name="categoryId" Type="uniqueidentifier" />
           <Property Name="displayOrder" Type="smallint" />
         </EntityType>
+        <EntityType Name="BDLinkedNoteAssociations">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Name="linkedNoteId" Type="uniqueidentifier" />
+          <Property Name="parentId" Type="uniqueidentifier" />
+          <Property Name="parentEntityName" Type="nvarchar" MaxLength="64" />
+          <Property Name="parentEntityPropertyName" Type="nvarchar" MaxLength="64" />
+          <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="schemaVersion" Type="int" />
+          <Property Name="createdBy" Type="uniqueidentifier" />
+          <Property Name="createdDate" Type="datetime" />
+          <Property Name="modifiedBy" Type="uniqueidentifier" />
+          <Property Name="modifiedDate" Type="datetime" />
+          <Property Name="displayOrder" Type="int" />
+          <Property Name="linkedNoteType" Type="int" />
+        </EntityType>
         <EntityType Name="BDLinkedNotes">
           <Key>
             <PropertyRef Name="uuid" />
@@ -66,9 +84,9 @@
           <Property Name="inUseBy" Type="uniqueidentifier" />
           <Property Name="documentText" Type="nvarchar" />
           <Property Name="storageKey" Type="nvarchar" />
-          <Property Name="contextPropertyName" Type="nvarchar" />
-          <Property Name="parentId" Type="uniqueidentifier" />
-          <Property Name="displayOrder" Type="smallint" />
+          <Property Name="linkedNoteAssociationId" Type="uniqueidentifier" />
+          <Property Name="previewText" Type="nvarchar" MaxLength="128" />
+          <Property Name="scopeId" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="BDPathogenGroups">
           <Key>
@@ -177,6 +195,8 @@
           <Property Name="schemaVersion" Type="smallint" />
           <Property Name="therapyGroupId" Type="uniqueidentifier" />
           <Property Name="therapyJoinType" Type="int" />
+          <Property Name="leftBracket" Type="bit" />
+          <Property Name="rightBracket" Type="bit" />
         </EntityType>
         <EntityType Name="BDTherapyGroups">
           <Key>
@@ -212,6 +232,7 @@
           <EntitySet Name="BDSubcategories" EntityType="BDDataModel.BDSubcategory" />
           <EntitySet Name="BDTherapies" EntityType="BDDataModel.BDTherapy" />
           <EntitySet Name="BDTherapyGroups" EntityType="BDDataModel.BDTherapyGroup" />
+          <EntitySet Name="BDLinkedNoteAssociations" EntityType="BDDataModel.BDLinkedNoteAssociation" />
         </EntityContainer>
         <EntityType Name="BDCategory">
           <Key>
@@ -261,9 +282,9 @@
           <Property Type="Guid" Name="inUseBy" />
           <Property Type="String" Name="documentText" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="storageKey" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="contextPropertyName" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="Guid" Name="parentId" />
-          <Property Type="Int16" Name="displayOrder" />
+          <Property Type="Guid" Name="linkedNoteAssociationId" />
+          <Property Type="String" Name="previewText" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="scopeId" />
         </EntityType>
         <EntityType Name="BDPathogenGroup">
           <Key>
@@ -372,6 +393,8 @@
           <Property Type="Int16" Name="schemaVersion" />
           <Property Type="Guid" Name="therapyGroupId" />
           <Property Type="Int32" Name="therapyJoinType" />
+          <Property Type="Boolean" Name="leftBracket" />
+          <Property Type="Boolean" Name="rightBracket" />
         </EntityType>
         <EntityType Name="BDTherapyGroup">
           <Key>
@@ -390,6 +413,23 @@
           <Property Type="Int16" Name="schemaVersion" />
           <Property Type="Guid" Name="pathogenGroupId" />
           <Property Type="Int32" Name="therapyGroupJoinType" />
+        </EntityType>
+        <EntityType Name="BDLinkedNoteAssociation">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Type="Guid" Name="linkedNoteId" />
+          <Property Type="Guid" Name="parentId" />
+          <Property Type="String" Name="parentEntityName" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="parentEntityPropertyName" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="uuid" Nullable="false" />
+          <Property Type="Int16" Name="schemaVersion" />
+          <Property Type="Guid" Name="createdBy" />
+          <Property Type="DateTime" Name="createdDate" />
+          <Property Type="Guid" Name="modifiedBy" />
+          <Property Type="DateTime" Name="modifiedDate" />
+          <Property Type="Int16" Name="displayOrder" />
+          <Property Type="Int32" Name="linkedNoteType" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -436,9 +476,9 @@
           <EntitySetMapping Name="BDLinkedNotes">
             <EntityTypeMapping TypeName="BDDataModel.BDLinkedNote">
               <MappingFragment StoreEntitySet="BDLinkedNotes">
-                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
-                <ScalarProperty Name="parentId" ColumnName="parentId" />
-                <ScalarProperty Name="contextPropertyName" ColumnName="contextPropertyName" />
+                <ScalarProperty Name="scopeId" ColumnName="scopeId" />
+                <ScalarProperty Name="previewText" ColumnName="previewText" />
+                <ScalarProperty Name="linkedNoteAssociationId" ColumnName="linkedNoteAssociationId" />
                 <ScalarProperty Name="storageKey" ColumnName="storageKey" />
                 <ScalarProperty Name="documentText" ColumnName="documentText" />
                 <ScalarProperty Name="inUseBy" ColumnName="inUseBy" />
@@ -550,6 +590,8 @@
           <EntitySetMapping Name="BDTherapies">
             <EntityTypeMapping TypeName="BDDataModel.BDTherapy">
               <MappingFragment StoreEntitySet="BDTherapies">
+                <ScalarProperty Name="rightBracket" ColumnName="rightBracket" />
+                <ScalarProperty Name="leftBracket" ColumnName="leftBracket" />
                 <ScalarProperty Name="therapyJoinType" ColumnName="therapyJoinType" />
                 <ScalarProperty Name="therapyGroupId" ColumnName="therapyGroupId" />
                 <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
@@ -586,6 +628,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BDLinkedNoteAssociations">
+            <EntityTypeMapping TypeName="BDDataModel.BDLinkedNoteAssociation">
+              <MappingFragment StoreEntitySet="BDLinkedNoteAssociations">
+                <ScalarProperty Name="linkedNoteType" ColumnName="linkedNoteType" />
+                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
+                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
+                <ScalarProperty Name="modifiedBy" ColumnName="modifiedBy" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+                <ScalarProperty Name="parentEntityPropertyName" ColumnName="parentEntityPropertyName" />
+                <ScalarProperty Name="parentEntityName" ColumnName="parentEntityName" />
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
+                <ScalarProperty Name="linkedNoteId" ColumnName="linkedNoteId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -608,7 +668,7 @@
       <Diagram Name="Model1">
         <EntityTypeShape EntityType="BDDataModel.BDCategory" Width="1.5" PointX="0.75" PointY="0.75" Height="3.1340950520833282" />
         <EntityTypeShape EntityType="BDDataModel.BDDisease" Width="1.5" PointX="2.75" PointY="0.75" Height="3.5186979166666674" />
-        <EntityTypeShape EntityType="BDDataModel.BDLinkedNote" Width="1.875" PointX="4.75" PointY="0.75" Height="3.0714322916666665" />
+        <EntityTypeShape EntityType="BDDataModel.BDLinkedNote" Width="1.875" PointX="4.75" PointY="0.75" Height="2.7427376302083331" />
         <EntityTypeShape EntityType="BDDataModel.BDPathogenGroup" Width="2" PointX="0.5" PointY="5.75" Height="2.5783902994791656" />
         <EntityTypeShape EntityType="BDDataModel.BDPathogen" Width="1.5" PointX="2.75" PointY="5.75" Height="3.1340950520833246" />
         <EntityTypeShape EntityType="BDDataModel.BDPresentation" Width="1.5" PointX="4.75" PointY="5.75" Height="3.3263964843750102" />
@@ -617,6 +677,7 @@
         <EntityTypeShape EntityType="BDDataModel.BDSubcategory" Width="1.5" PointX="6.75" PointY="7.75" Height="3.1340950520833246" />
         <EntityTypeShape EntityType="BDDataModel.BDTherapy" Width="2.25" PointX="8.75" PointY="0.75" Height="3.2357796223958331" />
         <EntityTypeShape EntityType="BDDataModel.BDTherapyGroup" Width="2.125" PointX="8.75" PointY="5.75" Height="3.5186979166666656" />
+        <EntityTypeShape EntityType="BDDataModel.BDLinkedNoteAssociation" Width="3" PointX="1" PointY="8.875" Height="2.9070849609374996" />
       </Diagram>
     </Diagrams>
   </Designer>

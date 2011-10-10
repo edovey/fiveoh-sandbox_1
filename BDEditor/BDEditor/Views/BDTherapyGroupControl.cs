@@ -12,6 +12,7 @@ namespace BDEditor.Views
         private Guid? pathogenGroupId;
         private BDTherapyGroup currentTherapyGroup;
         private IBDControl parentControl;
+        private Guid? scopeId;
 
         public BDTherapyGroupControl()
         {
@@ -34,9 +35,11 @@ namespace BDEditor.Views
 
                     bdTherapyControl1.CurrentTherapy = null;
                     bdTherapyControl2.CurrentTherapy = null;
+                    bdTherapyControl3.CurrentTherapy = null;
 
                     bdTherapyControl1.AssignParentId(null);
                     bdTherapyControl2.AssignParentId(null);
+                    bdTherapyControl3.AssignParentId(null);
                 }
                 else
                 {
@@ -60,18 +63,31 @@ namespace BDEditor.Views
                     List<BDTherapy> therapyList = BDTherapy.GetTherapiesForTherapyGroupId(dataContext, currentTherapyGroup.uuid);
                     if (therapyList.Count > 0) bdTherapyControl1.CurrentTherapy = therapyList[0];
                     if (therapyList.Count > 1) bdTherapyControl2.CurrentTherapy = therapyList[1];
+                    if (therapyList.Count > 2) bdTherapyControl3.CurrentTherapy = therapyList[2];
 
                     bdTherapyControl1.AssignParentId(currentTherapyGroup.uuid);
-                    bdTherapyControl2.AssignParentId(currentTherapyGroup.uuid);  
+                    bdTherapyControl2.AssignParentId(currentTherapyGroup.uuid);
+                    bdTherapyControl3.AssignParentId(currentTherapyGroup.uuid);
                 }
             }
         }
+
+        public void AssignScopeId(Guid? pScopeId)
+        {
+            scopeId = pScopeId;
+            bdTherapyControl1.AssignScopeId(scopeId);
+            bdTherapyControl2.AssignScopeId(scopeId);
+            bdTherapyControl3.AssignScopeId(scopeId);
+        }
+
+        #region IBDControl
 
         public void AssignDataContext(Entities pDataContext)
         {
             dataContext = pDataContext;
             bdTherapyControl1.AssignDataContext(dataContext);
             bdTherapyControl2.AssignDataContext(dataContext);
+            bdTherapyControl3.AssignDataContext(dataContext);
         }
 
         public bool Save()
@@ -81,6 +97,7 @@ namespace BDEditor.Views
             {
                 result = bdTherapyControl1.Save() || result;
                 result = bdTherapyControl2.Save() || result;
+                result = bdTherapyControl3.Save() || result;
 
                 if (result && (null == currentTherapyGroup))
                 {
@@ -122,12 +139,15 @@ namespace BDEditor.Views
 
             bdTherapyControl1.AssignParentControl(this);
             bdTherapyControl2.AssignParentControl(this);
+            bdTherapyControl3.AssignParentControl(this);
         }
 
         public void AssignParentControl(IBDControl pControl)
         {
             parentControl = pControl;
         }
+
+        #endregion
 
         public void TriggerCreateAndAssignParentIdToChildControl(IBDControl pControl)
         {
@@ -161,6 +181,7 @@ namespace BDEditor.Views
 
         private void CreateLink(string pProperty)
         {
+            /*
             BDLinkedNoteView view = new BDLinkedNoteView();
             view.AssignDataContext(dataContext);
             view.AssignContextPropertyName(pProperty);
@@ -179,6 +200,7 @@ namespace BDEditor.Views
             }
 
             view.ShowDialog(this);
+            */
         }
     }
 }

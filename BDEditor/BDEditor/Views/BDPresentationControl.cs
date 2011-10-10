@@ -32,13 +32,17 @@ namespace BDEditor.Views
 
                     bdPathogenGroupControl1.CurrentPathogenGroup = null;
                     bdPathogenGroupControl1.AssignParentId(null);
+                    bdPathogenGroupControl1.AssignScopeId(null);
                 }
                 else
                 {
                     tbPresentationName.Text = currentPresentation.name;
-                    BDLinkedNote linkedNote = BDLinkedNote.GetLinkedNoteForParentIdAndPropertyName(dataContext, currentPresentation.uuid, BDPresentation.OVERVIEW_NOTE);
-                    if (linkedNote != null)
-                        rtbPresentationOverview.Rtf = linkedNote.documentText;
+                    //BDLinkedNote linkedNote = BDLinkedNote.GetLinkedNoteForParentIdAndPropertyName(dataContext, currentPresentation.uuid, BDPresentation.OVERVIEW_NOTE);
+                    //if (linkedNote != null)
+                    //    rtbPresentationOverview.Rtf = linkedNote.documentText;
+
+                    bdPathogenGroupControl1.AssignScopeId(currentPresentation.uuid);
+
                     List<BDPathogenGroup> pathogenGroupList = BDPathogenGroup.GetPathogenGroupsForPresentationId(dataContext, currentPresentation.uuid);
                     if (pathogenGroupList.Count <= 0)
                     {
@@ -87,19 +91,19 @@ namespace BDEditor.Views
                 {
                     if(currentPresentation.name != tbPresentationName.Text) currentPresentation.name = tbPresentationName.Text;
 
-                    BDLinkedNote overviewNote;
-                    BDLinkedNote linkedNote = BDLinkedNote.GetLinkedNoteForParentIdAndPropertyName(dataContext, currentPresentation.uuid, BDPresentation.OVERVIEW_NOTE);
-                    if (linkedNote != null)
-                    {
-                        overviewNote = linkedNote;
-                    }
-                    else
-                    {
-                        overviewNote = BDLinkedNote.CreateLinkedNote(dataContext, currentPresentation.uuid, BDPresentation.OVERVIEW_NOTE);
-                    }
+                    //BDLinkedNote overviewNote;
+                    //BDLinkedNote linkedNote = BDLinkedNote.GetLinkedNoteForParentIdAndPropertyName(dataContext, currentPresentation.uuid, BDPresentation.OVERVIEW_NOTE);
+                    //if (linkedNote != null)
+                    //{
+                    //    overviewNote = linkedNote;
+                    //}
+                    //else
+                    //{
+                    //    overviewNote = BDLinkedNote.CreateLinkedNote(dataContext, currentPresentation.uuid, BDPresentation.OVERVIEW_NOTE);
+                    //}
 
-                    if(overviewNote.documentText != rtbPresentationOverview.Rtf) overviewNote.documentText = rtbPresentationOverview.Rtf;
-                    BDLinkedNote.SaveLinkedNote(dataContext, overviewNote);
+                    //if(overviewNote.documentText != rtbPresentationOverview.Rtf) overviewNote.documentText = rtbPresentationOverview.Rtf;
+                    //BDLinkedNote.SaveLinkedNote(dataContext, overviewNote);
 
                     System.Diagnostics.Debug.WriteLine(@"Presentation Control Save");
                     BDPresentation.SavePresentation(dataContext, currentPresentation);

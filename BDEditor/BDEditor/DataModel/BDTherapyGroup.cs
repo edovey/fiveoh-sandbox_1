@@ -13,6 +13,7 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDTherapyGroup : IBDObject
     {
+        public const string ENTITYNAME_FRIENDLY = @"Therapy Group";
 
         public enum TherapyGroupJoinType
         {

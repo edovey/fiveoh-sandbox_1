@@ -13,6 +13,8 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDPathogen: IBDObject
     {
+        public const string ENTITYNAME_FRIENDLY = @"Pathogen";
+
         public static BDPathogen CreatePathogen(Entities pContext)
         {
                 BDPathogen pathogen = CreateBDPathogen(Guid.NewGuid(), false);

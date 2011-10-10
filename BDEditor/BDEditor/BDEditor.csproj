@@ -74,6 +74,7 @@
     <Compile Include="DataModel\BDCategory.cs" />
     <Compile Include="DataModel\BDDisease.cs" />
     <Compile Include="DataModel\BDLinkedNote.cs" />
+    <Compile Include="DataModel\BDLinkedNoteAssociation.cs" />
     <Compile Include="DataModel\BDPathogen.cs" />
     <Compile Include="DataModel\BDPathogenGroup.cs" />
     <Compile Include="DataModel\BDPresentation.cs" />

@@ -97,9 +97,9 @@
             // 
             // panelTherapies
             // 
-            this.panelTherapies.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelTherapies.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelTherapies.AutoScroll = true;
             this.panelTherapies.BackColor = System.Drawing.SystemColors.Control;
             this.panelTherapies.Controls.Add(this.bdTherapyControl3);
@@ -154,7 +154,7 @@
             // 
             this.bdTherapyControl3.CurrentTherapy = null;
             this.bdTherapyControl3.DisplayLeftBracket = false;
-            this.bdTherapyControl3.DisplayRightBracket = true;
+            this.bdTherapyControl3.DisplayRightBracket = false;
             this.bdTherapyControl3.Location = new System.Drawing.Point(4, 118);
             this.bdTherapyControl3.Name = "bdTherapyControl3";
             this.bdTherapyControl3.Padding = new System.Windows.Forms.Padding(3);
@@ -175,7 +175,7 @@
             // bdTherapyControl1
             // 
             this.bdTherapyControl1.CurrentTherapy = null;
-            this.bdTherapyControl1.DisplayLeftBracket = true;
+            this.bdTherapyControl1.DisplayLeftBracket = false;
             this.bdTherapyControl1.DisplayRightBracket = false;
             this.bdTherapyControl1.Location = new System.Drawing.Point(4, 4);
             this.bdTherapyControl1.Name = "bdTherapyControl1";

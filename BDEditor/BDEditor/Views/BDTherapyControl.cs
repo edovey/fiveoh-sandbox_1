@@ -18,6 +18,8 @@ namespace BDEditor.Views
         private Guid? therapyGroupId;
         private IBDControl parentControl;
         private Guid? scopeId;
+        private bool displayLeftBracket;
+        private bool displayRightBracket;
 
         public BDTherapy CurrentTherapy
         {
@@ -25,10 +27,10 @@ namespace BDEditor.Views
             {
                 return currentTherapy;
             }
-            set 
+            set
             {
                 currentTherapy = value;
-                if(currentTherapy == null) 
+                if (currentTherapy == null)
                 {
                     //this.BackColor = SystemColors.ControlDark;
 
@@ -36,8 +38,10 @@ namespace BDEditor.Views
                     tbDosage.Text = @"";
                     tbDuration.Text = @"";
                     noneRadioButton.Checked = true;
+                    lblLeftBracket.ForeColor = SystemColors.ControlLight;
+                    lblRightBracket.ForeColor = SystemColors.ControlLight;
                 }
-                else 
+                else
                 {
                     this.BackColor = SystemColors.Control;
 
@@ -59,19 +63,27 @@ namespace BDEditor.Views
                             noneRadioButton.Checked = true;
                             break;
                     }
+                    if (currentTherapy.leftBracket == true)
+                        lblLeftBracket.ForeColor = SystemColors.ControlText;
+                    else lblLeftBracket.ForeColor = SystemColors.ControlLight;
+
+                    if (currentTherapy.rightBracket == true)
+                        lblRightBracket.ForeColor = SystemColors.ControlText;
+                    else lblRightBracket.ForeColor = SystemColors.ControlLight;
                 }
             }
         }
 
         public bool DisplayLeftBracket
         {
-            get { return lbLeftBracket.Visible; }
-            set { lbLeftBracket.Visible = value; }
+            get { return displayLeftBracket; }
+            set { displayLeftBracket = value; }
         }
+
         public bool DisplayRightBracket
         {
-            get { return lbRightBracket.Visible; }
-            set { lbRightBracket.Visible = value;}
+            get { return displayRightBracket; }
+            set { displayRightBracket = value; }
         }
 
         public BDTherapyControl()
@@ -101,6 +113,22 @@ namespace BDEditor.Views
         private void btnDurationLink_Click(object sender, EventArgs e)
         {
             CreateLink(BDTherapy.PROPERTYNAME_DURATION);
+        }
+
+        private void lblLeftBracket_Click(object sender, EventArgs e)
+        {
+            this.displayLeftBracket = !this.displayLeftBracket;
+            if (this.displayLeftBracket == true)
+                this.lblLeftBracket.ForeColor = SystemColors.ControlText;
+            else this.lblLeftBracket.ForeColor = SystemColors.ControlLight;
+        }
+
+        private void lblRightBracket_Click(object sender, EventArgs e)
+        {
+            this.displayRightBracket = !this.displayRightBracket;
+            if (this.displayRightBracket == true)
+                this.lblRightBracket.ForeColor = SystemColors.ControlText;
+            else this.lblRightBracket.ForeColor = SystemColors.ControlLight;
         }
 
         private void CreateLink(string pProperty)
@@ -137,10 +165,10 @@ namespace BDEditor.Views
             bool result = false;
             if (null != therapyGroupId)
             {
-                if ( (null == currentTherapy) && 
-                    ( (tbName.Text != string.Empty) ||
+                if ((null == currentTherapy) &&
+                    ((tbName.Text != string.Empty) ||
                     (tbDosage.Text != string.Empty) ||
-                    (tbDuration.Text != string.Empty) ) )
+                    (tbDuration.Text != string.Empty)))
                 {
                     currentTherapy = BDTherapy.CreateTherapy(dataContext);
                     currentTherapy.therapyGroupId = therapyGroupId;
@@ -148,25 +176,28 @@ namespace BDEditor.Views
 
                 if (null != currentTherapy)
                 {
-                    if(currentTherapy.name != tbName.Text) currentTherapy.name = tbName.Text;
-                    if(currentTherapy.dosage != tbDosage.Text) currentTherapy.dosage = tbDosage.Text;
-                    if(currentTherapy.duration != tbDuration.Text) currentTherapy.duration = tbDuration.Text;
+                    if (currentTherapy.name != tbName.Text) currentTherapy.name = tbName.Text;
+                    if (currentTherapy.dosage != tbDosage.Text) currentTherapy.dosage = tbDosage.Text;
+                    if (currentTherapy.duration != tbDuration.Text) currentTherapy.duration = tbDuration.Text;
 
                     if (andRadioButton.Checked)
                     {
-                        if(currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.AndWithNext) 
+                        if (currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.AndWithNext)
                             currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.AndWithNext;
                     }
                     else if (orRadioButton.Checked)
                     {
-                        if(currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.OrWithNext) 
+                        if (currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.OrWithNext)
                             currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.OrWithNext;
                     }
                     else
                     {
-                        if(currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.None) 
+                        if (currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.None)
                             currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.None;
                     }
+
+                    currentTherapy.leftBracket = this.displayLeftBracket;
+                    currentTherapy.rightBracket = this.displayRightBracket;
 
                     BDTherapy.SaveTherapy(dataContext, currentTherapy);
 

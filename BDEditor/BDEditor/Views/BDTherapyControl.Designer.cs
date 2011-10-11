@@ -37,8 +37,8 @@
             this.noneRadioButton = new System.Windows.Forms.RadioButton();
             this.andRadioButton = new System.Windows.Forms.RadioButton();
             this.orRadioButton = new System.Windows.Forms.RadioButton();
-            this.lbLeftBracket = new System.Windows.Forms.Label();
-            this.lbRightBracket = new System.Windows.Forms.Label();
+            this.lblLeftBracket = new System.Windows.Forms.Label();
+            this.lblRightBracket = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // tbName
@@ -131,25 +131,29 @@
             this.orRadioButton.Text = "Or (with next)";
             this.orRadioButton.UseVisualStyleBackColor = true;
             // 
-            // lbLeftBracket
+            // lblLeftBracket
             // 
-            this.lbLeftBracket.AutoSize = true;
-            this.lbLeftBracket.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbLeftBracket.Location = new System.Drawing.Point(-6, -8);
-            this.lbLeftBracket.Name = "lbLeftBracket";
-            this.lbLeftBracket.Size = new System.Drawing.Size(38, 55);
-            this.lbLeftBracket.TabIndex = 12;
-            this.lbLeftBracket.Text = "[";
+            this.lblLeftBracket.AutoSize = true;
+            this.lblLeftBracket.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLeftBracket.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.lblLeftBracket.Location = new System.Drawing.Point(-6, -8);
+            this.lblLeftBracket.Name = "lblLeftBracket";
+            this.lblLeftBracket.Size = new System.Drawing.Size(38, 55);
+            this.lblLeftBracket.TabIndex = 12;
+            this.lblLeftBracket.Text = "[";
+            this.lblLeftBracket.Click += new System.EventHandler(this.lblLeftBracket_Click);
             // 
-            // lbRightBracket
+            // lblRightBracket
             // 
-            this.lbRightBracket.AutoSize = true;
-            this.lbRightBracket.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbRightBracket.Location = new System.Drawing.Point(755, -8);
-            this.lbRightBracket.Name = "lbRightBracket";
-            this.lbRightBracket.Size = new System.Drawing.Size(38, 55);
-            this.lbRightBracket.TabIndex = 13;
-            this.lbRightBracket.Text = "]";
+            this.lblRightBracket.AutoSize = true;
+            this.lblRightBracket.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRightBracket.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.lblRightBracket.Location = new System.Drawing.Point(755, -8);
+            this.lblRightBracket.Name = "lblRightBracket";
+            this.lblRightBracket.Size = new System.Drawing.Size(38, 55);
+            this.lblRightBracket.TabIndex = 13;
+            this.lblRightBracket.Text = "]";
+            this.lblRightBracket.Click += new System.EventHandler(this.lblRightBracket_Click);
             // 
             // BDTherapyControl
             // 
@@ -164,8 +168,8 @@
             this.Controls.Add(this.tbDuration);
             this.Controls.Add(this.tbDosage);
             this.Controls.Add(this.tbName);
-            this.Controls.Add(this.lbLeftBracket);
-            this.Controls.Add(this.lbRightBracket);
+            this.Controls.Add(this.lblLeftBracket);
+            this.Controls.Add(this.lblRightBracket);
             this.Name = "BDTherapyControl";
             this.Padding = new System.Windows.Forms.Padding(3);
             this.Size = new System.Drawing.Size(783, 50);
@@ -186,7 +190,7 @@
         private System.Windows.Forms.RadioButton noneRadioButton;
         private System.Windows.Forms.RadioButton andRadioButton;
         private System.Windows.Forms.RadioButton orRadioButton;
-        private System.Windows.Forms.Label lbLeftBracket;
-        private System.Windows.Forms.Label lbRightBracket;
+        private System.Windows.Forms.Label lblLeftBracket;
+        private System.Windows.Forms.Label lblRightBracket;
     }
 }

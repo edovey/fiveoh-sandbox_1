@@ -147,8 +147,6 @@ namespace BDEditor.Views
             parentControl = pControl;
         }
 
-        #endregion
-
         public void TriggerCreateAndAssignParentIdToChildControl(IBDControl pControl)
         {
             if (null == currentTherapyGroup)
@@ -160,6 +158,9 @@ namespace BDEditor.Views
                 pControl.Save();
             }
         }
+
+        #endregion
+
         private void textBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;

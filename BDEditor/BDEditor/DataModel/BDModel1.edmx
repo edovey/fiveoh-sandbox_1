@@ -87,6 +87,7 @@
           <Property Name="linkedNoteAssociationId" Type="uniqueidentifier" />
           <Property Name="previewText" Type="nvarchar" MaxLength="128" />
           <Property Name="scopeId" Type="uniqueidentifier" />
+          <Property Name="singleUse" Type="bit" />
         </EntityType>
         <EntityType Name="BDPathogenGroups">
           <Key>
@@ -285,6 +286,7 @@
           <Property Type="Guid" Name="linkedNoteAssociationId" />
           <Property Type="String" Name="previewText" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Type="Guid" Name="scopeId" />
+          <Property Type="Boolean" Name="singleUse" />
         </EntityType>
         <EntityType Name="BDPathogenGroup">
           <Key>
@@ -476,6 +478,7 @@
           <EntitySetMapping Name="BDLinkedNotes">
             <EntityTypeMapping TypeName="BDDataModel.BDLinkedNote">
               <MappingFragment StoreEntitySet="BDLinkedNotes">
+                <ScalarProperty Name="singleUse" ColumnName="singleUse" />
                 <ScalarProperty Name="scopeId" ColumnName="scopeId" />
                 <ScalarProperty Name="previewText" ColumnName="previewText" />
                 <ScalarProperty Name="linkedNoteAssociationId" ColumnName="linkedNoteAssociationId" />

@@ -11,7 +11,7 @@ namespace BDEditor.DataModel
     public partial class BDPresentation
     {
         public const string ENTITYNAME_FRIENDLY = @"Presentation";
-        public const string OVERVIEW_NOTE = @"Overview";
+        public const string PROPERTYNAME_OVERVIEW = @"Overview";
 
         /// <summary>
         /// Extended Create method that sets creation date and schema version.

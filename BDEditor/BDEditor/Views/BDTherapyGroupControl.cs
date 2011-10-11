@@ -181,26 +181,25 @@ namespace BDEditor.Views
 
         private void CreateLink(string pProperty)
         {
-            /*
+            Save();
             BDLinkedNoteView view = new BDLinkedNoteView();
             view.AssignDataContext(dataContext);
             view.AssignContextPropertyName(pProperty);
             view.AssignParentControl(this);
+            view.AssignContextEntityName(BDTherapyGroup.ENTITYNAME_FRIENDLY);
+            view.AssignScopeId(scopeId);
 
             if (null != currentTherapyGroup)
             {
-                BDLinkedNote note = BDLinkedNote.GetLinkedNoteForParentIdAndPropertyName(dataContext, currentTherapyGroup.uuid, pProperty);
                 view.AssignParentId(currentTherapyGroup.uuid);
-                view.CurrentLinkNote = note;
             }
             else
             {
                 view.AssignParentId(null);
-                view.CurrentLinkNote = null;
             }
-
+            view.PopulateControl();
             view.ShowDialog(this);
-            */
+            
         }
     }
 }

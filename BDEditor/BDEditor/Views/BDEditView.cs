@@ -262,8 +262,8 @@ namespace BDEditor.Views
             {
                 sectionDropDown.Items.Add(section);
             }
-            if (sectionDropDown.Items.Count > 0)
-                sectionDropDown.SelectedIndex = 0;
+            if (sectionDropDown.Items.Count > 1)
+                sectionDropDown.SelectedIndex = 1;
         }
     }
 }

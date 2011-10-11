@@ -73,6 +73,16 @@ namespace BDEditor.DataModel
             return therapyGroupList;
         }
 
+        public static BDTherapyGroup GetTherapyGroupWithId(Entities pContext, Guid pUuid)
+        {
+            BDTherapyGroup entry;
+            IQueryable<BDTherapyGroup> entryList = (from bdTherapGroups in pContext.BDTherapyGroups
+                                                    where bdTherapGroups.uuid == pUuid
+                                                    select bdTherapGroups);
+            entry = entryList.AsQueryable().First<BDTherapyGroup>();
+            return entry;
+        }
+
         public Guid Uuid
         {
             get { return this.uuid; }
@@ -85,7 +95,7 @@ namespace BDEditor.DataModel
 
         public string DescriptionForLinkedNote
         {
-            get { return string.Format("Therapy Group - Name:{0}", this.name); }
+            get { return string.Format("Therapy Group - {0}", this.name); }
         }
     }
 }

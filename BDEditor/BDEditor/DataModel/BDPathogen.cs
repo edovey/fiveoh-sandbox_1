@@ -14,6 +14,7 @@ namespace BDEditor.DataModel
     public partial class BDPathogen: IBDObject
     {
         public const string ENTITYNAME_FRIENDLY = @"Pathogen";
+        public const string PROPERTYNAME_NAME = @"Name";
 
         public static BDPathogen CreatePathogen(Entities pContext)
         {
@@ -87,7 +88,7 @@ namespace BDEditor.DataModel
 
         public string DescriptionForLinkedNote
         {
-            get { return string.Format("Pathogen - Name:{0}", this.name); }
+            get { return string.Format("Pathogen - {0}", this.name); }
         }
     }
 }

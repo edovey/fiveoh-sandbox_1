@@ -132,8 +132,6 @@ namespace BDEditor.Views
 
                     BDLinkedNote.SaveLinkedNote(dataContext, currentLinkedNote);
                     BDLinkedNoteAssociation.SaveLinkedNoteAssociation(dataContext, association);
-
-                    //currentLinkedNote = BDLinkedNote.CreateLinkedNote(dataContext, selectedLinkNoteType, contextEntityName, contextParentId.Value, contextPropertyName);
                 }
 
                 if (null != currentLinkedNote)

@@ -16,6 +16,7 @@ namespace BDEditor.Views
         private Guid? pathogenGroupId;
         private BDPathogenGroup currentPathogenGroup;
         private IBDControl parentControl;
+        private Guid? scopeId;
 
         public PathogenSet()
         {
@@ -90,14 +91,18 @@ namespace BDEditor.Views
             }
         }
 
-        //private List<BDLinkedNote> GetLinkedNotesForPathogen(BDPathogen pPathogen)
-        //{
-        //    List<BDLinkedNote> linkedNoteList = BDLinkedNote.GetLinkedNotesForParentId(dataContext, pPathogen.uuid);
-        //    if (linkedNoteList.Count == 0)
-        //        return null;
-        //    else
-        //        return linkedNoteList;
-        //}
+        public void AssignScopeId(Guid? pScopeId)
+        {
+            scopeId = pScopeId;
+            bdPathogenControl1.AssignScopeId(scopeId);
+            bdPathogenControl2.AssignScopeId(scopeId);
+            bdPathogenControl3.AssignScopeId(scopeId);
+            bdPathogenControl4.AssignScopeId(scopeId);
+            bdPathogenControl5.AssignScopeId(scopeId);
+            bdPathogenControl6.AssignScopeId(scopeId);
+            bdPathogenControl7.AssignScopeId(scopeId);
+            bdPathogenControl8.AssignScopeId(scopeId);
+        }
 
         #region IBDControl
         

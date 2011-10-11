@@ -69,6 +69,7 @@ namespace BDEditor.Views
         public void AssignScopeId(Guid? pScopeId)
         {
             scopeId = pScopeId;
+            pathogenSet1.AssignScopeId(scopeId);
             bdTherapyGroupControl1.AssignScopeId(scopeId);
             bdTherapyGroupControl2.AssignScopeId(scopeId);
         }

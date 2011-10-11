@@ -24,22 +24,9 @@ namespace BDEditor.DataModel
                 linkedNote.createdDate = DateTime.Now;
                 linkedNote.schemaVersion = 0;
                 linkedNote.storageKey = string.Format("bd~{0}.txt", linkedNote.uuid.ToString().ToUpper());
-
+                linkedNote.singleUse = false;
                 pContext.AddObject(@"BDLinkedNotes", linkedNote);
                 return linkedNote;
-        }
-
-        public static BDLinkedNote CreateLinkedNote(Entities pContext, LinkedNoteType pLinkedNoteType, string pParentEntityName, Guid pParentId, string pParentEntityPropertyName)
-        {
-            BDLinkedNote linkedNote = CreateLinkedNote(pContext);
-
-            BDLinkedNoteAssociation linkedNoteAssociation = BDLinkedNoteAssociation.CreateLinkedNoteAssociation(pContext, pLinkedNoteType, linkedNote.uuid, pParentEntityName, pParentId, pParentEntityPropertyName);
-
-            linkedNote.linkedNoteAssociationId = linkedNoteAssociation.uuid;
-
-            SaveLinkedNote(pContext, linkedNote);
-            
-            return linkedNote;
         }
 
         /// <summary>
@@ -56,55 +43,6 @@ namespace BDEditor.DataModel
                 pContext.SaveChanges();
             }
         }
-
-        /*
-        /// <summary>
-        /// Get all Linked Notes with the specified parentID and property name
-        /// </summary>
-        /// <param name="pParentId"></param>
-        /// <param name="pPropertyName"></param>
-        /// <returns>List of Linked Notes</returns>
-        public static BDLinkedNote GetLinkedNoteForParentIdAndPropertyName(Entities pContext, Guid pParentId, string pPropertyName)
-        {
-            IQueryable<BDLinkedNote> linkedNotes = (from bdLinkedNotes in pContext.BDLinkedNotes
-                                                    where bdLinkedNotes.parentId == pParentId
-                                                    select bdLinkedNotes);
-
-            if (linkedNotes.Count() == 0)
-                return null;
-            else
-            {
-                foreach(BDLinkedNote note in linkedNotes)
-                {
-                    if (note.contextPropertyName == pPropertyName)
-                        return note;
-                }
-            }
-            return null;                                       
-        }
-
-        /// <summary>
-        /// Get linked note with the specified parent ID
-        /// </summary>
-        /// <param name="pContext"></param>
-        /// <param name="pParentId"></param>
-        /// <returns></returns>
-        public static BDLinkedNote GetLinkedNoteForParentId(Entities pContext, Guid pParentId)
-        {
-            BDLinkedNote linkedNote;
-
-            IQueryable<BDLinkedNote> linkedNotes = (from bdLinkedNotes in pContext.BDLinkedNotes
-                                                    where bdLinkedNotes.parentId == pParentId
-                                                    select bdLinkedNotes);
-            if (linkedNotes.Count() == 0)
-                return null;
-            else
-            {
-                linkedNote = linkedNotes.AsQueryable().First<BDLinkedNote>();
-            }
-            return linkedNote;                                       
-        }
-        */
 
         /// <summary>
         /// Return the LinkedNote for the uuid. Returns null if not found.
@@ -139,24 +77,19 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static List<BDLinkedNote> GetLinkedNotesForLinkedNoteAssociationId(Entities pContext, Guid pLinkedNoteAssociationId)
         {
-            //List<BDLinkedNote> linkedNoteList = new List<BDLinkedNote>();
-
             IQueryable<BDLinkedNote> linkedNotes = (from bdLinkedNotes in pContext.BDLinkedNotes
                                                     where bdLinkedNotes.linkedNoteAssociationId == pLinkedNoteAssociationId
                                                     select bdLinkedNotes);
 
             List<BDLinkedNote> linkedNoteList = linkedNotes.ToList<BDLinkedNote>();
-            //foreach (BDLinkedNote linkedNote in linkedNotes)
-            //{
-            //    linkedNoteList.Add(linkedNote);
-            //}
+
             return linkedNoteList;
         }
 
         public static List<BDLinkedNote> GetLinkedNotesForScopeId(Entities pContext, Guid? pScopeId)
         {
             IQueryable<BDLinkedNote> linkedNotes = (from bdLinkedNotes in pContext.BDLinkedNotes
-                                                    where bdLinkedNotes.scopeId == pScopeId
+                                                    where bdLinkedNotes.scopeId == pScopeId && bdLinkedNotes.singleUse == false
                                                     orderby bdLinkedNotes.previewText
                                                     select bdLinkedNotes);
 

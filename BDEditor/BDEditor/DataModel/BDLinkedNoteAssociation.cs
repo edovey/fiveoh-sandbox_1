@@ -148,8 +148,32 @@ namespace BDEditor.DataModel
                             }
                         }
                         break;
+                    case BDTherapyGroup.ENTITYNAME_FRIENDLY:
+                        {
+                            BDTherapyGroup therapyGroup = BDTherapyGroup.GetTherapyGroupWithId(pDataContext, pParentId.Value);
+                            if (null != therapyGroup)
+                            {
+                                result = string.Format("{0} [{1}]", therapyGroup.DescriptionForLinkedNote, pParentEntityPropertyName);
+                            }
+                        }
+                        break;
+                    case BDPathogen.ENTITYNAME_FRIENDLY:
+                        {
+                            BDPathogen pathogen = BDPathogen.GetPathogenWithId(pDataContext, pParentId.Value);
+                            if (null != pathogen)
+                            {
+                                result = string.Format("{0} [{1}]", pathogen.DescriptionForLinkedNote, pParentEntityPropertyName);
+                            }
+                        }
+                        break;
+                    case BDPresentation.ENTITYNAME_FRIENDLY:
+                        {
+                            result = string.Format("{0} [{1}]", pParentEntityName, pParentEntityPropertyName);
+                        }
+                        break;
+
                     default:
-                        result = string.Format("{0} [{1}]", @"Undescribed Entity", pParentEntityPropertyName);
+                        result = string.Format("{0} [{1}]", pParentEntityName, pParentEntityPropertyName);
                         break;
                 }
             }

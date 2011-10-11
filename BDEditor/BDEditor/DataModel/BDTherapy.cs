@@ -102,7 +102,7 @@ namespace BDEditor.DataModel
 
         public string DescriptionForLinkedNote
         {
-            get { return string.Format("Therapy - Name:{0} Dosage:{1} Duration:{2}", this.name, this.dosage, this.duration); }
+            get { return string.Format("Therapy - {0} Dosage:{1} Duration:{2}", this.name, this.dosage, this.duration); }
         }
     }
 }

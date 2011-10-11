@@ -1346,6 +1346,30 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Guid> _scopeId;
         partial void OnscopeIdChanging(Nullable<global::System.Guid> value);
         partial void OnscopeIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> singleUse
+        {
+            get
+            {
+                return _singleUse;
+            }
+            set
+            {
+                OnsingleUseChanging(value);
+                ReportPropertyChanging("singleUse");
+                _singleUse = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("singleUse");
+                OnsingleUseChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _singleUse;
+        partial void OnsingleUseChanging(Nullable<global::System.Boolean> value);
+        partial void OnsingleUseChanged();
 
         #endregion
     

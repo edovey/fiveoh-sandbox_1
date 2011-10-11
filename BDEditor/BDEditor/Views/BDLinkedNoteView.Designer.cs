@@ -65,7 +65,7 @@
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(462, 169);
-            this.tabControl1.TabIndex = 9;
+            this.tabControl1.TabIndex = 3;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tabPageLinks
@@ -131,7 +131,7 @@
             this.btnOK.Location = new System.Drawing.Point(399, 181);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 0;
+            this.btnOK.TabIndex = 2;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -154,6 +154,7 @@
             this.rtfContextInfo.ReadOnly = true;
             this.rtfContextInfo.Size = new System.Drawing.Size(476, 43);
             this.rtfContextInfo.TabIndex = 0;
+            this.rtfContextInfo.TabStop = false;
             this.rtfContextInfo.Text = "";
             // 
             // bdLinkedNoteControl1
@@ -166,7 +167,7 @@
             this.bdLinkedNoteControl1.SaveOnLeave = false;
             this.bdLinkedNoteControl1.SelectedLinkedNoteType = BDEditor.DataModel.LinkedNoteType.Default;
             this.bdLinkedNoteControl1.Size = new System.Drawing.Size(486, 83);
-            this.bdLinkedNoteControl1.TabIndex = 2;
+            this.bdLinkedNoteControl1.TabIndex = 1;
             // 
             // BDLinkedNoteView
             // 

@@ -17,7 +17,7 @@ namespace BDEditor.Views
         private Entities dataContext;
         private Guid? pathogenGroupId;
         private BDPathogen currentPathogen;
-        //private string title;
+        private Guid? scopeId;
         private IBDControl parentControl;
 
         public BDPathogen CurrentPathogen
@@ -49,6 +49,11 @@ namespace BDEditor.Views
         public BDPathogenControl()
         {
             InitializeComponent();
+        }
+
+        public void AssignScopeId(Guid? pScopeId)
+        {
+            scopeId = pScopeId;
         }
 
         #region IBDControl
@@ -112,27 +117,26 @@ namespace BDEditor.Views
         #region Class methods
         private void CreateLink()
         {
-            /*
+            Save();
             BDLinkedNoteView noteView = new BDLinkedNoteView();
             noteView.AssignDataContext(dataContext);
             noteView.AssignParentId(currentPathogen.uuid);
             noteView.AssignParentControl(this);
-            //noteView.AssignContextPropertyName(@"
+            noteView.AssignContextEntityName(BDPathogen.ENTITYNAME_FRIENDLY);
+            noteView.AssignContextPropertyName(BDPathogen.PROPERTYNAME_NAME);
+            noteView.AssignScopeId(scopeId);
 
             if (null != currentPathogen)
             {
-                BDLinkedNote note = BDLinkedNote.GetLinkedNoteForParentId(dataContext, currentPathogen.uuid);
-                if (note != null)
-                    noteView.CurrentLinkNote = note;
-                else
-                    noteView.CurrentLinkNote = null;
+                noteView.AssignParentId(currentPathogen.uuid);
             }
-            else{
-                noteView.CurrentLinkNote = null;
+            else
+            {
+                noteView.AssignParentId(null);
             }
 
+            noteView.PopulateControl();
             noteView.ShowDialog(this);
-            */
         }
 
         #endregion

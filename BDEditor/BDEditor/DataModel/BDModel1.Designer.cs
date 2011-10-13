@@ -256,6 +256,22 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDLinkedNoteAssociation> _BDLinkedNoteAssociations;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDSystemSetting> BDSystemSettings
+        {
+            get
+            {
+                if ((_BDSystemSettings == null))
+                {
+                    _BDSystemSettings = base.CreateObjectSet<BDSystemSetting>("BDSystemSettings");
+                }
+                return _BDSystemSettings;
+            }
+        }
+        private ObjectSet<BDSystemSetting> _BDSystemSettings;
 
         #endregion
         #region AddTo Methods
@@ -354,6 +370,14 @@ namespace BDEditor.DataModel
         public void AddToBDLinkedNoteAssociations(BDLinkedNoteAssociation bDLinkedNoteAssociation)
         {
             base.AddObject("BDLinkedNoteAssociations", bDLinkedNoteAssociation);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDSystemSettings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDSystemSettings(BDSystemSetting bDSystemSetting)
+        {
+            base.AddObject("BDSystemSettings", bDSystemSetting);
         }
 
         #endregion
@@ -3301,6 +3325,111 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Int16> _displayOrder;
         partial void OndisplayOrderChanging(Nullable<global::System.Int16> value);
         partial void OndisplayOrderChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="BDDataModel", Name="BDSystemSetting")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class BDSystemSetting : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new BDSystemSetting object.
+        /// </summary>
+        /// <param name="uuid">Initial value of the uuid property.</param>
+        /// <param name="settingName">Initial value of the settingName property.</param>
+        public static BDSystemSetting CreateBDSystemSetting(global::System.Guid uuid, global::System.String settingName)
+        {
+            BDSystemSetting bDSystemSetting = new BDSystemSetting();
+            bDSystemSetting.uuid = uuid;
+            bDSystemSetting.settingName = settingName;
+            return bDSystemSetting;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid uuid
+        {
+            get
+            {
+                return _uuid;
+            }
+            set
+            {
+                if (_uuid != value)
+                {
+                    OnuuidChanging(value);
+                    ReportPropertyChanging("uuid");
+                    _uuid = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("uuid");
+                    OnuuidChanged();
+                }
+            }
+        }
+        private global::System.Guid _uuid;
+        partial void OnuuidChanging(global::System.Guid value);
+        partial void OnuuidChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String settingName
+        {
+            get
+            {
+                return _settingName;
+            }
+            set
+            {
+                OnsettingNameChanging(value);
+                ReportPropertyChanging("settingName");
+                _settingName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("settingName");
+                OnsettingNameChanged();
+            }
+        }
+        private global::System.String _settingName;
+        partial void OnsettingNameChanging(global::System.String value);
+        partial void OnsettingNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String settingValue
+        {
+            get
+            {
+                return _settingValue;
+            }
+            set
+            {
+                OnsettingValueChanging(value);
+                ReportPropertyChanging("settingValue");
+                _settingValue = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("settingValue");
+                OnsettingValueChanged();
+            }
+        }
+        private global::System.String _settingValue;
+        partial void OnsettingValueChanging(global::System.String value);
+        partial void OnsettingValueChanged();
 
         #endregion
     

@@ -30,6 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.headerPanel = new System.Windows.Forms.Panel();
+            this.lbLastSyncDateTime = new System.Windows.Forms.Label();
+            this.btnSync = new System.Windows.Forms.Button();
             this.createTestDataButton = new System.Windows.Forms.Button();
             this.sectionDropDown = new System.Windows.Forms.ComboBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -46,6 +48,8 @@
             // 
             // headerPanel
             // 
+            this.headerPanel.Controls.Add(this.lbLastSyncDateTime);
+            this.headerPanel.Controls.Add(this.btnSync);
             this.headerPanel.Controls.Add(this.createTestDataButton);
             this.headerPanel.Controls.Add(this.sectionDropDown);
             this.headerPanel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -53,6 +57,25 @@
             this.headerPanel.Name = "headerPanel";
             this.headerPanel.Size = new System.Drawing.Size(1148, 39);
             this.headerPanel.TabIndex = 0;
+            // 
+            // lbLastSyncDateTime
+            // 
+            this.lbLastSyncDateTime.AutoSize = true;
+            this.lbLastSyncDateTime.Location = new System.Drawing.Point(479, 15);
+            this.lbLastSyncDateTime.Name = "lbLastSyncDateTime";
+            this.lbLastSyncDateTime.Size = new System.Drawing.Size(83, 13);
+            this.lbLastSyncDateTime.TabIndex = 3;
+            this.lbLastSyncDateTime.Text = "<Never Sync\'d>";
+            // 
+            // btnSync
+            // 
+            this.btnSync.Location = new System.Drawing.Point(398, 10);
+            this.btnSync.Name = "btnSync";
+            this.btnSync.Size = new System.Drawing.Size(75, 23);
+            this.btnSync.TabIndex = 2;
+            this.btnSync.Text = "Sync";
+            this.btnSync.UseVisualStyleBackColor = true;
+            this.btnSync.Click += new System.EventHandler(this.btnSync_Click);
             // 
             // createTestDataButton
             // 
@@ -119,7 +142,9 @@
             this.Controls.Add(this.headerPanel);
             this.Name = "BDEditView";
             this.Text = "BDEditView";
+            this.Load += new System.EventHandler(this.BDEditView_Load);
             this.headerPanel.ResumeLayout(false);
+            this.headerPanel.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
@@ -138,6 +163,8 @@
         private System.Windows.Forms.BindingSource entitiesBindingSource;
         private System.Windows.Forms.BindingSource entitiesBindingSource1;
         private System.Windows.Forms.Button createTestDataButton;
+        private System.Windows.Forms.Label lbLastSyncDateTime;
+        private System.Windows.Forms.Button btnSync;
 
     }
 }

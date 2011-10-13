@@ -16,6 +16,7 @@
           <EntitySet Name="BDQueueEntries" EntityType="BDDataModel.Store.BDQueueEntries" store:Type="Tables" />
           <EntitySet Name="BDSections" EntityType="BDDataModel.Store.BDSections" store:Type="Tables" />
           <EntitySet Name="BDSubcategories" EntityType="BDDataModel.Store.BDSubcategories" store:Type="Tables" />
+          <EntitySet Name="BDSystemSettings" EntityType="BDDataModel.Store.BDSystemSettings" store:Type="Tables" />
           <EntitySet Name="BDTherapies" EntityType="BDDataModel.Store.BDTherapies" store:Type="Tables" />
           <EntitySet Name="BDTherapyGroups" EntityType="BDDataModel.Store.BDTherapyGroups" store:Type="Tables" />
         </EntityContainer>
@@ -178,6 +179,14 @@
           <Property Name="inUseBy" Type="uniqueidentifier" />
           <Property Name="displayOrder" Type="smallint" />
         </EntityType>
+        <EntityType Name="BDSystemSettings">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="settingName" Type="nvarchar" Nullable="false" MaxLength="64" />
+          <Property Name="settingValue" Type="nvarchar" MaxLength="127" />
+        </EntityType>
         <EntityType Name="BDTherapies">
           <Key>
             <PropertyRef Name="uuid" />
@@ -234,6 +243,7 @@
           <EntitySet Name="BDTherapies" EntityType="BDDataModel.BDTherapy" />
           <EntitySet Name="BDTherapyGroups" EntityType="BDDataModel.BDTherapyGroup" />
           <EntitySet Name="BDLinkedNoteAssociations" EntityType="BDDataModel.BDLinkedNoteAssociation" />
+          <EntitySet Name="BDSystemSettings" EntityType="BDDataModel.BDSystemSetting" />
         </EntityContainer>
         <EntityType Name="BDCategory">
           <Key>
@@ -432,6 +442,14 @@
           <Property Type="DateTime" Name="modifiedDate" />
           <Property Type="Int16" Name="displayOrder" />
           <Property Type="Int32" Name="linkedNoteType" />
+        </EntityType>
+        <EntityType Name="BDSystemSetting">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Type="Guid" Name="uuid" Nullable="false" />
+          <Property Type="String" Name="settingName" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Type="String" Name="settingValue" MaxLength="127" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -649,6 +667,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BDSystemSettings">
+            <EntityTypeMapping TypeName="BDDataModel.BDSystemSetting">
+              <MappingFragment StoreEntitySet="BDSystemSettings">
+                <ScalarProperty Name="settingValue" ColumnName="settingValue" />
+                <ScalarProperty Name="settingName" ColumnName="settingName" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -681,6 +708,7 @@
         <EntityTypeShape EntityType="BDDataModel.BDTherapy" Width="2.25" PointX="8.75" PointY="0.75" Height="3.2357796223958331" />
         <EntityTypeShape EntityType="BDDataModel.BDTherapyGroup" Width="2.125" PointX="8.75" PointY="5.75" Height="3.5186979166666656" />
         <EntityTypeShape EntityType="BDDataModel.BDLinkedNoteAssociation" Width="3" PointX="1" PointY="8.875" Height="2.9070849609374996" />
+        <EntityTypeShape EntityType="BDDataModel.BDSystemSetting" Width="2.125" PointX="9.125" PointY="9.375" Height="1.4279589843750031" />
       </Diagram>
     </Diagrams>
   </Designer>

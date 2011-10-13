@@ -77,8 +77,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\AttributeDictionary.cs" />
     <Compile Include="Classes\BDDataLoader.cs" />
     <Compile Include="Classes\BDTreeNode.cs" />
+    <Compile Include="Classes\Constants.cs" />
+    <Compile Include="Classes\RepositoryHandler.cs" />
+    <Compile Include="Classes\SyncInfo.cs" />
+    <Compile Include="Classes\SyncInfoDictionary.cs" />
     <Compile Include="DataModel\BDCategory.cs" />
     <Compile Include="DataModel\BDDisease.cs" />
     <Compile Include="DataModel\BDLinkedNote.cs" />
@@ -94,6 +99,7 @@
       <DependentUpon>BDModel1.edmx</DependentUpon>
     </Compile>
     <Compile Include="DataModel\BDSubcategory.cs" />
+    <Compile Include="DataModel\BDSystemSetting.cs" />
     <Compile Include="DataModel\IBDObject.cs" />
     <Compile Include="Views\BDLinkedNoteControl.cs">
       <SubType>UserControl</SubType>

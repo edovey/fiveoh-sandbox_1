@@ -39,6 +39,22 @@ namespace BDEditor.Views
             sectionDropDown.DisplayMember = "Name";
         }
 
+        public DataModel.Entities DataContext
+        {
+            get
+            {
+                if (null == dataContext)
+                {
+                    dataContext = new Entities();
+                }
+                return dataContext;
+            }
+
+            set
+            {
+                dataContext = value;
+            }
+        }
         public void createEntry(BDNodeContextType context)
         {            
             switch (context)
@@ -264,6 +280,38 @@ namespace BDEditor.Views
             }
             if (sectionDropDown.Items.Count > 1)
                 sectionDropDown.SelectedIndex = 1;
+        }
+
+        private void UpdateSyncLabel()
+        {
+            DateTime? lastSyncDate = BDSystemSetting.GetTimestamp(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            if (null == lastSyncDate)
+            {
+                lbLastSyncDateTime.Text = @"<Never Sync'd>";
+            }
+            else
+            {
+                lbLastSyncDateTime.Text = lastSyncDate.Value.ToString(Constants.DATETIMEFORMAT);
+            }
+        }
+
+        private void BDEditView_Load(object sender, EventArgs e)
+        {
+            UpdateSyncLabel();
+        }
+
+        private void btnSync_Click(object sender, EventArgs e)
+        {
+            DateTime? lastSyncDate = BDSystemSetting.GetTimestamp(DataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+
+            SyncInfoDictionary syncResultList = RepositoryHandler.Aws.Sync(DataContext, lastSyncDate);
+
+            foreach (SyncInfo syncInfo in syncResultList.Values)
+            {
+                System.Diagnostics.Debug.WriteLine(syncInfo.EntityName);
+            }
+
+            UpdateSyncLabel();
         }
     }
 }

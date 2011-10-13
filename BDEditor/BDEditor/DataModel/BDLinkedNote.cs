@@ -13,6 +13,11 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDLinkedNote
     {
+        public const string AWS_DOMAIN = @"bd_linkedNotes";
+        public const string AWS_BUCKET = @"bdDataStore";
+        public const string AWS_S3_PREFIX = @"bd~";
+        public const string AWS_S3_FILEEXTENSION = @".txt";
+
         /// <summary>
         /// Extended Create method that sets the created date and schema version
         /// </summary>
@@ -23,7 +28,7 @@ namespace BDEditor.DataModel
                 linkedNote.createdBy = Guid.Empty;
                 linkedNote.createdDate = DateTime.Now;
                 linkedNote.schemaVersion = 0;
-                linkedNote.storageKey = string.Format("bd~{0}.txt", linkedNote.uuid.ToString().ToUpper());
+                linkedNote.storageKey = string.Format("{0}{1}{2}", AWS_S3_PREFIX, linkedNote.uuid.ToString().ToUpper(), AWS_S3_FILEEXTENSION);
                 linkedNote.singleUse = false;
                 pContext.AddObject(@"BDLinkedNotes", linkedNote);
                 return linkedNote;
@@ -60,10 +65,7 @@ namespace BDEditor.DataModel
                                                         where bdLinkedNotes.uuid == pLinkedNoteId
                                                         select bdLinkedNotes);
 
-                if (linkedNotes.Count() > 0)
-                {
-                    result = linkedNotes.First();
-                }
+                result = linkedNotes.AsQueryable().First<BDLinkedNote>();
             }
 
             return result;

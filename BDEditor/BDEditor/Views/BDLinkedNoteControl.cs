@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using BDEditor.DataModel;
-
 namespace BDEditor.Views
 {
     public partial class BDLinkedNoteControl : UserControl, IBDControl
@@ -15,44 +14,31 @@ namespace BDEditor.Views
         private Entities dataContext;
         private Guid? scopeId;
         private Guid? contextParentId;
-        //private Guid? linkedNoteAssociationId;
         private string contextEntityName;
         private string contextPropertyName;
         private IBDControl parentControl;
         private bool saveOnLeave = true;
         private LinkedNoteType selectedLinkNoteType;
-
         private BDLinkedNote currentLinkedNote;
 
         public BDLinkedNote CurrentLinkedNote
         {
-            get
-            {
-                return currentLinkedNote;
-            }
+            get { return currentLinkedNote; }
             set
             {
                 currentLinkedNote = value;
                 if (currentLinkedNote == null)
                 {
-                    rtfLinkNoteText.Rtf = @"";
+                    textControl.Text = @"";
                     selectedLinkNoteType = LinkedNoteType.Default;
                 }
-                else
-                    rtfLinkNoteText.Rtf = currentLinkedNote.documentText;
             }
         }
 
         public bool SaveOnLeave
         {
-            get
-            {
-                return saveOnLeave;
-            }
-            set
-            {
-                saveOnLeave = value;
-            }
+            get { return saveOnLeave; }
+            set { saveOnLeave = value; }
         }
 
         public LinkedNoteType SelectedLinkedNoteType
@@ -64,6 +50,8 @@ namespace BDEditor.Views
         public BDLinkedNoteControl()
         {
             InitializeComponent();
+            textControl.RulerBar = rulerBar;
+            textControl.ButtonBar = buttonBar;
         }
 
         private void BDLinkedNoteControl_Leave(object sender, EventArgs e)
@@ -82,28 +70,84 @@ namespace BDEditor.Views
             contextPropertyName = pContextPropertyName;
         }
 
-        //public void AssignLinkedNoteAssociationId(Guid? pLinkedNoteAssociationId)
-        //{
-        //    linkedNoteAssociationId = pLinkedNoteAssociationId;
-        //}
-
-        #region IBDControl
-
-        public void AssignDataContext(Entities pDataContext)
-        {
-            dataContext = pDataContext;
-        }
-
-        public void AssignParentId(Guid? pParentId)
-        {
-            contextParentId = pParentId;
-        }
-
         public void AssignScopeId(Guid? pScopeId)
         {
             scopeId = pScopeId;
         }
 
+        private string GetBodyContents(string pText)
+        {
+            // extract body contents from text
+            string bodyText;
+            int bodyStartIndex = (pText.IndexOf("<body"));
+            bodyStartIndex = pText.IndexOf(">", bodyStartIndex);
+            int bodyEndIndex = pText.IndexOf("</body>");
+            if (bodyStartIndex > 0)
+                bodyText = pText.Substring(bodyStartIndex + 1, (bodyEndIndex - bodyStartIndex) - 1);
+            else bodyText = pText;
+
+            return bodyText;
+        }
+
+        private string CleanTagFromText(string pText, string pTagStart, string pTagEnd, bool removeTagEnd)
+        {
+            if (pText.Contains(pTagStart))
+            {
+                int tagStartIndex = pText.IndexOf(pTagStart);
+                int tagEndIndex = pText.IndexOf(pTagEnd, tagStartIndex);
+                int tagLength = 0;
+                if (removeTagEnd == true)
+                    tagLength = tagEndIndex + pTagEnd.Length - tagStartIndex;
+                else tagLength = tagEndIndex - tagStartIndex;
+    
+                string cleanString = pText.Remove(tagStartIndex, tagLength);
+                return cleanString;
+            }
+            return pText;
+        }
+
+        private string CleanDocumentText(string pString)
+        {
+            string stringToClean = GetBodyContents(pString);
+            // remove table tags
+            while (stringToClean.Contains("<td"))
+                stringToClean = CleanTagFromText(stringToClean, "<td", ">",true);
+            stringToClean = stringToClean.Replace("</td>", "");
+
+            while (stringToClean.Contains("<tr"))
+                stringToClean = CleanTagFromText(stringToClean, "<tr", ">", true);
+            stringToClean = stringToClean.Replace("</tr>", "");
+
+            while (stringToClean.Contains("<table"))
+                stringToClean = CleanTagFromText(stringToClean, "<table", ">", true);
+            stringToClean = stringToClean.Replace("</table>", "");
+
+            // remove span tags
+            while (stringToClean.Contains("<span"))
+                stringToClean = CleanTagFromText(stringToClean, "<span", ">", true);
+            stringToClean = stringToClean.Replace("</span>","");
+            // remove style tags
+            while (stringToClean.Contains(" style="))
+                stringToClean = CleanTagFromText(stringToClean, " style=", ">", false);
+
+            // clean out extra line returns
+            stringToClean = stringToClean.Replace("\r\n", "");
+
+            // remove paragraph tags from inside list tags
+            stringToClean = stringToClean.Replace("<li><p>", "<li>");
+            stringToClean = stringToClean.Replace("</p></li>", "</li>");
+            return stringToClean;
+        }
+
+        #region IBDControl
+        public void AssignDataContext(Entities pDataContext)
+        {
+            dataContext = pDataContext;
+        }
+        public void AssignParentId(Guid? pParentId)
+        {
+            contextParentId = pParentId;
+        }
         public bool Save()
         {
             bool result = false;
@@ -116,8 +160,8 @@ namespace BDEditor.Views
                 }
             }
             else
-            { 
-                if ((null == currentLinkedNote) && (rtfLinkNoteText.Text != string.Empty) ) //Check the Text property because .rtf usually has formatting described
+            {
+                if ((null == currentLinkedNote) && (textControl.Text != string.Empty)) //Check the Text property because .rtf usually has formatting described
                 {
                     currentLinkedNote = BDLinkedNote.CreateLinkedNote(dataContext);
                     BDLinkedNoteAssociation association = BDLinkedNoteAssociation.CreateLinkedNoteAssociation(dataContext);
@@ -126,29 +170,33 @@ namespace BDEditor.Views
                     association.parentEntityName = contextEntityName;
                     association.parentEntityPropertyName = contextPropertyName;
                     association.linkedNoteType = (int)selectedLinkNoteType;
-
                     currentLinkedNote.linkedNoteAssociationId = association.uuid;
                     currentLinkedNote.scopeId = scopeId;
-
                     BDLinkedNote.SaveLinkedNote(dataContext, currentLinkedNote);
                     BDLinkedNoteAssociation.SaveLinkedNoteAssociation(dataContext, association);
                 }
-
                 if (null != currentLinkedNote)
                 {
-                    if (currentLinkedNote.documentText != rtfLinkNoteText.Rtf)
-                    {
-                        currentLinkedNote.documentText = rtfLinkNoteText.Rtf;
-                        if (rtfLinkNoteText.Text.Length > 127)
-                            currentLinkedNote.previewText = rtfLinkNoteText.Text.Substring(0, 127);
-                        else
-                            currentLinkedNote.previewText = rtfLinkNoteText.Text;
-                    }
+                    string plainText;
+                    textControl.Save(out plainText, TXTextControl.StringStreamType.PlainText);
+                    //string richText;
+                    //textControl.Save(out richText, TXTextControl.StringStreamType.RichTextFormat);
+                    string htmltext;
+                    textControl.Save(out htmltext, TXTextControl.StringStreamType.HTMLFormat);
+                    string cleanText = CleanDocumentText(htmltext);
 
+                    //MessageBox.Show(cleanText, "Cleaned input text");
+                    if (currentLinkedNote.documentText != cleanText)
+                    {
+                        currentLinkedNote.documentText = cleanText;
+                        if (cleanText.Length > 127)
+                            currentLinkedNote.previewText = cleanText.Substring(0, 127);
+                        else
+                            currentLinkedNote.previewText = cleanText;
+                    }
                     BDLinkedNote.SaveLinkedNote(dataContext, currentLinkedNote);
                 }
             }
-
             return result;
         }
 
@@ -164,9 +212,49 @@ namespace BDEditor.Views
 
         #endregion
 
-        private void tbLinkedNote_TextChanged(object sender, EventArgs e)
+        private void BDLinkedNoteControl_Load(object sender, EventArgs e)
         {
-
+            if (currentLinkedNote != null && currentLinkedNote.documentText != null && currentLinkedNote.documentText.Length > 0)
+            {
+                if (currentLinkedNote.documentText.Contains("<"))
+                    textControl.Append(currentLinkedNote.documentText, TXTextControl.StringStreamType.HTMLFormat, TXTextControl.AppendSettings.None);
+                else
+                    textControl.Append(currentLinkedNote.documentText, TXTextControl.StringStreamType.RichTextFormat, TXTextControl.AppendSettings.None);
+            }
         }
+
+        private void textControl_KeyUp(object sender, KeyEventArgs e)
+        {
+           // enable 'select all' so user can change font in one operation
+            if (e.KeyData == (Keys.Control | Keys.A))
+            {
+                textControl.SelectAll();
+                e.Handled = true;
+            }
+            //NOTE:  Redo / Undo are automatically supported by the control.  Bold is not.
+        }
+
+        private void btnSelectAll_Click(object sender, EventArgs e)
+        {
+            textControl.SelectAll();
+        }
+
+        private void btnPaste_Click(object sender, EventArgs e)
+        {
+            if(Clipboard.ContainsText(TextDataFormat.Html))
+            {
+                textControl.Append(Clipboard.GetText(TextDataFormat.Html), TXTextControl.StringStreamType.HTMLFormat, TXTextControl.AppendSettings.None);
+            }
+            else if (Clipboard.ContainsText(TextDataFormat.Rtf))
+            {
+                textControl.Append(Clipboard.GetText(TextDataFormat.Rtf), TXTextControl.StringStreamType.RichTextFormat, TXTextControl.AppendSettings.None);
+            }
+        }
+
+        private void btnBeta_Click(object sender, EventArgs e)
+        {
+            textControl.Selection.Text = "ß";
+        }
+
     }
 }

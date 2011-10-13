@@ -14,6 +14,7 @@ namespace BDEditor.DataModel
     public partial class BDDisease
     {
         public const string ENTITYNAME_FRIENDLY = @"Disease";
+        public const string PROPERTYNAME_OVERVIEW = @"Overview";
 
         /// <summary>
         /// Extended Create method that sets the create date and the schema version

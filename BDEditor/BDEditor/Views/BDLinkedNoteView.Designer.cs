@@ -51,20 +51,20 @@
             this.panel1.Controls.Add(this.tabControl1);
             this.panel1.Controls.Add(this.btnOK);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 136);
+            this.panel1.Location = new System.Drawing.Point(0, 309);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(486, 210);
+            this.panel1.Size = new System.Drawing.Size(810, 175);
             this.panel1.TabIndex = 1;
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPageLinks);
             this.tabControl1.Controls.Add(this.tabPageNotes);
-            this.tabControl1.Location = new System.Drawing.Point(12, 6);
+            this.tabControl1.Location = new System.Drawing.Point(12, 2);
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(462, 169);
+            this.tabControl1.Size = new System.Drawing.Size(619, 169);
             this.tabControl1.TabIndex = 3;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -74,7 +74,7 @@
             this.tabPageLinks.Location = new System.Drawing.Point(4, 22);
             this.tabPageLinks.Name = "tabPageLinks";
             this.tabPageLinks.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLinks.Size = new System.Drawing.Size(454, 143);
+            this.tabPageLinks.Size = new System.Drawing.Size(611, 143);
             this.tabPageLinks.TabIndex = 0;
             this.tabPageLinks.Text = "Links to Current Note";
             this.tabPageLinks.UseVisualStyleBackColor = true;
@@ -86,7 +86,7 @@
             this.chListLinks.Location = new System.Drawing.Point(3, 3);
             this.chListLinks.Name = "chListLinks";
             this.chListLinks.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.chListLinks.Size = new System.Drawing.Size(448, 137);
+            this.chListLinks.Size = new System.Drawing.Size(605, 137);
             this.chListLinks.TabIndex = 6;
             this.chListLinks.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.linkedNoteView_ItemCheck);
             // 
@@ -128,7 +128,7 @@
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOK.Location = new System.Drawing.Point(399, 181);
+            this.btnOK.Location = new System.Drawing.Point(723, 146);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 2;
@@ -143,7 +143,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(5);
-            this.panel2.Size = new System.Drawing.Size(486, 53);
+            this.panel2.Size = new System.Drawing.Size(810, 53);
             this.panel2.TabIndex = 3;
             // 
             // rtfContextInfo
@@ -152,7 +152,7 @@
             this.rtfContextInfo.Location = new System.Drawing.Point(5, 5);
             this.rtfContextInfo.Name = "rtfContextInfo";
             this.rtfContextInfo.ReadOnly = true;
-            this.rtfContextInfo.Size = new System.Drawing.Size(476, 43);
+            this.rtfContextInfo.Size = new System.Drawing.Size(800, 43);
             this.rtfContextInfo.TabIndex = 0;
             this.rtfContextInfo.TabStop = false;
             this.rtfContextInfo.Text = "";
@@ -166,14 +166,14 @@
             this.bdLinkedNoteControl1.Padding = new System.Windows.Forms.Padding(3);
             this.bdLinkedNoteControl1.SaveOnLeave = false;
             this.bdLinkedNoteControl1.SelectedLinkedNoteType = BDEditor.DataModel.LinkedNoteType.Default;
-            this.bdLinkedNoteControl1.Size = new System.Drawing.Size(486, 83);
+            this.bdLinkedNoteControl1.Size = new System.Drawing.Size(810, 256);
             this.bdLinkedNoteControl1.TabIndex = 1;
             // 
             // BDLinkedNoteView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(486, 346);
+            this.ClientSize = new System.Drawing.Size(810, 484);
             this.Controls.Add(this.bdLinkedNoteControl1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);

@@ -28,28 +28,36 @@ namespace BDEditor.Views
                 if (currentPresentation == null)
                 {
                     tbPresentationName.Text = @"";
-                    rtbPresentationOverview.Rtf = @"";
                     overviewLinkedNote = null;
 
                     bdPathogenGroupControl1.CurrentPathogenGroup = null;
                     bdPathogenGroupControl1.AssignParentId(null);
                     bdPathogenGroupControl1.AssignScopeId(null);
+
+                    bdLinkedNoteControl1.AssignParentId(null);
+                    bdLinkedNoteControl1.AssignScopeId(null);
+                    bdLinkedNoteControl1.AssignParentControl(this);
+                    bdLinkedNoteControl1.AssignContextEntityName(BDPresentation.ENTITYNAME_FRIENDLY);
+                    bdLinkedNoteControl1.AssignContextPropertyName(BDPresentation.PROPERTYNAME_OVERVIEW);
                 }
                 else
                 {
                     tbPresentationName.Text = currentPresentation.name;
-                    overviewLinkedNote = null;
 
+                    bdLinkedNoteControl1.AssignParentId(currentPresentation.uuid);
+                    bdLinkedNoteControl1.AssignScopeId(currentPresentation.uuid);
+                    bdLinkedNoteControl1.AssignParentControl(this);
+                    bdLinkedNoteControl1.AssignContextEntityName(BDPresentation.ENTITYNAME_FRIENDLY);
+                    bdLinkedNoteControl1.AssignContextPropertyName(BDPresentation.PROPERTYNAME_OVERVIEW);
+
+                    
                     BDLinkedNoteAssociation association = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, currentPresentation.uuid, BDPresentation.PROPERTYNAME_OVERVIEW);
                     if (null != association)
                     {
                         overviewLinkedNote = BDLinkedNote.GetLinkedNoteForId(dataContext, association.linkedNoteId);
-                        if (null != overviewLinkedNote)
-                        {
-                            rtbPresentationOverview.Rtf = overviewLinkedNote.documentText;
-                        }
+                        bdLinkedNoteControl1.CurrentLinkedNote = overviewLinkedNote;
                     }
- 
+                    
                     bdPathogenGroupControl1.AssignScopeId(currentPresentation.uuid);
 
                     List<BDPathogenGroup> pathogenGroupList = BDPathogenGroup.GetPathogenGroupsForPresentationId(dataContext, currentPresentation.uuid);
@@ -76,6 +84,7 @@ namespace BDEditor.Views
         {
             dataContext = pDataContext;
             bdPathogenGroupControl1.AssignDataContext(dataContext);
+            bdLinkedNoteControl1.AssignDataContext(dataContext);
         }
 
         public void AssignParentId(Guid? pParentId)
@@ -99,7 +108,8 @@ namespace BDEditor.Views
                 if (null != currentPresentation)
                 {
                     if(currentPresentation.name != tbPresentationName.Text) currentPresentation.name = tbPresentationName.Text;
-
+                    bdLinkedNoteControl1.Save();
+                    /*
                     if ((null == overviewLinkedNote) && (rtbPresentationOverview.Text != string.Empty))
                     {
                         overviewLinkedNote = BDLinkedNote.CreateLinkedNote(dataContext);
@@ -132,20 +142,7 @@ namespace BDEditor.Views
                         BDLinkedNote.SaveLinkedNote(dataContext, overviewLinkedNote);
 
                     }
-                    //BDLinkedNote overviewNote;
-                    //BDLinkedNote linkedNote = BDLinkedNote.GetLinkedNoteForParentIdAndPropertyName(dataContext, currentPresentation.uuid, BDPresentation.OVERVIEW_NOTE);
-                    //if (linkedNote != null)
-                    //{
-                    //    overviewNote = linkedNote;
-                    //}
-                    //else
-                    //{
-                    //    overviewNote = BDLinkedNote.CreateLinkedNote(dataContext, currentPresentation.uuid, BDPresentation.OVERVIEW_NOTE);
-                    //}
-
-                    //if(overviewNote.documentText != rtbPresentationOverview.Rtf) overviewNote.documentText = rtbPresentationOverview.Rtf;
-                    //BDLinkedNote.SaveLinkedNote(dataContext, overviewNote);
-
+                    */
                     System.Diagnostics.Debug.WriteLine(@"Presentation Control Save");
                     BDPresentation.SavePresentation(dataContext, currentPresentation);
 
@@ -172,12 +169,5 @@ namespace BDEditor.Views
             Save();
         }
 
-        private void btnFont_Click(object sender, EventArgs e)
-        {
-            if (fontDialog1.ShowDialog() == DialogResult.OK)
-            {
-                rtbPresentationOverview.Font = fontDialog1.Font;
-            }
-        }
     }
 }

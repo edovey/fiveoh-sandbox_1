@@ -30,10 +30,9 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.tbPresentationName = new System.Windows.Forms.TextBox();
-            this.rtbPresentationOverview = new System.Windows.Forms.RichTextBox();
             this.lblOverview = new System.Windows.Forms.Label();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
-            this.btnFont = new System.Windows.Forms.Button();
+            this.bdLinkedNoteControl1 = new BDEditor.Views.BDLinkedNoteControl();
             this.bdPathogenGroupControl1 = new BDEditor.Views.BDPathogenGroupControl();
             this.SuspendLayout();
             // 
@@ -56,14 +55,6 @@
             this.tbPresentationName.Size = new System.Drawing.Size(475, 20);
             this.tbPresentationName.TabIndex = 2;
             // 
-            // rtbPresentationOverview
-            // 
-            this.rtbPresentationOverview.Location = new System.Drawing.Point(9, 81);
-            this.rtbPresentationOverview.Name = "rtbPresentationOverview";
-            this.rtbPresentationOverview.Size = new System.Drawing.Size(753, 93);
-            this.rtbPresentationOverview.TabIndex = 3;
-            this.rtbPresentationOverview.Text = "";
-            // 
             // lblOverview
             // 
             this.lblOverview.AutoSize = true;
@@ -74,22 +65,23 @@
             this.lblOverview.TabIndex = 4;
             this.lblOverview.Text = "Overview";
             // 
-            // btnFont
+            // bdLinkedNoteControl1
             // 
-            this.btnFont.Location = new System.Drawing.Point(765, 66);
-            this.btnFont.Name = "btnFont";
-            this.btnFont.Size = new System.Drawing.Size(75, 23);
-            this.btnFont.TabIndex = 6;
-            this.btnFont.Text = "Set Font";
-            this.btnFont.UseVisualStyleBackColor = true;
-            this.btnFont.Click += new System.EventHandler(this.btnFont_Click);
+            this.bdLinkedNoteControl1.CurrentLinkedNote = null;
+            this.bdLinkedNoteControl1.Location = new System.Drawing.Point(9, 82);
+            this.bdLinkedNoteControl1.Name = "bdLinkedNoteControl1";
+            this.bdLinkedNoteControl1.Padding = new System.Windows.Forms.Padding(3);
+            this.bdLinkedNoteControl1.SaveOnLeave = true;
+            this.bdLinkedNoteControl1.SelectedLinkedNoteType = BDEditor.DataModel.LinkedNoteType.Default;
+            this.bdLinkedNoteControl1.Size = new System.Drawing.Size(807, 258);
+            this.bdLinkedNoteControl1.TabIndex = 6;
             // 
             // bdPathogenGroupControl1
             // 
             this.bdPathogenGroupControl1.AutoScroll = true;
             this.bdPathogenGroupControl1.BackColor = System.Drawing.SystemColors.Control;
             this.bdPathogenGroupControl1.CurrentPathogenGroup = null;
-            this.bdPathogenGroupControl1.Location = new System.Drawing.Point(0, 179);
+            this.bdPathogenGroupControl1.Location = new System.Drawing.Point(0, 336);
             this.bdPathogenGroupControl1.Name = "bdPathogenGroupControl1";
             this.bdPathogenGroupControl1.Size = new System.Drawing.Size(840, 639);
             this.bdPathogenGroupControl1.TabIndex = 5;
@@ -99,14 +91,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.Controls.Add(this.btnFont);
+            this.Controls.Add(this.bdLinkedNoteControl1);
             this.Controls.Add(this.bdPathogenGroupControl1);
             this.Controls.Add(this.lblOverview);
-            this.Controls.Add(this.rtbPresentationOverview);
             this.Controls.Add(this.tbPresentationName);
             this.Controls.Add(this.label1);
             this.Name = "BDPresentationControl";
-            this.Size = new System.Drawing.Size(903, 893);
+            this.Size = new System.Drawing.Size(903, 988);
             this.Leave += new System.EventHandler(this.BDPresentationControl_Leave);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -117,10 +108,9 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbPresentationName;
-        private System.Windows.Forms.RichTextBox rtbPresentationOverview;
         private System.Windows.Forms.Label lblOverview;
         private BDPathogenGroupControl bdPathogenGroupControl1;
         private System.Windows.Forms.FontDialog fontDialog1;
-        private System.Windows.Forms.Button btnFont;
+        private BDLinkedNoteControl bdLinkedNoteControl1;
     }
 }

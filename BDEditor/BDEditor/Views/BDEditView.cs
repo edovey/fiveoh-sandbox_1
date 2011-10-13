@@ -152,9 +152,14 @@ namespace BDEditor.Views
                     else if (selectedNode.Tag is BDDisease)
                     {
                         BDDiseaseControl diseaseControl = new BDDiseaseControl();
+                        diseaseControl.AssignDataContext(dataContext);
                         
                         diseaseControl.Dock = DockStyle.Fill;
                         diseaseControl.CurrentDisease = selectedNode.Tag as BDDisease;
+                        BDCategory category = selectedNode.Tag as BDCategory;
+                        if (null != category)
+                            diseaseControl.AssignParentId(category.uuid);
+
                         splitContainer1.Panel2.Controls.Add(diseaseControl);
                     }
                     else if (selectedNode.Tag is BDPresentation)

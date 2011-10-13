@@ -128,6 +128,11 @@ namespace BDEditor.DataModel
         }
 
 
+        public static SyncInfo SyncInfo()
+        {
+            return new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+        }
+
         /// <summary>
         /// Create or update an existing BDCategory from attributes in a dictionary. Saves the entry.
         /// </summary>

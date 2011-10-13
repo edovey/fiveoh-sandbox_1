@@ -149,7 +149,7 @@ namespace BDEditor.Views
             }
             else
             {
-                BDLinkedNote linkedNote = BDLinkedNote.GetLinkedNoteForId(dataContext, pAssociation.linkedNoteId);
+                BDLinkedNote linkedNote = BDLinkedNote.GetLinkedNoteWithId(dataContext, pAssociation.linkedNoteId);
                 bdLinkedNoteControl1.CurrentLinkedNote = linkedNote;
                 bdLinkedNoteControl1.SelectedLinkedNoteType = (LinkedNoteType)pAssociation.linkedNoteType;
             }

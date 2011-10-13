@@ -49,7 +49,7 @@ namespace BDEditor.Views
                     BDLinkedNoteAssociation association = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, currentDisease.uuid, BDDisease.PROPERTYNAME_OVERVIEW);
                     if (null != association)
                     {
-                        overviewLinkedNote = BDLinkedNote.GetLinkedNoteForId(dataContext, association.linkedNoteId);
+                        overviewLinkedNote = BDLinkedNote.GetLinkedNoteWithId(dataContext, association.linkedNoteId);
                         bdLinkedNoteControl1.CurrentLinkedNote = overviewLinkedNote;
                     }
                 }

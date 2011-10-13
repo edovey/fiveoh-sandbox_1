@@ -29,6 +29,7 @@ namespace BDEditor.DataModel
         private const string SECTIONID = @"ct_sectionid";
         private const string NAME = @"ct_name";
         private const string DEPRECATED = @"ct_deprecated";
+        private const string DISPLAYORDER = @"ct_displayorder";
 
         /// <summary>
         /// Extended Create Method that includes setting creation date and schema version.
@@ -81,6 +82,24 @@ namespace BDEditor.DataModel
             return catList;
         }
 
+
+        /// <summary>
+        /// Get Category with specified ID
+        /// </summary>
+        /// <param name="pCategoryId"></param>
+        /// <returns>BDCategory object.</returns>
+        public static BDCategory GetCategoryWithId(Entities pContext, Guid pCategoryId)
+        {
+            BDCategory category;
+            IQueryable<BDCategory> categories = (from bdCategories in pContext.BDCategories
+                                                 where bdCategories.uuid == pCategoryId
+                                                 select bdCategories);
+            category = categories.AsQueryable().First<BDCategory>();
+            return category;
+        }
+
+        #region Repository
+
         /// <summary>
         /// Retrieve all entries changed since a given date
         /// </summary>
@@ -112,22 +131,6 @@ namespace BDEditor.DataModel
             return entryList;
         }
 
-        /// <summary>
-        /// Get Category with specified ID
-        /// </summary>
-        /// <param name="pCategoryId"></param>
-        /// <returns>BDCategory object.</returns>
-        public static BDCategory GetCategoryWithId(Entities pContext, Guid pCategoryId)
-        {
-            BDCategory category;
-            IQueryable<BDCategory> categories = (from bdCategories in pContext.BDCategories
-                                                 where bdCategories.uuid == pCategoryId
-                                                 select bdCategories);
-            category = categories.AsQueryable().First<BDCategory>();
-            return category;
-        }
-
-
         public static SyncInfo SyncInfo()
         {
             return new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
@@ -157,6 +160,8 @@ namespace BDEditor.DataModel
             entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
             entry.modifiedBy = Guid.Parse(pAttributeDictionary[MODIFIEDBY]);
             entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
+            short displayOrder = short.Parse(pAttributeDictionary[DISPLAYORDER]);
+            entry.displayOrder = displayOrder;
 
             BDCategory.SaveCategory(pDataContext, entry);
 
@@ -169,7 +174,8 @@ namespace BDEditor.DataModel
             List<ReplaceableAttribute> attributeList = putAttributeRequest.Attribute;
             attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.UUID).WithValue(uuid.ToString().ToUpper()));
             attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.CREATEDBY).WithValue( (null == createdBy) ? Guid.Empty.ToString() : createdBy.ToString().ToUpper() ));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.DISPLAYORDER).WithValue(string.Format(@"{0}", displayOrder)));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.CREATEDBY).WithValue((null == createdBy) ? Guid.Empty.ToString() : createdBy.ToString().ToUpper()));
             attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()));
             attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(Constants.DATETIMEFORMAT)));
             attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)));
@@ -180,5 +186,7 @@ namespace BDEditor.DataModel
 
             return putAttributeRequest;
         }
+
+        #endregion
     }
 }

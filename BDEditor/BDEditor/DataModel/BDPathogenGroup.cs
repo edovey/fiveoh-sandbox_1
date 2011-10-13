@@ -6,6 +6,11 @@ using System.Data.Objects;
 using System.Linq;
 using System.Text;
 
+using Amazon.SimpleDB;
+using Amazon.SimpleDB.Model;
+
+using BDEditor.Classes;
+
 namespace BDEditor.DataModel
 {
     /// <summary>
@@ -14,6 +19,18 @@ namespace BDEditor.DataModel
     public partial class BDPathogenGroup
     {
         public const string ENTITYNAME_FRIENDLY = @"Pathogen Group";
+
+        public const string AWS_DOMAIN = @"bd_pathogenGroups_test";
+
+        private const string UUID = @"pg_uuid";
+        private const string SCHEMAVERSION = @"pg_schemaversion";
+        private const string CREATEDBY = @"pg_createdBy";
+        private const string CREATEDDATE = @"pg_createdDate";
+        private const string MODIFIEDBY = @"pg_createdBy";
+        private const string MODIFIEDDATE = @"pg_modifiedDate";
+        private const string PRESENTATIONID = @"pg_presentationId";
+        private const string DEPRECATED = @"pg_deprecated";
+        private const string DISPLAYORDER = @"pg_displayOrder";
 
         /// <summary>
         /// Extended Create method that sets created date and schema version
@@ -80,5 +97,86 @@ namespace BDEditor.DataModel
             pathogenGroup = pathogenGroups.AsQueryable().First<BDPathogenGroup>();
             return pathogenGroup;
         }
+            #region Repository
+
+        /// <summary>
+        /// Retrieve all entries changed since a given date
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pUpdateDateTime">Null date will return all records</param>
+        /// <returns>List of entries. Empty list if none found.</returns>
+        public static List<BDPathogenGroup> GetDiseasesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
+        {
+            List<BDPathogenGroup> entryList = new List<BDPathogenGroup>();
+            IQueryable<BDPathogenGroup> pathogenGroups;
+
+            if (null == pUpdateDateTime)
+            {
+                pathogenGroups = (from entry in pContext.BDPathogenGroups
+                            select entry);
+            }
+            else
+            {
+                pathogenGroups = (from entry in pContext.BDPathogenGroups
+                            where entry.modifiedDate > pUpdateDateTime.Value
+                            select entry);
+            }
+            if (pathogenGroups.Count() > 0)
+                entryList = pathogenGroups.ToList<BDPathogenGroup>();
+            return entryList;
+        }
+
+        public static SyncInfo SyncInfo()
+        {
+            return new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+        }
+
+        /// <summary>
+        /// Create or update an existing BDPathogenGroup from attributes in a dictionary. Saves the entry.
+        /// </summary>
+        /// <param name="pDataContext"></param>
+        /// <param name="pAttributeDictionary"></param>
+        /// <returns>Uuid of the created/updated entry</returns>
+        public static Guid LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
+        {
+            Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
+            bool deprecated = bool.Parse(pAttributeDictionary[DEPRECATED]);
+            BDPathogenGroup entry = BDPathogenGroup.GetPathogenGroupWithId(pDataContext, uuid);
+            if (null == entry)
+                entry = BDPathogenGroup.CreateBDPathogenGroup(uuid, deprecated);
+
+            short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
+            entry.schemaVersion = schemaVersion;
+            entry.createdBy = Guid.Parse(pAttributeDictionary[CREATEDBY]);
+            entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
+            entry.modifiedBy = Guid.Parse(pAttributeDictionary[MODIFIEDBY]);
+            entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
+            entry.presentationId = Guid.Parse(pAttributeDictionary[PRESENTATIONID]);
+            short displayOrder = short.Parse(pAttributeDictionary[DISPLAYORDER]);
+            entry.displayOrder = displayOrder;
+
+            BDPathogenGroup.SavePathogenGroup(pDataContext, entry);
+            
+            return uuid;
+        }
+
+        public PutAttributesRequest PutAttributes()
+        {
+            PutAttributesRequest putAttributeRequest = new PutAttributesRequest().WithDomainName(AWS_DOMAIN).WithItemName(this.uuid.ToString().ToUpper());
+            List<ReplaceableAttribute> attributeList = putAttributeRequest.Attribute;
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogenGroup.UUID).WithValue(uuid.ToString().ToUpper()));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogenGroup.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogenGroup.DISPLAYORDER).WithValue(string.Format(@"{0}", displayOrder))); 
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogenGroup.CREATEDBY).WithValue((null == createdBy) ? Guid.Empty.ToString() : createdBy.ToString().ToUpper()));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogenGroup.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(Constants.DATETIMEFORMAT)));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogenGroup.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogenGroup.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogenGroup.DEPRECATED).WithValue(deprecated.ToString()));
+
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogenGroup.PRESENTATIONID).WithValue((null == presentationId) ? Guid.Empty.ToString() : presentationId.ToString().ToUpper()));
+
+            return putAttributeRequest;
+        }
+        #endregion
     }
 }

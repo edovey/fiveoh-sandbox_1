@@ -161,7 +161,7 @@ namespace BDEditor.Views
             }
             else
             {
-                if ((null == currentLinkedNote) && (textControl.Text != string.Empty)) //Check the Text property because .rtf usually has formatting described
+                if ((null == currentLinkedNote) && (textControl.Text != string.Empty)) 
                 {
                     currentLinkedNote = BDLinkedNote.CreateLinkedNote(dataContext);
                     BDLinkedNoteAssociation association = BDLinkedNoteAssociation.CreateLinkedNoteAssociation(dataContext);
@@ -177,22 +177,23 @@ namespace BDEditor.Views
                 }
                 if (null != currentLinkedNote)
                 {
+                    TXTextControl.SaveSettings ss = new TXTextControl.SaveSettings();
+                    
                     string plainText;
-                    textControl.Save(out plainText, TXTextControl.StringStreamType.PlainText);
+                    textControl.Save(out plainText, TXTextControl.StringStreamType.PlainText,ss);
                     //string richText;
                     //textControl.Save(out richText, TXTextControl.StringStreamType.RichTextFormat);
                     string htmltext;
-                    textControl.Save(out htmltext, TXTextControl.StringStreamType.HTMLFormat);
+                    textControl.Save(out htmltext, TXTextControl.StringStreamType.HTMLFormat, ss);
                     string cleanText = CleanDocumentText(htmltext);
 
-                    //MessageBox.Show(cleanText, "Cleaned input text");
                     if (currentLinkedNote.documentText != cleanText)
                     {
                         currentLinkedNote.documentText = cleanText;
                         if (cleanText.Length > 127)
-                            currentLinkedNote.previewText = cleanText.Substring(0, 127);
+                            currentLinkedNote.previewText = plainText.Substring(0, 127);
                         else
-                            currentLinkedNote.previewText = cleanText;
+                            currentLinkedNote.previewText = plainText;
                     }
                     BDLinkedNote.SaveLinkedNote(dataContext, currentLinkedNote);
                 }

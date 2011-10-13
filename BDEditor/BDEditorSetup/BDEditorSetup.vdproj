@@ -27,6 +27,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_1D40AF0109084DCDAD77CA68CBC51C20"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_7D783B5EA11E44379669FAA734BF0BDA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -35,18 +41,6 @@
         {
         "MsmKey" = "8:_885187D6A9F3C4AE04FC192DDF139F53"
         "OwnerKey" = "8:_7D783B5EA11E44379669FAA734BF0BDA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_93EBBDB558755C9160BF9104EF3CBC33"
-        "OwnerKey" = "8:_7D783B5EA11E44379669FAA734BF0BDA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_93EBBDB558755C9160BF9104EF3CBC33"
-        "OwnerKey" = "8:_E84568DF3200DF8E89FB0D42DDE371A0"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -63,26 +57,44 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E84568DF3200DF8E89FB0D42DDE371A0"
+        "MsmKey" = "8:_E02DC4C3DEA02DA2C8610A917A80A639"
+        "OwnerKey" = "8:_7D783B5EA11E44379669FAA734BF0BDA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F7427D0A3D39FC8F1EDC1B52D65B64DF"
+        "OwnerKey" = "8:_7D783B5EA11E44379669FAA734BF0BDA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F7427D0A3D39FC8F1EDC1B52D65B64DF"
+        "OwnerKey" = "8:_E02DC4C3DEA02DA2C8610A917A80A639"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_7D783B5EA11E44379669FAA734BF0BDA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_7D783B5EA11E44379669FAA734BF0BDA"
+        "OwnerKey" = "8:_1D40AF0109084DCDAD77CA68CBC51C20"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E84568DF3200DF8E89FB0D42DDE371A0"
+        "OwnerKey" = "8:_E02DC4C3DEA02DA2C8610A917A80A639"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_93EBBDB558755C9160BF9104EF3CBC33"
+        "OwnerKey" = "8:_F7427D0A3D39FC8F1EDC1B52D65B64DF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -270,37 +282,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_93EBBDB558755C9160BF9104EF3CBC33"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:TXTextControl, Version=16.0.900.500, Culture=neutral, PublicKeyToken=6b83fe9a75cfb638, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_93EBBDB558755C9160BF9104EF3CBC33"
-                    {
-                    "Name" = "8:TXTextControl.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:TXTextControl.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_90736ED4E69A43E99604B8CB99408F28"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_ADF733B89ACD6DB8FBB402A75B9AF880"
             {
             "AssemblyRegister" = "3:1"
@@ -352,20 +333,51 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E84568DF3200DF8E89FB0D42DDE371A0"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E02DC4C3DEA02DA2C8610A917A80A639"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:TXTextControl.Windows.Forms, Version=16.0.100.500, Culture=neutral, PublicKeyToken=6b83fe9a75cfb638, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_E84568DF3200DF8E89FB0D42DDE371A0"
+                    "_E02DC4C3DEA02DA2C8610A917A80A639"
                     {
                     "Name" = "8:TXTextControl.Windows.Forms.dll"
                     "Attributes" = "3:512"
                     }
                 }
             "SourcePath" = "8:TXTextControl.Windows.Forms.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_90736ED4E69A43E99604B8CB99408F28"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F7427D0A3D39FC8F1EDC1B52D65B64DF"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:TXTextControl, Version=16.0.900.500, Culture=neutral, PublicKeyToken=6b83fe9a75cfb638, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_F7427D0A3D39FC8F1EDC1B52D65B64DF"
+                    {
+                    "Name" = "8:TXTextControl.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:TXTextControl.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_90736ED4E69A43E99604B8CB99408F28"
@@ -462,7 +474,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Bugs & Drugs Editor"
         "ProductCode" = "8:{F26CC5B2-6896-4A31-993D-8257143EFFFD}"
-        "PackageCode" = "8:{0E53E56C-BDAF-4A65-B057-BBC7F696B8DC}"
+        "PackageCode" = "8:{519CB020-7DA3-4374-B08E-66768FB0AB04}"
         "UpgradeCode" = "8:{14BE6AB3-949F-4D50-8F2A-7E46022D03A2}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -1006,6 +1018,115 @@
         }
         "MergeModule"
         {
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_1D40AF0109084DCDAD77CA68CBC51C20"
+            {
+            "UseDynamicProperties" = "11:TRUE"
+            "IsDependency" = "11:FALSE"
+            "SourcePath" = "8:C:\\Program Files\\The Imaging Source Europe GmbH\\TX Text Control 16.0.NET for Windows Forms\\MergeModule\\TXTextControl_WinForms_16.0.Express.msm"
+                "Properties"
+                {
+                    "_4404029B8857901A0580097138FB7A8C.1318558AC8B9415496B59CFE9D7F45E6"
+                    {
+                    "Name" = "8:_4404029B8857901A0580097138FB7A8C.1318558AC8B9415496B59CFE9D7F45E6"
+                    "DisplayName" = "8:"
+                    "Description" = "8:"
+                    "Type" = "3:2"
+                    "ContextData" = "8:InstallToGAC=;IsolateToManifest=_3EC34E339753431CB87BFB5CF6A9EB49.1318558AC8B9415496B59CFE9D7F45E6"
+                    "Attributes" = "3:0"
+                    "Setting" = "3:2"
+                    "Value" = "8:_3EC34E339753431CB87BFB5CF6A9EB49.1318558AC8B9415496B59CFE9D7F45E6"
+                    "DefaultValue" = "8:_3EC34E339753431CB87BFB5CF6A9EB49.1318558AC8B9415496B59CFE9D7F45E6"
+                    "ParentName" = "8:_A5F4126034E4430F82021A5E32900510.1318558AC8B9415496B59CFE9D7F45E6"
+                    "UsePlugInResources" = "11:FALSE"
+                    }
+                    "_8FFE0B56A09BF0D76847836DBEAF4D0E.1318558AC8B9415496B59CFE9D7F45E6"
+                    {
+                    "Name" = "8:_8FFE0B56A09BF0D76847836DBEAF4D0E.1318558AC8B9415496B59CFE9D7F45E6"
+                    "DisplayName" = "8:"
+                    "Description" = "8:"
+                    "Type" = "3:2"
+                    "ContextData" = "8:InstallToGAC=;IsolateToManifest=_F08674FF256043D585BBA3318BCFCB08.1318558AC8B9415496B59CFE9D7F45E6"
+                    "Attributes" = "3:0"
+                    "Setting" = "3:2"
+                    "Value" = "8:_F08674FF256043D585BBA3318BCFCB08.1318558AC8B9415496B59CFE9D7F45E6"
+                    "DefaultValue" = "8:_F08674FF256043D585BBA3318BCFCB08.1318558AC8B9415496B59CFE9D7F45E6"
+                    "ParentName" = "8:_A5F4126034E4430F82021A5E32900510.1318558AC8B9415496B59CFE9D7F45E6"
+                    "UsePlugInResources" = "11:FALSE"
+                    }
+                    "_A5F4126034E4430F82021A5E32900510.1318558AC8B9415496B59CFE9D7F45E6"
+                    {
+                    "Name" = "8:_A5F4126034E4430F82021A5E32900510.1318558AC8B9415496B59CFE9D7F45E6"
+                    "DisplayName" = "8:Module Retargetable Folder"
+                    "Description" = "8:"
+                    "Type" = "3:32769"
+                    "ContextData" = "8:_RetargetableFolder"
+                    "Attributes" = "3:6"
+                    "Setting" = "3:1"
+                    "UsePlugInResources" = "11:FALSE"
+                    }
+                    "_CF82547BA687EAA07154E78C77E2EA56.1318558AC8B9415496B59CFE9D7F45E6"
+                    {
+                    "Name" = "8:_CF82547BA687EAA07154E78C77E2EA56.1318558AC8B9415496B59CFE9D7F45E6"
+                    "DisplayName" = "8:"
+                    "Description" = "8:"
+                    "Type" = "3:2"
+                    "ContextData" = "8:InstallToGAC=;IsolateToManifest=_131B419BF2D6494398686AA6DF2E350A.1318558AC8B9415496B59CFE9D7F45E6"
+                    "Attributes" = "3:0"
+                    "Setting" = "3:2"
+                    "Value" = "8:_131B419BF2D6494398686AA6DF2E350A.1318558AC8B9415496B59CFE9D7F45E6"
+                    "DefaultValue" = "8:_131B419BF2D6494398686AA6DF2E350A.1318558AC8B9415496B59CFE9D7F45E6"
+                    "ParentName" = "8:_A5F4126034E4430F82021A5E32900510.1318558AC8B9415496B59CFE9D7F45E6"
+                    "UsePlugInResources" = "11:FALSE"
+                    }
+                    "_D68FD1A26CED2165FE962B8F37EFD13A.1318558AC8B9415496B59CFE9D7F45E6"
+                    {
+                    "Name" = "8:_D68FD1A26CED2165FE962B8F37EFD13A.1318558AC8B9415496B59CFE9D7F45E6"
+                    "DisplayName" = "8:"
+                    "Description" = "8:"
+                    "Type" = "3:2"
+                    "ContextData" = "8:InstallToGAC=;IsolateToManifest=_130C162C982B477092B919E1921504F3.1318558AC8B9415496B59CFE9D7F45E6"
+                    "Attributes" = "3:0"
+                    "Setting" = "3:2"
+                    "Value" = "8:_130C162C982B477092B919E1921504F3.1318558AC8B9415496B59CFE9D7F45E6"
+                    "DefaultValue" = "8:_130C162C982B477092B919E1921504F3.1318558AC8B9415496B59CFE9D7F45E6"
+                    "ParentName" = "8:_A5F4126034E4430F82021A5E32900510.1318558AC8B9415496B59CFE9D7F45E6"
+                    "UsePlugInResources" = "11:FALSE"
+                    }
+                    "_E35E54483FCA5986246916D4E8EE432E.1318558AC8B9415496B59CFE9D7F45E6"
+                    {
+                    "Name" = "8:_E35E54483FCA5986246916D4E8EE432E.1318558AC8B9415496B59CFE9D7F45E6"
+                    "DisplayName" = "8:"
+                    "Description" = "8:"
+                    "Type" = "3:2"
+                    "ContextData" = "8:InstallToGAC=;IsolateToManifest=_C2F7257502584987996E3BFA3981BA9B.1318558AC8B9415496B59CFE9D7F45E6"
+                    "Attributes" = "3:0"
+                    "Setting" = "3:2"
+                    "Value" = "8:_C2F7257502584987996E3BFA3981BA9B.1318558AC8B9415496B59CFE9D7F45E6"
+                    "DefaultValue" = "8:_C2F7257502584987996E3BFA3981BA9B.1318558AC8B9415496B59CFE9D7F45E6"
+                    "ParentName" = "8:_A5F4126034E4430F82021A5E32900510.1318558AC8B9415496B59CFE9D7F45E6"
+                    "UsePlugInResources" = "11:FALSE"
+                    }
+                    "_E99C3E545CC36546210DC5E984ED065E.1318558AC8B9415496B59CFE9D7F45E6"
+                    {
+                    "Name" = "8:_E99C3E545CC36546210DC5E984ED065E.1318558AC8B9415496B59CFE9D7F45E6"
+                    "DisplayName" = "8:"
+                    "Description" = "8:"
+                    "Type" = "3:2"
+                    "ContextData" = "8:InstallToGAC=;IsolateToManifest=_A0D27B566BF644BE8D9AF0D40260D78E.1318558AC8B9415496B59CFE9D7F45E6"
+                    "Attributes" = "3:0"
+                    "Setting" = "3:2"
+                    "Value" = "8:_A0D27B566BF644BE8D9AF0D40260D78E.1318558AC8B9415496B59CFE9D7F45E6"
+                    "DefaultValue" = "8:_A0D27B566BF644BE8D9AF0D40260D78E.1318558AC8B9415496B59CFE9D7F45E6"
+                    "ParentName" = "8:_A5F4126034E4430F82021A5E32900510.1318558AC8B9415496B59CFE9D7F45E6"
+                    "UsePlugInResources" = "11:FALSE"
+                    }
+                }
+            "LanguageId" = "3:0"
+            "Exclude" = "11:FALSE"
+            "Folder" = "8:"
+            "Feature" = "8:"
+            "IsolateTo" = "8:"
+            }
         }
         "ProjectOutput"
         {
@@ -1059,34 +1180,6 @@
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{E0309285-539C-449E-AAE0-02C2964A4933}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_F1B486703F824D7ABBEA645C2D254314"
-            {
-            "SourcePath" = "8:"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_90736ED4E69A43E99604B8CB99408F28"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:LocalizedResourceDlls"
             "OutputProjectGuid" = "8:{E0309285-539C-449E-AAE0-02C2964A4933}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"

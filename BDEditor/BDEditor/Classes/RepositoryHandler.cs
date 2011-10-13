@@ -46,12 +46,11 @@ namespace BDEditor.Classes
         public SyncInfoDictionary Sync(Entities pDataContext, DateTime? pLastSyncDate)
         {
             DateTime currentTimestamp = DateTime.Now;
-            SyncInfo syncInfo;
 
             #region Initialize Sync
             SyncInfoDictionary syncDictionary = new SyncInfoDictionary();
 
-            syncDictionary.Add(new SyncInfo(BDCategory.AWS_DOMAIN));
+            syncDictionary.Add(BDCategory.SyncInfo());
 
             // List the remote domains
             ListDomainsResponse sdbListDomainsResponse = SimpleDb.ListDomains(new ListDomainsRequest());
@@ -74,7 +73,6 @@ namespace BDEditor.Classes
                     simpleDb.CreateDomain(createDomain);
                 }
             }
-           
 
             #endregion
 

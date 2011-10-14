@@ -36,17 +36,18 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static BDSection CreateSection(Entities pContext)
         {
-            //using (BDEditor.DataModel.Entities context = new BDEditor.DataModel.Entities())
-            //{
-                BDSection section = CreateBDSection(Guid.NewGuid(), false);
-                section.createdBy = Guid.Empty;
-                section.createdDate = DateTime.Now;
-                section.schemaVersion = 0;
 
-                pContext.AddObject("BDSections", section);
+            BDSection section = CreateBDSection(Guid.NewGuid(), false);
+            section.createdBy = Guid.Empty;
+            section.createdDate = DateTime.Now;
+            section.schemaVersion = 0;
+            section.displayOrder = -1;
+            section.name = string.Empty;
 
-                return section;
-            //}
+            pContext.AddObject("BDSections", section);
+
+            return section;
+
         }
 
         /// <summary>
@@ -71,12 +72,16 @@ namespace BDEditor.DataModel
         /// <returns>BDSection object.</returns>
         public static BDSection GetSectionWithId(Entities pContext, Guid pSectionId)
         {
-            BDSection section;
-            
-                IQueryable<BDSection> sections = (from bdSections in pContext.BDSections
-                                                     where bdSections.uuid == pSectionId
-                                                     select bdSections);
-                section = sections.AsQueryable().First<BDSection>();
+            BDSection section = null;
+
+            if (null != pSectionId)
+            {
+                IQueryable<BDSection> entries = (from bdSections in pContext.BDSections
+                                                  where bdSections.uuid == pSectionId
+                                                  select bdSections);
+                if (entries.Count<BDSection>() > 0)
+                    section = entries.AsQueryable().First<BDSection>();
+            }
             return section;
         }
 
@@ -88,7 +93,7 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pUpdateDateTime">Null date will return all records</param>
         /// <returns>List of entries. Empty list if none found.</returns>
-        public static List<BDSection> GetSectionsUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
+        public static List<BDSection> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
         {
             List<BDSection> entryList = new List<BDSection>();
             IQueryable<BDSection> entries;
@@ -120,17 +125,20 @@ namespace BDEditor.DataModel
         /// <param name="pDataContext"></param>
         /// <param name="pAttributeDictionary"></param>
         /// <returns>Uuid of the created/updated entry</returns>
-        public static Guid LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
+        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
             bool deprecated = bool.Parse(pAttributeDictionary[DEPRECATED]);
             BDSection entry = BDSection.GetSectionWithId(pDataContext, uuid);
             if (null == entry)
+            {
                 entry = BDSection.CreateBDSection(uuid, deprecated);
+                pDataContext.AddObject("BDSections", entry);
+            }
 
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
             entry.schemaVersion = schemaVersion;
-            short displayOrder = short.Parse(pAttributeDictionary[DISPLAYORDER]);
+            short displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]);
             entry.displayOrder = displayOrder;
             entry.createdBy = Guid.Parse(pAttributeDictionary[CREATEDBY]);
             entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
@@ -138,7 +146,7 @@ namespace BDEditor.DataModel
             entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
             entry.name = pAttributeDictionary[NAME];
 
-            BDSection.SaveSection(pDataContext, entry);
+            pDataContext.SaveChanges();
 
             return uuid;
         }
@@ -147,16 +155,16 @@ namespace BDEditor.DataModel
         {
             PutAttributesRequest putAttributeRequest = new PutAttributesRequest().WithDomainName(AWS_DOMAIN).WithItemName(this.uuid.ToString().ToUpper());
             List<ReplaceableAttribute> attributeList = putAttributeRequest.Attribute;
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.UUID).WithValue(uuid.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.DISPLAYORDER).WithValue(string.Format(@"{0}", displayOrder)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.CREATEDBY).WithValue((null == createdBy) ? Guid.Empty.ToString() : createdBy.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(Constants.DATETIMEFORMAT)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.DEPRECATED).WithValue(deprecated.ToString()));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.UUID).WithValue(uuid.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.DISPLAYORDER).WithValue(string.Format(@"{0}", displayOrder)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.CREATEDBY).WithValue((null == createdBy) ? Guid.Empty.ToString() : createdBy.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.NAME).WithValue(name));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.NAME).WithValue(name).WithReplace(true));
 
             return putAttributeRequest;
         }

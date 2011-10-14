@@ -37,13 +37,16 @@ namespace BDEditor.DataModel
 
         public static BDPathogen CreatePathogen(Entities pContext)
         {
-                BDPathogen pathogen = CreateBDPathogen(Guid.NewGuid(), false);
-                pathogen.createdBy = Guid.Empty;
-                pathogen.createdDate = DateTime.Now;
-                pathogen.schemaVersion = 0;
+            BDPathogen pathogen = CreateBDPathogen(Guid.NewGuid(), false);
+            pathogen.createdBy = Guid.Empty;
+            pathogen.createdDate = DateTime.Now;
+            pathogen.schemaVersion = 0;
+            pathogen.displayOrder = -1;
+            pathogen.pathogenGroupId = Guid.Empty;
+            pathogen.name = string.Empty;
 
-                pContext.AddObject("BDPathogens", pathogen);
-                return pathogen;
+            pContext.AddObject("BDPathogens", pathogen);
+            return pathogen;
         }
 
         /// <summary>
@@ -87,11 +90,15 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static BDPathogen GetPathogenWithId(Entities pContext, Guid pPathogenId)
         {
-            BDPathogen pathogen;
-                IQueryable<BDPathogen> pathogens = (from bdPathogens in pContext.BDPathogens
+            BDPathogen pathogen = null;
+            if (null != pPathogenId)
+            {
+                IQueryable<BDPathogen> entries = (from bdPathogens in pContext.BDPathogens
                                                     where bdPathogens.uuid == pPathogenId
                                                     select bdPathogens);
-                pathogen = pathogens.AsQueryable().First<BDPathogen>();
+                if (entries.Count<BDPathogen>() > 0)
+                    pathogen = entries.AsQueryable().First<BDPathogen>();
+            }
             return pathogen;
         }
 
@@ -118,7 +125,7 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pUpdateDateTime">Null date will return all records</param>
         /// <returns>List of entries. Empty list if none found.</returns>
-        public static List<BDPathogen> GetPathogensUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
+        public static List<BDPathogen> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
         {
             List<BDPathogen> entryList = new List<BDPathogen>();
             IQueryable<BDPathogen> pathogens;
@@ -150,13 +157,16 @@ namespace BDEditor.DataModel
         /// <param name="pDataContext"></param>
         /// <param name="pAttributeDictionary"></param>
         /// <returns>Uuid of the created/updated entry</returns>
-        public static Guid LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
+        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
             bool deprecated = bool.Parse(pAttributeDictionary[DEPRECATED]);
             BDPathogen entry = BDPathogen.GetPathogenWithId(pDataContext, uuid);
             if (null == entry)
+            {
                 entry = BDPathogen.CreateBDPathogen(uuid, deprecated);
+                pDataContext.AddObject("BDPathogens", entry);
+            }
 
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
             entry.schemaVersion = schemaVersion;
@@ -166,10 +176,10 @@ namespace BDEditor.DataModel
             entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
             entry.pathogenGroupId = Guid.Parse(pAttributeDictionary[PATHOGENGROUPID]);
             entry.name = pAttributeDictionary[NAME];
-            short displayOrder = short.Parse(pAttributeDictionary[DISPLAYORDER]);
+            short displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]);
             entry.displayOrder = displayOrder;
 
-            BDPathogen.SavePathogen(pDataContext, entry);
+            pDataContext.SaveChanges();
 
             return uuid;
         }
@@ -178,17 +188,17 @@ namespace BDEditor.DataModel
         {
             PutAttributesRequest putAttributeRequest = new PutAttributesRequest().WithDomainName(AWS_DOMAIN).WithItemName(this.uuid.ToString().ToUpper());
             List<ReplaceableAttribute> attributeList = putAttributeRequest.Attribute;
-            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.UUID).WithValue(uuid.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.DISPLAYORDER).WithValue(string.Format(@"{0}", displayOrder)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.CREATEDBY).WithValue((null == createdBy) ? Guid.Empty.ToString() : createdBy.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(Constants.DATETIMEFORMAT)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.DEPRECATED).WithValue(deprecated.ToString()));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.UUID).WithValue(uuid.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.DISPLAYORDER).WithValue(string.Format(@"{0}", displayOrder)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.CREATEDBY).WithValue((null == createdBy) ? Guid.Empty.ToString() : createdBy.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.PATHOGENGROUPID).WithValue((null == pathogenGroupId) ? Guid.Empty.ToString() : pathogenGroupId.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.NAME).WithValue(name));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.PATHOGENGROUPID).WithValue((null == pathogenGroupId) ? Guid.Empty.ToString() : pathogenGroupId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.NAME).WithValue(name).WithReplace(true));
 
             return putAttributeRequest;
         }

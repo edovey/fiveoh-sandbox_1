@@ -46,14 +46,17 @@ namespace BDEditor.DataModel
         /// <returns>BDLinkedNote</returns>
         public static BDLinkedNote CreateLinkedNote(Entities pContext)
         {
-                BDLinkedNote linkedNote = CreateBDLinkedNote(Guid.NewGuid(), false);
-                linkedNote.createdBy = Guid.Empty;
-                linkedNote.createdDate = DateTime.Now;
-                linkedNote.schemaVersion = 0;
-                linkedNote.storageKey = string.Format("{0}{1}{2}", AWS_S3_PREFIX, linkedNote.uuid.ToString().ToUpper(), AWS_S3_FILEEXTENSION);
-                linkedNote.singleUse = false;
-                pContext.AddObject(@"BDLinkedNotes", linkedNote);
-                return linkedNote;
+            BDLinkedNote linkedNote = CreateBDLinkedNote(Guid.NewGuid(), false);
+            linkedNote.createdBy = Guid.Empty;
+            linkedNote.createdDate = DateTime.Now;
+            linkedNote.schemaVersion = 0;
+            linkedNote.documentText = string.Empty;
+            linkedNote.storageKey = string.Format("{0}{1}{2}", AWS_S3_PREFIX, linkedNote.uuid.ToString().ToUpper(), AWS_S3_FILEEXTENSION);
+            linkedNote.singleUse = false;
+            linkedNote.previewText = string.Empty;
+
+            pContext.AddObject(@"BDLinkedNotes", linkedNote);
+            return linkedNote;
         }
 
         /// <summary>
@@ -83,11 +86,12 @@ namespace BDEditor.DataModel
 
             if (null != pLinkedNoteId)
             {
-                IQueryable<BDLinkedNote> linkedNotes = (from bdLinkedNotes in pContext.BDLinkedNotes
+                IQueryable<BDLinkedNote> entries = (from bdLinkedNotes in pContext.BDLinkedNotes
                                                         where bdLinkedNotes.uuid == pLinkedNoteId
                                                         select bdLinkedNotes);
 
-                result = linkedNotes.AsQueryable().First<BDLinkedNote>();
+                if (entries.Count<BDLinkedNote>() > 0)
+                    result = entries.AsQueryable().First<BDLinkedNote>();
             }
 
             return result;
@@ -129,7 +133,7 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pUpdateDateTime">Null date will return all records</param>
         /// <returns>List of entries. Empty list if none found.</returns>
-        public static List<BDLinkedNote> GetLinkedNotesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
+        public static List<BDLinkedNote> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
         {
             List<BDLinkedNote> entryList = new List<BDLinkedNote>();
             IQueryable<BDLinkedNote> entries;
@@ -161,13 +165,16 @@ namespace BDEditor.DataModel
         /// <param name="pDataContext"></param>
         /// <param name="pAttributeDictionary"></param>
         /// <returns>Uuid of the created/updated entry</returns>
-        public static Guid LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
+        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
             bool deprecated = bool.Parse(pAttributeDictionary[DEPRECATED]);
             BDLinkedNote entry = BDLinkedNote.GetLinkedNoteWithId(pDataContext, uuid);
             if (null == entry)
+            {
                 entry = BDLinkedNote.CreateBDLinkedNote(uuid, deprecated);
+                pDataContext.AddObject("BDLinkedNotes", entry);
+            }
 
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
             entry.schemaVersion = schemaVersion;
@@ -182,7 +189,7 @@ namespace BDEditor.DataModel
             entry.storageKey = pAttributeDictionary[STORAGEKEY];
             entry.documentText = pAttributeDictionary[DOCUMENTTEXT];
 
-            BDLinkedNote.SaveLinkedNote(pDataContext, entry);
+            pDataContext.SaveChanges();
 
             return uuid;
         }
@@ -191,20 +198,20 @@ namespace BDEditor.DataModel
         {
             PutAttributesRequest putAttributeRequest = new PutAttributesRequest().WithDomainName(AWS_DOMAIN).WithItemName(this.uuid.ToString().ToUpper());
             List<ReplaceableAttribute> attributeList = putAttributeRequest.Attribute;
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.UUID).WithValue(uuid.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.CREATEDBY).WithValue((null == createdBy) ? Guid.Empty.ToString() : createdBy.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(Constants.DATETIMEFORMAT)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.DEPRECATED).WithValue(deprecated.ToString()));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.UUID).WithValue(uuid.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.CREATEDBY).WithValue((null == createdBy) ? Guid.Empty.ToString() : createdBy.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.LINKEDNOTEASSOCIATIONID).WithValue((null == linkedNoteAssociationId) ? Guid.Empty.ToString() : linkedNoteAssociationId.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.SCOPEID).WithValue((null == scopeId) ? Guid.Empty.ToString() : scopeId.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.PREVIEWTEXT).WithValue(previewText));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.DOCUMENTTEXT).WithValue(documentText));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.STORAGEKEY).WithValue(storageKey));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.SINGLEUSE).WithValue(singleUse.ToString()));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.LINKEDNOTEASSOCIATIONID).WithValue((null == linkedNoteAssociationId) ? Guid.Empty.ToString() : linkedNoteAssociationId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.SCOPEID).WithValue((null == scopeId) ? Guid.Empty.ToString() : scopeId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.PREVIEWTEXT).WithValue(previewText).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.DOCUMENTTEXT).WithValue(documentText).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.STORAGEKEY).WithValue(storageKey).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.SINGLEUSE).WithValue(singleUse.ToString()).WithReplace(true));
 
             return putAttributeRequest;
         }

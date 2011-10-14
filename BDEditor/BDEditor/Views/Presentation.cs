@@ -16,7 +16,6 @@ using BDEditor.DataModel;
 using BDEditor.Properties;
 using BDEditor.Views;
 
-
 namespace BDEditor
 {
     public partial class Presentation : Form
@@ -81,7 +80,7 @@ namespace BDEditor
             BDPresentation p = (BDPresentation)this.comboBox1.SelectedItem;
 
             tbName.Text = p.name;
-            rtbOverview.Text = p.overview;
+            //rtbOverview.Text = p.overview;
             selectedPresentation = p;
         }
 
@@ -105,7 +104,7 @@ namespace BDEditor
 
         private void rtbOverview_TextChanged(object sender, EventArgs e)
         {
-            selectedPresentation.overview = (sender as RichTextBox).Text;
+            //selectedPresentation.overview = (sender as RichTextBox).Text;
         }
 
         private void btnAddSection_Click(object sender, EventArgs e)

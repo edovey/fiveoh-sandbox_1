@@ -13,6 +13,7 @@ namespace BDEditor.Classes
         public int RowsPushed { get; set; }
         public bool ExistsOnRemote { get; set; }
         public string ModifiedDatePropertyName { get; set; }
+        public Exception Exception { get; set; }
 
         public List<AttributeDictionary> SyncConflictList { get; set; }
 
@@ -24,6 +25,7 @@ namespace BDEditor.Classes
             RowsPushed = 0;
             ExistsOnRemote = false;
             SyncConflictList = new List<AttributeDictionary>();
+            Exception = null;
         }
 
         public string GetLatestSelectString(DateTime? pLastSyncDate)

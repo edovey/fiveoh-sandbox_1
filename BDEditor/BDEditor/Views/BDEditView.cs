@@ -317,6 +317,7 @@ namespace BDEditor.Views
             }
 
             UpdateSyncLabel();
+            LoadSectionDropDown();
         }
     }
 }

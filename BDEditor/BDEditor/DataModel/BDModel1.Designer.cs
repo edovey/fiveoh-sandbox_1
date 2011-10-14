@@ -100,6 +100,22 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<BDLinkedNoteAssociation> BDLinkedNoteAssociations
+        {
+            get
+            {
+                if ((_BDLinkedNoteAssociations == null))
+                {
+                    _BDLinkedNoteAssociations = base.CreateObjectSet<BDLinkedNoteAssociation>("BDLinkedNoteAssociations");
+                }
+                return _BDLinkedNoteAssociations;
+            }
+        }
+        private ObjectSet<BDLinkedNoteAssociation> _BDLinkedNoteAssociations;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<BDLinkedNote> BDLinkedNotes
         {
             get
@@ -212,6 +228,22 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<BDSystemSetting> BDSystemSettings
+        {
+            get
+            {
+                if ((_BDSystemSettings == null))
+                {
+                    _BDSystemSettings = base.CreateObjectSet<BDSystemSetting>("BDSystemSettings");
+                }
+                return _BDSystemSettings;
+            }
+        }
+        private ObjectSet<BDSystemSetting> _BDSystemSettings;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<BDTherapy> BDTherapies
         {
             get
@@ -240,38 +272,6 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDTherapyGroup> _BDTherapyGroups;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<BDLinkedNoteAssociation> BDLinkedNoteAssociations
-        {
-            get
-            {
-                if ((_BDLinkedNoteAssociations == null))
-                {
-                    _BDLinkedNoteAssociations = base.CreateObjectSet<BDLinkedNoteAssociation>("BDLinkedNoteAssociations");
-                }
-                return _BDLinkedNoteAssociations;
-            }
-        }
-        private ObjectSet<BDLinkedNoteAssociation> _BDLinkedNoteAssociations;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<BDSystemSetting> BDSystemSettings
-        {
-            get
-            {
-                if ((_BDSystemSettings == null))
-                {
-                    _BDSystemSettings = base.CreateObjectSet<BDSystemSetting>("BDSystemSettings");
-                }
-                return _BDSystemSettings;
-            }
-        }
-        private ObjectSet<BDSystemSetting> _BDSystemSettings;
 
         #endregion
         #region AddTo Methods
@@ -290,6 +290,14 @@ namespace BDEditor.DataModel
         public void AddToBDDiseases(BDDisease bDDisease)
         {
             base.AddObject("BDDiseases", bDDisease);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDLinkedNoteAssociations EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDLinkedNoteAssociations(BDLinkedNoteAssociation bDLinkedNoteAssociation)
+        {
+            base.AddObject("BDLinkedNoteAssociations", bDLinkedNoteAssociation);
         }
     
         /// <summary>
@@ -349,6 +357,14 @@ namespace BDEditor.DataModel
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the BDSystemSettings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDSystemSettings(BDSystemSetting bDSystemSetting)
+        {
+            base.AddObject("BDSystemSettings", bDSystemSetting);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the BDTherapies EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToBDTherapies(BDTherapy bDTherapy)
@@ -362,22 +378,6 @@ namespace BDEditor.DataModel
         public void AddToBDTherapyGroups(BDTherapyGroup bDTherapyGroup)
         {
             base.AddObject("BDTherapyGroups", bDTherapyGroup);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDLinkedNoteAssociations EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDLinkedNoteAssociations(BDLinkedNoteAssociation bDLinkedNoteAssociation)
-        {
-            base.AddObject("BDLinkedNoteAssociations", bDLinkedNoteAssociation);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDSystemSettings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDSystemSettings(BDSystemSetting bDSystemSetting)
-        {
-            base.AddObject("BDSystemSettings", bDSystemSetting);
         }
 
         #endregion
@@ -590,7 +590,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> schemaVersion
+        public Nullable<global::System.Int32> schemaVersion
         {
             get
             {
@@ -605,8 +605,8 @@ namespace BDEditor.DataModel
                 OnschemaVersionChanged();
             }
         }
-        private Nullable<global::System.Int16> _schemaVersion;
-        partial void OnschemaVersionChanging(Nullable<global::System.Int16> value);
+        private Nullable<global::System.Int32> _schemaVersion;
+        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
         partial void OnschemaVersionChanged();
     
         /// <summary>
@@ -662,7 +662,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> displayOrder
+        public Nullable<global::System.Int32> displayOrder
         {
             get
             {
@@ -677,8 +677,8 @@ namespace BDEditor.DataModel
                 OndisplayOrderChanged();
             }
         }
-        private Nullable<global::System.Int16> _displayOrder;
-        partial void OndisplayOrderChanging(Nullable<global::System.Int16> value);
+        private Nullable<global::System.Int32> _displayOrder;
+        partial void OndisplayOrderChanging(Nullable<global::System.Int32> value);
         partial void OndisplayOrderChanged();
 
         #endregion
@@ -911,31 +911,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String overview
-        {
-            get
-            {
-                return _overview;
-            }
-            set
-            {
-                OnoverviewChanging(value);
-                ReportPropertyChanging("overview");
-                _overview = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("overview");
-                OnoverviewChanged();
-            }
-        }
-        private global::System.String _overview;
-        partial void OnoverviewChanging(global::System.String value);
-        partial void OnoverviewChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int16> schemaVersion
+        public Nullable<global::System.Int32> schemaVersion
         {
             get
             {
@@ -950,8 +926,8 @@ namespace BDEditor.DataModel
                 OnschemaVersionChanged();
             }
         }
-        private Nullable<global::System.Int16> _schemaVersion;
-        partial void OnschemaVersionChanging(Nullable<global::System.Int16> value);
+        private Nullable<global::System.Int32> _schemaVersion;
+        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
         partial void OnschemaVersionChanged();
     
         /// <summary>
@@ -1007,7 +983,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> displayOrder
+        public Nullable<global::System.Int32> displayOrder
         {
             get
             {
@@ -1022,8 +998,8 @@ namespace BDEditor.DataModel
                 OndisplayOrderChanged();
             }
         }
-        private Nullable<global::System.Int16> _displayOrder;
-        partial void OndisplayOrderChanging(Nullable<global::System.Int16> value);
+        private Nullable<global::System.Int32> _displayOrder;
+        partial void OndisplayOrderChanging(Nullable<global::System.Int32> value);
         partial void OndisplayOrderChanged();
 
         #endregion
@@ -1184,7 +1160,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> schemaVersion
+        public Nullable<global::System.Int32> schemaVersion
         {
             get
             {
@@ -1199,8 +1175,8 @@ namespace BDEditor.DataModel
                 OnschemaVersionChanged();
             }
         }
-        private Nullable<global::System.Int16> _schemaVersion;
-        partial void OnschemaVersionChanging(Nullable<global::System.Int16> value);
+        private Nullable<global::System.Int32> _schemaVersion;
+        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
         partial void OnschemaVersionChanged();
     
         /// <summary>
@@ -1551,7 +1527,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> schemaVersion
+        public Nullable<global::System.Int32> schemaVersion
         {
             get
             {
@@ -1566,8 +1542,8 @@ namespace BDEditor.DataModel
                 OnschemaVersionChanged();
             }
         }
-        private Nullable<global::System.Int16> _schemaVersion;
-        partial void OnschemaVersionChanging(Nullable<global::System.Int16> value);
+        private Nullable<global::System.Int32> _schemaVersion;
+        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
         partial void OnschemaVersionChanged();
     
         /// <summary>
@@ -1671,7 +1647,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> displayOrder
+        public Nullable<global::System.Int32> displayOrder
         {
             get
             {
@@ -1686,8 +1662,8 @@ namespace BDEditor.DataModel
                 OndisplayOrderChanged();
             }
         }
-        private Nullable<global::System.Int16> _displayOrder;
-        partial void OndisplayOrderChanging(Nullable<global::System.Int16> value);
+        private Nullable<global::System.Int32> _displayOrder;
+        partial void OndisplayOrderChanging(Nullable<global::System.Int32> value);
         partial void OndisplayOrderChanged();
     
         /// <summary>
@@ -1872,7 +1848,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String inUseBy
+        public Nullable<global::System.Guid> inUseBy
         {
             get
             {
@@ -1882,13 +1858,13 @@ namespace BDEditor.DataModel
             {
                 OninUseByChanging(value);
                 ReportPropertyChanging("inUseBy");
-                _inUseBy = StructuralObject.SetValidValue(value, true);
+                _inUseBy = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("inUseBy");
                 OninUseByChanged();
             }
         }
-        private global::System.String _inUseBy;
-        partial void OninUseByChanging(global::System.String value);
+        private Nullable<global::System.Guid> _inUseBy;
+        partial void OninUseByChanging(Nullable<global::System.Guid> value);
         partial void OninUseByChanged();
     
         /// <summary>
@@ -1968,7 +1944,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> schemaVersion
+        public Nullable<global::System.Int32> schemaVersion
         {
             get
             {
@@ -1983,8 +1959,8 @@ namespace BDEditor.DataModel
                 OnschemaVersionChanged();
             }
         }
-        private Nullable<global::System.Int16> _schemaVersion;
-        partial void OnschemaVersionChanging(Nullable<global::System.Int16> value);
+        private Nullable<global::System.Int32> _schemaVersion;
+        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
         partial void OnschemaVersionChanged();
     
         /// <summary>
@@ -1992,7 +1968,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> displayOrder
+        public Nullable<global::System.Int32> displayOrder
         {
             get
             {
@@ -2007,8 +1983,8 @@ namespace BDEditor.DataModel
                 OndisplayOrderChanged();
             }
         }
-        private Nullable<global::System.Int16> _displayOrder;
-        partial void OndisplayOrderChanging(Nullable<global::System.Int16> value);
+        private Nullable<global::System.Int32> _displayOrder;
+        partial void OndisplayOrderChanging(Nullable<global::System.Int32> value);
         partial void OndisplayOrderChanged();
     
         /// <summary>
@@ -2241,7 +2217,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> schemaVersion
+        public Nullable<global::System.Int32> schemaVersion
         {
             get
             {
@@ -2256,8 +2232,8 @@ namespace BDEditor.DataModel
                 OnschemaVersionChanged();
             }
         }
-        private Nullable<global::System.Int16> _schemaVersion;
-        partial void OnschemaVersionChanging(Nullable<global::System.Int16> value);
+        private Nullable<global::System.Int32> _schemaVersion;
+        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
         partial void OnschemaVersionChanged();
     
         /// <summary>
@@ -2265,7 +2241,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> displayOrder
+        public Nullable<global::System.Int32> displayOrder
         {
             get
             {
@@ -2280,8 +2256,8 @@ namespace BDEditor.DataModel
                 OndisplayOrderChanged();
             }
         }
-        private Nullable<global::System.Int16> _displayOrder;
-        partial void OndisplayOrderChanging(Nullable<global::System.Int16> value);
+        private Nullable<global::System.Int32> _displayOrder;
+        partial void OndisplayOrderChanging(Nullable<global::System.Int32> value);
         partial void OndisplayOrderChanged();
     
         /// <summary>
@@ -2466,7 +2442,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String inUseBy
+        public Nullable<global::System.Guid> inUseBy
         {
             get
             {
@@ -2476,13 +2452,13 @@ namespace BDEditor.DataModel
             {
                 OninUseByChanging(value);
                 ReportPropertyChanging("inUseBy");
-                _inUseBy = StructuralObject.SetValidValue(value, true);
+                _inUseBy = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("inUseBy");
                 OninUseByChanged();
             }
         }
-        private global::System.String _inUseBy;
-        partial void OninUseByChanging(global::System.String value);
+        private Nullable<global::System.Guid> _inUseBy;
+        partial void OninUseByChanging(Nullable<global::System.Guid> value);
         partial void OninUseByChanged();
     
         /// <summary>
@@ -2490,7 +2466,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> displayOrder
+        public Nullable<global::System.Int32> displayOrder
         {
             get
             {
@@ -2505,8 +2481,8 @@ namespace BDEditor.DataModel
                 OndisplayOrderChanged();
             }
         }
-        private Nullable<global::System.Int16> _displayOrder;
-        partial void OndisplayOrderChanging(Nullable<global::System.Int16> value);
+        private Nullable<global::System.Int32> _displayOrder;
+        partial void OndisplayOrderChanging(Nullable<global::System.Int32> value);
         partial void OndisplayOrderChanged();
     
         /// <summary>
@@ -2586,31 +2562,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String overview
-        {
-            get
-            {
-                return _overview;
-            }
-            set
-            {
-                OnoverviewChanging(value);
-                ReportPropertyChanging("overview");
-                _overview = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("overview");
-                OnoverviewChanged();
-            }
-        }
-        private global::System.String _overview;
-        partial void OnoverviewChanging(global::System.String value);
-        partial void OnoverviewChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int16> schemaVersion
+        public Nullable<global::System.Int32> schemaVersion
         {
             get
             {
@@ -2625,8 +2577,8 @@ namespace BDEditor.DataModel
                 OnschemaVersionChanged();
             }
         }
-        private Nullable<global::System.Int16> _schemaVersion;
-        partial void OnschemaVersionChanging(Nullable<global::System.Int16> value);
+        private Nullable<global::System.Int32> _schemaVersion;
+        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
         partial void OnschemaVersionChanged();
 
         #endregion
@@ -2962,7 +2914,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> schemaVersion
+        public Nullable<global::System.Int32> schemaVersion
         {
             get
             {
@@ -2977,8 +2929,8 @@ namespace BDEditor.DataModel
                 OnschemaVersionChanged();
             }
         }
-        private Nullable<global::System.Int16> _schemaVersion;
-        partial void OnschemaVersionChanging(Nullable<global::System.Int16> value);
+        private Nullable<global::System.Int32> _schemaVersion;
+        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
         partial void OnschemaVersionChanged();
     
         /// <summary>
@@ -3034,7 +2986,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> displayOrder
+        public Nullable<global::System.Int32> displayOrder
         {
             get
             {
@@ -3049,8 +3001,8 @@ namespace BDEditor.DataModel
                 OndisplayOrderChanged();
             }
         }
-        private Nullable<global::System.Int16> _displayOrder;
-        partial void OndisplayOrderChanging(Nullable<global::System.Int16> value);
+        private Nullable<global::System.Int32> _displayOrder;
+        partial void OndisplayOrderChanging(Nullable<global::System.Int32> value);
         partial void OndisplayOrderChanged();
 
         #endregion
@@ -3259,7 +3211,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> schemaVersion
+        public Nullable<global::System.Int32> schemaVersion
         {
             get
             {
@@ -3274,8 +3226,8 @@ namespace BDEditor.DataModel
                 OnschemaVersionChanged();
             }
         }
-        private Nullable<global::System.Int16> _schemaVersion;
-        partial void OnschemaVersionChanging(Nullable<global::System.Int16> value);
+        private Nullable<global::System.Int32> _schemaVersion;
+        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
         partial void OnschemaVersionChanged();
     
         /// <summary>
@@ -3331,7 +3283,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> displayOrder
+        public Nullable<global::System.Int32> displayOrder
         {
             get
             {
@@ -3346,8 +3298,8 @@ namespace BDEditor.DataModel
                 OndisplayOrderChanged();
             }
         }
-        private Nullable<global::System.Int16> _displayOrder;
-        partial void OndisplayOrderChanging(Nullable<global::System.Int16> value);
+        private Nullable<global::System.Int32> _displayOrder;
+        partial void OndisplayOrderChanging(Nullable<global::System.Int32> value);
         partial void OndisplayOrderChanged();
 
         #endregion
@@ -3589,7 +3541,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> displayOrder
+        public Nullable<global::System.Int32> displayOrder
         {
             get
             {
@@ -3604,8 +3556,8 @@ namespace BDEditor.DataModel
                 OndisplayOrderChanged();
             }
         }
-        private Nullable<global::System.Int16> _displayOrder;
-        partial void OndisplayOrderChanging(Nullable<global::System.Int16> value);
+        private Nullable<global::System.Int32> _displayOrder;
+        partial void OndisplayOrderChanging(Nullable<global::System.Int32> value);
         partial void OndisplayOrderChanged();
     
         /// <summary>
@@ -3661,7 +3613,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String inUseBy
+        public Nullable<global::System.Guid> inUseBy
         {
             get
             {
@@ -3671,13 +3623,13 @@ namespace BDEditor.DataModel
             {
                 OninUseByChanging(value);
                 ReportPropertyChanging("inUseBy");
-                _inUseBy = StructuralObject.SetValidValue(value, true);
+                _inUseBy = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("inUseBy");
                 OninUseByChanged();
             }
         }
-        private global::System.String _inUseBy;
-        partial void OninUseByChanging(global::System.String value);
+        private Nullable<global::System.Guid> _inUseBy;
+        partial void OninUseByChanging(Nullable<global::System.Guid> value);
         partial void OninUseByChanged();
     
         /// <summary>
@@ -3757,7 +3709,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> schemaVersion
+        public Nullable<global::System.Int32> schemaVersion
         {
             get
             {
@@ -3772,8 +3724,8 @@ namespace BDEditor.DataModel
                 OnschemaVersionChanged();
             }
         }
-        private Nullable<global::System.Int16> _schemaVersion;
-        partial void OnschemaVersionChanging(Nullable<global::System.Int16> value);
+        private Nullable<global::System.Int32> _schemaVersion;
+        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
         partial void OnschemaVersionChanged();
     
         /// <summary>
@@ -4006,7 +3958,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> displayOrder
+        public Nullable<global::System.Int32> displayOrder
         {
             get
             {
@@ -4021,8 +3973,8 @@ namespace BDEditor.DataModel
                 OndisplayOrderChanged();
             }
         }
-        private Nullable<global::System.Int16> _displayOrder;
-        partial void OndisplayOrderChanging(Nullable<global::System.Int16> value);
+        private Nullable<global::System.Int32> _displayOrder;
+        partial void OndisplayOrderChanging(Nullable<global::System.Int32> value);
         partial void OndisplayOrderChanged();
     
         /// <summary>
@@ -4030,7 +3982,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String inUseBy
+        public Nullable<global::System.Guid> inUseBy
         {
             get
             {
@@ -4040,13 +3992,13 @@ namespace BDEditor.DataModel
             {
                 OninUseByChanging(value);
                 ReportPropertyChanging("inUseBy");
-                _inUseBy = StructuralObject.SetValidValue(value, true);
+                _inUseBy = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("inUseBy");
                 OninUseByChanged();
             }
         }
-        private global::System.String _inUseBy;
-        partial void OninUseByChanging(global::System.String value);
+        private Nullable<global::System.Guid> _inUseBy;
+        partial void OninUseByChanging(Nullable<global::System.Guid> value);
         partial void OninUseByChanged();
     
         /// <summary>
@@ -4102,30 +4054,6 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String therapyNote
-        {
-            get
-            {
-                return _therapyNote;
-            }
-            set
-            {
-                OntherapyNoteChanging(value);
-                ReportPropertyChanging("therapyNote");
-                _therapyNote = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("therapyNote");
-                OntherapyNoteChanged();
-            }
-        }
-        private global::System.String _therapyNote;
-        partial void OntherapyNoteChanging(global::System.String value);
-        partial void OntherapyNoteChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
         public global::System.String name
         {
             get
@@ -4150,7 +4078,7 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int16> schemaVersion
+        public Nullable<global::System.Int32> schemaVersion
         {
             get
             {
@@ -4165,8 +4093,8 @@ namespace BDEditor.DataModel
                 OnschemaVersionChanged();
             }
         }
-        private Nullable<global::System.Int16> _schemaVersion;
-        partial void OnschemaVersionChanging(Nullable<global::System.Int16> value);
+        private Nullable<global::System.Int32> _schemaVersion;
+        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
         partial void OnschemaVersionChanged();
     
         /// <summary>

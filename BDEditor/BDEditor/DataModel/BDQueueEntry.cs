@@ -16,10 +16,10 @@ namespace BDEditor.DataModel
         public static BDQueueEntry GetQueueEntryWithId(Entities pContext, Guid pQueueEntryId)
         {
             BDQueueEntry queueEntry;
-                IQueryable<BDQueueEntry> queueEntries = (from bdQueueEntries in pContext.BDQueueEntries
-                                                         where bdQueueEntries.uuid == pQueueEntryId
-                                                         select bdQueueEntries);
-                queueEntry = queueEntries.AsQueryable().First<BDQueueEntry>();
+            IQueryable<BDQueueEntry> queueEntries = (from bdQueueEntries in pContext.BDQueueEntries
+                                                        where bdQueueEntries.uuid == pQueueEntryId
+                                                        select bdQueueEntries);
+            queueEntry = queueEntries.AsQueryable().First<BDQueueEntry>();
             return queueEntry;
         }
     }

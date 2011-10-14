@@ -39,14 +39,17 @@ namespace BDEditor.DataModel
         /// <returns>New BDSubcategory object</returns>
         public static BDSubcategory CreateSubcategory(Entities pContext)
         {
-                BDSubcategory subcategory = CreateBDSubcategory(Guid.NewGuid(), false);
-                subcategory.createdBy = Guid.Empty;
-                subcategory.createdDate = DateTime.Now;
-                subcategory.schemaVersion = 0;
+            BDSubcategory subcategory = CreateBDSubcategory(Guid.NewGuid(), false);
+            subcategory.createdBy = Guid.Empty;
+            subcategory.createdDate = DateTime.Now;
+            subcategory.schemaVersion = 0;
+            subcategory.displayOrder = -1;
+            subcategory.name = string.Empty;
+            subcategory.categoryId = Guid.Empty;
 
-                pContext.AddObject("BDSubcategories", subcategory);
+            pContext.AddObject("BDSubcategories", subcategory);
 
-                return subcategory;
+            return subcategory;
         }
 
         /// <summary>
@@ -91,11 +94,15 @@ namespace BDEditor.DataModel
         /// <returns>Subcategory object.</returns>
         public static BDSubcategory GetSubcategoryWithId(Entities pContext, Guid pSubcategoryId)
         {
-            BDSubcategory subcategory;
-            IQueryable<BDSubcategory> subcategories = (from bdSubcategories in pContext.BDSubcategories
-                                                        where bdSubcategories.uuid == pSubcategoryId
-                                                        select bdSubcategories);
-            subcategory = subcategories.AsQueryable().First<BDSubcategory>();
+            BDSubcategory subcategory = null;
+            if (null != pSubcategoryId)
+            {
+                IQueryable<BDSubcategory> entries = (from bdSubcategories in pContext.BDSubcategories
+                                                           where bdSubcategories.uuid == pSubcategoryId
+                                                           select bdSubcategories);
+                if (entries.Count<BDSubcategory>() > 0)
+                    subcategory = entries.AsQueryable().First<BDSubcategory>();
+            }
             return subcategory;
         }
 
@@ -107,7 +114,7 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pUpdateDateTime">Null date will return all records</param>
         /// <returns>List of entries. Empty list if none found.</returns>
-        public static List<BDSubcategory> GeSubcategoriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
+        public static List<BDSubcategory> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
         {
             List<BDSubcategory> entryList = new List<BDSubcategory>();
             IQueryable<BDSubcategory> entries;
@@ -139,17 +146,20 @@ namespace BDEditor.DataModel
         /// <param name="pDataContext"></param>
         /// <param name="pAttributeDictionary"></param>
         /// <returns>Uuid of the created/updated entry</returns>
-        public static Guid LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
+        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
             bool deprecated = bool.Parse(pAttributeDictionary[DEPRECATED]);
             BDSubcategory entry = BDSubcategory.GetSubcategoryWithId(pDataContext, uuid);
             if (null == entry)
+            {
                 entry = BDSubcategory.CreateBDSubcategory(uuid, deprecated);
+                pDataContext.AddObject("BDSubcategories", entry);
+            }
 
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
             entry.schemaVersion = schemaVersion;
-            short displayOrder = short.Parse(pAttributeDictionary[DISPLAYORDER]);
+            short displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]);
             entry.displayOrder = displayOrder;
             entry.createdBy = Guid.Parse(pAttributeDictionary[CREATEDBY]);
             entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
@@ -158,7 +168,7 @@ namespace BDEditor.DataModel
             entry.categoryId = Guid.Parse(pAttributeDictionary[CATEGORYID]);
             entry.name = pAttributeDictionary[NAME];
 
-            BDSubcategory.SaveSubcategory(pDataContext, entry);
+            pDataContext.SaveChanges();
 
             return uuid;
         }
@@ -167,17 +177,17 @@ namespace BDEditor.DataModel
         {
             PutAttributesRequest putAttributeRequest = new PutAttributesRequest().WithDomainName(AWS_DOMAIN).WithItemName(this.uuid.ToString().ToUpper());
             List<ReplaceableAttribute> attributeList = putAttributeRequest.Attribute;
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.UUID).WithValue(uuid.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.DISPLAYORDER).WithValue(string.Format(@"{0}", displayOrder)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.CREATEDBY).WithValue((null == createdBy) ? Guid.Empty.ToString() : createdBy.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(Constants.DATETIMEFORMAT)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.DEPRECATED).WithValue(deprecated.ToString()));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.UUID).WithValue(uuid.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.DISPLAYORDER).WithValue(string.Format(@"{0}", displayOrder)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.CREATEDBY).WithValue((null == createdBy) ? Guid.Empty.ToString() : createdBy.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.CATEGORYID).WithValue((null == categoryId) ? Guid.Empty.ToString() : categoryId.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.NAME).WithValue(name));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.CATEGORYID).WithValue((null == categoryId) ? Guid.Empty.ToString() : categoryId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.NAME).WithValue(name).WithReplace(true));
 
             return putAttributeRequest;
         }

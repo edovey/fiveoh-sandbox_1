@@ -40,14 +40,17 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static BDCategory CreateCategory(Entities pContext)
         {
-                BDCategory category = CreateBDCategory(Guid.NewGuid(), false);
-                category.createdBy = Guid.Empty;
-                category.createdDate = DateTime.Now;
-                category.schemaVersion = 0;
+            BDCategory category = CreateBDCategory(Guid.NewGuid(), false);
+            category.createdBy = Guid.Empty;
+            category.createdDate = DateTime.Now;
+            category.schemaVersion = 0;
+            category.displayOrder = -1;
+            category.sectionId = Guid.Empty;
+            category.name = string.Empty;
 
-                pContext.AddObject("BDCategories", category);
+            pContext.AddObject("BDCategories", category);
             
-                return category;
+            return category;
         }
 
         /// <summary>
@@ -92,11 +95,16 @@ namespace BDEditor.DataModel
         /// <returns>BDCategory object.</returns>
         public static BDCategory GetCategoryWithId(Entities pContext, Guid pCategoryId)
         {
-            BDCategory category;
-            IQueryable<BDCategory> categories = (from bdCategories in pContext.BDCategories
-                                                 where bdCategories.uuid == pCategoryId
-                                                 select bdCategories);
-            category = categories.AsQueryable().First<BDCategory>();
+            BDCategory category = null;
+            if (null != pCategoryId)
+            {
+                IQueryable<BDCategory> entries = (from bdCategories in pContext.BDCategories
+                                                  where bdCategories.uuid == pCategoryId
+                                                  select bdCategories);
+
+                if (entries.Count<BDCategory>() > 0)
+                    category = entries.AsQueryable().First<BDCategory>();
+            }
             return category;
         }
 
@@ -108,7 +116,7 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pUpdateDateTime">Null date will return all records</param>
         /// <returns>List of entries. Empty list if none found.</returns>
-        public static List<BDCategory> GetCategoriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
+        public static List<BDCategory> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
         {
             List<BDCategory> entryList = new List<BDCategory>();
             IQueryable<BDCategory> categories;
@@ -144,7 +152,7 @@ namespace BDEditor.DataModel
         /// <param name="pDataContext"></param>
         /// <param name="pAttributeDictionary"></param>
         /// <returns>Uuid of the created/updated entry</returns>
-        public static Guid LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
+        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
             bool deprecated = bool.Parse(pAttributeDictionary[DEPRECATED]);
@@ -152,6 +160,7 @@ namespace BDEditor.DataModel
             if (null == entry)
             {
                 entry = BDCategory.CreateBDCategory(uuid, deprecated);
+                pDataContext.AddObject("BDCategories", entry);
             }
 
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
@@ -162,10 +171,10 @@ namespace BDEditor.DataModel
             entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
             entry.modifiedBy = Guid.Parse(pAttributeDictionary[MODIFIEDBY]);
             entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
-            short displayOrder = short.Parse(pAttributeDictionary[DISPLAYORDER]);
+            short displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]);
             entry.displayOrder = displayOrder;
 
-            BDCategory.SaveCategory(pDataContext, entry);
+            pDataContext.SaveChanges();
 
             return uuid;
         }
@@ -174,17 +183,17 @@ namespace BDEditor.DataModel
         {
             PutAttributesRequest putAttributeRequest = new PutAttributesRequest().WithDomainName(AWS_DOMAIN).WithItemName(this.uuid.ToString().ToUpper());
             List<ReplaceableAttribute> attributeList = putAttributeRequest.Attribute;
-            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.UUID).WithValue(uuid.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.DISPLAYORDER).WithValue(string.Format(@"{0}", displayOrder)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.CREATEDBY).WithValue((null == createdBy) ? Guid.Empty.ToString() : createdBy.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(Constants.DATETIMEFORMAT)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.UUID).WithValue(uuid.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.DISPLAYORDER).WithValue(string.Format(@"{0}", displayOrder)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.CREATEDBY).WithValue((null == createdBy) ? Guid.Empty.ToString() : createdBy.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.SECTIONID).WithValue((null == sectionId) ? Guid.Empty.ToString() : sectionId.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.NAME).WithValue(name));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.DEPRECATED).WithValue(deprecated.ToString()));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.SECTIONID).WithValue((null == sectionId) ? Guid.Empty.ToString() : sectionId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.NAME).WithValue(name).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
 
             return putAttributeRequest;
         }

@@ -34,7 +34,6 @@ namespace BDEditor.DataModel
         private const string THERAPYGROUPJOINTYPE = @"tg_therapyGroupJoinType";
         private const string NAME = @"tg_name";
         private const string DEPRECATED = @"tg_deprecated";
-        private const string THERAPYNOTE = @"tg_therapyNote";
 
         public enum TherapyGroupJoinType
         {
@@ -49,15 +48,18 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static BDTherapyGroup CreateTherapyGroup(Entities pContext)
         {
-                BDTherapyGroup therapyGroup = CreateBDTherapyGroup(Guid.NewGuid(), false);
-                therapyGroup.createdBy = Guid.Empty;
-                therapyGroup.createdDate = DateTime.Now;
-                therapyGroup.schemaVersion = 0;
-                therapyGroup.therapyGroupJoinType = (int)TherapyGroupJoinType.None;
+            BDTherapyGroup therapyGroup = CreateBDTherapyGroup(Guid.NewGuid(), false);
+            therapyGroup.createdBy = Guid.Empty;
+            therapyGroup.createdDate = DateTime.Now;
+            therapyGroup.schemaVersion = 0;
+            therapyGroup.therapyGroupJoinType = (int)TherapyGroupJoinType.None;
+            therapyGroup.displayOrder = -1;
+            therapyGroup.name = string.Empty;
+            therapyGroup.pathogenGroupId = Guid.Empty;
 
-                pContext.AddObject("BDTherapyGroups", therapyGroup);
+            pContext.AddObject("BDTherapyGroups", therapyGroup);
 
-                return therapyGroup;
+            return therapyGroup;
         }
 
         /// <summary>
@@ -96,11 +98,16 @@ namespace BDEditor.DataModel
 
         public static BDTherapyGroup GetTherapyGroupWithId(Entities pContext, Guid pUuid)
         {
-            BDTherapyGroup entry;
-            IQueryable<BDTherapyGroup> entryList = (from bdTherapGroups in pContext.BDTherapyGroups
-                                                    where bdTherapGroups.uuid == pUuid
-                                                    select bdTherapGroups);
-            entry = entryList.AsQueryable().First<BDTherapyGroup>();
+            BDTherapyGroup entry = null;
+            if (null != pUuid)
+            {
+                IQueryable<BDTherapyGroup> entryList = (from bdTherapGroups in pContext.BDTherapyGroups
+                                                        where bdTherapGroups.uuid == pUuid
+                                                        select bdTherapGroups);
+
+                if (entryList.Count<BDTherapyGroup>() > 0)
+                    entry = entryList.AsQueryable().First<BDTherapyGroup>();
+            }
             return entry;
         }
 
@@ -127,7 +134,7 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pUpdateDateTime">Null date will return all records</param>
         /// <returns>List of entries. Empty list if none found.</returns>
-        public static List<BDTherapyGroup> GetTherapyGroupsUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
+        public static List<BDTherapyGroup> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
         {
             List<BDTherapyGroup> entryList = new List<BDTherapyGroup>();
             IQueryable<BDTherapyGroup> entries;
@@ -159,17 +166,20 @@ namespace BDEditor.DataModel
         /// <param name="pDataContext"></param>
         /// <param name="pAttributeDictionary"></param>
         /// <returns>Uuid of the created/updated entry</returns>
-        public static Guid LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
+        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
             bool deprecated = bool.Parse(pAttributeDictionary[DEPRECATED]);
             BDTherapyGroup entry = BDTherapyGroup.GetTherapyGroupWithId(pDataContext, uuid);
             if (null == entry)
+            {
                 entry = BDTherapyGroup.CreateBDTherapyGroup(uuid, deprecated);
+                pDataContext.AddObject("BDTherapyGroups", entry);
+            }
 
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
             entry.schemaVersion = schemaVersion;
-            short displayOrder = short.Parse(pAttributeDictionary[DISPLAYORDER]);
+            short displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]);
             entry.displayOrder = displayOrder;
             entry.createdBy = Guid.Parse(pAttributeDictionary[CREATEDBY]);
             entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
@@ -178,9 +188,8 @@ namespace BDEditor.DataModel
             entry.pathogenGroupId = Guid.Parse(pAttributeDictionary[PATHOGENGROUPID]);
             entry.therapyGroupJoinType = int.Parse(pAttributeDictionary[THERAPYGROUPJOINTYPE]);
             entry.name = pAttributeDictionary[NAME];
-            entry.therapyNote = pAttributeDictionary[THERAPYNOTE];
 
-            BDTherapyGroup.SaveTherapyGroup(pDataContext, entry);
+            pDataContext.SaveChanges();
 
             return uuid;
         }
@@ -189,19 +198,18 @@ namespace BDEditor.DataModel
         {
             PutAttributesRequest putAttributeRequest = new PutAttributesRequest().WithDomainName(AWS_DOMAIN).WithItemName(this.uuid.ToString().ToUpper());
             List<ReplaceableAttribute> attributeList = putAttributeRequest.Attribute;
-            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.UUID).WithValue(uuid.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.DISPLAYORDER).WithValue(string.Format(@"{0}", displayOrder)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.CREATEDBY).WithValue((null == createdBy) ? Guid.Empty.ToString() : createdBy.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(Constants.DATETIMEFORMAT)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.DEPRECATED).WithValue(deprecated.ToString()));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.UUID).WithValue(uuid.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.DISPLAYORDER).WithValue(string.Format(@"{0}", displayOrder)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.CREATEDBY).WithValue((null == createdBy) ? Guid.Empty.ToString() : createdBy.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.PATHOGENGROUPID).WithValue((null == pathogenGroupId) ? Guid.Empty.ToString() : pathogenGroupId.ToString().ToUpper()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.THERAPYGROUPJOINTYPE).WithValue(therapyGroupJoinType.ToString()));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.NAME).WithValue(name));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.THERAPYNOTE).WithValue(therapyNote));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.PATHOGENGROUPID).WithValue((null == pathogenGroupId) ? Guid.Empty.ToString() : pathogenGroupId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.THERAPYGROUPJOINTYPE).WithValue(therapyGroupJoinType.ToString()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.NAME).WithValue(name).WithReplace(true));
 
             return putAttributeRequest;
         }

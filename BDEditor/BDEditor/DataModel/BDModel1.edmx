@@ -31,10 +31,10 @@
           <Property Name="createdDate" Type="datetime" />
           <Property Name="modifiedBy" Type="uniqueidentifier" />
           <Property Name="modifiedDate" Type="datetime" />
-          <Property Name="schemaVersion" Type="smallint" />
+          <Property Name="schemaVersion" Type="int" />
           <Property Name="deprecated" Type="bit" Nullable="false" />
           <Property Name="inUseBy" Type="uniqueidentifier" />
-          <Property Name="displayOrder" Type="smallint" />
+          <Property Name="displayOrder" Type="int" />
         </EntityType>
         <EntityType Name="BDDiseases">
           <Key>
@@ -47,12 +47,11 @@
           <Property Name="inUseBy" Type="uniqueidentifier" />
           <Property Name="modifiedBy" Type="uniqueidentifier" />
           <Property Name="modifiedDate" Type="datetime" />
-          <Property Name="name" Type="nvarchar" />
-          <Property Name="overview" Type="nvarchar" />
-          <Property Name="schemaVersion" Type="smallint" />
+          <Property Name="name" Type="nvarchar" MaxLength="1000" />
+          <Property Name="schemaVersion" Type="int" />
           <Property Name="subcategoryId" Type="uniqueidentifier" />
           <Property Name="categoryId" Type="uniqueidentifier" />
-          <Property Name="displayOrder" Type="smallint" />
+          <Property Name="displayOrder" Type="int" />
         </EntityType>
         <EntityType Name="BDLinkedNoteAssociations">
           <Key>
@@ -81,11 +80,11 @@
           <Property Name="createdDate" Type="datetime" />
           <Property Name="modifiedBy" Type="uniqueidentifier" />
           <Property Name="modifiedDate" Type="datetime" />
-          <Property Name="schemaVersion" Type="smallint" />
+          <Property Name="schemaVersion" Type="int" />
           <Property Name="deprecated" Type="bit" Nullable="false" />
           <Property Name="inUseBy" Type="uniqueidentifier" />
           <Property Name="documentText" Type="nvarchar" />
-          <Property Name="storageKey" Type="nvarchar" />
+          <Property Name="storageKey" Type="nvarchar" MaxLength="256" />
           <Property Name="linkedNoteAssociationId" Type="uniqueidentifier" />
           <Property Name="previewText" Type="nvarchar" MaxLength="128" />
           <Property Name="scopeId" Type="uniqueidentifier" />
@@ -102,8 +101,8 @@
           <Property Name="inUseBy" Type="uniqueidentifier" />
           <Property Name="modifiedBy" Type="uniqueidentifier" />
           <Property Name="modifiedDate" Type="datetime" />
-          <Property Name="schemaVersion" Type="smallint" />
-          <Property Name="displayOrder" Type="smallint" />
+          <Property Name="schemaVersion" Type="int" />
+          <Property Name="displayOrder" Type="int" />
           <Property Name="presentationId" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="BDPathogens">
@@ -114,12 +113,12 @@
           <Property Name="createdBy" Type="uniqueidentifier" />
           <Property Name="createdDate" Type="datetime" />
           <Property Name="deprecated" Type="bit" Nullable="false" />
-          <Property Name="inUseBy" Type="nvarchar" />
+          <Property Name="inUseBy" Type="uniqueidentifier" />
           <Property Name="modifiedBy" Type="uniqueidentifier" />
           <Property Name="modifiedDate" Type="datetime" />
-          <Property Name="name" Type="nvarchar" />
-          <Property Name="schemaVersion" Type="smallint" />
-          <Property Name="displayOrder" Type="smallint" />
+          <Property Name="name" Type="nvarchar" MaxLength="1000" />
+          <Property Name="schemaVersion" Type="int" />
+          <Property Name="displayOrder" Type="int" />
           <Property Name="pathogenGroupId" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="BDPresentations">
@@ -131,13 +130,12 @@
           <Property Name="createdBy" Type="uniqueidentifier" />
           <Property Name="createdDate" Type="datetime" />
           <Property Name="deprecated" Type="bit" Nullable="false" />
-          <Property Name="inUseBy" Type="nvarchar" />
-          <Property Name="displayOrder" Type="smallint" />
+          <Property Name="inUseBy" Type="uniqueidentifier" />
+          <Property Name="displayOrder" Type="int" />
           <Property Name="modifiedBy" Type="uniqueidentifier" />
           <Property Name="modifiedDate" Type="datetime" />
-          <Property Name="name" Type="nvarchar" />
-          <Property Name="overview" Type="nvarchar" />
-          <Property Name="schemaVersion" Type="smallint" />
+          <Property Name="name" Type="nvarchar" MaxLength="1000" />
+          <Property Name="schemaVersion" Type="int" />
         </EntityType>
         <EntityType Name="BDQueueEntries">
           <Key>
@@ -159,10 +157,10 @@
           <Property Name="createdDate" Type="datetime" />
           <Property Name="modifiedBy" Type="uniqueidentifier" />
           <Property Name="modifiedDate" Type="datetime" />
-          <Property Name="schemaVersion" Type="smallint" />
+          <Property Name="schemaVersion" Type="int" />
           <Property Name="deprecated" Type="bit" Nullable="false" />
           <Property Name="inUseBy" Type="uniqueidentifier" />
-          <Property Name="displayOrder" Type="smallint" />
+          <Property Name="displayOrder" Type="int" />
         </EntityType>
         <EntityType Name="BDSubcategories">
           <Key>
@@ -175,10 +173,10 @@
           <Property Name="createdDate" Type="datetime" />
           <Property Name="modifiedBy" Type="uniqueidentifier" />
           <Property Name="modifiedDate" Type="datetime" />
-          <Property Name="schemaVersion" Type="smallint" />
+          <Property Name="schemaVersion" Type="int" />
           <Property Name="deprecated" Type="bit" Nullable="false" />
           <Property Name="inUseBy" Type="uniqueidentifier" />
-          <Property Name="displayOrder" Type="smallint" />
+          <Property Name="displayOrder" Type="int" />
         </EntityType>
         <EntityType Name="BDSystemSettings">
           <Key>
@@ -196,14 +194,14 @@
           <Property Name="createdBy" Type="uniqueidentifier" />
           <Property Name="createdDate" Type="datetime" />
           <Property Name="deprecated" Type="bit" Nullable="false" />
-          <Property Name="displayOrder" Type="smallint" />
-          <Property Name="dosage" Type="nvarchar" />
-          <Property Name="duration" Type="nvarchar" />
-          <Property Name="inUseBy" Type="nvarchar" />
+          <Property Name="displayOrder" Type="int" />
+          <Property Name="dosage" Type="nvarchar" MaxLength="1000" />
+          <Property Name="duration" Type="nvarchar" MaxLength="1000" />
+          <Property Name="inUseBy" Type="uniqueidentifier" />
           <Property Name="modifiedBy" Type="uniqueidentifier" />
           <Property Name="modifiedDate" Type="datetime" />
-          <Property Name="name" Type="nvarchar" />
-          <Property Name="schemaVersion" Type="smallint" />
+          <Property Name="name" Type="nvarchar" MaxLength="1000" />
+          <Property Name="schemaVersion" Type="int" />
           <Property Name="therapyGroupId" Type="uniqueidentifier" />
           <Property Name="therapyJoinType" Type="int" />
           <Property Name="leftBracket" Type="bit" />
@@ -217,13 +215,12 @@
           <Property Name="createdBy" Type="uniqueidentifier" />
           <Property Name="createdDate" Type="datetime" />
           <Property Name="deprecated" Type="bit" Nullable="false" />
-          <Property Name="displayOrder" Type="smallint" />
-          <Property Name="inUseBy" Type="nvarchar" />
+          <Property Name="displayOrder" Type="int" />
+          <Property Name="inUseBy" Type="uniqueidentifier" />
           <Property Name="modifiedBy" Type="uniqueidentifier" />
           <Property Name="modifiedDate" Type="datetime" />
-          <Property Name="therapyNote" Type="nvarchar" />
-          <Property Name="name" Type="nvarchar" />
-          <Property Name="schemaVersion" Type="smallint" />
+          <Property Name="name" Type="nvarchar" MaxLength="1000" />
+          <Property Name="schemaVersion" Type="int" />
           <Property Name="pathogenGroupId" Type="uniqueidentifier" />
           <Property Name="therapyGroupJoinType" Type="int" />
         </EntityType>
@@ -234,6 +231,7 @@
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BDCategories" EntityType="BDDataModel.BDCategory" />
           <EntitySet Name="BDDiseases" EntityType="BDDataModel.BDDisease" />
+          <EntitySet Name="BDLinkedNoteAssociations" EntityType="BDDataModel.BDLinkedNoteAssociation" />
           <EntitySet Name="BDLinkedNotes" EntityType="BDDataModel.BDLinkedNote" />
           <EntitySet Name="BDPathogenGroups" EntityType="BDDataModel.BDPathogenGroup" />
           <EntitySet Name="BDPathogens" EntityType="BDDataModel.BDPathogen" />
@@ -241,10 +239,9 @@
           <EntitySet Name="BDQueueEntries" EntityType="BDDataModel.BDQueueEntry" />
           <EntitySet Name="BDSections" EntityType="BDDataModel.BDSection" />
           <EntitySet Name="BDSubcategories" EntityType="BDDataModel.BDSubcategory" />
+          <EntitySet Name="BDSystemSettings" EntityType="BDDataModel.BDSystemSetting" />
           <EntitySet Name="BDTherapies" EntityType="BDDataModel.BDTherapy" />
           <EntitySet Name="BDTherapyGroups" EntityType="BDDataModel.BDTherapyGroup" />
-          <EntitySet Name="BDLinkedNoteAssociations" EntityType="BDDataModel.BDLinkedNoteAssociation" />
-          <EntitySet Name="BDSystemSettings" EntityType="BDDataModel.BDSystemSetting" />
         </EntityContainer>
         <EntityType Name="BDCategory">
           <Key>
@@ -257,10 +254,10 @@
           <Property Type="DateTime" Name="createdDate" />
           <Property Type="Guid" Name="modifiedBy" />
           <Property Type="DateTime" Name="modifiedDate" />
-          <Property Type="Int16" Name="schemaVersion" />
+          <Property Type="Int32" Name="schemaVersion" />
           <Property Type="Boolean" Name="deprecated" Nullable="false" />
           <Property Type="Guid" Name="inUseBy" />
-          <Property Type="Int16" Name="displayOrder" />
+          <Property Type="Int32" Name="displayOrder" />
         </EntityType>
         <EntityType Name="BDDisease">
           <Key>
@@ -273,12 +270,29 @@
           <Property Type="Guid" Name="inUseBy" />
           <Property Type="Guid" Name="modifiedBy" />
           <Property Type="DateTime" Name="modifiedDate" />
-          <Property Type="String" Name="name" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="overview" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="Int16" Name="schemaVersion" />
+          <Property Type="String" Name="name" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="schemaVersion" />
           <Property Type="Guid" Name="subcategoryId" />
           <Property Type="Guid" Name="categoryId" />
-          <Property Type="Int16" Name="displayOrder" />
+          <Property Type="Int32" Name="displayOrder" />
+        </EntityType>
+        <EntityType Name="BDLinkedNoteAssociation">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Type="Guid" Name="linkedNoteId" />
+          <Property Type="Guid" Name="parentId" />
+          <Property Type="String" Name="parentEntityName" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="parentEntityPropertyName" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="uuid" Nullable="false" />
+          <Property Type="Int32" Name="schemaVersion" />
+          <Property Type="Guid" Name="createdBy" />
+          <Property Type="DateTime" Name="createdDate" />
+          <Property Type="Guid" Name="modifiedBy" />
+          <Property Type="DateTime" Name="modifiedDate" />
+          <Property Type="Int32" Name="displayOrder" />
+          <Property Type="Int32" Name="linkedNoteType" />
+          <Property Type="Boolean" Name="deprecated" />
         </EntityType>
         <EntityType Name="BDLinkedNote">
           <Key>
@@ -289,11 +303,11 @@
           <Property Type="DateTime" Name="createdDate" />
           <Property Type="Guid" Name="modifiedBy" />
           <Property Type="DateTime" Name="modifiedDate" />
-          <Property Type="Int16" Name="schemaVersion" />
+          <Property Type="Int32" Name="schemaVersion" />
           <Property Type="Boolean" Name="deprecated" Nullable="false" />
           <Property Type="Guid" Name="inUseBy" />
           <Property Type="String" Name="documentText" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="storageKey" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="storageKey" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Type="Guid" Name="linkedNoteAssociationId" />
           <Property Type="String" Name="previewText" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Type="Guid" Name="scopeId" />
@@ -310,8 +324,8 @@
           <Property Type="Guid" Name="inUseBy" />
           <Property Type="Guid" Name="modifiedBy" />
           <Property Type="DateTime" Name="modifiedDate" />
-          <Property Type="Int16" Name="schemaVersion" />
-          <Property Type="Int16" Name="displayOrder" />
+          <Property Type="Int32" Name="schemaVersion" />
+          <Property Type="Int32" Name="displayOrder" />
           <Property Type="Guid" Name="presentationId" />
         </EntityType>
         <EntityType Name="BDPathogen">
@@ -322,12 +336,12 @@
           <Property Type="Guid" Name="createdBy" />
           <Property Type="DateTime" Name="createdDate" />
           <Property Type="Boolean" Name="deprecated" Nullable="false" />
-          <Property Type="String" Name="inUseBy" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="inUseBy" />
           <Property Type="Guid" Name="modifiedBy" />
           <Property Type="DateTime" Name="modifiedDate" />
-          <Property Type="String" Name="name" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="Int16" Name="schemaVersion" />
-          <Property Type="Int16" Name="displayOrder" />
+          <Property Type="String" Name="name" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="schemaVersion" />
+          <Property Type="Int32" Name="displayOrder" />
           <Property Type="Guid" Name="pathogenGroupId" />
         </EntityType>
         <EntityType Name="BDPresentation">
@@ -339,13 +353,12 @@
           <Property Type="Guid" Name="createdBy" />
           <Property Type="DateTime" Name="createdDate" />
           <Property Type="Boolean" Name="deprecated" Nullable="false" />
-          <Property Type="String" Name="inUseBy" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="Int16" Name="displayOrder" />
+          <Property Type="Guid" Name="inUseBy" />
+          <Property Type="Int32" Name="displayOrder" />
           <Property Type="Guid" Name="modifiedBy" />
           <Property Type="DateTime" Name="modifiedDate" />
-          <Property Type="String" Name="name" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="overview" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="Int16" Name="schemaVersion" />
+          <Property Type="String" Name="name" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="schemaVersion" />
         </EntityType>
         <EntityType Name="BDQueueEntry">
           <Key>
@@ -367,10 +380,10 @@
           <Property Type="DateTime" Name="createdDate" />
           <Property Type="Guid" Name="modifiedBy" />
           <Property Type="DateTime" Name="modifiedDate" />
-          <Property Type="Int16" Name="schemaVersion" />
+          <Property Type="Int32" Name="schemaVersion" />
           <Property Type="Boolean" Name="deprecated" Nullable="false" />
           <Property Type="Guid" Name="inUseBy" />
-          <Property Type="Int16" Name="displayOrder" />
+          <Property Type="Int32" Name="displayOrder" />
         </EntityType>
         <EntityType Name="BDSubcategory">
           <Key>
@@ -383,10 +396,18 @@
           <Property Type="DateTime" Name="createdDate" />
           <Property Type="Guid" Name="modifiedBy" />
           <Property Type="DateTime" Name="modifiedDate" />
-          <Property Type="Int16" Name="schemaVersion" />
+          <Property Type="Int32" Name="schemaVersion" />
           <Property Type="Boolean" Name="deprecated" Nullable="false" />
           <Property Type="Guid" Name="inUseBy" />
-          <Property Type="Int16" Name="displayOrder" />
+          <Property Type="Int32" Name="displayOrder" />
+        </EntityType>
+        <EntityType Name="BDSystemSetting">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Type="Guid" Name="uuid" Nullable="false" />
+          <Property Type="String" Name="settingName" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="settingValue" MaxLength="127" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="BDTherapy">
           <Key>
@@ -396,14 +417,14 @@
           <Property Type="Guid" Name="createdBy" />
           <Property Type="DateTime" Name="createdDate" />
           <Property Type="Boolean" Name="deprecated" Nullable="false" />
-          <Property Type="Int16" Name="displayOrder" />
-          <Property Type="String" Name="dosage" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="duration" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="inUseBy" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="displayOrder" />
+          <Property Type="String" Name="dosage" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="duration" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="inUseBy" />
           <Property Type="Guid" Name="modifiedBy" />
           <Property Type="DateTime" Name="modifiedDate" />
-          <Property Type="String" Name="name" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="Int16" Name="schemaVersion" />
+          <Property Type="String" Name="name" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="schemaVersion" />
           <Property Type="Guid" Name="therapyGroupId" />
           <Property Type="Int32" Name="therapyJoinType" />
           <Property Type="Boolean" Name="leftBracket" />
@@ -417,41 +438,14 @@
           <Property Type="Guid" Name="createdBy" />
           <Property Type="DateTime" Name="createdDate" />
           <Property Type="Boolean" Name="deprecated" Nullable="false" />
-          <Property Type="Int16" Name="displayOrder" />
-          <Property Type="String" Name="inUseBy" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="displayOrder" />
+          <Property Type="Guid" Name="inUseBy" />
           <Property Type="Guid" Name="modifiedBy" />
           <Property Type="DateTime" Name="modifiedDate" />
-          <Property Type="String" Name="therapyNote" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="name" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="Int16" Name="schemaVersion" />
+          <Property Type="String" Name="name" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="schemaVersion" />
           <Property Type="Guid" Name="pathogenGroupId" />
           <Property Type="Int32" Name="therapyGroupJoinType" />
-        </EntityType>
-        <EntityType Name="BDLinkedNoteAssociation">
-          <Key>
-            <PropertyRef Name="uuid" />
-          </Key>
-          <Property Type="Guid" Name="linkedNoteId" />
-          <Property Type="Guid" Name="parentId" />
-          <Property Type="String" Name="parentEntityName" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="parentEntityPropertyName" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Type="Guid" Name="uuid" Nullable="false" />
-          <Property Type="Int16" Name="schemaVersion" />
-          <Property Type="Guid" Name="createdBy" />
-          <Property Type="DateTime" Name="createdDate" />
-          <Property Type="Guid" Name="modifiedBy" />
-          <Property Type="DateTime" Name="modifiedDate" />
-          <Property Type="Int16" Name="displayOrder" />
-          <Property Type="Int32" Name="linkedNoteType" />
-          <Property Type="Boolean" Name="deprecated" />
-        </EntityType>
-        <EntityType Name="BDSystemSetting">
-          <Key>
-            <PropertyRef Name="uuid" />
-          </Key>
-          <Property Type="Guid" Name="uuid" Nullable="false" />
-          <Property Type="String" Name="settingName" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Type="String" Name="settingValue" MaxLength="127" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -483,7 +477,6 @@
                 <ScalarProperty Name="categoryId" ColumnName="categoryId" />
                 <ScalarProperty Name="subcategoryId" ColumnName="subcategoryId" />
                 <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
-                <ScalarProperty Name="overview" ColumnName="overview" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
                 <ScalarProperty Name="modifiedBy" ColumnName="modifiedBy" />
@@ -492,6 +485,25 @@
                 <ScalarProperty Name="createdDate" ColumnName="createdDate" />
                 <ScalarProperty Name="createdBy" ColumnName="createdBy" />
                 <ScalarProperty Name="uuid" ColumnName="uuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BDLinkedNoteAssociations">
+            <EntityTypeMapping TypeName="BDDataModel.BDLinkedNoteAssociation">
+              <MappingFragment StoreEntitySet="BDLinkedNoteAssociations">
+                <ScalarProperty Name="deprecated" ColumnName="deprecated" />
+                <ScalarProperty Name="linkedNoteType" ColumnName="linkedNoteType" />
+                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
+                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
+                <ScalarProperty Name="modifiedBy" ColumnName="modifiedBy" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+                <ScalarProperty Name="parentEntityPropertyName" ColumnName="parentEntityPropertyName" />
+                <ScalarProperty Name="parentEntityName" ColumnName="parentEntityName" />
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
+                <ScalarProperty Name="linkedNoteId" ColumnName="linkedNoteId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -552,7 +564,6 @@
             <EntityTypeMapping TypeName="BDDataModel.BDPresentation">
               <MappingFragment StoreEntitySet="BDPresentations">
                 <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
-                <ScalarProperty Name="overview" ColumnName="overview" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
                 <ScalarProperty Name="modifiedBy" ColumnName="modifiedBy" />
@@ -610,6 +621,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BDSystemSettings">
+            <EntityTypeMapping TypeName="BDDataModel.BDSystemSetting">
+              <MappingFragment StoreEntitySet="BDSystemSettings">
+                <ScalarProperty Name="settingValue" ColumnName="settingValue" />
+                <ScalarProperty Name="settingName" ColumnName="settingName" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="BDTherapies">
             <EntityTypeMapping TypeName="BDDataModel.BDTherapy">
               <MappingFragment StoreEntitySet="BDTherapies">
@@ -639,7 +659,6 @@
                 <ScalarProperty Name="pathogenGroupId" ColumnName="pathogenGroupId" />
                 <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
                 <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="therapyNote" ColumnName="therapyNote" />
                 <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
                 <ScalarProperty Name="modifiedBy" ColumnName="modifiedBy" />
                 <ScalarProperty Name="inUseBy" ColumnName="inUseBy" />
@@ -647,34 +666,6 @@
                 <ScalarProperty Name="deprecated" ColumnName="deprecated" />
                 <ScalarProperty Name="createdDate" ColumnName="createdDate" />
                 <ScalarProperty Name="createdBy" ColumnName="createdBy" />
-                <ScalarProperty Name="uuid" ColumnName="uuid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BDLinkedNoteAssociations">
-            <EntityTypeMapping TypeName="BDDataModel.BDLinkedNoteAssociation">
-              <MappingFragment StoreEntitySet="BDLinkedNoteAssociations">
-                <ScalarProperty Name="deprecated" ColumnName="deprecated" />
-                <ScalarProperty Name="linkedNoteType" ColumnName="linkedNoteType" />
-                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
-                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
-                <ScalarProperty Name="modifiedBy" ColumnName="modifiedBy" />
-                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
-                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
-                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
-                <ScalarProperty Name="uuid" ColumnName="uuid" />
-                <ScalarProperty Name="parentEntityPropertyName" ColumnName="parentEntityPropertyName" />
-                <ScalarProperty Name="parentEntityName" ColumnName="parentEntityName" />
-                <ScalarProperty Name="parentId" ColumnName="parentId" />
-                <ScalarProperty Name="linkedNoteId" ColumnName="linkedNoteId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BDSystemSettings">
-            <EntityTypeMapping TypeName="BDDataModel.BDSystemSetting">
-              <MappingFragment StoreEntitySet="BDSystemSettings">
-                <ScalarProperty Name="settingValue" ColumnName="settingValue" />
-                <ScalarProperty Name="settingName" ColumnName="settingName" />
                 <ScalarProperty Name="uuid" ColumnName="uuid" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -699,19 +690,19 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="Model1">
-        <EntityTypeShape EntityType="BDDataModel.BDCategory" Width="1.5" PointX="0.75" PointY="0.75" Height="3.1340950520833282" />
-        <EntityTypeShape EntityType="BDDataModel.BDDisease" Width="1.5" PointX="2.75" PointY="0.75" Height="3.5186979166666674" />
-        <EntityTypeShape EntityType="BDDataModel.BDLinkedNote" Width="1.875" PointX="4.75" PointY="0.75" Height="2.7427376302083331" />
-        <EntityTypeShape EntityType="BDDataModel.BDPathogenGroup" Width="2" PointX="0.5" PointY="5.75" Height="2.5783902994791656" />
-        <EntityTypeShape EntityType="BDDataModel.BDPathogen" Width="1.5" PointX="2.75" PointY="5.75" Height="3.1340950520833246" />
-        <EntityTypeShape EntityType="BDDataModel.BDPresentation" Width="1.5" PointX="4.75" PointY="5.75" Height="3.3263964843750102" />
-        <EntityTypeShape EntityType="BDDataModel.BDQueueEntry" Width="1.5" PointX="6.75" PointY="0.75" Height="1.9802864583333246" />
-        <EntityTypeShape EntityType="BDDataModel.BDSection" Width="1.5" PointX="6.75" PointY="3.75" Height="2.9417936197916674" />
-        <EntityTypeShape EntityType="BDDataModel.BDSubcategory" Width="1.5" PointX="6.75" PointY="7.75" Height="3.1340950520833246" />
-        <EntityTypeShape EntityType="BDDataModel.BDTherapy" Width="2.25" PointX="8.75" PointY="0.75" Height="3.2357796223958331" />
-        <EntityTypeShape EntityType="BDDataModel.BDTherapyGroup" Width="2.125" PointX="8.75" PointY="5.75" Height="3.5186979166666656" />
-        <EntityTypeShape EntityType="BDDataModel.BDLinkedNoteAssociation" Width="3" PointX="1" PointY="8.875" Height="2.9070849609374996" />
-        <EntityTypeShape EntityType="BDDataModel.BDSystemSetting" Width="2.125" PointX="9.125" PointY="9.375" Height="1.4279589843750031" />
+        <EntityTypeShape EntityType="BDDataModel.BDCategory" Width="1.5" PointX="0.75" PointY="0.75" Height="2.7427376302083388" />
+        <EntityTypeShape EntityType="BDDataModel.BDDisease" Width="2" PointX="2.75" PointY="0.75" Height="2.9070849609375031" />
+        <EntityTypeShape EntityType="BDDataModel.BDLinkedNoteAssociation" Width="2.375" PointX="10.5" PointY="0.875" Height="3.0714322916666674" />
+        <EntityTypeShape EntityType="BDDataModel.BDLinkedNote" Width="1.5" PointX="0.75" PointY="4.75" Height="3.2357796223958388" />
+        <EntityTypeShape EntityType="BDDataModel.BDPathogenGroup" Width="1.875" PointX="2.75" PointY="4.75" Height="2.5783902994791674" />
+        <EntityTypeShape EntityType="BDDataModel.BDPathogen" Width="1.5" PointX="4.75" PointY="4.75" Height="2.7427376302083388" />
+        <EntityTypeShape EntityType="BDDataModel.BDPresentation" Width="1.5" PointX="6.75" PointY="0.75" Height="2.7427376302083388" />
+        <EntityTypeShape EntityType="BDDataModel.BDQueueEntry" Width="1.5" PointX="6.75" PointY="4.75" Height="1.7566536458333388" />
+        <EntityTypeShape EntityType="BDDataModel.BDSection" Width="1.5" PointX="6.75" PointY="7.75" Height="2.5783902994791674" />
+        <EntityTypeShape EntityType="BDDataModel.BDSubcategory" Width="1.5" PointX="8.75" PointY="0.75" Height="2.7427376302083246" />
+        <EntityTypeShape EntityType="BDDataModel.BDSystemSetting" Width="1.875" PointX="0.75" PointY="8.75" Height="1.4279589843750102" />
+        <EntityTypeShape EntityType="BDDataModel.BDTherapy" Width="1.5" PointX="2.75" PointY="8.75" Height="3.5644742838541674" />
+        <EntityTypeShape EntityType="BDDataModel.BDTherapyGroup" Width="2.25" PointX="8.75" PointY="4.75" Height="2.9070849609375102" />
       </Diagram>
     </Diagrams>
   </Designer>

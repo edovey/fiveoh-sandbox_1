@@ -18,8 +18,9 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDSubcategory
     {
-        public const string ENTITYNAME_FRIENDLY = @"Subcategory";
         public const string AWS_DOMAIN = @"bd_subcategories_test";
+        public const string ENTITYNAME = @"BDSubcategories";
+        public const string ENTITYNAME_FRIENDLY = @"Subcategory";
 
         private const string UUID = @"sc_uuid";
         private const string SCHEMAVERSION = @"sc_schemaversion";

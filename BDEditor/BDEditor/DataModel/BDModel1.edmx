@@ -70,6 +70,7 @@
           <Property Name="modifiedDate" Type="datetime" />
           <Property Name="displayOrder" Type="int" />
           <Property Name="linkedNoteType" Type="int" />
+          <Property Name="deprecated" Type="bit" />
         </EntityType>
         <EntityType Name="BDLinkedNotes">
           <Key>
@@ -442,6 +443,7 @@
           <Property Type="DateTime" Name="modifiedDate" />
           <Property Type="Int16" Name="displayOrder" />
           <Property Type="Int32" Name="linkedNoteType" />
+          <Property Type="Boolean" Name="deprecated" />
         </EntityType>
         <EntityType Name="BDSystemSetting">
           <Key>
@@ -652,6 +654,7 @@
           <EntitySetMapping Name="BDLinkedNoteAssociations">
             <EntityTypeMapping TypeName="BDDataModel.BDLinkedNoteAssociation">
               <MappingFragment StoreEntitySet="BDLinkedNoteAssociations">
+                <ScalarProperty Name="deprecated" ColumnName="deprecated" />
                 <ScalarProperty Name="linkedNoteType" ColumnName="linkedNoteType" />
                 <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
                 <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />

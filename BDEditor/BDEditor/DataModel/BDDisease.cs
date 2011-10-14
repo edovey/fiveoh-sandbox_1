@@ -18,6 +18,7 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDDisease
     {
+        public const string ENTITYNAME = @"BDDiseases";
         public const string ENTITYNAME_FRIENDLY = @"Disease";
         public const string PROPERTYNAME_OVERVIEW = @"Overview";
         public const string AWS_DOMAIN = @"bd_diseases_test";

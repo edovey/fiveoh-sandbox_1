@@ -18,15 +18,15 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDPathogenGroup
     {
-        public const string ENTITYNAME_FRIENDLY = @"Pathogen Group";
-
         public const string AWS_DOMAIN = @"bd_pathogenGroups_test";
-
+        public const string ENTITYNAME = @"BDPathogenBroups";
+        public const string ENTITYNAME_FRIENDLY = @"Pathogen Group";
+        
         private const string UUID = @"pg_uuid";
         private const string SCHEMAVERSION = @"pg_schemaversion";
         private const string CREATEDBY = @"pg_createdBy";
         private const string CREATEDDATE = @"pg_createdDate";
-        private const string MODIFIEDBY = @"pg_createdBy";
+        private const string MODIFIEDBY = @"pg_modifiedBy";
         private const string MODIFIEDDATE = @"pg_modifiedDate";
         private const string PRESENTATIONID = @"pg_presentationId";
         private const string DEPRECATED = @"pg_deprecated";

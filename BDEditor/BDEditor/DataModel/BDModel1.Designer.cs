@@ -1713,6 +1713,30 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Int32> _linkedNoteType;
         partial void OnlinkedNoteTypeChanging(Nullable<global::System.Int32> value);
         partial void OnlinkedNoteTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> deprecated
+        {
+            get
+            {
+                return _deprecated;
+            }
+            set
+            {
+                OndeprecatedChanging(value);
+                ReportPropertyChanging("deprecated");
+                _deprecated = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("deprecated");
+                OndeprecatedChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _deprecated;
+        partial void OndeprecatedChanging(Nullable<global::System.Boolean> value);
+        partial void OndeprecatedChanged();
 
         #endregion
     

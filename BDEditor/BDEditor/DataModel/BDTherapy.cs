@@ -19,7 +19,7 @@ namespace BDEditor.DataModel
     public partial class BDTherapy: IBDObject
     {
         public const string AWS_DOMAIN = @"bd_therapies_test";
-
+        public const string ENTITYNAME = @"BDTherapies";
         public const string ENTITYNAME_FRIENDLY = @"Therapy";
         public const string PROPERTYNAME_THERAPY = @"Therapy";
         public const string PROPERTYNAME_DOSAGE = @"Dosage"; 
@@ -29,7 +29,7 @@ namespace BDEditor.DataModel
         private const string SCHEMAVERSION = @"th_schemaversion";
         private const string CREATEDBY = @"th_createdBy";
         private const string CREATEDDATE = @"th_createdDate";
-        private const string MODIFIEDBY = @"th_createdBy";
+        private const string MODIFIEDBY = @"th_modifiedBy";
         private const string MODIFIEDDATE = @"th_modifiedDate";
         private const string DEPRECATED = @"th_deprecated";
         private const string DISPLAYORDER = @"th_displayOrder";

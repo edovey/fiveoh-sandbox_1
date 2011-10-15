@@ -24,6 +24,7 @@
 #define SC_STORAGEKEY @"sc_storageKey"
 #define SC_DEPRECATED @"sc_deprecated"
 #define SC_INUSEBY @"sc_inUseBy"
+#define SC_DISPLAYORDER @"sc_displayOrder"
 #define SC_CATEGORYID @"sc_categoryId"
 #define SC_NAME @"sc_name"
 
@@ -39,6 +40,7 @@
 @property (nonatomic, retain) NSString * modifiedBy;
 @property (nonatomic, retain) NSDate * modifiedDate;
 @property (nonatomic, retain) NSNumber * schemaVersion;
+@property (nonatomic, retain) NSNumber * displayOrder;
 
 +(NSString *)create;
 +(BDSubcategory *)retrieveWithUUID:(NSString *)theUUID;

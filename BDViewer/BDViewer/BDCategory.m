@@ -22,6 +22,7 @@
 @dynamic modifiedBy;
 @dynamic modifiedDate;
 @dynamic schemaVersion;
+@dynamic displayOrder;
 
 +(NSString *)create
 {
@@ -38,6 +39,7 @@
     category.inUseBy = nil;
     category.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_CATEGORY intValue]];
     category.deprecated = [NSNumber numberWithBool:NO];
+    category.displayOrder = [NSNumber numberWithInt:-1];
         
     [BDQueueEntry createWithObjectUuid:category.uuid 
                       withEntityName:ENTITYNAME_CATEGORY 
@@ -46,6 +48,7 @@
     
     [[DataController sharedInstance] saveContext];
     NSString *uuid = category.uuid;
+    [category release];
     
     return uuid;
 }
@@ -75,7 +78,7 @@
         NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_CATEGORY 
                                                   inManagedObjectContext:moc];
         
-        category = [[BDCategory alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+        category = [[[BDCategory alloc] initWithEntity:entity insertIntoManagedObjectContext:moc] autorelease];
         category.uuid = uuid;
         
     }
@@ -113,7 +116,7 @@
         NSLog(@"*** Attempted to load a version older than the current for %@", uuid);
         uuid = nil;
     }
-    
+    [dateFormatter release];
     [[DataController sharedInstance] saveContext];
     
     return uuid;

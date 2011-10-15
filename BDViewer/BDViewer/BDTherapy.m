@@ -42,6 +42,7 @@
     therapy.inUseBy = nil;
     therapy.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_THERAPY intValue]];
     therapy.deprecated = [NSNumber numberWithBool:NO];
+    therapy.displayOrder = [NSNumber numberWithInt:-1];
     
     [BDQueueEntry createWithObjectUuid:therapy.uuid 
                       withEntityName:ENTITYNAME_THERAPY 
@@ -50,6 +51,7 @@
     
     [[DataController sharedInstance] saveContext];
     NSString *uuid = therapy.uuid;
+    [therapy release];
     
     return uuid;
 }
@@ -79,7 +81,7 @@
         NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_THERAPY 
                                                   inManagedObjectContext:moc];
         
-        therapy = [[BDTherapy alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+        therapy = [[[BDTherapy alloc] initWithEntity:entity insertIntoManagedObjectContext:moc] autorelease];
         therapy.uuid = uuid;
         
     }
@@ -107,11 +109,11 @@
                 therapy.deprecated = [NSNumber numberWithBool:[[theAttributeDictionary valueForKey:TH_DEPRECATED] boolValue]];
                 
                 therapy.therapyGroupId = [theAttributeDictionary valueForKey:TH_THERAPYGROUPID];
-                therapy.therapyGroupJoinType = [theAttributeDictionary valueForKey:TH_THERAPYGROUPJOINTYPE];
+                therapy.therapyGroupJoinType = [NSNumber numberWithInt:[[theAttributeDictionary valueForKey:TH_THERAPYGROUPJOINTYPE] intValue]];
                 therapy.name = [theAttributeDictionary valueForKey:TH_NAME];
                 therapy.dosage = [theAttributeDictionary valueForKey:TH_DOSAGE];
                 therapy.duration = [theAttributeDictionary valueForKey:TH_DURATION];
-                therapy.displayOrder = [theAttributeDictionary valueForKey:TH_DISPLAYORDER];
+                therapy.displayOrder = [NSNumber numberWithInt:[[theAttributeDictionary valueForKey:TH_DISPLAYORDER] intValue]];
             }
                 break;
         }
@@ -121,7 +123,7 @@
         NSLog(@"*** Attempted to load a version older than the current for %@", uuid);
         uuid = nil;
     }
-    
+    [dateFormatter release];
     [[DataController sharedInstance] saveContext];
     
     return uuid;

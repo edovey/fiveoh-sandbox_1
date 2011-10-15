@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="562" systemVersion="11B26" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="872" systemVersion="11C74" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="BDCategory">
         <attribute name="createdBy" optional="YES" attributeType="String"/>
         <attribute name="createdDate" optional="YES" attributeType="Date"/>
@@ -11,7 +11,7 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
         <attribute name="sectionId" optional="YES" attributeType="String"/>
-        <attribute name="uuid" attributeType="String"/>
+        <attribute name="uuid" attributeType="String" indexed="YES"/>
     </entity>
     <entity name="BDDisease" representedClassName="Disease">
         <attribute name="categoryId" optional="YES" attributeType="String"/>
@@ -23,25 +23,41 @@
         <attribute name="modifiedBy" optional="YES" attributeType="String"/>
         <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="overview" optional="YES" attributeType="String"/>
         <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
         <attribute name="subcategoryId" optional="YES" attributeType="String"/>
-        <attribute name="uuid" attributeType="String"/>
+        <attribute name="uuid" attributeType="String" indexed="YES"/>
     </entity>
     <entity name="BDLinkedNote">
-        <attribute name="contextPropertyName" optional="YES" attributeType="String"/>
         <attribute name="createdBy" optional="YES" attributeType="String"/>
         <attribute name="createdDate" optional="YES" attributeType="Date"/>
         <attribute name="deprecated" attributeType="Boolean" defaultValueString="NO"/>
         <attribute name="displayOrder" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
         <attribute name="documentText" optional="YES" attributeType="String"/>
         <attribute name="inUseBy" optional="YES" attributeType="String"/>
+        <attribute name="linkedNoteAssociationId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="modifiedBy" optional="YES" attributeType="String"/>
         <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
-        <attribute name="parentId" optional="YES" attributeType="String"/>
+        <attribute name="previewText" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <attribute name="scopeId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="singleUse" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="storageKey" optional="YES" attributeType="String"/>
-        <attribute name="uuid" optional="YES" attributeType="String"/>
+        <attribute name="uuid" attributeType="String" indexed="YES"/>
+    </entity>
+    <entity name="BDLinkedNoteAssociation" representedClassName="BDLinkedNoteAssociation" syncable="YES">
+        <attribute name="createdBy" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="deprecated" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="displayOrder" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="linkedNoteId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="linkedNoteType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="modifiedBy" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="modifiedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="parentEntityName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parentEntiyPropertyName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parentId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="uuid" attributeType="String" indexed="YES" syncable="YES"/>
     </entity>
     <entity name="BDPathogen" representedClassName="Pathogen">
         <attribute name="createdBy" optional="YES" attributeType="String"/>
@@ -54,19 +70,19 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="pathogenGroupId" optional="YES" attributeType="String"/>
         <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
-        <attribute name="uuid" attributeType="String"/>
+        <attribute name="uuid" attributeType="String" indexed="YES"/>
     </entity>
     <entity name="BDPathogenGroup" representedClassName="BDPathogenGroup">
         <attribute name="createdBy" optional="YES" attributeType="String"/>
         <attribute name="createdDate" optional="YES" attributeType="Date"/>
-        <attribute name="deprecated" optional="YES" attributeType="Boolean"/>
+        <attribute name="deprecated" attributeType="Boolean" defaultValueString="NO"/>
         <attribute name="displayOrder" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
         <attribute name="inUseBy" optional="YES" attributeType="String"/>
         <attribute name="modifiedBy" optional="YES" attributeType="String"/>
         <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
         <attribute name="presentationId" optional="YES" attributeType="String"/>
         <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
-        <attribute name="uuid" optional="YES" attributeType="String"/>
+        <attribute name="uuid" attributeType="String" indexed="YES"/>
     </entity>
     <entity name="BDPresentation" representedClassName="Presentation">
         <attribute name="createdBy" optional="YES" attributeType="String"/>
@@ -78,16 +94,15 @@
         <attribute name="modifiedBy" optional="YES" attributeType="String"/>
         <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="overview" optional="YES" attributeType="String"/>
         <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
-        <attribute name="uuid" attributeType="String"/>
+        <attribute name="uuid" attributeType="String" indexed="YES"/>
     </entity>
     <entity name="BDQueueEntry">
         <attribute name="action" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
         <attribute name="objectEntityName" optional="YES" attributeType="String"/>
         <attribute name="objectUuid" optional="YES" attributeType="String"/>
         <attribute name="timestamp" optional="YES" attributeType="Date"/>
-        <attribute name="uuid" optional="YES" attributeType="String"/>
+        <attribute name="uuid" attributeType="String" indexed="YES"/>
     </entity>
     <entity name="BDSection">
         <attribute name="createdBy" optional="YES" attributeType="String"/>
@@ -99,7 +114,7 @@
         <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
-        <attribute name="uuid" attributeType="String"/>
+        <attribute name="uuid" attributeType="String" indexed="YES"/>
     </entity>
     <entity name="BDSubcategory">
         <attribute name="categoryId" optional="YES" attributeType="String"/>
@@ -112,7 +127,7 @@
         <attribute name="modifiedDate" optional="YES" attributeType="Date"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
-        <attribute name="uuid" attributeType="String"/>
+        <attribute name="uuid" attributeType="String" indexed="YES"/>
     </entity>
     <entity name="BDTherapy" representedClassName="Therapy">
         <attribute name="createdBy" optional="YES" attributeType="String"/>
@@ -128,7 +143,7 @@
         <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
         <attribute name="therapyGroupId" optional="YES" attributeType="String"/>
         <attribute name="therapyGroupJoinType" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
-        <attribute name="uuid" attributeType="String"/>
+        <attribute name="uuid" attributeType="String" indexed="YES"/>
     </entity>
     <entity name="BDTherapyGroup" representedClassName="TherapyGroup">
         <attribute name="createdBy" optional="YES" attributeType="String"/>
@@ -142,20 +157,20 @@
         <attribute name="pathogenGroupId" optional="YES" attributeType="String"/>
         <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
         <attribute name="therapyGroupJoinType" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
-        <attribute name="therapyNote" optional="YES" attributeType="String"/>
-        <attribute name="uuid" attributeType="String"/>
+        <attribute name="uuid" attributeType="String" indexed="YES"/>
     </entity>
     <elements>
         <element name="BDCategory" positionX="-488" positionY="-24" width="128" height="195"/>
         <element name="BDDisease" positionX="-164" positionY="-45" width="128" height="225"/>
         <element name="BDLinkedNote" positionX="-0" positionY="252" width="128" height="225"/>
         <element name="BDPathogen" positionX="-461" positionY="252" width="128" height="210"/>
-        <element name="BDPresentation" positionX="-2" positionY="-36" width="128" height="225"/>
+        <element name="BDPathogenGroup" positionX="-621" positionY="255" width="128" height="195"/>
+        <element name="BDPresentation" positionX="-2" positionY="-36" width="128" height="210"/>
         <element name="BDQueueEntry" positionX="135" positionY="294" width="128" height="120"/>
         <element name="BDSection" positionX="-648" positionY="-9" width="128" height="180"/>
         <element name="BDSubcategory" positionX="-324" positionY="-24" width="128" height="195"/>
         <element name="BDTherapy" positionX="-155" positionY="234" width="128" height="255"/>
         <element name="BDTherapyGroup" positionX="-308" positionY="243" width="128" height="225"/>
-        <element name="BDPathogenGroup" positionX="-621" positionY="255" width="128" height="195"/>
+        <element name="BDLinkedNoteAssociation" positionX="153" positionY="9" width="128" height="240"/>
     </elements>
 </model>

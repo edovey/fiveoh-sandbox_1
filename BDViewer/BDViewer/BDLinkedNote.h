@@ -15,15 +15,20 @@
 #define ENTITYNAME_LINKEDNOTE @"BDLinkedNote"
 
 #define LN_UUID @"ln_uuid"
-#define LN_SCHEMAVERSION @"ln_schemaVersion"
 #define LN_CREATEDDATE @"ln_createdDate"
 #define LN_CREATEDBY @"ln_createdBy"
 #define LN_MODIFIEDDATE @"ln_modifiedDate"
 #define LN_MODIFIEDBY @"ln_modifiedBy"
-#define LN_STORAGEKEY @"ln_storageKey"
-#define LN_DEPRECATED @"ln_deprecated"
 #define LN_INUSEBY @"ln_inUseBy"
-#define LN_PARENTID @"ln_parentId"
+#define LN_DEPRECATED @"ln_deprecated"
+#define LN_SCHEMAVERSION @"ln_schemaVersion"
+#define LN_DISPLAYORDER @"ln_displayOrder"
+#define LN_LINKEDNOTEASSOCIATIONID @"ln_linkedNoteAssociationId"
+#define LN_PREVIEWTEXT @"ln_previewText"
+#define LN_SCOPEID @"ln_scopeId"
+#define LN_SINGLEUSE @"ln_singelUse"
+#define LN_STORAGEKEY @"ln_storageKey"
+#define LN_DOCUMENTTEXT @"ln_documentText"
 
 #define S3_LN_DOCUMENTTEXT @"ln_documentText"
 
@@ -31,14 +36,20 @@
 
 @property (nonatomic, retain) NSString  * uuid;
 @property (nonatomic, retain) NSDate    * createdDate;
-@property (nonatomic, retain) NSDate    * modifiedDate;
-@property (nonatomic, retain) NSString  * documentText; // Stored in S3 as refeferenced by storageKey
 @property (nonatomic, retain) NSString  * createdBy;
 @property (nonatomic, retain) NSString  * modifiedBy;
+@property (nonatomic, retain) NSDate    * modifiedDate;
 @property (nonatomic, retain) NSString  * inUseBy;
-@property (nonatomic, retain) NSString  * storageKey;
 @property (nonatomic, retain) NSNumber  * deprecated;
 @property (nonatomic, retain) NSNumber  * schemaVersion;
+@property (nonatomic, retain) NSNumber * displayOrder;
+
+@property (nonatomic, retain) NSString * linkedNoteAssociationId;
+@property (nonatomic, retain) NSString * previewText;
+@property (nonatomic, retain) NSString * scopeId;
+@property (nonatomic, retain) NSNumber * singleUse;
+@property (nonatomic, retain) NSString  * storageKey;
+@property (nonatomic, retain) NSString  * documentText; // Stored in S3 as refeferenced by storageKey
 
 
 +(NSString *)create;

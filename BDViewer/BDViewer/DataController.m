@@ -96,7 +96,9 @@
 	
 	NSError *error = nil;
 	NSArray *array = [theMOC executeFetchRequest:req
-                                           error:&error];   
+                                           error:&error];  
+    [req release];
+    
 	if (array == nil)
 	{
 		NSException *exception = [NSException 
@@ -155,12 +157,15 @@
         NSArray *sortDescriptors = [NSArray arrayWithObject:sd];
         
         [request setSortDescriptors:sortDescriptors];
+        [sd release];
+        
     }
     
     NSError *error;
 	NSMutableArray *mutableFetchResults = [[moc executeFetchRequest:request error:&error] mutableCopy];
-	    
-	return mutableFetchResults;
+    [request release];
+    
+	return [mutableFetchResults autorelease];
 }
 
 #pragma mark - Core Data stack

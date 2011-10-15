@@ -21,6 +21,7 @@
 @dynamic modifiedBy;
 @dynamic modifiedDate;
 @dynamic schemaVersion;
+@dynamic displayOrder;
 
 
 +(NSString *)create
@@ -38,6 +39,7 @@
     section.inUseBy = nil;
     section.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_SECTION intValue]];
     section.deprecated = [NSNumber numberWithBool:NO];
+    section.displayOrder = [NSNumber numberWithInt:-1];
         
     [BDQueueEntry createWithObjectUuid:section.uuid 
                       withEntityName:ENTITYNAME_SECTION
@@ -46,6 +48,7 @@
     
     [[DataController sharedInstance] saveContext];
     NSString *uuid = section.uuid;
+    [section release];
     
     return uuid;
 }
@@ -75,7 +78,7 @@
         NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_SECTION
                                                   inManagedObjectContext:moc];
         
-        section = [[BDSection alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+        section = [[[BDSection alloc] initWithEntity:entity insertIntoManagedObjectContext:moc] autorelease];
         section.uuid = uuid;
         
     }
@@ -101,6 +104,7 @@
                 section.modifiedDate = modifedDate;
                 section.inUseBy = [theAttributeDictionary valueForKey:SN_INUSEBY];
                 section.deprecated = [NSNumber numberWithBool:[[theAttributeDictionary valueForKey:SN_DEPRECATED] boolValue]];
+                section.displayOrder = [NSNumber numberWithInt:[[theAttributeDictionary valueForKey:SN_DISPLAYORDER] intValue]];
                 
                 section.name = [theAttributeDictionary valueForKey:SN_NAME];
             }
@@ -112,7 +116,7 @@
         NSLog(@"*** Attempted to load a version older than the current for %@", uuid);
         uuid = nil;
     }
-    
+    [dateFormatter release];
     [[DataController sharedInstance] saveContext];
     
     return uuid;

@@ -256,17 +256,24 @@
     
     UIMenuItem *miBold = [[UIMenuItem alloc] initWithTitle:@"Bold" action:@selector(bold:)];
     [tmpArray addObject:miBold];
+    [miBold release];
     
     UIMenuItem *miSymbol = [[UIMenuItem alloc] initWithTitle:@"\u03B2" action:@selector(insertSymbol)];
     [tmpArray addObject:miSymbol];
+    [miSymbol release];
     
     UIMenuItem *miSubscript = [[UIMenuItem alloc] initWithTitle:@"Subscript" action:@selector(subscript:)];
     [tmpArray addObject:miSubscript];
+    [miSubscript release];
     
     UIMenuItem *miSuperscript = [[UIMenuItem alloc] initWithTitle:@"Superscript" action:@selector(superscript:)];
     [tmpArray addObject:miSuperscript];
+    [miSuperscript release];
     
-    return [NSArray arrayWithArray:tmpArray];
+    NSArray *returnArray = [NSArray arrayWithArray:tmpArray];
+    [tmpArray release];
+    
+    return returnArray;
 }
 
 @end

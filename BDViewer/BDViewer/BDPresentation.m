@@ -20,7 +20,6 @@
 @dynamic modifiedBy;
 @dynamic modifiedDate;
 @dynamic name;
-@dynamic overview;
 @dynamic displayOrder;
 @dynamic schemaVersion;
 @dynamic uuid;
@@ -40,6 +39,7 @@
     presentation.inUseBy = nil;
     presentation.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_PRESENTATION intValue]];
     presentation.deprecated = [NSNumber numberWithBool:NO];
+    presentation.displayOrder = [NSNumber numberWithInt:-1];
     
     [BDQueueEntry createWithObjectUuid:presentation.uuid 
                       withEntityName:ENTITYNAME_PRESENTATION 
@@ -48,6 +48,7 @@
     
     [[DataController sharedInstance] saveContext];
     NSString *uuid = presentation.uuid;
+    [presentation release];
     
     return uuid;
 }
@@ -77,7 +78,7 @@
         NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_PRESENTATION 
                                                   inManagedObjectContext:moc];
         
-        presentation = [[BDPresentation alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+        presentation = [[[BDPresentation alloc] initWithEntity:entity insertIntoManagedObjectContext:moc] autorelease];
         presentation.uuid = uuid;
         
     }
@@ -105,8 +106,7 @@
                 presentation.deprecated = [NSNumber numberWithBool:[[theAttributeDictionary valueForKey:PR_DEPRECATED] boolValue]];
                 
                 presentation.diseaseId = [theAttributeDictionary valueForKey:PR_DISEASEID];
-                presentation.overview = [theAttributeDictionary valueForKey:PR_OVERVIEW];
-                presentation.displayOrder = [theAttributeDictionary valueForKey:PR_DISPLAYORDER];
+                presentation.displayOrder = [NSNumber numberWithInt:[[theAttributeDictionary valueForKey:PR_DISPLAYORDER] intValue]];
                 presentation.name = [theAttributeDictionary valueForKey:PR_NAME];
             }
                 break;
@@ -119,6 +119,7 @@
     }
     
     [[DataController sharedInstance] saveContext];
+    [dateFormatter release];
     
     return uuid;
 }

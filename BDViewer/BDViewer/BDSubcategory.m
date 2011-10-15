@@ -23,6 +23,7 @@
 @dynamic modifiedBy;
 @dynamic modifiedDate;
 @dynamic schemaVersion;
+@dynamic displayOrder;
 
 +(NSString *)create
 {
@@ -41,6 +42,7 @@
     subcategory.inUseBy = nil;
     subcategory.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_SUBCATEGORY intValue]];
     subcategory.deprecated = [NSNumber numberWithBool:NO];
+    subcategory.displayOrder = [NSNumber numberWithInt:-1];
     
 
     [BDQueueEntry createWithObjectUuid:subcategory.uuid 
@@ -50,6 +52,7 @@
     
     [[DataController sharedInstance] saveContext];
     NSString *uuid = subcategory.uuid;
+    [subcategory release];
     
     return uuid;
 }
@@ -79,7 +82,7 @@
         NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_SUBCATEGORY 
                                                   inManagedObjectContext:moc];
         
-        subcategory = [[BDSubcategory alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+        subcategory = [[[BDSubcategory alloc] initWithEntity:entity insertIntoManagedObjectContext:moc] autorelease];
         subcategory.uuid = uuid;
         
     }
@@ -105,6 +108,7 @@
                 subcategory.modifiedDate = modifedDate;
                 subcategory.inUseBy = [theAttributeDictionary valueForKey:SC_INUSEBY];
                 subcategory.deprecated = [NSNumber numberWithBool:[[theAttributeDictionary valueForKey:SC_DEPRECATED] boolValue]];
+                subcategory.displayOrder = [NSNumber numberWithInt:[[theAttributeDictionary valueForKey:SC_DISPLAYORDER] boolValue]];
 
                 subcategory.categoryId = [theAttributeDictionary valueForKey:SC_CATEGORYID];
                 subcategory.name = [theAttributeDictionary valueForKey:SC_NAME];
@@ -117,7 +121,7 @@
         NSLog(@"*** Attempted to load a version older than the current for %@", uuid);
         uuid = nil;
     }
-    
+    [dateFormatter release];
     [[DataController sharedInstance] saveContext];
     
     return uuid;

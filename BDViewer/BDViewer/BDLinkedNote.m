@@ -23,10 +23,15 @@
 @dynamic modifiedDate;
 @dynamic modifiedBy;
 @dynamic inUseBy;
-@dynamic documentText;
-@dynamic storageKey;
 @dynamic deprecated;
 @dynamic schemaVersion;
+@dynamic displayOrder;
+@dynamic linkedNoteAssociationId;
+@dynamic previewText;
+@dynamic scopeId;
+@dynamic singleUse;
+@dynamic storageKey;
+@dynamic documentText;
 
 +(NSString *)create
 {
@@ -43,6 +48,7 @@
     document.inUseBy = nil;
     document.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_LINKEDNOTE intValue]];
     document.deprecated = [NSNumber numberWithBool:NO];
+    document.displayOrder = [NSNumber numberWithInt:-1];
     
     document.storageKey = [NSString stringWithFormat:@"bd~%@.txt", document.uuid];
     
@@ -53,6 +59,7 @@
     
     [[DataController sharedInstance] saveContext];
     NSString *uuid = document.uuid;
+    [document release];
     
     return uuid;
 }
@@ -82,7 +89,7 @@
         NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_LINKEDNOTE 
                                                   inManagedObjectContext:moc];
         
-        document = [[BDLinkedNote alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+        document = [[[BDLinkedNote alloc] initWithEntity:entity insertIntoManagedObjectContext:moc] autorelease];
         document.uuid = uuid;
         
     }
@@ -107,8 +114,14 @@
                 document.modifiedBy  = [theAttributeDictionary valueForKey:LN_MODIFIEDBY];
                 document.modifiedDate = modifedDate;
                 document.inUseBy = [theAttributeDictionary valueForKey:LN_INUSEBY];
-                document.storageKey = [theAttributeDictionary valueForKey:LN_STORAGEKEY];   
                 document.deprecated = [NSNumber numberWithBool:[[theAttributeDictionary valueForKey:LN_DEPRECATED] boolValue]];
+                document.displayOrder = [NSNumber numberWithInt:[[theAttributeDictionary valueForKey:LN_DISPLAYORDER] intValue]];
+                document.linkedNoteAssociationId = [theAttributeDictionary valueForKey:LN_LINKEDNOTEASSOCIATIONID];
+                document.previewText = [theAttributeDictionary valueForKey:LN_PREVIEWTEXT];
+                document.scopeId = [theAttributeDictionary valueForKey:LN_SCOPEID];
+                document.singleUse = [NSNumber numberWithBool:[[theAttributeDictionary valueForKey:LN_SINGLEUSE] boolValue] ];
+                document.storageKey = [theAttributeDictionary valueForKey:LN_STORAGEKEY];   
+                document.documentText = [theAttributeDictionary valueForKey:LN_DOCUMENTTEXT];
             }
                 break;
         }
@@ -118,7 +131,7 @@
         NSLog(@"*** Attempted to load a version older than the current for %@", uuid);
         uuid = nil;
     }
-    
+    [dateFormatter release];
     [[DataController sharedInstance] saveContext];
     
     return uuid;

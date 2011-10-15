@@ -25,7 +25,6 @@
 #define TG_INUSEBY @"tg_inUseBy"
 #define TG_PATHOGENGROUPID @"tg_pathogenGroupId"
 #define TG_NAME @"tg_name"
-#define TG_THERAPYNOTE @"tg_therapyNote"
 #define TG_DISPLAYORDER @"tg_displayOrder"
 
 @interface BDTherapyGroup : NSManagedObject {
@@ -41,7 +40,6 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * pathogenGroupId;
 @property (nonatomic, retain) NSNumber * schemaVersion;
-@property (nonatomic, retain) NSString * therapyNote;
 @property (nonatomic, retain) NSString * uuid;
 
 +(NSString *)create;

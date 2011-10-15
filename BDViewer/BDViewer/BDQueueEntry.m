@@ -34,6 +34,7 @@
         entry.objectEntityName = theEntityName;
         entry.action = [NSNumber numberWithInt:theActionType];
         if(save) [[DataController sharedInstance] saveContext];
+        [entry release];
     }
 }
 

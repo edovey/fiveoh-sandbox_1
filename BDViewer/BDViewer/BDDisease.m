@@ -18,7 +18,7 @@
 @dynamic modifiedBy;
 @dynamic modifiedDate;
 @dynamic name;
-@dynamic overview;
+@dynamic displayOrder;
 @dynamic schemaVersion;
 @dynamic subcategoryId;
 @dynamic uuid;
@@ -39,6 +39,7 @@
     disease.inUseBy = nil;
     disease.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_DISEASE intValue]];
     disease.deprecated = [NSNumber numberWithBool:NO];
+    disease.displayOrder = [NSNumber numberWithInt:-1];
     
     [BDQueueEntry createWithObjectUuid:disease.uuid 
                       withEntityName:ENTITYNAME_DISEASE 
@@ -47,6 +48,7 @@
     
     [[DataController sharedInstance] saveContext];
     NSString *uuid = disease.uuid;
+    [disease release];
     
     return uuid;
 }
@@ -76,7 +78,7 @@
         NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_DISEASE 
                                                   inManagedObjectContext:moc];
         
-        disease = [[BDDisease alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+        disease = [[[BDDisease alloc] initWithEntity:entity insertIntoManagedObjectContext:moc] autorelease];
         disease.uuid = uuid;
         
     }
@@ -106,7 +108,7 @@
                 disease.subcategoryId = [theAttributeDictionary valueForKey:DI_SUBCATEGORYID];
                 disease.categoryId = [theAttributeDictionary valueForKey:DI_CATEGORYID];
                 disease.name = [theAttributeDictionary valueForKey:DI_NAME];
-                disease.overview = [theAttributeDictionary valueForKey:DI_OVERVIEW];
+                disease.displayOrder = [NSNumber numberWithInt:[[theAttributeDictionary valueForKey:DI_DISPLAYORDER] intValue]];
             }
                 break;
         }
@@ -115,9 +117,10 @@
     {
         NSLog(@"*** Attempted to load a version older than the current for %@", uuid);
         uuid = nil;
+        
     }
-    
     [[DataController sharedInstance] saveContext];
+    [dateFormatter release];
     
     return uuid;
 }

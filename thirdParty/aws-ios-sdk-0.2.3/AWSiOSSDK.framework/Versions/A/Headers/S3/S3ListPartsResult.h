@@ -14,7 +14,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "S3Owner.h";
+#import "S3Owner.h"
 
 /** The S3ListPartsResult contains all the information about the listParts method.
  *

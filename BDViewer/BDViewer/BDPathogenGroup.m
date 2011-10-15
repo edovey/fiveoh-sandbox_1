@@ -38,6 +38,7 @@
     pathogenGroup.inUseBy = nil;
     pathogenGroup.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_PATHOGEN intValue]];
     pathogenGroup.deprecated = [NSNumber numberWithBool:NO];
+    pathogenGroup.displayOrder = [NSNumber numberWithInt:-1];
     
     [BDQueueEntry createWithObjectUuid:pathogenGroup.uuid 
                         withEntityName:ENTITYNAME_PATHOGENGROUP 
@@ -46,6 +47,7 @@
     
     [[DataController sharedInstance] saveContext];
     NSString *uuid = pathogenGroup.uuid;
+    [pathogenGroup release];
     
     return uuid;
 }
@@ -76,7 +78,7 @@
         NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_PATHOGENGROUP
                                                   inManagedObjectContext:moc];
         
-        pathogenGroup = [[BDPathogenGroup alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+        pathogenGroup = [[[BDPathogenGroup alloc] initWithEntity:entity insertIntoManagedObjectContext:moc] autorelease];
         pathogenGroup.uuid = uuid;
         
     }
@@ -102,6 +104,7 @@
                 pathogenGroup.modifiedDate = modifedDate;
                 pathogenGroup.inUseBy = [theAttributeDictionary valueForKey:PG_INUSEBY];
                 pathogenGroup.deprecated = [NSNumber numberWithBool:[[theAttributeDictionary valueForKey:PG_DEPRECATED] boolValue]];
+                pathogenGroup.displayOrder = [NSNumber numberWithInt:[[theAttributeDictionary valueForKey:PG_DISPLAYORDER] intValue]];
                 
                 pathogenGroup.presentationId = [theAttributeDictionary valueForKey:PG_PRESENTATIONID];
             }
@@ -113,7 +116,7 @@
         NSLog(@"*** Attempted to load a version older than the current for %@", uuid);
         uuid = nil;
     }
-    
+    [dateFormatter release];
     [[DataController sharedInstance] saveContext];
     
     return uuid;

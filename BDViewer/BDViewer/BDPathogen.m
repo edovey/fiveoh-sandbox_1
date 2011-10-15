@@ -18,6 +18,7 @@
 @dynamic inUseBy;
 @dynamic modifiedBy;
 @dynamic modifiedDate;
+@dynamic displayOrder;
 @dynamic name;
 @dynamic pathogenGroupId;
 @dynamic schemaVersion;
@@ -38,6 +39,7 @@
     pathogen.inUseBy = nil;
     pathogen.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_PATHOGEN intValue]];
     pathogen.deprecated = [NSNumber numberWithBool:NO];
+    pathogen.displayOrder = [NSNumber numberWithInt:-1];
       
     [BDQueueEntry createWithObjectUuid:pathogen.uuid 
                       withEntityName:ENTITYNAME_PATHOGEN 
@@ -46,6 +48,7 @@
     
     [[DataController sharedInstance] saveContext];
     NSString *uuid = pathogen.uuid;
+    [pathogen release];
     
     return uuid;
 }
@@ -76,7 +79,7 @@
         NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_PATHOGEN 
                                                   inManagedObjectContext:moc];
         
-        pathogen = [[BDPathogen alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+        pathogen = [[[BDPathogen alloc] initWithEntity:entity insertIntoManagedObjectContext:moc]autorelease];
         pathogen.uuid = uuid;
         
     }
@@ -102,6 +105,7 @@
                 pathogen.modifiedDate = modifedDate;
                 pathogen.inUseBy = [theAttributeDictionary valueForKey:PA_INUSEBY];
                 pathogen.deprecated = [NSNumber numberWithBool:[[theAttributeDictionary valueForKey:PA_DEPRECATED] boolValue]];
+                pathogen.displayOrder = [NSNumber numberWithInt:[[theAttributeDictionary valueForKey:PA_DISPLAYORDER] intValue]];
                 
                 pathogen.pathogenGroupId = [theAttributeDictionary valueForKey:PA_PATHOGENGROUPID];
                 pathogen.name = [theAttributeDictionary valueForKey:PA_NAME];
@@ -114,7 +118,7 @@
         NSLog(@"*** Attempted to load a version older than the current for %@", uuid);
         uuid = nil;
     }
-    
+    [dateFormatter release];
     [[DataController sharedInstance] saveContext];
     
     return uuid;

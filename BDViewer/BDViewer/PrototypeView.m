@@ -141,7 +141,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
     // Configure the cell...
@@ -164,6 +164,7 @@
     self.repositoryUrlTextField.text = entry.storageKey;
     self.documentTextTextView.text = entry.documentText;
     self.modifiedDateLabel.text = [dateFormatter stringFromDate:entry.modifiedDate];
+    [dateFormatter release];
 }
 
 @end

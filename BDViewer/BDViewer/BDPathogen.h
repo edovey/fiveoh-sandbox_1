@@ -20,9 +20,9 @@
 #define PA_CREATEDBY @"pa_createdBy"
 #define PA_MODIFIEDDATE @"pa_modifiedDate"
 #define PA_MODIFIEDBY @"pa_modifiedBy"
-#define PA_STORAGEKEY @"pa_storageKey"
 #define PA_DEPRECATED @"pa_deprecated"
 #define PA_INUSEBY @"pa_inUseBy"
+#define PA_DISPLAYORDER @"pa_displayOrder"
 #define PA_PATHOGENGROUPID @"pa_pathogenGroupId"
 #define PA_NAME @"pa_name"
 
@@ -34,6 +34,7 @@
 @property (nonatomic, retain) NSNumber * deprecated;
 @property (nonatomic, retain) NSString * inUseBy;
 @property (nonatomic, retain) NSString * modifiedBy;
+@property (nonatomic, retain) NSNumber * displayOrder;
 @property (nonatomic, retain) NSDate * modifiedDate;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * pathogenGroupId;

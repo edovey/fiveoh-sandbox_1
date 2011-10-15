@@ -22,7 +22,6 @@
 @dynamic name;
 @dynamic pathogenGroupId;
 @dynamic schemaVersion;
-@dynamic therapyNote;
 @dynamic uuid;
 
 +(NSString *)create
@@ -40,6 +39,7 @@
     therapyGroup.inUseBy = nil;
     therapyGroup.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_THERAPYGROUP intValue]];
     therapyGroup.deprecated = [NSNumber numberWithBool:NO];
+    therapyGroup.displayOrder = [NSNumber numberWithInt:-1];
     
     [BDQueueEntry createWithObjectUuid:therapyGroup.uuid 
                       withEntityName:ENTITYNAME_THERAPYGROUP 
@@ -48,6 +48,7 @@
     
     [[DataController sharedInstance] saveContext];
     NSString *uuid = therapyGroup.uuid;
+    [therapyGroup release];
     
     return uuid;
 }
@@ -77,7 +78,7 @@
         NSEntityDescription *entity = [NSEntityDescription entityForName:ENTITYNAME_THERAPYGROUP 
                                                   inManagedObjectContext:moc];
         
-        therapyGroup = [[BDTherapyGroup alloc] initWithEntity:entity insertIntoManagedObjectContext:moc];
+        therapyGroup = [[[BDTherapyGroup alloc] initWithEntity:entity insertIntoManagedObjectContext:moc] autorelease];
         therapyGroup.uuid = uuid;
         
     }
@@ -105,8 +106,7 @@
                 therapyGroup.deprecated = [NSNumber numberWithBool:[[theAttributeDictionary valueForKey:TG_DEPRECATED] boolValue]];
                 
                 therapyGroup.pathogenGroupId = [theAttributeDictionary valueForKey:TG_PATHOGENGROUPID];
-                therapyGroup.therapyNote = [theAttributeDictionary valueForKey:TG_THERAPYNOTE];
-                therapyGroup.displayOrder = [theAttributeDictionary valueForKey:TG_DISPLAYORDER];
+                therapyGroup.displayOrder = [NSNumber numberWithInt:[[theAttributeDictionary valueForKey:TG_DISPLAYORDER] intValue]];
                 therapyGroup.name = [theAttributeDictionary valueForKey:TG_NAME];
             }
                 break;
@@ -117,7 +117,7 @@
         NSLog(@"*** Attempted to load a version older than the current for %@", uuid);
         uuid = nil;
     }
-    
+    [dateFormatter release];
     [[DataController sharedInstance] saveContext];
     
     return uuid;

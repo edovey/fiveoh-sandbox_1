@@ -22,10 +22,10 @@
 #define DI_MODIFIEDBY @"di_modifiedBy"
 #define DI_DEPRECATED @"di_deprecated"
 #define DI_INUSEBY @"di_inUseBy"
+#define DI_DISPLAYORDER @"di_displayOrder"
 #define DI_SUBCATEGORYID @"di_subcategoryId"
 #define DI_CATEGORYID @ "di_categoryId"
 #define DI_NAME @"di_name"
-#define DI_OVERVIEW @"di_overview"
 
 
 @interface BDDisease : NSManagedObject {
@@ -38,11 +38,11 @@
 @property (nonatomic, retain) NSString * modifiedBy;
 @property (nonatomic, retain) NSDate * modifiedDate;
 @property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSString * overview;
 @property (nonatomic, retain) NSNumber * schemaVersion;
 @property (nonatomic, retain) NSString * subcategoryId;
 @property (nonatomic, retain) NSString * uuid;
 @property (nonatomic, retain) NSString * categoryId;
+@property (nonatomic, retain) NSNumber * displayOrder;
 
 +(NSString *) create;
 +(BDDisease *) retrieveWithUUID:(NSString *)theUUID;

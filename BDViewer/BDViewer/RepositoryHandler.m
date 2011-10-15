@@ -17,6 +17,7 @@
 #import "BDPresentation.h"
 #import "BDTherapyGroup.h"
 #import "BDTherapy.h"
+#import "BDLinkedNoteAssociation.h"  
 
 #import <AWSiOSSDK/SimpleDB/AmazonSimpleDBClient.h>
 #import "SdbRequestDelegate.h"
@@ -31,6 +32,7 @@
 -(SimpleDBPutAttributesRequest *)sdbPutAttributeRequestWithTherapyGroup:(BDTherapyGroup *)therapyGroup;
 -(SimpleDBPutAttributesRequest *)sdbPutAttributeRequestWithTherapy:(BDTherapy *)therapy;
 -(SimpleDBPutAttributesRequest *)sdbPutAttributeRequestWithLinkedNote:(BDLinkedNote *)linkedNote;
+-(SimpleDBPutAttributesRequest *)sdbPutAttributeRequestWithLinkedNoteAssociation:(BDLinkedNoteAssociation *)linkedNoteAssociation;
 -(int)pushQueuedEntries;
 -(NSString *)loadEntityWithItemName:(NSString *)theItemName forDomain:(NSString *)theDomain;
 -(NSString *)getSimpleSelectExpressionForDomain:(NSString *)theDomain;
@@ -280,7 +282,7 @@
                                                                    andReplace:YES] autorelease]];
     
     [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:SN_NAME
-                                                                      andValue:section.name
+                                                                     andValue:(nil == section.name) ? @"" : section.name
                                                                     andReplace:YES] autorelease]];
     
     SimpleDBPutAttributesRequest *sdbPutRequest = [[SimpleDBPutAttributesRequest alloc] 
@@ -336,11 +338,11 @@
                                                                    andReplace:YES] autorelease]];
     
     [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:CT_SECTIONID
-                                                                     andValue:category.sectionId
+                                                                     andValue:(nil == category.sectionId) ? @"" : category.sectionId
                                                                    andReplace:YES] autorelease]];
     
     [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:CT_NAME
-                                                                     andValue:category.name
+                                                                     andValue:(nil == category.name) ? @"" : category.name
                                                                    andReplace:YES] autorelease]];
     
     SimpleDBPutAttributesRequest *sdbPutRequest = [[SimpleDBPutAttributesRequest alloc] 
@@ -396,11 +398,11 @@
                                                                    andReplace:YES] autorelease]];
     
     [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:SC_CATEGORYID                         
-                                                                     andValue:subcategory.categoryId
+                                                                     andValue:(nil == subcategory.categoryId) ? @"" : subcategory.categoryId
                                                                    andReplace:YES] autorelease]];
      
      [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:SC_NAME
-                                                                      andValue:subcategory.name
+                                                                      andValue:(nil == subcategory.name) ? @"" : subcategory.name
                                                                     andReplace:YES] autorelease]];
      
      SimpleDBPutAttributesRequest *sdbPutRequest = [[SimpleDBPutAttributesRequest alloc] 
@@ -456,20 +458,17 @@
                                                                    andReplace:YES] autorelease]];
     
     [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:DI_CATEGORYID                         
-                                                                     andValue:disease.categoryId
+                                                                     andValue:(nil == disease.categoryId) ? @"" : disease.categoryId
                                                                    andReplace:YES] autorelease]];
     
     [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:DI_SUBCATEGORYID                         
-                                                                     andValue:disease.subcategoryId
+                                                                     andValue:(nil == disease.subcategoryId) ? @"" : disease.subcategoryId
                                                                    andReplace:YES] autorelease]];
     
     [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:DI_NAME
-                                                                     andValue:disease.name
+                                                                     andValue:(nil == disease.name) ? @"" : disease.name
                                                                    andReplace:YES] autorelease]];
     
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:DI_OVERVIEW                         
-                                                                     andValue:disease.overview
-                                                                   andReplace:YES] autorelease]];
     
     SimpleDBPutAttributesRequest *sdbPutRequest = [[SimpleDBPutAttributesRequest alloc] 
                                                    initWithDomainName:DOMAIN_DISEASE 
@@ -524,7 +523,7 @@
                                                                    andReplace:YES] autorelease]];
     
     [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:PR_DISEASEID                         
-                                                                     andValue:presentation.diseaseId
+                                                                     andValue:(nil == presentation.diseaseId) ? @"" : presentation.diseaseId
                                                                    andReplace:YES] autorelease]];
     
     [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:PR_DISPLAYORDER                         
@@ -535,9 +534,6 @@
                                                                      andValue:presentation.name
                                                                    andReplace:YES] autorelease]];
     
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:PR_OVERVIEW                         
-                                                                     andValue:presentation.overview
-                                                                   andReplace:YES] autorelease]];
     
     SimpleDBPutAttributesRequest *sdbPutRequest = [[SimpleDBPutAttributesRequest alloc] 
                                                    initWithDomainName:DOMAIN_PRESENTATION
@@ -592,16 +588,13 @@
                                                                    andReplace:YES] autorelease]];
     
     [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:TG_PATHOGENGROUPID                         
-                                                                     andValue:therapyGroup.pathogenGroupId
+                                                                     andValue:(nil == therapyGroup.pathogenGroupId) ? @"" : therapyGroup.pathogenGroupId
                                                                    andReplace:YES] autorelease]];
     
     [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:TG_DISPLAYORDER                         
                                                                      andValue:[NSString stringWithFormat:@"%d", [therapyGroup.displayOrder intValue]]
                                                                    andReplace:YES] autorelease]];
     
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:TG_THERAPYNOTE                         
-                                                                     andValue:therapyGroup.therapyNote 
-                                                                   andReplace:YES] autorelease]];
     
     SimpleDBPutAttributesRequest *sdbPutRequest = [[SimpleDBPutAttributesRequest alloc] 
                                                    initWithDomainName:DOMAIN_THERAPYGROUP
@@ -656,7 +649,7 @@
                                                                    andReplace:YES] autorelease]];
     
     [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:TH_THERAPYGROUPID                         
-                                                                     andValue:therapy.therapyGroupId
+                                                                     andValue:(nil == therapy.therapyGroupId) ? @"" : therapy.therapyGroupId
                                                                    andReplace:YES] autorelease]];
     
     [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:TH_THERAPYGROUPJOINTYPE                         
@@ -668,15 +661,15 @@
                                                                    andReplace:YES] autorelease]];
     
     [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:TH_DOSAGE                         
-                                                                     andValue:therapy.dosage 
+                                                                     andValue:(nil == therapy.dosage) ? @"" : therapy.dosage 
                                                                    andReplace:YES] autorelease]];
     
     [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:TH_DURATION                         
-                                                                     andValue:therapy.duration 
+                                                                     andValue:(nil == therapy.duration) ? @"" : therapy.duration 
                                                                    andReplace:YES] autorelease]];
     
     [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:TH_NAME                         
-                                                                     andValue:therapy.name 
+                                                                     andValue:(nil == therapy.name) ? @"" : therapy.name 
                                                                    andReplace:YES] autorelease]];
     
     SimpleDBPutAttributesRequest *sdbPutRequest = [[SimpleDBPutAttributesRequest alloc] 
@@ -704,18 +697,6 @@
                                                                     andValue:linkedNote.uuid 
                                                                   andReplace:YES] autorelease]];
     
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_SCHEMAVERSION 
-                                                                    andValue:[NSString stringWithFormat:@"%d", [linkedNote.schemaVersion intValue]]
-                                                                  andReplace:YES] autorelease]];
-    
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_STORAGEKEY 
-                                                                     andValue:(nil == linkedNote.storageKey) ? @"" : linkedNote.storageKey
-                                                                   andReplace:YES] autorelease]];
-
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_INUSEBY 
-                                                                     andValue:(nil == linkedNote.inUseBy) ? @"" : linkedNote.inUseBy
-                                                                   andReplace:YES] autorelease]];
-
     [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_CREATEDDATE 
                                                                     andValue:[dateFormatter stringFromDate:linkedNote.createdDate] 
                                                                   andReplace:YES] autorelease]];
@@ -732,12 +713,125 @@
                                                                      andValue:(nil == linkedNote.modifiedBy) ? @"" : linkedNote.modifiedBy
                                                                   andReplace:YES] autorelease]];
     
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_INUSEBY 
+                                                                     andValue:(nil == linkedNote.inUseBy) ? @"" : linkedNote.inUseBy
+                                                                   andReplace:YES] autorelease]];
+
     [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_DEPRECATED 
                                                                     andValue:[Utility nsNumberBoolToString:linkedNote.deprecated]
                                                                   andReplace:YES] autorelease]];
     
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_SCHEMAVERSION 
+                                                                    andValue:[NSString stringWithFormat:@"%d", [linkedNote.schemaVersion intValue]]
+                                                                  andReplace:YES] autorelease]];
+    
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_DISPLAYORDER 
+                                                                     andValue:[NSString stringWithFormat:@"%d", [linkedNote.displayOrder intValue]]
+                                                                   andReplace:YES] autorelease]];
+    
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_LINKEDNOTEASSOCIATIONID 
+                                                                     andValue:(nil == linkedNote.linkedNoteAssociationId) ? @"" : linkedNote.linkedNoteAssociationId
+                                                                   andReplace:YES] autorelease]];
+    
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_PREVIEWTEXT 
+                                                                     andValue:(nil == linkedNote.previewText) ? @"" : linkedNote.previewText
+                                                                   andReplace:YES] autorelease]];
+    
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_SCOPEID 
+                                                                     andValue:(nil == linkedNote.scopeId) ? @"" : linkedNote.scopeId
+                                                                   andReplace:YES] autorelease]];
+    
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_SINGLEUSE 
+                                                                     andValue:[Utility nsNumberBoolToString:linkedNote.singleUse]
+                                                                   andReplace:YES] autorelease]];
+    
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_STORAGEKEY 
+                                                                     andValue:(nil == linkedNote.storageKey) ? @"" : linkedNote.storageKey
+                                                                   andReplace:YES] autorelease]];
+    
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_DOCUMENTTEXT 
+                                                                     andValue:(nil == linkedNote.documentText) ? @"" : linkedNote.documentText
+                                                                   andReplace:YES] autorelease]];
+    
+
     SimpleDBPutAttributesRequest *sdbPutRequest = [[SimpleDBPutAttributesRequest alloc] 
                                                    initWithDomainName:DOMAIN_LINKEDNOTE 
+                                                   andItemName:itemName 
+                                                   andAttributes:attributes];
+    
+    [attributes release];
+    [dateFormatter release];
+    return [sdbPutRequest autorelease];
+}
+
+-(SimpleDBPutAttributesRequest *)sdbPutAttributeRequestWithLinkedNoteAssociation:(BDLinkedNoteAssociation *)linkedNoteAssociation
+{
+    
+    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+	[dateFormatter setTimeStyle:NSDateFormatterFullStyle];
+	[dateFormatter setDateFormat:DATETIMEFORMAT];
+    
+    NSString *itemName = linkedNoteAssociation.uuid;
+    NSLog(@"ItemName to push:%@", itemName);
+    NSMutableArray *attributes = [[NSMutableArray alloc] initWithCapacity:8];
+    
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LA_UUID 
+                                                                     andValue:linkedNoteAssociation.uuid 
+                                                                   andReplace:YES] autorelease]];
+    
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LA_SCHEMAVERSION 
+                                                                     andValue:[NSString stringWithFormat:@"%d", [linkedNoteAssociation.schemaVersion intValue]]
+                                                                   andReplace:YES] autorelease]];
+    
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LA_CREATEDDATE 
+                                                                     andValue:[dateFormatter stringFromDate:linkedNoteAssociation.createdDate] 
+                                                                   andReplace:YES] autorelease]];
+    
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LA_CREATEDBY 
+                                                                     andValue:(nil == linkedNoteAssociation.createdBy) ? @"" : linkedNoteAssociation.createdBy
+                                                                   andReplace:YES] autorelease]];
+    
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LA_MODIFIEDDATE 
+                                                                     andValue:[dateFormatter stringFromDate:linkedNoteAssociation.modifiedDate] 
+                                                                   andReplace:YES] autorelease]];
+    
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LA_MODIFIEDBY 
+                                                                     andValue:(nil == linkedNoteAssociation.modifiedBy) ? @"" : linkedNoteAssociation.modifiedBy
+                                                                   andReplace:YES] autorelease]];
+    
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LA_DEPRECATED 
+                                                                     andValue:[Utility nsNumberBoolToString:linkedNoteAssociation.deprecated]
+                                                                   andReplace:YES] autorelease]];
+    
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LA_DISPLAYORDER 
+                                                                     andValue:[NSString stringWithFormat:@"%d",[linkedNoteAssociation.displayOrder intValue]]
+                                                                   andReplace:YES] autorelease]];
+    
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LA_LINKEDNOTEID
+                                                                     andValue:(nil == linkedNoteAssociation.linkedNoteId) ? @"" : linkedNoteAssociation.linkedNoteId
+                                                                   andReplace:YES] autorelease]];
+    
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LA_PARENTID
+                                                                     andValue:(nil == linkedNoteAssociation.parentId) ? @"" : linkedNoteAssociation.parentId
+                                                                   andReplace:YES] autorelease]];
+
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LA_PARENTENTITYNAME
+                                                                     andValue:(nil == linkedNoteAssociation.parentEntityName) ? @"" : linkedNoteAssociation.parentEntityName
+                                                                   andReplace:YES] autorelease]];
+    
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LA_PARENTENTITYPROPERTYNAME
+                                                                     andValue:(nil == linkedNoteAssociation.parentEntityPropertyName) ? @"" : linkedNoteAssociation.parentEntityPropertyName
+                                                                   andReplace:YES] autorelease]];
+    
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LA_LINKEDNOTETYPE
+                                                                     andValue:[NSString stringWithFormat:@"%d", [linkedNoteAssociation.linkedNoteType intValue]]
+                                                                   andReplace:YES] autorelease]];
+    
+
+    
+    
+    SimpleDBPutAttributesRequest *sdbPutRequest = [[SimpleDBPutAttributesRequest alloc] 
+                                                   initWithDomainName:DOMAIN_LINKEDNOTEASSOCIATION 
                                                    andItemName:itemName 
                                                    andAttributes:attributes];
     

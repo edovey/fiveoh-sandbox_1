@@ -23,6 +23,7 @@
 #define PG_MODIFIEDBY @"pg_modifiedBy"
 #define PG_DEPRECATED @"pg_deprecated"
 #define PG_INUSEBY @"pg_inUseBy"
+#define PG_DISPLAYORDER @"pg_displayOrder"
 #define PG_PRESENTATIONID @"pg_presentationId"
 
 @interface BDPathogenGroup : NSManagedObject {

@@ -22,6 +22,7 @@
 #define SN_MODIFIEDBY @"sn_modifiedBy"
 #define SN_DEPRECATED @"sn_deprecated"
 #define SN_INUSEBY @"sn_inUseBy"
+#define SN_DISPLAYORDER @"sn_displayOrder"
 #define SN_NAME @"sn_name"
 
 @interface BDSection : NSManagedObject
@@ -35,6 +36,7 @@
 @property (nonatomic, retain) NSString * modifiedBy;
 @property (nonatomic, retain) NSDate * modifiedDate;
 @property (nonatomic, retain) NSNumber * schemaVersion;
+@property (nonatomic, retain) NSNumber * displayOrder;
 
 +(NSString *)create;
 +(BDSection *)retrieveWithUUID:(NSString *)theUUID;

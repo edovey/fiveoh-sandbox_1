@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+<<<<<<< HEAD
 #define SCHEMAVERSION_LINKEDNOTEASSOCIATION @"1"
 #define DOMAIN_LINKEDNOTEASSOCIATION @"bd_test2"
 #define BUCKET_LINKEDNOTEASSOCIATION @"bdDataStore"
@@ -27,11 +28,17 @@
 #define LA_PARENTENTITYNAME @"la_parentEntityName"
 #define LA_PARENTENTITYPROPERTYNAME @"la_parentEntityPropertyName"
 #define LA_LINKEDNOTETYPE @"la_linkedNoteType"
+=======
+>>>>>>> 2ba7e82d91d3dd1edb435395d6dda9ff888fe580
 
 @interface BDLinkedNoteAssociation : NSManagedObject
 
 @property (nonatomic, retain) NSString * uuid;
+<<<<<<< HEAD
 @property (nonatomic, retain) NSString * createdBy;
+=======
+@property (nonatomic, retain) NSDate * createdBy;
+>>>>>>> 2ba7e82d91d3dd1edb435395d6dda9ff888fe580
 @property (nonatomic, retain) NSDate * createdDate;
 @property (nonatomic, retain) NSString * modifiedBy;
 @property (nonatomic, retain) NSDate * modifiedDate;
@@ -41,6 +48,7 @@
 @property (nonatomic, retain) NSString * linkedNoteId;
 @property (nonatomic, retain) NSString * parentId;
 @property (nonatomic, retain) NSString * parentEntityName;
+<<<<<<< HEAD
 @property (nonatomic, retain) NSString * parentEntityPropertyName;
 @property (nonatomic, retain) NSNumber * linkedNoteType;
 
@@ -49,4 +57,9 @@
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary withOverwriteNewerFlag:(BOOL)overwriteNewer; 
 
 -(void)commitChanges;
+=======
+@property (nonatomic, retain) NSString * parentEntiyPropertyName;
+@property (nonatomic, retain) NSNumber * linkedNoteType;
+
+>>>>>>> 2ba7e82d91d3dd1edb435395d6dda9ff888fe580
 @end

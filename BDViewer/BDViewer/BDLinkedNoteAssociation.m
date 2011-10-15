@@ -7,12 +7,8 @@
 //
 
 #import "BDLinkedNoteAssociation.h"
-<<<<<<< HEAD
 #import "NSString+UUID.h"
 #import "BDQueueEntry.h"
-=======
-
->>>>>>> 2ba7e82d91d3dd1edb435395d6dda9ff888fe580
 
 @implementation BDLinkedNoteAssociation
 
@@ -27,7 +23,6 @@
 @dynamic linkedNoteId;
 @dynamic parentId;
 @dynamic parentEntityName;
-<<<<<<< HEAD
 @dynamic parentEntityPropertyName;
 @dynamic linkedNoteType;
 
@@ -147,9 +142,4 @@
 }
 
 
-=======
-@dynamic parentEntiyPropertyName;
-@dynamic linkedNoteType;
-
->>>>>>> 2ba7e82d91d3dd1edb435395d6dda9ff888fe580
 @end

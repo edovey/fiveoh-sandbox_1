@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 #define SCHEMAVERSION_LINKEDNOTE @"1"
-#define DOMAIN_LINKEDNOTE @"bd_test2"
+#define DOMAIN_LINKEDNOTE @"bd_linkedNotes"
 #define BUCKET_LINKEDNOTE @"bdDataStore"
 #define ENTITYNAME_LINKEDNOTE @"BDLinkedNote"
 

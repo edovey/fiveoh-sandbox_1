@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 #define SCHEMAVERSION_LINKEDNOTEASSOCIATION @"1"
-#define DOMAIN_LINKEDNOTEASSOCIATION @"bd_test2"
+#define DOMAIN_LINKEDNOTEASSOCIATION @"bd_linkedNoteAssociations"
 #define BUCKET_LINKEDNOTEASSOCIATION @"bdDataStore"
 #define ENTITYNAME_LINKEDNOTEASSOCIATION @"BDLinkedNoteAssociation"
 

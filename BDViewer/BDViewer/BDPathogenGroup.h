@@ -11,7 +11,7 @@
 
 
 #define SCHEMAVERSION_PATHOGEN @"1"
-#define DOMAIN_PATHOGEN @"bd_test2"
+#define DOMAIN_PATHOGEN @"bd_pathogenGroups"
 #define BUCKET_PATHOGEN @"bdDataStore"
 #define ENTITYNAME_PATHOGENGROUP @"BDPathogenGroup"
 

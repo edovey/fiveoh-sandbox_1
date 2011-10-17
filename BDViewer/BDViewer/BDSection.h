@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 #define SCHEMAVERSION_SECTION @"1"
-#define DOMAIN_SECTION @"bd_test2"
+#define DOMAIN_SECTION @"bd_sections"
 #define BUCKET_SECTION @"bdDataStore"
 #define ENTITYNAME_SECTION @"BDSection"
 

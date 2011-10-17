@@ -272,6 +272,9 @@ namespace BDEditor.Views
 
             LoadSectionDropDown();
 
+            DateTime? lastSyncDate = BDSystemSetting.GetTimestamp(DataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            createTestDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
+
             this.Cursor = Cursors.Default;
             
         }
@@ -279,7 +282,7 @@ namespace BDEditor.Views
         private void LoadSectionDropDown()
         {
             sectionDropDown.Items.Clear();
-            foreach (BDSection section in dataContext.BDSections)
+            foreach (BDSection section in BDSection.GetAll(dataContext))
             {
                 sectionDropDown.Items.Add(section);
             }
@@ -302,11 +305,14 @@ namespace BDEditor.Views
 
         private void BDEditView_Load(object sender, EventArgs e)
         {
+            DateTime? lastSyncDate = BDSystemSetting.GetTimestamp(DataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            createTestDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
             UpdateSyncLabel();
         }
 
         private void btnSync_Click(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
             DateTime? lastSyncDate = BDSystemSetting.GetTimestamp(DataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
 
             SyncInfoDictionary syncResultList = RepositoryHandler.Aws.Sync(DataContext, lastSyncDate);
@@ -318,6 +324,11 @@ namespace BDEditor.Views
 
             UpdateSyncLabel();
             LoadSectionDropDown();
+
+            lastSyncDate = BDSystemSetting.GetTimestamp(DataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            createTestDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
+
+            this.Cursor = Cursors.Default;
         }
     }
 }

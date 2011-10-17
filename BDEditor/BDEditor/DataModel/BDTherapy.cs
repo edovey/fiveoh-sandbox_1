@@ -18,7 +18,7 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDTherapy: IBDObject
     {
-        public const string AWS_DOMAIN = @"bd_therapies_test";
+        public const string AWS_DOMAIN = @"bd_therapies";
         public const string ENTITYNAME = @"BDTherapies";
         public const string ENTITYNAME_FRIENDLY = @"Therapy";
         public const string PROPERTYNAME_THERAPY = @"Therapy";
@@ -175,7 +175,7 @@ namespace BDEditor.DataModel
         /// <param name="pDataContext"></param>
         /// <param name="pAttributeDictionary"></param>
         /// <returns>Uuid of the created/updated entry</returns>
-        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
+        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
             bool deprecated = bool.Parse(pAttributeDictionary[DEPRECATED]);
@@ -202,7 +202,8 @@ namespace BDEditor.DataModel
             entry.dosage = pAttributeDictionary[DOSAGE];
             entry.duration = pAttributeDictionary[DURATION];
 
-            pDataContext.SaveChanges();
+            if (pSaveChanges)
+                pDataContext.SaveChanges();
 
             return uuid;
         }

@@ -18,7 +18,7 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDSubcategory
     {
-        public const string AWS_DOMAIN = @"bd_subcategories_test";
+        public const string AWS_DOMAIN = @"bd_subcategories";
         public const string ENTITYNAME = @"BDSubcategories";
         public const string ENTITYNAME_FRIENDLY = @"Subcategory";
 
@@ -146,7 +146,7 @@ namespace BDEditor.DataModel
         /// <param name="pDataContext"></param>
         /// <param name="pAttributeDictionary"></param>
         /// <returns>Uuid of the created/updated entry</returns>
-        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
+        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
             bool deprecated = bool.Parse(pAttributeDictionary[DEPRECATED]);
@@ -168,7 +168,8 @@ namespace BDEditor.DataModel
             entry.categoryId = Guid.Parse(pAttributeDictionary[CATEGORYID]);
             entry.name = pAttributeDictionary[NAME];
 
-            pDataContext.SaveChanges();
+            if (pSaveChanges)
+                pDataContext.SaveChanges();
 
             return uuid;
         }

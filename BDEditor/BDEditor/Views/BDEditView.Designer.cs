@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDEditView));
             this.headerPanel = new System.Windows.Forms.Panel();
             this.lbLastSyncDateTime = new System.Windows.Forms.Label();
             this.btnSync = new System.Windows.Forms.Button();
@@ -152,6 +153,7 @@
             this.ClientSize = new System.Drawing.Size(1148, 700);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.headerPanel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "BDEditView";
             this.Text = "BDEditView";
             this.Load += new System.EventHandler(this.BDEditView_Load);

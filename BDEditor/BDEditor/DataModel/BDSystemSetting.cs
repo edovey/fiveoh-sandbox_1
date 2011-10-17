@@ -41,10 +41,13 @@ namespace BDEditor.DataModel
             return result;
         }
 
-        public static void SaveTimestamp(Entities pDataContext, string pTimestampName, DateTime pDateTime)
+        public static void SaveTimestamp(Entities pDataContext, string pTimestampName, DateTime? pDateTime)
         {
             BDSystemSetting entry = GetSetting(pDataContext, pTimestampName);
-            entry.settingValue = pDateTime.ToString(BDEditor.Classes.Constants.DATETIMEFORMAT);
+            if (null == pDateTime)
+                entry.settingValue = null;
+            else
+                entry.settingValue = pDateTime.Value.ToString(BDEditor.Classes.Constants.DATETIMEFORMAT);
             pDataContext.SaveChanges();
         }
 

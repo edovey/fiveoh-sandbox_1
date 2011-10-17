@@ -131,6 +131,7 @@ namespace BDEditor.Views
 
         private void sectionDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
+            splitContainer1.Panel2.Controls.Clear();
             //BDSection section = sectionDropDown.SelectedValue as BDSection;
             BDSection section = sectionDropDown.SelectedItem as BDSection;
             if (null != section)
@@ -303,14 +304,7 @@ namespace BDEditor.Views
             }
         }
 
-        private void BDEditView_Load(object sender, EventArgs e)
-        {
-            DateTime? lastSyncDate = BDSystemSetting.GetTimestamp(DataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
-            createTestDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
-            UpdateSyncLabel();
-        }
-
-        private void btnSync_Click(object sender, EventArgs e)
+        private void SyncData()
         {
             this.Cursor = Cursors.WaitCursor;
             DateTime? lastSyncDate = BDSystemSetting.GetTimestamp(DataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
@@ -329,6 +323,39 @@ namespace BDEditor.Views
             createTestDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
 
             this.Cursor = Cursors.Default;
+        }
+
+        private void BDEditView_Load(object sender, EventArgs e)
+        {
+            DateTime? lastSyncDate = BDSystemSetting.GetTimestamp(DataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            createTestDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
+            UpdateSyncLabel();
+        }
+
+        private void btnSync_Click(object sender, EventArgs e)
+        {
+            SyncData();
+        }
+
+        private void btnSyncWithReplaceLocal_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("This will DELETE all local data and replace it from the repository?", "Replace Local Data", MessageBoxButtons.YesNo, MessageBoxIcon.Stop) == DialogResult.Yes)
+            {
+                this.Cursor = Cursors.WaitCursor;
+
+                sectionDropDown.Items.Clear();
+                sectionDropDown.SelectedIndex = -1;
+
+                RepositoryHandler.Aws.DeleteLocalData(dataContext);
+                
+                dataContext = null;
+                dataContext = new Entities();
+
+                BDSystemSetting.SaveTimestamp(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP, null);
+                this.Cursor = Cursors.Default;
+
+                SyncData();          
+            }
         }
     }
 }

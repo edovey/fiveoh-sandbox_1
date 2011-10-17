@@ -74,7 +74,7 @@ namespace BDEditor.DataModel
             List<BDPathogen> pathogenList = new List<BDPathogen>();
                 IQueryable<BDPathogen> pathogens = (from entry in pContext.BDPathogens
                                                     where entry.pathogenGroupId == pPathogenGroupId
-                                                    orderby entry.name
+                                                    orderby entry.displayOrder
                                                     select entry);
                 foreach (BDPathogen pathogen in pathogens)
                 {

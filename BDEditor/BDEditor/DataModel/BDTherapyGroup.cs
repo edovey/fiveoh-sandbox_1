@@ -86,9 +86,10 @@ namespace BDEditor.DataModel
         public static List<BDTherapyGroup> getTherapyGroupsForPathogenGroupId(Entities pContext, Guid pPathogenGroupId)
         {
             List<BDTherapyGroup> therapyGroupList = new List<BDTherapyGroup>();
-                IQueryable<BDTherapyGroup> therapyGroups = (from bdTherapyGroups in pContext.BDTherapyGroups
-                                                            where bdTherapyGroups.pathogenGroupId == pPathogenGroupId
-                                                            select bdTherapyGroups);
+                IQueryable<BDTherapyGroup> therapyGroups = (from entry in pContext.BDTherapyGroups
+                                                            where entry.pathogenGroupId == pPathogenGroupId
+                                                            orderby entry.displayOrder
+                                                            select entry);
                 foreach (BDTherapyGroup therapyGroup in therapyGroups)
                 {
                     therapyGroupList.Add(therapyGroup);

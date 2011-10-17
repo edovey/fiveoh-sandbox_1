@@ -25,6 +25,12 @@ namespace BDEditor.Classes
         string diseaseData = null;
         string presentationData = null;
 
+        short idxSection = 0;
+        short idxCategory = 0;
+        short idxSubCategory = 0;
+        short idxDisease = 0;
+        short idxPresentation = 0;
+
         public void ImportData(Entities pDataContext, string pFilename)
         {
             dataContext = pDataContext;
@@ -65,6 +71,7 @@ namespace BDEditor.Classes
             {
                 bdSection = BDSection.CreateSection(dataContext);
                 bdSection.name = sectionData;
+                bdSection.displayOrder = idxSection++;
                 BDSection.SaveSection(dataContext, bdSection);
 
                 bdCategory = null;
@@ -78,6 +85,7 @@ namespace BDEditor.Classes
                 bdCategory = BDCategory.CreateCategory(dataContext);
                 bdCategory.name = categoryData;
                 bdCategory.sectionId = bdSection.uuid;
+                bdCategory.displayOrder = idxCategory++;
                 BDCategory.SaveCategory(dataContext, bdCategory);
 
                 bdSubCategory = null;
@@ -90,6 +98,7 @@ namespace BDEditor.Classes
                 bdSubCategory = BDSubcategory.CreateSubcategory(dataContext);
                 bdSubCategory.name = subCategoryData;
                 bdSubCategory.categoryId = bdCategory.uuid;
+                bdSubCategory.displayOrder = idxSubCategory++;
                 BDSubcategory.SaveSubcategory(dataContext, bdSubCategory);
 
                 bdDisease = null;
@@ -100,6 +109,7 @@ namespace BDEditor.Classes
             {
                 bdDisease = BDDisease.CreateDisease(dataContext);
                 bdDisease.name = diseaseData;
+                bdDisease.displayOrder = idxDisease++;
                 if (null != bdSubCategory)
                 {
                     bdDisease.subcategoryId = bdSubCategory.uuid;
@@ -118,6 +128,7 @@ namespace BDEditor.Classes
                 bdPresentation = BDPresentation.CreatePresentation(dataContext);
                 bdPresentation.name = presentationData;
                 bdPresentation.diseaseId = bdDisease.uuid;
+                bdPresentation.displayOrder = idxPresentation++;
                 BDPresentation.SavePresentation(dataContext, bdPresentation);
             }
 

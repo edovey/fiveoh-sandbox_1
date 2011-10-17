@@ -82,7 +82,7 @@ namespace BDEditor.DataModel
   
             IQueryable<BDDisease> diseases = (from entry in pContext.BDDiseases
                                         where entry.categoryId == pCategoryId
-                                        orderby entry.name
+                                        orderby entry.displayOrder
                                         select entry);
 
             foreach (BDDisease disease in diseases)
@@ -101,9 +101,10 @@ namespace BDEditor.DataModel
         {
             List<BDDisease> diseaseList = new List<BDDisease>();
 
-        IQueryable<BDDisease> diseases = (from bdDiseases in pContext.BDDiseases
-                                                where bdDiseases.subcategoryId == pSubcategoryId
-                                                select bdDiseases);
+        IQueryable<BDDisease> diseases = (from entry in pContext.BDDiseases
+                                                where entry.subcategoryId == pSubcategoryId
+                                                orderby entry.displayOrder
+                                                select entry);
 
             foreach (BDDisease disease in diseases)
             {

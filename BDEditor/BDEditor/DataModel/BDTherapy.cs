@@ -96,9 +96,10 @@ namespace BDEditor.DataModel
         {
             List<BDTherapy> therapyList = new List<BDTherapy>();
 
-            IQueryable<BDTherapy> therapies = (from bdTherapies in pContext.BDTherapies
-                                                where bdTherapies.therapyGroupId == pTherapyGroupId
-                                                select bdTherapies);
+            IQueryable<BDTherapy> therapies = (from entry in pContext.BDTherapies
+                                                where entry.therapyGroupId == pTherapyGroupId
+                                                orderby entry.displayOrder
+                                                select entry);
             foreach (BDTherapy therapy in therapies)
             {
                 therapyList.Add(therapy);

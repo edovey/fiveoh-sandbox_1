@@ -79,9 +79,10 @@ namespace BDEditor.DataModel
         {
             List<BDPresentation> presentationList = new List<BDPresentation>();
 
-            IQueryable<BDPresentation> presentations = (from bdPresentations in pContext.BDPresentations
-                                                        where bdPresentations.diseaseId == pDiseaseId
-                                                        select bdPresentations);
+            IQueryable<BDPresentation> presentations = (from entry in pContext.BDPresentations
+                                                        where entry.diseaseId == pDiseaseId
+                                                        orderby entry.displayOrder
+                                                        select entry);
             foreach (BDPresentation presentation in presentations)
             {
                 presentationList.Add(presentation);

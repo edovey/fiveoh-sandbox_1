@@ -89,7 +89,7 @@ namespace BDEditor.DataModel
         {
             List<BDSection> entryList = new List<BDSection>();
             IQueryable<BDSection> entries = (from entry in pContext.BDSections
-                                                 orderby entry.name
+                                                 orderby entry.displayOrder
                                                  select entry);
             if (entries.Count() > 0)
                 entryList = entries.ToList<BDSection>();

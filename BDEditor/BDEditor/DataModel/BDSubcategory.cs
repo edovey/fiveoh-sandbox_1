@@ -76,9 +76,10 @@ namespace BDEditor.DataModel
         {
             List<BDSubcategory> subcategoryList = new List<BDSubcategory>();
 
-                IQueryable<BDSubcategory> subcategories = (from bdSubcategories in pContext.BDSubcategories
-                                                           where bdSubcategories.categoryId == pCategoryId
-                                                           select bdSubcategories);
+                IQueryable<BDSubcategory> subcategories = (from entry in pContext.BDSubcategories
+                                                           where entry.categoryId == pCategoryId
+                                                           orderby entry.displayOrder
+                                                           select entry);
                 foreach (BDSubcategory subcat in subcategories)
                 {
                     subcategoryList.Add(subcat);

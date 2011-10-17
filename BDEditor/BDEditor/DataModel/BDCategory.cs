@@ -79,7 +79,7 @@ namespace BDEditor.DataModel
             List<BDCategory> entryList = new List<BDCategory>();
             IQueryable<BDCategory> entries = (from entry in pContext.BDCategories
                                                  where entry.sectionId == pSectionId
-                                                 orderby entry.name
+                                                 orderby entry.displayOrder
                                                  select entry);
             if (entries.Count<BDCategory>() > 0)
                 entryList = entries.ToList<BDCategory>();

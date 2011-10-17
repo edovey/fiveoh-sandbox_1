@@ -142,8 +142,10 @@
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.headerPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(1280, 1024);
             this.Name = "BDEditView";
-            this.Text = "BDEditView";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Bugs & Drugs Editor";
             this.Load += new System.EventHandler(this.BDEditView_Load);
             this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();

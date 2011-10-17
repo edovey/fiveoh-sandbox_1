@@ -39,6 +39,7 @@
             this.sectionTree = new System.Windows.Forms.TreeView();
             this.entitiesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.entitiesBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.btnSyncWithReplaceLocal = new System.Windows.Forms.Button();
             this.headerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -49,6 +50,7 @@
             // 
             // headerPanel
             // 
+            this.headerPanel.Controls.Add(this.btnSyncWithReplaceLocal);
             this.headerPanel.Controls.Add(this.lbLastSyncDateTime);
             this.headerPanel.Controls.Add(this.btnSync);
             this.headerPanel.Controls.Add(this.createTestDataButton);
@@ -134,6 +136,16 @@
             // 
             this.entitiesBindingSource1.DataSource = typeof(BDEditor.DataModel.Entities);
             // 
+            // btnSyncWithReplaceLocal
+            // 
+            this.btnSyncWithReplaceLocal.Location = new System.Drawing.Point(794, 10);
+            this.btnSyncWithReplaceLocal.Name = "btnSyncWithReplaceLocal";
+            this.btnSyncWithReplaceLocal.Size = new System.Drawing.Size(261, 23);
+            this.btnSyncWithReplaceLocal.TabIndex = 4;
+            this.btnSyncWithReplaceLocal.Text = "(System Option) Replace Local from Repository";
+            this.btnSyncWithReplaceLocal.UseVisualStyleBackColor = true;
+            this.btnSyncWithReplaceLocal.Click += new System.EventHandler(this.btnSyncWithReplaceLocal_Click);
+            // 
             // BDEditView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -169,6 +181,7 @@
         private System.Windows.Forms.Button createTestDataButton;
         private System.Windows.Forms.Label lbLastSyncDateTime;
         private System.Windows.Forms.Button btnSync;
+        private System.Windows.Forms.Button btnSyncWithReplaceLocal;
 
     }
 }

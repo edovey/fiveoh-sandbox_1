@@ -101,58 +101,71 @@ namespace BDEditor.Classes
             {
                 System.Diagnostics.Debug.WriteLine(string.Format("Pull {0}", syncInfoEntry.EntityName));
                 SelectRequest selectRequestAction = new SelectRequest().WithSelectExpression(syncInfoEntry.GetLatestSelectString(pLastSyncDate));
-                SelectResponse selectResponse = simpleDb.Select(selectRequestAction);
 
-                if (selectResponse.IsSetSelectResult())
+                SelectResponse selectResponse = null;
+
+                do
                 {
-                    SelectResult selectResult = selectResponse.SelectResult;
-                    foreach (Item item in selectResult.Item)
+                    selectResponse = simpleDb.Select(selectRequestAction);
+
+                    if (selectResponse.IsSetSelectResult())
                     {
-                        Guid? entryGuid = null;
-                        syncInfoEntry.RowsPulled++;
-                        AttributeDictionary attributeDictionary = ItemAttributesToDictionary(item);
-                        switch (syncInfoEntry.EntityName)
+                        SelectResult selectResult = selectResponse.SelectResult;
+                        foreach (Item item in selectResult.Item)
                         {
-                            case BDCategory.AWS_DOMAIN:
-                                entryGuid = BDCategory.LoadFromAttributes(pDataContext, attributeDictionary, false);
-                                break;
-                            case BDDisease.AWS_DOMAIN:
-                                entryGuid = BDDisease.LoadFromAttributes(pDataContext, attributeDictionary, false);
-                                break;
-                            case BDLinkedNoteAssociation.AWS_DOMAIN:
-                                BDLinkedNoteAssociation.LoadFromAttributes(pDataContext, attributeDictionary, false);
-                                break;
-                            case BDLinkedNote.AWS_DOMAIN:
-                                entryGuid = BDLinkedNote.LoadFromAttributes(pDataContext, attributeDictionary, false);
-                                break;
-                            case BDPathogenGroup.AWS_DOMAIN:
-                                entryGuid = BDPathogenGroup.LoadFromAttributes(pDataContext, attributeDictionary, false);
-                                break;
-                            case BDPathogen.AWS_DOMAIN:
-                                entryGuid = BDPathogen.LoadFromAttributes(pDataContext, attributeDictionary, false);
-                                break;
-                            case BDPresentation.AWS_DOMAIN:
-                                entryGuid = BDPresentation.LoadFromAttributes(pDataContext, attributeDictionary, false);
-                                break;
-                            case BDSection.AWS_DOMAIN:
-                                BDSection.LoadFromAttributes(pDataContext, attributeDictionary, false);
-                                break;
-                            case BDSubcategory.AWS_DOMAIN:
-                                entryGuid = BDSubcategory.LoadFromAttributes(pDataContext, attributeDictionary, false);
-                                break;
-                            case BDTherapy.AWS_DOMAIN:
-                                entryGuid = BDTherapy.LoadFromAttributes(pDataContext, attributeDictionary, false);
-                                break;
-                            case BDTherapyGroup.AWS_DOMAIN:
-                                entryGuid = BDTherapyGroup.LoadFromAttributes(pDataContext, attributeDictionary, false);
-                                break;
+                            Guid? entryGuid = null;
+                            syncInfoEntry.RowsPulled++;
+                            AttributeDictionary attributeDictionary = ItemAttributesToDictionary(item);
+                            switch (syncInfoEntry.EntityName)
+                            {
+                                case BDCategory.AWS_DOMAIN:
+                                    entryGuid = BDCategory.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
+                                case BDDisease.AWS_DOMAIN:
+                                    entryGuid = BDDisease.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
+                                case BDLinkedNoteAssociation.AWS_DOMAIN:
+                                    BDLinkedNoteAssociation.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
+                                case BDLinkedNote.AWS_DOMAIN:
+                                    entryGuid = BDLinkedNote.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
+                                case BDPathogenGroup.AWS_DOMAIN:
+                                    entryGuid = BDPathogenGroup.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
+                                case BDPathogen.AWS_DOMAIN:
+                                    entryGuid = BDPathogen.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
+                                case BDPresentation.AWS_DOMAIN:
+                                    entryGuid = BDPresentation.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
+                                case BDSection.AWS_DOMAIN:
+                                    BDSection.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
+                                case BDSubcategory.AWS_DOMAIN:
+                                    entryGuid = BDSubcategory.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
+                                case BDTherapy.AWS_DOMAIN:
+                                    entryGuid = BDTherapy.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
+                                case BDTherapyGroup.AWS_DOMAIN:
+                                    entryGuid = BDTherapyGroup.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
+                            }
+                            // The entry id will be null if a sync conflict prevented create/updateso add it to the conflict list
+                            if (null == entryGuid) syncInfoEntry.SyncConflictList.Add(attributeDictionary);
                         }
-                        // The entry id will be null if a sync conflict prevented create/updateso add it to the conflict list
-                        if (null == entryGuid) syncInfoEntry.SyncConflictList.Add(attributeDictionary);
+                        pDataContext.SaveChanges();
                     }
-                    pDataContext.SaveChanges();
-                }
-                System.Diagnostics.Debug.WriteLine("Pulled {0} Records for {1}", syncInfoEntry.RowsPulled, syncInfoEntry.EntityName);
+
+                    if (selectResponse.SelectResult.IsSetNextToken())
+                    {
+                        selectRequestAction.NextToken = selectResponse.SelectResult.NextToken;
+                    }
+
+                    System.Diagnostics.Debug.WriteLine("Pulled {0} Records for {1}", syncInfoEntry.RowsPulled, syncInfoEntry.EntityName);
+
+                } while (selectResponse.SelectResult.IsSetNextToken());
             }
 
             #endregion
@@ -286,6 +299,35 @@ namespace BDEditor.Classes
             BDSystemSetting.SaveTimestamp(pDataContext, BDSystemSetting.LASTSYNC_TIMESTAMP, pLastSyncDate.Value);
 
             return syncDictionary;
+        }
+
+        public void DeleteLocalData(Entities pDataContext)
+        {
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDCategories");
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDDiseases");
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDLinkedNoteAssociations");
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDLinkedNotes");
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDPathogenGroups");
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDPathogens");
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDPresentations");
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDSections");
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDSubcategories");
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDTherapies");
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDTherapyGroups");
+
+            /*
+            pDataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, pDataContext.BDCategories);
+            pDataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, pDataContext.BDDiseases);
+            pDataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, pDataContext.BDLinkedNoteAssociations);
+            pDataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, pDataContext.BDLinkedNotes);
+            pDataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, pDataContext.BDPathogenGroups);
+            pDataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, pDataContext.BDPathogens);
+            pDataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, pDataContext.BDPresentations);
+            pDataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, pDataContext.BDSections);
+            pDataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, pDataContext.BDSubcategories);
+            pDataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, pDataContext.BDTherapies);
+            pDataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, pDataContext.BDTherapyGroups);
+             * */
         }
 
         #region Helper Methods

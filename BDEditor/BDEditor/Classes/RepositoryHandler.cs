@@ -114,175 +114,172 @@ namespace BDEditor.Classes
                         switch (syncInfoEntry.EntityName)
                         {
                             case BDCategory.AWS_DOMAIN:
-                                entryGuid = BDCategory.LoadFromAttributes(pDataContext, attributeDictionary);
+                                entryGuid = BDCategory.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                 break;
                             case BDDisease.AWS_DOMAIN:
-                                entryGuid = BDDisease.LoadFromAttributes(pDataContext, attributeDictionary);
+                                entryGuid = BDDisease.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                 break;
                             case BDLinkedNoteAssociation.AWS_DOMAIN:
-                                BDLinkedNoteAssociation.LoadFromAttributes(pDataContext, attributeDictionary);
+                                BDLinkedNoteAssociation.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                 break;
                             case BDLinkedNote.AWS_DOMAIN:
-                                entryGuid = BDLinkedNote.LoadFromAttributes(pDataContext, attributeDictionary);
+                                entryGuid = BDLinkedNote.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                 break;
                             case BDPathogenGroup.AWS_DOMAIN:
-                                entryGuid = BDPathogenGroup.LoadFromAttributes(pDataContext, attributeDictionary);
+                                entryGuid = BDPathogenGroup.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                 break;
                             case BDPathogen.AWS_DOMAIN:
-                                entryGuid = BDPathogen.LoadFromAttributes(pDataContext, attributeDictionary);
+                                entryGuid = BDPathogen.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                 break;
                             case BDPresentation.AWS_DOMAIN:
-                                entryGuid = BDPresentation.LoadFromAttributes(pDataContext, attributeDictionary);
+                                entryGuid = BDPresentation.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                 break;
                             case BDSection.AWS_DOMAIN:
-                                BDSection.LoadFromAttributes(pDataContext, attributeDictionary);
+                                BDSection.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                 break;
                             case BDSubcategory.AWS_DOMAIN:
-                                entryGuid = BDSubcategory.LoadFromAttributes(pDataContext, attributeDictionary);
+                                entryGuid = BDSubcategory.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                 break;
                             case BDTherapy.AWS_DOMAIN:
-                                entryGuid = BDTherapy.LoadFromAttributes(pDataContext, attributeDictionary);
+                                entryGuid = BDTherapy.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                 break;
                             case BDTherapyGroup.AWS_DOMAIN:
-                                entryGuid = BDTherapyGroup.LoadFromAttributes(pDataContext, attributeDictionary);
+                                entryGuid = BDTherapyGroup.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                 break;
                         }
                         // The entry id will be null if a sync conflict prevented create/updateso add it to the conflict list
                         if (null == entryGuid) syncInfoEntry.SyncConflictList.Add(attributeDictionary);
                     }
+                    pDataContext.SaveChanges();
                 }
                 System.Diagnostics.Debug.WriteLine("Pulled {0} Records for {1}", syncInfoEntry.RowsPulled, syncInfoEntry.EntityName);
             }
 
             #endregion
 
-            //if (null == pLastSyncDate)
-            //{
-            //    pLastSyncDate = DateTime.Now;
-            //    BDSystemSetting.SaveTimestamp(pDataContext, BDSystemSetting.LASTSYNC_TIMESTAMP, pLastSyncDate.Value);
-            //}
-
-            #region Push
-
-            foreach (SyncInfo syncInfoEntry in syncDictionary.Values)
+            if (null != pLastSyncDate)
             {
-                System.Diagnostics.Debug.WriteLine(string.Format("Push {0}", syncInfoEntry.EntityName));
-                switch (syncInfoEntry.EntityName)
-                {
-                    case BDCategory.AWS_DOMAIN:
-                        {
-                            List<BDCategory> changeList = BDCategory.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
-                            foreach (BDCategory entry in changeList)
-                            {
-                                SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
-                                syncInfoEntry.RowsPushed++;
-                            }
-                        }
-                        break;
-                    case BDDisease.AWS_DOMAIN:
-                        {
-                            List<BDDisease> changeList = BDDisease.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
-                            foreach (BDDisease entry in changeList)
-                            {
-                                SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
-                                syncInfoEntry.RowsPushed++;
-                            }
-                        }
-                        break;
-                    case BDLinkedNoteAssociation.AWS_DOMAIN:
-                        {
-                            List<BDLinkedNoteAssociation> changeList = BDLinkedNoteAssociation.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
-                            foreach (BDLinkedNoteAssociation entry in changeList)
-                            {
-                                SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
-                                syncInfoEntry.RowsPushed++;
-                            }
-                        }
-                        break;
-                    case BDLinkedNote.AWS_DOMAIN:
-                        {
-                            List<BDLinkedNote> changeList = BDLinkedNote.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
-                            foreach (BDLinkedNote entry in changeList)
-                            {
-                                SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
-                                syncInfoEntry.RowsPushed++;
-                            }
-                        }
-                        break;
-                    case BDPathogenGroup.AWS_DOMAIN:
-                        {
-                            List<BDPathogenGroup> changeList = BDPathogenGroup.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
-                            foreach (BDPathogenGroup entry in changeList)
-                            {
-                                SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
-                                syncInfoEntry.RowsPushed++;
-                            }
-                        }
-                        break;
-                    case BDPathogen.AWS_DOMAIN:
-                        {
-                            List<BDPathogen> changeList = BDPathogen.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
-                            foreach (BDPathogen entry in changeList)
-                            {
-                                SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
-                                syncInfoEntry.RowsPushed++;
-                            }
-                        }
-                        break;
-                    case BDPresentation.AWS_DOMAIN:
-                        {
-                            List<BDPresentation> changeList = BDPresentation.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
-                            foreach (BDPresentation entry in changeList)
-                            {
-                                SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
-                                syncInfoEntry.RowsPushed++;
-                            }
-                        }
-                        break;
-                    case BDSection.AWS_DOMAIN:
-                        {
-                            List<BDSection> changeList = BDSection.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
-                            foreach (BDSection entry in changeList)
-                            {
-                                SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
-                                syncInfoEntry.RowsPushed++;
-                            }
-                        }
-                        break;
-                    case BDSubcategory.AWS_DOMAIN:
-                        {
-                            List<BDSubcategory> changeList = BDSubcategory.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
-                            foreach (BDSubcategory entry in changeList)
-                            {
-                                SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
-                                syncInfoEntry.RowsPushed++;
-                            }
-                        }
-                        break;
-                    case BDTherapy.AWS_DOMAIN:
-                        {
-                            List<BDTherapy> changeList = BDTherapy.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
-                            foreach (BDTherapy entry in changeList)
-                            {
-                                SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
-                                syncInfoEntry.RowsPushed++;
-                            }
-                        }
-                        break;
-                    case BDTherapyGroup.AWS_DOMAIN:
-                        {
-                            List<BDTherapyGroup> changeList = BDTherapyGroup.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
-                            foreach (BDTherapyGroup entry in changeList)
-                            {
-                                SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
-                                syncInfoEntry.RowsPushed++;
-                            }
-                        }
-                        break;
-                }
-                System.Diagnostics.Debug.WriteLine("Pushed {0} Records for {1}", syncInfoEntry.RowsPushed, syncInfoEntry.EntityName);
-            }
+                #region Push
 
+                foreach (SyncInfo syncInfoEntry in syncDictionary.Values)
+                {
+                    System.Diagnostics.Debug.WriteLine(string.Format("Push {0}", syncInfoEntry.EntityName));
+                    switch (syncInfoEntry.EntityName)
+                    {
+                        case BDCategory.AWS_DOMAIN:
+                            {
+                                List<BDCategory> changeList = BDCategory.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+                                foreach (BDCategory entry in changeList)
+                                {
+                                    SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
+                                    syncInfoEntry.RowsPushed++;
+                                }
+                            }
+                            break;
+                        case BDDisease.AWS_DOMAIN:
+                            {
+                                List<BDDisease> changeList = BDDisease.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+                                foreach (BDDisease entry in changeList)
+                                {
+                                    SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
+                                    syncInfoEntry.RowsPushed++;
+                                }
+                            }
+                            break;
+                        case BDLinkedNoteAssociation.AWS_DOMAIN:
+                            {
+                                List<BDLinkedNoteAssociation> changeList = BDLinkedNoteAssociation.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+                                foreach (BDLinkedNoteAssociation entry in changeList)
+                                {
+                                    SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
+                                    syncInfoEntry.RowsPushed++;
+                                }
+                            }
+                            break;
+                        case BDLinkedNote.AWS_DOMAIN:
+                            {
+                                List<BDLinkedNote> changeList = BDLinkedNote.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+                                foreach (BDLinkedNote entry in changeList)
+                                {
+                                    SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
+                                    syncInfoEntry.RowsPushed++;
+                                }
+                            }
+                            break;
+                        case BDPathogenGroup.AWS_DOMAIN:
+                            {
+                                List<BDPathogenGroup> changeList = BDPathogenGroup.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+                                foreach (BDPathogenGroup entry in changeList)
+                                {
+                                    SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
+                                    syncInfoEntry.RowsPushed++;
+                                }
+                            }
+                            break;
+                        case BDPathogen.AWS_DOMAIN:
+                            {
+                                List<BDPathogen> changeList = BDPathogen.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+                                foreach (BDPathogen entry in changeList)
+                                {
+                                    SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
+                                    syncInfoEntry.RowsPushed++;
+                                }
+                            }
+                            break;
+                        case BDPresentation.AWS_DOMAIN:
+                            {
+                                List<BDPresentation> changeList = BDPresentation.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+                                foreach (BDPresentation entry in changeList)
+                                {
+                                    SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
+                                    syncInfoEntry.RowsPushed++;
+                                }
+                            }
+                            break;
+                        case BDSection.AWS_DOMAIN:
+                            {
+                                List<BDSection> changeList = BDSection.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+                                foreach (BDSection entry in changeList)
+                                {
+                                    SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
+                                    syncInfoEntry.RowsPushed++;
+                                }
+                            }
+                            break;
+                        case BDSubcategory.AWS_DOMAIN:
+                            {
+                                List<BDSubcategory> changeList = BDSubcategory.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+                                foreach (BDSubcategory entry in changeList)
+                                {
+                                    SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
+                                    syncInfoEntry.RowsPushed++;
+                                }
+                            }
+                            break;
+                        case BDTherapy.AWS_DOMAIN:
+                            {
+                                List<BDTherapy> changeList = BDTherapy.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+                                foreach (BDTherapy entry in changeList)
+                                {
+                                    SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
+                                    syncInfoEntry.RowsPushed++;
+                                }
+                            }
+                            break;
+                        case BDTherapyGroup.AWS_DOMAIN:
+                            {
+                                List<BDTherapyGroup> changeList = BDTherapyGroup.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+                                foreach (BDTherapyGroup entry in changeList)
+                                {
+                                    SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
+                                    syncInfoEntry.RowsPushed++;
+                                }
+                            }
+                            break;
+                    }
+                    System.Diagnostics.Debug.WriteLine("Pushed {0} Records for {1}", syncInfoEntry.RowsPushed, syncInfoEntry.EntityName);
+                }
+            }
             #endregion
 
             pLastSyncDate = DateTime.Now;

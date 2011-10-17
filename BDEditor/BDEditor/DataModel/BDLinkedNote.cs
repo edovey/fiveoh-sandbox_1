@@ -18,7 +18,7 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDLinkedNote
     {
-        public const string AWS_DOMAIN = @"bd_linkedNotes_test";
+        public const string AWS_DOMAIN = @"bd_linkedNotes";
         public const string AWS_BUCKET = @"bdDataStore";
         public const string AWS_S3_PREFIX = @"bd~";
         public const string AWS_S3_FILEEXTENSION = @".txt";
@@ -165,7 +165,7 @@ namespace BDEditor.DataModel
         /// <param name="pDataContext"></param>
         /// <param name="pAttributeDictionary"></param>
         /// <returns>Uuid of the created/updated entry</returns>
-        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
+        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
             bool deprecated = bool.Parse(pAttributeDictionary[DEPRECATED]);
@@ -189,7 +189,8 @@ namespace BDEditor.DataModel
             entry.storageKey = pAttributeDictionary[STORAGEKEY];
             entry.documentText = pAttributeDictionary[DOCUMENTTEXT];
 
-            pDataContext.SaveChanges();
+            if (pSaveChanges)
+                pDataContext.SaveChanges();
 
             return uuid;
         }

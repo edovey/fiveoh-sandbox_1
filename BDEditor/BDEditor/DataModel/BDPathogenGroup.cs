@@ -18,7 +18,7 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDPathogenGroup
     {
-        public const string AWS_DOMAIN = @"bd_pathogenGroups_test";
+        public const string AWS_DOMAIN = @"bd_pathogenGroups";
         public const string ENTITYNAME = @"BDPathogenBroups";
         public const string ENTITYNAME_FRIENDLY = @"Pathogen Group";
         
@@ -143,7 +143,7 @@ namespace BDEditor.DataModel
         /// <param name="pDataContext"></param>
         /// <param name="pAttributeDictionary"></param>
         /// <returns>Uuid of the created/updated entry</returns>
-        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
+        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
             bool deprecated = bool.Parse(pAttributeDictionary[DEPRECATED]);
@@ -164,7 +164,8 @@ namespace BDEditor.DataModel
             short displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]);
             entry.displayOrder = displayOrder;
 
-            pDataContext.SaveChanges();
+            if (pSaveChanges)
+                pDataContext.SaveChanges();
             
             return uuid;
         }

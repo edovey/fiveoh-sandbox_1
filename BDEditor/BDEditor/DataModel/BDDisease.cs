@@ -21,7 +21,7 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME = @"BDDiseases";
         public const string ENTITYNAME_FRIENDLY = @"Disease";
         public const string PROPERTYNAME_OVERVIEW = @"Overview";
-        public const string AWS_DOMAIN = @"bd_diseases_test";
+        public const string AWS_DOMAIN = @"bd_diseases";
 
         private const string UUID = @"di_uuid";
         private const string SCHEMAVERSION = @"di_schemaversion";
@@ -80,9 +80,10 @@ namespace BDEditor.DataModel
         {
             List<BDDisease> diseaseList = new List<BDDisease>();
   
-            IQueryable<BDDisease> diseases = (from bdDiseases in pContext.BDDiseases
-                                        where bdDiseases.categoryId == pCategoryId
-                                        select bdDiseases);
+            IQueryable<BDDisease> diseases = (from entry in pContext.BDDiseases
+                                        where entry.categoryId == pCategoryId
+                                        orderby entry.name
+                                        select entry);
 
             foreach (BDDisease disease in diseases)
             {
@@ -172,7 +173,7 @@ namespace BDEditor.DataModel
         /// <param name="pDataContext"></param>
         /// <param name="pAttributeDictionary"></param>
         /// <returns>Uuid of the created/updated entry</returns>
-        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
+        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
             bool deprecated = bool.Parse(pAttributeDictionary[DEPRECATED]);
@@ -195,7 +196,8 @@ namespace BDEditor.DataModel
             entry.subcategoryId = Guid.Parse(pAttributeDictionary[SUBCATEGORYID]);
             entry.name = pAttributeDictionary[NAME];
 
-            pDataContext.SaveChanges();
+            if (pSaveChanges)
+                pDataContext.SaveChanges();
             
             return uuid;
         }

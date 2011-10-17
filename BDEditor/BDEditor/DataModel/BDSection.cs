@@ -16,7 +16,7 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDSection
     {
-        public const string AWS_DOMAIN = @"bd_sections_test";
+        public const string AWS_DOMAIN = @"bd_sections";
         public const string ENTITYNAME = @"BDSections";
         public const string ENTITYNAME_FRIENDLY = @"Section";
 
@@ -85,6 +85,17 @@ namespace BDEditor.DataModel
             return section;
         }
 
+        public static List<BDSection> GetAll(Entities pContext)
+        {
+            List<BDSection> entryList = new List<BDSection>();
+            IQueryable<BDSection> entries = (from entry in pContext.BDSections
+                                                 orderby entry.name
+                                                 select entry);
+            if (entries.Count() > 0)
+                entryList = entries.ToList<BDSection>();
+            return entryList;
+        }
+
         #region Repository
 
         /// <summary>
@@ -125,7 +136,7 @@ namespace BDEditor.DataModel
         /// <param name="pDataContext"></param>
         /// <param name="pAttributeDictionary"></param>
         /// <returns>Uuid of the created/updated entry</returns>
-        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
+        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
             bool deprecated = bool.Parse(pAttributeDictionary[DEPRECATED]);
@@ -146,7 +157,8 @@ namespace BDEditor.DataModel
             entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
             entry.name = pAttributeDictionary[NAME];
 
-            pDataContext.SaveChanges();
+            if (pSaveChanges)
+                pDataContext.SaveChanges();
 
             return uuid;
         }

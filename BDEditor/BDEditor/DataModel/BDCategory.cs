@@ -18,7 +18,7 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDCategory
     {
-        public const string AWS_DOMAIN = @"bd_categories_test";
+        public const string AWS_DOMAIN = @"bd_categories";
         public const string ENTITYNAME = @"BDCategories";
         public const string ENTITYNAME_FRIENDLY = @"Category";
 
@@ -76,15 +76,14 @@ namespace BDEditor.DataModel
         /// <returns>List of Categories</returns>
         public static List<BDCategory> GetCategoriesForSectionId(Entities pContext, Guid pSectionId)
         {
-            List<BDCategory> catList = new List<BDCategory>();
-            IQueryable<BDCategory> categories = (from bdCategories in pContext.BDCategories
-                                                 where bdCategories.sectionId == pSectionId
-                                                 select bdCategories);
-            foreach (BDCategory cat in categories)
-            {
-                catList.Add(cat);
-            }
-            return catList;
+            List<BDCategory> entryList = new List<BDCategory>();
+            IQueryable<BDCategory> entries = (from entry in pContext.BDCategories
+                                                 where entry.sectionId == pSectionId
+                                                 orderby entry.name
+                                                 select entry);
+            if (entries.Count<BDCategory>() > 0)
+                entryList = entries.ToList<BDCategory>();
+            return entryList;
         }
 
 
@@ -152,7 +151,7 @@ namespace BDEditor.DataModel
         /// <param name="pDataContext"></param>
         /// <param name="pAttributeDictionary"></param>
         /// <returns>Uuid of the created/updated entry</returns>
-        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
+        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
             bool deprecated = bool.Parse(pAttributeDictionary[DEPRECATED]);
@@ -174,7 +173,8 @@ namespace BDEditor.DataModel
             short displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]);
             entry.displayOrder = displayOrder;
 
-            pDataContext.SaveChanges();
+            if(pSaveChanges)
+                pDataContext.SaveChanges();
 
             return uuid;
         }

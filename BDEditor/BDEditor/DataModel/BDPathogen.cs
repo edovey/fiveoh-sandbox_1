@@ -18,7 +18,7 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDPathogen: IBDObject
     {
-        public const string AWS_DOMAIN = @"bd_pathogens_test";
+        public const string AWS_DOMAIN = @"bd_pathogens";
         public const string ENTITYNAME = @"BDPathogen";
         public const string ENTITYNAME_FRIENDLY = @"Pathogen";
         public const string PROPERTYNAME_NAME = @"Name";
@@ -72,9 +72,10 @@ namespace BDEditor.DataModel
         public static List<BDPathogen> GetPathogensForPathogenGroup(Entities pContext, Guid pPathogenGroupId)
         {
             List<BDPathogen> pathogenList = new List<BDPathogen>();
-                IQueryable<BDPathogen> pathogens = (from bdPathogens in pContext.BDPathogens
-                                                    where bdPathogens.pathogenGroupId == pPathogenGroupId
-                                                    select bdPathogens);
+                IQueryable<BDPathogen> pathogens = (from entry in pContext.BDPathogens
+                                                    where entry.pathogenGroupId == pPathogenGroupId
+                                                    orderby entry.name
+                                                    select entry);
                 foreach (BDPathogen pathogen in pathogens)
                 {
                     pathogenList.Add(pathogen);
@@ -157,7 +158,7 @@ namespace BDEditor.DataModel
         /// <param name="pDataContext"></param>
         /// <param name="pAttributeDictionary"></param>
         /// <returns>Uuid of the created/updated entry</returns>
-        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
+        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
             bool deprecated = bool.Parse(pAttributeDictionary[DEPRECATED]);
@@ -179,7 +180,8 @@ namespace BDEditor.DataModel
             short displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]);
             entry.displayOrder = displayOrder;
 
-            pDataContext.SaveChanges();
+            if (pSaveChanges)
+                pDataContext.SaveChanges();
 
             return uuid;
         }

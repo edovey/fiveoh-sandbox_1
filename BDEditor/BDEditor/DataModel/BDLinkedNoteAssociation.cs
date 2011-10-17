@@ -26,7 +26,7 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDLinkedNoteAssociation
     {
-        public const string AWS_DOMAIN = @"bd_linkedNoteAssociations_test";
+        public const string AWS_DOMAIN = @"bd_linkedNoteAssociations";
         public const string ENTITYNAME = @"BDLinkedNoteAssociations";
         public const string ENTITYNAME_FRIENDLY = @"Linked Note Association";
 
@@ -270,7 +270,7 @@ namespace BDEditor.DataModel
         /// <param name="pDataContext"></param>
         /// <param name="pAttributeDictionary"></param>
         /// <returns>Uuid of the created/updated entry</returns>
-        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
+        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
             bool deprecated = bool.Parse(pAttributeDictionary[DEPRECATED]);
@@ -294,7 +294,8 @@ namespace BDEditor.DataModel
             entry.parentEntityName = pAttributeDictionary[PARENTENTITYNAME];
             entry.parentEntityPropertyName = pAttributeDictionary[PARENTENTITYPROPERTYNAME];
 
-            pDataContext.SaveChanges();
+            if (pSaveChanges)
+                pDataContext.SaveChanges();
 
             return uuid;
         }

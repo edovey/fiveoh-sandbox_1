@@ -13,6 +13,18 @@
         <attribute name="sectionId" optional="YES" attributeType="String"/>
         <attribute name="uuid" attributeType="String" indexed="YES"/>
     </entity>
+    <entity name="BDChapter" representedClassName="BDChapter" syncable="YES">
+        <attribute name="createdBy" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="deprecated" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="displayOrder" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="inUseBy" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="modifiedBy" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="modifiedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="schemaVersion" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="uuid" attributeType="String" indexed="YES" syncable="YES"/>
+    </entity>
     <entity name="BDDisease" representedClassName="Disease">
         <attribute name="categoryId" optional="YES" attributeType="String"/>
         <attribute name="createdBy" optional="YES" attributeType="String"/>
@@ -105,6 +117,7 @@
         <attribute name="uuid" attributeType="String" indexed="YES"/>
     </entity>
     <entity name="BDSection">
+        <attribute name="chapterId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="createdBy" optional="YES" attributeType="String"/>
         <attribute name="createdDate" optional="YES" attributeType="Date"/>
         <attribute name="deprecated" attributeType="Boolean" defaultValueString="NO"/>
@@ -163,14 +176,15 @@
         <element name="BDCategory" positionX="-488" positionY="-24" width="128" height="195"/>
         <element name="BDDisease" positionX="-164" positionY="-45" width="128" height="225"/>
         <element name="BDLinkedNote" positionX="-0" positionY="252" width="128" height="225"/>
+        <element name="BDLinkedNoteAssociation" positionX="153" positionY="9" width="128" height="240"/>
         <element name="BDPathogen" positionX="-461" positionY="252" width="128" height="210"/>
         <element name="BDPathogenGroup" positionX="-621" positionY="255" width="128" height="195"/>
         <element name="BDPresentation" positionX="-2" positionY="-36" width="128" height="210"/>
         <element name="BDQueueEntry" positionX="135" positionY="294" width="128" height="120"/>
-        <element name="BDSection" positionX="-648" positionY="-9" width="128" height="180"/>
+        <element name="BDSection" positionX="-648" positionY="-9" width="128" height="210"/>
         <element name="BDSubcategory" positionX="-324" positionY="-24" width="128" height="195"/>
         <element name="BDTherapy" positionX="-155" positionY="234" width="128" height="255"/>
         <element name="BDTherapyGroup" positionX="-308" positionY="243" width="128" height="225"/>
-        <element name="BDLinkedNoteAssociation" positionX="153" positionY="9" width="128" height="240"/>
+        <element name="BDChapter" positionX="-792" positionY="-9" width="128" height="195"/>
     </elements>
 </model>

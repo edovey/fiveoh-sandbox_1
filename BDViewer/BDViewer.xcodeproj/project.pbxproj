@@ -23,13 +23,8 @@
 		6E2EA35A142B9F9300908103 /* ProjectConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA356142B9F9300908103 /* ProjectConstants.m */; };
 		6E2EA35B142B9F9300908103 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA358142B9F9300908103 /* Utility.m */; };
 		6E2EA35F142BA0F800908103 /* AWSiOSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E2EA35E142BA0F800908103 /* AWSiOSSDK.framework */; };
-		6E2EA373142BB6EB00908103 /* PrototypeView~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E2EA36F142BB6EB00908103 /* PrototypeView~iPad.xib */; };
-		6E2EA374142BB6EB00908103 /* PrototypeView~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E2EA370142BB6EB00908103 /* PrototypeView~iPhone.xib */; };
-		6E2EA375142BB6EB00908103 /* PrototypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA372142BB6EB00908103 /* PrototypeView.m */; };
-		6E2EA37A142BB6FE00908103 /* EditorView~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E2EA376142BB6FE00908103 /* EditorView~iPad.xib */; };
-		6E2EA37B142BB6FE00908103 /* EditorView~iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E2EA377142BB6FE00908103 /* EditorView~iPhone.xib */; };
-		6E2EA37C142BB6FE00908103 /* EditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA379142BB6FE00908103 /* EditorView.m */; };
 		6E49B041143CC81900E32F3F /* BDPathogenGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E49B040143CC81900E32F3F /* BDPathogenGroup.m */; };
+		6E8ED864144E26A0002247E5 /* BDChapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E8ED863144E26A0002247E5 /* BDChapter.m */; };
 		6E9685C2142BBE15004C5DED /* BDViewer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6E9685C0142BBE15004C5DED /* BDViewer.xcdatamodeld */; };
 		6EA646C31430C2F000A693A4 /* BDDisease.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EA646C21430C2F000A693A4 /* BDDisease.m */; };
 		6EA646C71430C33700A693A4 /* BDPresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EA646C61430C33700A693A4 /* BDPresentation.m */; };
@@ -45,8 +40,8 @@
 		6EC50013142AA6BA003232D1 /* BDViewerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EC50012142AA6BA003232D1 /* BDViewerAppDelegate.m */; };
 		6EC5001C142AA6BA003232D1 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EC5001B142AA6BA003232D1 /* RootViewController.m */; };
 		6ECA7030142CDB0B00C54BA7 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6ECA702E142CDB0B00C54BA7 /* RootViewController.xib */; };
-		6ECA7049142D3C4800C54BA7 /* MainWindow~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6ECA7047142D3C4800C54BA7 /* MainWindow~ipad.xib */; };
-		6ECA704C142D3CDA00C54BA7 /* MainWindow-iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6ECA704A142D3CDA00C54BA7 /* MainWindow-iphone.xib */; };
+		6ECA7049142D3C4800C54BA7 /* MainWindow_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6ECA7047142D3C4800C54BA7 /* MainWindow_iPad.xib */; };
+		6ECA704C142D3CDA00C54BA7 /* MainWindow_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6ECA704A142D3CDA00C54BA7 /* MainWindow_iPhone.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,16 +75,10 @@
 		6E2EA357142B9F9300908103 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		6E2EA358142B9F9300908103 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		6E2EA35E142BA0F800908103 /* AWSiOSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSiOSSDK.framework; path = "../thirdParty/aws-ios-sdk-0.2.3/AWSiOSSDK.framework"; sourceTree = "<group>"; };
-		6E2EA36F142BB6EB00908103 /* PrototypeView~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "PrototypeView~iPad.xib"; sourceTree = "<group>"; };
-		6E2EA370142BB6EB00908103 /* PrototypeView~iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "PrototypeView~iPhone.xib"; sourceTree = "<group>"; };
-		6E2EA371142BB6EB00908103 /* PrototypeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrototypeView.h; sourceTree = "<group>"; };
-		6E2EA372142BB6EB00908103 /* PrototypeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrototypeView.m; sourceTree = "<group>"; };
-		6E2EA376142BB6FE00908103 /* EditorView~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "EditorView~iPad.xib"; sourceTree = "<group>"; };
-		6E2EA377142BB6FE00908103 /* EditorView~iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "EditorView~iPhone.xib"; sourceTree = "<group>"; };
-		6E2EA378142BB6FE00908103 /* EditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorView.h; sourceTree = "<group>"; };
-		6E2EA379142BB6FE00908103 /* EditorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditorView.m; sourceTree = "<group>"; };
 		6E49B03F143CC81900E32F3F /* BDPathogenGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDPathogenGroup.h; sourceTree = "<group>"; };
 		6E49B040143CC81900E32F3F /* BDPathogenGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDPathogenGroup.m; sourceTree = "<group>"; };
+		6E8ED862144E26A0002247E5 /* BDChapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDChapter.h; sourceTree = "<group>"; };
+		6E8ED863144E26A0002247E5 /* BDChapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDChapter.m; sourceTree = "<group>"; };
 		6E9685C1142BBE15004C5DED /* BDViewer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BDViewer.xcdatamodel; sourceTree = "<group>"; };
 		6EA646C11430C2F000A693A4 /* BDDisease.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDDisease.h; sourceTree = "<group>"; };
 		6EA646C21430C2F000A693A4 /* BDDisease.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDDisease.m; sourceTree = "<group>"; };
@@ -115,8 +104,8 @@
 		6EC5001B142AA6BA003232D1 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		6EC5FFFC142AA6BA003232D1 /* BDViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BDViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6ECA702E142CDB0B00C54BA7 /* RootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
-		6ECA7048142D3C4800C54BA7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/MainWindow~iPad.xib"; sourceTree = "<group>"; };
-		6ECA704B142D3CDA00C54BA7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/MainWindow-iPhone.xib"; sourceTree = "<group>"; };
+		6ECA7048142D3C4800C54BA7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow_iPad.xib; sourceTree = "<group>"; };
+		6ECA704B142D3CDA00C54BA7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow_iPhone.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +188,8 @@
 				6E2EA34E142B9E3B00908103 /* DataController.m */,
 				6E2EA34A142B9E0500908103 /* BDCategory.h */,
 				6E2EA34B142B9E0500908103 /* BDCategory.m */,
+				6E8ED862144E26A0002247E5 /* BDChapter.h */,
+				6E8ED863144E26A0002247E5 /* BDChapter.m */,
 				6EA646C11430C2F000A693A4 /* BDDisease.h */,
 				6EA646C21430C2F000A693A4 /* BDDisease.m */,
 				6E003A751448AE89003908C2 /* BDLinkedNoteAssociation.h */,
@@ -241,16 +232,8 @@
 		6E2EA331142B94D800908103 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				6ECA704A142D3CDA00C54BA7 /* MainWindow-iphone.xib */,
-				6ECA7047142D3C4800C54BA7 /* MainWindow~ipad.xib */,
-				6E2EA376142BB6FE00908103 /* EditorView~iPad.xib */,
-				6E2EA377142BB6FE00908103 /* EditorView~iPhone.xib */,
-				6E2EA378142BB6FE00908103 /* EditorView.h */,
-				6E2EA379142BB6FE00908103 /* EditorView.m */,
-				6E2EA36F142BB6EB00908103 /* PrototypeView~iPad.xib */,
-				6E2EA370142BB6EB00908103 /* PrototypeView~iPhone.xib */,
-				6E2EA371142BB6EB00908103 /* PrototypeView.h */,
-				6E2EA372142BB6EB00908103 /* PrototypeView.m */,
+				6ECA704A142D3CDA00C54BA7 /* MainWindow_iPhone.xib */,
+				6ECA7047142D3C4800C54BA7 /* MainWindow_iPad.xib */,
 				6EC5001A142AA6BA003232D1 /* RootViewController.h */,
 				6EC5001B142AA6BA003232D1 /* RootViewController.m */,
 				6ECA702E142CDB0B00C54BA7 /* RootViewController.xib */,
@@ -373,13 +356,9 @@
 			files = (
 				6EC5000D142AA6BA003232D1 /* InfoPlist.strings in Resources */,
 				6E2EA33A142B95F600908103 /* sample.html in Resources */,
-				6E2EA373142BB6EB00908103 /* PrototypeView~iPad.xib in Resources */,
-				6E2EA374142BB6EB00908103 /* PrototypeView~iPhone.xib in Resources */,
-				6E2EA37A142BB6FE00908103 /* EditorView~iPad.xib in Resources */,
-				6E2EA37B142BB6FE00908103 /* EditorView~iPhone.xib in Resources */,
 				6ECA7030142CDB0B00C54BA7 /* RootViewController.xib in Resources */,
-				6ECA7049142D3C4800C54BA7 /* MainWindow~ipad.xib in Resources */,
-				6ECA704C142D3CDA00C54BA7 /* MainWindow-iphone.xib in Resources */,
+				6ECA7049142D3C4800C54BA7 /* MainWindow_iPad.xib in Resources */,
+				6ECA704C142D3CDA00C54BA7 /* MainWindow_iPhone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,8 +385,6 @@
 				6E2EA359142B9F9300908103 /* NSString+UUID.m in Sources */,
 				6E2EA35A142B9F9300908103 /* ProjectConstants.m in Sources */,
 				6E2EA35B142B9F9300908103 /* Utility.m in Sources */,
-				6E2EA375142BB6EB00908103 /* PrototypeView.m in Sources */,
-				6E2EA37C142BB6FE00908103 /* EditorView.m in Sources */,
 				6E9685C2142BBE15004C5DED /* BDViewer.xcdatamodeld in Sources */,
 				6EA646C31430C2F000A693A4 /* BDDisease.m in Sources */,
 				6EA646C71430C33700A693A4 /* BDPresentation.m in Sources */,
@@ -416,6 +393,7 @@
 				6EA646D01430C3D700A693A4 /* BDTherapy.m in Sources */,
 				6E49B041143CC81900E32F3F /* BDPathogenGroup.m in Sources */,
 				6E003A771448AE89003908C2 /* BDLinkedNoteAssociation.m in Sources */,
+				6E8ED864144E26A0002247E5 /* BDChapter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,20 +408,20 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		6ECA7047142D3C4800C54BA7 /* MainWindow~ipad.xib */ = {
+		6ECA7047142D3C4800C54BA7 /* MainWindow_iPad.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				6ECA7048142D3C4800C54BA7 /* en */,
 			);
-			name = "MainWindow~ipad.xib";
+			name = MainWindow_iPad.xib;
 			sourceTree = "<group>";
 		};
-		6ECA704A142D3CDA00C54BA7 /* MainWindow-iphone.xib */ = {
+		6ECA704A142D3CDA00C54BA7 /* MainWindow_iPhone.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				6ECA704B142D3CDA00C54BA7 /* en */,
 			);
-			name = "MainWindow-iphone.xib";
+			name = MainWindow_iPhone.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

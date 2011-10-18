@@ -47,4 +47,13 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		BuildVersion_BuildAction = Build
+		BuildVersion_UseGlobalSettings = False
+		BuildVersion_UpdateAssemblyVersion = True
+		BuildVersion_UpdateFileVersion = True
+		BuildVersion_AssemblyInfoFilename = BDEditor\Properties\AssemblyInfo.cs
+		BuildVersion_ConfigurationName = Release
+		BuildVersion_BuildVersioningStyle = None.Increment.Increment.YearDayOfYear
+	EndGlobalSection
 EndGlobal

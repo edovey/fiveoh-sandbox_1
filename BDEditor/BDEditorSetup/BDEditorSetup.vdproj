@@ -88,18 +88,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E02DC4C3DEA02DA2C8610A917A80A639"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F7427D0A3D39FC8F1EDC1B52D65B64DF"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_ADF733B89ACD6DB8FBB402A75B9AF880"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -113,6 +101,18 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_095C7552B792E76A70C273A5C33093C3"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_E02DC4C3DEA02DA2C8610A917A80A639"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_F7427D0A3D39FC8F1EDC1B52D65B64DF"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -473,21 +473,21 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Bugs & Drugs Editor"
-        "ProductCode" = "8:{F26CC5B2-6896-4A31-993D-8257143EFFFD}"
-        "PackageCode" = "8:{519CB020-7DA3-4374-B08E-66768FB0AB04}"
+        "ProductCode" = "8:{87030EE9-9738-430B-B051-10A5D9D45409}"
+        "PackageCode" = "8:{399B19A6-9EE7-4B80-9A60-6C998DF7A7B8}"
         "UpgradeCode" = "8:{14BE6AB3-949F-4D50-8F2A-7E46022D03A2}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Saint Street, Inc."
+        "ProductVersion" = "8:1.1.5"
+        "Manufacturer" = "8:Saint Street"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:BDEditorSetup"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Saint Street, Inc"
+        "ARPCONTACT" = "8:Saint Street"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:Bugs & Drugs Editor"
         "ARPURLINFOABOUT" = "8:"
@@ -596,7 +596,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_919C02FD6B07471492024F9197ABDF20"
             {
-            "Name" = "8:Shortcut to Primary output from BDEditor (Active)"
+            "Name" = "8:Bugs & Drugs Editor"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -610,7 +610,7 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_AB4FBA23AB0549529EE140F2DFA73B8D"
             {
-            "Name" = "8:Shortcut to Primary output from BDEditor (Active)"
+            "Name" = "8:Bugs & Drugs Editor"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -736,7 +736,7 @@
                             "ContextData" = "8:1;True=1;False=0"
                             "Attributes" = "3:0"
                             "Setting" = "3:0"
-                            "Value" = "3:1"
+                            "Value" = "3:0"
                             "DefaultValue" = "3:1"
                             "UsePlugInResources" = "11:TRUE"
                             }

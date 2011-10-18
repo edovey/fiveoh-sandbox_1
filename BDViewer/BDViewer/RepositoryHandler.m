@@ -57,7 +57,7 @@
 {
     RepositoryHandler *handler = [[RepositoryHandler alloc] init];
     
-    NSArray *entityArray = [[NSArray alloc] initWithObjects:DOMAIN_SECTION, DOMAIN_CATEGORY, DOMAIN_SUBCATEGORY, DOMAIN_DISEASE, DOMAIN_PRESENTATION, DOMAIN_THERAPYGROUP, DOMAIN_THERAPY, DOMAIN_LINKEDNOTE, nil];
+    NSArray *entityArray = [[NSArray alloc] initWithObjects:DOMAIN_SECTION, DOMAIN_CATEGORY, DOMAIN_SUBCATEGORY, DOMAIN_DISEASE, DOMAIN_PRESENTATION, DOMAIN_THERAPYGROUP, DOMAIN_THERAPY, DOMAIN_LINKEDNOTE, DOMAIN_LINKEDNOTEASSOCIATION, nil];
     
     for (int i = 0; i < [entityArray count]; i++)
     {
@@ -69,7 +69,7 @@
             
             for (SimpleDBItem *item in selectResponse.items) 
             {
-                NSString *loadedUUID = [handler loadEntityWithItemName:item.name forDomain:DOMAIN_LINKEDNOTE];
+                NSString *loadedUUID = [handler loadEntityWithItemName:item.name forDomain:[entityArray objectAtIndex:i]];
                 NSLog(@"Loaded %@", loadedUUID);
             }
             
@@ -98,7 +98,11 @@
 {
     RepositoryHandler *handler = [[RepositoryHandler alloc] init];
 
-//    NSArray *entityArray = [[NSArray alloc] initWithObjects:DOMAIN_SECTION, DOMAIN_CATEGORY, DOMAIN_SUBCATEGORY, DOMAIN_DISEASE, DOMAIN_PRESENTATION, DOMAIN_THERAPYGROUP, DOMAIN_THERAPY, DOMAIN_LINKEDNOTE, nil];
+    NSArray *entityArray = [[NSArray alloc] initWithObjects:DOMAIN_SECTION, DOMAIN_CATEGORY, DOMAIN_SUBCATEGORY, DOMAIN_DISEASE, DOMAIN_PRESENTATION, DOMAIN_THERAPYGROUP, DOMAIN_THERAPY, DOMAIN_LINKEDNOTE, DOMAIN_LINKEDNOTEASSOCIATION, nil];
+    
+    NSArray *entityDateArray = [[NSArray alloc] initWithObjects: SN_MODIFIEDDATE, CT_MODIFIEDDATE, SC_MODIFIEDDATE, DI_MODIFIEDDATE, PR_MODIFIEDDATE, TG_MODIFIEDDATE, TH_MODIFIEDDATE, LN_MODIFIEDDATE, LA_MODIFIEDDATE, nil]; 
+    
+    NSArray *entityBucketArray = [[NSArray alloc] initWithObjects: BUCKET_SECTION, BUCKET_CATEGORY, BUCKET_SUBCATEGORY, BUCKET_DISEASE, BUCKET_PRESENTATION, BUCKET_THERAPYGROUP, BUCKET_THERAPY, BUCKET_LINKEDNOTE, BUCKET_LINKEDNOTEASSOCIATION, nil];
 
     NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
 	[dateFormatter setTimeStyle:NSDateFormatterFullStyle];
@@ -117,64 +121,67 @@
     
     NSString *selectExpression;
     
-    //TODO: EXPAND FOR ALL ENTITIES
-    
-    // EditorDocuments
+    for (int i = 0; i < [entityArray count]; i++)
+    {
 
-    if(nil == refreshDateString)
-    {
-        selectExpression = [handler getSimpleSelectExpressionForDomain: DOMAIN_LINKEDNOTE];
-    }
-    else
-    {
-        selectExpression = [handler getSelectExpressionForDomain:DOMAIN_LINKEDNOTE withDateItem:LN_MODIFIEDDATE beforeDate: refreshDateString];
-    }
-    @try 
-    {
-        SimpleDBSelectRequest  *selectRequest  = [[[SimpleDBSelectRequest alloc] initWithSelectExpression:selectExpression] autorelease];
-        SimpleDBSelectResponse *selectResponse = [[RepositoryConstants sdb] select:selectRequest];
-        
-        NSLog(@"Number of items to load:%d", [selectResponse.items count]);
-        
-        for (SimpleDBItem *item in selectResponse.items) 
-        {            
-            BDLinkedNote *document = [BDLinkedNote retrieveWithUUID:[handler loadEntityWithItemName:item.name forDomain:DOMAIN_LINKEDNOTE]];
-            
-            if ((nil != document) && (nil != document.storageKey) && ([document.storageKey length] > 0))
+        if(nil == refreshDateString)
+        {
+            selectExpression = [handler getSimpleSelectExpressionForDomain: [entityArray objectAtIndex:i]];
+        }
+        else
+        {
+            selectExpression = [handler getSelectExpressionForDomain:[entityArray objectAtIndex:i] withDateItem:[entityDateArray objectAtIndex:i] beforeDate: refreshDateString];
+        }
+        if([[entityArray objectAtIndex:i] stringValue] == DOMAIN_LINKEDNOTE) 
+        {
+            @try 
             {
-                NSLog(@"Retrieving S3 Doc:%@", document.storageKey);
+                SimpleDBSelectRequest  *selectRequest  = [[[SimpleDBSelectRequest alloc] initWithSelectExpression:selectExpression] autorelease];
+                SimpleDBSelectResponse *selectResponse = [[RepositoryConstants sdb] select:selectRequest];
                 
-                @try 
-                {
-                    S3GetObjectRequest  *s3ObjectRequest  = [[S3GetObjectRequest alloc] initWithKey:document.storageKey 
-                                                                                           withBucket:BUCKET_LINKEDNOTE];
+                NSLog(@"Number of items to load:%d", [selectResponse.items count]);
+                
+                for (SimpleDBItem *item in selectResponse.items) 
+                {            
+                    BDLinkedNote *document = [BDLinkedNote retrieveWithUUID:[handler loadEntityWithItemName:item.name forDomain:[entityArray objectAtIndex:i]]];
                     
-                    S3GetObjectResponse *s3ObjectResponse = [[RepositoryConstants s3] getObject:s3ObjectRequest];
-                    
-                    //Expects that this will be text
-                    NSLog(@"S3 content type = %@", s3ObjectResponse.contentType);
-                    
-                    if ([s3ObjectResponse.contentType isEqualToString:@"text/html"] || [s3ObjectResponse.contentType isEqualToString:@"text/plain"]) 
+                    if ((nil != document) && (nil != document.storageKey) && ([document.storageKey length] > 0))
                     {
-                        NSString *documentText = [[NSString alloc] initWithData:s3ObjectResponse.body encoding:NSUTF8StringEncoding];
+                        NSLog(@"Retrieving S3 Doc:%@", document.storageKey);
                         
-                        NSLog(@"%@", documentText);
-                        document.documentText = documentText;
-                        [[DataController sharedInstance] saveContext];
-                    }                    
-                }
-                @catch (AmazonServiceException *exception) 
-                {
-                    NSLog(@"Exception = %@", exception);
+                        @try 
+                        {
+                            S3GetObjectRequest  *s3ObjectRequest  = [[S3GetObjectRequest alloc] initWithKey:document.storageKey 
+                                                                                                 withBucket:[entityBucketArray objectAtIndex: i]];
+                            
+                            S3GetObjectResponse *s3ObjectResponse = [[RepositoryConstants s3] getObject:s3ObjectRequest];
+                            
+                            //Expects that this will be text
+                            NSLog(@"S3 content type = %@", s3ObjectResponse.contentType);
+                            
+                            if ([s3ObjectResponse.contentType isEqualToString:@"text/html"] || [s3ObjectResponse.contentType isEqualToString:@"text/plain"]) 
+                            {
+                                NSString *documentText = [[NSString alloc] initWithData:s3ObjectResponse.body encoding:NSUTF8StringEncoding];
+                                
+                                NSLog(@"%@", documentText);
+                                document.documentText = documentText;
+                                [[DataController sharedInstance] saveContext];
+                            }                    
+                        }
+                        @catch (AmazonServiceException *exception) 
+                        {
+                            NSLog(@"Exception = %@", exception);
+                        }
+                    }
                 }
             }
+            @catch (AmazonServiceException *exception) 
+            {
+                NSLog(@"Exception = %@", exception);
+            }
         }
+
     }
-    @catch (AmazonServiceException *exception) 
-    {
-        NSLog(@"Exception = %@", exception);
-    }
-    
     [handler release];
 
     [defaults setObject:[dateFormatter stringFromDate:[NSDate date]] forKey:@"RepositoryRefreshDate"];
@@ -191,6 +198,11 @@
                                                                          targetMOC:nil];
     
 //    sdbDelegate = [[SdbRequestDelegate alloc] init];
+//    NSArray *entityNameArray = [[NSArray alloc] initWithObjects:ENTITYNAME_SECTION, ENTITYNAME_CATEGORY, ENTITYNAME_SUBCATEGORY, ENTITYNAME_DISEASE, ENTITYNAME_PRESENTATION, ENTITYNAME_THERAPYGROUP, ENTITYNAME_THERAPY, ENTITYNAME_LINKEDNOTE, ENTITYNAME_LINKEDNOTEASSOCIATION, nil];
+//
+//   
+//    NSArray *entityBucketArray = [[NSArray alloc] initWithObjects: BUCKET_SECTION, BUCKET_CATEGORY, BUCKET_SUBCATEGORY, BUCKET_DISEASE, BUCKET_PRESENTATION, BUCKET_THERAPYGROUP, BUCKET_THERAPY, BUCKET_LINKEDNOTE, BUCKET_LINKEDNOTEASSOCIATION, nil];
+
 
     int processCount = 0;
     while([queueEntries count] > 0)
@@ -841,16 +853,14 @@
 }
 
 
-#pragma mark - Entity Load from SimpleDB
-
-//// MAKE THIS 'GENERIC' FOR ALL ENTITIES>>>
+#pragma mark - Generic private methods
 
 -(NSString *)loadEntityWithItemName:(NSString *)theItemName forDomain:(NSString *)theDomain
 {
     NSString * documentUUID = nil;
     @try 
     {
-        SimpleDBGetAttributesRequest  *request = [[[SimpleDBGetAttributesRequest alloc] initWithDomainName:DOMAIN_LINKEDNOTE 
+        SimpleDBGetAttributesRequest  *request = [[[SimpleDBGetAttributesRequest alloc] initWithDomainName:theDomain 
                                                                                            andItemName:theItemName] autorelease];
         
         SimpleDBGetAttributesResponse *response = [[RepositoryConstants sdb] getAttributes:request];
@@ -872,7 +882,6 @@
     return documentUUID;
 }
 
-#pragma mark - Generic private methods
 
 -(NSString *)getSimpleSelectExpressionForDomain:(NSString *)theDomain {
     NSString *returnString = [NSString stringWithFormat:@"select itemName() from %@", theDomain];

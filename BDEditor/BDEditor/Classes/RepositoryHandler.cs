@@ -49,6 +49,7 @@ namespace BDEditor.Classes
             SyncInfoDictionary syncDictionary = new SyncInfoDictionary();
 
             syncDictionary.Add(BDCategory.SyncInfo());
+            syncDictionary.Add(BDChapter.SyncInfo());
             syncDictionary.Add(BDDisease.SyncInfo());
             syncDictionary.Add(BDLinkedNoteAssociation.SyncInfo());
             syncDictionary.Add(BDLinkedNote.SyncInfo());
@@ -189,6 +190,16 @@ namespace BDEditor.Classes
                                 }
                             }
                             break;
+                        case BDChapter.AWS_DOMAIN:
+                            {
+                                List<BDChapter> changeList = BDChapter.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+                                foreach (BDChapter entry in changeList)
+                                {
+                                    SimpleDb.PutAttributes(entry.PutAttributes()); // Push to the repository
+                                    syncInfoEntry.RowsPushed++;
+                                }
+                            }
+                            break;
                         case BDDisease.AWS_DOMAIN:
                             {
                                 List<BDDisease> changeList = BDDisease.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
@@ -304,6 +315,7 @@ namespace BDEditor.Classes
         public void DeleteLocalData(Entities pDataContext)
         {
             pDataContext.ExecuteStoreCommand("DELETE FROM BDCategories");
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDChapters");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDDiseases");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDLinkedNoteAssociations");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDLinkedNotes");

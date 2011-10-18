@@ -14,13 +14,14 @@ namespace BDEditor.Views
 {
     public enum BDNodeContextType
     {
-        Section = 1,
-        Category = 2,
-        SubCategory = 3,
-        Disease = 4,
-        Presentation = 5,
-        Therapy = 6,
-        Pathogen = 7
+        Chapter = 1,
+        Section = 2,
+        Category = 3,
+        SubCategory = 4,
+        Disease = 5,
+        Presentation = 6,
+        Therapy = 7,
+        Pathogen = 8
     }
 
     public partial class BDEditView : Form

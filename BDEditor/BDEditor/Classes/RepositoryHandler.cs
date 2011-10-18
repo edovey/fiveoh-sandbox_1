@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
+using System.Net;
 using Amazon;
 using Amazon.SimpleDB;
 using Amazon.SimpleDB.Model;
+using Amazon.S3;
+using Amazon.S3.Model;
 
 using BDEditor.DataModel;
 
@@ -18,6 +22,7 @@ namespace BDEditor.Classes
         static private readonly RepositoryHandler aws = new RepositoryHandler();
 
         private AmazonSimpleDB simpleDb = null;
+        private AmazonS3 s3 = null;
 
         private List<SyncInfo> syncInfoList = new List<SyncInfo>();
 
@@ -34,6 +39,15 @@ namespace BDEditor.Classes
             { 
                 if (null == simpleDb) { simpleDb = AWSClientFactory.CreateAmazonSimpleDBClient(BD_ACCESS_KEY, BD_SECRET_KEY); }
                 return simpleDb;
+            }
+        }
+
+        public AmazonS3 S3
+        {
+            get
+            {
+                if (null == s3) { s3 = Amazon.AWSClientFactory.CreateAmazonS3Client(BD_ACCESS_KEY, BD_SECRET_KEY); }
+                return s3;
             }
         }
 
@@ -129,7 +143,47 @@ namespace BDEditor.Classes
                                     BDLinkedNoteAssociation.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                     break;
                                 case BDLinkedNote.AWS_DOMAIN:
-                                    entryGuid = BDLinkedNote.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    {
+                                        entryGuid = BDLinkedNote.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                        if (null != entryGuid) // retrieve the note body
+                                        {
+                                            BDLinkedNote note = BDLinkedNote.GetLinkedNoteWithId(pDataContext, entryGuid);
+                                            try
+                                            {
+                                                GetObjectRequest getObjectRequest = new GetObjectRequest()
+                                                    .WithBucketName(BDLinkedNote.AWS_BUCKET)
+                                                    .WithKey(note.storageKey);
+
+                                                using (GetObjectResponse response = S3.GetObject(getObjectRequest))
+                                                {
+                                                    if ((response.ContentType == @"text/html") || (response.ContentType == @"text/plain"))
+                                                    {
+                                                        using (StreamReader reader = new StreamReader(response.ResponseStream))
+                                                        {
+                                                            String encodedString = reader.ReadToEnd();
+                                                            String unencodedString = System.Net.WebUtility.HtmlDecode(encodedString);
+                                                            note.documentText = unencodedString;
+                                                        }
+                                                    }
+                                                    
+                                                }
+                                            }
+                                            catch (AmazonS3Exception amazonS3Exception)
+                                            {
+                                                if (amazonS3Exception.ErrorCode != null &&
+                                                    (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId") ||
+                                                    amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
+                                                {
+                                                    Console.WriteLine("Please check the provided AWS Credentials.");
+                                                    Console.WriteLine("If you haven't signed up for Amazon S3, please visit http://aws.amazon.com/s3");
+                                                }
+                                                else
+                                                {
+                                                    Console.WriteLine("An error occurred with the message '{0}' when reading an object", amazonS3Exception.Message);
+                                                }
+                                            }
+                                        }
+                                    }
                                     break;
                                 case BDPathogenGroup.AWS_DOMAIN:
                                     entryGuid = BDPathogenGroup.LoadFromAttributes(pDataContext, attributeDictionary, false);
@@ -226,6 +280,18 @@ namespace BDEditor.Classes
                                 foreach (BDLinkedNote entry in changeList)
                                 {
                                     SimpleDb.PutAttributes(entry.PutAttributes());  // Push to the repository
+
+                                    string encodedText = System.Net.WebUtility.HtmlEncode(entry.documentText);
+
+                                    PutObjectRequest putObjectRequest = new PutObjectRequest()
+                                        .WithContentType(@"text/plain")
+                                        .WithContentBody(encodedText)
+                                        .WithBucketName(BDLinkedNote.AWS_BUCKET)
+                                        .WithKey(entry.storageKey);
+
+                                    S3Response s3Response = S3.PutObject(putObjectRequest);
+                                    s3Response.Dispose();
+
                                     syncInfoEntry.RowsPushed++;
                                 }
                             }
@@ -325,21 +391,7 @@ namespace BDEditor.Classes
             pDataContext.ExecuteStoreCommand("DELETE FROM BDSections");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDSubcategories");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDTherapies");
-            pDataContext.ExecuteStoreCommand("DELETE FROM BDTherapyGroups");
-
-            /*
-            pDataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, pDataContext.BDCategories);
-            pDataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, pDataContext.BDDiseases);
-            pDataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, pDataContext.BDLinkedNoteAssociations);
-            pDataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, pDataContext.BDLinkedNotes);
-            pDataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, pDataContext.BDPathogenGroups);
-            pDataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, pDataContext.BDPathogens);
-            pDataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, pDataContext.BDPresentations);
-            pDataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, pDataContext.BDSections);
-            pDataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, pDataContext.BDSubcategories);
-            pDataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, pDataContext.BDTherapies);
-            pDataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, pDataContext.BDTherapyGroups);
-             * */
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDTherapyGroups"); 
         }
 
         #region Helper Methods

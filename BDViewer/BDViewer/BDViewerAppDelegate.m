@@ -20,7 +20,7 @@
     // Add the navigation controller's view to the window and display.
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
-    return YES;
+    return YES;    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

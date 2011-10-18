@@ -22,6 +22,7 @@
 @dynamic modifiedDate;
 @dynamic schemaVersion;
 @dynamic displayOrder;
+@dynamic chapterId;
 
 
 +(NSString *)create
@@ -105,6 +106,7 @@
                 section.inUseBy = [theAttributeDictionary valueForKey:SN_INUSEBY];
                 section.deprecated = [NSNumber numberWithBool:[[theAttributeDictionary valueForKey:SN_DEPRECATED] boolValue]];
                 section.displayOrder = [NSNumber numberWithInt:[[theAttributeDictionary valueForKey:SN_DISPLAYORDER] intValue]];
+                section.chapterId = [theAttributeDictionary valueForKey:SN_CHAPTERID];
                 
                 section.name = [theAttributeDictionary valueForKey:SN_NAME];
             }

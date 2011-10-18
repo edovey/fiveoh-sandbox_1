@@ -22,6 +22,7 @@
 #define SN_MODIFIEDBY @"sn_modifiedBy"
 #define SN_DEPRECATED @"sn_deprecated"
 #define SN_INUSEBY @"sn_inUseBy"
+#define SN_CHAPTERID @"sn_chapterId"
 #define SN_DISPLAYORDER @"sn_displayOrder"
 #define SN_NAME @"sn_name"
 
@@ -37,6 +38,7 @@
 @property (nonatomic, retain) NSDate * modifiedDate;
 @property (nonatomic, retain) NSNumber * schemaVersion;
 @property (nonatomic, retain) NSNumber * displayOrder;
+@property (nonatomic, retain) NSString * chapterId;
 
 +(NSString *)create;
 +(BDSection *)retrieveWithUUID:(NSString *)theUUID;

@@ -143,42 +143,45 @@ namespace BDEditor.Classes
                                     break;
                                 case BDLinkedNote.AWS_DOMAIN:
                                     {
-                                        entryGuid = BDLinkedNote.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                        entryGuid = BDLinkedNote.LoadFromAttributes(pDataContext, attributeDictionary, true); // We need the note for the S3 call, so save
                                         if (null != entryGuid) // retrieve the note body
                                         {
                                             BDLinkedNote note = BDLinkedNote.GetLinkedNoteWithId(pDataContext, entryGuid);
-                                            try
+                                            if (null != note)
                                             {
-                                                GetObjectRequest getObjectRequest = new GetObjectRequest()
-                                                    .WithBucketName(BDLinkedNote.AWS_BUCKET)
-                                                    .WithKey(note.storageKey);
+                                                try
+                                                {
+                                                    GetObjectRequest getObjectRequest = new GetObjectRequest()
+                                                        .WithBucketName(BDLinkedNote.AWS_BUCKET)
+                                                        .WithKey(note.storageKey);
 
-                                                using (GetObjectResponse response = S3.GetObject(getObjectRequest))
-                                                {
-                                                    if ((response.ContentType == @"text/html") || (response.ContentType == @"text/plain"))
+                                                    using (GetObjectResponse response = S3.GetObject(getObjectRequest))
                                                     {
-                                                        using (StreamReader reader = new StreamReader(response.ResponseStream))
+                                                        if ((response.ContentType == @"text/html") || (response.ContentType == @"text/plain"))
                                                         {
-                                                            String encodedString = reader.ReadToEnd();
-                                                            String unencodedString = System.Net.WebUtility.HtmlDecode(encodedString);
-                                                            note.documentText = unencodedString;
+                                                            using (StreamReader reader = new StreamReader(response.ResponseStream))
+                                                            {
+                                                                String encodedString = reader.ReadToEnd();
+                                                                String unencodedString = System.Net.WebUtility.HtmlDecode(encodedString);
+                                                                note.documentText = unencodedString;
+                                                            }
                                                         }
+
                                                     }
-                                                    
                                                 }
-                                            }
-                                            catch (AmazonS3Exception amazonS3Exception)
-                                            {
-                                                if (amazonS3Exception.ErrorCode != null &&
-                                                    (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId") ||
-                                                    amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
+                                                catch (AmazonS3Exception amazonS3Exception)
                                                 {
-                                                    Console.WriteLine("Please check the provided AWS Credentials.");
-                                                    Console.WriteLine("If you haven't signed up for Amazon S3, please visit http://aws.amazon.com/s3");
-                                                }
-                                                else
-                                                {
-                                                    Console.WriteLine("An error occurred with the message '{0}' when reading an object", amazonS3Exception.Message);
+                                                    if (amazonS3Exception.ErrorCode != null &&
+                                                        (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId") ||
+                                                        amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
+                                                    {
+                                                        Console.WriteLine("Please check the provided AWS Credentials.");
+                                                        Console.WriteLine("If you haven't signed up for Amazon S3, please visit http://aws.amazon.com/s3");
+                                                    }
+                                                    else
+                                                    {
+                                                        Console.WriteLine("An error occurred with the message '{0}' when reading an object", amazonS3Exception.Message);
+                                                    }
                                                 }
                                             }
                                         }

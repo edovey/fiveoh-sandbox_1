@@ -63,8 +63,8 @@ namespace BDEditor.DataModel
         {
             if (pPresentation.EntityState != EntityState.Unchanged)
             {
-                pPresentation.modifiedBy = Guid.Empty;
-                pPresentation.modifiedDate = DateTime.Now;
+                //pPresentation.modifiedBy = Guid.Empty;
+                //pPresentation.modifiedDate = DateTime.Now;
                 System.Diagnostics.Debug.WriteLine(@"Presentation Save");
                 pContext.SaveChanges();
             }
@@ -107,6 +107,26 @@ namespace BDEditor.DataModel
                     presentation = entries.AsQueryable().First<BDPresentation>();
             }
             return presentation;
+        }
+
+        protected override void OnPropertyChanged(string property)
+        {
+            switch (property)
+            {
+                case "createdBy":
+                case "createdDate":
+                case "modifiedBy":
+                case "modifiedDate":
+                    break;
+                default:
+                    {
+                        _modifiedBy = Guid.Empty;
+                        _modifiedDate = DateTime.Now;
+                    }
+                    break;
+            }
+
+            base.OnPropertyChanged(property);
         }
 
         #region Repository

@@ -63,7 +63,7 @@
             // 
             // btnSyncWithReplaceLocal
             // 
-            this.btnSyncWithReplaceLocal.Location = new System.Drawing.Point(794, 10);
+            this.btnSyncWithReplaceLocal.Location = new System.Drawing.Point(750, 10);
             this.btnSyncWithReplaceLocal.Name = "btnSyncWithReplaceLocal";
             this.btnSyncWithReplaceLocal.Size = new System.Drawing.Size(261, 23);
             this.btnSyncWithReplaceLocal.TabIndex = 4;
@@ -93,11 +93,11 @@
             // createTestDataButton
             // 
             this.createTestDataButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.createTestDataButton.Location = new System.Drawing.Point(1061, 10);
+            this.createTestDataButton.Location = new System.Drawing.Point(1032, 10);
             this.createTestDataButton.Name = "createTestDataButton";
-            this.createTestDataButton.Size = new System.Drawing.Size(75, 23);
+            this.createTestDataButton.Size = new System.Drawing.Size(104, 23);
             this.createTestDataButton.TabIndex = 1;
-            this.createTestDataButton.Text = "Test Data";
+            this.createTestDataButton.Text = "Load Seed Data";
             this.createTestDataButton.UseVisualStyleBackColor = true;
             this.createTestDataButton.Click += new System.EventHandler(this.createTestDataButton_Click);
             // 

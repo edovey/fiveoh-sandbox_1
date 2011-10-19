@@ -136,6 +136,9 @@ namespace BDEditor.Classes
                                 case BDCategory.AWS_DOMAIN:
                                     entryGuid = BDCategory.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                     break;
+                                case BDChapter.AWS_DOMAIN:
+                                    entryGuid = BDChapter.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
                                 case BDDisease.AWS_DOMAIN:
                                     entryGuid = BDDisease.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                     break;

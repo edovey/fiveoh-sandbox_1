@@ -191,7 +191,7 @@ namespace BDEditor.Views
                     if (currentLinkedNote.documentText != cleanText)
                     {
                         currentLinkedNote.documentText = cleanText;
-                        if (cleanText.Length > 127)
+                        if (plainText.Length > 127)
                             currentLinkedNote.previewText = plainText.Substring(0, 127);
                         else
                             currentLinkedNote.previewText = plainText;

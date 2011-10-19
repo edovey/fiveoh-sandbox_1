@@ -8,7 +8,6 @@ using Amazon.SimpleDB;
 using Amazon.SimpleDB.Model;
 
 using BDEditor.Classes;
-using System.Data;
 
 namespace BDEditor.DataModel
 {

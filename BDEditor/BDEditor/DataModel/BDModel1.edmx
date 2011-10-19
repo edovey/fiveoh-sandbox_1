@@ -85,7 +85,7 @@
           <Property Name="modifiedDate" Type="datetime" />
           <Property Name="displayOrder" Type="int" />
           <Property Name="linkedNoteType" Type="int" />
-          <Property Name="deprecated" Type="bit" />
+          <Property Name="deprecated" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="BDLinkedNotes">
           <Key>
@@ -273,7 +273,7 @@
           <Property Type="Guid" Name="modifiedBy" />
           <Property Type="DateTime" Name="modifiedDate" />
           <Property Type="Int32" Name="schemaVersion" />
-          <Property Type="Boolean" Name="deprecated" Nullable="false" />
+          <Property Type="Boolean" Name="deprecated" Nullable="false" DefaultValue="false" />
           <Property Type="Guid" Name="inUseBy" />
           <Property Type="Int32" Name="displayOrder" />
         </EntityType>
@@ -310,7 +310,7 @@
           <Property Type="DateTime" Name="modifiedDate" />
           <Property Type="Int32" Name="displayOrder" />
           <Property Type="Int32" Name="linkedNoteType" />
-          <Property Type="Boolean" Name="deprecated" />
+          <Property Type="Boolean" Name="deprecated" Nullable="false" DefaultValue="false" />
         </EntityType>
         <EntityType Name="BDLinkedNote">
           <Key>

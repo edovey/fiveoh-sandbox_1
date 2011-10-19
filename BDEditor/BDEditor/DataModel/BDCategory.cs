@@ -40,7 +40,7 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static BDCategory CreateCategory(Entities pContext)
         {
-            BDCategory category = CreateBDCategory(Guid.NewGuid(), false);
+            BDCategory category = CreateBDCategory(Guid.NewGuid());
             category.createdBy = Guid.Empty;
             category.createdDate = DateTime.Now;
             category.schemaVersion = 0;
@@ -174,14 +174,14 @@ namespace BDEditor.DataModel
         public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
-            bool deprecated = bool.Parse(pAttributeDictionary[DEPRECATED]);
+            bool deprecated = Boolean.Parse(pAttributeDictionary[DEPRECATED]);
             BDCategory entry = BDCategory.GetCategoryWithId(pDataContext, uuid);
             if (null == entry)
             {
-                entry = BDCategory.CreateBDCategory(uuid, deprecated);
+                entry = BDCategory.CreateBDCategory(uuid);
                 pDataContext.AddObject("BDCategories", entry);
             }
-
+            entry.deprecated = deprecated;
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
             entry.schemaVersion = schemaVersion;
             entry.sectionId = Guid.Parse(pAttributeDictionary[SECTIONID]);

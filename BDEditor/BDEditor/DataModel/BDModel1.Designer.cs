@@ -426,12 +426,10 @@ namespace BDEditor.DataModel
         /// Create a new BDCategory object.
         /// </summary>
         /// <param name="uuid">Initial value of the uuid property.</param>
-        /// <param name="deprecated">Initial value of the deprecated property.</param>
-        public static BDCategory CreateBDCategory(global::System.Guid uuid, global::System.Boolean deprecated)
+        public static BDCategory CreateBDCategory(global::System.Guid uuid)
         {
             BDCategory bDCategory = new BDCategory();
             bDCategory.uuid = uuid;
-            bDCategory.deprecated = deprecated;
             return bDCategory;
         }
 
@@ -653,7 +651,7 @@ namespace BDEditor.DataModel
                 OndeprecatedChanged();
             }
         }
-        private global::System.Boolean _deprecated;
+        private global::System.Boolean _deprecated = false;
         partial void OndeprecatedChanging(global::System.Boolean value);
         partial void OndeprecatedChanged();
     
@@ -1990,9 +1988,9 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> deprecated
+        public global::System.Boolean deprecated
         {
             get
             {
@@ -2007,8 +2005,8 @@ namespace BDEditor.DataModel
                 OndeprecatedChanged();
             }
         }
-        private Nullable<global::System.Boolean> _deprecated;
-        partial void OndeprecatedChanging(Nullable<global::System.Boolean> value);
+        private global::System.Boolean _deprecated = false;
+        partial void OndeprecatedChanging(global::System.Boolean value);
         partial void OndeprecatedChanged();
 
         #endregion

@@ -24,6 +24,14 @@
 		6E2EA35B142B9F9300908103 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA358142B9F9300908103 /* Utility.m */; };
 		6E2EA35F142BA0F800908103 /* AWSiOSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E2EA35E142BA0F800908103 /* AWSiOSSDK.framework */; };
 		6E49B041143CC81900E32F3F /* BDPathogenGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E49B040143CC81900E32F3F /* BDPathogenGroup.m */; };
+		6E511FDC144F25BD00BB47C9 /* ChapterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E511FDA144F25BD00BB47C9 /* ChapterView.m */; };
+		6E511FDD144F25BD00BB47C9 /* ChapterView_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E511FDB144F25BD00BB47C9 /* ChapterView_iPhone.xib */; };
+		6E511FE1144F2FC300BB47C9 /* SectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E511FDF144F2FC300BB47C9 /* SectionView.m */; };
+		6E511FE2144F2FC300BB47C9 /* SectionView_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E511FE0144F2FC300BB47C9 /* SectionView_iPhone.xib */; };
+		6E511FE6144F38C800BB47C9 /* CategoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E511FE4144F38C800BB47C9 /* CategoryView.m */; };
+		6E511FE7144F38C800BB47C9 /* CategoryView_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E511FE5144F38C800BB47C9 /* CategoryView_iPhone.xib */; };
+		6E511FEB144F3AB200BB47C9 /* DiseaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E511FE9144F3AB100BB47C9 /* DiseaseView.m */; };
+		6E511FEC144F3AB200BB47C9 /* DiseaseView_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E511FEA144F3AB200BB47C9 /* DiseaseView_iPhone.xib */; };
 		6E8ED864144E26A0002247E5 /* BDChapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E8ED863144E26A0002247E5 /* BDChapter.m */; };
 		6E9685C2142BBE15004C5DED /* BDViewer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6E9685C0142BBE15004C5DED /* BDViewer.xcdatamodeld */; };
 		6EA646C31430C2F000A693A4 /* BDDisease.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EA646C21430C2F000A693A4 /* BDDisease.m */; };
@@ -77,6 +85,18 @@
 		6E2EA35E142BA0F800908103 /* AWSiOSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSiOSSDK.framework; path = "../thirdParty/aws-ios-sdk-0.2.3/AWSiOSSDK.framework"; sourceTree = "<group>"; };
 		6E49B03F143CC81900E32F3F /* BDPathogenGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDPathogenGroup.h; sourceTree = "<group>"; };
 		6E49B040143CC81900E32F3F /* BDPathogenGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDPathogenGroup.m; sourceTree = "<group>"; };
+		6E511FD9144F25BD00BB47C9 /* ChapterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChapterView.h; sourceTree = "<group>"; };
+		6E511FDA144F25BD00BB47C9 /* ChapterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChapterView.m; sourceTree = "<group>"; };
+		6E511FDB144F25BD00BB47C9 /* ChapterView_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChapterView_iPhone.xib; sourceTree = "<group>"; };
+		6E511FDE144F2FC300BB47C9 /* SectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SectionView.h; sourceTree = "<group>"; };
+		6E511FDF144F2FC300BB47C9 /* SectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SectionView.m; sourceTree = "<group>"; };
+		6E511FE0144F2FC300BB47C9 /* SectionView_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SectionView_iPhone.xib; sourceTree = "<group>"; };
+		6E511FE3144F38C800BB47C9 /* CategoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryView.h; sourceTree = "<group>"; };
+		6E511FE4144F38C800BB47C9 /* CategoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryView.m; sourceTree = "<group>"; };
+		6E511FE5144F38C800BB47C9 /* CategoryView_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryView_iPhone.xib; sourceTree = "<group>"; };
+		6E511FE8144F3AB100BB47C9 /* DiseaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiseaseView.h; sourceTree = "<group>"; };
+		6E511FE9144F3AB100BB47C9 /* DiseaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiseaseView.m; sourceTree = "<group>"; };
+		6E511FEA144F3AB200BB47C9 /* DiseaseView_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiseaseView_iPhone.xib; sourceTree = "<group>"; };
 		6E8ED862144E26A0002247E5 /* BDChapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDChapter.h; sourceTree = "<group>"; };
 		6E8ED863144E26A0002247E5 /* BDChapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDChapter.m; sourceTree = "<group>"; };
 		6E9685C1142BBE15004C5DED /* BDViewer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BDViewer.xcdatamodel; sourceTree = "<group>"; };
@@ -237,6 +257,18 @@
 				6EC5001A142AA6BA003232D1 /* RootViewController.h */,
 				6EC5001B142AA6BA003232D1 /* RootViewController.m */,
 				6ECA702E142CDB0B00C54BA7 /* RootViewController.xib */,
+				6E511FE3144F38C800BB47C9 /* CategoryView.h */,
+				6E511FE4144F38C800BB47C9 /* CategoryView.m */,
+				6E511FE5144F38C800BB47C9 /* CategoryView_iPhone.xib */,
+				6E511FD9144F25BD00BB47C9 /* ChapterView.h */,
+				6E511FDA144F25BD00BB47C9 /* ChapterView.m */,
+				6E511FDB144F25BD00BB47C9 /* ChapterView_iPhone.xib */,
+				6E511FE8144F3AB100BB47C9 /* DiseaseView.h */,
+				6E511FE9144F3AB100BB47C9 /* DiseaseView.m */,
+				6E511FEA144F3AB200BB47C9 /* DiseaseView_iPhone.xib */,
+				6E511FDE144F2FC300BB47C9 /* SectionView.h */,
+				6E511FDF144F2FC300BB47C9 /* SectionView.m */,
+				6E511FE0144F2FC300BB47C9 /* SectionView_iPhone.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -359,6 +391,10 @@
 				6ECA7030142CDB0B00C54BA7 /* RootViewController.xib in Resources */,
 				6ECA7049142D3C4800C54BA7 /* MainWindow_iPad.xib in Resources */,
 				6ECA704C142D3CDA00C54BA7 /* MainWindow_iPhone.xib in Resources */,
+				6E511FDD144F25BD00BB47C9 /* ChapterView_iPhone.xib in Resources */,
+				6E511FE2144F2FC300BB47C9 /* SectionView_iPhone.xib in Resources */,
+				6E511FE7144F38C800BB47C9 /* CategoryView_iPhone.xib in Resources */,
+				6E511FEC144F3AB200BB47C9 /* DiseaseView_iPhone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,6 +430,10 @@
 				6E49B041143CC81900E32F3F /* BDPathogenGroup.m in Sources */,
 				6E003A771448AE89003908C2 /* BDLinkedNoteAssociation.m in Sources */,
 				6E8ED864144E26A0002247E5 /* BDChapter.m in Sources */,
+				6E511FDC144F25BD00BB47C9 /* ChapterView.m in Sources */,
+				6E511FE1144F2FC300BB47C9 /* SectionView.m in Sources */,
+				6E511FE6144F38C800BB47C9 /* CategoryView.m in Sources */,
+				6E511FEB144F3AB200BB47C9 /* DiseaseView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -60,6 +60,14 @@
                                                                       targetMOC:nil];
 }
 
++(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID parentPropertyName:(NSString *)thePropertyName
+{
+    NSArray *entities = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_THERAPYGROUP withKey:TG_PATHOGENGROUPID withValue:theUUID withMOC:nil];
+    return entities;
+}
+
+
+
 //Returns the uuid of the object
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
          withOverwriteNewerFlag:(BOOL)overwriteNewer

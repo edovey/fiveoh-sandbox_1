@@ -27,6 +27,11 @@
                                          withValue:(NSString *)theValue 
                                            withMOC:(NSManagedObjectContext *)theMOC;
 
+- (NSArray *)retrieveManagedObjectsForValue:(NSString *)theEntityName 
+                                           withKey:(NSString *)theKey 
+                                         withValue:(NSString *)theValue 
+                                           withMOC:(NSManagedObjectContext *)theMOC;
+
 - (NSMutableArray *)allInstancesOf:(NSString *)entityName 
 						 orderedBy:(NSString *)orderName 
 						  loadData:(BOOL)loadDataFlag

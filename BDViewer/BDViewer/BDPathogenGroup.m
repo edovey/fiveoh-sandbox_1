@@ -59,6 +59,12 @@
                                                                       targetMOC:nil];
 }
 
++(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID parentPropertyName:(NSString *)thePropertyName
+{
+    NSArray *entities = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_PATHOGENGROUP withKey:PG_PRESENTATIONID withValue:theUUID withMOC:nil];
+    return entities;
+}
+
 
 //Returns the uuid of the object
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 

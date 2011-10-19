@@ -54,13 +54,6 @@
     return uuid;
 }
 
-+(BDSection *)retrieveWithUUID:(NSString *)theUUID
-{
-    return (BDSection *)[[DataController sharedInstance] retrieveManagedObject:ENTITYNAME_SECTION
-                                                                           uuid:theUUID 
-                                                                      targetMOC:nil];
-}
-
 //Returns the uuid of the object
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
          withOverwriteNewerFlag:(BOOL)overwriteNewer
@@ -122,6 +115,25 @@
     [[DataController sharedInstance] saveContext];
     
     return uuid;
+}
+
++(BDSection *)retrieveWithUUID:(NSString *)theUUID
+{
+    return (BDSection *)[[DataController sharedInstance] retrieveManagedObject:ENTITYNAME_SECTION
+                                                                          uuid:theUUID 
+                                                                     targetMOC:nil];
+}
+
++(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID
+{
+    NSArray *sections = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_SECTION withKey:SN_CHAPTERID withValue:theUUID withMOC:nil];
+    return sections;
+}
+
++(NSArray *)retrieveAll
+{
+    NSMutableArray *sections = [[DataController sharedInstance] allInstancesOf:ENTITYNAME_SECTION orderedBy:SN_DISPLAYORDER loadData:false targetMOC:nil];
+    return [NSArray arrayWithArray:sections];
 }
 
 -(NSString *)generateStorageKey

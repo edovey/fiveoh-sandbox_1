@@ -22,7 +22,7 @@
 #define CT_MODIFIEDBY @"ct_modifiedBy"
 #define CT_DEPRECATED @"ct_deprecated"
 #define CT_INUSEBY @"ct_inUseBy"
-#define CT_DISPLAYORDER @"ct_displayOrder";
+#define CT_DISPLAYORDER @"ct_displayOrder"
 #define CT_SECTIONID @"ct_sectionId"
 #define CT_NAME @"ct_name"
 
@@ -42,6 +42,7 @@
 
 +(NSString *)create;
 +(BDCategory *)retrieveWithUUID:(NSString *)theUUID;
++(NSArray *)retrieveAll;
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
          withOverwriteNewerFlag:(BOOL)overwriteNewer; 
 

@@ -41,6 +41,7 @@
 
 +(NSString *)create;
 +(BDChapter *)retrieveWithUUID:(NSString *)theUUID;
++(NSArray *)retrieveAll;
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
          withOverwriteNewerFlag:(BOOL)overwriteNewer; 
 

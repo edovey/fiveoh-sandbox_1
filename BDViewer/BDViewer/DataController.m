@@ -116,6 +116,48 @@
 	return nil;
 }
 
+- (NSArray *)retrieveManagedObjectsForValue:(NSString *)theEntityName 
+                                           withKey:(NSString *)theKey 
+                                         withValue:(NSString *)theValue 
+                                           withMOC:(NSManagedObjectContext *)theMOC
+{
+   	if (nil == theMOC)
+	{
+		theMOC = [self managedObjectContext];
+	}
+	
+	NSPredicate *pred;
+	pred = [NSPredicate predicateWithFormat:@"(%K == %@)", theKey, theValue];
+	
+	NSEntityDescription *entity = [NSEntityDescription entityForName:theEntityName inManagedObjectContext:theMOC];
+	
+	// And, of course, a fetch request. This time we give it both the entity
+	// description and the predicate we've just created.
+	
+	NSFetchRequest *req = [[NSFetchRequest alloc] init];
+	[req setEntity:entity];	
+	[req setPredicate:pred];
+	
+	// We declare an NSError and handle errors by raising an exception,
+	// just like in the previous method
+	
+	NSError *error = nil;
+	NSArray *array = [theMOC executeFetchRequest:req
+                                           error:&error];  
+    [req release];
+    
+	if (array == nil)
+	{
+		NSException *exception = [NSException 
+								  exceptionWithName:@"MTCoreDataException" /*MTCoreDataExeption*/ 
+								  reason:[error localizedDescription] 
+								  userInfo:nil];
+		[exception raise];
+	}
+    
+	return array;
+}
+
 - (NSMutableArray *)allInstancesOf:(NSString *)entityName 
 						 orderedBy:(NSString *)orderName 
 						  loadData:(BOOL)loadDataFlag

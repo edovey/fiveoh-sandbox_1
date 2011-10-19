@@ -9,7 +9,7 @@
 #import "BDChapter.h"
 #import "NSString+UUID.h"
 #import "BDQueueEntry.h"
-
+#import "BDSection.h"
 @implementation BDChapter
 
 @dynamic createdBy;
@@ -57,6 +57,12 @@
     return (BDChapter *)[[DataController sharedInstance] retrieveManagedObject:ENTITYNAME_CHAPTER
                                                                           uuid:theUUID 
                                                                      targetMOC:nil];
+}
+
++(NSArray *) retrieveAll 
+{
+    NSMutableArray * allChapters = [[DataController sharedInstance] allInstancesOf:ENTITYNAME_CHAPTER orderedBy:CH_DISPLAYORDER loadData:false targetMOC:nil];
+    return [NSArray arrayWithArray:allChapters];
 }
 
 //Returns the uuid of the object

@@ -60,6 +60,18 @@
                                                                       targetMOC:nil];
 }
 
++(NSArray *) retrieveAll 
+{
+    NSMutableArray * allDiseases = [[DataController sharedInstance] allInstancesOf:ENTITYNAME_DISEASE orderedBy:DI_DISPLAYORDER loadData:false targetMOC:nil];
+    return [NSArray arrayWithArray:allDiseases];
+}
+
++(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID parentPropertyName:(NSString *)thePropertyName
+{
+    NSArray *diseasesInCategory = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_DISEASE withKey:DI_CATEGORYID withValue:theUUID withMOC:nil];
+    return diseasesInCategory;
+}
+
 //Returns the uuid of the object
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
          withOverwriteNewerFlag:(BOOL)overwriteNewer

@@ -63,13 +63,12 @@ namespace BDEditor.Views
                             noneRadioButton.Checked = true;
                             break;
                     }
-                    if (currentTherapy.leftBracket == true)
-                        lblLeftBracket.ForeColor = SystemColors.ControlText;
-                    else lblLeftBracket.ForeColor = SystemColors.ControlLight;
 
-                    if (currentTherapy.rightBracket == true)
-                        lblRightBracket.ForeColor = SystemColors.ControlText;
-                    else lblRightBracket.ForeColor = SystemColors.ControlLight;
+                    displayLeftBracket = currentTherapy.leftBracket.Value;
+                    lblLeftBracket.ForeColor = (displayLeftBracket) ? SystemColors.ControlText : SystemColors.ControlLight;
+
+                    displayRightBracket = currentTherapy.rightBracket.Value;
+                    lblRightBracket.ForeColor = (displayRightBracket) ? SystemColors.ControlText : SystemColors.ControlLight;
                 }
             }
         }
@@ -196,8 +195,8 @@ namespace BDEditor.Views
                             currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.None;
                     }
 
-                    currentTherapy.leftBracket = this.displayLeftBracket;
-                    currentTherapy.rightBracket = this.displayRightBracket;
+                    if(currentTherapy.leftBracket != this.displayLeftBracket) currentTherapy.leftBracket = this.displayLeftBracket;
+                    if(currentTherapy.rightBracket != this.displayRightBracket) currentTherapy.rightBracket = this.displayRightBracket;
 
                     BDTherapy.SaveTherapy(dataContext, currentTherapy);
 

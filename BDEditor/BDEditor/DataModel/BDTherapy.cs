@@ -219,8 +219,8 @@ namespace BDEditor.DataModel
             entry.displayOrder = displayOrder;
             entry.therapyGroupId = Guid.Parse(pAttributeDictionary[THERAPYGROUPID]);
             entry.therapyJoinType = int.Parse(pAttributeDictionary[THERAPYJOINTYPE]);
-            entry.leftBracket = bool.Parse(pAttributeDictionary[LEFTBRACKET]);
-            entry.rightBracket = bool.Parse(pAttributeDictionary[RIGHTBRACKET]);
+            entry.leftBracket = Boolean.Parse(pAttributeDictionary[LEFTBRACKET]);
+            entry.rightBracket = Boolean.Parse(pAttributeDictionary[RIGHTBRACKET]);
             entry.name = pAttributeDictionary[NAME];
             entry.dosage = pAttributeDictionary[DOSAGE];
             entry.duration = pAttributeDictionary[DURATION];

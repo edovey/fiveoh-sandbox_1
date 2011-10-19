@@ -143,6 +143,7 @@ namespace BDEditor.Views
         public void AssignDataContext(Entities pDataContext)
         {
             dataContext = pDataContext;
+            //dataContext = new Entities();
         }
         public void AssignParentId(Guid? pParentId)
         {

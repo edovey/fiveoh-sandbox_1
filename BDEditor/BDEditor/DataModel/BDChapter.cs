@@ -109,8 +109,8 @@ namespace BDEditor.DataModel
                     break;
                 default:
                     {
-                        _modifiedBy = Guid.Empty;
-                        _modifiedDate = DateTime.Now;
+                        modifiedBy = Guid.Empty;
+                        modifiedDate = DateTime.Now;
                     }
                     break;
             }

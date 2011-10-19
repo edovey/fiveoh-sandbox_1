@@ -116,7 +116,6 @@ namespace BDEditor.DataModel
                     {
                         modifiedBy = Guid.Empty;
                         modifiedDate = DateTime.Now;
-                        //System.Diagnostics.Debug.WriteLine(string.Format("Pathogen property change [{0}]", property));
                     }
                     break;
             }

@@ -234,25 +234,6 @@ namespace BDEditor.DataModel
 
         protected override void OnPropertyChanged(string property)
         {
-            /*switch (property)
-            {
-                case "linkedNoteId":
-                case "parentId":
-                case "parentEntityName":
-                case "parentEntityPropertyName":
-                case "displayOrder":
-                case "linkedNoteType":
-                case "deprecated":
-                    {
-                        _modifiedBy = Guid.Empty;
-                        _modifiedDate = DateTime.Now;
-                    }
-                    break;
-                default:
-                    break;
-            }*/
-
-
             switch (property)
             {
                 case "createdBy":
@@ -262,8 +243,8 @@ namespace BDEditor.DataModel
                     break;
                 default:
                     {
-                        _modifiedBy = Guid.Empty;
-                        _modifiedDate = DateTime.Now;
+                        modifiedBy = Guid.Empty;
+                        modifiedDate = DateTime.Now;
                     }
                     break;
             }

@@ -13,18 +13,21 @@ namespace BDEditor.Classes
 
         private Entities dataContext;
 
+        BDChapter bdChapter;
         BDSection bdSection;
         BDCategory bdCategory;
         BDSubcategory bdSubCategory;
         BDDisease bdDisease;
         BDPresentation bdPresentation;
 
+        string chapterData = null;
         string sectionData = null;
         string categoryData = null;
         string subCategoryData = null;
         string diseaseData = null;
         string presentationData = null;
 
+        short idxChapter = 0;
         short idxSection = 0;
         short idxCategory = 0;
         short idxSubCategory = 0;
@@ -60,17 +63,33 @@ namespace BDEditor.Classes
 
             //Expectation that a row contains only one element with data
 
-            sectionData = elements[0];
-            categoryData = elements[1];
-            subCategoryData = elements[2];
-            diseaseData = elements[3];
+            chapterData = elements[0];
+            sectionData = elements[1];
+            categoryData = elements[2];
+            subCategoryData = elements[3];
+            diseaseData = elements[4];
             // diseaseOverviewFlag = elements[4];
-            presentationData = elements[5];
+            presentationData = elements[6];
+
+            if( (chapterData != string.Empty) && ((null == bdChapter) || (bdChapter.name != chapterData)))
+            {
+                bdChapter = BDChapter.CreateChapter(dataContext);
+                bdChapter.name = chapterData;
+                bdChapter.displayOrder = idxChapter++;
+                BDChapter.SaveChapter(dataContext,bdChapter);
+
+                bdSection = null;
+                bdCategory = null;
+                bdSubCategory = null;
+                bdDisease = null;
+                bdPresentation = null;
+            }
 
             if ( (sectionData != string.Empty) && ( (null == bdSection) || (bdSection.name != sectionData) ) )
             {
                 bdSection = BDSection.CreateSection(dataContext);
                 bdSection.name = sectionData;
+                bdSection.chapterId = bdChapter.uuid;
                 bdSection.displayOrder = idxSection++;
                 BDSection.SaveSection(dataContext, bdSection);
 

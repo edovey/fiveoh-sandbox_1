@@ -123,6 +123,7 @@
     <Compile Include="Classes\SyncInfo.cs" />
     <Compile Include="Classes\SyncInfoDictionary.cs" />
     <Compile Include="DataModel\BDCategory.cs" />
+    <Compile Include="DataModel\BDChapter.cs" />
     <Compile Include="DataModel\BDDisease.cs" />
     <Compile Include="DataModel\BDLinkedNote.cs" />
     <Compile Include="DataModel\BDLinkedNoteAssociation.cs" />
@@ -361,7 +362,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
+      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

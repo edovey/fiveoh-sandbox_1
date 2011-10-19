@@ -60,8 +60,8 @@ namespace BDEditor.DataModel
         {
             if (pSubcategory.EntityState != EntityState.Unchanged)
             {
-                pSubcategory.modifiedBy = Guid.Empty;
-                pSubcategory.modifiedDate = DateTime.Now;
+                //pSubcategory.modifiedBy = Guid.Empty;
+                //pSubcategory.modifiedDate = DateTime.Now;
                 System.Diagnostics.Debug.WriteLine(@"SubCategory Save");
                 pContext.SaveChanges();
             }
@@ -105,6 +105,26 @@ namespace BDEditor.DataModel
                     subcategory = entries.AsQueryable().First<BDSubcategory>();
             }
             return subcategory;
+        }
+
+        protected override void OnPropertyChanged(string property)
+        {
+            switch (property)
+            {
+                case "createdBy":
+                case "createdDate":
+                case "modifiedBy":
+                case "modifiedDate":
+                    break;
+                default:
+                    {
+                        modifiedBy = Guid.Empty;
+                        modifiedDate = DateTime.Now;
+                    }
+                    break;
+            }
+
+            base.OnPropertyChanged(property);
         }
 
         #region Repository

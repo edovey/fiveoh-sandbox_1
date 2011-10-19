@@ -70,8 +70,8 @@ namespace BDEditor.DataModel
         {
             if (pTherapyGroup.EntityState != EntityState.Unchanged)
             {
-                pTherapyGroup.modifiedBy = Guid.Empty;
-                pTherapyGroup.modifiedDate = DateTime.Now;
+                //pTherapyGroup.modifiedBy = Guid.Empty;
+                //pTherapyGroup.modifiedDate = DateTime.Now;
                 System.Diagnostics.Debug.WriteLine(@"TherapyGroup Save");
                 pContext.SaveChanges();
             }
@@ -110,6 +110,27 @@ namespace BDEditor.DataModel
                     entry = entryList.AsQueryable().First<BDTherapyGroup>();
             }
             return entry;
+        }
+
+        protected override void OnPropertyChanged(string property)
+        {
+            switch (property)
+            {
+                case "createdBy":
+                case "createdDate":
+                case "modifiedBy":
+                case "modifiedDate":
+                    break;
+                default:
+                    {
+                        modifiedBy = Guid.Empty;
+                        modifiedDate = DateTime.Now;
+                        //System.Diagnostics.Debug.WriteLine(string.Format("TherapyGroup property change [{0}]", property));
+                    }
+                    break;
+            }
+
+            base.OnPropertyChanged(property);
         }
 
         public Guid Uuid

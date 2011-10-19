@@ -61,8 +61,8 @@ namespace BDEditor.DataModel
         {
             if (pPathogenGroup.EntityState != EntityState.Unchanged)
             {
-                pPathogenGroup.modifiedBy = Guid.Empty;
-                pPathogenGroup.modifiedDate = DateTime.Now;
+                //pPathogenGroup.modifiedBy = Guid.Empty;
+                //pPathogenGroup.modifiedDate = DateTime.Now;
 
                 System.Diagnostics.Debug.WriteLine(@"PathogenGroup Save");
                 pContext.SaveChanges();
@@ -103,7 +103,28 @@ namespace BDEditor.DataModel
             }
             return pathogenGroup;
         }
-            #region Repository
+
+        protected override void OnPropertyChanged(string property)
+        {
+            switch (property)
+            {
+                case "createdBy":
+                case "createdDate":
+                case "modifiedBy":
+                case "modifiedDate":
+                    break;
+                default:
+                    {
+                        modifiedBy = Guid.Empty;
+                        modifiedDate = DateTime.Now;
+                    }
+                    break;
+            }
+
+            base.OnPropertyChanged(property);
+        }
+
+        #region Repository
 
         /// <summary>
         /// Retrieve all entries changed since a given date

@@ -31,15 +31,15 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDEditView));
             this.headerPanel = new System.Windows.Forms.Panel();
+            this.btnSyncWithReplaceLocal = new System.Windows.Forms.Button();
             this.lbLastSyncDateTime = new System.Windows.Forms.Label();
             this.btnSync = new System.Windows.Forms.Button();
             this.createTestDataButton = new System.Windows.Forms.Button();
-            this.sectionDropDown = new System.Windows.Forms.ComboBox();
+            this.chapterDropDown = new System.Windows.Forms.ComboBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.sectionTree = new System.Windows.Forms.TreeView();
+            this.chapterTree = new System.Windows.Forms.TreeView();
             this.entitiesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.entitiesBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.btnSyncWithReplaceLocal = new System.Windows.Forms.Button();
             this.headerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -54,12 +54,22 @@
             this.headerPanel.Controls.Add(this.lbLastSyncDateTime);
             this.headerPanel.Controls.Add(this.btnSync);
             this.headerPanel.Controls.Add(this.createTestDataButton);
-            this.headerPanel.Controls.Add(this.sectionDropDown);
+            this.headerPanel.Controls.Add(this.chapterDropDown);
             this.headerPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.headerPanel.Location = new System.Drawing.Point(0, 0);
             this.headerPanel.Name = "headerPanel";
             this.headerPanel.Size = new System.Drawing.Size(1148, 39);
             this.headerPanel.TabIndex = 0;
+            // 
+            // btnSyncWithReplaceLocal
+            // 
+            this.btnSyncWithReplaceLocal.Location = new System.Drawing.Point(794, 10);
+            this.btnSyncWithReplaceLocal.Name = "btnSyncWithReplaceLocal";
+            this.btnSyncWithReplaceLocal.Size = new System.Drawing.Size(261, 23);
+            this.btnSyncWithReplaceLocal.TabIndex = 4;
+            this.btnSyncWithReplaceLocal.Text = "(System Option) Replace Local from Repository";
+            this.btnSyncWithReplaceLocal.UseVisualStyleBackColor = true;
+            this.btnSyncWithReplaceLocal.Click += new System.EventHandler(this.btnSyncWithReplaceLocal_Click);
             // 
             // lbLastSyncDateTime
             // 
@@ -91,15 +101,15 @@
             this.createTestDataButton.UseVisualStyleBackColor = true;
             this.createTestDataButton.Click += new System.EventHandler(this.createTestDataButton_Click);
             // 
-            // sectionDropDown
+            // chapterDropDown
             // 
-            this.sectionDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.sectionDropDown.FormattingEnabled = true;
-            this.sectionDropDown.Location = new System.Drawing.Point(3, 12);
-            this.sectionDropDown.Name = "sectionDropDown";
-            this.sectionDropDown.Size = new System.Drawing.Size(379, 21);
-            this.sectionDropDown.TabIndex = 0;
-            this.sectionDropDown.SelectedIndexChanged += new System.EventHandler(this.sectionDropDown_SelectedIndexChanged);
+            this.chapterDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.chapterDropDown.FormattingEnabled = true;
+            this.chapterDropDown.Location = new System.Drawing.Point(3, 12);
+            this.chapterDropDown.Name = "chapterDropDown";
+            this.chapterDropDown.Size = new System.Drawing.Size(379, 21);
+            this.chapterDropDown.TabIndex = 0;
+            this.chapterDropDown.SelectedIndexChanged += new System.EventHandler(this.listDropDown_SelectedIndexChanged);
             // 
             // splitContainer1
             // 
@@ -109,7 +119,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.sectionTree);
+            this.splitContainer1.Panel1.Controls.Add(this.chapterTree);
             this.splitContainer1.Panel1.Padding = new System.Windows.Forms.Padding(4);
             // 
             // splitContainer1.Panel2
@@ -119,14 +129,14 @@
             this.splitContainer1.SplitterDistance = 378;
             this.splitContainer1.TabIndex = 1;
             // 
-            // sectionTree
+            // chapterTree
             // 
-            this.sectionTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sectionTree.Location = new System.Drawing.Point(4, 4);
-            this.sectionTree.Name = "sectionTree";
-            this.sectionTree.Size = new System.Drawing.Size(370, 653);
-            this.sectionTree.TabIndex = 0;
-            this.sectionTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.sectionTree_AfterSelect);
+            this.chapterTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chapterTree.Location = new System.Drawing.Point(4, 4);
+            this.chapterTree.Name = "chapterTree";
+            this.chapterTree.Size = new System.Drawing.Size(370, 653);
+            this.chapterTree.TabIndex = 0;
+            this.chapterTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.sectionTree_AfterSelect);
             // 
             // entitiesBindingSource
             // 
@@ -135,16 +145,6 @@
             // entitiesBindingSource1
             // 
             this.entitiesBindingSource1.DataSource = typeof(BDEditor.DataModel.Entities);
-            // 
-            // btnSyncWithReplaceLocal
-            // 
-            this.btnSyncWithReplaceLocal.Location = new System.Drawing.Point(794, 10);
-            this.btnSyncWithReplaceLocal.Name = "btnSyncWithReplaceLocal";
-            this.btnSyncWithReplaceLocal.Size = new System.Drawing.Size(261, 23);
-            this.btnSyncWithReplaceLocal.TabIndex = 4;
-            this.btnSyncWithReplaceLocal.Text = "(System Option) Replace Local from Repository";
-            this.btnSyncWithReplaceLocal.UseVisualStyleBackColor = true;
-            this.btnSyncWithReplaceLocal.Click += new System.EventHandler(this.btnSyncWithReplaceLocal_Click);
             // 
             // BDEditView
             // 
@@ -173,9 +173,9 @@
         #endregion
 
         private System.Windows.Forms.Panel headerPanel;
-        private System.Windows.Forms.ComboBox sectionDropDown;
+        private System.Windows.Forms.ComboBox chapterDropDown;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.TreeView sectionTree;
+        private System.Windows.Forms.TreeView chapterTree;
         private System.Windows.Forms.BindingSource entitiesBindingSource;
         private System.Windows.Forms.BindingSource entitiesBindingSource1;
         private System.Windows.Forms.Button createTestDataButton;

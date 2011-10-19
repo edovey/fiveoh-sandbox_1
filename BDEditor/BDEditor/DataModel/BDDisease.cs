@@ -64,8 +64,8 @@ namespace BDEditor.DataModel
         {
             if (pDisease.EntityState != EntityState.Unchanged)
             {
-                pDisease.modifiedBy = Guid.Empty;
-                pDisease.modifiedDate = DateTime.Now;
+                //pDisease.modifiedBy = Guid.Empty;
+                //pDisease.modifiedDate = DateTime.Now;
                 System.Diagnostics.Debug.WriteLine(@"Disease Save");
                 pContext.SaveChanges();
             }
@@ -132,6 +132,26 @@ namespace BDEditor.DataModel
                     disease = entries.AsQueryable().First<BDDisease>();
             }
             return disease;
+        }
+
+        protected override void OnPropertyChanged(string property)
+        {
+            switch (property)
+            {
+                case "createdBy":
+                case "createdDate":
+                case "modifiedBy":
+                case "modifiedDate":
+                    break;
+                default:
+                    {
+                        modifiedBy = Guid.Empty;
+                        modifiedDate = DateTime.Now;
+                    }
+                    break;
+            }
+
+            base.OnPropertyChanged(property);
         }
 
         #region Repository

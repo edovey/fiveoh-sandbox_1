@@ -7,6 +7,7 @@
     <Schema Namespace="BDDataModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.3.5" ProviderManifestToken="3.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="BDDataModelStoreContainer">
           <EntitySet Name="BDCategories" EntityType="BDDataModel.Store.BDCategories" store:Type="Tables" />
+          <EntitySet Name="BDChapters" EntityType="BDDataModel.Store.BDChapters" store:Type="Tables" />
           <EntitySet Name="BDDiseases" EntityType="BDDataModel.Store.BDDiseases" store:Type="Tables" />
           <EntitySet Name="BDLinkedNoteAssociations" EntityType="BDDataModel.Store.BDLinkedNoteAssociations" store:Type="Tables" />
           <EntitySet Name="BDLinkedNotes" EntityType="BDDataModel.Store.BDLinkedNotes" store:Type="Tables" />
@@ -35,6 +36,21 @@
           <Property Name="deprecated" Type="bit" Nullable="false" />
           <Property Name="inUseBy" Type="uniqueidentifier" />
           <Property Name="displayOrder" Type="int" />
+        </EntityType>
+        <EntityType Name="BDChapters">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="createdBy" Type="uniqueidentifier" />
+          <Property Name="createdDate" Type="datetime" />
+          <Property Name="modifiedBy" Type="uniqueidentifier" />
+          <Property Name="modifiedDate" Type="datetime" />
+          <Property Name="deprecated" Type="bit" Nullable="false" />
+          <Property Name="schemaVersion" Type="int" />
+          <Property Name="inUseBy" Type="uniqueidentifier" />
+          <Property Name="displayOrder" Type="int" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="BDDiseases">
           <Key>
@@ -161,6 +177,7 @@
           <Property Name="deprecated" Type="bit" Nullable="false" />
           <Property Name="inUseBy" Type="uniqueidentifier" />
           <Property Name="displayOrder" Type="int" />
+          <Property Name="chapterId" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="BDSubcategories">
           <Key>
@@ -242,6 +259,7 @@
           <EntitySet Name="BDSystemSettings" EntityType="BDDataModel.BDSystemSetting" />
           <EntitySet Name="BDTherapies" EntityType="BDDataModel.BDTherapy" />
           <EntitySet Name="BDTherapyGroups" EntityType="BDDataModel.BDTherapyGroup" />
+          <EntitySet Name="BDChapters" EntityType="BDDataModel.BDChapter" />
         </EntityContainer>
         <EntityType Name="BDCategory">
           <Key>
@@ -384,6 +402,7 @@
           <Property Type="Boolean" Name="deprecated" Nullable="false" />
           <Property Type="Guid" Name="inUseBy" />
           <Property Type="Int32" Name="displayOrder" />
+          <Property Type="Guid" Name="chapterId" />
         </EntityType>
         <EntityType Name="BDSubcategory">
           <Key>
@@ -446,6 +465,21 @@
           <Property Type="Int32" Name="schemaVersion" />
           <Property Type="Guid" Name="pathogenGroupId" />
           <Property Type="Int32" Name="therapyGroupJoinType" />
+        </EntityType>
+        <EntityType Name="BDChapter">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Type="Guid" Name="uuid" Nullable="false" />
+          <Property Type="Guid" Name="createdBy" />
+          <Property Type="DateTime" Name="createdDate" />
+          <Property Type="Guid" Name="modifiedBy" />
+          <Property Type="DateTime" Name="modifiedDate" />
+          <Property Type="Boolean" Name="deprecated" Nullable="false" />
+          <Property Type="Int32" Name="schemaVersion" />
+          <Property Type="Guid" Name="inUseBy" />
+          <Property Type="Int32" Name="displayOrder" />
+          <Property Type="String" Name="name" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -591,6 +625,7 @@
           <EntitySetMapping Name="BDSections">
             <EntityTypeMapping TypeName="BDDataModel.BDSection">
               <MappingFragment StoreEntitySet="BDSections">
+                <ScalarProperty Name="chapterId" ColumnName="chapterId" />
                 <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
                 <ScalarProperty Name="inUseBy" ColumnName="inUseBy" />
                 <ScalarProperty Name="deprecated" ColumnName="deprecated" />
@@ -670,6 +705,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BDChapters">
+            <EntityTypeMapping TypeName="BDDataModel.BDChapter">
+              <MappingFragment StoreEntitySet="BDChapters">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
+                <ScalarProperty Name="inUseBy" ColumnName="inUseBy" />
+                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
+                <ScalarProperty Name="deprecated" ColumnName="deprecated" />
+                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
+                <ScalarProperty Name="modifiedBy" ColumnName="modifiedBy" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -703,6 +754,7 @@
         <EntityTypeShape EntityType="BDDataModel.BDSystemSetting" Width="1.875" PointX="0.75" PointY="8.75" Height="1.4279589843750102" />
         <EntityTypeShape EntityType="BDDataModel.BDTherapy" Width="1.5" PointX="2.75" PointY="8.75" Height="3.5644742838541674" />
         <EntityTypeShape EntityType="BDDataModel.BDTherapyGroup" Width="2.25" PointX="8.75" PointY="4.75" Height="2.9070849609375102" />
+        <EntityTypeShape EntityType="BDDataModel.BDChapter" Width="1.5" PointX="8.75" PointY="8.375" Height="2.9417936197916674" />
       </Diagram>
     </Diagrams>
   </Designer>

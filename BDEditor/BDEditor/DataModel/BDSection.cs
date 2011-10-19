@@ -29,6 +29,7 @@ namespace BDEditor.DataModel
         private const string NAME = @"sn_name";
         private const string DEPRECATED = @"sn_deprecated";
         private const string DISPLAYORDER = @"sn_displayorder";
+        private const string CHAPTERID = @"sn_chapterId";
 
         /// <summary>
         /// Extended Create method that sets the created date and the schema version
@@ -58,8 +59,8 @@ namespace BDEditor.DataModel
         {
             if (pSection.EntityState != EntityState.Unchanged)
             {
-                pSection.modifiedBy = Guid.Empty;
-                pSection.modifiedDate = DateTime.Now;
+                //pSection.modifiedBy = Guid.Empty;
+                //pSection.modifiedDate = DateTime.Now;
                 System.Diagnostics.Debug.WriteLine(@"Section Save");
                 pContext.SaveChanges();
             }
@@ -85,6 +86,21 @@ namespace BDEditor.DataModel
             return section;
         }
 
+        public static List<BDSection> GetSectionsForChapterId(Entities pContext, Guid pChapterId)
+        {
+            List<BDSection> entryList = new List<BDSection>();
+
+            if (null != pChapterId)
+            {
+                IQueryable<BDSection> entries = (from entry in pContext.BDSections
+                                                 where entry.chapterId == pChapterId
+                                                 select entry);
+                if (entries.Count<BDSection>() > 0)
+                    entryList = entries.ToList<BDSection>();
+            }
+            return entryList;
+        }
+
         public static List<BDSection> GetAll(Entities pContext)
         {
             List<BDSection> entryList = new List<BDSection>();
@@ -94,6 +110,26 @@ namespace BDEditor.DataModel
             if (entries.Count() > 0)
                 entryList = entries.ToList<BDSection>();
             return entryList;
+        }
+
+        protected override void OnPropertyChanged(string property)
+        {
+            switch (property)
+            {
+                case "createdBy":
+                case "createdDate":
+                case "modifiedBy":
+                case "modifiedDate":
+                    break;
+                default:
+                    {
+                        modifiedBy = Guid.Empty;
+                        modifiedDate = DateTime.Now;
+                    }
+                    break;
+            }
+
+            base.OnPropertyChanged(property);
         }
 
         #region Repository
@@ -156,6 +192,7 @@ namespace BDEditor.DataModel
             entry.modifiedBy = Guid.Parse(pAttributeDictionary[MODIFIEDBY]);
             entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
             entry.name = pAttributeDictionary[NAME];
+            entry.chapterId = Guid.Parse(pAttributeDictionary[CHAPTERID]);
 
             if (pSaveChanges)
                 pDataContext.SaveChanges();
@@ -177,6 +214,7 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDSection.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDSection.NAME).WithValue(name).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.CHAPTERID).WithValue((null == chapterId) ? Guid.Empty.ToString() : chapterId.ToString().ToUpper()).WithReplace(true));
 
             return putAttributeRequest;
         }

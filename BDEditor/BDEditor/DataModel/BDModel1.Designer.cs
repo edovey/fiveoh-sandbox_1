@@ -272,6 +272,22 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDTherapyGroup> _BDTherapyGroups;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDChapter> BDChapters
+        {
+            get
+            {
+                if ((_BDChapters == null))
+                {
+                    _BDChapters = base.CreateObjectSet<BDChapter>("BDChapters");
+                }
+                return _BDChapters;
+            }
+        }
+        private ObjectSet<BDChapter> _BDChapters;
 
         #endregion
         #region AddTo Methods
@@ -378,6 +394,14 @@ namespace BDEditor.DataModel
         public void AddToBDTherapyGroups(BDTherapyGroup bDTherapyGroup)
         {
             base.AddObject("BDTherapyGroups", bDTherapyGroup);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDChapters EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDChapters(BDChapter bDChapter)
+        {
+            base.AddObject("BDChapters", bDChapter);
         }
 
         #endregion
@@ -680,6 +704,279 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Int32> _displayOrder;
         partial void OndisplayOrderChanging(Nullable<global::System.Int32> value);
         partial void OndisplayOrderChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="BDDataModel", Name="BDChapter")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class BDChapter : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new BDChapter object.
+        /// </summary>
+        /// <param name="uuid">Initial value of the uuid property.</param>
+        /// <param name="deprecated">Initial value of the deprecated property.</param>
+        public static BDChapter CreateBDChapter(global::System.Guid uuid, global::System.Boolean deprecated)
+        {
+            BDChapter bDChapter = new BDChapter();
+            bDChapter.uuid = uuid;
+            bDChapter.deprecated = deprecated;
+            return bDChapter;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid uuid
+        {
+            get
+            {
+                return _uuid;
+            }
+            set
+            {
+                if (_uuid != value)
+                {
+                    OnuuidChanging(value);
+                    ReportPropertyChanging("uuid");
+                    _uuid = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("uuid");
+                    OnuuidChanged();
+                }
+            }
+        }
+        private global::System.Guid _uuid;
+        partial void OnuuidChanging(global::System.Guid value);
+        partial void OnuuidChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Guid> createdBy
+        {
+            get
+            {
+                return _createdBy;
+            }
+            set
+            {
+                OncreatedByChanging(value);
+                ReportPropertyChanging("createdBy");
+                _createdBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("createdBy");
+                OncreatedByChanged();
+            }
+        }
+        private Nullable<global::System.Guid> _createdBy;
+        partial void OncreatedByChanging(Nullable<global::System.Guid> value);
+        partial void OncreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> createdDate
+        {
+            get
+            {
+                return _createdDate;
+            }
+            set
+            {
+                OncreatedDateChanging(value);
+                ReportPropertyChanging("createdDate");
+                _createdDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("createdDate");
+                OncreatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _createdDate;
+        partial void OncreatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OncreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Guid> modifiedBy
+        {
+            get
+            {
+                return _modifiedBy;
+            }
+            set
+            {
+                OnmodifiedByChanging(value);
+                ReportPropertyChanging("modifiedBy");
+                _modifiedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("modifiedBy");
+                OnmodifiedByChanged();
+            }
+        }
+        private Nullable<global::System.Guid> _modifiedBy;
+        partial void OnmodifiedByChanging(Nullable<global::System.Guid> value);
+        partial void OnmodifiedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> modifiedDate
+        {
+            get
+            {
+                return _modifiedDate;
+            }
+            set
+            {
+                OnmodifiedDateChanging(value);
+                ReportPropertyChanging("modifiedDate");
+                _modifiedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("modifiedDate");
+                OnmodifiedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _modifiedDate;
+        partial void OnmodifiedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnmodifiedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean deprecated
+        {
+            get
+            {
+                return _deprecated;
+            }
+            set
+            {
+                OndeprecatedChanging(value);
+                ReportPropertyChanging("deprecated");
+                _deprecated = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("deprecated");
+                OndeprecatedChanged();
+            }
+        }
+        private global::System.Boolean _deprecated;
+        partial void OndeprecatedChanging(global::System.Boolean value);
+        partial void OndeprecatedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> schemaVersion
+        {
+            get
+            {
+                return _schemaVersion;
+            }
+            set
+            {
+                OnschemaVersionChanging(value);
+                ReportPropertyChanging("schemaVersion");
+                _schemaVersion = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("schemaVersion");
+                OnschemaVersionChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _schemaVersion;
+        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
+        partial void OnschemaVersionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Guid> inUseBy
+        {
+            get
+            {
+                return _inUseBy;
+            }
+            set
+            {
+                OninUseByChanging(value);
+                ReportPropertyChanging("inUseBy");
+                _inUseBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("inUseBy");
+                OninUseByChanged();
+            }
+        }
+        private Nullable<global::System.Guid> _inUseBy;
+        partial void OninUseByChanging(Nullable<global::System.Guid> value);
+        partial void OninUseByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> displayOrder
+        {
+            get
+            {
+                return _displayOrder;
+            }
+            set
+            {
+                OndisplayOrderChanging(value);
+                ReportPropertyChanging("displayOrder");
+                _displayOrder = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("displayOrder");
+                OndisplayOrderChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _displayOrder;
+        partial void OndisplayOrderChanging(Nullable<global::System.Int32> value);
+        partial void OndisplayOrderChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                OnnameChanging(value);
+                ReportPropertyChanging("name");
+                _name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("name");
+                OnnameChanged();
+            }
+        }
+        private global::System.String _name;
+        partial void OnnameChanging(global::System.String value);
+        partial void OnnameChanged();
 
         #endregion
     
@@ -3004,6 +3301,30 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Int32> _displayOrder;
         partial void OndisplayOrderChanging(Nullable<global::System.Int32> value);
         partial void OndisplayOrderChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Guid> chapterId
+        {
+            get
+            {
+                return _chapterId;
+            }
+            set
+            {
+                OnchapterIdChanging(value);
+                ReportPropertyChanging("chapterId");
+                _chapterId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("chapterId");
+                OnchapterIdChanged();
+            }
+        }
+        private Nullable<global::System.Guid> _chapterId;
+        partial void OnchapterIdChanging(Nullable<global::System.Guid> value);
+        partial void OnchapterIdChanged();
 
         #endregion
     

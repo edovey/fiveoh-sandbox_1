@@ -80,8 +80,8 @@ namespace BDEditor.DataModel
         {
             if (pTherapy.EntityState != EntityState.Unchanged)
             {
-                pTherapy.modifiedBy = Guid.Empty;
-                pTherapy.modifiedDate = DateTime.Now;
+                //pTherapy.modifiedBy = Guid.Empty;
+                //pTherapy.modifiedDate = DateTime.Now;
                 System.Diagnostics.Debug.WriteLine(@"Therapy Save");
                 pContext.SaveChanges();
             }
@@ -136,6 +136,28 @@ namespace BDEditor.DataModel
         {
             get { return string.Format("Therapy - {0} Dosage:{1} Duration:{2}", this.name, this.dosage, this.duration); }
         }
+
+        protected override void OnPropertyChanged(string property)
+        {
+            switch (property)
+            {
+                case "createdBy":
+                case "createdDate":
+                case "modifiedBy":
+                case "modifiedDate":
+                    break;
+                default:
+                    {
+                        modifiedBy = Guid.Empty;
+                        modifiedDate = DateTime.Now;
+                        //System.Diagnostics.Debug.WriteLine(string.Format("Therapy property change [{0}]", property));
+                    }
+                    break;
+            }
+
+            base.OnPropertyChanged(property);
+        }
+
         #region Repository
 
         /// <summary>
@@ -197,8 +219,8 @@ namespace BDEditor.DataModel
             entry.displayOrder = displayOrder;
             entry.therapyGroupId = Guid.Parse(pAttributeDictionary[THERAPYGROUPID]);
             entry.therapyJoinType = int.Parse(pAttributeDictionary[THERAPYJOINTYPE]);
-            entry.leftBracket = bool.Parse(pAttributeDictionary[LEFTBRACKET]);
-            entry.rightBracket = bool.Parse(pAttributeDictionary[RIGHTBRACKET]);
+            entry.leftBracket = Boolean.Parse(pAttributeDictionary[LEFTBRACKET]);
+            entry.rightBracket = Boolean.Parse(pAttributeDictionary[RIGHTBRACKET]);
             entry.name = pAttributeDictionary[NAME];
             entry.dosage = pAttributeDictionary[DOSAGE];
             entry.duration = pAttributeDictionary[DURATION];

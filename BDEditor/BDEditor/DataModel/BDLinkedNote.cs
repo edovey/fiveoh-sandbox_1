@@ -67,8 +67,8 @@ namespace BDEditor.DataModel
         {
             if (pLinkedNote.EntityState != EntityState.Unchanged)
             {
-                pLinkedNote.modifiedBy = Guid.Empty;
-                pLinkedNote.modifiedDate = DateTime.Now;
+                //pLinkedNote.modifiedBy = Guid.Empty;
+                //pLinkedNote.modifiedDate = DateTime.Now;
                 System.Diagnostics.Debug.WriteLine(@"LinkedNote Save");
                 pContext.SaveChanges();
             }
@@ -123,6 +123,26 @@ namespace BDEditor.DataModel
 
             List<BDLinkedNote> resultList = linkedNotes.ToList<BDLinkedNote>();
             return resultList;
+        }
+
+        protected override void OnPropertyChanged(string property)
+        {
+            switch (property)
+            {
+                case "createdBy":
+                case "createdDate":
+                case "modifiedBy":
+                case "modifiedDate":
+                    break;
+                default:
+                    {
+                        modifiedBy = Guid.Empty;
+                        modifiedDate = DateTime.Now;
+                    }
+                    break;
+            }
+
+            base.OnPropertyChanged(property);
         }
 
         #region Repository
@@ -187,7 +207,7 @@ namespace BDEditor.DataModel
             entry.scopeId = Guid.Parse(pAttributeDictionary[SCOPEID]);
             entry.singleUse = bool.Parse(pAttributeDictionary[SINGLEUSE]);
             entry.storageKey = pAttributeDictionary[STORAGEKEY];
-            entry.documentText = pAttributeDictionary[DOCUMENTTEXT];
+            //entry.documentText = pAttributeDictionary[DOCUMENTTEXT];
 
             if (pSaveChanges)
                 pDataContext.SaveChanges();
@@ -210,7 +230,7 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.LINKEDNOTEASSOCIATIONID).WithValue((null == linkedNoteAssociationId) ? Guid.Empty.ToString() : linkedNoteAssociationId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.SCOPEID).WithValue((null == scopeId) ? Guid.Empty.ToString() : scopeId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.PREVIEWTEXT).WithValue(previewText).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.DOCUMENTTEXT).WithValue(documentText).WithReplace(true));
+            //attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.DOCUMENTTEXT).WithValue(documentText).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.STORAGEKEY).WithValue(storageKey).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.SINGLEUSE).WithValue(singleUse.ToString()).WithReplace(true));
 

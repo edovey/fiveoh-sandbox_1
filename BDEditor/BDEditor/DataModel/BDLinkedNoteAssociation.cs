@@ -53,6 +53,8 @@ namespace BDEditor.DataModel
         {
             BDLinkedNoteAssociation linkedNoteAssociation = CreateBDLinkedNoteAssociation(Guid.NewGuid());
             linkedNoteAssociation.createdBy = Guid.Empty;
+            linkedNoteAssociation.createdDate = DateTime.Now;
+            linkedNoteAssociation.deprecated = false;
             linkedNoteAssociation.schemaVersion = 0;
             linkedNoteAssociation.linkedNoteType = (int)LinkedNoteType.Default;
             linkedNoteAssociation.displayOrder = -1;
@@ -98,8 +100,8 @@ namespace BDEditor.DataModel
         {
             if (pLinkedNoteAssociation.EntityState != EntityState.Unchanged)
             {
-                pLinkedNoteAssociation.modifiedBy = Guid.Empty;
-                pLinkedNoteAssociation.modifiedDate = DateTime.Now;
+                //pLinkedNoteAssociation.modifiedBy = Guid.Empty;
+                //pLinkedNoteAssociation.modifiedDate = DateTime.Now;
                 System.Diagnostics.Debug.WriteLine(@"LinkedNoteAssociation Save");
                 pContext.SaveChanges();
             }
@@ -230,6 +232,24 @@ namespace BDEditor.DataModel
             return GetDescription(pDataContext, this.parentId, this.parentEntityName, this.parentEntityPropertyName);
         }
 
+        protected override void OnPropertyChanged(string property)
+        {
+            switch (property)
+            {
+                case "createdBy":
+                case "createdDate":
+                case "modifiedBy":
+                case "modifiedDate":
+                    break;
+                default:
+                    {
+                        modifiedBy = Guid.Empty;
+                        modifiedDate = DateTime.Now;
+                    }
+                    break;
+            }
+            base.OnPropertyChanged(property);
+        }
         #region Repository
 
         /// <summary>
@@ -278,7 +298,7 @@ namespace BDEditor.DataModel
             if (null == entry)
             {
                 entry = BDLinkedNoteAssociation.CreateBDLinkedNoteAssociation(uuid);
-                pDataContext.AddObject("BDLinkedNotesAssociations", entry);
+                pDataContext.AddObject("BDLinkedNoteAssociations", entry);
             }
 
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
@@ -293,7 +313,7 @@ namespace BDEditor.DataModel
             entry.parentId = Guid.Parse(pAttributeDictionary[PARENTID]);
             entry.parentEntityName = pAttributeDictionary[PARENTENTITYNAME];
             entry.parentEntityPropertyName = pAttributeDictionary[PARENTENTITYPROPERTYNAME];
-
+            entry.linkedNoteType = int.Parse(pAttributeDictionary[LINKEDNOTETYPE]);
             if (pSaveChanges)
                 pDataContext.SaveChanges();
 

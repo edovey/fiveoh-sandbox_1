@@ -1,325 +1,1 @@
-	RECOMMENDED EMPIRIC THERAPY OF SELECTED INFECTIONS IN ADULT PATIENTS							
-Section	Category	Sub Category	Infection	Infection Overview	Presentation	Presentation Description	Presentation Overview	NOTES
-Selected Infection in Adult Patients								
-	Skin & Soft Tissue							
-			Impetigo					
-					SINGLE PRESENTATION			
-			Folliculitis/Furunculosis					
-					Normal			
-					Whirlpool/hot tub			
-			Recurrent furunculosis					
-					SINGLE PRESENTATION			
-			Carbuncles					
-					SINGLE PRESENTATION			
-			MRSA nasal carriage					
-					SINGLE PRESENTATION			
-			Vesicular lesions	Y				
-					Chickenpox children			
-					Adults Immuno-competent			
-					Adults Immunocompromised			
-					Zoster (Shingles) -  Immuno-competent			
-					Zoster (Shingles) -  Immunocompromised			
-					Mucocutaneous -  Immuno-competent Primary (gingivo-stomatitis)			
-					"Mucocutaneous -  Immuno-competent Recurrent (fever blisters, cold sores)"			
-					Mucocutaneous -  Immuno-compromised			
-			Cellulitis					
-					Facial	Y		
-					Extremities			
-			Lymphadenitis	Y				
-					SINGLE PRESENTATION			
-			Peri-rectal cellulitis/abscess					
-					SINGLE PRESENTATION			
-			Breast abscess/mastitis	Y				
-					Post-partum			
-					Postsurgical			
-					"Not post-partum, not postsurgical"			
-			Animal bites	Y				
-					Cats			
-					Dogs			
-					Human bites		Y	
-			Diabetic foot infection	Y				
-					Simple cellulitis		Y	
-					"Ulcer, drainage, fistula"			
-			Pressure/decubit-us ulcers/ ulcers 2o to PVD	Y				
-					No evidence of clinical infection			
-					Evidence of clinical infection	Y		
-								p 178 -9 Table 1
-								p 180 Table 2
-			Post-operative wounds	Y				
-					"Involving trunk, neck, head, extremity"			
-					"Involving perineum, GI tract, female genital tract, axilla"			
-			Rapidly progres-sive skin & soft tissue infections	Y				
-					SINGLE PRESENTATION			
-			Necrotizing fasciitis/myositis	Y				
-					SINGLE PRESENTATION			
-			"Synergistic nec-rotizing cellulitis, Fournier’s gangrene"					
-					SINGLE PRESENTATION			
-			Gas gangrene					
-					SINGLE PRESENTATION			
-	Bone & Joint							
-			Post-operative wounds	Y				
-					"Involving trunk, neck, head, extremity"			
-					"Involving perineum, GI tract, female genital tract, axilla"			
-			Rapidly progres-sive skin & soft tissue infections	Y				
-					General			
-					Necrotizing fasciitis/myositis			
-					"Synergistic nec-rotizing cellulitis, Fournier’s gangrene"			
-					Gas gangrene			
-			Osteomyelitis					
-					Hematogenous			
-					Intravenous drug use			
-					"Contiguous vascular insufficiency, diabetic foot"			
-					Post-nail puncture of foot			
-			Post-operative sternotomy/mediastinitis	Y				
-			Prosthetic joint infections	Y				
-					Early (<3 months)			
-					Delayed (3-24 months)			
-					Late/Hematogenous (>2 years)			
-			Septic arthritis 					
-					Adults	Y		
-					Gonococcal	Y		
-					Rheumatoid arthritis			
-					"Shoulder arthroplasty, rotator cuff surgery"			
-					Intravenous drug use			
-			Septic bursitis					
-					SINGLE PRESENTATION			
-	Respiratory							
-			Pharyngitis	Y				
-					Acute		Y	
-					Non-responders (after 72 hours of therapy) or Early relapse (2-7 days post therapy)			
-					Late relapse or recurrent			
-					Asymptomatic carrier		Y	
-					Gonococcal			
-			Vincent's Angina					
-					SINGLE PRESENTATION			
-			Jugular Vein Septic Phlebitis (Lemierre's Syndrome)					
-					SINGLE PRESENTATION			
-			Parapharyngeal space infections (Ludwig's angina)					
-					Normal			
-					Odontogenic			
-			Laryngitis					
-					SINGLE PRESENTATION			
-			Rhinitis					
-					SINGLE PRESENTATION			
-			Ottis Media					
-					Acute			
-					Failure of first line agents	Y		
-					Chronic			
-					Hospital acquired ottitis			
-					Swimmer's ear		Y	
-					Invasive ottitis externa			
-			Mastoiditis					
-					Acute			
-					Chronic			
-			Sinusitis	Y				
-					Acute	Y		
-					Failure of first line agents	Y		
-					Acute Recurrent	Y		
-					Chronic: Symptoms ? 12 weeks	Y		
-					Hospital Acquired	Y		
-					Fungal	Y		
-			Whooping Cough	Y				
-					SINGLE PRESENTATION			
-			Bronchitis	Y				
-					Acute			
-					Acute exacerbation of chronic bronchitis (AECB)		Y	
-					At least 2 of the above criteria and:a	Y		
-					At least 2 of the above criteria and:b	Y		
-					Bronchectiasis / end stage lung disease			
-			Community acquired pneumonia	Y				
-					Outpatient: No comorbid factors	Y		
-					Outpatient:comorbid factors			
-					Outpatient:Failure of 1st line agents		Y	
-					Hospitalized - Moderate		Y	
-					Hospitalized - Severe		Y	
-								Table 3 - p 214 
-			Nursing home acquired pneumonia	Y				
-					Treated in nursing home			
-					Transferred to acute care		Y	
-			Influenza	Y				
-					SINGLE PRESENTATION			
-			Hospital acquired pneumonia	Y				
-					Early onset	Y		
-					Late onset	Y		
-					Late onset with risk factors	Y		
-					Late onset with risk factor:aspiratiion		Y	
-					Late onset with risk factors	Y		
-			Ventilator associated pneumonia (VAP)	Y				
-					? 7 days	Y		
-					? 7 days	Y		
-			Aspiration pneumonia	Y				
-					Community acquired or nursing home			
-					Community acquired or nursing home with:	Y		
-					Hospital acquired			
-			Lung abscess					
-			Empyema					
-					Acute	Y		
-					Chronic			
-			Pneumocytis jiroveci (previously P. carnii) pneumonia (PJP)					
-					Normal			
-					Prophylaxis and post-treatment suppression		Y	
-			Tuberculosis	Y				
-					SINGLE PRESENTATION			
-	Gastrointestinal							
-			Gastroenteritis	Y				
-					Mild-moderate			
-					Severe			
-			Travellers' diarrhea	Y				
-					Mild-moderate			
-					Severe			
-			Clostridium difficile-associated diarrhea (CDAD)	Y				
-					Mild			
-					Acute	Y		
-					Severe/toxic megacolon			
-					Recurrence - initial			
-					Recurrence - subsequent			
-			Helicobacter pylori associated duodenal/gastric ulcer	Y				
-					Initial therapy			
-					Failure of therapy			
-			Cholecystitis					
-					Acute			
-					Recurrent			
-					Perforation/pericholecystic abscess			
-			Pancreatitis					
-					Acute			
-					Complicated	Y		
-			Liver abscess					
-					Bacterial			
-					Parasitic			
-			Diverticulitis					
-					SINGLE PRESENTATION			
-			Appendicitis Acute					
-					SINGLE PRESENTATION			
-			Peritonitis	Y				
-					Spontaneous bacterial peritonitis (SBP)			
-					Secondary peritonitis	Y		
-					Chronic/complicated peritonitis or Recurrent/Failure of therapy for 2° peritonitis			
-					Peritoneal Dialysis-related peritonitis		Y	
-								Table 4 - p 247-249
-	Genital							
-			Vulvovaginitis 					
-					Candidiasis			
-					Trichomoniasis			
-					Bacterial vaginosis			
-			Lymphogranuloma venereum (LGV)					
-					SINGLE PRESENTATION			
-			Cervicitis					
-					Chlamydial			
-					Gonococcal			
-					Nonchlamydial/nongonococcal			
-			Urethritis (male)					
-					Chlamydial			
-					Gonococcal			
-					Nonchlamydial/nongonococcal			
-			Epididymo-orchitis					
-					Sexually transmitted 	Y		
-					Non-sexually transmitted 			
-			Pelvic inflammatory disease					
-					Mild-moderate			
-					Moderate-severe		Y	
-					Chorioamnionitis	Y		
-			Endometritis					
-					Postpartum Early	Y		
-					Postpartum Late	Y		
-			Septic pelvic vein thrombophlebitis 					
-					SINGLE PRESENTATION	Y		
-			Labial abscess					
-					SINGLE PRESENTATION			
-			Prostatitis					
-					Acute			
-					Chronic			
-			Proctitis					
-					SINGLE PRESENTATION			
-			Genital ulcers/lesions	Y				
-					Herpes primary episode			
-					Herpres recurrent			
-					Herpes pregnancy - primary episode		Y	
-					Herpes pregnancy - recurrent			
-					Syphilis	Y		
-					Syphilis - Latent > 1 year duration (late) or Cardiovascular			
-					Syphilis - Neurosyphilis			
-					Chancroid			
-					Genital Warts		Y	
-					Condyloma acuminata			
-			Scabies					
-			Pubic Lice					
-	Urinary Tract							Category Oveview
-			Asymptomatic Bacteriuria	Y				
-					Adult males/females	Y		
-					Prior to:	Y		
-					Pregnancy		Y	
-					Diabetes (Type I & II) with glycosuria		Y	
-					Cirrhosis		Y	
-			Cystitis 	Y				
-					"Females Sexually active, first episode"		Y	
-					"Females Sexually active, Recurrent cystitis"	Y	Y	
-					Females recurrent - related to coitus	Y		
-					Females  recurrent  - unrelated to coitus			
-					Males		Y	
-					Males - first episode			
-					Males - recurrent			
-			Complicated UTI					
-					Complicating factors:	Y		
-					Abnormality of urinary tract:	Y		
-					Pregnancy		Y	
-					Chronic catheterization		Y	
-			Pyelonephritis					
-					Uncomplicated			
-					Complicated	Y		
-					Pregnancy			
-	Central Nervous System							
-			Meningitis	Y				
-					< 18 years old			
-					18-50 years old	Y		
-					Adult > 50 years	Y		
-					Post trauma or post operative			
-					Shunt (meningitis/ventriculitis)			
-								p 279-281 Table 5
-			Brain Abscess					
-					Contiguous 2o to sinusitis/otitis	Y	Y	
-					Hematogenous 2o to endocarditis	Y		
-					Post trauma / Post neuro-surgery			
-					HIV			
-			Epidural abscess					
-					SINGLE PRESENTATION			
-			Subdural empyema					
-					SINGLE PRESENTATION			
-			Encephalitis					
-					SINGLE PRESENTATION			
-	Vascular							
-			Pericarditis					
-					SINGLE PRESENTATION			
-			Endocarditis	Y				Vancomycin note
-					Native valve (non-IVDU)			
-					Intravenous Drug Users (right-sided)			
-					Prosthetic valve early (< 8 weeks)			
-					Prosthetic valve LATE (< 8 weeks)			
-								p 289 - 293 Table 6
-	Sepsis							Category overview
-			Community-acquired Intraabdominal source					
-					SINGLE PRESENTATION		Y	
-			Intravenous drug users					
-					SINGLE PRESENTATION		Y	
-			Pelvic source					
-					SINGLE PRESENTATION		Y	
-			Respiratory source					
-					SINGLE PRESENTATION		Y	
-			Splenectomized					
-					SINGLE PRESENTATION			
-			Urosepsis					
-					SINGLE PRESENTATION		Y	
-			 Community-acquired Septic shock - source unknown					
-					SINGLE PRESENTATION	Y		
-			Hospital acquired -Respiratory source					
-					SINGLE PRESENTATION		Y	
-			Hospital acquired -  Intraabdominal source					
-					SINGLE PRESENTATION		Y	
-			Hospital acquired -  Pelvic source					
-					SINGLE PRESENTATION		Y	
-			Hospital acquired - Line related	Y				
-					SINGLE PRESENTATION			
-			Hospital acquired -  Hyperalimentation					
-					SINGLE PRESENTATION			
-			Hospital acquired -  Candidemia					
-					SINGLE PRESENTATION			
-	Febrile Neutropenia							Category overview
+		RECOMMENDED EMPIRIC THERAPY OF SELECTED INFECTIONS IN ADULT PATIENTS							Chapter	Section	Category	Sub Category	Infection	Infection Overview	Presentation	Presentation Description	Presentation Overview	NOTESAntibiotics									Treatment Recommendations	Selected Infection in Adult Patients										Skin & Soft Tissue											Impetigo											SINGLE PRESENTATION							Folliculitis/Furunculosis											Normal									Whirlpool/hot tub							Recurrent furunculosis											SINGLE PRESENTATION							Carbuncles											SINGLE PRESENTATION							MRSA nasal carriage											SINGLE PRESENTATION							Vesicular lesions	Y										Chickenpox children									Adults Immuno-competent									Adults Immunocompromised									Zoster (Shingles) -  Immuno-competent									Zoster (Shingles) -  Immunocompromised									Mucocutaneous -  Immuno-competent Primary (gingivo-stomatitis)									"Mucocutaneous -  Immuno-competent Recurrent (fever blisters, cold sores)"									Mucocutaneous -  Immuno-compromised							Cellulitis											Facial	Y								Extremities							Lymphadenitis	Y										SINGLE PRESENTATION							Peri-rectal cellulitis/abscess											SINGLE PRESENTATION							Breast abscess/mastitis	Y										Post-partum									Postsurgical									"Not post-partum, not postsurgical"							Animal bites	Y										Cats									Dogs									Human bites		Y					Diabetic foot infection	Y										Simple cellulitis		Y							"Ulcer, drainage, fistula"							Pressure/decubit-us ulcers/ ulcers 2o to PVD	Y										No evidence of clinical infection									Evidence of clinical infection	Y											p 178 -9 Table 1									p 180 Table 2				Post-operative wounds	Y										"Involving trunk, neck, head, extremity"									"Involving perineum, GI tract, female genital tract, axilla"							Rapidly progres-sive skin & soft tissue infections	Y										SINGLE PRESENTATION							Necrotizing fasciitis/myositis	Y										SINGLE PRESENTATION							"Synergistic nec-rotizing cellulitis, FournierÕs gangrene"											SINGLE PRESENTATION							Gas gangrene											SINGLE PRESENTATION					Bone & Joint											Post-operative wounds	Y										"Involving trunk, neck, head, extremity"									"Involving perineum, GI tract, female genital tract, axilla"							Rapidly progres-sive skin & soft tissue infections	Y										General									Necrotizing fasciitis/myositis									"Synergistic nec-rotizing cellulitis, FournierÕs gangrene"									Gas gangrene							Osteomyelitis											Hematogenous									Intravenous drug use									"Contiguous vascular insufficiency, diabetic foot"									Post-nail puncture of foot							Post-operative sternotomy/mediastinitis	Y								Prosthetic joint infections	Y										Early (<3 months)									Delayed (3-24 months)									Late/Hematogenous (>2 years)							Septic arthritis 											Adults	Y								Gonococcal	Y								Rheumatoid arthritis									"Shoulder arthroplasty, rotator cuff surgery"									Intravenous drug use							Septic bursitis											SINGLE PRESENTATION					Respiratory											Pharyngitis	Y										Acute		Y							Non-responders (after 72 hours of therapy) or Early relapse (2-7 days post therapy)									Late relapse or recurrent									Asymptomatic carrier		Y							Gonococcal							Vincent's Angina											SINGLE PRESENTATION							Jugular Vein Septic Phlebitis (Lemierre's Syndrome)											SINGLE PRESENTATION							Parapharyngeal space infections (Ludwig's angina)											Normal									Odontogenic							Laryngitis											SINGLE PRESENTATION							Rhinitis											SINGLE PRESENTATION							Ottis Media											Acute									Failure of first line agents	Y								Chronic									Hospital acquired ottitis									Swimmer's ear		Y							Invasive ottitis externa							Mastoiditis											Acute									Chronic							Sinusitis	Y										Acute	Y								Failure of first line agents	Y								Acute Recurrent	Y								Chronic: Symptoms ³ 12 weeks	Y								Hospital Acquired	Y								Fungal	Y						Whooping Cough	Y										SINGLE PRESENTATION							Bronchitis	Y										Acute									Acute exacerbation of chronic bronchitis (AECB)		Y							At least 2 of the above criteria and:a	Y								At least 2 of the above criteria and:b	Y								Bronchectiasis / end stage lung disease							Community acquired pneumonia	Y										Outpatient: No comorbid factors	Y								Outpatient:comorbid factors									Outpatient:Failure of 1st line agents		Y							Hospitalized - Moderate		Y							Hospitalized - Severe		Y										Table 3 - p 214 				Nursing home acquired pneumonia	Y										Treated in nursing home									Transferred to acute care		Y					Influenza	Y										SINGLE PRESENTATION							Hospital acquired pneumonia	Y										Early onset	Y								Late onset	Y								Late onset with risk factors	Y								Late onset with risk factor:aspiratiion		Y							Late onset with risk factors	Y						Ventilator associated pneumonia (VAP)	Y										² 7 days	Y								³ 7 days	Y						Aspiration pneumonia	Y										Community acquired or nursing home									Community acquired or nursing home with:	Y								Hospital acquired							Lung abscess									Empyema											Acute	Y								Chronic							Pneumocytis jiroveci (previously P. carnii) pneumonia (PJP)											Normal									Prophylaxis and post-treatment suppression		Y					Tuberculosis	Y										SINGLE PRESENTATION					Gastrointestinal											Gastroenteritis	Y										Mild-moderate									Severe							Travellers' diarrhea	Y										Mild-moderate									Severe							Clostridium difficile-associated diarrhea (CDAD)	Y										Mild									Acute	Y								Severe/toxic megacolon									Recurrence - initial									Recurrence - subsequent							Helicobacter pylori associated duodenal/gastric ulcer	Y										Initial therapy									Failure of therapy							Cholecystitis											Acute									Recurrent									Perforation/pericholecystic abscess							Pancreatitis											Acute									Complicated	Y						Liver abscess											Bacterial									Parasitic							Diverticulitis											SINGLE PRESENTATION							Appendicitis Acute											SINGLE PRESENTATION							Peritonitis	Y										Spontaneous bacterial peritonitis (SBP)									Secondary peritonitis	Y								Chronic/complicated peritonitis or Recurrent/Failure of therapy for 2¡ peritonitis									Peritoneal Dialysis-related peritonitis		Y										Table 4 - p 247-249		Genital											Vulvovaginitis 											Candidiasis									Trichomoniasis									Bacterial vaginosis							Lymphogranuloma venereum (LGV)											SINGLE PRESENTATION							Cervicitis											Chlamydial									Gonococcal									Nonchlamydial/nongonococcal							Urethritis (male)											Chlamydial									Gonococcal									Nonchlamydial/nongonococcal							Epididymo-orchitis											Sexually transmitted 	Y								Non-sexually transmitted 							Pelvic inflammatory disease											Mild-moderate									Moderate-severe		Y							Chorioamnionitis	Y						Endometritis											Postpartum Early	Y								Postpartum Late	Y						Septic pelvic vein thrombophlebitis 											SINGLE PRESENTATION	Y						Labial abscess											SINGLE PRESENTATION							Prostatitis											Acute									Chronic							Proctitis											SINGLE PRESENTATION							Genital ulcers/lesions	Y										Herpes primary episode									Herpres recurrent									Herpes pregnancy - primary episode		Y							Herpes pregnancy - recurrent									Syphilis	Y								Syphilis - Latent > 1 year duration (late) or Cardiovascular									Syphilis - Neurosyphilis									Chancroid									Genital Warts		Y							Condyloma acuminata							Scabies									Pubic Lice							Urinary Tract							Category Oveview				Asymptomatic Bacteriuria	Y										Adult males/females	Y								Prior to:	Y								Pregnancy		Y							Diabetes (Type I & II) with glycosuria		Y							Cirrhosis		Y					Cystitis 	Y										"Females Sexually active, first episode"		Y							"Females Sexually active, Recurrent cystitis"	Y	Y							Females recurrent - related to coitus	Y								Females  recurrent  - unrelated to coitus									Males		Y							Males - first episode									Males - recurrent							Complicated UTI											Complicating factors:	Y								Abnormality of urinary tract:	Y								Pregnancy		Y							Chronic catheterization		Y					Pyelonephritis											Uncomplicated									Complicated	Y								Pregnancy					Central Nervous System											Meningitis	Y										< 18 years old									18-50 years old	Y								Adult > 50 years	Y								Post trauma or post operative									Shunt (meningitis/ventriculitis)												p 279-281 Table 5				Brain Abscess											Contiguous 2o to sinusitis/otitis	Y	Y							Hematogenous 2o to endocarditis	Y								Post trauma / Post neuro-surgery									HIV							Epidural abscess											SINGLE PRESENTATION							Subdural empyema											SINGLE PRESENTATION							Encephalitis											SINGLE PRESENTATION					Vascular											Pericarditis											SINGLE PRESENTATION							Endocarditis	Y				Vancomycin note						Native valve (non-IVDU)									Intravenous Drug Users (right-sided)									Prosthetic valve early (< 8 weeks)									Prosthetic valve LATE (< 8 weeks)												p 289 - 293 Table 6		Sepsis							Category overview				Community-acquired Intraabdominal source											SINGLE PRESENTATION		Y					Intravenous drug users											SINGLE PRESENTATION		Y					Pelvic source											SINGLE PRESENTATION		Y					Respiratory source											SINGLE PRESENTATION		Y					Splenectomized											SINGLE PRESENTATION							Urosepsis											SINGLE PRESENTATION		Y					 Community-acquired Septic shock - source unknown											SINGLE PRESENTATION	Y						Hospital acquired -Respiratory source											SINGLE PRESENTATION		Y					Hospital acquired -  Intraabdominal source											SINGLE PRESENTATION		Y					Hospital acquired -  Pelvic source											SINGLE PRESENTATION		Y					Hospital acquired - Line related	Y										SINGLE PRESENTATION							Hospital acquired -  Hyperalimentation											SINGLE PRESENTATION							Hospital acquired -  Candidemia											SINGLE PRESENTATION					Febrile Neutropenia							Category overview

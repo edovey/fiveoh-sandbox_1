@@ -128,6 +128,7 @@
             this.splitContainer1.Size = new System.Drawing.Size(1148, 661);
             this.splitContainer1.SplitterDistance = 378;
             this.splitContainer1.TabIndex = 1;
+            this.splitContainer1.Leave += new System.EventHandler(this.splitContainer1_Leave);
             // 
             // chapterTree
             // 

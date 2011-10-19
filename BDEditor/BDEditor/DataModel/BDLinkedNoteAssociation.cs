@@ -293,7 +293,7 @@ namespace BDEditor.DataModel
         public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
-            bool deprecated = bool.Parse(pAttributeDictionary[DEPRECATED]);
+            bool deprecated = Boolean.Parse(pAttributeDictionary[DEPRECATED]);
             BDLinkedNoteAssociation entry = BDLinkedNoteAssociation.GetLinkedNoteAssociationWithId(pDataContext, uuid);
             if (null == entry)
             {

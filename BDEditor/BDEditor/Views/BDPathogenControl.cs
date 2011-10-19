@@ -95,15 +95,18 @@ namespace BDEditor.Views
 
         public void TriggerCreateAndAssignParentIdToChildControl(IBDControl pControl)
         {
-            if(null == currentPathogen)
+            if (null == currentPathogen)
             {
                 currentPathogen = BDPathogen.CreatePathogen(dataContext);
                 currentPathogen.pathogenGroupId = pathogenGroupId;
                 BDPathogen.SavePathogen(dataContext, currentPathogen);
                 pControl.AssignParentId(currentPathogen.uuid);
                 pControl.Save();
-
-                //this.BackColor = SystemColors.Control;
+            }
+            else
+            {
+                pControl.AssignParentId(currentPathogen.uuid);
+                pControl.Save();
             }
         }
 

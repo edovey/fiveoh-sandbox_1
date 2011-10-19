@@ -30,19 +30,19 @@ namespace BDEditor.Views
                 currentPathogenGroup = value;
                 if (null == currentPathogenGroup)
                 {
-                    //this.BackColor = SystemColors.ControlDark;
                     bdTherapyGroupControl1.AssignParentId(null);
                     bdTherapyGroupControl1.CurrentTherapyGroup = null;
+                    bdTherapyGroupControl1.DisplayOrder = 1;
 
                     bdTherapyGroupControl2.AssignParentId(null);
                     bdTherapyGroupControl2.CurrentTherapyGroup = null;
+                    bdTherapyGroupControl2.DisplayOrder = 2;
 
                     pathogenSet1.CurrentPathogenGroup = null;
                     pathogenSet1.AssignParentId(null);
                 }
                 else
                 {
-                    //this.BackColor = SystemColors.Control;
                     bdTherapyGroupControl1.AssignParentId(currentPathogenGroup.uuid);
                     bdTherapyGroupControl2.AssignParentId(currentPathogenGroup.uuid);
                     List<BDTherapyGroup> therapyGroupList = BDTherapyGroup.getTherapyGroupsForPathogenGroupId(dataContext, currentPathogenGroup.uuid);
@@ -52,7 +52,6 @@ namespace BDEditor.Views
 
                     if (therapyGroupList.Count >= 1) bdTherapyGroupControl1.CurrentTherapyGroup = therapyGroupList[0];
                     if (therapyGroupList.Count >= 2) bdTherapyGroupControl2.CurrentTherapyGroup = therapyGroupList[1];
-
 
                     pathogenSet1.CurrentPathogenGroup = currentPathogenGroup;
                 }
@@ -78,15 +77,6 @@ namespace BDEditor.Views
         {
 
         }
-
-        //private List<BDLinkedNote> GetLinkedNotesForPathogen(BDPathogen pPathogen)
-        //{
-        //    List<BDLinkedNote> linkedNoteList = BDLinkedNote.GetLinkedNotesForParentId(dataContext, pPathogen.uuid);
-        //    if (linkedNoteList.Count == 0)
-        //        return null;
-        //    else
-        //        return linkedNoteList;
-        //}
 
         #region IBDControl
         
@@ -150,7 +140,6 @@ namespace BDEditor.Views
                 pControl.AssignParentId(currentPathogenGroup.uuid);
                 pControl.Save();
             }
-            //this.BackColor = SystemColors.Control;
         }
         #endregion    
     }

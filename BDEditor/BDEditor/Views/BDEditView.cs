@@ -305,5 +305,17 @@ namespace BDEditor.Views
                 SyncData();          
             }
         }
+
+        private void splitContainer1_Leave(object sender, EventArgs e)
+        {
+            if (splitContainer1.Panel2.Controls.Count > 0)
+            {
+                IBDControl control = splitContainer1.Panel2.Controls[0] as IBDControl;
+                if (null != control)
+                {
+                    control.Save();
+                }
+            }
+        }
     }
 }

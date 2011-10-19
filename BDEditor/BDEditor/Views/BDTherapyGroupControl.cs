@@ -13,6 +13,7 @@ namespace BDEditor.Views
         private BDTherapyGroup currentTherapyGroup;
         private IBDControl parentControl;
         private Guid? scopeId;
+        public int? DisplayOrder { get; set; }
 
         public BDTherapyGroupControl()
         {
@@ -36,6 +37,10 @@ namespace BDEditor.Views
                     bdTherapyControl1.CurrentTherapy = null;
                     bdTherapyControl2.CurrentTherapy = null;
                     bdTherapyControl3.CurrentTherapy = null;
+
+                    bdTherapyControl1.DisplayOrder = 1;
+                    bdTherapyControl2.DisplayOrder = 2;
+                    bdTherapyControl3.DisplayOrder = 3;
 
                     bdTherapyControl1.AssignParentId(null);
                     bdTherapyControl2.AssignParentId(null);
@@ -103,6 +108,7 @@ namespace BDEditor.Views
                 {
                     currentTherapyGroup = BDTherapyGroup.CreateTherapyGroup(dataContext);
                     currentTherapyGroup.pathogenGroupId = pathogenGroupId;
+                    currentTherapyGroup.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                 }
 
                 if (null != currentTherapyGroup)
@@ -153,7 +159,13 @@ namespace BDEditor.Views
             {
                 currentTherapyGroup = BDTherapyGroup.CreateTherapyGroup(dataContext);
                 currentTherapyGroup.pathogenGroupId = pathogenGroupId;
+                currentTherapyGroup.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                 BDTherapyGroup.SaveTherapyGroup(dataContext, currentTherapyGroup);
+                pControl.AssignParentId(currentTherapyGroup.uuid);
+                pControl.Save();
+            }
+            else
+            {
                 pControl.AssignParentId(currentTherapyGroup.uuid);
                 pControl.Save();
             }

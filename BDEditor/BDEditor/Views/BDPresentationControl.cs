@@ -109,40 +109,7 @@ namespace BDEditor.Views
                 {
                     if(currentPresentation.name != tbPresentationName.Text) currentPresentation.name = tbPresentationName.Text;
                     bdLinkedNoteControl1.Save();
-                    /*
-                    if ((null == overviewLinkedNote) && (rtbPresentationOverview.Text != string.Empty))
-                    {
-                        overviewLinkedNote = BDLinkedNote.CreateLinkedNote(dataContext);
-                        BDLinkedNoteAssociation association = BDLinkedNoteAssociation.CreateLinkedNoteAssociation(dataContext);
-                        association.linkedNoteId = overviewLinkedNote.uuid;
-                        association.parentId = currentPresentation.uuid;
-                        association.parentEntityName = BDPresentation.ENTITYNAME_FRIENDLY;
-                        association.parentEntityPropertyName = BDPresentation.PROPERTYNAME_OVERVIEW;
-                        association.linkedNoteType = (int)LinkedNoteType.Default;
-
-                        overviewLinkedNote.linkedNoteAssociationId = association.uuid;
-                        overviewLinkedNote.scopeId = currentPresentation.uuid;
-                        overviewLinkedNote.singleUse = true;
-
-                        BDLinkedNote.SaveLinkedNote(dataContext, overviewLinkedNote);
-                        BDLinkedNoteAssociation.SaveLinkedNoteAssociation(dataContext, association);
-                    }
-
-                    if (null != overviewLinkedNote)
-                    {
-                        if (overviewLinkedNote.documentText != rtbPresentationOverview.Rtf)
-                        {
-                            overviewLinkedNote.singleUse = true;
-                            overviewLinkedNote.documentText = rtbPresentationOverview.Rtf;
-                            if (rtbPresentationOverview.Text.Length > 127)
-                                overviewLinkedNote.previewText = rtbPresentationOverview.Text.Substring(0, 127);
-                            else
-                                overviewLinkedNote.previewText = rtbPresentationOverview.Text;
-                        }
-                        BDLinkedNote.SaveLinkedNote(dataContext, overviewLinkedNote);
-
-                    }
-                    */
+                  
                     System.Diagnostics.Debug.WriteLine(@"Presentation Control Save");
                     BDPresentation.SavePresentation(dataContext, currentPresentation);
 

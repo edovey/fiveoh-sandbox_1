@@ -20,6 +20,8 @@ namespace BDEditor.Views
         private Guid? scopeId;
         private bool displayLeftBracket;
         private bool displayRightBracket;
+        
+        public int? DisplayOrder {get; set;}
 
         public BDTherapy CurrentTherapy
         {
@@ -32,8 +34,6 @@ namespace BDEditor.Views
                 currentTherapy = value;
                 if (currentTherapy == null)
                 {
-                    //this.BackColor = SystemColors.ControlDark;
-
                     tbName.Text = @"";
                     tbDosage.Text = @"";
                     tbDuration.Text = @"";
@@ -48,6 +48,8 @@ namespace BDEditor.Views
                     tbName.Text = currentTherapy.name;
                     tbDosage.Text = currentTherapy.dosage;
                     tbDuration.Text = currentTherapy.duration;
+                    DisplayOrder = currentTherapy.displayOrder;
+
                     switch ((BDTherapy.TherapyJoinType)currentTherapy.therapyJoinType)
                     {
                         case BDTherapy.TherapyJoinType.None:
@@ -117,17 +119,13 @@ namespace BDEditor.Views
         private void lblLeftBracket_Click(object sender, EventArgs e)
         {
             this.displayLeftBracket = !this.displayLeftBracket;
-            if (this.displayLeftBracket == true)
-                this.lblLeftBracket.ForeColor = SystemColors.ControlText;
-            else this.lblLeftBracket.ForeColor = SystemColors.ControlLight;
+            lblLeftBracket.ForeColor = (this.displayLeftBracket) ? SystemColors.ControlText : SystemColors.ControlLight;
         }
 
         private void lblRightBracket_Click(object sender, EventArgs e)
         {
             this.displayRightBracket = !this.displayRightBracket;
-            if (this.displayRightBracket == true)
-                this.lblRightBracket.ForeColor = SystemColors.ControlText;
-            else this.lblRightBracket.ForeColor = SystemColors.ControlLight;
+            lblRightBracket.ForeColor = (this.displayRightBracket) ? SystemColors.ControlText : SystemColors.ControlLight;
         }
 
         private void CreateLink(string pProperty)
@@ -171,6 +169,7 @@ namespace BDEditor.Views
                 {
                     currentTherapy = BDTherapy.CreateTherapy(dataContext);
                     currentTherapy.therapyGroupId = therapyGroupId;
+                    currentTherapy.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                 }
 
                 if (null != currentTherapy)
@@ -217,8 +216,6 @@ namespace BDEditor.Views
             TextBox textBox = sender as TextBox;
             if (null != textBox)
             {
-                //this.BackColor = (textBox.Text.Trim() != string.Empty) ? SystemColors.Control : SystemColors.ControlDark;
-
                 Button linkButton = textBox.Tag as Button;
                 if (null != linkButton)
                     linkButton.Enabled = true;
@@ -241,11 +238,15 @@ namespace BDEditor.Views
             {
                 currentTherapy = BDTherapy.CreateTherapy(dataContext);
                 currentTherapy.therapyGroupId = therapyGroupId;
+                currentTherapy.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                 BDTherapy.SaveTherapy(dataContext, currentTherapy);
                 pControl.AssignParentId(currentTherapy.uuid);
                 pControl.Save();
-
-                this.BackColor = SystemColors.Control;
+            }
+            else
+            {
+                pControl.AssignParentId(currentTherapy.uuid);
+                pControl.Save();
             }
         }
 

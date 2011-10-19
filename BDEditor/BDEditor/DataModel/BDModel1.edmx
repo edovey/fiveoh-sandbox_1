@@ -310,7 +310,7 @@
           <Property Type="DateTime" Name="modifiedDate" />
           <Property Type="Int32" Name="displayOrder" />
           <Property Type="Int32" Name="linkedNoteType" />
-          <Property Type="Boolean" Name="deprecated" Nullable="false" DefaultValue="false" />
+          <Property Type="Boolean" Name="deprecated" Nullable="false" DefaultValue="False" />
         </EntityType>
         <EntityType Name="BDLinkedNote">
           <Key>

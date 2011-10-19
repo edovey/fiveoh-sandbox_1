@@ -50,7 +50,6 @@ namespace BDEditor.Views
         public BDLinkedNoteControl()
         {
             InitializeComponent();
-            textControl.RulerBar = rulerBar;
             textControl.ButtonBar = buttonBar;
         }
 
@@ -256,6 +255,21 @@ namespace BDEditor.Views
         private void btnBeta_Click(object sender, EventArgs e)
         {
             textControl.Selection.Text = "ß";
+        }
+
+        private void btnClean_Click(object sender, EventArgs e)
+        {
+            TXTextControl.SaveSettings ss = new TXTextControl.SaveSettings();
+
+            string htmltext;
+            textControl.Save(out htmltext, TXTextControl.StringStreamType.HTMLFormat, ss);
+            string cleanText = CleanDocumentText(htmltext);
+
+            if (cleanText.Length > 0)
+            {
+                textControl.Text = @"";
+                textControl.Append(cleanText, TXTextControl.StringStreamType.HTMLFormat, TXTextControl.AppendSettings.None);
+            }
         }
 
     }

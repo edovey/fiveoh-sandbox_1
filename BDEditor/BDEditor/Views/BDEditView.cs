@@ -34,10 +34,10 @@ namespace BDEditor.Views
 
             dataContext = new DataModel.Entities();
 
-            LoadSectionDropDown();
+            LoadChapterDropDown();
 
             //sectionDropDown.DataSource = dataContext.BDSections;
-            sectionDropDown.DisplayMember = "Name";
+            chapterDropDown.DisplayMember = "Name";
         }
 
         public DataModel.Entities DataContext
@@ -71,25 +71,51 @@ namespace BDEditor.Views
             }
         }
 
-        public void rebuildTree(BDSection pSection)
+        public void rebuildTree(BDChapter pChapter)
         {
-            sectionTree.Nodes.Clear();
+            chapterTree.Nodes.Clear();
 
-            TreeNode rootNode = new TreeNode(pSection.name);
-            List<BDCategory> categoryList = BDCategory.GetCategoriesForSectionId(dataContext, pSection.uuid);
-            foreach (BDCategory category in categoryList)
+            TreeNode rootNode = new TreeNode(pChapter.name);
+
+            List<BDSection> sectionList = BDSection.GetSectionsForChapterId(dataContext, pChapter.uuid);
+
+            foreach (BDSection section in sectionList)
             {
-                TreeNode categoryNode = new TreeNode(category.name);
-                categoryNode.Tag = category;
+                TreeNode sectionNode = new TreeNode(section.name);
+                sectionNode.Tag = section;
 
-                List<BDSubcategory> subCategoryList = BDSubcategory.GetSubcategoriesForCategoryId(dataContext, category.uuid);
-                foreach (BDSubcategory subCategory in subCategoryList)
+                List<BDCategory> categoryList = BDCategory.GetCategoriesForSectionId(dataContext, section.uuid);
+                foreach (BDCategory category in categoryList)
                 {
-                    TreeNode subCategoryNode = new TreeNode(subCategory.name);
-                    subCategoryNode.Tag = subCategory;
+                    TreeNode categoryNode = new TreeNode(category.name);
+                    categoryNode.Tag = category;
 
-                    List<BDDisease> diseaseList = BDDisease.GetDiseasesForSubcategory(dataContext, subCategory.uuid);
-                    foreach (BDDisease disease in diseaseList)
+                    List<BDSubcategory> subCategoryList = BDSubcategory.GetSubcategoriesForCategoryId(dataContext, category.uuid);
+                    foreach (BDSubcategory subCategory in subCategoryList)
+                    {
+                        TreeNode subCategoryNode = new TreeNode(subCategory.name);
+                        subCategoryNode.Tag = subCategory;
+
+                        List<BDDisease> diseaseList = BDDisease.GetDiseasesForSubcategory(dataContext, subCategory.uuid);
+                        foreach (BDDisease disease in diseaseList)
+                        {
+                            TreeNode diseaseNode = new TreeNode(disease.name);
+                            diseaseNode.Tag = disease;
+
+                            List<BDPresentation> presentationList = BDPresentation.GetPresentationsForDiseaseId(dataContext, disease.uuid);
+                            foreach (BDPresentation presentation in presentationList)
+                            {
+                                TreeNode presentationNode = new TreeNode(presentation.name);
+                                presentationNode.Tag = presentation;
+                                diseaseNode.Nodes.Add(presentationNode);
+                            }
+                            subCategoryNode.Nodes.Add(diseaseNode);
+                        }
+                        categoryNode.Nodes.Add(subCategoryNode);
+                    } // subCatg
+
+                    List<BDDisease> categorydiseaseList = BDDisease.GetDiseasesForCategoryId(dataContext, category.uuid);
+                    foreach (BDDisease disease in categorydiseaseList)
                     {
                         TreeNode diseaseNode = new TreeNode(disease.name);
                         diseaseNode.Tag = disease;
@@ -102,46 +128,26 @@ namespace BDEditor.Views
                             diseaseNode.Nodes.Add(presentationNode);
                         }
 
+                        categoryNode.Nodes.Add(diseaseNode);
+                    } // disease
 
-                        subCategoryNode.Nodes.Add(diseaseNode);
-                    }
-
-                    categoryNode.Nodes.Add(subCategoryNode);
-                }
-
-                List<BDDisease> categorydiseaseList = BDDisease.GetDiseasesForCategoryId(dataContext, category.uuid);
-                foreach (BDDisease disease in categorydiseaseList)
-                {
-                    TreeNode diseaseNode = new TreeNode(disease.name);
-                    diseaseNode.Tag = disease;
-
-                    List<BDPresentation> presentationList = BDPresentation.GetPresentationsForDiseaseId(dataContext, disease.uuid);
-                    foreach (BDPresentation presentation in presentationList)
-                    {
-                        TreeNode presentationNode = new TreeNode(presentation.name);
-                        presentationNode.Tag = presentation;
-                        diseaseNode.Nodes.Add(presentationNode);
-                    }
-
-                    categoryNode.Nodes.Add(diseaseNode);
-                }
-
-                sectionTree.Nodes.Add(categoryNode);
-            }
+                    sectionNode.Nodes.Add(categoryNode);
+                } // category
+                chapterTree.Nodes.Add(sectionNode);
+            } // section
         }
 
-        private void sectionDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        private void listDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
             splitContainer1.Panel2.Controls.Clear();
             //BDSection section = sectionDropDown.SelectedValue as BDSection;
-            BDSection section = sectionDropDown.SelectedItem as BDSection;
-            if (null != section)
+            BDChapter entry = chapterDropDown.SelectedItem as BDChapter;
+            if (null != entry)
             {
                 this.Cursor = Cursors.WaitCursor;
-                rebuildTree(section);
+                rebuildTree(entry);
                 this.Cursor = Cursors.Default;
             }
-
         }
 
         private void sectionTree_AfterSelect(object sender, TreeViewEventArgs e)
@@ -204,75 +210,14 @@ namespace BDEditor.Views
             this.Cursor = Cursors.Default;
         }
 
-        private void createTestData()
-        {
-            BDSection section = BDSection.CreateSection(dataContext);
-            section.name = @"Selected Infection in Adult Patients";
-            BDSection.SaveSection(dataContext, section);
-
-            BDCategory category = BDCategory.CreateCategory(dataContext);
-            category.name = @"Skin & Soft Tissue";
-            category.sectionId = section.uuid;
-            BDCategory.SaveCategory(dataContext, category);
-
-            BDSubcategory subCategory = BDSubcategory.CreateSubcategory(dataContext);
-            subCategory.name = @"Sub Category";
-            subCategory.categoryId = category.uuid;
-            BDSubcategory.SaveSubcategory(dataContext, subCategory);
-
-            BDDisease disease = BDDisease.CreateDisease(dataContext);
-            disease.name = @"Disease";
-            disease.categoryId = category.uuid;
-            BDDisease.SaveDisease(dataContext, disease);
-
-            BDPresentation presentation = BDPresentation.CreatePresentation(dataContext);
-            presentation.name = @"Presentation";
-            presentation.diseaseId = disease.uuid;
-            BDPresentation.SavePresentation(dataContext, presentation);
-
-            category = BDCategory.CreateCategory(dataContext);
-            category.name = @"Bone & Joint";
-            category.sectionId = section.uuid;
-            BDCategory.SaveCategory(dataContext, category);
-
-            category = BDCategory.CreateCategory(dataContext);
-            category.name = @"Respiratory";
-            category.sectionId = section.uuid;
-            BDCategory.SaveCategory(dataContext, category);
-
-            disease = BDDisease.CreateDisease(dataContext);
-            disease.name = @"Pharygtis";
-            disease.categoryId = category.uuid;
-            BDDisease.SaveDisease(dataContext, disease);
-
-            presentation = BDPresentation.CreatePresentation(dataContext);
-            presentation.name = @"Acute";
-            presentation.diseaseId = disease.uuid;
-            BDPresentation.SavePresentation(dataContext, presentation);
-
-            presentation = BDPresentation.CreatePresentation(dataContext);
-            presentation.name = @"Non-Responders";
-            presentation.diseaseId = disease.uuid;
-            BDPresentation.SavePresentation(dataContext, presentation);
-
-            presentation = BDPresentation.CreatePresentation(dataContext);
-            presentation.name = @"Late Relapse / Recurrent";
-            presentation.diseaseId = disease.uuid;
-            BDPresentation.SavePresentation(dataContext, presentation);
-
-            dataContext.Refresh(System.Data.Objects.RefreshMode.StoreWins, dataContext.BDSections);
-            sectionDropDown.DataSource = null;
-            sectionDropDown.DataSource = dataContext.BDSections;
-            sectionDropDown.SelectedIndex = -1;
-        }
-
+  
         private void createTestDataButton_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
             BDDataLoader dataLoader = new BDDataLoader();
             dataLoader.ImportData(dataContext, @"Resources\BDEditorStructure.txt");
 
-            LoadSectionDropDown();
+            LoadChapterDropDown();
 
             DateTime? lastSyncDate = BDSystemSetting.GetTimestamp(DataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             createTestDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
@@ -281,15 +226,17 @@ namespace BDEditor.Views
             
         }
 
-        private void LoadSectionDropDown()
+        private void LoadChapterDropDown()
         {
-            sectionDropDown.Items.Clear();
-            foreach (BDSection section in BDSection.GetAll(dataContext))
+            chapterDropDown.Items.Clear();
+            foreach (BDChapter entry in BDChapter.GetAll(dataContext))
             {
-                sectionDropDown.Items.Add(section);
+                chapterDropDown.Items.Add(entry);
             }
-            if (sectionDropDown.Items.Count > 1)
-                sectionDropDown.SelectedIndex = 1;
+            if (chapterDropDown.Items.Count > 2)
+                chapterDropDown.SelectedIndex = 2;
+            else if (chapterDropDown.Items.Count > 1)
+                chapterDropDown.SelectedIndex = 1;
         }
 
         private void UpdateSyncLabel()
@@ -318,7 +265,7 @@ namespace BDEditor.Views
             }
 
             UpdateSyncLabel();
-            LoadSectionDropDown();
+            LoadChapterDropDown();
 
             lastSyncDate = BDSystemSetting.GetTimestamp(DataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             createTestDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
@@ -344,8 +291,8 @@ namespace BDEditor.Views
             {
                 this.Cursor = Cursors.WaitCursor;
 
-                sectionDropDown.Items.Clear();
-                sectionDropDown.SelectedIndex = -1;
+                chapterDropDown.Items.Clear();
+                chapterDropDown.SelectedIndex = -1;
 
                 RepositoryHandler.Aws.DeleteLocalData(dataContext);
                 

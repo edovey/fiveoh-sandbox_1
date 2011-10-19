@@ -332,7 +332,7 @@ namespace BDEditor.DataModel
             entry.parentId = Guid.Parse(pAttributeDictionary[PARENTID]);
             entry.parentEntityName = pAttributeDictionary[PARENTENTITYNAME];
             entry.parentEntityPropertyName = pAttributeDictionary[PARENTENTITYPROPERTYNAME];
-
+            entry.linkedNoteType = int.Parse(pAttributeDictionary[LINKEDNOTETYPE]);
             if (pSaveChanges)
                 pDataContext.SaveChanges();
 

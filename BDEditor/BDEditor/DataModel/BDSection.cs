@@ -86,6 +86,21 @@ namespace BDEditor.DataModel
             return section;
         }
 
+        public static List<BDSection> GetSectionsForChapterId(Entities pContext, Guid pChapterId)
+        {
+            List<BDSection> entryList = new List<BDSection>();
+
+            if (null != pChapterId)
+            {
+                IQueryable<BDSection> entries = (from entry in pContext.BDSections
+                                                 where entry.chapterId == pChapterId
+                                                 select entry);
+                if (entries.Count<BDSection>() > 0)
+                    entryList = entries.ToList<BDSection>();
+            }
+            return entryList;
+        }
+
         public static List<BDSection> GetAll(Entities pContext)
         {
             List<BDSection> entryList = new List<BDSection>();

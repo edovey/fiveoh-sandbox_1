@@ -80,8 +80,8 @@ namespace BDEditor.DataModel
         {
             if (pTherapy.EntityState != EntityState.Unchanged)
             {
-                pTherapy.modifiedBy = Guid.Empty;
-                pTherapy.modifiedDate = DateTime.Now;
+                //pTherapy.modifiedBy = Guid.Empty;
+                //pTherapy.modifiedDate = DateTime.Now;
                 System.Diagnostics.Debug.WriteLine(@"Therapy Save");
                 pContext.SaveChanges();
             }
@@ -136,6 +136,27 @@ namespace BDEditor.DataModel
         {
             get { return string.Format("Therapy - {0} Dosage:{1} Duration:{2}", this.name, this.dosage, this.duration); }
         }
+
+        protected override void OnPropertyChanged(string property)
+        {
+            switch (property)
+            {
+                case "createdBy":
+                case "createdDate":
+                case "modifiedBy":
+                case "modifiedDate":
+                    break;
+                default:
+                    {
+                        _modifiedBy = Guid.Empty;
+                        _modifiedDate = DateTime.Now;
+                    }
+                    break;
+            }
+
+            base.OnPropertyChanged(property);
+        }
+
         #region Repository
 
         /// <summary>

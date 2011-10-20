@@ -43,7 +43,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    categoryArray = BDCategory.retrieveAll;
+    categoryArray = [NSArray arrayWithArray:[BDCategory retrieveAllWithParentUUID:parentId]];
 }
 
 - (void)viewDidUnload
@@ -97,6 +97,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
      DiseaseView *vwDisease = [[DiseaseView alloc] initWithNibName:@"DiseaseView" bundle:nil];
+    vwDisease.parentId = [[categoryArray objectAtIndex:indexPath.row] uuid];
      [self.navigationController pushViewController:vwDisease animated:YES];
      [vwDisease release];
 }

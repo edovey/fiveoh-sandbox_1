@@ -46,6 +46,7 @@
 
 +(NSString *)create;
 +(BDLinkedNoteAssociation *)retrieveWithUUID:(NSString *)theUUID;
++(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID;
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary withOverwriteNewerFlag:(BOOL)overwriteNewer; 
 
 -(void)commitChanges;

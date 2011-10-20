@@ -47,6 +47,7 @@
 +(NSString *) create;
 +(BDDisease *) retrieveWithUUID:(NSString *)theUUID;
 +(NSArray *)retrieveAll;
++(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID;
 +(NSString *) loadWithAttributes:(NSDictionary *)theAttributeDictionary withOverwriteNewerFlag:(BOOL)overwriteNewer;
 
 -(void)commitChanges;

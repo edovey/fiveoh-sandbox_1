@@ -71,6 +71,14 @@
                                                                           targetMOC:nil];
 }
 
++(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID
+{
+    NSArray *entities = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_LINKEDNOTE withKey:LN_LINKEDNOTEASSOCIATIONID withValue:theUUID withMOC:nil];
+    return entities;
+}
+
+
+
 //Returns the uuid of the object
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
          withOverwriteNewerFlag:(BOOL)overwriteNewer

@@ -317,5 +317,10 @@ namespace BDEditor.Views
                 }
             }
         }
+
+        private void lbLastSyncDateTime_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -12,12 +12,15 @@
 #import "BDLinkedNote.h"
 #import "BDSection.h"
 #import "BDCategory.h"
+#import "BDChapter.h"
 #import "BDSubcategory.h"
 #import "BDDisease.h"
 #import "BDPresentation.h"
 #import "BDTherapyGroup.h"
 #import "BDTherapy.h"
 #import "BDLinkedNoteAssociation.h"  
+#import "BDPathogen.h"
+#import "BDPathogenGroup.h"
 
 #import <AWSiOSSDK/SimpleDB/AmazonSimpleDBClient.h>
 #import "SdbRequestDelegate.h"
@@ -34,7 +37,7 @@
 -(SimpleDBPutAttributesRequest *)sdbPutAttributeRequestWithLinkedNote:(BDLinkedNote *)linkedNote;
 -(SimpleDBPutAttributesRequest *)sdbPutAttributeRequestWithLinkedNoteAssociation:(BDLinkedNoteAssociation *)linkedNoteAssociation;
 -(int)pushQueuedEntries;
--(NSString *)loadEntityWithItemName:(NSString *)theItemName forDomain:(NSString *)theDomain;
+-(NSString *)loadEntityWithAwsSimpleDbItemName:(NSString *)theItemName forAwsSimpleDbDomain:(NSString *)theDomain;
 -(NSString *)getSimpleSelectExpressionForDomain:(NSString *)theDomain;
 -(NSString *)getSelectExpressionForDomain:(NSString *)theDomain withDateItem:(NSString *)theDateItem beforeDate:(NSString *) theCompareDate;
 
@@ -53,11 +56,24 @@
     return processedCount;
 }
 
+/*
 +(void)pullAll
 {
     RepositoryHandler *handler = [[RepositoryHandler alloc] init];
     
-    NSArray *entityArray = [[NSArray alloc] initWithObjects:DOMAIN_SECTION, DOMAIN_CATEGORY, DOMAIN_SUBCATEGORY, DOMAIN_DISEASE, DOMAIN_PRESENTATION, DOMAIN_THERAPYGROUP, DOMAIN_THERAPY, DOMAIN_LINKEDNOTE, DOMAIN_LINKEDNOTEASSOCIATION, nil];
+    NSArray *entityArray = [[NSArray alloc] initWithObjects:
+                            DOMAIN_SECTION, 
+                            DOMAIN_CATEGORY, 
+                            DOMAIN_SUBCATEGORY, 
+                            DOMAIN_DISEASE, 
+                            DOMAIN_PATHOGEN,
+                            DOMAIN_PATHOGENGROUP,
+                            DOMAIN_PRESENTATION, 
+                            DOMAIN_THERAPYGROUP, 
+                            DOMAIN_THERAPY, 
+                            DOMAIN_LINKEDNOTE, 
+                            DOMAIN_LINKEDNOTEASSOCIATION, 
+                            nil];
     
     for (int i = 0; i < [entityArray count]; i++)
     {
@@ -69,7 +85,7 @@
             
             for (SimpleDBItem *item in selectResponse.items) 
             {
-                NSString *loadedUUID = [handler loadEntityWithItemName:item.name forDomain:[entityArray objectAtIndex:i]];
+                NSString *loadedUUID = [handler loadEntityWithAwsSimpleDbItemName:item.name forAwsSimpleDbDomain:[entityArray objectAtIndex:i]];
                 NSLog(@"Loaded %@", loadedUUID);
             }
             
@@ -93,37 +109,76 @@
     [dateFormatter release];
 
 }
+*/
 
-+(void)pullLatest
++(void)pullSince:(NSDate *)theLastSyncDate
 {
     RepositoryHandler *handler = [[RepositoryHandler alloc] init];
 
-    NSArray *entityArray = [[NSArray alloc] initWithObjects:DOMAIN_SECTION, DOMAIN_CATEGORY, DOMAIN_SUBCATEGORY, DOMAIN_DISEASE, DOMAIN_PRESENTATION, DOMAIN_THERAPYGROUP, DOMAIN_THERAPY, DOMAIN_LINKEDNOTE, DOMAIN_LINKEDNOTEASSOCIATION, nil];
+    NSArray *entityArray = [[NSArray alloc] initWithObjects:
+                            DOMAIN_SECTION, 
+                            DOMAIN_CATEGORY, 
+                            DOMAIN_SUBCATEGORY, 
+                            DOMAIN_DISEASE, 
+                            DOMAIN_PATHOGEN,
+                            DOMAIN_PATHOGENGROUP,
+                            DOMAIN_PRESENTATION, 
+                            DOMAIN_THERAPYGROUP, 
+                            DOMAIN_THERAPY, 
+                            DOMAIN_LINKEDNOTE, 
+                            DOMAIN_LINKEDNOTEASSOCIATION, 
+                            nil];
     
-    NSArray *entityDateArray = [[NSArray alloc] initWithObjects: SN_MODIFIEDDATE, CT_MODIFIEDDATE, SC_MODIFIEDDATE, DI_MODIFIEDDATE, PR_MODIFIEDDATE, TG_MODIFIEDDATE, TH_MODIFIEDDATE, LN_MODIFIEDDATE, LA_MODIFIEDDATE, nil]; 
+    NSArray *entityDateArray = [[NSArray alloc] initWithObjects: 
+                                SN_MODIFIEDDATE, 
+                                CT_MODIFIEDDATE, 
+                                SC_MODIFIEDDATE, 
+                                DI_MODIFIEDDATE, 
+                                PA_MODIFIEDDATE,
+                                PG_MODIFIEDDATE,
+                                PR_MODIFIEDDATE, 
+                                TG_MODIFIEDDATE, 
+                                TH_MODIFIEDDATE, 
+                                LN_MODIFIEDDATE, 
+                                LA_MODIFIEDDATE, 
+                                nil]; 
     
-    NSArray *entityBucketArray = [[NSArray alloc] initWithObjects: BUCKET_SECTION, BUCKET_CATEGORY, BUCKET_SUBCATEGORY, BUCKET_DISEASE, BUCKET_PRESENTATION, BUCKET_THERAPYGROUP, BUCKET_THERAPY, BUCKET_LINKEDNOTE, BUCKET_LINKEDNOTEASSOCIATION, nil];
+    NSArray *entityBucketArray = [[NSArray alloc] initWithObjects: 
+                                  BUCKET_SECTION, 
+                                  BUCKET_CATEGORY, 
+                                  BUCKET_SUBCATEGORY, 
+                                  BUCKET_DISEASE, 
+                                  BUCKET_PATHOGEN,
+                                  BUCKET_PATHOGENGROUP,
+                                  BUCKET_PRESENTATION, 
+                                  BUCKET_THERAPYGROUP, 
+                                  BUCKET_THERAPY, 
+                                  BUCKET_LINKEDNOTE, 
+                                  BUCKET_LINKEDNOTEASSOCIATION, 
+                                  nil];
 
     NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
 	[dateFormatter setTimeStyle:NSDateFormatterFullStyle];
 	[dateFormatter setDateFormat:DATETIMEFORMAT];
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSObject *refreshDateInfo = [defaults objectForKey:@"RepositoryRefreshDate"];
+//    NSObject *refreshDateInfo = [defaults objectForKey:@"RepositoryRefreshDate"]; // Get the datetime of the last refresh
+    
+    
     NSString *refreshDateString = nil;
     
-    if(nil != refreshDateInfo)
+    if(nil != theLastSyncDate)
     {
-        refreshDateString = (NSString *)refreshDateInfo;
+        refreshDateString = [dateFormatter stringFromDate:theLastSyncDate];
     }
-    
+        
     NSLog(@"Last Refresh: %@", refreshDateString);
     
     NSString *selectExpression;
     
     for (int i = 0; i < [entityArray count]; i++)
     {
-
+        
         if(nil == refreshDateString)
         {
             selectExpression = [handler getSimpleSelectExpressionForDomain: [entityArray objectAtIndex:i]];
@@ -132,59 +187,69 @@
         {
             selectExpression = [handler getSelectExpressionForDomain:[entityArray objectAtIndex:i] withDateItem:[entityDateArray objectAtIndex:i] beforeDate: refreshDateString];
         }
-        if([[entityArray objectAtIndex:i] stringValue] == DOMAIN_LINKEDNOTE) 
+        
+        
+        @try 
         {
-            @try 
-            {
-                SimpleDBSelectRequest  *selectRequest  = [[[SimpleDBSelectRequest alloc] initWithSelectExpression:selectExpression] autorelease];
-                SimpleDBSelectResponse *selectResponse = [[RepositoryConstants sdb] select:selectRequest];
+            SimpleDBSelectRequest  *selectRequest  = [[[SimpleDBSelectRequest alloc] initWithSelectExpression:selectExpression] autorelease];
+            SimpleDBSelectResponse *selectResponse = [[RepositoryConstants sdb] select:selectRequest];
+            
+            NSLog(@"Number of items to load:%d", [selectResponse.items count]);
+            
+            for (SimpleDBItem *item in selectResponse.items) 
+            {   
+                NSString *loadedUuid = [handler loadEntityWithAwsSimpleDbItemName:item.name forAwsSimpleDbDomain:[entityArray objectAtIndex:i]];
                 
-                NSLog(@"Number of items to load:%d", [selectResponse.items count]);
-                
-                for (SimpleDBItem *item in selectResponse.items) 
-                {            
-                    BDLinkedNote *document = [BDLinkedNote retrieveWithUUID:[handler loadEntityWithItemName:item.name forDomain:[entityArray objectAtIndex:i]]];
-                    
-                    if ((nil != document) && (nil != document.storageKey) && ([document.storageKey length] > 0))
+                if(nil != loadedUuid)
+                {
+                    if([[entityArray objectAtIndex:i] stringValue] == DOMAIN_LINKEDNOTE) 
                     {
-                        NSLog(@"Retrieving S3 Doc:%@", document.storageKey);
+                        //Load document text from S3
                         
-                        @try 
+                        BDLinkedNote *document = [BDLinkedNote retrieveWithUUID:loadedUuid];
+                        if ((nil != document) && (nil != document.storageKey) && ([document.storageKey length] > 0))
                         {
-                            S3GetObjectRequest  *s3ObjectRequest  = [[S3GetObjectRequest alloc] initWithKey:document.storageKey 
-                                                                                                 withBucket:[entityBucketArray objectAtIndex: i]];
+                            NSLog(@"Retrieving S3 Doc:%@", document.storageKey);
                             
-                            S3GetObjectResponse *s3ObjectResponse = [[RepositoryConstants s3] getObject:s3ObjectRequest];
-                            
-                            //Expects that this will be text
-                            NSLog(@"S3 content type = %@", s3ObjectResponse.contentType);
-                            
-                            if ([s3ObjectResponse.contentType isEqualToString:@"text/html"] || [s3ObjectResponse.contentType isEqualToString:@"text/plain"]) 
+                            @try 
                             {
-                                NSString *documentText = [[NSString alloc] initWithData:s3ObjectResponse.body encoding:NSUTF8StringEncoding];
+                                S3GetObjectRequest  *s3ObjectRequest  = [[S3GetObjectRequest alloc] initWithKey:document.storageKey 
+                                                                                                     withBucket:[entityBucketArray objectAtIndex: i]];
                                 
-                                NSLog(@"%@", documentText);
-                                document.documentText = documentText;
-                                [[DataController sharedInstance] saveContext];
-                            }                    
+                                S3GetObjectResponse *s3ObjectResponse = [[RepositoryConstants s3] getObject:s3ObjectRequest];
+                                
+                                //Expects that this will be text
+                                NSLog(@"S3 content type = %@", s3ObjectResponse.contentType);
+                                
+                                if ([s3ObjectResponse.contentType isEqualToString:@"text/html"] || [s3ObjectResponse.contentType isEqualToString:@"text/plain"]) 
+                                {
+                                    NSString *documentText = [[NSString alloc] initWithData:s3ObjectResponse.body encoding:NSUTF8StringEncoding];
+                                    
+                                    NSLog(@"%@", documentText);
+                                    document.documentText = documentText;
+                                    [[DataController sharedInstance] saveContext];
+                                }                    
+                            }
+                            @catch (AmazonServiceException *exception) 
+                            {
+                                NSLog(@"Exception = %@", exception);
+                            }
                         }
-                        @catch (AmazonServiceException *exception) 
-                        {
-                            NSLog(@"Exception = %@", exception);
-                        }
+                        
                     }
                 }
-            }
-            @catch (AmazonServiceException *exception) 
-            {
-                NSLog(@"Exception = %@", exception);
+
             }
         }
-
+        @catch (AmazonServiceException *exception) 
+        {
+            NSLog(@"Exception = %@", exception);
+        }
     }
+    
     [handler release];
 
-    [defaults setObject:[dateFormatter stringFromDate:[NSDate date]] forKey:@"RepositoryRefreshDate"];
+    [defaults setObject:[NSDate date] forKey:@"RepositoryRefreshDate"];
     
     [dateFormatter release];
 }
@@ -703,68 +768,18 @@
     
     NSString *itemName = linkedNote.uuid;
     NSLog(@"ItemName to push:%@", itemName);
-    NSMutableArray *attributes = [[NSMutableArray alloc] initWithCapacity:8];
     
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_UUID 
-                                                                    andValue:linkedNote.uuid 
-                                                                  andReplace:YES] autorelease]];
+    NSDictionary *attributeDictionary = [linkedNote propertyAttributeDictionary];
     
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_CREATEDDATE 
-                                                                    andValue:[dateFormatter stringFromDate:linkedNote.createdDate] 
-                                                                  andReplace:YES] autorelease]];
+    NSMutableArray *attributes = [[NSMutableArray alloc] initWithCapacity:[attributeDictionary count]];
     
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_CREATEDBY 
-                                                                     andValue:(nil == linkedNote.createdBy) ? @"" : linkedNote.createdBy
-                                                                  andReplace:YES] autorelease]];
-    
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_MODIFIEDDATE 
-                                                                    andValue:[dateFormatter stringFromDate:linkedNote.modifiedDate] 
-                                                                  andReplace:YES] autorelease]];
-    
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_MODIFIEDBY 
-                                                                     andValue:(nil == linkedNote.modifiedBy) ? @"" : linkedNote.modifiedBy
-                                                                  andReplace:YES] autorelease]];
-    
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_INUSEBY 
-                                                                     andValue:(nil == linkedNote.inUseBy) ? @"" : linkedNote.inUseBy
-                                                                   andReplace:YES] autorelease]];
-
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_DEPRECATED 
-                                                                    andValue:[Utility nsNumberBoolToString:linkedNote.deprecated]
-                                                                  andReplace:YES] autorelease]];
-    
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_SCHEMAVERSION 
-                                                                    andValue:[NSString stringWithFormat:@"%d", [linkedNote.schemaVersion intValue]]
-                                                                  andReplace:YES] autorelease]];
-    
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_DISPLAYORDER 
-                                                                     andValue:[NSString stringWithFormat:@"%d", [linkedNote.displayOrder intValue]]
-                                                                   andReplace:YES] autorelease]];
-    
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_LINKEDNOTEASSOCIATIONID 
-                                                                     andValue:(nil == linkedNote.linkedNoteAssociationId) ? @"" : linkedNote.linkedNoteAssociationId
-                                                                   andReplace:YES] autorelease]];
-    
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_PREVIEWTEXT 
-                                                                     andValue:(nil == linkedNote.previewText) ? @"" : linkedNote.previewText
-                                                                   andReplace:YES] autorelease]];
-    
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_SCOPEID 
-                                                                     andValue:(nil == linkedNote.scopeId) ? @"" : linkedNote.scopeId
-                                                                   andReplace:YES] autorelease]];
-    
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_SINGLEUSE 
-                                                                     andValue:[Utility nsNumberBoolToString:linkedNote.singleUse]
-                                                                   andReplace:YES] autorelease]];
-    
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_STORAGEKEY 
-                                                                     andValue:(nil == linkedNote.storageKey) ? @"" : linkedNote.storageKey
-                                                                   andReplace:YES] autorelease]];
-    
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:LN_DOCUMENTTEXT 
-                                                                     andValue:(nil == linkedNote.documentText) ? @"" : linkedNote.documentText
-                                                                   andReplace:YES] autorelease]];
-    
+    for (NSString *attributeKey in attributeDictionary)
+    {
+        NSString *attributeValue = [attributeDictionary valueForKey:attributeKey];
+        [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:attributeKey 
+                                                                         andValue:attributeValue 
+                                                                       andReplace:YES] autorelease]];
+    }
 
     SimpleDBPutAttributesRequest *sdbPutRequest = [[SimpleDBPutAttributesRequest alloc] 
                                                    initWithDomainName:DOMAIN_LINKEDNOTE 
@@ -855,7 +870,7 @@
 
 #pragma mark - Generic private methods
 
--(NSString *)loadEntityWithItemName:(NSString *)theItemName forDomain:(NSString *)theDomain
+-(NSString *)loadEntityWithAwsSimpleDbItemName:(NSString *)theItemName forAwsSimpleDbDomain:(NSString *)theDomain
 {
     NSString * documentUUID = nil;
     @try 
@@ -873,7 +888,19 @@
                                     forKey:attr.name];
         }
         
-        documentUUID = [BDLinkedNote loadWithAttributes:attributeDictionary withOverwriteNewerFlag:NO];        
+        if([theDomain isEqualToString:DOMAIN_CATEGORY]) { documentUUID = [BDCategory loadWithAttributes:attributeDictionary withOverwriteNewerFlag:NO]; }
+        else if([theDomain isEqualToString:DOMAIN_CHAPTER]) { documentUUID = [BDChapter loadWithAttributes:attributeDictionary withOverwriteNewerFlag:NO]; }
+        else if([theDomain isEqualToString:DOMAIN_DISEASE]) { documentUUID = [BDDisease loadWithAttributes:attributeDictionary withOverwriteNewerFlag:NO]; }
+        else if([theDomain isEqualToString:DOMAIN_LINKEDNOTE]) { documentUUID = [BDLinkedNote loadWithAttributes:attributeDictionary withOverwriteNewerFlag:NO]; }
+        else if([theDomain isEqualToString:DOMAIN_LINKEDNOTEASSOCIATION]) { documentUUID = [BDLinkedNoteAssociation loadWithAttributes:attributeDictionary withOverwriteNewerFlag:NO]; }
+        else if([theDomain isEqualToString:DOMAIN_PATHOGEN]) { documentUUID = [BDPathogen loadWithAttributes:attributeDictionary withOverwriteNewerFlag:NO]; }
+        else if([theDomain isEqualToString:DOMAIN_PATHOGENGROUP]) { documentUUID = [BDPathogenGroup loadWithAttributes:attributeDictionary withOverwriteNewerFlag:NO]; }
+        else if([theDomain isEqualToString:DOMAIN_PRESENTATION]) { documentUUID = [BDPresentation loadWithAttributes:attributeDictionary withOverwriteNewerFlag:NO]; }
+        else if([theDomain isEqualToString:DOMAIN_SECTION]) { documentUUID = [BDSection loadWithAttributes:attributeDictionary withOverwriteNewerFlag:NO]; }
+        else if([theDomain isEqualToString:DOMAIN_SUBCATEGORY]) { documentUUID = [BDSubcategory loadWithAttributes:attributeDictionary withOverwriteNewerFlag:NO]; }
+        else if([theDomain isEqualToString:DOMAIN_THERAPY]) { documentUUID = [BDTherapy loadWithAttributes:attributeDictionary withOverwriteNewerFlag:NO]; }
+        else if([theDomain isEqualToString:DOMAIN_THERAPYGROUP]) { documentUUID = [BDTherapyGroup loadWithAttributes:attributeDictionary withOverwriteNewerFlag:NO]; }
+        
     }
     @catch (AmazonServiceException *exception) {
         NSLog(@"Exception = %@", exception);

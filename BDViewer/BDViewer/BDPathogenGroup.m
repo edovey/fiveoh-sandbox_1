@@ -36,7 +36,7 @@
     pathogenGroup.modifiedDate = pathogenGroup.createdDate;
     pathogenGroup.modifiedBy = [[UIDevice currentDevice] uniqueIdentifier];
     pathogenGroup.inUseBy = nil;
-    pathogenGroup.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_PATHOGEN intValue]];
+    pathogenGroup.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_PATHOGENGROUP intValue]];
     pathogenGroup.deprecated = [NSNumber numberWithBool:NO];
     pathogenGroup.displayOrder = [NSNumber numberWithInt:-1];
     

@@ -8,11 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "RepositoryProtocol.h"
 
 #define SCHEMAVERSION_LINKEDNOTE @"1"
 #define DOMAIN_LINKEDNOTE @"bd_linkedNotes"
 #define BUCKET_LINKEDNOTE @"bdDataStore"
 #define ENTITYNAME_LINKEDNOTE @"BDLinkedNote"
+
+#define AWS_S3_PREFIX_LINKEDNOTE  @"bd~";
+#define AWS_S3_FILEEXTENSION_LINKEDNOTE  @".txt";
 
 #define LN_UUID @"ln_uuid"
 #define LN_CREATEDDATE @"ln_createdDate"
@@ -32,7 +36,7 @@
 
 #define S3_LN_DOCUMENTTEXT @"ln_documentText"
 
-@interface BDLinkedNote : NSManagedObject
+@interface BDLinkedNote : NSManagedObject <RepositoryProtocol>
 
 @property (nonatomic, retain) NSString  * uuid;
 @property (nonatomic, retain) NSDate    * createdDate;
@@ -54,8 +58,9 @@
 
 +(NSString *)create;
 +(BDLinkedNote *)retrieveWithUUID:(NSString *)theUUID;
-+(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
-         withOverwriteNewerFlag:(BOOL)overwriteNewer; 
+
+//+(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
+//         withOverwriteNewerFlag:(BOOL)overwriteNewer; 
 
 -(void)commitChanges;
 @end

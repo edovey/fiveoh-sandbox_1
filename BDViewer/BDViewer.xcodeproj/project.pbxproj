@@ -126,6 +126,7 @@
 		6ECA702E142CDB0B00C54BA7 /* RootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
 		6ECA7048142D3C4800C54BA7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow_iPad.xib; sourceTree = "<group>"; };
 		6ECA704B142D3CDA00C54BA7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow_iPhone.xib; sourceTree = "<group>"; };
+		CB5C1F5E14507472007E9A64 /* RepositoryProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepositoryProtocol.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +197,7 @@
 				6E2EA33C142B967A00908103 /* RepositoryConstants.m */,
 				6E2EA33D142B967A00908103 /* RepositoryHandler.h */,
 				6E2EA33E142B967A00908103 /* RepositoryHandler.m */,
+				CB5C1F5E14507472007E9A64 /* RepositoryProtocol.h */,
 			);
 			name = "Remote Repository";
 			sourceTree = "<group>";

@@ -9,10 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-
-#define SCHEMAVERSION_PATHOGEN @"1"
-#define DOMAIN_PATHOGEN @"bd_pathogenGroups"
-#define BUCKET_PATHOGEN @"bdDataStore"
+#define SCHEMAVERSION_PATHOGENGROUP @"1"
+#define DOMAIN_PATHOGENGROUP @"bd_pathogenGroups"
+#define BUCKET_PATHOGENGROUP @"bdDataStore"
 #define ENTITYNAME_PATHOGENGROUP @"BDPathogenGroup"
 
 #define PG_UUID @"pg_uuid"

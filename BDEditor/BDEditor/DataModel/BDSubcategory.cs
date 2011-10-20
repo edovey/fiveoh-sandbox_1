@@ -23,7 +23,7 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME_FRIENDLY = @"Subcategory";
 
         private const string UUID = @"sc_uuid";
-        private const string SCHEMAVERSION = @"sc_schemaversion";
+        private const string SCHEMAVERSION = @"sc_schemaVersion";
         private const string CREATEDBY = @"sc_createdBy";
         private const string CREATEDDATE = @"sc_createdDate";
         private const string MODIFIEDBY = @"sc_modfiedBy";

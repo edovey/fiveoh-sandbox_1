@@ -23,7 +23,7 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME_FRIENDLY = @"Pathogen Group";
         
         private const string UUID = @"pg_uuid";
-        private const string SCHEMAVERSION = @"pg_schemaversion";
+        private const string SCHEMAVERSION = @"pg_schemaVersion";
         private const string CREATEDBY = @"pg_createdBy";
         private const string CREATEDDATE = @"pg_createdDate";
         private const string MODIFIEDBY = @"pg_modifiedBy";

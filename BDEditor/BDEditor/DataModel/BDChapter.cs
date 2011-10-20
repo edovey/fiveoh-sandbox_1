@@ -21,14 +21,14 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME_FRIENDLY = @"Chapter";
 
         private const string UUID = @"ch_uuid";
-        private const string SCHEMAVERSION = @"ch_schemaversion";
-        private const string CREATEDBY = @"ch_createdby";
-        private const string CREATEDDATE = @"ch_createddate";
-        private const string MODIFIEDBY = @"ch_modifiedby";
-        private const string MODIFIEDDATE = @"ch_modifieddate";
+        private const string SCHEMAVERSION = @"ch_schemaVersion";
+        private const string CREATEDBY = @"ch_createdBy";
+        private const string CREATEDDATE = @"ch_createdDate";
+        private const string MODIFIEDBY = @"ch_modifiedBy";
+        private const string MODIFIEDDATE = @"ch_modifiedDate";
         private const string NAME = @"ch_name";
         private const string DEPRECATED = @"ch_deprecated";
-        private const string DISPLAYORDER = @"ch_displayorder";
+        private const string DISPLAYORDER = @"ch_displayOrder";
 
         /// <summary>
         /// Extended Create method that sets the created date and the schema version

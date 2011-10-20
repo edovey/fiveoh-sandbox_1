@@ -22,7 +22,7 @@ namespace BDEditor.DataModel
 
 
         private const string UUID = @"pr_uuid";
-        private const string SCHEMAVERSION = @"pr_schemaversion";
+        private const string SCHEMAVERSION = @"pr_schemaVersion";
         private const string CREATEDBY = @"pr_createdBy";
         private const string CREATEDDATE = @"pr_createdDate";
         private const string MODIFIEDBY = @"pr_modifiedBy";

@@ -26,7 +26,7 @@ namespace BDEditor.DataModel
         public const string PROPERTYNAME_DURATION = @"Duration";
 
         private const string UUID = @"th_uuid";
-        private const string SCHEMAVERSION = @"th_schemaversion";
+        private const string SCHEMAVERSION = @"th_schemaVersion";
         private const string CREATEDBY = @"th_createdBy";
         private const string CREATEDDATE = @"th_createdDate";
         private const string MODIFIEDBY = @"th_modifiedBy";

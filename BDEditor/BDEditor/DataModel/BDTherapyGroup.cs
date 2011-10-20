@@ -24,7 +24,7 @@ namespace BDEditor.DataModel
 
 
         private const string UUID = @"tg_uuid";
-        private const string SCHEMAVERSION = @"tg_schemaversion";
+        private const string SCHEMAVERSION = @"tg_schemaVersion";
         private const string CREATEDBY = @"tg_createdBy";
         private const string CREATEDDATE = @"tg_createdDate";
         private const string MODIFIEDBY = @"tg_modifiedBy";

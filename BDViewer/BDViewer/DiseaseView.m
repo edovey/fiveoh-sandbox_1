@@ -8,10 +8,12 @@
 
 #import "DiseaseView.h"
 #import "BDDisease.h"
+#import "PresentationView.h"
 
 @implementation DiseaseView
 @synthesize dataTableView;
 @synthesize diseaseArray;
+@synthesize parentId;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,12 +38,13 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.title = @"Diseases";
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    diseaseArray = [BDDisease retrieveAll];
+    diseaseArray = [NSArray arrayWithArray:[BDDisease retrieveAllWithParentUUID:parentId]];
 }
 
 - (void)viewDidUnload
@@ -61,6 +64,7 @@
 - (void)dealloc {
     [dataTableView release];
     [diseaseArray release];
+    [parentId release];
     [super dealloc];
 }
 #pragma mark - TableView DataSource
@@ -91,11 +95,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    /*
     PresentationView *vwPresentation = [[PresentationView alloc] initWithNibName:@"PresentationView" bundle:nil];
+    vwPresentation.parentId = [[diseaseArray objectAtIndex:indexPath.row] uuid];
     [self.navigationController pushViewController:vwPresentation animated:YES];
     [vwPresentation release];
-     */
 }
 
 @end

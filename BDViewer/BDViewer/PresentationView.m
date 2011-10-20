@@ -1,19 +1,19 @@
 //
-//  CategoryView.m
+//  PresentationView.m
 //  BDViewer
 //
-//  Created by Liz Dovey on 11-10-19.
+//  Created by Liz Dovey on 11-10-20.
 //  Copyright (c) 2011 875953 Alberta, Inc. All rights reserved.
 //
 
-#import "CategoryView.h"
-#import "BDCategory.h"
-#import "DiseaseView.h"
+#import "PresentationView.h"
+#import "BDPresentation.h"
 
-@implementation CategoryView
-@synthesize dataTableView;
-@synthesize categoryArray;
+@implementation PresentationView
 @synthesize parentId;
+@synthesize dataTableView;
+@synthesize presentationArray;
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -29,20 +29,21 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = @"Categories";
+    self.title = @"Presentations";
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    categoryArray = [NSArray arrayWithArray:[BDCategory retrieveAllWithParentUUID:parentId]];
+    presentationArray = [NSArray arrayWithArray:[BDPresentation retrieveAllWithParentUUID:parentId]];
 }
 
 - (void)viewDidUnload
 {
+    [parentId release];
+    [self setDataTableView:nil];
     [dataTableView release];
     dataTableView = nil;
-    [self setDataTableView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -55,8 +56,8 @@
 }
 
 - (void)dealloc {
-    [categoryArray release];
     [dataTableView release];
+    [presentationArray release];
     [parentId release];
     [super dealloc];
 }
@@ -68,7 +69,7 @@
 }
 
 - (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [categoryArray count];
+    return [presentationArray count];
 }
 
 #pragma mark - TableView Delegate
@@ -81,17 +82,21 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
-    cell.textLabel.text = [[categoryArray objectAtIndex:indexPath.row] name ];
+    cell.textLabel.text = [[presentationArray objectAtIndex:indexPath.row] name ];
+    //TODO:
     // Show the disclosure indicator if the section has categories
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-     DiseaseView *vwDisease = [[DiseaseView alloc] initWithNibName:@"DiseaseView" bundle:nil];
-    vwDisease.parentId = [[categoryArray objectAtIndex:indexPath.row] uuid];
-     [self.navigationController pushViewController:vwDisease animated:YES];
-     [vwDisease release];
+    /*
+     TherapyView *vwTherapy = [[TherapyView alloc] initWithNibName:@"TherapyView" bundle:nil];
+     vwTherapy.parentId = [presentationArray objectAtIndex:indexPath.row] uuid]];
+     [self.navigationController pushViewController:vwTherapy animated:YES];
+     [vwTherapy release];
+     */
 }
 
 @end
+

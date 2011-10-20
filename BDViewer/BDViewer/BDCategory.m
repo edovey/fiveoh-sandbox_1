@@ -134,6 +134,12 @@
     return categoriesInSection;
 }
 
++(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID
+{
+    NSArray *entities = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_CATEGORY withKey:CT_SECTIONID withValue:theUUID withMOC:nil];
+    return entities;
+}
+
 -(NSString *)generateStorageKey
 {
     return [NSString stringWithFormat:@"bd~%@.txt", self.uuid];

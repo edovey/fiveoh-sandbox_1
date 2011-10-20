@@ -15,15 +15,6 @@
 @synthesize sectionArray;
 @synthesize parentId;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -38,13 +29,15 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.title = @"Sections";
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 -(void)viewWillAppear:(BOOL)animated 
 {
     [super viewWillAppear:animated];
-    sectionArray = [NSArray arrayWithArray:BDSection.retrieveAll];
-    //sectionArray = [NSArray arrayWithArray:BDSection.retrieveAllWithParentUUID:parentId];
+    self.sectionArray = [NSArray arrayWithArray:[BDSection retrieveAll]];
+//    sectionArray = [NSArray arrayWithArray:[BDSection retrieveAllWithParentUUID:parentId]];
 }
 
 - (void)viewDidUnload

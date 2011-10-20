@@ -58,12 +58,13 @@
             this.headerPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.headerPanel.Location = new System.Drawing.Point(0, 0);
             this.headerPanel.Name = "headerPanel";
-            this.headerPanel.Size = new System.Drawing.Size(1148, 39);
+            this.headerPanel.Size = new System.Drawing.Size(1192, 39);
             this.headerPanel.TabIndex = 0;
             // 
             // btnSyncWithReplaceLocal
             // 
-            this.btnSyncWithReplaceLocal.Location = new System.Drawing.Point(794, 10);
+            this.btnSyncWithReplaceLocal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSyncWithReplaceLocal.Location = new System.Drawing.Point(919, 10);
             this.btnSyncWithReplaceLocal.Name = "btnSyncWithReplaceLocal";
             this.btnSyncWithReplaceLocal.Size = new System.Drawing.Size(261, 23);
             this.btnSyncWithReplaceLocal.TabIndex = 4;
@@ -74,15 +75,16 @@
             // lbLastSyncDateTime
             // 
             this.lbLastSyncDateTime.AutoSize = true;
-            this.lbLastSyncDateTime.Location = new System.Drawing.Point(479, 15);
+            this.lbLastSyncDateTime.Location = new System.Drawing.Point(404, 15);
             this.lbLastSyncDateTime.Name = "lbLastSyncDateTime";
             this.lbLastSyncDateTime.Size = new System.Drawing.Size(83, 13);
             this.lbLastSyncDateTime.TabIndex = 3;
             this.lbLastSyncDateTime.Text = "<Never Sync\'d>";
+            this.lbLastSyncDateTime.Click += new System.EventHandler(this.lbLastSyncDateTime_Click);
             // 
             // btnSync
             // 
-            this.btnSync.Location = new System.Drawing.Point(398, 10);
+            this.btnSync.Location = new System.Drawing.Point(323, 10);
             this.btnSync.Name = "btnSync";
             this.btnSync.Size = new System.Drawing.Size(75, 23);
             this.btnSync.TabIndex = 2;
@@ -93,11 +95,11 @@
             // createTestDataButton
             // 
             this.createTestDataButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.createTestDataButton.Location = new System.Drawing.Point(1061, 10);
+            this.createTestDataButton.Location = new System.Drawing.Point(809, 10);
             this.createTestDataButton.Name = "createTestDataButton";
-            this.createTestDataButton.Size = new System.Drawing.Size(75, 23);
+            this.createTestDataButton.Size = new System.Drawing.Size(104, 23);
             this.createTestDataButton.TabIndex = 1;
-            this.createTestDataButton.Text = "Test Data";
+            this.createTestDataButton.Text = "Load Seed Data";
             this.createTestDataButton.UseVisualStyleBackColor = true;
             this.createTestDataButton.Click += new System.EventHandler(this.createTestDataButton_Click);
             // 
@@ -105,14 +107,15 @@
             // 
             this.chapterDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.chapterDropDown.FormattingEnabled = true;
-            this.chapterDropDown.Location = new System.Drawing.Point(3, 12);
+            this.chapterDropDown.Location = new System.Drawing.Point(6, 12);
             this.chapterDropDown.Name = "chapterDropDown";
-            this.chapterDropDown.Size = new System.Drawing.Size(379, 21);
+            this.chapterDropDown.Size = new System.Drawing.Size(298, 21);
             this.chapterDropDown.TabIndex = 0;
             this.chapterDropDown.SelectedIndexChanged += new System.EventHandler(this.listDropDown_SelectedIndexChanged);
             // 
             // splitContainer1
             // 
+            this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 39);
             this.splitContainer1.Name = "splitContainer1";
@@ -125,8 +128,10 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(4);
-            this.splitContainer1.Size = new System.Drawing.Size(1148, 661);
-            this.splitContainer1.SplitterDistance = 378;
+            this.splitContainer1.Size = new System.Drawing.Size(1192, 927);
+            this.splitContainer1.SplitterDistance = 298;
+            this.splitContainer1.SplitterIncrement = 10;
+            this.splitContainer1.SplitterWidth = 6;
             this.splitContainer1.TabIndex = 1;
             this.splitContainer1.Leave += new System.EventHandler(this.splitContainer1_Leave);
             // 
@@ -135,7 +140,7 @@
             this.chapterTree.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chapterTree.Location = new System.Drawing.Point(4, 4);
             this.chapterTree.Name = "chapterTree";
-            this.chapterTree.Size = new System.Drawing.Size(370, 653);
+            this.chapterTree.Size = new System.Drawing.Size(286, 915);
             this.chapterTree.TabIndex = 0;
             this.chapterTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.sectionTree_AfterSelect);
             // 
@@ -151,7 +156,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1148, 700);
+            this.ClientSize = new System.Drawing.Size(1192, 966);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.headerPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

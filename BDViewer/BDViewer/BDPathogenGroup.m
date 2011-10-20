@@ -36,7 +36,7 @@
     pathogenGroup.modifiedDate = pathogenGroup.createdDate;
     pathogenGroup.modifiedBy = [[UIDevice currentDevice] uniqueIdentifier];
     pathogenGroup.inUseBy = nil;
-    pathogenGroup.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_PATHOGEN intValue]];
+    pathogenGroup.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_PATHOGENGROUP intValue]];
     pathogenGroup.deprecated = [NSNumber numberWithBool:NO];
     pathogenGroup.displayOrder = [NSNumber numberWithInt:-1];
     
@@ -59,7 +59,7 @@
                                                                       targetMOC:nil];
 }
 
-+(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID parentPropertyName:(NSString *)thePropertyName
++(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID
 {
     NSArray *entities = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_PATHOGENGROUP withKey:PG_PRESENTATIONID withValue:theUUID withMOC:nil];
     return entities;

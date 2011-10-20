@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 #define SCHEMAVERSION_CATEGORY @"1"
-#define DOMAIN_CATEGORY @"bd_therapyGroups"
+#define DOMAIN_CATEGORY @"bd_categories"
 #define BUCKET_CATEGORY @"bdDataStore"
 #define ENTITYNAME_CATEGORY @"BDCategory"
 
@@ -43,6 +43,7 @@
 +(NSString *)create;
 +(BDCategory *)retrieveWithUUID:(NSString *)theUUID;
 +(NSArray *)retrieveAll;
++(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID;
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
          withOverwriteNewerFlag:(BOOL)overwriteNewer; 
 

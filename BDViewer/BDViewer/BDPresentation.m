@@ -60,7 +60,7 @@
                                                                       targetMOC:nil];
 }
 
-+(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID parentPropertyName:(NSString *)thePropertyName
++(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID
 {
     NSArray *presentationsInDisease = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_PRESENTATION withKey:PR_DISEASEID withValue:theUUID withMOC:nil];
     return presentationsInDisease;

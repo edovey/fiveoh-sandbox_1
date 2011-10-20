@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RootViewController : UITableViewController
+@interface RootViewController : UIViewController
 
+
+-(IBAction)openTouched:(id)sender;
+-(IBAction)loadTouched:(id)sender;
 @end

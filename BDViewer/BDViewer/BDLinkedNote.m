@@ -71,6 +71,14 @@
                                                                           targetMOC:nil];
 }
 
++(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID
+{
+    NSArray *entities = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_LINKEDNOTE withKey:LN_LINKEDNOTEASSOCIATIONID withValue:theUUID withMOC:nil];
+    return entities;
+}
+
+
+
 //Returns the uuid of the object
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
          withOverwriteNewerFlag:(BOOL)overwriteNewer
@@ -135,6 +143,34 @@
     [[DataController sharedInstance] saveContext];
     
     return uuid;
+}
+
+-(NSDictionary *)propertyAttributeDictionary
+{
+    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+	[dateFormatter setTimeStyle:NSDateFormatterFullStyle];
+	[dateFormatter setDateFormat:DATETIMEFORMAT];
+    
+    NSMutableDictionary *attributeDictionary = [[[NSMutableDictionary alloc] init] autorelease];
+    
+    [attributeDictionary setValue:self.uuid forKey:LN_UUID];
+    [attributeDictionary setValue:(nil == self.createdBy) ? @"" : self.createdBy forKey:LN_CREATEDBY];
+    [attributeDictionary setValue:[dateFormatter stringFromDate:self.createdDate] forKey:LN_CREATEDDATE];
+    [attributeDictionary setValue:(nil == self.modifiedBy) ? @"" : self.modifiedBy forKey:LN_MODIFIEDBY];
+    [attributeDictionary setValue:[dateFormatter stringFromDate:self.modifiedDate] forKey:LN_MODIFIEDDATE];
+    [attributeDictionary setValue:(nil == self.inUseBy) ? @"" : self.inUseBy forKey:LN_INUSEBY];
+    [attributeDictionary setValue:[Utility nsNumberBoolToString:self.deprecated] forKey:LN_DEPRECATED];
+    [attributeDictionary setValue:[NSString stringWithFormat:@"%d", [self.schemaVersion intValue]] forKey:LN_SCHEMAVERSION];
+    [attributeDictionary setValue:[NSString stringWithFormat:@"%d", [self.displayOrder intValue]] forKey:LN_DISPLAYORDER];
+    [attributeDictionary setValue:(nil == self.linkedNoteAssociationId) ? @"" : self.linkedNoteAssociationId forKey:LN_LINKEDNOTEASSOCIATIONID];
+    [attributeDictionary setValue:(nil == self.previewText) ? @"" : self.previewText forKey:LN_PREVIEWTEXT];
+    [attributeDictionary setValue:(nil == self.scopeId) ? @"" : self.scopeId forKey:LN_SCOPEID];
+    [attributeDictionary setValue:[Utility nsNumberBoolToString:self.singleUse] forKey:LN_SINGLEUSE];
+    [attributeDictionary setValue:(nil == self.storageKey) ? @"" : self.storageKey forKey:LN_STORAGEKEY];
+    
+    [dateFormatter release];
+    
+    return attributeDictionary;
 }
 
 -(NSString *)generateStorageKey

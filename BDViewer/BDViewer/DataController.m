@@ -191,23 +191,26 @@
 		[request setReturnsObjectsAsFaults:NO];
 	}
 	
-    if (orderName) 
-	{
-        NSSortDescriptor *sd = [[NSSortDescriptor alloc] initWithKey:orderName
-                                                           ascending:orderAscending];
-        
-        NSArray *sortDescriptors = [NSArray arrayWithObject:sd];
-        
-        [request setSortDescriptors:sortDescriptors];
-        [sd release];
-        
-    }
+//    if (orderName) 
+//	{
+//        NSSortDescriptor *sd = [[NSSortDescriptor alloc] initWithKey:orderName
+//                                                           ascending:orderAscending];
+//        
+//        NSArray *sortDescriptors = [NSArray arrayWithObject:sd];
+//        
+//        [request setSortDescriptors:sortDescriptors];
+//        [sd release];
+//        
+//    }
     
     NSError *error;
-	NSMutableArray *mutableFetchResults = [[moc executeFetchRequest:request error:&error] mutableCopy];
+	NSArray *fetchResults = [NSArray arrayWithArray:[moc executeFetchRequest:request error:&error]];
+//    NSLog(@"Error in fetch: %@", &error);
     [request release];
     
-	return [mutableFetchResults autorelease];
+    NSMutableArray *mutableResults = [NSMutableArray arrayWithArray:fetchResults];
+    
+	return mutableResults;
 }
 
 #pragma mark - Core Data stack
@@ -242,7 +245,7 @@
     {
         return __managedObjectModel;
     }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"fiveoh-one" withExtension:@"momd"];
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"bdviewer" withExtension:@"momd"];
     __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];    
     return __managedObjectModel;
 }
@@ -258,7 +261,7 @@
         return __persistentStoreCoordinator;
     }
     
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"fiveoh-one.sqlite"];
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"bdviewer.sqlite"];
     
     NSError *error = nil;
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];

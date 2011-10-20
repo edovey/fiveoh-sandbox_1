@@ -43,7 +43,7 @@
 
 +(NSString *)create;
 +(BDPathogen *)retrieveWithUUID:(NSString *)theUUID;
-+(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID parentPropertyName:(NSString *)thePropertyName;
++(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID;
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
          withOverwriteNewerFlag:(BOOL)overwriteNewer; 
 

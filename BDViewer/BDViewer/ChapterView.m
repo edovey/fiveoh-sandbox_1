@@ -9,20 +9,11 @@
 #import "ChapterView.h"
 #import "BDChapter.h"
 #import "SectionView.h"
+#import "DataController.h"
 
 @implementation ChapterView
 @synthesize dataTableView;
 @synthesize chapterArray;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-        
-    }
-    return self;
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -38,12 +29,15 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    self.title = @"Chapters";
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
-//    chapterArray = BDChapter.
+    [super viewWillAppear:animated];    
+    chapterArray = [NSArray arrayWithArray:[BDChapter retrieveAll]];
 }
 
 - (void)viewDidUnload
@@ -52,12 +46,6 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (void)dealloc {

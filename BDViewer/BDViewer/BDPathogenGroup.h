@@ -9,10 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-
-#define SCHEMAVERSION_PATHOGEN @"1"
-#define DOMAIN_PATHOGEN @"bd_pathogenGroups"
-#define BUCKET_PATHOGEN @"bdDataStore"
+#define SCHEMAVERSION_PATHOGENGROUP @"1"
+#define DOMAIN_PATHOGENGROUP @"bd_pathogenGroups"
+#define BUCKET_PATHOGENGROUP @"bdDataStore"
 #define ENTITYNAME_PATHOGENGROUP @"BDPathogenGroup"
 
 #define PG_UUID @"pg_uuid"
@@ -42,7 +41,7 @@
 
 +(NSString *)create;
 +(BDPathogenGroup *)retrieveWithUUID:(NSString *)theUUID;
-+(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID parentPropertyName:(NSString *)thePropertyName;
++(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID;
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
          withOverwriteNewerFlag:(BOOL)overwriteNewer; 
 

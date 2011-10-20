@@ -13,6 +13,5 @@
 }
 
 +(int)pushQueue;
-+(void)pullAll;
-+(void)pullLatest;
++(void)pullSince:(NSDate *)theLastSyncDate;
 @end

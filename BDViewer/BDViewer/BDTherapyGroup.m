@@ -60,7 +60,7 @@
                                                                       targetMOC:nil];
 }
 
-+(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID parentPropertyName:(NSString *)thePropertyName
++(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID
 {
     NSArray *entities = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_THERAPYGROUP withKey:TG_PATHOGENGROUPID withValue:theUUID withMOC:nil];
     return entities;

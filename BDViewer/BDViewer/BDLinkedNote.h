@@ -58,9 +58,9 @@
 
 +(NSString *)create;
 +(BDLinkedNote *)retrieveWithUUID:(NSString *)theUUID;
-
-//+(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
-//         withOverwriteNewerFlag:(BOOL)overwriteNewer; 
++(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID;
++(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
+         withOverwriteNewerFlag:(BOOL)overwriteNewer; 
 
 -(void)commitChanges;
 @end

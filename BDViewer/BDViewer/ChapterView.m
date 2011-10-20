@@ -29,13 +29,14 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    self.title = @"Chapters";
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
-    NSManagedObjectContext *moc = [[DataController sharedInstance] managedObjectContext];
-    
+    [super viewWillAppear:animated];    
     chapterArray = [NSArray arrayWithArray:[BDChapter retrieveAll]];
 }
 

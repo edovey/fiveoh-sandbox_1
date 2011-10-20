@@ -202,7 +202,7 @@
                 
                 if(nil != loadedUuid)
                 {
-                    if([[entityArray objectAtIndex:i] stringValue] == DOMAIN_LINKEDNOTE) 
+                    if([entityArray objectAtIndex:i]  == DOMAIN_LINKEDNOTE) 
                     {
                         //Load document text from S3
                         

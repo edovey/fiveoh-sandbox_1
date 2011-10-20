@@ -12,4 +12,5 @@
 
 
 -(IBAction)openTouched:(id)sender;
+-(IBAction)loadTouched:(id)sender;
 @end

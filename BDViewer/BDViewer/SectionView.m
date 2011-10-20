@@ -43,8 +43,8 @@
 -(void)viewWillAppear:(BOOL)animated 
 {
     [super viewWillAppear:animated];
-    sectionArray = [NSArray arrayWithArray:BDSection.retrieveAll];
-    //sectionArray = [NSArray arrayWithArray:BDSection.retrieveAllWithParentUUID:parentId];
+    //sectionArray = [NSArray arrayWithArray:BDSection.retrieveAll];
+    sectionArray = [NSArray arrayWithArray:[BDSection retrieveAllWithParentUUID:parentId]];
 }
 
 - (void)viewDidUnload

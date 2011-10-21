@@ -68,7 +68,7 @@
 
 +(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID
 {
-    NSArray *diseasesInCategory = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_DISEASE withKey:DI_CATEGORYID withValue:theUUID withMOC:nil];
+    NSArray *diseasesInCategory = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_DISEASE withKey:@"categoryId" withValue:theUUID orderedBy:@"displayOrder" withMOC:nil];
     return diseasesInCategory;
 }
 

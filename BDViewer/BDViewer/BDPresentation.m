@@ -62,7 +62,7 @@
 
 +(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID
 {
-    NSArray *presentationsInDisease = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_PRESENTATION withKey:PR_DISEASEID withValue:theUUID withMOC:nil];
+    NSArray *presentationsInDisease = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_PRESENTATION withKey:@"diseaseId" withValue:theUUID orderedBy: @"displayOrder" withMOC:nil];
     return presentationsInDisease;
 }
 

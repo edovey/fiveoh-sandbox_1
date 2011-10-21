@@ -124,19 +124,19 @@
 
 +(NSArray *) retrieveAll 
 {
-    NSMutableArray * allCategories = [[DataController sharedInstance] allInstancesOf:ENTITYNAME_CATEGORY orderedBy:CT_DISPLAYORDER loadData:false targetMOC:nil];
+    NSMutableArray * allCategories = [[DataController sharedInstance] allInstancesOf:ENTITYNAME_CATEGORY orderedBy:@"displayOrder" loadData:false targetMOC:nil];
     return [NSArray arrayWithArray:allCategories];
 }
 
 +(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID parentPropertyName:(NSString *)thePropertyName
 {
-    NSArray *categoriesInSection = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_CATEGORY withKey:CT_SECTIONID withValue:theUUID withMOC:nil];
+    NSArray *categoriesInSection = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_CATEGORY withKey:@"sectionId" withValue:theUUID orderedBy:@"displayOrder" withMOC:nil];
     return categoriesInSection;
 }
 
 +(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID
 {
-    NSArray *entities = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_CATEGORY withKey:CT_SECTIONID withValue:theUUID withMOC:nil];
+    NSArray *entities = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_CATEGORY withKey:@"sectionId" withValue:theUUID orderedBy:@"displayOrder" withMOC:nil];
     return entities;
 }
 

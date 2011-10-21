@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 #define SCHEMAVERSION_DISEASE @"1"
-#define DOMAIN_DISEASE @"bd_diseases"
+#define DOMAIN_DISEASE @"bd_1_diseases"
 #define BUCKET_DISEASE @"bdDataStore"
 #define ENTITYNAME_DISEASE @"BDDisease"
 

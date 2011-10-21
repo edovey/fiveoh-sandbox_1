@@ -73,7 +73,7 @@
 
 +(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID
 {
-    NSArray *entities = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_LINKEDNOTE withKey:LN_LINKEDNOTEASSOCIATIONID withValue:theUUID withMOC:nil];
+    NSArray *entities = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_LINKEDNOTE withKey:@"linkedNoteAssociationId" withValue:theUUID orderedBy: @"displayOrder" withMOC:nil];
     return entities;
 }
 

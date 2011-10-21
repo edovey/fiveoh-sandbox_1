@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 #define SCHEMAVERSION_PRESENTATION @"1"
-#define DOMAIN_PRESENTATION @"bd_presentations"
+#define DOMAIN_PRESENTATION @"bd_1_presentations"
 #define BUCKET_PRESENTATION @"bdDataStore"
 #define ENTITYNAME_PRESENTATION @"BDPresentation"
 

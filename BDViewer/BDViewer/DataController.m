@@ -118,7 +118,8 @@
 
 - (NSArray *)retrieveManagedObjectsForValue:(NSString *)theEntityName 
                                            withKey:(NSString *)theKey 
-                                         withValue:(NSString *)theValue 
+                                         withValue:(NSString *)theValue
+                                         orderedBy:(NSString *)orderName 
                                            withMOC:(NSManagedObjectContext *)theMOC
 {
    	if (nil == theMOC)
@@ -138,6 +139,18 @@
 	[req setEntity:entity];	
 	[req setPredicate:pred];
 	
+    if (orderName) 
+	{
+        NSSortDescriptor *sd = [[NSSortDescriptor alloc] initWithKey:orderName
+                                                           ascending:YES];
+        
+        NSArray *sortDescriptors = [NSArray arrayWithObject:sd];
+        
+        [req setSortDescriptors:sortDescriptors];
+        [sd release];
+        
+    }
+    
 	// We declare an NSError and handle errors by raising an exception,
 	// just like in the previous method
 	
@@ -191,21 +204,20 @@
 		[request setReturnsObjectsAsFaults:NO];
 	}
 	
-//    if (orderName) 
-//	{
-//        NSSortDescriptor *sd = [[NSSortDescriptor alloc] initWithKey:orderName
-//                                                           ascending:orderAscending];
-//        
-//        NSArray *sortDescriptors = [NSArray arrayWithObject:sd];
-//        
-//        [request setSortDescriptors:sortDescriptors];
-//        [sd release];
-//        
-//    }
+    if (orderName) 
+	{
+        NSSortDescriptor *sd = [[NSSortDescriptor alloc] initWithKey:orderName
+                                                           ascending:orderAscending];
+        
+        NSArray *sortDescriptors = [NSArray arrayWithObject:sd];
+        
+        [request setSortDescriptors:sortDescriptors];
+        [sd release];
+        
+    }
     
     NSError *error;
 	NSArray *fetchResults = [NSArray arrayWithArray:[moc executeFetchRequest:request error:&error]];
-//    NSLog(@"Error in fetch: %@", &error);
     [request release];
     
     NSMutableArray *mutableResults = [NSMutableArray arrayWithArray:fetchResults];

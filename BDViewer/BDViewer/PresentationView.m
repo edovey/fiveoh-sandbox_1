@@ -35,7 +35,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    presentationArray = [NSArray arrayWithArray:[BDPresentation retrieveAllWithParentUUID:parentId]];
+    self.presentationArray = [NSArray arrayWithArray:[BDPresentation retrieveAllWithParentUUID:parentId]];
 }
 
 - (void)viewDidUnload
@@ -69,7 +69,7 @@
 }
 
 - (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [presentationArray count];
+    return [self.presentationArray count];
 }
 
 #pragma mark - TableView Delegate
@@ -82,7 +82,7 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
-    cell.textLabel.text = [[presentationArray objectAtIndex:indexPath.row] name ];
+    cell.textLabel.text = [[self.presentationArray objectAtIndex:indexPath.row] name ];
     //TODO:
     // Show the disclosure indicator if the section has categories
     return cell;
@@ -92,7 +92,7 @@
 {
     /*
      TherapyView *vwTherapy = [[TherapyView alloc] initWithNibName:@"TherapyView" bundle:nil];
-     vwTherapy.parentId = [presentationArray objectAtIndex:indexPath.row] uuid]];
+     vwTherapy.parentId = [self.presentationArray objectAtIndex:indexPath.row] uuid]];
      [self.navigationController pushViewController:vwTherapy animated:YES];
      [vwTherapy release];
      */

@@ -126,13 +126,13 @@
 
 +(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID
 {
-    NSArray *sections = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_SECTION withKey:SN_CHAPTERID withValue:theUUID withMOC:nil];
+    NSArray *sections = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_SECTION withKey:@"chapterId" withValue:theUUID orderedBy:@"displayOrder" withMOC:nil];
     return sections;
 }
 
 +(NSArray *)retrieveAll
 {
-    NSMutableArray *sections = [[DataController sharedInstance] allInstancesOf:ENTITYNAME_SECTION orderedBy:SN_DISPLAYORDER loadData:false targetMOC:nil];
+    NSMutableArray *sections = [[DataController sharedInstance] allInstancesOf:ENTITYNAME_SECTION orderedBy:@"displayOrder" loadData:false targetMOC:nil];
     return [NSArray arrayWithArray:sections];
 }
 

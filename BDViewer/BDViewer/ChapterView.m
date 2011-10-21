@@ -37,7 +37,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];    
-    chapterArray = [NSArray arrayWithArray:[BDChapter retrieveAll]];
+    self.chapterArray = [NSArray arrayWithArray:[BDChapter retrieveAll]];
 }
 
 - (void)viewDidUnload
@@ -61,7 +61,7 @@
 }
 
 - (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [chapterArray count];
+    return [self.chapterArray count];
 }
 
 #pragma mark - TableView Delegate
@@ -74,7 +74,7 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
-    cell.textLabel.text = [[chapterArray objectAtIndex:indexPath.row] name];
+    cell.textLabel.text = [[self.chapterArray objectAtIndex:indexPath.row] name];
     //TODO:
     // Show a disclosure indicator if the Chapter has Sections
     return cell;
@@ -83,7 +83,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
      SectionView *vwSection = [[SectionView alloc] initWithNibName:@"SectionView" bundle:nil];
-    vwSection.parentId = [[chapterArray objectAtIndex:indexPath.row] uuid];
+    vwSection.parentId = [[self.chapterArray objectAtIndex:indexPath.row] uuid];
      [self.navigationController pushViewController:vwSection animated:YES];
      [vwSection release];
 }

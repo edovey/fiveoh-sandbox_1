@@ -11,7 +11,7 @@
 #import "RepositoryProtocol.h"
 
 #define SCHEMAVERSION_LINKEDNOTE @"1"
-#define DOMAIN_LINKEDNOTE @"bd_linkedNotes"
+#define DOMAIN_LINKEDNOTE @"bd_1_linkedNotes"
 #define BUCKET_LINKEDNOTE @"bdDataStore"
 #define ENTITYNAME_LINKEDNOTE @"BDLinkedNote"
 

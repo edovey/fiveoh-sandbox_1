@@ -35,7 +35,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    categoryArray = [NSArray arrayWithArray:[BDCategory retrieveAllWithParentUUID:parentId]];
+    self.categoryArray = [NSArray arrayWithArray:[BDCategory retrieveAllWithParentUUID:parentId]];
 }
 
 - (void)viewDidUnload
@@ -68,7 +68,7 @@
 }
 
 - (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [categoryArray count];
+    return [self.categoryArray count];
 }
 
 #pragma mark - TableView Delegate
@@ -81,7 +81,7 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
-    cell.textLabel.text = [[categoryArray objectAtIndex:indexPath.row] name ];
+    cell.textLabel.text = [[self.categoryArray objectAtIndex:indexPath.row] name ];
     // Show the disclosure indicator if the section has categories
     return cell;
 }
@@ -89,7 +89,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
      DiseaseView *vwDisease = [[DiseaseView alloc] initWithNibName:@"DiseaseView" bundle:nil];
-    vwDisease.parentId = [[categoryArray objectAtIndex:indexPath.row] uuid];
+    vwDisease.parentId = [[self.categoryArray objectAtIndex:indexPath.row] uuid];
      [self.navigationController pushViewController:vwDisease animated:YES];
      [vwDisease release];
 }

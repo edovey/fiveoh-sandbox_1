@@ -66,7 +66,7 @@
 
 +(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID
 {
-    NSArray *entities = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_SUBCATEGORY withKey:SC_CATEGORYID withValue:theUUID withMOC:nil];
+    NSArray *entities = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_SUBCATEGORY withKey:@"categoryId" withValue:theUUID orderedBy:@"displayOrder" withMOC:nil];
     return entities;
 }
 

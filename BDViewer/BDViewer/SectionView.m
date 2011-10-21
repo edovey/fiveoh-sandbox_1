@@ -68,7 +68,7 @@
 }
 
 - (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [sectionArray count];
+    return [self.sectionArray count];
 }
 
 #pragma mark - TableView Delegate
@@ -81,7 +81,7 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
-    cell.textLabel.text = [[sectionArray objectAtIndex:indexPath.row] name ];
+    cell.textLabel.text = [[self.sectionArray objectAtIndex:indexPath.row] name ];
     // Show the disclosure indicator if the section has categories
     return cell;
 }
@@ -89,7 +89,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
      CategoryView *vwCategory = [[CategoryView alloc] initWithNibName:@"CategoryView" bundle:nil];
-    vwCategory.parentId = [[sectionArray objectAtIndex:indexPath.row] uuid];
+    vwCategory.parentId = [[self.sectionArray objectAtIndex:indexPath.row] uuid];
      [self.navigationController pushViewController:vwCategory animated:YES];
      [vwCategory release];
 }

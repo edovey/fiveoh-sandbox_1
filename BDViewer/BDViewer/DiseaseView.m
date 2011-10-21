@@ -44,7 +44,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    diseaseArray = [NSArray arrayWithArray:[BDDisease retrieveAllWithParentUUID:parentId]];
+    self.diseaseArray = [NSArray arrayWithArray:[BDDisease retrieveAllWithParentUUID:parentId]];
 }
 
 - (void)viewDidUnload
@@ -74,7 +74,7 @@
 }
 
 - (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [diseaseArray count];
+    return [self.diseaseArray count];
 }
 
 #pragma mark - TableView Delegate
@@ -87,7 +87,7 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
-    cell.textLabel.text = [[diseaseArray objectAtIndex:indexPath.row] name ];
+    cell.textLabel.text = [[self.diseaseArray objectAtIndex:indexPath.row] name ];
     //TODO:
     // Show the disclosure indicator if the section has categories
     return cell;
@@ -96,7 +96,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PresentationView *vwPresentation = [[PresentationView alloc] initWithNibName:@"PresentationView" bundle:nil];
-    vwPresentation.parentId = [[diseaseArray objectAtIndex:indexPath.row] uuid];
+    vwPresentation.parentId = [[self.diseaseArray objectAtIndex:indexPath.row] uuid];
     [self.navigationController pushViewController:vwPresentation animated:YES];
     [vwPresentation release];
 }

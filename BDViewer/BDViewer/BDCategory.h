@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 #define SCHEMAVERSION_CATEGORY @"1"
-#define DOMAIN_CATEGORY @"bd_categories"
+#define DOMAIN_CATEGORY @"bd_1_categories"
 #define BUCKET_CATEGORY @"bdDataStore"
 #define ENTITYNAME_CATEGORY @"BDCategory"
 

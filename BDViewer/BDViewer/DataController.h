@@ -30,6 +30,7 @@
 - (NSArray *)retrieveManagedObjectsForValue:(NSString *)theEntityName 
                                            withKey:(NSString *)theKey 
                                          withValue:(NSString *)theValue 
+                                        orderedBy:(NSString *)orderName 
                                            withMOC:(NSManagedObjectContext *)theMOC;
 
 - (NSMutableArray *)allInstancesOf:(NSString *)entityName 

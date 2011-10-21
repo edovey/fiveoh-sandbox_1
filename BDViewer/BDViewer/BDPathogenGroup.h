@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 #define SCHEMAVERSION_PATHOGENGROUP @"1"
-#define DOMAIN_PATHOGENGROUP @"bd_pathogenGroups"
+#define DOMAIN_PATHOGENGROUP @"bd_1_pathogenGroups"
 #define BUCKET_PATHOGENGROUP @"bdDataStore"
 #define ENTITYNAME_PATHOGENGROUP @"BDPathogenGroup"
 

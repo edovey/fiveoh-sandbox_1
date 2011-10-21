@@ -61,7 +61,7 @@
 
 +(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID
 {
-    NSArray *entities = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_PATHOGENGROUP withKey:PG_PRESENTATIONID withValue:theUUID withMOC:nil];
+    NSArray *entities = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_PATHOGENGROUP withKey:@"presentationId" withValue:theUUID orderedBy:@"displayOrder" withMOC:nil];
     return entities;
 }
 

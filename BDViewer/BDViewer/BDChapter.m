@@ -61,7 +61,7 @@
 
 +(NSArray *) retrieveAll 
 {
-    NSMutableArray * allChapters = [[DataController sharedInstance] allInstancesOf:ENTITYNAME_CHAPTER orderedBy:CH_DISPLAYORDER loadData:false targetMOC:nil];
+    NSMutableArray * allChapters = [[DataController sharedInstance] allInstancesOf:ENTITYNAME_CHAPTER orderedBy:@"displayOrder" loadData:false targetMOC:nil];
     return [NSArray arrayWithArray:allChapters];
 }
 

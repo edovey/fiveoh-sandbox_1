@@ -11,7 +11,7 @@
 
 
 #define SCHEMAVERSION_SUBCATEGORY @"1"
-#define DOMAIN_SUBCATEGORY @"bd_subcategories"
+#define DOMAIN_SUBCATEGORY @"bd_1_subcategories"
 #define BUCKET_SUBCATEGORY @"bdDataStore"
 #define ENTITYNAME_SUBCATEGORY @"BDSubcategory"
 

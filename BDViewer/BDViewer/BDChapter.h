@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 #define SCHEMAVERSION_CHAPTER @"1"
-#define DOMAIN_CHAPTER @"bd_chapters"
+#define DOMAIN_CHAPTER @"bd_1_chapters"
 #define BUCKET_CHAPTER @"bdDataStore"
 #define ENTITYNAME_CHAPTER @"BDChapter"
 

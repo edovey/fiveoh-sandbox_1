@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 #define SCHEMAVERSION_THERAPY @"1"
-#define DOMAIN_THERAPY @"bd_therapies"
+#define DOMAIN_THERAPY @"bd_1_therapies"
 #define BUCKET_THERAPY @"bdDataStore"
 #define ENTITYNAME_THERAPY @"BDTherapy"
 

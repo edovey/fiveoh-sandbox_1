@@ -15,14 +15,14 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDPresentation
     {
-        public const string AWS_DOMAIN = @"bd_presentations";
+        public const string AWS_DOMAIN = @"bd_1_presentations";
         public const string ENTITYNAME = @"BDPresentations";
         public const string ENTITYNAME_FRIENDLY = @"Presentation";
         public const string PROPERTYNAME_OVERVIEW = @"Overview";
 
 
         private const string UUID = @"pr_uuid";
-        private const string SCHEMAVERSION = @"pr_schemaversion";
+        private const string SCHEMAVERSION = @"pr_schemaVersion";
         private const string CREATEDBY = @"pr_createdBy";
         private const string CREATEDDATE = @"pr_createdDate";
         private const string MODIFIEDBY = @"pr_modifiedBy";

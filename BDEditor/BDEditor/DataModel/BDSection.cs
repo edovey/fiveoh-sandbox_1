@@ -16,19 +16,19 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDSection
     {
-        public const string AWS_DOMAIN = @"bd_sections";
+        public const string AWS_DOMAIN = @"bd_1_sections";
         public const string ENTITYNAME = @"BDSections";
         public const string ENTITYNAME_FRIENDLY = @"Section";
 
         private const string UUID = @"sn_uuid";
-        private const string SCHEMAVERSION = @"sn_schemaversion";
-        private const string CREATEDBY = @"sn_createdby";
-        private const string CREATEDDATE = @"sn_createddate";
-        private const string MODIFIEDBY = @"sn_modifiedby";
-        private const string MODIFIEDDATE = @"sn_modifieddate";
+        private const string SCHEMAVERSION = @"sn_schemaVersion";
+        private const string CREATEDBY = @"sn_createdBy";
+        private const string CREATEDDATE = @"sn_createdDate";
+        private const string MODIFIEDBY = @"sn_modifiedBy";
+        private const string MODIFIEDDATE = @"sn_modifiedDate";
         private const string NAME = @"sn_name";
         private const string DEPRECATED = @"sn_deprecated";
-        private const string DISPLAYORDER = @"sn_displayorder";
+        private const string DISPLAYORDER = @"sn_displayOrder";
         private const string CHAPTERID = @"sn_chapterId";
 
         /// <summary>

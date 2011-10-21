@@ -18,7 +18,7 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDLinkedNote
     {
-        public const string AWS_DOMAIN = @"bd_linkedNotes";
+        public const string AWS_DOMAIN = @"bd_1_linkedNotes";
         public const string AWS_BUCKET = @"bdDataStore";
         public const string AWS_S3_PREFIX = @"bd~";
         public const string AWS_S3_FILEEXTENSION = @".txt";
@@ -27,7 +27,7 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME_FRIENDLY = @"Linked Note";
 
         private const string UUID = @"ln_uuid";
-        private const string SCHEMAVERSION = @"ln_schemaversion";
+        private const string SCHEMAVERSION = @"ln_schemaVersion";
         private const string CREATEDBY = @"ln_createdBy";
         private const string CREATEDDATE = @"ln_createdDate";
         private const string MODIFIEDBY = @"ln_modifieddBy";

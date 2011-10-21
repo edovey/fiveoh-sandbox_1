@@ -26,12 +26,12 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDLinkedNoteAssociation
     {
-        public const string AWS_DOMAIN = @"bd_linkedNoteAssociations";
+        public const string AWS_DOMAIN = @"bd_1_linkedNoteAssociations";
         public const string ENTITYNAME = @"BDLinkedNoteAssociations";
         public const string ENTITYNAME_FRIENDLY = @"Linked Note Association";
 
         private const string UUID = @"la_uuid";
-        private const string SCHEMAVERSION = @"la_schemaversion";
+        private const string SCHEMAVERSION = @"la_schemaVersion";
         private const string CREATEDBY = @"la_createdBy";
         private const string CREATEDDATE = @"la_createdDate";
         private const string MODIFIEDBY = @"la_modifiedBy";

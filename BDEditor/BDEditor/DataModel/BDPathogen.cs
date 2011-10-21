@@ -18,14 +18,14 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDPathogen: IBDObject
     {
-        public const string AWS_DOMAIN = @"bd_pathogens";
+        public const string AWS_DOMAIN = @"bd_1_pathogens";
         public const string ENTITYNAME = @"BDPathogen";
         public const string ENTITYNAME_FRIENDLY = @"Pathogen";
         public const string PROPERTYNAME_NAME = @"Name";
 
 
         private const string UUID = @"pa_uuid";
-        private const string SCHEMAVERSION = @"pa_schemaversion";
+        private const string SCHEMAVERSION = @"pa_schemaVersion";
         private const string CREATEDBY = @"pa_createdBy";
         private const string CREATEDDATE = @"pa_createdDate";
         private const string MODIFIEDBY = @"pa_modifiedBy";

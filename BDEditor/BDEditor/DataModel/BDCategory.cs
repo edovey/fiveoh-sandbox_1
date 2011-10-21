@@ -18,20 +18,20 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDCategory
     {
-        public const string AWS_DOMAIN = @"bd_categories";
+        public const string AWS_DOMAIN = @"bd_1_categories";
         public const string ENTITYNAME = @"BDCategories";
         public const string ENTITYNAME_FRIENDLY = @"Category";
 
         private const string UUID = @"ct_uuid";
-        private const string SCHEMAVERSION = @"ct_schemaversion";
-        private const string CREATEDBY = @"ct_createdby";
-        private const string CREATEDDATE = @"ct_createddate";
-        private const string MODIFIEDBY = @"ct_modifiedby";
-        private const string MODIFIEDDATE = @"ct_modifieddate";
-        private const string SECTIONID = @"ct_sectionid";
+        private const string SCHEMAVERSION = @"ct_schemaVersion";
+        private const string CREATEDBY = @"ct_createdBy";
+        private const string CREATEDDATE = @"ct_createdDate";
+        private const string MODIFIEDBY = @"ct_modifiedBy";
+        private const string MODIFIEDDATE = @"ct_modifiedDate";
+        private const string SECTIONID = @"ct_sectionId";
         private const string NAME = @"ct_name";
         private const string DEPRECATED = @"ct_deprecated";
-        private const string DISPLAYORDER = @"ct_displayorder";
+        private const string DISPLAYORDER = @"ct_displayOrder";
 
         /// <summary>
         /// Extended Create Method that includes setting creation date and schema version.

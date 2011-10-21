@@ -21,10 +21,10 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME = @"BDDiseases";
         public const string ENTITYNAME_FRIENDLY = @"Disease";
         public const string PROPERTYNAME_OVERVIEW = @"Overview";
-        public const string AWS_DOMAIN = @"bd_diseases";
+        public const string AWS_DOMAIN = @"bd_1_diseases";
 
         private const string UUID = @"di_uuid";
-        private const string SCHEMAVERSION = @"di_schemaversion";
+        private const string SCHEMAVERSION = @"di_schemaVersion";
         private const string CREATEDBY = @"di_createdBy";
         private const string CREATEDDATE = @"di_createdDate";
         private const string MODIFIEDBY = @"di_modifiedBy";

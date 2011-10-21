@@ -116,6 +116,7 @@
     RepositoryHandler *handler = [[RepositoryHandler alloc] init];
 
     NSArray *entityArray = [[NSArray alloc] initWithObjects:
+                            DOMAIN_CHAPTER,
                             DOMAIN_SECTION, 
                             DOMAIN_CATEGORY, 
                             DOMAIN_SUBCATEGORY, 
@@ -130,6 +131,7 @@
                             nil];
     
     NSArray *entityDateArray = [[NSArray alloc] initWithObjects: 
+                                CH_MODIFIEDDATE,
                                 SN_MODIFIEDDATE, 
                                 CT_MODIFIEDDATE, 
                                 SC_MODIFIEDDATE, 
@@ -144,6 +146,7 @@
                                 nil]; 
     
     NSArray *entityBucketArray = [[NSArray alloc] initWithObjects: 
+                                  BUCKET_CHAPTER,
                                   BUCKET_SECTION, 
                                   BUCKET_CATEGORY, 
                                   BUCKET_SUBCATEGORY, 

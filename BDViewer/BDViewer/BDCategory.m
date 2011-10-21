@@ -146,6 +146,7 @@
     NSPredicate *parentPredicate = [NSPredicate predicateWithFormat:@"sectionId = %@", theUUID];
     [predicateArray addObject:parentPredicate];
     NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicateArray];
+    [predicateArray release];
     NSNumber *count = [[DataController sharedInstance] aggregateOperation:@"count:" onEntity: ENTITYNAME_CATEGORY onAttribute:@"sectionId" withPredicate:predicate];
     return count;
 }

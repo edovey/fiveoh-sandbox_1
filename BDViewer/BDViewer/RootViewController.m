@@ -45,15 +45,14 @@
 
 -(IBAction)openTouched:(id)sender 
 {
-    /*
      ChapterView *vwChapters = [[ChapterView alloc] initWithNibName:@"ChapterView" bundle:nil];
     [self.navigationController pushViewController:vwChapters animated:YES];
     [vwChapters release];
-     */
+    /*
     SectionView *vwSections = [[SectionView alloc] initWithNibName:@"SectionView" bundle:nil];
     [self.navigationController pushViewController:vwSections animated:YES];
     [vwSections release];
-    
+     */    
 }
 
 -(IBAction)loadTouched:(id)sender

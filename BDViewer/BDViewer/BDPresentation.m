@@ -73,6 +73,7 @@
     NSPredicate *parentPredicate = [NSPredicate predicateWithFormat:@"diseaseId = %@", theUUID];
     [predicateArray addObject:parentPredicate];
     NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicateArray];
+    [predicateArray release];
     NSNumber *count = [[DataController sharedInstance] aggregateOperation:@"count:" onEntity: ENTITYNAME_PRESENTATION onAttribute:@"diseaseId" withPredicate:predicate];
     return count;
 }

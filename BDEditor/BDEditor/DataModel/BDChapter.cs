@@ -16,7 +16,7 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDChapter
     {
-        public const string AWS_DOMAIN = @"bd_chapters";
+        public const string AWS_DOMAIN = @"bd_1_chapters";
         public const string ENTITYNAME = @"BDChapters";
         public const string ENTITYNAME_FRIENDLY = @"Chapter";
 

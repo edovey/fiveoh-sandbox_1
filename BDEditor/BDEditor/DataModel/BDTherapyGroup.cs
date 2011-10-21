@@ -18,7 +18,7 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDTherapyGroup : IBDObject
     {
-        public const string AWS_DOMAIN = @"bd_therapyGroups";
+        public const string AWS_DOMAIN = @"bd_1_therapyGroups";
         public const string ENTITYNAME = @"BDTherapyGroups";
         public const string ENTITYNAME_FRIENDLY = @"Therapy Group";
 

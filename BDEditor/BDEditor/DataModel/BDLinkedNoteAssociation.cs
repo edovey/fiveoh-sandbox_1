@@ -26,7 +26,7 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDLinkedNoteAssociation
     {
-        public const string AWS_DOMAIN = @"bd_linkedNoteAssociations";
+        public const string AWS_DOMAIN = @"bd_1_linkedNoteAssociations";
         public const string ENTITYNAME = @"BDLinkedNoteAssociations";
         public const string ENTITYNAME_FRIENDLY = @"Linked Note Association";
 

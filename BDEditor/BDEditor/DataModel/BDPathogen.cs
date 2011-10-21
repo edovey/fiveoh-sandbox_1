@@ -18,7 +18,7 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDPathogen: IBDObject
     {
-        public const string AWS_DOMAIN = @"bd_pathogens";
+        public const string AWS_DOMAIN = @"bd_1_pathogens";
         public const string ENTITYNAME = @"BDPathogen";
         public const string ENTITYNAME_FRIENDLY = @"Pathogen";
         public const string PROPERTYNAME_NAME = @"Name";

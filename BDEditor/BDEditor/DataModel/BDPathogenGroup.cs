@@ -18,7 +18,7 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDPathogenGroup
     {
-        public const string AWS_DOMAIN = @"bd_pathogenGroups";
+        public const string AWS_DOMAIN = @"bd_1_pathogenGroups";
         public const string ENTITYNAME = @"BDPathogenBroups";
         public const string ENTITYNAME_FRIENDLY = @"Pathogen Group";
         

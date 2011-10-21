@@ -9,6 +9,8 @@
 #import "DiseaseView.h"
 #import "BDDisease.h"
 #import "PresentationView.h"
+#import "BDPresentation.h"
+#import "TherapyView.h"
 
 @implementation DiseaseView
 @synthesize dataTableView;
@@ -95,10 +97,20 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PresentationView *vwPresentation = [[PresentationView alloc] initWithNibName:@"PresentationView" bundle:nil];
-    vwPresentation.parentId = [[self.diseaseArray objectAtIndex:indexPath.row] uuid];
-    [self.navigationController pushViewController:vwPresentation animated:YES];
-    [vwPresentation release];
+    NSNumber *presentationCount = [BDPresentation retrieveCountWithParentUUID:[[self.diseaseArray objectAtIndex:indexPath.row] uuid]];
+    if([presentationCount intValue] > 1)
+    {
+        PresentationView *vwPresentation = [[PresentationView alloc] initWithNibName:@"PresentationView" bundle:nil];
+        vwPresentation.parentId = [[self.diseaseArray objectAtIndex:indexPath.row] uuid];
+        [self.navigationController pushViewController:vwPresentation animated:YES];
+        [vwPresentation release];
+    } else {
+        TherapyView *vwTherapy = [[TherapyView alloc] initWithNibName:@"TherapyView" bundle:nil];
+        vwTherapy.diseaseId = [[self.diseaseArray objectAtIndex:indexPath.row] uuid];
+        [self.navigationController pushViewController:vwTherapy animated:YES];
+        [vwTherapy release];
+    }
+    
 }
 
 @end

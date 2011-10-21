@@ -8,12 +8,20 @@
 
 #import "PresentationView.h"
 #import "BDPresentation.h"
+#import "TherapyView.h"
+
+@interface PresentationView() 
+-(void)retrieveOverviewForPresentation;
+-(void)buildHTMLFromData;
+-(void)loadHTMLIntoWebView;
+@end
 
 @implementation PresentationView
 @synthesize parentId;
 @synthesize dataTableView;
+@synthesize dataWebView;
 @synthesize presentationArray;
-
+@synthesize overviewHTMLString;
 
 - (void)didReceiveMemoryWarning
 {
@@ -36,14 +44,17 @@
 {
     [super viewWillAppear:animated];
     self.presentationArray = [NSArray arrayWithArray:[BDPresentation retrieveAllWithParentUUID:parentId]];
+    [self retrieveOverviewForPresentation];
+    [self loadHTMLIntoWebView];
 }
 
 - (void)viewDidUnload
 {
-    [parentId release];
+    parentId = nil;
     [self setDataTableView:nil];
     [dataTableView release];
     dataTableView = nil;
+    [self setDataWebView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -59,6 +70,8 @@
     [dataTableView release];
     [presentationArray release];
     [parentId release];
+    [dataWebView release];
+    [overviewHTMLString release];
     [super dealloc];
 }
 
@@ -90,13 +103,30 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    /*
-     TherapyView *vwTherapy = [[TherapyView alloc] initWithNibName:@"TherapyView" bundle:nil];
-     vwTherapy.parentId = [self.presentationArray objectAtIndex:indexPath.row] uuid]];
-     [self.navigationController pushViewController:vwTherapy animated:YES];
-     [vwTherapy release];
-     */
+        TherapyView *vwTherapy = [[TherapyView alloc] initWithNibName:@"TherapyView" bundle:nil];
+        vwTherapy.parentId = [[self.presentationArray objectAtIndex:indexPath.row] uuid];
+        [self.navigationController pushViewController:vwTherapy animated:YES];
+        [vwTherapy release];
+    }
+
+#pragma mark - Private Class methods
+-(void)retrieveOverviewForPresentation
+{
+    overviewHTMLString = @"Overview Text";
+    //TODO:  retrieve text of overview.  if none,hide control and reset origin of tableview.
 }
 
+-(void)buildHTMLFromData
+{
+
+}
+
+
+-(void)loadHTMLIntoWebView 
+{
+    [self.dataWebView loadHTMLString:[NSString stringWithFormat:@"<html><body><font face='Helvetica' size='3.0'>%@<br></font></body></html>",self.overviewHTMLString] baseURL:[NSURL URLWithString:@""]];
+    [self.dataWebView setBackgroundColor:[UIColor clearColor]];
+    [self.dataWebView setOpaque:NO];
+}
 @end
 

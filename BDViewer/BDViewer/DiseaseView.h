@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DiseaseView : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface DiseaseView : UIViewController <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate>
 {
     NSArray * diseaseArray;
     NSString *parentId;

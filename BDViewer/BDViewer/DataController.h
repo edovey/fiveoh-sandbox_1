@@ -44,6 +44,9 @@
 						  loadData:(BOOL)loadDataFlag
 						 targetMOC:(NSManagedObjectContext *)moc;
 
+- (NSNumber *)aggregateOperation:(NSString *)function onEntity: (NSString*) entityName onAttribute:(NSString *)attributeName withPredicate:(NSPredicate *)predicate; 
+
+
 - (NSURL *)applicationDocumentsDirectory;
 
-@end
+@end 

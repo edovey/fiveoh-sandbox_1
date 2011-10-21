@@ -8,15 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PresentationView : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface PresentationView : UIViewController <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate>
 {
     UITableView *dataTableView;
-    NSString * parentId;
+    UIWebView *dataWebView;
+    NSString *parentId;
     NSArray * presentationArray;
+    NSString *overviewHTMLString;
 }
 
 @property (retain, nonatomic) NSString *parentId;
 @property (retain, nonatomic) NSArray *presentationArray;
 @property (retain, nonatomic) IBOutlet UITableView *dataTableView;
+@property (retain, nonatomic) IBOutlet UIWebView *dataWebView;
+@property (retain, nonatomic) NSString * overviewHTMLString;
 
 @end

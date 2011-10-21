@@ -225,6 +225,37 @@
 	return mutableResults;
 }
 
+-(NSNumber *)aggregateOperation:(NSString *)function onEntity: (NSString*) entityName onAttribute:(NSString *)attributeName withPredicate:(NSPredicate *)predicate {
+    NSManagedObjectContext *moc = [self managedObjectContext];
+    NSExpression *ex = [NSExpression expressionForFunction:function arguments:[NSArray arrayWithObject:[NSExpression expressionForKeyPath:attributeName]]];
+    
+    NSExpressionDescription *ed = [[NSExpressionDescription alloc] init];
+    [ed setName:@"result"];
+    [ed setExpression:ex];
+    [ed setExpressionResultType:NSInteger64AttributeType];
+    
+    NSArray *properties = [NSArray arrayWithObject:ed];
+    [ed release];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setPropertiesToFetch:properties];
+    [request setResultType:NSDictionaryResultType];
+    
+    if (predicate != nil)
+        [request setPredicate:predicate];
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:moc];
+    [request setEntity:entity];
+    
+    NSArray *results = [moc executeFetchRequest:request error:nil];
+    [request release];
+    NSDictionary *resultsDictionary = [results objectAtIndex:0];
+    NSNumber *resultValue = [resultsDictionary objectForKey:@"result"];
+    return resultValue;
+    
+}
+
+
 #pragma mark - Core Data stack
 
 /**

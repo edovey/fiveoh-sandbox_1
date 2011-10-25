@@ -109,7 +109,7 @@
         [self.navigationController pushViewController:vwPresentation animated:YES];
         [vwPresentation release];
     } else {
-        TherapyView *vwTherapy = [[TherapyView alloc] initWithParentId:[disease uuid] withParentName: [disease name]];
+        TherapyView *vwTherapy = [[TherapyView alloc] initWithDiseaseId:[disease uuid] withDiseaseName: [disease name]];
         [self.navigationController pushViewController:vwTherapy animated:YES];
         [vwTherapy release];
     }

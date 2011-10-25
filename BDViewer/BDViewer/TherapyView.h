@@ -11,19 +11,22 @@
 @interface TherapyView : UIViewController <UIWebViewDelegate>
 {
     UIWebView *dataWebView;
-    NSString *parentId;
-    NSString *parentName;
+    NSString *presentationId;
+    NSString *presentationName;
     NSString *diseaseId;
+    NSString *diseaseName;
     NSString *overviewHTMLString;
     NSString *detailHTMLString;
 }
 
 @property (retain, nonatomic) IBOutlet UIWebView *dataWebView;
-@property (retain, nonatomic) NSString *parentId;
-@property (nonatomic, retain) NSString *parentName;
+@property (retain, nonatomic) NSString *presentationId;
+@property (nonatomic, retain) NSString *presentationName;
 @property (retain, nonatomic) NSString *diseaseId;
+@property (retain, nonatomic) NSString *diseaseName;
 @property (retain, nonatomic) NSString *overviewHTMLString;
 @property (retain, nonatomic) NSString *detailHTMLString;
 
--(id)initWithParentId:(NSString *)pParentId withParentName:(NSString *)pParentName;
+-(id)initWithDiseaseId:(NSString *)pDiseaseId withDiseaseName:(NSString *)pDiseaseName;
+-(id)initWithPresentationId:(NSString *)pPresentationId withPresentationName:(NSString *) pPresentationName;
 @end

@@ -117,7 +117,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BDPresentation *presentation = [presentationArray objectAtIndex:indexPath.row];
-    TherapyView *vwTherapy = [[TherapyView alloc] initWithParentId:[presentation uuid] withParentName: [presentation name]];
+    TherapyView *vwTherapy = [[TherapyView alloc] initWithPresentationId:presentation.uuid withPresentationName:presentation.name];
     [self.navigationController pushViewController:vwTherapy animated:YES];
     [vwTherapy release];
 }

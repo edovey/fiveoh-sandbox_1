@@ -27,19 +27,40 @@
 
 @implementation TherapyView
 @synthesize dataWebView;
-@synthesize parentId;
-@synthesize parentName;
+@synthesize presentationId;
+@synthesize presentationName;
 @synthesize diseaseId;
+@synthesize diseaseName;
 @synthesize overviewHTMLString;
 @synthesize detailHTMLString;
 
--(id)initWithParentId:(NSString *)pParentId withParentName:(NSString *)pParentName
+-(id)initWithPresentationId:(NSString *)pPresentationId withPresentationName:(NSString *)pPresentationName
 {
     self = [super initWithNibName:@"TherapyView" bundle:nil];
     if(self)
     {
-        parentId = [pParentId retain];
-        parentName = [pParentName retain];
+        self.presentationId = [pPresentationId retain];
+        self.presentationName = [pPresentationName retain];
+        self.title = presentationName;
+    }
+    return self;
+}
+
+-(id)initWithDiseaseId:(NSString *)pDiseaseId withDiseaseName:(NSString *) pDiseaseName
+{
+    self = [super initWithNibName:@"TherapyView" bundle:nil];
+    if(self)
+    {
+        self.diseaseId = [pDiseaseId retain];
+        self.diseaseName = [pDiseaseName retain];
+        self.title = diseaseName;
+        
+        if(self.diseaseId != nil && [self.diseaseId length] > 0)
+        {           
+            // get presentation id using disease record
+            NSArray *presentationArray = [BDPresentation retrieveAllWithParentUUID:diseaseId];
+            self.presentationId = [[presentationArray objectAtIndex:0] uuid];
+        }
     }
     return self;
 }
@@ -59,7 +80,6 @@
     [super viewDidLoad];
 
     // Do any additional setup after loading the view from its nib.
-    self.title = parentName;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -76,9 +96,10 @@
     dataWebView = nil;
     overviewHTMLString = nil;
     detailHTMLString = nil;
-    parentId = nil;
-    parentName = nil;
+    presentationId = nil;
+    presentationName = nil;
     diseaseId = nil;
+    diseaseName = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -93,9 +114,10 @@
 - (void)dealloc {
 //    [detailHTMLString release];
     [overviewHTMLString release];
-    [parentId release];
-    [parentName release];
+    [presentationId release];
+    [presentationName release];
     [diseaseId release];
+    [diseaseName release];
     [dataWebView release];
     [super dealloc];
 }
@@ -109,20 +131,14 @@
 -(NSString *)buildHTMLFromData
 {
     NSMutableString *bodyHTML = [[[NSMutableString alloc] initWithString:@"<table border=\"1\" cellspacing=\"0\" cellpadding=\"5\">"] autorelease];
-    NSString *presentationId;
     if(diseaseId != nil && [diseaseId length] > 0)
     {
         // TODO: get disease record to get overview information and display it first
         
-        // get presentation id using disease record to continue building the html
-        NSArray *presentationArray = [BDPresentation retrieveAllWithParentUUID:diseaseId];
-        presentationId = [[presentationArray objectAtIndex:0] uuid];
-    } else {
-        presentationId = parentId;
     }
     
     // use presentationId to get pathogengroups
-    NSArray *pathogenGroupArray = [BDPathogenGroup retrieveAllWithParentUUID:presentationId];
+    NSArray *pathogenGroupArray = [BDPathogenGroup retrieveAllWithParentUUID:self.presentationId];
     
     for(BDPathogenGroup *pGroup in pathogenGroupArray) {
         [bodyHTML appendFormat:@"%@",[self buildPathogenGroupHTML:pGroup]];

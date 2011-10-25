@@ -14,6 +14,18 @@
 @synthesize dataTableView;
 @synthesize categoryArray;
 @synthesize parentId;
+@synthesize parentName;
+
+-(id)initWithParentId:(NSString *)pParentId withParentName:(NSString *)pParentName
+{
+    self = [super initWithNibName:@"CategoryView" bundle:nil];
+    if(self)
+    {
+        parentId = [pParentId retain];
+        parentName = [pParentName retain];
+    }
+    return self;
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -29,7 +41,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = @"Categories";
+    self.title = parentName;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -58,6 +70,7 @@
     [categoryArray release];
     [dataTableView release];
     [parentId release];
+    [parentName release];
     [super dealloc];
 }
 
@@ -82,14 +95,14 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     cell.textLabel.text = [[self.categoryArray objectAtIndex:indexPath.row] name ];
-    // Show the disclosure indicator if the section has categories
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-     DiseaseView *vwDisease = [[DiseaseView alloc] initWithNibName:@"DiseaseView" bundle:nil];
-    vwDisease.parentId = [[self.categoryArray objectAtIndex:indexPath.row] uuid];
+    BDCategory *category = [categoryArray objectAtIndex:indexPath.row];
+     DiseaseView *vwDisease = [[DiseaseView alloc] initWithParentId:[category uuid] withParentName: [category name]];
      [self.navigationController pushViewController:vwDisease animated:YES];
      [vwDisease release];
 }

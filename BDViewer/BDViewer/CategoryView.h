@@ -13,10 +13,14 @@
     UITableView *dataTableView;
     NSArray *categoryArray;
     NSString *parentId;
+    NSString *parentName;
 }
 
 @property (nonatomic, retain) NSArray *categoryArray;
 @property (retain, nonatomic) IBOutlet UITableView *dataTableView;
 @property (nonatomic, retain) NSString *parentId;
+@property (nonatomic, retain) NSString *parentName;
+
+-(id)initWithParentId:(NSString *)pParentId withParentName:(NSString *)pParentName;
 
 @end

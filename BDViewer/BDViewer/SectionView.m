@@ -14,6 +14,18 @@
 @synthesize dataTableView;
 @synthesize sectionArray;
 @synthesize parentId;
+@synthesize parentName;
+
+-(id)initWithParentId:(NSString *)pParentId withParentName:(NSString *)pParentName
+{
+    self = [super initWithNibName:@"SectionView" bundle:nil];
+    if(self)
+    {
+        parentId = [pParentId retain];
+        parentName = [pParentName retain];
+    }
+    return self;
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -29,7 +41,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = @"Sections";
+    self.title = parentName;
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
@@ -82,14 +94,14 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     cell.textLabel.text = [[self.sectionArray objectAtIndex:indexPath.row] name ];
-    // Show the disclosure indicator if the section has categories
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-     CategoryView *vwCategory = [[CategoryView alloc] initWithNibName:@"CategoryView" bundle:nil];
-    vwCategory.parentId = [[self.sectionArray objectAtIndex:indexPath.row] uuid];
+    BDSection *section = [sectionArray objectAtIndex:indexPath.row];
+     CategoryView *vwCategory = [[CategoryView alloc] initWithParentId:[section uuid] withParentName: [section name]];
      [self.navigationController pushViewController:vwCategory animated:YES];
      [vwCategory release];
 }

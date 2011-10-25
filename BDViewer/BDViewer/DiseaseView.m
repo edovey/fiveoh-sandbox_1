@@ -16,15 +16,19 @@
 @synthesize dataTableView;
 @synthesize diseaseArray;
 @synthesize parentId;
+@synthesize parentName;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+-(id)initWithParentId:(NSString *)pParentId withParentName:(NSString *)pParentName
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+    self = [super initWithNibName:@"DiseaseView" bundle:nil];
+    if(self)
+    {
+        parentId = [pParentId retain];
+        parentName = [pParentName retain];
     }
     return self;
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -40,7 +44,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = @"Diseases";
+    self.title = parentName;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -67,6 +71,7 @@
     [dataTableView release];
     [diseaseArray release];
     [parentId release];
+    [parentName release];
     [super dealloc];
 }
 #pragma mark - TableView DataSource
@@ -90,23 +95,21 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     cell.textLabel.text = [[self.diseaseArray objectAtIndex:indexPath.row] name ];
-    //TODO:
-    // Show the disclosure indicator if the section has categories
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    BDDisease *disease = [diseaseArray objectAtIndex:indexPath.row];
     NSNumber *presentationCount = [BDPresentation retrieveCountWithParentUUID:[[self.diseaseArray objectAtIndex:indexPath.row] uuid]];
     if([presentationCount intValue] > 1)
     {
-        PresentationView *vwPresentation = [[PresentationView alloc] initWithNibName:@"PresentationView" bundle:nil];
-        vwPresentation.parentId = [[self.diseaseArray objectAtIndex:indexPath.row] uuid];
+        PresentationView *vwPresentation = [[PresentationView alloc] initWithParentId:[disease uuid] withParentName: [disease name]];
         [self.navigationController pushViewController:vwPresentation animated:YES];
         [vwPresentation release];
     } else {
-        TherapyView *vwTherapy = [[TherapyView alloc] initWithNibName:@"TherapyView" bundle:nil];
-        vwTherapy.diseaseId = [[self.diseaseArray objectAtIndex:indexPath.row] uuid];
+        TherapyView *vwTherapy = [[TherapyView alloc] initWithParentId:[disease uuid] withParentName: [disease name]];
         [self.navigationController pushViewController:vwTherapy animated:YES];
         [vwTherapy release];
     }

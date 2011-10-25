@@ -28,9 +28,21 @@
 @implementation TherapyView
 @synthesize dataWebView;
 @synthesize parentId;
+@synthesize parentName;
 @synthesize diseaseId;
 @synthesize overviewHTMLString;
 @synthesize detailHTMLString;
+
+-(id)initWithParentId:(NSString *)pParentId withParentName:(NSString *)pParentName
+{
+    self = [super initWithNibName:@"TherapyView" bundle:nil];
+    if(self)
+    {
+        parentId = [pParentId retain];
+        parentName = [pParentName retain];
+    }
+    return self;
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -47,7 +59,7 @@
     [super viewDidLoad];
 
     // Do any additional setup after loading the view from its nib.
-    self.title = @"Therapies";
+    self.title = parentName;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -65,6 +77,7 @@
     overviewHTMLString = nil;
     detailHTMLString = nil;
     parentId = nil;
+    parentName = nil;
     diseaseId = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -81,6 +94,7 @@
 //    [detailHTMLString release];
     [overviewHTMLString release];
     [parentId release];
+    [parentName release];
     [diseaseId release];
     [dataWebView release];
     [super dealloc];
@@ -111,7 +125,6 @@
     NSArray *pathogenGroupArray = [BDPathogenGroup retrieveAllWithParentUUID:presentationId];
     
     for(BDPathogenGroup *pGroup in pathogenGroupArray) {
-        [bodyHTML appendString:@"<tr><th>Pathogens</th></tr><tr>"];
         [bodyHTML appendFormat:@"%@",[self buildPathogenGroupHTML:pGroup]];
         
         // use pathogenGroup uuid to get pathogens
@@ -146,7 +159,10 @@
 {
     NSMutableString *pathogenGroupHTML = [[NSMutableString alloc] initWithCapacity:0];
     NSArray *pathogenArray = [BDPathogen retrieveAllWithParentUUID:[thePathogenGroup uuid]];
-    
+
+    if([pathogenArray count] > 0)
+        [pathogenGroupHTML appendString:@"<tr><th>Pathogens</th></tr><tr>"];
+
     for(BDPathogen *pathogen in pathogenArray)
     {
        [pathogenGroupHTML appendFormat:@"<td>%@</td>",pathogen.name ];

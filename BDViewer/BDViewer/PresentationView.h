@@ -13,14 +13,17 @@
     UITableView *dataTableView;
     UIWebView *dataWebView;
     NSString *parentId;
+    NSString *parentName;
     NSArray * presentationArray;
     NSString *overviewHTMLString;
 }
 
 @property (retain, nonatomic) NSString *parentId;
+@property (nonatomic, retain) NSString *parentName;
 @property (retain, nonatomic) NSArray *presentationArray;
 @property (retain, nonatomic) IBOutlet UITableView *dataTableView;
 @property (retain, nonatomic) IBOutlet UIWebView *dataWebView;
 @property (retain, nonatomic) NSString * overviewHTMLString;
 
+-(id)initWithParentId:(NSString *)pParentId withParentName:(NSString *)pParentName;
 @end

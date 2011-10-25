@@ -75,15 +75,14 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     cell.textLabel.text = [[self.chapterArray objectAtIndex:indexPath.row] name];
-    //TODO:
-    // Show a disclosure indicator if the Chapter has Sections
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-     SectionView *vwSection = [[SectionView alloc] initWithNibName:@"SectionView" bundle:nil];
-    vwSection.parentId = [[self.chapterArray objectAtIndex:indexPath.row] uuid];
+    BDChapter *chapter = [chapterArray objectAtIndex:indexPath.row];
+    SectionView *vwSection = [[SectionView alloc] initWithParentId:[chapter uuid] withParentName: [chapter name]];
      [self.navigationController pushViewController:vwSection animated:YES];
      [vwSection release];
 }

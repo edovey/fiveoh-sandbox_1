@@ -18,10 +18,22 @@
 
 @implementation PresentationView
 @synthesize parentId;
+@synthesize parentName;
 @synthesize dataTableView;
 @synthesize dataWebView;
 @synthesize presentationArray;
 @synthesize overviewHTMLString;
+
+-(id)initWithParentId:(NSString *)pParentId withParentName:(NSString *)pParentName
+{
+    self = [super initWithNibName:@"PresentationView" bundle:nil];
+    if(self)
+    {
+        parentId = [pParentId retain];
+        parentName = [pParentName retain];
+    }
+    return self;
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -37,7 +49,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = @"Presentations";
+    self.title = parentName;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -51,6 +63,7 @@
 - (void)viewDidUnload
 {
     parentId = nil;
+    parentName = nil;
     [self setDataTableView:nil];
     [dataTableView release];
     dataTableView = nil;
@@ -70,6 +83,7 @@
     [dataTableView release];
     [presentationArray release];
     [parentId release];
+    [parentName release];
     [dataWebView release];
     [overviewHTMLString release];
     [super dealloc];
@@ -96,18 +110,17 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     cell.textLabel.text = [[self.presentationArray objectAtIndex:indexPath.row] name ];
-    //TODO:
-    // Show the disclosure indicator if the section has categories
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-        TherapyView *vwTherapy = [[TherapyView alloc] initWithNibName:@"TherapyView" bundle:nil];
-        vwTherapy.parentId = [[self.presentationArray objectAtIndex:indexPath.row] uuid];
-        [self.navigationController pushViewController:vwTherapy animated:YES];
-        [vwTherapy release];
-    }
+    BDPresentation *presentation = [presentationArray objectAtIndex:indexPath.row];
+    TherapyView *vwTherapy = [[TherapyView alloc] initWithParentId:[presentation uuid] withParentName: [presentation name]];
+    [self.navigationController pushViewController:vwTherapy animated:YES];
+    [vwTherapy release];
+}
 
 #pragma mark - Private Class methods
 -(void)retrieveOverviewForPresentation

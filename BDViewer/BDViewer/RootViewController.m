@@ -12,6 +12,7 @@
 #import "SectionView.h"
 
 @implementation RootViewController
+@synthesize syncActivityIndictor;
 
 
 - (void)viewWillAppear:(BOOL)animated
@@ -30,6 +31,7 @@
 
 - (void)viewDidUnload
 {
+    [self setSyncActivityIndictor:nil];
     [super viewDidUnload];
 
     // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
@@ -38,6 +40,7 @@
 
 - (void)dealloc
 {
+    [syncActivityIndictor release];
     [super dealloc];
 }
 
@@ -57,7 +60,9 @@
 
 -(IBAction)loadTouched:(id)sender
 {
+    [syncActivityIndicator startAnimating];
     [RepositoryHandler pullSince:nil];
+    [syncActivityIndicator stopAnimating];
 }
 
 @end

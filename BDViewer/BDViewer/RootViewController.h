@@ -9,7 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface RootViewController : UIViewController
+{
+    UIActivityIndicatorView *syncActivityIndicator;
+}
 
+@property (retain, nonatomic) IBOutlet UIActivityIndicatorView *syncActivityIndictor;
 
 -(IBAction)openTouched:(id)sender;
 -(IBAction)loadTouched:(id)sender;

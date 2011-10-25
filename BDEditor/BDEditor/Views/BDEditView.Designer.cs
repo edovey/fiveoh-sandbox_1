@@ -138,6 +138,7 @@
             // chapterTree
             // 
             this.chapterTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chapterTree.HideSelection = false;
             this.chapterTree.Location = new System.Drawing.Point(4, 4);
             this.chapterTree.Name = "chapterTree";
             this.chapterTree.Size = new System.Drawing.Size(286, 915);

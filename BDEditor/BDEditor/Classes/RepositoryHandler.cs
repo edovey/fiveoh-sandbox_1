@@ -111,6 +111,7 @@ namespace BDEditor.Classes
             #endregion
 
             #region Pull
+            Common.Settings.IsSyncLoad = true;
 
             foreach (SyncInfo syncInfoEntry in syncDictionary.Values)
             {
@@ -228,6 +229,8 @@ namespace BDEditor.Classes
 
                 } while (selectResponse.SelectResult.IsSetNextToken());
             }
+
+            Common.Settings.IsSyncLoad = false;
 
             #endregion
 

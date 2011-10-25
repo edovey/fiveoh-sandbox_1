@@ -30,7 +30,7 @@ namespace BDEditor.DataModel
         private const string CREATEDDATE = @"pa_createdDate";
         private const string MODIFIEDBY = @"pa_modifiedBy";
         private const string MODIFIEDDATE = @"pa_modifiedDate";
-        private const string PATHOGENGROUPID = @"di_pathogenGroupId";
+        private const string PATHOGENGROUPID = @"pa_pathogenGroupId";
         private const string NAME = @"pa_name";
         private const string DEPRECATED = @"pa_deprecated";
         private const string DISPLAYORDER = @"pa_displayOrder";

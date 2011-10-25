@@ -30,7 +30,7 @@ namespace BDEditor.DataModel
         private const string CREATEDDATE = @"pa_createdDate";
         private const string MODIFIEDBY = @"pa_modifiedBy";
         private const string MODIFIEDDATE = @"pa_modifiedDate";
-        private const string PATHOGENGROUPID = @"di_pathogenGroupId";
+        private const string PATHOGENGROUPID = @"pa_pathogenGroupId";
         private const string NAME = @"pa_name";
         private const string DEPRECATED = @"pa_deprecated";
         private const string DISPLAYORDER = @"pa_displayOrder";
@@ -105,20 +105,21 @@ namespace BDEditor.DataModel
 
         protected override void OnPropertyChanged(string property)
         {
-            switch (property)
-            {
-                case "createdBy":
-                case "createdDate":
-                case "modifiedBy":
-                case "modifiedDate":
-                    break;
-                default:
-                    {
-                        modifiedBy = Guid.Empty;
-                        modifiedDate = DateTime.Now;
-                    }
-                    break;
-            }
+            if (!Common.Settings.IsSyncLoad)
+                switch (property)
+                {
+                    case "createdBy":
+                    case "createdDate":
+                    case "modifiedBy":
+                    case "modifiedDate":
+                        break;
+                    default:
+                        {
+                            modifiedBy = Guid.Empty;
+                            modifiedDate = DateTime.Now;
+                        }
+                        break;
+                }
 
             base.OnPropertyChanged(property);
         }

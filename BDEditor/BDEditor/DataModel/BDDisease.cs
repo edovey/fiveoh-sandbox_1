@@ -136,20 +136,21 @@ namespace BDEditor.DataModel
 
         protected override void OnPropertyChanged(string property)
         {
-            switch (property)
-            {
-                case "createdBy":
-                case "createdDate":
-                case "modifiedBy":
-                case "modifiedDate":
-                    break;
-                default:
-                    {
-                        modifiedBy = Guid.Empty;
-                        modifiedDate = DateTime.Now;
-                    }
-                    break;
-            }
+            if (!Common.Settings.IsSyncLoad)
+                switch (property)
+                {
+                    case "createdBy":
+                    case "createdDate":
+                    case "modifiedBy":
+                    case "modifiedDate":
+                        break;
+                    default:
+                        {
+                            modifiedBy = Guid.Empty;
+                            modifiedDate = DateTime.Now;
+                        }
+                        break;
+                }
 
             base.OnPropertyChanged(property);
         }

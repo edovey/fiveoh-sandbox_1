@@ -9,9 +9,11 @@
 #import "PresentationView.h"
 #import "BDPresentation.h"
 #import "TherapyView.h"
+#import "BDLinkedNoteAssociation.h"
+#import "BDLinkedNote.h"
 
 @interface PresentationView() 
--(void)retrieveOverviewForPresentation;
+-(NSString *)retrieveNoteForParent:(NSString *)theParentId forPropertyName:(NSString *)thePropertyName;
 -(void)buildHTMLFromData;
 -(void)loadHTMLIntoWebView;
 @end
@@ -56,7 +58,7 @@
 {
     [super viewWillAppear:animated];
     self.presentationArray = [NSArray arrayWithArray:[BDPresentation retrieveAllWithParentUUID:parentId]];
-    [self retrieveOverviewForPresentation];
+    [self retrieveNoteForParent:(NSString *)parentId forPropertyName:@"Overview"];
     [self loadHTMLIntoWebView];
 }
 
@@ -123,23 +125,45 @@
 }
 
 #pragma mark - Private Class methods
--(void)retrieveOverviewForPresentation
+-(NSString *)retrieveNoteForParent:(NSString *)theParentId forPropertyName:(NSString *)thePropertyName
 {
-    overviewHTMLString = @"Overview Text";
-    //TODO:  retrieve text of overview.  if none,hide control and reset origin of tableview.
+    NSArray *lnAssociations = [BDLinkedNoteAssociation retrieveAllWithParentUUID:theParentId withPropertyName:thePropertyName];
+    if([lnAssociations count] > 0)
+    {
+        BDLinkedNote *note = [BDLinkedNote retrieveWithUUID:[[lnAssociations objectAtIndex:0] linkedNoteId]];
+        if ([note.documentText length] > 0)
+            return note.documentText;
+    }
+    return nil;
 }
+
 
 -(void)buildHTMLFromData
 {
-
+    NSMutableString *tmpHTML = [[[NSMutableString alloc] initWithCapacity:0] autorelease];
+    
+    NSString *presentationOverview = [self retrieveNoteForParent:parentId forPropertyName:@"Overview"];
+    if(presentationOverview != nil && [presentationOverview length] > 8) //  && ![presentationOverview isEqualToString:@"<p></p>"])
+        [tmpHTML appendString: presentationOverview];
+    
+    self.overviewHTMLString = tmpHTML;
 }
 
 
 -(void)loadHTMLIntoWebView 
 {
-    [self.dataWebView loadHTMLString:[NSString stringWithFormat:@"<html><body><font face='Helvetica' size='3.0'>%@<br></font></body></html>",self.overviewHTMLString] baseURL:[NSURL URLWithString:@""]];
-    [self.dataWebView setBackgroundColor:[UIColor clearColor]];
-    [self.dataWebView setOpaque:NO];
+    if([self.overviewHTMLString length] > 0)
+    {
+        [self.dataWebView loadHTMLString:[NSString stringWithFormat:@"<html><body><font face='Helvetica' size='3.0'>%@<br></font></body></html>",self.overviewHTMLString] baseURL:[NSURL URLWithString:@""]];
+        [self.dataWebView setBackgroundColor:[UIColor clearColor]];
+        [self.dataWebView setOpaque:NO];
+    }
+    else
+    {
+        self.dataWebView.hidden = YES;
+        CGRect tblFrame = CGRectMake(0, 0, 320, 460);
+        self.dataWebView.frame = tblFrame;
+    }
 }
 @end
 

@@ -14,9 +14,11 @@
 #import "BDTherapyGroup.h"
 #import "BDTherapy.h"
 #import "BDPresentation.h"
+#import "BDLinkedNote.h"
+#import "BDLinkedNoteAssociation.h"
 
 @interface TherapyView() 
--(void)retrieveOverviewForTherapy;
+-(NSString *)retrieveNoteForParent:(NSString *)theParentId forPropertyName:(NSString *)thePropertyName;
 -(void)loadHTMLIntoWebView;
 -(NSString *)buildHTMLFromData;
 -(NSString *)buildPathogenGroupHTML:(BDPathogenGroup *)thePathogen;
@@ -31,7 +33,6 @@
 @synthesize presentationName;
 @synthesize diseaseId;
 @synthesize diseaseName;
-@synthesize overviewHTMLString;
 @synthesize detailHTMLString;
 
 -(id)initWithPresentationId:(NSString *)pPresentationId withPresentationName:(NSString *)pPresentationName
@@ -85,7 +86,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self retrieveOverviewForTherapy];
     detailHTMLString = [NSString stringWithString:[self buildHTMLFromData]];
     [self loadHTMLIntoWebView];
 }
@@ -94,7 +94,6 @@
 {
     [dataWebView release];
     dataWebView = nil;
-    overviewHTMLString = nil;
     detailHTMLString = nil;
     presentationId = nil;
     presentationName = nil;
@@ -112,8 +111,6 @@
 }
 
 - (void)dealloc {
-//    [detailHTMLString release];
-    [overviewHTMLString release];
     [presentationId release];
     [presentationName release];
     [diseaseId release];
@@ -123,19 +120,33 @@
 }
 
 #pragma mark - Private Class methods
--(void)retrieveOverviewForTherapy
+-(NSString *)retrieveNoteForParent:(NSString *)theParentId forPropertyName:(NSString *)thePropertyName
 {
-    overviewHTMLString = @"Overview Text";
+    NSArray *lnAssociations = [BDLinkedNoteAssociation retrieveAllWithParentUUID:theParentId withPropertyName:thePropertyName];
+    if([lnAssociations count] > 0)
+    {
+        BDLinkedNote *note = [BDLinkedNote retrieveWithUUID:[[lnAssociations objectAtIndex:0] linkedNoteId]];
+        if ([note.documentText length] > 0)
+            return note.documentText;
+    }
+    return nil;
 }
+
 
 -(NSString *)buildHTMLFromData
 {
-    NSMutableString *bodyHTML = [[[NSMutableString alloc] initWithString:@"<table border=\"1\" cellspacing=\"0\" cellpadding=\"5\">"] autorelease];
+    NSMutableString *bodyHTML = [[[NSMutableString alloc] initWithCapacity:0] autorelease];
     if(diseaseId != nil && [diseaseId length] > 0)
     {
-        // TODO: get disease record to get overview information and display it first
-        
+        NSString *diseaseOverview = [self retrieveNoteForParent:diseaseId forPropertyName:@"Overview"];
+        if(diseaseOverview != nil && [diseaseOverview length] > 8) // && ![diseaseOverview isEqualToString:@"<p> </p>"])
+            [bodyHTML appendString:diseaseOverview];
     }
+    
+    NSString *presentationOverview = [self retrieveNoteForParent:presentationId forPropertyName:@"Overview"];
+    if(presentationOverview != nil && [presentationOverview length] > 8) //  && ![presentationOverview isEqualToString:@"<p> </p>"])
+        [bodyHTML appendString: presentationOverview];
+    
     
     // use presentationId to get pathogengroups
     NSArray *pathogenGroupArray = [BDPathogenGroup retrieveAllWithParentUUID:self.presentationId];
@@ -143,30 +154,34 @@
     for(BDPathogenGroup *pGroup in pathogenGroupArray) {
         [bodyHTML appendFormat:@"%@",[self buildPathogenGroupHTML:pGroup]];
         
-        // use pathogenGroup uuid to get pathogens
-        NSArray *therapyGroupArray = [BDPathogen retrieveAllWithParentUUID:pGroup.uuid];
+        // use therapyGroup uuid to get therapies
+        NSArray *therapyGroupArray = [BDTherapyGroup retrieveAllWithParentUUID:pGroup.uuid];
+
+        // header for therapy section 
+        [bodyHTML appendString:@"<p><b>Recommended Empiric Therapy</b></p>"];
+        [bodyHTML appendString:@"<table border=\"1\" cellspacing=\"0\" cellpadding=\"5\">"];
 
         for (BDTherapyGroup *tGroup in therapyGroupArray)
         {
-            [bodyHTML appendFormat:@"<tr><th>%@</th></tr>",tGroup.name];
             [bodyHTML appendFormat:@"%@",[self buildTherapyGroupHTML:tGroup]];
         
             // use therapygroupid to get therapies
             NSArray *therapyArray = [BDTherapy retrieveAllWithParentUUID:tGroup.uuid];
+            
             [bodyHTML appendString:@"<tr><th>Therapy</th><th>Dosage</th><th>Duration</th></tr>"];
             for (BDTherapy *therapy in therapyArray)
             {
                 [bodyHTML appendFormat:@"%@", [self buildTherapyHTML:therapy]];
             }
          }
+        [bodyHTML appendString:@"</table>"];
      }
-    [bodyHTML appendString:@"</table>"];
     return [NSString stringWithString:bodyHTML];
 }
 
 -(void)loadHTMLIntoWebView 
 {
-    [self.dataWebView loadHTMLString:[NSString stringWithFormat:@"<html><body><font face='Helvetica' size='3.0'>%@%@<br></font></body></html>",self.overviewHTMLString, self.detailHTMLString] baseURL:[NSURL URLWithString:@""]];
+    [self.dataWebView loadHTMLString:[NSString stringWithFormat:@"<html><body><font face='Helvetica' size='3.0'>%@<br></font></body></html>",self.detailHTMLString] baseURL:[NSURL URLWithString:@""]];
     [self.dataWebView setBackgroundColor:[UIColor clearColor]];
     [self.dataWebView setOpaque:NO];
 }
@@ -177,13 +192,13 @@
     NSArray *pathogenArray = [BDPathogen retrieveAllWithParentUUID:[thePathogenGroup uuid]];
 
     if([pathogenArray count] > 0)
-        [pathogenGroupHTML appendString:@"<tr><th>Pathogens</th></tr><tr>"];
+        [pathogenGroupHTML appendString:@"<p><b>Usual Pathogens</b></p>"];
 
     for(BDPathogen *pathogen in pathogenArray)
     {
-       [pathogenGroupHTML appendFormat:@"<td>%@</td>",pathogen.name ];
+       [pathogenGroupHTML appendFormat:@"%@<br>",pathogen.name ];
     }
-    [pathogenGroupHTML appendString:@"</tr>"];
+    //[pathogenGroupHTML appendString:@"</tr>"];
     
     NSString *returnString = [NSString stringWithString:pathogenGroupHTML];
     [pathogenGroupHTML release];
@@ -193,8 +208,7 @@
 -(NSString *)buildTherapyGroupHTML:(BDTherapyGroup *)theTherapyGroup
 {
     NSMutableString *therapyGroupHTML = [[NSMutableString alloc] initWithCapacity:0];
-    
-    [therapyGroupHTML appendFormat:@"<tr><th>%@</th></tr>",theTherapyGroup.name];
+    [therapyGroupHTML appendFormat:@"<tr><td colspan=\"3\" align=\"left\"><u>%@</></td></tr>",theTherapyGroup.name];
 
     NSString *returnString = [NSString stringWithString:therapyGroupHTML];
     [therapyGroupHTML release];
@@ -204,8 +218,7 @@
 -(NSString *)buildTherapyHTML:(BDTherapy *)theTherapy
 {
     NSMutableString *therapyHTML = [[NSMutableString alloc] initWithCapacity:0];
-    
-    [therapyHTML appendFormat:@"<tr><td>%@</td>",theTherapy.name];
+     [therapyHTML appendFormat:@"<tr><td><b>%@</b></td>",theTherapy.name];
     
     if([theTherapy.dosage length] > 0)
         [therapyHTML appendFormat:@"<td>%@</td>",theTherapy.dosage];

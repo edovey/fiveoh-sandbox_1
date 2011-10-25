@@ -15,7 +15,6 @@
     NSString *presentationName;
     NSString *diseaseId;
     NSString *diseaseName;
-    NSString *overviewHTMLString;
     NSString *detailHTMLString;
 }
 
@@ -24,7 +23,6 @@
 @property (nonatomic, retain) NSString *presentationName;
 @property (retain, nonatomic) NSString *diseaseId;
 @property (retain, nonatomic) NSString *diseaseName;
-@property (retain, nonatomic) NSString *overviewHTMLString;
 @property (retain, nonatomic) NSString *detailHTMLString;
 
 -(id)initWithDiseaseId:(NSString *)pDiseaseId withDiseaseName:(NSString *)pDiseaseName;

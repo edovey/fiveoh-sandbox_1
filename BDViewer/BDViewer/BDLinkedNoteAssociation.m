@@ -69,6 +69,14 @@
     return entities;
 }
 
++(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID withPropertyName:(NSString *)thePropertyName
+{
+    NSArray *entities = [[DataController sharedInstance] retrieveManagedObjectsForValue:ENTITYNAME_LINKEDNOTEASSOCIATION withKey:@"parentId" withValue:theUUID orderedBy:@"displayOrder" withMOC:nil];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"parentEntityPropertyName == %@",thePropertyName];
+    NSArray *filtered = [entities filteredArrayUsingPredicate:predicate];
+    return filtered;
+}
 
 
 //Returns the uuid of the object

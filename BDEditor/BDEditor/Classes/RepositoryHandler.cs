@@ -168,7 +168,8 @@ namespace BDEditor.Classes
                                                             {
                                                                 String encodedString = reader.ReadToEnd();
                                                                 String unencodedString = System.Net.WebUtility.HtmlDecode(encodedString);
-                                                                note.documentText = unencodedString;
+                                                                //note.documentText = unencodedString;
+                                                                note.documentText = encodedString;
                                                             }
                                                         }
 
@@ -294,7 +295,8 @@ namespace BDEditor.Classes
 
                                     PutObjectRequest putObjectRequest = new PutObjectRequest()
                                         .WithContentType(@"text/plain")
-                                        .WithContentBody(encodedText)
+                                        //.WithContentBody(encodedText)
+                                        .WithContentBody(entry.documentText)
                                         .WithBucketName(BDLinkedNote.AWS_BUCKET)
                                         .WithKey(entry.storageKey);
 

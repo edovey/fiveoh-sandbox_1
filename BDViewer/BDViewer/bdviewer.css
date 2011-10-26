@@ -1,0 +1,38 @@
+body {
+    font-family: Verdana, Arial;
+    font-size:10pt;
+}
+h1 {
+    font-family: Verdana, Arial;    
+    font-size:1.2em;
+    color:#CC6600;
+    background-color:white;
+}
+h2{
+    font-family: Verdana, Arial;
+    font-size:1.0em;
+    font-weight:bold;
+}
+h3{
+    font-family: Verdana, Arial;
+    font-size:.85em;
+    font-weight:normal;
+    color:gray;
+    background-color:white;
+}
+table.report {
+    border= 0;
+    font-family: Verdana, Arial;
+    font-size:1.0em;
+    font-weight:normal;
+}
+
+table.report td{
+    cellpadding = 5;
+    cellspacing = 0;
+}
+.data{
+    font-family: Verdana, Arial;
+    font-size:1.0em;
+    font-weight:normal;
+}

@@ -181,7 +181,7 @@
 
 -(void)loadHTMLIntoWebView 
 {
-    [self.dataWebView loadHTMLString:[NSString stringWithFormat:@"<html><body><font face='Helvetica' size='3.0'>%@<br></font></body></html>",self.detailHTMLString] baseURL:[NSURL URLWithString:@""]];
+    [self.dataWebView loadHTMLString:[NSString stringWithFormat:@"<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"bdviewer.css\" /> </head><body><font face='Helvetica' size='3.0'>%@<br></font></body></html>",self.detailHTMLString] baseURL:[NSURL URLWithString:@""]];
     [self.dataWebView setBackgroundColor:[UIColor clearColor]];
     [self.dataWebView setOpaque:NO];
 }

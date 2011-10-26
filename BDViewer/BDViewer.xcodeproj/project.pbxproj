@@ -55,6 +55,7 @@
 		6ECA7030142CDB0B00C54BA7 /* RootViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6ECA702E142CDB0B00C54BA7 /* RootViewController~iphone.xib */; };
 		6ECA7049142D3C4800C54BA7 /* MainWindow_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6ECA7047142D3C4800C54BA7 /* MainWindow_iPad.xib */; };
 		6ECA704C142D3CDA00C54BA7 /* MainWindow_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6ECA704A142D3CDA00C54BA7 /* MainWindow_iPhone.xib */; };
+		6EE41D1214587CC500F541FC /* bdviewer.css in Resources */ = {isa = PBXBuildFile; fileRef = 6EE41D1114587CC500F541FC /* bdviewer.css */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -138,6 +139,7 @@
 		6ECA702E142CDB0B00C54BA7 /* RootViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "RootViewController~iphone.xib"; path = "en.lproj/RootViewController~iphone.xib"; sourceTree = "<group>"; };
 		6ECA7048142D3C4800C54BA7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow_iPad.xib; sourceTree = "<group>"; };
 		6ECA704B142D3CDA00C54BA7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow_iPhone.xib; sourceTree = "<group>"; };
+		6EE41D1114587CC500F541FC /* bdviewer.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = bdviewer.css; sourceTree = "<group>"; };
 		CB5C1F5E14507472007E9A64 /* RepositoryProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepositoryProtocol.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -168,6 +170,7 @@
 		6E2EA32A142B919F00908103 /* Embedded Files */ = {
 			isa = PBXGroup;
 			children = (
+				6EE41D1114587CC500F541FC /* bdviewer.css */,
 				6E2EA339142B95F600908103 /* sample.html */,
 			);
 			name = "Embedded Files";
@@ -419,6 +422,7 @@
 				6E214E6B1450723100FE8C4F /* RootViewController.xib in Resources */,
 				6E214E851450881200FE8C4F /* PresentationView~iphone.xib in Resources */,
 				6E0EFD111450B8AA007F764D /* TherapyView~iphone.xib in Resources */,
+				6EE41D1214587CC500F541FC /* bdviewer.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

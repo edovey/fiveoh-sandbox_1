@@ -158,8 +158,8 @@
         NSArray *therapyGroupArray = [BDTherapyGroup retrieveAllWithParentUUID:pGroup.uuid];
 
         // header for therapy section 
-        [bodyHTML appendString:@"<p><b>Recommended Empiric Therapy</b></p>"];
-        [bodyHTML appendString:@"<table border=\"1\" cellspacing=\"0\" cellpadding=\"5\">"];
+        [bodyHTML appendString:@"<h2>Recommended Empiric Therapy<h2>"];
+        [bodyHTML appendString:@"<table class=\"therapy\" border=\"1\" cellspacing=\"0\" cellpadding=\"5\">"];
 
         for (BDTherapyGroup *tGroup in therapyGroupArray)
         {
@@ -181,7 +181,9 @@
 
 -(void)loadHTMLIntoWebView 
 {
-    [self.dataWebView loadHTMLString:[NSString stringWithFormat:@"<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"bdviewer.css\" /> </head><body><font face='Helvetica' size='3.0'>%@<br></font></body></html>",self.detailHTMLString] baseURL:[NSURL URLWithString:@""]];
+    NSURL *bundleURL = [[NSBundle mainBundle] bundleURL];
+      
+    [self.dataWebView loadHTMLString:[NSString stringWithFormat:@"<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"bdviewer.css\" /> </head><body>%@</body></html>",self.detailHTMLString] baseURL:bundleURL];
     [self.dataWebView setBackgroundColor:[UIColor clearColor]];
     [self.dataWebView setOpaque:NO];
 }
@@ -192,14 +194,13 @@
     NSArray *pathogenArray = [BDPathogen retrieveAllWithParentUUID:[thePathogenGroup uuid]];
 
     if([pathogenArray count] > 0)
-        [pathogenGroupHTML appendString:@"<p><b>Usual Pathogens</b></p>"];
+        [pathogenGroupHTML appendString:@"<h2>Usual Pathogens</h2>"];
 
     for(BDPathogen *pathogen in pathogenArray)
     {
        [pathogenGroupHTML appendFormat:@"%@<br>",pathogen.name ];
     }
-    //[pathogenGroupHTML appendString:@"</tr>"];
-    
+  
     NSString *returnString = [NSString stringWithString:pathogenGroupHTML];
     [pathogenGroupHTML release];
     return returnString;

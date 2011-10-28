@@ -9,14 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface PresentationView : UIViewController <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate>
-{
-    UITableView *dataTableView;
-    UIWebView *dataWebView;
-    NSString *parentId;
-    NSString *parentName;
-    NSArray * presentationArray;
-    NSString *overviewHTMLString;
-}
 
 @property (retain, nonatomic) NSString *parentId;
 @property (nonatomic, retain) NSString *parentName;

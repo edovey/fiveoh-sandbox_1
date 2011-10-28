@@ -9,12 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface SectionView : UIViewController <UITableViewDataSource, UITableViewDelegate>
-{
-    NSArray *sectionArray;
-    UITableView *dataTableView;
-    NSString *parentId;
-    NSString *parentName;
-}
 
 @property (nonatomic, retain) IBOutlet UITableView *dataTableView;
 @property (nonatomic, retain) NSString *parentId;

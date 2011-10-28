@@ -9,12 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface CategoryView : UIViewController <UITableViewDataSource, UITableViewDelegate>
-{
-    UITableView *dataTableView;
-    NSArray *categoryArray;
-    NSString *parentId;
-    NSString *parentName;
-}
 
 @property (nonatomic, retain) NSArray *categoryArray;
 @property (retain, nonatomic) IBOutlet UITableView *dataTableView;

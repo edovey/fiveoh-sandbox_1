@@ -9,10 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface ChapterView : UIViewController <UITableViewDelegate, UITableViewDataSource>
-{
-    UITableView *dataTableView;
-    NSArray *chapterArray;
-}
+
+
 @property (retain, nonatomic) IBOutlet UITableView *dataTableView;
 
 @property (retain, nonatomic) NSArray *chapterArray;

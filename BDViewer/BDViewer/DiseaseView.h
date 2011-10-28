@@ -9,12 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface DiseaseView : UIViewController <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate>
-{
-    NSArray * diseaseArray;
-    NSString *parentId;
-    UITableView * dataTableView;
-    NSString *parentName;
-}
 
 @property (nonatomic, retain) NSArray * diseaseArray;
 @property (retain, nonatomic) NSString *parentId;

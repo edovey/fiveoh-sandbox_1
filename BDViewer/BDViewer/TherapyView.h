@@ -9,14 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface TherapyView : UIViewController <UIWebViewDelegate>
-{
-    UIWebView *dataWebView;
-    NSString *presentationId;
-    NSString *presentationName;
-    NSString *diseaseId;
-    NSString *diseaseName;
-    NSString *detailHTMLString;
-}
 
 @property (retain, nonatomic) IBOutlet UIWebView *dataWebView;
 @property (retain, nonatomic) NSString *presentationId;

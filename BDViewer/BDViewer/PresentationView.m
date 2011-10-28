@@ -152,17 +152,13 @@
 
 -(void)loadHTMLIntoWebView 
 {
-    if([self.overviewHTMLString length] > 0)
+    if(self.overviewHTMLString != nil && [self.overviewHTMLString length] > 8)
     {
         [self.dataWebView loadHTMLString:[NSString stringWithFormat:@"<html><body><font face='Helvetica' size='3.0'>%@<br></font></body></html>",self.overviewHTMLString] baseURL:[NSURL URLWithString:@""]];
         [self.dataWebView setBackgroundColor:[UIColor clearColor]];
         [self.dataWebView setOpaque:NO];
-    }
-    else
-    {
-        self.dataWebView.hidden = YES;
-        CGRect tblFrame = CGRectMake(0, 0, 320, 460);
-        self.dataWebView.frame = tblFrame;
+    } else {
+        dataTableView.tableHeaderView = nil;
     }
 }
 @end

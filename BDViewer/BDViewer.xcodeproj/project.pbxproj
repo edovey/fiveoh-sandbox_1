@@ -56,6 +56,7 @@
 		6ECA7049142D3C4800C54BA7 /* MainWindow_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6ECA7047142D3C4800C54BA7 /* MainWindow_iPad.xib */; };
 		6ECA704C142D3CDA00C54BA7 /* MainWindow_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6ECA704A142D3CDA00C54BA7 /* MainWindow_iPhone.xib */; };
 		6EE41D1214587CC500F541FC /* bdviewer.css in Resources */ = {isa = PBXBuildFile; fileRef = 6EE41D1114587CC500F541FC /* bdviewer.css */; };
+		CB6F1C0D145B1F7F007620DE /* bd-icon114.png in Resources */ = {isa = PBXBuildFile; fileRef = CB6F1C0C145B1F7F007620DE /* bd-icon114.png */; };
 		CB95FABD145B11F70005571B /* bd-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CB95FABB145B11F70005571B /* bd-icon.png */; };
 		CB95FABE145B11F70005571B /* bd-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CB95FABC145B11F70005571B /* bd-icon@2x.png */; };
 		CBDC32C1145B125600AD4D48 /* bd-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CBDC32C0145B125600AD4D48 /* bd-icon.png */; };
@@ -145,6 +146,7 @@
 		6ECA704B142D3CDA00C54BA7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow_iPhone.xib; sourceTree = "<group>"; };
 		6EE41D1114587CC500F541FC /* bdviewer.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = bdviewer.css; sourceTree = "<group>"; };
 		CB5C1F5E14507472007E9A64 /* RepositoryProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepositoryProtocol.h; sourceTree = "<group>"; };
+		CB6F1C0C145B1F7F007620DE /* bd-icon114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bd-icon114.png"; sourceTree = "<group>"; };
 		CB95FABB145B11F70005571B /* bd-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bd-icon.png"; path = "graphics/bd-icon.png"; sourceTree = "<group>"; };
 		CB95FABC145B11F70005571B /* bd-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bd-icon@2x.png"; path = "graphics/bd-icon@2x.png"; sourceTree = "<group>"; };
 		CBDC32C0145B125600AD4D48 /* bd-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bd-icon.png"; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 		6EC5FFF1142AA6BA003232D1 = {
 			isa = PBXGroup;
 			children = (
+				CB6F1C0C145B1F7F007620DE /* bd-icon114.png */,
 				CBDC32C3145B126300AD4D48 /* bd-icon@2x.png */,
 				CBDC32C0145B125600AD4D48 /* bd-icon.png */,
 				6EC50008142AA6BA003232D1 /* BDViewer */,
@@ -439,6 +442,7 @@
 				CB95FABE145B11F70005571B /* bd-icon@2x.png in Resources */,
 				CBDC32C1145B125600AD4D48 /* bd-icon.png in Resources */,
 				CBDC32C4145B126300AD4D48 /* bd-icon@2x.png in Resources */,
+				CB6F1C0D145B1F7F007620DE /* bd-icon114.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,8 +550,8 @@
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../thirdParty\"/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../thirdParty\"/**";
-				PROVISIONING_PROFILE = "1F76E99B-992F-480D-B20D-E957FC0330B6";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1F76E99B-992F-480D-B20D-E957FC0330B6";
+				PROVISIONING_PROFILE = "7A9EB59E-DF38-4C5B-B811-332B790C1938";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7A9EB59E-DF38-4C5B-B811-332B790C1938";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -571,8 +575,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../thirdParty\"/**";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "1F76E99B-992F-480D-B20D-E957FC0330B6";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1F76E99B-992F-480D-B20D-E957FC0330B6";
+				PROVISIONING_PROFILE = "7A9EB59E-DF38-4C5B-B811-332B790C1938";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7A9EB59E-DF38-4C5B-B811-332B790C1938";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

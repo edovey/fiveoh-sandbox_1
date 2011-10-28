@@ -14,6 +14,8 @@
 	<array>
 		<string>bd-temp.png</string>
 		<string>bd-temp@2x.png</string>
+		<string>bd-icon.png</string>
+		<string>bd-icon114.png</string>
 	</array>
 	<key>CFBundleIcons</key>
 	<dict>
@@ -23,6 +25,8 @@
 			<array>
 				<string>bd-temp.png</string>
 				<string>bd-temp@2x.png</string>
+				<string>bd-icon.png</string>
+				<string>bd-icon114.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<false/>

@@ -6,12 +6,12 @@
 //  Copyright (c) 2011 875953 Alberta, Inc. All rights reserved.
 //
 
-#import "SectionView.h"
-#import "CategoryView.h"
+#import "SectionListView.h"
+#import "CategoryListView.h"
 #import "BDSection.h"
 #import "BDCategory.h"
 
-@implementation SectionView
+@implementation SectionListView
 @synthesize dataTableView;
 @synthesize sectionArray;
 @synthesize parentId;
@@ -97,6 +97,7 @@
     
     int childCount = [[BDCategory retrieveCountWithParentUUID:[[self.sectionArray objectAtIndex:indexPath.row] uuid]] intValue];
     cell.accessoryType = (childCount > 0) ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
+    cell.selectionStyle = (childCount > 0) ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
     
     return cell;
 }
@@ -104,7 +105,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BDSection *section = [self.sectionArray objectAtIndex:indexPath.row];
-     CategoryView *vwCategory = [[CategoryView alloc] initWithParentId:[section uuid] withParentName: [section name]];
+     CategoryListView *vwCategory = [[CategoryListView alloc] initWithParentId:[section uuid] withParentName: [section name]];
      [self.navigationController pushViewController:vwCategory animated:YES];
      [vwCategory release];
 }

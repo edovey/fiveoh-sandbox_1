@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChapterView : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface ChapterListView : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 
 @property (retain, nonatomic) IBOutlet UITableView *dataTableView;

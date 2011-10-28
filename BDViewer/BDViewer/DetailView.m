@@ -6,7 +6,7 @@
 //  Copyright (c) 2011 875953 Alberta, Inc. All rights reserved.
 //
 
-#import "TherapyView.h"
+#import "DetailView.h"
 #import "BDTherapyGroup.h"
 #import "BDTherapy.h"
 #import "BDPathogenGroup.h"
@@ -17,7 +17,7 @@
 #import "BDLinkedNote.h"
 #import "BDLinkedNoteAssociation.h"
 
-@interface TherapyView() 
+@interface DetailView() 
 -(NSString *)retrieveNoteForParent:(NSString *)theParentId forPropertyName:(NSString *)thePropertyName;
 -(void)loadHTMLIntoWebView;
 -(NSString *)buildHTMLFromData;
@@ -27,7 +27,7 @@
 
 @end
 
-@implementation TherapyView
+@implementation DetailView
 @synthesize dataWebView;
 @synthesize presentationId;
 @synthesize presentationName;

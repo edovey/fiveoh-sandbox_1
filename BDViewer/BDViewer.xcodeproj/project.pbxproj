@@ -8,11 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		6E003A771448AE89003908C2 /* BDLinkedNoteAssociation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E003A761448AE89003908C2 /* BDLinkedNoteAssociation.m */; };
-		6E0EFD101450B8AA007F764D /* TherapyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EFD0E1450B8A9007F764D /* TherapyView.m */; };
-		6E0EFD111450B8AA007F764D /* TherapyView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E0EFD0F1450B8AA007F764D /* TherapyView~iphone.xib */; };
+		6E0EFD101450B8AA007F764D /* DetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EFD0E1450B8A9007F764D /* DetailView.m */; };
+		6E0EFD111450B8AA007F764D /* DetailView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E0EFD0F1450B8AA007F764D /* DetailView~iphone.xib */; };
 		6E214E6B1450723100FE8C4F /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E214E691450723100FE8C4F /* RootViewController.xib */; };
-		6E214E841450881200FE8C4F /* PresentationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E214E821450881100FE8C4F /* PresentationView.m */; };
-		6E214E851450881200FE8C4F /* PresentationView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E214E831450881200FE8C4F /* PresentationView~iphone.xib */; };
+		6E214E841450881200FE8C4F /* PresentationListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E214E821450881100FE8C4F /* PresentationListView.m */; };
 		6E2EA337142B95DC00908103 /* S3RequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA334142B95DC00908103 /* S3RequestDelegate.m */; };
 		6E2EA338142B95DC00908103 /* SdbRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA336142B95DC00908103 /* SdbRequestDelegate.m */; };
 		6E2EA33A142B95F600908103 /* sample.html in Resources */ = {isa = PBXBuildFile; fileRef = 6E2EA339142B95F600908103 /* sample.html */; };
@@ -28,15 +27,16 @@
 		6E2EA35A142B9F9300908103 /* ProjectConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA356142B9F9300908103 /* ProjectConstants.m */; };
 		6E2EA35B142B9F9300908103 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA358142B9F9300908103 /* Utility.m */; };
 		6E2EA35F142BA0F800908103 /* AWSiOSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E2EA35E142BA0F800908103 /* AWSiOSSDK.framework */; };
+		6E3140A9145B5A48002A8049 /* PresentationListView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E3140A8145B5A48002A8049 /* PresentationListView~iphone.xib */; };
 		6E49B041143CC81900E32F3F /* BDPathogenGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E49B040143CC81900E32F3F /* BDPathogenGroup.m */; };
-		6E511FDC144F25BD00BB47C9 /* ChapterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E511FDA144F25BD00BB47C9 /* ChapterView.m */; };
-		6E511FDD144F25BD00BB47C9 /* ChapterView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E511FDB144F25BD00BB47C9 /* ChapterView~iphone.xib */; };
-		6E511FE1144F2FC300BB47C9 /* SectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E511FDF144F2FC300BB47C9 /* SectionView.m */; };
-		6E511FE2144F2FC300BB47C9 /* SectionView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E511FE0144F2FC300BB47C9 /* SectionView~iphone.xib */; };
-		6E511FE6144F38C800BB47C9 /* CategoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E511FE4144F38C800BB47C9 /* CategoryView.m */; };
-		6E511FE7144F38C800BB47C9 /* CategoryView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E511FE5144F38C800BB47C9 /* CategoryView~iphone.xib */; };
-		6E511FEB144F3AB200BB47C9 /* DiseaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E511FE9144F3AB100BB47C9 /* DiseaseView.m */; };
-		6E511FEC144F3AB200BB47C9 /* DiseaseView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E511FEA144F3AB200BB47C9 /* DiseaseView~iphone.xib */; };
+		6E511FDC144F25BD00BB47C9 /* ChapterListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E511FDA144F25BD00BB47C9 /* ChapterListView.m */; };
+		6E511FDD144F25BD00BB47C9 /* ChapterListView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E511FDB144F25BD00BB47C9 /* ChapterListView~iphone.xib */; };
+		6E511FE1144F2FC300BB47C9 /* SectionListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E511FDF144F2FC300BB47C9 /* SectionListView.m */; };
+		6E511FE2144F2FC300BB47C9 /* SectionListView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E511FE0144F2FC300BB47C9 /* SectionListView~iphone.xib */; };
+		6E511FE6144F38C800BB47C9 /* CategoryListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E511FE4144F38C800BB47C9 /* CategoryListView.m */; };
+		6E511FE7144F38C800BB47C9 /* CategoryListView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E511FE5144F38C800BB47C9 /* CategoryListView~iphone.xib */; };
+		6E511FEB144F3AB200BB47C9 /* DiseaseListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E511FE9144F3AB100BB47C9 /* DiseaseListView.m */; };
+		6E511FEC144F3AB200BB47C9 /* DiseaseListView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E511FEA144F3AB200BB47C9 /* DiseaseListView~iphone.xib */; };
 		6E8ED864144E26A0002247E5 /* BDChapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E8ED863144E26A0002247E5 /* BDChapter.m */; };
 		6E9685C2142BBE15004C5DED /* BDViewer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6E9685C0142BBE15004C5DED /* BDViewer.xcdatamodeld */; };
 		6EA646C31430C2F000A693A4 /* BDDisease.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EA646C21430C2F000A693A4 /* BDDisease.m */; };
@@ -66,13 +66,12 @@
 /* Begin PBXFileReference section */
 		6E003A751448AE89003908C2 /* BDLinkedNoteAssociation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDLinkedNoteAssociation.h; sourceTree = "<group>"; };
 		6E003A761448AE89003908C2 /* BDLinkedNoteAssociation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDLinkedNoteAssociation.m; sourceTree = "<group>"; };
-		6E0EFD0D1450B8A9007F764D /* TherapyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TherapyView.h; sourceTree = "<group>"; };
-		6E0EFD0E1450B8A9007F764D /* TherapyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TherapyView.m; sourceTree = "<group>"; };
-		6E0EFD0F1450B8AA007F764D /* TherapyView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "TherapyView~iphone.xib"; sourceTree = "<group>"; };
+		6E0EFD0D1450B8A9007F764D /* DetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailView.h; sourceTree = "<group>"; };
+		6E0EFD0E1450B8A9007F764D /* DetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailView.m; sourceTree = "<group>"; };
+		6E0EFD0F1450B8AA007F764D /* DetailView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "DetailView~iphone.xib"; sourceTree = "<group>"; };
 		6E214E6A1450723100FE8C4F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RootViewController.xib; sourceTree = "<group>"; };
-		6E214E811450881000FE8C4F /* PresentationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentationView.h; sourceTree = "<group>"; };
-		6E214E821450881100FE8C4F /* PresentationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentationView.m; sourceTree = "<group>"; };
-		6E214E831450881200FE8C4F /* PresentationView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "PresentationView~iphone.xib"; sourceTree = "<group>"; };
+		6E214E811450881000FE8C4F /* PresentationListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentationListView.h; sourceTree = "<group>"; };
+		6E214E821450881100FE8C4F /* PresentationListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentationListView.m; sourceTree = "<group>"; };
 		6E2EA333142B95DC00908103 /* S3RequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = S3RequestDelegate.h; sourceTree = "<group>"; };
 		6E2EA334142B95DC00908103 /* S3RequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = S3RequestDelegate.m; sourceTree = "<group>"; };
 		6E2EA335142B95DC00908103 /* SdbRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SdbRequestDelegate.h; sourceTree = "<group>"; };
@@ -101,20 +100,21 @@
 		6E2EA357142B9F9300908103 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		6E2EA358142B9F9300908103 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		6E2EA35E142BA0F800908103 /* AWSiOSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSiOSSDK.framework; path = "../thirdParty/aws-ios-sdk-0.2.3/AWSiOSSDK.framework"; sourceTree = "<group>"; };
+		6E3140A8145B5A48002A8049 /* PresentationListView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "PresentationListView~iphone.xib"; sourceTree = "<group>"; };
 		6E49B03F143CC81900E32F3F /* BDPathogenGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDPathogenGroup.h; sourceTree = "<group>"; };
 		6E49B040143CC81900E32F3F /* BDPathogenGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDPathogenGroup.m; sourceTree = "<group>"; };
-		6E511FD9144F25BD00BB47C9 /* ChapterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChapterView.h; sourceTree = "<group>"; };
-		6E511FDA144F25BD00BB47C9 /* ChapterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChapterView.m; sourceTree = "<group>"; };
-		6E511FDB144F25BD00BB47C9 /* ChapterView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ChapterView~iphone.xib"; sourceTree = "<group>"; };
-		6E511FDE144F2FC300BB47C9 /* SectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SectionView.h; sourceTree = "<group>"; };
-		6E511FDF144F2FC300BB47C9 /* SectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SectionView.m; sourceTree = "<group>"; };
-		6E511FE0144F2FC300BB47C9 /* SectionView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SectionView~iphone.xib"; sourceTree = "<group>"; };
-		6E511FE3144F38C800BB47C9 /* CategoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryView.h; sourceTree = "<group>"; };
-		6E511FE4144F38C800BB47C9 /* CategoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryView.m; sourceTree = "<group>"; };
-		6E511FE5144F38C800BB47C9 /* CategoryView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "CategoryView~iphone.xib"; sourceTree = "<group>"; };
-		6E511FE8144F3AB100BB47C9 /* DiseaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiseaseView.h; sourceTree = "<group>"; };
-		6E511FE9144F3AB100BB47C9 /* DiseaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiseaseView.m; sourceTree = "<group>"; };
-		6E511FEA144F3AB200BB47C9 /* DiseaseView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "DiseaseView~iphone.xib"; sourceTree = "<group>"; };
+		6E511FD9144F25BD00BB47C9 /* ChapterListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChapterListView.h; sourceTree = "<group>"; };
+		6E511FDA144F25BD00BB47C9 /* ChapterListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChapterListView.m; sourceTree = "<group>"; };
+		6E511FDB144F25BD00BB47C9 /* ChapterListView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ChapterListView~iphone.xib"; sourceTree = "<group>"; };
+		6E511FDE144F2FC300BB47C9 /* SectionListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SectionListView.h; sourceTree = "<group>"; };
+		6E511FDF144F2FC300BB47C9 /* SectionListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SectionListView.m; sourceTree = "<group>"; };
+		6E511FE0144F2FC300BB47C9 /* SectionListView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SectionListView~iphone.xib"; sourceTree = "<group>"; };
+		6E511FE3144F38C800BB47C9 /* CategoryListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryListView.h; sourceTree = "<group>"; };
+		6E511FE4144F38C800BB47C9 /* CategoryListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryListView.m; sourceTree = "<group>"; };
+		6E511FE5144F38C800BB47C9 /* CategoryListView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "CategoryListView~iphone.xib"; sourceTree = "<group>"; };
+		6E511FE8144F3AB100BB47C9 /* DiseaseListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiseaseListView.h; sourceTree = "<group>"; };
+		6E511FE9144F3AB100BB47C9 /* DiseaseListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiseaseListView.m; sourceTree = "<group>"; };
+		6E511FEA144F3AB200BB47C9 /* DiseaseListView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "DiseaseListView~iphone.xib"; sourceTree = "<group>"; };
 		6E8ED862144E26A0002247E5 /* BDChapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDChapter.h; sourceTree = "<group>"; };
 		6E8ED863144E26A0002247E5 /* BDChapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDChapter.m; sourceTree = "<group>"; };
 		6E9685C1142BBE15004C5DED /* BDViewer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BDViewer.xcdatamodel; sourceTree = "<group>"; };
@@ -287,24 +287,24 @@
 				6EC5001B142AA6BA003232D1 /* RootViewController.m */,
 				6E214E691450723100FE8C4F /* RootViewController.xib */,
 				6ECA702E142CDB0B00C54BA7 /* RootViewController~iphone.xib */,
-				6E511FE3144F38C800BB47C9 /* CategoryView.h */,
-				6E511FE4144F38C800BB47C9 /* CategoryView.m */,
-				6E511FE5144F38C800BB47C9 /* CategoryView~iphone.xib */,
-				6E511FD9144F25BD00BB47C9 /* ChapterView.h */,
-				6E511FDA144F25BD00BB47C9 /* ChapterView.m */,
-				6E511FDB144F25BD00BB47C9 /* ChapterView~iphone.xib */,
-				6E511FE8144F3AB100BB47C9 /* DiseaseView.h */,
-				6E511FE9144F3AB100BB47C9 /* DiseaseView.m */,
-				6E511FEA144F3AB200BB47C9 /* DiseaseView~iphone.xib */,
-				6E214E811450881000FE8C4F /* PresentationView.h */,
-				6E214E821450881100FE8C4F /* PresentationView.m */,
-				6E214E831450881200FE8C4F /* PresentationView~iphone.xib */,
-				6E511FDE144F2FC300BB47C9 /* SectionView.h */,
-				6E511FDF144F2FC300BB47C9 /* SectionView.m */,
-				6E511FE0144F2FC300BB47C9 /* SectionView~iphone.xib */,
-				6E0EFD0D1450B8A9007F764D /* TherapyView.h */,
-				6E0EFD0E1450B8A9007F764D /* TherapyView.m */,
-				6E0EFD0F1450B8AA007F764D /* TherapyView~iphone.xib */,
+				6E511FD9144F25BD00BB47C9 /* ChapterListView.h */,
+				6E511FDA144F25BD00BB47C9 /* ChapterListView.m */,
+				6E511FDB144F25BD00BB47C9 /* ChapterListView~iphone.xib */,
+				6E511FDE144F2FC300BB47C9 /* SectionListView.h */,
+				6E511FDF144F2FC300BB47C9 /* SectionListView.m */,
+				6E511FE0144F2FC300BB47C9 /* SectionListView~iphone.xib */,
+				6E511FE3144F38C800BB47C9 /* CategoryListView.h */,
+				6E511FE4144F38C800BB47C9 /* CategoryListView.m */,
+				6E511FE5144F38C800BB47C9 /* CategoryListView~iphone.xib */,
+				6E511FE8144F3AB100BB47C9 /* DiseaseListView.h */,
+				6E511FE9144F3AB100BB47C9 /* DiseaseListView.m */,
+				6E511FEA144F3AB200BB47C9 /* DiseaseListView~iphone.xib */,
+				6E214E811450881000FE8C4F /* PresentationListView.h */,
+				6E214E821450881100FE8C4F /* PresentationListView.m */,
+				6E3140A8145B5A48002A8049 /* PresentationListView~iphone.xib */,
+				6E0EFD0D1450B8A9007F764D /* DetailView.h */,
+				6E0EFD0E1450B8A9007F764D /* DetailView.m */,
+				6E0EFD0F1450B8AA007F764D /* DetailView~iphone.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -430,19 +430,19 @@
 				6ECA7030142CDB0B00C54BA7 /* RootViewController~iphone.xib in Resources */,
 				6ECA7049142D3C4800C54BA7 /* MainWindow_iPad.xib in Resources */,
 				6ECA704C142D3CDA00C54BA7 /* MainWindow_iPhone.xib in Resources */,
-				6E511FDD144F25BD00BB47C9 /* ChapterView~iphone.xib in Resources */,
-				6E511FE2144F2FC300BB47C9 /* SectionView~iphone.xib in Resources */,
-				6E511FE7144F38C800BB47C9 /* CategoryView~iphone.xib in Resources */,
-				6E511FEC144F3AB200BB47C9 /* DiseaseView~iphone.xib in Resources */,
+				6E511FDD144F25BD00BB47C9 /* ChapterListView~iphone.xib in Resources */,
+				6E511FE2144F2FC300BB47C9 /* SectionListView~iphone.xib in Resources */,
+				6E511FE7144F38C800BB47C9 /* CategoryListView~iphone.xib in Resources */,
+				6E511FEC144F3AB200BB47C9 /* DiseaseListView~iphone.xib in Resources */,
 				6E214E6B1450723100FE8C4F /* RootViewController.xib in Resources */,
-				6E214E851450881200FE8C4F /* PresentationView~iphone.xib in Resources */,
-				6E0EFD111450B8AA007F764D /* TherapyView~iphone.xib in Resources */,
+				6E0EFD111450B8AA007F764D /* DetailView~iphone.xib in Resources */,
 				6EE41D1214587CC500F541FC /* bdviewer.css in Resources */,
 				CB95FABD145B11F70005571B /* bd-icon.png in Resources */,
 				CB95FABE145B11F70005571B /* bd-icon@2x.png in Resources */,
 				CBDC32C1145B125600AD4D48 /* bd-icon.png in Resources */,
 				CBDC32C4145B126300AD4D48 /* bd-icon@2x.png in Resources */,
 				CB6F1C0D145B1F7F007620DE /* bd-icon114.png in Resources */,
+				6E3140A9145B5A48002A8049 /* PresentationListView~iphone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -478,12 +478,12 @@
 				6E49B041143CC81900E32F3F /* BDPathogenGroup.m in Sources */,
 				6E003A771448AE89003908C2 /* BDLinkedNoteAssociation.m in Sources */,
 				6E8ED864144E26A0002247E5 /* BDChapter.m in Sources */,
-				6E511FDC144F25BD00BB47C9 /* ChapterView.m in Sources */,
-				6E511FE1144F2FC300BB47C9 /* SectionView.m in Sources */,
-				6E511FE6144F38C800BB47C9 /* CategoryView.m in Sources */,
-				6E511FEB144F3AB200BB47C9 /* DiseaseView.m in Sources */,
-				6E214E841450881200FE8C4F /* PresentationView.m in Sources */,
-				6E0EFD101450B8AA007F764D /* TherapyView.m in Sources */,
+				6E511FDC144F25BD00BB47C9 /* ChapterListView.m in Sources */,
+				6E511FE1144F2FC300BB47C9 /* SectionListView.m in Sources */,
+				6E511FE6144F38C800BB47C9 /* CategoryListView.m in Sources */,
+				6E511FEB144F3AB200BB47C9 /* DiseaseListView.m in Sources */,
+				6E214E841450881200FE8C4F /* PresentationListView.m in Sources */,
+				6E0EFD101450B8AA007F764D /* DetailView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

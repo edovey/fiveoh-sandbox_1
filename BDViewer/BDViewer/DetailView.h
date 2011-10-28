@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TherapyView : UIViewController <UIWebViewDelegate>
+@interface DetailView : UIViewController <UIWebViewDelegate>
 
 @property (retain, nonatomic) IBOutlet UIWebView *dataWebView;
 @property (retain, nonatomic) NSString *presentationId;

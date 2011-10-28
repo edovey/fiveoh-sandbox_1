@@ -6,19 +6,19 @@
 //  Copyright (c) 2011 875953 Alberta, Inc. All rights reserved.
 //
 
-#import "PresentationView.h"
+#import "PresentationListView.h"
 #import "BDPresentation.h"
-#import "TherapyView.h"
+#import "DetailView.h"
 #import "BDLinkedNoteAssociation.h"
 #import "BDLinkedNote.h"
 
-@interface PresentationView() 
+@interface PresentationListView() 
 -(NSString *)retrieveNoteForParent:(NSString *)theParentId forPropertyName:(NSString *)thePropertyName;
 -(void)buildHTMLFromData;
 -(void)loadHTMLIntoWebView;
 @end
 
-@implementation PresentationView
+@implementation PresentationListView
 @synthesize parentId;
 @synthesize parentName;
 @synthesize dataTableView;
@@ -119,7 +119,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BDPresentation *presentation = [presentationArray objectAtIndex:indexPath.row];
-    TherapyView *vwTherapy = [[TherapyView alloc] initWithPresentationId:presentation.uuid withPresentationName:presentation.name];
+    DetailView *vwTherapy = [[DetailView alloc] initWithPresentationId:presentation.uuid withPresentationName:presentation.name];
     [self.navigationController pushViewController:vwTherapy animated:YES];
     [vwTherapy release];
 }

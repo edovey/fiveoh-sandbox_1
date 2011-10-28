@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PresentationView : UIViewController <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate>
+@interface PresentationListView : UIViewController <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate>
 
 @property (retain, nonatomic) NSString *parentId;
 @property (nonatomic, retain) NSString *parentName;

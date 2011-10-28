@@ -1,20 +1,32 @@
 //
-//  ChapterView.m
+//  CategoryView.m
 //  BDViewer
 //
 //  Created by Liz Dovey on 11-10-19.
 //  Copyright (c) 2011 875953 Alberta, Inc. All rights reserved.
 //
 
-#import "ChapterView.h"
-#import "BDChapter.h"
-#import "SectionView.h"
-#import "DataController.h"
-#import "BDSection.h"
+#import "CategoryListView.h"
+#import "BDCategory.h"
+#import "DiseaseListView.h"
+#import "BDDisease.h"
 
-@implementation ChapterView
+@implementation CategoryListView
 @synthesize dataTableView;
-@synthesize chapterArray;
+@synthesize categoryArray;
+@synthesize parentId;
+@synthesize parentName;
+
+-(id)initWithParentId:(NSString *)pParentId withParentName:(NSString *)pParentName
+{
+    self = [super initWithNibName:@"CategoryView" bundle:nil];
+    if(self)
+    {
+        parentId = [pParentId retain];
+        parentName = [pParentName retain];
+    }
+    return self;
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -30,28 +42,36 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    self.title = @"Chapters";
+    self.title = parentName;
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];    
-    self.chapterArray = [NSArray arrayWithArray:[BDChapter retrieveAll]];
+    [super viewWillAppear:animated];
+    self.categoryArray = [NSArray arrayWithArray:[BDCategory retrieveAllWithParentUUID:parentId]];
 }
 
 - (void)viewDidUnload
 {
+    [dataTableView release];
+    dataTableView = nil;
     [self setDataTableView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
 - (void)dealloc {
+    [categoryArray release];
     [dataTableView release];
-    [chapterArray release];
+    [parentId release];
+    [parentName release];
     [super dealloc];
 }
 
@@ -62,7 +82,7 @@
 }
 
 - (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.chapterArray count];
+    return [self.categoryArray count];
 }
 
 #pragma mark - TableView Delegate
@@ -75,22 +95,21 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
-    cell.textLabel.text = [[self.chapterArray objectAtIndex:indexPath.row] name];
+    cell.textLabel.text = [[self.categoryArray objectAtIndex:indexPath.row] name ];
     
-    int childCount = [[BDSection retrieveCountWithParentUUID:[[self.chapterArray objectAtIndex:indexPath.row] uuid]] intValue];
+    int childCount = [[BDDisease retrieveCountWithParentUUID:[[self.categoryArray objectAtIndex:indexPath.row] uuid]] intValue];
     cell.accessoryType = (childCount > 0) ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
-    
+    cell.selectionStyle = (childCount > 0) ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
+
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BDChapter *chapter = [chapterArray objectAtIndex:indexPath.row];
-    SectionView *vwSection = [[SectionView alloc] initWithParentId:[chapter uuid] withParentName: [chapter name]];
-     [self.navigationController pushViewController:vwSection animated:YES];
-     [vwSection release];
+    BDCategory *category = [categoryArray objectAtIndex:indexPath.row];
+     DiseaseListView *vwDisease = [[DiseaseListView alloc] initWithParentId:[category uuid] withParentName: [category name]];
+     [self.navigationController pushViewController:vwDisease animated:YES];
+     [vwDisease release];
 }
-
-
 
 @end

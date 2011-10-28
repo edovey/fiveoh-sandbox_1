@@ -56,61 +56,6 @@
     return processedCount;
 }
 
-/*
-+(void)pullAll
-{
-    RepositoryHandler *handler = [[RepositoryHandler alloc] init];
-    
-    NSArray *entityArray = [[NSArray alloc] initWithObjects:
-                            DOMAIN_SECTION, 
-                            DOMAIN_CATEGORY, 
-                            DOMAIN_SUBCATEGORY, 
-                            DOMAIN_DISEASE, 
-                            DOMAIN_PATHOGEN,
-                            DOMAIN_PATHOGENGROUP,
-                            DOMAIN_PRESENTATION, 
-                            DOMAIN_THERAPYGROUP, 
-                            DOMAIN_THERAPY, 
-                            DOMAIN_LINKEDNOTE, 
-                            DOMAIN_LINKEDNOTEASSOCIATION, 
-                            nil];
-    
-    for (int i = 0; i < [entityArray count]; i++)
-    {
-        NSString *selectExpression = [handler getSimpleSelectExpressionForDomain:[entityArray objectAtIndex:i]];
-        @try 
-        {
-            SimpleDBSelectRequest  *selectRequest  = [[[SimpleDBSelectRequest alloc] initWithSelectExpression:selectExpression] autorelease];
-            SimpleDBSelectResponse *selectResponse = [[RepositoryConstants sdb] select:selectRequest];
-            
-            for (SimpleDBItem *item in selectResponse.items) 
-            {
-                NSString *loadedUUID = [handler loadEntityWithAwsSimpleDbItemName:item.name forAwsSimpleDbDomain:[entityArray objectAtIndex:i]];
-                NSLog(@"Loaded %@", loadedUUID);
-            }
-            
-        }
-        @catch (AmazonServiceException *exception) 
-        {
-            NSLog(@"Exception = %@", exception);
-        }
-                                      
-    }
-    [handler release];
-    [entityArray release];
-    
-    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-	[dateFormatter setTimeStyle:NSDateFormatterFullStyle];
-	[dateFormatter setDateFormat:DATETIMEFORMAT];
-
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[dateFormatter stringFromDate:[NSDate date]] forKey:@"RepositoryRefreshDate"];
-    
-    [dateFormatter release];
-
-}
-*/
-
 +(void)pullSince:(NSDate *)theLastSyncDate
 {
     RepositoryHandler *handler = [[RepositoryHandler alloc] init];
@@ -164,9 +109,7 @@
 	[dateFormatter setTimeStyle:NSDateFormatterFullStyle];
 	[dateFormatter setDateFormat:DATETIMEFORMAT];
 
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    NSObject *refreshDateInfo = [defaults objectForKey:@"RepositoryRefreshDate"]; // Get the datetime of the last refresh
-    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];    
     
     NSString *refreshDateString = nil;
     
@@ -252,7 +195,7 @@
     
     [handler release];
 
-    [defaults setObject:[NSDate date] forKey:@"RepositoryRefreshDate"];
+    [defaults setObject:[NSDate date] forKey:REPOSITORY_REFRESHDATE_KEY];
     
     [dateFormatter release];
 }
@@ -264,14 +207,6 @@
                                                                           loadData:NO 
       
                                                                          targetMOC:nil];
-    
-//    sdbDelegate = [[SdbRequestDelegate alloc] init];
-//    NSArray *entityNameArray = [[NSArray alloc] initWithObjects:ENTITYNAME_SECTION, ENTITYNAME_CATEGORY, ENTITYNAME_SUBCATEGORY, ENTITYNAME_DISEASE, ENTITYNAME_PRESENTATION, ENTITYNAME_THERAPYGROUP, ENTITYNAME_THERAPY, ENTITYNAME_LINKEDNOTE, ENTITYNAME_LINKEDNOTEASSOCIATION, nil];
-//
-//   
-//    NSArray *entityBucketArray = [[NSArray alloc] initWithObjects: BUCKET_SECTION, BUCKET_CATEGORY, BUCKET_SUBCATEGORY, BUCKET_DISEASE, BUCKET_PRESENTATION, BUCKET_THERAPYGROUP, BUCKET_THERAPY, BUCKET_LINKEDNOTE, BUCKET_LINKEDNOTEASSOCIATION, nil];
-
-
     int processCount = 0;
     while([queueEntries count] > 0)
     {

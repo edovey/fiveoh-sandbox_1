@@ -61,7 +61,11 @@
 -(IBAction)loadTouched:(id)sender
 {
     [syncActivityIndicator startAnimating];
-    [RepositoryHandler pullSince:nil];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSObject *refreshDateInfo = [defaults  objectForKey:REPOSITORY_REFRESHDATE_KEY]; // Get the datetime of the last refresh
+    NSDate *lastRefreshDate = (NSDate *)refreshDateInfo;
+    [RepositoryHandler pullSince:lastRefreshDate];
     [syncActivityIndicator stopAnimating];
 }
 

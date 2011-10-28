@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define REPOSITORY_REFRESHDATE_KEY @"RepositoryRefreshDate"
+
 @interface RepositoryHandler : NSObject
 {
 }

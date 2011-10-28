@@ -67,7 +67,7 @@
 }
 
 
-+(NSNumber *) retrieveCountWithParentUUID:(NSString *)theUUID;
++(NSNumber *) retrieveCountWithParentUUID:(NSString *)theUUID
 {
     NSMutableArray *predicateArray = [[NSMutableArray alloc] initWithCapacity:0];
     NSPredicate *parentPredicate = [NSPredicate predicateWithFormat:@"diseaseId = %@", theUUID];

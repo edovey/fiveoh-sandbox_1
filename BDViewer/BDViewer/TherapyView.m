@@ -60,6 +60,7 @@
         {           
             // get presentation id using disease record
             NSArray *presentationArray = [BDPresentation retrieveAllWithParentUUID:diseaseId];
+            //TODO: bounds check on array
             self.presentationId = [[presentationArray objectAtIndex:0] uuid];
         }
     }

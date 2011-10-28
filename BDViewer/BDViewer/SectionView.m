@@ -9,6 +9,7 @@
 #import "SectionView.h"
 #import "CategoryView.h"
 #import "BDSection.h"
+#import "BDCategory.h"
 
 @implementation SectionView
 @synthesize dataTableView;
@@ -41,15 +42,14 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = parentName;
+    self.title = self.parentName;
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 -(void)viewWillAppear:(BOOL)animated 
 {
     [super viewWillAppear:animated];
-    self.sectionArray = [NSArray arrayWithArray:[BDSection retrieveAll]];
-//    sectionArray = [NSArray arrayWithArray:[BDSection retrieveAllWithParentUUID:parentId]];
+    self.sectionArray = [NSArray arrayWithArray:[BDSection retrieveAllWithParentUUID:self.parentId]];
 }
 
 - (void)viewDidUnload
@@ -89,18 +89,21 @@
 {
     static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [dataTableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [self.dataTableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     cell.textLabel.text = [[self.sectionArray objectAtIndex:indexPath.row] name ];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    int childCount = [[BDCategory retrieveCountWithParentUUID:[[self.sectionArray objectAtIndex:indexPath.row] uuid]] intValue];
+    cell.accessoryType = (childCount > 0) ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
+    
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BDSection *section = [sectionArray objectAtIndex:indexPath.row];
+    BDSection *section = [self.sectionArray objectAtIndex:indexPath.row];
      CategoryView *vwCategory = [[CategoryView alloc] initWithParentId:[section uuid] withParentName: [section name]];
      [self.navigationController pushViewController:vwCategory animated:YES];
      [vwCategory release];

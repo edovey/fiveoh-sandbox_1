@@ -45,6 +45,7 @@
 +(NSString *)create;
 +(BDTherapyGroup *)retrieveWithUUID:(NSString *)theUUID;
 +(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID;
++(NSNumber *) retrieveCountWithParentUUID:(NSString *)theUUID;
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
          withOverwriteNewerFlag:(BOOL)overwriteNewer; 
 

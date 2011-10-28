@@ -9,6 +9,7 @@
 #import "CategoryView.h"
 #import "BDCategory.h"
 #import "DiseaseView.h"
+#import "BDDisease.h"
 
 @implementation CategoryView
 @synthesize dataTableView;
@@ -95,7 +96,10 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     cell.textLabel.text = [[self.categoryArray objectAtIndex:indexPath.row] name ];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    int childCount = [[BDDisease retrieveCountWithParentUUID:[[self.categoryArray objectAtIndex:indexPath.row] uuid]] intValue];
+    cell.accessoryType = (childCount > 0) ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
+
     return cell;
 }
 

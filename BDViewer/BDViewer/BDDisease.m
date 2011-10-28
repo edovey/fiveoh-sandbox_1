@@ -72,6 +72,17 @@
     return diseasesInCategory;
 }
 
++(NSNumber *) retrieveCountWithParentUUID:(NSString *)theUUID
+{
+    NSMutableArray *predicateArray = [[NSMutableArray alloc] initWithCapacity:0];
+    NSPredicate *parentPredicate = [NSPredicate predicateWithFormat:@"categoryId = %@", theUUID];
+    [predicateArray addObject:parentPredicate];
+    NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicateArray];
+    [predicateArray release];
+    NSNumber *count = [[DataController sharedInstance] aggregateOperation:@"count:" onEntity: ENTITYNAME_DISEASE onAttribute:@"categoryId" withPredicate:predicate];
+    return count;
+}
+
 //Returns the uuid of the object
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
          withOverwriteNewerFlag:(BOOL)overwriteNewer

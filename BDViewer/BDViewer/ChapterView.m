@@ -10,6 +10,7 @@
 #import "BDChapter.h"
 #import "SectionView.h"
 #import "DataController.h"
+#import "BDSection.h"
 
 @implementation ChapterView
 @synthesize dataTableView;
@@ -75,7 +76,10 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     cell.textLabel.text = [[self.chapterArray objectAtIndex:indexPath.row] name];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    int childCount = [[BDSection retrieveCountWithParentUUID:[[self.chapterArray objectAtIndex:indexPath.row] uuid]] intValue];
+    cell.accessoryType = (childCount > 0) ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
+    
     return cell;
 }
 

@@ -11,6 +11,8 @@
 #import "PresentationView.h"
 #import "BDPresentation.h"
 #import "TherapyView.h"
+#import "BDPresentation.h"
+#import "BDTherapyGroup.h"
 
 @implementation DiseaseView
 @synthesize dataTableView;
@@ -95,25 +97,31 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     cell.textLabel.text = [[self.diseaseArray objectAtIndex:indexPath.row] name ];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    int childCount = [[BDPresentation retrieveCountWithParentUUID:[[self.diseaseArray objectAtIndex:indexPath.row] uuid]] intValue];
+    cell.accessoryType = (childCount > 0) ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
+    
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BDDisease *disease = [diseaseArray objectAtIndex:indexPath.row];
-    NSNumber *presentationCount = [BDPresentation retrieveCountWithParentUUID:[[self.diseaseArray objectAtIndex:indexPath.row] uuid]];
-    if([presentationCount intValue] > 1)
+    int childCount = [[BDPresentation retrieveCountWithParentUUID:[[self.diseaseArray objectAtIndex:indexPath.row] uuid]] intValue];
+    if(childCount > 0)
     {
-        PresentationView *vwPresentation = [[PresentationView alloc] initWithParentId:[disease uuid] withParentName: [disease name]];
-        [self.navigationController pushViewController:vwPresentation animated:YES];
-        [vwPresentation release];
-    } else {
-        TherapyView *vwTherapy = [[TherapyView alloc] initWithDiseaseId:[disease uuid] withDiseaseName: [disease name]];
-        [self.navigationController pushViewController:vwTherapy animated:YES];
-        [vwTherapy release];
+        NSNumber *presentationCount = [BDPresentation retrieveCountWithParentUUID:[[self.diseaseArray objectAtIndex:indexPath.row] uuid]];
+        if([presentationCount intValue] > 1)
+        {
+            PresentationView *vwPresentation = [[PresentationView alloc] initWithParentId:[disease uuid] withParentName: [disease name]];
+            [self.navigationController pushViewController:vwPresentation animated:YES];
+            [vwPresentation release];
+        } else {
+            TherapyView *vwTherapy = [[TherapyView alloc] initWithDiseaseId:[disease uuid] withDiseaseName: [disease name]];
+            [self.navigationController pushViewController:vwTherapy animated:YES];
+            [vwTherapy release];
+        }
     }
-    
 }
 
 @end

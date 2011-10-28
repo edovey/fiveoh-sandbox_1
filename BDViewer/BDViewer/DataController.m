@@ -27,6 +27,22 @@
     return _sharedObject;
 }
 
+/*
++ (DataController *)sharedInstance
+{
+	static DataController *_sharedObject;
+	
+	@synchronized(self)
+	{
+		if (!_sharedObject)
+        {
+			_sharedObject = [[DataController alloc] init];
+        }
+		return _sharedObject;
+	}
+}
+*/
+
 - (void)saveContext
 {
     [self saveContextWithMoc:nil];
@@ -274,6 +290,7 @@
     {
         __managedObjectContext = [[NSManagedObjectContext alloc] init];
         [__managedObjectContext setPersistentStoreCoordinator:coordinator];
+        [__managedObjectContext setUndoManager:nil];
     }
     return __managedObjectContext;
 }
@@ -288,8 +305,12 @@
     {
         return __managedObjectModel;
     }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"bdviewer" withExtension:@"momd"];
-    __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];    
+    
+//    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"bdviewer" withExtension:@"momd"];
+//    __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];    
+    
+    __managedObjectModel = [[NSManagedObjectModel mergedModelFromBundles:nil] retain];    
+
     return __managedObjectModel;
 }
 
@@ -307,8 +328,17 @@
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"bdviewer.sqlite"];
     
     NSError *error = nil;
+    
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error])
+    
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:YES], 
+                             NSMigratePersistentStoresAutomaticallyOption,
+                             [NSNumber numberWithBool:YES], 
+                             NSInferMappingModelAutomaticallyOption,
+                             nil];
+    
+    if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error])
     {
         /*
          Replace this implementation with code to handle the error appropriately.

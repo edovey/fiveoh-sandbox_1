@@ -56,6 +56,10 @@
 		6ECA7049142D3C4800C54BA7 /* MainWindow_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6ECA7047142D3C4800C54BA7 /* MainWindow_iPad.xib */; };
 		6ECA704C142D3CDA00C54BA7 /* MainWindow_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6ECA704A142D3CDA00C54BA7 /* MainWindow_iPhone.xib */; };
 		6EE41D1214587CC500F541FC /* bdviewer.css in Resources */ = {isa = PBXBuildFile; fileRef = 6EE41D1114587CC500F541FC /* bdviewer.css */; };
+		CB95FABD145B11F70005571B /* bd-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CB95FABB145B11F70005571B /* bd-icon.png */; };
+		CB95FABE145B11F70005571B /* bd-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CB95FABC145B11F70005571B /* bd-icon@2x.png */; };
+		CBDC32C1145B125600AD4D48 /* bd-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CBDC32C0145B125600AD4D48 /* bd-icon.png */; };
+		CBDC32C4145B126300AD4D48 /* bd-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CBDC32C3145B126300AD4D48 /* bd-icon@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -141,6 +145,10 @@
 		6ECA704B142D3CDA00C54BA7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow_iPhone.xib; sourceTree = "<group>"; };
 		6EE41D1114587CC500F541FC /* bdviewer.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = bdviewer.css; sourceTree = "<group>"; };
 		CB5C1F5E14507472007E9A64 /* RepositoryProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepositoryProtocol.h; sourceTree = "<group>"; };
+		CB95FABB145B11F70005571B /* bd-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bd-icon.png"; path = "graphics/bd-icon.png"; sourceTree = "<group>"; };
+		CB95FABC145B11F70005571B /* bd-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bd-icon@2x.png"; path = "graphics/bd-icon@2x.png"; sourceTree = "<group>"; };
+		CBDC32C0145B125600AD4D48 /* bd-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bd-icon.png"; sourceTree = "<group>"; };
+		CBDC32C3145B126300AD4D48 /* bd-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bd-icon@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +198,8 @@
 		6E2EA32C142B91C500908103 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				CB95FABB145B11F70005571B /* bd-icon.png */,
+				CB95FABC145B11F70005571B /* bd-icon@2x.png */,
 			);
 			name = Graphics;
 			sourceTree = "<group>";
@@ -333,6 +343,8 @@
 		6EC5FFF1142AA6BA003232D1 = {
 			isa = PBXGroup;
 			children = (
+				CBDC32C3145B126300AD4D48 /* bd-icon@2x.png */,
+				CBDC32C0145B125600AD4D48 /* bd-icon.png */,
 				6EC50008142AA6BA003232D1 /* BDViewer */,
 				6EC5FFFF142AA6BA003232D1 /* Frameworks */,
 				6EC5FFFD142AA6BA003232D1 /* Products */,
@@ -423,6 +435,10 @@
 				6E214E851450881200FE8C4F /* PresentationView~iphone.xib in Resources */,
 				6E0EFD111450B8AA007F764D /* TherapyView~iphone.xib in Resources */,
 				6EE41D1214587CC500F541FC /* bdviewer.css in Resources */,
+				CB95FABD145B11F70005571B /* bd-icon.png in Resources */,
+				CB95FABE145B11F70005571B /* bd-icon@2x.png in Resources */,
+				CBDC32C1145B125600AD4D48 /* bd-icon.png in Resources */,
+				CBDC32C4145B126300AD4D48 /* bd-icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,7 +526,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Karl Schulze (PKD77ZK2K5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Karl Schulze (PKD77ZK2K5)";
 				COPY_PHASE_STRIP = NO;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch *.xcode* (*) CVS .svn .git";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../thirdParty\"/**";
@@ -529,6 +546,8 @@
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../thirdParty\"/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../thirdParty\"/**";
+				PROVISIONING_PROFILE = "1F76E99B-992F-480D-B20D-E957FC0330B6";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1F76E99B-992F-480D-B20D-E957FC0330B6";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -538,7 +557,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Karl Schulze (PKD77ZK2K5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Karl Schulze (PKD77ZK2K5)";
 				COPY_PHASE_STRIP = YES;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch *.xcode* (*) CVS .svn .git";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../thirdParty\"/**";
@@ -551,6 +571,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../thirdParty\"/**";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "1F76E99B-992F-480D-B20D-E957FC0330B6";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1F76E99B-992F-480D-B20D-E957FC0330B6";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

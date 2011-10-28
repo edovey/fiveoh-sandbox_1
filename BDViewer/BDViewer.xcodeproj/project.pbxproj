@@ -28,6 +28,7 @@
 		6E2EA35B142B9F9300908103 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2EA358142B9F9300908103 /* Utility.m */; };
 		6E2EA35F142BA0F800908103 /* AWSiOSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E2EA35E142BA0F800908103 /* AWSiOSSDK.framework */; };
 		6E3140A9145B5A48002A8049 /* PresentationListView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E3140A8145B5A48002A8049 /* PresentationListView~iphone.xib */; };
+		6E3140AB145B5D8A002A8049 /* ChapterListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E3140AA145B5D89002A8049 /* ChapterListView.xib */; };
 		6E49B041143CC81900E32F3F /* BDPathogenGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E49B040143CC81900E32F3F /* BDPathogenGroup.m */; };
 		6E511FDC144F25BD00BB47C9 /* ChapterListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E511FDA144F25BD00BB47C9 /* ChapterListView.m */; };
 		6E511FDD144F25BD00BB47C9 /* ChapterListView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E511FDB144F25BD00BB47C9 /* ChapterListView~iphone.xib */; };
@@ -101,6 +102,7 @@
 		6E2EA358142B9F9300908103 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		6E2EA35E142BA0F800908103 /* AWSiOSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSiOSSDK.framework; path = "../thirdParty/aws-ios-sdk-0.2.3/AWSiOSSDK.framework"; sourceTree = "<group>"; };
 		6E3140A8145B5A48002A8049 /* PresentationListView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "PresentationListView~iphone.xib"; sourceTree = "<group>"; };
+		6E3140AA145B5D89002A8049 /* ChapterListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChapterListView.xib; sourceTree = "<group>"; };
 		6E49B03F143CC81900E32F3F /* BDPathogenGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDPathogenGroup.h; sourceTree = "<group>"; };
 		6E49B040143CC81900E32F3F /* BDPathogenGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDPathogenGroup.m; sourceTree = "<group>"; };
 		6E511FD9144F25BD00BB47C9 /* ChapterListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChapterListView.h; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 				6E511FD9144F25BD00BB47C9 /* ChapterListView.h */,
 				6E511FDA144F25BD00BB47C9 /* ChapterListView.m */,
 				6E511FDB144F25BD00BB47C9 /* ChapterListView~iphone.xib */,
+				6E3140AA145B5D89002A8049 /* ChapterListView.xib */,
 				6E511FDE144F2FC300BB47C9 /* SectionListView.h */,
 				6E511FDF144F2FC300BB47C9 /* SectionListView.m */,
 				6E511FE0144F2FC300BB47C9 /* SectionListView~iphone.xib */,
@@ -443,6 +446,7 @@
 				CBDC32C4145B126300AD4D48 /* bd-icon@2x.png in Resources */,
 				CB6F1C0D145B1F7F007620DE /* bd-icon114.png in Resources */,
 				6E3140A9145B5A48002A8049 /* PresentationListView~iphone.xib in Resources */,
+				6E3140AB145B5D8A002A8049 /* ChapterListView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

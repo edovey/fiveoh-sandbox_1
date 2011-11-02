@@ -57,6 +57,8 @@
 		6ECA7049142D3C4800C54BA7 /* MainWindow_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6ECA7047142D3C4800C54BA7 /* MainWindow_iPad.xib */; };
 		6ECA704C142D3CDA00C54BA7 /* MainWindow_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6ECA704A142D3CDA00C54BA7 /* MainWindow_iPhone.xib */; };
 		6EE41D1214587CC500F541FC /* bdviewer.css in Resources */ = {isa = PBXBuildFile; fileRef = 6EE41D1114587CC500F541FC /* bdviewer.css */; };
+		6EFB671C14606E7F00031EC3 /* LinkedNoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB671A14606E7F00031EC3 /* LinkedNoteView.m */; };
+		6EFB671D14606E7F00031EC3 /* LinkedNoteView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6EFB671B14606E7F00031EC3 /* LinkedNoteView~iphone.xib */; };
 		CB6F1C0D145B1F7F007620DE /* bd-icon114.png in Resources */ = {isa = PBXBuildFile; fileRef = CB6F1C0C145B1F7F007620DE /* bd-icon114.png */; };
 		CB95FABD145B11F70005571B /* bd-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CB95FABB145B11F70005571B /* bd-icon.png */; };
 		CB95FABE145B11F70005571B /* bd-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CB95FABC145B11F70005571B /* bd-icon@2x.png */; };
@@ -147,6 +149,9 @@
 		6ECA7048142D3C4800C54BA7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow_iPad.xib; sourceTree = "<group>"; };
 		6ECA704B142D3CDA00C54BA7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow_iPhone.xib; sourceTree = "<group>"; };
 		6EE41D1114587CC500F541FC /* bdviewer.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = bdviewer.css; sourceTree = "<group>"; };
+		6EFB671914606E7F00031EC3 /* LinkedNoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedNoteView.h; sourceTree = "<group>"; };
+		6EFB671A14606E7F00031EC3 /* LinkedNoteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkedNoteView.m; sourceTree = "<group>"; };
+		6EFB671B14606E7F00031EC3 /* LinkedNoteView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "LinkedNoteView~iphone.xib"; sourceTree = "<group>"; };
 		CB5C1F5E14507472007E9A64 /* RepositoryProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepositoryProtocol.h; sourceTree = "<group>"; };
 		CB6F1C0C145B1F7F007620DE /* bd-icon114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bd-icon114.png"; sourceTree = "<group>"; };
 		CB95FABB145B11F70005571B /* bd-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bd-icon.png"; path = "graphics/bd-icon.png"; sourceTree = "<group>"; };
@@ -308,6 +313,9 @@
 				6E0EFD0D1450B8A9007F764D /* DetailView.h */,
 				6E0EFD0E1450B8A9007F764D /* DetailView.m */,
 				6E0EFD0F1450B8AA007F764D /* DetailView~iphone.xib */,
+				6EFB671914606E7F00031EC3 /* LinkedNoteView.h */,
+				6EFB671A14606E7F00031EC3 /* LinkedNoteView.m */,
+				6EFB671B14606E7F00031EC3 /* LinkedNoteView~iphone.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -447,6 +455,7 @@
 				CB6F1C0D145B1F7F007620DE /* bd-icon114.png in Resources */,
 				6E3140A9145B5A48002A8049 /* PresentationListView~iphone.xib in Resources */,
 				6E3140AB145B5D8A002A8049 /* ChapterListView.xib in Resources */,
+				6EFB671D14606E7F00031EC3 /* LinkedNoteView~iphone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,6 +497,7 @@
 				6E511FEB144F3AB200BB47C9 /* DiseaseListView.m in Sources */,
 				6E214E841450881200FE8C4F /* PresentationListView.m in Sources */,
 				6E0EFD101450B8AA007F764D /* DetailView.m in Sources */,
+				6EFB671C14606E7F00031EC3 /* LinkedNoteView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -534,8 +544,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Karl Schulze (PKD77ZK2K5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Karl Schulze (PKD77ZK2K5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch *.xcode* (*) CVS .svn .git";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../thirdParty\"/**";
@@ -554,8 +564,8 @@
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../thirdParty\"/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../thirdParty\"/**";
-				PROVISIONING_PROFILE = "00D73C0F-E845-4DAB-9449-3C53D475A386";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "00D73C0F-E845-4DAB-9449-3C53D475A386";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -565,7 +575,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Karl Schulze (PKD77ZK2K5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Karl Schulze (PKD77ZK2K5)";
 				COPY_PHASE_STRIP = YES;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch *.xcode* (*) CVS .svn .git";
@@ -579,7 +589,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../thirdParty\"/**";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "00D73C0F-E845-4DAB-9449-3C53D475A386";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "00D73C0F-E845-4DAB-9449-3C53D475A386";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

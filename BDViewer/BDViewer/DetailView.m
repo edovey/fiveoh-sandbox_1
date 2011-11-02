@@ -16,9 +16,10 @@
 #import "BDPresentation.h"
 #import "BDLinkedNote.h"
 #import "BDLinkedNoteAssociation.h"
+#import "LinkedNoteView.h"
 
 @interface DetailView() 
--(NSString *)retrieveNoteForParent:(NSString *)theParentId forPropertyName:(NSString *)thePropertyName;
+-(BDLinkedNote *)retrieveNoteForParent:(NSString *)theParentId forPropertyName:(NSString *)thePropertyName;
 -(void)loadHTMLIntoWebView;
 -(NSString *)buildHTMLFromData;
 -(NSString *)buildPathogenGroupHTML:(BDPathogenGroup *)thePathogen;
@@ -82,6 +83,7 @@
     [super viewDidLoad];
 
     // Do any additional setup after loading the view from its nib.
+    self.dataWebView.delegate = self;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -120,15 +122,36 @@
     [super dealloc];
 }
 
+#pragma mark - UIWebView Delegate
+-(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    if(navigationType == UIWebViewNavigationTypeLinkClicked)
+    {
+        // request contains guid of linkedNote
+        NSURL *linkURL = [request.URL standardizedURL];
+        if([linkURL isFileURL])
+        {
+            NSArray *pathComponents = [linkURL pathComponents];
+            NSString *noteId = [pathComponents objectAtIndex:[pathComponents count] - 1];
+            LinkedNoteView *vwNote = [[LinkedNoteView alloc] initWithLinkId:noteId];
+            [self.navigationController pushViewController:vwNote animated:YES];
+            [vwNote release];
+            
+            return NO;
+        }
+    }
+    return YES;
+}
+
 #pragma mark - Private Class methods
--(NSString *)retrieveNoteForParent:(NSString *)theParentId forPropertyName:(NSString *)thePropertyName
+-(BDLinkedNote *)retrieveNoteForParent:(NSString *)theParentId forPropertyName:(NSString *)thePropertyName
 {
     NSArray *lnAssociations = [BDLinkedNoteAssociation retrieveAllWithParentUUID:theParentId withPropertyName:thePropertyName];
     if([lnAssociations count] > 0)
     {
         BDLinkedNote *note = [BDLinkedNote retrieveWithUUID:[[lnAssociations objectAtIndex:0] linkedNoteId]];
         if ([note.documentText length] > 0)
-            return note.documentText;
+            return note;
     }
     return nil;
 }
@@ -139,12 +162,12 @@
     NSMutableString *bodyHTML = [[[NSMutableString alloc] initWithCapacity:0] autorelease];
     if(diseaseId != nil && [diseaseId length] > 0)
     {
-        NSString *diseaseOverview = [self retrieveNoteForParent:diseaseId forPropertyName:@"Overview"];
+        NSString *diseaseOverview = [[self retrieveNoteForParent:diseaseId forPropertyName:@"Overview"] documentText];
         if(diseaseOverview != nil && [diseaseOverview length] > 8) // && ![diseaseOverview isEqualToString:@"<p> </p>"])
             [bodyHTML appendString:diseaseOverview];
     }
     
-    NSString *presentationOverview = [self retrieveNoteForParent:presentationId forPropertyName:@"Overview"];
+    NSString *presentationOverview = [[self retrieveNoteForParent:presentationId forPropertyName:@"Overview"] documentText];
     if(presentationOverview != nil && [presentationOverview length] > 8) //  && ![presentationOverview isEqualToString:@"<p> </p>"])
         [bodyHTML appendString: presentationOverview];
     
@@ -219,11 +242,18 @@
 
 -(NSString *)buildTherapyHTML:(BDTherapy *)theTherapy
 {
+
     NSMutableString *therapyHTML = [[NSMutableString alloc] initWithCapacity:0];
      [therapyHTML appendFormat:@"<tr><td><b>%@</b></td>",theTherapy.name];
     
     if([theTherapy.dosage length] > 0)
-        [therapyHTML appendFormat:@"<td>%@</td>",theTherapy.dosage];
+    {
+        BDLinkedNote *dosageNote = [self retrieveNoteForParent:theTherapy.uuid forPropertyName:@"Dosage"];
+        if(dosageNote == nil || [dosageNote.documentText length] == 0)
+            [therapyHTML appendFormat:@"<td>%@</td>",theTherapy.dosage];
+        else
+            [therapyHTML appendFormat:@"<td><a href=\"%@\">%@</a></td>",dosageNote.uuid,theTherapy.name];
+    }
     if([theTherapy.duration length] > 0)
         [therapyHTML appendFormat:@"<td>%@</td>",theTherapy.duration];
     

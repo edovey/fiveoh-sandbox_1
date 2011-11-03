@@ -1,5 +1,5 @@
 //
-//  TherapyView.h
+//  DetailView.h
 //  BDViewer
 //
 //  Created by Liz Dovey on 11-10-20.

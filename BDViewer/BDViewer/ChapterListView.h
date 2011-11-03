@@ -1,5 +1,5 @@
 //
-//  ChapterView.h
+//  ChapterListView.h
 //  BDViewer
 //
 //  Created by Liz Dovey on 11-10-19.

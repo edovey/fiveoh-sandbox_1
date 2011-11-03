@@ -1,5 +1,5 @@
 //
-//  CategoryView.m
+//  CategoryListView.m
 //  BDViewer
 //
 //  Created by Liz Dovey on 11-10-19.
@@ -19,7 +19,7 @@
 
 -(id)initWithParentId:(NSString *)pParentId withParentName:(NSString *)pParentName
 {
-    self = [super initWithNibName:@"CategoryView" bundle:nil];
+    self = [super initWithNibName:@"CategoryListView" bundle:nil];
     if(self)
     {
         parentId = [pParentId retain];

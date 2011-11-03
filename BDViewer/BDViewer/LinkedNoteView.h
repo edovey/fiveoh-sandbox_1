@@ -1,5 +1,5 @@
 //
-//  LinkView.h
+//  LinkedNoteView.h
 //  BDViewer
 //
 //  Created by Liz Dovey on 11-11-01.

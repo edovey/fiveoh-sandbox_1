@@ -1,5 +1,5 @@
 //
-//  SectionView.m
+//  SectionListView.m
 //  BDViewer
 //
 //  Created by Liz Dovey on 11-10-19.
@@ -19,7 +19,7 @@
 
 -(id)initWithParentId:(NSString *)pParentId withParentName:(NSString *)pParentName
 {
-    self = [super initWithNibName:@"SectionView" bundle:nil];
+    self = [super initWithNibName:@"SectionListView" bundle:nil];
     if(self)
     {
         parentId = [pParentId retain];

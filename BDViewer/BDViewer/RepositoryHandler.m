@@ -667,8 +667,8 @@
                                                                      andValue:(nil == therapy.therapyGroupId) ? @"" : therapy.therapyGroupId
                                                                    andReplace:YES] autorelease]];
     
-    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:TH_THERAPYGROUPJOINTYPE                         
-                                                                     andValue:[NSString stringWithFormat:@"%d", [therapy.therapyGroupJoinType intValue]]
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:TH_THERAPYJOINTYPE                         
+                                                                     andValue:[NSString stringWithFormat:@"%d", [therapy.therapyJoinType intValue]]
                                                                    andReplace:YES] autorelease]];
     
     [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:TH_DISPLAYORDER                            
@@ -686,6 +686,14 @@
     [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:TH_NAME                         
                                                                      andValue:(nil == therapy.name) ? @"" : therapy.name 
                                                                    andReplace:YES] autorelease]];
+    
+    [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:TH_LEFTBRACKET
+                                                                     andValue:[Utility nsNumberBoolToString:therapy.leftBracket]
+                                                                   andReplace:YES] autorelease]];
+     
+     [attributes addObject:[[[SimpleDBReplaceableAttribute alloc] initWithName:TH_RIGHTBRACKET
+                                                                      andValue:[Utility nsNumberBoolToString:therapy.rightBracket]
+                                                                    andReplace:YES] autorelease]];
     
     SimpleDBPutAttributesRequest *sdbPutRequest = [[SimpleDBPutAttributesRequest alloc] 
                                                    initWithDomainName:DOMAIN_THERAPY

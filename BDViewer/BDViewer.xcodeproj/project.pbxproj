@@ -75,6 +75,7 @@
 		6E214E6A1450723100FE8C4F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RootViewController.xib; sourceTree = "<group>"; };
 		6E214E811450881000FE8C4F /* PresentationListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentationListView.h; sourceTree = "<group>"; };
 		6E214E821450881100FE8C4F /* PresentationListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentationListView.m; sourceTree = "<group>"; };
+		6E26D8791461CA4F007E4621 /* BDViewer 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "BDViewer 2.xcdatamodel"; sourceTree = "<group>"; };
 		6E2EA333142B95DC00908103 /* S3RequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = S3RequestDelegate.h; sourceTree = "<group>"; };
 		6E2EA334142B95DC00908103 /* S3RequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = S3RequestDelegate.m; sourceTree = "<group>"; };
 		6E2EA335142B95DC00908103 /* SdbRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SdbRequestDelegate.h; sourceTree = "<group>"; };
@@ -667,9 +668,10 @@
 		6E9685C0142BBE15004C5DED /* BDViewer.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				6E26D8791461CA4F007E4621 /* BDViewer 2.xcdatamodel */,
 				6E9685C1142BBE15004C5DED /* BDViewer.xcdatamodel */,
 			);
-			currentVersion = 6E9685C1142BBE15004C5DED /* BDViewer.xcdatamodel */;
+			currentVersion = 6E26D8791461CA4F007E4621 /* BDViewer 2.xcdatamodel */;
 			path = BDViewer.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

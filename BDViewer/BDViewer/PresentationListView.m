@@ -1,5 +1,5 @@
 //
-//  PresentationView.m
+//  PresentationListView.m
 //  BDViewer
 //
 //  Created by Liz Dovey on 11-10-20.
@@ -28,7 +28,7 @@
 
 -(id)initWithParentId:(NSString *)pParentId withParentName:(NSString *)pParentName
 {
-    self = [super initWithNibName:@"PresentationView" bundle:nil];
+    self = [super initWithNibName:@"PresentationListView" bundle:nil];
     if(self)
     {
         parentId = [pParentId retain];

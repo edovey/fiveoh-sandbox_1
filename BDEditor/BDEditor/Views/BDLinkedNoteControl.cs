@@ -135,6 +135,10 @@ namespace BDEditor.Views
             // remove paragraph tags from inside list tags
             stringToClean = stringToClean.Replace("<li><p>", "<li>");
             stringToClean = stringToClean.Replace("</p></li>", "</li>");
+
+            // remove xml tags
+            stringToClean = CleanTagFromText(stringToClean,"<p>xmlns", "</p>", true);
+
             return stringToClean;
         }
 

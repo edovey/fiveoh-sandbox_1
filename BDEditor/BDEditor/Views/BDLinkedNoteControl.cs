@@ -105,12 +105,29 @@ namespace BDEditor.Views
             return pText;
         }
 
-        private string CleanDocumentText(string pString)
+        private string CleanXmlTagFromText(string pText)
+        {
+            string returnString = "";
+            int tagStartIndex = 0;
+            int tagEndIndex = pText.IndexOf("</p>", tagStartIndex);
+            
+            string tagString = pText.Substring(tagStartIndex, tagEndIndex - tagStartIndex);
+
+            if (tagString.Contains("xmlns"))
+            {
+                returnString = pText.Remove(tagStartIndex, tagEndIndex - tagStartIndex);
+                
+                returnString = returnString.Remove(tagEndIndex, 4); // remove end paragaraph tag
+            }
+            return returnString;
+        }
+
+        private string CleanClipboardText(string pString)
         {
             string stringToClean = GetBodyContents(pString);
             // remove table tags
             while (stringToClean.Contains("<td"))
-                stringToClean = CleanTagFromText(stringToClean, "<td", ">",true);
+                stringToClean = CleanTagFromText(stringToClean, "<td", ">", true);
             stringToClean = stringToClean.Replace("</td>", "");
 
             while (stringToClean.Contains("<tr"))
@@ -124,7 +141,7 @@ namespace BDEditor.Views
             // remove span tags
             while (stringToClean.Contains("<span"))
                 stringToClean = CleanTagFromText(stringToClean, "<span", ">", true);
-            stringToClean = stringToClean.Replace("</span>","");
+            stringToClean = stringToClean.Replace("</span>", "");
             // remove style tags
             while (stringToClean.Contains(" style="))
                 stringToClean = CleanTagFromText(stringToClean, " style=", ">", false);
@@ -137,16 +154,60 @@ namespace BDEditor.Views
             stringToClean = stringToClean.Replace("</p></li>", "</li>");
 
             // remove xml tags
-            stringToClean = CleanTagFromText(stringToClean,"<p>xmlns", "</p>", true);
+            stringToClean = CleanTagFromText(stringToClean, "<p>xmlns", "</p>", true);
+
+           // TODO:  clean extra paragraph tags from end of string
 
             return stringToClean;
+        }
+
+        private string CleanDocumentText(string pString)
+        {
+            string stringToClean = GetBodyContents(pString);
+
+            // remove paragraph tags from inside list tags
+            stringToClean = stringToClean.Replace("<li><p>", "<li>");
+            stringToClean = stringToClean.Replace("</p></li>", "</li>");
+
+            // clean out extra line returns
+            stringToClean = stringToClean.Replace("\r\n", "");
+
+            // remove paragraph tags from inside list tags
+            stringToClean = stringToClean.Replace("<li><p>", "<li>");
+            stringToClean = stringToClean.Replace("</p></li>", "</li>");
+
+            return stringToClean;
+        }
+
+        private void PasteCleanText()
+        {
+            if (Clipboard.ContainsText(TextDataFormat.Html))
+            {
+                textControl.Append(Clipboard.GetText(TextDataFormat.Html), TXTextControl.StringStreamType.HTMLFormat, TXTextControl.AppendSettings.None);
+            }
+            else if (Clipboard.ContainsText(TextDataFormat.Rtf))
+            {
+                textControl.Append(Clipboard.GetText(TextDataFormat.Rtf), TXTextControl.StringStreamType.RichTextFormat, TXTextControl.AppendSettings.None);
+            }
+
+            // retrieve new text as HTML
+            TXTextControl.SaveSettings ss = new TXTextControl.SaveSettings();
+
+            string htmltext;
+            textControl.Save(out htmltext, TXTextControl.StringStreamType.HTMLFormat, ss);
+            string cleanText = CleanClipboardText(htmltext);
+
+            if (cleanText.Length > 0)
+            {
+                textControl.Text = @"";
+                textControl.Append(cleanText, TXTextControl.StringStreamType.HTMLFormat, TXTextControl.AppendSettings.None);
+            }
         }
 
         #region IBDControl
         public void AssignDataContext(Entities pDataContext)
         {
             dataContext = pDataContext;
-            //dataContext = new Entities();
         }
         public void AssignParentId(Guid? pParentId)
         {
@@ -185,8 +246,6 @@ namespace BDEditor.Views
                     
                     string plainText;
                     textControl.Save(out plainText, TXTextControl.StringStreamType.PlainText,ss);
-                    //string richText;
-                    //textControl.Save(out richText, TXTextControl.StringStreamType.RichTextFormat);
                     string htmltext;
                     textControl.Save(out htmltext, TXTextControl.StringStreamType.HTMLFormat, ss);
                     string cleanText = CleanDocumentText(htmltext);
@@ -234,26 +293,34 @@ namespace BDEditor.Views
             if (e.KeyData == (Keys.Control | Keys.A))
             {
                 textControl.SelectAll();
-                e.Handled = true;
+            } if (e.KeyData == (Keys.Control | Keys.V))
+            {
+                PasteCleanText();
             }
-            //NOTE:  Redo / Undo are automatically supported by the control.  Bold is not.
-        }
+            else if(e.KeyData == (Keys.Control | Keys.B))
+            {
+                textControl.Selection.Bold = !textControl.Selection.Bold;
+            }
+            else if (e.KeyData == (Keys.Control | Keys.U))
+            {
+                if(textControl.Selection.Underline != TXTextControl.FontUnderlineStyle.Single)
+                    textControl.Selection.Underline = TXTextControl.FontUnderlineStyle.Single;
+            }
+            else if (e.KeyData == (Keys.Control | Keys.Alt | Keys.R))
+            {
+                // retrieve new text as HTML
+                TXTextControl.SaveSettings ss = new TXTextControl.SaveSettings();
 
-        private void btnSelectAll_Click(object sender, EventArgs e)
-        {
-            textControl.SelectAll();
+                string htmltext;
+                textControl.Save(out htmltext, TXTextControl.StringStreamType.HTMLFormat, ss);
+                string cleanText = CleanClipboardText(htmltext);
+            }
+            //NOTE:  Redo / Undo are automatically supported by the control.  Bold & underline are not.
         }
 
         private void btnPaste_Click(object sender, EventArgs e)
         {
-            if(Clipboard.ContainsText(TextDataFormat.Html))
-            {
-                textControl.Append(Clipboard.GetText(TextDataFormat.Html), TXTextControl.StringStreamType.HTMLFormat, TXTextControl.AppendSettings.None);
-            }
-            else if (Clipboard.ContainsText(TextDataFormat.Rtf))
-            {
-                textControl.Append(Clipboard.GetText(TextDataFormat.Rtf), TXTextControl.StringStreamType.RichTextFormat, TXTextControl.AppendSettings.None);
-            }
+            PasteCleanText();
         }
 
         private void btnBeta_Click(object sender, EventArgs e)
@@ -261,20 +328,35 @@ namespace BDEditor.Views
             textControl.Selection.Text = "ß";
         }
 
-        private void btnClean_Click(object sender, EventArgs e)
+        private void btnGE_Click(object sender, EventArgs e)
         {
-            TXTextControl.SaveSettings ss = new TXTextControl.SaveSettings();
-
-            string htmltext;
-            textControl.Save(out htmltext, TXTextControl.StringStreamType.HTMLFormat, ss);
-            string cleanText = CleanDocumentText(htmltext);
-
-            if (cleanText.Length > 0)
-            {
-                textControl.Text = @"";
-                textControl.Append(cleanText, TXTextControl.StringStreamType.HTMLFormat, TXTextControl.AppendSettings.None);
-            }
+            textControl.Selection.Text = "≥";
         }
 
+        private void btnLE_Click(object sender, EventArgs e)
+        {
+            textControl.Selection.Text = "≤";
+        }
+
+        private void btnPM_Click(object sender, EventArgs e)
+        {
+            textControl.Selection.Text = "±";
+        }
+
+        private void btnDegree_Click(object sender, EventArgs e)
+        {
+            textControl.Selection.Text = "°";
+        }
+
+        private void btnSuperscript_Click(object sender, EventArgs e)
+        {
+            // TODO
+            //textControl.Selection.Baseline = textControl.InputFormat.Superscript;
+        }
+
+        private void btnSubscript_Click(object sender, EventArgs e)
+        {
+            // TODO
+        }
     }
 }

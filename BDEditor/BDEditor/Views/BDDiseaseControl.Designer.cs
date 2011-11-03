@@ -37,10 +37,10 @@
             // lblDisease
             // 
             this.lblDisease.AutoSize = true;
-            this.lblDisease.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDisease.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDisease.Location = new System.Drawing.Point(12, 14);
             this.lblDisease.Name = "lblDisease";
-            this.lblDisease.Size = new System.Drawing.Size(62, 18);
+            this.lblDisease.Size = new System.Drawing.Size(77, 24);
             this.lblDisease.TabIndex = 0;
             this.lblDisease.Text = "Disease";
             // 
@@ -57,10 +57,10 @@
             // lblOverview
             // 
             this.lblOverview.AutoSize = true;
-            this.lblOverview.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOverview.Location = new System.Drawing.Point(16, 77);
+            this.lblOverview.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOverview.Location = new System.Drawing.Point(16, 73);
             this.lblOverview.Name = "lblOverview";
-            this.lblOverview.Size = new System.Drawing.Size(64, 16);
+            this.lblOverview.Size = new System.Drawing.Size(89, 24);
             this.lblOverview.TabIndex = 3;
             this.lblOverview.Text = "Overview";
             // 

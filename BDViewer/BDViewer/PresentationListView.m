@@ -6,19 +6,19 @@
 //  Copyright (c) 2011 875953 Alberta, Inc. All rights reserved.
 //
 
-#import "PresentationView.h"
+#import "PresentationListView.h"
 #import "BDPresentation.h"
-#import "TherapyView.h"
+#import "DetailView.h"
 #import "BDLinkedNoteAssociation.h"
 #import "BDLinkedNote.h"
 
-@interface PresentationView() 
+@interface PresentationListView() 
 -(NSString *)retrieveNoteForParent:(NSString *)theParentId forPropertyName:(NSString *)thePropertyName;
 -(void)buildHTMLFromData;
 -(void)loadHTMLIntoWebView;
 @end
 
-@implementation PresentationView
+@implementation PresentationListView
 @synthesize parentId;
 @synthesize parentName;
 @synthesize dataTableView;
@@ -58,7 +58,7 @@
 {
     [super viewWillAppear:animated];
     self.presentationArray = [NSArray arrayWithArray:[BDPresentation retrieveAllWithParentUUID:parentId]];
-    [self retrieveNoteForParent:(NSString *)parentId forPropertyName:@"Overview"];
+    self.overviewHTMLString = [self retrieveNoteForParent:(NSString *)parentId forPropertyName:@"Overview"];
     [self loadHTMLIntoWebView];
 }
 
@@ -119,7 +119,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BDPresentation *presentation = [presentationArray objectAtIndex:indexPath.row];
-    TherapyView *vwTherapy = [[TherapyView alloc] initWithPresentationId:presentation.uuid withPresentationName:presentation.name];
+    DetailView *vwTherapy = [[DetailView alloc] initWithPresentationId:presentation.uuid withPresentationName:presentation.name];
     [self.navigationController pushViewController:vwTherapy animated:YES];
     [vwTherapy release];
 }
@@ -154,9 +154,12 @@
 {
     if(self.overviewHTMLString != nil && [self.overviewHTMLString length] > 8)
     {
-        [self.dataWebView loadHTMLString:[NSString stringWithFormat:@"<html><body><font face='Helvetica' size='3.0'>%@<br></font></body></html>",self.overviewHTMLString] baseURL:[NSURL URLWithString:@""]];
-        [self.dataWebView setBackgroundColor:[UIColor clearColor]];
-        [self.dataWebView setOpaque:NO];
+        NSURL *bundleURL = [[NSBundle mainBundle] bundleURL];
+        
+        [self.dataWebView loadHTMLString:[NSString stringWithFormat:@"<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"bdviewer.css\" /> </head><body>%@</body></html>",self.overviewHTMLString] baseURL:bundleURL];
+
+        [self.dataWebView setBackgroundColor:[UIColor whiteColor]];
+        [self.dataWebView setOpaque:YES];
     } else {
         dataTableView.tableHeaderView = nil;
     }

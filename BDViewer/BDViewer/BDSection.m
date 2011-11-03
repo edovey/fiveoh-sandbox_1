@@ -136,6 +136,18 @@
     return [NSArray arrayWithArray:sections];
 }
 
++(NSNumber *) retrieveCountWithParentUUID:(NSString *)theUUID
+{
+    NSMutableArray *predicateArray = [[NSMutableArray alloc] initWithCapacity:0];
+    NSPredicate *parentPredicate = [NSPredicate predicateWithFormat:@"chapterId = %@", theUUID];
+    [predicateArray addObject:parentPredicate];
+    NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicateArray];
+    [predicateArray release];
+    NSNumber *count = [[DataController sharedInstance] aggregateOperation:@"count:" onEntity: ENTITYNAME_SECTION onAttribute:@"chapterId" withPredicate:predicate];
+    return count;
+}
+
+
 -(NSString *)generateStorageKey
 {
     return [NSString stringWithFormat:@"bd~%@.txt", self.uuid];

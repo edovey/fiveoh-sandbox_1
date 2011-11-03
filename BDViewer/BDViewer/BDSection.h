@@ -46,6 +46,7 @@
 +(NSArray *) retrieveAllWithParentUUID:(NSString *)theUUID;
 +(NSString *)loadWithAttributes:(NSDictionary *)theAttributeDictionary 
          withOverwriteNewerFlag:(BOOL)overwriteNewer; 
++(NSNumber *) retrieveCountWithParentUUID:(NSString *)theUUID;
 
 -(void)commitChanges;
 @end

@@ -66,6 +66,17 @@
     return entities;
 }
 
++(NSNumber *) retrieveCountWithParentUUID:(NSString *)theUUID
+{
+    NSMutableArray *predicateArray = [[NSMutableArray alloc] initWithCapacity:0];
+    NSPredicate *parentPredicate = [NSPredicate predicateWithFormat:@"chapterId = %@", theUUID];
+    [predicateArray addObject:parentPredicate];
+    NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicateArray];
+    [predicateArray release];
+    NSNumber *count = [[DataController sharedInstance] aggregateOperation:@"count:" onEntity: ENTITYNAME_THERAPYGROUP onAttribute:@"chapterId" withPredicate:predicate];
+    return count;
+}
+
 
 
 //Returns the uuid of the object

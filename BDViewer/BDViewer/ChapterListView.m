@@ -6,12 +6,13 @@
 //  Copyright (c) 2011 875953 Alberta, Inc. All rights reserved.
 //
 
-#import "ChapterView.h"
+#import "ChapterListView.h"
 #import "BDChapter.h"
-#import "SectionView.h"
+#import "SectionListView.h"
 #import "DataController.h"
+#import "BDSection.h"
 
-@implementation ChapterView
+@implementation ChapterListView
 @synthesize dataTableView;
 @synthesize chapterArray;
 
@@ -75,14 +76,18 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     cell.textLabel.text = [[self.chapterArray objectAtIndex:indexPath.row] name];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    int childCount = [[BDSection retrieveCountWithParentUUID:[[self.chapterArray objectAtIndex:indexPath.row] uuid]] intValue];
+    cell.accessoryType = (childCount > 0) ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
+    cell.selectionStyle = (childCount > 0) ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
+    
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BDChapter *chapter = [chapterArray objectAtIndex:indexPath.row];
-    SectionView *vwSection = [[SectionView alloc] initWithParentId:[chapter uuid] withParentName: [chapter name]];
+    SectionListView *vwSection = [[SectionListView alloc] initWithParentId:[chapter uuid] withParentName: [chapter name]];
      [self.navigationController pushViewController:vwSection animated:YES];
      [vwSection release];
 }

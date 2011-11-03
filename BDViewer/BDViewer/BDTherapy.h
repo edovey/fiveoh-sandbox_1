@@ -25,11 +25,22 @@
 #define TH_DEPRECATED @"th_deprecated"
 #define TH_INUSEBY @"th_inUseBy"
 #define TH_THERAPYGROUPID @"th_therapyGroupId"
-#define TH_THERAPYGROUPJOINTYPE @"th_therapyGroupJoinType"
+#define TH_THERAPYJOINTYPE @"th_therapyJoinType"
 #define TH_DISPLAYORDER @"th_displayOrder"
 #define TH_DOSAGE @"th_dosage"
 #define TH_DURATION @"th_duration"
 #define TH_NAME @"th_name"
+#define TH_LEFTBRACKET @"th_leftBracket"
+#define TH_RIGHTBRACKET @"th_rightBracket"
+
+
+typedef enum
+{
+    NONE_TherapyJoinType = 0,
+    AND_TherapyJoinType = 1,
+    OR_TherapyJoinType = 2
+} TherapyJoinType;
+
 
 @interface BDTherapy : NSManagedObject {
 @private
@@ -46,8 +57,10 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * schemaVersion;
 @property (nonatomic, retain) NSString * therapyGroupId;
-@property (nonatomic, retain) NSNumber * therapyGroupJoinType;
+@property (nonatomic, retain) NSNumber * therapyJoinType;
 @property (nonatomic, retain) NSString * uuid;
+@property (nonatomic, retain) NSNumber *leftBracket;
+@property (nonatomic, retain) NSNumber *rightBracket;
 
 +(NSString *)create;
 +(BDTherapy *)retrieveWithUUID:(NSString *)theUUID;

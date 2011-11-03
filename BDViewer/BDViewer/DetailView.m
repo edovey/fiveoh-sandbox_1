@@ -1,5 +1,5 @@
 //
-//  TherapyView.m
+//  DetailView.m
 //  BDViewer
 //
 //  Created by Liz Dovey on 11-10-20.
@@ -16,9 +16,10 @@
 #import "BDPresentation.h"
 #import "BDLinkedNote.h"
 #import "BDLinkedNoteAssociation.h"
+#import "LinkedNoteView.h"
 
 @interface DetailView() 
--(NSString *)retrieveNoteForParent:(NSString *)theParentId forPropertyName:(NSString *)thePropertyName;
+-(BDLinkedNote *)retrieveNoteForParent:(NSString *)theParentId forPropertyName:(NSString *)thePropertyName;
 -(void)loadHTMLIntoWebView;
 -(NSString *)buildHTMLFromData;
 -(NSString *)buildPathogenGroupHTML:(BDPathogenGroup *)thePathogen;
@@ -37,7 +38,7 @@
 
 -(id)initWithPresentationId:(NSString *)pPresentationId withPresentationName:(NSString *)pPresentationName
 {
-    self = [super initWithNibName:@"TherapyView" bundle:nil];
+    self = [super initWithNibName:@"DetailView" bundle:nil];
     if(self)
     {
         self.presentationId = [pPresentationId retain];
@@ -49,7 +50,7 @@
 
 -(id)initWithDiseaseId:(NSString *)pDiseaseId withDiseaseName:(NSString *) pDiseaseName
 {
-    self = [super initWithNibName:@"TherapyView" bundle:nil];
+    self = [super initWithNibName:@"DetailView" bundle:nil];
     if(self)
     {
         self.diseaseId = [pDiseaseId retain];
@@ -82,6 +83,7 @@
     [super viewDidLoad];
 
     // Do any additional setup after loading the view from its nib.
+    self.dataWebView.delegate = self;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -120,15 +122,36 @@
     [super dealloc];
 }
 
+#pragma mark - UIWebView Delegate
+-(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    if(navigationType == UIWebViewNavigationTypeLinkClicked)
+    {
+        // request contains guid of linkedNote
+        NSURL *linkURL = [request.URL standardizedURL];
+        if([linkURL isFileURL])
+        {
+            NSArray *pathComponents = [linkURL pathComponents];
+            NSString *noteId = [pathComponents objectAtIndex:[pathComponents count] - 1];
+            LinkedNoteView *vwNote = [[LinkedNoteView alloc] initWithLinkId:noteId];
+            [self.navigationController pushViewController:vwNote animated:YES];
+            [vwNote release];
+            
+            return NO;
+        }
+    }
+    return YES;
+}
+
 #pragma mark - Private Class methods
--(NSString *)retrieveNoteForParent:(NSString *)theParentId forPropertyName:(NSString *)thePropertyName
+-(BDLinkedNote *)retrieveNoteForParent:(NSString *)theParentId forPropertyName:(NSString *)thePropertyName
 {
     NSArray *lnAssociations = [BDLinkedNoteAssociation retrieveAllWithParentUUID:theParentId withPropertyName:thePropertyName];
     if([lnAssociations count] > 0)
     {
         BDLinkedNote *note = [BDLinkedNote retrieveWithUUID:[[lnAssociations objectAtIndex:0] linkedNoteId]];
         if ([note.documentText length] > 0)
-            return note.documentText;
+            return note;
     }
     return nil;
 }
@@ -139,12 +162,12 @@
     NSMutableString *bodyHTML = [[[NSMutableString alloc] initWithCapacity:0] autorelease];
     if(diseaseId != nil && [diseaseId length] > 0)
     {
-        NSString *diseaseOverview = [self retrieveNoteForParent:diseaseId forPropertyName:@"Overview"];
+        NSString *diseaseOverview = [[self retrieveNoteForParent:diseaseId forPropertyName:@"Overview"] documentText];
         if(diseaseOverview != nil && [diseaseOverview length] > 8) // && ![diseaseOverview isEqualToString:@"<p> </p>"])
             [bodyHTML appendString:diseaseOverview];
     }
     
-    NSString *presentationOverview = [self retrieveNoteForParent:presentationId forPropertyName:@"Overview"];
+    NSString *presentationOverview = [[self retrieveNoteForParent:presentationId forPropertyName:@"Overview"] documentText];
     if(presentationOverview != nil && [presentationOverview length] > 8) //  && ![presentationOverview isEqualToString:@"<p> </p>"])
         [bodyHTML appendString: presentationOverview];
     
@@ -184,7 +207,7 @@
 {
     NSURL *bundleURL = [[NSBundle mainBundle] bundleURL];
       
-    [self.dataWebView loadHTMLString:[NSString stringWithFormat:@"<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"bdviewer.css\" /> </head><body>%@</body></html>",self.detailHTMLString] baseURL:bundleURL];
+    [self.dataWebView loadHTMLString:[NSString stringWithFormat:@"<html><head><meta http-equiv=\"Content-type\" content=\"text/html;charset=UTF-8\"/><link rel=\"stylesheet\" type=\"text/css\" href=\"bdviewer.css\" /> </head><body>%@</body></html>",self.detailHTMLString] baseURL:bundleURL];
     [self.dataWebView setBackgroundColor:[UIColor clearColor]];
     [self.dataWebView setOpaque:NO];
 }
@@ -199,7 +222,11 @@
 
     for(BDPathogen *pathogen in pathogenArray)
     {
-       [pathogenGroupHTML appendFormat:@"%@<br>",pathogen.name ];
+        BDLinkedNote *pathogenNote = [self retrieveNoteForParent:pathogen.uuid forPropertyName:@"Overview"];
+        if(pathogenNote != nil && [pathogenNote.documentText length] > 0)
+            [pathogenGroupHTML appendFormat:@"<a href=\"%@\">%@</a><br>", pathogenNote.uuid, pathogen.name];
+        else
+           [pathogenGroupHTML appendFormat:@"%@<br>",pathogen.name ];
     }
   
     NSString *returnString = [NSString stringWithString:pathogenGroupHTML];
@@ -210,7 +237,12 @@
 -(NSString *)buildTherapyGroupHTML:(BDTherapyGroup *)theTherapyGroup
 {
     NSMutableString *therapyGroupHTML = [[NSMutableString alloc] initWithCapacity:0];
-    [therapyGroupHTML appendFormat:@"<tr><td colspan=\"3\" align=\"left\"><u>%@</></td></tr>",theTherapyGroup.name];
+    BDLinkedNote *tgNote = [self retrieveNoteForParent:theTherapyGroup.uuid forPropertyName:@"Overview"];
+
+    if(tgNote != nil && [tgNote.documentText length] > 0)
+        [therapyGroupHTML appendFormat:@"<tr><td colspan=\"3\" align=\"left\"<a href=\"%@\">%@</a></td></tr>", tgNote.uuid, theTherapyGroup.name];
+    else
+        [therapyGroupHTML appendFormat:@"<tr><td colspan=\"3\" align=\"left\"><u>%@</u></td></tr>",theTherapyGroup.name];
 
     NSString *returnString = [NSString stringWithString:therapyGroupHTML];
     [therapyGroupHTML release];
@@ -219,14 +251,58 @@
 
 -(NSString *)buildTherapyHTML:(BDTherapy *)theTherapy
 {
+
     NSMutableString *therapyHTML = [[NSMutableString alloc] initWithCapacity:0];
-     [therapyHTML appendFormat:@"<tr><td><b>%@</b></td>",theTherapy.name];
+    
+    [therapyHTML appendString:@"<tr><td>"];
+    
+    if([theTherapy.leftBracket boolValue] == YES)
+        [therapyHTML appendString:@"&#91"];
+    
+    if([theTherapy.name length] > 0)
+    {    
+        BDLinkedNote *nameNote = [self retrieveNoteForParent:theTherapy.uuid forPropertyName:@"Name"];
+        if (nameNote != nil && [nameNote.documentText length] > 0)
+            [therapyHTML appendFormat:@"<a href=\"%@\"><b>%@</b></a>",nameNote.uuid,theTherapy.name];
+        else
+            [therapyHTML appendFormat:@"<b>%@</b>",theTherapy.name];
+    }
+
+    if([theTherapy.rightBracket boolValue] == YES)
+        [therapyHTML appendString:@"&#93"];
+    
+    // check for conjunctions and insert text if any are found
+    switch ([theTherapy.therapyJoinType intValue]) {
+        case AND_TherapyJoinType:
+            [therapyHTML appendString:@" +"];
+            break;
+        case OR_TherapyJoinType:
+            [therapyHTML appendString:@" or"];
+            break; 
+            
+        case NONE_TherapyJoinType:
+        default:
+            break;
+    }
+     
+    [therapyHTML appendString:@"</td>"];
     
     if([theTherapy.dosage length] > 0)
-        [therapyHTML appendFormat:@"<td>%@</td>",theTherapy.dosage];
+    {
+        BDLinkedNote *dosageNote = [self retrieveNoteForParent:theTherapy.uuid forPropertyName:@"Dosage"];
+        if(dosageNote != nil && [dosageNote.documentText length] > 0)
+            [therapyHTML appendFormat:@"<td><a href=\"%@\">%@</a></td>",dosageNote.uuid,theTherapy.dosage];
+        else
+            [therapyHTML appendFormat:@"<td>%@</td>",theTherapy.dosage];
+    }
     if([theTherapy.duration length] > 0)
-        [therapyHTML appendFormat:@"<td>%@</td>",theTherapy.duration];
-    
+    {
+        BDLinkedNote *durationNote = [self retrieveNoteForParent:theTherapy.uuid forPropertyName:@"Duration"];
+        if(durationNote !=nil && [durationNote.documentText length] > 0)
+            [therapyHTML appendFormat:@"<td><a href=\"%@\">%@</a></td>",durationNote.uuid,theTherapy.duration];
+        else
+            [therapyHTML appendFormat:@"<td>%@</td>",theTherapy.duration];
+    }
     
     [therapyHTML appendString:@"</tr>"];
 

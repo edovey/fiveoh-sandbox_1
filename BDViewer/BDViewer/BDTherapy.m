@@ -23,9 +23,11 @@
 @dynamic name;
 @dynamic schemaVersion;
 @dynamic therapyGroupId;
-@dynamic therapyGroupJoinType;
+@dynamic therapyJoinType;
 @dynamic displayOrder;
 @dynamic uuid;
+@dynamic leftBracket;
+@dynamic rightBracket;
 
 +(NSString *)create
 {
@@ -43,6 +45,8 @@
     therapy.schemaVersion = [NSNumber numberWithInt:[SCHEMAVERSION_THERAPY intValue]];
     therapy.deprecated = [NSNumber numberWithBool:NO];
     therapy.displayOrder = [NSNumber numberWithInt:-1];
+    therapy.leftBracket = [NSNumber numberWithBool:NO];
+    therapy.rightBracket = [NSNumber numberWithBool:NO];
     
     [BDQueueEntry createWithObjectUuid:therapy.uuid 
                       withEntityName:ENTITYNAME_THERAPY 
@@ -116,11 +120,13 @@
                 therapy.deprecated = [NSNumber numberWithBool:[[theAttributeDictionary valueForKey:TH_DEPRECATED] boolValue]];
                 
                 therapy.therapyGroupId = [theAttributeDictionary valueForKey:TH_THERAPYGROUPID];
-                therapy.therapyGroupJoinType = [NSNumber numberWithInt:[[theAttributeDictionary valueForKey:TH_THERAPYGROUPJOINTYPE] intValue]];
+                therapy.therapyJoinType = [NSNumber numberWithInt:[[theAttributeDictionary valueForKey:TH_THERAPYJOINTYPE] intValue]];
                 therapy.name = [theAttributeDictionary valueForKey:TH_NAME];
                 therapy.dosage = [theAttributeDictionary valueForKey:TH_DOSAGE];
                 therapy.duration = [theAttributeDictionary valueForKey:TH_DURATION];
                 therapy.displayOrder = [NSNumber numberWithInt:[[theAttributeDictionary valueForKey:TH_DISPLAYORDER] intValue]];
+                therapy.leftBracket = [NSNumber numberWithBool:[[theAttributeDictionary valueForKey:TH_LEFTBRACKET] intValue]];
+                therapy.rightBracket = [NSNumber numberWithBool:[[theAttributeDictionary valueForKey:TH_RIGHTBRACKET] intValue]];
             }
                 break;
         }

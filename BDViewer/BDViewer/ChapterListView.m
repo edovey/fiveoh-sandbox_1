@@ -1,5 +1,5 @@
 //
-//  ChapterView.m
+//  ChapterListView.m
 //  BDViewer
 //
 //  Created by Liz Dovey on 11-10-19.

@@ -176,6 +176,8 @@ namespace BDEditor.Views
             stringToClean = stringToClean.Replace("<li><p>", "<li>");
             stringToClean = stringToClean.Replace("</p></li>", "</li>");
 
+            stringToClean = stringToClean.Replace("style=\"margin-top:6pt;margin-bottom:6pt;\"", "");
+
             return stringToClean;
         }
 
@@ -318,45 +320,48 @@ namespace BDEditor.Views
             //NOTE:  Redo / Undo are automatically supported by the control.  Bold & underline are not.
         }
 
-        private void btnPaste_Click(object sender, EventArgs e)
-        {
-            PasteCleanText();
-        }
-
-        private void btnBeta_Click(object sender, EventArgs e)
+        private void toolStripButton1_Click(object sender, EventArgs e)
         {
             textControl.Selection.Text = "ß";
         }
 
-        private void btnGE_Click(object sender, EventArgs e)
+        private void toolStripButton2_Click(object sender, EventArgs e)
         {
             textControl.Selection.Text = "≥";
         }
 
-        private void btnLE_Click(object sender, EventArgs e)
+        private void toolStripButton3_Click(object sender, EventArgs e)
         {
             textControl.Selection.Text = "≤";
         }
 
-        private void btnPM_Click(object sender, EventArgs e)
+        private void toolStripButton4_Click(object sender, EventArgs e)
         {
             textControl.Selection.Text = "±";
         }
 
-        private void btnDegree_Click(object sender, EventArgs e)
+        private void toolStripButton5_Click(object sender, EventArgs e)
         {
             textControl.Selection.Text = "°";
         }
-
-        private void btnSuperscript_Click(object sender, EventArgs e)
+        
+        private void toolStripButton6_Click(object sender, EventArgs e)
         {
-            // TODO
-            //textControl.Selection.Baseline = textControl.InputFormat.Superscript;
+            // superscript: move baseline of text up, reduce fontsize.
+            textControl.Selection.Baseline = 100;
+            textControl.Selection.FontSize -= 40;
         }
 
-        private void btnSubscript_Click(object sender, EventArgs e)
+        private void toolStripButton7_Click(object sender, EventArgs e)
         {
-            // TODO
+            // subscript: move baseline of text down, reduce fontsize.
+            textControl.Selection.Baseline = -100;
+            textControl.Selection.FontSize -= 40;
+        }
+
+        private void toolStripButton8_Click(object sender, EventArgs e)
+        {
+            PasteCleanText();
         }
     }
 }

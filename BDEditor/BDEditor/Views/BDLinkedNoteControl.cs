@@ -203,6 +203,30 @@ namespace BDEditor.Views
         }
 
         /// <summary>
+        /// Remove extra markup from within a tag's boundaries but retain the tag itself
+        /// </summary>
+        /// <param name="pText"></param>
+        /// <param name="pTagStart"></param>
+        /// <param name="pTagEnd"></param>
+        /// <param name="pTrimStart"></param>
+        /// <returns></returns>
+        private string CleanInnerTag(string pText, string pTagStart, string pTagEnd, string pTrimStart)
+        {
+            if (pText.Contains(pTagStart))
+            {
+                int tagStartIndex = pText.IndexOf(pTagStart);
+                int trimStartIndex = pText.IndexOf(pTrimStart, tagStartIndex);
+                int tagEndIndex = pText.IndexOf(pTagEnd, tagStartIndex);
+                int tagLength = 0;
+
+                tagLength = tagEndIndex - trimStartIndex;
+                string cleanString = pText.Remove(trimStartIndex, tagLength);
+                return cleanString;
+            }
+            return pText;
+        }
+
+        /// <summary>
         /// Strip the text of the formatting tags that may exist (usually from a Word document)
         /// </summary>
         /// <param name="pString">String to search and clean</param>
@@ -256,6 +280,19 @@ namespace BDEditor.Views
         private string CleanDocumentText(string pString)
         {
             string stringToClean = GetBodyContents(pString);
+
+            // remove style tags from ul, ol, li and p
+            while (stringToClean.Contains("<ul style="))
+                stringToClean = CleanInnerTag(stringToClean, "<ul style=", ">", " style");
+
+            while (stringToClean.Contains("<ol style="))
+                stringToClean = CleanInnerTag(stringToClean, "<ol style=", ">", " style");
+
+            while (stringToClean.Contains("<li style=")) 
+                stringToClean = CleanInnerTag(stringToClean, "<li style=", ">", " style");
+
+            while (stringToClean.Contains("<p style=")) 
+                stringToClean = CleanInnerTag(stringToClean, "<p style=", ">", " style");
 
             // remove paragraph tags from inside list tags
             stringToClean = stringToClean.Replace("<li><p>", "<li>");

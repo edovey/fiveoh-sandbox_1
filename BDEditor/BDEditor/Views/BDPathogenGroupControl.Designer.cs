@@ -32,6 +32,8 @@
             this.pathogenSet1 = new BDEditor.Views.PathogenSet();
             this.bdTherapyGroupControl1 = new BDEditor.Views.BDTherapyGroupControl();
             this.bdTherapyGroupControl2 = new BDEditor.Views.BDTherapyGroupControl();
+            this.therapyGroupPanel = new System.Windows.Forms.Panel();
+            this.therapyGroupPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -55,34 +57,50 @@
             // 
             // bdTherapyGroupControl1
             // 
+            this.bdTherapyGroupControl1.AutoScroll = true;
             this.bdTherapyGroupControl1.BackColor = System.Drawing.SystemColors.Control;
             this.bdTherapyGroupControl1.CurrentTherapyGroup = null;
-            this.bdTherapyGroupControl1.Location = new System.Drawing.Point(3, 119);
+            this.bdTherapyGroupControl1.DisplayOrder = null;
+            this.bdTherapyGroupControl1.Location = new System.Drawing.Point(4, 10);
             this.bdTherapyGroupControl1.Name = "bdTherapyGroupControl1";
-            this.bdTherapyGroupControl1.Size = new System.Drawing.Size(804, 254);
+            this.bdTherapyGroupControl1.Size = new System.Drawing.Size(877, 254);
             this.bdTherapyGroupControl1.TabIndex = 3;
             // 
             // bdTherapyGroupControl2
             // 
+            this.bdTherapyGroupControl2.AutoScroll = true;
             this.bdTherapyGroupControl2.BackColor = System.Drawing.SystemColors.Control;
             this.bdTherapyGroupControl2.CurrentTherapyGroup = null;
-            this.bdTherapyGroupControl2.Location = new System.Drawing.Point(8, 379);
+            this.bdTherapyGroupControl2.DisplayOrder = null;
+            this.bdTherapyGroupControl2.Location = new System.Drawing.Point(4, 270);
             this.bdTherapyGroupControl2.Name = "bdTherapyGroupControl2";
-            this.bdTherapyGroupControl2.Size = new System.Drawing.Size(804, 254);
+            this.bdTherapyGroupControl2.Size = new System.Drawing.Size(865, 254);
             this.bdTherapyGroupControl2.TabIndex = 4;
+            // 
+            // therapyGroupPanel
+            // 
+            this.therapyGroupPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.therapyGroupPanel.AutoScroll = true;
+            this.therapyGroupPanel.Controls.Add(this.bdTherapyGroupControl1);
+            this.therapyGroupPanel.Controls.Add(this.bdTherapyGroupControl2);
+            this.therapyGroupPanel.Location = new System.Drawing.Point(8, 100);
+            this.therapyGroupPanel.Name = "therapyGroupPanel";
+            this.therapyGroupPanel.Size = new System.Drawing.Size(885, 549);
+            this.therapyGroupPanel.TabIndex = 5;
             // 
             // BDPathogenGroupControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.Controls.Add(this.bdTherapyGroupControl2);
+            this.Controls.Add(this.therapyGroupPanel);
             this.Controls.Add(this.pathogenSet1);
-            this.Controls.Add(this.bdTherapyGroupControl1);
             this.Controls.Add(this.label1);
             this.Name = "BDPathogenGroupControl";
-            this.Size = new System.Drawing.Size(818, 701);
-            this.Load += new System.EventHandler(this.BDPathogenGroupControl_Load);
+            this.Size = new System.Drawing.Size(900, 652);
+            this.therapyGroupPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -94,5 +112,6 @@
         private System.Windows.Forms.Label label1;
         private PathogenSet pathogenSet1;
         private BDTherapyGroupControl bdTherapyGroupControl2;
+        private System.Windows.Forms.Panel therapyGroupPanel;
     }
 }

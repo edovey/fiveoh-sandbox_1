@@ -50,8 +50,16 @@ namespace BDEditor.Views
                     bdTherapyGroupControl1.CurrentTherapyGroup = null;
                     bdTherapyGroupControl2.CurrentTherapyGroup = null;
 
-                    if (therapyGroupList.Count >= 1) bdTherapyGroupControl1.CurrentTherapyGroup = therapyGroupList[0];
-                    if (therapyGroupList.Count >= 2) bdTherapyGroupControl2.CurrentTherapyGroup = therapyGroupList[1];
+                    if (therapyGroupList.Count >= 1)
+                    {
+                        bdTherapyGroupControl1.CurrentTherapyGroup = therapyGroupList[0];
+                        bdTherapyGroupControl1.RefreshLayout();
+                    }
+                    if (therapyGroupList.Count >= 2)
+                    {
+                        bdTherapyGroupControl2.CurrentTherapyGroup = therapyGroupList[1];
+                        bdTherapyGroupControl2.RefreshLayout();
+                    }
 
                     pathogenSet1.CurrentPathogenGroup = currentPathogenGroup;
                 }
@@ -71,11 +79,6 @@ namespace BDEditor.Views
             pathogenSet1.AssignScopeId(scopeId);
             bdTherapyGroupControl1.AssignScopeId(scopeId);
             bdTherapyGroupControl2.AssignScopeId(scopeId);
-        }
-
-        private void BDPathogenGroupControl_Load(object sender, EventArgs e)
-        {
-
         }
 
         #region IBDControl
@@ -143,5 +146,6 @@ namespace BDEditor.Views
             }
         }
         #endregion    
+
     }
 }

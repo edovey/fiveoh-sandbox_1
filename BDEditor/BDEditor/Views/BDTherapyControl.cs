@@ -23,6 +23,25 @@ namespace BDEditor.Views
         
         public int? DisplayOrder {get; set;}
 
+        public event EventHandler RequestItemAdd;
+        public event EventHandler RequestItemDelete;
+
+        protected virtual void OnItemAddRequested(EventArgs e)
+        {
+            if (null != RequestItemAdd)
+            {
+                RequestItemAdd(this, e);
+            }
+        }
+
+        protected virtual void OnItemDeleteRequested(EventArgs e)
+        {
+            if (null != RequestItemDelete)
+            {
+                RequestItemDelete(this, e);
+            }
+        }
+
         public BDTherapy CurrentTherapy
         {
             get
@@ -289,5 +308,20 @@ namespace BDEditor.Views
         {
             tbName.Text = tbName.Text.Insert(tbName.SelectionStart, "±");
         }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            OnItemAddRequested(new EventArgs());
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            OnItemDeleteRequested(new EventArgs());
+        }
+
+        public override string ToString()
+        {
+            return (null == this.currentTherapy) ? base.ToString() : this.currentTherapy.name;
+        }
     }
 }

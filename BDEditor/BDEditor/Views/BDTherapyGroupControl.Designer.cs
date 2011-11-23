@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDTherapyGroupControl));
             this.therapyGroupName = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
             this.orRadioButton = new System.Windows.Forms.RadioButton();
@@ -38,10 +39,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.btnTherapyGroupLink = new System.Windows.Forms.Button();
-            this.bdTherapyControl3 = new BDEditor.Views.BDTherapyControl();
-            this.bdTherapyControl2 = new BDEditor.Views.BDTherapyControl();
-            this.bdTherapyControl1 = new BDEditor.Views.BDTherapyControl();
-            this.panelTherapies.SuspendLayout();
+            this.btnAdd = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // therapyGroupName
@@ -97,17 +95,16 @@
             // 
             // panelTherapies
             // 
-            this.panelTherapies.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelTherapies.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.panelTherapies.AutoScroll = true;
+            this.panelTherapies.AutoSize = true;
+            this.panelTherapies.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panelTherapies.BackColor = System.Drawing.SystemColors.Control;
-            this.panelTherapies.Controls.Add(this.bdTherapyControl3);
-            this.panelTherapies.Controls.Add(this.bdTherapyControl2);
-            this.panelTherapies.Controls.Add(this.bdTherapyControl1);
-            this.panelTherapies.Location = new System.Drawing.Point(6, 76);
+            this.panelTherapies.Location = new System.Drawing.Point(5, 75);
             this.panelTherapies.Name = "panelTherapies";
-            this.panelTherapies.Size = new System.Drawing.Size(791, 179);
+            this.panelTherapies.Size = new System.Drawing.Size(0, 0);
             this.panelTherapies.TabIndex = 15;
             // 
             // label1
@@ -142,51 +139,30 @@
             // 
             // btnTherapyGroupLink
             // 
-            this.btnTherapyGroupLink.Location = new System.Drawing.Point(302, 25);
+            this.btnTherapyGroupLink.Image = ((System.Drawing.Image)(resources.GetObject("btnTherapyGroupLink.Image")));
+            this.btnTherapyGroupLink.Location = new System.Drawing.Point(302, 23);
             this.btnTherapyGroupLink.Name = "btnTherapyGroupLink";
-            this.btnTherapyGroupLink.Size = new System.Drawing.Size(38, 23);
+            this.btnTherapyGroupLink.Size = new System.Drawing.Size(31, 25);
             this.btnTherapyGroupLink.TabIndex = 19;
-            this.btnTherapyGroupLink.Text = "Link";
             this.btnTherapyGroupLink.UseVisualStyleBackColor = true;
             this.btnTherapyGroupLink.Click += new System.EventHandler(this.btnTherapyGroupLink_Click);
             // 
-            // bdTherapyControl3
+            // btnAdd
             // 
-            this.bdTherapyControl3.CurrentTherapy = null;
-            this.bdTherapyControl3.DisplayLeftBracket = false;
-            this.bdTherapyControl3.DisplayRightBracket = false;
-            this.bdTherapyControl3.Location = new System.Drawing.Point(4, 118);
-            this.bdTherapyControl3.Name = "bdTherapyControl3";
-            this.bdTherapyControl3.Padding = new System.Windows.Forms.Padding(3);
-            this.bdTherapyControl3.Size = new System.Drawing.Size(783, 50);
-            this.bdTherapyControl3.TabIndex = 2;
-            // 
-            // bdTherapyControl2
-            // 
-            this.bdTherapyControl2.CurrentTherapy = null;
-            this.bdTherapyControl2.DisplayLeftBracket = false;
-            this.bdTherapyControl2.DisplayRightBracket = false;
-            this.bdTherapyControl2.Location = new System.Drawing.Point(4, 61);
-            this.bdTherapyControl2.Name = "bdTherapyControl2";
-            this.bdTherapyControl2.Padding = new System.Windows.Forms.Padding(3);
-            this.bdTherapyControl2.Size = new System.Drawing.Size(783, 50);
-            this.bdTherapyControl2.TabIndex = 1;
-            // 
-            // bdTherapyControl1
-            // 
-            this.bdTherapyControl1.CurrentTherapy = null;
-            this.bdTherapyControl1.DisplayLeftBracket = false;
-            this.bdTherapyControl1.DisplayRightBracket = false;
-            this.bdTherapyControl1.Location = new System.Drawing.Point(4, 4);
-            this.bdTherapyControl1.Name = "bdTherapyControl1";
-            this.bdTherapyControl1.Padding = new System.Windows.Forms.Padding(3);
-            this.bdTherapyControl1.Size = new System.Drawing.Size(783, 50);
-            this.bdTherapyControl1.TabIndex = 0;
+            this.btnAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnAdd.Image")));
+            this.btnAdd.Location = new System.Drawing.Point(744, 23);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(30, 26);
+            this.btnAdd.TabIndex = 20;
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.RequestItemAdd);
             // 
             // BDTherapyGroupControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
+            this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnTherapyGroupLink);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -198,9 +174,8 @@
             this.Controls.Add(this.tbName);
             this.Controls.Add(this.therapyGroupName);
             this.Name = "BDTherapyGroupControl";
-            this.Size = new System.Drawing.Size(800, 261);
+            this.Size = new System.Drawing.Size(865, 158);
             this.Leave += new System.EventHandler(this.BDTherapyGroupControl_Leave);
-            this.panelTherapies.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -218,8 +193,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnTherapyGroupLink;
-        private BDTherapyControl bdTherapyControl3;
-        private BDTherapyControl bdTherapyControl2;
-        private BDTherapyControl bdTherapyControl1;
+        private System.Windows.Forms.Button btnAdd;
     }
 }

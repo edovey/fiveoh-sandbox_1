@@ -142,6 +142,12 @@ namespace BDEditor.Views
             noteView.ShowDialog(this);
         }
 
+        public void AssignTypeaheadSource(AutoCompleteStringCollection pSource)
+        {
+            tbPathogenName.AutoCompleteCustomSource = pSource;
+            tbPathogenName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tbPathogenName.AutoCompleteSource = AutoCompleteSource.CustomSource;
+        }
         #endregion
 
         private void btnLink_Click(object sender, EventArgs e)

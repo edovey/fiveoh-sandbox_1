@@ -86,6 +86,7 @@ namespace BDEditor.Views
             bdTherapyGroupControl1.AssignDataContext(dataContext);
             bdTherapyGroupControl2.AssignDataContext(dataContext);
             pathogenSet1.AssignDataContext(dataContext);
+            pathogenSet1.AssignTypeaheadSource();
         }
 
         public void AssignParentId(Guid? pParentId)

@@ -61,6 +61,9 @@ namespace BDEditor.Views
                         case BDTherapy.TherapyJoinType.OrWithNext:
                             orRadioButton.Checked = true;
                             break;
+                        case BDTherapy.TherapyJoinType.ThenWithNext:
+                            thenRadioButton.Checked = true;
+                            break;
                         default:
                             noneRadioButton.Checked = true;
                             break;
@@ -188,6 +191,11 @@ namespace BDEditor.Views
                         if (currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.OrWithNext)
                             currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.OrWithNext;
                     }
+                    else if (thenRadioButton.Checked)
+                    {
+                        if (currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.ThenWithNext)
+                            currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.ThenWithNext;
+                    }
                     else
                     {
                         if (currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.None)
@@ -256,5 +264,30 @@ namespace BDEditor.Views
         }
 
         #endregion
+
+        private void bToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tbName.Text = tbName.Text.Insert(tbName.SelectionStart, "ß");
+        }
+
+        private void degreeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tbName.Text = tbName.Text.Insert(tbName.SelectionStart, "°");
+        }
+
+        private void geToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tbName.Text = tbName.Text.Insert(tbName.SelectionStart, "≥");
+        }
+
+        private void leToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tbName.Text = tbName.Text.Insert(tbName.SelectionStart, "≤");
+        }
+
+        private void plusMinusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tbName.Text = tbName.Text.Insert(tbName.SelectionStart, "±");
+        }
     }
 }

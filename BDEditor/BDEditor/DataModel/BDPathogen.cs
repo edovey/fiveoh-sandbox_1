@@ -83,6 +83,13 @@ namespace BDEditor.DataModel
             return pathogenList;
         }
 
+        public static string[] GetPathogenNames(Entities pContext)
+        {
+            var pathogenNames = (from bdPathogens in pContext.BDPathogens
+                                select bdPathogens.name);
+            return pathogenNames.ToArray();
+        }
+
         /// <summary>
         /// Get Pathogen with the specified ID
         /// </summary>

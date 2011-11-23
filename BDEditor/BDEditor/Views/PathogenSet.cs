@@ -104,6 +104,21 @@ namespace BDEditor.Views
             bdPathogenControl8.AssignScopeId(scopeId);
         }
 
+        public void AssignTypeaheadSource()
+        {
+            string[] pathogenNameList = BDPathogen.GetPathogenNames(dataContext);
+            AutoCompleteStringCollection nameCollection = new AutoCompleteStringCollection();
+            nameCollection.AddRange(pathogenNameList);
+            bdPathogenControl1.AssignTypeaheadSource(nameCollection);
+            bdPathogenControl2.AssignTypeaheadSource(nameCollection);
+            bdPathogenControl3.AssignTypeaheadSource(nameCollection);
+            bdPathogenControl4.AssignTypeaheadSource(nameCollection);
+            bdPathogenControl5.AssignTypeaheadSource(nameCollection);
+            bdPathogenControl6.AssignTypeaheadSource(nameCollection);
+            bdPathogenControl7.AssignTypeaheadSource(nameCollection);
+            bdPathogenControl8.AssignTypeaheadSource(nameCollection);
+        }
+
         #region IBDControl
         
         public void AssignDataContext(Entities pDataContext)

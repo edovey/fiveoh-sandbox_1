@@ -123,6 +123,45 @@ namespace BDEditor.DataModel
             return therapy;
         }
 
+        /// <summary>
+        /// Get a string array of all the distinct Therapy Name values in the database.
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <returns></returns>
+        public static string[] GetTherapyNames(Entities pContext)
+        {
+           IQueryable<string> qry = (from bdTherapies in pContext.BDTherapies
+                                 select bdTherapies.name);
+            var therapyNames = qry.Distinct();
+            return therapyNames.ToArray();
+        }
+
+        /// <summary>
+        /// Get a string array of all the distinct Therapy Dose values in the database.
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <returns></returns>
+        public static string[] GetTherapyDoseStrings(Entities pContext)
+        {
+            IQueryable<string> doseQuery = from t in pContext.BDTherapies
+                                           select t.dosage;
+            var doseStrings = doseQuery.Distinct();
+            return doseStrings.ToArray();
+        }
+
+        /// <summary>
+        /// Get a string array of all the distinct Therapy Duration values in the database.
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <returns></returns>
+        public static string[] GetTherapyDurationStrings(Entities pContext)
+        {
+            IQueryable<string> durationQuery = from t in pContext.BDTherapies
+                                           select t.duration;
+            var durationStrings = durationQuery.Distinct();
+            return durationStrings.ToArray();
+        }
+
         public Guid Uuid
         {
             get { return this.uuid; }

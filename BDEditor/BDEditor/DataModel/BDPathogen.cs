@@ -83,10 +83,17 @@ namespace BDEditor.DataModel
             return pathogenList;
         }
 
+        /// <summary>
+        /// Get a string array of all the Pathogen Name values in the database.
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <returns></returns>
         public static string[] GetPathogenNames(Entities pContext)
         {
-            var pathogenNames = (from bdPathogens in pContext.BDPathogens
-                                select bdPathogens.name);
+            IQueryable<string> qry =  (from p in pContext.BDPathogens
+                                select p.name);
+            var pathogenNames = qry.Distinct();
+
             return pathogenNames.ToArray();
         }
 

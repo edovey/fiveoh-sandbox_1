@@ -28,72 +28,64 @@ namespace BDEditor.Views
 
         protected virtual void OnItemAddRequested(EventArgs e)
         {
-            if (null != RequestItemAdd)
-            {
-                RequestItemAdd(this, e);
-            }
+            if (null != RequestItemAdd) { RequestItemAdd(this, e); }
         }
 
         protected virtual void OnItemDeleteRequested(EventArgs e)
         {
-            if (null != RequestItemDelete)
-            {
-                RequestItemDelete(this, e);
-            }
+            if (null != RequestItemDelete) { RequestItemDelete(this, e); }
         }
 
         public BDTherapy CurrentTherapy
         {
-            get
+            get { return currentTherapy; }
+            set { currentTherapy = value; }
+        }
+
+        public void RefreshLayout()
+        {
+            if (currentTherapy == null)
             {
-                return currentTherapy;
+                tbName.Text = @"";
+                tbDosage.Text = @"";
+                tbDuration.Text = @"";
+                noneRadioButton.Checked = true;
+                lblLeftBracket.ForeColor = SystemColors.ControlLight;
+                lblRightBracket.ForeColor = SystemColors.ControlLight;
             }
-            set
+            else
             {
-                currentTherapy = value;
-                if (currentTherapy == null)
+                this.BackColor = SystemColors.Control;
+
+                tbName.Text = currentTherapy.name;
+                tbDosage.Text = currentTherapy.dosage;
+                tbDuration.Text = currentTherapy.duration;
+                DisplayOrder = currentTherapy.displayOrder;
+
+                switch ((BDTherapy.TherapyJoinType)currentTherapy.therapyJoinType)
                 {
-                    tbName.Text = @"";
-                    tbDosage.Text = @"";
-                    tbDuration.Text = @"";
-                    noneRadioButton.Checked = true;
-                    lblLeftBracket.ForeColor = SystemColors.ControlLight;
-                    lblRightBracket.ForeColor = SystemColors.ControlLight;
+                    case BDTherapy.TherapyJoinType.None:
+                        noneRadioButton.Checked = true;
+                        break;
+                    case BDTherapy.TherapyJoinType.AndWithNext:
+                        andRadioButton.Checked = true;
+                        break;
+                    case BDTherapy.TherapyJoinType.OrWithNext:
+                        orRadioButton.Checked = true;
+                        break;
+                    case BDTherapy.TherapyJoinType.ThenWithNext:
+                        thenRadioButton.Checked = true;
+                        break;
+                    default:
+                        noneRadioButton.Checked = true;
+                        break;
                 }
-                else
-                {
-                    this.BackColor = SystemColors.Control;
 
-                    tbName.Text = currentTherapy.name;
-                    tbDosage.Text = currentTherapy.dosage;
-                    tbDuration.Text = currentTherapy.duration;
-                    DisplayOrder = currentTherapy.displayOrder;
+                displayLeftBracket = currentTherapy.leftBracket.Value;
+                lblLeftBracket.ForeColor = (displayLeftBracket) ? SystemColors.ControlText : SystemColors.ControlLight;
 
-                    switch ((BDTherapy.TherapyJoinType)currentTherapy.therapyJoinType)
-                    {
-                        case BDTherapy.TherapyJoinType.None:
-                            noneRadioButton.Checked = true;
-                            break;
-                        case BDTherapy.TherapyJoinType.AndWithNext:
-                            andRadioButton.Checked = true;
-                            break;
-                        case BDTherapy.TherapyJoinType.OrWithNext:
-                            orRadioButton.Checked = true;
-                            break;
-                        case BDTherapy.TherapyJoinType.ThenWithNext:
-                            thenRadioButton.Checked = true;
-                            break;
-                        default:
-                            noneRadioButton.Checked = true;
-                            break;
-                    }
-
-                    displayLeftBracket = currentTherapy.leftBracket.Value;
-                    lblLeftBracket.ForeColor = (displayLeftBracket) ? SystemColors.ControlText : SystemColors.ControlLight;
-
-                    displayRightBracket = currentTherapy.rightBracket.Value;
-                    lblRightBracket.ForeColor = (displayRightBracket) ? SystemColors.ControlText : SystemColors.ControlLight;
-                }
+                displayRightBracket = currentTherapy.rightBracket.Value;
+                lblRightBracket.ForeColor = (displayRightBracket) ? SystemColors.ControlText : SystemColors.ControlLight;
             }
         }
 
@@ -152,24 +144,28 @@ namespace BDEditor.Views
 
         private void CreateLink(string pProperty)
         {
-            Save();
-            BDLinkedNoteView view = new BDLinkedNoteView();
-            view.AssignDataContext(dataContext);
-            view.AssignContextPropertyName(pProperty);
-            view.AssignParentControl(this);
-            view.AssignContextEntityName(BDTherapy.ENTITYNAME_FRIENDLY);
-            view.AssignScopeId(scopeId);
+            if (CreateCurrentObject())
+            {
+                Save();
 
-            if (null != currentTherapy)
-            {
-                view.AssignParentId(currentTherapy.uuid);
+                BDLinkedNoteView view = new BDLinkedNoteView();
+                view.AssignDataContext(dataContext);
+                view.AssignContextPropertyName(pProperty);
+                view.AssignParentControl(this);
+                view.AssignContextEntityName(BDTherapy.ENTITYNAME_FRIENDLY);
+                view.AssignScopeId(scopeId);
+
+                if (null != currentTherapy)
+                {
+                    view.AssignParentId(currentTherapy.uuid);
+                }
+                else
+                {
+                    view.AssignParentId(null);
+                }
+                view.PopulateControl();
+                view.ShowDialog(this);
             }
-            else
-            {
-                view.AssignParentId(null);
-            }
-            view.PopulateControl();
-            view.ShowDialog(this);
         }
 
         #region IBDControl
@@ -177,6 +173,26 @@ namespace BDEditor.Views
         public void AssignDataContext(Entities pDataContext)
         {
             dataContext = pDataContext;
+        }
+
+        public bool CreateCurrentObject()
+        {
+            bool result = true;
+
+            if (null == this.currentTherapy)
+            {
+                if (null == this.therapyGroupId)
+                {
+                    result = false;
+                }
+                else
+                {
+                    this.currentTherapy = BDTherapy.CreateTherapy(this.dataContext, this.therapyGroupId.Value);
+                    this.currentTherapy.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
+                }
+            }
+
+            return result;
         }
 
         public bool Save()
@@ -189,9 +205,7 @@ namespace BDEditor.Views
                     (tbDosage.Text != string.Empty) ||
                     (tbDuration.Text != string.Empty)))
                 {
-                    currentTherapy = BDTherapy.CreateTherapy(dataContext);
-                    currentTherapy.therapyGroupId = therapyGroupId;
-                    currentTherapy.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
+                    CreateCurrentObject();
                 }
 
                 if (null != currentTherapy)
@@ -238,6 +252,13 @@ namespace BDEditor.Views
             therapyGroupId = pParentId;
         }
 
+        public void AssignParentControl(IBDControl pControl)
+        {
+            parentControl = pControl;
+        }
+
+        #endregion
+
         private void textBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
@@ -246,34 +267,6 @@ namespace BDEditor.Views
                 Button linkButton = textBox.Tag as Button;
                 if (null != linkButton)
                     linkButton.Enabled = true;
-
-                if (null == currentTherapy)
-                {
-                    parentControl.TriggerCreateAndAssignParentIdToChildControl(this);
-                }
-            }
-        }
-
-        public void AssignParentControl(IBDControl pControl)
-        {
-            parentControl = pControl;
-        }
-
-        public void TriggerCreateAndAssignParentIdToChildControl(IBDControl pControl)
-        {
-            if (null == currentTherapy)
-            {
-                currentTherapy = BDTherapy.CreateTherapy(dataContext);
-                currentTherapy.therapyGroupId = therapyGroupId;
-                currentTherapy.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
-                BDTherapy.SaveTherapy(dataContext, currentTherapy);
-                pControl.AssignParentId(currentTherapy.uuid);
-                pControl.Save();
-            }
-            else
-            {
-                pControl.AssignParentId(currentTherapy.uuid);
-                pControl.Save();
             }
         }
 
@@ -281,8 +274,6 @@ namespace BDEditor.Views
         {
             Save();
         }
-
-        #endregion
 
         private void bToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -321,7 +312,7 @@ namespace BDEditor.Views
 
         public override string ToString()
         {
-            return (null == this.currentTherapy) ? base.ToString() : this.currentTherapy.name;
-        }
+            return (null == this.currentTherapy) ? "No Therapy" : this.currentTherapy.name;
+        }
     }
 }

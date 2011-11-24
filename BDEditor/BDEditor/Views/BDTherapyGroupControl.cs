@@ -24,14 +24,8 @@ namespace BDEditor.Views
 
         public BDTherapyGroup CurrentTherapyGroup
         {
-            get
-            {
-                return currentTherapyGroup;
-            }
-            set
-            {
-                currentTherapyGroup = value;
-            }
+            get { return currentTherapyGroup; }
+            set { currentTherapyGroup = value; }
         }
 
         public void RefreshLayout()
@@ -77,7 +71,6 @@ namespace BDEditor.Views
             }
 
             resizeTherapyControlPanelHeight();
-
         }
 
         public void AssignScopeId(Guid? pScopeId)
@@ -109,8 +102,7 @@ namespace BDEditor.Views
 
                 if (result && (null == currentTherapyGroup))
                 {
-                    currentTherapyGroup = BDTherapyGroup.CreateTherapyGroup(dataContext);
-                    currentTherapyGroup.pathogenGroupId = pathogenGroupId;
+                    currentTherapyGroup = BDTherapyGroup.CreateTherapyGroup(dataContext, pathogenGroupId.Value);
                     currentTherapyGroup.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                 }
 
@@ -142,13 +134,32 @@ namespace BDEditor.Views
             return result;
         }
 
-
-
         public void AssignParentControl(IBDControl pControl)
         {
             parentControl = pControl;
         }
 
+        public bool CreateCurrentObject()
+        {
+            bool result = true;
+
+            if (null == this.currentTherapyGroup)
+            {
+                if (null == this.pathogenGroupId)
+                {
+                    result = false;
+                }
+                else
+                {
+                    this.currentTherapyGroup = BDTherapyGroup.CreateTherapyGroup(dataContext, this.pathogenGroupId.Value);
+                    this.currentTherapyGroup.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
+                }
+            }
+
+            return result;
+        }
+
+        /*
         public void TriggerCreateAndAssignParentIdToChildControl(IBDControl pControl)
         {
             if (null == currentTherapyGroup)
@@ -166,33 +177,40 @@ namespace BDEditor.Views
                 pControl.Save();
             }
         }
-
+        */
         #endregion
 
         private BDTherapyControl addTherapyControl(BDTherapy pTherapy, int pTabIndex)
         {
-            BDTherapyControl therapyControl = new BDTherapyControl();
+            BDTherapyControl therapyControl = null;
 
-            int bottom = 0;
-            foreach (Control control in panelTherapies.Controls)
+            if (CreateCurrentObject())
             {
-                bottom += control.Height;
+                therapyControl = new BDTherapyControl();
+
+                //TODO: if currentTherapyGroup is null, create one
+                int bottom = 0;
+                foreach (Control control in panelTherapies.Controls)
+                {
+                    bottom += control.Height;
+                }
+                therapyControl.TabIndex = pTabIndex;
+                therapyControl.Top = bottom;
+                therapyControl.Left = 0;
+                therapyControl.AssignParentId(currentTherapyGroup.uuid);
+                therapyControl.AssignParentControl(this);
+                therapyControl.AssignDataContext(dataContext);
+                therapyControl.AssignScopeId(scopeId);
+                therapyControl.CurrentTherapy = pTherapy;
+                therapyControl.RequestItemAdd += new System.EventHandler(RequestItemAdd);
+                therapyControl.RequestItemDelete += new System.EventHandler(RequestItemDelete);
+                therapyControlList.Add(therapyControl);
+
+                panelTherapies.Controls.Add(therapyControl);
+                panelTherapies.Controls.SetChildIndex(therapyControl, pTabIndex);
+
+                therapyControl.RefreshLayout();
             }
-            therapyControl.TabIndex = pTabIndex;
-            therapyControl.Top = bottom;
-            therapyControl.Left = 0;
-            therapyControl.AssignParentId(currentTherapyGroup.uuid);
-            therapyControl.AssignParentControl(this);
-            therapyControl.AssignDataContext(dataContext);
-            therapyControl.AssignScopeId(scopeId);
-            therapyControl.CurrentTherapy = pTherapy;
-            therapyControl.RequestItemAdd += new System.EventHandler(RequestItemAdd);
-            therapyControl.RequestItemDelete += new System.EventHandler(RequestItemDelete);
-            therapyControlList.Add(therapyControl);
-       
-            panelTherapies.Controls.Add(therapyControl);
-            panelTherapies.Controls.SetChildIndex(therapyControl, pTabIndex);
-            
 
             return therapyControl;
         }
@@ -246,25 +264,27 @@ namespace BDEditor.Views
 
         private void CreateLink(string pProperty)
         {
-            Save();
-            BDLinkedNoteView view = new BDLinkedNoteView();
-            view.AssignDataContext(dataContext);
-            view.AssignContextPropertyName(pProperty);
-            view.AssignParentControl(this);
-            view.AssignContextEntityName(BDTherapyGroup.ENTITYNAME_FRIENDLY);
-            view.AssignScopeId(scopeId);
+            if (CreateCurrentObject())
+            {
+                Save();
+                BDLinkedNoteView view = new BDLinkedNoteView();
+                view.AssignDataContext(dataContext);
+                view.AssignContextPropertyName(pProperty);
+                view.AssignParentControl(this);
+                view.AssignContextEntityName(BDTherapyGroup.ENTITYNAME_FRIENDLY);
+                view.AssignScopeId(scopeId);
 
-            if (null != currentTherapyGroup)
-            {
-                view.AssignParentId(currentTherapyGroup.uuid);
+                if (null != currentTherapyGroup)
+                {
+                    view.AssignParentId(currentTherapyGroup.uuid);
+                }
+                else
+                {
+                    view.AssignParentId(null);
+                }
+                view.PopulateControl();
+                view.ShowDialog(this);
             }
-            else
-            {
-                view.AssignParentId(null);
-            }
-            view.PopulateControl();
-            view.ShowDialog(this);
-            
         }
 
         private void resizeTherapyControlPanelHeight()
@@ -275,8 +295,11 @@ namespace BDEditor.Views
         private void RequestItemAdd(object sender, EventArgs e)
         {
             BDTherapyControl control = addTherapyControl(null, therapyControlList.Count);
-            resizeTherapyControlPanelHeight();
-            control.Focus();
+            if (null != control)
+            {
+                resizeTherapyControlPanelHeight();
+                control.Focus();
+            }
         }
 
         private void RequestItemDelete(object sender, EventArgs e)
@@ -286,6 +309,11 @@ namespace BDEditor.Views
             {
                 removeTherapyControl(therapyControl, true);
             }
+        }
+
+        public override string ToString()
+        {
+            return (null == this.currentTherapyGroup) ? "No Therapy Group" : this.currentTherapyGroup.name;
         }
     }
 }

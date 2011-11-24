@@ -46,7 +46,7 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets creation date and schema version.
         /// </summary>
         /// <returns></returns>
-        public static BDTherapyGroup CreateTherapyGroup(Entities pContext)
+        public static BDTherapyGroup CreateTherapyGroup(Entities pContext, Guid pPathogenGroupId)
         {
             BDTherapyGroup therapyGroup = CreateBDTherapyGroup(Guid.NewGuid(), false);
             therapyGroup.createdBy = Guid.Empty;
@@ -55,7 +55,7 @@ namespace BDEditor.DataModel
             therapyGroup.therapyGroupJoinType = (int)TherapyGroupJoinType.None;
             therapyGroup.displayOrder = -1;
             therapyGroup.name = string.Empty;
-            therapyGroup.pathogenGroupId = Guid.Empty;
+            therapyGroup.pathogenGroupId = pPathogenGroupId;
 
             pContext.AddObject("BDTherapyGroups", therapyGroup);
 

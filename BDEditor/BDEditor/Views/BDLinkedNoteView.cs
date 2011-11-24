@@ -52,10 +52,10 @@ namespace BDEditor.Views
             bdLinkedNoteControl1.AssignParentId(parentId);
         }
 
-        public void AssignParentControl(IBDControl pParentControl)
-        {
-            bdLinkedNoteControl1.AssignParentControl(pParentControl);
-        }
+        //public void AssignParentControl(IBDControl pParentControl)
+        //{
+        //    bdLinkedNoteControl1.AssignParentControl(pParentControl);
+        //}
 
         public void AssignScopeId(Guid? pScopeId)
         {

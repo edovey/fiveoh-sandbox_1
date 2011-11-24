@@ -270,7 +270,6 @@ namespace BDEditor.Views
                 BDLinkedNoteView view = new BDLinkedNoteView();
                 view.AssignDataContext(dataContext);
                 view.AssignContextPropertyName(pProperty);
-                view.AssignParentControl(this);
                 view.AssignContextEntityName(BDTherapyGroup.ENTITYNAME_FRIENDLY);
                 view.AssignScopeId(scopeId);
 

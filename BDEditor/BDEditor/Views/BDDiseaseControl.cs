@@ -16,44 +16,45 @@ namespace BDEditor.Views
         private Entities dataContext;
         private BDLinkedNote overviewLinkedNote;
         private Guid? parentId;
+        public Guid? SubCategoryId { get; set; }
+        public Guid? CategoryId { get; set; }
+        public int? DisplayOrder { get; set; }
 
         public BDDisease CurrentDisease
         {
-            get
+            get { return currentDisease; }
+            set { currentDisease = value; }
+        }
+
+        public void RefreshLayout()
+        {
+            if (currentDisease == null)
             {
-                return currentDisease;
+                tbDiseaseName.Text = @"";
+                overviewLinkedNote = null;
+
+                bdLinkedNoteControl1.CurrentLinkedNote = null;
+                bdLinkedNoteControl1.AssignParentId(null);
+                bdLinkedNoteControl1.AssignScopeId(null);
+                bdLinkedNoteControl1.AssignContextEntityName(BDDisease.ENTITYNAME_FRIENDLY);
+                bdLinkedNoteControl1.AssignContextPropertyName(BDDisease.PROPERTYNAME_OVERVIEW);
             }
-            set
+            else
             {
-                currentDisease = value;
-                if (currentDisease == null)
-                {
-                    tbDiseaseName.Text = @"";
-                    overviewLinkedNote = null;
+                tbDiseaseName.Text = currentDisease.name;
+                bdLinkedNoteControl1.AssignParentId(currentDisease.uuid);
+                bdLinkedNoteControl1.AssignScopeId(currentDisease.uuid);
+                bdLinkedNoteControl1.AssignContextEntityName(BDDisease.ENTITYNAME_FRIENDLY);
+                bdLinkedNoteControl1.AssignContextPropertyName(BDDisease.PROPERTYNAME_OVERVIEW);
 
-                    bdLinkedNoteControl1.AssignParentId(null);
-                    bdLinkedNoteControl1.AssignScopeId(null);
-                    bdLinkedNoteControl1.AssignParentControl(this);
-                    bdLinkedNoteControl1.AssignContextEntityName(BDDisease.ENTITYNAME_FRIENDLY);
-                    bdLinkedNoteControl1.AssignContextPropertyName(BDDisease.PROPERTYNAME_OVERVIEW);
-                }
-                else
+                BDLinkedNoteAssociation association = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, currentDisease.uuid, BDDisease.PROPERTYNAME_OVERVIEW);
+                if (null != association)
                 {
-                    tbDiseaseName.Text = currentDisease.name;
-                    bdLinkedNoteControl1.AssignParentId(currentDisease.uuid);
-                    bdLinkedNoteControl1.AssignScopeId(currentDisease.uuid);
-                    bdLinkedNoteControl1.AssignParentControl(this);
-                    bdLinkedNoteControl1.AssignContextEntityName(BDDisease.ENTITYNAME_FRIENDLY);
-                    bdLinkedNoteControl1.AssignContextPropertyName(BDDisease.PROPERTYNAME_OVERVIEW);
-
-                    BDLinkedNoteAssociation association = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, currentDisease.uuid, BDDisease.PROPERTYNAME_OVERVIEW);
-                    if (null != association)
-                    {
-                        overviewLinkedNote = BDLinkedNote.GetLinkedNoteWithId(dataContext, association.linkedNoteId);
-                        bdLinkedNoteControl1.CurrentLinkedNote = overviewLinkedNote;
-                    }
+                    overviewLinkedNote = BDLinkedNote.GetLinkedNoteWithId(dataContext, association.linkedNoteId);
+                    bdLinkedNoteControl1.CurrentLinkedNote = overviewLinkedNote;
                 }
             }
+            bdLinkedNoteControl1.RefreshLayout();
         }
 
         public BDDiseaseControl()
@@ -74,6 +75,7 @@ namespace BDEditor.Views
 
         }
 
+        #region IBDControl
         public void AssignDataContext(Entities pDataContext)
         {
             dataContext = pDataContext;
@@ -94,14 +96,12 @@ namespace BDEditor.Views
             {
                 if ((null == currentDisease) && (tbDiseaseName.Text != string.Empty))
                 {
-                    currentDisease.subcategoryId = parentId;
-                    currentDisease.categoryId = parentId;
+                    CreateCurrentObject();
                 }
 
                 if(null != currentDisease)
                 {
-                    if(currentDisease.name != tbDiseaseName.Text)
-                        currentDisease.name = tbDiseaseName.Text;
+                    if(currentDisease.name != tbDiseaseName.Text) currentDisease.name = tbDiseaseName.Text;
                     bdLinkedNoteControl1.Save();
                 }
                 System.Diagnostics.Debug.WriteLine(@"Disease Control Save");
@@ -110,14 +110,41 @@ namespace BDEditor.Views
             return result;
         }
 
-        public void AssignParentControl(IBDControl pControl)
+        public bool CreateCurrentObject()
         {
-            throw new NotImplementedException();
+            bool result = true;
+
+            if (null == this.currentDisease)
+            {
+                if (null == this.parentId)
+                {
+                    result = false;
+                }
+                else
+                {
+                    this.currentDisease = BDDisease.CreateDisease(this.dataContext);
+                    this.currentDisease.subcategoryId = SubCategoryId;
+                    this.currentDisease.categoryId = CategoryId;
+                    this.currentDisease.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
+                }
+            }
+
+            return result;
         }
 
-        public void TriggerCreateAndAssignParentIdToChildControl(IBDControl pControl)
+        #endregion
+
+        private void bdLinkedNoteControl_SaveAttemptWithoutParent(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            BDLinkedNoteControl control = sender as BDLinkedNoteControl;
+            if (null != control)
+            {
+                if (CreateCurrentObject())
+                {
+                    control.AssignParentId(this.currentDisease.uuid);
+                    control.Save();
+                }
+            }
         }
     }
 }

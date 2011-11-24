@@ -18,30 +18,12 @@ namespace BDEditor.Views
         private Guid? pathogenGroupId;
         private BDPathogen currentPathogen;
         private Guid? scopeId;
-        private IBDControl parentControl;
+        public int? DisplayOrder { get; set; }
 
         public BDPathogen CurrentPathogen
         {
-            get 
-            {
-                return currentPathogen;
-            }
-            set 
-            {
-                currentPathogen = value;
-
-                if (currentPathogen == null)
-                {
-                    //this.BackColor = SystemColors.ControlDark;
-                    this.tbPathogenName.Text = @"";
-                    //this.lblTitle.ForeColor = SystemColors.HotTrack;
-                }
-                else
-                {
-                    //this.BackColor = SystemColors.Control;
-                    this.tbPathogenName.Text = currentPathogen.name;
-                }
-            }
+            get { return currentPathogen; }
+            set { currentPathogen = value; }
         }
 
          #endregion
@@ -69,8 +51,7 @@ namespace BDEditor.Views
 
             if ((null == currentPathogen) && (tbPathogenName.Text != string.Empty))
             {
-                currentPathogen = BDPathogen.CreatePathogen(dataContext);
-                currentPathogen.pathogenGroupId = pathogenGroupId;
+                CreateCurrentObject();
             }
             if (null != currentPathogen)
             {
@@ -88,6 +69,39 @@ namespace BDEditor.Views
             this.Enabled = (null != pathogenGroupId);
         }
 
+        public bool CreateCurrentObject()
+        {
+            bool result = true;
+
+            if (null == this.currentPathogen)
+            {
+                if (null == this.pathogenGroupId)
+                {
+                    result = false;
+                }
+                else
+                {
+                    this.currentPathogen = BDPathogen.CreatePathogen(dataContext, pathogenGroupId.Value);
+                    this.currentPathogen.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
+                }
+            }
+
+            return result;
+        }
+
+        public void RefreshLayout()
+        {
+            if (currentPathogen == null)
+            {
+                this.tbPathogenName.Text = @"";
+            }
+            else
+            {
+                this.tbPathogenName.Text = currentPathogen.name;
+            }
+        }
+        
+        /*
         public void AssignParentControl(IBDControl pControl)
         {
             parentControl = pControl;
@@ -109,6 +123,7 @@ namespace BDEditor.Views
                 pControl.Save();
             }
         }
+        */
 
         private void BDPathogenControl_Leave(object sender, EventArgs e)
         {
@@ -120,11 +135,11 @@ namespace BDEditor.Views
         #region Class methods
         private void CreateLink()
         {
+            CreateCurrentObject();
             Save();
             BDLinkedNoteView noteView = new BDLinkedNoteView();
             noteView.AssignDataContext(dataContext);
             noteView.AssignParentId(currentPathogen.uuid);
-            noteView.AssignParentControl(this);
             noteView.AssignContextEntityName(BDPathogen.ENTITYNAME_FRIENDLY);
             noteView.AssignContextPropertyName(BDPathogen.PROPERTYNAME_NAME);
             noteView.AssignScopeId(scopeId);
@@ -159,18 +174,13 @@ namespace BDEditor.Views
         private void textBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            if (null != textBox)
-            {
-                //this.BackColor = (textBox.Text.Trim() != string.Empty) ? SystemColors.Control : SystemColors.ControlDark;
-                this.btnLink.Enabled = true;
-                if (null == currentPathogen)
-                {
-                    currentPathogen = BDPathogen.CreatePathogen(dataContext);
-                    currentPathogen.pathogenGroupId = pathogenGroupId;
-                    BDPathogen.SavePathogen(dataContext, currentPathogen);
-                }
-            }
-            else this.btnLink.Enabled = false;
+            this.btnLink.Enabled = (null != textBox);
         }
+
+        public override string ToString()
+        {
+            return (null == this.currentPathogen) ? "No Pathogen" : this.currentPathogen.name;
+        }
+        
     }
 }

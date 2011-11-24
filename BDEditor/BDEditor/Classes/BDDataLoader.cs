@@ -144,9 +144,8 @@ namespace BDEditor.Classes
 
             if ((presentationData != string.Empty) && ((null == bdPresentation) || (bdPresentation.name != presentationData)))
             {
-                bdPresentation = BDPresentation.CreatePresentation(dataContext);
+                bdPresentation = BDPresentation.CreatePresentation(dataContext, bdDisease.uuid);
                 bdPresentation.name = presentationData;
-                bdPresentation.diseaseId = bdDisease.uuid;
                 bdPresentation.displayOrder = idxPresentation++;
                 BDPresentation.SavePresentation(dataContext, bdPresentation);
             }

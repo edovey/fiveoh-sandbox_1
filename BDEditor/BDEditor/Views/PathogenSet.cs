@@ -15,7 +15,6 @@ namespace BDEditor.Views
         private Entities dataContext;
         private Guid? pathogenGroupId;
         private BDPathogenGroup currentPathogenGroup;
-        private IBDControl parentControl;
         private Guid? scopeId;
 
         public PathogenSet()
@@ -25,23 +24,8 @@ namespace BDEditor.Views
 
         public BDPathogenGroup CurrentPathogenGroup
         {
-            get
-            {
-                return currentPathogenGroup;
-            }
-            set
-            {
-                currentPathogenGroup = value;
-                if (null == currentPathogenGroup)
-                {
-                    AssignPathogensToView(null);
-                }
-                else
-                {
-                    List<BDPathogen> pathogenList = BDPathogen.GetPathogensForPathogenGroup(dataContext, currentPathogenGroup.uuid);
-                    AssignPathogensToView(pathogenList);
-                }
-            }
+            get {  return currentPathogenGroup; }
+            set { currentPathogenGroup = value; }
         }
 
         private void AssignPathogensToView(List<BDPathogen> pListPathogens)
@@ -53,7 +37,7 @@ namespace BDEditor.Views
             bdPathogenControl5.CurrentPathogen = null;
             bdPathogenControl6.CurrentPathogen = null;
             bdPathogenControl7.CurrentPathogen = null;
-            bdPathogenControl7.CurrentPathogen = null;
+            bdPathogenControl8.CurrentPathogen = null;
 
             if (null != pListPathogens)
             {
@@ -89,6 +73,15 @@ namespace BDEditor.Views
                 bdPathogenControl7.AssignParentId(currentPathogenGroup.uuid);
                 bdPathogenControl8.AssignParentId(currentPathogenGroup.uuid);
             }
+
+            bdPathogenControl1.RefreshLayout();
+            bdPathogenControl2.RefreshLayout();
+            bdPathogenControl3.RefreshLayout();
+            bdPathogenControl4.RefreshLayout();
+            bdPathogenControl5.RefreshLayout();
+            bdPathogenControl6.RefreshLayout();
+            bdPathogenControl7.RefreshLayout();
+            bdPathogenControl8.RefreshLayout();
         }
 
         public void AssignScopeId(Guid? pScopeId)
@@ -137,14 +130,6 @@ namespace BDEditor.Views
         public void AssignParentId(Guid? pParentId)
         {
             pathogenGroupId = pParentId;
-            bdPathogenControl1.AssignParentControl(this);
-            bdPathogenControl2.AssignParentControl(this); 
-            bdPathogenControl3.AssignParentControl(this); 
-            bdPathogenControl4.AssignParentControl(this); 
-            bdPathogenControl5.AssignParentControl(this); 
-            bdPathogenControl6.AssignParentControl(this);
-            bdPathogenControl7.AssignParentControl(this);
-            bdPathogenControl8.AssignParentControl(this);
         }
 
         public bool Save()
@@ -166,6 +151,25 @@ namespace BDEditor.Views
             return result;
         }
 
+        public bool CreateCurrentObject()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RefreshLayout()
+        {
+            if (null == currentPathogenGroup)
+            {
+                AssignPathogensToView(null);
+            }
+            else
+            {
+                List<BDPathogen> pathogenList = BDPathogen.GetPathogensForPathogenGroup(dataContext, currentPathogenGroup.uuid);
+                AssignPathogensToView(pathogenList);
+            }
+        }
+
+        /*
         public void AssignParentControl(IBDControl pControl)
         {
             parentControl = pControl;
@@ -178,6 +182,11 @@ namespace BDEditor.Views
                 parentControl.TriggerCreateAndAssignParentIdToChildControl(pControl);
             }
         }
+        */
+
         #endregion    
+    
+
+        
     }    
 }

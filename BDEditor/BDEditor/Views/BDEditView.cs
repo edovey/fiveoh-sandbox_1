@@ -38,6 +38,11 @@ namespace BDEditor.Views
 
             //sectionDropDown.DataSource = dataContext.BDSections;
             chapterDropDown.DisplayMember = "Name";
+
+            // This will preload the control into memory. 
+            // Startup will be slower, but the first selection from the dropdown will be snappier
+            BDLinkedNoteControl control = new BDLinkedNoteControl();
+
         }
 
         public DataModel.Entities DataContext
@@ -182,9 +187,14 @@ namespace BDEditor.Views
                         diseaseControl.CurrentDisease = selectedNode.Tag as BDDisease;
                         BDCategory category = selectedNode.Tag as BDCategory;
                         if (null != category)
+                        {
                             diseaseControl.AssignParentId(category.uuid);
+                            diseaseControl.CategoryId = category.uuid;
+                        }
 
                         splitContainer1.Panel2.Controls.Add(diseaseControl);
+                        diseaseControl.RefreshLayout();
+
                     }
                     else if (selectedNode.Tag is BDPresentation)
                     {
@@ -199,6 +209,7 @@ namespace BDEditor.Views
                         }
 
                         splitContainer1.Panel2.Controls.Add(presentationControl);
+                        presentationControl.RefreshLayout();
                     }
                     break;
                 case TreeViewAction.Collapse:

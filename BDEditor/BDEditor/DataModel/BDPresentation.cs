@@ -36,7 +36,7 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets creation date and schema version.
         /// </summary>
         /// <returns></returns>
-        public static BDPresentation CreatePresentation(Entities pContext)
+        public static BDPresentation CreatePresentation(Entities pContext, Guid pDiseaseId)
         {
             BDPresentation presentation = CreateBDPresentation(Guid.NewGuid(), false);
             presentation.createdBy = Guid.Empty;
@@ -44,12 +44,11 @@ namespace BDEditor.DataModel
             presentation.schemaVersion = 0;
             presentation.displayOrder = -1;
             presentation.name = string.Empty;
-            presentation.diseaseId = Guid.Empty;
+            presentation.diseaseId = pDiseaseId;
 
             pContext.AddObject("BDPresentations", presentation);
 
-            BDPathogenGroup pathogenGroup = BDPathogenGroup.CreatePathogenGroup(pContext);
-            pathogenGroup.presentationId = presentation.uuid;
+            BDPathogenGroup pathogenGroup = BDPathogenGroup.CreatePathogenGroup(pContext, presentation.uuid);
             BDPathogenGroup.SavePathogenGroup(pContext, pathogenGroup);
 
             return presentation;

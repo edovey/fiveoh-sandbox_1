@@ -9,8 +9,8 @@ namespace BDEditor.Views
     {
         void AssignDataContext(BDEditor.DataModel.Entities pDataContext);
         void AssignParentId(Guid? pParentId);
-        void AssignParentControl(IBDControl pControl);
         bool Save();
         bool CreateCurrentObject();
+        void RefreshLayout();
     }
 }

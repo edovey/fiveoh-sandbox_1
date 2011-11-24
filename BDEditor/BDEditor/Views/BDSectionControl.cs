@@ -16,12 +16,8 @@ namespace BDEditor.Views
 
         public BDSection CurrentSection
         {
-            get
-            {
-                return currentSection;
-            }
-
-            set
+            get {  return currentSection; }
+            set 
             {
                 currentSection = value;
                 if (currentSection == null)

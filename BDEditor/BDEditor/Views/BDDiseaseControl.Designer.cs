@@ -66,14 +66,16 @@
             // 
             // bdLinkedNoteControl1
             // 
+            this.bdLinkedNoteControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.bdLinkedNoteControl1.CurrentLinkedNote = null;
-            this.bdLinkedNoteControl1.Location = new System.Drawing.Point(15, 97);
+            this.bdLinkedNoteControl1.Location = new System.Drawing.Point(15, 109);
             this.bdLinkedNoteControl1.Name = "bdLinkedNoteControl1";
             this.bdLinkedNoteControl1.Padding = new System.Windows.Forms.Padding(3);
             this.bdLinkedNoteControl1.SaveOnLeave = true;
             this.bdLinkedNoteControl1.SelectedLinkedNoteType = BDEditor.DataModel.LinkedNoteType.Default;
-            this.bdLinkedNoteControl1.Size = new System.Drawing.Size(807, 258);
+            this.bdLinkedNoteControl1.Size = new System.Drawing.Size(805, 235);
             this.bdLinkedNoteControl1.TabIndex = 4;
+            this.bdLinkedNoteControl1.SaveAttemptWithoutParent += new System.EventHandler(this.bdLinkedNoteControl_SaveAttemptWithoutParent);
             // 
             // BDDiseaseControl
             // 

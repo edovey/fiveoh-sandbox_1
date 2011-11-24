@@ -16,69 +16,20 @@ namespace BDEditor.Views
         private Guid? diseaseId;
         private BDPresentation currentPresentation;
         private BDLinkedNote overviewLinkedNote;
+        public int? DisplayOrder { get; set; }
+
         public BDPresentation CurrentPresentation
         {
-            get
-            {
-                return currentPresentation;
-            }
-            set
-            {
-                currentPresentation = value;
-                if (currentPresentation == null)
-                {
-                    tbPresentationName.Text = @"";
-                    overviewLinkedNote = null;
-
-                    bdPathogenGroupControl1.CurrentPathogenGroup = null;
-                    bdPathogenGroupControl1.AssignParentId(null);
-                    bdPathogenGroupControl1.AssignScopeId(null);
-
-                    bdLinkedNoteControl1.AssignParentId(null);
-                    bdLinkedNoteControl1.AssignScopeId(null);
-                    bdLinkedNoteControl1.AssignParentControl(this);
-                    bdLinkedNoteControl1.AssignContextEntityName(BDPresentation.ENTITYNAME_FRIENDLY);
-                    bdLinkedNoteControl1.AssignContextPropertyName(BDPresentation.PROPERTYNAME_OVERVIEW);
-                }
-                else
-                {
-                    tbPresentationName.Text = currentPresentation.name;
-
-                    bdLinkedNoteControl1.AssignParentId(currentPresentation.uuid);
-                    bdLinkedNoteControl1.AssignScopeId(currentPresentation.uuid);
-                    bdLinkedNoteControl1.AssignParentControl(this);
-                    bdLinkedNoteControl1.AssignContextEntityName(BDPresentation.ENTITYNAME_FRIENDLY);
-                    bdLinkedNoteControl1.AssignContextPropertyName(BDPresentation.PROPERTYNAME_OVERVIEW);
-
-                    
-                    BDLinkedNoteAssociation association = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, currentPresentation.uuid, BDPresentation.PROPERTYNAME_OVERVIEW);
-                    if (null != association)
-                    {
-                        overviewLinkedNote = BDLinkedNote.GetLinkedNoteWithId(dataContext, association.linkedNoteId);
-                        bdLinkedNoteControl1.CurrentLinkedNote = overviewLinkedNote;
-                    }
-                    
-                    bdPathogenGroupControl1.AssignScopeId(currentPresentation.uuid);
-
-                    List<BDPathogenGroup> pathogenGroupList = BDPathogenGroup.GetPathogenGroupsForPresentationId(dataContext, currentPresentation.uuid);
-                    if (pathogenGroupList.Count <= 0)
-                    {
-                        bdPathogenGroupControl1.CurrentPathogenGroup = null;
-                        bdPathogenGroupControl1.AssignParentId(currentPresentation.uuid);
-                    }
-                    else
-                    {
-                        bdPathogenGroupControl1.CurrentPathogenGroup = pathogenGroupList[0];
-                        bdPathogenGroupControl1.AssignParentId(currentPresentation.uuid);
-                    }
-                }
-            }
+            get { return currentPresentation; }
+            set { currentPresentation = value; }
         }
 
         public BDPresentationControl()
         {
             InitializeComponent();
         }
+
+        #region IBDControl
 
         public void AssignDataContext(Entities pDataContext)
         {
@@ -102,8 +53,7 @@ namespace BDEditor.Views
             {
                 if ((null == currentPresentation) && (tbPresentationName.Text != string.Empty))
                 {
-                    currentPresentation = BDPresentation.CreatePresentation(dataContext);
-                    currentPresentation.diseaseId = diseaseId;
+                    CreateCurrentObject();
                 }
                 if (null != currentPresentation)
                 {
@@ -120,7 +70,79 @@ namespace BDEditor.Views
             return result;
         }
 
+        public bool CreateCurrentObject()
+        {
+            bool result = true;
 
+            if (null == this.currentPresentation)
+            {
+                if (null == this.diseaseId)
+                {
+                    result = false;
+                }
+                else
+                {
+                    this.currentPresentation = BDPresentation.CreatePresentation(dataContext, diseaseId.Value);
+                    this.currentPresentation.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
+                }
+            }
+
+            return result;
+        }
+
+        public void RefreshLayout()
+        {
+            if (currentPresentation == null)
+            {
+                tbPresentationName.Text = @"";
+                overviewLinkedNote = null;
+
+                bdPathogenGroupControl1.CurrentPathogenGroup = null;
+                bdPathogenGroupControl1.AssignParentId(null);
+                bdPathogenGroupControl1.AssignScopeId(null);
+
+                bdLinkedNoteControl1.AssignParentId(null);
+                bdLinkedNoteControl1.AssignScopeId(null);
+                bdLinkedNoteControl1.AssignContextEntityName(BDPresentation.ENTITYNAME_FRIENDLY);
+                bdLinkedNoteControl1.AssignContextPropertyName(BDPresentation.PROPERTYNAME_OVERVIEW);
+            }
+            else
+            {
+                tbPresentationName.Text = currentPresentation.name;
+
+                bdLinkedNoteControl1.AssignParentId(currentPresentation.uuid);
+                bdLinkedNoteControl1.AssignScopeId(currentPresentation.uuid);
+                bdLinkedNoteControl1.AssignContextEntityName(BDPresentation.ENTITYNAME_FRIENDLY);
+                bdLinkedNoteControl1.AssignContextPropertyName(BDPresentation.PROPERTYNAME_OVERVIEW);
+
+
+                BDLinkedNoteAssociation association = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, currentPresentation.uuid, BDPresentation.PROPERTYNAME_OVERVIEW);
+                if (null != association)
+                {
+                    overviewLinkedNote = BDLinkedNote.GetLinkedNoteWithId(dataContext, association.linkedNoteId);
+                    bdLinkedNoteControl1.CurrentLinkedNote = overviewLinkedNote;
+                }
+
+                bdPathogenGroupControl1.AssignScopeId(currentPresentation.uuid);
+
+                List<BDPathogenGroup> pathogenGroupList = BDPathogenGroup.GetPathogenGroupsForPresentationId(dataContext, currentPresentation.uuid);
+                if (pathogenGroupList.Count <= 0)
+                {
+                    bdPathogenGroupControl1.CurrentPathogenGroup = null;
+                    bdPathogenGroupControl1.AssignParentId(currentPresentation.uuid);
+                }
+                else
+                {
+                    bdPathogenGroupControl1.CurrentPathogenGroup = pathogenGroupList[0];
+                    bdPathogenGroupControl1.AssignParentId(currentPresentation.uuid);
+                }
+            }
+
+            bdPathogenGroupControl1.RefreshLayout();
+            bdLinkedNoteControl1.RefreshLayout();
+        }
+
+        /*
         public void AssignParentControl(IBDControl pControl)
         {
             throw new NotImplementedException();
@@ -130,11 +152,12 @@ namespace BDEditor.Views
         {
             throw new NotImplementedException();
         }
+        */
+        #endregion
 
         private void BDPresentationControl_Leave(object sender, EventArgs e)
         {
             Save();
         }
-
     }
 }

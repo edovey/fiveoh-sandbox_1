@@ -35,14 +35,14 @@ namespace BDEditor.DataModel
         private const string DEPRECATED = @"pa_deprecated";
         private const string DISPLAYORDER = @"pa_displayOrder";
 
-        public static BDPathogen CreatePathogen(Entities pContext)
+        public static BDPathogen CreatePathogen(Entities pContext, Guid pPathogenGroupId)
         {
             BDPathogen pathogen = CreateBDPathogen(Guid.NewGuid(), false);
             pathogen.createdBy = Guid.Empty;
             pathogen.createdDate = DateTime.Now;
             pathogen.schemaVersion = 0;
             pathogen.displayOrder = -1;
-            pathogen.pathogenGroupId = Guid.Empty;
+            pathogen.pathogenGroupId = pPathogenGroupId;
             pathogen.name = string.Empty;
 
             pContext.AddObject("BDPathogens", pathogen);

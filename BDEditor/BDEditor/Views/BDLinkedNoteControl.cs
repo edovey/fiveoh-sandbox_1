@@ -16,23 +16,21 @@ namespace BDEditor.Views
         private Guid? contextParentId;
         private string contextEntityName;
         private string contextPropertyName;
-        private IBDControl parentControl;
         private bool saveOnLeave = true;
         private LinkedNoteType selectedLinkNoteType;
         private BDLinkedNote currentLinkedNote;
 
+        public event EventHandler SaveAttemptWithoutParent;
+
+        protected virtual void OnSaveAttemptWithoutParent(EventArgs e)
+        {
+            if (null != SaveAttemptWithoutParent) { SaveAttemptWithoutParent(this, e); }
+        }
+
         public BDLinkedNote CurrentLinkedNote
         {
             get { return currentLinkedNote; }
-            set
-            {
-                currentLinkedNote = value;
-                if (currentLinkedNote == null)
-                {
-                    textControl.Text = @"";
-                    selectedLinkNoteType = LinkedNoteType.Default;
-                }
-            }
+            set { currentLinkedNote = value;  }
         }
 
         public bool SaveOnLeave
@@ -76,16 +74,11 @@ namespace BDEditor.Views
 
         private void BDLinkedNoteControl_Load(object sender, EventArgs e)
         {
-            if (currentLinkedNote != null && currentLinkedNote.documentText != null && currentLinkedNote.documentText.Length > 0)
-            {
-                if (currentLinkedNote.documentText.Contains("<"))
-                    textControl.Append(currentLinkedNote.documentText, TXTextControl.StringStreamType.HTMLFormat, TXTextControl.AppendSettings.None);
-                else
-                    textControl.Append(currentLinkedNote.documentText, TXTextControl.StringStreamType.RichTextFormat, TXTextControl.AppendSettings.None);
-            }
+            RefreshLayout();
         }
 
         #region IBDControl implementation
+
         public void AssignDataContext(Entities pDataContext)
         {
             dataContext = pDataContext;
@@ -97,29 +90,17 @@ namespace BDEditor.Views
         public bool Save()
         {
             bool result = false;
+
             if (null == contextParentId)
             {
-                if (null != parentControl)
-                {
-                    System.Diagnostics.Debug.WriteLine(@"Triggering parent create");
-                    parentControl.TriggerCreateAndAssignParentIdToChildControl(this);
-                }
+                System.Diagnostics.Debug.WriteLine(@"Linked Note OnSaveAttemptWithoutParent");
+                OnSaveAttemptWithoutParent(new EventArgs());
             }
             else
             {
                 if ((null == currentLinkedNote) && (textControl.Text != string.Empty)) 
                 {
-                    currentLinkedNote = BDLinkedNote.CreateLinkedNote(dataContext);
-                    BDLinkedNoteAssociation association = BDLinkedNoteAssociation.CreateLinkedNoteAssociation(dataContext);
-                    association.linkedNoteId = currentLinkedNote.uuid;
-                    association.parentId = contextParentId;
-                    association.parentEntityName = contextEntityName;
-                    association.parentEntityPropertyName = contextPropertyName;
-                    association.linkedNoteType = (int)selectedLinkNoteType;
-                    currentLinkedNote.linkedNoteAssociationId = association.uuid;
-                    currentLinkedNote.scopeId = scopeId;
-                    BDLinkedNote.SaveLinkedNote(dataContext, currentLinkedNote);
-                    BDLinkedNoteAssociation.SaveLinkedNoteAssociation(dataContext, association);
+                    CreateCurrentObject();
                 }
                 if (null != currentLinkedNote)
                 {
@@ -145,14 +126,50 @@ namespace BDEditor.Views
             return result;
         }
 
-        public void AssignParentControl(IBDControl pControl)
+        public bool CreateCurrentObject()
         {
-            parentControl = pControl;
+            bool result = true;
+
+            if (null == currentLinkedNote)
+            {
+                if (null == this.contextParentId)
+                {
+                    result = false;
+                }
+                else
+                {
+                    currentLinkedNote = BDLinkedNote.CreateLinkedNote(dataContext);
+                    BDLinkedNoteAssociation association = BDLinkedNoteAssociation.CreateLinkedNoteAssociation(dataContext);
+                    association.linkedNoteId = currentLinkedNote.uuid;
+                    association.parentId = contextParentId;
+                    association.parentEntityName = contextEntityName;
+                    association.parentEntityPropertyName = contextPropertyName;
+                    association.linkedNoteType = (int)selectedLinkNoteType;
+                    currentLinkedNote.linkedNoteAssociationId = association.uuid;
+                    currentLinkedNote.scopeId = scopeId;
+                    BDLinkedNote.SaveLinkedNote(dataContext, currentLinkedNote);
+                    BDLinkedNoteAssociation.SaveLinkedNoteAssociation(dataContext, association);
+                }
+            }
+
+            return result;
         }
 
-        public void TriggerCreateAndAssignParentIdToChildControl(IBDControl pControl)
+        public void RefreshLayout()
         {
-            throw new NotImplementedException();
+            if (null == currentLinkedNote)
+            {
+                textControl.Text = @"";
+                selectedLinkNoteType = LinkedNoteType.Default;
+            }
+
+            if (currentLinkedNote != null && currentLinkedNote.documentText != null && currentLinkedNote.documentText.Length > 0)
+            {
+                if (currentLinkedNote.documentText.Contains("<"))
+                    textControl.Append(currentLinkedNote.documentText, TXTextControl.StringStreamType.HTMLFormat, TXTextControl.AppendSettings.None);
+                else
+                    textControl.Append(currentLinkedNote.documentText, TXTextControl.StringStreamType.RichTextFormat, TXTextControl.AppendSettings.None);
+            }
         }
 
         #endregion
@@ -415,5 +432,8 @@ namespace BDEditor.Views
             PasteCleanText();
         }
         #endregion
+
+
+        
     }
 }

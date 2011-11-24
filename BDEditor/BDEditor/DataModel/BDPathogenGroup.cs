@@ -37,14 +37,14 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext"></param>
         /// <returns></returns>
-        public static BDPathogenGroup CreatePathogenGroup(Entities pContext)
+        public static BDPathogenGroup CreatePathogenGroup(Entities pContext, Guid pPresentationId)
         {
             BDPathogenGroup pathogenGroup = CreateBDPathogenGroup(Guid.NewGuid(), false);
             pathogenGroup.createdBy = Guid.Empty;
             pathogenGroup.createdDate = DateTime.Now;
             pathogenGroup.schemaVersion = 0;
             pathogenGroup.displayOrder = -1;
-            pathogenGroup.presentationId = Guid.Empty;
+            pathogenGroup.presentationId = pPresentationId;
 
             pContext.AddObject("BDPathogenGroups", pathogenGroup);
 

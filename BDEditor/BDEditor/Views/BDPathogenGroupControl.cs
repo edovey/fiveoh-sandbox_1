@@ -16,54 +16,13 @@ namespace BDEditor.Views
         private Entities dataContext;
         private Guid? presentationId;
         private BDPathogenGroup currentPathogenGroup;
-        private IBDControl parentControl;
         private Guid? scopeId;
+        public int? DisplayOrder { get; set; }
 
         public BDPathogenGroup CurrentPathogenGroup
         {
-            get
-            {
-                return currentPathogenGroup;
-            }
-            set
-            {
-                currentPathogenGroup = value;
-                if (null == currentPathogenGroup)
-                {
-                    bdTherapyGroupControl1.AssignParentId(null);
-                    bdTherapyGroupControl1.CurrentTherapyGroup = null;
-                    bdTherapyGroupControl1.DisplayOrder = 1;
-
-                    bdTherapyGroupControl2.AssignParentId(null);
-                    bdTherapyGroupControl2.CurrentTherapyGroup = null;
-                    bdTherapyGroupControl2.DisplayOrder = 2;
-
-                    pathogenSet1.CurrentPathogenGroup = null;
-                    pathogenSet1.AssignParentId(null);
-                }
-                else
-                {
-                    bdTherapyGroupControl1.AssignParentId(currentPathogenGroup.uuid);
-                    bdTherapyGroupControl2.AssignParentId(currentPathogenGroup.uuid);
-                    List<BDTherapyGroup> therapyGroupList = BDTherapyGroup.getTherapyGroupsForPathogenGroupId(dataContext, currentPathogenGroup.uuid);
-
-                    bdTherapyGroupControl1.CurrentTherapyGroup = null;
-                    bdTherapyGroupControl2.CurrentTherapyGroup = null;
-
-                    if (therapyGroupList.Count >= 1)
-                    {
-                        bdTherapyGroupControl1.CurrentTherapyGroup = therapyGroupList[0];
-                        bdTherapyGroupControl1.RefreshLayout();
-                    }
-                    if (therapyGroupList.Count >= 2)
-                    {
-                        bdTherapyGroupControl2.CurrentTherapyGroup = therapyGroupList[1];
-                        bdTherapyGroupControl2.RefreshLayout();
-                    }
-
-                    pathogenSet1.CurrentPathogenGroup = currentPathogenGroup;
-                }
-            }
+            get { return currentPathogenGroup; }
+            set { currentPathogenGroup = value; }
         }
 
         #endregion
@@ -108,8 +67,7 @@ namespace BDEditor.Views
 
                 if (result && (null == currentPathogenGroup)) // only create a group if any of the children exist
                 {
-                    currentPathogenGroup = BDPathogenGroup.CreatePathogenGroup(dataContext);
-                    currentPathogenGroup.presentationId = presentationId;
+                    CreateCurrentObject();
                 }
 
                 if (null != currentPathogenGroup)
@@ -124,6 +82,70 @@ namespace BDEditor.Views
             return result;
         }
 
+        public bool CreateCurrentObject()
+        {
+            bool result = true;
+
+            if (null == this.currentPathogenGroup)
+            {
+                if (null == this.presentationId)
+                {
+                    result = false;
+                }
+                else
+                {
+                    this.currentPathogenGroup = BDPathogenGroup.CreatePathogenGroup(this.dataContext, this.presentationId.Value);
+                    this.currentPathogenGroup.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
+                }
+            }
+
+            return result;
+        }
+
+        public void RefreshLayout()
+        {
+            if (null == currentPathogenGroup)
+            {
+                bdTherapyGroupControl1.AssignParentId(null);
+                bdTherapyGroupControl1.CurrentTherapyGroup = null;
+                bdTherapyGroupControl1.DisplayOrder = 1;
+
+                bdTherapyGroupControl2.AssignParentId(null);
+                bdTherapyGroupControl2.CurrentTherapyGroup = null;
+                bdTherapyGroupControl2.DisplayOrder = 2;
+
+                pathogenSet1.CurrentPathogenGroup = null;
+                pathogenSet1.AssignParentId(null);
+            }
+            else
+            {
+                bdTherapyGroupControl1.AssignParentId(currentPathogenGroup.uuid);
+                bdTherapyGroupControl2.AssignParentId(currentPathogenGroup.uuid);
+                List<BDTherapyGroup> therapyGroupList = BDTherapyGroup.getTherapyGroupsForPathogenGroupId(dataContext, currentPathogenGroup.uuid);
+
+                bdTherapyGroupControl1.CurrentTherapyGroup = null;
+                bdTherapyGroupControl2.CurrentTherapyGroup = null;
+
+                if (therapyGroupList.Count >= 1)
+                {
+                    bdTherapyGroupControl1.CurrentTherapyGroup = therapyGroupList[0];
+                    //bdTherapyGroupControl1.RefreshLayout();
+                }
+                if (therapyGroupList.Count >= 2)
+                {
+                    bdTherapyGroupControl2.CurrentTherapyGroup = therapyGroupList[1];
+                    //bdTherapyGroupControl2.RefreshLayout();
+                }
+
+                pathogenSet1.CurrentPathogenGroup = currentPathogenGroup;
+            }
+
+            bdTherapyGroupControl1.RefreshLayout();
+            bdTherapyGroupControl2.RefreshLayout();
+            pathogenSet1.RefreshLayout();
+        }
+
+        /*
         public void AssignParentControl(IBDControl pControl)
         {
             parentControl = pControl;
@@ -145,6 +167,8 @@ namespace BDEditor.Views
                 pControl.Save();
             }
         }
+        */
+
         #endregion    
 
     }

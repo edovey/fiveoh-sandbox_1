@@ -215,7 +215,7 @@ namespace BDEditor.Classes
                                     entryGuid = BDTherapyGroup.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                     break;
                             }
-                            // The entry id will be null if a sync conflict prevented create/updateso add it to the conflict list
+                            // The entry id will be null if a sync conflict prevented create/update so add it to the conflict list
                             if (null == entryGuid) syncInfoEntry.SyncConflictList.Add(attributeDictionary);
                         }
                         pDataContext.SaveChanges();
@@ -234,6 +234,8 @@ namespace BDEditor.Classes
             Common.Settings.IsSyncLoad = false;
 
             #endregion
+
+            // TODO: delete based on deletion records since last update 
 
             if (null != pLastSyncDate)
             {
@@ -380,8 +382,11 @@ namespace BDEditor.Classes
                     }
                     System.Diagnostics.Debug.WriteLine("Pushed {0} Records for {1}", syncInfoEntry.RowsPushed, syncInfoEntry.EntityName);
                 }
-            }
             #endregion
+
+                // TODO: delete records remotely that were removed locally
+            
+            }
 
             pLastSyncDate = DateTime.Now;
             BDSystemSetting.SaveTimestamp(pDataContext, BDSystemSetting.LASTSYNC_TIMESTAMP, pLastSyncDate.Value);
@@ -394,6 +399,7 @@ namespace BDEditor.Classes
             pDataContext.ExecuteStoreCommand("DELETE FROM BDCategories");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDChapters");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDDiseases");
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDDeletions");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDLinkedNoteAssociations");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDLinkedNotes");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDPathogenGroups");

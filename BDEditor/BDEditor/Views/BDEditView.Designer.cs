@@ -124,10 +124,12 @@
             // 
             this.splitContainer1.Panel1.Controls.Add(this.chapterTree);
             this.splitContainer1.Panel1.Padding = new System.Windows.Forms.Padding(4);
+            this.splitContainer1.Panel1MinSize = 50;
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(4);
+            this.splitContainer1.Panel2MinSize = 800;
             this.splitContainer1.Size = new System.Drawing.Size(1192, 927);
             this.splitContainer1.SplitterDistance = 298;
             this.splitContainer1.SplitterIncrement = 10;

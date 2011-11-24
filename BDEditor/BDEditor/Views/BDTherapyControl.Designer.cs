@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDTherapyControl));
             this.tbName = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.bToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,6 +48,8 @@
             this.lblLeftBracket = new System.Windows.Forms.Label();
             this.lblRightBracket = new System.Windows.Forms.Label();
             this.thenRadioButton = new System.Windows.Forms.RadioButton();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -131,40 +134,40 @@
             // btnTherapyLink
             // 
             this.btnTherapyLink.Enabled = false;
+            this.btnTherapyLink.Image = ((System.Drawing.Image)(resources.GetObject("btnTherapyLink.Image")));
             this.btnTherapyLink.Location = new System.Drawing.Point(249, 2);
             this.btnTherapyLink.Name = "btnTherapyLink";
-            this.btnTherapyLink.Size = new System.Drawing.Size(35, 23);
+            this.btnTherapyLink.Size = new System.Drawing.Size(28, 28);
             this.btnTherapyLink.TabIndex = 1;
-            this.btnTherapyLink.Text = "Link";
             this.btnTherapyLink.UseVisualStyleBackColor = true;
             this.btnTherapyLink.Click += new System.EventHandler(this.btnTherapyLink_Click);
             // 
             // btnDosageLink
             // 
             this.btnDosageLink.Enabled = false;
+            this.btnDosageLink.Image = ((System.Drawing.Image)(resources.GetObject("btnDosageLink.Image")));
             this.btnDosageLink.Location = new System.Drawing.Point(507, 2);
             this.btnDosageLink.Name = "btnDosageLink";
-            this.btnDosageLink.Size = new System.Drawing.Size(35, 23);
+            this.btnDosageLink.Size = new System.Drawing.Size(28, 28);
             this.btnDosageLink.TabIndex = 3;
-            this.btnDosageLink.Text = "Link";
             this.btnDosageLink.UseVisualStyleBackColor = true;
             this.btnDosageLink.Click += new System.EventHandler(this.btnDosageLink_Click);
             // 
             // btnDurationLink
             // 
             this.btnDurationLink.Enabled = false;
+            this.btnDurationLink.Image = ((System.Drawing.Image)(resources.GetObject("btnDurationLink.Image")));
             this.btnDurationLink.Location = new System.Drawing.Point(728, 2);
             this.btnDurationLink.Name = "btnDurationLink";
-            this.btnDurationLink.Size = new System.Drawing.Size(35, 23);
+            this.btnDurationLink.Size = new System.Drawing.Size(28, 28);
             this.btnDurationLink.TabIndex = 5;
-            this.btnDurationLink.Text = "Link";
             this.btnDurationLink.UseVisualStyleBackColor = true;
             this.btnDurationLink.Click += new System.EventHandler(this.btnDurationLink_Click);
             // 
             // noneRadioButton
             // 
             this.noneRadioButton.AutoSize = true;
-            this.noneRadioButton.Location = new System.Drawing.Point(30, 27);
+            this.noneRadioButton.Location = new System.Drawing.Point(30, 30);
             this.noneRadioButton.Name = "noneRadioButton";
             this.noneRadioButton.Size = new System.Drawing.Size(89, 17);
             this.noneRadioButton.TabIndex = 6;
@@ -175,7 +178,7 @@
             // andRadioButton
             // 
             this.andRadioButton.AutoSize = true;
-            this.andRadioButton.Location = new System.Drawing.Point(125, 27);
+            this.andRadioButton.Location = new System.Drawing.Point(125, 30);
             this.andRadioButton.Name = "andRadioButton";
             this.andRadioButton.Size = new System.Drawing.Size(95, 17);
             this.andRadioButton.TabIndex = 7;
@@ -186,7 +189,7 @@
             // orRadioButton
             // 
             this.orRadioButton.AutoSize = true;
-            this.orRadioButton.Location = new System.Drawing.Point(226, 27);
+            this.orRadioButton.Location = new System.Drawing.Point(226, 30);
             this.orRadioButton.Name = "orRadioButton";
             this.orRadioButton.Size = new System.Drawing.Size(87, 17);
             this.orRadioButton.TabIndex = 8;
@@ -202,7 +205,7 @@
             this.lblLeftBracket.Location = new System.Drawing.Point(-6, -8);
             this.lblLeftBracket.Name = "lblLeftBracket";
             this.lblLeftBracket.Size = new System.Drawing.Size(38, 55);
-            this.lblLeftBracket.TabIndex = 12;
+            this.lblLeftBracket.TabIndex = 10;
             this.lblLeftBracket.Text = "[";
             this.lblLeftBracket.Click += new System.EventHandler(this.lblLeftBracket_Click);
             // 
@@ -214,25 +217,47 @@
             this.lblRightBracket.Location = new System.Drawing.Point(755, -8);
             this.lblRightBracket.Name = "lblRightBracket";
             this.lblRightBracket.Size = new System.Drawing.Size(38, 55);
-            this.lblRightBracket.TabIndex = 13;
+            this.lblRightBracket.TabIndex = 11;
             this.lblRightBracket.Text = "]";
             this.lblRightBracket.Click += new System.EventHandler(this.lblRightBracket_Click);
             // 
             // thenRadioButton
             // 
             this.thenRadioButton.AutoSize = true;
-            this.thenRadioButton.Location = new System.Drawing.Point(320, 27);
+            this.thenRadioButton.Location = new System.Drawing.Point(320, 30);
             this.thenRadioButton.Name = "thenRadioButton";
             this.thenRadioButton.Size = new System.Drawing.Size(101, 17);
-            this.thenRadioButton.TabIndex = 14;
+            this.thenRadioButton.TabIndex = 9;
             this.thenRadioButton.TabStop = true;
             this.thenRadioButton.Text = "Then (with next)";
             this.thenRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnAdd.Image")));
+            this.btnAdd.Location = new System.Drawing.Point(785, 2);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(28, 28);
+            this.btnAdd.TabIndex = 12;
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.Image")));
+            this.btnDelete.Location = new System.Drawing.Point(817, 3);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(28, 28);
+            this.btnDelete.TabIndex = 13;
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // BDTherapyControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnDelete);
+            this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.thenRadioButton);
             this.Controls.Add(this.orRadioButton);
             this.Controls.Add(this.andRadioButton);
@@ -247,7 +272,7 @@
             this.Controls.Add(this.lblRightBracket);
             this.Name = "BDTherapyControl";
             this.Padding = new System.Windows.Forms.Padding(3);
-            this.Size = new System.Drawing.Size(783, 50);
+            this.Size = new System.Drawing.Size(851, 56);
             this.Leave += new System.EventHandler(this.BDTherapyControl_Leave);
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -275,5 +300,7 @@
         private System.Windows.Forms.ToolStripMenuItem leToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem plusMinusToolStripMenuItem;
         private System.Windows.Forms.RadioButton thenRadioButton;
+        private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.Button btnDelete;
     }
 }

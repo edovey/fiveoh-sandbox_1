@@ -67,6 +67,7 @@
             // 
             // bdLinkedNoteControl1
             // 
+            this.bdLinkedNoteControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.bdLinkedNoteControl1.CurrentLinkedNote = null;
             this.bdLinkedNoteControl1.Location = new System.Drawing.Point(9, 82);
             this.bdLinkedNoteControl1.Name = "bdLinkedNoteControl1";
@@ -81,9 +82,9 @@
             this.bdPathogenGroupControl1.AutoScroll = true;
             this.bdPathogenGroupControl1.BackColor = System.Drawing.SystemColors.Control;
             this.bdPathogenGroupControl1.CurrentPathogenGroup = null;
-            this.bdPathogenGroupControl1.Location = new System.Drawing.Point(0, 336);
+            this.bdPathogenGroupControl1.Location = new System.Drawing.Point(0, 345);
             this.bdPathogenGroupControl1.Name = "bdPathogenGroupControl1";
-            this.bdPathogenGroupControl1.Size = new System.Drawing.Size(840, 639);
+            this.bdPathogenGroupControl1.Size = new System.Drawing.Size(900, 639);
             this.bdPathogenGroupControl1.TabIndex = 5;
             // 
             // BDPresentationControl

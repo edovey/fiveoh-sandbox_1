@@ -125,6 +125,7 @@
     <Compile Include="Classes\SyncInfoDictionary.cs" />
     <Compile Include="DataModel\BDCategory.cs" />
     <Compile Include="DataModel\BDChapter.cs" />
+    <Compile Include="DataModel\BDDeletion.cs" />
     <Compile Include="DataModel\BDDisease.cs" />
     <Compile Include="DataModel\BDLinkedNote.cs" />
     <Compile Include="DataModel\BDLinkedNoteAssociation.cs" />

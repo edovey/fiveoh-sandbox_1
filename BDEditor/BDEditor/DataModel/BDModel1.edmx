@@ -8,6 +8,7 @@
         <EntityContainer Name="BDDataModelStoreContainer">
           <EntitySet Name="BDCategories" EntityType="BDDataModel.Store.BDCategories" store:Type="Tables" />
           <EntitySet Name="BDChapters" EntityType="BDDataModel.Store.BDChapters" store:Type="Tables" />
+          <EntitySet Name="BDDeletions" EntityType="BDDataModel.Store.BDDeletions" store:Type="Tables" />
           <EntitySet Name="BDDiseases" EntityType="BDDataModel.Store.BDDiseases" store:Type="Tables" />
           <EntitySet Name="BDLinkedNoteAssociations" EntityType="BDDataModel.Store.BDLinkedNoteAssociations" store:Type="Tables" />
           <EntitySet Name="BDLinkedNotes" EntityType="BDDataModel.Store.BDLinkedNotes" store:Type="Tables" />
@@ -51,6 +52,19 @@
           <Property Name="inUseBy" Type="uniqueidentifier" />
           <Property Name="displayOrder" Type="int" />
           <Property Name="name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="BDDeletions">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="createdBy" Type="uniqueidentifier" />
+          <Property Name="createdDate" Type="datetime" />
+          <Property Name="modifiedBy" Type="uniqueidentifier" />
+          <Property Name="modifiedDate" Type="datetime" />
+          <Property Name="entityName" Type="nvarchar" MaxLength="100" />
+          <Property Name="entityId" Type="uniqueidentifier" />
+          <Property Name="schemaVersion" Type="int" />
         </EntityType>
         <EntityType Name="BDDiseases">
           <Key>
@@ -260,6 +274,7 @@
           <EntitySet Name="BDTherapies" EntityType="BDDataModel.BDTherapy" />
           <EntitySet Name="BDTherapyGroups" EntityType="BDDataModel.BDTherapyGroup" />
           <EntitySet Name="BDChapters" EntityType="BDDataModel.BDChapter" />
+          <EntitySet Name="BDDeletions" EntityType="BDDataModel.BDDeletion" />
         </EntityContainer>
         <EntityType Name="BDCategory">
           <Key>
@@ -480,6 +495,19 @@
           <Property Type="Guid" Name="inUseBy" />
           <Property Type="Int32" Name="displayOrder" />
           <Property Type="String" Name="name" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="BDDeletion">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Type="Guid" Name="uuid" Nullable="false" />
+          <Property Type="Guid" Name="createdBy" />
+          <Property Type="DateTime" Name="createdDate" />
+          <Property Type="Guid" Name="modifiedBy" />
+          <Property Type="DateTime" Name="modifiedDate" />
+          <Property Type="String" Name="entityName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="entityId" />
+          <Property Type="Int32" Name="schemaVersion" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -721,6 +749,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BDDeletions">
+            <EntityTypeMapping TypeName="BDDataModel.BDDeletion">
+              <MappingFragment StoreEntitySet="BDDeletions">
+                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
+                <ScalarProperty Name="entityId" ColumnName="entityId" />
+                <ScalarProperty Name="entityName" ColumnName="entityName" />
+                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
+                <ScalarProperty Name="modifiedBy" ColumnName="modifiedBy" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -755,6 +797,7 @@
         <EntityTypeShape EntityType="BDDataModel.BDTherapy" Width="1.5" PointX="2.75" PointY="8.75" Height="3.5644742838541674" />
         <EntityTypeShape EntityType="BDDataModel.BDTherapyGroup" Width="2.25" PointX="8.75" PointY="4.75" Height="2.9070849609375102" />
         <EntityTypeShape EntityType="BDDataModel.BDChapter" Width="1.5" PointX="8.75" PointY="8.375" Height="2.9417936197916674" />
+        <EntityTypeShape EntityType="BDDataModel.BDDeletion" Width="1.5" PointX="4.875" PointY="8.5" Height="2.3648893229166674" />
       </Diagram>
     </Diagrams>
   </Designer>

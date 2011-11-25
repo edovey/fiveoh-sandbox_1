@@ -147,30 +147,6 @@ namespace BDEditor.Views
             pathogenSet1.RefreshLayout();
         }
 
-        /*
-        public void AssignParentControl(IBDControl pControl)
-        {
-            parentControl = pControl;
-        }
-
-        public void TriggerCreateAndAssignParentIdToChildControl(IBDControl pControl)
-        {
-            if (null == currentPathogenGroup)
-            {
-                currentPathogenGroup = BDPathogenGroup.CreatePathogenGroup(dataContext);
-                currentPathogenGroup.presentationId = presentationId;
-                BDPathogenGroup.SavePathogenGroup(dataContext, currentPathogenGroup);
-                pControl.AssignParentId(currentPathogenGroup.uuid);
-                pControl.Save();
-            }
-            else
-            {
-                pControl.AssignParentId(currentPathogenGroup.uuid);
-                pControl.Save();
-            }
-        }
-        */
-
         #endregion    
 
         private BDTherapyGroupControl addTherapyGroupControl(BDTherapyGroup pTherapyGroup, int pTabIndex)
@@ -180,22 +156,19 @@ namespace BDEditor.Views
             if (CreateCurrentObject())
             {
                 therapyGroupControl = new BDTherapyGroupControl();
-                int bottom = 0;
-                foreach (Control control in panelTherapyGroups.Controls)
-                {
-                    bottom += control.Height;
-                }
+
+                therapyGroupControl.Dock = DockStyle.Top;
                 therapyGroupControl.TabIndex = pTabIndex;
-                therapyGroupControl.Top = bottom;
-                therapyGroupControl.Left = 0;
+                therapyGroupControl.DisplayOrder = pTabIndex;
                 therapyGroupControl.AssignParentId(currentPathogenGroup.uuid);
                 therapyGroupControl.AssignScopeId(scopeId);
                 therapyGroupControl.AssignDataContext(dataContext);
                 therapyGroupControl.CurrentTherapyGroup = pTherapyGroup;
                 therapyGroupControl.RequestItemAdd += new EventHandler(TherapyGroup_RequestItemAdd);
                 therapyGroupControl.RequestItemDelete += new EventHandler(TherapyGroup_RequestItemDelete);
+
                 panelTherapyGroups.Controls.Add(therapyGroupControl);
-                panelTherapyGroups.Controls.SetChildIndex(therapyGroupControl, pTabIndex);
+                therapyGroupControl.BringToFront();
 
                 therapyGroupControl.RefreshLayout();
             }
@@ -221,14 +194,6 @@ namespace BDEditor.Views
             therapyGroupControlList.Remove(pTherapyGroupControl);
             pTherapyGroupControl.Dispose();
             pTherapyGroupControl = null;
-
-            int top = 0;
-            for (int idx = 0; idx < panelTherapyGroups.Controls.Count; idx++)
-            {
-                Control control = panelTherapyGroups.Controls[idx];
-                control.Top = top;
-                top += control.Height;
-            }
         }
 
         private void resizeTherapyGroupControlPanelHeight()

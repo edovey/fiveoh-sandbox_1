@@ -41,13 +41,15 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnAddTherapyGroup = new System.Windows.Forms.Button();
             this.btnDelTherapyGroup = new System.Windows.Forms.Button();
+            this.panelHeader = new System.Windows.Forms.Panel();
+            this.panelHeader.SuspendLayout();
             this.SuspendLayout();
             // 
             // therapyGroupName
             // 
             this.therapyGroupName.AutoSize = true;
             this.therapyGroupName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.therapyGroupName.Location = new System.Drawing.Point(6, 4);
+            this.therapyGroupName.Location = new System.Drawing.Point(6, 0);
             this.therapyGroupName.Name = "therapyGroupName";
             this.therapyGroupName.Size = new System.Drawing.Size(169, 18);
             this.therapyGroupName.TabIndex = 6;
@@ -55,7 +57,7 @@
             // 
             // tbName
             // 
-            this.tbName.Location = new System.Drawing.Point(9, 25);
+            this.tbName.Location = new System.Drawing.Point(9, 21);
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(286, 20);
             this.tbName.TabIndex = 7;
@@ -64,7 +66,7 @@
             // orRadioButton
             // 
             this.orRadioButton.AutoSize = true;
-            this.orRadioButton.Location = new System.Drawing.Point(572, 25);
+            this.orRadioButton.Location = new System.Drawing.Point(572, 21);
             this.orRadioButton.Name = "orRadioButton";
             this.orRadioButton.Size = new System.Drawing.Size(87, 17);
             this.orRadioButton.TabIndex = 14;
@@ -75,7 +77,7 @@
             // andRadioButton
             // 
             this.andRadioButton.AutoSize = true;
-            this.andRadioButton.Location = new System.Drawing.Point(471, 25);
+            this.andRadioButton.Location = new System.Drawing.Point(471, 21);
             this.andRadioButton.Name = "andRadioButton";
             this.andRadioButton.Size = new System.Drawing.Size(95, 17);
             this.andRadioButton.TabIndex = 13;
@@ -86,7 +88,7 @@
             // noneRadioButton
             // 
             this.noneRadioButton.AutoSize = true;
-            this.noneRadioButton.Location = new System.Drawing.Point(350, 25);
+            this.noneRadioButton.Location = new System.Drawing.Point(350, 21);
             this.noneRadioButton.Name = "noneRadioButton";
             this.noneRadioButton.Size = new System.Drawing.Size(121, 17);
             this.noneRadioButton.TabIndex = 12;
@@ -96,23 +98,22 @@
             // 
             // panelTherapies
             // 
-            this.panelTherapies.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             this.panelTherapies.AutoScroll = true;
             this.panelTherapies.AutoSize = true;
             this.panelTherapies.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panelTherapies.BackColor = System.Drawing.SystemColors.Control;
-            this.panelTherapies.Location = new System.Drawing.Point(9, 81);
+            this.panelTherapies.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelTherapies.Location = new System.Drawing.Point(0, 77);
+            this.panelTherapies.MinimumSize = new System.Drawing.Size(0, 5);
             this.panelTherapies.Name = "panelTherapies";
-            this.panelTherapies.Size = new System.Drawing.Size(0, 0);
+            this.panelTherapies.Size = new System.Drawing.Size(860, 5);
             this.panelTherapies.TabIndex = 15;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(38, 55);
+            this.label1.Location = new System.Drawing.Point(38, 51);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(68, 18);
             this.label1.TabIndex = 16;
@@ -122,7 +123,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(299, 55);
+            this.label2.Location = new System.Drawing.Point(299, 51);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(66, 18);
             this.label2.TabIndex = 17;
@@ -132,7 +133,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(556, 55);
+            this.label3.Location = new System.Drawing.Point(556, 51);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(72, 18);
             this.label3.TabIndex = 18;
@@ -141,7 +142,7 @@
             // btnTherapyGroupLink
             // 
             this.btnTherapyGroupLink.Image = global::BDEditor.Properties.Resources.link_16;
-            this.btnTherapyGroupLink.Location = new System.Drawing.Point(302, 23);
+            this.btnTherapyGroupLink.Location = new System.Drawing.Point(302, 19);
             this.btnTherapyGroupLink.Name = "btnTherapyGroupLink";
             this.btnTherapyGroupLink.Size = new System.Drawing.Size(31, 25);
             this.btnTherapyGroupLink.TabIndex = 19;
@@ -151,7 +152,7 @@
             // btnAdd
             // 
             this.btnAdd.Image = global::BDEditor.Properties.Resources.add_record_16;
-            this.btnAdd.Location = new System.Drawing.Point(9, 47);
+            this.btnAdd.Location = new System.Drawing.Point(9, 43);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(28, 28);
             this.btnAdd.TabIndex = 20;
@@ -161,7 +162,7 @@
             // btnAddTherapyGroup
             // 
             this.btnAddTherapyGroup.Image = global::BDEditor.Properties.Resources.add_16x16;
-            this.btnAddTherapyGroup.Location = new System.Drawing.Point(765, 25);
+            this.btnAddTherapyGroup.Location = new System.Drawing.Point(765, 21);
             this.btnAddTherapyGroup.Name = "btnAddTherapyGroup";
             this.btnAddTherapyGroup.Size = new System.Drawing.Size(28, 28);
             this.btnAddTherapyGroup.TabIndex = 21;
@@ -171,34 +172,49 @@
             // btnDelTherapyGroup
             // 
             this.btnDelTherapyGroup.Image = global::BDEditor.Properties.Resources.del_16x16;
-            this.btnDelTherapyGroup.Location = new System.Drawing.Point(799, 25);
+            this.btnDelTherapyGroup.Location = new System.Drawing.Point(799, 21);
             this.btnDelTherapyGroup.Name = "btnDelTherapyGroup";
             this.btnDelTherapyGroup.Size = new System.Drawing.Size(28, 28);
             this.btnDelTherapyGroup.TabIndex = 22;
             this.btnDelTherapyGroup.UseVisualStyleBackColor = true;
             this.btnDelTherapyGroup.Click += new System.EventHandler(this.TherapyGroup_RequestItemDelete);
             // 
+            // panelHeader
+            // 
+            this.panelHeader.Controls.Add(this.therapyGroupName);
+            this.panelHeader.Controls.Add(this.btnDelTherapyGroup);
+            this.panelHeader.Controls.Add(this.tbName);
+            this.panelHeader.Controls.Add(this.btnAddTherapyGroup);
+            this.panelHeader.Controls.Add(this.noneRadioButton);
+            this.panelHeader.Controls.Add(this.btnAdd);
+            this.panelHeader.Controls.Add(this.andRadioButton);
+            this.panelHeader.Controls.Add(this.btnTherapyGroupLink);
+            this.panelHeader.Controls.Add(this.orRadioButton);
+            this.panelHeader.Controls.Add(this.label3);
+            this.panelHeader.Controls.Add(this.label1);
+            this.panelHeader.Controls.Add(this.label2);
+            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelHeader.Location = new System.Drawing.Point(0, 0);
+            this.panelHeader.Name = "panelHeader";
+            this.panelHeader.Size = new System.Drawing.Size(860, 77);
+            this.panelHeader.TabIndex = 23;
+            // 
             // BDTherapyGroupControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.Controls.Add(this.btnDelTherapyGroup);
-            this.Controls.Add(this.btnAddTherapyGroup);
-            this.Controls.Add(this.btnAdd);
-            this.Controls.Add(this.btnTherapyGroupLink);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.panelTherapies);
-            this.Controls.Add(this.orRadioButton);
-            this.Controls.Add(this.andRadioButton);
-            this.Controls.Add(this.noneRadioButton);
-            this.Controls.Add(this.tbName);
-            this.Controls.Add(this.therapyGroupName);
+            this.Controls.Add(this.panelHeader);
+            this.MinimumSize = new System.Drawing.Size(860, 90);
             this.Name = "BDTherapyGroupControl";
-            this.Size = new System.Drawing.Size(877, 158);
+            this.Size = new System.Drawing.Size(860, 90);
+            this.Load += new System.EventHandler(this.BDTherapyGroupControl_Load);
             this.Leave += new System.EventHandler(this.BDTherapyGroupControl_Leave);
+            this.panelHeader.ResumeLayout(false);
+            this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -219,5 +235,6 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnAddTherapyGroup;
         private System.Windows.Forms.Button btnDelTherapyGroup;
+        private System.Windows.Forms.Panel panelHeader;
     }
 }

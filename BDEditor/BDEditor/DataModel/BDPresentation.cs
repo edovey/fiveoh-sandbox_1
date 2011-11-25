@@ -49,6 +49,7 @@ namespace BDEditor.DataModel
             pContext.AddObject("BDPresentations", presentation);
 
             BDPathogenGroup pathogenGroup = BDPathogenGroup.CreatePathogenGroup(pContext, presentation.uuid);
+            pathogenGroup.displayOrder = 0;
             BDPathogenGroup.SavePathogenGroup(pContext, pathogenGroup);
 
             return presentation;

@@ -19,6 +19,21 @@ namespace BDEditor.Views
         private Guid? scopeId;
         public int? DisplayOrder { get; set; }
 
+        public event EventHandler RequestItemAdd;
+        public event EventHandler RequestItemDelete;
+
+        private List<BDTherapyGroupControl> therapyGroupControlList = new List<BDTherapyGroupControl>();
+
+        protected virtual void OnItemAddRequested(EventArgs e)
+        {
+            if (null != RequestItemAdd) { RequestItemAdd(this, e); }
+        }
+
+        protected virtual void OnItemDeleteRequested(EventArgs e)
+        {
+            if (null != RequestItemDelete) { RequestItemDelete(this, e); }
+        }
+
         public BDPathogenGroup CurrentPathogenGroup
         {
             get { return currentPathogenGroup; }
@@ -36,8 +51,6 @@ namespace BDEditor.Views
         {
             scopeId = pScopeId;
             pathogenSet1.AssignScopeId(scopeId);
-            bdTherapyGroupControl1.AssignScopeId(scopeId);
-            bdTherapyGroupControl2.AssignScopeId(scopeId);
         }
 
         #region IBDControl
@@ -45,8 +58,6 @@ namespace BDEditor.Views
         public void AssignDataContext(Entities pDataContext)
         {
             dataContext = pDataContext;
-            bdTherapyGroupControl1.AssignDataContext(dataContext);
-            bdTherapyGroupControl2.AssignDataContext(dataContext);
             pathogenSet1.AssignDataContext(dataContext);
             pathogenSet1.AssignTypeaheadSource();
         }
@@ -65,7 +76,12 @@ namespace BDEditor.Views
             {
                 result = pathogenSet1.Save() || result;
 
-                if (result && (null == currentPathogenGroup)) // only create a group if any of the children exist
+                foreach (BDTherapyGroupControl control in therapyGroupControlList)
+                {
+                    result = control.Save() || result;
+                }
+
+                if (result && (null == currentPathogenGroup)) 
                 {
                     CreateCurrentObject();
                 }
@@ -73,8 +89,7 @@ namespace BDEditor.Views
                 if (null != currentPathogenGroup)
                 {
                     System.Diagnostics.Debug.WriteLine(@"PathogenGroup Control Save");
-                    bdTherapyGroupControl1.Save();
-                    bdTherapyGroupControl2.Save();
+
                     BDPathogenGroup.SavePathogenGroup(dataContext, currentPathogenGroup);
                     result = true;
                 }
@@ -104,44 +119,31 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
+            for (int idx = 0; idx < therapyGroupControlList.Count; idx++)
+            {
+                BDTherapyGroupControl control = therapyGroupControlList[idx];
+                removeTherapyGroupControl(control, false);
+            }
+            therapyGroupControlList.Clear();
+            panelTherapyGroups.Controls.Clear();
+
             if (null == currentPathogenGroup)
             {
-                bdTherapyGroupControl1.AssignParentId(null);
-                bdTherapyGroupControl1.CurrentTherapyGroup = null;
-                bdTherapyGroupControl1.DisplayOrder = 1;
-
-                bdTherapyGroupControl2.AssignParentId(null);
-                bdTherapyGroupControl2.CurrentTherapyGroup = null;
-                bdTherapyGroupControl2.DisplayOrder = 2;
-
                 pathogenSet1.CurrentPathogenGroup = null;
                 pathogenSet1.AssignParentId(null);
             }
             else
             {
-                bdTherapyGroupControl1.AssignParentId(currentPathogenGroup.uuid);
-                bdTherapyGroupControl2.AssignParentId(currentPathogenGroup.uuid);
                 List<BDTherapyGroup> therapyGroupList = BDTherapyGroup.getTherapyGroupsForPathogenGroupId(dataContext, currentPathogenGroup.uuid);
-
-                bdTherapyGroupControl1.CurrentTherapyGroup = null;
-                bdTherapyGroupControl2.CurrentTherapyGroup = null;
-
-                if (therapyGroupList.Count >= 1)
+                for (int idx = 0; idx < therapyGroupList.Count; idx++)
                 {
-                    bdTherapyGroupControl1.CurrentTherapyGroup = therapyGroupList[0];
-                    //bdTherapyGroupControl1.RefreshLayout();
-                }
-                if (therapyGroupList.Count >= 2)
-                {
-                    bdTherapyGroupControl2.CurrentTherapyGroup = therapyGroupList[1];
-                    //bdTherapyGroupControl2.RefreshLayout();
+                    BDTherapyGroup entry = therapyGroupList[idx];
+                    addTherapyGroupControl(entry, idx);
                 }
 
                 pathogenSet1.CurrentPathogenGroup = currentPathogenGroup;
             }
 
-            bdTherapyGroupControl1.RefreshLayout();
-            bdTherapyGroupControl2.RefreshLayout();
             pathogenSet1.RefreshLayout();
         }
 
@@ -171,5 +173,101 @@ namespace BDEditor.Views
 
         #endregion    
 
+        private BDTherapyGroupControl addTherapyGroupControl(BDTherapyGroup pTherapyGroup, int pTabIndex)
+        {
+            BDTherapyGroupControl therapyGroupControl = null;
+
+            if (CreateCurrentObject())
+            {
+                therapyGroupControl = new BDTherapyGroupControl();
+                int bottom = 0;
+                foreach (Control control in panelTherapyGroups.Controls)
+                {
+                    bottom += control.Height;
+                }
+                therapyGroupControl.TabIndex = pTabIndex;
+                therapyGroupControl.Top = bottom;
+                therapyGroupControl.Left = 0;
+                therapyGroupControl.AssignParentId(currentPathogenGroup.uuid);
+                therapyGroupControl.AssignScopeId(scopeId);
+                therapyGroupControl.AssignDataContext(dataContext);
+                therapyGroupControl.CurrentTherapyGroup = pTherapyGroup;
+                therapyGroupControl.RequestItemAdd += new EventHandler(TherapyGroup_RequestItemAdd);
+                therapyGroupControl.RequestItemDelete += new EventHandler(TherapyGroup_RequestItemDelete);
+                panelTherapyGroups.Controls.Add(therapyGroupControl);
+                panelTherapyGroups.Controls.SetChildIndex(therapyGroupControl, pTabIndex);
+
+                therapyGroupControl.RefreshLayout();
+            }
+
+            return therapyGroupControl;
+        }
+
+        private void removeTherapyGroupControl(BDTherapyGroupControl pTherapyGroupControl, bool pDeleteRecord)
+        {
+            if (pDeleteRecord)
+            {
+                BDTherapyGroup entry = pTherapyGroupControl.CurrentTherapyGroup;
+                if (null != entry)
+                {
+                    // call to BDDeletion
+                }
+            }
+
+            pTherapyGroupControl.RequestItemAdd -= new EventHandler(TherapyGroup_RequestItemAdd);
+            pTherapyGroupControl.RequestItemDelete -= new EventHandler(TherapyGroup_RequestItemDelete);
+            panelTherapyGroups.Controls.Remove(pTherapyGroupControl);
+
+            therapyGroupControlList.Remove(pTherapyGroupControl);
+            pTherapyGroupControl.Dispose();
+            pTherapyGroupControl = null;
+
+            int top = 0;
+            for (int idx = 0; idx < panelTherapyGroups.Controls.Count; idx++)
+            {
+                Control control = panelTherapyGroups.Controls[idx];
+                control.Top = top;
+                top += control.Height;
+            }
+        }
+
+        private void resizeTherapyGroupControlPanelHeight()
+        {
+            this.Height = panelTherapyGroups.Top + panelTherapyGroups.Height;
+        }
+
+        private void PathogenGroup_RequestItemAdd(object sender, EventArgs e)
+        {
+            OnItemAddRequested(new EventArgs());
+        }
+
+        private void PathogenGroup_RequestItemDelete(object sender, EventArgs e)
+        {
+            OnItemDeleteRequested(new EventArgs());
+        }
+
+        private void TherapyGroup_RequestItemAdd(object sender, EventArgs e)
+        {
+            BDTherapyGroupControl control = addTherapyGroupControl(null, therapyGroupControlList.Count);
+            if (null != control)
+            {
+                resizeTherapyGroupControlPanelHeight();
+                control.Focus();
+            }
+        }
+
+        private void TherapyGroup_RequestItemDelete(object sender, EventArgs e)
+        {
+            BDTherapyGroupControl control = sender as BDTherapyGroupControl;
+            if (null != control)
+            {
+                removeTherapyGroupControl(control, true);
+            }
+        }
+
+        public override string ToString()
+        {
+            return (null == this.currentPathogenGroup) ? "No Pathogen Group" : this.currentPathogenGroup.uuid.ToString();
+        }
     }
 }

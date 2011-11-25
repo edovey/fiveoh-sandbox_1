@@ -29,11 +29,9 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
+            this.panelTherapyGroups = new System.Windows.Forms.Panel();
+            this.btnAddTherapyGroup = new System.Windows.Forms.Button();
             this.pathogenSet1 = new BDEditor.Views.PathogenSet();
-            this.bdTherapyGroupControl1 = new BDEditor.Views.BDTherapyGroupControl();
-            this.bdTherapyGroupControl2 = new BDEditor.Views.BDTherapyGroupControl();
-            this.therapyGroupPanel = new System.Windows.Forms.Panel();
-            this.therapyGroupPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -46,6 +44,29 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Pathogens";
             // 
+            // panelTherapyGroups
+            // 
+            this.panelTherapyGroups.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelTherapyGroups.AutoScroll = true;
+            this.panelTherapyGroups.AutoSize = true;
+            this.panelTherapyGroups.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panelTherapyGroups.Location = new System.Drawing.Point(8, 100);
+            this.panelTherapyGroups.Name = "panelTherapyGroups";
+            this.panelTherapyGroups.Size = new System.Drawing.Size(0, 0);
+            this.panelTherapyGroups.TabIndex = 5;
+            // 
+            // btnAddTherapyGroup
+            // 
+            this.btnAddTherapyGroup.Image = global::BDEditor.Properties.Resources.add_record_16;
+            this.btnAddTherapyGroup.Location = new System.Drawing.Point(849, 66);
+            this.btnAddTherapyGroup.Name = "btnAddTherapyGroup";
+            this.btnAddTherapyGroup.Size = new System.Drawing.Size(28, 28);
+            this.btnAddTherapyGroup.TabIndex = 6;
+            this.btnAddTherapyGroup.UseVisualStyleBackColor = true;
+            this.btnAddTherapyGroup.Click += new System.EventHandler(this.TherapyGroup_RequestItemAdd);
+            // 
             // pathogenSet1
             // 
             this.pathogenSet1.AutoScroll = true;
@@ -55,52 +76,17 @@
             this.pathogenSet1.Size = new System.Drawing.Size(308, 64);
             this.pathogenSet1.TabIndex = 2;
             // 
-            // bdTherapyGroupControl1
-            // 
-            this.bdTherapyGroupControl1.AutoScroll = true;
-            this.bdTherapyGroupControl1.BackColor = System.Drawing.SystemColors.Control;
-            this.bdTherapyGroupControl1.CurrentTherapyGroup = null;
-            this.bdTherapyGroupControl1.DisplayOrder = null;
-            this.bdTherapyGroupControl1.Location = new System.Drawing.Point(4, 10);
-            this.bdTherapyGroupControl1.Name = "bdTherapyGroupControl1";
-            this.bdTherapyGroupControl1.Size = new System.Drawing.Size(877, 254);
-            this.bdTherapyGroupControl1.TabIndex = 3;
-            // 
-            // bdTherapyGroupControl2
-            // 
-            this.bdTherapyGroupControl2.AutoScroll = true;
-            this.bdTherapyGroupControl2.BackColor = System.Drawing.SystemColors.Control;
-            this.bdTherapyGroupControl2.CurrentTherapyGroup = null;
-            this.bdTherapyGroupControl2.DisplayOrder = null;
-            this.bdTherapyGroupControl2.Location = new System.Drawing.Point(4, 270);
-            this.bdTherapyGroupControl2.Name = "bdTherapyGroupControl2";
-            this.bdTherapyGroupControl2.Size = new System.Drawing.Size(865, 254);
-            this.bdTherapyGroupControl2.TabIndex = 4;
-            // 
-            // therapyGroupPanel
-            // 
-            this.therapyGroupPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.therapyGroupPanel.AutoScroll = true;
-            this.therapyGroupPanel.Controls.Add(this.bdTherapyGroupControl1);
-            this.therapyGroupPanel.Controls.Add(this.bdTherapyGroupControl2);
-            this.therapyGroupPanel.Location = new System.Drawing.Point(8, 100);
-            this.therapyGroupPanel.Name = "therapyGroupPanel";
-            this.therapyGroupPanel.Size = new System.Drawing.Size(885, 549);
-            this.therapyGroupPanel.TabIndex = 5;
-            // 
             // BDPathogenGroupControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.Controls.Add(this.therapyGroupPanel);
+            this.Controls.Add(this.btnAddTherapyGroup);
+            this.Controls.Add(this.panelTherapyGroups);
             this.Controls.Add(this.pathogenSet1);
             this.Controls.Add(this.label1);
             this.Name = "BDPathogenGroupControl";
-            this.Size = new System.Drawing.Size(900, 652);
-            this.therapyGroupPanel.ResumeLayout(false);
+            this.Size = new System.Drawing.Size(977, 331);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -108,10 +94,9 @@
 
         #endregion
 
-        private BDTherapyGroupControl bdTherapyGroupControl1;
         private System.Windows.Forms.Label label1;
         private PathogenSet pathogenSet1;
-        private BDTherapyGroupControl bdTherapyGroupControl2;
-        private System.Windows.Forms.Panel therapyGroupPanel;
+        private System.Windows.Forms.Panel panelTherapyGroups;
+        private System.Windows.Forms.Button btnAddTherapyGroup;
     }
 }

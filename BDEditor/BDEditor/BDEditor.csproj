@@ -275,6 +275,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="App.Config">
       <SubType>Designer</SubType>
@@ -305,14 +306,14 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DataModel\BDModel1.edmx.sql" />
-    <Content Include="Resources\add_16x16.png" />
-    <Content Include="Resources\add_record_16.png" />
+    <None Include="Resources\add_16x16.png" />
+    <None Include="Resources\add_record_16.png" />
     <Content Include="Resources\BDEditorStructure.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\delete_record_16.png" />
-    <Content Include="Resources\del_16x16.png" />
-    <Content Include="Resources\link_16.png" />
+    <None Include="Resources\link_16.png" />
+    <None Include="Resources\del_16x16.png" />
+    <None Include="Resources\delete_record_16.png" />
     <Content Include="sqlceca35.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -369,7 +370,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
+      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

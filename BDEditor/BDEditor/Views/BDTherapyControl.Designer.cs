@@ -234,7 +234,7 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnAdd.Image")));
+            this.btnAdd.Image = global::BDEditor.Properties.Resources.add_16x16;
             this.btnAdd.Location = new System.Drawing.Point(785, 2);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(28, 28);
@@ -244,7 +244,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.Image")));
+            this.btnDelete.Image = global::BDEditor.Properties.Resources.del_16x16;
             this.btnDelete.Location = new System.Drawing.Point(817, 3);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(28, 28);

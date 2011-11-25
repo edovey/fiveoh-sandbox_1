@@ -16,7 +16,6 @@ namespace BDEditor.Views
         private Entities dataContext;
         private BDTherapy currentTherapy;
         private Guid? therapyGroupId;
-        private IBDControl parentControl;
         private Guid? scopeId;
         private bool displayLeftBracket;
         private bool displayRightBracket;
@@ -249,11 +248,6 @@ namespace BDEditor.Views
         public void AssignParentId(Guid? pParentId)
         {
             therapyGroupId = pParentId;
-        }
-
-        public void AssignParentControl(IBDControl pControl)
-        {
-            parentControl = pControl;
         }
 
         #endregion

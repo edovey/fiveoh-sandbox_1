@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDTherapyGroupControl));
             this.therapyGroupName = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
             this.orRadioButton = new System.Windows.Forms.RadioButton();
@@ -40,6 +39,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.btnTherapyGroupLink = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
+            this.btnAddTherapyGroup = new System.Windows.Forms.Button();
+            this.btnDelTherapyGroup = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // therapyGroupName
@@ -102,7 +103,7 @@
             this.panelTherapies.AutoSize = true;
             this.panelTherapies.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panelTherapies.BackColor = System.Drawing.SystemColors.Control;
-            this.panelTherapies.Location = new System.Drawing.Point(5, 75);
+            this.panelTherapies.Location = new System.Drawing.Point(9, 81);
             this.panelTherapies.Name = "panelTherapies";
             this.panelTherapies.Size = new System.Drawing.Size(0, 0);
             this.panelTherapies.TabIndex = 15;
@@ -139,7 +140,7 @@
             // 
             // btnTherapyGroupLink
             // 
-            this.btnTherapyGroupLink.Image = ((System.Drawing.Image)(resources.GetObject("btnTherapyGroupLink.Image")));
+            this.btnTherapyGroupLink.Image = global::BDEditor.Properties.Resources.link_16;
             this.btnTherapyGroupLink.Location = new System.Drawing.Point(302, 23);
             this.btnTherapyGroupLink.Name = "btnTherapyGroupLink";
             this.btnTherapyGroupLink.Size = new System.Drawing.Size(31, 25);
@@ -149,19 +150,41 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnAdd.Image")));
-            this.btnAdd.Location = new System.Drawing.Point(744, 23);
+            this.btnAdd.Image = global::BDEditor.Properties.Resources.add_record_16;
+            this.btnAdd.Location = new System.Drawing.Point(9, 47);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(30, 26);
+            this.btnAdd.Size = new System.Drawing.Size(28, 28);
             this.btnAdd.TabIndex = 20;
             this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.RequestItemAdd);
+            this.btnAdd.Click += new System.EventHandler(this.Therapy_RequestItemAdd);
+            // 
+            // btnAddTherapyGroup
+            // 
+            this.btnAddTherapyGroup.Image = global::BDEditor.Properties.Resources.add_16x16;
+            this.btnAddTherapyGroup.Location = new System.Drawing.Point(765, 25);
+            this.btnAddTherapyGroup.Name = "btnAddTherapyGroup";
+            this.btnAddTherapyGroup.Size = new System.Drawing.Size(28, 28);
+            this.btnAddTherapyGroup.TabIndex = 21;
+            this.btnAddTherapyGroup.UseVisualStyleBackColor = true;
+            this.btnAddTherapyGroup.Click += new System.EventHandler(this.TherapyGroup_RequestItemAdd);
+            // 
+            // btnDelTherapyGroup
+            // 
+            this.btnDelTherapyGroup.Image = global::BDEditor.Properties.Resources.del_16x16;
+            this.btnDelTherapyGroup.Location = new System.Drawing.Point(799, 25);
+            this.btnDelTherapyGroup.Name = "btnDelTherapyGroup";
+            this.btnDelTherapyGroup.Size = new System.Drawing.Size(28, 28);
+            this.btnDelTherapyGroup.TabIndex = 22;
+            this.btnDelTherapyGroup.UseVisualStyleBackColor = true;
+            this.btnDelTherapyGroup.Click += new System.EventHandler(this.TherapyGroup_RequestItemDelete);
             // 
             // BDTherapyGroupControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.Controls.Add(this.btnDelTherapyGroup);
+            this.Controls.Add(this.btnAddTherapyGroup);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnTherapyGroupLink);
             this.Controls.Add(this.label3);
@@ -174,7 +197,7 @@
             this.Controls.Add(this.tbName);
             this.Controls.Add(this.therapyGroupName);
             this.Name = "BDTherapyGroupControl";
-            this.Size = new System.Drawing.Size(865, 158);
+            this.Size = new System.Drawing.Size(877, 158);
             this.Leave += new System.EventHandler(this.BDTherapyGroupControl_Leave);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -194,5 +217,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnTherapyGroupLink;
         private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.Button btnAddTherapyGroup;
+        private System.Windows.Forms.Button btnDelTherapyGroup;
     }
 }

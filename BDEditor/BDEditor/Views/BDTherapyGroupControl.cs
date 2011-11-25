@@ -15,7 +15,20 @@ namespace BDEditor.Views
         private Guid? scopeId;
         public int? DisplayOrder { get; set; }
 
+        public event EventHandler RequestItemAdd;
+        public event EventHandler RequestItemDelete;
+
         private List<BDTherapyControl> therapyControlList = new List<BDTherapyControl>();
+
+        protected virtual void OnItemAddRequested(EventArgs e)
+        {
+            if (null != RequestItemAdd) { RequestItemAdd(this, e); }
+        }
+
+        protected virtual void OnItemDeleteRequested(EventArgs e)
+        {
+            if (null != RequestItemDelete) { RequestItemDelete(this, e); }
+        }
 
         public BDTherapyGroupControl()
         {
@@ -32,8 +45,8 @@ namespace BDEditor.Views
         {
             for (int idx = 0; idx < therapyControlList.Count; idx++)
             {
-                BDTherapyControl therapyControl = therapyControlList[idx];
-                removeTherapyControl(therapyControl, false);
+                BDTherapyControl control = therapyControlList[idx];
+                removeTherapyControl(control, false);
             }
             therapyControlList.Clear();
             panelTherapies.Controls.Clear();
@@ -65,8 +78,8 @@ namespace BDEditor.Views
                 List<BDTherapy> therapyList = BDTherapy.GetTherapiesForTherapyGroupId(dataContext, currentTherapyGroup.uuid);
                 for (int idx = 0; idx < therapyList.Count; idx++)
                 {
-                    BDTherapy therapy = therapyList[idx];
-                    addTherapyControl(therapy, idx);
+                    BDTherapy entry = therapyList[idx];
+                    addTherapyControl(entry, idx);
                 }
             }
 
@@ -99,11 +112,10 @@ namespace BDEditor.Views
                 {
                     result = control.Save() || result;
                 }
-
+                // If zero therapies are defined then this is a valid test
                 if (result && (null == currentTherapyGroup))
                 {
-                    currentTherapyGroup = BDTherapyGroup.CreateTherapyGroup(dataContext, pathogenGroupId.Value);
-                    currentTherapyGroup.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
+                    CreateCurrentObject();
                 }
 
                 if (null != currentTherapyGroup)
@@ -188,7 +200,6 @@ namespace BDEditor.Views
             {
                 therapyControl = new BDTherapyControl();
 
-                //TODO: if currentTherapyGroup is null, create one
                 int bottom = 0;
                 foreach (Control control in panelTherapies.Controls)
                 {
@@ -198,12 +209,11 @@ namespace BDEditor.Views
                 therapyControl.Top = bottom;
                 therapyControl.Left = 0;
                 therapyControl.AssignParentId(currentTherapyGroup.uuid);
-                therapyControl.AssignParentControl(this);
                 therapyControl.AssignDataContext(dataContext);
                 therapyControl.AssignScopeId(scopeId);
                 therapyControl.CurrentTherapy = pTherapy;
-                therapyControl.RequestItemAdd += new System.EventHandler(RequestItemAdd);
-                therapyControl.RequestItemDelete += new System.EventHandler(RequestItemDelete);
+                therapyControl.RequestItemAdd += new System.EventHandler(Therapy_RequestItemAdd);
+                therapyControl.RequestItemDelete += new System.EventHandler(Therapy_RequestItemDelete);
                 therapyControlList.Add(therapyControl);
 
                 panelTherapies.Controls.Add(therapyControl);
@@ -219,15 +229,15 @@ namespace BDEditor.Views
         {
             if (pDeleteRecord)
             {
-                BDTherapy therapy = pTherapyControl.CurrentTherapy;
-                if (null != therapy)
+                BDTherapy entry = pTherapyControl.CurrentTherapy;
+                if (null != entry)
                 {
-                    // call to BDDeleteRecord
+                    // call to BDDeletion
                 }
             }
 
-            pTherapyControl.RequestItemAdd -= new System.EventHandler(RequestItemAdd);
-            pTherapyControl.RequestItemDelete -= new System.EventHandler(RequestItemDelete);
+            pTherapyControl.RequestItemAdd -= new System.EventHandler(Therapy_RequestItemAdd);
+            pTherapyControl.RequestItemDelete -= new System.EventHandler(Therapy_RequestItemDelete);
             panelTherapies.Controls.Remove(pTherapyControl);
 
             therapyControlList.Remove(pTherapyControl);
@@ -240,7 +250,6 @@ namespace BDEditor.Views
                 control.Top = top;
                 top += control.Height;
             }
-            //
         }
 
         private void textBox_TextChanged(object sender, EventArgs e)
@@ -291,7 +300,17 @@ namespace BDEditor.Views
             this.Height = panelTherapies.Top + panelTherapies.Height;
         }
 
-        private void RequestItemAdd(object sender, EventArgs e)
+        private void TherapyGroup_RequestItemAdd(object sender, EventArgs e)
+        {
+            OnItemAddRequested(new EventArgs());
+        }
+
+        private void TherapyGroup_RequestItemDelete(object sender, EventArgs e)
+        {
+            OnItemDeleteRequested(new EventArgs());
+        }
+
+        private void Therapy_RequestItemAdd(object sender, EventArgs e)
         {
             BDTherapyControl control = addTherapyControl(null, therapyControlList.Count);
             if (null != control)
@@ -301,12 +320,12 @@ namespace BDEditor.Views
             }
         }
 
-        private void RequestItemDelete(object sender, EventArgs e)
+        private void Therapy_RequestItemDelete(object sender, EventArgs e)
         {
-            BDTherapyControl therapyControl = sender as BDTherapyControl;
-            if (null != therapyControl)
+            BDTherapyControl control = sender as BDTherapyControl;
+            if (null != control)
             {
-                removeTherapyControl(therapyControl, true);
+                removeTherapyControl(control, true);
             }
         }
 

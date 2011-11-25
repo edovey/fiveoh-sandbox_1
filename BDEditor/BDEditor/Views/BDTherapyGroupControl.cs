@@ -144,6 +144,10 @@ namespace BDEditor.Views
             return result;
         }
 
+        public void Delete()
+        {
+        }
+
         public void AssignParentControl(IBDControl pControl)
         {
             parentControl = pControl;

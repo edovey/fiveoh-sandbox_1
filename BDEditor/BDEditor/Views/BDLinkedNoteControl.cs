@@ -126,6 +126,10 @@ namespace BDEditor.Views
             return result;
         }
 
+        public void Delete()
+        {
+        }
+
         public bool CreateCurrentObject()
         {
             bool result = true;

@@ -235,7 +235,9 @@ namespace BDEditor.Classes
 
             #endregion
 
+            #region Delete Local
             // TODO: delete based on deletion records since last update 
+            #endregion
 
             if (null != pLastSyncDate)
             {
@@ -384,8 +386,10 @@ namespace BDEditor.Classes
                 }
             #endregion
 
+                #region Delete Remote
                 // TODO: delete records remotely that were removed locally
-            
+                #endregion
+
             }
 
             pLastSyncDate = DateTime.Now;

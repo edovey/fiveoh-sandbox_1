@@ -75,6 +75,42 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
+        /// Extended Delete method that created a deletion record as well as deleting the local record
+        /// </summary>
+        /// <param name="pContext">the data context</param>
+        /// <param name="pEntity">the entry to be deleted</param>
+        public static void Delete(Entities pContext, BDLinkedNote pEntity)
+        {
+            // create BDDeletion record for the object to be deleted
+            BDDeletion.CreateDeletion(pContext, ENTITYNAME_FRIENDLY, pEntity.uuid);
+            // delete record from local data store
+            pContext.DeleteObject(pEntity);
+            pContext.SaveChanges();
+        }
+
+        /// <summary>
+        /// Get object to delete using provided uuid, call extended delete
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pUuid">Guid of record to delete</param>
+        /// <param name="pCreateDeletion"create entry in deletion table (bool)</param>
+        public static void Delete(Entities pContext, Guid pUuid, bool pCreateDeletion)
+        {
+            BDLinkedNote entity = BDLinkedNote.GetLinkedNoteWithId(pContext, pUuid);
+            if (null != entity)
+            {
+                if (pCreateDeletion)
+                {
+                    BDLinkedNote.Delete(pContext, entity);
+                }
+                else
+                {
+                    pContext.DeleteObject(entity);
+                }
+            }
+        }
+
+        /// <summary>
         /// Return the LinkedNote for the uuid. Returns null if not found.
         /// </summary>
         /// <param name="pContext"></param>

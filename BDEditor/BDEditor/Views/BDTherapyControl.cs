@@ -257,6 +257,10 @@ namespace BDEditor.Views
             return result;
         }
 
+        public void Delete()
+        {
+        }
+
         public void AssignParentId(Guid? pParentId)
         {
             therapyGroupId = pParentId;

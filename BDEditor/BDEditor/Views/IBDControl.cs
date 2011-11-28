@@ -10,6 +10,7 @@ namespace BDEditor.Views
         void AssignDataContext(BDEditor.DataModel.Entities pDataContext);
         void AssignParentId(Guid? pParentId);
         bool Save();
+        void Delete();
         bool CreateCurrentObject();
         void RefreshLayout();
     }

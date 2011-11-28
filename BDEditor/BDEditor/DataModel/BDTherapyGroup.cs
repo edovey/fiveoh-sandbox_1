@@ -79,6 +79,49 @@ namespace BDEditor.DataModel
 
 
         /// <summary>
+        /// Extended Delete method that created a deletion record as well as deleting the local record
+        /// </summary>
+        /// <param name="pContext">the data context</param>
+        /// <param name="pEntity">the entry to be deleted</param>
+        public static void Delete(Entities pContext, BDTherapyGroup pEntity)
+        {
+            // find and delete child objects, then delete record from local data store
+            List<BDTherapy> children = BDTherapy.GetTherapiesForTherapyGroupId(pContext, pEntity.uuid);
+            foreach (BDTherapy t in children)
+            {
+                BDTherapy.Delete(pContext, t);
+            }
+
+            // create BDDeletion record for the object to be deleted
+            BDDeletion.CreateDeletion(pContext, ENTITYNAME_FRIENDLY, pEntity.uuid);
+
+            pContext.DeleteObject(pEntity);
+            pContext.SaveChanges();
+        }
+
+        /// <summary>
+        /// Get object to delete using provided uuid, call extended delete
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pUuid">Guid of record to delete</param>
+        /// <param name="pCreateDeletion"create entry in deletion table (bool)</param>
+        public static void Delete(Entities pContext, Guid pUuid, bool pCreateDeletion)
+        {
+            BDTherapyGroup entity = BDTherapyGroup.GetTherapyGroupWithId(pContext, pUuid);
+            if (null != entity)
+            {
+                if (pCreateDeletion)
+                {
+                    BDTherapyGroup.Delete(pContext, entity);
+                }
+                else
+                {
+                    pContext.DeleteObject(entity);
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets all Therapy Groups in the model with the specified Pathogen ID
         /// </summary>
         /// <param name="pPathogenId"></param>

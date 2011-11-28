@@ -235,7 +235,8 @@ namespace BDEditor.Classes
 
             #endregion
 
-            // TODO: delete based on deletion records since last update 
+            // Process all deletion records in database since last sync: will include records received in last pull
+            BDDeletion.DeleteLocalSinceDate(pDataContext, pLastSyncDate);
 
             if (null != pLastSyncDate)
             {
@@ -384,8 +385,58 @@ namespace BDEditor.Classes
                 }
             #endregion
 
-                // TODO: delete records remotely that were removed locally
-            
+                #region Delete Remote
+                // Process all deletion records in database since last sync: will include records received in last pull
+                List<BDDeletion> newDeletionsForRemote = BDDeletion.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+                string domainName = "";
+                foreach (BDDeletion entry in newDeletionsForRemote)
+                {
+                    switch(entry.entityName)
+                    {
+                        case BDCategory.ENTITYNAME_FRIENDLY:
+                            domainName = BDCategory.AWS_DOMAIN;
+                            break;
+                        case BDChapter.ENTITYNAME_FRIENDLY:
+                            domainName = BDChapter.AWS_DOMAIN;
+                            break;
+                        case BDDisease.ENTITYNAME_FRIENDLY:
+                            domainName = BDDisease.AWS_DOMAIN;
+                            break;
+                        case BDLinkedNote.ENTITYNAME_FRIENDLY:
+                            domainName = BDLinkedNote.AWS_DOMAIN;
+                            break;
+                        case BDLinkedNoteAssociation.ENTITYNAME_FRIENDLY:
+                            domainName = BDLinkedNoteAssociation.AWS_DOMAIN;
+                            break;
+                        case BDPathogen.ENTITYNAME_FRIENDLY:
+                            domainName = BDPathogen.AWS_DOMAIN;
+                            break;
+                        case BDPathogenGroup.ENTITYNAME_FRIENDLY:
+                            domainName = BDPathogenGroup.AWS_DOMAIN;
+                            break;
+                        case BDPresentation.ENTITYNAME_FRIENDLY:
+                            domainName = BDPresentation.AWS_DOMAIN;
+                            break;
+                        case BDSection.ENTITYNAME_FRIENDLY:
+                            domainName = BDSection.AWS_DOMAIN;
+                            break;
+                        case BDSubcategory.ENTITYNAME_FRIENDLY:
+                            domainName = BDSubcategory.AWS_DOMAIN;
+                            break;
+                        case BDTherapy.ENTITYNAME_FRIENDLY:
+                            domainName = BDTherapy.AWS_DOMAIN;
+                            break;
+                        case BDTherapyGroup.ENTITYNAME_FRIENDLY:
+                            domainName = BDTherapyGroup.AWS_DOMAIN;
+                            break;
+                    }
+
+                    DeleteAttributesRequest request = new DeleteAttributesRequest().WithDomainName(domainName).WithItemName(entry.entityId.Value.ToString().ToUpper());
+                    SimpleDb.DeleteAttributes(request);
+                    break;
+                }
+                #endregion
+
             }
 
             pLastSyncDate = DateTime.Now;

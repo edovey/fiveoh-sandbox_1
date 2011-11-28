@@ -86,6 +86,55 @@ namespace BDEditor.DataModel
             return deletion;
         }
 
+        public static void DeleteLocalSinceDate(Entities pDataContext, DateTime? pLastSyncDate)
+        {
+            List<BDDeletion> newDeletionsForLocal = BDDeletion.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+            foreach (BDDeletion deletion in newDeletionsForLocal)
+            {
+                switch (deletion.entityName)
+                {
+                    case BDCategory.ENTITYNAME_FRIENDLY:
+                        BDCategory.Delete(pDataContext, deletion.entityId.Value,false);
+                        break;
+                    case BDChapter.ENTITYNAME_FRIENDLY:
+                        BDChapter.Delete(pDataContext, deletion.entityId.Value, false);
+                        break;
+                    case BDDisease.ENTITYNAME_FRIENDLY:
+                        BDDisease.Delete(pDataContext, deletion.entityId.Value, false);
+                        break;
+                    case BDLinkedNote.ENTITYNAME_FRIENDLY:
+                        BDLinkedNote.Delete(pDataContext, deletion.entityId.Value, false);
+                        break;
+                    case BDLinkedNoteAssociation.ENTITYNAME_FRIENDLY:
+                        BDLinkedNoteAssociation.Delete(pDataContext, deletion.entityId.Value, false);
+                        break;
+                    case BDPathogen.ENTITYNAME_FRIENDLY:
+                        BDPathogen.Delete(pDataContext, deletion.entityId.Value, false);
+                        break;
+                    case BDPathogenGroup.ENTITYNAME_FRIENDLY:
+                        BDPathogenGroup.Delete(pDataContext, deletion.entityId.Value, false);
+                        break;
+                    case BDPresentation.ENTITYNAME_FRIENDLY:
+                        BDPresentation.Delete(pDataContext, deletion.entityId.Value, false);
+                        break;
+                    case BDSection.ENTITYNAME_FRIENDLY:
+                        BDSection.Delete(pDataContext, deletion.entityId.Value, false);
+                        break;
+                    case BDSubcategory.ENTITYNAME_FRIENDLY:
+                        BDSubcategory.Delete(pDataContext, deletion.entityId.Value, false);
+                        break;
+                    case BDTherapy.ENTITYNAME_FRIENDLY:
+                        BDTherapy.Delete(pDataContext, deletion.entityId.Value, false);
+                        break;
+                    case BDTherapyGroup.ENTITYNAME_FRIENDLY:
+                        BDTherapyGroup.Delete(pDataContext, deletion.entityId.Value, false);
+                        break;
+                }
+                pDataContext.SaveChanges();
+
+            }
+        }
+
         public static SyncInfo SyncInfo()
         {
             return new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);

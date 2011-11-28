@@ -222,7 +222,7 @@ namespace BDEditor.Views
                 BDTherapy entry = pTherapyControl.CurrentTherapy;
                 if (null != entry)
                 {
-                    
+                    BDTherapy.Delete(dataContext, entry);
 
                     for (int idx = 0; idx < therapyControlList.Count; idx++)
                     {
@@ -307,7 +307,9 @@ namespace BDEditor.Views
                     therapyControlList[requestedPosition] = therapyControlList[currentPosition];
                     therapyControlList[currentPosition] = temp;
 
-                    panelTherapies.Controls.SetChildIndex(therapyControlList[requestedPosition], currentPosition);
+                    int zOrder = panelTherapies.Controls.GetChildIndex(pTherapyControl);
+                    zOrder = zOrder + (pOffset * -1);
+                    panelTherapies.Controls.SetChildIndex(pTherapyControl, zOrder);
                 }
             }
         }

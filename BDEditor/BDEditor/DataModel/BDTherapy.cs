@@ -66,7 +66,7 @@ namespace BDEditor.DataModel
             therapy.name = string.Empty;
             therapy.dosage = string.Empty;
             therapy.duration = string.Empty;
-            therapy.therapyGroupId = Guid.Empty;
+            therapy.therapyGroupId = pTherapyGroupId;
 
             pContext.AddObject("BDTherapies", therapy);
 

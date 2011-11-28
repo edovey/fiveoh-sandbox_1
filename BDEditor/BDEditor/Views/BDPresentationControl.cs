@@ -96,6 +96,8 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
+            this.SuspendLayout();
+
             if (currentPresentation == null)
             {
                 tbPresentationName.Text = @"";
@@ -144,6 +146,7 @@ namespace BDEditor.Views
 
             bdPathogenGroupControl1.RefreshLayout();
             bdLinkedNoteControl1.RefreshLayout();
+            this.ResumeLayout();
         }
 
         /*

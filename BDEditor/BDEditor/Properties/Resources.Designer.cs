@@ -74,6 +74,13 @@ namespace BDEditor.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap apps_16 {
+            get {
+                object obj = ResourceManager.GetObject("apps_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap cancl_16 {
             get {
                 object obj = ResourceManager.GetObject("cancl_16", resourceCulture);

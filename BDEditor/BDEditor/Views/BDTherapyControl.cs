@@ -334,5 +334,10 @@ namespace BDEditor.Views
         {
             OnReorderToNext(new EventArgs());
         }
+
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+            this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
+        }
     }
 }

@@ -162,6 +162,7 @@ namespace BDEditor.Views
             {
                 case TreeViewAction.ByKeyboard:
                 case TreeViewAction.ByMouse:
+                    splitContainer1.Panel2.SuspendLayout();
                     splitContainer1.Panel2.Controls.Clear();
                     TreeNode selectedNode = e.Node;
                     if(selectedNode.Tag is BDCategory)
@@ -211,6 +212,7 @@ namespace BDEditor.Views
                         splitContainer1.Panel2.Controls.Add(presentationControl);
                         presentationControl.RefreshLayout();
                     }
+                    splitContainer1.Panel2.ResumeLayout();
                     break;
                 case TreeViewAction.Collapse:
                 case TreeViewAction.Expand:

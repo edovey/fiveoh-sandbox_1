@@ -56,6 +56,7 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
+            this.SuspendLayout();
             for (int idx = 0; idx < therapyControlList.Count; idx++)
             {
                 BDTherapyControl control = therapyControlList[idx];
@@ -95,6 +96,7 @@ namespace BDEditor.Views
                     addTherapyControl(entry, idx);
                 }
             }
+            this.ResumeLayout();
         }
 
         public void AssignScopeId(Guid? pScopeId)

@@ -123,6 +123,8 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
+            this.SuspendLayout();
+
             for (int idx = 0; idx < therapyGroupControlList.Count; idx++)
             {
                 BDTherapyGroupControl control = therapyGroupControlList[idx];
@@ -149,6 +151,8 @@ namespace BDEditor.Views
             }
 
             pathogenSet1.RefreshLayout();
+
+            this.ResumeLayout();
         }
 
         #endregion    

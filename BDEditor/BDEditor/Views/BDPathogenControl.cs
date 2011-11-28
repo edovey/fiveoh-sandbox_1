@@ -20,6 +20,25 @@ namespace BDEditor.Views
         private Guid? scopeId;
         public int? DisplayOrder { get; set; }
 
+        public event EventHandler RequestItemDelete;
+        public event EventHandler ReorderToPrevious;
+        public event EventHandler ReorderToNext;
+
+        protected virtual void OnItemDeleteRequested(EventArgs e)
+        {
+            if (null != RequestItemDelete) { RequestItemDelete(this, e); }
+        }
+
+        protected virtual void OnReorderToPrevious(EventArgs e)
+        {
+            if (null != ReorderToPrevious) { ReorderToPrevious(this, e); }
+        }
+
+        protected virtual void OnReorderToNext(EventArgs e)
+        {
+            if (null != ReorderToNext) { ReorderToNext(this, e); }
+        }
+
         public BDPathogen CurrentPathogen
         {
             get { return currentPathogen; }
@@ -105,29 +124,6 @@ namespace BDEditor.Views
             }
         }
         
-        /*
-        public void AssignParentControl(IBDControl pControl)
-        {
-            parentControl = pControl;
-        }
-
-        public void TriggerCreateAndAssignParentIdToChildControl(IBDControl pControl)
-        {
-            if (null == currentPathogen)
-            {
-                currentPathogen = BDPathogen.CreatePathogen(dataContext);
-                currentPathogen.pathogenGroupId = pathogenGroupId;
-                BDPathogen.SavePathogen(dataContext, currentPathogen);
-                pControl.AssignParentId(currentPathogen.uuid);
-                pControl.Save();
-            }
-            else
-            {
-                pControl.AssignParentId(currentPathogen.uuid);
-                pControl.Save();
-            }
-        }
-        */
 
         private void BDPathogenControl_Leave(object sender, EventArgs e)
         {
@@ -184,6 +180,21 @@ namespace BDEditor.Views
         public override string ToString()
         {
             return (null == this.currentPathogen) ? "No Pathogen" : this.currentPathogen.name;
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            OnItemDeleteRequested(new EventArgs());
+        }
+
+        private void btnReorderToPrevious_Click(object sender, EventArgs e)
+        {
+            OnReorderToPrevious(new EventArgs());
+        }
+
+        private void btnReorderToNext_Click(object sender, EventArgs e)
+        {
+            OnReorderToNext(new EventArgs());
         }
         
     }

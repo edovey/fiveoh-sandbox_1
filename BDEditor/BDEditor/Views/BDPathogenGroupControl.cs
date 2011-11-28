@@ -97,7 +97,8 @@ namespace BDEditor.Views
                     result = control.Save() || result;
                 }
 
-                if (result && (null == currentPathogenGroup)) 
+                // if zero pathogens are defined then this is a valid test
+                if ((result && (null == currentPathogenGroup) || (null == currentPathogenGroup) && textBoxPathogenGroupName.Text != string.Empty)) 
                 {
                     CreateCurrentObject();
                 }
@@ -105,6 +106,9 @@ namespace BDEditor.Views
                 if (null != currentPathogenGroup)
                 {
                     System.Diagnostics.Debug.WriteLine(@"PathogenGroup Control Save");
+
+                    if (currentPathogenGroup.name != textBoxPathogenGroupName.Text) currentPathogenGroup.name = textBoxPathogenGroupName.Text;
+                    if (currentPathogenGroup.displayOrder != DisplayOrder) currentPathogenGroup.displayOrder = DisplayOrder;
 
                     BDPathogenGroup.SavePathogenGroup(dataContext, currentPathogenGroup);
                     result = true;
@@ -141,19 +145,20 @@ namespace BDEditor.Views
         {
             this.SuspendLayout();
 
-            for (int idx = 0; idx < pathogenControlList.Count; idx++)
-            {
-                BDPathogenControl control = pathogenControlList[idx];
-                removePathogenControl(control, false);
-            }
+            //for (int idx = 0; idx < pathogenControlList.Count; idx++)
+            //{
+            //    BDPathogenControl control = pathogenControlList[idx];
+            //    removePathogenControl(control, false);
+            //}
             pathogenControlList.Clear();
 
             if (null == currentPathogenGroup)
             {
-                throw new NotImplementedException();
+                textBoxPathogenGroupName.Text = @"";
             }
             else
             {
+                textBoxPathogenGroupName.Text = currentPathogenGroup.name;
                 List<BDPathogen> list = BDPathogen.GetPathogensForPathogenGroup(dataContext, currentPathogenGroup.uuid);
                 for (int idx = 0; idx < list.Count; idx++)
                 {
@@ -178,11 +183,7 @@ namespace BDEditor.Views
                     BDTherapyGroup entry = list[idx];
                     addTherapyGroupControl(entry, idx);
                 }
-
-                this.CurrentPathogenGroup = currentPathogenGroup;
             }
-
-            //pathogenSet1.RefreshLayout();
 
             this.ResumeLayout();
         }
@@ -269,9 +270,9 @@ namespace BDEditor.Views
                     pathogenControlList[requestedPosition] = pathogenControlList[currentPosition];
                     pathogenControlList[currentPosition] = temp;
 
-                    int zOrder = this.Controls.GetChildIndex(pPathogenControl);
+                    int zOrder = panelPathogens.Controls.GetChildIndex(pPathogenControl);
                     zOrder = zOrder + (pOffset * -1);
-                    this.Controls.SetChildIndex(pPathogenControl, zOrder);
+                    panelPathogens.Controls.SetChildIndex(pPathogenControl, zOrder);
                 }
             }
         }
@@ -380,12 +381,18 @@ namespace BDEditor.Views
 
         private void Pathogen_RequestItemAdd(object sender, EventArgs e)
         {
-            OnItemAddRequested(new EventArgs());
+            BDPathogenControl control = addPathogenControl(null, pathogenControlList.Count);
+            if (null != control)
+            {
+                control.Focus();
+            }
         }
 
         private void Pathogen_RequestItemDelete(object sender, EventArgs e)
         {
-            OnItemDeleteRequested(new EventArgs());
+            BDPathogenControl control = sender as BDPathogenControl;
+            if (null != control)
+                removePathogenControl(control, true);
         }
         
         private void Pathogen_ReorderToNext(object sender, EventArgs e)

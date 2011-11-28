@@ -134,6 +134,7 @@
           <Property Name="schemaVersion" Type="int" />
           <Property Name="displayOrder" Type="int" />
           <Property Name="presentationId" Type="uniqueidentifier" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="BDPathogens">
           <Key>
@@ -360,6 +361,7 @@
           <Property Type="Int32" Name="schemaVersion" />
           <Property Type="Int32" Name="displayOrder" />
           <Property Type="Guid" Name="presentationId" />
+          <Property Type="String" Name="name" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="BDPathogen">
           <Key>
@@ -592,6 +594,7 @@
           <EntitySetMapping Name="BDPathogenGroups">
             <EntityTypeMapping TypeName="BDDataModel.BDPathogenGroup">
               <MappingFragment StoreEntitySet="BDPathogenGroups">
+                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="presentationId" ColumnName="presentationId" />
                 <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
                 <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />

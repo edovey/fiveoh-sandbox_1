@@ -223,6 +223,7 @@ namespace BDEditor.Views
                     if (currentTherapy.name != tbName.Text) currentTherapy.name = tbName.Text;
                     if (currentTherapy.dosage != tbDosage.Text) currentTherapy.dosage = tbDosage.Text;
                     if (currentTherapy.duration != tbDuration.Text) currentTherapy.duration = tbDuration.Text;
+                    if (currentTherapy.displayOrder != DisplayOrder) currentTherapy.displayOrder = DisplayOrder;
 
                     if (andRadioButton.Checked)
                     {

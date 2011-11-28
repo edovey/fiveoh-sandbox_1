@@ -88,7 +88,7 @@
             this.toolStripMenuItem2,
             this.deleteToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(153, 104);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(153, 126);
             // 
             // reorderPreviousToolStripMenuItem
             // 
@@ -96,6 +96,7 @@
             this.reorderPreviousToolStripMenuItem.Name = "reorderPreviousToolStripMenuItem";
             this.reorderPreviousToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.reorderPreviousToolStripMenuItem.Text = "Move &Previous";
+            this.reorderPreviousToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToPrevious_Click);
             // 
             // reorderNextToolStripMenuItem
             // 
@@ -103,6 +104,7 @@
             this.reorderNextToolStripMenuItem.Name = "reorderNextToolStripMenuItem";
             this.reorderNextToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.reorderNextToolStripMenuItem.Text = "Move &Next";
+            this.reorderNextToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToNext_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -115,6 +117,7 @@
             this.addPathogenToolStripMenuItem.Name = "addPathogenToolStripMenuItem";
             this.addPathogenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.addPathogenToolStripMenuItem.Text = "&Add Pathogen";
+            this.addPathogenToolStripMenuItem.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // toolStripMenuItem2
             // 
@@ -127,6 +130,7 @@
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // BDPathogenControl
             // 

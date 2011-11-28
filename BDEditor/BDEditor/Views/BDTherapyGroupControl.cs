@@ -57,11 +57,11 @@ namespace BDEditor.Views
         public void RefreshLayout()
         {
             this.SuspendLayout();
-            for (int idx = 0; idx < therapyControlList.Count; idx++)
-            {
-                BDTherapyControl control = therapyControlList[idx];
-                removeTherapyControl(control, false);
-            }
+            //for (int idx = 0; idx < therapyControlList.Count; idx++)
+            //{
+            //    BDTherapyControl control = therapyControlList[idx];
+            //    removeTherapyControl(control, false);
+            //}
             therapyControlList.Clear();
             panelTherapies.Controls.Clear();
 
@@ -134,6 +134,7 @@ namespace BDEditor.Views
                 if (null != currentTherapyGroup)
                 {
                     if(currentTherapyGroup.name != tbName.Text) currentTherapyGroup.name = tbName.Text;
+                    if (currentTherapyGroup.displayOrder != DisplayOrder) currentTherapyGroup.displayOrder = DisplayOrder;
 
                     if (andRadioButton.Checked)
                     {
@@ -230,18 +231,17 @@ namespace BDEditor.Views
             pTherapyControl.ReorderToPrevious -= new EventHandler(Therapy_ReorderToPrevious);
             
             therapyControlList.Remove(pTherapyControl);
-
+            for (int idx = 0; idx < therapyControlList.Count; idx++)
+            {
+                therapyControlList[idx].DisplayOrder = idx;
+            }
+            
             if (pDeleteRecord)
             {
                 BDTherapy entry = pTherapyControl.CurrentTherapy;
                 if (null != entry)
                 {
-                    BDTherapy.Delete(dataContext, entry);
-
-                    for (int idx = 0; idx < therapyControlList.Count; idx++)
-                    {
-                        therapyControlList[idx].DisplayOrder = idx;
-                    }
+                    BDTherapy.Delete(dataContext, entry);   
                 }
             }
 
@@ -345,7 +345,11 @@ namespace BDEditor.Views
 
         private void Therapy_RequestItemDelete(object sender, EventArgs e)
         {
-
+            BDTherapyControl control = sender as BDTherapyControl;
+            if (null != control)
+            {
+                removeTherapyControl(control, true);
+            }
         }
 
         private void Therapy_ReorderToNext(object sender, EventArgs e)

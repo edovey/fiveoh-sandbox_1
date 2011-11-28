@@ -81,6 +81,7 @@ namespace BDEditor.Views
             if (null != currentPathogen)
             {
                 if(currentPathogen.name != tbPathogenName.Text) currentPathogen.name = tbPathogenName.Text;
+                if (currentPathogen.displayOrder != DisplayOrder) currentPathogen.displayOrder = DisplayOrder;
                 BDPathogen.SavePathogen(dataContext, currentPathogen);
                 result = true;
             }
@@ -127,6 +128,7 @@ namespace BDEditor.Views
             else
             {
                 this.tbPathogenName.Text = currentPathogen.name;
+                DisplayOrder = currentPathogen.displayOrder;
             }
         }
         
@@ -188,6 +190,11 @@ namespace BDEditor.Views
             return (null == this.currentPathogen) ? "No Pathogen" : this.currentPathogen.name;
         }
 
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            OnItemAddRequested(new EventArgs());
+        }
+
         private void btnDelete_Click(object sender, EventArgs e)
         {
             OnItemDeleteRequested(new EventArgs());
@@ -207,6 +214,5 @@ namespace BDEditor.Views
         {
             this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
         }
-        
     }
 }

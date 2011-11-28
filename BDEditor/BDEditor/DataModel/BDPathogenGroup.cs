@@ -31,6 +31,7 @@ namespace BDEditor.DataModel
         private const string PRESENTATIONID = @"pg_presentationId";
         private const string DEPRECATED = @"pg_deprecated";
         private const string DISPLAYORDER = @"pg_displayOrder";
+        private const string NAME = @"pg_name";
 
         /// <summary>
         /// Extended Create method that sets created date and schema version
@@ -235,6 +236,9 @@ namespace BDEditor.DataModel
             entry.presentationId = Guid.Parse(pAttributeDictionary[PRESENTATIONID]);
             short displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]);
             entry.displayOrder = displayOrder;
+            
+            if(schemaVersion >= 1)
+                entry.name = pAttributeDictionary[NAME];
 
             if (pSaveChanges)
                 pDataContext.SaveChanges();
@@ -254,6 +258,7 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDPathogenGroup.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDPathogenGroup.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDPathogenGroup.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogenGroup.NAME).WithValue(name).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDPathogenGroup.PRESENTATIONID).WithValue((null == presentationId) ? Guid.Empty.ToString() : presentationId.ToString().ToUpper()).WithReplace(true));
 

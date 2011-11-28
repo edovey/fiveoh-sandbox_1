@@ -33,12 +33,14 @@
             // 
             // bdPathogenControl1
             // 
+            this.bdPathogenControl1.AutoSize = true;
+            this.bdPathogenControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bdPathogenControl1.BackColor = System.Drawing.SystemColors.Control;
             this.bdPathogenControl1.CurrentPathogen = null;
             this.bdPathogenControl1.DisplayOrder = null;
             this.bdPathogenControl1.Location = new System.Drawing.Point(3, 2);
             this.bdPathogenControl1.Name = "bdPathogenControl1";
-            this.bdPathogenControl1.Size = new System.Drawing.Size(393, 31);
+            this.bdPathogenControl1.Size = new System.Drawing.Size(378, 31);
             this.bdPathogenControl1.TabIndex = 0;
             // 
             // PathogenSet
@@ -48,8 +50,9 @@
             this.AutoScroll = true;
             this.Controls.Add(this.bdPathogenControl1);
             this.Name = "PathogenSet";
-            this.Size = new System.Drawing.Size(535, 172);
+            this.Size = new System.Drawing.Size(535, 43);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

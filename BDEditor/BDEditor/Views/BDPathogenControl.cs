@@ -20,9 +20,15 @@ namespace BDEditor.Views
         private Guid? scopeId;
         public int? DisplayOrder { get; set; }
 
+        public event EventHandler RequestItemAdd;
         public event EventHandler RequestItemDelete;
         public event EventHandler ReorderToPrevious;
         public event EventHandler ReorderToNext;
+
+        protected virtual void OnItemAddRequested(EventArgs e)
+        {
+            if (null != RequestItemAdd) { RequestItemAdd(this, e); }
+        }
 
         protected virtual void OnItemDeleteRequested(EventArgs e)
         {
@@ -195,6 +201,11 @@ namespace BDEditor.Views
         private void btnReorderToNext_Click(object sender, EventArgs e)
         {
             OnReorderToNext(new EventArgs());
+        }
+
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+            this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
         }
         
     }

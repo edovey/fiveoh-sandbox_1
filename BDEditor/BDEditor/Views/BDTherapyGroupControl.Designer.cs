@@ -46,9 +46,9 @@
             this.reorderNextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.addTherapyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addTherapyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addTherapyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.panelHeader.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
             this.SuspendLayout();
@@ -196,13 +196,13 @@
             this.toolStripMenuItem2,
             this.deleteToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(180, 126);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(179, 126);
             // 
             // reorderPreviousToolStripMenuItem
             // 
             this.reorderPreviousToolStripMenuItem.Image = global::BDEditor.Properties.Resources.reorder_previous;
             this.reorderPreviousToolStripMenuItem.Name = "reorderPreviousToolStripMenuItem";
-            this.reorderPreviousToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.reorderPreviousToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.reorderPreviousToolStripMenuItem.Text = "Move &Previous";
             this.reorderPreviousToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToPrevious_Click);
             // 
@@ -210,43 +210,43 @@
             // 
             this.reorderNextToolStripMenuItem.Image = global::BDEditor.Properties.Resources.reorder_next;
             this.reorderNextToolStripMenuItem.Name = "reorderNextToolStripMenuItem";
-            this.reorderNextToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.reorderNextToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.reorderNextToolStripMenuItem.Text = "Move &Next";
             this.reorderNextToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToNext_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(176, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(175, 6);
             // 
             // addTherapyToolStripMenuItem
             // 
             this.addTherapyToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_16x16;
             this.addTherapyToolStripMenuItem.Name = "addTherapyToolStripMenuItem";
-            this.addTherapyToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.addTherapyToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.addTherapyToolStripMenuItem.Text = "&Add Therapy Group";
             this.addTherapyToolStripMenuItem.Click += new System.EventHandler(this.TherapyGroup_RequestItemAdd);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(176, 6);
-            // 
-            // deleteToolStripMenuItem
-            // 
-            this.deleteToolStripMenuItem.Image = global::BDEditor.Properties.Resources.remove;
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
-            this.deleteToolStripMenuItem.Text = "Delete";
-            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.TherapyGroup_RequestItemDelete);
             // 
             // addTherapyToolStripMenuItem1
             // 
             this.addTherapyToolStripMenuItem1.Image = global::BDEditor.Properties.Resources.add_record_16;
             this.addTherapyToolStripMenuItem1.Name = "addTherapyToolStripMenuItem1";
-            this.addTherapyToolStripMenuItem1.Size = new System.Drawing.Size(179, 22);
+            this.addTherapyToolStripMenuItem1.Size = new System.Drawing.Size(178, 22);
             this.addTherapyToolStripMenuItem1.Text = "Add Therapy";
             this.addTherapyToolStripMenuItem1.Click += new System.EventHandler(this.Therapy_RequestItemAdd);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(175, 6);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Image = global::BDEditor.Properties.Resources.remove;
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.TherapyGroup_RequestItemDelete);
             // 
             // BDTherapyGroupControl
             // 

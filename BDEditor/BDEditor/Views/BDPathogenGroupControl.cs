@@ -18,10 +18,14 @@ namespace BDEditor.Views
         private BDPathogenGroup currentPathogenGroup;
         private Guid? scopeId;
         public int? DisplayOrder { get; set; }
+        private AutoCompleteStringCollection pathogenNameCollection;
 
         public event EventHandler RequestItemAdd;
         public event EventHandler RequestItemDelete;
+        public event EventHandler ReorderToPrevious;
+        public event EventHandler ReorderToNext;
 
+        private List<BDPathogenControl> pathogenControlList = new List<BDPathogenControl>();
         private List<BDTherapyGroupControl> therapyGroupControlList = new List<BDTherapyGroupControl>();
 
         protected virtual void OnItemAddRequested(EventArgs e)
@@ -33,6 +37,18 @@ namespace BDEditor.Views
         {
             if (null != RequestItemDelete) { RequestItemDelete(this, e); }
         }
+
+        protected virtual void OnReorderToPrevious(EventArgs e)
+        {
+            if (null != ReorderToPrevious) { ReorderToPrevious(this, e); }
+        }
+
+        protected virtual void OnReorderToNext(EventArgs e)
+        {
+            if (null != ReorderToNext) { ReorderToNext(this, e); }
+        }
+
+ 
 
         public BDPathogenGroup CurrentPathogenGroup
         {
@@ -50,7 +66,6 @@ namespace BDEditor.Views
         public void AssignScopeId(Guid? pScopeId)
         {
             scopeId = pScopeId;
-            pathogenSet1.AssignScopeId(scopeId);
         }
 
         #region IBDControl
@@ -58,8 +73,6 @@ namespace BDEditor.Views
         public void AssignDataContext(Entities pDataContext)
         {
             dataContext = pDataContext;
-            pathogenSet1.AssignDataContext(dataContext);
-            pathogenSet1.AssignTypeaheadSource();
         }
 
         public void AssignParentId(Guid? pParentId)
@@ -74,7 +87,10 @@ namespace BDEditor.Views
 
             if (null != presentationId)
             {
-                result = pathogenSet1.Save() || result;
+               foreach (BDPathogenControl control in pathogenControlList)
+                {
+                    result = control.Save() || result;
+                }     
 
                 foreach (BDTherapyGroupControl control in therapyGroupControlList)
                 {
@@ -125,6 +141,27 @@ namespace BDEditor.Views
         {
             this.SuspendLayout();
 
+            for (int idx = 0; idx < pathogenControlList.Count; idx++)
+            {
+                BDPathogenControl control = pathogenControlList[idx];
+                removePathogenControl(control, false);
+            }
+            pathogenControlList.Clear();
+
+            if (null == currentPathogenGroup)
+            {
+                throw new NotImplementedException();
+            }
+            else
+            {
+                List<BDPathogen> list = BDPathogen.GetPathogensForPathogenGroup(dataContext, currentPathogenGroup.uuid);
+                for (int idx = 0; idx < list.Count; idx++)
+                {
+                    BDPathogen entry = list[idx];
+                    addPathogenControl(entry, idx);
+                }
+            }
+
             for (int idx = 0; idx < therapyGroupControlList.Count; idx++)
             {
                 BDTherapyGroupControl control = therapyGroupControlList[idx];
@@ -133,12 +170,7 @@ namespace BDEditor.Views
             therapyGroupControlList.Clear();
             panelTherapyGroups.Controls.Clear();
 
-            if (null == currentPathogenGroup)
-            {
-                pathogenSet1.CurrentPathogenGroup = null;
-                pathogenSet1.AssignParentId(null);
-            }
-            else
+            if (null != currentPathogenGroup)
             {
                 List<BDTherapyGroup> list = BDTherapyGroup.getTherapyGroupsForPathogenGroupId(dataContext, currentPathogenGroup.uuid);
                 for (int idx = 0; idx < list.Count; idx++)
@@ -147,15 +179,104 @@ namespace BDEditor.Views
                     addTherapyGroupControl(entry, idx);
                 }
 
-                pathogenSet1.CurrentPathogenGroup = currentPathogenGroup;
+                this.CurrentPathogenGroup = currentPathogenGroup;
             }
 
-            pathogenSet1.RefreshLayout();
+            //pathogenSet1.RefreshLayout();
 
             this.ResumeLayout();
         }
 
         #endregion    
+
+        private BDPathogenControl addPathogenControl(BDPathogen pPathogen, int pTabIndex)
+        {
+            BDPathogenControl pathogenControl = null;
+
+            if (CreateCurrentObject())
+            {
+                pathogenControl = new BDPathogenControl();
+
+                pathogenControl.Dock = DockStyle.Top;
+                pathogenControl.TabIndex = pTabIndex;
+                pathogenControl.DisplayOrder = pTabIndex;
+                pathogenControl.AssignParentId(currentPathogenGroup.uuid);
+                pathogenControl.AssignDataContext(dataContext);
+                pathogenControl.AssignScopeId(scopeId);
+                pathogenControl.AssignTypeaheadSource(pathogenNameCollection);
+                pathogenControl.CurrentPathogen = pPathogen;
+                pathogenControl.RequestItemAdd += new EventHandler(Pathogen_RequestItemAdd);
+                pathogenControl.RequestItemDelete += new EventHandler(Pathogen_RequestItemDelete);
+                pathogenControl.ReorderToNext += new EventHandler(Pathogen_ReorderToNext);
+                pathogenControl.ReorderToPrevious += new EventHandler(Pathogen_ReorderToPrevious);
+                pathogenControlList.Add(pathogenControl);
+
+                panelPathogens.Controls.Add(pathogenControl);
+                pathogenControl.BringToFront();
+                pathogenControl.RefreshLayout();
+            }
+            return pathogenControl;
+        }
+
+        private void removePathogenControl(BDPathogenControl pPathogenControl, bool pDeleteRecord)
+        {
+            this.Controls.Remove(pPathogenControl);
+
+            pPathogenControl.RequestItemAdd -= new EventHandler(Pathogen_RequestItemAdd);
+            pPathogenControl.RequestItemDelete -= new EventHandler(Pathogen_RequestItemDelete);
+            pPathogenControl.ReorderToNext -= new EventHandler(Pathogen_ReorderToNext);
+            pPathogenControl.ReorderToPrevious -= new EventHandler(Pathogen_ReorderToPrevious);
+
+            pathogenControlList.Remove(pPathogenControl);
+
+            if (pDeleteRecord)
+            {
+                BDPathogen entry = pPathogenControl.CurrentPathogen;
+                if (null != entry)
+                {
+                    BDPathogen.Delete(dataContext, entry);
+
+                    for (int idx = 0; idx < pathogenControlList.Count; idx++)
+                    {
+                        pathogenControlList[idx].DisplayOrder = idx;
+                    }
+                }
+            }
+
+            pPathogenControl.Dispose();
+            pPathogenControl = null;
+        }
+
+        private void ReorderPathogenControl(BDPathogenControl pPathogenControl, int pOffset)
+        {
+            int currentPosition = pathogenControlList.FindIndex(t => t == pPathogenControl);
+            if (currentPosition >= 0)
+            {
+                int requestedPosition = currentPosition += pOffset;
+                if ((requestedPosition >= 0) && (requestedPosition < pathogenControlList.Count))
+                {
+                    pathogenControlList[requestedPosition].CreateCurrentObject();
+                    pathogenControlList[requestedPosition].DisplayOrder = currentPosition;
+                    pathogenControlList[requestedPosition].CurrentPathogen.displayOrder = currentPosition;
+                    BDPathogen.SavePathogen(dataContext, pathogenControlList[requestedPosition].CurrentPathogen);
+
+                    pathogenControlList[currentPosition].CreateCurrentObject();
+                    pathogenControlList[currentPosition].DisplayOrder = requestedPosition;
+                    pathogenControlList[currentPosition].CurrentPathogen.displayOrder = requestedPosition;
+                    BDPathogen.SavePathogen(dataContext, pathogenControlList[currentPosition].CurrentPathogen);
+
+                    BDPathogenControl temp = pathogenControlList[requestedPosition];
+                    pathogenControlList[requestedPosition] = pathogenControlList[currentPosition];
+                    pathogenControlList[currentPosition] = temp;
+
+                    int zOrder = this.Controls.GetChildIndex(pPathogenControl);
+                    zOrder = zOrder + (pOffset * -1);
+                    this.Controls.SetChildIndex(pPathogenControl, zOrder);
+                }
+            }
+        }
+
+
 
         private BDTherapyGroupControl addTherapyGroupControl(BDTherapyGroup pTherapyGroup, int pTabIndex)
         {
@@ -255,6 +376,34 @@ namespace BDEditor.Views
         private void PathogenGroup_RequestItemDelete(object sender, EventArgs e)
         {
             OnItemDeleteRequested(new EventArgs());
+        }
+
+        private void Pathogen_RequestItemAdd(object sender, EventArgs e)
+        {
+            OnItemAddRequested(new EventArgs());
+        }
+
+        private void Pathogen_RequestItemDelete(object sender, EventArgs e)
+        {
+            OnItemDeleteRequested(new EventArgs());
+        }
+        
+        private void Pathogen_ReorderToNext(object sender, EventArgs e)
+        {
+            BDPathogenControl control = sender as BDPathogenControl;
+            if (null != control)
+            {
+                ReorderPathogenControl(control, 1);
+            }
+        }
+
+        private void Pathogen_ReorderToPrevious(object sender, EventArgs e)
+        {
+            BDPathogenControl control = sender as BDPathogenControl;
+            if (null != control)
+            {
+                ReorderPathogenControl(control, -1);
+            }
         }
 
         private void TherapyGroup_RequestItemAdd(object sender, EventArgs e)

@@ -345,11 +345,7 @@ namespace BDEditor.Views
 
         private void Therapy_RequestItemDelete(object sender, EventArgs e)
         {
-            BDTherapyControl control = sender as BDTherapyControl;
-            if (null != control)
-            {
-                removeTherapyControl(control, true);
-            }
+
         }
 
         private void Therapy_ReorderToNext(object sender, EventArgs e)
@@ -383,6 +379,11 @@ namespace BDEditor.Views
         public override string ToString()
         {
             return (null == this.currentTherapyGroup) ? "No Therapy Group" : this.currentTherapyGroup.name;
+        }
+
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+            this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
         }
     }
 }

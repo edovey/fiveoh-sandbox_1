@@ -45,13 +45,19 @@
             this.lblLeftBracket = new System.Windows.Forms.Label();
             this.lblRightBracket = new System.Windows.Forms.Label();
             this.thenRadioButton = new System.Windows.Forms.RadioButton();
-            this.btnDelete = new System.Windows.Forms.Button();
             this.btnDurationLink = new System.Windows.Forms.Button();
             this.btnDosageLink = new System.Windows.Forms.Button();
             this.btnTherapyLink = new System.Windows.Forms.Button();
-            this.btnReorderToPrevious = new System.Windows.Forms.Button();
-            this.btnReorderToNext = new System.Windows.Forms.Button();
+            this.btnMenu = new System.Windows.Forms.Button();
+            this.contextMenuStripEvents = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.reorderPreviousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reorderNextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.addTherapyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
+            this.contextMenuStripEvents.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbName
@@ -200,16 +206,6 @@
             this.thenRadioButton.Text = "Then (with next)";
             this.thenRadioButton.UseVisualStyleBackColor = true;
             // 
-            // btnDelete
-            // 
-            this.btnDelete.Image = global::BDEditor.Properties.Resources.remove;
-            this.btnDelete.Location = new System.Drawing.Point(783, 3);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(28, 28);
-            this.btnDelete.TabIndex = 13;
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
             // btnDurationLink
             // 
             this.btnDurationLink.Enabled = false;
@@ -243,35 +239,77 @@
             this.btnTherapyLink.UseVisualStyleBackColor = true;
             this.btnTherapyLink.Click += new System.EventHandler(this.btnTherapyLink_Click);
             // 
-            // btnReorderToPrevious
+            // btnMenu
             // 
-            this.btnReorderToPrevious.Image = global::BDEditor.Properties.Resources.reorder_previous;
-            this.btnReorderToPrevious.Location = new System.Drawing.Point(816, 3);
-            this.btnReorderToPrevious.Name = "btnReorderToPrevious";
-            this.btnReorderToPrevious.Size = new System.Drawing.Size(28, 28);
-            this.btnReorderToPrevious.TabIndex = 14;
-            this.btnReorderToPrevious.UseVisualStyleBackColor = true;
-            this.btnReorderToPrevious.Click += new System.EventHandler(this.btnReorderToPrevious_Click);
+            this.btnMenu.Image = global::BDEditor.Properties.Resources.apps_16;
+            this.btnMenu.Location = new System.Drawing.Point(783, 3);
+            this.btnMenu.Name = "btnMenu";
+            this.btnMenu.Size = new System.Drawing.Size(28, 28);
+            this.btnMenu.TabIndex = 16;
+            this.btnMenu.UseVisualStyleBackColor = true;
+            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
             // 
-            // btnReorderToNext
+            // contextMenuStripEvents
             // 
-            this.btnReorderToNext.Image = global::BDEditor.Properties.Resources.reorder_next;
-            this.btnReorderToNext.Location = new System.Drawing.Point(816, 30);
-            this.btnReorderToNext.Name = "btnReorderToNext";
-            this.btnReorderToNext.Size = new System.Drawing.Size(28, 28);
-            this.btnReorderToNext.TabIndex = 15;
-            this.btnReorderToNext.UseVisualStyleBackColor = true;
-            this.btnReorderToNext.Click += new System.EventHandler(this.btnReorderToNext_Click);
+            this.contextMenuStripEvents.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.reorderPreviousToolStripMenuItem,
+            this.reorderNextToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.addTherapyToolStripMenuItem,
+            this.toolStripMenuItem2,
+            this.deleteToolStripMenuItem});
+            this.contextMenuStripEvents.Name = "contextMenuStripEvents";
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(156, 104);
+            // 
+            // reorderPreviousToolStripMenuItem
+            // 
+            this.reorderPreviousToolStripMenuItem.Image = global::BDEditor.Properties.Resources.reorder_previous;
+            this.reorderPreviousToolStripMenuItem.Name = "reorderPreviousToolStripMenuItem";
+            this.reorderPreviousToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.reorderPreviousToolStripMenuItem.Text = "Move &Previous";
+            this.reorderPreviousToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToPrevious_Click);
+            // 
+            // reorderNextToolStripMenuItem
+            // 
+            this.reorderNextToolStripMenuItem.Image = global::BDEditor.Properties.Resources.reorder_next;
+            this.reorderNextToolStripMenuItem.Name = "reorderNextToolStripMenuItem";
+            this.reorderNextToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.reorderNextToolStripMenuItem.Text = "Move &Next";
+            this.reorderNextToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToNext_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(165, 6);
+            // 
+            // addTherapyToolStripMenuItem
+            // 
+            this.addTherapyToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_16x16;
+            this.addTherapyToolStripMenuItem.Name = "addTherapyToolStripMenuItem";
+            this.addTherapyToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.addTherapyToolStripMenuItem.Text = "&Add Therapy";
+            this.addTherapyToolStripMenuItem.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(165, 6);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Image = global::BDEditor.Properties.Resources.remove;
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // BDTherapyControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.btnReorderToNext);
-            this.Controls.Add(this.btnReorderToPrevious);
             this.Controls.Add(this.thenRadioButton);
-            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.orRadioButton);
+            this.Controls.Add(this.btnMenu);
             this.Controls.Add(this.andRadioButton);
             this.Controls.Add(this.noneRadioButton);
             this.Controls.Add(this.btnDurationLink);
@@ -287,6 +325,7 @@
             this.Size = new System.Drawing.Size(850, 60);
             this.Leave += new System.EventHandler(this.BDTherapyControl_Leave);
             this.contextMenuStrip1.ResumeLayout(false);
+            this.contextMenuStripEvents.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -312,8 +351,13 @@
         private System.Windows.Forms.ToolStripMenuItem leToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem plusMinusToolStripMenuItem;
         private System.Windows.Forms.RadioButton thenRadioButton;
-        private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button btnReorderToPrevious;
-        private System.Windows.Forms.Button btnReorderToNext;
+        private System.Windows.Forms.Button btnMenu;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripEvents;
+        private System.Windows.Forms.ToolStripMenuItem reorderPreviousToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reorderNextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem addTherapyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
     }
 }

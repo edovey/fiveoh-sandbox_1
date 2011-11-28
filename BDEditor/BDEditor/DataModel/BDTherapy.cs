@@ -296,5 +296,10 @@ namespace BDEditor.DataModel
             return putAttributeRequest;
         }
         #endregion
+
+        public override string ToString()
+        {
+            return this.name;
+        }
     }
 }

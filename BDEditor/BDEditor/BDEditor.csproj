@@ -314,6 +314,13 @@
     <None Include="Resources\link_16.png" />
     <None Include="Resources\del_16x16.png" />
     <None Include="Resources\delete_record_16.png" />
+    <None Include="Resources\next_16.png" />
+    <None Include="Resources\previous_16.png" />
+    <None Include="Resources\up_16.png" />
+    <None Include="Resources\cancl_16.png" />
+    <None Include="Resources\close_16.png" />
+    <None Include="Resources\del_16.png" />
+    <None Include="Resources\down_16.png" />
     <Content Include="sqlceca35.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

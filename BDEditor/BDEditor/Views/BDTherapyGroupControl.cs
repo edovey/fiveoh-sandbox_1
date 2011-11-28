@@ -186,8 +186,10 @@ namespace BDEditor.Views
                 therapyControl.AssignDataContext(dataContext);
                 therapyControl.AssignScopeId(scopeId);
                 therapyControl.CurrentTherapy = pTherapy;
-                therapyControl.RequestItemAdd += new System.EventHandler(Therapy_RequestItemAdd);
-                therapyControl.RequestItemDelete += new System.EventHandler(Therapy_RequestItemDelete);
+                therapyControl.RequestItemAdd += new EventHandler(Therapy_RequestItemAdd);
+                therapyControl.RequestItemDelete += new EventHandler(Therapy_RequestItemDelete);
+                therapyControl.ReorderToNext += new EventHandler(Therapy_ReorderToNext);
+                therapyControl.ReorderToPrevious += new EventHandler(Therapy_ReorderToPrevious);
                 therapyControlList.Add(therapyControl);
 
                 panelTherapies.Controls.Add(therapyControl);
@@ -201,20 +203,31 @@ namespace BDEditor.Views
 
         private void removeTherapyControl(BDTherapyControl pTherapyControl, bool pDeleteRecord)
         {
+
+            panelTherapies.Controls.Remove(pTherapyControl);
+
+            pTherapyControl.RequestItemAdd -= new EventHandler(Therapy_RequestItemAdd);
+            pTherapyControl.RequestItemDelete -= new EventHandler(Therapy_RequestItemDelete);
+            pTherapyControl.ReorderToNext -= new EventHandler(Therapy_ReorderToNext);
+            pTherapyControl.ReorderToPrevious -= new EventHandler(Therapy_ReorderToPrevious);
+            
+            therapyControlList.Remove(pTherapyControl);
+
             if (pDeleteRecord)
             {
                 BDTherapy entry = pTherapyControl.CurrentTherapy;
                 if (null != entry)
                 {
-                    // call to BDDeletion
+                    
+
+                    for (int idx = 0; idx < therapyControlList.Count; idx++)
+                    {
+                        therapyControlList[idx].DisplayOrder = idx;
+                    }
                 }
             }
 
-            pTherapyControl.RequestItemAdd -= new System.EventHandler(Therapy_RequestItemAdd);
-            pTherapyControl.RequestItemDelete -= new System.EventHandler(Therapy_RequestItemDelete);
-            panelTherapies.Controls.Remove(pTherapyControl);
-
-            therapyControlList.Remove(pTherapyControl);
+            
             pTherapyControl.Dispose();
             pTherapyControl = null;
         }
@@ -262,6 +275,39 @@ namespace BDEditor.Views
             }
         }
 
+        private void ReorderTherapyControl(BDTherapyControl pTherapyControl, int pOffset)
+        {
+            int currentPosition = therapyControlList.FindIndex(t => t == pTherapyControl);
+            if (currentPosition >= 0)
+            {
+                int requestedPosition = currentPosition + pOffset;
+                if ((requestedPosition >= 0) && (requestedPosition < therapyControlList.Count))
+                {
+                    therapyControlList[requestedPosition].CreateCurrentObject();
+                    therapyControlList[requestedPosition].DisplayOrder = currentPosition;
+                    //if (null != therapyControlList[requestedPosition].CurrentTherapy)
+                    //{
+                        therapyControlList[requestedPosition].CurrentTherapy.displayOrder = currentPosition;
+                        BDTherapy.SaveTherapy(dataContext, therapyControlList[requestedPosition].CurrentTherapy);
+                    //}
+
+                        therapyControlList[currentPosition].CreateCurrentObject();
+                    therapyControlList[currentPosition].DisplayOrder = requestedPosition;
+                    //if (null != therapyControlList[currentPosition].CurrentTherapy)
+                    //{
+                        therapyControlList[currentPosition].CurrentTherapy.displayOrder = requestedPosition;
+                        BDTherapy.SaveTherapy(dataContext, therapyControlList[currentPosition].CurrentTherapy);
+                    //}
+
+                    BDTherapyControl temp = therapyControlList[requestedPosition];
+                    therapyControlList[requestedPosition] = therapyControlList[currentPosition];
+                    therapyControlList[currentPosition] = temp;
+
+                    panelTherapies.Controls.SetChildIndex(therapyControlList[requestedPosition], currentPosition);
+                }
+            }
+        }
+
         private void TherapyGroup_RequestItemAdd(object sender, EventArgs e)
         {
             OnItemAddRequested(new EventArgs());
@@ -287,6 +333,24 @@ namespace BDEditor.Views
             if (null != control)
             {
                 removeTherapyControl(control, true);
+            }
+        }
+
+        private void Therapy_ReorderToNext(object sender, EventArgs e)
+        {
+            BDTherapyControl control = sender as BDTherapyControl;
+            if (null != control)
+            {
+                ReorderTherapyControl(control, 1);
+            }
+        }
+
+        private void Therapy_ReorderToPrevious(object sender, EventArgs e)
+        {
+            BDTherapyControl control = sender as BDTherapyControl;
+            if (null != control)
+            {
+                ReorderTherapyControl(control, -1);
             }
         }
 

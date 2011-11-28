@@ -24,6 +24,8 @@ namespace BDEditor.Views
 
         public event EventHandler RequestItemAdd;
         public event EventHandler RequestItemDelete;
+        public event EventHandler ReorderToPrevious;
+        public event EventHandler ReorderToNext;
 
         protected virtual void OnItemAddRequested(EventArgs e)
         {
@@ -33,6 +35,16 @@ namespace BDEditor.Views
         protected virtual void OnItemDeleteRequested(EventArgs e)
         {
             if (null != RequestItemDelete) { RequestItemDelete(this, e); }
+        }
+
+        protected virtual void OnReorderToPrevious(EventArgs e)
+        {
+            if (null != ReorderToPrevious) { ReorderToPrevious(this, e); }
+        }
+
+        protected virtual void OnReorderToNext(EventArgs e)
+        {
+            if (null != ReorderToNext) { ReorderToNext(this, e); }
         }
 
         public BDTherapy CurrentTherapy
@@ -303,9 +315,20 @@ namespace BDEditor.Views
             OnItemDeleteRequested(new EventArgs());
         }
 
+
         public override string ToString()
         {
             return (null == this.currentTherapy) ? "No Therapy" : this.currentTherapy.name;
+        }
+
+        private void btnReorderToPrevious_Click(object sender, EventArgs e)
+        {
+            OnReorderToPrevious(new EventArgs());
+        }
+
+        private void btnReorderToNext_Click(object sender, EventArgs e)
+        {
+            OnReorderToNext(new EventArgs());
         }
     }
 }

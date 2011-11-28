@@ -74,6 +74,27 @@ namespace BDEditor.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap cancl_16 {
+            get {
+                object obj = ResourceManager.GetObject("cancl_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap close_16 {
+            get {
+                object obj = ResourceManager.GetObject("close_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap del_16 {
+            get {
+                object obj = ResourceManager.GetObject("del_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap del_16x16 {
             get {
                 object obj = ResourceManager.GetObject("del_16x16", resourceCulture);
@@ -88,9 +109,58 @@ namespace BDEditor.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap down_16 {
+            get {
+                object obj = ResourceManager.GetObject("down_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap link_16 {
             get {
                 object obj = ResourceManager.GetObject("link_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap next_16 {
+            get {
+                object obj = ResourceManager.GetObject("next_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap previous_16 {
+            get {
+                object obj = ResourceManager.GetObject("previous_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap remove {
+            get {
+                object obj = ResourceManager.GetObject("remove", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap reorder_next {
+            get {
+                object obj = ResourceManager.GetObject("reorder_next", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap reorder_previous {
+            get {
+                object obj = ResourceManager.GetObject("reorder_previous", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap up_16 {
+            get {
+                object obj = ResourceManager.GetObject("up_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -39,17 +39,18 @@
             this.degreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tbDosage = new System.Windows.Forms.TextBox();
             this.tbDuration = new System.Windows.Forms.TextBox();
-            this.btnTherapyLink = new System.Windows.Forms.Button();
-            this.btnDosageLink = new System.Windows.Forms.Button();
-            this.btnDurationLink = new System.Windows.Forms.Button();
             this.noneRadioButton = new System.Windows.Forms.RadioButton();
             this.andRadioButton = new System.Windows.Forms.RadioButton();
             this.orRadioButton = new System.Windows.Forms.RadioButton();
             this.lblLeftBracket = new System.Windows.Forms.Label();
             this.lblRightBracket = new System.Windows.Forms.Label();
             this.thenRadioButton = new System.Windows.Forms.RadioButton();
-            this.btnAdd = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.btnDurationLink = new System.Windows.Forms.Button();
+            this.btnDosageLink = new System.Windows.Forms.Button();
+            this.btnTherapyLink = new System.Windows.Forms.Button();
+            this.btnReorderToPrevious = new System.Windows.Forms.Button();
+            this.btnReorderToNext = new System.Windows.Forms.Button();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,13 +73,13 @@
             this.degreeToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.ShowImageMargin = false;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(128, 136);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(69, 114);
             this.contextMenuStrip1.Text = "Insert Symbol";
             // 
             // bToolStripMenuItem
             // 
             this.bToolStripMenuItem.Name = "bToolStripMenuItem";
-            this.bToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.bToolStripMenuItem.Size = new System.Drawing.Size(68, 22);
             this.bToolStripMenuItem.Text = "ß";
             this.bToolStripMenuItem.ToolTipText = "Insert ß";
             this.bToolStripMenuItem.Click += new System.EventHandler(this.bToolStripMenuItem_Click);
@@ -86,7 +87,7 @@
             // geToolStripMenuItem
             // 
             this.geToolStripMenuItem.Name = "geToolStripMenuItem";
-            this.geToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.geToolStripMenuItem.Size = new System.Drawing.Size(68, 22);
             this.geToolStripMenuItem.Text = "≥";
             this.geToolStripMenuItem.ToolTipText = "Insert ≥";
             this.geToolStripMenuItem.Click += new System.EventHandler(this.geToolStripMenuItem_Click);
@@ -94,7 +95,7 @@
             // leToolStripMenuItem
             // 
             this.leToolStripMenuItem.Name = "leToolStripMenuItem";
-            this.leToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.leToolStripMenuItem.Size = new System.Drawing.Size(68, 22);
             this.leToolStripMenuItem.Text = "≤";
             this.leToolStripMenuItem.ToolTipText = "Insert ≤";
             this.leToolStripMenuItem.Click += new System.EventHandler(this.leToolStripMenuItem_Click);
@@ -102,7 +103,7 @@
             // plusMinusToolStripMenuItem
             // 
             this.plusMinusToolStripMenuItem.Name = "plusMinusToolStripMenuItem";
-            this.plusMinusToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.plusMinusToolStripMenuItem.Size = new System.Drawing.Size(68, 22);
             this.plusMinusToolStripMenuItem.Text = "±";
             this.plusMinusToolStripMenuItem.ToolTipText = "Insert ±";
             this.plusMinusToolStripMenuItem.Click += new System.EventHandler(this.plusMinusToolStripMenuItem_Click);
@@ -110,7 +111,7 @@
             // degreeToolStripMenuItem
             // 
             this.degreeToolStripMenuItem.Name = "degreeToolStripMenuItem";
-            this.degreeToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.degreeToolStripMenuItem.Size = new System.Drawing.Size(68, 22);
             this.degreeToolStripMenuItem.Text = "°";
             this.degreeToolStripMenuItem.ToolTipText = "Insert °";
             this.degreeToolStripMenuItem.Click += new System.EventHandler(this.degreeToolStripMenuItem_Click);
@@ -130,39 +131,6 @@
             this.tbDuration.Size = new System.Drawing.Size(174, 20);
             this.tbDuration.TabIndex = 4;
             this.tbDuration.TextChanged += new System.EventHandler(this.textBox_TextChanged);
-            // 
-            // btnTherapyLink
-            // 
-            this.btnTherapyLink.Enabled = false;
-            this.btnTherapyLink.Image = ((System.Drawing.Image)(resources.GetObject("btnTherapyLink.Image")));
-            this.btnTherapyLink.Location = new System.Drawing.Point(249, 2);
-            this.btnTherapyLink.Name = "btnTherapyLink";
-            this.btnTherapyLink.Size = new System.Drawing.Size(28, 28);
-            this.btnTherapyLink.TabIndex = 1;
-            this.btnTherapyLink.UseVisualStyleBackColor = true;
-            this.btnTherapyLink.Click += new System.EventHandler(this.btnTherapyLink_Click);
-            // 
-            // btnDosageLink
-            // 
-            this.btnDosageLink.Enabled = false;
-            this.btnDosageLink.Image = ((System.Drawing.Image)(resources.GetObject("btnDosageLink.Image")));
-            this.btnDosageLink.Location = new System.Drawing.Point(507, 2);
-            this.btnDosageLink.Name = "btnDosageLink";
-            this.btnDosageLink.Size = new System.Drawing.Size(28, 28);
-            this.btnDosageLink.TabIndex = 3;
-            this.btnDosageLink.UseVisualStyleBackColor = true;
-            this.btnDosageLink.Click += new System.EventHandler(this.btnDosageLink_Click);
-            // 
-            // btnDurationLink
-            // 
-            this.btnDurationLink.Enabled = false;
-            this.btnDurationLink.Image = ((System.Drawing.Image)(resources.GetObject("btnDurationLink.Image")));
-            this.btnDurationLink.Location = new System.Drawing.Point(728, 2);
-            this.btnDurationLink.Name = "btnDurationLink";
-            this.btnDurationLink.Size = new System.Drawing.Size(28, 28);
-            this.btnDurationLink.TabIndex = 5;
-            this.btnDurationLink.UseVisualStyleBackColor = true;
-            this.btnDurationLink.Click += new System.EventHandler(this.btnDurationLink_Click);
             // 
             // noneRadioButton
             // 
@@ -232,33 +200,77 @@
             this.thenRadioButton.Text = "Then (with next)";
             this.thenRadioButton.UseVisualStyleBackColor = true;
             // 
-            // btnAdd
-            // 
-            this.btnAdd.Image = global::BDEditor.Properties.Resources.add_16x16;
-            this.btnAdd.Location = new System.Drawing.Point(785, 2);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(28, 28);
-            this.btnAdd.TabIndex = 12;
-            this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
             // btnDelete
             // 
-            this.btnDelete.Image = global::BDEditor.Properties.Resources.del_16x16;
-            this.btnDelete.Location = new System.Drawing.Point(817, 3);
+            this.btnDelete.Image = global::BDEditor.Properties.Resources.remove;
+            this.btnDelete.Location = new System.Drawing.Point(783, 3);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(28, 28);
             this.btnDelete.TabIndex = 13;
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // btnDurationLink
+            // 
+            this.btnDurationLink.Enabled = false;
+            this.btnDurationLink.Image = ((System.Drawing.Image)(resources.GetObject("btnDurationLink.Image")));
+            this.btnDurationLink.Location = new System.Drawing.Point(728, 2);
+            this.btnDurationLink.Name = "btnDurationLink";
+            this.btnDurationLink.Size = new System.Drawing.Size(28, 28);
+            this.btnDurationLink.TabIndex = 5;
+            this.btnDurationLink.UseVisualStyleBackColor = true;
+            this.btnDurationLink.Click += new System.EventHandler(this.btnDurationLink_Click);
+            // 
+            // btnDosageLink
+            // 
+            this.btnDosageLink.Enabled = false;
+            this.btnDosageLink.Image = ((System.Drawing.Image)(resources.GetObject("btnDosageLink.Image")));
+            this.btnDosageLink.Location = new System.Drawing.Point(507, 2);
+            this.btnDosageLink.Name = "btnDosageLink";
+            this.btnDosageLink.Size = new System.Drawing.Size(28, 28);
+            this.btnDosageLink.TabIndex = 3;
+            this.btnDosageLink.UseVisualStyleBackColor = true;
+            this.btnDosageLink.Click += new System.EventHandler(this.btnDosageLink_Click);
+            // 
+            // btnTherapyLink
+            // 
+            this.btnTherapyLink.Enabled = false;
+            this.btnTherapyLink.Image = ((System.Drawing.Image)(resources.GetObject("btnTherapyLink.Image")));
+            this.btnTherapyLink.Location = new System.Drawing.Point(249, 2);
+            this.btnTherapyLink.Name = "btnTherapyLink";
+            this.btnTherapyLink.Size = new System.Drawing.Size(28, 28);
+            this.btnTherapyLink.TabIndex = 1;
+            this.btnTherapyLink.UseVisualStyleBackColor = true;
+            this.btnTherapyLink.Click += new System.EventHandler(this.btnTherapyLink_Click);
+            // 
+            // btnReorderToPrevious
+            // 
+            this.btnReorderToPrevious.Image = global::BDEditor.Properties.Resources.reorder_previous;
+            this.btnReorderToPrevious.Location = new System.Drawing.Point(816, 3);
+            this.btnReorderToPrevious.Name = "btnReorderToPrevious";
+            this.btnReorderToPrevious.Size = new System.Drawing.Size(28, 28);
+            this.btnReorderToPrevious.TabIndex = 14;
+            this.btnReorderToPrevious.UseVisualStyleBackColor = true;
+            this.btnReorderToPrevious.Click += new System.EventHandler(this.btnReorderToPrevious_Click);
+            // 
+            // btnReorderToNext
+            // 
+            this.btnReorderToNext.Image = global::BDEditor.Properties.Resources.reorder_next;
+            this.btnReorderToNext.Location = new System.Drawing.Point(816, 30);
+            this.btnReorderToNext.Name = "btnReorderToNext";
+            this.btnReorderToNext.Size = new System.Drawing.Size(28, 28);
+            this.btnReorderToNext.TabIndex = 15;
+            this.btnReorderToNext.UseVisualStyleBackColor = true;
+            this.btnReorderToNext.Click += new System.EventHandler(this.btnReorderToNext_Click);
+            // 
             // BDTherapyControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.btnDelete);
-            this.Controls.Add(this.btnAdd);
+            this.Controls.Add(this.btnReorderToNext);
+            this.Controls.Add(this.btnReorderToPrevious);
             this.Controls.Add(this.thenRadioButton);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.orRadioButton);
             this.Controls.Add(this.andRadioButton);
             this.Controls.Add(this.noneRadioButton);
@@ -272,7 +284,7 @@
             this.Controls.Add(this.lblRightBracket);
             this.Name = "BDTherapyControl";
             this.Padding = new System.Windows.Forms.Padding(3);
-            this.Size = new System.Drawing.Size(850, 56);
+            this.Size = new System.Drawing.Size(850, 60);
             this.Leave += new System.EventHandler(this.BDTherapyControl_Leave);
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -300,7 +312,8 @@
         private System.Windows.Forms.ToolStripMenuItem leToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem plusMinusToolStripMenuItem;
         private System.Windows.Forms.RadioButton thenRadioButton;
-        private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnReorderToPrevious;
+        private System.Windows.Forms.Button btnReorderToNext;
     }
 }

@@ -138,10 +138,10 @@ namespace BDEditor.Views
             }
             else
             {
-                List<BDTherapyGroup> therapyGroupList = BDTherapyGroup.getTherapyGroupsForPathogenGroupId(dataContext, currentPathogenGroup.uuid);
-                for (int idx = 0; idx < therapyGroupList.Count; idx++)
+                List<BDTherapyGroup> list = BDTherapyGroup.getTherapyGroupsForPathogenGroupId(dataContext, currentPathogenGroup.uuid);
+                for (int idx = 0; idx < list.Count; idx++)
                 {
-                    BDTherapyGroup entry = therapyGroupList[idx];
+                    BDTherapyGroup entry = list[idx];
                     addTherapyGroupControl(entry, idx);
                 }
 
@@ -170,6 +170,9 @@ namespace BDEditor.Views
                 therapyGroupControl.CurrentTherapyGroup = pTherapyGroup;
                 therapyGroupControl.RequestItemAdd += new EventHandler(TherapyGroup_RequestItemAdd);
                 therapyGroupControl.RequestItemDelete += new EventHandler(TherapyGroup_RequestItemDelete);
+                therapyGroupControl.ReorderToNext += new EventHandler(TherapyGroup_ReorderToNext);
+                therapyGroupControl.ReorderToPrevious += new EventHandler(TherapyGroup_ReorderToPrevious);
+                therapyGroupControlList.Add(therapyGroupControl);
 
                 panelTherapyGroups.Controls.Add(therapyGroupControl);
                 therapyGroupControl.BringToFront();
@@ -182,27 +185,62 @@ namespace BDEditor.Views
 
         private void removeTherapyGroupControl(BDTherapyGroupControl pTherapyGroupControl, bool pDeleteRecord)
         {
+            panelTherapyGroups.Controls.Remove(pTherapyGroupControl);
+
+            pTherapyGroupControl.RequestItemAdd -= new EventHandler(TherapyGroup_RequestItemAdd);
+            pTherapyGroupControl.RequestItemDelete -= new EventHandler(TherapyGroup_RequestItemDelete);
+            pTherapyGroupControl.ReorderToNext -= new EventHandler(TherapyGroup_ReorderToNext);
+            pTherapyGroupControl.ReorderToPrevious -= new EventHandler(TherapyGroup_ReorderToPrevious);
+
+            therapyGroupControlList.Remove(pTherapyGroupControl);
+
             if (pDeleteRecord)
             {
                 BDTherapyGroup entry = pTherapyGroupControl.CurrentTherapyGroup;
                 if (null != entry)
                 {
-                    // call to BDDeletion
+                    BDTherapyGroup.Delete(dataContext, entry);
+
+                    for (int idx = 0; idx < therapyGroupControlList.Count; idx++)
+                    {
+                        therapyGroupControlList[idx].DisplayOrder = idx;
+                    }
                 }
             }
 
-            pTherapyGroupControl.RequestItemAdd -= new EventHandler(TherapyGroup_RequestItemAdd);
-            pTherapyGroupControl.RequestItemDelete -= new EventHandler(TherapyGroup_RequestItemDelete);
-            panelTherapyGroups.Controls.Remove(pTherapyGroupControl);
-
-            therapyGroupControlList.Remove(pTherapyGroupControl);
             pTherapyGroupControl.Dispose();
             pTherapyGroupControl = null;
         }
 
-        private void resizeTherapyGroupControlPanelHeight()
+        private void ReorderTherapyGroupControl(BDTherapyGroupControl pTherapyGroupControl, int pOffset)
         {
-            this.Height = panelTherapyGroups.Top + panelTherapyGroups.Height;
+            int currentPosition = therapyGroupControlList.FindIndex(t => t == pTherapyGroupControl);
+            if (currentPosition >= 0)
+            {
+                int requestedPosition = currentPosition + pOffset;
+                if ((requestedPosition >= 0) && (requestedPosition < therapyGroupControlList.Count))
+                {
+                    therapyGroupControlList[requestedPosition].CreateCurrentObject();
+                    therapyGroupControlList[requestedPosition].DisplayOrder = currentPosition;
+
+                    therapyGroupControlList[requestedPosition].CurrentTherapyGroup .displayOrder = currentPosition;
+                    BDTherapyGroup.SaveTherapyGroup(dataContext, therapyGroupControlList[requestedPosition].CurrentTherapyGroup);
+
+                    therapyGroupControlList[currentPosition].CreateCurrentObject();
+                    therapyGroupControlList[currentPosition].DisplayOrder = requestedPosition;
+
+                    therapyGroupControlList[currentPosition].CurrentTherapyGroup.displayOrder = requestedPosition;
+                    BDTherapyGroup.SaveTherapyGroup(dataContext, therapyGroupControlList[currentPosition].CurrentTherapyGroup);
+
+                    BDTherapyGroupControl temp = therapyGroupControlList[requestedPosition];
+                    therapyGroupControlList[requestedPosition] = therapyGroupControlList[currentPosition];
+                    therapyGroupControlList[currentPosition] = temp;
+
+                    int zOrder = panelTherapyGroups.Controls.GetChildIndex(pTherapyGroupControl);
+                    zOrder = zOrder + (pOffset * -1);
+                    panelTherapyGroups.Controls.SetChildIndex(pTherapyGroupControl, zOrder);
+                }
+            }
         }
 
         private void PathogenGroup_RequestItemAdd(object sender, EventArgs e)
@@ -220,7 +258,6 @@ namespace BDEditor.Views
             BDTherapyGroupControl control = addTherapyGroupControl(null, therapyGroupControlList.Count);
             if (null != control)
             {
-                resizeTherapyGroupControlPanelHeight();
                 control.Focus();
             }
         }
@@ -231,6 +268,24 @@ namespace BDEditor.Views
             if (null != control)
             {
                 removeTherapyGroupControl(control, true);
+            }
+        }
+
+        private void TherapyGroup_ReorderToNext(object sender, EventArgs e)
+        {
+            BDTherapyGroupControl control = sender as BDTherapyGroupControl;
+            if (null != control)
+            {
+                ReorderTherapyGroupControl(control, 1);
+            }
+        }
+
+        private void TherapyGroup_ReorderToPrevious(object sender, EventArgs e)
+        {
+            BDTherapyGroupControl control = sender as BDTherapyGroupControl;
+            if (null != control)
+            {
+                ReorderTherapyGroupControl(control, -1);
             }
         }
 

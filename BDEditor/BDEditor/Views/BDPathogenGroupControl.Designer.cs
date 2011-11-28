@@ -62,10 +62,13 @@
             // btnAddTherapyGroup
             // 
             this.btnAddTherapyGroup.Image = global::BDEditor.Properties.Resources.add_record_16;
-            this.btnAddTherapyGroup.Location = new System.Drawing.Point(830, 25);
+            this.btnAddTherapyGroup.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAddTherapyGroup.Location = new System.Drawing.Point(715, 61);
             this.btnAddTherapyGroup.Name = "btnAddTherapyGroup";
-            this.btnAddTherapyGroup.Size = new System.Drawing.Size(28, 28);
+            this.btnAddTherapyGroup.Size = new System.Drawing.Size(129, 28);
             this.btnAddTherapyGroup.TabIndex = 6;
+            this.btnAddTherapyGroup.Text = "Add Therapy Group";
+            this.btnAddTherapyGroup.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAddTherapyGroup.UseVisualStyleBackColor = true;
             this.btnAddTherapyGroup.Click += new System.EventHandler(this.TherapyGroup_RequestItemAdd);
             // 

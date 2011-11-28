@@ -18,6 +18,9 @@ namespace BDEditor.Views
         public event EventHandler RequestItemAdd;
         public event EventHandler RequestItemDelete;
 
+        public event EventHandler ReorderToPrevious;
+        public event EventHandler ReorderToNext;
+
         private List<BDTherapyControl> therapyControlList = new List<BDTherapyControl>();
 
         protected virtual void OnItemAddRequested(EventArgs e)
@@ -28,6 +31,16 @@ namespace BDEditor.Views
         protected virtual void OnItemDeleteRequested(EventArgs e)
         {
             if (null != RequestItemDelete) { RequestItemDelete(this, e); }
+        }
+
+        protected virtual void OnReorderToPrevious(EventArgs e)
+        {
+            if (null != ReorderToPrevious) { ReorderToPrevious(this, e); }
+        }
+
+        protected virtual void OnReorderToNext(EventArgs e)
+        {
+            if (null != ReorderToNext) { ReorderToNext(this, e); }
         }
 
         public BDTherapyGroupControl()
@@ -207,7 +220,6 @@ namespace BDEditor.Views
 
         private void removeTherapyControl(BDTherapyControl pTherapyControl, bool pDeleteRecord)
         {
-
             panelTherapies.Controls.Remove(pTherapyControl);
 
             pTherapyControl.RequestItemAdd -= new EventHandler(Therapy_RequestItemAdd);
@@ -231,7 +243,6 @@ namespace BDEditor.Views
                 }
             }
 
-            
             pTherapyControl.Dispose();
             pTherapyControl = null;
         }
@@ -289,19 +300,16 @@ namespace BDEditor.Views
                 {
                     therapyControlList[requestedPosition].CreateCurrentObject();
                     therapyControlList[requestedPosition].DisplayOrder = currentPosition;
-                    //if (null != therapyControlList[requestedPosition].CurrentTherapy)
-                    //{
-                        therapyControlList[requestedPosition].CurrentTherapy.displayOrder = currentPosition;
-                        BDTherapy.SaveTherapy(dataContext, therapyControlList[requestedPosition].CurrentTherapy);
-                    //}
 
-                        therapyControlList[currentPosition].CreateCurrentObject();
+                    therapyControlList[requestedPosition].CurrentTherapy.displayOrder = currentPosition;
+                    BDTherapy.SaveTherapy(dataContext, therapyControlList[requestedPosition].CurrentTherapy);
+
+
+                    therapyControlList[currentPosition].CreateCurrentObject();
                     therapyControlList[currentPosition].DisplayOrder = requestedPosition;
-                    //if (null != therapyControlList[currentPosition].CurrentTherapy)
-                    //{
-                        therapyControlList[currentPosition].CurrentTherapy.displayOrder = requestedPosition;
-                        BDTherapy.SaveTherapy(dataContext, therapyControlList[currentPosition].CurrentTherapy);
-                    //}
+
+                    therapyControlList[currentPosition].CurrentTherapy.displayOrder = requestedPosition;
+                    BDTherapy.SaveTherapy(dataContext, therapyControlList[currentPosition].CurrentTherapy);
 
                     BDTherapyControl temp = therapyControlList[requestedPosition];
                     therapyControlList[requestedPosition] = therapyControlList[currentPosition];
@@ -360,14 +368,19 @@ namespace BDEditor.Views
             }
         }
 
+        private void btnReorderToPrevious_Click(object sender, EventArgs e)
+        {
+            OnReorderToPrevious(new EventArgs());
+        }
+
+        private void btnReorderToNext_Click(object sender, EventArgs e)
+        {
+            OnReorderToNext(new EventArgs());
+        }
+        
         public override string ToString()
         {
             return (null == this.currentTherapyGroup) ? "No Therapy Group" : this.currentTherapyGroup.name;
-        }
-
-        private void BDTherapyGroupControl_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

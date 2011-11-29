@@ -134,9 +134,7 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static string[] GetPathogenNames(Entities pContext)
         {
-            IQueryable<string> qry =  (from p in pContext.BDPathogens
-                                select p.name);
-            var pathogenNames = qry.Distinct();
+            var pathogenNames = pContext.BDPathogens.Where(x => (!string.IsNullOrEmpty(x.name))).Select(pg => pg.name).Distinct();
 
             return pathogenNames.ToArray();
         }

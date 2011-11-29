@@ -182,9 +182,8 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static string[] GetTherapyNames(Entities pContext)
         {
-           IQueryable<string> qry = (from bdTherapies in pContext.BDTherapies
-                                 select bdTherapies.name);
-            var therapyNames = qry.Distinct();
+            var therapyNames = pContext.BDTherapies.Where(x => (!string.IsNullOrEmpty(x.name))).Select(pg => pg.name).Distinct();
+
             return therapyNames.ToArray();
         }
 
@@ -193,12 +192,11 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext"></param>
         /// <returns></returns>
-        public static string[] GetTherapyDoseStrings(Entities pContext)
+        public static string[] GetTherapyDosages(Entities pContext)
         {
-            IQueryable<string> doseQuery = from t in pContext.BDTherapies
-                                           select t.dosage;
-            var doseStrings = doseQuery.Distinct();
-            return doseStrings.ToArray();
+            var dosages = pContext.BDTherapies.Where(x => (!string.IsNullOrEmpty(x.dosage))).Select(pg => pg.dosage).Distinct();
+
+            return dosages.ToArray();
         }
 
         /// <summary>
@@ -206,12 +204,10 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext"></param>
         /// <returns></returns>
-        public static string[] GetTherapyDurationStrings(Entities pContext)
+        public static string[] GetTherapyDurations(Entities pContext)
         {
-            IQueryable<string> durationQuery = from t in pContext.BDTherapies
-                                           select t.duration;
-            var durationStrings = durationQuery.Distinct();
-            return durationStrings.ToArray();
+            var durations = pContext.BDTherapies.Where(x => (!string.IsNullOrEmpty(x.duration))).Select(pg => pg.duration).Distinct();
+            return durations.ToArray();
         }
 
         public Guid Uuid

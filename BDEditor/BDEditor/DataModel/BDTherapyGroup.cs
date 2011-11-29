@@ -163,11 +163,9 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static string[] GetTherapyGroupNames(Entities pContext)
         {
-            IQueryable<string> qry = (from p in pContext.BDTherapyGroups
-                                      select p.name);
-            var pathogenNames = qry.Distinct();
+            var therapyGroupNames = pContext.BDTherapyGroups.Where(x => (!string.IsNullOrEmpty(x.name))).Select(pg => pg.name).Distinct();
 
-            return pathogenNames.ToArray();
+            return therapyGroupNames.ToArray();
         }
 
         protected override void OnPropertyChanged(string property)

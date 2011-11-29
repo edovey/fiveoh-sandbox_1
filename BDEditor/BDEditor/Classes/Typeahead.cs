@@ -80,7 +80,7 @@ namespace BDEditor.Classes
                 if (null == therapyDosages)
                 {
                     therapyDosages = new AutoCompleteStringCollection();
-                    string[] names = BDTherapy.GetTherapyDoseStrings(new BDEditor.DataModel.Entities());
+                    string[] names = BDTherapy.GetTherapyDosages(new BDEditor.DataModel.Entities());
                     therapyDosages.AddRange(names);
                 }
                 return therapyDosages;
@@ -94,7 +94,7 @@ namespace BDEditor.Classes
                 if (null == therapyDurations)
                 {
                     therapyDurations = new AutoCompleteStringCollection();
-                    string[] names = BDTherapy.GetTherapyDurationStrings(new BDEditor.DataModel.Entities());
+                    string[] names = BDTherapy.GetTherapyDurations(new BDEditor.DataModel.Entities());
                     therapyDurations.AddRange(names);
                 }
                 return therapyDurations;

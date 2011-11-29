@@ -74,6 +74,7 @@ namespace BDEditor.Classes
             syncDictionary.Add(BDSubcategory.SyncInfo());
             syncDictionary.Add(BDTherapy.SyncInfo());
             syncDictionary.Add(BDTherapyGroup.SyncInfo());
+            syncDictionary.Add(BDDeletion.SyncInfo());
 
             // List the remote domains
             ListDomainsResponse sdbListDomainsResponse = SimpleDb.ListDomains(new ListDomainsRequest());
@@ -142,6 +143,9 @@ namespace BDEditor.Classes
                                     break;
                                 case BDDisease.AWS_DOMAIN:
                                     entryGuid = BDDisease.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
+                                case BDDeletion.AWS_DOMAIN:
+                                    entryGuid = BDDeletion.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                     break;
                                 case BDLinkedNoteAssociation.AWS_DOMAIN:
                                     BDLinkedNoteAssociation.LoadFromAttributes(pDataContext, attributeDictionary, false);
@@ -261,6 +265,16 @@ namespace BDEditor.Classes
                             {
                                 List<BDChapter> changeList = BDChapter.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
                                 foreach (BDChapter entry in changeList)
+                                {
+                                    SimpleDb.PutAttributes(entry.PutAttributes()); // Push to the repository
+                                    syncInfoEntry.RowsPushed++;
+                                }
+                            }
+                            break;
+                        case BDDeletion.AWS_DOMAIN:
+                            {
+                                List<BDDeletion> changeList = BDDeletion.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+                                foreach (BDDeletion entry in changeList)
                                 {
                                     SimpleDb.PutAttributes(entry.PutAttributes()); // Push to the repository
                                     syncInfoEntry.RowsPushed++;

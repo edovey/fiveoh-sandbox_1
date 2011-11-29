@@ -19,7 +19,6 @@ namespace BDEditor.Views
         private BDLinkedNote overviewLinkedNote;
         private Guid? scopeId;
         public int? DisplayOrder { get; set; }
-        private AutoCompleteStringCollection pathogenGroupNameCollection;
 
         private List<BDPathogenGroupControl> pathogenGroupControlList = new List<BDPathogenGroupControl>();
 

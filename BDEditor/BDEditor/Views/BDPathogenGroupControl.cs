@@ -19,7 +19,6 @@ namespace BDEditor.Views
         private BDPathogenGroup currentPathogenGroup;
         private Guid? scopeId;
         public int? DisplayOrder { get; set; }
-        private AutoCompleteStringCollection pathogenNameCollection;
 
         private List<BDPathogenControl> pathogenControlList = new List<BDPathogenControl>();
         private List<BDTherapyGroupControl> therapyGroupControlList = new List<BDTherapyGroupControl>();

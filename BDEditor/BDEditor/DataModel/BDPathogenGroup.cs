@@ -47,7 +47,7 @@ namespace BDEditor.DataModel
             pathogenGroup.schemaVersion = 0;
             pathogenGroup.displayOrder = -1;
             pathogenGroup.presentationId = pPresentationId;
-
+            pathogenGroup.name = string.Empty;
             pContext.AddObject("BDPathogenGroups", pathogenGroup);
 
             return pathogenGroup;

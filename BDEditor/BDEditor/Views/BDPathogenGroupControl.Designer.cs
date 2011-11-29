@@ -130,8 +130,8 @@
             this.moveNeToolStripMenuItem,
             this.toolStripSeparator2,
             this.addPathogenGroupToolStripMenuItem,
-            this.addTherapyToolStripMenuItem,
             this.addPathogenToolStripMenuItem,
+            this.addTherapyToolStripMenuItem,
             this.toolStripSeparator1,
             this.deletePathogenGroupMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";

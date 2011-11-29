@@ -215,7 +215,7 @@
             this.btnDurationLink.Size = new System.Drawing.Size(28, 28);
             this.btnDurationLink.TabIndex = 5;
             this.btnDurationLink.UseVisualStyleBackColor = true;
-            this.btnDurationLink.Click += new System.EventHandler(this.btnDurationLink_Click);
+            this.btnDurationLink.Click += new System.EventHandler(this.btnLink_Click);
             // 
             // btnDosageLink
             // 
@@ -226,7 +226,7 @@
             this.btnDosageLink.Size = new System.Drawing.Size(28, 28);
             this.btnDosageLink.TabIndex = 3;
             this.btnDosageLink.UseVisualStyleBackColor = true;
-            this.btnDosageLink.Click += new System.EventHandler(this.btnDosageLink_Click);
+            this.btnDosageLink.Click += new System.EventHandler(this.btnLink_Click);
             // 
             // btnTherapyLink
             // 
@@ -237,7 +237,7 @@
             this.btnTherapyLink.Size = new System.Drawing.Size(28, 28);
             this.btnTherapyLink.TabIndex = 1;
             this.btnTherapyLink.UseVisualStyleBackColor = true;
-            this.btnTherapyLink.Click += new System.EventHandler(this.btnTherapyLink_Click);
+            this.btnTherapyLink.Click += new System.EventHandler(this.btnLink_Click);
             // 
             // btnMenu
             // 

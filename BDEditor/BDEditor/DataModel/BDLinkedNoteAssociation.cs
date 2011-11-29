@@ -178,6 +178,20 @@ namespace BDEditor.DataModel
             return result;
         }
 
+        public static List<BDLinkedNoteAssociation> GetLinkedNoteAssociationForParentId(Entities pContext, Guid? pParentId)
+        {
+            List<BDLinkedNoteAssociation> resultList = new List<BDLinkedNoteAssociation>();
+            if (pParentId != null)
+            {
+                IQueryable<BDLinkedNoteAssociation> linkedNoteAssociations = (from bdLinkedNoteAssociations in pContext.BDLinkedNoteAssociations
+                                                                              where bdLinkedNoteAssociations.parentId == pParentId
+                                                                              select bdLinkedNoteAssociations);
+
+                resultList = linkedNoteAssociations.ToList<BDLinkedNoteAssociation>();
+            }
+            return resultList;
+        }
+
         /// <summary>
         /// Returns all the LinkedNoteAssociations for a linkedNote uuid 
         /// </summary>

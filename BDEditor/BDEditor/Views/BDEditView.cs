@@ -203,6 +203,7 @@ namespace BDEditor.Views
                         presentationControl.AssignDataContext(dataContext);
                         presentationControl.Dock = DockStyle.Fill;
                         presentationControl.CurrentPresentation = selectedNode.Tag as BDPresentation;
+                        presentationControl.AssignScopeId((null != presentationControl.CurrentPresentation) ? presentationControl.CurrentPresentation.uuid : Guid.Empty);
                         BDDisease disease = selectedNode.Parent.Tag as BDDisease;
                         if (null != disease)
                         {

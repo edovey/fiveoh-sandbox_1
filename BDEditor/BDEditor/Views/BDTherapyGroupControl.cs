@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using BDEditor.DataModel;
+using BDEditor.Classes;
 
 namespace BDEditor.Views
 {
@@ -46,6 +47,8 @@ namespace BDEditor.Views
         public BDTherapyGroupControl()
         {
             InitializeComponent();
+
+            btnTherapyGroupLink.Tag = BDTherapyGroup.PROPERTYNAME_DEFAULT;
         }
 
         public BDTherapyGroup CurrentTherapyGroup
@@ -96,6 +99,9 @@ namespace BDEditor.Views
                     addTherapyControl(entry, idx);
                 }
             }
+
+            showLinksInUse();
+
             this.ResumeLayout();
         }
 
@@ -263,9 +269,13 @@ namespace BDEditor.Views
             Save();
         }
 
-        private void btnTherapyGroupLink_Click(object sender, EventArgs e)
+        private void btnLink_Click(object sender, EventArgs e)
         {
-            CreateLink(@"TherapyGroup");
+            Button control = sender as Button;
+            if (null != control)
+            {
+                CreateLink(control.Tag as string);
+            }
         }
 
         private void CreateLink(string pProperty)
@@ -289,7 +299,14 @@ namespace BDEditor.Views
                 }
                 view.PopulateControl();
                 view.ShowDialog(this);
+                showLinksInUse();
             }
+        }
+
+        private void showLinksInUse()
+        {
+            List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentId(dataContext, (null != this.currentTherapyGroup) ? this.currentTherapyGroup.uuid : Guid.Empty);
+            btnTherapyGroupLink.BackColor = links.Exists(x => x.parentEntityPropertyName == (string)btnTherapyGroupLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
         }
 
         private void ReorderTherapyControl(BDTherapyControl pTherapyControl, int pOffset)

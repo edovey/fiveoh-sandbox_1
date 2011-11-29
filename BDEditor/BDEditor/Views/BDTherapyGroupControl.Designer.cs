@@ -154,8 +154,8 @@
             this.btnTherapyGroupLink.Name = "btnTherapyGroupLink";
             this.btnTherapyGroupLink.Size = new System.Drawing.Size(31, 25);
             this.btnTherapyGroupLink.TabIndex = 19;
-            this.btnTherapyGroupLink.UseVisualStyleBackColor = true;
-            this.btnTherapyGroupLink.Click += new System.EventHandler(this.btnTherapyGroupLink_Click);
+            this.btnTherapyGroupLink.UseVisualStyleBackColor = false;
+            this.btnTherapyGroupLink.Click += new System.EventHandler(this.btnLink_Click);
             // 
             // panelHeader
             // 
@@ -259,7 +259,7 @@
             this.Controls.Add(this.panelHeader);
             this.MinimumSize = new System.Drawing.Size(860, 100);
             this.Name = "BDTherapyGroupControl";
-            this.Size = new System.Drawing.Size(860, 111);
+            this.Size = new System.Drawing.Size(860, 100);
             this.Leave += new System.EventHandler(this.BDTherapyGroupControl_Leave);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();

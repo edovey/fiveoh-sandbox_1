@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using BDEditor.DataModel;
+using BDEditor.Classes;
 
 namespace BDEditor.Views
 {
@@ -61,6 +62,7 @@ namespace BDEditor.Views
         public BDPathogenGroupControl()
         {
             InitializeComponent();
+            btnPathogenGroupLink.Tag = BDPathogenGroup.PROPERTYNAME_DEFAULT;
         }
 
         public void AssignScopeId(Guid? pScopeId)
@@ -184,6 +186,8 @@ namespace BDEditor.Views
                     addTherapyGroupControl(entry, idx);
                 }
             }
+
+            showLinksInUse();
 
             this.ResumeLayout();
         }
@@ -460,9 +464,13 @@ namespace BDEditor.Views
             return (null == this.currentPathogenGroup) ? "No Pathogen Group" : this.currentPathogenGroup.uuid.ToString();
         }
 
-        private void btnPathogenGroupLink_Click(object sender, EventArgs e)
+        private void btnLink_Click(object sender, EventArgs e)
         {
-            CreateLink(@"PathogenGroup");
+            Button control = sender as Button;
+            if (null != control)
+            {
+                CreateLink(control.Tag as string);
+            }
         }
 
         private void CreateLink(string pProperty)
@@ -486,8 +494,15 @@ namespace BDEditor.Views
                 }
                 view.PopulateControl();
                 view.ShowDialog(this);
+                showLinksInUse();
             }
         }
+
+        private void showLinksInUse()
+        {
+            List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentId(dataContext, (null != this.currentPathogenGroup) ? this.currentPathogenGroup.uuid : Guid.Empty);
+            btnPathogenGroupLink.BackColor = links.Exists(x => x.parentEntityPropertyName == (string)btnPathogenGroupLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
+        }   
 
         private void btnMenu_Click(object sender, EventArgs e)
         {

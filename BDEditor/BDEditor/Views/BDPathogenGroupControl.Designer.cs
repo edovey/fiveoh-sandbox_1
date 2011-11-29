@@ -94,7 +94,7 @@
             this.btnPathogenGroupLink.Size = new System.Drawing.Size(31, 25);
             this.btnPathogenGroupLink.TabIndex = 20;
             this.btnPathogenGroupLink.UseVisualStyleBackColor = true;
-            this.btnPathogenGroupLink.Click += new System.EventHandler(this.btnPathogenGroupLink_Click);
+            this.btnPathogenGroupLink.Click += new System.EventHandler(this.btnLink_Click);
             // 
             // labelPathogen
             // 

@@ -21,7 +21,7 @@ namespace BDEditor.DataModel
         public const string AWS_DOMAIN = @"bd_1_therapyGroups";
         public const string ENTITYNAME = @"BDTherapyGroups";
         public const string ENTITYNAME_FRIENDLY = @"Therapy Group";
-
+        public const string PROPERTYNAME_DEFAULT = "TherapyGroup";
 
         private const string UUID = @"tg_uuid";
         private const string SCHEMAVERSION = @"tg_schemaVersion";

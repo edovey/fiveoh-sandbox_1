@@ -155,7 +155,7 @@ namespace BDEditor.Views
                 }
 
                 bdLinkedNoteControl1.AssignParentId(currentPresentation.uuid);
-                bdLinkedNoteControl1.AssignScopeId(currentPresentation.uuid);
+                bdLinkedNoteControl1.AssignScopeId(scopeId);
                 bdLinkedNoteControl1.AssignContextEntityName(BDPresentation.ENTITYNAME_FRIENDLY);
                 bdLinkedNoteControl1.AssignContextPropertyName(BDPresentation.PROPERTYNAME_OVERVIEW);
 

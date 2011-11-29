@@ -21,7 +21,8 @@ namespace BDEditor.DataModel
         public const string AWS_DOMAIN = @"bd_1_pathogenGroups";
         public const string ENTITYNAME = @"BDPathogenBroups";
         public const string ENTITYNAME_FRIENDLY = @"Pathogen Group";
-        
+        public const string PROPERTYNAME_DEFAULT = @"PathogenGroup";
+
         private const string UUID = @"pg_uuid";
         private const string SCHEMAVERSION = @"pg_schemaVersion";
         private const string CREATEDBY = @"pg_createdBy";

@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using BDEditor.DataModel;
 using System.Diagnostics;
+using BDEditor.Classes;
 
 namespace BDEditor.Views
 {
@@ -98,6 +99,7 @@ namespace BDEditor.Views
                 displayRightBracket = currentTherapy.rightBracket.Value;
                 lblRightBracket.ForeColor = (displayRightBracket) ? SystemColors.ControlText : SystemColors.ControlLight;
             }
+            showLinksInUse();
         }
 
         public bool DisplayLeftBracket
@@ -119,13 +121,36 @@ namespace BDEditor.Views
             tbName.Tag = btnTherapyLink;
             tbDosage.Tag = btnDosageLink;
             tbDuration.Tag = btnDurationLink;
+
+            btnTherapyLink.Tag = BDTherapy.PROPERTYNAME_THERAPY;
+            btnDosageLink.Tag = BDTherapy.PROPERTYNAME_DOSAGE;
+            btnDurationLink.Tag = BDTherapy.PROPERTYNAME_DURATION;
         }
 
+        private void btnLink_Click(object sender, EventArgs e)
+        {
+            Button control = sender as Button;
+            if (null != control)
+            {
+                string tag = control.Tag as string;
+                CreateLink(tag);
+            }
+        }
+
+        private void showLinksInUse()
+        {
+            List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentId(dataContext, (null != this.currentTherapy) ? this.currentTherapy.uuid : Guid.Empty);
+            btnTherapyLink.BackColor = links.Exists(x => x.parentEntityPropertyName == (string)btnTherapyLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
+            btnDosageLink.BackColor = links.Exists(x => x.parentEntityPropertyName == (string)btnDosageLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
+            btnDurationLink.BackColor = links.Exists(x => x.parentEntityPropertyName == (string)btnDurationLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
+        }     
+        
         public void AssignScopeId(Guid? pScopeId)
         {
             scopeId = pScopeId;
         }
 
+        /*
         private void btnTherapyLink_Click(object sender, EventArgs e)
         {
             CreateLink(BDTherapy.PROPERTYNAME_THERAPY);
@@ -140,6 +165,7 @@ namespace BDEditor.Views
         {
             CreateLink(BDTherapy.PROPERTYNAME_DURATION);
         }
+        */
 
         private void lblLeftBracket_Click(object sender, EventArgs e)
         {
@@ -175,6 +201,7 @@ namespace BDEditor.Views
                 }
                 view.PopulateControl();
                 view.ShowDialog(this);
+                showLinksInUse();
             }
         }
 
@@ -319,7 +346,6 @@ namespace BDEditor.Views
         {
             OnItemDeleteRequested(new EventArgs());
         }
-
 
         public override string ToString()
         {

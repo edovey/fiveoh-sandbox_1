@@ -13,5 +13,6 @@ namespace BDEditor.Views
         void Delete();
         bool CreateCurrentObject();
         void RefreshLayout();
+        void ShowLinksInUse(bool pPropagateToChildren);
     }
 }

@@ -136,6 +136,11 @@ namespace BDEditor.Views
             return result;
         }
 
+        public void ShowLinksInUse(bool pPropagateToChildren)
+        {
+
+        }
+
         #endregion
 
         private void bdLinkedNoteControl_SaveAttemptWithoutParent(object sender, EventArgs e)

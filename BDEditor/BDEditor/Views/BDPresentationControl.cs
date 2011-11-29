@@ -21,12 +21,19 @@ namespace BDEditor.Views
         public int? DisplayOrder { get; set; }
         private AutoCompleteStringCollection pathogenGroupNameCollection;
 
+        private List<BDPathogenGroupControl> pathogenGroupControlList = new List<BDPathogenGroupControl>();
+
         public event EventHandler RequestItemAdd;
         public event EventHandler RequestItemDelete;
         public event EventHandler ReorderToPrevious;
         public event EventHandler ReorderToNext;
 
-        private List<BDPathogenGroupControl> pathogenGroupControlList = new List<BDPathogenGroupControl>();
+        public event EventHandler NotesChanged;
+
+        protected virtual void OnNotesChanged(EventArgs e)
+        {
+            if (null != NotesChanged) { NotesChanged(this, e); }
+        }
 
         protected virtual void OnItemAddRequested(EventArgs e)
         {
@@ -109,6 +116,7 @@ namespace BDEditor.Views
 
         public void Delete()
         {
+            throw new NotImplementedException();
         }
 
         public bool CreateCurrentObject()
@@ -199,6 +207,8 @@ namespace BDEditor.Views
                 pathogenGroupControl.RequestItemDelete += new EventHandler(PathogenGroup_RequestItemDelete);
                 pathogenGroupControl.ReorderToNext += new EventHandler(PathogenGroup_ReorderToNext);
                 pathogenGroupControl.ReorderToPrevious += new EventHandler(PathogenGroup_ReorderToPrevious);
+                pathogenGroupControl.NotesChanged += new EventHandler(notesChanged_Action);
+
                 pathogenGroupControlList.Add(pathogenGroupControl);
 
                 panelPathogenGroups.Controls.Add(pathogenGroupControl);
@@ -216,6 +226,7 @@ namespace BDEditor.Views
             pPathogenGroupControl.RequestItemDelete -= new EventHandler(PathogenGroup_RequestItemDelete);
             pPathogenGroupControl.ReorderToNext -= new EventHandler(PathogenGroup_ReorderToNext);
             pPathogenGroupControl.ReorderToPrevious -= new EventHandler(PathogenGroup_ReorderToPrevious);
+            pPathogenGroupControl.NotesChanged -= new EventHandler(notesChanged_Action);
 
             pathogenGroupControlList.Remove(pPathogenGroupControl);
 
@@ -266,6 +277,17 @@ namespace BDEditor.Views
             }
         }
 
+        public void ShowLinksInUse(bool pPropagateToChildren)
+        {
+            if (pPropagateToChildren)
+            {
+                for (int idx = 0; idx < pathogenGroupControlList.Count; idx++)
+                {
+                    pathogenGroupControlList[idx].ShowLinksInUse(true);
+                }
+            }
+        }
+
         private void PathogenGroup_RequestItemAdd(object sender, EventArgs e)
         {
             BDPathogenGroupControl control = addPathogenGroupControl(null, pathogenGroupControlList.Count);
@@ -307,5 +329,10 @@ namespace BDEditor.Views
             this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
         }
 
+        private void notesChanged_Action(object sender, EventArgs e)
+        {
+            ShowLinksInUse(true);
+            OnNotesChanged(new EventArgs());
+        }
     }
 }

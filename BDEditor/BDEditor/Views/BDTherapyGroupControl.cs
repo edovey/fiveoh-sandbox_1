@@ -16,13 +16,20 @@ namespace BDEditor.Views
         private Guid? scopeId;
         public int? DisplayOrder { get; set; }
 
+        private List<BDTherapyControl> therapyControlList = new List<BDTherapyControl>();
+
         public event EventHandler RequestItemAdd;
         public event EventHandler RequestItemDelete;
 
         public event EventHandler ReorderToPrevious;
         public event EventHandler ReorderToNext;
 
-        private List<BDTherapyControl> therapyControlList = new List<BDTherapyControl>();
+        public event EventHandler NotesChanged;
+
+        protected virtual void OnNotesChanged(EventArgs e)
+        {
+            if (null != NotesChanged) { NotesChanged(this, e); }
+        }
 
         protected virtual void OnItemAddRequested(EventArgs e)
         {
@@ -100,7 +107,7 @@ namespace BDEditor.Views
                 }
             }
 
-            showLinksInUse();
+            ShowLinksInUse(false);
 
             this.ResumeLayout();
         }
@@ -177,6 +184,7 @@ namespace BDEditor.Views
 
         public void Delete()
         {
+            throw new NotImplementedException();
         }
 
         public void AssignParentControl(IBDControl pControl)
@@ -228,6 +236,8 @@ namespace BDEditor.Views
                 therapyControl.RequestItemDelete += new EventHandler(Therapy_RequestItemDelete);
                 therapyControl.ReorderToNext += new EventHandler(Therapy_ReorderToNext);
                 therapyControl.ReorderToPrevious += new EventHandler(Therapy_ReorderToPrevious);
+                therapyControl.NotesChanged += new EventHandler(notesChanged_Action);
+
                 therapyControlList.Add(therapyControl);
 
                 panelTherapies.Controls.Add(therapyControl);
@@ -247,6 +257,7 @@ namespace BDEditor.Views
             pTherapyControl.RequestItemDelete -= new EventHandler(Therapy_RequestItemDelete);
             pTherapyControl.ReorderToNext -= new EventHandler(Therapy_ReorderToNext);
             pTherapyControl.ReorderToPrevious -= new EventHandler(Therapy_ReorderToPrevious);
+            pTherapyControl.NotesChanged -= new EventHandler(notesChanged_Action);
             
             therapyControlList.Remove(pTherapyControl);
             for (int idx = 0; idx < therapyControlList.Count; idx++)
@@ -300,7 +311,7 @@ namespace BDEditor.Views
                 view.AssignContextPropertyName(pProperty);
                 view.AssignContextEntityName(BDTherapyGroup.ENTITYNAME_FRIENDLY);
                 view.AssignScopeId(scopeId);
-
+                view.NotesChanged += new EventHandler(notesChanged_Action);
                 if (null != currentTherapyGroup)
                 {
                     view.AssignParentId(currentTherapyGroup.uuid);
@@ -311,14 +322,23 @@ namespace BDEditor.Views
                 }
                 view.PopulateControl();
                 view.ShowDialog(this);
-                showLinksInUse();
+                view.NotesChanged -= new EventHandler(notesChanged_Action);
+                ShowLinksInUse(false);
             }
         }
 
-        private void showLinksInUse()
+        public void ShowLinksInUse(bool pPropagateToChildren)
         {
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentId(dataContext, (null != this.currentTherapyGroup) ? this.currentTherapyGroup.uuid : Guid.Empty);
             btnTherapyGroupLink.BackColor = links.Exists(x => x.parentEntityPropertyName == (string)btnTherapyGroupLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
+
+            if (pPropagateToChildren)
+            {
+                for (int idx = 0; idx < therapyControlList.Count; idx++)
+                {
+                    therapyControlList[idx].ShowLinksInUse(true);
+                }
+            }
         }
 
         private void ReorderTherapyControl(BDTherapyControl pTherapyControl, int pOffset)
@@ -417,6 +437,12 @@ namespace BDEditor.Views
         private void btnMenu_Click(object sender, EventArgs e)
         {
             this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
+        }
+
+        private void notesChanged_Action(object sender, EventArgs e)
+        {
+            //ShowLinksInUse(true);
+            OnNotesChanged(new EventArgs());
         }
     }
 }

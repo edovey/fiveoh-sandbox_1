@@ -27,6 +27,12 @@ namespace BDEditor.Views
         public event EventHandler RequestItemDelete;
         public event EventHandler ReorderToPrevious;
         public event EventHandler ReorderToNext;
+        public event EventHandler NotesChanged;
+
+        protected virtual void OnNotesChanged(EventArgs e)
+        {
+            if (null != NotesChanged) { NotesChanged(this, e); }
+        }
 
         protected virtual void OnItemAddRequested(EventArgs e)
         {
@@ -99,7 +105,7 @@ namespace BDEditor.Views
                 displayRightBracket = currentTherapy.rightBracket.Value;
                 lblRightBracket.ForeColor = (displayRightBracket) ? SystemColors.ControlText : SystemColors.ControlLight;
             }
-            ShowLinksInUse();
+            ShowLinksInUse(false);
         }
 
         public bool DisplayLeftBracket
@@ -137,7 +143,7 @@ namespace BDEditor.Views
             }
         }
 
-        public void ShowLinksInUse()
+        public void ShowLinksInUse(bool pPropagateToChildren)
         {
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentId(dataContext, (null != this.currentTherapy) ? this.currentTherapy.uuid : Guid.Empty);
             btnTherapyLink.BackColor = links.Exists(x => x.parentEntityPropertyName == (string)btnTherapyLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
@@ -173,7 +179,7 @@ namespace BDEditor.Views
                 view.AssignContextPropertyName(pProperty);
                 view.AssignContextEntityName(BDTherapy.ENTITYNAME_FRIENDLY);
                 view.AssignScopeId(scopeId);
-
+                view.NotesChanged += new EventHandler(notesChanged_Action);
                 if (null != currentTherapy)
                 {
                     view.AssignParentId(currentTherapy.uuid);
@@ -184,7 +190,8 @@ namespace BDEditor.Views
                 }
                 view.PopulateControl();
                 view.ShowDialog(this);
-                ShowLinksInUse();
+                view.NotesChanged -= new EventHandler(notesChanged_Action);
+                ShowLinksInUse(false);
             }
         }
 
@@ -295,6 +302,7 @@ namespace BDEditor.Views
 
         public void Delete()
         {
+            throw new NotImplementedException();
         }
 
         public void AssignParentId(Guid? pParentId)
@@ -373,6 +381,12 @@ namespace BDEditor.Views
         private void btnMenu_Click(object sender, EventArgs e)
         {
             this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
+        }
+
+        private void notesChanged_Action(object sender, EventArgs e)
+        {
+            //ShowLinksInUse(true);
+            OnNotesChanged(new EventArgs());
         }
     }
 }

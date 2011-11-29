@@ -25,6 +25,12 @@ namespace BDEditor.Views
         public event EventHandler RequestItemDelete;
         public event EventHandler ReorderToPrevious;
         public event EventHandler ReorderToNext;
+        public event EventHandler NotesChanged;
+
+        protected virtual void OnNotesChanged(EventArgs e)
+        {
+            if (null != NotesChanged) { NotesChanged(this, e); }
+        }
 
         protected virtual void OnItemAddRequested(EventArgs e)
         {
@@ -96,6 +102,7 @@ namespace BDEditor.Views
 
         public void Delete()
         {
+            throw new NotImplementedException();
         }
 
         public void AssignParentId(Guid? pParentId)
@@ -135,7 +142,7 @@ namespace BDEditor.Views
                 this.tbPathogenName.Text = currentPathogen.name;
                 DisplayOrder = currentPathogen.displayOrder;
             }
-            showLinksInUse();
+            ShowLinksInUse(false);
         }
         
 
@@ -157,6 +164,7 @@ namespace BDEditor.Views
             noteView.AssignContextEntityName(BDPathogen.ENTITYNAME_FRIENDLY);
             noteView.AssignContextPropertyName(BDPathogen.PROPERTYNAME_NAME);
             noteView.AssignScopeId(scopeId);
+            noteView.NotesChanged += new EventHandler(notesChanged_Action);
 
             if (null != currentPathogen)
             {
@@ -169,7 +177,8 @@ namespace BDEditor.Views
 
             noteView.PopulateControl();
             noteView.ShowDialog(this);
-            showLinksInUse();
+            noteView.NotesChanged -= new EventHandler(notesChanged_Action);
+            ShowLinksInUse(false);
         }
 
         public void AssignTypeaheadSource(AutoCompleteStringCollection pSource)
@@ -187,7 +196,7 @@ namespace BDEditor.Views
                 CreateLink();
         }
 
-        private void showLinksInUse()
+        public void ShowLinksInUse(bool pPropagateToChildren)
         {
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentId(dataContext, (null != this.currentPathogen) ? this.currentPathogen.uuid : Guid.Empty);
             btnLink.BackColor = links.Exists(x => x.parentEntityPropertyName == (string)btnLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
@@ -227,6 +236,12 @@ namespace BDEditor.Views
         private void btnMenu_Click(object sender, EventArgs e)
         {
             this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
+        }
+
+        private void notesChanged_Action(object sender, EventArgs e)
+        {
+            //ShowLinksInUse(true);
+            OnNotesChanged(new EventArgs());
         }
     }
 }

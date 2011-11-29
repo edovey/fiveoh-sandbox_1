@@ -22,11 +22,19 @@ namespace BDEditor.Views
 
         List<BDLinkedNoteAssociation> existingLinksList;
         List<BDLinkedNote> existingNotesInScopeList;
-        
+
+        public event EventHandler NotesChanged;
+
+        protected virtual void OnNotesChanged(EventArgs e)
+        {
+            if (null != NotesChanged) { NotesChanged(this, e); }
+        }
+
         public BDLinkedNoteView()
         {
             InitializeComponent();
         }
+
 
         public void AssignDataContext(Entities pDataContext)
         {
@@ -263,6 +271,7 @@ namespace BDEditor.Views
                     this.existingAssociation = null;
                     DisplayLinkedNote(null, true);
                     RefreshSelectedTab();
+                    OnNotesChanged(new EventArgs());
                 }
             }
         }

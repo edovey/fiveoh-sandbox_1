@@ -128,6 +128,12 @@ namespace BDEditor.Views
 
         public void Delete()
         {
+            throw new NotImplementedException();
+        }
+
+        public void ShowLinksInUse(bool pPropagateToChildren)
+        {
+            throw new NotImplementedException();
         }
 
         public bool CreateCurrentObject()
@@ -436,8 +442,5 @@ namespace BDEditor.Views
             PasteCleanText();
         }
         #endregion
-
-
-        
     }
 }

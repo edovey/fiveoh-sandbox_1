@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnMenu = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageLinks = new System.Windows.Forms.TabPage();
             this.chListLinks = new System.Windows.Forms.CheckedListBox();
@@ -39,15 +41,21 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.rtfContextInfo = new System.Windows.Forms.RichTextBox();
             this.bdLinkedNoteControl1 = new BDEditor.Views.BDLinkedNoteControl();
+            this.contextMenuStripEvents = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPageLinks.SuspendLayout();
             this.tabPageNotes.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.contextMenuStripEvents.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnMenu);
             this.panel1.Controls.Add(this.tabControl1);
             this.panel1.Controls.Add(this.btnOK);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -55,6 +63,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(810, 175);
             this.panel1.TabIndex = 1;
+            // 
+            // btnMenu
+            // 
+            this.btnMenu.Image = global::BDEditor.Properties.Resources.apps_16;
+            this.btnMenu.Location = new System.Drawing.Point(637, 139);
+            this.btnMenu.Name = "btnMenu";
+            this.btnMenu.Size = new System.Drawing.Size(28, 28);
+            this.btnMenu.TabIndex = 17;
+            this.btnMenu.UseVisualStyleBackColor = true;
+            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
             // 
             // tabControl1
             // 
@@ -97,7 +115,7 @@
             this.tabPageNotes.Location = new System.Drawing.Point(4, 22);
             this.tabPageNotes.Name = "tabPageNotes";
             this.tabPageNotes.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageNotes.Size = new System.Drawing.Size(454, 143);
+            this.tabPageNotes.Size = new System.Drawing.Size(611, 143);
             this.tabPageNotes.TabIndex = 1;
             this.tabPageNotes.Text = "Attached Notes";
             this.tabPageNotes.UseVisualStyleBackColor = true;
@@ -120,7 +138,7 @@
             this.chListNotes.FormattingEnabled = true;
             this.chListNotes.Location = new System.Drawing.Point(3, 3);
             this.chListNotes.Name = "chListNotes";
-            this.chListNotes.Size = new System.Drawing.Size(448, 109);
+            this.chListNotes.Size = new System.Drawing.Size(605, 109);
             this.chListNotes.TabIndex = 7;
             this.chListNotes.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.linkedNoteView_ItemCheck);
             this.chListNotes.SelectedIndexChanged += new System.EventHandler(this.chListNotes_SelectedIndexChanged);
@@ -159,6 +177,7 @@
             // 
             // bdLinkedNoteControl1
             // 
+            this.bdLinkedNoteControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.bdLinkedNoteControl1.CurrentLinkedNote = null;
             this.bdLinkedNoteControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.bdLinkedNoteControl1.Location = new System.Drawing.Point(0, 53);
@@ -168,6 +187,36 @@
             this.bdLinkedNoteControl1.SelectedLinkedNoteType = BDEditor.DataModel.LinkedNoteType.Default;
             this.bdLinkedNoteControl1.Size = new System.Drawing.Size(810, 256);
             this.bdLinkedNoteControl1.TabIndex = 1;
+            // 
+            // contextMenuStripEvents
+            // 
+            this.contextMenuStripEvents.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.deleteNoteToolStripMenuItem});
+            this.contextMenuStripEvents.Name = "contextMenuStripEvents";
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(174, 76);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Image = global::BDEditor.Properties.Resources.delete_record_16;
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.deleteToolStripMenuItem.Text = "Delete Association";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.RemoveCurrentAssociation_Action);
+            // 
+            // deleteNoteToolStripMenuItem
+            // 
+            this.deleteNoteToolStripMenuItem.Image = global::BDEditor.Properties.Resources.remove;
+            this.deleteNoteToolStripMenuItem.Name = "deleteNoteToolStripMenuItem";
+            this.deleteNoteToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.deleteNoteToolStripMenuItem.Text = "Delete Note";
+            this.deleteNoteToolStripMenuItem.Click += new System.EventHandler(this.DeleteCurrentNote_Action);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(170, 6);
             // 
             // BDLinkedNoteView
             // 
@@ -184,6 +233,7 @@
             this.tabPageLinks.ResumeLayout(false);
             this.tabPageNotes.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            this.contextMenuStripEvents.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -201,6 +251,11 @@
         private System.Windows.Forms.TabPage tabPageNotes;
         private System.Windows.Forms.CheckedListBox chListNotes;
         private System.Windows.Forms.Button btnAssignNote;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripEvents;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.Button btnMenu;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem deleteNoteToolStripMenuItem;
 
     }
 }

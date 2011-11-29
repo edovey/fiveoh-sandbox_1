@@ -114,13 +114,29 @@ namespace BDEditor.DataModel
         /// <param name="pEntity">the entry to be deleted</param>
         public static void Delete(Entities pContext, BDLinkedNoteAssociation pEntity)
         {
-            // TODO:  decide if this method should check if this is the last association against a note, and delete it when it is..?
+            Delete(pContext, pEntity, true);
+        }
 
-            // create BDDeletion record for the object to be deleted
-            BDDeletion.CreateDeletion(pContext, ENTITYNAME_FRIENDLY, pEntity.uuid);
-            // delete record from local data store
-            pContext.DeleteObject(pEntity);
-            pContext.SaveChanges();
+        /// <summary>
+        /// Extended Delete method that created a deletion record as well as deleting the local record
+        /// </summary>
+        /// <param name="pContext">the data context</param>
+        /// <param name="pEntity">the entry to be deleted</param>
+        /// <param name="pCreateDeletion">Create entry in the deletion table (bool)</param>
+        public static void Delete(Entities pContext, BDLinkedNoteAssociation pEntity, bool pCreateDeletion)
+        {
+            // Don't delete the note from here. Deletion of a note will delete all association entries
+            if (null != pEntity)
+            {
+                if (pCreateDeletion)
+                {
+                    // create BDDeletion record for the object to be deleted
+                    BDDeletion.CreateDeletion(pContext, ENTITYNAME_FRIENDLY, pEntity.uuid);
+                }
+                // delete record from local data store
+                pContext.DeleteObject(pEntity);
+                pContext.SaveChanges();
+            }
         }
 
         /// <summary>
@@ -128,7 +144,7 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pUuid">Guid of record to delete</param>
-        /// <param name="pCreateDeletion"create entry in deletion table (bool)</param>
+        /// <param name="pCreateDeletion">create entry in deletion table (bool)</param>
         public static void Delete(Entities pContext, Guid pUuid, bool pCreateDeletion)
         {
             BDLinkedNoteAssociation entity = BDLinkedNoteAssociation.GetLinkedNoteAssociationWithId(pContext, pUuid);
@@ -141,6 +157,7 @@ namespace BDEditor.DataModel
                 else
                 {
                     pContext.DeleteObject(entity);
+                    pContext.SaveChanges();
                 }
             }
         }

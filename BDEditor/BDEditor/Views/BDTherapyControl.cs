@@ -99,7 +99,7 @@ namespace BDEditor.Views
                 displayRightBracket = currentTherapy.rightBracket.Value;
                 lblRightBracket.ForeColor = (displayRightBracket) ? SystemColors.ControlText : SystemColors.ControlLight;
             }
-            showLinksInUse();
+            ShowLinksInUse();
         }
 
         public bool DisplayLeftBracket
@@ -137,7 +137,7 @@ namespace BDEditor.Views
             }
         }
 
-        private void showLinksInUse()
+        public void ShowLinksInUse()
         {
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentId(dataContext, (null != this.currentTherapy) ? this.currentTherapy.uuid : Guid.Empty);
             btnTherapyLink.BackColor = links.Exists(x => x.parentEntityPropertyName == (string)btnTherapyLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
@@ -149,23 +149,6 @@ namespace BDEditor.Views
         {
             scopeId = pScopeId;
         }
-
-        /*
-        private void btnTherapyLink_Click(object sender, EventArgs e)
-        {
-            CreateLink(BDTherapy.PROPERTYNAME_THERAPY);
-        }
-
-        private void btnDosageLink_Click(object sender, EventArgs e)
-        {
-            CreateLink(BDTherapy.PROPERTYNAME_DOSAGE);
-        }
-
-        private void btnDurationLink_Click(object sender, EventArgs e)
-        {
-            CreateLink(BDTherapy.PROPERTYNAME_DURATION);
-        }
-        */
 
         private void lblLeftBracket_Click(object sender, EventArgs e)
         {
@@ -201,7 +184,7 @@ namespace BDEditor.Views
                 }
                 view.PopulateControl();
                 view.ShowDialog(this);
-                showLinksInUse();
+                ShowLinksInUse();
             }
         }
 

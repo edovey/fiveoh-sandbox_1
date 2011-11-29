@@ -81,6 +81,8 @@ namespace BDEditor.DataModel
         /// <param name="pEntity">the entry to be deleted</param>
         public static void Delete(Entities pContext, BDLinkedNote pEntity)
         {
+            // delet the note associations
+            DeleteNoteAssociations(pContext, pEntity.uuid, true);
             // create BDDeletion record for the object to be deleted
             BDDeletion.CreateDeletion(pContext, ENTITYNAME_FRIENDLY, pEntity.uuid);
             // delete record from local data store
@@ -93,12 +95,14 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pUuid">Guid of record to delete</param>
-        /// <param name="pCreateDeletion"create entry in deletion table (bool)</param>
+        /// <param name="pCreateDeletion">create entry in deletion table (bool)</param>
         public static void Delete(Entities pContext, Guid pUuid, bool pCreateDeletion)
         {
             BDLinkedNote entity = BDLinkedNote.GetLinkedNoteWithId(pContext, pUuid);
             if (null != entity)
             {
+                DeleteNoteAssociations(pContext, pUuid, pCreateDeletion);
+
                 if (pCreateDeletion)
                 {
                     BDLinkedNote.Delete(pContext, entity);
@@ -106,7 +110,17 @@ namespace BDEditor.DataModel
                 else
                 {
                     pContext.DeleteObject(entity);
+                    pContext.SaveChanges();
                 }
+            }
+        }
+
+        private static void DeleteNoteAssociations(Entities pContext, Guid pUuid, bool pCreateDeletion)
+        {
+            List<BDLinkedNoteAssociation> children = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForLinkedNoteId(pContext, pUuid);
+            foreach (BDLinkedNoteAssociation t in children)
+            {
+                BDLinkedNoteAssociation.Delete(pContext, t, pCreateDeletion);
             }
         }
 

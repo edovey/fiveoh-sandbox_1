@@ -52,11 +52,6 @@ namespace BDEditor.Views
             bdLinkedNoteControl1.AssignParentId(parentId);
         }
 
-        //public void AssignParentControl(IBDControl pParentControl)
-        //{
-        //    bdLinkedNoteControl1.AssignParentControl(pParentControl);
-        //}
-
         public void AssignScopeId(Guid? pScopeId)
         {
             scopeId = pScopeId;
@@ -69,9 +64,12 @@ namespace BDEditor.Views
         public void PopulateControl()
         {
             bdLinkedNoteControl1.CurrentLinkedNote = null;
-            
+
+            this.existingAssociation = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, parentId, contextPropertyName);
+            rtfContextInfo.Text = BDLinkedNoteAssociation.GetDescription(dataContext, parentId, contextEntityName, contextPropertyName);
+
             RefreshListOfAssociatedLinks();
-            //RefreshListOfScopeNotes();
+            DisplayLinkedNote(this.existingAssociation, false);
         }
 
         private void RefreshListOfAssociatedLinks()
@@ -81,9 +79,6 @@ namespace BDEditor.Views
 
             chListLinks.Items.Clear();
 
-            rtfContextInfo.Text = BDLinkedNoteAssociation.GetDescription(dataContext, parentId, contextEntityName, contextPropertyName);
-
-            existingAssociation = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, parentId, contextPropertyName);
             if (null != existingAssociation)
             {
                 existingLinksList = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForLinkedNoteId(dataContext, existingAssociation.linkedNoteId.Value);
@@ -95,11 +90,6 @@ namespace BDEditor.Views
                         bool isCurrent = (existingLinksList[i].uuid == existingAssociation.uuid);
                         string description = existingLinksList[i].GetDescription(dataContext);
                         chListLinks.Items.Add(description, isCurrent);
-                        if (isCurrent)
-                        {
-                            rtfContextInfo.Text = description;
-                            DisplayLinkedNote(existingLinksList[i]);
-                        }
                     }
                 }
             }
@@ -141,7 +131,7 @@ namespace BDEditor.Views
             this.Cursor = Cursors.Default;
         }
 
-        private void DisplayLinkedNote(BDLinkedNoteAssociation pAssociation)
+        private void DisplayLinkedNote(BDLinkedNoteAssociation pAssociation, bool withRefresh)
         {
             if (null == pAssociation)
             {
@@ -153,6 +143,9 @@ namespace BDEditor.Views
                 bdLinkedNoteControl1.CurrentLinkedNote = linkedNote;
                 bdLinkedNoteControl1.SelectedLinkedNoteType = (LinkedNoteType)pAssociation.linkedNoteType;
             }
+
+            if (withRefresh)
+                bdLinkedNoteControl1.RefreshLayout();
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -167,6 +160,11 @@ namespace BDEditor.Views
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefreshSelectedTab();
+        }
+
+        private void RefreshSelectedTab()
         {
             switch (tabControl1.SelectedIndex)
             {
@@ -194,22 +192,20 @@ namespace BDEditor.Views
             {
                 BDLinkedNote selectedNote = existingNotesInScopeList[chListNotes.SelectedIndex];
 
-                BDLinkedNoteAssociation assignedLink;
-                if (null == existingAssociation)
+                if (null == this.existingAssociation)
                 {
-                    assignedLink = BDLinkedNoteAssociation.CreateLinkedNoteAssociation(dataContext);
-                    assignedLink.parentEntityName = contextEntityName;
-                    assignedLink.parentEntityPropertyName = contextPropertyName;
-                    assignedLink.parentId = parentId;
-                }
-                else
-                {
-                    assignedLink = existingAssociation;
+                    this.existingAssociation = BDLinkedNoteAssociation.CreateLinkedNoteAssociation(dataContext);
+                    this.existingAssociation.parentEntityName = contextEntityName;
+                    this.existingAssociation.parentEntityPropertyName = contextPropertyName;
+                    this.existingAssociation.parentId = parentId;
+
                 }
 
-                assignedLink.linkedNoteId = selectedNote.uuid;
+                this.existingAssociation.linkedNoteId = selectedNote.uuid;
 
-                BDLinkedNoteAssociation.SaveLinkedNoteAssociation(dataContext, assignedLink);
+                BDLinkedNoteAssociation.SaveLinkedNoteAssociation(dataContext, this.existingAssociation);
+
+                DisplayLinkedNote(this.existingAssociation, true);
 
                 tabControl1.SelectedIndex = 0;
             }
@@ -238,6 +234,37 @@ namespace BDEditor.Views
                 btnAssignNote.Visible = enabled && (chListNotes.SelectedIndex >= 0);
             }
             btnAssignNote.Enabled = enabled && (chListNotes.SelectedIndex >= 0);
+        }
+
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+            this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
+        }
+
+        private void RemoveCurrentAssociation_Action(object sender, EventArgs e)
+        {
+            if (null != existingAssociation)
+            {
+                BDLinkedNoteAssociation.Delete(dataContext, existingAssociation);
+                this.existingAssociation = null;
+                DisplayLinkedNote(null, true);
+                RefreshSelectedTab();
+            }
+        }
+
+        private void DeleteCurrentNote_Action(object sender, EventArgs e)
+        {
+            if (null != existingAssociation)
+            {
+                if (MessageBox.Show("This will also delete all linked associations.", "Delete Note", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.OK)
+                {
+                    BDLinkedNote.Delete(dataContext, existingAssociation.linkedNoteId.Value, true);
+
+                    this.existingAssociation = null;
+                    DisplayLinkedNote(null, true);
+                    RefreshSelectedTab();
+                }
+            }
         }
     }
 }

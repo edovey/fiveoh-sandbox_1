@@ -110,6 +110,13 @@ namespace BDEditor.Views
             scopeId = pScopeId;
         }
 
+        public void AssignTypeaheadSource(AutoCompleteStringCollection pSource)
+        {
+            tbName.AutoCompleteCustomSource = pSource;
+            tbName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tbName.AutoCompleteSource = AutoCompleteSource.CustomSource;
+        }
+
         #region IBDControl
 
         public void AssignDataContext(Entities pDataContext)
@@ -159,6 +166,8 @@ namespace BDEditor.Views
                     }
                     
                     BDTherapyGroup.SaveTherapyGroup(dataContext, currentTherapyGroup);
+                    Typeahead.AddToCollection(BDTherapyGroup.ENTITYNAME, BDTherapyGroup.PROPERTYNAME_NAME, currentTherapyGroup.name);
+
                     result = true;
                 }
             }
@@ -211,6 +220,9 @@ namespace BDEditor.Views
                 therapyControl.AssignParentId(currentTherapyGroup.uuid);
                 therapyControl.AssignDataContext(dataContext);
                 therapyControl.AssignScopeId(scopeId);
+                therapyControl.AssignTypeaheadSource(Typeahead.TherapyNames, BDTherapy.PROPERTYNAME_THERAPY);
+                therapyControl.AssignTypeaheadSource(Typeahead.TherapyDosages, BDTherapy.PROPERTYNAME_DOSAGE);
+                therapyControl.AssignTypeaheadSource(Typeahead.TherapyDurations, BDTherapy.PROPERTYNAME_DURATION);
                 therapyControl.CurrentTherapy = pTherapy;
                 therapyControl.RequestItemAdd += new EventHandler(Therapy_RequestItemAdd);
                 therapyControl.RequestItemDelete += new EventHandler(Therapy_RequestItemDelete);

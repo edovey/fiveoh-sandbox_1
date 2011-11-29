@@ -123,6 +123,7 @@
     <Compile Include="Classes\RepositoryHandler.cs" />
     <Compile Include="Classes\SyncInfo.cs" />
     <Compile Include="Classes\SyncInfoDictionary.cs" />
+    <Compile Include="Classes\Typeahead.cs" />
     <Compile Include="DataModel\BDCategory.cs" />
     <Compile Include="DataModel\BDChapter.cs" />
     <Compile Include="DataModel\BDDeletion.cs" />
@@ -217,12 +218,6 @@
       <DependentUpon>BDTherapyGroupControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\IBDControl.cs" />
-    <Compile Include="Views\PathogenSet.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\PathogenSet.Designer.cs">
-      <DependentUpon>PathogenSet.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\licenses.licx">
@@ -263,9 +258,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDTherapyGroupControl.resx">
       <DependentUpon>BDTherapyGroupControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\PathogenSet.resx">
-      <DependentUpon>PathogenSet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -378,7 +370,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
+      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

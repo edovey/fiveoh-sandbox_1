@@ -87,6 +87,8 @@ namespace BDEditor.Views
                 if (currentPathogen.displayOrder != DisplayOrder) currentPathogen.displayOrder = DisplayOrder;
                 BDPathogen.SavePathogen(dataContext, currentPathogen);
                 result = true;
+
+                Typeahead.AddToCollection(BDPathogen.ENTITYNAME, BDPathogen.PROPERTYNAME_NAME, currentPathogen.name);
             }
 
             return result;
@@ -176,6 +178,7 @@ namespace BDEditor.Views
             tbPathogenName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             tbPathogenName.AutoCompleteSource = AutoCompleteSource.CustomSource;
         }
+
         #endregion
 
         private void btnLink_Click(object sender, EventArgs e)

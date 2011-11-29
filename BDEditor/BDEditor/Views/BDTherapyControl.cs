@@ -205,6 +205,28 @@ namespace BDEditor.Views
             }
         }
 
+        public void AssignTypeaheadSource(AutoCompleteStringCollection pSource, string pProperty)
+        {
+            if (pProperty == string.Empty || pProperty == BDTherapy.PROPERTYNAME_THERAPY)
+            {
+                tbName.AutoCompleteCustomSource = pSource;
+                tbName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                tbName.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            } 
+            else if (pProperty == BDTherapy.PROPERTYNAME_DOSAGE)
+            {
+                tbDosage.AutoCompleteCustomSource = pSource;
+                tbDosage.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                tbDosage.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            } 
+            else if (pProperty == BDTherapy.PROPERTYNAME_DURATION)
+            {
+                tbDuration.AutoCompleteCustomSource = pSource;
+                tbDuration.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                tbDuration.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            }    
+        }
+
         #region IBDControl
 
         public void AssignDataContext(Entities pDataContext)
@@ -277,6 +299,9 @@ namespace BDEditor.Views
                     if(currentTherapy.rightBracket != this.displayRightBracket) currentTherapy.rightBracket = this.displayRightBracket;
 
                     BDTherapy.SaveTherapy(dataContext, currentTherapy);
+                    Typeahead.AddToCollection(BDTherapy.ENTITYNAME, BDTherapy.PROPERTYNAME_THERAPY, currentTherapy.name);
+                    Typeahead.AddToCollection(BDTherapy.ENTITYNAME, BDTherapy.PROPERTYNAME_DOSAGE, currentTherapy.dosage);
+                    Typeahead.AddToCollection(BDTherapy.ENTITYNAME, BDTherapy.PROPERTYNAME_DURATION, currentTherapy.duration);
 
                     result = true;
                 }

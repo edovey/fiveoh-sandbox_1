@@ -156,6 +156,19 @@ namespace BDEditor.DataModel
             return pathogenGroup;
         }
 
+        /// <summary>
+        /// Get a string array of all the Pathogen Group name values in the database.
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <returns></returns>
+        public static string[] GetPathogenGroupNames(Entities pContext)
+        {
+            var pgroups = pContext.BDPathogenGroups.Where(x => (!string.IsNullOrEmpty(x.name))).Select(pg => pg.name).Distinct();
+
+            return pgroups.ToArray();
+        }
+ 
+
         protected override void OnPropertyChanged(string property)
         {
             if (!Common.Settings.IsSyncLoad)

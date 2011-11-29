@@ -22,6 +22,7 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME = @"BDTherapyGroups";
         public const string ENTITYNAME_FRIENDLY = @"Therapy Group";
         public const string PROPERTYNAME_DEFAULT = "TherapyGroup";
+        public const string PROPERTYNAME_NAME = @"Name";
 
         private const string UUID = @"tg_uuid";
         private const string SCHEMAVERSION = @"tg_schemaVersion";
@@ -153,6 +154,20 @@ namespace BDEditor.DataModel
                     entry = entryList.AsQueryable().First<BDTherapyGroup>();
             }
             return entry;
+        }
+
+        /// <summary>
+        /// Get a string array of all the Therapy Group name values in the database.
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <returns></returns>
+        public static string[] GetTherapyGroupNames(Entities pContext)
+        {
+            IQueryable<string> qry = (from p in pContext.BDTherapyGroups
+                                      select p.name);
+            var pathogenNames = qry.Distinct();
+
+            return pathogenNames.ToArray();
         }
 
         protected override void OnPropertyChanged(string property)

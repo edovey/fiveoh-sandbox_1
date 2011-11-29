@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using BDEditor.DataModel;
+using BDEditor.Classes;
 
 namespace BDEditor.Views
 {
@@ -192,7 +193,7 @@ namespace BDEditor.Views
                 pathogenGroupControl.AssignParentId(currentPresentation.uuid);
                 pathogenGroupControl.AssignDataContext(dataContext);
                 pathogenGroupControl.AssignScopeId(scopeId);
-               // pathogenGroupControl.AssignTypeaheadSource(pathogenGroupNameCollection);
+                pathogenGroupControl.AssignTypeaheadSource(Typeahead.PathogenGroups);
                 pathogenGroupControl.CurrentPathogenGroup = pPathogenGroup;
                 pathogenGroupControl.RequestItemAdd += new EventHandler(PathogenGroup_RequestItemAdd);
                 pathogenGroupControl.RequestItemDelete += new EventHandler(PathogenGroup_RequestItemDelete);

@@ -70,6 +70,14 @@ namespace BDEditor.Views
             scopeId = pScopeId;
         }
 
+        public void AssignTypeaheadSource(AutoCompleteStringCollection pSource)
+        {
+            textBoxPathogenGroupName.AutoCompleteCustomSource = pSource;
+            textBoxPathogenGroupName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            textBoxPathogenGroupName.AutoCompleteSource = AutoCompleteSource.CustomSource;
+        }
+
+
         #region IBDControl
         
         public void AssignDataContext(Entities pDataContext)
@@ -113,6 +121,9 @@ namespace BDEditor.Views
                     if (currentPathogenGroup.displayOrder != DisplayOrder) currentPathogenGroup.displayOrder = DisplayOrder;
 
                     BDPathogenGroup.SavePathogenGroup(dataContext, currentPathogenGroup);
+
+                    Typeahead.AddToCollection(BDPathogen.ENTITYNAME, BDPathogen.PROPERTYNAME_NAME, currentPathogenGroup.name);
+
                     result = true;
                 }
             }
@@ -208,7 +219,7 @@ namespace BDEditor.Views
                 pathogenControl.AssignParentId(currentPathogenGroup.uuid);
                 pathogenControl.AssignDataContext(dataContext);
                 pathogenControl.AssignScopeId(scopeId);
-                pathogenControl.AssignTypeaheadSource(pathogenNameCollection);
+                pathogenControl.AssignTypeaheadSource(Typeahead.Pathogens);
                 pathogenControl.CurrentPathogen = pPathogen;
                 pathogenControl.RequestItemAdd += new EventHandler(Pathogen_RequestItemAdd);
                 pathogenControl.RequestItemDelete += new EventHandler(Pathogen_RequestItemDelete);
@@ -297,6 +308,7 @@ namespace BDEditor.Views
                 therapyGroupControl.AssignParentId(currentPathogenGroup.uuid);
                 therapyGroupControl.AssignScopeId(scopeId);
                 therapyGroupControl.AssignDataContext(dataContext);
+                therapyGroupControl.AssignTypeaheadSource(Typeahead.TherapyGroups);
                 therapyGroupControl.CurrentTherapyGroup = pTherapyGroup;
                 therapyGroupControl.RequestItemAdd += new EventHandler(TherapyGroup_RequestItemAdd);
                 therapyGroupControl.RequestItemDelete += new EventHandler(TherapyGroup_RequestItemDelete);

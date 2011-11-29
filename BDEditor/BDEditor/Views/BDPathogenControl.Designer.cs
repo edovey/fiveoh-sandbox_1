@@ -44,10 +44,6 @@
             // 
             // tbPathogenName
             // 
-            this.tbPathogenName.AutoCompleteCustomSource.AddRange(new string[] {
-            "Streptococcus aureus\t",
-            "S. aureus",
-            "Pathogen B"});
             this.tbPathogenName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.tbPathogenName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.tbPathogenName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

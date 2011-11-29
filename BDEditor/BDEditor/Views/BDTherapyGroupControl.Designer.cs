@@ -196,7 +196,7 @@
             this.toolStripMenuItem2,
             this.deleteToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(179, 126);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(179, 148);
             // 
             // reorderPreviousToolStripMenuItem
             // 
@@ -259,7 +259,7 @@
             this.Controls.Add(this.panelHeader);
             this.MinimumSize = new System.Drawing.Size(860, 100);
             this.Name = "BDTherapyGroupControl";
-            this.Size = new System.Drawing.Size(860, 100);
+            this.Size = new System.Drawing.Size(860, 111);
             this.Leave += new System.EventHandler(this.BDTherapyGroupControl_Leave);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();

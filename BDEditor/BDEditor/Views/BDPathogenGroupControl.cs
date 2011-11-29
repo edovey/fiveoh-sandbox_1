@@ -379,13 +379,19 @@ namespace BDEditor.Views
             OnItemDeleteRequested(new EventArgs());
         }
 
+        private void PathogenGroup_ReorderToPrevious(object sender, EventArgs e)
+        {
+            OnReorderToPrevious(new EventArgs());
+        }
+
+        private void PathogenGroup_ReorderToNext(object sender, EventArgs e)
+        {
+            OnReorderToNext(new EventArgs());
+        }
+
         private void Pathogen_RequestItemAdd(object sender, EventArgs e)
         {
             BDPathogenControl control = addPathogenControl(null, pathogenControlList.Count);
-            if (null != control)
-            {
-                control.Focus();
-            }
         }
 
         private void Pathogen_RequestItemDelete(object sender, EventArgs e)
@@ -454,9 +460,48 @@ namespace BDEditor.Views
             return (null == this.currentPathogenGroup) ? "No Pathogen Group" : this.currentPathogenGroup.uuid.ToString();
         }
 
+        private void btnPathogenGroupLink_Click(object sender, EventArgs e)
+        {
+            CreateLink(@"PathogenGroup");
+        }
+
+        private void CreateLink(string pProperty)
+        {
+            if (CreateCurrentObject())
+            {
+                Save();
+                BDLinkedNoteView view = new BDLinkedNoteView();
+                view.AssignDataContext(dataContext);
+                view.AssignContextPropertyName(pProperty);
+                view.AssignContextEntityName(BDPathogenGroup.ENTITYNAME_FRIENDLY);
+                view.AssignScopeId(scopeId);
+
+                if (null != currentPathogenGroup)
+                {
+                    view.AssignParentId(currentPathogenGroup.uuid);
+                }
+                else
+                {
+                    view.AssignParentId(null);
+                }
+                view.PopulateControl();
+                view.ShowDialog(this);
+            }
+        }
+
         private void btnMenu_Click(object sender, EventArgs e)
         {
             this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
         }
+        private void btnReorderToPrevious_Click(object sender, EventArgs e)
+        {
+            OnReorderToPrevious(new EventArgs());
+        }
+
+        private void btnReorderToNext_Click(object sender, EventArgs e)
+        {
+            OnReorderToNext(new EventArgs());
+        }
+
     }
 }

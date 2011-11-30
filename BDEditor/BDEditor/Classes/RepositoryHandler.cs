@@ -405,7 +405,7 @@ namespace BDEditor.Classes
                 string domainName = "";
                 foreach (BDDeletion entry in newDeletionsForRemote)
                 {
-                    switch(entry.entityName)
+                    switch(entry.targetName)
                     {
                         case BDCategory.ENTITYNAME_FRIENDLY:
                             domainName = BDCategory.AWS_DOMAIN;
@@ -445,7 +445,7 @@ namespace BDEditor.Classes
                             break;
                     }
 
-                    DeleteAttributesRequest request = new DeleteAttributesRequest().WithDomainName(domainName).WithItemName(entry.entityId.Value.ToString().ToUpper());
+                    DeleteAttributesRequest request = new DeleteAttributesRequest().WithDomainName(domainName).WithItemName(entry.targetId.Value.ToString().ToUpper());
                     SimpleDb.DeleteAttributes(request);
                     break;
                 }

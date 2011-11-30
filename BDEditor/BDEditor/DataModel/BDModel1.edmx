@@ -507,8 +507,8 @@
           <Property Type="DateTime" Name="createdDate" />
           <Property Type="Guid" Name="modifiedBy" />
           <Property Type="DateTime" Name="modifiedDate" />
-          <Property Type="String" Name="entityName" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="Guid" Name="entityId" />
+          <Property Type="String" Name="targetName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="targetId" />
           <Property Type="Int32" Name="schemaVersion" />
         </EntityType>
         </Schema>
@@ -756,8 +756,8 @@
             <EntityTypeMapping TypeName="BDDataModel.BDDeletion">
               <MappingFragment StoreEntitySet="BDDeletions">
                 <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
-                <ScalarProperty Name="entityId" ColumnName="entityId" />
-                <ScalarProperty Name="entityName" ColumnName="entityName" />
+                <ScalarProperty Name="targetId" ColumnName="entityId" />
+                <ScalarProperty Name="targetName" ColumnName="entityName" />
                 <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
                 <ScalarProperty Name="modifiedBy" ColumnName="modifiedBy" />
                 <ScalarProperty Name="createdDate" ColumnName="createdDate" />

@@ -1156,48 +1156,48 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String entityName
+        public global::System.String targetName
         {
             get
             {
-                return _entityName;
+                return _targetName;
             }
             set
             {
-                OnentityNameChanging(value);
-                ReportPropertyChanging("entityName");
-                _entityName = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("entityName");
-                OnentityNameChanged();
+                OntargetNameChanging(value);
+                ReportPropertyChanging("targetName");
+                _targetName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("targetName");
+                OntargetNameChanged();
             }
         }
-        private global::System.String _entityName;
-        partial void OnentityNameChanging(global::System.String value);
-        partial void OnentityNameChanged();
+        private global::System.String _targetName;
+        partial void OntargetNameChanging(global::System.String value);
+        partial void OntargetNameChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Guid> entityId
+        public Nullable<global::System.Guid> targetId
         {
             get
             {
-                return _entityId;
+                return _targetId;
             }
             set
             {
-                OnentityIdChanging(value);
-                ReportPropertyChanging("entityId");
-                _entityId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("entityId");
-                OnentityIdChanged();
+                OntargetIdChanging(value);
+                ReportPropertyChanging("targetId");
+                _targetId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("targetId");
+                OntargetIdChanged();
             }
         }
-        private Nullable<global::System.Guid> _entityId;
-        partial void OnentityIdChanging(Nullable<global::System.Guid> value);
-        partial void OnentityIdChanged();
+        private Nullable<global::System.Guid> _targetId;
+        partial void OntargetIdChanging(Nullable<global::System.Guid> value);
+        partial void OntargetIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.

@@ -27,10 +27,10 @@ namespace BDEditor.DataModel
         private const string CREATEDDATE = @"de_createdDate";
         private const string MODIFIEDBY = @"de_modifiedBy";
         private const string MODIFIEDDATE = @"de_modifiedDate";
-        private const string ENTITYID = @"de_entityId";
-        private const string ENITIYNAME = @"de_entityName";
+        private const string TARGETID = @"de_targetId";
+        private const string TARGETNAME = @"de_targetName";
 
-        public static void CreateDeletion(Entities pContext, string pEntityName, Guid pEntityId)
+        public static void CreateDeletion(Entities pContext, string pTargetName, Guid pTargetId)
         {
             BDDeletion deletion = CreateBDDeletion(Guid.NewGuid());
             deletion.createdBy = Guid.Empty;
@@ -38,8 +38,8 @@ namespace BDEditor.DataModel
             deletion.modifiedBy = Guid.Empty;
             deletion.modifiedDate = DateTime.Now;
             deletion.schemaVersion = ENTITY_SCHEMAVERSION;
-            deletion.entityName = pEntityName;
-            deletion.entityId = pEntityId;
+            deletion.targetName = pTargetName;
+            deletion.targetId = pTargetId;
 
             pContext.AddObject("BDDeletions", deletion);
         }
@@ -92,43 +92,43 @@ namespace BDEditor.DataModel
             List<BDDeletion> newDeletionsForLocal = BDDeletion.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
             foreach (BDDeletion deletion in newDeletionsForLocal)
             {
-                switch (deletion.entityName)
+                switch (deletion.targetName)
                 {
                     case BDCategory.ENTITYNAME_FRIENDLY:
-                        BDCategory.Delete(pDataContext, deletion.entityId.Value,false);
+                        BDCategory.Delete(pDataContext, deletion.targetId.Value,false);
                         break;
                     case BDChapter.ENTITYNAME_FRIENDLY:
-                        BDChapter.Delete(pDataContext, deletion.entityId.Value, false);
+                        BDChapter.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
                     case BDDisease.ENTITYNAME_FRIENDLY:
-                        BDDisease.Delete(pDataContext, deletion.entityId.Value, false);
+                        BDDisease.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
                     case BDLinkedNote.ENTITYNAME_FRIENDLY:
-                        BDLinkedNote.Delete(pDataContext, deletion.entityId.Value, false);
+                        BDLinkedNote.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
                     case BDLinkedNoteAssociation.ENTITYNAME_FRIENDLY:
-                        BDLinkedNoteAssociation.Delete(pDataContext, deletion.entityId.Value, false);
+                        BDLinkedNoteAssociation.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
                     case BDPathogen.ENTITYNAME_FRIENDLY:
-                        BDPathogen.Delete(pDataContext, deletion.entityId.Value, false);
+                        BDPathogen.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
                     case BDPathogenGroup.ENTITYNAME_FRIENDLY:
-                        BDPathogenGroup.Delete(pDataContext, deletion.entityId.Value, false);
+                        BDPathogenGroup.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
                     case BDPresentation.ENTITYNAME_FRIENDLY:
-                        BDPresentation.Delete(pDataContext, deletion.entityId.Value, false);
+                        BDPresentation.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
                     case BDSection.ENTITYNAME_FRIENDLY:
-                        BDSection.Delete(pDataContext, deletion.entityId.Value, false);
+                        BDSection.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
                     case BDSubcategory.ENTITYNAME_FRIENDLY:
-                        BDSubcategory.Delete(pDataContext, deletion.entityId.Value, false);
+                        BDSubcategory.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
                     case BDTherapy.ENTITYNAME_FRIENDLY:
-                        BDTherapy.Delete(pDataContext, deletion.entityId.Value, false);
+                        BDTherapy.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
                     case BDTherapyGroup.ENTITYNAME_FRIENDLY:
-                        BDTherapyGroup.Delete(pDataContext, deletion.entityId.Value, false);
+                        BDTherapyGroup.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
                 }
                 pDataContext.SaveChanges();
@@ -156,8 +156,8 @@ namespace BDEditor.DataModel
             entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
             entry.modifiedBy = Guid.Parse(pAttributeDictionary[MODIFIEDBY]);
             entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
-            entry.entityId = Guid.Parse(pAttributeDictionary[ENTITYID]);
-            entry.entityName = pAttributeDictionary[ENTITYNAME];
+            entry.targetId = Guid.Parse(pAttributeDictionary[TARGETID]);
+            entry.targetName = pAttributeDictionary[TARGETNAME];
 
             if (pSaveChanges)
                 pDataContext.SaveChanges();
@@ -176,8 +176,8 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDDeletion.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDDeletion.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDDeletion.ENTITYID).WithValue((null == entityId) ? Guid.Empty.ToString() : entityId.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDDeletion.ENTITYNAME).WithValue((null == entityName) ? string.Empty : entityName).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDDeletion.TARGETID).WithValue((null == targetId) ? Guid.Empty.ToString() : targetId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDDeletion.TARGETNAME).WithValue((null == targetName) ? string.Empty : targetName).WithReplace(true));
 
             return putAttributeRequest;
         }

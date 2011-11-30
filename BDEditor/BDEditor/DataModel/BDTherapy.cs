@@ -337,9 +337,9 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.THERAPYJOINTYPE).WithValue(string.Format(@"{0}", therapyJoinType)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.LEFTBRACKET).WithValue(leftBracket.ToString()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.RIGHTBRACKET).WithValue(rightBracket.ToString()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.NAME).WithValue(name).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DOSAGE).WithValue(dosage).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DURATION).WithValue(duration).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DOSAGE).WithValue((null == dosage) ? string.Empty : dosage).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DURATION).WithValue((null == duration) ? string.Empty : duration).WithReplace(true));
 
             return putAttributeRequest;
         }

@@ -264,7 +264,7 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDSection.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDSection.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.NAME).WithValue(name).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDSection.CHAPTERID).WithValue((null == chapterId) ? Guid.Empty.ToString() : chapterId.ToString().ToUpper()).WithReplace(true));
 
             return putAttributeRequest;

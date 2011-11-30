@@ -246,7 +246,7 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.CATEGORYID).WithValue((null == categoryId) ? Guid.Empty.ToString() : categoryId.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.NAME).WithValue(name).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
 
             return putAttributeRequest;
         }

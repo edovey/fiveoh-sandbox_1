@@ -288,7 +288,7 @@ namespace BDEditor.DataModel
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDDisease.CATEGORYID).WithValue((null == categoryId) ? Guid.Empty.ToString() : categoryId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDDisease.SUBCATEGORYID).WithValue((null == subcategoryId) ? Guid.Empty.ToString() : subcategoryId.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDDisease.NAME).WithValue(name).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDDisease.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
 
             return putAttributeRequest;
         }

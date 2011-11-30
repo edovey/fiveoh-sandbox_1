@@ -233,7 +233,7 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDChapter.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDChapter.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDChapter.NAME).WithValue(name).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDChapter.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
 
             return putAttributeRequest;
         }

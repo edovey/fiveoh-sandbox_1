@@ -280,9 +280,9 @@ namespace BDEditor.DataModel
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.LINKEDNOTEASSOCIATIONID).WithValue((null == linkedNoteAssociationId) ? Guid.Empty.ToString() : linkedNoteAssociationId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.SCOPEID).WithValue((null == scopeId) ? Guid.Empty.ToString() : scopeId.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.PREVIEWTEXT).WithValue(previewText).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.PREVIEWTEXT).WithValue((null == previewText) ? string.Empty : previewText).WithReplace(true));
             //attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.DOCUMENTTEXT).WithValue(documentText).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.STORAGEKEY).WithValue(storageKey).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.STORAGEKEY).WithValue((null == storageKey) ? string.Empty : storageKey).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.SINGLEUSE).WithValue(singleUse.ToString()).WithReplace(true));
 
             return putAttributeRequest;

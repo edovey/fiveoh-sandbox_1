@@ -277,7 +277,7 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.PATHOGENGROUPID).WithValue((null == pathogenGroupId) ? Guid.Empty.ToString() : pathogenGroupId.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.NAME).WithValue(name).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
 
             return putAttributeRequest;
         }

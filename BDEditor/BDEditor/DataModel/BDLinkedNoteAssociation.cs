@@ -406,8 +406,8 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.LINKEDNOTEID).WithValue((null == linkedNoteId) ? Guid.Empty.ToString() : linkedNoteId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.LINKEDNOTETYPE).WithValue(string.Format(@"{0}", linkedNoteType)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.PARENTENTITYNAME).WithValue(parentEntityName).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.PARENTENTITYPROPERTYNAME).WithValue(parentEntityPropertyName).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.PARENTENTITYNAME).WithValue((null == parentEntityName) ? string.Empty : parentEntityName).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.PARENTENTITYPROPERTYNAME).WithValue((null == parentEntityPropertyName) ? string.Empty : parentEntityPropertyName).WithReplace(true));
 
             return putAttributeRequest;
         }

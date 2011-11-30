@@ -272,7 +272,7 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDPathogenGroup.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDPathogenGroup.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDPathogenGroup.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogenGroup.NAME).WithValue(name).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogenGroup.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDPathogenGroup.PRESENTATIONID).WithValue((null == presentationId) ? Guid.Empty.ToString() : presentationId.ToString().ToUpper()).WithReplace(true));
 

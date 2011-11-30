@@ -176,7 +176,7 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDDeletion.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDDeletion.ENTITYID).WithValue((null == entityId) ? Guid.Empty.ToString() : entityId.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDDeletion.ENTITYNAME).WithValue(entityName).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDDeletion.ENTITYNAME).WithValue((null == entityName) ? string.Empty : entityName).WithReplace(true));
 
             return putAttributeRequest;
         }

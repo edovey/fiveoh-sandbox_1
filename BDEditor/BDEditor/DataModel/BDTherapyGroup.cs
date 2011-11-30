@@ -289,7 +289,7 @@ namespace BDEditor.DataModel
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.PATHOGENGROUPID).WithValue((null == pathogenGroupId) ? Guid.Empty.ToString() : pathogenGroupId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.THERAPYGROUPJOINTYPE).WithValue(therapyGroupJoinType.ToString()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.NAME).WithValue(name).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
 
             return putAttributeRequest;
         }

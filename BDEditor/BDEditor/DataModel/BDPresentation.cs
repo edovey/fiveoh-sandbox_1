@@ -262,7 +262,7 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDPresentation.DISPLAYORDER).WithValue(string.Format(@"{0}", displayOrder)).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDPresentation.DISEASEID).WithValue((null == diseaseId) ? Guid.Empty.ToString() : diseaseId.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDPresentation.NAME).WithValue(name).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPresentation.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
 
             return putAttributeRequest;
         }

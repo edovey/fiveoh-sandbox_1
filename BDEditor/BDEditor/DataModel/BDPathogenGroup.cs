@@ -22,6 +22,7 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME = @"BDPathogenBroups";
         public const string ENTITYNAME_FRIENDLY = @"Pathogen Group";
         public const string PROPERTYNAME_DEFAULT = @"PathogenGroup";
+        public const int ENTITY_SCHEMAVERSION = 1;
 
         private const string UUID = @"pg_uuid";
         private const string SCHEMAVERSION = @"pg_schemaVersion";
@@ -44,7 +45,7 @@ namespace BDEditor.DataModel
             BDPathogenGroup pathogenGroup = CreateBDPathogenGroup(Guid.NewGuid(), false);
             pathogenGroup.createdBy = Guid.Empty;
             pathogenGroup.createdDate = DateTime.Now;
-            pathogenGroup.schemaVersion = 0;
+            pathogenGroup.schemaVersion = ENTITY_SCHEMAVERSION;
             pathogenGroup.displayOrder = -1;
             pathogenGroup.presentationId = pPresentationId;
             pathogenGroup.name = string.Empty;
@@ -65,6 +66,8 @@ namespace BDEditor.DataModel
             {
                 //pPathogenGroup.modifiedBy = Guid.Empty;
                 //pPathogenGroup.modifiedDate = DateTime.Now;
+                if (pPathogenGroup.schemaVersion != ENTITY_SCHEMAVERSION)
+                    pPathogenGroup.schemaVersion = ENTITY_SCHEMAVERSION;
 
                 System.Diagnostics.Debug.WriteLine(@"PathogenGroup Save");
                 pContext.SaveChanges();

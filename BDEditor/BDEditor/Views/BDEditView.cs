@@ -68,7 +68,7 @@ namespace BDEditor.Views
                 case BDNodeContextType.Section:
                     BDSection section = BDSection.CreateSection(dataContext);
                     section.name = @"New Section";
-                    BDSection.SaveSection(dataContext,section);
+                    BDSection.Save(dataContext,section);
                     break;
 
                 default:

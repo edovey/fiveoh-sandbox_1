@@ -35,20 +35,20 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(14, 20);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(3, 6);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(68, 18);
+            this.label1.Size = new System.Drawing.Size(85, 24);
             this.label1.TabIndex = 0;
             this.label1.Text = "Category";
             // 
             // tbCategoryName
             // 
-            this.tbCategoryName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbCategoryName.Location = new System.Drawing.Point(17, 53);
+            this.tbCategoryName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbCategoryName.Location = new System.Drawing.Point(39, 31);
             this.tbCategoryName.Name = "tbCategoryName";
             this.tbCategoryName.ReadOnly = true;
-            this.tbCategoryName.Size = new System.Drawing.Size(449, 24);
+            this.tbCategoryName.Size = new System.Drawing.Size(449, 26);
             this.tbCategoryName.TabIndex = 1;
             // 
             // BDCategoryControl

@@ -172,7 +172,7 @@ namespace BDEditor.Views
                             currentTherapyGroup.therapyGroupJoinType = (int)BDTherapyGroup.TherapyGroupJoinType.None;
                     }
                     
-                    BDTherapyGroup.SaveTherapyGroup(dataContext, currentTherapyGroup);
+                    BDTherapyGroup.Save(dataContext, currentTherapyGroup);
                     Typeahead.AddToCollection(BDTherapyGroup.ENTITYNAME, BDTherapyGroup.PROPERTYNAME_NAME, currentTherapyGroup.name);
 
                     result = true;
@@ -353,14 +353,14 @@ namespace BDEditor.Views
                     therapyControlList[requestedPosition].DisplayOrder = currentPosition;
 
                     therapyControlList[requestedPosition].CurrentTherapy.displayOrder = currentPosition;
-                    BDTherapy.SaveTherapy(dataContext, therapyControlList[requestedPosition].CurrentTherapy);
+                    BDTherapy.Save(dataContext, therapyControlList[requestedPosition].CurrentTherapy);
 
 
                     therapyControlList[currentPosition].CreateCurrentObject();
                     therapyControlList[currentPosition].DisplayOrder = requestedPosition;
 
                     therapyControlList[currentPosition].CurrentTherapy.displayOrder = requestedPosition;
-                    BDTherapy.SaveTherapy(dataContext, therapyControlList[currentPosition].CurrentTherapy);
+                    BDTherapy.Save(dataContext, therapyControlList[currentPosition].CurrentTherapy);
 
                     BDTherapyControl temp = therapyControlList[requestedPosition];
                     therapyControlList[requestedPosition] = therapyControlList[currentPosition];

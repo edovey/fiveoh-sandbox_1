@@ -35,17 +35,17 @@
             // lblSectionName
             // 
             this.lblSectionName.AutoSize = true;
-            this.lblSectionName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSectionName.Location = new System.Drawing.Point(14, 20);
+            this.lblSectionName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSectionName.Location = new System.Drawing.Point(3, 6);
             this.lblSectionName.Name = "lblSectionName";
-            this.lblSectionName.Size = new System.Drawing.Size(89, 18);
+            this.lblSectionName.Size = new System.Drawing.Size(126, 24);
             this.lblSectionName.TabIndex = 0;
             this.lblSectionName.Text = "Section Title";
             // 
             // tbSectionName
             // 
             this.tbSectionName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbSectionName.Location = new System.Drawing.Point(17, 53);
+            this.tbSectionName.Location = new System.Drawing.Point(39, 31);
             this.tbSectionName.Name = "tbSectionName";
             this.tbSectionName.Size = new System.Drawing.Size(475, 24);
             this.tbSectionName.TabIndex = 1;

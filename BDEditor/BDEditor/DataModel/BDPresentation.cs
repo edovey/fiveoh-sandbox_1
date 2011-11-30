@@ -19,7 +19,7 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME = @"BDPresentations";
         public const string ENTITYNAME_FRIENDLY = @"Presentation";
         public const string PROPERTYNAME_OVERVIEW = @"Overview";
-
+        public const int ENTITY_SCHEMAVERSION = 0;
 
         private const string UUID = @"pr_uuid";
         private const string SCHEMAVERSION = @"pr_schemaVersion";
@@ -41,7 +41,7 @@ namespace BDEditor.DataModel
             BDPresentation presentation = CreateBDPresentation(Guid.NewGuid(), false);
             presentation.createdBy = Guid.Empty;
             presentation.createdDate = DateTime.Now;
-            presentation.schemaVersion = 0;
+            presentation.schemaVersion = ENTITY_SCHEMAVERSION;
             presentation.displayOrder = -1;
             presentation.name = string.Empty;
             presentation.diseaseId = pDiseaseId;
@@ -50,7 +50,7 @@ namespace BDEditor.DataModel
 
             BDPathogenGroup pathogenGroup = BDPathogenGroup.CreatePathogenGroup(pContext, presentation.uuid);
             pathogenGroup.displayOrder = 0;
-            BDPathogenGroup.SavePathogenGroup(pContext, pathogenGroup);
+            BDPathogenGroup.Save(pContext, pathogenGroup);
 
             return presentation;
         }
@@ -59,12 +59,13 @@ namespace BDEditor.DataModel
         /// Extended Save method that sets modifiedDate.
         /// </summary>
         /// <param name="pPresentation"></param>
-        public static void SavePresentation(Entities pContext, BDPresentation pPresentation)
+        public static void Save(Entities pContext, BDPresentation pPresentation)
         {
             if (pPresentation.EntityState != EntityState.Unchanged)
             {
-                //pPresentation.modifiedBy = Guid.Empty;
-                //pPresentation.modifiedDate = DateTime.Now;
+                if (pPresentation.schemaVersion != ENTITY_SCHEMAVERSION)
+                    pPresentation.schemaVersion = ENTITY_SCHEMAVERSION;
+
                 System.Diagnostics.Debug.WriteLine(@"Presentation Save");
                 pContext.SaveChanges();
             }

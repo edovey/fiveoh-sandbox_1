@@ -25,6 +25,7 @@ namespace BDEditor.DataModel
 
         public const string ENTITYNAME = @"BDLinkedNotes";
         public const string ENTITYNAME_FRIENDLY = @"Linked Note";
+        public const int ENTITY_SCHEMAVERSION = 0;
 
         private const string UUID = @"ln_uuid";
         private const string SCHEMAVERSION = @"ln_schemaVersion";
@@ -49,7 +50,7 @@ namespace BDEditor.DataModel
             BDLinkedNote linkedNote = CreateBDLinkedNote(Guid.NewGuid(), false);
             linkedNote.createdBy = Guid.Empty;
             linkedNote.createdDate = DateTime.Now;
-            linkedNote.schemaVersion = 0;
+            linkedNote.schemaVersion = ENTITY_SCHEMAVERSION;
             linkedNote.documentText = string.Empty;
             linkedNote.storageKey = string.Format("{0}{1}{2}", AWS_S3_PREFIX, linkedNote.uuid.ToString().ToUpper(), AWS_S3_FILEEXTENSION);
             linkedNote.singleUse = false;
@@ -63,12 +64,13 @@ namespace BDEditor.DataModel
         /// Extended Save method that sets the modified date
         /// </summary>
         /// <param name="pLinkedNote"></param>
-        public static void SaveLinkedNote(Entities pContext, BDLinkedNote pLinkedNote)
+        public static void Save(Entities pContext, BDLinkedNote pLinkedNote)
         {
             if (pLinkedNote.EntityState != EntityState.Unchanged)
             {
-                //pLinkedNote.modifiedBy = Guid.Empty;
-                //pLinkedNote.modifiedDate = DateTime.Now;
+                if (pLinkedNote.schemaVersion != ENTITY_SCHEMAVERSION)
+                    pLinkedNote.schemaVersion = ENTITY_SCHEMAVERSION;
+
                 System.Diagnostics.Debug.WriteLine(@"LinkedNote Save");
                 pContext.SaveChanges();
             }

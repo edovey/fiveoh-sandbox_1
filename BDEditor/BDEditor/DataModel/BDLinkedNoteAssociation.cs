@@ -29,6 +29,7 @@ namespace BDEditor.DataModel
         public const string AWS_DOMAIN = @"bd_1_linkedNoteAssociations";
         public const string ENTITYNAME = @"BDLinkedNoteAssociations";
         public const string ENTITYNAME_FRIENDLY = @"Linked Note Association";
+        public const int ENTITY_SCHEMAVERSION = 0;
 
         private const string UUID = @"la_uuid";
         private const string SCHEMAVERSION = @"la_schemaVersion";
@@ -55,7 +56,7 @@ namespace BDEditor.DataModel
             linkedNoteAssociation.createdBy = Guid.Empty;
             linkedNoteAssociation.createdDate = DateTime.Now;
             linkedNoteAssociation.deprecated = false;
-            linkedNoteAssociation.schemaVersion = 0;
+            linkedNoteAssociation.schemaVersion = ENTITY_SCHEMAVERSION;
             linkedNoteAssociation.linkedNoteType = (int)LinkedNoteType.Default;
             linkedNoteAssociation.displayOrder = -1;
             pContext.AddObject(@"BDLinkedNoteAssociations", linkedNoteAssociation);
@@ -91,17 +92,18 @@ namespace BDEditor.DataModel
 
             pContext.AddObject(@"BDLinkedNoteAssociations", linkedNoteAssociation);
 
-            SaveLinkedNoteAssociation(pContext, linkedNoteAssociation);
+            Save(pContext, linkedNoteAssociation);
 
             return linkedNoteAssociation;
         }
 
-        public static void SaveLinkedNoteAssociation(Entities pContext, BDLinkedNoteAssociation pLinkedNoteAssociation)
+        public static void Save(Entities pContext, BDLinkedNoteAssociation pLinkedNoteAssociation)
         {
             if (pLinkedNoteAssociation.EntityState != EntityState.Unchanged)
             {
-                //pLinkedNoteAssociation.modifiedBy = Guid.Empty;
-                //pLinkedNoteAssociation.modifiedDate = DateTime.Now;
+                if (pLinkedNoteAssociation.schemaVersion != ENTITY_SCHEMAVERSION)
+                    pLinkedNoteAssociation.schemaVersion = ENTITY_SCHEMAVERSION;
+
                 System.Diagnostics.Debug.WriteLine(@"LinkedNoteAssociation Save");
                 pContext.SaveChanges();
             }

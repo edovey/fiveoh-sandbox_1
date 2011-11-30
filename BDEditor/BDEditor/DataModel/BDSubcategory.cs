@@ -21,6 +21,7 @@ namespace BDEditor.DataModel
         public const string AWS_DOMAIN = @"bd_1_subcategories";
         public const string ENTITYNAME = @"BDSubcategories";
         public const string ENTITYNAME_FRIENDLY = @"Subcategory";
+        public const int ENTITY_SCHEMAVERSION = 0;
 
         private const string UUID = @"sc_uuid";
         private const string SCHEMAVERSION = @"sc_schemaVersion";
@@ -42,7 +43,7 @@ namespace BDEditor.DataModel
             BDSubcategory subcategory = CreateBDSubcategory(Guid.NewGuid(), false);
             subcategory.createdBy = Guid.Empty;
             subcategory.createdDate = DateTime.Now;
-            subcategory.schemaVersion = 0;
+            subcategory.schemaVersion = ENTITY_SCHEMAVERSION;
             subcategory.displayOrder = -1;
             subcategory.name = string.Empty;
             subcategory.categoryId = Guid.Empty;
@@ -56,12 +57,13 @@ namespace BDEditor.DataModel
         /// Extended Save method that sets the modified date.
         /// </summary>
         /// <param name="pSubcategory"></param>
-        public static void SaveSubcategory(Entities pContext, BDSubcategory pSubcategory)
+        public static void Save(Entities pContext, BDSubcategory pSubcategory)
         {
             if (pSubcategory.EntityState != EntityState.Unchanged)
             {
-                //pSubcategory.modifiedBy = Guid.Empty;
-                //pSubcategory.modifiedDate = DateTime.Now;
+                if (pSubcategory.schemaVersion != ENTITY_SCHEMAVERSION)
+                    pSubcategory.schemaVersion = ENTITY_SCHEMAVERSION;
+
                 System.Diagnostics.Debug.WriteLine(@"SubCategory Save");
                 pContext.SaveChanges();
             }

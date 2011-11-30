@@ -288,7 +288,7 @@ namespace BDEditor.Views
                     if(currentTherapy.leftBracket != this.displayLeftBracket) currentTherapy.leftBracket = this.displayLeftBracket;
                     if(currentTherapy.rightBracket != this.displayRightBracket) currentTherapy.rightBracket = this.displayRightBracket;
 
-                    BDTherapy.SaveTherapy(dataContext, currentTherapy);
+                    BDTherapy.Save(dataContext, currentTherapy);
                     Typeahead.AddToCollection(BDTherapy.ENTITYNAME, BDTherapy.PROPERTYNAME_THERAPY, currentTherapy.name);
                     Typeahead.AddToCollection(BDTherapy.ENTITYNAME, BDTherapy.PROPERTYNAME_DOSAGE, currentTherapy.dosage);
                     Typeahead.AddToCollection(BDTherapy.ENTITYNAME, BDTherapy.PROPERTYNAME_DURATION, currentTherapy.duration);

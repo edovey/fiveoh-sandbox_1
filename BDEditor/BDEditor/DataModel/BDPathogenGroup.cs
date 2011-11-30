@@ -60,12 +60,10 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pPathogenGroup"></param>
-        public static void SavePathogenGroup(Entities pContext, BDPathogenGroup pPathogenGroup)
+        public static void Save(Entities pContext, BDPathogenGroup pPathogenGroup)
         {
             if (pPathogenGroup.EntityState != EntityState.Unchanged)
             {
-                //pPathogenGroup.modifiedBy = Guid.Empty;
-                //pPathogenGroup.modifiedDate = DateTime.Now;
                 if (pPathogenGroup.schemaVersion != ENTITY_SCHEMAVERSION)
                     pPathogenGroup.schemaVersion = ENTITY_SCHEMAVERSION;
 

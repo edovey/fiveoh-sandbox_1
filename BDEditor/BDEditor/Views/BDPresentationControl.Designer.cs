@@ -33,8 +33,8 @@
             this.tbPresentationName = new System.Windows.Forms.TextBox();
             this.lblOverview = new System.Windows.Forms.Label();
             this.panelHeader = new System.Windows.Forms.Panel();
-            this.panelPathogenGroups = new System.Windows.Forms.Panel();
             this.btnMenu = new System.Windows.Forms.Button();
+            this.panelPathogenGroups = new System.Windows.Forms.Panel();
             this.contextMenuStripEvents = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addPathogenGroupToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.bdLinkedNoteControl1 = new BDEditor.Views.BDLinkedNoteControl();
@@ -45,10 +45,10 @@
             // labelPresentation
             // 
             this.labelPresentation.AutoSize = true;
-            this.labelPresentation.Font = new System.Drawing.Font("Arial", 14.25F);
-            this.labelPresentation.Location = new System.Drawing.Point(39, 6);
+            this.labelPresentation.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelPresentation.Location = new System.Drawing.Point(3, 6);
             this.labelPresentation.Name = "labelPresentation";
-            this.labelPresentation.Size = new System.Drawing.Size(116, 22);
+            this.labelPresentation.Size = new System.Drawing.Size(114, 24);
             this.labelPresentation.TabIndex = 0;
             this.labelPresentation.Text = "Presentation";
             // 
@@ -64,10 +64,10 @@
             // lblOverview
             // 
             this.lblOverview.AutoSize = true;
-            this.lblOverview.Font = new System.Drawing.Font("Arial", 14.25F);
+            this.lblOverview.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOverview.Location = new System.Drawing.Point(39, 56);
             this.lblOverview.Name = "lblOverview";
-            this.lblOverview.Size = new System.Drawing.Size(88, 22);
+            this.lblOverview.Size = new System.Drawing.Size(80, 20);
             this.lblOverview.TabIndex = 4;
             this.lblOverview.Text = "Overview";
             // 
@@ -81,36 +81,37 @@
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(863, 78);
+            this.panelHeader.Size = new System.Drawing.Size(880, 78);
             this.panelHeader.TabIndex = 7;
-            // 
-            // panelPathogenGroups
-            // 
-            this.panelPathogenGroups.AutoSize = true;
-            this.panelPathogenGroups.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panelPathogenGroups.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelPathogenGroups.Location = new System.Drawing.Point(0, 299);
-            this.panelPathogenGroups.MinimumSize = new System.Drawing.Size(0, 15);
-            this.panelPathogenGroups.Name = "panelPathogenGroups";
-            this.panelPathogenGroups.Size = new System.Drawing.Size(863, 15);
-            this.panelPathogenGroups.TabIndex = 8;
             // 
             // btnMenu
             // 
             this.btnMenu.Image = global::BDEditor.Properties.Resources.apps_16;
-            this.btnMenu.Location = new System.Drawing.Point(3, 23);
+            this.btnMenu.Location = new System.Drawing.Point(3, 30);
             this.btnMenu.Name = "btnMenu";
             this.btnMenu.Size = new System.Drawing.Size(28, 28);
             this.btnMenu.TabIndex = 26;
             this.btnMenu.UseVisualStyleBackColor = true;
             this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
             // 
+            // panelPathogenGroups
+            // 
+            this.panelPathogenGroups.AutoSize = true;
+            this.panelPathogenGroups.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panelPathogenGroups.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panelPathogenGroups.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelPathogenGroups.Location = new System.Drawing.Point(0, 299);
+            this.panelPathogenGroups.MinimumSize = new System.Drawing.Size(0, 15);
+            this.panelPathogenGroups.Name = "panelPathogenGroups";
+            this.panelPathogenGroups.Size = new System.Drawing.Size(880, 15);
+            this.panelPathogenGroups.TabIndex = 8;
+            // 
             // contextMenuStripEvents
             // 
             this.contextMenuStripEvents.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addPathogenGroupToolStripMenuItem1});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(187, 48);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(187, 26);
             // 
             // addPathogenGroupToolStripMenuItem1
             // 
@@ -130,7 +131,7 @@
             this.bdLinkedNoteControl1.Padding = new System.Windows.Forms.Padding(3);
             this.bdLinkedNoteControl1.SaveOnLeave = true;
             this.bdLinkedNoteControl1.SelectedLinkedNoteType = BDEditor.DataModel.LinkedNoteType.Default;
-            this.bdLinkedNoteControl1.Size = new System.Drawing.Size(863, 221);
+            this.bdLinkedNoteControl1.Size = new System.Drawing.Size(880, 221);
             this.bdLinkedNoteControl1.TabIndex = 6;
             // 
             // BDPresentationControl
@@ -145,7 +146,7 @@
             this.Controls.Add(this.panelHeader);
             this.MinimumSize = new System.Drawing.Size(880, 325);
             this.Name = "BDPresentationControl";
-            this.Size = new System.Drawing.Size(863, 338);
+            this.Size = new System.Drawing.Size(880, 325);
             this.Leave += new System.EventHandler(this.BDPresentationControl_Leave);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();

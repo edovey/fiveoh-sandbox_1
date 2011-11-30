@@ -120,7 +120,7 @@ namespace BDEditor.Views
                         else
                             currentLinkedNote.previewText = plainText;
                     }
-                    BDLinkedNote.SaveLinkedNote(dataContext, currentLinkedNote);
+                    BDLinkedNote.Save(dataContext, currentLinkedNote);
                 }
             }
             return result;
@@ -157,8 +157,8 @@ namespace BDEditor.Views
                     association.linkedNoteType = (int)selectedLinkNoteType;
                     currentLinkedNote.linkedNoteAssociationId = association.uuid;
                     currentLinkedNote.scopeId = scopeId;
-                    BDLinkedNote.SaveLinkedNote(dataContext, currentLinkedNote);
-                    BDLinkedNoteAssociation.SaveLinkedNoteAssociation(dataContext, association);
+                    BDLinkedNote.Save(dataContext, currentLinkedNote);
+                    BDLinkedNoteAssociation.Save(dataContext, association);
                 }
             }
 

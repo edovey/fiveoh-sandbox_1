@@ -21,6 +21,7 @@ namespace BDEditor.DataModel
         public const string AWS_DOMAIN = @"bd_1_categories";
         public const string ENTITYNAME = @"BDCategories";
         public const string ENTITYNAME_FRIENDLY = @"Category";
+        public const int ENTITY_SCHEMAVERSION = 0;
 
         private const string UUID = @"ct_uuid";
         private const string SCHEMAVERSION = @"ct_schemaVersion";
@@ -43,7 +44,7 @@ namespace BDEditor.DataModel
             BDCategory category = CreateBDCategory(Guid.NewGuid());
             category.createdBy = Guid.Empty;
             category.createdDate = DateTime.Now;
-            category.schemaVersion = 0;
+            category.schemaVersion = ENTITY_SCHEMAVERSION;
             category.displayOrder = -1;
             category.sectionId = Guid.Empty;
             category.name = string.Empty;
@@ -58,12 +59,12 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pCategory"></param>
-        public static void SaveCategory(Entities pContext, BDCategory pCategory)
+        public static void Save(Entities pContext, BDCategory pCategory)
         {
             if (pCategory.EntityState != System.Data.EntityState.Unchanged)
             {
-                //pCategory.modifiedBy = Guid.Empty;
-                //pCategory.modifiedDate = DateTime.Now;
+                if (pCategory.schemaVersion != ENTITY_SCHEMAVERSION)
+                    pCategory.schemaVersion = ENTITY_SCHEMAVERSION;
 
                 pContext.SaveChanges();
             }

@@ -22,6 +22,7 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME_FRIENDLY = @"Disease";
         public const string PROPERTYNAME_OVERVIEW = @"Overview";
         public const string AWS_DOMAIN = @"bd_1_diseases";
+        public const int ENTITY_SCHEMAVERSION = 0;
 
         private const string UUID = @"di_uuid";
         private const string SCHEMAVERSION = @"di_schemaVersion";
@@ -45,7 +46,7 @@ namespace BDEditor.DataModel
             BDDisease disease = CreateBDDisease(Guid.NewGuid(), false);
             disease.createdBy = Guid.Empty;
             disease.createdDate = DateTime.Now;
-            disease.schemaVersion = 0;
+            disease.schemaVersion = ENTITY_SCHEMAVERSION;
             disease.displayOrder = -1;
             disease.subcategoryId = Guid.Empty;
             disease.categoryId = Guid.Empty;
@@ -60,12 +61,13 @@ namespace BDEditor.DataModel
         /// Extended Save method that sets the modification date
         /// </summary>
         /// <param name="pDisease"></param>
-        public static void SaveDisease(Entities pContext, BDDisease pDisease)
+        public static void Save(Entities pContext, BDDisease pDisease)
         {
             if (pDisease.EntityState != EntityState.Unchanged)
             {
-                //pDisease.modifiedBy = Guid.Empty;
-                //pDisease.modifiedDate = DateTime.Now;
+                if (pDisease.schemaVersion != ENTITY_SCHEMAVERSION)
+                    pDisease.schemaVersion = ENTITY_SCHEMAVERSION;
+
                 System.Diagnostics.Debug.WriteLine(@"Disease Save");
                 pContext.SaveChanges();
             }

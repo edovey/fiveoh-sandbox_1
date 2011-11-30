@@ -19,6 +19,7 @@ namespace BDEditor.DataModel
         public const string AWS_DOMAIN = @"bd_1_deletions";
         public const string ENTITYNAME = @"BDDeletions";
         public const string ENTITYNAME_FRIENDLY = @"Deletion";
+        public const int ENTITY_SCHEMAVERSION = 0;
 
         private const string UUID = @"de_uuid";
         private const string SCHEMAVERSION = @"de_schemaVersion";
@@ -36,7 +37,7 @@ namespace BDEditor.DataModel
             deletion.createdDate = DateTime.Now;
             deletion.modifiedBy = Guid.Empty;
             deletion.modifiedDate = DateTime.Now;
-            deletion.schemaVersion = 0;
+            deletion.schemaVersion = ENTITY_SCHEMAVERSION;
             deletion.entityName = pEntityName;
             deletion.entityId = pEntityId;
 

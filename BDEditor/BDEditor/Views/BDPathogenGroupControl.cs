@@ -125,7 +125,7 @@ namespace BDEditor.Views
                     if (currentPathogenGroup.name != textBoxPathogenGroupName.Text) currentPathogenGroup.name = textBoxPathogenGroupName.Text;
                     if (currentPathogenGroup.displayOrder != DisplayOrder) currentPathogenGroup.displayOrder = DisplayOrder;
 
-                    BDPathogenGroup.SavePathogenGroup(dataContext, currentPathogenGroup);
+                    BDPathogenGroup.Save(dataContext, currentPathogenGroup);
 
                     Typeahead.AddToCollection(BDPathogen.ENTITYNAME, BDPathogen.PROPERTYNAME_NAME, currentPathogenGroup.name);
 
@@ -282,12 +282,12 @@ namespace BDEditor.Views
                     pathogenControlList[requestedPosition].CreateCurrentObject();
                     pathogenControlList[requestedPosition].DisplayOrder = currentPosition;
                     pathogenControlList[requestedPosition].CurrentPathogen.displayOrder = currentPosition;
-                    BDPathogen.SavePathogen(dataContext, pathogenControlList[requestedPosition].CurrentPathogen);
+                    BDPathogen.Save(dataContext, pathogenControlList[requestedPosition].CurrentPathogen);
 
                     pathogenControlList[currentPosition].CreateCurrentObject();
                     pathogenControlList[currentPosition].DisplayOrder = requestedPosition;
                     pathogenControlList[currentPosition].CurrentPathogen.displayOrder = requestedPosition;
-                    BDPathogen.SavePathogen(dataContext, pathogenControlList[currentPosition].CurrentPathogen);
+                    BDPathogen.Save(dataContext, pathogenControlList[currentPosition].CurrentPathogen);
 
                     BDPathogenControl temp = pathogenControlList[requestedPosition];
                     pathogenControlList[requestedPosition] = pathogenControlList[currentPosition];
@@ -377,13 +377,13 @@ namespace BDEditor.Views
                     therapyGroupControlList[requestedPosition].DisplayOrder = currentPosition;
 
                     therapyGroupControlList[requestedPosition].CurrentTherapyGroup .displayOrder = currentPosition;
-                    BDTherapyGroup.SaveTherapyGroup(dataContext, therapyGroupControlList[requestedPosition].CurrentTherapyGroup);
+                    BDTherapyGroup.Save(dataContext, therapyGroupControlList[requestedPosition].CurrentTherapyGroup);
 
                     therapyGroupControlList[currentPosition].CreateCurrentObject();
                     therapyGroupControlList[currentPosition].DisplayOrder = requestedPosition;
 
                     therapyGroupControlList[currentPosition].CurrentTherapyGroup.displayOrder = requestedPosition;
-                    BDTherapyGroup.SaveTherapyGroup(dataContext, therapyGroupControlList[currentPosition].CurrentTherapyGroup);
+                    BDTherapyGroup.Save(dataContext, therapyGroupControlList[currentPosition].CurrentTherapyGroup);
 
                     BDTherapyGroupControl temp = therapyGroupControlList[requestedPosition];
                     therapyGroupControlList[requestedPosition] = therapyGroupControlList[currentPosition];

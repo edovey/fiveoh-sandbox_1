@@ -105,7 +105,7 @@ namespace BDEditor.Views
                     bdLinkedNoteControl1.Save();
                 }
                 System.Diagnostics.Debug.WriteLine(@"Disease Control Save");
-                BDDisease.SaveDisease(dataContext, currentDisease);
+                BDDisease.Save(dataContext, currentDisease);
             }
             return result;
         }

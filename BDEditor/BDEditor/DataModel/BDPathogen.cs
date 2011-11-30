@@ -22,6 +22,7 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME = @"BDPathogen";
         public const string ENTITYNAME_FRIENDLY = @"Pathogen";
         public const string PROPERTYNAME_NAME = @"Name";
+        public const int ENTITY_SCHEMAVERSION = 0;
 
 
         private const string UUID = @"pa_uuid";
@@ -40,7 +41,7 @@ namespace BDEditor.DataModel
             BDPathogen pathogen = CreateBDPathogen(Guid.NewGuid(), false);
             pathogen.createdBy = Guid.Empty;
             pathogen.createdDate = DateTime.Now;
-            pathogen.schemaVersion = 0;
+            pathogen.schemaVersion = ENTITY_SCHEMAVERSION;
             pathogen.displayOrder = -1;
             pathogen.pathogenGroupId = pPathogenGroupId;
             pathogen.name = string.Empty;
@@ -53,12 +54,13 @@ namespace BDEditor.DataModel
         /// Extend Save method that sets modified date
         /// </summary>
         /// <param name="pPathogen"></param>
-        public static void SavePathogen(Entities pContext, BDPathogen pPathogen)
+        public static void Save(Entities pContext, BDPathogen pPathogen)
         {
             if (pPathogen.EntityState != EntityState.Unchanged)
             {
-                //pPathogen.modifiedBy = Guid.Empty;
-                //pPathogen.modifiedDate = DateTime.Now;
+                if (pPathogen.schemaVersion != ENTITY_SCHEMAVERSION)
+                    pPathogen.schemaVersion = ENTITY_SCHEMAVERSION;
+
                 System.Diagnostics.Debug.WriteLine(@"Pathogen Save");
                 pContext.SaveChanges();
             }

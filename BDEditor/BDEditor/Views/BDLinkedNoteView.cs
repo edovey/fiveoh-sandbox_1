@@ -211,7 +211,7 @@ namespace BDEditor.Views
 
                 this.existingAssociation.linkedNoteId = selectedNote.uuid;
 
-                BDLinkedNoteAssociation.SaveLinkedNoteAssociation(dataContext, this.existingAssociation);
+                BDLinkedNoteAssociation.Save(dataContext, this.existingAssociation);
 
                 DisplayLinkedNote(this.existingAssociation, true);
 

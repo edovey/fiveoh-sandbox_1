@@ -91,7 +91,7 @@ namespace BDEditor.Views
             {
                 if(currentPathogen.name != tbPathogenName.Text) currentPathogen.name = tbPathogenName.Text;
                 if (currentPathogen.displayOrder != DisplayOrder) currentPathogen.displayOrder = DisplayOrder;
-                BDPathogen.SavePathogen(dataContext, currentPathogen);
+                BDPathogen.Save(dataContext, currentPathogen);
                 result = true;
 
                 Typeahead.AddToCollection(BDPathogen.ENTITYNAME, BDPathogen.PROPERTYNAME_NAME, currentPathogen.name);

@@ -21,6 +21,7 @@ namespace BDEditor.DataModel
         public const string AWS_DOMAIN = @"bd_1_therapies";
         public const string ENTITYNAME = @"BDTherapies";
         public const string ENTITYNAME_FRIENDLY = @"Therapy";
+        public const int ENTITY_SCHEMAVERSION = 0;
         public const string PROPERTYNAME_THERAPY = @"Therapy";
         public const string PROPERTYNAME_DOSAGE = @"Dosage"; 
         public const string PROPERTYNAME_DURATION = @"Duration";
@@ -58,7 +59,7 @@ namespace BDEditor.DataModel
             BDTherapy therapy = CreateBDTherapy(Guid.NewGuid(), false);
             therapy.createdBy = Guid.Empty;
             therapy.createdDate = DateTime.Now;
-            therapy.schemaVersion = 0;
+            therapy.schemaVersion = ENTITY_SCHEMAVERSION;
             therapy.therapyJoinType = (int)TherapyJoinType.None;
             therapy.leftBracket = false;
             therapy.rightBracket = false;
@@ -77,12 +78,13 @@ namespace BDEditor.DataModel
         /// Extended Save method that sets the modified date.
         /// </summary>
         /// <param name="pTherapy"></param>
-        public static void SaveTherapy(Entities pContext, BDTherapy pTherapy)
+        public static void Save(Entities pContext, BDTherapy pTherapy)
         {
             if (pTherapy.EntityState != EntityState.Unchanged)
             {
-                //pTherapy.modifiedBy = Guid.Empty;
-                //pTherapy.modifiedDate = DateTime.Now;
+                if (pTherapy.schemaVersion != ENTITY_SCHEMAVERSION)
+                    pTherapy.schemaVersion = ENTITY_SCHEMAVERSION;
+                
                 System.Diagnostics.Debug.WriteLine(@"Therapy Save");
                 pContext.SaveChanges();
             }

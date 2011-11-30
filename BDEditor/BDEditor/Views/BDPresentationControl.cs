@@ -106,7 +106,7 @@ namespace BDEditor.Views
                     }
                   
                     System.Diagnostics.Debug.WriteLine(@"Presentation Control Save");
-                    BDPresentation.SavePresentation(dataContext, currentPresentation);
+                    BDPresentation.Save(dataContext, currentPresentation);
                 }
             }
            
@@ -257,13 +257,13 @@ namespace BDEditor.Views
                     pathogenGroupControlList[requestedPosition].DisplayOrder = currentPosition;
 
                     pathogenGroupControlList[requestedPosition].CurrentPathogenGroup.displayOrder = currentPosition;
-                    BDPathogenGroup.SavePathogenGroup(dataContext, pathogenGroupControlList[requestedPosition].CurrentPathogenGroup);
+                    BDPathogenGroup.Save(dataContext, pathogenGroupControlList[requestedPosition].CurrentPathogenGroup);
 
                     pathogenGroupControlList[currentPosition].CreateCurrentObject();
                     pathogenGroupControlList[currentPosition].DisplayOrder = requestedPosition;
 
                     pathogenGroupControlList[currentPosition].CurrentPathogenGroup.displayOrder = requestedPosition;
-                    BDPathogenGroup.SavePathogenGroup(dataContext, pathogenGroupControlList[currentPosition].CurrentPathogenGroup);
+                    BDPathogenGroup.Save(dataContext, pathogenGroupControlList[currentPosition].CurrentPathogenGroup);
 
                     BDPathogenGroupControl temp = pathogenGroupControlList[requestedPosition];
                     pathogenGroupControlList[requestedPosition] = pathogenGroupControlList[currentPosition];

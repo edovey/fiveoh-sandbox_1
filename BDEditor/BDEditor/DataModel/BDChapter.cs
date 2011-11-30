@@ -19,6 +19,7 @@ namespace BDEditor.DataModel
         public const string AWS_DOMAIN = @"bd_1_chapters";
         public const string ENTITYNAME = @"BDChapters";
         public const string ENTITYNAME_FRIENDLY = @"Chapter";
+        public const int ENTITY_SCHEMAVERSION = 0;
 
         private const string UUID = @"ch_uuid";
         private const string SCHEMAVERSION = @"ch_schemaVersion";
@@ -40,7 +41,7 @@ namespace BDEditor.DataModel
             BDChapter chapter = CreateBDChapter(Guid.NewGuid(), false);
             chapter.createdBy = Guid.Empty;
             chapter.createdDate = DateTime.Now;
-            chapter.schemaVersion = 0;
+            chapter.schemaVersion = ENTITY_SCHEMAVERSION;
             chapter.displayOrder = -1;
             chapter.name = string.Empty;
 
@@ -90,12 +91,13 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pChapter"></param>
-        public static void SaveChapter(Entities pContext, BDChapter pChapter)
+        public static void Save(Entities pContext, BDChapter pChapter)
         {
             if (pChapter.EntityState != EntityState.Unchanged)
             {
-                //pChapter.modifiedBy = Guid.Empty;
-                //pChapter.modifiedDate = DateTime.Now;
+                if (pChapter.schemaVersion != ENTITY_SCHEMAVERSION)
+                    pChapter.schemaVersion = ENTITY_SCHEMAVERSION;
+
                 System.Diagnostics.Debug.WriteLine(@"Chapter Save");
                 pContext.SaveChanges();
             }

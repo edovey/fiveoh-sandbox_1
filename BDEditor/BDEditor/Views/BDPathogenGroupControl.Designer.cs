@@ -41,8 +41,8 @@
             this.moveNeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.addPathogenGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addTherapyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addPathogenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addTherapyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.deletePathogenGroupMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelPathogens = new System.Windows.Forms.Panel();
@@ -166,14 +166,6 @@
             this.addPathogenGroupToolStripMenuItem.Text = "Add Pathogen Group";
             this.addPathogenGroupToolStripMenuItem.Click += new System.EventHandler(this.PathogenGroup_RequestItemAdd);
             // 
-            // addTherapyToolStripMenuItem
-            // 
-            this.addTherapyToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_record_16;
-            this.addTherapyToolStripMenuItem.Name = "addTherapyToolStripMenuItem";
-            this.addTherapyToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.addTherapyToolStripMenuItem.Text = "&Add Therapy Group";
-            this.addTherapyToolStripMenuItem.Click += new System.EventHandler(this.TherapyGroup_RequestItemAdd);
-            // 
             // addPathogenToolStripMenuItem
             // 
             this.addPathogenToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_record_16;
@@ -181,6 +173,14 @@
             this.addPathogenToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.addPathogenToolStripMenuItem.Text = "Add Pathogen";
             this.addPathogenToolStripMenuItem.Click += new System.EventHandler(this.Pathogen_RequestItemAdd);
+            // 
+            // addTherapyToolStripMenuItem
+            // 
+            this.addTherapyToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_record_16;
+            this.addTherapyToolStripMenuItem.Name = "addTherapyToolStripMenuItem";
+            this.addTherapyToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.addTherapyToolStripMenuItem.Text = "&Add Therapy Group";
+            this.addTherapyToolStripMenuItem.Click += new System.EventHandler(this.TherapyGroup_RequestItemAdd);
             // 
             // toolStripSeparator1
             // 

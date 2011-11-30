@@ -19,6 +19,7 @@ namespace BDEditor.DataModel
         public const string AWS_DOMAIN = @"bd_1_sections";
         public const string ENTITYNAME = @"BDSections";
         public const string ENTITYNAME_FRIENDLY = @"Section";
+        public const int ENTITY_SCHEMAVERSION = 0;
 
         private const string UUID = @"sn_uuid";
         private const string SCHEMAVERSION = @"sn_schemaVersion";
@@ -41,7 +42,7 @@ namespace BDEditor.DataModel
             BDSection section = CreateBDSection(Guid.NewGuid(), false);
             section.createdBy = Guid.Empty;
             section.createdDate = DateTime.Now;
-            section.schemaVersion = 0;
+            section.schemaVersion = ENTITY_SCHEMAVERSION;
             section.displayOrder = -1;
             section.name = string.Empty;
 
@@ -55,12 +56,13 @@ namespace BDEditor.DataModel
         /// Extended Save method that sets the modified date
         /// </summary>
         /// <param name="pSection"></param>
-        public static void SaveSection(Entities pContext, BDSection pSection)
+        public static void Save(Entities pContext, BDSection pSection)
         {
             if (pSection.EntityState != EntityState.Unchanged)
             {
-                //pSection.modifiedBy = Guid.Empty;
-                //pSection.modifiedDate = DateTime.Now;
+                if (pSection.schemaVersion != ENTITY_SCHEMAVERSION)
+                    pSection.schemaVersion = ENTITY_SCHEMAVERSION;
+
                 System.Diagnostics.Debug.WriteLine(@"Section Save");
                 pContext.SaveChanges();
             }

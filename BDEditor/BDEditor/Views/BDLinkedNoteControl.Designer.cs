@@ -54,11 +54,13 @@
             // 
             this.textControl.BorderStyle = TXTextControl.BorderStyle.None;
             this.textControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textControl.Font = new System.Drawing.Font("Arial", 10F);
+            this.textControl.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textControl.IsSpellCheckingEnabled = true;
             this.textControl.Location = new System.Drawing.Point(13, 44);
             this.textControl.Name = "textControl";
             this.textControl.Padding = new System.Windows.Forms.Padding(3);
+            this.textControl.PageSize.Height = 300D;
+            this.textControl.PageSize.Width = 790D;
             this.textControl.Size = new System.Drawing.Size(789, 188);
             this.textControl.TabIndex = 0;
             this.textControl.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textControl_KeyUp);

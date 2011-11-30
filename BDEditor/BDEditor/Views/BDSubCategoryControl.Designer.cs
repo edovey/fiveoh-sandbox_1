@@ -35,17 +35,17 @@
             // lblSubcategoryName
             // 
             this.lblSubcategoryName.AutoSize = true;
-            this.lblSubcategoryName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSubcategoryName.Location = new System.Drawing.Point(14, 20);
+            this.lblSubcategoryName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSubcategoryName.Location = new System.Drawing.Point(3, 6);
             this.lblSubcategoryName.Name = "lblSubcategoryName";
-            this.lblSubcategoryName.Size = new System.Drawing.Size(91, 18);
+            this.lblSubcategoryName.Size = new System.Drawing.Size(116, 24);
             this.lblSubcategoryName.TabIndex = 0;
             this.lblSubcategoryName.Text = "Subcategory";
             // 
             // tbSubcategoryName
             // 
             this.tbSubcategoryName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbSubcategoryName.Location = new System.Drawing.Point(17, 51);
+            this.tbSubcategoryName.Location = new System.Drawing.Point(39, 31);
             this.tbSubcategoryName.Name = "tbSubcategoryName";
             this.tbSubcategoryName.ReadOnly = true;
             this.tbSubcategoryName.Size = new System.Drawing.Size(475, 24);

@@ -94,7 +94,7 @@ namespace BDEditor.Views
                 BDPathogen.Save(dataContext, currentPathogen);
                 result = true;
 
-                Typeahead.AddToCollection(BDPathogen.ENTITYNAME, BDPathogen.PROPERTYNAME_NAME, currentPathogen.name);
+                Typeahead.AddToCollection(BDPathogen.KEY_NAME, BDPathogen.PROPERTYNAME_NAME, currentPathogen.name);
             }
 
             return result;
@@ -161,7 +161,7 @@ namespace BDEditor.Views
             BDLinkedNoteView noteView = new BDLinkedNoteView();
             noteView.AssignDataContext(dataContext);
             noteView.AssignParentId(currentPathogen.uuid);
-            noteView.AssignContextEntityName(BDPathogen.ENTITYNAME_FRIENDLY);
+            noteView.AssignContextEntityKeyName(BDPathogen.KEY_NAME);
             noteView.AssignContextPropertyName(BDPathogen.PROPERTYNAME_NAME);
             noteView.AssignScopeId(scopeId);
             noteView.NotesChanged += new EventHandler(notesChanged_Action);
@@ -198,7 +198,7 @@ namespace BDEditor.Views
 
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
-            List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentId(dataContext, (null != this.currentPathogen) ? this.currentPathogen.uuid : Guid.Empty);
+            List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentPathogen) ? this.currentPathogen.uuid : Guid.Empty);
             btnLink.BackColor = links.Exists(x => x.parentEntityPropertyName == (string)btnLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
         }  
 

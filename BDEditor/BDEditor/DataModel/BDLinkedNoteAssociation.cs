@@ -24,11 +24,13 @@ namespace BDEditor.DataModel
     /// <summary>
     /// Extension of generated BDLinkedNoteAssociation
     /// </summary>
-    public partial class BDLinkedNoteAssociation
+    public partial class BDLinkedNoteAssociation: IBDObject
     {
         public const string AWS_DOMAIN = @"bd_1_linkedNoteAssociations";
         public const string ENTITYNAME = @"BDLinkedNoteAssociations";
         public const string ENTITYNAME_FRIENDLY = @"Linked Note Association";
+        public const string KEY_NAME = @"BDLinkedNoteAssociation";
+
         public const int ENTITY_SCHEMAVERSION = 0;
 
         private const string UUID = @"la_uuid";
@@ -59,7 +61,7 @@ namespace BDEditor.DataModel
             linkedNoteAssociation.schemaVersion = ENTITY_SCHEMAVERSION;
             linkedNoteAssociation.linkedNoteType = (int)LinkedNoteType.Default;
             linkedNoteAssociation.displayOrder = -1;
-            pContext.AddObject(@"BDLinkedNoteAssociations", linkedNoteAssociation);
+            pContext.AddObject(ENTITYNAME, linkedNoteAssociation);
             return linkedNoteAssociation;
         }
 
@@ -90,7 +92,7 @@ namespace BDEditor.DataModel
             linkedNoteAssociation.parentEntityName = pParentEntityName;
             linkedNoteAssociation.parentEntityPropertyName = pParentEntityPropertyName;
 
-            pContext.AddObject(@"BDLinkedNoteAssociations", linkedNoteAssociation);
+            pContext.AddObject(ENTITYNAME, linkedNoteAssociation);
 
             Save(pContext, linkedNoteAssociation);
 
@@ -133,7 +135,7 @@ namespace BDEditor.DataModel
                 if (pCreateDeletion)
                 {
                     // create BDDeletion record for the object to be deleted
-                    BDDeletion.CreateDeletion(pContext, ENTITYNAME_FRIENDLY, pEntity.uuid);
+                    BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
                 }
                 // delete record from local data store
                 pContext.DeleteObject(pEntity);
@@ -197,7 +199,7 @@ namespace BDEditor.DataModel
             return result;
         }
 
-        public static List<BDLinkedNoteAssociation> GetLinkedNoteAssociationForParentId(Entities pContext, Guid? pParentId)
+        public static List<BDLinkedNoteAssociation> GetLinkedNoteAssociationsForParentId(Entities pContext, Guid? pParentId)
         {
             List<BDLinkedNoteAssociation> resultList = new List<BDLinkedNoteAssociation>();
             if (pParentId != null)
@@ -209,6 +211,14 @@ namespace BDEditor.DataModel
                 resultList = linkedNoteAssociations.ToList<BDLinkedNoteAssociation>();
             }
             return resultList;
+        }
+
+        public static List<string> GetAssignedPropertyNamesForParentId(Entities pContext, Guid? pParentId)
+        {
+            var nameList = pContext.BDLinkedNoteAssociations.Where(x => x.uuid == pParentId.Value)
+                                                            .Select(pg => pg.parentEntityPropertyName).Distinct();
+
+            return nameList.ToList<string>();
         }
 
         /// <summary>
@@ -249,15 +259,15 @@ namespace BDEditor.DataModel
             return result;
         }
 
-        public static string GetDescription(Entities pDataContext, Guid? pParentId, string pParentEntityName, string pParentEntityPropertyName)
+        public static string GetDescription(Entities pDataContext, Guid? pParentId, string pParentKeyName, string pParentEntityPropertyName)
         {
-            string result = string.Format("{0} [{1}]", pParentEntityName, pParentEntityPropertyName);
+            string result = string.Format("{0} [{1}]", pParentKeyName, pParentEntityPropertyName);
 
             if (null != pParentId)
             {
-                switch (pParentEntityName)
+                switch (pParentKeyName)
                 {
-                    case BDTherapy.ENTITYNAME_FRIENDLY:
+                    case BDTherapy.KEY_NAME:
                         {
                             BDTherapy therapy = BDTherapy.GetTherapyWithId(pDataContext, pParentId.Value);
                             if (null != therapy)
@@ -266,7 +276,7 @@ namespace BDEditor.DataModel
                             }
                         }
                         break;
-                    case BDTherapyGroup.ENTITYNAME_FRIENDLY:
+                    case BDTherapyGroup.KEY_NAME:
                         {
                             BDTherapyGroup therapyGroup = BDTherapyGroup.GetTherapyGroupWithId(pDataContext, pParentId.Value);
                             if (null != therapyGroup)
@@ -275,7 +285,7 @@ namespace BDEditor.DataModel
                             }
                         }
                         break;
-                    case BDPathogen.ENTITYNAME_FRIENDLY:
+                    case BDPathogen.KEY_NAME:
                         {
                             BDPathogen pathogen = BDPathogen.GetPathogenWithId(pDataContext, pParentId.Value);
                             if (null != pathogen)
@@ -284,14 +294,14 @@ namespace BDEditor.DataModel
                             }
                         }
                         break;
-                    case BDPresentation.ENTITYNAME_FRIENDLY:
+                    case BDPresentation.KEY_NAME:
                         {
-                            result = string.Format("{0} [{1}]", pParentEntityName, pParentEntityPropertyName);
+                            result = string.Format("{0} [{1}]", pParentKeyName, pParentEntityPropertyName);
                         }
                         break;
 
                     default:
-                        result = string.Format("{0} [{1}]", pParentEntityName, pParentEntityPropertyName);
+                        result = string.Format("{0} [{1}]", pParentKeyName, pParentEntityPropertyName);
                         break;
                 }
             }
@@ -330,9 +340,9 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pUpdateDateTime">Null date will return all records</param>
         /// <returns>List of entries. Empty list if none found.</returns>
-        public static List<BDLinkedNoteAssociation> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
+        public static List<IBDObject> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
         {
-            List<BDLinkedNoteAssociation> entryList = new List<BDLinkedNoteAssociation>();
+            List<IBDObject> entryList = new List<IBDObject>();
             IQueryable<BDLinkedNoteAssociation> entries;
 
             if (null == pUpdateDateTime)
@@ -347,13 +357,22 @@ namespace BDEditor.DataModel
                            select entry);
             }
             if (entries.Count() > 0)
-                entryList = entries.ToList<BDLinkedNoteAssociation>();
+                entryList = new List<IBDObject>(entries.ToList<BDLinkedNoteAssociation>());
+
             return entryList;
         }
 
-        public static SyncInfo SyncInfo()
+        public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime pCurrentSyncDate)
         {
-            return new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            syncInfo.PushList = BDLinkedNoteAssociation.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+            syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
+            for (int idx = 0; idx < syncInfo.PushList.Count; idx++)
+            {
+                ((BDLinkedNoteAssociation)syncInfo.PushList[idx]).modifiedDate = pCurrentSyncDate;
+            }
+            if (syncInfo.PushList.Count > 0) { pDataContext.SaveChanges(); }
+            return syncInfo;
         }
 
         /// <summary>
@@ -370,7 +389,7 @@ namespace BDEditor.DataModel
             if (null == entry)
             {
                 entry = BDLinkedNoteAssociation.CreateBDLinkedNoteAssociation(uuid);
-                pDataContext.AddObject("BDLinkedNoteAssociations", entry);
+                pDataContext.AddObject(ENTITYNAME, entry);
             }
 
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
@@ -414,6 +433,26 @@ namespace BDEditor.DataModel
             return putAttributeRequest;
         }
         #endregion
+
+        public Guid Uuid
+        {
+            get { return this.uuid; }
+        }
+
+        public string Description
+        {
+            get { return this.uuid.ToString(); }
+        }
+
+        public string DescriptionForLinkedNote
+        {
+            get { return string.Format("{0}: {1}", ENTITYNAME_FRIENDLY, this.uuid); }
+        }
+
+        public override string ToString()
+        {
+            return this.uuid.ToString();
+        }
     }
 
 }

@@ -133,7 +133,6 @@
     <Compile Include="DataModel\BDPathogen.cs" />
     <Compile Include="DataModel\BDPathogenGroup.cs" />
     <Compile Include="DataModel\BDPresentation.cs" />
-    <Compile Include="DataModel\BDQueueEntry.cs" />
     <Compile Include="DataModel\BDSection.cs" />
     <Compile Include="DataModel\BDModel1.Designer.cs">
       <AutoGen>True</AutoGen>

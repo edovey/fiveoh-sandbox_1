@@ -19,8 +19,10 @@ namespace BDEditor.DataModel
     public partial class BDPathogen: IBDObject
     {
         public const string AWS_DOMAIN = @"bd_1_pathogens";
-        public const string ENTITYNAME = @"BDPathogen";
+        public const string ENTITYNAME = @"BDPathogens";
         public const string ENTITYNAME_FRIENDLY = @"Pathogen";
+        public const string KEY_NAME = @"BDPathogen";
+
         public const string PROPERTYNAME_NAME = @"Name";
         public const int ENTITY_SCHEMAVERSION = 0;
 
@@ -46,7 +48,7 @@ namespace BDEditor.DataModel
             pathogen.pathogenGroupId = pPathogenGroupId;
             pathogen.name = string.Empty;
 
-            pContext.AddObject("BDPathogens", pathogen);
+            pContext.AddObject(ENTITYNAME, pathogen);
             return pathogen;
         }
 
@@ -74,14 +76,14 @@ namespace BDEditor.DataModel
         public static void Delete(Entities pContext, BDPathogen pEntity)
         {
             // delete linked notes
-            List<BDLinkedNoteAssociation> linkedNotes = BDLinkedNoteAssociation.GetLinkedNoteAssociationsFromParentIdAndProperty(pContext, pEntity.uuid, ENTITYNAME_FRIENDLY);
+            List<BDLinkedNoteAssociation> linkedNotes = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(pContext, pEntity.uuid);
             foreach (BDLinkedNoteAssociation a in linkedNotes)
             {
                 BDLinkedNoteAssociation.Delete(pContext, a);
             }
 
             // create BDDeletion record for the object to be deleted
-            BDDeletion.CreateDeletion(pContext, ENTITYNAME_FRIENDLY, pEntity.uuid);
+            BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
 
             // delete record from local data store
             pContext.DeleteObject(pEntity);
@@ -197,6 +199,11 @@ namespace BDEditor.DataModel
             get { return string.Format("Pathogen - {0}", this.name); }
         }
 
+        public override string ToString()
+        {
+            return this.name;
+        }
+
         #region Repository
 
         /// <summary>
@@ -205,9 +212,9 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pUpdateDateTime">Null date will return all records</param>
         /// <returns>List of entries. Empty list if none found.</returns>
-        public static List<BDPathogen> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
+        public static List<IBDObject> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
         {
-            List<BDPathogen> entryList = new List<BDPathogen>();
+            List<IBDObject> entryList = new List<IBDObject>();
             IQueryable<BDPathogen> pathogens;
 
             if (null == pUpdateDateTime)
@@ -222,13 +229,22 @@ namespace BDEditor.DataModel
                             select entry);
             }
             if (pathogens.Count() > 0)
-                entryList = pathogens.ToList<BDPathogen>();
+                entryList = new List<IBDObject>(pathogens.ToList<BDPathogen>());
             return entryList;
         }
 
-        public static SyncInfo SyncInfo()
+        public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime pCurrentSyncDate)
         {
-            return new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            syncInfo.PushList = BDPathogen.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+            syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
+
+            for (int idx = 0; idx < syncInfo.PushList.Count; idx++)
+            {
+                ((BDPathogen)syncInfo.PushList[idx]).modifiedDate = pCurrentSyncDate;
+            }
+            if (syncInfo.PushList.Count > 0) { pDataContext.SaveChanges(); }
+            return syncInfo;
         }
 
         /// <summary>
@@ -245,7 +261,7 @@ namespace BDEditor.DataModel
             if (null == entry)
             {
                 entry = BDPathogen.CreateBDPathogen(uuid, deprecated);
-                pDataContext.AddObject("BDPathogens", entry);
+                pDataContext.AddObject(ENTITYNAME, entry);
             }
 
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);

@@ -232,8 +232,8 @@ namespace BDEditor.Views
             dataLoader.ImportData(dataContext, @"Resources\BDEditorStructure.txt");
 
             LoadChapterDropDown();
-
-            DateTime? lastSyncDate = BDSystemSetting.GetTimestamp(DataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
             createTestDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
 
             this.Cursor = Cursors.Default;
@@ -255,7 +255,9 @@ namespace BDEditor.Views
 
         private void UpdateSyncLabel()
         {
-            DateTime? lastSyncDate = BDSystemSetting.GetTimestamp(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+
+            DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
             if (null == lastSyncDate)
             {
                 lbLastSyncDateTime.Text = @"<Never Sync'd>";
@@ -269,19 +271,29 @@ namespace BDEditor.Views
         private void SyncData()
         {
             this.Cursor = Cursors.WaitCursor;
-            DateTime? lastSyncDate = BDSystemSetting.GetTimestamp(DataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
 
             SyncInfoDictionary syncResultList = RepositoryHandler.Aws.Sync(DataContext, lastSyncDate);
 
+            string resultMessage = string.Empty;
+
             foreach (SyncInfo syncInfo in syncResultList.Values)
             {
-                System.Diagnostics.Debug.WriteLine(syncInfo.EntityName);
+                System.Diagnostics.Debug.WriteLine(syncInfo.FriendlyName);
+                if( (syncInfo.RowsPulled > 0) || (syncInfo.RowsPushed > 0) )
+                    resultMessage = string.Format("{0}{1}{4}: Pulled {2}, Pushed {3}", resultMessage, (string.IsNullOrEmpty(resultMessage)? "": "\n"), syncInfo.RowsPulled, syncInfo.RowsPushed, syncInfo.FriendlyName);
             }
+
+            if (string.IsNullOrEmpty(resultMessage)) resultMessage = "No changes";
+
+            MessageBox.Show(resultMessage, "Snchronization");
 
             UpdateSyncLabel();
             LoadChapterDropDown();
 
-            lastSyncDate = BDSystemSetting.GetTimestamp(DataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            lastSyncDate = systemSetting.settingDateTimeValue;
             createTestDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
 
             this.Cursor = Cursors.Default;
@@ -289,7 +301,8 @@ namespace BDEditor.Views
 
         private void BDEditView_Load(object sender, EventArgs e)
         {
-            DateTime? lastSyncDate = BDSystemSetting.GetTimestamp(DataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
             createTestDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
             UpdateSyncLabel();
         }
@@ -313,7 +326,10 @@ namespace BDEditor.Views
                 dataContext = null;
                 dataContext = new Entities();
 
-                BDSystemSetting.SaveTimestamp(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP, null);
+                BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+                systemSetting.settingDateTimeValue = null;
+                dataContext.SaveChanges();
+                //BDSystemSetting.SaveTimestamp(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP, null);
                 this.Cursor = Cursors.Default;
 
                 SyncData();          

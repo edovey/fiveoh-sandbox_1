@@ -14,11 +14,14 @@ namespace BDEditor.DataModel
     /// <summary>
     /// Extension of generated BDSection
     /// </summary>
-    public partial class BDSection
+    public partial class BDSection: IBDObject
     {
         public const string AWS_DOMAIN = @"bd_1_sections";
         public const string ENTITYNAME = @"BDSections";
         public const string ENTITYNAME_FRIENDLY = @"Section";
+        public const string KEY_NAME = @"BDSection";
+        public const string PROPERTYNAME_NAME = @"Name";
+
         public const int ENTITY_SCHEMAVERSION = 0;
 
         private const string UUID = @"sn_uuid";
@@ -46,7 +49,7 @@ namespace BDEditor.DataModel
             section.displayOrder = -1;
             section.name = string.Empty;
 
-            pContext.AddObject("BDSections", section);
+            pContext.AddObject(ENTITYNAME, section);
 
             return section;
 
@@ -75,9 +78,9 @@ namespace BDEditor.DataModel
         /// <param name="pEntity">the entry to be deleted</param>
         public static void Delete(Entities pContext, BDSection pEntity)
         {
-            // delete linked notes for section
-            List<BDLinkedNoteAssociation> notes = BDLinkedNoteAssociation.GetLinkedNoteAssociationsFromParentIdAndProperty(pContext, pEntity.uuid, ENTITYNAME_FRIENDLY);
-            foreach (BDLinkedNoteAssociation a in notes)
+            // delete linked notes
+            List<BDLinkedNoteAssociation> linkedNotes = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(pContext, pEntity.uuid);
+            foreach (BDLinkedNoteAssociation a in linkedNotes)
             {
                 BDLinkedNoteAssociation.Delete(pContext, a);
             }
@@ -90,7 +93,7 @@ namespace BDEditor.DataModel
             }
 
             // create BDDeletion record for the object to be deleted
-            BDDeletion.CreateDeletion(pContext, ENTITYNAME_FRIENDLY, pEntity.uuid);
+            BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
             // delete record from local data store
             pContext.DeleteObject(pEntity);
             pContext.SaveChanges();
@@ -193,9 +196,9 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pUpdateDateTime">Null date will return all records</param>
         /// <returns>List of entries. Empty list if none found.</returns>
-        public static List<BDSection> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
+        public static List<IBDObject> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
         {
-            List<BDSection> entryList = new List<BDSection>();
+            List<IBDObject> entryList = new List<IBDObject>();
             IQueryable<BDSection> entries;
 
             if (null == pUpdateDateTime)
@@ -209,14 +212,24 @@ namespace BDEditor.DataModel
                            where entry.modifiedDate > pUpdateDateTime.Value
                            select entry);
             }
+
             if (entries.Count() > 0)
-                entryList = entries.ToList<BDSection>();
+                entryList = new List<IBDObject>(entries.ToList<BDSection>());
+
             return entryList;
         }
 
-        public static SyncInfo SyncInfo()
+        public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime pCurrentSyncDate)
         {
-            return new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            syncInfo.PushList = BDSection.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+            syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
+            for (int idx = 0; idx < syncInfo.PushList.Count; idx++)
+            {
+                ((BDSection)syncInfo.PushList[idx]).modifiedDate = pCurrentSyncDate;
+            }
+            if (syncInfo.PushList.Count > 0) { pDataContext.SaveChanges(); }
+            return syncInfo;
         }
 
         /// <summary>
@@ -233,7 +246,7 @@ namespace BDEditor.DataModel
             if (null == entry)
             {
                 entry = BDSection.CreateBDSection(uuid, deprecated);
-                pDataContext.AddObject("BDSections", entry);
+                pDataContext.AddObject(ENTITYNAME, entry);
             }
 
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
@@ -273,5 +286,25 @@ namespace BDEditor.DataModel
         }
         #endregion
 
+
+        public Guid Uuid
+        {
+            get { return this.uuid; }
+        }
+
+        public string Description
+        {
+            get { return this.name; }
+        }
+
+        public string DescriptionForLinkedNote
+        {
+            get { return string.Format("{0}: {1}", ENTITYNAME_FRIENDLY, this.name); }
+        }
+
+        public override string ToString()
+        {
+            return this.name;
+        }
     }
 }

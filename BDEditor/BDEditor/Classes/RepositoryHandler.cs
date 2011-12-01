@@ -59,22 +59,27 @@ namespace BDEditor.Classes
         /// <returns></returns>
         public SyncInfoDictionary Sync(Entities pDataContext, DateTime? pLastSyncDate)
         {
+            DateTime currentSyncDate = DateTime.Now;
             #region Initialize Sync
             SyncInfoDictionary syncDictionary = new SyncInfoDictionary();
 
-            syncDictionary.Add(BDCategory.SyncInfo());
-            syncDictionary.Add(BDChapter.SyncInfo());
-            syncDictionary.Add(BDDisease.SyncInfo());
-            syncDictionary.Add(BDLinkedNoteAssociation.SyncInfo());
-            syncDictionary.Add(BDLinkedNote.SyncInfo());
-            syncDictionary.Add(BDPathogenGroup.SyncInfo());
-            syncDictionary.Add(BDPathogen.SyncInfo());
-            syncDictionary.Add(BDPresentation.SyncInfo());
-            syncDictionary.Add(BDSection.SyncInfo());
-            syncDictionary.Add(BDSubcategory.SyncInfo());
-            syncDictionary.Add(BDTherapy.SyncInfo());
-            syncDictionary.Add(BDTherapyGroup.SyncInfo());
-            syncDictionary.Add(BDDeletion.SyncInfo());
+            // Create the SyncInfo instance and update the modified date of all the changed records to be the currentSyncDate
+            syncDictionary.Add(BDCategory.SyncInfo(pDataContext, pLastSyncDate, currentSyncDate));
+            syncDictionary.Add(BDChapter.SyncInfo(pDataContext, pLastSyncDate, currentSyncDate));
+            syncDictionary.Add(BDDisease.SyncInfo(pDataContext, pLastSyncDate, currentSyncDate));
+            syncDictionary.Add(BDLinkedNoteAssociation.SyncInfo(pDataContext, pLastSyncDate, currentSyncDate));
+            syncDictionary.Add(BDLinkedNote.SyncInfo(pDataContext, pLastSyncDate, currentSyncDate));
+            syncDictionary.Add(BDPathogenGroup.SyncInfo(pDataContext, pLastSyncDate, currentSyncDate));
+            syncDictionary.Add(BDPathogen.SyncInfo(pDataContext, pLastSyncDate, currentSyncDate));
+            syncDictionary.Add(BDPresentation.SyncInfo(pDataContext, pLastSyncDate, currentSyncDate));
+            syncDictionary.Add(BDSection.SyncInfo(pDataContext, pLastSyncDate, currentSyncDate));
+            syncDictionary.Add(BDSubcategory.SyncInfo(pDataContext, pLastSyncDate, currentSyncDate));
+            syncDictionary.Add(BDTherapy.SyncInfo(pDataContext, pLastSyncDate, currentSyncDate));
+            syncDictionary.Add(BDTherapyGroup.SyncInfo(pDataContext, pLastSyncDate, currentSyncDate));
+            syncDictionary.Add(BDDeletion.SyncInfo(pDataContext, pLastSyncDate, currentSyncDate));
+
+            // prepare the push changes
+
 
             // List the remote domains
             ListDomainsResponse sdbListDomainsResponse = SimpleDb.ListDomains(new ListDomainsRequest());
@@ -96,15 +101,15 @@ namespace BDEditor.Classes
                 {
                     try
                     {
-                        CreateDomainRequest createDomainRequest = (new CreateDomainRequest()).WithDomainName(syncInfoEntry.EntityName);
+                        CreateDomainRequest createDomainRequest = (new CreateDomainRequest()).WithDomainName(syncInfoEntry.RemoteEntityName);
                         CreateDomainResponse createResponse = simpleDb.CreateDomain(createDomainRequest);
                         syncInfoEntry.ExistsOnRemote = true;
-                        System.Diagnostics.Debug.WriteLine(string.Format("Created domain for {0}", syncInfoEntry.EntityName));
+                        System.Diagnostics.Debug.WriteLine(string.Format("Created domain for {0}", syncInfoEntry.RemoteEntityName));
                     }
                     catch (AmazonSimpleDBException ex)
                     {
                         syncInfoEntry.Exception = ex;
-                        System.Diagnostics.Debug.WriteLine(string.Format("Failed to created domain for {0}", syncInfoEntry.EntityName));
+                        System.Diagnostics.Debug.WriteLine(string.Format("Failed to created domain for {0}", syncInfoEntry.RemoteEntityName));
                     }
                 }
             }
@@ -116,8 +121,8 @@ namespace BDEditor.Classes
 
             foreach (SyncInfo syncInfoEntry in syncDictionary.Values)
             {
-                System.Diagnostics.Debug.WriteLine(string.Format("Pull {0}", syncInfoEntry.EntityName));
-                SelectRequest selectRequestAction = new SelectRequest().WithSelectExpression(syncInfoEntry.GetLatestSelectString(pLastSyncDate));
+                System.Diagnostics.Debug.WriteLine(string.Format("Pull {0}", syncInfoEntry.RemoteEntityName));
+                SelectRequest selectRequestAction = new SelectRequest().WithSelectExpression(syncInfoEntry.GetLatestRemoteSelectString(pLastSyncDate));
 
                 SelectResponse selectResponse = null;
 
@@ -133,7 +138,7 @@ namespace BDEditor.Classes
                             Guid? entryGuid = null;
                             syncInfoEntry.RowsPulled++;
                             AttributeDictionary attributeDictionary = ItemAttributesToDictionary(item);
-                            switch (syncInfoEntry.EntityName)
+                            switch (syncInfoEntry.RemoteEntityName)
                             {
                                 case BDCategory.AWS_DOMAIN:
                                     entryGuid = BDCategory.LoadFromAttributes(pDataContext, attributeDictionary, false);
@@ -230,7 +235,7 @@ namespace BDEditor.Classes
                         selectRequestAction.NextToken = selectResponse.SelectResult.NextToken;
                     }
 
-                    System.Diagnostics.Debug.WriteLine("Pulled {0} Records for {1}", syncInfoEntry.RowsPulled, syncInfoEntry.EntityName);
+                    System.Diagnostics.Debug.WriteLine("Pulled {0} Records for {1}", syncInfoEntry.RowsPulled, syncInfoEntry.RemoteEntityName);
 
                 } while (selectResponse.SelectResult.IsSetNextToken());
             }
@@ -248,7 +253,27 @@ namespace BDEditor.Classes
 
                 foreach (SyncInfo syncInfoEntry in syncDictionary.Values)
                 {
-                    System.Diagnostics.Debug.WriteLine(string.Format("Push {0}", syncInfoEntry.EntityName));
+                    System.Diagnostics.Debug.WriteLine(string.Format("Push {0}", syncInfoEntry.RemoteEntityName));
+                    foreach (IBDObject changeEntry in syncInfoEntry.PushList)
+                    {
+                        SimpleDb.PutAttributes(changeEntry.PutAttributes());
+                        syncInfoEntry.RowsPushed++;
+
+                        if (changeEntry is BDLinkedNote)
+                        {
+                            BDLinkedNote linkedNote = changeEntry as BDLinkedNote;
+                            PutObjectRequest putObjectRequest = new PutObjectRequest()
+                                        .WithContentType(@"text/plain")
+                                        .WithContentBody(linkedNote.documentText)
+                                        .WithBucketName(BDLinkedNote.AWS_BUCKET)
+                                        .WithKey(linkedNote.storageKey);
+
+                            S3Response s3Response = S3.PutObject(putObjectRequest);
+                            s3Response.Dispose();
+                        }
+                    }
+
+                    /*
                     switch (syncInfoEntry.EntityName)
                     {
                         case BDCategory.AWS_DOMAIN:
@@ -395,52 +420,55 @@ namespace BDEditor.Classes
                             }
                             break;
                     }
-                    System.Diagnostics.Debug.WriteLine("Pushed {0} Records for {1}", syncInfoEntry.RowsPushed, syncInfoEntry.EntityName);
+                    */
+
+                    System.Diagnostics.Debug.WriteLine("Pushed {0} Records for {1}", syncInfoEntry.RowsPushed, syncInfoEntry.RemoteEntityName);
                 }
             #endregion
 
                 #region Delete Remote
                 // Process all deletion records in database since last sync: will include records received in last pull
-                List<BDDeletion> newDeletionsForRemote = BDDeletion.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+                List<IBDObject> newDeletionsForRemote = BDDeletion.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
                 string domainName = "";
-                foreach (BDDeletion entry in newDeletionsForRemote)
+                foreach (IBDObject entryObject in newDeletionsForRemote)
                 {
+                    BDDeletion entry = entryObject as BDDeletion;
                     switch(entry.targetName)
                     {
-                        case BDCategory.ENTITYNAME_FRIENDLY:
+                        case BDCategory.KEY_NAME:
                             domainName = BDCategory.AWS_DOMAIN;
                             break;
-                        case BDChapter.ENTITYNAME_FRIENDLY:
+                        case BDChapter.KEY_NAME:
                             domainName = BDChapter.AWS_DOMAIN;
                             break;
-                        case BDDisease.ENTITYNAME_FRIENDLY:
+                        case BDDisease.KEY_NAME:
                             domainName = BDDisease.AWS_DOMAIN;
                             break;
-                        case BDLinkedNote.ENTITYNAME_FRIENDLY:
+                        case BDLinkedNote.KEY_NAME:
                             domainName = BDLinkedNote.AWS_DOMAIN;
                             break;
-                        case BDLinkedNoteAssociation.ENTITYNAME_FRIENDLY:
+                        case BDLinkedNoteAssociation.KEY_NAME:
                             domainName = BDLinkedNoteAssociation.AWS_DOMAIN;
                             break;
-                        case BDPathogen.ENTITYNAME_FRIENDLY:
+                        case BDPathogen.KEY_NAME:
                             domainName = BDPathogen.AWS_DOMAIN;
                             break;
-                        case BDPathogenGroup.ENTITYNAME_FRIENDLY:
+                        case BDPathogenGroup.KEY_NAME:
                             domainName = BDPathogenGroup.AWS_DOMAIN;
                             break;
-                        case BDPresentation.ENTITYNAME_FRIENDLY:
+                        case BDPresentation.KEY_NAME:
                             domainName = BDPresentation.AWS_DOMAIN;
                             break;
-                        case BDSection.ENTITYNAME_FRIENDLY:
+                        case BDSection.KEY_NAME:
                             domainName = BDSection.AWS_DOMAIN;
                             break;
-                        case BDSubcategory.ENTITYNAME_FRIENDLY:
+                        case BDSubcategory.KEY_NAME:
                             domainName = BDSubcategory.AWS_DOMAIN;
                             break;
-                        case BDTherapy.ENTITYNAME_FRIENDLY:
+                        case BDTherapy.KEY_NAME:
                             domainName = BDTherapy.AWS_DOMAIN;
                             break;
-                        case BDTherapyGroup.ENTITYNAME_FRIENDLY:
+                        case BDTherapyGroup.KEY_NAME:
                             domainName = BDTherapyGroup.AWS_DOMAIN;
                             break;
                     }
@@ -453,8 +481,11 @@ namespace BDEditor.Classes
 
             }
 
-            pLastSyncDate = DateTime.Now;
-            BDSystemSetting.SaveTimestamp(pDataContext, BDSystemSetting.LASTSYNC_TIMESTAMP, pLastSyncDate.Value);
+            pLastSyncDate = currentSyncDate;
+
+            BDSystemSetting systemSetting = BDSystemSetting.GetSetting(pDataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            systemSetting.settingDateTimeValue = currentSyncDate;
+            pDataContext.SaveChanges();
 
             return syncDictionary;
         }

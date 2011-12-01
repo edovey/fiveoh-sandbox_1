@@ -55,7 +55,7 @@ namespace BDEditor.Views
         {
             InitializeComponent();
 
-            btnTherapyGroupLink.Tag = BDTherapyGroup.PROPERTYNAME_DEFAULT;
+            btnTherapyGroupLink.Tag = BDTherapyGroup.PROPERTYNAME_NAME;
         }
 
         public BDTherapyGroup CurrentTherapyGroup
@@ -309,7 +309,7 @@ namespace BDEditor.Views
                 BDLinkedNoteView view = new BDLinkedNoteView();
                 view.AssignDataContext(dataContext);
                 view.AssignContextPropertyName(pProperty);
-                view.AssignContextEntityName(BDTherapyGroup.ENTITYNAME_FRIENDLY);
+                view.AssignContextEntityKeyName(BDTherapyGroup.KEY_NAME);
                 view.AssignScopeId(scopeId);
                 view.NotesChanged += new EventHandler(notesChanged_Action);
                 if (null != currentTherapyGroup)
@@ -329,7 +329,7 @@ namespace BDEditor.Views
 
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
-            List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentId(dataContext, (null != this.currentTherapyGroup) ? this.currentTherapyGroup.uuid : Guid.Empty);
+            List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentTherapyGroup) ? this.currentTherapyGroup.uuid : Guid.Empty);
             btnTherapyGroupLink.BackColor = links.Exists(x => x.parentEntityPropertyName == (string)btnTherapyGroupLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
 
             if (pPropagateToChildren)

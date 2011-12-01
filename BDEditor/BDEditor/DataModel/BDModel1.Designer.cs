@@ -3996,6 +3996,30 @@ namespace BDEditor.DataModel
         private global::System.String _settingValue;
         partial void OnsettingValueChanging(global::System.String value);
         partial void OnsettingValueChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> settingDateTimeValue
+        {
+            get
+            {
+                return _settingDateTimeValue;
+            }
+            set
+            {
+                OnsettingDateTimeValueChanging(value);
+                ReportPropertyChanging("settingDateTimeValue");
+                _settingDateTimeValue = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("settingDateTimeValue");
+                OnsettingDateTimeValueChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _settingDateTimeValue;
+        partial void OnsettingDateTimeValueChanging(Nullable<global::System.DateTime> value);
+        partial void OnsettingDateTimeValueChanged();
 
         #endregion
     

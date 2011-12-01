@@ -149,7 +149,7 @@ namespace BDEditor.Views
 
                 bdLinkedNoteControl1.AssignParentId(null);
                 bdLinkedNoteControl1.AssignScopeId(null);
-                bdLinkedNoteControl1.AssignContextEntityName(BDPresentation.ENTITYNAME_FRIENDLY);
+                bdLinkedNoteControl1.AssignContextEntityKeyName(BDPresentation.KEY_NAME);
                 bdLinkedNoteControl1.AssignContextPropertyName(BDPresentation.PROPERTYNAME_OVERVIEW);
             }
             else
@@ -164,7 +164,7 @@ namespace BDEditor.Views
 
                 bdLinkedNoteControl1.AssignParentId(currentPresentation.uuid);
                 bdLinkedNoteControl1.AssignScopeId(scopeId);
-                bdLinkedNoteControl1.AssignContextEntityName(BDPresentation.ENTITYNAME_FRIENDLY);
+                bdLinkedNoteControl1.AssignContextEntityKeyName(BDPresentation.KEY_NAME);
                 bdLinkedNoteControl1.AssignContextPropertyName(BDPresentation.PROPERTYNAME_OVERVIEW);
 
 

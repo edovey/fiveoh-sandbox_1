@@ -67,7 +67,7 @@ namespace BDEditor.Views
         public BDPathogenGroupControl()
         {
             InitializeComponent();
-            btnPathogenGroupLink.Tag = BDPathogenGroup.PROPERTYNAME_DEFAULT;
+            btnPathogenGroupLink.Tag = BDPathogenGroup.PROPERTYNAME_NAME;
         }
 
         public void AssignScopeId(Guid? pScopeId)
@@ -504,7 +504,7 @@ namespace BDEditor.Views
                 BDLinkedNoteView view = new BDLinkedNoteView();
                 view.AssignDataContext(dataContext);
                 view.AssignContextPropertyName(pProperty);
-                view.AssignContextEntityName(BDPathogenGroup.ENTITYNAME_FRIENDLY);
+                view.AssignContextEntityKeyName(BDPathogenGroup.KEY_NAME);
                 view.AssignScopeId(scopeId);
                 view.NotesChanged += new EventHandler(notesChanged_Action);
                 if (null != currentPathogenGroup)
@@ -524,7 +524,7 @@ namespace BDEditor.Views
 
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
-            List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentId(dataContext, (null != this.currentPathogenGroup) ? this.currentPathogenGroup.uuid : Guid.Empty);
+            List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentPathogenGroup) ? this.currentPathogenGroup.uuid : Guid.Empty);
             btnPathogenGroupLink.BackColor = links.Exists(x => x.parentEntityPropertyName == (string)btnPathogenGroupLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
 
             if (pPropagateToChildren)

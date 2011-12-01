@@ -10,5 +10,6 @@ namespace BDEditor.DataModel
         Guid Uuid { get; }
         string Description { get; }
         string DescriptionForLinkedNote { get; }
+        Amazon.SimpleDB.Model.PutAttributesRequest PutAttributes();
     }
 }

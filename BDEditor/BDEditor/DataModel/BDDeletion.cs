@@ -14,11 +14,13 @@ namespace BDEditor.DataModel
     /// <summary>
     /// Extension of generated BDDeletion
     /// </summary>
-    public partial class BDDeletion
+    public partial class BDDeletion: IBDObject
     {
         public const string AWS_DOMAIN = @"bd_1_deletions";
         public const string ENTITYNAME = @"BDDeletions";
         public const string ENTITYNAME_FRIENDLY = @"Deletion";
+        public const string KEY_NAME = @"BDDeletion";
+
         public const int ENTITY_SCHEMAVERSION = 0;
 
         private const string UUID = @"de_uuid";
@@ -41,7 +43,7 @@ namespace BDEditor.DataModel
             deletion.targetName = pTargetName;
             deletion.targetId = pTargetId;
 
-            pContext.AddObject("BDDeletions", deletion);
+            pContext.AddObject(ENTITYNAME, deletion);
         }
 
         #region Repository
@@ -51,9 +53,9 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pUpdateDateTime">Null date will return all records</param>
         /// <returns>List of entries.  List is empty if none found.</returns>
-        public static List<BDDeletion> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
+        public static List<IBDObject> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
         {
-            List<BDDeletion> entryList = new List<BDDeletion>();
+            List<IBDObject> entryList = new List<IBDObject>();
             IQueryable<BDDeletion> entries;
 
             if (null == pUpdateDateTime)
@@ -69,7 +71,7 @@ namespace BDEditor.DataModel
             }
 
             if (entries.Count() > 0)
-                entryList = entries.ToList<BDDeletion>();
+                entryList = new List<IBDObject>(entries.ToList<BDDeletion>());
             return entryList;
         }
 
@@ -89,45 +91,46 @@ namespace BDEditor.DataModel
 
         public static void DeleteLocalSinceDate(Entities pDataContext, DateTime? pLastSyncDate)
         {
-            List<BDDeletion> newDeletionsForLocal = BDDeletion.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
-            foreach (BDDeletion deletion in newDeletionsForLocal)
+            List<IBDObject> newDeletionsForLocal = BDDeletion.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+            foreach (IBDObject deletionEntry in newDeletionsForLocal)
             {
+                BDDeletion deletion = deletionEntry as BDDeletion;
                 switch (deletion.targetName)
                 {
-                    case BDCategory.ENTITYNAME_FRIENDLY:
+                    case BDCategory.KEY_NAME:
                         BDCategory.Delete(pDataContext, deletion.targetId.Value,false);
                         break;
-                    case BDChapter.ENTITYNAME_FRIENDLY:
+                    case BDChapter.KEY_NAME:
                         BDChapter.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
-                    case BDDisease.ENTITYNAME_FRIENDLY:
+                    case BDDisease.KEY_NAME:
                         BDDisease.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
-                    case BDLinkedNote.ENTITYNAME_FRIENDLY:
+                    case BDLinkedNote.KEY_NAME:
                         BDLinkedNote.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
-                    case BDLinkedNoteAssociation.ENTITYNAME_FRIENDLY:
+                    case BDLinkedNoteAssociation.KEY_NAME:
                         BDLinkedNoteAssociation.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
-                    case BDPathogen.ENTITYNAME_FRIENDLY:
+                    case BDPathogen.KEY_NAME:
                         BDPathogen.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
-                    case BDPathogenGroup.ENTITYNAME_FRIENDLY:
+                    case BDPathogenGroup.KEY_NAME:
                         BDPathogenGroup.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
-                    case BDPresentation.ENTITYNAME_FRIENDLY:
+                    case BDPresentation.KEY_NAME:
                         BDPresentation.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
-                    case BDSection.ENTITYNAME_FRIENDLY:
+                    case BDSection.KEY_NAME:
                         BDSection.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
-                    case BDSubcategory.ENTITYNAME_FRIENDLY:
+                    case BDSubcategory.KEY_NAME:
                         BDSubcategory.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
-                    case BDTherapy.ENTITYNAME_FRIENDLY:
+                    case BDTherapy.KEY_NAME:
                         BDTherapy.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
-                    case BDTherapyGroup.ENTITYNAME_FRIENDLY:
+                    case BDTherapyGroup.KEY_NAME:
                         BDTherapyGroup.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
                 }
@@ -136,9 +139,17 @@ namespace BDEditor.DataModel
             }
         }
 
-        public static SyncInfo SyncInfo()
+        public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime pCurrentSyncDate)
         {
-            return new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            syncInfo.PushList = BDDeletion.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+            syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
+            for (int idx = 0; idx < syncInfo.PushList.Count; idx++)
+            {
+                ((BDDeletion)syncInfo.PushList[idx]).modifiedDate = pCurrentSyncDate;
+            }
+            if (syncInfo.PushList.Count > 0) { pDataContext.SaveChanges(); }
+            return syncInfo;
         }
 
         public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
@@ -182,5 +193,25 @@ namespace BDEditor.DataModel
             return putAttributeRequest;
         }
         #endregion
+
+        public Guid Uuid
+        {
+            get { return this.uuid; }
+        }
+
+        public string Description
+        {
+            get { return string.Format("{0} [{1}]", this.targetName, this.targetId); }
+        }
+
+        public string DescriptionForLinkedNote
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public override string ToString()
+        {
+            return this.Description;
+        }
     }
 }

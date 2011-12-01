@@ -36,7 +36,7 @@ namespace BDEditor.Views
                 bdLinkedNoteControl1.CurrentLinkedNote = null;
                 bdLinkedNoteControl1.AssignParentId(null);
                 bdLinkedNoteControl1.AssignScopeId(null);
-                bdLinkedNoteControl1.AssignContextEntityName(BDDisease.ENTITYNAME_FRIENDLY);
+                bdLinkedNoteControl1.AssignContextEntityKeyName(BDDisease.KEY_NAME);
                 bdLinkedNoteControl1.AssignContextPropertyName(BDDisease.PROPERTYNAME_OVERVIEW);
             }
             else
@@ -44,7 +44,7 @@ namespace BDEditor.Views
                 tbDiseaseName.Text = currentDisease.name;
                 bdLinkedNoteControl1.AssignParentId(currentDisease.uuid);
                 bdLinkedNoteControl1.AssignScopeId(currentDisease.uuid);
-                bdLinkedNoteControl1.AssignContextEntityName(BDDisease.ENTITYNAME_FRIENDLY);
+                bdLinkedNoteControl1.AssignContextEntityKeyName(BDDisease.KEY_NAME);
                 bdLinkedNoteControl1.AssignContextPropertyName(BDDisease.PROPERTYNAME_OVERVIEW);
 
                 BDLinkedNoteAssociation association = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, currentDisease.uuid, BDDisease.PROPERTYNAME_OVERVIEW);

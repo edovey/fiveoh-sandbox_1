@@ -30,26 +30,26 @@ namespace BDEditor.DataModel
             return setting;
         }
 
-        public static DateTime? GetTimestamp(Entities pDataContext, string pTimestampName)
-        {
-            DateTime? result = null;
-            BDSystemSetting entry = GetSetting(pDataContext, pTimestampName);
-            if (null != entry.settingValue)
-            {
-                result = DateTime.Parse(entry.settingValue);
-            }
-            return result;
-        }
+        //public static DateTime? GetTimestamp(Entities pDataContext, string pTimestampName)
+        //{
+        //    DateTime? result = null;
+        //    BDSystemSetting entry = GetSetting(pDataContext, pTimestampName);
+        //    if (null != entry.settingValue)
+        //    {
+        //        result = DateTime.Parse(entry.settingValue);
+        //    }
+        //    return result;
+        //}
 
-        public static void SaveTimestamp(Entities pDataContext, string pTimestampName, DateTime? pDateTime)
-        {
-            BDSystemSetting entry = GetSetting(pDataContext, pTimestampName);
-            if (null == pDateTime)
-                entry.settingValue = null;
-            else
-                entry.settingValue = pDateTime.Value.ToString(BDEditor.Classes.Constants.DATETIMEFORMAT);
-            pDataContext.SaveChanges();
-        }
+        //public static void SaveTimestamp(Entities pDataContext, string pTimestampName, DateTime? pDateTime)
+        //{
+        //    BDSystemSetting entry = GetSetting(pDataContext, pTimestampName);
+        //    if (null == pDateTime)
+        //        entry.settingValue = null;
+        //    else
+        //        entry.settingValue = pDateTime.Value.ToString(BDEditor.Classes.Constants.DATETIMEFORMAT);
+        //    pDataContext.SaveChanges();
+        //}
 
     }
 }

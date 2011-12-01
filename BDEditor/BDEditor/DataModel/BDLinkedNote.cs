@@ -16,7 +16,7 @@ namespace BDEditor.DataModel
     /// <summary>
     /// Extension of generated BDLinkedNote
     /// </summary>
-    public partial class BDLinkedNote
+    public partial class BDLinkedNote: IBDObject
     {
         public const string AWS_DOMAIN = @"bd_1_linkedNotes";
         public const string AWS_BUCKET = @"bdDataStore";
@@ -25,6 +25,8 @@ namespace BDEditor.DataModel
 
         public const string ENTITYNAME = @"BDLinkedNotes";
         public const string ENTITYNAME_FRIENDLY = @"Linked Note";
+        public const string KEY_NAME = @"BDLinkedNote";
+
         public const int ENTITY_SCHEMAVERSION = 0;
 
         private const string UUID = @"ln_uuid";
@@ -56,7 +58,7 @@ namespace BDEditor.DataModel
             linkedNote.singleUse = false;
             linkedNote.previewText = string.Empty;
 
-            pContext.AddObject(@"BDLinkedNotes", linkedNote);
+            pContext.AddObject(ENTITYNAME, linkedNote);
             return linkedNote;
         }
 
@@ -86,7 +88,7 @@ namespace BDEditor.DataModel
             // delet the note associations
             DeleteNoteAssociations(pContext, pEntity.uuid, true);
             // create BDDeletion record for the object to be deleted
-            BDDeletion.CreateDeletion(pContext, ENTITYNAME_FRIENDLY, pEntity.uuid);
+            BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
             // delete record from local data store
             pContext.DeleteObject(pEntity);
             pContext.SaveChanges();
@@ -206,9 +208,9 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pUpdateDateTime">Null date will return all records</param>
         /// <returns>List of entries. Empty list if none found.</returns>
-        public static List<BDLinkedNote> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
+        public static List<IBDObject> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
         {
-            List<BDLinkedNote> entryList = new List<BDLinkedNote>();
+            List<IBDObject> entryList = new List<IBDObject>();
             IQueryable<BDLinkedNote> entries;
 
             if (null == pUpdateDateTime)
@@ -222,14 +224,24 @@ namespace BDEditor.DataModel
                             where entry.modifiedDate > pUpdateDateTime.Value
                             select entry);
             }
+            
             if (entries.Count() > 0)
-                entryList = entries.ToList<BDLinkedNote>();
+                entryList = new List<IBDObject>(entries.ToList<BDLinkedNote>());
+
             return entryList;
         }
 
-        public static SyncInfo SyncInfo()
+        public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime pCurrentSyncDate)
         {
-            return new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            syncInfo.PushList = BDLinkedNote.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+            syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
+            for (int idx = 0; idx < syncInfo.PushList.Count; idx++)
+            {
+                ((BDLinkedNote)syncInfo.PushList[idx]).modifiedDate = pCurrentSyncDate;
+            }
+            if (syncInfo.PushList.Count > 0) { pDataContext.SaveChanges(); }
+            return syncInfo;
         }
 
         /// <summary>
@@ -246,7 +258,7 @@ namespace BDEditor.DataModel
             if (null == entry)
             {
                 entry = BDLinkedNote.CreateBDLinkedNote(uuid, deprecated);
-                pDataContext.AddObject("BDLinkedNotes", entry);
+                pDataContext.AddObject(ENTITYNAME, entry);
             }
 
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
@@ -291,5 +303,24 @@ namespace BDEditor.DataModel
         }
         #endregion
 
+        public Guid Uuid
+        {
+            get { return this.uuid; }
+        }
+
+        public string Description
+        {
+            get { return this.previewText; }
+        }
+
+        public string DescriptionForLinkedNote
+        {
+            get { return string.Format("{0}: {1}", ENTITYNAME_FRIENDLY, this.previewText); }
+        }
+
+        public override string ToString()
+        {
+            return this.uuid.ToString();
+        }
     }
 }

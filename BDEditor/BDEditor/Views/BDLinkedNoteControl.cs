@@ -57,9 +57,9 @@ namespace BDEditor.Views
                 Save();
         }
 
-        public void AssignContextEntityName(string pContextEntityName)
+        public void AssignContextEntityKeyName(string pContextEntityKeyName)
         {
-            contextEntityName = pContextEntityName;
+            contextEntityName = pContextEntityKeyName;
         }
 
         public void AssignContextPropertyName(string pContextPropertyName)

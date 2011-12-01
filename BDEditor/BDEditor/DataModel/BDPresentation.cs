@@ -13,12 +13,14 @@ namespace BDEditor.DataModel
     /// <summary>
     /// Extension of generated BDPresentation
     /// </summary>
-    public partial class BDPresentation
+    public partial class BDPresentation: IBDObject
     {
         public const string AWS_DOMAIN = @"bd_1_presentations";
         public const string ENTITYNAME = @"BDPresentations";
         public const string ENTITYNAME_FRIENDLY = @"Presentation";
+        public const string KEY_NAME = @"BDPresentation";
         public const string PROPERTYNAME_OVERVIEW = @"Overview";
+        public const string PROPERTYNAME_NAME = @"Name";
         public const int ENTITY_SCHEMAVERSION = 0;
 
         private const string UUID = @"pr_uuid";
@@ -46,7 +48,7 @@ namespace BDEditor.DataModel
             presentation.name = string.Empty;
             presentation.diseaseId = pDiseaseId;
 
-            pContext.AddObject("BDPresentations", presentation);
+            pContext.AddObject(ENTITYNAME, presentation);
 
             BDPathogenGroup pathogenGroup = BDPathogenGroup.CreatePathogenGroup(pContext, presentation.uuid);
             pathogenGroup.displayOrder = 0;
@@ -78,9 +80,9 @@ namespace BDEditor.DataModel
         /// <param name="pEntity">the entry to be deleted</param>
         public static void Delete(Entities pContext, BDPresentation pEntity)
         {
-            // find linked notes and delete
-            List<BDLinkedNoteAssociation> notes = BDLinkedNoteAssociation.GetLinkedNoteAssociationsFromParentIdAndProperty(pContext, pEntity.uuid, PROPERTYNAME_OVERVIEW);
-            foreach (BDLinkedNoteAssociation a in notes)
+            // delete linked notes
+            List<BDLinkedNoteAssociation> linkedNotes = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(pContext, pEntity.uuid);
+            foreach (BDLinkedNoteAssociation a in linkedNotes)
             {
                 BDLinkedNoteAssociation.Delete(pContext, a);
             }
@@ -93,7 +95,7 @@ namespace BDEditor.DataModel
             }
 
             // create BDDeletion record for the object to be deleted
-            BDDeletion.CreateDeletion(pContext, ENTITYNAME_FRIENDLY, pEntity.uuid);
+            BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
             // delete record from local data store
             pContext.DeleteObject(pEntity);
             pContext.SaveChanges();
@@ -189,9 +191,9 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pUpdateDateTime">Null date will return all records</param>
         /// <returns>List of entries. Empty list if none found.</returns>
-        public static List<BDPresentation> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
+        public static List<IBDObject> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
         {
-            List<BDPresentation> entryList = new List<BDPresentation>();
+            List<IBDObject> entryList = new List<IBDObject>();
             IQueryable<BDPresentation> presentations;
 
             if (null == pUpdateDateTime)
@@ -206,13 +208,21 @@ namespace BDEditor.DataModel
                             select entry);
             }
             if (presentations.Count() > 0)
-                entryList = presentations.ToList<BDPresentation>();
+                entryList = new List<IBDObject>(presentations.ToList<BDPresentation>());
             return entryList;
         }
 
-        public static SyncInfo SyncInfo()
+        public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime pCurrentSyncDate)
         {
-            return new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            syncInfo.PushList = BDPresentation.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+            syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
+            for (int idx = 0; idx < syncInfo.PushList.Count; idx++)
+            {
+                ((BDPresentation)syncInfo.PushList[idx]).modifiedDate = pCurrentSyncDate;
+            }
+            if (syncInfo.PushList.Count > 0) { pDataContext.SaveChanges(); }
+            return syncInfo;
         }
 
         /// <summary>
@@ -229,7 +239,7 @@ namespace BDEditor.DataModel
             if (null == entry)
             {
                 entry = BDPresentation.CreateBDPresentation(uuid, deprecated);
-                pDataContext.AddObject("BDPresentations", entry);
+                pDataContext.AddObject(ENTITYNAME, entry);
             }
 
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
@@ -268,5 +278,25 @@ namespace BDEditor.DataModel
             return putAttributeRequest;
         }
         #endregion 
+    
+        public Guid Uuid
+        {
+            get { return this.uuid; }
+        }
+
+        public string Description
+        {
+            get { return this.name; }
+        }
+
+        public string DescriptionForLinkedNote
+        {
+            get { return string.Format("{0}: {1}",ENTITYNAME_FRIENDLY, this.name); }
+        }
+
+        public override string ToString()
+        {
+            return this.name;
+        }
     }
 }

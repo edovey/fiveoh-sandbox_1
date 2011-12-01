@@ -21,6 +21,8 @@ namespace BDEditor.DataModel
         public const string AWS_DOMAIN = @"bd_1_therapies";
         public const string ENTITYNAME = @"BDTherapies";
         public const string ENTITYNAME_FRIENDLY = @"Therapy";
+        public const string KEY_NAME = @"BDTherapy";
+
         public const int ENTITY_SCHEMAVERSION = 0;
         public const string PROPERTYNAME_THERAPY = @"Therapy";
         public const string PROPERTYNAME_DOSAGE = @"Dosage"; 
@@ -69,7 +71,7 @@ namespace BDEditor.DataModel
             therapy.duration = string.Empty;
             therapy.therapyGroupId = pTherapyGroupId;
 
-            pContext.AddObject("BDTherapies", therapy);
+            pContext.AddObject(ENTITYNAME, therapy);
 
             return therapy;
         }
@@ -97,23 +99,15 @@ namespace BDEditor.DataModel
         /// <param name="pEntity">the entry to be deleted</param>
         public static void Delete(Entities pContext, BDTherapy pEntity)
         {
-            // check for linked notes and delete association
-            List<BDLinkedNoteAssociation> linkedNotesToName = BDLinkedNoteAssociation.GetLinkedNoteAssociationsFromParentIdAndProperty(pContext, pEntity.uuid, @"Therapy");
-            foreach (BDLinkedNoteAssociation assnToName in linkedNotesToName)
-                BDLinkedNoteAssociation.Delete(pContext, assnToName);
-            List<BDLinkedNoteAssociation> linkedNotesToDosage = BDLinkedNoteAssociation.GetLinkedNoteAssociationsFromParentIdAndProperty(pContext, pEntity.uuid, @"Dosage");
-            foreach (BDLinkedNoteAssociation assnToDosage in linkedNotesToDosage)
+            // delete linked notes
+            List<BDLinkedNoteAssociation> linkedNotes = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(pContext, pEntity.uuid);
+            foreach (BDLinkedNoteAssociation a in linkedNotes)
             {
-                BDLinkedNoteAssociation.Delete(pContext, assnToDosage);
-            }
-            List<BDLinkedNoteAssociation> linkedNotesToDuration = BDLinkedNoteAssociation.GetLinkedNoteAssociationsFromParentIdAndProperty(pContext, pEntity.uuid, @"Duration");
-            foreach(BDLinkedNoteAssociation assnToDuration in linkedNotesToDuration)
-            {
-                BDLinkedNoteAssociation.Delete(pContext, assnToDuration);
+                BDLinkedNoteAssociation.Delete(pContext, a);
             }
 
             // create BDDeletion record for the object to be deleted
-            BDDeletion.CreateDeletion(pContext, ENTITYNAME_FRIENDLY, pEntity.uuid);
+            BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
 
             // delete record from local data store
             pContext.DeleteObject(pEntity);
@@ -257,9 +251,9 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pUpdateDateTime">Null date will return all records</param>
         /// <returns>List of entries. Empty list if none found.</returns>
-        public static List<BDTherapy> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
+        public static List<IBDObject> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
         {
-            List<BDTherapy> entryList = new List<BDTherapy>();
+            List<IBDObject> entryList = new List<IBDObject>();
             IQueryable<BDTherapy> entries;
 
             if (null == pUpdateDateTime)
@@ -269,18 +263,31 @@ namespace BDEditor.DataModel
             }
             else
             {
-                entries = (from entry in pContext.BDTherapies
-                            where entry.modifiedDate > pUpdateDateTime.Value
-                            select entry);
+                entries = pContext.BDTherapies.Where(x => x.modifiedDate > pUpdateDateTime);
+                //entries = (from entry in pContext.BDTherapies
+                //           where (entry.modifiedDate > pUpdateDateTime) && (entry.modifiedDate != pUpdateDateTime)
+                //            select entry);
             }
             if (entries.Count() > 0)
-                entryList = entries.ToList<BDTherapy>();
+            {
+                entryList = new List<IBDObject>(entries.ToList<BDTherapy>());
+            }
             return entryList;
         }
 
-        public static SyncInfo SyncInfo()
+        public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime pCurrentSyncDate)
         {
-            return new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            syncInfo.PushList = BDTherapy.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+            syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
+
+            for (int idx = 0; idx < syncInfo.PushList.Count; idx++)
+            {
+                ((BDTherapy)syncInfo.PushList[idx]).modifiedDate = pCurrentSyncDate;
+            }
+            if (syncInfo.PushList.Count > 0) { pDataContext.SaveChanges(); }
+
+            return syncInfo;
         }
 
         /// <summary>
@@ -297,7 +304,7 @@ namespace BDEditor.DataModel
             if (null == entry)
             {
                 entry = BDTherapy.CreateBDTherapy(uuid, deprecated);
-                pDataContext.AddObject("BDTherapies", entry);
+                pDataContext.AddObject(ENTITYNAME, entry);
             }
 
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);

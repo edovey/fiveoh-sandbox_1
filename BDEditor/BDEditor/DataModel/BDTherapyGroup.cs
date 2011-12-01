@@ -21,8 +21,10 @@ namespace BDEditor.DataModel
         public const string AWS_DOMAIN = @"bd_1_therapyGroups";
         public const string ENTITYNAME = @"BDTherapyGroups";
         public const string ENTITYNAME_FRIENDLY = @"Therapy Group";
+        public const string KEY_NAME = @"BDTherapyGroup";
+
         public const int ENTITY_SCHEMAVERSION = 0;
-        public const string PROPERTYNAME_DEFAULT = "TherapyGroup";
+        //public const string PROPERTYNAME_DEFAULT = "TherapyGroup";
         public const string PROPERTYNAME_NAME = @"Name";
 
         private const string UUID = @"tg_uuid";
@@ -59,7 +61,7 @@ namespace BDEditor.DataModel
             therapyGroup.name = string.Empty;
             therapyGroup.pathogenGroupId = pPathogenGroupId;
 
-            pContext.AddObject("BDTherapyGroups", therapyGroup);
+            pContext.AddObject(ENTITYNAME, therapyGroup);
 
             return therapyGroup;
         }
@@ -88,6 +90,13 @@ namespace BDEditor.DataModel
         /// <param name="pEntity">the entry to be deleted</param>
         public static void Delete(Entities pContext, BDTherapyGroup pEntity)
         {
+            // delete linked notes
+            List<BDLinkedNoteAssociation> linkedNotes = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(pContext, pEntity.uuid);
+            foreach (BDLinkedNoteAssociation a in linkedNotes)
+            {
+                BDLinkedNoteAssociation.Delete(pContext, a);
+            }
+
             // find and delete child objects, then delete record from local data store
             List<BDTherapy> children = BDTherapy.GetTherapiesForTherapyGroupId(pContext, pEntity.uuid);
             foreach (BDTherapy t in children)
@@ -96,7 +105,7 @@ namespace BDEditor.DataModel
             }
 
             // create BDDeletion record for the object to be deleted
-            BDDeletion.CreateDeletion(pContext, ENTITYNAME_FRIENDLY, pEntity.uuid);
+            BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
 
             pContext.DeleteObject(pEntity);
             pContext.SaveChanges();
@@ -207,6 +216,10 @@ namespace BDEditor.DataModel
             get { return string.Format("Therapy Group - {0}", this.name); }
         }
 
+        public override string ToString()
+        {
+            return this.name;
+        }
         #region Repository
 
         /// <summary>
@@ -215,9 +228,9 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pUpdateDateTime">Null date will return all records</param>
         /// <returns>List of entries. Empty list if none found.</returns>
-        public static List<BDTherapyGroup> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
+        public static List<IBDObject> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
         {
-            List<BDTherapyGroup> entryList = new List<BDTherapyGroup>();
+            List<IBDObject> entryList = new List<IBDObject>();
             IQueryable<BDTherapyGroup> entries;
 
             if (null == pUpdateDateTime)
@@ -232,13 +245,21 @@ namespace BDEditor.DataModel
                             select entry);
             }
             if (entries.Count() > 0)
-                entryList = entries.ToList<BDTherapyGroup>();
+                entryList = new List<IBDObject>(entries.ToList<BDTherapyGroup>());
             return entryList;
         }
 
-        public static SyncInfo SyncInfo()
+        public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime pCurrentSyncDate)
         {
-            return new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            syncInfo.PushList = BDTherapyGroup.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+            syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
+            for (int idx = 0; idx < syncInfo.PushList.Count; idx++)
+            {
+                ((BDTherapyGroup)syncInfo.PushList[idx]).modifiedDate = pCurrentSyncDate;
+            }
+            if (syncInfo.PushList.Count > 0) { pDataContext.SaveChanges(); }
+            return syncInfo;
         }
 
         /// <summary>
@@ -255,7 +276,7 @@ namespace BDEditor.DataModel
             if (null == entry)
             {
                 entry = BDTherapyGroup.CreateBDTherapyGroup(uuid, deprecated);
-                pDataContext.AddObject("BDTherapyGroups", entry);
+                pDataContext.AddObject(ENTITYNAME, entry);
             }
 
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);

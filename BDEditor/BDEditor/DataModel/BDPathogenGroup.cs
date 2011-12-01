@@ -16,12 +16,13 @@ namespace BDEditor.DataModel
     /// <summary>
     /// Extension of generated BDPathogenGroup
     /// </summary>
-    public partial class BDPathogenGroup
+    public partial class BDPathogenGroup: IBDObject
     {
         public const string AWS_DOMAIN = @"bd_1_pathogenGroups";
-        public const string ENTITYNAME = @"BDPathogenBroups";
+        public const string ENTITYNAME = @"BDPathogenGroups";
         public const string ENTITYNAME_FRIENDLY = @"Pathogen Group";
-        public const string PROPERTYNAME_DEFAULT = @"PathogenGroup";
+        public const string KEY_NAME = @"BDPathogenGroup";
+        public const string PROPERTYNAME_NAME = @"Name";
         public const int ENTITY_SCHEMAVERSION = 1;
 
         private const string UUID = @"pg_uuid";
@@ -49,7 +50,7 @@ namespace BDEditor.DataModel
             pathogenGroup.displayOrder = -1;
             pathogenGroup.presentationId = pPresentationId;
             pathogenGroup.name = string.Empty;
-            pContext.AddObject("BDPathogenGroups", pathogenGroup);
+            pContext.AddObject(ENTITYNAME, pathogenGroup);
 
             return pathogenGroup;
         }
@@ -80,8 +81,8 @@ namespace BDEditor.DataModel
         public static void Delete(Entities pContext, BDPathogenGroup pEntity)
         {
             // delete linked notes
-            List<BDLinkedNoteAssociation> notes = BDLinkedNoteAssociation.GetLinkedNoteAssociationsFromParentIdAndProperty(pContext, pEntity.uuid, ENTITYNAME_FRIENDLY);
-            foreach (BDLinkedNoteAssociation a in notes)
+            List<BDLinkedNoteAssociation> linkedNotes = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(pContext, pEntity.uuid);
+            foreach (BDLinkedNoteAssociation a in linkedNotes)
             {
                 BDLinkedNoteAssociation.Delete(pContext, a);
             }
@@ -94,7 +95,7 @@ namespace BDEditor.DataModel
             }
 
             // create BDDeletion record for the object to be deleted
-            BDDeletion.CreateDeletion(pContext, ENTITYNAME_FRIENDLY, pEntity.uuid);
+            BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
             // delete record from local data store
             pContext.DeleteObject(pEntity);
             pContext.SaveChanges();
@@ -199,9 +200,9 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pUpdateDateTime">Null date will return all records</param>
         /// <returns>List of entries. Empty list if none found.</returns>
-        public static List<BDPathogenGroup> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
+        public static List<IBDObject> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
         {
-            List<BDPathogenGroup> entryList = new List<BDPathogenGroup>();
+            List<IBDObject> entryList = new List<IBDObject>();
             IQueryable<BDPathogenGroup> pathogenGroups;
 
             if (null == pUpdateDateTime)
@@ -216,13 +217,21 @@ namespace BDEditor.DataModel
                             select entry);
             }
             if (pathogenGroups.Count() > 0)
-                entryList = pathogenGroups.ToList<BDPathogenGroup>();
+                entryList = new List<IBDObject>( pathogenGroups.ToList<BDPathogenGroup>());
             return entryList;
         }
 
-        public static SyncInfo SyncInfo()
+        public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime pCurrentSyncDate)
         {
-            return new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            syncInfo.PushList = BDPathogenGroup.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+            syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
+            for (int idx = 0; idx < syncInfo.PushList.Count; idx++)
+            {
+                ((BDPathogenGroup)syncInfo.PushList[idx]).modifiedDate = pCurrentSyncDate;
+            }
+            if (syncInfo.PushList.Count > 0) { pDataContext.SaveChanges(); }
+            return syncInfo;
         }
 
         /// <summary>
@@ -239,7 +248,7 @@ namespace BDEditor.DataModel
             if (null == entry)
             {
                 entry = BDPathogenGroup.CreateBDPathogenGroup(uuid, deprecated);
-                pDataContext.AddObject("BDPathogenGroups", entry);
+                pDataContext.AddObject(ENTITYNAME, entry);
             }
 
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
@@ -280,5 +289,25 @@ namespace BDEditor.DataModel
             return putAttributeRequest;
         }
         #endregion
+
+        public Guid Uuid
+        {
+            get { return this.uuid; }
+        }
+
+        public string Description
+        {
+            get { return this.name; }
+        }
+
+        public string DescriptionForLinkedNote
+        {
+            get { return string.Format("Pathogen Group: {0}", this.name); }
+        }
+
+        public override string ToString()
+        {
+            return this.name;
+        }
     }
 }

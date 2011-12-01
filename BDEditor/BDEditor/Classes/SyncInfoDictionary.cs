@@ -9,7 +9,7 @@ namespace BDEditor.Classes
     {
         public void Add(SyncInfo pSyncInfo)
         {
-            base.Add(pSyncInfo.EntityName, pSyncInfo);
+            base.Add(pSyncInfo.RemoteEntityName, pSyncInfo);
         }
     }
 }

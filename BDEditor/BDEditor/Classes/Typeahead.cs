@@ -101,31 +101,31 @@ namespace BDEditor.Classes
             }
         }
 
-        public static void AddToCollection(string pEntityName, string pEntityMember, string pEntityValue)
+        public static void AddToCollection(string pEntityKeyName, string pEntityMember, string pEntityValue)
         {
             if (!string.IsNullOrEmpty(pEntityValue))
             {
-                switch (pEntityName)
+                switch (pEntityKeyName)
                 {
-                    case BDPathogenGroup.ENTITYNAME:
+                    case BDPathogenGroup.KEY_NAME:
                         {
                             if (!pathogenGroups.Contains(pEntityValue))
                                 pathogenGroups.Add(pEntityValue);
                         }
                         break;
-                    case BDPathogen.ENTITYNAME:
+                    case BDPathogen.KEY_NAME:
                         {
                             if (!pathogens.Contains(pEntityValue))
                                 pathogens.Add(pEntityValue);
                         }
                         break;
-                    case BDTherapyGroup.ENTITYNAME:
+                    case BDTherapyGroup.KEY_NAME:
                         {
                             if (!therapyGroups.Contains(pEntityValue))
                                 therapyGroups.Add(pEntityValue);
                         }
                         break;
-                    case BDTherapy.ENTITYNAME:
+                    case BDTherapy.KEY_NAME:
                         {
                             if ((pEntityMember == string.Empty || pEntityMember == BDTherapy.PROPERTYNAME_THERAPY) && !therapyNames.Contains(pEntityValue))
                                 therapyNames.Add(pEntityValue);

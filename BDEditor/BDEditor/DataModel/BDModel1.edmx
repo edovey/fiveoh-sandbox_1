@@ -217,6 +217,7 @@
           <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
           <Property Name="settingName" Type="nvarchar" Nullable="false" MaxLength="64" />
           <Property Name="settingValue" Type="nvarchar" MaxLength="127" />
+          <Property Name="settingDateTimeValue" Type="datetime" />
         </EntityType>
         <EntityType Name="BDTherapies">
           <Key>
@@ -444,6 +445,7 @@
           <Property Type="Guid" Name="uuid" Nullable="false" />
           <Property Type="String" Name="settingName" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="settingValue" MaxLength="127" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="settingDateTimeValue" />
         </EntityType>
         <EntityType Name="BDTherapy">
           <Key>
@@ -690,6 +692,7 @@
           <EntitySetMapping Name="BDSystemSettings">
             <EntityTypeMapping TypeName="BDDataModel.BDSystemSetting">
               <MappingFragment StoreEntitySet="BDSystemSettings">
+                <ScalarProperty Name="settingDateTimeValue" ColumnName="settingDateTimeValue" />
                 <ScalarProperty Name="settingValue" ColumnName="settingValue" />
                 <ScalarProperty Name="settingName" ColumnName="settingName" />
                 <ScalarProperty Name="uuid" ColumnName="uuid" />

@@ -14,11 +14,14 @@ namespace BDEditor.DataModel
     /// <summary>
     /// Extension of generated BDChapter
     /// </summary>
-    public partial class BDChapter
+    public partial class BDChapter: IBDObject
     {
         public const string AWS_DOMAIN = @"bd_1_chapters";
         public const string ENTITYNAME = @"BDChapters";
         public const string ENTITYNAME_FRIENDLY = @"Chapter";
+        public const string KEY_NAME = @"BDChapter";
+        public const string PROPERTYNAME_NAME = @"Name";
+
         public const int ENTITY_SCHEMAVERSION = 0;
 
         private const string UUID = @"ch_uuid";
@@ -45,7 +48,7 @@ namespace BDEditor.DataModel
             chapter.displayOrder = -1;
             chapter.name = string.Empty;
 
-            pContext.AddObject("BDChapters", chapter);
+            pContext.AddObject(ENTITYNAME, chapter);
 
             return chapter;
         }
@@ -57,8 +60,15 @@ namespace BDEditor.DataModel
         /// <param name="pEntity">the entry to be deleted</param>
         public static void Delete(Entities pContext, BDChapter pEntity)
         {
+            // delete linked note associations
+            List<BDLinkedNoteAssociation> notes = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(pContext, pEntity.uuid);
+            foreach (BDLinkedNoteAssociation a in notes)
+            {
+                BDLinkedNoteAssociation.Delete(pContext, a);
+            }
+
             // create BDDeletion record for the object to be deleted
-            BDDeletion.CreateDeletion(pContext, ENTITYNAME_FRIENDLY, pEntity.uuid);
+            BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
             // delete record from local data store
             pContext.DeleteObject(pEntity);
             pContext.SaveChanges();
@@ -163,9 +173,9 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pUpdateDateTime">Null date will return all records</param>
         /// <returns>List of entries. Empty list if none found.</returns>
-        public static List<BDChapter> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
+        public static List<IBDObject> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
         {
-            List<BDChapter> entryList = new List<BDChapter>();
+            List<IBDObject> entryList = new List<IBDObject>();
             IQueryable<BDChapter> entries;
 
             if (null == pUpdateDateTime)
@@ -180,13 +190,21 @@ namespace BDEditor.DataModel
                            select entry);
             }
             if (entries.Count() > 0)
-                entryList = entries.ToList<BDChapter>();
+                entryList = new List<IBDObject>( entries.ToList<BDChapter>());
             return entryList;
         }
 
-        public static SyncInfo SyncInfo()
+        public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime pCurrentSyncDate)
         {
-            return new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            syncInfo.PushList = BDChapter.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+            syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
+            for (int idx = 0; idx < syncInfo.PushList.Count; idx++)
+            {
+                ((BDChapter)syncInfo.PushList[idx]).modifiedDate = pCurrentSyncDate;
+            }
+            if (syncInfo.PushList.Count > 0) { pDataContext.SaveChanges(); }
+            return syncInfo;
         }
 
         /// <summary>
@@ -203,7 +221,7 @@ namespace BDEditor.DataModel
             if (null == entry)
             {
                 entry = BDChapter.CreateBDChapter(uuid, deprecated);
-                pDataContext.AddObject("BDChapters", entry);
+                pDataContext.AddObject(ENTITYNAME, entry);
             }
 
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
@@ -241,5 +259,25 @@ namespace BDEditor.DataModel
         }
         #endregion
 
+
+        public Guid Uuid
+        {
+            get { return this.uuid; }
+        }
+
+        public string Description
+        {
+            get { return this.name; }
+        }
+
+        public string DescriptionForLinkedNote
+        {
+            get { return string.Format("{0}: {1}",ENTITYNAME_FRIENDLY, this.name); }
+        }
+
+        public override string ToString()
+        {
+            return this.name;
+        }
     }
 }

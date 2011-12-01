@@ -148,7 +148,7 @@ namespace BDEditor.DataModel
             if (null == entry)
             {
                 entry = BDDeletion.CreateBDDeletion(uuid);
-                pDataContext.AddObject("BDDeletions", entry);
+                pDataContext.AddObject(ENTITYNAME, entry);
             }
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
             entry.schemaVersion = schemaVersion;
@@ -156,7 +156,7 @@ namespace BDEditor.DataModel
             entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
             entry.modifiedBy = Guid.Parse(pAttributeDictionary[MODIFIEDBY]);
             entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
-            entry.targetId = Guid.Parse(pAttributeDictionary[TARGETID]);
+            entry.targetId = Guid.Parse(pAttributeDictionary [TARGETID]);
             entry.targetName = pAttributeDictionary[TARGETNAME];
 
             if (pSaveChanges)

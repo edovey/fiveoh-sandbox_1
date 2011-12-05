@@ -170,7 +170,7 @@ namespace BDEditor.Views
             if (null == currentLinkedNote)
             {
                 textControl.Text = @"";
-                selectedLinkNoteType = LinkedNoteType.Default;
+                selectedLinkNoteType = LinkedNoteType.Inline;
             }
 
             if (currentLinkedNote != null && currentLinkedNote.documentText != null && currentLinkedNote.documentText.Length > 0)

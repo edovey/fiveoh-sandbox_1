@@ -15,10 +15,10 @@ namespace BDEditor.DataModel
 {
     public enum LinkedNoteType
     {
-        All = -1,
-        Default = 0,
-        Footnote = 1,
-        EndNote = 2
+        Inline = 0,
+        Comment = 1,
+        Footnote = 2,
+        EndNote = 3
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ namespace BDEditor.DataModel
             linkedNoteAssociation.createdDate = DateTime.Now;
             linkedNoteAssociation.deprecated = false;
             linkedNoteAssociation.schemaVersion = ENTITY_SCHEMAVERSION;
-            linkedNoteAssociation.linkedNoteType = (int)LinkedNoteType.Default;
+            linkedNoteAssociation.linkedNoteType = (int)LinkedNoteType.Inline;
             linkedNoteAssociation.displayOrder = -1;
             pContext.AddObject(ENTITYNAME, linkedNoteAssociation);
             return linkedNoteAssociation;

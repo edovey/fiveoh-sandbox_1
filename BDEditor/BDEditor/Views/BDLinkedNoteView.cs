@@ -33,6 +33,7 @@ namespace BDEditor.Views
         public BDLinkedNoteView()
         {
             InitializeComponent();
+            this.linkedNoteTypeCombo.DataSource = System.Enum.GetValues(typeof(LinkedNoteType));
         }
 
 
@@ -273,6 +274,12 @@ namespace BDEditor.Views
                     OnNotesChanged(new EventArgs());
                 }
             }
+        }
+
+        private void linkeNoteType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(null != existingAssociation)
+                existingAssociation.linkedNoteType = (int)Enum.Parse(typeof(LinkedNoteType), linkedNoteTypeCombo.SelectedText);
         }
     }
 }

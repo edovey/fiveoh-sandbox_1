@@ -254,6 +254,28 @@ namespace BDEditor.Views
         }
 
         /// <summary>
+        /// The Text Control inserts a span tag on every paragraph to control the font size.  This method strips it out.
+        /// </summary>
+        /// <param name="pText"></param>
+        /// <param name="pTag"></param>
+        /// <returns></returns>
+        private string CleanFontStyleTag(string pText, string pTag)
+        {
+            if (pText.Contains(pTag))
+            {
+                string endTag = "</span>";
+                int referenceIndex = pText.IndexOf(pTag);
+                int tagStartIndex = pText.IndexOf(endTag,referenceIndex);
+
+                string cleanString = pText.Remove(tagStartIndex, endTag.Length);
+                cleanString = cleanString.Replace(pTag, "");
+                return cleanString;
+            }
+
+            return pText;
+        }
+
+        /// <summary>
         /// Strip the text of the formatting tags that may exist (usually from a Word document)
         /// </summary>
         /// <param name="pString">String to search and clean</param>
@@ -333,6 +355,11 @@ namespace BDEditor.Views
             stringToClean = stringToClean.Replace("</p></li>", "</li>");
 
             stringToClean = stringToClean.Replace("style=\"margin-top:6pt;margin-bottom:6pt;\"", "");
+
+            // clean tags for font size
+            string styleTag = "<span style=\"font-size:10pt;\">";
+            while (stringToClean.Contains(styleTag))
+                stringToClean = CleanFontStyleTag(stringToClean, styleTag);
 
             return stringToClean;
         }

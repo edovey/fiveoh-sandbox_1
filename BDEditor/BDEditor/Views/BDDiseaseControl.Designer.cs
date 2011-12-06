@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDDiseaseControl));
             this.lblDisease = new System.Windows.Forms.Label();
             this.tbDiseaseName = new System.Windows.Forms.TextBox();
             this.lblOverview = new System.Windows.Forms.Label();
-            this.bdLinkedNoteControl1 = new BDEditor.Views.BDLinkedNoteControl();
             this.panelHeader = new System.Windows.Forms.Panel();
+            this.btnLinkedNote = new System.Windows.Forms.Button();
+            this.bdLinkedNoteControl1 = new BDEditor.Views.BDLinkedNoteControl();
             this.panelHeader.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,6 +68,28 @@
             this.lblOverview.TabIndex = 3;
             this.lblOverview.Text = "Overview";
             // 
+            // panelHeader
+            // 
+            this.panelHeader.Controls.Add(this.btnLinkedNote);
+            this.panelHeader.Controls.Add(this.lblOverview);
+            this.panelHeader.Controls.Add(this.tbDiseaseName);
+            this.panelHeader.Controls.Add(this.lblDisease);
+            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelHeader.Location = new System.Drawing.Point(0, 0);
+            this.panelHeader.Name = "panelHeader";
+            this.panelHeader.Size = new System.Drawing.Size(826, 78);
+            this.panelHeader.TabIndex = 5;
+            // 
+            // btnLinkedNote
+            // 
+            this.btnLinkedNote.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkedNote.Image")));
+            this.btnLinkedNote.Location = new System.Drawing.Point(520, 27);
+            this.btnLinkedNote.Name = "btnLinkedNote";
+            this.btnLinkedNote.Size = new System.Drawing.Size(28, 28);
+            this.btnLinkedNote.TabIndex = 29;
+            this.btnLinkedNote.UseVisualStyleBackColor = true;
+            this.btnLinkedNote.Click += new System.EventHandler(this.btnLinkedNote_Click);
+            // 
             // bdLinkedNoteControl1
             // 
             this.bdLinkedNoteControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -79,17 +103,6 @@
             this.bdLinkedNoteControl1.Size = new System.Drawing.Size(826, 235);
             this.bdLinkedNoteControl1.TabIndex = 4;
             this.bdLinkedNoteControl1.SaveAttemptWithoutParent += new System.EventHandler(this.bdLinkedNoteControl_SaveAttemptWithoutParent);
-            // 
-            // panelHeader
-            // 
-            this.panelHeader.Controls.Add(this.lblOverview);
-            this.panelHeader.Controls.Add(this.tbDiseaseName);
-            this.panelHeader.Controls.Add(this.lblDisease);
-            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelHeader.Location = new System.Drawing.Point(0, 0);
-            this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(826, 78);
-            this.panelHeader.TabIndex = 5;
             // 
             // BDDiseaseControl
             // 
@@ -113,5 +126,6 @@
         private System.Windows.Forms.Label lblOverview;
         private BDLinkedNoteControl bdLinkedNoteControl1;
         private System.Windows.Forms.Panel panelHeader;
+        private System.Windows.Forms.Button btnLinkedNote;
     }
 }

@@ -216,7 +216,7 @@
             this.linkedNoteTypeCombo.Name = "linkedNoteTypeCombo";
             this.linkedNoteTypeCombo.Size = new System.Drawing.Size(135, 21);
             this.linkedNoteTypeCombo.TabIndex = 1;
-            this.linkedNoteTypeCombo.SelectedIndexChanged += new System.EventHandler(this.linkeNoteType_SelectedIndexChanged);
+            this.linkedNoteTypeCombo.SelectedIndexChanged += new System.EventHandler(this.linkedNoteType_SelectedIndexChanged);
             // 
             // bdLinkedNoteControl1
             // 

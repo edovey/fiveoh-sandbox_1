@@ -15,10 +15,18 @@ namespace BDEditor.Views
         private BDDisease currentDisease;
         private Entities dataContext;
         private BDLinkedNote overviewLinkedNote;
+        private Guid? scopeId;
         private Guid? parentId;
         public Guid? SubCategoryId { get; set; }
         public Guid? CategoryId { get; set; }
         public int? DisplayOrder { get; set; }
+
+        public event EventHandler NotesChanged;
+
+        protected virtual void OnNotesChanged(EventArgs e)
+        {
+            if (null != NotesChanged) { NotesChanged(this, e); }
+        }
 
         public BDDisease CurrentDisease
         {
@@ -136,12 +144,40 @@ namespace BDEditor.Views
             return result;
         }
 
+        private void CreateLink(string pProperty)
+        {
+            BDLinkedNoteView view = new BDLinkedNoteView();
+            view.AssignDataContext(dataContext);
+            view.AssignContextPropertyName(pProperty);
+            view.AssignContextEntityKeyName(BDDisease.KEY_NAME);
+            view.AssignScopeId(scopeId);
+            view.AssignLinkedNoteType(LinkedNoteType.Footnote, true, true);
+            view.NotesChanged += new EventHandler(notesChanged_Action);
+            if (null != currentDisease)
+            {
+                view.AssignParentId(currentDisease.uuid);
+            }
+            else
+            {
+                view.AssignParentId(null);
+            }
+            view.PopulateControl();
+            view.ShowDialog(this);
+            view.NotesChanged -= new EventHandler(notesChanged_Action);
+            ShowLinksInUse(false);
+        }
+
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
 
         }
 
         #endregion
+
+        private void notesChanged_Action(object sender, EventArgs e)
+        {
+            OnNotesChanged(new EventArgs());
+        }
 
         private void bdLinkedNoteControl_SaveAttemptWithoutParent(object sender, EventArgs e)
         {
@@ -153,6 +189,16 @@ namespace BDEditor.Views
                     control.AssignParentId(this.currentDisease.uuid);
                     control.Save();
                 }
+            }
+        }
+
+        private void btnLinkedNote_Click(object sender, EventArgs e)
+        {
+            Button control = sender as Button;
+            if (null != control)
+            {
+                string tag = control.Tag as string;
+                CreateLink(tag);
             }
         }
     }

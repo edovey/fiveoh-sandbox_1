@@ -61,6 +61,7 @@ namespace BDEditor.Views
                 dataContext = value;
             }
         }
+
         public void createEntry(BDNodeContextType context)
         {            
             switch (context)
@@ -168,8 +169,10 @@ namespace BDEditor.Views
                     if(selectedNode.Tag is BDCategory)
                     {
                         BDCategoryControl categoryControl = new BDCategoryControl();
+                        categoryControl.AssignDataContext(dataContext);
                         categoryControl.Dock = DockStyle.Fill;
                         categoryControl.CurrentCategory = selectedNode.Tag as BDCategory;
+
                         splitContainer1.Panel2.Controls.Add(categoryControl);
                     }
                     else if (selectedNode.Tag is BDSubcategory)

@@ -469,5 +469,6 @@ namespace BDEditor.Views
             PasteCleanText();
         }
         #endregion
+
     }
 }

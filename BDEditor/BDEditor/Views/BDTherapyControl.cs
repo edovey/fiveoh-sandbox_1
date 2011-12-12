@@ -344,6 +344,11 @@ namespace BDEditor.Views
             tbName.Text = tbName.Text.Insert(tbName.SelectionStart, "°");
         }
 
+        private void µToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tbName.Text = tbName.Text.Insert(tbName.SelectionStart, "µ");
+        }
+
         private void geToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tbName.Text = tbName.Text.Insert(tbName.SelectionStart, "≥");
@@ -394,5 +399,6 @@ namespace BDEditor.Views
             //ShowLinksInUse(true);
             OnNotesChanged(new EventArgs());
         }
+
     }
 }

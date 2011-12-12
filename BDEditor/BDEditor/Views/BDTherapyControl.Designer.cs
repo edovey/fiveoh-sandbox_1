@@ -60,6 +60,8 @@
             this.chkPreviousName = new System.Windows.Forms.CheckBox();
             this.chkPreviousDose = new System.Windows.Forms.CheckBox();
             this.chkPreviousDuration = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.µToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
             this.SuspendLayout();
@@ -80,16 +82,17 @@
             this.geToolStripMenuItem,
             this.leToolStripMenuItem,
             this.plusMinusToolStripMenuItem,
-            this.degreeToolStripMenuItem});
+            this.degreeToolStripMenuItem,
+            this.µToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.ShowImageMargin = false;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(69, 114);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(128, 158);
             this.contextMenuStrip1.Text = "Insert Symbol";
             // 
             // bToolStripMenuItem
             // 
             this.bToolStripMenuItem.Name = "bToolStripMenuItem";
-            this.bToolStripMenuItem.Size = new System.Drawing.Size(68, 22);
+            this.bToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.bToolStripMenuItem.Text = "ß";
             this.bToolStripMenuItem.ToolTipText = "Insert ß";
             this.bToolStripMenuItem.Click += new System.EventHandler(this.bToolStripMenuItem_Click);
@@ -97,7 +100,7 @@
             // geToolStripMenuItem
             // 
             this.geToolStripMenuItem.Name = "geToolStripMenuItem";
-            this.geToolStripMenuItem.Size = new System.Drawing.Size(68, 22);
+            this.geToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.geToolStripMenuItem.Text = "≥";
             this.geToolStripMenuItem.ToolTipText = "Insert ≥";
             this.geToolStripMenuItem.Click += new System.EventHandler(this.geToolStripMenuItem_Click);
@@ -105,7 +108,7 @@
             // leToolStripMenuItem
             // 
             this.leToolStripMenuItem.Name = "leToolStripMenuItem";
-            this.leToolStripMenuItem.Size = new System.Drawing.Size(68, 22);
+            this.leToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.leToolStripMenuItem.Text = "≤";
             this.leToolStripMenuItem.ToolTipText = "Insert ≤";
             this.leToolStripMenuItem.Click += new System.EventHandler(this.leToolStripMenuItem_Click);
@@ -113,7 +116,7 @@
             // plusMinusToolStripMenuItem
             // 
             this.plusMinusToolStripMenuItem.Name = "plusMinusToolStripMenuItem";
-            this.plusMinusToolStripMenuItem.Size = new System.Drawing.Size(68, 22);
+            this.plusMinusToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.plusMinusToolStripMenuItem.Text = "±";
             this.plusMinusToolStripMenuItem.ToolTipText = "Insert ±";
             this.plusMinusToolStripMenuItem.Click += new System.EventHandler(this.plusMinusToolStripMenuItem_Click);
@@ -121,7 +124,7 @@
             // degreeToolStripMenuItem
             // 
             this.degreeToolStripMenuItem.Name = "degreeToolStripMenuItem";
-            this.degreeToolStripMenuItem.Size = new System.Drawing.Size(68, 22);
+            this.degreeToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.degreeToolStripMenuItem.Text = "°";
             this.degreeToolStripMenuItem.ToolTipText = "Insert °";
             this.degreeToolStripMenuItem.Click += new System.EventHandler(this.degreeToolStripMenuItem_Click);
@@ -265,13 +268,13 @@
             this.toolStripMenuItem2,
             this.deleteToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(156, 104);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(153, 104);
             // 
             // reorderPreviousToolStripMenuItem
             // 
             this.reorderPreviousToolStripMenuItem.Image = global::BDEditor.Properties.Resources.reorder_previous;
             this.reorderPreviousToolStripMenuItem.Name = "reorderPreviousToolStripMenuItem";
-            this.reorderPreviousToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.reorderPreviousToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.reorderPreviousToolStripMenuItem.Text = "Move &Previous";
             this.reorderPreviousToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToPrevious_Click);
             // 
@@ -279,33 +282,33 @@
             // 
             this.reorderNextToolStripMenuItem.Image = global::BDEditor.Properties.Resources.reorder_next;
             this.reorderNextToolStripMenuItem.Name = "reorderNextToolStripMenuItem";
-            this.reorderNextToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.reorderNextToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.reorderNextToolStripMenuItem.Text = "Move &Next";
             this.reorderNextToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToNext_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(152, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
             // 
             // addTherapyToolStripMenuItem
             // 
             this.addTherapyToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_16x16;
             this.addTherapyToolStripMenuItem.Name = "addTherapyToolStripMenuItem";
-            this.addTherapyToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.addTherapyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.addTherapyToolStripMenuItem.Text = "&Add Therapy";
             this.addTherapyToolStripMenuItem.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(149, 6);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Image = global::BDEditor.Properties.Resources.remove;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.btnDelete_Click);
             // 
@@ -327,6 +330,7 @@
             this.chkPreviousName.Name = "chkPreviousName";
             this.chkPreviousName.Size = new System.Drawing.Size(15, 14);
             this.chkPreviousName.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.chkPreviousName, "Same as previous");
             this.chkPreviousName.UseVisualStyleBackColor = true;
             // 
             // chkPreviousDose
@@ -336,6 +340,7 @@
             this.chkPreviousDose.Name = "chkPreviousDose";
             this.chkPreviousDose.Size = new System.Drawing.Size(15, 14);
             this.chkPreviousDose.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.chkPreviousDose, "Same as previous");
             this.chkPreviousDose.UseVisualStyleBackColor = true;
             // 
             // chkPreviousDuration
@@ -345,7 +350,15 @@
             this.chkPreviousDuration.Name = "chkPreviousDuration";
             this.chkPreviousDuration.Size = new System.Drawing.Size(15, 14);
             this.chkPreviousDuration.TabIndex = 6;
+            this.toolTip1.SetToolTip(this.chkPreviousDuration, "Same as previous");
             this.chkPreviousDuration.UseVisualStyleBackColor = true;
+            // 
+            // µToolStripMenuItem
+            // 
+            this.µToolStripMenuItem.Name = "µToolStripMenuItem";
+            this.µToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.µToolStripMenuItem.Text = "µ";
+            this.µToolStripMenuItem.Click += new System.EventHandler(this.µToolStripMenuItem_Click);
             // 
             // BDTherapyControl
             // 
@@ -411,5 +424,7 @@
         private System.Windows.Forms.CheckBox chkPreviousName;
         private System.Windows.Forms.CheckBox chkPreviousDose;
         private System.Windows.Forms.CheckBox chkPreviousDuration;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolStripMenuItem µToolStripMenuItem;
     }
 }

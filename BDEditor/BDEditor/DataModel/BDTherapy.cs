@@ -49,7 +49,8 @@ namespace BDEditor.DataModel
             None = 0,
             AndWithNext = 1,
             OrWithNext = 2,
-            ThenWithNext = 3
+            ThenWithNext = 3,
+            AndOrWithNext = 4,
         }
 
         /// <summary>

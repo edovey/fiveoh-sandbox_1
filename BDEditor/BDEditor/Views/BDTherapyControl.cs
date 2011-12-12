@@ -279,11 +279,16 @@ namespace BDEditor.Views
                         if (currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.ThenWithNext)
                             currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.ThenWithNext;
                     }
-                    else
+                    else if
                     {
                         if (currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.None)
                             currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.None;
                     }
+                else 
+                {
+                    if (currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.AndOrWithNext)
+                        currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.AndOrWithNext;
+                }
 
                     if(currentTherapy.leftBracket != this.displayLeftBracket) currentTherapy.leftBracket = this.displayLeftBracket;
                     if(currentTherapy.rightBracket != this.displayRightBracket) currentTherapy.rightBracket = this.displayRightBracket;

@@ -56,6 +56,7 @@
             this.addTherapyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.andOrRadioButton = new System.Windows.Forms.RadioButton();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
             this.SuspendLayout();
@@ -305,10 +306,22 @@
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // andOrRadioButton
+            // 
+            this.andOrRadioButton.AutoSize = true;
+            this.andOrRadioButton.Location = new System.Drawing.Point(428, 30);
+            this.andOrRadioButton.Name = "andOrRadioButton";
+            this.andOrRadioButton.Size = new System.Drawing.Size(93, 17);
+            this.andOrRadioButton.TabIndex = 17;
+            this.andOrRadioButton.TabStop = true;
+            this.andOrRadioButton.Text = "+/-  (with next)";
+            this.andOrRadioButton.UseVisualStyleBackColor = true;
+            // 
             // BDTherapyControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.andOrRadioButton);
             this.Controls.Add(this.thenRadioButton);
             this.Controls.Add(this.orRadioButton);
             this.Controls.Add(this.btnMenu);
@@ -361,5 +374,6 @@
         private System.Windows.Forms.ToolStripMenuItem addTherapyToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.RadioButton andOrRadioButton;
     }
 }

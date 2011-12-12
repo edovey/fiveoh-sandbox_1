@@ -45,6 +45,7 @@ namespace BDEditor.Views
             {
                 List<LinkedNoteType> noteTypes = Enum.GetValues(typeof(LinkedNoteType)).Cast<LinkedNoteType>().ToList<LinkedNoteType>();
                 noteTypes.Remove(LinkedNoteType.Comment);
+                // for disease and presentation, the 'inline' type is the overview which is already represented on the view
                 noteTypes.Remove(LinkedNoteType.Inline);
                 this.linkedNoteTypeCombo.DataSource = noteTypes;
             }

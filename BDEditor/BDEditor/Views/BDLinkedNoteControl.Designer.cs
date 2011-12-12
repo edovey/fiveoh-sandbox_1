@@ -61,7 +61,6 @@
             this.textControl.Padding = new System.Windows.Forms.Padding(3);
             this.textControl.PageSize.Height = 300D;
             this.textControl.PageSize.Width = 790D;
-            this.textControl.ParagraphFormat.LineSpacing = 50;
             this.textControl.Size = new System.Drawing.Size(789, 188);
             this.textControl.TabIndex = 0;
             this.textControl.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textControl_KeyUp);

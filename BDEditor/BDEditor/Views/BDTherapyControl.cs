@@ -70,6 +70,9 @@ namespace BDEditor.Views
                 noneRadioButton.Checked = true;
                 lblLeftBracket.ForeColor = SystemColors.ControlLight;
                 lblRightBracket.ForeColor = SystemColors.ControlLight;
+                chkPreviousName.Checked = false;
+                chkPreviousDose.Checked = false;
+                chkPreviousDuration.Checked = false;
             }
             else
             {
@@ -104,6 +107,10 @@ namespace BDEditor.Views
 
                 displayRightBracket = currentTherapy.rightBracket.Value;
                 lblRightBracket.ForeColor = (displayRightBracket) ? SystemColors.ControlText : SystemColors.ControlLight;
+
+                chkPreviousName.Checked = currentTherapy.nameSameAsPrevious.Value;
+                chkPreviousDose.Checked = currentTherapy.dosageSameAsPrevious.Value;
+                chkPreviousDuration.Checked = currentTherapy.durationSameAsPrevious.Value;
             }
             ShowLinksInUse(false);
         }
@@ -252,7 +259,10 @@ namespace BDEditor.Views
                 if ((null == currentTherapy) &&
                     ((tbName.Text != string.Empty) ||
                     (tbDosage.Text != string.Empty) ||
-                    (tbDuration.Text != string.Empty)))
+                    (tbDuration.Text != string.Empty) ||
+                    chkPreviousName.Checked ||
+                    chkPreviousDose.Checked ||
+                    chkPreviousDuration.Checked))
                 {
                     CreateCurrentObject();
                 }
@@ -292,6 +302,10 @@ namespace BDEditor.Views
 
                     if(currentTherapy.leftBracket != this.displayLeftBracket) currentTherapy.leftBracket = this.displayLeftBracket;
                     if(currentTherapy.rightBracket != this.displayRightBracket) currentTherapy.rightBracket = this.displayRightBracket;
+
+                    if (currentTherapy.nameSameAsPrevious != this.chkPreviousName.Checked) currentTherapy.nameSameAsPrevious = this.chkPreviousName.Checked;
+                    if (currentTherapy.dosageSameAsPrevious != this.chkPreviousDose.Checked) currentTherapy.dosageSameAsPrevious = this.chkPreviousDose.Checked;
+                    if (currentTherapy.durationSameAsPrevious != this.chkPreviousDuration.Checked) currentTherapy.durationSameAsPrevious = this.chkPreviousDuration.Checked;
 
                     BDTherapy.Save(dataContext, currentTherapy);
                     result = true;

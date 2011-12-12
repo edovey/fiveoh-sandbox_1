@@ -23,7 +23,7 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME_FRIENDLY = @"Therapy";
         public const string KEY_NAME = @"BDTherapy";
 
-        public const int ENTITY_SCHEMAVERSION = 0;
+        public const int ENTITY_SCHEMAVERSION = 1;
         public const string PROPERTYNAME_THERAPY = @"Therapy";
         public const string PROPERTYNAME_DOSAGE = @"Dosage"; 
         public const string PROPERTYNAME_DURATION = @"Duration";
@@ -43,6 +43,9 @@ namespace BDEditor.DataModel
         private const string NAME = @"th_name";
         private const string DOSAGE = @"th_dosage";
         private const string DURATION = @"th_duration";
+        private const string NAMEPREVIOUS = @"th_namePrevious";
+        private const string DOSAGEPREVIOUS = @"th_dosagePrevious";
+        private const string DURATIONPREVIOUS = @"th_durationPrevious";
 
         public enum TherapyJoinType
         {
@@ -71,6 +74,9 @@ namespace BDEditor.DataModel
             therapy.dosage = string.Empty;
             therapy.duration = string.Empty;
             therapy.therapyGroupId = pTherapyGroupId;
+            therapy.nameSameAsPrevious = false;
+            therapy.dosageSameAsPrevious = false;
+            therapy.durationSameAsPrevious = false;
 
             pContext.AddObject(ENTITYNAME, therapy);
 
@@ -324,6 +330,19 @@ namespace BDEditor.DataModel
             entry.dosage = pAttributeDictionary[DOSAGE];
             entry.duration = pAttributeDictionary[DURATION];
 
+            if (schemaVersion >= 1)
+            {
+                entry.nameSameAsPrevious = Boolean.Parse(pAttributeDictionary[NAMEPREVIOUS]);
+                entry.dosageSameAsPrevious = Boolean.Parse(pAttributeDictionary[DOSAGEPREVIOUS]);
+                entry.durationSameAsPrevious = Boolean.Parse(pAttributeDictionary[DURATIONPREVIOUS]);
+            }
+            else
+            {
+                entry.nameSameAsPrevious = false;
+                entry.dosageSameAsPrevious = false;
+                entry.durationSameAsPrevious = false;
+            }
+
             if (pSaveChanges)
                 pDataContext.SaveChanges();
 
@@ -350,6 +369,10 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DOSAGE).WithValue((null == dosage) ? string.Empty : dosage).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DURATION).WithValue((null == duration) ? string.Empty : duration).WithReplace(true));
+
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.NAMEPREVIOUS).WithValue(nameSameAsPrevious.ToString()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DOSAGEPREVIOUS).WithValue(dosageSameAsPrevious.ToString()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DURATIONPREVIOUS).WithValue(durationSameAsPrevious.ToString()).WithReplace(true));
 
             return putAttributeRequest;
         }

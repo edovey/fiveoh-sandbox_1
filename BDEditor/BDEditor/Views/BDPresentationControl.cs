@@ -301,7 +301,8 @@ namespace BDEditor.Views
             BDPathogenGroupControl control = sender as BDPathogenGroupControl;
             if (null != control)
             {
-                removePathogenGroupControl(control, true);
+                if (MessageBox.Show("Delete Pathogen Group?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                    removePathogenGroupControl(control, true);
             }
         }
 

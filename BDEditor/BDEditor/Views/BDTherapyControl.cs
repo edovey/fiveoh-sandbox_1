@@ -279,26 +279,27 @@ namespace BDEditor.Views
                         if (currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.ThenWithNext)
                             currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.ThenWithNext;
                     }
-                    else if
+                    else if (andOrRadioButton.Checked)
+                    {
+                       if (currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.AndOrWithNext)
+                            currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.AndOrWithNext;
+                    }
+                   else 
                     {
                         if (currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.None)
                             currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.None;
                     }
-                else 
-                {
-                    if (currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.AndOrWithNext)
-                        currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.AndOrWithNext;
-                }
 
                     if(currentTherapy.leftBracket != this.displayLeftBracket) currentTherapy.leftBracket = this.displayLeftBracket;
                     if(currentTherapy.rightBracket != this.displayRightBracket) currentTherapy.rightBracket = this.displayRightBracket;
 
                     BDTherapy.Save(dataContext, currentTherapy);
-                    Typeahead.AddToCollection(BDTherapy.ENTITYNAME, BDTherapy.PROPERTYNAME_THERAPY, currentTherapy.name);
-                    Typeahead.AddToCollection(BDTherapy.ENTITYNAME, BDTherapy.PROPERTYNAME_DOSAGE, currentTherapy.dosage);
-                    Typeahead.AddToCollection(BDTherapy.ENTITYNAME, BDTherapy.PROPERTYNAME_DURATION, currentTherapy.duration);
-
                     result = true;
+
+                   Typeahead.AddToCollection(BDTherapy.KEY_NAME, BDTherapy.PROPERTYNAME_THERAPY, currentTherapy.name);
+                   Typeahead.AddToCollection(BDTherapy.KEY_NAME, BDTherapy.PROPERTYNAME_DOSAGE, currentTherapy.dosage);
+                   Typeahead.AddToCollection(BDTherapy.KEY_NAME, BDTherapy.PROPERTYNAME_DURATION, currentTherapy.duration);
+
                 }
             }
 

@@ -173,7 +173,7 @@ namespace BDEditor.Views
                     }
                     
                     BDTherapyGroup.Save(dataContext, currentTherapyGroup);
-                    Typeahead.AddToCollection(BDTherapyGroup.ENTITYNAME, BDTherapyGroup.PROPERTYNAME_NAME, currentTherapyGroup.name);
+                    Typeahead.AddToCollection(BDTherapyGroup.KEY_NAME, BDTherapyGroup.PROPERTYNAME_NAME, currentTherapyGroup.name);
 
                     result = true;
                 }

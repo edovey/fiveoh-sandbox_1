@@ -167,6 +167,7 @@
             this.Name = "BDEditView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bugs & Drugs Editor";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BDEditView_FormClosing);
             this.Load += new System.EventHandler(this.BDEditView_Load);
             this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();

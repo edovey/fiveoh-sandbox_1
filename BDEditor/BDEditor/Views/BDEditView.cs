@@ -342,6 +342,21 @@ namespace BDEditor.Views
 
         private void splitContainer1_Leave(object sender, EventArgs e)
         {
+            save();
+        }
+
+        private void lbLastSyncDateTime_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BDEditView_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            save();
+        }
+
+        private void save()
+        {
             if (splitContainer1.Panel2.Controls.Count > 0)
             {
                 IBDControl control = splitContainer1.Panel2.Controls[0] as IBDControl;
@@ -350,11 +365,6 @@ namespace BDEditor.Views
                     control.Save();
                 }
             }
-        }
-
-        private void lbLastSyncDateTime_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

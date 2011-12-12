@@ -425,7 +425,8 @@ namespace BDEditor.Views
         {
             BDPathogenControl control = sender as BDPathogenControl;
             if (null != control)
-                removePathogenControl(control, true);
+                if (MessageBox.Show("Delete Pathogen?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                    removePathogenControl(control, true);
         }
         
         private void Pathogen_ReorderToNext(object sender, EventArgs e)
@@ -460,7 +461,8 @@ namespace BDEditor.Views
             BDTherapyGroupControl control = sender as BDTherapyGroupControl;
             if (null != control)
             {
-                removeTherapyGroupControl(control, true);
+                if (MessageBox.Show("Delete Therapy Group?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                    removeTherapyGroupControl(control, true);
             }
         }
 

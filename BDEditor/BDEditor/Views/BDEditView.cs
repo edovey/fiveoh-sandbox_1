@@ -304,6 +304,7 @@ namespace BDEditor.Views
 
         private void BDEditView_Load(object sender, EventArgs e)
         {
+            this.Text = string.Format("{0} - {1}" , "Bugs & Drugs Editor", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
             BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
             createTestDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);

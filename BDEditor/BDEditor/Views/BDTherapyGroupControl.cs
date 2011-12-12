@@ -397,7 +397,8 @@ namespace BDEditor.Views
             BDTherapyControl control = sender as BDTherapyControl;
             if (null != control)
             {
-                removeTherapyControl(control, true);
+                if(MessageBox.Show("Delete Therapy?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                    removeTherapyControl(control, true);
             }
         }
 

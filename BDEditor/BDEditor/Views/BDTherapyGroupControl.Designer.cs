@@ -114,7 +114,7 @@
             this.panelTherapies.Location = new System.Drawing.Point(0, 82);
             this.panelTherapies.MinimumSize = new System.Drawing.Size(0, 5);
             this.panelTherapies.Name = "panelTherapies";
-            this.panelTherapies.Size = new System.Drawing.Size(860, 5);
+            this.panelTherapies.Size = new System.Drawing.Size(856, 5);
             this.panelTherapies.TabIndex = 15;
             // 
             // label1
@@ -172,7 +172,7 @@
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(860, 82);
+            this.panelHeader.Size = new System.Drawing.Size(856, 82);
             this.panelHeader.TabIndex = 23;
             // 
             // btnMenu
@@ -255,11 +255,13 @@
             this.AutoScroll = true;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.Controls.Add(this.panelTherapies);
             this.Controls.Add(this.panelHeader);
             this.MinimumSize = new System.Drawing.Size(860, 100);
             this.Name = "BDTherapyGroupControl";
-            this.Size = new System.Drawing.Size(860, 100);
+            this.Size = new System.Drawing.Size(856, 96);
             this.Leave += new System.EventHandler(this.BDTherapyGroupControl_Leave);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();

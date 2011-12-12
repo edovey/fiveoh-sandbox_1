@@ -70,7 +70,7 @@
             this.tbName.Location = new System.Drawing.Point(47, 3);
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(218, 20);
-            this.tbName.TabIndex = 0;
+            this.tbName.TabIndex = 1;
             this.tbName.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
             // contextMenuStrip1
@@ -132,7 +132,7 @@
             this.tbDosage.Location = new System.Drawing.Point(328, 3);
             this.tbDosage.Name = "tbDosage";
             this.tbDosage.Size = new System.Drawing.Size(211, 20);
-            this.tbDosage.TabIndex = 2;
+            this.tbDosage.TabIndex = 4;
             this.tbDosage.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
             // tbDuration
@@ -141,7 +141,7 @@
             this.tbDuration.Location = new System.Drawing.Point(606, 3);
             this.tbDuration.Name = "tbDuration";
             this.tbDuration.Size = new System.Drawing.Size(174, 20);
-            this.tbDuration.TabIndex = 4;
+            this.tbDuration.TabIndex = 7;
             this.tbDuration.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
             // noneRadioButton
@@ -150,7 +150,7 @@
             this.noneRadioButton.Location = new System.Drawing.Point(30, 30);
             this.noneRadioButton.Name = "noneRadioButton";
             this.noneRadioButton.Size = new System.Drawing.Size(89, 17);
-            this.noneRadioButton.TabIndex = 6;
+            this.noneRadioButton.TabIndex = 9;
             this.noneRadioButton.TabStop = true;
             this.noneRadioButton.Text = "Next Therapy";
             this.noneRadioButton.UseVisualStyleBackColor = true;
@@ -161,7 +161,7 @@
             this.andRadioButton.Location = new System.Drawing.Point(125, 30);
             this.andRadioButton.Name = "andRadioButton";
             this.andRadioButton.Size = new System.Drawing.Size(95, 17);
-            this.andRadioButton.TabIndex = 7;
+            this.andRadioButton.TabIndex = 10;
             this.andRadioButton.TabStop = true;
             this.andRadioButton.Text = "And (with next)";
             this.andRadioButton.UseVisualStyleBackColor = true;
@@ -172,7 +172,7 @@
             this.orRadioButton.Location = new System.Drawing.Point(226, 30);
             this.orRadioButton.Name = "orRadioButton";
             this.orRadioButton.Size = new System.Drawing.Size(87, 17);
-            this.orRadioButton.TabIndex = 8;
+            this.orRadioButton.TabIndex = 11;
             this.orRadioButton.TabStop = true;
             this.orRadioButton.Text = "Or (with next)";
             this.orRadioButton.UseVisualStyleBackColor = true;
@@ -185,7 +185,7 @@
             this.lblLeftBracket.Location = new System.Drawing.Point(-6, -8);
             this.lblLeftBracket.Name = "lblLeftBracket";
             this.lblLeftBracket.Size = new System.Drawing.Size(38, 55);
-            this.lblLeftBracket.TabIndex = 10;
+            this.lblLeftBracket.TabIndex = 15;
             this.lblLeftBracket.Text = "[";
             this.lblLeftBracket.Click += new System.EventHandler(this.lblLeftBracket_Click);
             // 
@@ -197,7 +197,7 @@
             this.lblRightBracket.Location = new System.Drawing.Point(810, -8);
             this.lblRightBracket.Name = "lblRightBracket";
             this.lblRightBracket.Size = new System.Drawing.Size(38, 55);
-            this.lblRightBracket.TabIndex = 11;
+            this.lblRightBracket.TabIndex = 16;
             this.lblRightBracket.Text = "]";
             this.lblRightBracket.Click += new System.EventHandler(this.lblRightBracket_Click);
             // 
@@ -207,7 +207,7 @@
             this.thenRadioButton.Location = new System.Drawing.Point(320, 30);
             this.thenRadioButton.Name = "thenRadioButton";
             this.thenRadioButton.Size = new System.Drawing.Size(101, 17);
-            this.thenRadioButton.TabIndex = 9;
+            this.thenRadioButton.TabIndex = 12;
             this.thenRadioButton.TabStop = true;
             this.thenRadioButton.Text = "Then (with next)";
             this.thenRadioButton.UseVisualStyleBackColor = true;
@@ -219,7 +219,7 @@
             this.btnDurationLink.Location = new System.Drawing.Point(786, 2);
             this.btnDurationLink.Name = "btnDurationLink";
             this.btnDurationLink.Size = new System.Drawing.Size(28, 28);
-            this.btnDurationLink.TabIndex = 5;
+            this.btnDurationLink.TabIndex = 8;
             this.btnDurationLink.UseVisualStyleBackColor = true;
             this.btnDurationLink.Click += new System.EventHandler(this.btnLink_Click);
             // 
@@ -230,7 +230,7 @@
             this.btnDosageLink.Location = new System.Drawing.Point(545, 2);
             this.btnDosageLink.Name = "btnDosageLink";
             this.btnDosageLink.Size = new System.Drawing.Size(28, 28);
-            this.btnDosageLink.TabIndex = 3;
+            this.btnDosageLink.TabIndex = 5;
             this.btnDosageLink.UseVisualStyleBackColor = true;
             this.btnDosageLink.Click += new System.EventHandler(this.btnLink_Click);
             // 
@@ -241,7 +241,7 @@
             this.btnTherapyLink.Location = new System.Drawing.Point(271, 2);
             this.btnTherapyLink.Name = "btnTherapyLink";
             this.btnTherapyLink.Size = new System.Drawing.Size(28, 28);
-            this.btnTherapyLink.TabIndex = 1;
+            this.btnTherapyLink.TabIndex = 2;
             this.btnTherapyLink.UseVisualStyleBackColor = true;
             this.btnTherapyLink.Click += new System.EventHandler(this.btnLink_Click);
             // 
@@ -251,7 +251,7 @@
             this.btnMenu.Location = new System.Drawing.Point(838, 3);
             this.btnMenu.Name = "btnMenu";
             this.btnMenu.Size = new System.Drawing.Size(28, 28);
-            this.btnMenu.TabIndex = 16;
+            this.btnMenu.TabIndex = 14;
             this.btnMenu.UseVisualStyleBackColor = true;
             this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
             // 
@@ -315,7 +315,7 @@
             this.andOrRadioButton.Location = new System.Drawing.Point(428, 30);
             this.andOrRadioButton.Name = "andOrRadioButton";
             this.andOrRadioButton.Size = new System.Drawing.Size(93, 17);
-            this.andOrRadioButton.TabIndex = 17;
+            this.andOrRadioButton.TabIndex = 13;
             this.andOrRadioButton.TabStop = true;
             this.andOrRadioButton.Text = "+/-  (with next)";
             this.andOrRadioButton.UseVisualStyleBackColor = true;
@@ -326,7 +326,7 @@
             this.chkPreviousName.Location = new System.Drawing.Point(30, 7);
             this.chkPreviousName.Name = "chkPreviousName";
             this.chkPreviousName.Size = new System.Drawing.Size(15, 14);
-            this.chkPreviousName.TabIndex = 18;
+            this.chkPreviousName.TabIndex = 0;
             this.chkPreviousName.UseVisualStyleBackColor = true;
             // 
             // chkPreviousDose
@@ -335,7 +335,7 @@
             this.chkPreviousDose.Location = new System.Drawing.Point(311, 7);
             this.chkPreviousDose.Name = "chkPreviousDose";
             this.chkPreviousDose.Size = new System.Drawing.Size(15, 14);
-            this.chkPreviousDose.TabIndex = 19;
+            this.chkPreviousDose.TabIndex = 3;
             this.chkPreviousDose.UseVisualStyleBackColor = true;
             // 
             // chkPreviousDuration
@@ -344,7 +344,7 @@
             this.chkPreviousDuration.Location = new System.Drawing.Point(588, 7);
             this.chkPreviousDuration.Name = "chkPreviousDuration";
             this.chkPreviousDuration.Size = new System.Drawing.Size(15, 14);
-            this.chkPreviousDuration.TabIndex = 20;
+            this.chkPreviousDuration.TabIndex = 6;
             this.chkPreviousDuration.UseVisualStyleBackColor = true;
             // 
             // BDTherapyControl

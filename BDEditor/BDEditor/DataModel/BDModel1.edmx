@@ -239,6 +239,9 @@
           <Property Name="therapyJoinType" Type="int" />
           <Property Name="leftBracket" Type="bit" />
           <Property Name="rightBracket" Type="bit" />
+          <Property Name="nameSameAsPrevious" Type="bit" />
+          <Property Name="dosageSameAsPrevious" Type="bit" />
+          <Property Name="durationSameAsPrevious" Type="bit" />
         </EntityType>
         <EntityType Name="BDTherapyGroups">
           <Key>
@@ -467,6 +470,9 @@
           <Property Type="Int32" Name="therapyJoinType" />
           <Property Type="Boolean" Name="leftBracket" />
           <Property Type="Boolean" Name="rightBracket" />
+          <Property Type="Boolean" Name="nameSameAsPrevious" />
+          <Property Type="Boolean" Name="dosageSameAsPrevious" />
+          <Property Type="Boolean" Name="durationSameAsPrevious" />
         </EntityType>
         <EntityType Name="BDTherapyGroup">
           <Key>
@@ -702,6 +708,9 @@
           <EntitySetMapping Name="BDTherapies">
             <EntityTypeMapping TypeName="BDDataModel.BDTherapy">
               <MappingFragment StoreEntitySet="BDTherapies">
+                <ScalarProperty Name="durationSameAsPrevious" ColumnName="durationSameAsPrevious" />
+                <ScalarProperty Name="dosageSameAsPrevious" ColumnName="dosageSameAsPrevious" />
+                <ScalarProperty Name="nameSameAsPrevious" ColumnName="nameSameAsPrevious" />
                 <ScalarProperty Name="rightBracket" ColumnName="rightBracket" />
                 <ScalarProperty Name="leftBracket" ColumnName="leftBracket" />
                 <ScalarProperty Name="therapyJoinType" ColumnName="therapyJoinType" />
@@ -800,7 +809,7 @@
         <EntityTypeShape EntityType="BDDataModel.BDSection" Width="1.5" PointX="6.75" PointY="7.75" Height="2.5783902994791674" />
         <EntityTypeShape EntityType="BDDataModel.BDSubcategory" Width="1.5" PointX="8.75" PointY="0.75" Height="2.7427376302083246" />
         <EntityTypeShape EntityType="BDDataModel.BDSystemSetting" Width="1.875" PointX="0.75" PointY="8.75" Height="1.4279589843750102" />
-        <EntityTypeShape EntityType="BDDataModel.BDTherapy" Width="1.5" PointX="2.75" PointY="8.75" Height="3.5644742838541674" />
+        <EntityTypeShape EntityType="BDDataModel.BDTherapy" Width="1.75" PointX="2.75" PointY="8.75" Height="4.0575162760416656" />
         <EntityTypeShape EntityType="BDDataModel.BDTherapyGroup" Width="2.25" PointX="8.75" PointY="4.75" Height="2.9070849609375102" />
         <EntityTypeShape EntityType="BDDataModel.BDChapter" Width="1.5" PointX="8.75" PointY="8.375" Height="2.9417936197916674" />
         <EntityTypeShape EntityType="BDDataModel.BDDeletion" Width="1.5" PointX="4.875" PointY="8.5" Height="2.3648893229166674" />

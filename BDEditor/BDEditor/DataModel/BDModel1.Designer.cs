@@ -4437,6 +4437,78 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Boolean> _rightBracket;
         partial void OnrightBracketChanging(Nullable<global::System.Boolean> value);
         partial void OnrightBracketChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> nameSameAsPrevious
+        {
+            get
+            {
+                return _nameSameAsPrevious;
+            }
+            set
+            {
+                OnnameSameAsPreviousChanging(value);
+                ReportPropertyChanging("nameSameAsPrevious");
+                _nameSameAsPrevious = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("nameSameAsPrevious");
+                OnnameSameAsPreviousChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _nameSameAsPrevious;
+        partial void OnnameSameAsPreviousChanging(Nullable<global::System.Boolean> value);
+        partial void OnnameSameAsPreviousChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> dosageSameAsPrevious
+        {
+            get
+            {
+                return _dosageSameAsPrevious;
+            }
+            set
+            {
+                OndosageSameAsPreviousChanging(value);
+                ReportPropertyChanging("dosageSameAsPrevious");
+                _dosageSameAsPrevious = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("dosageSameAsPrevious");
+                OndosageSameAsPreviousChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _dosageSameAsPrevious;
+        partial void OndosageSameAsPreviousChanging(Nullable<global::System.Boolean> value);
+        partial void OndosageSameAsPreviousChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> durationSameAsPrevious
+        {
+            get
+            {
+                return _durationSameAsPrevious;
+            }
+            set
+            {
+                OndurationSameAsPreviousChanging(value);
+                ReportPropertyChanging("durationSameAsPrevious");
+                _durationSameAsPrevious = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("durationSameAsPrevious");
+                OndurationSameAsPreviousChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _durationSameAsPrevious;
+        partial void OndurationSameAsPreviousChanging(Nullable<global::System.Boolean> value);
+        partial void OndurationSameAsPreviousChanged();
 
         #endregion
     

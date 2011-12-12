@@ -180,6 +180,10 @@ namespace BDEditor.Views
                 else
                     textControl.Append(currentLinkedNote.documentText, TXTextControl.StringStreamType.RichTextFormat, TXTextControl.AppendSettings.None);
             }
+            else
+            {
+                textControl.Append(@"", TXTextControl.StringStreamType.HTMLFormat, TXTextControl.AppendSettings.None);
+            }
         }
 
         #endregion

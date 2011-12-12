@@ -75,7 +75,7 @@
             // lbLastSyncDateTime
             // 
             this.lbLastSyncDateTime.AutoSize = true;
-            this.lbLastSyncDateTime.Location = new System.Drawing.Point(404, 15);
+            this.lbLastSyncDateTime.Location = new System.Drawing.Point(391, 15);
             this.lbLastSyncDateTime.Name = "lbLastSyncDateTime";
             this.lbLastSyncDateTime.Size = new System.Drawing.Size(83, 13);
             this.lbLastSyncDateTime.TabIndex = 3;
@@ -84,7 +84,7 @@
             // 
             // btnSync
             // 
-            this.btnSync.Location = new System.Drawing.Point(323, 10);
+            this.btnSync.Location = new System.Drawing.Point(310, 10);
             this.btnSync.Name = "btnSync";
             this.btnSync.Size = new System.Drawing.Size(75, 23);
             this.btnSync.TabIndex = 2;

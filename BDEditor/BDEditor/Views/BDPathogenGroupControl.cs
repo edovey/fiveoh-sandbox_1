@@ -127,7 +127,7 @@ namespace BDEditor.Views
 
                     BDPathogenGroup.Save(dataContext, currentPathogenGroup);
 
-                    Typeahead.AddToCollection(BDPathogen.KEY_NAME, BDPathogen.PROPERTYNAME_NAME, currentPathogenGroup.name);
+                    Typeahead.AddToCollection(BDPathogenGroup.KEY_NAME, BDPathogenGroup.PROPERTYNAME_NAME, currentPathogenGroup.name);
 
                     result = true;
                 }

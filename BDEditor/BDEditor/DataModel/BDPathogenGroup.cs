@@ -94,6 +94,12 @@ namespace BDEditor.DataModel
                 BDPathogen.Delete(pContext, p);
             }
 
+            List<BDTherapyGroup> therapyGroups = BDTherapyGroup.getTherapyGroupsForPathogenGroupId(pContext, pEntity.uuid);
+            foreach (BDTherapyGroup tg in therapyGroups)
+            {
+                BDTherapyGroup.Delete(pContext, tg);
+            }
+
             // create BDDeletion record for the object to be deleted
             BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
             // delete record from local data store

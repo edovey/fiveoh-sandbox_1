@@ -62,6 +62,7 @@
             this.tbPresentationName.ReadOnly = true;
             this.tbPresentationName.Size = new System.Drawing.Size(475, 20);
             this.tbPresentationName.TabIndex = 2;
+            this.tbPresentationName.Leave += new System.EventHandler(this.tbPresentationName_Leave);
             // 
             // lblOverview
             // 

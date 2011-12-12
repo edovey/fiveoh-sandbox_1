@@ -260,17 +260,17 @@ namespace BDEditor.Views
             pTherapyControl.NotesChanged -= new EventHandler(notesChanged_Action);
             
             therapyControlList.Remove(pTherapyControl);
-            for (int idx = 0; idx < therapyControlList.Count; idx++)
-            {
-                therapyControlList[idx].DisplayOrder = idx;
-            }
-            
+
             if (pDeleteRecord)
             {
                 BDTherapy entry = pTherapyControl.CurrentTherapy;
                 if (null != entry)
                 {
-                    BDTherapy.Delete(dataContext, entry);   
+                    BDTherapy.Delete(dataContext, entry);
+                    for (int idx = 0; idx < therapyControlList.Count; idx++)
+                    {
+                        therapyControlList[idx].DisplayOrder = idx;
+                    }
                 }
             }
 

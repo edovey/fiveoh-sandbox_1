@@ -63,6 +63,7 @@ namespace BDEditor.Views
         public BDPresentationControl()
         {
             InitializeComponent();
+            btnLinkedNote.Tag = BDPresentation.PROPERTYNAME_NAME;
         }
 
         public void AssignScopeId(Guid? pScopeId)
@@ -177,6 +178,8 @@ namespace BDEditor.Views
             }
 
             bdLinkedNoteControl1.RefreshLayout();
+
+            ShowLinksInUse(false);
             this.ResumeLayout();
         }
 
@@ -228,7 +231,7 @@ namespace BDEditor.Views
             pPathogenGroupControl.NotesChanged -= new EventHandler(notesChanged_Action);
 
             pathogenGroupControlList.Remove(pPathogenGroupControl);
-
+            
             if (pDeleteRecord)
             {
                 BDPathogenGroup entry = pPathogenGroupControl.CurrentPathogenGroup;
@@ -278,6 +281,8 @@ namespace BDEditor.Views
 
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
+            List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentPresentation) ? this.currentPresentation.uuid : Guid.Empty);
+            btnLinkedNote.BackColor = links.Exists(x => x.parentEntityPropertyName == (string)btnLinkedNote.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
             if (pPropagateToChildren)
             {
                 for (int idx = 0; idx < pathogenGroupControlList.Count; idx++)
@@ -371,6 +376,11 @@ namespace BDEditor.Views
                 string tag = control.Tag as string;
                 CreateLink(tag);
             }
+        }
+
+        private void tbPresentationName_Leave(object sender, EventArgs e)
+        {
+            Save();
         }
     }
 }

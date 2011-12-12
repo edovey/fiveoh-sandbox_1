@@ -353,7 +353,6 @@ namespace BDEditor.Views
                 if (null != entry)
                 {
                     BDTherapyGroup.Delete(dataContext, entry);
-
                     for (int idx = 0; idx < therapyGroupControlList.Count; idx++)
                     {
                         therapyGroupControlList[idx].DisplayOrder = idx;
@@ -561,6 +560,11 @@ namespace BDEditor.Views
         {
             //ShowLinksInUse(true);
             OnNotesChanged(new EventArgs());
+        }
+
+        private void textBoxPathogenGroupName_Leave(object sender, EventArgs e)
+        {
+            Save();
         }
 
     }

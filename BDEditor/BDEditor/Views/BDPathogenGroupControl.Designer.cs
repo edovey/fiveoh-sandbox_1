@@ -112,6 +112,7 @@
             this.textBoxPathogenGroupName.Name = "textBoxPathogenGroupName";
             this.textBoxPathogenGroupName.Size = new System.Drawing.Size(286, 20);
             this.textBoxPathogenGroupName.TabIndex = 18;
+            this.textBoxPathogenGroupName.Leave += new System.EventHandler(this.textBoxPathogenGroupName_Leave);
             // 
             // btnMenu
             // 

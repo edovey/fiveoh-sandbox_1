@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDLinkedNoteControl));
             this.textControl = new TXTextControl.TextControl();
             this.buttonBar = new TXTextControl.ButtonBar();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -46,6 +47,7 @@
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
             this.panel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -162,6 +164,7 @@
             this.toolStripButton3,
             this.toolStripButton4,
             this.toolStripButton5,
+            this.toolStripButton9,
             this.toolStripSeparator1,
             this.toolStripButton6,
             this.toolStripButton7,
@@ -169,7 +172,7 @@
             this.toolStripButton8});
             this.toolStrip1.Location = new System.Drawing.Point(122, 2);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(308, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(362, 25);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -282,6 +285,17 @@
             this.panel3.Size = new System.Drawing.Size(10, 198);
             this.panel3.TabIndex = 16;
             // 
+            // toolStripButton9
+            // 
+            this.toolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton9.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton9.Image")));
+            this.toolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton9.Name = "toolStripButton9";
+            this.toolStripButton9.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton9.Text = "µ";
+            this.toolStripButton9.ToolTipText = "Insert µ";
+            this.toolStripButton9.Click += new System.EventHandler(this.toolStripButton9_Click);
+            // 
             // BDLinkedNoteControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -323,6 +337,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButton8;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.ToolStripButton toolStripButton9;
 
     }
 }

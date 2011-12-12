@@ -468,6 +468,11 @@ namespace BDEditor.Views
         {
             PasteCleanText();
         }
+
+        private void toolStripButton9_Click(object sender, EventArgs e)
+        {
+            textControl.Selection.Text = "µ";
+        }
         #endregion
 
     }

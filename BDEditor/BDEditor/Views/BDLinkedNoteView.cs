@@ -19,7 +19,6 @@ namespace BDEditor.Views
         Guid? scopeId;
         bool isRendering = false;
         BDLinkedNoteAssociation existingAssociation;
-
         List<BDLinkedNoteAssociation> existingLinksList;
         List<BDLinkedNote> existingNotesInScopeList;
 
@@ -33,8 +32,23 @@ namespace BDEditor.Views
         public BDLinkedNoteView()
         {
             InitializeComponent();
+
+            List<LinkedNoteType> noteTypes =Enum.GetValues(typeof(LinkedNoteType)).Cast<LinkedNoteType>().ToList<LinkedNoteType>();
+            this.linkedNoteTypeCombo.DataSource = noteTypes;
         }
 
+        public void AssignLinkedNoteType(LinkedNoteType pType, bool isEditable, bool isRestrictedType)
+        {
+            this.linkedNoteTypeCombo.SelectedItem = pType;
+            this.linkedNoteTypeCombo.Enabled = isEditable;
+            if (isRestrictedType)
+            {
+                List<LinkedNoteType> noteTypes = Enum.GetValues(typeof(LinkedNoteType)).Cast<LinkedNoteType>().ToList<LinkedNoteType>();
+                noteTypes.Remove(LinkedNoteType.Comment);
+                noteTypes.Remove(LinkedNoteType.Inline);
+                this.linkedNoteTypeCombo.DataSource = noteTypes;
+            }
+        }
 
         public void AssignDataContext(Entities pDataContext)
         {
@@ -273,6 +287,12 @@ namespace BDEditor.Views
                     OnNotesChanged(new EventArgs());
                 }
             }
+        }
+
+        private void linkedNoteType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(null != existingAssociation)
+                existingAssociation.linkedNoteType = (int)Enum.Parse(typeof(LinkedNoteType), linkedNoteTypeCombo.SelectedText);
         }
     }
 }

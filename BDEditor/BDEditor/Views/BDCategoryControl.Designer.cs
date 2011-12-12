@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDCategoryControl));
             this.label1 = new System.Windows.Forms.Label();
             this.tbCategoryName = new System.Windows.Forms.TextBox();
+            this.btnLinkedNote = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -51,10 +53,21 @@
             this.tbCategoryName.Size = new System.Drawing.Size(449, 26);
             this.tbCategoryName.TabIndex = 1;
             // 
+            // btnLinkedNote
+            // 
+            this.btnLinkedNote.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkedNote.Image")));
+            this.btnLinkedNote.Location = new System.Drawing.Point(494, 31);
+            this.btnLinkedNote.Name = "btnLinkedNote";
+            this.btnLinkedNote.Size = new System.Drawing.Size(28, 28);
+            this.btnLinkedNote.TabIndex = 28;
+            this.btnLinkedNote.UseVisualStyleBackColor = true;
+            this.btnLinkedNote.Click += new System.EventHandler(this.btnLinkedNote_Click);
+            // 
             // BDCategoryControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnLinkedNote);
             this.Controls.Add(this.tbCategoryName);
             this.Controls.Add(this.label1);
             this.Name = "BDCategoryControl";
@@ -69,5 +82,6 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbCategoryName;
+        private System.Windows.Forms.Button btnLinkedNote;
     }
 }

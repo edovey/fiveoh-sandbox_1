@@ -29,10 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDPresentationControl));
             this.labelPresentation = new System.Windows.Forms.Label();
             this.tbPresentationName = new System.Windows.Forms.TextBox();
             this.lblOverview = new System.Windows.Forms.Label();
             this.panelHeader = new System.Windows.Forms.Panel();
+            this.btnLinkedNote = new System.Windows.Forms.Button();
             this.btnMenu = new System.Windows.Forms.Button();
             this.panelPathogenGroups = new System.Windows.Forms.Panel();
             this.contextMenuStripEvents = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -74,6 +76,7 @@
             // panelHeader
             // 
             this.panelHeader.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panelHeader.Controls.Add(this.btnLinkedNote);
             this.panelHeader.Controls.Add(this.btnMenu);
             this.panelHeader.Controls.Add(this.lblOverview);
             this.panelHeader.Controls.Add(this.tbPresentationName);
@@ -83,6 +86,16 @@
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(880, 78);
             this.panelHeader.TabIndex = 7;
+            // 
+            // btnLinkedNote
+            // 
+            this.btnLinkedNote.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkedNote.Image")));
+            this.btnLinkedNote.Location = new System.Drawing.Point(520, 30);
+            this.btnLinkedNote.Name = "btnLinkedNote";
+            this.btnLinkedNote.Size = new System.Drawing.Size(28, 28);
+            this.btnLinkedNote.TabIndex = 27;
+            this.btnLinkedNote.UseVisualStyleBackColor = true;
+            this.btnLinkedNote.Click += new System.EventHandler(this.btnLinkedNote_Click);
             // 
             // btnMenu
             // 
@@ -101,7 +114,7 @@
             this.panelPathogenGroups.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panelPathogenGroups.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelPathogenGroups.Location = new System.Drawing.Point(0, 299);
-            this.panelPathogenGroups.MinimumSize = new System.Drawing.Size(0, 15);
+            this.panelPathogenGroups.MinimumSize = new System.Drawing.Size(4, 15);
             this.panelPathogenGroups.Name = "panelPathogenGroups";
             this.panelPathogenGroups.Size = new System.Drawing.Size(880, 15);
             this.panelPathogenGroups.TabIndex = 8;
@@ -130,7 +143,7 @@
             this.bdLinkedNoteControl1.Name = "bdLinkedNoteControl1";
             this.bdLinkedNoteControl1.Padding = new System.Windows.Forms.Padding(3);
             this.bdLinkedNoteControl1.SaveOnLeave = true;
-            this.bdLinkedNoteControl1.SelectedLinkedNoteType = BDEditor.DataModel.LinkedNoteType.Default;
+            this.bdLinkedNoteControl1.SelectedLinkedNoteType = BDEditor.DataModel.LinkedNoteType.Inline;
             this.bdLinkedNoteControl1.Size = new System.Drawing.Size(880, 221);
             this.bdLinkedNoteControl1.TabIndex = 6;
             // 
@@ -167,5 +180,6 @@
         private System.Windows.Forms.Button btnMenu;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripEvents;
         private System.Windows.Forms.ToolStripMenuItem addPathogenGroupToolStripMenuItem1;
+        private System.Windows.Forms.Button btnLinkedNote;
     }
 }

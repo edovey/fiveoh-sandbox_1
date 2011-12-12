@@ -287,6 +287,34 @@ namespace BDEditor.Views
             }
         }
 
+        private void CreateLink(string pProperty)
+        {
+            if (CreateCurrentObject())
+            {
+                Save();
+
+                BDLinkedNoteView view = new BDLinkedNoteView();
+                view.AssignDataContext(dataContext);
+                view.AssignContextPropertyName(pProperty);
+                view.AssignContextEntityKeyName(BDPresentation.KEY_NAME);
+                view.AssignScopeId(scopeId);
+                view.AssignLinkedNoteType(LinkedNoteType.Footnote, true, true);
+                view.NotesChanged += new EventHandler(notesChanged_Action);
+                if (null != currentPresentation)
+                {
+                    view.AssignParentId(currentPresentation.uuid);
+                }
+                else
+                {
+                    view.AssignParentId(null);
+                }
+                view.PopulateControl();
+                view.ShowDialog(this);
+                view.NotesChanged -= new EventHandler(notesChanged_Action);
+                ShowLinksInUse(false);
+            }
+        }
+
         private void PathogenGroup_RequestItemAdd(object sender, EventArgs e)
         {
             BDPathogenGroupControl control = addPathogenGroupControl(null, pathogenGroupControlList.Count);
@@ -333,6 +361,16 @@ namespace BDEditor.Views
         {
             ShowLinksInUse(true);
             OnNotesChanged(new EventArgs());
+        }
+
+        private void btnLinkedNote_Click(object sender, EventArgs e)
+        {
+            Button control = sender as Button;
+            if (null != control)
+            {
+                string tag = control.Tag as string;
+                CreateLink(tag);
+            }
         }
     }
 }

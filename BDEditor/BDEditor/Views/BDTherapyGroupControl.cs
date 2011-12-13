@@ -429,7 +429,88 @@ namespace BDEditor.Views
         {
             OnReorderToNext(new EventArgs());
         }
-        
+
+        private void bToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbName, "ß");
+        }
+
+        private void degreeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbName, "°");
+        }
+
+        private void µToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbName, "µ");
+        }
+
+        private void geToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbName, "≥");
+        }
+
+        private void leToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbName, "≤");
+        }
+
+        private void plusMinusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbName, "±");
+        }
+
+        private void Menu_Copy(System.Object sender, System.EventArgs e)
+        {
+            // Ensure that text is selected in the text box.   
+            if (tbName.SelectionLength > 0)
+                // Copy the selected text to the Clipboard.
+                tbName.Copy();
+        }
+
+        private void Menu_Cut(System.Object sender, System.EventArgs e)
+        {
+            // Ensure that text is currently selected in the text box.   
+            if (tbName.SelectedText != "")
+                // Cut the selected text in the control and paste it into the Clipboard.
+                tbName.Cut();
+        }
+
+        private void Menu_Paste(System.Object sender, System.EventArgs e)
+        {
+            // Determine if there is any text in the Clipboard to paste into the text box.
+            if (Clipboard.GetDataObject().GetDataPresent(DataFormats.Text) == true)
+            {
+                // Paste current text in Clipboard into text box.
+                tbName.Paste();
+            }
+        }
+
+
+        private void Menu_Undo(System.Object sender, System.EventArgs e)
+        {
+            // Determine if last operation can be undone in text box.   
+            if (tbName.CanUndo == true)
+            {
+                // Undo the last operation.
+                tbName.Undo();
+                // Clear the undo buffer to prevent last action from being redone.
+                tbName.ClearUndo();
+            }
+        }
+
+        private void Menu_Delete(System.Object sender, System.EventArgs e)
+        {
+            tbName.SelectedText = string.Empty;
+        }
+
+        private void insertText(TextBox pTextBox, string pText)
+        {
+            int x = pTextBox.SelectionStart;
+            pTextBox.Text = pTextBox.Text.Insert(pTextBox.SelectionStart, pText);
+            pTextBox.SelectionStart = x + 1;
+        }
+
         public override string ToString()
         {
             return (null == this.currentTherapyGroup) ? "No Therapy Group" : this.currentTherapyGroup.name;
@@ -444,6 +525,18 @@ namespace BDEditor.Views
         {
             //ShowLinksInUse(true);
             OnNotesChanged(new EventArgs());
+        }
+
+        private void tbName_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                undoToolStripMenuItem.Enabled = tbName.CanUndo;
+                pasteToolStripMenuItem.Enabled = (Clipboard.ContainsText());
+                cutToolStripMenuItem.Enabled = (tbName.SelectionLength > 0);
+                copyToolStripMenuItem.Enabled = (tbName.SelectionLength > 0);
+                deleteToolStripMenuItem1.Enabled = (tbName.SelectionLength > 0);
+            }
         }
     }
 }

@@ -20,7 +20,12 @@ namespace BDEditor.Views
         private Guid? scopeId;
         private bool displayLeftBracket;
         private bool displayRightBracket;
-        
+        private string currentControlName;
+
+        private const string NAME_TEXTBOX = "Name";
+        private const string DOSAGE_TEXTBOX = "Dosage";
+        private const string DURATION_TEXTBOX = "Duration";
+
         public int? DisplayOrder {get; set;}
 
         public event EventHandler RequestItemAdd;
@@ -332,6 +337,12 @@ namespace BDEditor.Views
 
         #endregion
 
+        private void insertTextFromMenu(TextBox textbox, string textToInsert, int selectionStart)
+        {
+            textbox.Text = textbox.Text.Insert(selectionStart, textToInsert);
+            textbox.SelectionStart = selectionStart + 1;
+        }
+
         private void textBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
@@ -350,32 +361,72 @@ namespace BDEditor.Views
 
         private void bToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tbName.Text = tbName.Text.Insert(tbName.SelectionStart, "ß");
+            string newText = "ß";
+            if (currentControlName == NAME_TEXTBOX)
+                insertTextFromMenu(tbName, newText, tbName.SelectionStart);
+            else if (currentControlName == DOSAGE_TEXTBOX)
+                insertTextFromMenu(tbDosage, newText, tbDosage.SelectionStart);
+            else if (currentControlName == DURATION_TEXTBOX)
+                insertTextFromMenu(tbDuration, newText, tbDuration.SelectionStart);
         }
 
         private void degreeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tbName.Text = tbName.Text.Insert(tbName.SelectionStart, "°");
+            string newText = "°";
+            if (currentControlName == NAME_TEXTBOX)
+                insertTextFromMenu(tbName, newText, tbName.SelectionStart);
+            else if (currentControlName == DOSAGE_TEXTBOX)
+                insertTextFromMenu(tbDosage, newText, tbDosage.SelectionStart);
+            else if (currentControlName == DURATION_TEXTBOX)
+                insertTextFromMenu(tbDuration, newText, tbDuration.SelectionStart);
         }
 
         private void µToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tbName.Text = tbName.Text.Insert(tbName.SelectionStart, "µ");
+            string newText = "µ";
+
+            if (currentControlName == NAME_TEXTBOX)
+                insertTextFromMenu(tbName, newText, tbName.SelectionStart);
+            else if (currentControlName == DOSAGE_TEXTBOX)
+                insertTextFromMenu(tbDosage, newText, tbDosage.SelectionStart);
+            else if (currentControlName == DURATION_TEXTBOX)
+                insertTextFromMenu(tbDuration, newText, tbDuration.SelectionStart);
         }
 
         private void geToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tbName.Text = tbName.Text.Insert(tbName.SelectionStart, "≥");
+            string newText = "≥";
+
+            if (currentControlName == NAME_TEXTBOX)
+                insertTextFromMenu(tbName, newText, tbName.SelectionStart);
+            else if (currentControlName == DOSAGE_TEXTBOX)
+                insertTextFromMenu(tbDosage, newText, tbDosage.SelectionStart);
+            else if (currentControlName == DURATION_TEXTBOX)
+                insertTextFromMenu(tbDuration, newText, tbDuration.SelectionStart);
         }
 
         private void leToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tbName.Text = tbName.Text.Insert(tbName.SelectionStart, "≤");
+            string newText = "≤";
+
+            if (currentControlName == NAME_TEXTBOX)
+                insertTextFromMenu(tbName, newText, tbName.SelectionStart);
+            else if (currentControlName == DOSAGE_TEXTBOX)
+                insertTextFromMenu(tbDosage, newText, tbDosage.SelectionStart);
+            else if (currentControlName == DURATION_TEXTBOX)
+                insertTextFromMenu(tbDuration, newText, tbDuration.SelectionStart);
         }
 
         private void plusMinusToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tbName.Text = tbName.Text.Insert(tbName.SelectionStart, "±");
+            string newText = "±";
+
+            if (currentControlName == NAME_TEXTBOX)
+                insertTextFromMenu(tbName, newText, tbName.SelectionStart);
+            else if (currentControlName == DOSAGE_TEXTBOX)
+                insertTextFromMenu(tbDosage, newText, tbDosage.SelectionStart);
+            else if (currentControlName == DURATION_TEXTBOX)
+                insertTextFromMenu(tbDuration, newText, tbDuration.SelectionStart);
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -412,6 +463,21 @@ namespace BDEditor.Views
         {
             //ShowLinksInUse(true);
             OnNotesChanged(new EventArgs());
+        }
+
+        private void tbName_MouseDown(object sender, MouseEventArgs e)
+        {
+            currentControlName = NAME_TEXTBOX;
+        }
+
+        private void tbDosage_MouseDown(object sender, MouseEventArgs e)
+        {
+            currentControlName = DOSAGE_TEXTBOX;
+        }
+
+        private void tbDuration_MouseDown(object sender, MouseEventArgs e)
+        {
+            currentControlName = DURATION_TEXTBOX;
         }
 
     }

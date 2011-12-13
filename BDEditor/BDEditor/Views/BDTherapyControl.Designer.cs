@@ -37,6 +37,7 @@
             this.leToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.plusMinusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.degreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.µToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tbDosage = new System.Windows.Forms.TextBox();
             this.tbDuration = new System.Windows.Forms.TextBox();
             this.noneRadioButton = new System.Windows.Forms.RadioButton();
@@ -61,7 +62,6 @@
             this.chkPreviousDose = new System.Windows.Forms.CheckBox();
             this.chkPreviousDuration = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.µToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
             this.SuspendLayout();
@@ -73,7 +73,9 @@
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(218, 20);
             this.tbName.TabIndex = 1;
+            this.tbName.Tag = "";
             this.tbName.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.tbName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbName_MouseDown);
             // 
             // contextMenuStrip1
             // 
@@ -129,6 +131,13 @@
             this.degreeToolStripMenuItem.ToolTipText = "Insert °";
             this.degreeToolStripMenuItem.Click += new System.EventHandler(this.degreeToolStripMenuItem_Click);
             // 
+            // µToolStripMenuItem
+            // 
+            this.µToolStripMenuItem.Name = "µToolStripMenuItem";
+            this.µToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.µToolStripMenuItem.Text = "µ";
+            this.µToolStripMenuItem.Click += new System.EventHandler(this.µToolStripMenuItem_Click);
+            // 
             // tbDosage
             // 
             this.tbDosage.ContextMenuStrip = this.contextMenuStrip1;
@@ -136,7 +145,9 @@
             this.tbDosage.Name = "tbDosage";
             this.tbDosage.Size = new System.Drawing.Size(211, 20);
             this.tbDosage.TabIndex = 4;
+            this.tbDosage.Tag = "";
             this.tbDosage.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.tbDosage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDosage_MouseDown);
             // 
             // tbDuration
             // 
@@ -145,7 +156,9 @@
             this.tbDuration.Name = "tbDuration";
             this.tbDuration.Size = new System.Drawing.Size(174, 20);
             this.tbDuration.TabIndex = 7;
+            this.tbDuration.Tag = "";
             this.tbDuration.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.tbDuration.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDuration_MouseDown);
             // 
             // noneRadioButton
             // 
@@ -352,13 +365,6 @@
             this.chkPreviousDuration.TabIndex = 6;
             this.toolTip1.SetToolTip(this.chkPreviousDuration, "Same as previous");
             this.chkPreviousDuration.UseVisualStyleBackColor = true;
-            // 
-            // µToolStripMenuItem
-            // 
-            this.µToolStripMenuItem.Name = "µToolStripMenuItem";
-            this.µToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
-            this.µToolStripMenuItem.Text = "µ";
-            this.µToolStripMenuItem.Click += new System.EventHandler(this.µToolStripMenuItem_Click);
             // 
             // BDTherapyControl
             // 

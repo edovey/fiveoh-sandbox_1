@@ -116,22 +116,6 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<BDLinkedNote> BDLinkedNotes
-        {
-            get
-            {
-                if ((_BDLinkedNotes == null))
-                {
-                    _BDLinkedNotes = base.CreateObjectSet<BDLinkedNote>("BDLinkedNotes");
-                }
-                return _BDLinkedNotes;
-            }
-        }
-        private ObjectSet<BDLinkedNote> _BDLinkedNotes;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<BDPathogenGroup> BDPathogenGroups
         {
             get
@@ -304,6 +288,22 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDDeletion> _BDDeletions;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDLinkedNote> BDLinkedNotes
+        {
+            get
+            {
+                if ((_BDLinkedNotes == null))
+                {
+                    _BDLinkedNotes = base.CreateObjectSet<BDLinkedNote>("BDLinkedNotes");
+                }
+                return _BDLinkedNotes;
+            }
+        }
+        private ObjectSet<BDLinkedNote> _BDLinkedNotes;
 
         #endregion
         #region AddTo Methods
@@ -330,14 +330,6 @@ namespace BDEditor.DataModel
         public void AddToBDLinkedNoteAssociations(BDLinkedNoteAssociation bDLinkedNoteAssociation)
         {
             base.AddObject("BDLinkedNoteAssociations", bDLinkedNoteAssociation);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDLinkedNotes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDLinkedNotes(BDLinkedNote bDLinkedNote)
-        {
-            base.AddObject("BDLinkedNotes", bDLinkedNote);
         }
     
         /// <summary>
@@ -426,6 +418,14 @@ namespace BDEditor.DataModel
         public void AddToBDDeletions(BDDeletion bDDeletion)
         {
             base.AddObject("BDDeletions", bDDeletion);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDLinkedNotes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDLinkedNotes(BDLinkedNote bDLinkedNote)
+        {
+            base.AddObject("BDLinkedNotes", bDLinkedNote);
         }
 
         #endregion

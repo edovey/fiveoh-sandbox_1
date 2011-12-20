@@ -49,12 +49,12 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_BuildVersioningStyle = None.Increment.Increment.YearDayOfYear
-		BuildVersion_ConfigurationName = Release
-		BuildVersion_AssemblyInfoFilename = BDEditor\Properties\AssemblyInfo.cs
-		BuildVersion_UpdateFileVersion = True
-		BuildVersion_UpdateAssemblyVersion = True
-		BuildVersion_UseGlobalSettings = False
 		BuildVersion_BuildAction = Build
+		BuildVersion_UseGlobalSettings = False
+		BuildVersion_UpdateAssemblyVersion = False
+		BuildVersion_UpdateFileVersion = False
+		BuildVersion_AssemblyInfoFilename = BDEditor\Properties\AssemblyInfo.cs
+		BuildVersion_ConfigurationName = Release
+		BuildVersion_BuildVersioningStyle = None.Increment.Increment.YearDayOfYear
 	EndGlobalSection
 EndGlobal

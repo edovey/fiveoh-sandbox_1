@@ -17,7 +17,6 @@ namespace BDEditor.Views
         private string contextEntityName;
         private string contextPropertyName;
         private bool saveOnLeave = true;
-        private LinkedNoteType selectedLinkNoteType;
         private BDLinkedNote currentLinkedNote;
 
         public event EventHandler SaveAttemptWithoutParent;
@@ -37,12 +36,6 @@ namespace BDEditor.Views
         {
             get { return saveOnLeave; }
             set { saveOnLeave = value; }
-        }
-
-        public LinkedNoteType SelectedLinkedNoteType
-        {
-            get { return selectedLinkNoteType; }
-            set { selectedLinkNoteType = value; }
         }
 
         public BDLinkedNoteControl()
@@ -154,7 +147,7 @@ namespace BDEditor.Views
                     association.parentId = contextParentId;
                     association.parentEntityName = contextEntityName;
                     association.parentEntityPropertyName = contextPropertyName;
-                    association.linkedNoteType = (int)selectedLinkNoteType;
+                    association.linkedNoteType = 0;
                     currentLinkedNote.linkedNoteAssociationId = association.uuid;
                     currentLinkedNote.scopeId = scopeId;
                     BDLinkedNote.Save(dataContext, currentLinkedNote);
@@ -170,7 +163,6 @@ namespace BDEditor.Views
             if (null == currentLinkedNote)
             {
                 textControl.Text = @"";
-                selectedLinkNoteType = LinkedNoteType.Inline;
             }
 
             if (currentLinkedNote != null && currentLinkedNote.documentText != null && currentLinkedNote.documentText.Length > 0)

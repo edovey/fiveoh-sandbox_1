@@ -90,6 +90,7 @@ namespace BDEditor.Views
 
             this.existingAssociation = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, parentId, contextPropertyName);
             rtfContextInfo.Text = BDLinkedNoteAssociation.GetDescription(dataContext, parentId, contextEntityKeyName, contextPropertyName);
+            this.linkedNoteTypeCombo.SelectedIndex = this.existingAssociation.linkedNoteType.Value;
 
             RefreshListOfAssociatedLinks();
             DisplayLinkedNote(this.existingAssociation, false);
@@ -164,7 +165,6 @@ namespace BDEditor.Views
             {
                 BDLinkedNote linkedNote = BDLinkedNote.GetLinkedNoteWithId(dataContext, pAssociation.linkedNoteId);
                 bdLinkedNoteControl1.CurrentLinkedNote = linkedNote;
-                bdLinkedNoteControl1.SelectedLinkedNoteType = (LinkedNoteType)pAssociation.linkedNoteType;
             }
 
             if (withRefresh)
@@ -224,6 +224,7 @@ namespace BDEditor.Views
                 }
 
                 this.existingAssociation.linkedNoteId = selectedNote.uuid;
+                
 
                 BDLinkedNoteAssociation.Save(dataContext, this.existingAssociation);
 
@@ -293,7 +294,7 @@ namespace BDEditor.Views
         private void linkedNoteType_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(null != existingAssociation)
-                existingAssociation.linkedNoteType = (int)Enum.Parse(typeof(LinkedNoteType), linkedNoteTypeCombo.SelectedText);
+                existingAssociation.linkedNoteType = linkedNoteTypeCombo.SelectedIndex;
         }
     }
 }

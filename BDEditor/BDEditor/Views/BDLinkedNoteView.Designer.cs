@@ -227,7 +227,6 @@
             this.bdLinkedNoteControl1.Name = "bdLinkedNoteControl1";
             this.bdLinkedNoteControl1.Padding = new System.Windows.Forms.Padding(3);
             this.bdLinkedNoteControl1.SaveOnLeave = false;
-            this.bdLinkedNoteControl1.SelectedLinkedNoteType = BDEditor.DataModel.LinkedNoteType.Inline;
             this.bdLinkedNoteControl1.Size = new System.Drawing.Size(810, 256);
             this.bdLinkedNoteControl1.TabIndex = 1;
             // 

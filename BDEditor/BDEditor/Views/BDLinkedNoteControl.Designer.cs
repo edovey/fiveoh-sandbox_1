@@ -40,6 +40,7 @@
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
@@ -47,7 +48,6 @@
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
             this.panel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -172,7 +172,7 @@
             this.toolStripButton8});
             this.toolStrip1.Location = new System.Drawing.Point(122, 2);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(362, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(320, 25);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -227,6 +227,17 @@
             this.toolStripButton5.ToolTipText = "Insert °";
             this.toolStripButton5.Click += new System.EventHandler(this.toolStripButton5_Click);
             // 
+            // toolStripButton9
+            // 
+            this.toolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton9.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton9.Image")));
+            this.toolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton9.Name = "toolStripButton9";
+            this.toolStripButton9.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton9.Text = "µ";
+            this.toolStripButton9.ToolTipText = "Insert µ";
+            this.toolStripButton9.Click += new System.EventHandler(this.toolStripButton9_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -237,7 +248,7 @@
             this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton6.Name = "toolStripButton6";
-            this.toolStripButton6.Size = new System.Drawing.Size(70, 22);
+            this.toolStripButton6.Size = new System.Drawing.Size(65, 22);
             this.toolStripButton6.Text = "Superscript";
             this.toolStripButton6.ToolTipText = "Superscript selected text";
             this.toolStripButton6.Click += new System.EventHandler(this.toolStripButton6_Click);
@@ -247,7 +258,7 @@
             this.toolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton7.Name = "toolStripButton7";
-            this.toolStripButton7.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton7.Size = new System.Drawing.Size(55, 22);
             this.toolStripButton7.Text = "Subscript";
             this.toolStripButton7.ToolTipText = "Subscript selected text";
             this.toolStripButton7.Click += new System.EventHandler(this.toolStripButton7_Click);
@@ -262,7 +273,7 @@
             this.toolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton8.Name = "toolStripButton8";
-            this.toolStripButton8.Size = new System.Drawing.Size(39, 22);
+            this.toolStripButton8.Size = new System.Drawing.Size(38, 22);
             this.toolStripButton8.Text = "Paste";
             this.toolStripButton8.ToolTipText = "Paste Clipboard contents";
             this.toolStripButton8.Click += new System.EventHandler(this.toolStripButton8_Click);
@@ -284,17 +295,6 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(10, 198);
             this.panel3.TabIndex = 16;
-            // 
-            // toolStripButton9
-            // 
-            this.toolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton9.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton9.Image")));
-            this.toolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton9.Name = "toolStripButton9";
-            this.toolStripButton9.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton9.Text = "µ";
-            this.toolStripButton9.ToolTipText = "Insert µ";
-            this.toolStripButton9.Click += new System.EventHandler(this.toolStripButton9_Click);
             // 
             // BDLinkedNoteControl
             // 

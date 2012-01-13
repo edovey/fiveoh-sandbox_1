@@ -124,10 +124,9 @@ namespace BDEditor.DataModel
                                                     where entry.pathogenGroupId == pPathogenGroupId
                                                     orderby entry.displayOrder
                                                     select entry);
-                foreach (BDPathogen pathogen in pathogens)
-                {
-                    pathogenList.Add(pathogen);
-                }
+                if (pathogens.Count() > 0)
+                    pathogenList = new List<BDPathogen>(pathogens.ToList<BDPathogen>());
+
             return pathogenList;
         }
 

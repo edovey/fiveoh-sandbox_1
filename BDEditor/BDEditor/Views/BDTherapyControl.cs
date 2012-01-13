@@ -33,6 +33,7 @@ namespace BDEditor.Views
         public event EventHandler ReorderToPrevious;
         public event EventHandler ReorderToNext;
         public event EventHandler NotesChanged;
+        public event EventHandler<SearchableItemEventArgs> SearchableItemAdded;
 
         protected virtual void OnNotesChanged(EventArgs e)
         {
@@ -57,6 +58,16 @@ namespace BDEditor.Views
         protected virtual void OnReorderToNext(EventArgs e)
         {
             if (null != ReorderToNext) { ReorderToNext(this, e); }
+        }
+
+        protected virtual void OnSearchableItemAdded(SearchableItemEventArgs se)
+        {
+            // make a copy of the handler to avoid race condition
+            EventHandler<SearchableItemEventArgs> handler = SearchableItemAdded;
+
+            if (null != handler) { 
+                handler(this,se); 
+            }
         }
 
         public BDTherapy CurrentTherapy
@@ -250,6 +261,9 @@ namespace BDEditor.Views
                 {
                     this.currentTherapy = BDTherapy.CreateTherapy(this.dataContext, this.therapyGroupId.Value);
                     this.currentTherapy.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
+
+                    // raise event to begin metadata entry creation
+                    OnSearchableItemAdded(new SearchableItemEventArgs(this.currentTherapy.uuid, BDTherapy.ENTITYNAME));
                 }
             }
 
@@ -315,9 +329,12 @@ namespace BDEditor.Views
                     BDTherapy.Save(dataContext, currentTherapy);
                     result = true;
 
-                   Typeahead.AddToCollection(BDTherapy.KEY_NAME, BDTherapy.PROPERTYNAME_THERAPY, currentTherapy.name);
-                   Typeahead.AddToCollection(BDTherapy.KEY_NAME, BDTherapy.PROPERTYNAME_DOSAGE, currentTherapy.dosage);
-                   Typeahead.AddToCollection(BDTherapy.KEY_NAME, BDTherapy.PROPERTYNAME_DURATION, currentTherapy.duration);
+                    if(currentTherapy.name.Length > 0) 
+                       Typeahead.AddToCollection(BDTherapy.KEY_NAME, BDTherapy.PROPERTYNAME_THERAPY, currentTherapy.name);
+                   if(currentTherapy.dosage.Length > 0)
+                       Typeahead.AddToCollection(BDTherapy.KEY_NAME, BDTherapy.PROPERTYNAME_DOSAGE, currentTherapy.dosage);
+                    if(currentTherapy.duration.Length > 0)
+                       Typeahead.AddToCollection(BDTherapy.KEY_NAME, BDTherapy.PROPERTYNAME_DURATION, currentTherapy.duration);
 
                 }
             }

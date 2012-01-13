@@ -25,10 +25,22 @@ namespace BDEditor.Views
         public event EventHandler ReorderToNext;
 
         public event EventHandler NotesChanged;
+        public event EventHandler<SearchableItemEventArgs> SearchableItemAdded;
 
         protected virtual void OnNotesChanged(EventArgs e)
         {
             if (null != NotesChanged) { NotesChanged(this, e); }
+        }
+
+        protected virtual void OnSearchableItemAdded(SearchableItemEventArgs se)
+        {
+            // make a copy of the handler to avoid race condition
+            EventHandler<SearchableItemEventArgs> handler = SearchableItemAdded;
+
+            if (null != handler)
+            {
+                handler(this, se);
+            }
         }
 
         protected virtual void OnItemAddRequested(EventArgs e)
@@ -237,6 +249,7 @@ namespace BDEditor.Views
                 therapyControl.ReorderToNext += new EventHandler(Therapy_ReorderToNext);
                 therapyControl.ReorderToPrevious += new EventHandler(Therapy_ReorderToPrevious);
                 therapyControl.NotesChanged += new EventHandler(notesChanged_Action);
+                therapyControl.SearchableItemAdded += new EventHandler<SearchableItemEventArgs>(Therapy_SearchableItemAdded);
 
                 therapyControlList.Add(therapyControl);
 
@@ -258,6 +271,7 @@ namespace BDEditor.Views
             pTherapyControl.ReorderToNext -= new EventHandler(Therapy_ReorderToNext);
             pTherapyControl.ReorderToPrevious -= new EventHandler(Therapy_ReorderToPrevious);
             pTherapyControl.NotesChanged -= new EventHandler(notesChanged_Action);
+            pTherapyControl.SearchableItemAdded -= new EventHandler<SearchableItemEventArgs>(Therapy_SearchableItemAdded);
             
             therapyControlList.Remove(pTherapyControl);
 
@@ -271,6 +285,10 @@ namespace BDEditor.Views
                     {
                         therapyControlList[idx].DisplayOrder = idx;
                     }
+                    // remove associated metadata 
+                    BDMetadata mdEntry = BDMetadata.GetMetadataWithId(dataContext, entry.uuid);
+                    if(null != mdEntry)
+                        BDMetadata.Delete(dataContext, mdEntry);
                 }
             }
 
@@ -418,6 +436,11 @@ namespace BDEditor.Views
             {
                 ReorderTherapyControl(control, -1);
             }
+        }
+
+        private void Therapy_SearchableItemAdded(object sender, SearchableItemEventArgs se)
+        {
+            OnSearchableItemAdded(se);
         }
 
         private void btnReorderToPrevious_Click(object sender, EventArgs e)

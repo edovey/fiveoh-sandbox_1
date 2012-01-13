@@ -125,7 +125,7 @@
             this.contextMenuStripEvents.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addPathogenGroupToolStripMenuItem1});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(187, 26);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(187, 48);
             // 
             // addPathogenGroupToolStripMenuItem1
             // 
@@ -159,7 +159,7 @@
             this.Controls.Add(this.panelHeader);
             this.MinimumSize = new System.Drawing.Size(880, 325);
             this.Name = "BDPresentationControl";
-            this.Size = new System.Drawing.Size(880, 325);
+            this.Size = new System.Drawing.Size(880, 338);
             this.Leave += new System.EventHandler(this.BDPresentationControl_Leave);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();

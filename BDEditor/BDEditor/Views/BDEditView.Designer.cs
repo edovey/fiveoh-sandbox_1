@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDEditView));
             this.headerPanel = new System.Windows.Forms.Panel();
+            this.brewButton = new System.Windows.Forms.Button();
             this.btnSyncWithReplaceLocal = new System.Windows.Forms.Button();
             this.lbLastSyncDateTime = new System.Windows.Forms.Label();
             this.btnSync = new System.Windows.Forms.Button();
@@ -50,6 +51,7 @@
             // 
             // headerPanel
             // 
+            this.headerPanel.Controls.Add(this.brewButton);
             this.headerPanel.Controls.Add(this.btnSyncWithReplaceLocal);
             this.headerPanel.Controls.Add(this.lbLastSyncDateTime);
             this.headerPanel.Controls.Add(this.btnSync);
@@ -60,6 +62,16 @@
             this.headerPanel.Name = "headerPanel";
             this.headerPanel.Size = new System.Drawing.Size(1192, 39);
             this.headerPanel.TabIndex = 0;
+            // 
+            // brewButton
+            // 
+            this.brewButton.Location = new System.Drawing.Point(728, 10);
+            this.brewButton.Name = "brewButton";
+            this.brewButton.Size = new System.Drawing.Size(75, 23);
+            this.brewButton.TabIndex = 5;
+            this.brewButton.Text = "brew";
+            this.brewButton.UseVisualStyleBackColor = true;
+            this.brewButton.Click += new System.EventHandler(this.brewButton_Click);
             // 
             // btnSyncWithReplaceLocal
             // 
@@ -192,6 +204,7 @@
         private System.Windows.Forms.Label lbLastSyncDateTime;
         private System.Windows.Forms.Button btnSync;
         private System.Windows.Forms.Button btnSyncWithReplaceLocal;
+        private System.Windows.Forms.Button brewButton;
 
     }
 }

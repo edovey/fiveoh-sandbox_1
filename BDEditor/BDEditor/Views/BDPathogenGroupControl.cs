@@ -28,6 +28,7 @@ namespace BDEditor.Views
         public event EventHandler ReorderToPrevious;
         public event EventHandler ReorderToNext;
         public event EventHandler NotesChanged;
+        public event EventHandler<SearchableItemEventArgs> SearchableItemAdded;
 
         protected virtual void OnNotesChanged(EventArgs e)
         {
@@ -54,7 +55,16 @@ namespace BDEditor.Views
             if (null != ReorderToNext) { ReorderToNext(this, e); }
         }
 
- 
+        protected virtual void OnSearchableItemAdded(SearchableItemEventArgs se)
+        {
+            // make a copy of the handler to avoid race condition
+            EventHandler<SearchableItemEventArgs> handler = SearchableItemAdded;
+
+            if (null != handler)
+            {
+                handler(this, se);
+            }
+        }
 
         public BDPathogenGroup CurrentPathogenGroup
         {
@@ -232,6 +242,7 @@ namespace BDEditor.Views
                 pathogenControl.ReorderToNext += new EventHandler(Pathogen_ReorderToNext);
                 pathogenControl.ReorderToPrevious += new EventHandler(Pathogen_ReorderToPrevious);
                 pathogenControl.NotesChanged += new EventHandler(notesChanged_Action);
+                pathogenControl.SearchableItemAdded += new EventHandler<SearchableItemEventArgs>(Pathogen_SearchableItemAdded);
                 pathogenControlList.Add(pathogenControl);
 
                 panelPathogens.Controls.Add(pathogenControl);
@@ -250,6 +261,7 @@ namespace BDEditor.Views
             pPathogenControl.ReorderToNext -= new EventHandler(Pathogen_ReorderToNext);
             pPathogenControl.ReorderToPrevious -= new EventHandler(Pathogen_ReorderToPrevious);
             pPathogenControl.NotesChanged -= new EventHandler(notesChanged_Action);
+            pPathogenControl.SearchableItemAdded -= new EventHandler<SearchableItemEventArgs>(Pathogen_SearchableItemAdded);
 
             pathogenControlList.Remove(pPathogenControl);
 
@@ -264,6 +276,10 @@ namespace BDEditor.Views
                     {
                         pathogenControlList[idx].DisplayOrder = idx;
                     }
+
+                    BDMetadata mdEntry = BDMetadata.GetMetadataWithId(dataContext, entry.uuid);
+                    if (null != mdEntry)
+                        BDMetadata.Delete(dataContext, mdEntry);
                 }
             }
 
@@ -301,7 +317,6 @@ namespace BDEditor.Views
         }
 
 
-
         private BDTherapyGroupControl addTherapyGroupControl(BDTherapyGroup pTherapyGroup, int pTabIndex)
         {
             BDTherapyGroupControl therapyGroupControl = null;
@@ -323,6 +338,7 @@ namespace BDEditor.Views
                 therapyGroupControl.ReorderToNext += new EventHandler(TherapyGroup_ReorderToNext);
                 therapyGroupControl.ReorderToPrevious += new EventHandler(TherapyGroup_ReorderToPrevious);
                 therapyGroupControl.NotesChanged += new EventHandler(notesChanged_Action);
+                therapyGroupControl.SearchableItemAdded += new EventHandler<SearchableItemEventArgs>(TherapyGroup_SearchableItemAdded);
 
                 therapyGroupControlList.Add(therapyGroupControl);
 
@@ -344,6 +360,7 @@ namespace BDEditor.Views
             pTherapyGroupControl.ReorderToNext -= new EventHandler(TherapyGroup_ReorderToNext);
             pTherapyGroupControl.ReorderToPrevious -= new EventHandler(TherapyGroup_ReorderToPrevious);
             pTherapyGroupControl.NotesChanged -= new EventHandler(notesChanged_Action);
+            pTherapyGroupControl.SearchableItemAdded -= new EventHandler<SearchableItemEventArgs>(TherapyGroup_SearchableItemAdded);
 
             therapyGroupControlList.Remove(pTherapyGroupControl);
 
@@ -395,6 +412,7 @@ namespace BDEditor.Views
             }
         }
 
+
         private void PathogenGroup_RequestItemAdd(object sender, EventArgs e)
         {
             OnItemAddRequested(new EventArgs());
@@ -414,6 +432,12 @@ namespace BDEditor.Views
         {
             OnReorderToNext(new EventArgs());
         }
+
+        private void PathogenGroup_SearchableItemAdded(object sender, SearchableItemEventArgs se)
+        {
+            OnSearchableItemAdded(se);
+        }
+
 
         private void Pathogen_RequestItemAdd(object sender, EventArgs e)
         {
@@ -445,6 +469,12 @@ namespace BDEditor.Views
                 ReorderPathogenControl(control, -1);
             }
         }
+
+        private void Pathogen_SearchableItemAdded(object sender, SearchableItemEventArgs se)
+        {
+            OnSearchableItemAdded(se);
+        }
+
 
         private void TherapyGroup_RequestItemAdd(object sender, EventArgs e)
         {
@@ -483,6 +513,12 @@ namespace BDEditor.Views
             }
         }
 
+        private void TherapyGroup_SearchableItemAdded(object sender, SearchableItemEventArgs se)
+        {
+            OnSearchableItemAdded(se);
+        }
+
+        
         public override string ToString()
         {
             return (null == this.currentPathogenGroup) ? "No Pathogen Group" : this.currentPathogenGroup.uuid.ToString();
@@ -546,6 +582,7 @@ namespace BDEditor.Views
         {
             this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
         }
+
         private void btnReorderToPrevious_Click(object sender, EventArgs e)
         {
             OnReorderToPrevious(new EventArgs());

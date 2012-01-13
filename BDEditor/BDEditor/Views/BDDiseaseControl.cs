@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using BDEditor.DataModel;
+using BDEditor.Classes;
 
 namespace BDEditor.Views
 {

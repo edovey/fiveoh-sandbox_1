@@ -152,7 +152,7 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Get all linked notes with the specified linkedNoteAssociation ID
+        /// Get all linked notes with the specified association ID
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pParentId"></param>
@@ -245,7 +245,7 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Create or update an existing BDDisease from attributes in a dictionary. Saves the entry.
+        /// Create or update an existing BDLinkedNote from attributes in a dictionary. Saves the entry.
         /// </summary>
         /// <param name="pDataContext"></param>
         /// <param name="pAttributeDictionary"></param>

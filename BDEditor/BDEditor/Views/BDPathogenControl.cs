@@ -26,6 +26,7 @@ namespace BDEditor.Views
         public event EventHandler ReorderToPrevious;
         public event EventHandler ReorderToNext;
         public event EventHandler NotesChanged;
+        public event EventHandler<SearchableItemEventArgs> SearchableItemAdded;
 
         protected virtual void OnNotesChanged(EventArgs e)
         {
@@ -50,6 +51,17 @@ namespace BDEditor.Views
         protected virtual void OnReorderToNext(EventArgs e)
         {
             if (null != ReorderToNext) { ReorderToNext(this, e); }
+        }
+
+        protected virtual void OnSearchableItemAdded(SearchableItemEventArgs se)
+        {
+            // make a copy of the handler to avoid race condition
+            EventHandler<SearchableItemEventArgs> handler = SearchableItemAdded;
+
+            if (null != handler)
+            {
+                handler(this, se);
+            }
         }
 
         public BDPathogen CurrentPathogen
@@ -125,6 +137,9 @@ namespace BDEditor.Views
                 {
                     this.currentPathogen = BDPathogen.CreatePathogen(dataContext, pathogenGroupId.Value);
                     this.currentPathogen.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
+
+                    // raise event to begin metadata entry creation
+                    OnSearchableItemAdded(new SearchableItemEventArgs(this.currentPathogen.uuid, BDPathogen.ENTITYNAME));
                 }
             }
 

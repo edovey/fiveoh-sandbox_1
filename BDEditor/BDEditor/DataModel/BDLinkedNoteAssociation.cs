@@ -54,7 +54,7 @@ namespace BDEditor.DataModel
         /// <returns>BDLinkedNoteAssociation</returns>
         public static BDLinkedNoteAssociation CreateLinkedNoteAssociation(Entities pContext)
         {
-            BDLinkedNoteAssociation linkedNoteAssociation = CreateBDLinkedNoteAssociation(Guid.NewGuid());
+            BDLinkedNoteAssociation linkedNoteAssociation = CreateBDLinkedNoteAssociation(Guid.NewGuid(), false);
             linkedNoteAssociation.createdBy = Guid.Empty;
             linkedNoteAssociation.createdDate = DateTime.Now;
             linkedNoteAssociation.deprecated = false;
@@ -82,7 +82,7 @@ namespace BDEditor.DataModel
                                                                             Guid pParentId, 
                                                                             string pParentEntityPropertyName)
         {
-            BDLinkedNoteAssociation linkedNoteAssociation = CreateBDLinkedNoteAssociation(Guid.NewGuid());
+            BDLinkedNoteAssociation linkedNoteAssociation = CreateBDLinkedNoteAssociation(Guid.NewGuid(), false);
             linkedNoteAssociation.createdBy = Guid.Empty;
             linkedNoteAssociation.schemaVersion = 0;
             linkedNoteAssociation.linkedNoteType = (int)pLinkedNoteType;
@@ -388,7 +388,7 @@ namespace BDEditor.DataModel
             BDLinkedNoteAssociation entry = BDLinkedNoteAssociation.GetLinkedNoteAssociationWithId(pDataContext, uuid);
             if (null == entry)
             {
-                entry = BDLinkedNoteAssociation.CreateBDLinkedNoteAssociation(uuid);
+                entry = BDLinkedNoteAssociation.CreateBDLinkedNoteAssociation(uuid, false);
                 pDataContext.AddObject(ENTITYNAME, entry);
             }
 

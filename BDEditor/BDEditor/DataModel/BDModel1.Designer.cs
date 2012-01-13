@@ -84,6 +84,38 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<BDChapter> BDChapters
+        {
+            get
+            {
+                if ((_BDChapters == null))
+                {
+                    _BDChapters = base.CreateObjectSet<BDChapter>("BDChapters");
+                }
+                return _BDChapters;
+            }
+        }
+        private ObjectSet<BDChapter> _BDChapters;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDDeletion> BDDeletions
+        {
+            get
+            {
+                if ((_BDDeletions == null))
+                {
+                    _BDDeletions = base.CreateObjectSet<BDDeletion>("BDDeletions");
+                }
+                return _BDDeletions;
+            }
+        }
+        private ObjectSet<BDDeletion> _BDDeletions;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<BDDisease> BDDiseases
         {
             get
@@ -112,6 +144,38 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDLinkedNoteAssociation> _BDLinkedNoteAssociations;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDLinkedNote> BDLinkedNotes
+        {
+            get
+            {
+                if ((_BDLinkedNotes == null))
+                {
+                    _BDLinkedNotes = base.CreateObjectSet<BDLinkedNote>("BDLinkedNotes");
+                }
+                return _BDLinkedNotes;
+            }
+        }
+        private ObjectSet<BDLinkedNote> _BDLinkedNotes;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDMetadata> BDMetadatas
+        {
+            get
+            {
+                if ((_BDMetadatas == null))
+                {
+                    _BDMetadatas = base.CreateObjectSet<BDMetadata>("BDMetadatas");
+                }
+                return _BDMetadatas;
+            }
+        }
+        private ObjectSet<BDMetadata> _BDMetadatas;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -176,6 +240,22 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDQueueEntry> _BDQueueEntries;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDSearchEntry> BDSearchEntries
+        {
+            get
+            {
+                if ((_BDSearchEntries == null))
+                {
+                    _BDSearchEntries = base.CreateObjectSet<BDSearchEntry>("BDSearchEntries");
+                }
+                return _BDSearchEntries;
+            }
+        }
+        private ObjectSet<BDSearchEntry> _BDSearchEntries;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -260,50 +340,18 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<BDChapter> BDChapters
+        public ObjectSet<BDSearchEntryAssociation> BDSearchEntryAssociations
         {
             get
             {
-                if ((_BDChapters == null))
+                if ((_BDSearchEntryAssociations == null))
                 {
-                    _BDChapters = base.CreateObjectSet<BDChapter>("BDChapters");
+                    _BDSearchEntryAssociations = base.CreateObjectSet<BDSearchEntryAssociation>("BDSearchEntryAssociations");
                 }
-                return _BDChapters;
+                return _BDSearchEntryAssociations;
             }
         }
-        private ObjectSet<BDChapter> _BDChapters;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<BDDeletion> BDDeletions
-        {
-            get
-            {
-                if ((_BDDeletions == null))
-                {
-                    _BDDeletions = base.CreateObjectSet<BDDeletion>("BDDeletions");
-                }
-                return _BDDeletions;
-            }
-        }
-        private ObjectSet<BDDeletion> _BDDeletions;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<BDLinkedNote> BDLinkedNotes
-        {
-            get
-            {
-                if ((_BDLinkedNotes == null))
-                {
-                    _BDLinkedNotes = base.CreateObjectSet<BDLinkedNote>("BDLinkedNotes");
-                }
-                return _BDLinkedNotes;
-            }
-        }
-        private ObjectSet<BDLinkedNote> _BDLinkedNotes;
+        private ObjectSet<BDSearchEntryAssociation> _BDSearchEntryAssociations;
 
         #endregion
         #region AddTo Methods
@@ -314,6 +362,22 @@ namespace BDEditor.DataModel
         public void AddToBDCategories(BDCategory bDCategory)
         {
             base.AddObject("BDCategories", bDCategory);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDChapters EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDChapters(BDChapter bDChapter)
+        {
+            base.AddObject("BDChapters", bDChapter);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDDeletions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDDeletions(BDDeletion bDDeletion)
+        {
+            base.AddObject("BDDeletions", bDDeletion);
         }
     
         /// <summary>
@@ -330,6 +394,22 @@ namespace BDEditor.DataModel
         public void AddToBDLinkedNoteAssociations(BDLinkedNoteAssociation bDLinkedNoteAssociation)
         {
             base.AddObject("BDLinkedNoteAssociations", bDLinkedNoteAssociation);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDLinkedNotes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDLinkedNotes(BDLinkedNote bDLinkedNote)
+        {
+            base.AddObject("BDLinkedNotes", bDLinkedNote);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDMetadatas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDMetadatas(BDMetadata bDMetadata)
+        {
+            base.AddObject("BDMetadatas", bDMetadata);
         }
     
         /// <summary>
@@ -362,6 +442,14 @@ namespace BDEditor.DataModel
         public void AddToBDQueueEntries(BDQueueEntry bDQueueEntry)
         {
             base.AddObject("BDQueueEntries", bDQueueEntry);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDSearchEntries EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDSearchEntries(BDSearchEntry bDSearchEntry)
+        {
+            base.AddObject("BDSearchEntries", bDSearchEntry);
         }
     
         /// <summary>
@@ -405,27 +493,11 @@ namespace BDEditor.DataModel
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the BDChapters EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the BDSearchEntryAssociations EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToBDChapters(BDChapter bDChapter)
+        public void AddToBDSearchEntryAssociations(BDSearchEntryAssociation bDSearchEntryAssociation)
         {
-            base.AddObject("BDChapters", bDChapter);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDDeletions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDDeletions(BDDeletion bDDeletion)
-        {
-            base.AddObject("BDDeletions", bDDeletion);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDLinkedNotes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDLinkedNotes(BDLinkedNote bDLinkedNote)
-        {
-            base.AddObject("BDLinkedNotes", bDLinkedNote);
+            base.AddObject("BDSearchEntryAssociations", bDSearchEntryAssociation);
         }
 
         #endregion
@@ -450,10 +522,12 @@ namespace BDEditor.DataModel
         /// Create a new BDCategory object.
         /// </summary>
         /// <param name="uuid">Initial value of the uuid property.</param>
-        public static BDCategory CreateBDCategory(global::System.Guid uuid)
+        /// <param name="deprecated">Initial value of the deprecated property.</param>
+        public static BDCategory CreateBDCategory(global::System.Guid uuid, global::System.Boolean deprecated)
         {
             BDCategory bDCategory = new BDCategory();
             bDCategory.uuid = uuid;
+            bDCategory.deprecated = deprecated;
             return bDCategory;
         }
 
@@ -675,7 +749,7 @@ namespace BDEditor.DataModel
                 OndeprecatedChanged();
             }
         }
-        private global::System.Boolean _deprecated = false;
+        private global::System.Boolean _deprecated;
         partial void OndeprecatedChanging(global::System.Boolean value);
         partial void OndeprecatedChanged();
     
@@ -1156,24 +1230,24 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String targetName
+        public Nullable<global::System.Int32> schemaVersion
         {
             get
             {
-                return _targetName;
+                return _schemaVersion;
             }
             set
             {
-                OntargetNameChanging(value);
-                ReportPropertyChanging("targetName");
-                _targetName = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("targetName");
-                OntargetNameChanged();
+                OnschemaVersionChanging(value);
+                ReportPropertyChanging("schemaVersion");
+                _schemaVersion = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("schemaVersion");
+                OnschemaVersionChanged();
             }
         }
-        private global::System.String _targetName;
-        partial void OntargetNameChanging(global::System.String value);
-        partial void OntargetNameChanged();
+        private Nullable<global::System.Int32> _schemaVersion;
+        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
+        partial void OnschemaVersionChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1204,24 +1278,24 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> schemaVersion
+        public global::System.String targetName
         {
             get
             {
-                return _schemaVersion;
+                return _targetName;
             }
             set
             {
-                OnschemaVersionChanging(value);
-                ReportPropertyChanging("schemaVersion");
-                _schemaVersion = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("schemaVersion");
-                OnschemaVersionChanged();
+                OntargetNameChanging(value);
+                ReportPropertyChanging("targetName");
+                _targetName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("targetName");
+                OntargetNameChanged();
             }
         }
-        private Nullable<global::System.Int32> _schemaVersion;
-        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
-        partial void OnschemaVersionChanged();
+        private global::System.String _targetName;
+        partial void OntargetNameChanging(global::System.String value);
+        partial void OntargetNameChanged();
 
         #endregion
     
@@ -1931,10 +2005,12 @@ namespace BDEditor.DataModel
         /// Create a new BDLinkedNoteAssociation object.
         /// </summary>
         /// <param name="uuid">Initial value of the uuid property.</param>
-        public static BDLinkedNoteAssociation CreateBDLinkedNoteAssociation(global::System.Guid uuid)
+        /// <param name="deprecated">Initial value of the deprecated property.</param>
+        public static BDLinkedNoteAssociation CreateBDLinkedNoteAssociation(global::System.Guid uuid, global::System.Boolean deprecated)
         {
             BDLinkedNoteAssociation bDLinkedNoteAssociation = new BDLinkedNoteAssociation();
             bDLinkedNoteAssociation.uuid = uuid;
+            bDLinkedNoteAssociation.deprecated = deprecated;
             return bDLinkedNoteAssociation;
         }
 
@@ -2252,9 +2328,304 @@ namespace BDEditor.DataModel
                 OndeprecatedChanged();
             }
         }
-        private global::System.Boolean _deprecated = false;
+        private global::System.Boolean _deprecated;
         partial void OndeprecatedChanging(global::System.Boolean value);
         partial void OndeprecatedChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="BDDataModel", Name="BDMetadata")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class BDMetadata : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new BDMetadata object.
+        /// </summary>
+        /// <param name="uuid">Initial value of the uuid property.</param>
+        public static BDMetadata CreateBDMetadata(global::System.Guid uuid)
+        {
+            BDMetadata bDMetadata = new BDMetadata();
+            bDMetadata.uuid = uuid;
+            return bDMetadata;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid uuid
+        {
+            get
+            {
+                return _uuid;
+            }
+            set
+            {
+                if (_uuid != value)
+                {
+                    OnuuidChanging(value);
+                    ReportPropertyChanging("uuid");
+                    _uuid = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("uuid");
+                    OnuuidChanged();
+                }
+            }
+        }
+        private global::System.Guid _uuid;
+        partial void OnuuidChanging(global::System.Guid value);
+        partial void OnuuidChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String displayParentEntityName
+        {
+            get
+            {
+                return _displayParentEntityName;
+            }
+            set
+            {
+                OndisplayParentEntityNameChanging(value);
+                ReportPropertyChanging("displayParentEntityName");
+                _displayParentEntityName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("displayParentEntityName");
+                OndisplayParentEntityNameChanged();
+            }
+        }
+        private global::System.String _displayParentEntityName;
+        partial void OndisplayParentEntityNameChanging(global::System.String value);
+        partial void OndisplayParentEntityNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String demographic
+        {
+            get
+            {
+                return _demographic;
+            }
+            set
+            {
+                OndemographicChanging(value);
+                ReportPropertyChanging("demographic");
+                _demographic = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("demographic");
+                OndemographicChanged();
+            }
+        }
+        private global::System.String _demographic;
+        partial void OndemographicChanging(global::System.String value);
+        partial void OndemographicChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> schemaVersion
+        {
+            get
+            {
+                return _schemaVersion;
+            }
+            set
+            {
+                OnschemaVersionChanging(value);
+                ReportPropertyChanging("schemaVersion");
+                _schemaVersion = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("schemaVersion");
+                OnschemaVersionChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _schemaVersion;
+        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
+        partial void OnschemaVersionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Guid> createdBy
+        {
+            get
+            {
+                return _createdBy;
+            }
+            set
+            {
+                OncreatedByChanging(value);
+                ReportPropertyChanging("createdBy");
+                _createdBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("createdBy");
+                OncreatedByChanged();
+            }
+        }
+        private Nullable<global::System.Guid> _createdBy;
+        partial void OncreatedByChanging(Nullable<global::System.Guid> value);
+        partial void OncreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> createdDate
+        {
+            get
+            {
+                return _createdDate;
+            }
+            set
+            {
+                OncreatedDateChanging(value);
+                ReportPropertyChanging("createdDate");
+                _createdDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("createdDate");
+                OncreatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _createdDate;
+        partial void OncreatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OncreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Guid> modifiedBy
+        {
+            get
+            {
+                return _modifiedBy;
+            }
+            set
+            {
+                OnmodifiedByChanging(value);
+                ReportPropertyChanging("modifiedBy");
+                _modifiedBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("modifiedBy");
+                OnmodifiedByChanged();
+            }
+        }
+        private Nullable<global::System.Guid> _modifiedBy;
+        partial void OnmodifiedByChanging(Nullable<global::System.Guid> value);
+        partial void OnmodifiedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> modifiedDate
+        {
+            get
+            {
+                return _modifiedDate;
+            }
+            set
+            {
+                OnmodifiedDateChanging(value);
+                ReportPropertyChanging("modifiedDate");
+                _modifiedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("modifiedDate");
+                OnmodifiedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _modifiedDate;
+        partial void OnmodifiedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnmodifiedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Guid> itemId
+        {
+            get
+            {
+                return _itemId;
+            }
+            set
+            {
+                OnitemIdChanging(value);
+                ReportPropertyChanging("itemId");
+                _itemId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("itemId");
+                OnitemIdChanged();
+            }
+        }
+        private Nullable<global::System.Guid> _itemId;
+        partial void OnitemIdChanging(Nullable<global::System.Guid> value);
+        partial void OnitemIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String itemEntityName
+        {
+            get
+            {
+                return _itemEntityName;
+            }
+            set
+            {
+                OnitemEntityNameChanging(value);
+                ReportPropertyChanging("itemEntityName");
+                _itemEntityName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("itemEntityName");
+                OnitemEntityNameChanged();
+            }
+        }
+        private global::System.String _itemEntityName;
+        partial void OnitemEntityNameChanging(global::System.String value);
+        partial void OnitemEntityNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Guid> displayParentId
+        {
+            get
+            {
+                return _displayParentId;
+            }
+            set
+            {
+                OndisplayParentIdChanging(value);
+                ReportPropertyChanging("displayParentId");
+                _displayParentId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("displayParentId");
+                OndisplayParentIdChanged();
+            }
+        }
+        private Nullable<global::System.Guid> _displayParentId;
+        partial void OndisplayParentIdChanging(Nullable<global::System.Guid> value);
+        partial void OndisplayParentIdChanged();
 
         #endregion
     
@@ -3297,6 +3668,404 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Int16> _action;
         partial void OnactionChanging(Nullable<global::System.Int16> value);
         partial void OnactionChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="BDDataModel", Name="BDSearchEntry")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class BDSearchEntry : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new BDSearchEntry object.
+        /// </summary>
+        /// <param name="uuid">Initial value of the uuid property.</param>
+        public static BDSearchEntry CreateBDSearchEntry(global::System.Guid uuid)
+        {
+            BDSearchEntry bDSearchEntry = new BDSearchEntry();
+            bDSearchEntry.uuid = uuid;
+            return bDSearchEntry;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid uuid
+        {
+            get
+            {
+                return _uuid;
+            }
+            set
+            {
+                if (_uuid != value)
+                {
+                    OnuuidChanging(value);
+                    ReportPropertyChanging("uuid");
+                    _uuid = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("uuid");
+                    OnuuidChanged();
+                }
+            }
+        }
+        private global::System.Guid _uuid;
+        partial void OnuuidChanging(global::System.Guid value);
+        partial void OnuuidChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Guid> createdBy
+        {
+            get
+            {
+                return _createdBy;
+            }
+            set
+            {
+                OncreatedByChanging(value);
+                ReportPropertyChanging("createdBy");
+                _createdBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("createdBy");
+                OncreatedByChanged();
+            }
+        }
+        private Nullable<global::System.Guid> _createdBy;
+        partial void OncreatedByChanging(Nullable<global::System.Guid> value);
+        partial void OncreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> createdDate
+        {
+            get
+            {
+                return _createdDate;
+            }
+            set
+            {
+                OncreatedDateChanging(value);
+                ReportPropertyChanging("createdDate");
+                _createdDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("createdDate");
+                OncreatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _createdDate;
+        partial void OncreatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OncreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                OnnameChanging(value);
+                ReportPropertyChanging("name");
+                _name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("name");
+                OnnameChanged();
+            }
+        }
+        private global::System.String _name;
+        partial void OnnameChanging(global::System.String value);
+        partial void OnnameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> schemaVersion
+        {
+            get
+            {
+                return _schemaVersion;
+            }
+            set
+            {
+                OnschemaVersionChanging(value);
+                ReportPropertyChanging("schemaVersion");
+                _schemaVersion = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("schemaVersion");
+                OnschemaVersionChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _schemaVersion;
+        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
+        partial void OnschemaVersionChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="BDDataModel", Name="BDSearchEntryAssociation")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class BDSearchEntryAssociation : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new BDSearchEntryAssociation object.
+        /// </summary>
+        /// <param name="uuid">Initial value of the uuid property.</param>
+        public static BDSearchEntryAssociation CreateBDSearchEntryAssociation(global::System.Guid uuid)
+        {
+            BDSearchEntryAssociation bDSearchEntryAssociation = new BDSearchEntryAssociation();
+            bDSearchEntryAssociation.uuid = uuid;
+            return bDSearchEntryAssociation;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid uuid
+        {
+            get
+            {
+                return _uuid;
+            }
+            set
+            {
+                if (_uuid != value)
+                {
+                    OnuuidChanging(value);
+                    ReportPropertyChanging("uuid");
+                    _uuid = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("uuid");
+                    OnuuidChanged();
+                }
+            }
+        }
+        private global::System.Guid _uuid;
+        partial void OnuuidChanging(global::System.Guid value);
+        partial void OnuuidChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Guid> createdBy
+        {
+            get
+            {
+                return _createdBy;
+            }
+            set
+            {
+                OncreatedByChanging(value);
+                ReportPropertyChanging("createdBy");
+                _createdBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("createdBy");
+                OncreatedByChanged();
+            }
+        }
+        private Nullable<global::System.Guid> _createdBy;
+        partial void OncreatedByChanging(Nullable<global::System.Guid> value);
+        partial void OncreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> createdDate
+        {
+            get
+            {
+                return _createdDate;
+            }
+            set
+            {
+                OncreatedDateChanging(value);
+                ReportPropertyChanging("createdDate");
+                _createdDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("createdDate");
+                OncreatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _createdDate;
+        partial void OncreatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OncreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Guid> searchEntryId
+        {
+            get
+            {
+                return _searchEntryId;
+            }
+            set
+            {
+                OnsearchEntryIdChanging(value);
+                ReportPropertyChanging("searchEntryId");
+                _searchEntryId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("searchEntryId");
+                OnsearchEntryIdChanged();
+            }
+        }
+        private Nullable<global::System.Guid> _searchEntryId;
+        partial void OnsearchEntryIdChanging(Nullable<global::System.Guid> value);
+        partial void OnsearchEntryIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> displayOrder
+        {
+            get
+            {
+                return _displayOrder;
+            }
+            set
+            {
+                OndisplayOrderChanging(value);
+                ReportPropertyChanging("displayOrder");
+                _displayOrder = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("displayOrder");
+                OndisplayOrderChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _displayOrder;
+        partial void OndisplayOrderChanging(Nullable<global::System.Int32> value);
+        partial void OndisplayOrderChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> schemaVersion
+        {
+            get
+            {
+                return _schemaVersion;
+            }
+            set
+            {
+                OnschemaVersionChanging(value);
+                ReportPropertyChanging("schemaVersion");
+                _schemaVersion = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("schemaVersion");
+                OnschemaVersionChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _schemaVersion;
+        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
+        partial void OnschemaVersionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Guid> displayParentId
+        {
+            get
+            {
+                return _displayParentId;
+            }
+            set
+            {
+                OndisplayParentIdChanging(value);
+                ReportPropertyChanging("displayParentId");
+                _displayParentId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("displayParentId");
+                OndisplayParentIdChanged();
+            }
+        }
+        private Nullable<global::System.Guid> _displayParentId;
+        partial void OndisplayParentIdChanging(Nullable<global::System.Guid> value);
+        partial void OndisplayParentIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String displayParentEntityName
+        {
+            get
+            {
+                return _displayParentEntityName;
+            }
+            set
+            {
+                OndisplayParentEntityNameChanging(value);
+                ReportPropertyChanging("displayParentEntityName");
+                _displayParentEntityName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("displayParentEntityName");
+                OndisplayParentEntityNameChanged();
+            }
+        }
+        private global::System.String _displayParentEntityName;
+        partial void OndisplayParentEntityNameChanging(global::System.String value);
+        partial void OndisplayParentEntityNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String displayContext
+        {
+            get
+            {
+                return _displayContext;
+            }
+            set
+            {
+                OndisplayContextChanging(value);
+                ReportPropertyChanging("displayContext");
+                _displayContext = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("displayContext");
+                OndisplayContextChanged();
+            }
+        }
+        private global::System.String _displayContext;
+        partial void OndisplayContextChanging(global::System.String value);
+        partial void OndisplayContextChanged();
 
         #endregion
     

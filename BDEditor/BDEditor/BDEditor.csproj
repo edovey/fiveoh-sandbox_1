@@ -124,6 +124,8 @@
     <Compile Include="Classes\Common.cs" />
     <Compile Include="Classes\Constants.cs" />
     <Compile Include="Classes\RepositoryHandler.cs" />
+    <Compile Include="Classes\SearchableItemEventArgs.cs" />
+    <Compile Include="Classes\SearchEntryGenerator.cs" />
     <Compile Include="Classes\SyncInfo.cs" />
     <Compile Include="Classes\SyncInfoDictionary.cs" />
     <Compile Include="Classes\Typeahead.cs" />
@@ -134,9 +136,12 @@
     <Compile Include="DataModel\BDDisease.cs" />
     <Compile Include="DataModel\BDLinkedNote.cs" />
     <Compile Include="DataModel\BDLinkedNoteAssociation.cs" />
+    <Compile Include="DataModel\BDMetadata.cs" />
     <Compile Include="DataModel\BDPathogen.cs" />
     <Compile Include="DataModel\BDPathogenGroup.cs" />
     <Compile Include="DataModel\BDPresentation.cs" />
+    <Compile Include="DataModel\BDSearchEntry.cs" />
+    <Compile Include="DataModel\BDSearchEntryAssociation.cs" />
     <Compile Include="DataModel\BDSection.cs" />
     <Compile Include="DataModel\BDModel1.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -279,6 +284,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>BDModel1.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="DataModel\BDModel1.edmx.sqlce" />
     <None Include="Properties\DataSources\BDEditor.DataModel.Entities.datasource" />
     <None Include="Properties\DataSources\BDModelContainer.datasource" />
     <None Include="Properties\Settings.settings">
@@ -372,7 +378,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
+      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

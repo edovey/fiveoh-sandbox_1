@@ -77,6 +77,9 @@ namespace BDEditor.Classes
             syncDictionary.Add(BDTherapy.SyncInfo(pDataContext, pLastSyncDate, currentSyncDate));
             syncDictionary.Add(BDTherapyGroup.SyncInfo(pDataContext, pLastSyncDate, currentSyncDate));
             syncDictionary.Add(BDDeletion.SyncInfo(pDataContext, pLastSyncDate, currentSyncDate));
+            syncDictionary.Add(BDSearchEntry.SyncInfo(pDataContext, pLastSyncDate, currentSyncDate));
+            syncDictionary.Add(BDSearchEntryAssociation.SyncInfo(pDataContext, pLastSyncDate, currentSyncDate));
+            syncDictionary.Add(BDMetadata.SyncInfo(pDataContext, pLastSyncDate, currentSyncDate));
 
             // prepare the push changes
 
@@ -223,6 +226,15 @@ namespace BDEditor.Classes
                                 case BDTherapyGroup.AWS_DOMAIN:
                                     entryGuid = BDTherapyGroup.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                     break;
+                                case BDMetadata.AWS_DOMAIN:
+                                    entryGuid = BDMetadata.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
+                                case BDSearchEntry.AWS_DOMAIN:
+                                    entryGuid = BDSearchEntry.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
+                                case BDSearchEntryAssociation.AWS_DOMAIN:
+                                    entryGuid = BDSearchEntryAssociation.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
                             }
                             // The entry id will be null if a sync conflict prevented create/update so add it to the conflict list
                             if (null == entryGuid) syncInfoEntry.SyncConflictList.Add(attributeDictionary);
@@ -322,6 +334,15 @@ namespace BDEditor.Classes
                         case BDTherapyGroup.KEY_NAME:
                             domainName = BDTherapyGroup.AWS_DOMAIN;
                             break;
+                        case BDSearchEntry.KEY_NAME:
+                            domainName = BDSearchEntry.AWS_DOMAIN;
+                            break;
+                        case BDSearchEntryAssociation.KEY_NAME:
+                            domainName = BDSearchEntryAssociation.AWS_DOMAIN;
+                            break;
+                        case BDMetadata.KEY_NAME:
+                            domainName = BDMetadata.AWS_DOMAIN;
+                            break;
                     }
 
                     DeleteAttributesRequest request = new DeleteAttributesRequest().WithDomainName(domainName).WithItemName(entry.targetId.Value.ToString().ToUpper());
@@ -355,7 +376,10 @@ namespace BDEditor.Classes
             pDataContext.ExecuteStoreCommand("DELETE FROM BDSections");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDSubcategories");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDTherapies");
-            pDataContext.ExecuteStoreCommand("DELETE FROM BDTherapyGroups"); 
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDTherapyGroups");
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDSearchEntryAssociations");
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDSearchEntries");
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDMetata");
         }
 
         #region Helper Methods

@@ -1,0 +1,459 @@
+
+-- --------------------------------------------------
+-- Entity Designer DDL Script for SQL Server Compact Edition
+-- --------------------------------------------------
+-- Date Created: 01/12/2012 10:56:53
+-- Generated from EDMX file: C:\Users\Liz Dovey\Documents\Git-SS\fiveoh-sandbox_1\BDEditor\BDEditor\DataModel\BDModel1.edmx
+-- --------------------------------------------------
+
+
+-- --------------------------------------------------
+-- Dropping existing FOREIGN KEY constraints
+-- NOTE: if the constraint does not exist, an ignorable error will be reported.
+-- --------------------------------------------------
+
+
+-- --------------------------------------------------
+-- Dropping existing tables
+-- NOTE: if the table does not exist, an ignorable error will be reported.
+-- --------------------------------------------------
+
+    DROP TABLE [BDCategories];
+GO
+    DROP TABLE [BDChapters];
+GO
+    DROP TABLE [BDDeletions];
+GO
+    DROP TABLE [BDDiseases];
+GO
+    DROP TABLE [BDLinkedNoteAssociations];
+GO
+    DROP TABLE [BDLinkedNotes];
+GO
+    DROP TABLE [BDMetadata];
+GO
+    DROP TABLE [BDPathogenGroups];
+GO
+    DROP TABLE [BDPathogens];
+GO
+    DROP TABLE [BDPresentations];
+GO
+    DROP TABLE [BDQueueEntries];
+GO
+    DROP TABLE [BDSearchEntries];
+GO
+    DROP TABLE [BDSearchEntryAssociations];
+GO
+    DROP TABLE [BDSections];
+GO
+    DROP TABLE [BDSubcategories];
+GO
+    DROP TABLE [BDSystemSettings];
+GO
+    DROP TABLE [BDTherapies];
+GO
+    DROP TABLE [BDTherapyGroups];
+GO
+
+-- --------------------------------------------------
+-- Creating all tables
+-- --------------------------------------------------
+
+-- Creating table 'BDCategories'
+CREATE TABLE [BDCategories] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [sectionId] uniqueidentifier  NULL,
+    [name] nvarchar(4000)  NULL,
+    [createdBy] uniqueidentifier  NULL,
+    [createdDate] datetime  NULL,
+    [modifiedBy] uniqueidentifier  NULL,
+    [modifiedDate] datetime  NULL,
+    [schemaVersion] int  NULL,
+    [deprecated] bit  NOT NULL,
+    [inUseBy] uniqueidentifier  NULL,
+    [displayOrder] int  NULL
+);
+GO
+
+-- Creating table 'BDDiseases'
+CREATE TABLE [BDDiseases] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [createdBy] uniqueidentifier  NULL,
+    [createdDate] datetime  NULL,
+    [deprecated] bit  NOT NULL,
+    [inUseBy] uniqueidentifier  NULL,
+    [modifiedBy] uniqueidentifier  NULL,
+    [modifiedDate] datetime  NULL,
+    [name] nvarchar(1000)  NULL,
+    [schemaVersion] int  NULL,
+    [subcategoryId] uniqueidentifier  NULL,
+    [categoryId] uniqueidentifier  NULL,
+    [displayOrder] int  NULL
+);
+GO
+
+-- Creating table 'BDLinkedNoteAssociations'
+CREATE TABLE [BDLinkedNoteAssociations] (
+    [linkedNoteId] uniqueidentifier  NULL,
+    [parentId] uniqueidentifier  NULL,
+    [parentEntityName] nvarchar(64)  NULL,
+    [parentEntityPropertyName] nvarchar(64)  NULL,
+    [uuid] uniqueidentifier  NOT NULL,
+    [schemaVersion] int  NULL,
+    [createdBy] uniqueidentifier  NULL,
+    [createdDate] datetime  NULL,
+    [modifiedBy] uniqueidentifier  NULL,
+    [modifiedDate] datetime  NULL,
+    [displayOrder] int  NULL,
+    [linkedNoteType] int  NULL,
+    [deprecated] bit  NOT NULL
+);
+GO
+
+-- Creating table 'BDPathogenGroups'
+CREATE TABLE [BDPathogenGroups] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [createdBy] uniqueidentifier  NULL,
+    [createdDate] datetime  NULL,
+    [deprecated] bit  NOT NULL,
+    [inUseBy] uniqueidentifier  NULL,
+    [modifiedBy] uniqueidentifier  NULL,
+    [modifiedDate] datetime  NULL,
+    [schemaVersion] int  NULL,
+    [displayOrder] int  NULL,
+    [presentationId] uniqueidentifier  NULL,
+    [name] nvarchar(100)  NULL
+);
+GO
+
+-- Creating table 'BDPathogens'
+CREATE TABLE [BDPathogens] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [createdBy] uniqueidentifier  NULL,
+    [createdDate] datetime  NULL,
+    [deprecated] bit  NOT NULL,
+    [inUseBy] uniqueidentifier  NULL,
+    [modifiedBy] uniqueidentifier  NULL,
+    [modifiedDate] datetime  NULL,
+    [name] nvarchar(1000)  NULL,
+    [schemaVersion] int  NULL,
+    [displayOrder] int  NULL,
+    [pathogenGroupId] uniqueidentifier  NULL
+);
+GO
+
+-- Creating table 'BDPresentations'
+CREATE TABLE [BDPresentations] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [diseaseId] uniqueidentifier  NULL,
+    [createdBy] uniqueidentifier  NULL,
+    [createdDate] datetime  NULL,
+    [deprecated] bit  NOT NULL,
+    [inUseBy] uniqueidentifier  NULL,
+    [displayOrder] int  NULL,
+    [modifiedBy] uniqueidentifier  NULL,
+    [modifiedDate] datetime  NULL,
+    [name] nvarchar(1000)  NULL,
+    [schemaVersion] int  NULL
+);
+GO
+
+-- Creating table 'BDQueueEntries'
+CREATE TABLE [BDQueueEntries] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [timestamp] datetime  NULL,
+    [objectUuid] uniqueidentifier  NULL,
+    [objectEntityName] nvarchar(4000)  NULL,
+    [action] smallint  NULL
+);
+GO
+
+-- Creating table 'BDSections'
+CREATE TABLE [BDSections] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [name] nvarchar(4000)  NULL,
+    [createdBy] uniqueidentifier  NULL,
+    [createdDate] datetime  NULL,
+    [modifiedBy] uniqueidentifier  NULL,
+    [modifiedDate] datetime  NULL,
+    [schemaVersion] int  NULL,
+    [deprecated] bit  NOT NULL,
+    [inUseBy] uniqueidentifier  NULL,
+    [displayOrder] int  NULL,
+    [chapterId] uniqueidentifier  NULL
+);
+GO
+
+-- Creating table 'BDSubcategories'
+CREATE TABLE [BDSubcategories] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [categoryId] uniqueidentifier  NULL,
+    [name] nvarchar(4000)  NULL,
+    [createdBy] uniqueidentifier  NULL,
+    [createdDate] datetime  NULL,
+    [modifiedBy] uniqueidentifier  NULL,
+    [modifiedDate] datetime  NULL,
+    [schemaVersion] int  NULL,
+    [deprecated] bit  NOT NULL,
+    [inUseBy] uniqueidentifier  NULL,
+    [displayOrder] int  NULL
+);
+GO
+
+-- Creating table 'BDSystemSettings'
+CREATE TABLE [BDSystemSettings] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [settingName] nvarchar(64)  NOT NULL,
+    [settingValue] nvarchar(127)  NULL,
+    [settingDateTimeValue] datetime  NULL
+);
+GO
+
+-- Creating table 'BDTherapies'
+CREATE TABLE [BDTherapies] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [createdBy] uniqueidentifier  NULL,
+    [createdDate] datetime  NULL,
+    [deprecated] bit  NOT NULL,
+    [displayOrder] int  NULL,
+    [dosage] nvarchar(1000)  NULL,
+    [duration] nvarchar(1000)  NULL,
+    [inUseBy] uniqueidentifier  NULL,
+    [modifiedBy] uniqueidentifier  NULL,
+    [modifiedDate] datetime  NULL,
+    [name] nvarchar(1000)  NULL,
+    [schemaVersion] int  NULL,
+    [therapyGroupId] uniqueidentifier  NULL,
+    [therapyJoinType] int  NULL,
+    [leftBracket] bit  NULL,
+    [rightBracket] bit  NULL,
+    [nameSameAsPrevious] bit  NULL,
+    [dosageSameAsPrevious] bit  NULL,
+    [durationSameAsPrevious] bit  NULL
+);
+GO
+
+-- Creating table 'BDTherapyGroups'
+CREATE TABLE [BDTherapyGroups] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [createdBy] uniqueidentifier  NULL,
+    [createdDate] datetime  NULL,
+    [deprecated] bit  NOT NULL,
+    [displayOrder] int  NULL,
+    [inUseBy] uniqueidentifier  NULL,
+    [modifiedBy] uniqueidentifier  NULL,
+    [modifiedDate] datetime  NULL,
+    [name] nvarchar(1000)  NULL,
+    [schemaVersion] int  NULL,
+    [pathogenGroupId] uniqueidentifier  NULL,
+    [therapyGroupJoinType] int  NULL
+);
+GO
+
+-- Creating table 'BDChapters'
+CREATE TABLE [BDChapters] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [createdBy] uniqueidentifier  NULL,
+    [createdDate] datetime  NULL,
+    [modifiedBy] uniqueidentifier  NULL,
+    [modifiedDate] datetime  NULL,
+    [deprecated] bit  NOT NULL,
+    [schemaVersion] int  NULL,
+    [inUseBy] uniqueidentifier  NULL,
+    [displayOrder] int  NULL,
+    [name] nvarchar(100)  NULL
+);
+GO
+
+-- Creating table 'BDDeletions'
+CREATE TABLE [BDDeletions] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [createdBy] uniqueidentifier  NULL,
+    [createdDate] datetime  NULL,
+    [modifiedBy] uniqueidentifier  NULL,
+    [modifiedDate] datetime  NULL,
+    [targetName] nvarchar(100)  NULL,
+    [targetId] uniqueidentifier  NULL,
+    [schemaVersion] int  NULL
+);
+GO
+
+-- Creating table 'BDLinkedNotes'
+CREATE TABLE [BDLinkedNotes] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [createdBy] uniqueidentifier  NULL,
+    [createdDate] datetime  NULL,
+    [modifiedBy] uniqueidentifier  NULL,
+    [modifiedDate] datetime  NULL,
+    [schemaVersion] int  NULL,
+    [deprecated] bit  NOT NULL,
+    [inUseBy] uniqueidentifier  NULL,
+    [documentText] nvarchar(4000)  NULL,
+    [storageKey] nvarchar(256)  NULL,
+    [linkedNoteAssociationId] uniqueidentifier  NULL,
+    [previewText] nvarchar(128)  NULL,
+    [scopeId] uniqueidentifier  NULL,
+    [singleUse] bit  NULL
+);
+GO
+
+-- Creating table 'BDSearchEntries'
+CREATE TABLE [BDSearchEntries] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [createdBy] uniqueidentifier  NULL,
+    [createdDate] datetime  NULL,
+    [name] nvarchar(100)  NULL,
+    [searchEntryAssociationId] uniqueidentifier  NULL,
+    [schemaVersion] int  NULL
+);
+GO
+
+-- Creating table 'BDSearchEntryAssociations'
+CREATE TABLE [BDSearchEntryAssociations] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [createdBy] uniqueidentifier  NULL,
+    [createdDate] datetime  NULL,
+    [searchEntryId] uniqueidentifier  NULL,
+    [displayOrder] int  NULL,
+    [schemaVersion] int  NULL,
+    [contextDescription] nvarchar(1000)  NULL,
+    [displayParentId] uniqueidentifier  NULL,
+    [displayParentEntityName] nvarchar(100)  NULL
+);
+GO
+
+-- Creating table 'BDMetadatas'
+CREATE TABLE [BDMetadatas] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [displayParentEntityName] nvarchar(100)  NULL,
+    [demographic] nvarchar(100)  NULL,
+    [schemaVersion] int  NULL,
+    [createdBy] uniqueidentifier  NULL,
+    [createdDate] datetime  NULL,
+    [modifiedBy] uniqueidentifier  NULL,
+    [modifiedDate] datetime  NULL,
+    [itemId] uniqueidentifier  NULL,
+    [itemEntityName] nvarchar(100)  NULL,
+    [displayParentId] uniqueidentifier  NULL
+);
+GO
+
+-- --------------------------------------------------
+-- Creating all PRIMARY KEY constraints
+-- --------------------------------------------------
+
+-- Creating primary key on [uuid] in table 'BDCategories'
+ALTER TABLE [BDCategories]
+ADD CONSTRAINT [PK_BDCategories]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDDiseases'
+ALTER TABLE [BDDiseases]
+ADD CONSTRAINT [PK_BDDiseases]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDLinkedNoteAssociations'
+ALTER TABLE [BDLinkedNoteAssociations]
+ADD CONSTRAINT [PK_BDLinkedNoteAssociations]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDPathogenGroups'
+ALTER TABLE [BDPathogenGroups]
+ADD CONSTRAINT [PK_BDPathogenGroups]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDPathogens'
+ALTER TABLE [BDPathogens]
+ADD CONSTRAINT [PK_BDPathogens]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDPresentations'
+ALTER TABLE [BDPresentations]
+ADD CONSTRAINT [PK_BDPresentations]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDQueueEntries'
+ALTER TABLE [BDQueueEntries]
+ADD CONSTRAINT [PK_BDQueueEntries]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDSections'
+ALTER TABLE [BDSections]
+ADD CONSTRAINT [PK_BDSections]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDSubcategories'
+ALTER TABLE [BDSubcategories]
+ADD CONSTRAINT [PK_BDSubcategories]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDSystemSettings'
+ALTER TABLE [BDSystemSettings]
+ADD CONSTRAINT [PK_BDSystemSettings]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDTherapies'
+ALTER TABLE [BDTherapies]
+ADD CONSTRAINT [PK_BDTherapies]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDTherapyGroups'
+ALTER TABLE [BDTherapyGroups]
+ADD CONSTRAINT [PK_BDTherapyGroups]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDChapters'
+ALTER TABLE [BDChapters]
+ADD CONSTRAINT [PK_BDChapters]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDDeletions'
+ALTER TABLE [BDDeletions]
+ADD CONSTRAINT [PK_BDDeletions]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDLinkedNotes'
+ALTER TABLE [BDLinkedNotes]
+ADD CONSTRAINT [PK_BDLinkedNotes]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDSearchEntries'
+ALTER TABLE [BDSearchEntries]
+ADD CONSTRAINT [PK_BDSearchEntries]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDSearchEntryAssociations'
+ALTER TABLE [BDSearchEntryAssociations]
+ADD CONSTRAINT [PK_BDSearchEntryAssociations]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDMetadatas'
+ALTER TABLE [BDMetadatas]
+ADD CONSTRAINT [PK_BDMetadatas]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- --------------------------------------------------
+-- Creating all FOREIGN KEY constraints
+-- --------------------------------------------------
+
+-- --------------------------------------------------
+-- Script has ended
+-- --------------------------------------------------

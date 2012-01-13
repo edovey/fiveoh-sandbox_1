@@ -26,6 +26,7 @@ namespace BDEditor.Views
         public event EventHandler RequestItemDelete;
         public event EventHandler ReorderToPrevious;
         public event EventHandler ReorderToNext;
+        public event EventHandler<SearchableItemEventArgs> SearchableItemAdded;
 
         public event EventHandler NotesChanged;
 
@@ -54,6 +55,16 @@ namespace BDEditor.Views
             if (null != ReorderToNext) { ReorderToNext(this, e); }
         }
 
+        protected virtual void OnSearchableItemAdded(SearchableItemEventArgs se)
+        {
+            // create metadata entry here
+
+            BDMetadata md = BDMetadata.CreateMetadata(dataContext, se.ItemId, se.ItemEntityName);
+            md.displayParentEntityName = BDDisease.ENTITYNAME;
+            md.displayParentId = this.currentPresentation.diseaseId;
+            BDMetadata.Save(dataContext, md);
+        }
+        
         public BDPresentation CurrentPresentation
         {
             get { return currentPresentation; }
@@ -210,6 +221,7 @@ namespace BDEditor.Views
                 pathogenGroupControl.ReorderToNext += new EventHandler(PathogenGroup_ReorderToNext);
                 pathogenGroupControl.ReorderToPrevious += new EventHandler(PathogenGroup_ReorderToPrevious);
                 pathogenGroupControl.NotesChanged += new EventHandler(notesChanged_Action);
+                pathogenGroupControl.SearchableItemAdded += new EventHandler<SearchableItemEventArgs>(PathogenGroup_SearchableItemAdded);
 
                 pathogenGroupControlList.Add(pathogenGroupControl);
 
@@ -229,6 +241,7 @@ namespace BDEditor.Views
             pPathogenGroupControl.ReorderToNext -= new EventHandler(PathogenGroup_ReorderToNext);
             pPathogenGroupControl.ReorderToPrevious -= new EventHandler(PathogenGroup_ReorderToPrevious);
             pPathogenGroupControl.NotesChanged -= new EventHandler(notesChanged_Action);
+            pPathogenGroupControl.SearchableItemAdded -= new EventHandler<SearchableItemEventArgs>(PathogenGroup_SearchableItemAdded);
 
             pathogenGroupControlList.Remove(pPathogenGroupControl);
             
@@ -355,6 +368,11 @@ namespace BDEditor.Views
             {
                 ReorderPathogenGroupControl(control, -1);
             }
+        }
+
+        private void PathogenGroup_SearchableItemAdded(object sender, SearchableItemEventArgs se)
+        {
+            OnSearchableItemAdded(se);
         }
 
         private void btnMenu_Click(object sender, EventArgs e)

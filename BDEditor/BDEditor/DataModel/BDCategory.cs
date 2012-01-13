@@ -44,7 +44,7 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static BDCategory CreateCategory(Entities pContext)
         {
-            BDCategory category = CreateBDCategory(Guid.NewGuid());
+            BDCategory category = CreateBDCategory(Guid.NewGuid(), false);
             category.createdBy = Guid.Empty;
             category.createdDate = DateTime.Now;
             category.schemaVersion = ENTITY_SCHEMAVERSION;
@@ -239,7 +239,7 @@ namespace BDEditor.DataModel
             BDCategory entry = BDCategory.GetCategoryWithId(pDataContext, uuid);
             if (null == entry)
             {
-                entry = BDCategory.CreateBDCategory(uuid);
+                entry = BDCategory.CreateBDCategory(uuid, false);
                 pDataContext.AddObject(ENTITYNAME, entry);
             }
             entry.deprecated = deprecated;

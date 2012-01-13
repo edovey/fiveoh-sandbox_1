@@ -366,5 +366,10 @@ namespace BDEditor.Views
                 }
             }
         }
+
+        private void brewButton_Click(object sender, EventArgs e)
+        {
+            SearchEntryGenerator.Generate();
+        }
     }
 }

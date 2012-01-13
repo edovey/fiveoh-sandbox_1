@@ -90,7 +90,10 @@ namespace BDEditor.Views
 
             this.existingAssociation = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, parentId, contextPropertyName);
             rtfContextInfo.Text = BDLinkedNoteAssociation.GetDescription(dataContext, parentId, contextEntityKeyName, contextPropertyName);
-            this.linkedNoteTypeCombo.SelectedIndex = this.existingAssociation.linkedNoteType.Value;
+            if (null != this.existingAssociation)
+            {
+                this.linkedNoteTypeCombo.SelectedIndex = this.existingAssociation.linkedNoteType.Value;
+            }
 
             RefreshListOfAssociatedLinks();
             DisplayLinkedNote(this.existingAssociation, false);

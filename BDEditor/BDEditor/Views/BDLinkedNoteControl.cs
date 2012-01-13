@@ -103,8 +103,8 @@ namespace BDEditor.Views
                     textControl.Save(out plainText, TXTextControl.StringStreamType.PlainText,ss);
                     string htmltext;
                     textControl.Save(out htmltext, TXTextControl.StringStreamType.HTMLFormat, ss);
-                    string cleanText = CleanDocumentText(htmltext);
 
+                    string cleanText = WashText(htmltext);
                     if (currentLinkedNote.documentText != cleanText)
                     {
                         currentLinkedNote.documentText = cleanText;
@@ -160,10 +160,7 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
-            if (null == currentLinkedNote)
-            {
-                textControl.Text = @"";
-            }
+            textControl.Text = @"";
 
             if (currentLinkedNote != null && currentLinkedNote.documentText != null && currentLinkedNote.documentText.Length > 0)
             {
@@ -201,7 +198,7 @@ namespace BDEditor.Views
         }
 
         /// <summary>
-        /// Remove requested tag from provided string to end tag
+        /// Remove all occurences of requested tag from provided string to end tag
         /// </summary>
         /// <param name="pText">Text to clean</param>
         /// <param name="pTagStart">Tag that begins the string to remove</param>
@@ -210,19 +207,19 @@ namespace BDEditor.Views
         /// <returns></returns>
         private string CleanTagFromText(string pText, string pTagStart, string pTagEnd, bool removeTagEnd)
         {
-            if (pText.Contains(pTagStart))
+            string cleanString = pText;
+            while (cleanString.Contains(pTagStart))
             {
-                int tagStartIndex = pText.IndexOf(pTagStart);
-                int tagEndIndex = pText.IndexOf(pTagEnd, tagStartIndex);
+                int tagStartIndex = cleanString.IndexOf(pTagStart);
+                int tagEndIndex = cleanString.IndexOf(pTagEnd, tagStartIndex);
                 int tagLength = 0;
                 if (removeTagEnd == true)
                     tagLength = tagEndIndex + pTagEnd.Length - tagStartIndex;
                 else tagLength = tagEndIndex - tagStartIndex;
-    
-                string cleanString = pText.Remove(tagStartIndex, tagLength);
-                return cleanString;
+
+                cleanString = cleanString.Remove(tagStartIndex, tagLength);
             }
-            return pText;
+            return cleanString;
         }
 
         /// <summary>
@@ -271,77 +268,41 @@ namespace BDEditor.Views
             return pText;
         }
 
-        /// <summary>
-        /// Strip the text of the formatting tags that may exist (usually from a Word document)
-        /// </summary>
-        /// <param name="pString">String to search and clean</param>
-        /// <returns></returns>
-        private string CleanClipboardText(string pString)
+        private void ReformatTextControl(TXTextControl.TextControl pTextControl)
         {
-            string stringToClean = GetBodyContents(pString);
-            // remove table tags
-            while (stringToClean.Contains("<td"))
-                stringToClean = CleanTagFromText(stringToClean, "<td", ">", true);
-            stringToClean = stringToClean.Replace("</td>", "");
-
-            while (stringToClean.Contains("<tr"))
-                stringToClean = CleanTagFromText(stringToClean, "<tr", ">", true);
-            stringToClean = stringToClean.Replace("</tr>", "");
-
-            while (stringToClean.Contains("<table"))
-                stringToClean = CleanTagFromText(stringToClean, "<table", ">", true);
-            stringToClean = stringToClean.Replace("</table>", "");
-
-            // remove span tags
-            while (stringToClean.Contains("<span"))
-                stringToClean = CleanTagFromText(stringToClean, "<span", ">", true);
-            stringToClean = stringToClean.Replace("</span>", "");
-
-            // remove style tags
-            while (stringToClean.Contains(" style="))
-                stringToClean = CleanTagFromText(stringToClean, " style=", ">", false);
-
-            // clean out extra line returns
-            stringToClean = stringToClean.Replace("\r\n", "");
-
-            // remove paragraph tags from inside list tags
-            stringToClean = stringToClean.Replace("<li><p>", "<li>");
-            stringToClean = stringToClean.Replace("</p></li>", "</li>");
-
-            // remove xml tags
-            stringToClean = CleanTagFromText(stringToClean, "<p>xmlns", "</p>", true);
-
-           // TODO:  clean extra paragraph tags from end of string
-
-            return stringToClean;
+            TXTextControl.SaveSettings ss = new TXTextControl.SaveSettings();
+            string htmltext;
+            pTextControl.Save(out htmltext, TXTextControl.StringStreamType.HTMLFormat, ss);
+            string cleanText = WashText(htmltext);
+            pTextControl.Text = @"";
+            pTextControl.Append(cleanText, TXTextControl.StringStreamType.HTMLFormat, TXTextControl.AppendSettings.None);
         }
 
         /// <summary>
-        /// strip out the HTML inserted by the TXTextControl that we don't want to keep in the data.
-        /// Called just before save.
+        /// Strip the text of the formatting tags that may exist (usually from a Word document) also strip out the HTML inserted by the TXTextControl that we don't want to keep in the data.
         /// </summary>
-        /// <param name="pString">String to parse.</param>
+        /// <param name="pText">String to search and clean</param>
         /// <returns></returns>
-        private string CleanDocumentText(string pString)
+        private string WashText(string pText)
         {
-            string stringToClean = GetBodyContents(pString);
+            string stringToClean = GetBodyContents(pText);
 
-            // remove style tags from ul, ol, li and p
-            while (stringToClean.Contains("<ul style="))
-                stringToClean = CleanInnerTag(stringToClean, "<ul style=", ">", " style");
+            // remove table tags
+            stringToClean = CleanTagFromText(stringToClean, "<td", ">", true);
+            stringToClean = stringToClean.Replace("</td>", "");
 
-            while (stringToClean.Contains("<ol style="))
-                stringToClean = CleanInnerTag(stringToClean, "<ol style=", ">", " style");
+            stringToClean = CleanTagFromText(stringToClean, "<tr", ">", true);
+            stringToClean = stringToClean.Replace("</tr>", "");
 
-            while (stringToClean.Contains("<li style=")) 
-                stringToClean = CleanInnerTag(stringToClean, "<li style=", ">", " style");
+            stringToClean = CleanTagFromText(stringToClean, "<table", ">", true);
+            stringToClean = stringToClean.Replace("</table>", "");
 
-            while (stringToClean.Contains("<p style=")) 
-                stringToClean = CleanInnerTag(stringToClean, "<p style=", ">", " style");
+            // remove span tags
+            stringToClean = CleanTagFromText(stringToClean, "<span", ">", true);
+            stringToClean = stringToClean.Replace("</span>", "");
 
-            // remove paragraph tags from inside list tags
-            stringToClean = stringToClean.Replace("<li><p>", "<li>");
-            stringToClean = stringToClean.Replace("</p></li>", "</li>");
+            // remove style tags
+            stringToClean = CleanTagFromText(stringToClean, " style=", ">", false);
 
             // clean out extra line returns
             stringToClean = stringToClean.Replace("\r\n", "");
@@ -349,6 +310,17 @@ namespace BDEditor.Views
             // remove paragraph tags from inside list tags
             stringToClean = stringToClean.Replace("<li><p>", "<li>");
             stringToClean = stringToClean.Replace("</p></li>", "</li>");
+
+            //Remove the "converted bullet" character sequence
+            string bulletSequence = Char.ConvertFromUtf32(194) + Char.ConvertFromUtf32(183) + Char.ConvertFromUtf32(160);
+            stringToClean = stringToClean.Replace(bulletSequence, "");
+            // remove xml tags
+            stringToClean = CleanTagFromText(stringToClean, "xmlns:", @"&quot;", true);
+            stringToClean = CleanTagFromText(stringToClean, "xmlns=", @"&quot;", true);
+            stringToClean = CleanTagFromText(stringToClean, "urn:", @"&quot;", true);
+            stringToClean = CleanTagFromText(stringToClean, @"http://schemas.microsoft.com", @"&quot;", true);
+            stringToClean = CleanTagFromText(stringToClean, @"http://www.w3.org", @"&quot;", true);
+            stringToClean = CleanTagFromText(stringToClean, "<p>xmlns", "</p>", true);
 
             stringToClean = stringToClean.Replace("style=\"margin-top:6pt;margin-bottom:6pt;\"", "");
 
@@ -357,48 +329,56 @@ namespace BDEditor.Views
             while (stringToClean.Contains(styleTag))
                 stringToClean = CleanFontStyleTag(stringToClean, styleTag);
 
+            // cleanDocument code
+            while (stringToClean.Contains("<ul style="))
+                stringToClean = CleanInnerTag(stringToClean, "<ul style=", ">", " style");
+
+            while (stringToClean.Contains("<ol style="))
+                stringToClean = CleanInnerTag(stringToClean, "<ol style=", ">", " style");
+
+            while (stringToClean.Contains("<li style="))
+                stringToClean = CleanInnerTag(stringToClean, "<li style=", ">", " style");
+
+            while (stringToClean.Contains("<p style="))
+                stringToClean = CleanInnerTag(stringToClean, "<p style=", ">", " style");
+
+            // TODO:  clean extra paragraph tags from end of string
+
             return stringToClean;
         }
 
-        /// <summary>
-        /// Paste the text from the clipboard into the control, then retrieve it and clean it
-        /// </summary>
-        private void PasteCleanText()
+        private void ShowDiagnostics()
         {
-            if (Clipboard.ContainsText(TextDataFormat.Html))
-            {
-                textControl.Append(Clipboard.GetText(TextDataFormat.Html), TXTextControl.StringStreamType.HTMLFormat, TXTextControl.AppendSettings.None);
-            }
-            else if (Clipboard.ContainsText(TextDataFormat.Rtf))
-            {
-                textControl.Append(Clipboard.GetText(TextDataFormat.Rtf), TXTextControl.StringStreamType.RichTextFormat, TXTextControl.AppendSettings.None);
-            }
+            System.Diagnostics.Debug.WriteLine("HTML>{0}", Clipboard.ContainsText(TextDataFormat.Html));
+            System.Diagnostics.Debug.WriteLine("RTF>{0}", Clipboard.ContainsText(TextDataFormat.Rtf));
+            System.Diagnostics.Debug.WriteLine("TEXT>{0}", Clipboard.ContainsText(TextDataFormat.Text));
 
-            // retrieve new text as HTML
-            TXTextControl.SaveSettings ss = new TXTextControl.SaveSettings();
+            System.Diagnostics.Debug.WriteLine("Text");
+            System.Diagnostics.Debug.WriteLine(Clipboard.GetText());
 
-            string htmltext;
-            textControl.Save(out htmltext, TXTextControl.StringStreamType.HTMLFormat, ss);
-            string cleanText = CleanClipboardText(htmltext);
-
-            if (cleanText.Length > 0)
+            if (Clipboard.ContainsText(TextDataFormat.Rtf))
             {
-                textControl.Text = @"";
-                textControl.Append(cleanText, TXTextControl.StringStreamType.HTMLFormat, TXTextControl.AppendSettings.None);
+                System.Diagnostics.Debug.WriteLine("RTF");
+                System.Diagnostics.Debug.WriteLine(Clipboard.GetText(TextDataFormat.Rtf));
             }
         }
+
         #endregion
 
         #region UI Events
+
         private void textControl_KeyUp(object sender, KeyEventArgs e)
         {
            // enable 'select all' so user can change font in one operation
             if (e.KeyData == (Keys.Control | Keys.A))
             {
                 textControl.SelectAll();
-            } if (e.KeyData == (Keys.Control | Keys.V))
+            }
+            else if (e.KeyData == (Keys.Control | Keys.V))
             {
-                PasteCleanText();
+                System.Diagnostics.Debug.WriteLine("Ctrl-V");
+
+                ReformatTextControl(textControl);
             }
             else if(e.KeyData == (Keys.Control | Keys.B))
             {
@@ -416,7 +396,7 @@ namespace BDEditor.Views
 
                 string htmltext;
                 textControl.Save(out htmltext, TXTextControl.StringStreamType.HTMLFormat, ss);
-                string cleanText = CleanClipboardText(htmltext);
+                string cleanText = WashText(htmltext);
             }
             //NOTE:  Redo / Undo are automatically supported by the control.  Bold & underline are not.
         }
@@ -462,7 +442,8 @@ namespace BDEditor.Views
 
         private void toolStripButton8_Click(object sender, EventArgs e)
         {
-            PasteCleanText();
+            textControl.Paste();
+            ReformatTextControl(textControl);
         }
 
         private void toolStripButton9_Click(object sender, EventArgs e)
@@ -470,6 +451,8 @@ namespace BDEditor.Views
             textControl.Selection.Text = "µ";
         }
         #endregion
+
+
 
     }
 }

@@ -59,10 +59,13 @@ namespace BDEditor.Views
         {
             // create metadata entry here
 
+            //TODO: Review the location of this
             BDMetadata md = BDMetadata.CreateMetadata(dataContext, se.ItemId, se.ItemEntityName);
             md.displayParentEntityName = BDDisease.ENTITYNAME;
             md.displayParentId = this.currentPresentation.diseaseId;
             BDMetadata.Save(dataContext, md);
+
+            if (null != SearchableItemAdded) { SearchableItemAdded(this, se); }
         }
         
         public BDPresentation CurrentPresentation

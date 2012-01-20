@@ -15,10 +15,20 @@ namespace BDEditor.DataModel
 {
     public partial class BDMetadata : IBDObject
     {
-        public const string AWS_DOMAIN = @"bd_1_metadatas";
-        public const string AWS_BUCKET = @"bdDataStore";
-        public const string AWS_S3_PREFIX = @"bd~";
-        public const string AWS_S3_FILEEXTENSION = @".txt";
+        //public const string AWS_DOMAIN = @"bd_1_metadatas";
+
+        public const string AWS_PROD_DOMAIN = @"bd_1_metadatas";
+        public const string AWS_DEV_DOMAIN = @"bd_dev_1_metadatas";
+
+#if DEBUG
+        public const string AWS_DOMAIN = AWS_DEV_DOMAIN;
+#else
+        public const string AWS_DOMAIN = AWS_PROD_DOMAIN;
+#endif
+
+        //public const string AWS_BUCKET = @"bdDataStore";
+        //public const string AWS_S3_PREFIX = @"bd~";
+        //public const string AWS_S3_FILEEXTENSION = @".txt";
 
         public const string ENTITYNAME = @"BDMetadatas";
         public const string ENTITYNAME_FRIENDLY = @"Metadata";
@@ -185,7 +195,7 @@ namespace BDEditor.DataModel
 
         public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime pCurrentSyncDate)
         {
-            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, CREATEDDATE);
+            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, CREATEDDATE, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
             syncInfo.PushList = BDSearchEntry.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
             syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
             for (int idx = 0; idx < syncInfo.PushList.Count; idx++)

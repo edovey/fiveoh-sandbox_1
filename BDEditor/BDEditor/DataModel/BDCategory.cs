@@ -18,7 +18,17 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDCategory: IBDObject
     {
-        public const string AWS_DOMAIN = @"bd_1_categories";
+        //public const string AWS_DOMAIN = @"bd_1_categories";
+
+        public const string AWS_PROD_DOMAIN = @"bd_1_categories";
+        public const string AWS_DEV_DOMAIN = @"bd_dev_1_categories";
+
+#if DEBUG
+        public const string AWS_DOMAIN = AWS_DEV_DOMAIN;
+#else
+        public const string AWS_DOMAIN = AWS_PROD_DOMAIN;
+#endif
+
         public const string ENTITYNAME = @"BDCategories";
         public const string ENTITYNAME_FRIENDLY = @"Category";
         public const string KEY_NAME = @"BDCategory";
@@ -215,7 +225,7 @@ namespace BDEditor.DataModel
 
         public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime pCurrentSyncDate)
         {
-            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
             syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
             syncInfo.PushList = BDCategory.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
             for (int idx = 0; idx < syncInfo.PushList.Count; idx++)

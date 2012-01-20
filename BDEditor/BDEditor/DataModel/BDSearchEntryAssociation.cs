@@ -18,7 +18,17 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDSearchEntryAssociation : IBDObject
     {
-        public const string AWS_DOMAIN = @"bd_1_searchEntryAssociations";
+        //public const string AWS_DOMAIN = @"bd_1_searchEntryAssociations";
+
+        public const string AWS_PROD_DOMAIN = @"bd_1_searchEntryAssociations";
+        public const string AWS_DEV_DOMAIN = @"bd_dev_1_searchEntryAssociations";
+
+#if DEBUG
+        public const string AWS_DOMAIN = AWS_DEV_DOMAIN;
+#else
+        public const string AWS_DOMAIN = AWS_PROD_DOMAIN;
+#endif
+
         public const string ENTITYNAME = @"BDSearchEntryAssociations";
         public const string ENTITYNAME_FRIENDLY = @"Search Entry Association";
         public const string KEY_NAME = @"BDSearchEntryAssociation";
@@ -242,7 +252,7 @@ namespace BDEditor.DataModel
 
         public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime pCurrentSyncDate)
         {
-            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
             syncInfo.PushList = BDSearchEntryAssociation.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
             syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
             for (int idx = 0; idx < syncInfo.PushList.Count; idx++)

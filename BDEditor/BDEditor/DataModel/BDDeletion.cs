@@ -16,7 +16,17 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDDeletion: IBDObject
     {
-        public const string AWS_DOMAIN = @"bd_1_deletions";
+        //public const string AWS_DOMAIN = @"bd_1_deletions";
+
+        public const string AWS_PROD_DOMAIN = @"bd_1_deletions";
+        public const string AWS_DEV_DOMAIN = @"bd_dev_1_deletions";
+
+#if DEBUG
+        public const string AWS_DOMAIN = AWS_DEV_DOMAIN;
+#else
+        public const string AWS_DOMAIN = AWS_PROD_DOMAIN;
+#endif
+
         public const string ENTITYNAME = @"BDDeletions";
         public const string ENTITYNAME_FRIENDLY = @"Deletion";
         public const string KEY_NAME = @"BDDeletion";
@@ -141,7 +151,7 @@ namespace BDEditor.DataModel
 
         public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime pCurrentSyncDate)
         {
-            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
             syncInfo.PushList = BDDeletion.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
             syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
             for (int idx = 0; idx < syncInfo.PushList.Count; idx++)

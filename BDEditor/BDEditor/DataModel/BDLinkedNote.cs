@@ -18,8 +18,23 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDLinkedNote: IBDObject
     {
-        public const string AWS_DOMAIN = @"bd_1_linkedNotes";
+        //public const string AWS_DOMAIN = @"bd_1_linkedNotes";
         public const string AWS_BUCKET = @"bdDataStore";
+
+        public const string AWS_PROD_DOMAIN = @"bd_1_linkedNotes";
+        public const string AWS_DEV_DOMAIN = @"bd_dev_1_linkedNotes";
+
+        public const string AWS_PROD_BUCKET = @"bdDataStore";
+        public const string AWS_DEV_BUCKET = @"bdDevStore";
+
+#if DEBUG
+        public const string AWS_DOMAIN = AWS_DEV_DOMAIN;
+        //public const string AWS_BUCKET = AWS_DEV_BUCKET;
+#else
+        public const string AWS_DOMAIN = AWS_PROD_DOMAIN;
+        //public const string AWS_BUCKET = AWS_PROD_BUCKET;
+#endif
+
         public const string AWS_S3_PREFIX = @"bd~";
         public const string AWS_S3_FILEEXTENSION = @".txt";
 
@@ -233,7 +248,7 @@ namespace BDEditor.DataModel
 
         public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime pCurrentSyncDate)
         {
-            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
             syncInfo.PushList = BDLinkedNote.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
             syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
             for (int idx = 0; idx < syncInfo.PushList.Count; idx++)

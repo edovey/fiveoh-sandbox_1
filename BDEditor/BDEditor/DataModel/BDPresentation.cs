@@ -15,7 +15,17 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDPresentation: IBDObject
     {
-        public const string AWS_DOMAIN = @"bd_1_presentations";
+        //public const string AWS_DOMAIN = @"bd_1_presentations";
+
+        public const string AWS_PROD_DOMAIN = @"bd_1_presentations";
+        public const string AWS_DEV_DOMAIN = @"bd_dev_1_presentations";
+
+#if DEBUG
+        public const string AWS_DOMAIN = AWS_DEV_DOMAIN;
+#else
+        public const string AWS_DOMAIN = AWS_PROD_DOMAIN;
+#endif
+
         public const string ENTITYNAME = @"BDPresentations";
         public const string ENTITYNAME_FRIENDLY = @"Presentation";
         public const string KEY_NAME = @"BDPresentation";
@@ -214,7 +224,7 @@ namespace BDEditor.DataModel
 
         public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime pCurrentSyncDate)
         {
-            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
             syncInfo.PushList = BDPresentation.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
             syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
             for (int idx = 0; idx < syncInfo.PushList.Count; idx++)

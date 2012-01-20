@@ -18,7 +18,17 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDTherapy: IBDObject
     {
-        public const string AWS_DOMAIN = @"bd_1_therapies";
+        //public const string AWS_DOMAIN = @"bd_1_therapies";
+
+        public const string AWS_PROD_DOMAIN = @"bd_1_therapies";
+        public const string AWS_DEV_DOMAIN = @"bd_dev_1_therapies";
+
+#if DEBUG
+        public const string AWS_DOMAIN = AWS_DEV_DOMAIN;
+#else
+        public const string AWS_DOMAIN = AWS_PROD_DOMAIN;
+#endif
+
         public const string ENTITYNAME = @"BDTherapies";
         public const string ENTITYNAME_FRIENDLY = @"Therapy";
         public const string KEY_NAME = @"BDTherapy";
@@ -284,7 +294,7 @@ namespace BDEditor.DataModel
 
         public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime pCurrentSyncDate)
         {
-            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE);
+            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
             syncInfo.PushList = BDTherapy.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
             syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
 

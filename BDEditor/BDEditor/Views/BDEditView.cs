@@ -41,7 +41,7 @@ namespace BDEditor.Views
 
             // This will preload the control into memory. 
             // Startup will be slower, but the first selection from the dropdown will be snappier
-            BDLinkedNoteControl control = new BDLinkedNoteControl();
+            //BDLinkedNoteControl control = new BDLinkedNoteControl();
 
         }
 
@@ -305,6 +305,11 @@ namespace BDEditor.Views
         private void BDEditView_Load(object sender, EventArgs e)
         {
             this.Text = string.Format("{0} - {1}" , "Bugs & Drugs Editor", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+
+#if DEBUG
+            this.Text = this.Text + @" < DEVELOPMENT >";
+#endif
+
             BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
             createTestDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);

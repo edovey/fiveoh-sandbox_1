@@ -32,7 +32,7 @@ namespace BDEditor.DataModel
         public const string KEY_NAME = @"BDChapter";
         public const string PROPERTYNAME_NAME = @"Name";
 
-        public const int ENTITY_SCHEMAVERSION = 0;
+        public const int ENTITY_SCHEMAVERSION = 1;
 
         private const string UUID = @"ch_uuid";
         private const string SCHEMAVERSION = @"ch_schemaVersion";
@@ -127,7 +127,7 @@ namespace BDEditor.DataModel
         /// Get the Chapter with the specified ID
         /// </summary>
         /// <param name="pContext"></param>
-        /// <param name="pChapterId"></param>
+        /// <param name="pParentId"></param>
         /// <returns>BDChapter object</returns>
         public static BDChapter GetChapterWithId(Entities pContext, Guid pChapterId)
         {

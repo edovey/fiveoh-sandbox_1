@@ -89,7 +89,8 @@ namespace BDEditor.Classes
             {
                 bdSection = BDSection.CreateSection(dataContext);
                 bdSection.name = sectionData;
-                bdSection.chapterId = bdChapter.uuid;
+                bdSection.parentId = bdChapter.uuid;
+                bdSection.parentKeyName = BDChapter.KEY_NAME;
                 bdSection.displayOrder = idxSection++;
                 BDSection.Save(dataContext, bdSection);
 
@@ -103,7 +104,8 @@ namespace BDEditor.Classes
             {
                 bdCategory = BDCategory.CreateCategory(dataContext);
                 bdCategory.name = categoryData;
-                bdCategory.sectionId = bdSection.uuid;
+                bdCategory.parentId = bdSection.uuid;
+                bdCategory.parentKeyName = BDSection.KEY_NAME;
                 bdCategory.displayOrder = idxCategory++;
                 BDCategory.Save(dataContext, bdCategory);
 
@@ -116,7 +118,8 @@ namespace BDEditor.Classes
             {
                 bdSubCategory = BDSubcategory.CreateSubcategory(dataContext);
                 bdSubCategory.name = subCategoryData;
-                bdSubCategory.categoryId = bdCategory.uuid;
+                bdSubCategory.parentId = bdCategory.uuid;
+                bdSubCategory.parentKeyName = BDCategory.KEY_NAME;
                 bdSubCategory.displayOrder = idxSubCategory++;
                 BDSubcategory.Save(dataContext, bdSubCategory);
 
@@ -131,11 +134,13 @@ namespace BDEditor.Classes
                 bdDisease.displayOrder = idxDisease++;
                 if (null != bdSubCategory)
                 {
-                    bdDisease.subcategoryId = bdSubCategory.uuid;
+                    bdDisease.parentId = bdSubCategory.uuid;
+                    bdDisease.parentKeyName = BDSubcategory.KEY_NAME;
                 }
                 else
                 {
-                    bdDisease.categoryId = bdCategory.uuid;
+                    bdDisease.parentId = bdCategory.uuid;
+                    bdDisease.parentKeyName = BDCategory.KEY_NAME;
                 }
                 BDDisease.Save(dataContext, bdDisease);
 
@@ -145,6 +150,7 @@ namespace BDEditor.Classes
             if ((presentationData != string.Empty) && ((null == bdPresentation) || (bdPresentation.name != presentationData)))
             {
                 bdPresentation = BDPresentation.CreatePresentation(dataContext, bdDisease.uuid);
+                bdPresentation.parentKeyName = BDDisease.KEY_NAME;
                 bdPresentation.name = presentationData;
                 bdPresentation.displayOrder = idxPresentation++;
                 BDPresentation.Save(dataContext, bdPresentation);

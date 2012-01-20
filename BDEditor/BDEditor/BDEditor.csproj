@@ -137,6 +137,7 @@
     <Compile Include="DataModel\BDLinkedNote.cs" />
     <Compile Include="DataModel\BDLinkedNoteAssociation.cs" />
     <Compile Include="DataModel\BDMetadata.cs" />
+    <Compile Include="DataModel\BDObjectAssociation.cs" />
     <Compile Include="DataModel\BDPathogen.cs" />
     <Compile Include="DataModel\BDPathogenGroup.cs" />
     <Compile Include="DataModel\BDPresentation.cs" />
@@ -322,6 +323,9 @@
     <None Include="Resources\close_16.png" />
     <None Include="Resources\del_16.png" />
     <None Include="Resources\down_16.png" />
+    <Content Include="Resources\Chapter_2.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="sqlceca35.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

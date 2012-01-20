@@ -43,9 +43,9 @@ namespace BDEditor.DataModel
         private const string MODIFIEDBY = @"md_modifieddBy";
         private const string MODIFIEDDATE = @"md_modifiedDate";
         private const string ITEMID = @"md_itemId";
-        private const string ITEMENTITYNAME = @"md_itemEntityName";
+        private const string ITEMKEYNAME = @"md_itemKeyName";
         private const string DISPLAYPARENTID = @"md_displayParentId";
-        private const string DISPLAYPARENTENTITYNAME = @"md_displayParentEntityName";
+        private const string DISPLAYPARENTKEYNAME = @"md_displayParentKeyName";
         private const string DEMOGRAPHIC = @"md_demographic";
 
 
@@ -53,14 +53,14 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets the created date and schema version
         /// </summary>
         /// <returns>BDMetadata</returns>
-        public static BDMetadata CreateMetadata(Entities pContext, Guid pItemId, string pItemEntityName)
+        public static BDMetadata CreateMetadata(Entities pContext, Guid pItemId, string pItemKeyName)
         {
             BDMetadata entry = CreateBDMetadata(Guid.NewGuid());
             entry.createdBy = Guid.Empty;
             entry.createdDate = DateTime.Now;
             entry.schemaVersion = ENTITY_SCHEMAVERSION;
             entry.itemId = pItemId;
-            entry.itemEntityName = pItemEntityName;
+            entry.itemKeyName = pItemKeyName;
 
             pContext.AddObject(ENTITYNAME, entry);
             return entry;
@@ -230,9 +230,9 @@ namespace BDEditor.DataModel
             entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
 
             entry.itemId = Guid.Parse(pAttributeDictionary[ITEMID]);
-            entry.itemEntityName = pAttributeDictionary[ITEMENTITYNAME];
+            entry.itemKeyName = pAttributeDictionary[ITEMKEYNAME];
             entry.displayParentId = Guid.Parse(pAttributeDictionary[DISPLAYPARENTID]);
-            entry.displayParentEntityName = pAttributeDictionary[DISPLAYPARENTENTITYNAME];
+            entry.displayParentKeyName = pAttributeDictionary[DISPLAYPARENTKEYNAME];
 
             if (pSaveChanges)
                 pDataContext.SaveChanges();
@@ -252,9 +252,9 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.ITEMID).WithValue((null == itemId) ? Guid.Empty.ToString() : itemId.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.ITEMENTITYNAME).WithValue((null == itemEntityName) ? string.Empty : itemEntityName).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.ITEMKEYNAME).WithValue((null == itemKeyName) ? string.Empty : itemKeyName).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.DISPLAYPARENTID).WithValue((null == displayParentId) ? Guid.Empty.ToString() : displayParentId.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.DISPLAYPARENTENTITYNAME).WithValue((null == displayParentEntityName) ? string.Empty : displayParentEntityName).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.DISPLAYPARENTKEYNAME).WithValue((null == displayParentKeyName) ? string.Empty : displayParentKeyName).WithReplace(true));
 
             return putAttributeRequest;
         }

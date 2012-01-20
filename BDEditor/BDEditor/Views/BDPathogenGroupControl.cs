@@ -188,7 +188,7 @@ namespace BDEditor.Views
             else
             {
                 textBoxPathogenGroupName.Text = currentPathogenGroup.name;
-                List<BDPathogen> list = BDPathogen.GetPathogensForPathogenGroup(dataContext, currentPathogenGroup.uuid);
+                List<BDPathogen> list = BDPathogen.GetPathogensForParent(dataContext, currentPathogenGroup.uuid);
                 for (int idx = 0; idx < list.Count; idx++)
                 {
                     BDPathogen entry = list[idx];
@@ -206,7 +206,7 @@ namespace BDEditor.Views
 
             if (null != currentPathogenGroup)
             {
-                List<BDTherapyGroup> list = BDTherapyGroup.getTherapyGroupsForPathogenGroupId(dataContext, currentPathogenGroup.uuid);
+                List<BDTherapyGroup> list = BDTherapyGroup.getTherapyGroupsForParentId(dataContext, currentPathogenGroup.uuid);
                 for (int idx = 0; idx < list.Count; idx++)
                 {
                     BDTherapyGroup entry = list[idx];
@@ -562,7 +562,7 @@ namespace BDEditor.Views
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentPathogenGroup) ? this.currentPathogenGroup.uuid : Guid.Empty);
-            btnPathogenGroupLink.BackColor = links.Exists(x => x.parentEntityPropertyName == (string)btnPathogenGroupLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
+            btnPathogenGroupLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnPathogenGroupLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
 
             if (pPropagateToChildren)
             {

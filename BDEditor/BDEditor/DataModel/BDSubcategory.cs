@@ -33,7 +33,7 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME_FRIENDLY = @"Subcategory";
         public const string KEY_NAME = @"BDSubCategory";
 
-        public const int ENTITY_SCHEMAVERSION = 0;
+        public const int ENTITY_SCHEMAVERSION = 1;
 
         private const string UUID = @"sc_uuid";
         private const string SCHEMAVERSION = @"sc_schemaVersion";
@@ -42,7 +42,8 @@ namespace BDEditor.DataModel
         private const string MODIFIEDBY = @"sc_modfiedBy";
         private const string MODIFIEDDATE = @"sc_modifiedDate";
         private const string DISPLAYORDER = @"sc_displayOrder";
-        private const string CATEGORYID = @"sc_categoryId";
+        private const string PARENTID = @"sc_parentId";
+        private const string PARENTKEYNAME = @"sc_parentKeyName";
         private const string NAME = @"sc_name";
         private const string DEPRECATED = @"sc_deprecated";
         
@@ -58,7 +59,7 @@ namespace BDEditor.DataModel
             subcategory.schemaVersion = ENTITY_SCHEMAVERSION;
             subcategory.displayOrder = -1;
             subcategory.name = string.Empty;
-            subcategory.categoryId = Guid.Empty;
+            subcategory.parentId = Guid.Empty;
 
             pContext.AddObject(ENTITYNAME, subcategory);
 
@@ -127,14 +128,14 @@ namespace BDEditor.DataModel
         /// <summary>
         /// Gets all subcategories in the model with the specified category ID
         /// </summary>
-        /// <param name="pCategoryId"></param>
+        /// <param name="pParentId"></param>
         /// <returns>List of Subcategories</returns>
-        public static List<BDSubcategory> GetSubcategoriesForCategoryId(Entities pContext, Guid pCategoryId)
+        public static List<BDSubcategory> GetSubcategoriesForParentId(Entities pContext, Guid pParentId)
         {
             List<BDSubcategory> subcategoryList = new List<BDSubcategory>();
 
                 IQueryable<BDSubcategory> subcategories = (from entry in pContext.BDSubcategories
-                                                           where entry.categoryId == pCategoryId
+                                                           where entry.parentId == pParentId
                                                            orderby entry.displayOrder
                                                            select entry);
                 foreach (BDSubcategory subcat in subcategories)
@@ -254,7 +255,8 @@ namespace BDEditor.DataModel
             entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
             entry.modifiedBy = Guid.Parse(pAttributeDictionary[MODIFIEDBY]);
             entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
-            entry.categoryId = Guid.Parse(pAttributeDictionary[CATEGORYID]);
+            entry.parentId = Guid.Parse(pAttributeDictionary[PARENTID]);
+            entry.parentKeyName = pAttributeDictionary[PARENTKEYNAME];
             entry.name = pAttributeDictionary[NAME];
 
             if (pSaveChanges)
@@ -276,7 +278,8 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.CATEGORYID).WithValue((null == categoryId) ? Guid.Empty.ToString() : categoryId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
 
             return putAttributeRequest;

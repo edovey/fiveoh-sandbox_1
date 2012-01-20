@@ -32,7 +32,7 @@ namespace BDEditor.DataModel
         public const string KEY_NAME = @"BDSection";
         public const string PROPERTYNAME_NAME = @"Name";
 
-        public const int ENTITY_SCHEMAVERSION = 0;
+        public const int ENTITY_SCHEMAVERSION = 1;
 
         private const string UUID = @"sn_uuid";
         private const string SCHEMAVERSION = @"sn_schemaVersion";
@@ -43,7 +43,8 @@ namespace BDEditor.DataModel
         private const string NAME = @"sn_name";
         private const string DEPRECATED = @"sn_deprecated";
         private const string DISPLAYORDER = @"sn_displayOrder";
-        private const string CHAPTERID = @"sn_chapterId";
+        private const string PARENTID = @"sn_parentId";
+        private const string PARENTKEYNAME = @"sn_parentKeyName";
 
         /// <summary>
         /// Extended Create method that sets the created date and the schema version
@@ -96,7 +97,7 @@ namespace BDEditor.DataModel
             }
 
             // delete children
-            List<BDCategory> categories = BDCategory.GetCategoriesForSectionId(pContext, pEntity.uuid);
+            List<BDCategory> categories = BDCategory.GetCategoriesForParentId(pContext, pEntity.uuid);
             foreach (BDCategory c in categories)
             {
                 BDCategory.Delete(pContext, c);
@@ -134,7 +135,7 @@ namespace BDEditor.DataModel
         /// <summary>
         /// Get Section with the specified ID
         /// </summary>
-        /// <param name="pSectionId"></param>
+        /// <param name="pParentId"></param>
         /// <returns>BDSection object.</returns>
         public static BDSection GetSectionWithId(Entities pContext, Guid pSectionId)
         {
@@ -151,14 +152,14 @@ namespace BDEditor.DataModel
             return section;
         }
 
-        public static List<BDSection> GetSectionsForChapterId(Entities pContext, Guid pChapterId)
+        public static List<BDSection> GetSectionsForParentId(Entities pContext, Guid pParentId)
         {
             List<BDSection> entryList = new List<BDSection>();
 
-            if (null != pChapterId)
+            if (null != pParentId)
             {
                 IQueryable<BDSection> entries = (from entry in pContext.BDSections
-                                                 where entry.chapterId == pChapterId
+                                                 where entry.parentId == pParentId
                                                  select entry);
                 if (entries.Count<BDSection>() > 0)
                     entryList = entries.ToList<BDSection>();
@@ -268,7 +269,8 @@ namespace BDEditor.DataModel
             entry.modifiedBy = Guid.Parse(pAttributeDictionary[MODIFIEDBY]);
             entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
             entry.name = pAttributeDictionary[NAME];
-            entry.chapterId = Guid.Parse(pAttributeDictionary[CHAPTERID]);
+            entry.parentId = Guid.Parse(pAttributeDictionary[PARENTID]);
+            entry.parentKeyName = pAttributeDictionary[PARENTKEYNAME];
 
             if (pSaveChanges)
                 pDataContext.SaveChanges();
@@ -290,7 +292,7 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDSection.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDSection.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.CHAPTERID).WithValue((null == chapterId) ? Guid.Empty.ToString() : chapterId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
 
             return putAttributeRequest;
         }

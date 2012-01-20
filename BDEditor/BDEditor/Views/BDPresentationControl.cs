@@ -61,8 +61,8 @@ namespace BDEditor.Views
 
             //TODO: Review the location of this
             BDMetadata md = BDMetadata.CreateMetadata(dataContext, se.ItemId, se.ItemEntityName);
-            md.displayParentEntityName = BDDisease.ENTITYNAME;
-            md.displayParentId = this.currentPresentation.diseaseId;
+            md.displayParentKeyName = BDDisease.ENTITYNAME;
+            md.displayParentId = this.currentPresentation.parentId;
             BDMetadata.Save(dataContext, md);
 
             if (null != SearchableItemAdded) { SearchableItemAdded(this, se); }
@@ -170,7 +170,7 @@ namespace BDEditor.Views
             else
             {
                 tbPresentationName.Text = currentPresentation.name;
-                List<BDPathogenGroup> list = BDPathogenGroup.GetPathogenGroupsForPresentationId(dataContext, currentPresentation.uuid);
+                List<BDPathogenGroup> list = BDPathogenGroup.GetPathogenGroupsForParentId(dataContext, currentPresentation.uuid);
                 for (int idx = 0; idx < list.Count; idx++)
                 {
                     BDPathogenGroup entry = list[idx];
@@ -298,7 +298,7 @@ namespace BDEditor.Views
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentPresentation) ? this.currentPresentation.uuid : Guid.Empty);
-            btnLinkedNote.BackColor = links.Exists(x => x.parentEntityPropertyName == (string)btnLinkedNote.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
+            btnLinkedNote.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnLinkedNote.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
             if (pPropagateToChildren)
             {
                 for (int idx = 0; idx < pathogenGroupControlList.Count; idx++)

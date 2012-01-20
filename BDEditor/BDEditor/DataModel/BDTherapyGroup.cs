@@ -33,7 +33,7 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME_FRIENDLY = @"Therapy Group";
         public const string KEY_NAME = @"BDTherapyGroup";
 
-        public const int ENTITY_SCHEMAVERSION = 0;
+        public const int ENTITY_SCHEMAVERSION = 1;
         //public const string PROPERTYNAME_DEFAULT = "TherapyGroup";
         public const string PROPERTYNAME_NAME = @"Name";
 
@@ -48,6 +48,8 @@ namespace BDEditor.DataModel
         private const string THERAPYGROUPJOINTYPE = @"tg_therapyGroupJoinType";
         private const string NAME = @"tg_name";
         private const string DEPRECATED = @"tg_deprecated";
+        private const string PARENTID = @"tg_parentId";
+        private const string PARENTKEYNAME = @"tg_parentKeyName";
 
         public enum TherapyGroupJoinType
         {
@@ -60,7 +62,7 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets creation date and schema version.
         /// </summary>
         /// <returns></returns>
-        public static BDTherapyGroup CreateTherapyGroup(Entities pContext, Guid pPathogenGroupId)
+        public static BDTherapyGroup CreateTherapyGroup(Entities pContext, Guid pParentId)
         {
             BDTherapyGroup therapyGroup = CreateBDTherapyGroup(Guid.NewGuid(), false);
             therapyGroup.createdBy = Guid.Empty;
@@ -69,7 +71,7 @@ namespace BDEditor.DataModel
             therapyGroup.therapyGroupJoinType = (int)TherapyGroupJoinType.None;
             therapyGroup.displayOrder = -1;
             therapyGroup.name = string.Empty;
-            therapyGroup.pathogenGroupId = pPathogenGroupId;
+            therapyGroup.parentId = pParentId;
 
             pContext.AddObject(ENTITYNAME, therapyGroup);
 
@@ -108,7 +110,7 @@ namespace BDEditor.DataModel
             }
 
             // find and delete child objects, then delete record from local data store
-            List<BDTherapy> children = BDTherapy.GetTherapiesForTherapyGroupId(pContext, pEntity.uuid);
+            List<BDTherapy> children = BDTherapy.GetTherapiesForTherapyParentId(pContext, pEntity.uuid);
             foreach (BDTherapy t in children)
             {
                 BDTherapy.Delete(pContext, t);
@@ -148,11 +150,11 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pPathogenId"></param>
         /// <returns>List of BDTherapyGroups</returns>
-        public static List<BDTherapyGroup> getTherapyGroupsForPathogenGroupId(Entities pContext, Guid pPathogenGroupId)
+        public static List<BDTherapyGroup> getTherapyGroupsForParentId(Entities pContext, Guid pParentId)
         {
             List<BDTherapyGroup> therapyGroupList = new List<BDTherapyGroup>();
                 IQueryable<BDTherapyGroup> therapyGroups = (from entry in pContext.BDTherapyGroups
-                                                            where entry.pathogenGroupId == pPathogenGroupId
+                                                            where entry.pathogenGroupId == pParentId
                                                             orderby entry.displayOrder
                                                             select entry);
                 foreach (BDTherapyGroup therapyGroup in therapyGroups)
@@ -297,9 +299,14 @@ namespace BDEditor.DataModel
             entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
             entry.modifiedBy = Guid.Parse(pAttributeDictionary[MODIFIEDBY]);
             entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
-            entry.pathogenGroupId = Guid.Parse(pAttributeDictionary[PATHOGENGROUPID]);
             entry.therapyGroupJoinType = int.Parse(pAttributeDictionary[THERAPYGROUPJOINTYPE]);
             entry.name = pAttributeDictionary[NAME];
+
+            if(schemaVersion >= 1)
+            {
+                entry.parentId = Guid.Parse(pAttributeDictionary[PARENTID]);
+                entry.parentKeyName = pAttributeDictionary[PARENTKEYNAME];
+            }
 
             if (pSaveChanges)
                 pDataContext.SaveChanges();
@@ -320,10 +327,14 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.PATHOGENGROUPID).WithValue((null == pathogenGroupId) ? Guid.Empty.ToString() : pathogenGroupId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.THERAPYGROUPJOINTYPE).WithValue(therapyGroupJoinType.ToString()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
 
+            if(schemaVersion >= 1)
+            {
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));
+        }
             return putAttributeRequest;
         }
         #endregion

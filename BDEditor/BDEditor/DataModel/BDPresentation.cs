@@ -31,7 +31,7 @@ namespace BDEditor.DataModel
         public const string KEY_NAME = @"BDPresentation";
         public const string PROPERTYNAME_OVERVIEW = @"Overview";
         public const string PROPERTYNAME_NAME = @"Name";
-        public const int ENTITY_SCHEMAVERSION = 0;
+        public const int ENTITY_SCHEMAVERSION = 1;
 
         private const string UUID = @"pr_uuid";
         private const string SCHEMAVERSION = @"pr_schemaVersion";
@@ -41,14 +41,15 @@ namespace BDEditor.DataModel
         private const string MODIFIEDDATE = @"pr_modifiedDate";
         private const string DEPRECATED = @"pr_deprecated";
         private const string DISPLAYORDER = @"pr_displayOrder";
-        private const string DISEASEID = @"pr_diseaseId";
+        private const string PARENTID = @"pr_parentId";
+        private const string PARENTKEYNAME = @"pr_parentKeyName";
         private const string NAME = @"pr_name";
 
         /// <summary>
         /// Extended Create method that sets creation date and schema version.
         /// </summary>
         /// <returns></returns>
-        public static BDPresentation CreatePresentation(Entities pContext, Guid pDiseaseId)
+        public static BDPresentation CreatePresentation(Entities pContext, Guid pParentId)
         {
             BDPresentation presentation = CreateBDPresentation(Guid.NewGuid(), false);
             presentation.createdBy = Guid.Empty;
@@ -56,7 +57,8 @@ namespace BDEditor.DataModel
             presentation.schemaVersion = ENTITY_SCHEMAVERSION;
             presentation.displayOrder = -1;
             presentation.name = string.Empty;
-            presentation.diseaseId = pDiseaseId;
+            presentation.parentId = pParentId;
+            presentation._parentKeyName = string.Empty;
 
             pContext.AddObject(ENTITYNAME, presentation);
 
@@ -98,7 +100,7 @@ namespace BDEditor.DataModel
             }
 
             // find child objects and delete
-            List<BDPathogenGroup> pGroups = BDPathogenGroup.GetPathogenGroupsForPresentationId(pContext, pEntity.uuid);
+            List<BDPathogenGroup> pGroups = BDPathogenGroup.GetPathogenGroupsForParentId(pContext, pEntity.uuid);
             foreach (BDPathogenGroup pg in pGroups)
             {
                 BDPathogenGroup.Delete(pContext, pg);
@@ -136,14 +138,14 @@ namespace BDEditor.DataModel
         /// <summary>
         /// Gets all Presentations in the model with the specified disease ID
         /// </summary>
-        /// <param name="pDiseaseId"></param>
+        /// <param name="pParentId"></param>
         /// <returns>List of Presentations</returns>
-        public static List<BDPresentation> GetPresentationsForDiseaseId(Entities pContext, Guid pDiseaseId)
+        public static List<BDPresentation> GetPresentationsForParentId(Entities pContext, Guid pParentId)
         {
             List<BDPresentation> presentationList = new List<BDPresentation>();
 
             IQueryable<BDPresentation> presentations = (from entry in pContext.BDPresentations
-                                                        where entry.diseaseId == pDiseaseId
+                                                        where entry.parentId == pParentId
                                                         orderby entry.displayOrder
                                                         select entry);
             foreach (BDPresentation presentation in presentations)
@@ -156,7 +158,7 @@ namespace BDEditor.DataModel
         /// <summary>
         /// Get Presentation with the specified ID
         /// </summary>
-        /// <param name="pPresentationId"></param>
+        /// <param name="pParentId"></param>
         /// <returns>BDPresentation object</returns>
         public static BDPresentation GetPresentationWithId(Entities pContext, Guid pPresentationId)
         {
@@ -260,7 +262,8 @@ namespace BDEditor.DataModel
             entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
             short displayorder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]);
             entry.displayOrder = displayorder;
-            entry.diseaseId = Guid.Parse(pAttributeDictionary[DISEASEID]);
+            entry.parentId = Guid.Parse(pAttributeDictionary[PARENTID]);
+            entry.parentKeyName = pAttributeDictionary[PARENTKEYNAME];
             entry.name = pAttributeDictionary[NAME];
 
             if (pSaveChanges)
@@ -282,7 +285,8 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDPresentation.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDPresentation.DISPLAYORDER).WithValue(string.Format(@"{0}", displayOrder)).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDPresentation.DISEASEID).WithValue((null == diseaseId) ? Guid.Empty.ToString() : diseaseId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPresentation.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPresentation.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDPresentation.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
 
             return putAttributeRequest;

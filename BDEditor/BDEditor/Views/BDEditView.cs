@@ -83,32 +83,32 @@ namespace BDEditor.Views
 
             TreeNode rootNode = new TreeNode(pChapter.name);
 
-            List<BDSection> sectionList = BDSection.GetSectionsForChapterId(dataContext, pChapter.uuid);
+            List<BDSection> sectionList = BDSection.GetSectionsForParentId(dataContext, pChapter.uuid);
 
             foreach (BDSection section in sectionList)
             {
                 TreeNode sectionNode = new TreeNode(section.name);
                 sectionNode.Tag = section;
 
-                List<BDCategory> categoryList = BDCategory.GetCategoriesForSectionId(dataContext, section.uuid);
+                List<BDCategory> categoryList = BDCategory.GetCategoriesForParentId(dataContext, section.uuid);
                 foreach (BDCategory category in categoryList)
                 {
                     TreeNode categoryNode = new TreeNode(category.name);
                     categoryNode.Tag = category;
 
-                    List<BDSubcategory> subCategoryList = BDSubcategory.GetSubcategoriesForCategoryId(dataContext, category.uuid);
+                    List<BDSubcategory> subCategoryList = BDSubcategory.GetSubcategoriesForParentId(dataContext, category.uuid);
                     foreach (BDSubcategory subCategory in subCategoryList)
                     {
                         TreeNode subCategoryNode = new TreeNode(subCategory.name);
                         subCategoryNode.Tag = subCategory;
 
-                        List<BDDisease> diseaseList = BDDisease.GetDiseasesForSubcategory(dataContext, subCategory.uuid);
+                        List<BDDisease> diseaseList = BDDisease.GetDiseasesForParentId(dataContext, subCategory.uuid);
                         foreach (BDDisease disease in diseaseList)
                         {
                             TreeNode diseaseNode = new TreeNode(disease.name);
                             diseaseNode.Tag = disease;
 
-                            List<BDPresentation> presentationList = BDPresentation.GetPresentationsForDiseaseId(dataContext, disease.uuid);
+                            List<BDPresentation> presentationList = BDPresentation.GetPresentationsForParentId(dataContext, disease.uuid);
                             foreach (BDPresentation presentation in presentationList)
                             {
                                 TreeNode presentationNode = new TreeNode(presentation.name);
@@ -120,13 +120,13 @@ namespace BDEditor.Views
                         categoryNode.Nodes.Add(subCategoryNode);
                     } // subCatg
 
-                    List<BDDisease> categorydiseaseList = BDDisease.GetDiseasesForCategoryId(dataContext, category.uuid);
+                    List<BDDisease> categorydiseaseList = BDDisease.GetDiseasesForParentId(dataContext, category.uuid);
                     foreach (BDDisease disease in categorydiseaseList)
                     {
                         TreeNode diseaseNode = new TreeNode(disease.name);
                         diseaseNode.Tag = disease;
 
-                        List<BDPresentation> presentationList = BDPresentation.GetPresentationsForDiseaseId(dataContext, disease.uuid);
+                        List<BDPresentation> presentationList = BDPresentation.GetPresentationsForParentId(dataContext, disease.uuid);
                         foreach (BDPresentation presentation in presentationList)
                         {
                             TreeNode presentationNode = new TreeNode(presentation.name);
@@ -232,7 +232,8 @@ namespace BDEditor.Views
         {
             this.Cursor = Cursors.WaitCursor;
             BDDataLoader dataLoader = new BDDataLoader();
-            dataLoader.ImportData(dataContext, @"Resources\BDEditorStructure.txt");
+            //dataLoader.ImportData(dataContext, @"Resources\BDEditorStructure.txt");
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_2.txt");
 
             LoadChapterDropDown();
             BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);

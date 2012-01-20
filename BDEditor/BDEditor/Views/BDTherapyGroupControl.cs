@@ -111,7 +111,7 @@ namespace BDEditor.Views
                         break;
                 }
 
-                List<BDTherapy> list = BDTherapy.GetTherapiesForTherapyGroupId(dataContext, currentTherapyGroup.uuid);
+                List<BDTherapy> list = BDTherapy.GetTherapiesForTherapyParentId(dataContext, currentTherapyGroup.uuid);
                 for (int idx = 0; idx < list.Count; idx++)
                 {
                     BDTherapy entry = list[idx];
@@ -348,7 +348,7 @@ namespace BDEditor.Views
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentTherapyGroup) ? this.currentTherapyGroup.uuid : Guid.Empty);
-            btnTherapyGroupLink.BackColor = links.Exists(x => x.parentEntityPropertyName == (string)btnTherapyGroupLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
+            btnTherapyGroupLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnTherapyGroupLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
 
             if (pPropagateToChildren)
             {

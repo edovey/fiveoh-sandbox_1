@@ -34,7 +34,7 @@ namespace BDEditor.DataModel
         public const string KEY_NAME = @"BDCategory";
         public const string PROPERTYNAME_NAME = @"Name";
 
-        public const int ENTITY_SCHEMAVERSION = 0;
+        public const int ENTITY_SCHEMAVERSION = 1;
 
         private const string UUID = @"ct_uuid";
         private const string SCHEMAVERSION = @"ct_schemaVersion";
@@ -42,7 +42,8 @@ namespace BDEditor.DataModel
         private const string CREATEDDATE = @"ct_createdDate";
         private const string MODIFIEDBY = @"ct_modifiedBy";
         private const string MODIFIEDDATE = @"ct_modifiedDate";
-        private const string SECTIONID = @"ct_sectionId";
+        private const string PARENTID = @"ct_parentId";
+        private const string PARENTKEYNAME = @"ct_parentKeyName";
         private const string NAME = @"ct_name";
         private const string DEPRECATED = @"ct_deprecated";
         private const string DISPLAYORDER = @"ct_displayOrder";
@@ -59,8 +60,9 @@ namespace BDEditor.DataModel
             category.createdDate = DateTime.Now;
             category.schemaVersion = ENTITY_SCHEMAVERSION;
             category.displayOrder = -1;
-            category.sectionId = Guid.Empty;
+            category.parentId = Guid.Empty;
             category.name = string.Empty;
+            category.parentKeyName = string.Empty;
 
             pContext.AddObject(ENTITYNAME, category);
             
@@ -98,7 +100,7 @@ namespace BDEditor.DataModel
             }
 
             // delete children
-            List<BDDisease> diseases = BDDisease.GetDiseasesForCategoryId(pContext, pEntity.uuid);
+            List<BDDisease> diseases = BDDisease.GetDiseasesForParentId(pContext, pEntity.uuid);
             foreach (BDDisease d in diseases)
             {
                 BDDisease.Delete(pContext, d);
@@ -136,13 +138,13 @@ namespace BDEditor.DataModel
         /// <summary>
         /// Gets all sections in the model with the specified section ID
         /// </summary>
-        /// <param name="pSectionId"></param>
+        /// <param name="pParentId"></param>
         /// <returns>List of Categories</returns>
-        public static List<BDCategory> GetCategoriesForSectionId(Entities pContext, Guid pSectionId)
+        public static List<BDCategory> GetCategoriesForParentId(Entities pContext, Guid pParentId)
         {
             List<BDCategory> entryList = new List<BDCategory>();
             IQueryable<BDCategory> entries = (from entry in pContext.BDCategories
-                                                 where entry.sectionId == pSectionId
+                                                 where entry.parentId == pParentId
                                                  orderby entry.displayOrder
                                                  select entry);
             if (entries.Count<BDCategory>() > 0)
@@ -154,7 +156,7 @@ namespace BDEditor.DataModel
         /// <summary>
         /// Get Category with specified ID
         /// </summary>
-        /// <param name="pCategoryId"></param>
+        /// <param name="pParentId"></param>
         /// <returns>BDCategory object.</returns>
         public static BDCategory GetCategoryWithId(Entities pContext, Guid pCategoryId)
         {
@@ -255,7 +257,8 @@ namespace BDEditor.DataModel
             entry.deprecated = deprecated;
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
             entry.schemaVersion = schemaVersion;
-            entry.sectionId = Guid.Parse(pAttributeDictionary[SECTIONID]);
+            entry.parentId = Guid.Parse(pAttributeDictionary[PARENTID]);
+            entry.parentKeyName = pAttributeDictionary[PARENTKEYNAME];
             entry.name = pAttributeDictionary[NAME];
             entry.createdBy = Guid.Parse(pAttributeDictionary[CREATEDBY]);
             entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
@@ -282,8 +285,9 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.SECTIONID).WithValue((null == sectionId) ? Guid.Empty.ToString() : sectionId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.NAME).WithValue((null == name)? string.Empty : name).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.PARENTKEYNAME).WithValue((null == parentKeyName)? string.Empty : parentKeyName).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDCategory.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
 
             return putAttributeRequest;

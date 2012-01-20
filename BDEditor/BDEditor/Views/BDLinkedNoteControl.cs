@@ -145,8 +145,8 @@ namespace BDEditor.Views
                     BDLinkedNoteAssociation association = BDLinkedNoteAssociation.CreateLinkedNoteAssociation(dataContext);
                     association.linkedNoteId = currentLinkedNote.uuid;
                     association.parentId = contextParentId;
-                    association.parentEntityName = contextEntityName;
-                    association.parentEntityPropertyName = contextPropertyName;
+                    association.parentKeyName = contextEntityName;
+                    association.parentKeyPropertyName = contextPropertyName;
                     association.linkedNoteType = 0;
                     currentLinkedNote.linkedNoteAssociationId = association.uuid;
                     currentLinkedNote.scopeId = scopeId;

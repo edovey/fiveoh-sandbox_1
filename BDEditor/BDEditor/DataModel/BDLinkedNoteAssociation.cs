@@ -41,7 +41,7 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME_FRIENDLY = @"Linked Note Association";
         public const string KEY_NAME = @"BDLinkedNoteAssociation";
 
-        public const int ENTITY_SCHEMAVERSION = 0;
+        public const int ENTITY_SCHEMAVERSION = 1;
 
         private const string UUID = @"la_uuid";
         private const string SCHEMAVERSION = @"la_schemaVersion";
@@ -54,8 +54,8 @@ namespace BDEditor.DataModel
         private const string LINKEDNOTEID = @"la_linkedNoteId";
         private const string LINKEDNOTETYPE = @"la_linkedNoteType";
         private const string PARENTID = @"la_parentId";
-        private const string PARENTENTITYNAME = @"la_parentEntityName";
-        private const string PARENTENTITYPROPERTYNAME = @"la_parentEntityPropertyName";
+        private const string PARENTKEYNAME = @"la_parentKeyName";
+        private const string PARENTKEYPROPERTYNAME = @"la_parentKeyPropertyName";
 
         /// <summary>
         /// Extended Create method that sets the created data and schema version. Does not save.
@@ -81,16 +81,16 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pLinkedNoteType"></param>
         /// <param name="pLinkedNoteId"></param>
-        /// <param name="pParentEntityName"></param>
+        /// <param name="pParentKeyName"></param>
         /// <param name="pParentId"></param>
-        /// <param name="pParentEntityPropertyName"></param>
+        /// <param name="pParentEntityKeyName"></param>
         /// <returns>BDLinkedNoteAssociation</returns>
         public static BDLinkedNoteAssociation CreateLinkedNoteAssociation(Entities pContext, 
                                                                             LinkedNoteType pLinkedNoteType, 
                                                                             Guid pLinkedNoteId, 
-                                                                            string pParentEntityName, 
+                                                                            string pParentKeyName, 
                                                                             Guid pParentId, 
-                                                                            string pParentEntityPropertyName)
+                                                                            string pParentEntityKeyName)
         {
             BDLinkedNoteAssociation linkedNoteAssociation = CreateBDLinkedNoteAssociation(Guid.NewGuid(), false);
             linkedNoteAssociation.createdBy = Guid.Empty;
@@ -99,8 +99,8 @@ namespace BDEditor.DataModel
 
             linkedNoteAssociation.linkedNoteId = pLinkedNoteId;
             linkedNoteAssociation.parentId = pParentId;
-            linkedNoteAssociation.parentEntityName = pParentEntityName;
-            linkedNoteAssociation.parentEntityPropertyName = pParentEntityPropertyName;
+            linkedNoteAssociation.parentKeyName = pParentKeyName;
+            linkedNoteAssociation.parentKeyPropertyName = pParentEntityKeyName;
 
             pContext.AddObject(ENTITYNAME, linkedNoteAssociation);
 
@@ -198,7 +198,7 @@ namespace BDEditor.DataModel
         public static BDLinkedNoteAssociation GetLinkedNoteAssociationForParentIdAndProperty(Entities pContext, Guid? pParentId, string pContextPropertyName)
         {
             IQueryable<BDLinkedNoteAssociation> linkedNoteAssociations = (from bdLinkedNoteAssociations in pContext.BDLinkedNoteAssociations
-                                                                          where bdLinkedNoteAssociations.parentId == pParentId && bdLinkedNoteAssociations.parentEntityPropertyName == pContextPropertyName
+                                                                          where bdLinkedNoteAssociations.parentId == pParentId && bdLinkedNoteAssociations.parentKeyPropertyName == pContextPropertyName
                                                                           select bdLinkedNoteAssociations);
 
             BDLinkedNoteAssociation result = null;
@@ -226,7 +226,7 @@ namespace BDEditor.DataModel
         public static List<string> GetAssignedPropertyNamesForParentId(Entities pContext, Guid? pParentId)
         {
             var nameList = pContext.BDLinkedNoteAssociations.Where(x => x.uuid == pParentId.Value)
-                                                            .Select(pg => pg.parentEntityPropertyName).Distinct();
+                                                            .Select(pg => pg.parentKeyPropertyName).Distinct();
 
             return nameList.ToList<string>();
         }
@@ -241,7 +241,7 @@ namespace BDEditor.DataModel
         {
             IQueryable<BDLinkedNoteAssociation> linkedNoteAssociations = (from bdLinkedNoteAssociations in pContext.BDLinkedNoteAssociations
                                                                           where bdLinkedNoteAssociations.linkedNoteId == pLinkedNoteId
-                                                                          orderby bdLinkedNoteAssociations.parentEntityName ascending, bdLinkedNoteAssociations.parentEntityPropertyName ascending
+                                                                          orderby bdLinkedNoteAssociations.parentKeyName ascending, bdLinkedNoteAssociations.parentKeyPropertyName ascending
                                                                           select bdLinkedNoteAssociations);
             List<BDLinkedNoteAssociation> resultList = linkedNoteAssociations.ToList<BDLinkedNoteAssociation>();
             return resultList;
@@ -320,7 +320,7 @@ namespace BDEditor.DataModel
 
         public string GetDescription(Entities pDataContext)
         {
-            return GetDescription(pDataContext, this.parentId, this.parentEntityName, this.parentEntityPropertyName);
+            return GetDescription(pDataContext, this.parentId, this.parentKeyName, this.parentKeyPropertyName);
         }
 
         protected override void OnPropertyChanged(string property)
@@ -412,8 +412,8 @@ namespace BDEditor.DataModel
             entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
             entry.linkedNoteId = Guid.Parse(pAttributeDictionary[LINKEDNOTEID]);
             entry.parentId = Guid.Parse(pAttributeDictionary[PARENTID]);
-            entry.parentEntityName = pAttributeDictionary[PARENTENTITYNAME];
-            entry.parentEntityPropertyName = pAttributeDictionary[PARENTENTITYPROPERTYNAME];
+            entry.parentKeyName = pAttributeDictionary[PARENTKEYNAME];
+            entry.parentKeyPropertyName = pAttributeDictionary[PARENTKEYPROPERTYNAME];
             entry.linkedNoteType = int.Parse(pAttributeDictionary[LINKEDNOTETYPE]);
             if (pSaveChanges)
                 pDataContext.SaveChanges();
@@ -437,8 +437,8 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.LINKEDNOTEID).WithValue((null == linkedNoteId) ? Guid.Empty.ToString() : linkedNoteId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.LINKEDNOTETYPE).WithValue(string.Format(@"{0}", linkedNoteType)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.PARENTENTITYNAME).WithValue((null == parentEntityName) ? string.Empty : parentEntityName).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.PARENTENTITYPROPERTYNAME).WithValue((null == parentEntityPropertyName) ? string.Empty : parentEntityPropertyName).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.PARENTKEYPROPERTYNAME).WithValue((null == parentKeyPropertyName) ? string.Empty : parentKeyPropertyName).WithReplace(true));
 
             return putAttributeRequest;
         }

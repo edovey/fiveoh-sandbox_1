@@ -34,7 +34,7 @@ namespace BDEditor.DataModel
         public const string PROPERTYNAME_OVERVIEW = @"Overview";
         public const string KEY_NAME = @"BDDisease";
 
-        public const int ENTITY_SCHEMAVERSION = 0;
+        public const int ENTITY_SCHEMAVERSION = 1;
 
         private const string UUID = @"di_uuid";
         private const string SCHEMAVERSION = @"di_schemaVersion";
@@ -47,6 +47,8 @@ namespace BDEditor.DataModel
         private const string CATEGORYID = @"di_categoryId";
         private const string NAME = @"di_name";
         private const string DEPRECATED = @"di_deprecated";
+        private const string PARENTID = @"di_parentId";
+        private const string PARENTKEYNAME = @"di_parentKeyName";
 
 
         /// <summary>
@@ -62,6 +64,8 @@ namespace BDEditor.DataModel
             disease.displayOrder = -1;
             disease.subcategoryId = Guid.Empty;
             disease.categoryId = Guid.Empty;
+            disease.parentId = Guid.Empty;
+            disease._parentKeyName = string.Empty;
             disease.name = string.Empty;
             
             pContext.AddObject(ENTITYNAME, disease);
@@ -99,7 +103,7 @@ namespace BDEditor.DataModel
                 BDLinkedNoteAssociation.Delete(pContext, a);
             }
             // delete children
-            List<BDPresentation> children = BDPresentation.GetPresentationsForDiseaseId(pContext, pEntity.uuid);
+            List<BDPresentation> children = BDPresentation.GetPresentationsForParentId(pContext, pEntity.uuid);
             foreach(BDPresentation p in children)
             {
                 BDPresentation.Delete(pContext, p);
@@ -137,14 +141,14 @@ namespace BDEditor.DataModel
         /// <summary>
         /// Gets all diseases in the model with the specified category ID
         /// </summary>
-        /// <param name="pCategoryId"></param>
+        /// <param name="pParentId"></param>
         /// <returns>List of Diseases</returns>
-        public static List<BDDisease> GetDiseasesForCategoryId(Entities pContext, Guid pCategoryId)
+        public static List<BDDisease> GetDiseasesForParentId(Entities pContext, Guid pParentId)
         {
             List<BDDisease> diseaseList = new List<BDDisease>();
-  
+
             IQueryable<BDDisease> diseases = (from entry in pContext.BDDiseases
-                                        where entry.categoryId == pCategoryId
+                                        where entry.parentId == pParentId
                                         orderby entry.displayOrder
                                         select entry);
 
@@ -156,31 +160,9 @@ namespace BDEditor.DataModel
         }
      
         /// <summary>
-        /// Gets all diseases in the model with the specified subcategory ID
-        /// </summary>
-        /// <param name="pSubcategoryId"></param>
-        /// <returns>List of Diseases</returns>
-        public static List<BDDisease> GetDiseasesForSubcategory(Entities pContext, Guid pSubcategoryId)
-        {
-            List<BDDisease> diseaseList = new List<BDDisease>();
-
-        IQueryable<BDDisease> diseases = (from entry in pContext.BDDiseases
-                                                where entry.subcategoryId == pSubcategoryId
-                                                orderby entry.displayOrder
-                                                select entry);
-
-            foreach (BDDisease disease in diseases)
-            {
-                diseaseList.Add(disease);
-            }
-
-            return diseaseList;
-        }
-
-        /// <summary>
         /// Get Disease with the specified ID
         /// </summary>
-        /// <param name="pDiseaseId"></param>
+        /// <param name="pParentId"></param>
         /// <returns>Disease object</returns>
         public static BDDisease GetDiseaseWithId(Entities pContext, Guid pDiseaseId)
         {
@@ -287,9 +269,18 @@ namespace BDEditor.DataModel
             entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
             entry.modifiedBy = Guid.Parse(pAttributeDictionary[MODIFIEDBY]);
             entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
-            entry.categoryId = Guid.Parse(pAttributeDictionary[CATEGORYID]);
-            entry.subcategoryId = Guid.Parse(pAttributeDictionary[SUBCATEGORYID]);
             entry.name = pAttributeDictionary[NAME];
+
+            if (schemaVersion >= 1)
+            {
+                entry.parentId = Guid.Parse(pAttributeDictionary[PARENTID]);
+                entry.parentKeyName = pAttributeDictionary[PARENTKEYNAME];
+            }
+            else
+            {
+                entry.parentId = Guid.Parse(pAttributeDictionary[CATEGORYID]);
+                entry.parentKeyName = @"BDCategory";
+            }
 
             if (pSaveChanges)
                 pDataContext.SaveChanges();
@@ -310,9 +301,18 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDDisease.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDDisease.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDDisease.CATEGORYID).WithValue((null == categoryId) ? Guid.Empty.ToString() : categoryId.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDDisease.SUBCATEGORYID).WithValue((null == subcategoryId) ? Guid.Empty.ToString() : subcategoryId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDDisease.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
+
+            if (schemaVersion >= 1) {
+                attributeList.Add(new ReplaceableAttribute().WithName(BDDisease.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
+                attributeList.Add(new ReplaceableAttribute().WithName(BDDisease.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName.ToString().ToUpper()).WithReplace(true));
+            } else {
+
+                attributeList.Add(new ReplaceableAttribute().WithName(BDDisease.PARENTID).WithValue(categoryId.ToString().ToUpper()).WithReplace(true));
+                attributeList.Add(new ReplaceableAttribute().WithName(BDDisease.PARENTKEYNAME).WithValue(@"BDCategory").WithReplace(true));
+                attributeList.Add(new ReplaceableAttribute().WithName(BDDisease.SCHEMAVERSION).WithValue(string.Format(@"{0}", 1)).WithReplace(true));
+
+            }
 
             return putAttributeRequest;
         }

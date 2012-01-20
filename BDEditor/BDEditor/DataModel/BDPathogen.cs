@@ -34,7 +34,7 @@ namespace BDEditor.DataModel
         public const string KEY_NAME = @"BDPathogen";
 
         public const string PROPERTYNAME_NAME = @"Name";
-        public const int ENTITY_SCHEMAVERSION = 0;
+        public const int ENTITY_SCHEMAVERSION = 1;
 
 
         private const string UUID = @"pa_uuid";
@@ -43,19 +43,20 @@ namespace BDEditor.DataModel
         private const string CREATEDDATE = @"pa_createdDate";
         private const string MODIFIEDBY = @"pa_modifiedBy";
         private const string MODIFIEDDATE = @"pa_modifiedDate";
-        private const string PATHOGENGROUPID = @"pa_pathogenGroupId";
+        private const string PARENTID = @"pa_parentId";
+        private const string PARENTKEYNAME = @"pa_parentKeyName";
         private const string NAME = @"pa_name";
         private const string DEPRECATED = @"pa_deprecated";
         private const string DISPLAYORDER = @"pa_displayOrder";
 
-        public static BDPathogen CreatePathogen(Entities pContext, Guid pPathogenGroupId)
+        public static BDPathogen CreatePathogen(Entities pContext, Guid pParentId)
         {
             BDPathogen pathogen = CreateBDPathogen(Guid.NewGuid(), false);
             pathogen.createdBy = Guid.Empty;
             pathogen.createdDate = DateTime.Now;
             pathogen.schemaVersion = ENTITY_SCHEMAVERSION;
             pathogen.displayOrder = -1;
-            pathogen.pathogenGroupId = pPathogenGroupId;
+            pathogen.parentId = pParentId;
             pathogen.name = string.Empty;
 
             pContext.AddObject(ENTITYNAME, pathogen);
@@ -123,15 +124,15 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Get all pathogens in the model with the specified presentation ID
+        /// Get all pathogens in the model with the specified parent ID
         /// </summary>
-        /// <param name="pPresentationId"></param>
+        /// <param name="pParentId"></param>
         /// <returns>List of Pathogens</returns>
-        public static List<BDPathogen> GetPathogensForPathogenGroup(Entities pContext, Guid pPathogenGroupId)
+        public static List<BDPathogen> GetPathogensForParent(Entities pContext, Guid pParentId)
         {
             List<BDPathogen> pathogenList = new List<BDPathogen>();
                 IQueryable<BDPathogen> pathogens = (from entry in pContext.BDPathogens
-                                                    where entry.pathogenGroupId == pPathogenGroupId
+                                                    where entry.parentId == pParentId
                                                     orderby entry.displayOrder
                                                     select entry);
                 if (pathogens.Count() > 0)
@@ -279,8 +280,9 @@ namespace BDEditor.DataModel
             entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
             entry.modifiedBy = Guid.Parse(pAttributeDictionary[MODIFIEDBY]);
             entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
-            entry.pathogenGroupId = Guid.Parse(pAttributeDictionary[PATHOGENGROUPID]);
+            entry.parentId = Guid.Parse(pAttributeDictionary[PARENTID]);
             entry.name = pAttributeDictionary[NAME];
+            entry.parentKeyName = pAttributeDictionary[PARENTKEYNAME];
             short displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]);
             entry.displayOrder = displayOrder;
 
@@ -303,7 +305,7 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.PATHOGENGROUPID).WithValue((null == pathogenGroupId) ? Guid.Empty.ToString() : pathogenGroupId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
 
             return putAttributeRequest;

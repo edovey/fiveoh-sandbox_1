@@ -214,7 +214,7 @@ namespace BDEditor.Views
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentPathogen) ? this.currentPathogen.uuid : Guid.Empty);
-            btnLink.BackColor = links.Exists(x => x.parentEntityPropertyName == (string)btnLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
+            btnLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
         }  
 
         private void textBox_TextChanged(object sender, EventArgs e)

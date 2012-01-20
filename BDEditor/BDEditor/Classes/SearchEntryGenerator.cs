@@ -60,7 +60,7 @@ namespace BDEditor.Classes
                     IQueryable<BDSearchEntryAssociation> associations = (from entry in dataContext.BDSearchEntryAssociations
                                                                          where (entry.searchEntryId == searchEntry.uuid
                                                                          && entry.displayParentId == mdEntry.displayParentId
-                                                                         && entry.displayParentEntityName == mdEntry.displayParentEntityName)
+                                                                         && entry.displayParentKeyName == mdEntry.displayParentKeyName)
                                                                          select entry);
 
                     if (associations.Count() == 0)
@@ -74,7 +74,7 @@ namespace BDEditor.Classes
         private static string GetEntryName(Entities pContext, BDMetadata metadata)
         {
             string result = String.Empty;
-            switch (metadata.itemEntityName)
+            switch (metadata.itemKeyName)
             {
                 case BDTherapy.ENTITYNAME:
                     result = BDTherapy.GetTherapyWithId(pContext, metadata.itemId.Value).name;
@@ -94,7 +94,7 @@ namespace BDEditor.Classes
         {
             string result = String.Empty;
 
-            switch (pMetadata.displayParentEntityName)
+            switch (pMetadata.displayParentKeyName)
             {
                 case BDDisease.ENTITYNAME:
                     {
@@ -114,7 +114,7 @@ namespace BDEditor.Classes
             BDSearchEntryAssociation a = BDSearchEntryAssociation.CreateSearchEntryAssociation(pContext);
             a.searchEntryId = pSearchEntry.uuid;
             a.displayParentId = pMetadata.displayParentId;
-            a.displayParentEntityName = pMetadata.displayParentEntityName;
+            a.displayParentKeyName = pMetadata.displayParentKeyName;
 
             a.displayContext = GetDisplayContext(pContext, pMetadata);
             

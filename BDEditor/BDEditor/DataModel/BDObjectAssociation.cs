@@ -15,8 +15,8 @@ namespace BDEditor.DataModel
 {
     public partial class BDObjectAssociation
     {
-        public const string AWS_PROD_DOMAIN = @"bd_1_objectAssociation";
-        public const string AWS_DEV_DOMAIN = @"bd_dev_1_objectAssociation";
+        public const string AWS_PROD_DOMAIN = @"bd_2_objectAssociation";
+        public const string AWS_DEV_DOMAIN = @"bd_dev_2_objectAssociation";
 
 #if DEBUG
         public const string AWS_DOMAIN = AWS_DEV_DOMAIN;

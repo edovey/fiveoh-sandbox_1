@@ -21,8 +21,8 @@ namespace BDEditor.DataModel
         //public const string AWS_DOMAIN = @"bd_1_linkedNotes";
         //public const string AWS_BUCKET = @"bdDataStore";
 
-        public const string AWS_PROD_DOMAIN = @"bd_1_linkedNotes";
-        public const string AWS_DEV_DOMAIN = @"bd_dev_1_linkedNotes";
+        public const string AWS_PROD_DOMAIN = @"bd_2_linkedNotes";
+        public const string AWS_DEV_DOMAIN = @"bd_dev_2_linkedNotes";
 
         public const string AWS_PROD_BUCKET = @"bdDataStore";
         public const string AWS_DEV_BUCKET = @"bdDevStore";

@@ -41,6 +41,7 @@
             this.chapterTree = new System.Windows.Forms.TreeView();
             this.entitiesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.entitiesBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.btnImportFromProduction = new System.Windows.Forms.Button();
             this.headerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -51,6 +52,7 @@
             // 
             // headerPanel
             // 
+            this.headerPanel.Controls.Add(this.btnImportFromProduction);
             this.headerPanel.Controls.Add(this.brewButton);
             this.headerPanel.Controls.Add(this.btnSyncWithReplaceLocal);
             this.headerPanel.Controls.Add(this.lbLastSyncDateTime);
@@ -167,6 +169,17 @@
             // 
             this.entitiesBindingSource1.DataSource = typeof(BDEditor.DataModel.Entities);
             // 
+            // btnImportFromProduction
+            // 
+            this.btnImportFromProduction.Location = new System.Drawing.Point(619, 10);
+            this.btnImportFromProduction.Name = "btnImportFromProduction";
+            this.btnImportFromProduction.Size = new System.Drawing.Size(103, 23);
+            this.btnImportFromProduction.TabIndex = 6;
+            this.btnImportFromProduction.Text = "AWS Prod Import";
+            this.btnImportFromProduction.UseVisualStyleBackColor = true;
+            this.btnImportFromProduction.Visible = false;
+            this.btnImportFromProduction.Click += new System.EventHandler(this.btnImportFromProduction_Click);
+            // 
             // BDEditView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -205,6 +218,7 @@
         private System.Windows.Forms.Button btnSync;
         private System.Windows.Forms.Button btnSyncWithReplaceLocal;
         private System.Windows.Forms.Button brewButton;
+        private System.Windows.Forms.Button btnImportFromProduction;
 
     }
 }

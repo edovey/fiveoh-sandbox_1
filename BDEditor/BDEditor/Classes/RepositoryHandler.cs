@@ -386,7 +386,7 @@ namespace BDEditor.Classes
             return pSyncDictionary;
         }
 
-        public void ImportFromProduction(Entities pDataContext, DateTime? pLastSyncDate)
+        public SyncInfoDictionary ImportFromProduction(Entities pDataContext, DateTime? pLastSyncDate)
         {
             DateTime currentSyncDate = DateTime.Now;
 
@@ -396,6 +396,7 @@ namespace BDEditor.Classes
 
             foreach (SyncInfo syncInfoEntry in syncDictionary.Values)
             {
+                System.Diagnostics.Debug.WriteLine(syncInfoEntry.FriendlyName);
                 if (!syncInfoEntry.ExistsOnRemote) continue;
 
                 System.Diagnostics.Debug.WriteLine(string.Format("Production Pull {0}", syncInfoEntry.RemoteProductionEntityName));
@@ -439,49 +440,53 @@ namespace BDEditor.Classes
                                         // change all the association records.
                                         // NOTE: LinkedNoteAssociations MUST be loaded first.
 
-                                        entryGuid = BDLinkedNote.LoadFromAttributes(pDataContext, attributeDictionary, true); // We need the note for the S3 call, so save
-                                        if (null != entryGuid) // retrieve the note body
+                                        BDLinkedNote note = BDLinkedNote.CreateFromProdWithAttributes(pDataContext, attributeDictionary);
+
+                                        if (null != note)
                                         {
-                                            BDLinkedNote note = BDLinkedNote.GetLinkedNoteWithId(pDataContext, entryGuid);
-                                            if (null != note)
+                                            try
                                             {
-                                                try
-                                                {
-                                                    GetObjectRequest getObjectRequest = new GetObjectRequest()
-                                                        .WithBucketName(BDLinkedNote.AWS_BUCKET)
-                                                        .WithKey(note.storageKey);
+                                                GetObjectRequest getObjectRequest = new GetObjectRequest()
+                                                    .WithBucketName(BDLinkedNote.AWS_PROD_BUCKET)
+                                                    .WithKey(note.storageKey); // This will be the "original" storage key
 
-                                                    using (GetObjectResponse response = S3.GetObject(getObjectRequest))
+                                                using (GetObjectResponse response = S3.GetObject(getObjectRequest))
+                                                {
+                                                    if ((response.ContentType == @"text/html") || (response.ContentType == @"text/plain"))
                                                     {
-                                                        if ((response.ContentType == @"text/html") || (response.ContentType == @"text/plain"))
+                                                        using (StreamReader reader = new StreamReader(response.ResponseStream))
                                                         {
-                                                            using (StreamReader reader = new StreamReader(response.ResponseStream))
-                                                            {
-                                                                String encodedString = reader.ReadToEnd();
-                                                                String unencodedString = System.Net.WebUtility.HtmlDecode(encodedString);
-                                                                //note.documentText = unencodedString;
-                                                                note.documentText = encodedString;
-                                                            }
+                                                            String encodedString = reader.ReadToEnd();
+                                                            String unencodedString = System.Net.WebUtility.HtmlDecode(encodedString);
+                                                            note.documentText = encodedString;
                                                         }
-
-                                                    }
-                                                }
-                                                catch (AmazonS3Exception amazonS3Exception)
-                                                {
-                                                    if (amazonS3Exception.ErrorCode != null &&
-                                                        (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId") ||
-                                                        amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
-                                                    {
-                                                        Console.WriteLine("Please check the provided AWS Credentials.");
-                                                        Console.WriteLine("If you haven't signed up for Amazon S3, please visit http://aws.amazon.com/s3");
-                                                    }
-                                                    else
-                                                    {
-                                                        Console.WriteLine("An error occurred with the message '{0}' when reading an object", amazonS3Exception.Message);
                                                     }
                                                 }
                                             }
+                                            catch (AmazonS3Exception amazonS3Exception)
+                                            {
+                                                if (amazonS3Exception.ErrorCode != null &&
+                                                    (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId") ||
+                                                    amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
+                                                {
+                                                    Console.WriteLine("Please check the provided AWS Credentials.");
+                                                    Console.WriteLine("If you haven't signed up for Amazon S3, please visit http://aws.amazon.com/s3");
+                                                }
+                                                else
+                                                {
+                                                    Console.WriteLine("An error occurred with the message '{0}' when reading an object", amazonS3Exception.Message);
+                                                }
+                                            }
+
+                                            note.storageKey = BDLinkedNote.GenerateStorageKey(note); // update the storage key with the new uuid.
+
+                                            Guid originalLinkedNoteUuid = note.tempProductionUuid.Value;
+
+                                            pDataContext.ExecuteStoreCommand("UPDATE BDLinkedNoteAssociations SET linkedNoteId = {0} WHERE linkedNoteId = {1}", note.uuid, originalLinkedNoteUuid);
+
+                                            // This expects that the LinkedNoteAssociation data has already been loaded
                                         }
+
                                     }
                                     break;
                                 case BDPathogenGroup.AWS_PROD_DOMAIN:
@@ -532,6 +537,8 @@ namespace BDEditor.Classes
             }
 
             Common.Settings.IsSyncLoad = false;
+
+            return syncDictionary;
         }
 
         public void DeleteLocalData(Entities pDataContext)

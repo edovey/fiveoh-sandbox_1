@@ -20,8 +20,8 @@ namespace BDEditor.DataModel
     {
         //public const string AWS_DOMAIN = @"bd_1_subcategories";
 
-        public const string AWS_PROD_DOMAIN = @"bd_1_subcategories";
-        public const string AWS_DEV_DOMAIN = @"bd_dev_1_subcategories";
+        public const string AWS_PROD_DOMAIN = @"bd_2_subcategories";
+        public const string AWS_DEV_DOMAIN = @"bd_dev_2_subcategories";
 
 #if DEBUG
         public const string AWS_DOMAIN = AWS_DEV_DOMAIN;

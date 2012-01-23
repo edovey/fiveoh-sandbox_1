@@ -309,6 +309,9 @@ namespace BDEditor.Views
 
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
+            this.btnImportFromProduction.Visible = true;
+#else
+            this.btnImportFromProduction.Visible = false;
 #endif
 
             BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
@@ -376,6 +379,42 @@ namespace BDEditor.Views
         private void brewButton_Click(object sender, EventArgs e)
         {
             SearchEntryGenerator.Generate();
+        }
+
+        private void btnImportFromProduction_Click(object sender, EventArgs e)
+        {
+
+#if DEBUG
+            this.Cursor = Cursors.WaitCursor;
+            BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
+
+            SyncInfoDictionary syncResultList = RepositoryHandler.Aws.ImportFromProduction(dataContext, null);
+
+            string resultMessage = string.Empty;
+
+            foreach (SyncInfo syncInfo in syncResultList.Values)
+            {
+                System.Diagnostics.Debug.WriteLine(syncInfo.FriendlyName);
+                if ((syncInfo.RowsPulled > 0) || (syncInfo.RowsPushed > 0))
+                    resultMessage = string.Format("Procustion Import {0}{1}{4}: Pulled {2}, Pushed {3}", resultMessage, (string.IsNullOrEmpty(resultMessage) ? "" : "\n"), syncInfo.RowsPulled, syncInfo.RowsPushed, syncInfo.FriendlyName);
+            }
+
+            if (string.IsNullOrEmpty(resultMessage)) resultMessage = "No changes";
+
+            MessageBox.Show(resultMessage, "Snchronization");
+
+            UpdateSyncLabel();
+            LoadChapterDropDown();
+
+            systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            lastSyncDate = systemSetting.settingDateTimeValue;
+            createTestDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
+
+            this.Cursor = Cursors.Default;
+#else
+            MessageBox.Show(@"May not import in this environment" , "Import");
+#endif
         }
     }
 }

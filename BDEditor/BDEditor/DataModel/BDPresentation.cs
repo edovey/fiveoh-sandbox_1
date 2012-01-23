@@ -285,9 +285,12 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDPresentation.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDPresentation.DISPLAYORDER).WithValue(string.Format(@"{0}", displayOrder)).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDPresentation.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDPresentation.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDPresentation.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
+             attributeList.Add(new ReplaceableAttribute().WithName(BDPresentation.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
+             if (schemaVersion > 0)
+             {
+                 attributeList.Add(new ReplaceableAttribute().WithName(BDPresentation.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
+                 attributeList.Add(new ReplaceableAttribute().WithName(BDPresentation.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));
+             }
 
             return putAttributeRequest;
         }

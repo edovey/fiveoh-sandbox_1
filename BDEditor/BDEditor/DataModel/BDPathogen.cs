@@ -305,8 +305,13 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
+
+            if(schemaVersion > 0)
+            {
+                attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
+                attributeList.Add(new ReplaceableAttribute().WithName(BDPathogen.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));
+            }
 
             return putAttributeRequest;
         }

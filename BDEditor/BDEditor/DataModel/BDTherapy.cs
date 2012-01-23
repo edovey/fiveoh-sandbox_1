@@ -373,8 +373,6 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DISPLAYORDER).WithValue(displayOrder.ToString()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.THERAPYJOINTYPE).WithValue(string.Format(@"{0}", therapyJoinType)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.LEFTBRACKET).WithValue(leftBracket.ToString()).WithReplace(true));
@@ -386,6 +384,11 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.NAMEPREVIOUS).WithValue(nameSameAsPrevious.ToString()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DOSAGEPREVIOUS).WithValue(dosageSameAsPrevious.ToString()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DURATIONPREVIOUS).WithValue(durationSameAsPrevious.ToString()).WithReplace(true));
+            if (schemaVersion > 0)
+            {
+                attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
+                attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));
+            }
 
             return putAttributeRequest;
         }

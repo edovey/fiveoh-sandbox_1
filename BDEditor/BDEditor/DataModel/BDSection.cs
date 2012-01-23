@@ -292,7 +292,11 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDSection.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDSection.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSection.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
+            if (schemaVersion > 0)
+            {
+                attributeList.Add(new ReplaceableAttribute().WithName(BDSection.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
+                attributeList.Add(new ReplaceableAttribute().WithName(BDSection.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));
+            }
 
             return putAttributeRequest;
         }
@@ -320,3 +324,4 @@ namespace BDEditor.DataModel
         }
     }
 }
+

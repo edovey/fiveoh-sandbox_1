@@ -303,15 +303,10 @@ namespace BDEditor.DataModel
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDDisease.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
 
-            if (schemaVersion >= 1) {
+            if (schemaVersion >= 1)
+            {
                 attributeList.Add(new ReplaceableAttribute().WithName(BDDisease.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
                 attributeList.Add(new ReplaceableAttribute().WithName(BDDisease.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName.ToString().ToUpper()).WithReplace(true));
-            } else {
-
-                attributeList.Add(new ReplaceableAttribute().WithName(BDDisease.PARENTID).WithValue(categoryId.ToString().ToUpper()).WithReplace(true));
-                attributeList.Add(new ReplaceableAttribute().WithName(BDDisease.PARENTKEYNAME).WithValue(@"BDCategory").WithReplace(true));
-                attributeList.Add(new ReplaceableAttribute().WithName(BDDisease.SCHEMAVERSION).WithValue(string.Format(@"{0}", 1)).WithReplace(true));
-
             }
 
             return putAttributeRequest;

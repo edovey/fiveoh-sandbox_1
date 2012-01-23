@@ -278,9 +278,12 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
+            if (schemaVersion > 0)
+            {
+                attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
+                attributeList.Add(new ReplaceableAttribute().WithName(BDSubcategory.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));
+            }
 
             return putAttributeRequest;
         }

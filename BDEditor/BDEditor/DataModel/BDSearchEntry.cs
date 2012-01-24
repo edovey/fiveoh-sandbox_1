@@ -53,7 +53,16 @@ namespace BDEditor.DataModel
         /// <returns>BDLinkedNote</returns>
         public static BDSearchEntry CreateSearchEntry(Entities pContext)
         {
-            BDSearchEntry entry = CreateBDSearchEntry(Guid.NewGuid());
+            return CreateSearchEntry(pContext, Guid.NewGuid());
+        }
+
+        /// <summary>
+        /// Extended Create method that sets the created date and schema version
+        /// </summary>
+        /// <returns>BDLinkedNote</returns>
+        public static BDSearchEntry CreateSearchEntry(Entities pContext, Guid pUuid)
+        {
+            BDSearchEntry entry = CreateBDSearchEntry(pUuid);
             entry.createdBy = Guid.Empty;
             entry.createdDate = DateTime.Now;
             entry.schemaVersion = ENTITY_SCHEMAVERSION;

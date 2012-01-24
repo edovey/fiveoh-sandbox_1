@@ -2849,6 +2849,54 @@ namespace BDEditor.DataModel
         private global::System.String _childKeyName;
         partial void OnchildKeyNameChanging(global::System.String value);
         partial void OnchildKeyNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> schemaVersion
+        {
+            get
+            {
+                return _schemaVersion;
+            }
+            set
+            {
+                OnschemaVersionChanging(value);
+                ReportPropertyChanging("schemaVersion");
+                _schemaVersion = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("schemaVersion");
+                OnschemaVersionChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _schemaVersion;
+        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
+        partial void OnschemaVersionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> createdDate
+        {
+            get
+            {
+                return _createdDate;
+            }
+            set
+            {
+                OncreatedDateChanging(value);
+                ReportPropertyChanging("createdDate");
+                _createdDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("createdDate");
+                OncreatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _createdDate;
+        partial void OncreatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OncreatedDateChanged();
 
         #endregion
     

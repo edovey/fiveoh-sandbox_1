@@ -44,7 +44,12 @@ namespace BDEditor.DataModel
 
         public static void CreateDeletion(Entities pContext, string pTargetName, Guid pTargetId)
         {
-            BDDeletion deletion = CreateBDDeletion(Guid.NewGuid());
+            CreateDeletion(pContext, pTargetName, pTargetId, Guid.NewGuid());
+        }
+
+        public static void CreateDeletion(Entities pContext, string pTargetName, Guid pTargetId, Guid pUuid)
+        {
+            BDDeletion deletion = CreateBDDeletion(pUuid);
             deletion.createdBy = Guid.Empty;
             deletion.createdDate = DateTime.Now;
             deletion.modifiedBy = Guid.Empty;

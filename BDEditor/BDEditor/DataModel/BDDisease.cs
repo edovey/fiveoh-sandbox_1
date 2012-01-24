@@ -57,7 +57,16 @@ namespace BDEditor.DataModel
         /// <returns>BDDisease object</returns>
         public static BDDisease CreateDisease(Entities pContext)
         {
-            BDDisease disease = CreateBDDisease(Guid.NewGuid(), false);
+            return CreateDisease(pContext, Guid.NewGuid());
+        }
+
+        /// <summary>
+        /// Extended Create method that sets the create date and the schema version
+        /// </summary>
+        /// <returns>BDDisease object</returns>
+        public static BDDisease CreateDisease(Entities pContext, Guid pUuid)
+        {
+            BDDisease disease = CreateBDDisease(pUuid, false);
             disease.createdBy = Guid.Empty;
             disease.createdDate = DateTime.Now;
             disease.schemaVersion = ENTITY_SCHEMAVERSION;
@@ -67,7 +76,7 @@ namespace BDEditor.DataModel
             disease.parentId = Guid.Empty;
             disease._parentKeyName = string.Empty;
             disease.name = string.Empty;
-            
+
             pContext.AddObject(ENTITYNAME, disease);
 
             return disease;

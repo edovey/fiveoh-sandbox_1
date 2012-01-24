@@ -66,7 +66,16 @@ namespace BDEditor.DataModel
         /// <returns>BDLinkedNote</returns>
         public static BDLinkedNote CreateLinkedNote(Entities pContext)
         {
-            BDLinkedNote linkedNote = CreateBDLinkedNote(Guid.NewGuid(), false);
+            return CreateLinkedNote(pContext, Guid.NewGuid());
+        }
+
+        /// <summary>
+        /// Extended Create method that sets the created date and schema version
+        /// </summary>
+        /// <returns>BDLinkedNote</returns>
+        public static BDLinkedNote CreateLinkedNote(Entities pContext, Guid pUuid)
+        {
+            BDLinkedNote linkedNote = CreateBDLinkedNote(pUuid, false);
             linkedNote.createdBy = Guid.Empty;
             linkedNote.createdDate = DateTime.Now;
             linkedNote.schemaVersion = ENTITY_SCHEMAVERSION;

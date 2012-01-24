@@ -51,7 +51,16 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static BDPresentation CreatePresentation(Entities pContext, Guid pParentId)
         {
-            BDPresentation presentation = CreateBDPresentation(Guid.NewGuid(), false);
+            return CreatePresentation(pContext, pParentId, Guid.NewGuid());
+        }
+
+        /// <summary>
+        /// Extended Create method that sets creation date and schema version.
+        /// </summary>
+        /// <returns></returns>
+        public static BDPresentation CreatePresentation(Entities pContext, Guid pParentId, Guid pUuid)
+        {
+            BDPresentation presentation = CreateBDPresentation(pUuid, false);
             presentation.createdBy = Guid.Empty;
             presentation.createdDate = DateTime.Now;
             presentation.schemaVersion = ENTITY_SCHEMAVERSION;
@@ -68,7 +77,6 @@ namespace BDEditor.DataModel
 
             return presentation;
         }
-
         /// <summary>
         /// Extended Save method that sets modifiedDate.
         /// </summary>

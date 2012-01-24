@@ -64,7 +64,16 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static BDTherapyGroup CreateTherapyGroup(Entities pContext, Guid pParentId)
         {
-            BDTherapyGroup therapyGroup = CreateBDTherapyGroup(Guid.NewGuid(), false);
+            return CreateTherapyGroup(pContext, pParentId, Guid.NewGuid());
+        }
+
+        /// <summary>
+        /// Extended Create method that sets creation date and schema version.
+        /// </summary>
+        /// <returns></returns>
+        public static BDTherapyGroup CreateTherapyGroup(Entities pContext, Guid pParentId, Guid pUuid)
+        {
+            BDTherapyGroup therapyGroup = CreateBDTherapyGroup(pUuid, false);
             therapyGroup.createdBy = Guid.Empty;
             therapyGroup.createdDate = DateTime.Now;
             therapyGroup.schemaVersion = ENTITY_SCHEMAVERSION;

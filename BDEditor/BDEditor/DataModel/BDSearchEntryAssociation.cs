@@ -55,7 +55,17 @@ namespace BDEditor.DataModel
         /// <returns>BDSearchEntryAssociation</returns>
         public static BDSearchEntryAssociation CreateSearchEntryAssociation(Entities pContext)
         {
-            BDSearchEntryAssociation entry = CreateBDSearchEntryAssociation(Guid.NewGuid());
+            return CreateSearchEntryAssociation(pContext, Guid.NewGuid());
+        }
+
+        /// <summary>
+        /// Extended Create method that sets the created data and schema version. Does not save.
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <returns>BDSearchEntryAssociation</returns>
+        public static BDSearchEntryAssociation CreateSearchEntryAssociation(Entities pContext, Guid pUuid)
+        {
+            BDSearchEntryAssociation entry = CreateBDSearchEntryAssociation(pUuid);
             entry.createdBy = Guid.Empty;
             entry.createdDate = DateTime.Now;
             entry.schemaVersion = ENTITY_SCHEMAVERSION;

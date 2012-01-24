@@ -73,7 +73,16 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static BDTherapy CreateTherapy(Entities pContext, Guid pParentId)
         {
-            BDTherapy therapy = CreateBDTherapy(Guid.NewGuid(), false);
+            return CreateTherapy(pContext, pParentId, Guid.NewGuid());
+        }
+
+        /// <summary>
+        /// Extended Create method that sets created date and schema version
+        /// </summary>
+        /// <returns></returns>
+        public static BDTherapy CreateTherapy(Entities pContext, Guid pParentId, Guid pUuid)
+        {
+            BDTherapy therapy = CreateBDTherapy(pUuid, false);
             therapy.createdBy = Guid.Empty;
             therapy.createdDate = DateTime.Now;
             therapy.schemaVersion = ENTITY_SCHEMAVERSION;

@@ -151,6 +151,8 @@
           <Property Name="objectId" Type="uniqueidentifier" />
           <Property Name="objectKeyName" Type="nvarchar" MaxLength="100" />
           <Property Name="childKeyName" Type="nvarchar" MaxLength="100" />
+          <Property Name="schemaVersion" Type="int" />
+          <Property Name="createdDate" Type="datetime" />
         </EntityType>
         <EntityType Name="BDPathogenGroups">
           <Key>
@@ -646,6 +648,8 @@
           <Property Type="Guid" Name="objectId" />
           <Property Type="String" Name="objectKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="childKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="schemaVersion" />
+          <Property Type="DateTime" Name="createdDate" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -963,6 +967,8 @@
           <EntitySetMapping Name="BDObjectAssociations">
             <EntityTypeMapping TypeName="BDDataModel.BDObjectAssociation">
               <MappingFragment StoreEntitySet="BDObjectAssociation">
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
                 <ScalarProperty Name="childKeyName" ColumnName="childKeyName" />
                 <ScalarProperty Name="objectKeyName" ColumnName="objectKeyName" />
                 <ScalarProperty Name="objectId" ColumnName="objectId" />
@@ -1008,7 +1014,7 @@
         <EntityTypeShape EntityType="BDDataModel.BDSection" Width="1.5" PointX="6.625" PointY="0.75" Height="3.3263964843750031" />
         <EntityTypeShape EntityType="BDDataModel.BDSubcategory" Width="1.5" PointX="10.75" PointY="1" Height="3.3263964843750067" />
         <EntityTypeShape EntityType="BDDataModel.BDTherapy" Width="1.5" PointX="10.875" PointY="7.125" Height="4.8648079427083246" />
-        <EntityTypeShape EntityType="BDDataModel.BDObjectAssociation" Width="1.5" PointX="5" PointY="8.75" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="BDDataModel.BDObjectAssociation" Width="3.625" PointX="5.375" PointY="11.75" Height="1.9210009765625031" />
       </Diagram>
     </Diagrams>
   </Designer>

@@ -52,8 +52,16 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static BDSection CreateSection(Entities pContext)
         {
+            return CreateSection(pContext, Guid.NewGuid());
+        }
 
-            BDSection section = CreateBDSection(Guid.NewGuid(), false);
+        /// <summary>
+        /// Extended Create method that sets the created date and the schema version
+        /// </summary>
+        /// <returns></returns>
+        public static BDSection CreateSection(Entities pContext, Guid pUuid)
+        {
+            BDSection section = CreateBDSection(pUuid, false);
             section.createdBy = Guid.Empty;
             section.createdDate = DateTime.Now;
             section.schemaVersion = ENTITY_SCHEMAVERSION;
@@ -63,7 +71,6 @@ namespace BDEditor.DataModel
             pContext.AddObject(ENTITYNAME, section);
 
             return section;
-
         }
 
         /// <summary>

@@ -54,7 +54,17 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static BDPathogenGroup CreatePathogenGroup(Entities pContext, Guid pParentId)
         {
-            BDPathogenGroup pathogenGroup = CreateBDPathogenGroup(Guid.NewGuid(), false);
+            return CreatePathogenGroup(pContext, pParentId, Guid.NewGuid());
+        }
+
+        /// <summary>
+        /// Extended Create method that sets created date and schema version
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <returns></returns>
+        public static BDPathogenGroup CreatePathogenGroup(Entities pContext, Guid pParentId, Guid pUuid)
+        {
+            BDPathogenGroup pathogenGroup = CreateBDPathogenGroup(pUuid, false);
             pathogenGroup.createdBy = Guid.Empty;
             pathogenGroup.createdDate = DateTime.Now;
             pathogenGroup.schemaVersion = ENTITY_SCHEMAVERSION;
@@ -66,7 +76,6 @@ namespace BDEditor.DataModel
 
             return pathogenGroup;
         }
-
 
         /// <summary>
         /// Extended Save method that sets the modified date.

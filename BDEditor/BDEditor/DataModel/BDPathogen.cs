@@ -51,7 +51,12 @@ namespace BDEditor.DataModel
 
         public static BDPathogen CreatePathogen(Entities pContext, Guid pParentId)
         {
-            BDPathogen pathogen = CreateBDPathogen(Guid.NewGuid(), false);
+            return CreatePathogen(pContext, pParentId, Guid.NewGuid());
+        }
+
+        public static BDPathogen CreatePathogen(Entities pContext, Guid pParentId, Guid pUuid)
+        {
+            BDPathogen pathogen = CreateBDPathogen(pUuid, false);
             pathogen.createdBy = Guid.Empty;
             pathogen.createdDate = DateTime.Now;
             pathogen.schemaVersion = ENTITY_SCHEMAVERSION;

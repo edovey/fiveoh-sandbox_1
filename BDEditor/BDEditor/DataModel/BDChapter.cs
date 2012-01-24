@@ -51,7 +51,17 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static BDChapter CreateChapter(Entities pContext)
         {
-            BDChapter chapter = CreateBDChapter(Guid.NewGuid(), false);
+            return CreateChapter(pContext, Guid.NewGuid());
+        }
+
+        /// <summary>
+        /// Extended Create method that sets the created date and the schema version
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <returns></returns>
+        public static BDChapter CreateChapter(Entities pContext, Guid pUuid)
+        {
+            BDChapter chapter = CreateBDChapter(pUuid, false);
             chapter.createdBy = Guid.Empty;
             chapter.createdDate = DateTime.Now;
             chapter.schemaVersion = ENTITY_SCHEMAVERSION;

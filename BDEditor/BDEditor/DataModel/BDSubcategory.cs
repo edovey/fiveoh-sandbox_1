@@ -53,7 +53,16 @@ namespace BDEditor.DataModel
         /// <returns>New BDSubcategory object</returns>
         public static BDSubcategory CreateSubcategory(Entities pContext)
         {
-            BDSubcategory subcategory = CreateBDSubcategory(Guid.NewGuid(), false);
+            return CreateSubcategory(pContext, Guid.NewGuid());
+        }
+
+        /// <summary>
+        /// Extended Create method that sets created date and schema version.
+        /// </summary>
+        /// <returns>New BDSubcategory object</returns>
+        public static BDSubcategory CreateSubcategory(Entities pContext, Guid pUuid)
+        {
+            BDSubcategory subcategory = CreateBDSubcategory(pUuid, false);
             subcategory.createdBy = Guid.Empty;
             subcategory.createdDate = DateTime.Now;
             subcategory.schemaVersion = ENTITY_SCHEMAVERSION;

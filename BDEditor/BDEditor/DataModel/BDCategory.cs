@@ -54,8 +54,19 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <returns></returns>
         public static BDCategory CreateCategory(Entities pContext)
+        {   
+            return CreateCategory(pContext, Guid.NewGuid());
+        }
+
+        /// <summary>
+        /// Extended Create Method that includes setting creation date and schema version.
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pUuid"></param>
+        /// <returns></returns>
+        public static BDCategory CreateCategory(Entities pContext, Guid pUuid)
         {
-            BDCategory category = CreateBDCategory(Guid.NewGuid(), false);
+            BDCategory category = CreateBDCategory(pUuid, false);
             category.createdBy = Guid.Empty;
             category.createdDate = DateTime.Now;
             category.schemaVersion = ENTITY_SCHEMAVERSION;
@@ -65,7 +76,7 @@ namespace BDEditor.DataModel
             category.parentKeyName = string.Empty;
 
             pContext.AddObject(ENTITYNAME, category);
-            
+
             return category;
         }
 

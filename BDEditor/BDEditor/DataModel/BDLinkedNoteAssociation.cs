@@ -64,7 +64,17 @@ namespace BDEditor.DataModel
         /// <returns>BDLinkedNoteAssociation</returns>
         public static BDLinkedNoteAssociation CreateLinkedNoteAssociation(Entities pContext)
         {
-            BDLinkedNoteAssociation linkedNoteAssociation = CreateBDLinkedNoteAssociation(Guid.NewGuid(), false);
+            return CreateLinkedNoteAssociation(pContext, Guid.NewGuid());
+        }
+
+        /// <summary>
+        /// Extended Create method that sets the created data and schema version. Does not save.
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <returns>BDLinkedNoteAssociation</returns>
+        public static BDLinkedNoteAssociation CreateLinkedNoteAssociation(Entities pContext, Guid pUuid)
+        {
+            BDLinkedNoteAssociation linkedNoteAssociation = CreateBDLinkedNoteAssociation(pUuid, false);
             linkedNoteAssociation.createdBy = Guid.Empty;
             linkedNoteAssociation.createdDate = DateTime.Now;
             linkedNoteAssociation.deprecated = false;

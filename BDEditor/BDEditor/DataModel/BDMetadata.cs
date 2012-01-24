@@ -55,7 +55,16 @@ namespace BDEditor.DataModel
         /// <returns>BDMetadata</returns>
         public static BDMetadata CreateMetadata(Entities pContext, Guid pItemId, string pItemKeyName)
         {
-            BDMetadata entry = CreateBDMetadata(Guid.NewGuid());
+            return CreateMetadata(pContext, pItemId, pItemKeyName, Guid.NewGuid());
+        }
+
+        /// <summary>
+        /// Extended Create method that sets the created date and schema version
+        /// </summary>
+        /// <returns>BDMetadata</returns>
+        public static BDMetadata CreateMetadata(Entities pContext, Guid pItemId, string pItemKeyName, Guid pUuid)
+        {
+            BDMetadata entry = CreateBDMetadata(pUuid);
             entry.createdBy = Guid.Empty;
             entry.createdDate = DateTime.Now;
             entry.schemaVersion = ENTITY_SCHEMAVERSION;

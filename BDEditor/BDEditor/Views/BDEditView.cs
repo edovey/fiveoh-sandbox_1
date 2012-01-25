@@ -228,17 +228,17 @@ namespace BDEditor.Views
         }
 
   
-        private void createTestDataButton_Click(object sender, EventArgs e)
+        private void loadSeedData_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
             BDDataLoader dataLoader = new BDDataLoader();
-            //dataLoader.ImportData(dataContext, @"Resources\BDEditorStructure.txt");
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_2.txt");
+
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_2a.txt", BDDataLoader.baseDataLayoutType.chapter2a);
 
             LoadChapterDropDown();
             BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
-            createTestDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
+            loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
 
             this.Cursor = Cursors.Default;
             
@@ -298,7 +298,7 @@ namespace BDEditor.Views
 
             systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             lastSyncDate = systemSetting.settingDateTimeValue;
-            createTestDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
+            loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
 
             this.Cursor = Cursors.Default;
         }
@@ -316,7 +316,7 @@ namespace BDEditor.Views
 
             BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
-            createTestDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
+            loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
             UpdateSyncLabel();
         }
 
@@ -409,7 +409,7 @@ namespace BDEditor.Views
 
             systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             lastSyncDate = systemSetting.settingDateTimeValue;
-            createTestDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
+            loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
 
             this.Cursor = Cursors.Default;
 #else

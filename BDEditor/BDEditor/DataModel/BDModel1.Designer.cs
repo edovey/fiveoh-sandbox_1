@@ -2722,6 +2722,30 @@ namespace BDEditor.DataModel
         private global::System.String _itemKeyName;
         partial void OnitemKeyNameChanging(global::System.String value);
         partial void OnitemKeyNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> layoutVariant
+        {
+            get
+            {
+                return _layoutVariant;
+            }
+            set
+            {
+                OnlayoutVariantChanging(value);
+                ReportPropertyChanging("layoutVariant");
+                _layoutVariant = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("layoutVariant");
+                OnlayoutVariantChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _layoutVariant;
+        partial void OnlayoutVariantChanging(Nullable<global::System.Int32> value);
+        partial void OnlayoutVariantChanged();
 
         #endregion
     

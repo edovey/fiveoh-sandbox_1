@@ -51,8 +51,26 @@ namespace BDEditor.DataModel
                 association.objectKeyName = pObjectKeyName;
                 association.childKeyName = pChildKeyName;
                 association.schemaVersion = ENTITY_SCHEMAVERSION;
+                association.createdDate = DateTime.Now;
 
                 pContext.AddObject(ENTITYNAME, association);
+                Save(pContext, association);
+            }
+        }
+
+        /// <summary>
+        /// Extended Save method that sets the modified date
+        /// </summary>
+        /// <param name="pEntry"></param>
+        public static void Save(Entities pContext, BDObjectAssociation pEntry)
+        {
+            if (pEntry.EntityState != EntityState.Unchanged)
+            {
+                if (pEntry.schemaVersion != ENTITY_SCHEMAVERSION)
+                    pEntry.schemaVersion = ENTITY_SCHEMAVERSION;
+
+                System.Diagnostics.Debug.WriteLine(@"ObjectAssociation Save");
+                pContext.SaveChanges();
             }
         }
 

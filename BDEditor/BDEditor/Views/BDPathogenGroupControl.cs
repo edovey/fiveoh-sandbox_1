@@ -475,7 +475,6 @@ namespace BDEditor.Views
             OnSearchableItemAdded(se);
         }
 
-
         private void TherapyGroup_RequestItemAdd(object sender, EventArgs e)
         {
             BDTherapyGroupControl control = addTherapyGroupControl(null, therapyGroupControlList.Count);

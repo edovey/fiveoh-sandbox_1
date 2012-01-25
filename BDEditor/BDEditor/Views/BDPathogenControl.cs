@@ -139,7 +139,7 @@ namespace BDEditor.Views
                     this.currentPathogen.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
 
                     // raise event to begin metadata entry creation
-                    OnSearchableItemAdded(new SearchableItemEventArgs(this.currentPathogen.uuid, BDPathogen.ENTITYNAME));
+                    OnSearchableItemAdded(new SearchableItemEventArgs(this.currentPathogen.uuid, BDPathogen.KEY_NAME));
                 }
             }
 

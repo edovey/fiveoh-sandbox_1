@@ -47,7 +47,7 @@ namespace BDEditor.DataModel
         private const string DISPLAYPARENTID = @"md_displayParentId";
         private const string DISPLAYPARENTKEYNAME = @"md_displayParentKeyName";
         private const string DEMOGRAPHIC = @"md_demographic";
-
+        private const string LAYOUTVARIANT = @"md_layoutVariant";
 
         /// <summary>
         /// Extended Create method that sets the created date and schema version
@@ -64,15 +64,30 @@ namespace BDEditor.DataModel
         /// <returns>BDMetadata</returns>
         public static BDMetadata CreateMetadata(Entities pContext, Guid pItemId, string pItemKeyName, Guid pUuid)
         {
-            BDMetadata entry = CreateBDMetadata(pUuid);
-            entry.createdBy = Guid.Empty;
-            entry.createdDate = DateTime.Now;
-            entry.schemaVersion = ENTITY_SCHEMAVERSION;
-            entry.itemId = pItemId;
-            entry.itemKeyName = pItemKeyName;
+            BDMetadata entry = GetMetadataWithItemId(pContext, pItemId);
+            if (null == entry)
+            {
+                entry = CreateBDMetadata(pUuid);
+                entry.createdBy = Guid.Empty;
+                entry.createdDate = DateTime.Now;
+                entry.schemaVersion = ENTITY_SCHEMAVERSION;
+                entry.itemId = pItemId;
+                entry.itemKeyName = pItemKeyName;
 
-            pContext.AddObject(ENTITYNAME, entry);
+                pContext.AddObject(ENTITYNAME, entry);
+            }
             return entry;
+        }
+
+        public static Boolean Exists(Entities pContext, Guid pItemId)
+        {
+            IQueryable<BDMetadata> entries = (from entry in pContext.BDMetadatas
+                                                       where (entry.itemId == pItemId)
+                                                       select entry);
+
+            Boolean result = (entries.Count<BDMetadata>() > 0);
+
+            return result;
         }
 
         /// <summary>
@@ -101,9 +116,12 @@ namespace BDEditor.DataModel
         {
             if (pEntity != null)
             {
+                BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
                 // delete record from local data store
                 pContext.DeleteObject(pEntity);
                 pContext.SaveChanges();
+
+                
             }
         }
 
@@ -118,9 +136,16 @@ namespace BDEditor.DataModel
             BDMetadata entity = BDMetadata.GetMetadataWithId(pContext, pUuid);
             if (null != entity)
             {
-                    pContext.DeleteObject(entity);
-                    pContext.SaveChanges();
+                BDDeletion.CreateDeletion(pContext, KEY_NAME, pUuid);
+                pContext.DeleteObject(entity);
+                pContext.SaveChanges();
             }
+        }
+
+        public static void DeleteForItemId(Entities pContext, Guid? pItemId)
+        {
+            BDMetadata meta = GetMetadataWithItemId(pContext, pItemId);
+            Delete(pContext, meta);
         }
 
         /// <summary>
@@ -242,6 +267,7 @@ namespace BDEditor.DataModel
             entry.itemKeyName = pAttributeDictionary[ITEMKEYNAME];
             entry.displayParentId = Guid.Parse(pAttributeDictionary[DISPLAYPARENTID]);
             entry.displayParentKeyName = pAttributeDictionary[DISPLAYPARENTKEYNAME];
+            entry.layoutVariant = short.Parse(pAttributeDictionary[LAYOUTVARIANT]);
 
             if (pSaveChanges)
                 pDataContext.SaveChanges();
@@ -260,6 +286,7 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
 
+            attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.LAYOUTVARIANT).WithValue(string.Format(@"{0}", layoutVariant)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.ITEMID).WithValue((null == itemId) ? Guid.Empty.ToString() : itemId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.ITEMKEYNAME).WithValue((null == itemKeyName) ? string.Empty : itemKeyName).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.DISPLAYPARENTID).WithValue((null == displayParentId) ? Guid.Empty.ToString() : displayParentId.ToString().ToUpper()).WithReplace(true));

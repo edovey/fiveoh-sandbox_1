@@ -57,15 +57,13 @@ namespace BDEditor.Views
 
         protected virtual void OnSearchableItemAdded(SearchableItemEventArgs se)
         {
-            // create metadata entry here
+            // make a copy of the handler to avoid race condition
+            EventHandler<SearchableItemEventArgs> handler = SearchableItemAdded;
 
-            //TODO: Review the location of this
-            BDMetadata md = BDMetadata.CreateMetadata(dataContext, se.ItemId, se.ItemEntityName);
-            md.displayParentKeyName = BDDisease.ENTITYNAME;
-            md.displayParentId = this.currentPresentation.parentId;
-            BDMetadata.Save(dataContext, md);
-
-            if (null != SearchableItemAdded) { SearchableItemAdded(this, se); }
+            if (null != handler)
+            {
+                handler(this, se);
+            }
         }
         
         public BDPresentation CurrentPresentation
@@ -375,6 +373,11 @@ namespace BDEditor.Views
 
         private void PathogenGroup_SearchableItemAdded(object sender, SearchableItemEventArgs se)
         {
+            BDMetadata md = BDMetadata.CreateMetadata(dataContext, se.ItemId, se.ItemKeyName);
+            md.displayParentKeyName = BDPresentation.KEY_NAME;
+            md.displayParentId = this.currentPresentation.Uuid;
+            BDMetadata.Save(dataContext, md);
+
             OnSearchableItemAdded(se);
         }
 

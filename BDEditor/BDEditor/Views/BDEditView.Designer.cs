@@ -31,17 +31,17 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDEditView));
             this.headerPanel = new System.Windows.Forms.Panel();
+            this.btnImportFromProduction = new System.Windows.Forms.Button();
             this.brewButton = new System.Windows.Forms.Button();
             this.btnSyncWithReplaceLocal = new System.Windows.Forms.Button();
             this.lbLastSyncDateTime = new System.Windows.Forms.Label();
             this.btnSync = new System.Windows.Forms.Button();
-            this.createTestDataButton = new System.Windows.Forms.Button();
+            this.loadSeedDataButton = new System.Windows.Forms.Button();
             this.chapterDropDown = new System.Windows.Forms.ComboBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.chapterTree = new System.Windows.Forms.TreeView();
             this.entitiesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.entitiesBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.btnImportFromProduction = new System.Windows.Forms.Button();
             this.headerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -57,13 +57,24 @@
             this.headerPanel.Controls.Add(this.btnSyncWithReplaceLocal);
             this.headerPanel.Controls.Add(this.lbLastSyncDateTime);
             this.headerPanel.Controls.Add(this.btnSync);
-            this.headerPanel.Controls.Add(this.createTestDataButton);
+            this.headerPanel.Controls.Add(this.loadSeedDataButton);
             this.headerPanel.Controls.Add(this.chapterDropDown);
             this.headerPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.headerPanel.Location = new System.Drawing.Point(0, 0);
             this.headerPanel.Name = "headerPanel";
             this.headerPanel.Size = new System.Drawing.Size(1192, 39);
             this.headerPanel.TabIndex = 0;
+            // 
+            // btnImportFromProduction
+            // 
+            this.btnImportFromProduction.Location = new System.Drawing.Point(619, 10);
+            this.btnImportFromProduction.Name = "btnImportFromProduction";
+            this.btnImportFromProduction.Size = new System.Drawing.Size(103, 23);
+            this.btnImportFromProduction.TabIndex = 6;
+            this.btnImportFromProduction.Text = "AWS Prod Import";
+            this.btnImportFromProduction.UseVisualStyleBackColor = true;
+            this.btnImportFromProduction.Visible = false;
+            this.btnImportFromProduction.Click += new System.EventHandler(this.btnImportFromProduction_Click);
             // 
             // brewButton
             // 
@@ -106,16 +117,16 @@
             this.btnSync.UseVisualStyleBackColor = true;
             this.btnSync.Click += new System.EventHandler(this.btnSync_Click);
             // 
-            // createTestDataButton
+            // loadSeedDataButton
             // 
-            this.createTestDataButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.createTestDataButton.Location = new System.Drawing.Point(809, 10);
-            this.createTestDataButton.Name = "createTestDataButton";
-            this.createTestDataButton.Size = new System.Drawing.Size(104, 23);
-            this.createTestDataButton.TabIndex = 1;
-            this.createTestDataButton.Text = "Load Seed Data";
-            this.createTestDataButton.UseVisualStyleBackColor = true;
-            this.createTestDataButton.Click += new System.EventHandler(this.createTestDataButton_Click);
+            this.loadSeedDataButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.loadSeedDataButton.Location = new System.Drawing.Point(809, 10);
+            this.loadSeedDataButton.Name = "loadSeedDataButton";
+            this.loadSeedDataButton.Size = new System.Drawing.Size(104, 23);
+            this.loadSeedDataButton.TabIndex = 1;
+            this.loadSeedDataButton.Text = "Load Seed Data";
+            this.loadSeedDataButton.UseVisualStyleBackColor = true;
+            this.loadSeedDataButton.Click += new System.EventHandler(this.loadSeedData_Click);
             // 
             // chapterDropDown
             // 
@@ -169,17 +180,6 @@
             // 
             this.entitiesBindingSource1.DataSource = typeof(BDEditor.DataModel.Entities);
             // 
-            // btnImportFromProduction
-            // 
-            this.btnImportFromProduction.Location = new System.Drawing.Point(619, 10);
-            this.btnImportFromProduction.Name = "btnImportFromProduction";
-            this.btnImportFromProduction.Size = new System.Drawing.Size(103, 23);
-            this.btnImportFromProduction.TabIndex = 6;
-            this.btnImportFromProduction.Text = "AWS Prod Import";
-            this.btnImportFromProduction.UseVisualStyleBackColor = true;
-            this.btnImportFromProduction.Visible = false;
-            this.btnImportFromProduction.Click += new System.EventHandler(this.btnImportFromProduction_Click);
-            // 
             // BDEditView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -213,7 +213,7 @@
         private System.Windows.Forms.TreeView chapterTree;
         private System.Windows.Forms.BindingSource entitiesBindingSource;
         private System.Windows.Forms.BindingSource entitiesBindingSource1;
-        private System.Windows.Forms.Button createTestDataButton;
+        private System.Windows.Forms.Button loadSeedDataButton;
         private System.Windows.Forms.Label lbLastSyncDateTime;
         private System.Windows.Forms.Button btnSync;
         private System.Windows.Forms.Button btnSyncWithReplaceLocal;

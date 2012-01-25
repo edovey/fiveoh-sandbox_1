@@ -8,11 +8,7 @@ namespace BDEditor.Classes
    public  class SearchableItemEventArgs : EventArgs
     {
        private Guid itemId;
-       private string itemEntityName;
-       private Guid? displayParentId;
-       private string displayParentEntityName;
-       private string demographic;
-       private string disease;
+       private string itemKeyName;
 
        /// <summary>
        /// Class to define event args for searchable item changes.  
@@ -20,10 +16,10 @@ namespace BDEditor.Classes
        /// </summary>
        /// <param name="pName"></param>
        /// <param name="pItemId"></param>
-       public SearchableItemEventArgs(Guid pItemId, string pItemEntityName)
+       public SearchableItemEventArgs(Guid pItemId, string pItemKeyName)
        {
            itemId = pItemId;
-           itemEntityName = pItemEntityName;
+           itemKeyName = pItemKeyName;
        }
 
        /// <summary>
@@ -37,46 +33,10 @@ namespace BDEditor.Classes
        /// <summary>
        /// Class name of the item
        /// </summary>
-       public string ItemEntityName
+       public string ItemKeyName
        {
-           get { return itemEntityName; }
+           get { return itemKeyName; }
        }
 
-       /// <summary>
-       /// Guid of the entity that owns the 'page' where the searchable term will
-       /// eventually be displayed
-       /// </summary>
-       public Guid? DisplayParentId
-       {
-           set { displayParentId = value; }
-           get { return displayParentId; }
-       }
-
-       /// <summary>
-       /// entity name of the parent of the searchable term
-       /// </summary>
-       public string DisplayParentEntityName
-       {
-           set { displayParentEntityName = value; }
-           get { return displayParentEntityName; }
-       }
-
-       /// <summary>
-       /// Demographic to which the searchable term applies (Adult, Paediatric, etc.)
-       /// </summary>
-       public string Demographic
-       {
-           set { demographic = value; }
-           get { return Demographic; }
-       }
-
-       /// <summary>
-       /// Disease that may be associated with the searchable term
-       /// </summary>
-       public string Disease
-       {
-           set { disease = value; }
-           get { return disease; }
-       }
     }
 }

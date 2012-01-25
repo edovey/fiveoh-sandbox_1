@@ -263,7 +263,7 @@ namespace BDEditor.Views
                     this.currentTherapy.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
 
                     // raise event to begin metadata entry creation
-                    OnSearchableItemAdded(new SearchableItemEventArgs(this.currentTherapy.uuid, BDTherapy.ENTITYNAME));
+                    OnSearchableItemAdded(new SearchableItemEventArgs(this.currentTherapy.uuid, BDTherapy.KEY_NAME));
                 }
             }
 

@@ -142,6 +142,7 @@
           <Property Name="displayParentId" Type="uniqueidentifier" />
           <Property Name="displayParentKeyName" Type="nvarchar" MaxLength="100" />
           <Property Name="itemKeyName" Type="nvarchar" MaxLength="100" />
+          <Property Name="layoutVariant" Type="int" />
         </EntityType>
         <EntityType Name="BDObjectAssociation">
           <Key>
@@ -461,6 +462,7 @@
           <Property Type="Guid" Name="displayParentId" />
           <Property Type="String" Name="displayParentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="itemKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="layoutVariant" />
         </EntityType>
         <EntityType Name="BDSearchEntryAssociation">
           <Key>
@@ -762,6 +764,7 @@
           <EntitySetMapping Name="BDMetadatas">
             <EntityTypeMapping TypeName="BDDataModel.BDMetadata">
               <MappingFragment StoreEntitySet="BDMetadata">
+                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
                 <ScalarProperty Name="itemKeyName" ColumnName="itemKeyName" />
                 <ScalarProperty Name="displayParentKeyName" ColumnName="displayParentKeyName" />
                 <ScalarProperty Name="displayParentId" ColumnName="displayParentId" />

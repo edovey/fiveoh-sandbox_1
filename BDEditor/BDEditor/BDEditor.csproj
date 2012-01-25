@@ -323,7 +323,9 @@
     <None Include="Resources\close_16.png" />
     <None Include="Resources\del_16.png" />
     <None Include="Resources\down_16.png" />
-    <Content Include="Resources\Chapter_2.txt">
+    <Content Include="Resources\Chapter_2c.txt" />
+    <Content Include="Resources\Chapter_2b.txt" />
+    <Content Include="Resources\Chapter_2a.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="sqlceca35.dll">
@@ -382,7 +384,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
+      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -75,7 +75,7 @@ namespace BDEditor.Classes
             syncDictionary.Add(BDSearchEntry.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
             syncDictionary.Add(BDSearchEntryAssociation.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
             syncDictionary.Add(BDMetadata.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
-            syncDictionary.Add(BDObjectAssociation.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
+            syncDictionary.Add(BDNodeAssociation.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
 
             // List the remote domains
             ListDomainsResponse sdbListDomainsResponse = SimpleDb.ListDomains(new ListDomainsRequest());
@@ -228,8 +228,8 @@ namespace BDEditor.Classes
                         case BDMetadata.KEY_NAME:
                             domainName = BDMetadata.AWS_DOMAIN;
                             break;
-                        case BDObjectAssociation.KEY_NAME:
-                            domainName = BDObjectAssociation.AWS_DOMAIN;
+                        case BDNodeAssociation.KEY_NAME:
+                            domainName = BDNodeAssociation.AWS_DOMAIN;
                             break;
                     }
 
@@ -367,8 +367,8 @@ namespace BDEditor.Classes
                                 case BDSearchEntryAssociation.AWS_DOMAIN:
                                     entryGuid = BDSearchEntryAssociation.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                     break;
-                                case BDObjectAssociation.AWS_DOMAIN:
-                                    entryGuid = BDObjectAssociation.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                case BDNodeAssociation.AWS_DOMAIN:
+                                    entryGuid = BDNodeAssociation.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                     break;
                             }
                             // The entry id will be null if a sync conflict prevented create/update so add it to the conflict list
@@ -525,8 +525,8 @@ namespace BDEditor.Classes
                                 case BDSearchEntryAssociation.AWS_PROD_DOMAIN:
                                     entryGuid = BDSearchEntryAssociation.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                     break;
-                                case BDObjectAssociation.AWS_PROD_DOMAIN:
-                                    entryGuid = BDObjectAssociation.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                case BDNodeAssociation.AWS_PROD_DOMAIN:
+                                    entryGuid = BDNodeAssociation.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                     break;
                             }
                             // The entry id will be null if a sync conflict prevented create/update so add it to the conflict list

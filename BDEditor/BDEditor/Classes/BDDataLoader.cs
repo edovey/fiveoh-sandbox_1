@@ -120,7 +120,7 @@ namespace BDEditor.Classes
                 bdDisease = null;
                 bdPresentation = null;
 
-                BDObjectAssociation.CreateObjectAssociation(dataContext, bdChapter.uuid, BDChapter.KEY_NAME, BDSection.KEY_NAME);
+                BDNodeAssociation.CreateNodeAssociation(dataContext, bdChapter.uuid, BDChapter.KEY_NAME, BDSection.KEY_NAME);
 
                 BDMetadata meta = BDMetadata.CreateMetadata(dataContext, bdSection.Uuid, BDSection.KEY_NAME);
                 meta.layoutVariant = 1;
@@ -140,7 +140,7 @@ namespace BDEditor.Classes
                 bdDisease = null;
                 bdPresentation = null;
 
-                BDObjectAssociation.CreateObjectAssociation(dataContext, bdSection.uuid, BDSection.KEY_NAME, BDCategory.KEY_NAME);
+                BDNodeAssociation.CreateNodeAssociation(dataContext, bdSection.uuid, BDSection.KEY_NAME, BDCategory.KEY_NAME);
 
                 BDMetadata meta = BDMetadata.CreateMetadata(dataContext, bdCategory.Uuid, BDCategory.KEY_NAME);
                 meta.layoutVariant = 1;
@@ -154,13 +154,13 @@ namespace BDEditor.Classes
                 bdDisease.displayOrder = idxDisease++;
                 if (null != bdSubCategory)
                 {
-                    BDObjectAssociation.CreateObjectAssociation(dataContext, bdSubCategory.uuid, BDSubcategory.KEY_NAME, BDDisease.KEY_NAME);
+                    BDNodeAssociation.CreateNodeAssociation(dataContext, bdSubCategory.uuid, BDSubcategory.KEY_NAME, BDDisease.KEY_NAME);
                     bdDisease.parentId = bdSubCategory.uuid;
                     bdDisease.parentKeyName = BDSubcategory.KEY_NAME;
                 }
                 else
                 {
-                    BDObjectAssociation.CreateObjectAssociation(dataContext, bdCategory.uuid, BDCategory.KEY_NAME, BDDisease.KEY_NAME);
+                    BDNodeAssociation.CreateNodeAssociation(dataContext, bdCategory.uuid, BDCategory.KEY_NAME, BDDisease.KEY_NAME);
                     bdDisease.parentId = bdCategory.uuid;
                     bdDisease.parentKeyName = BDCategory.KEY_NAME;
                 }
@@ -180,9 +180,9 @@ namespace BDEditor.Classes
                 bdPresentation.displayOrder = idxPresentation++;
                 BDPresentation.Save(dataContext, bdPresentation);
 
-                BDObjectAssociation.CreateObjectAssociation(dataContext, bdDisease.uuid, BDDisease.KEY_NAME, BDPresentation.KEY_NAME);
+                BDNodeAssociation.CreateNodeAssociation(dataContext, bdDisease.uuid, BDDisease.KEY_NAME, BDPresentation.KEY_NAME);
 
-                BDObjectAssociation.CreateObjectAssociation(dataContext, bdPresentation.uuid, BDPresentation.KEY_NAME, BDPathogenGroup.KEY_NAME);
+                BDNodeAssociation.CreateNodeAssociation(dataContext, bdPresentation.uuid, BDPresentation.KEY_NAME, BDPathogenGroup.KEY_NAME);
 
                 BDMetadata meta = BDMetadata.CreateMetadata(dataContext, bdPresentation.Uuid, BDPresentation.KEY_NAME);
                 meta.layoutVariant = 1;

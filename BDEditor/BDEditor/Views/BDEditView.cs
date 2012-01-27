@@ -140,13 +140,13 @@ namespace BDEditor.Views
                     sectionNode.Nodes.Add(categoryNode);
                 } // category
                 chapterTree.Nodes.Add(sectionNode);
-            } // section
+            } // node
         }
 
         private void listDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
             splitContainer1.Panel2.Controls.Clear();
-            //BDSection section = sectionDropDown.SelectedValue as BDSection;
+            //BDSection node = sectionDropDown.SelectedValue as BDSection;
             BDChapter entry = chapterDropDown.SelectedItem as BDChapter;
             if (null != entry)
             {

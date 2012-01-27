@@ -137,7 +137,8 @@
     <Compile Include="DataModel\BDLinkedNote.cs" />
     <Compile Include="DataModel\BDLinkedNoteAssociation.cs" />
     <Compile Include="DataModel\BDMetadata.cs" />
-    <Compile Include="DataModel\BDObjectAssociation.cs" />
+    <Compile Include="DataModel\BDNode.cs" />
+    <Compile Include="DataModel\BDNodeAssociation.cs" />
     <Compile Include="DataModel\BDPathogen.cs" />
     <Compile Include="DataModel\BDPathogenGroup.cs" />
     <Compile Include="DataModel\BDPresentation.cs" />
@@ -384,7 +385,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
+      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

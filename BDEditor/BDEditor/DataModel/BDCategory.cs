@@ -147,7 +147,7 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Gets all sections in the model with the specified section ID
+        /// Gets all sections in the model with the specified node ID
         /// </summary>
         /// <param name="pParentId"></param>
         /// <returns>List of Categories</returns>

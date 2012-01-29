@@ -85,7 +85,7 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets the created date and schema version
         /// </summary>
         /// <returns>BDMetadata</returns>
-        public static BDMetadata CreateMetadata(Entities pContext, LayoutVariantType pLayoutVariant, Guid pItemId, Constants.BDObjectType pItemKeyType)
+        public static BDMetadata CreateMetadata(Entities pContext, LayoutVariantType pLayoutVariant, Guid pItemId, Constants.BDNodeType pItemKeyType)
         {
             return CreateMetadata(pContext,pLayoutVariant, pItemId,pItemKeyType, Guid.NewGuid());
         }
@@ -94,7 +94,7 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets the created date and schema version. Returns instance if already exists.
         /// </summary>
         /// <returns>BDMetadata</returns>
-        public static BDMetadata CreateMetadata(Entities pContext, LayoutVariantType pLayoutVariant, Guid pItemId, Constants.BDObjectType pItemKeyType, Guid pUuid)
+        public static BDMetadata CreateMetadata(Entities pContext, LayoutVariantType pLayoutVariant, Guid pItemId, Constants.BDNodeType pItemKeyType, Guid pUuid)
         {
             BDMetadata entry = GetMetadataWithItemId(pContext, pItemId);
             if (null == entry)
@@ -376,7 +376,7 @@ namespace BDEditor.DataModel
             get { throw new NotImplementedException(); }
         }
 
-        public Constants.BDObjectType NodeType
+        public Constants.BDNodeType NodeType
         {
             get { throw new NotImplementedException(); }
         }

@@ -46,10 +46,10 @@ namespace BDEditor.Classes
                 {
                     if (null != association.childNodeType)
                     {
-                        Constants.BDObjectType childNodeType = association.ChildNodeType;
+                        Constants.BDNodeType childNodeType = association.ChildNodeType;
                         switch (childNodeType)
                         {
-                            case Constants.BDObjectType.BDTherapyGroup:
+                            case Constants.BDNodeType.BDTherapyGroup:
                                 IQueryable<BDTherapyGroup> tgEntries = (from entry in pContext.BDTherapyGroups
                                                                   where entry.parentId == pParentId
                                                                   select entry);
@@ -60,7 +60,7 @@ namespace BDEditor.Classes
                                 }
                                 break;
 
-                            case Constants.BDObjectType.BDTherapy:
+                            case Constants.BDNodeType.BDTherapy:
                                 IQueryable<BDTherapy> tEntries = (from entry in pContext.BDTherapies
                                                                   where entry.parentId == pParentId
                                                                   select entry);

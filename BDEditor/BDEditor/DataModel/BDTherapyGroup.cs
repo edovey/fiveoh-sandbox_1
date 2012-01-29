@@ -227,9 +227,9 @@ namespace BDEditor.DataModel
             get { return this.uuid; }
         }
 
-        public Constants.BDObjectType NodeType
+        public Constants.BDNodeType NodeType
         {
-            get { return Constants.BDObjectType.BDTherapyGroup; }
+            get { return Constants.BDNodeType.BDTherapyGroup; }
         }
 
         public string Description

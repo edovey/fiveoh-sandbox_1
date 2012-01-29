@@ -17,7 +17,7 @@ namespace BDEditor.Classes.Navigation
         {
             TreeNode resultNode = new TreeNode();
 
-            if ((null != pChapterNode) && (pChapterNode.NodeType == Constants.BDObjectType.BDChapter))
+            if ((null != pChapterNode) && (pChapterNode.NodeType == Constants.BDNodeType.BDChapter))
             {
 
             }

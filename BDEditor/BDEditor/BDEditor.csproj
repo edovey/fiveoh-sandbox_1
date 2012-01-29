@@ -124,6 +124,7 @@
     <Compile Include="Classes\BDTreeNode.cs" />
     <Compile Include="Classes\Common.cs" />
     <Compile Include="Classes\Constants.cs" />
+    <Compile Include="Classes\Navigation\TreatmentRecommendationTree.cs" />
     <Compile Include="Classes\RepositoryHandler.cs" />
     <Compile Include="Classes\SearchableItemEventArgs.cs" />
     <Compile Include="Classes\SearchEntryGenerator.cs" />
@@ -153,6 +154,7 @@
     </Compile>
     <Compile Include="DataModel\BDSubcategory.cs" />
     <Compile Include="DataModel\BDSystemSetting.cs" />
+    <Compile Include="DataModel\IBDNode.cs" />
     <Compile Include="DataModel\IBDObject.cs" />
     <Compile Include="Views\BDLinkedNoteControl.cs">
       <SubType>UserControl</SubType>
@@ -386,7 +388,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
+      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

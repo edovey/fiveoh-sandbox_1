@@ -229,9 +229,5 @@ namespace BDEditor.DataModel
             return this.Description;
         }
 
-        public Constants.BDObjectType NodeType
-        {
-            get { throw new NotImplementedException(); }
-        }
     }
 }

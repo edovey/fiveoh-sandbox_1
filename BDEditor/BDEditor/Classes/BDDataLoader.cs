@@ -87,7 +87,7 @@ namespace BDEditor.Classes
 
             if( (chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
             {
-                chapter = BDNode.CreateNode(dataContext, Constants.BDObjectType.BDChapter,Guid.Parse(uuidData));
+                chapter = BDNode.CreateNode(dataContext, Constants.BDNodeType.BDChapter,Guid.Parse(uuidData));
                 chapter.name = chapterData;
                 chapter.displayOrder = idxChapter++;
 
@@ -106,7 +106,7 @@ namespace BDEditor.Classes
 
             if ( (sectionData != string.Empty) && ( (null == section) || (section.name != sectionData) ) )
             {
-                section = BDNode.CreateNode(dataContext, Constants.BDObjectType.BDSection, Guid.Parse(uuidData));
+                section = BDNode.CreateNode(dataContext, Constants.BDNodeType.BDSection, Guid.Parse(uuidData));
                 section.name = sectionData;
                 section.SetParent(chapter);
                 section.displayOrder = idxSection++;
@@ -116,7 +116,7 @@ namespace BDEditor.Classes
                 disease = null;
                 presentation = null;
 
-                BDNodeAssociation.CreateNodeAssociation(dataContext, chapter, Constants.BDObjectType.BDSection);
+                BDNodeAssociation.CreateNodeAssociation(dataContext, chapter, Constants.BDNodeType.BDSection);
 
                 BDMetadata meta = BDMetadata.CreateMetadata(dataContext, BDMetadata.LayoutVariantType.TreatmentRecommendation01, section);
                 BDMetadata.Save(dataContext, meta);
@@ -124,7 +124,7 @@ namespace BDEditor.Classes
 
             if ((categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
             {
-                category = BDNode.CreateNode(dataContext, Constants.BDObjectType.BDCategory, Guid.Parse(uuidData));
+                category = BDNode.CreateNode(dataContext, Constants.BDNodeType.BDCategory, Guid.Parse(uuidData));
                 category.name = categoryData;
                 category.SetParent(section);
                 category.displayOrder = idxCategory++;
@@ -133,7 +133,7 @@ namespace BDEditor.Classes
                 disease = null;
                 presentation = null;
 
-                BDNodeAssociation.CreateNodeAssociation(dataContext, section, Constants.BDObjectType.BDChapter);
+                BDNodeAssociation.CreateNodeAssociation(dataContext, section, Constants.BDNodeType.BDChapter);
 
                 BDMetadata meta = BDMetadata.CreateMetadata(dataContext, BDMetadata.LayoutVariantType.TreatmentRecommendation01, category);
                 BDMetadata.Save(dataContext, meta);
@@ -141,7 +141,7 @@ namespace BDEditor.Classes
 
             if ((diseaseData != string.Empty) && ((null == disease) || (disease.name != diseaseData)))
             {
-                disease = BDNode.CreateNode(dataContext, Constants.BDObjectType.BDDisease, Guid.Parse(uuidData));
+                disease = BDNode.CreateNode(dataContext, Constants.BDNodeType.BDDisease, Guid.Parse(uuidData));
                 disease.name = diseaseData;
                 disease.SetParent(category);
                 disease.displayOrder = idxDisease++;
@@ -149,7 +149,7 @@ namespace BDEditor.Classes
 
                 presentation = null;
 
-                BDNodeAssociation.CreateNodeAssociation(dataContext, category, Constants.BDObjectType.BDDisease);
+                BDNodeAssociation.CreateNodeAssociation(dataContext, category, Constants.BDNodeType.BDDisease);
       
                 BDMetadata meta = BDMetadata.CreateMetadata(dataContext, BDMetadata.LayoutVariantType.TreatmentRecommendation01, disease);
                 BDMetadata.Save(dataContext, meta);
@@ -157,14 +157,14 @@ namespace BDEditor.Classes
 
             if ((presentationData != string.Empty) && ((null == presentation) || (presentation.name != presentationData)))
             {
-                presentation = BDNode.CreateNode(dataContext, Constants.BDObjectType.BDPresentation, Guid.Parse(uuidData));
+                presentation = BDNode.CreateNode(dataContext, Constants.BDNodeType.BDPresentation, Guid.Parse(uuidData));
                 presentation.name = presentationData;
                 presentation.SetParent(disease);
                 presentation.displayOrder = idxPresentation++;
                 BDNode.Save(dataContext, presentation);
 
-                BDNodeAssociation.CreateNodeAssociation(dataContext, disease, Constants.BDObjectType.BDPresentation);
-                BDNodeAssociation.CreateNodeAssociation(dataContext, presentation, Constants.BDObjectType.BDPathogenGroup);
+                BDNodeAssociation.CreateNodeAssociation(dataContext, disease, Constants.BDNodeType.BDPresentation);
+                BDNodeAssociation.CreateNodeAssociation(dataContext, presentation, Constants.BDNodeType.BDPathogenGroup);
 
                 BDMetadata meta = BDMetadata.CreateMetadata(dataContext, BDMetadata.LayoutVariantType.TreatmentRecommendation01, presentation);
                 BDMetadata.Save(dataContext, meta);

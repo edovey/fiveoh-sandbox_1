@@ -282,7 +282,7 @@ namespace BDEditor.DataModel
         }
 
 
-        public Constants.BDObjectType NodeType
+        public Constants.BDNodeType NodeType
         {
             get { throw new NotImplementedException(); }
         }

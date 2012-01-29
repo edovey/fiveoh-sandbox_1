@@ -149,16 +149,16 @@ namespace BDEditor.Views
         {
             splitContainer1.Panel2.Controls.Clear();
             //BDSection node = sectionDropDown.SelectedValue as BDSection;
-            BDChapter entry = chapterDropDown.SelectedItem as BDChapter;
-            if (null != entry)
-            {
-                this.Cursor = Cursors.WaitCursor;
-                rebuildTree(entry);
-                this.Cursor = Cursors.Default;
-            }
+            //BDChapter entry = chapterDropDown.SelectedItem as BDChapter;
+            //if (null != entry)
+            //{
+            //    this.Cursor = Cursors.WaitCursor;
+            //    rebuildTree(entry);
+            //    this.Cursor = Cursors.Default;
+            //}
 
             BDNode listEntry = chapterDropDown.SelectedItem as BDNode;
-            if ((null != listEntry) && (listEntry.NodeType == Constants.BDObjectType.BDChapter))
+            if ((null != listEntry) && (listEntry.NodeType == Constants.BDNodeType.BDChapter))
             {
                 BDMetadata meta = BDMetadata.GetMetadataWithItemId(dataContext, listEntry.Uuid);
                 if (null != meta)

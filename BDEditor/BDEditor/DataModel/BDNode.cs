@@ -14,7 +14,7 @@ namespace BDEditor.DataModel
     /// <summary>
     /// Extension of generated BDNode
     /// </summary>
-    public partial class BDNode: IBDObject
+    public partial class BDNode: IBDNode, IBDObject
     {
         //public const string AWS_DOMAIN = @"bd_1_nodes";
 
@@ -31,6 +31,7 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME_FRIENDLY = @"Node";
         public const string KEY_NAME = @"BDNode";
         public const string PROPERTYNAME_NAME = @"Name";
+        public const string VIRTUALPROPERTYNAME_OVERVIEW = @"Overview";
 
         public const int ENTITY_SCHEMAVERSION = 0;
 
@@ -57,7 +58,7 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets the created date and the schema version
         /// </summary>
         /// <returns></returns>
-        public static BDNode CreateNode(Entities pContext, Constants.BDObjectType pNodeType)
+        public static BDNode CreateNode(Entities pContext, Constants.BDNodeType pNodeType)
         {
             return CreateNode(pContext, pNodeType, Guid.NewGuid());
         }
@@ -66,7 +67,7 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets the created date and the schema version
         /// </summary>
         /// <returns></returns>
-        public static BDNode CreateNode(Entities pContext, Constants.BDObjectType pNodeType, Guid pUuid)
+        public static BDNode CreateNode(Entities pContext, Constants.BDNodeType pNodeType, Guid pUuid)
         {
             BDNode node = CreateBDNode(pUuid);
             node.nodeType = (int)pNodeType;
@@ -311,7 +312,7 @@ namespace BDEditor.DataModel
         {
             if (null == pParent)
             {
-                SetParent(Constants.BDObjectType.None, null);
+                SetParent(Constants.BDNodeType.None, null);
             }
             else
             {
@@ -319,36 +320,36 @@ namespace BDEditor.DataModel
             }
         }
 
-        public void SetParent(Constants.BDObjectType pParentType, Guid? pParentId)
+        public void SetParent(Constants.BDNodeType pParentType, Guid? pParentId)
         {
             parentId = pParentId;
             parentType = (int)pParentType;
             parentKeyName = pParentType.ToString();
         }
 
-        public Constants.BDObjectType NodeType
+        public Constants.BDNodeType NodeType
         {
             get
             {
-                Constants.BDObjectType result = Constants.BDObjectType.None;
+                Constants.BDNodeType result = Constants.BDNodeType.None;
 
-                if (Enum.IsDefined(typeof(Constants.BDObjectType), nodeType))
+                if (Enum.IsDefined(typeof(Constants.BDNodeType), nodeType))
                 {
-                    result = (Constants.BDObjectType)nodeType;
+                    result = (Constants.BDNodeType)nodeType;
                 }
                 return result;
             }
         }
 
-        public Constants.BDObjectType ParentType
+        public Constants.BDNodeType ParentType
         {
             get
             {
-                Constants.BDObjectType result = Constants.BDObjectType.None;
+                Constants.BDNodeType result = Constants.BDNodeType.None;
 
-                if (Enum.IsDefined(typeof(Constants.BDObjectType), parentType))
+                if (Enum.IsDefined(typeof(Constants.BDNodeType), parentType))
                 {
-                    result = (Constants.BDObjectType)parentType;
+                    result = (Constants.BDNodeType)parentType;
                 }
                 return result;
             }

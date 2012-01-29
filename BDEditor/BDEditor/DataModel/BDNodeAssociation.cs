@@ -37,17 +37,17 @@ namespace BDEditor.DataModel
         private const string CHILDNODETYPE = @"na_childNodeType";
         private const string CHILDKEYNAME = @"na_childKeyName";
 
-        public static void CreateNodeAssociation(Entities pContext, IBDObject pNodeObject, Constants.BDObjectType pChildNodeType)
+        public static void CreateNodeAssociation(Entities pContext, IBDObject pNodeObject, Constants.BDNodeType pChildNodeType)
         {
             CreateNodeAssociation(pContext, pNodeObject.Uuid, pNodeObject.NodeType, pChildNodeType, Guid.NewGuid());
         }
 
-        public static void CreateNodeAssociation(Entities pContext, IBDObject pNodeObject, Constants.BDObjectType pChildNodeType, Guid pUuid)
+        public static void CreateNodeAssociation(Entities pContext, IBDObject pNodeObject, Constants.BDNodeType pChildNodeType, Guid pUuid)
         {
             CreateNodeAssociation(pContext, pNodeObject.Uuid, pNodeObject.NodeType, pChildNodeType, pUuid);
         }
 
-        private static void CreateNodeAssociation(Entities pContext, Guid pNodeId, Constants.BDObjectType pNodeType, Constants.BDObjectType pChildNodeType, Guid pUuid)
+        private static void CreateNodeAssociation(Entities pContext, Guid pNodeId, Constants.BDNodeType pNodeType, Constants.BDNodeType pChildNodeType, Guid pUuid)
         {
             if (!Exists(pContext, pNodeId, pChildNodeType))
             {
@@ -81,7 +81,7 @@ namespace BDEditor.DataModel
             }
         }
 
-        public static Boolean Exists(Entities pContext, Guid pObjectId, Constants.BDObjectType pChildNodeType)
+        public static Boolean Exists(Entities pContext, Guid pObjectId, Constants.BDNodeType pChildNodeType)
         {
             IQueryable<BDNodeAssociation> entries = (from entry in pContext.BDNodeAssociations
                                                      where (entry.nodeId == pObjectId) && (entry.childNodeType == (int)pChildNodeType)
@@ -124,29 +124,29 @@ namespace BDEditor.DataModel
             return resultList;
         }
 
-        public Constants.BDObjectType NodeType
+        public Constants.BDNodeType NodeType
         {
             get
             {
-                Constants.BDObjectType result = Constants.BDObjectType.None;
+                Constants.BDNodeType result = Constants.BDNodeType.None;
 
-                if (Enum.IsDefined(typeof(Constants.BDObjectType), nodeType))
+                if (Enum.IsDefined(typeof(Constants.BDNodeType), nodeType))
                 {
-                    result = (Constants.BDObjectType)nodeType;
+                    result = (Constants.BDNodeType)nodeType;
                 }
                 return result;
             }
         }
 
-        public Constants.BDObjectType ChildNodeType
+        public Constants.BDNodeType ChildNodeType
         {
             get
             {
-                Constants.BDObjectType result = Constants.BDObjectType.None;
+                Constants.BDNodeType result = Constants.BDNodeType.None;
 
-                if (Enum.IsDefined(typeof(Constants.BDObjectType), childNodeType))
+                if (Enum.IsDefined(typeof(Constants.BDNodeType), childNodeType))
                 {
-                    result = (Constants.BDObjectType)childNodeType;
+                    result = (Constants.BDNodeType)childNodeType;
                 }
                 return result;
             }

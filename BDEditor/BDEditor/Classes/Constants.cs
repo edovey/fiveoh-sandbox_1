@@ -8,7 +8,7 @@ namespace BDEditor.Classes
 {
     public class Constants
     {
-        public enum BDObjectType
+        public enum BDNodeType
         {
             None = -1,
             BDChapter = 1,

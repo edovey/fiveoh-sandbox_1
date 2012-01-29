@@ -142,10 +142,13 @@ namespace BDEditor.Views
                 }
                 else
                 {
-                    this.currentPresentation = BDNode.CreateNode(dataContext, Constants.BDObjectType.BDPresentation);
-                    this.currentPresentation.SetParent(Constants.BDObjectType.BDDisease, diseaseId.Value);
-                    //this.currentPresentation = BDPresentation.CreatePresentation(dataContext, diseaseId.Value);
+                    BDMetadata parentMetaData = BDMetadata.GetMetadataWithItemId(dataContext, diseaseId);
+                    this.currentPresentation = BDNode.CreateNode(dataContext, Constants.BDNodeType.BDPresentation);
+                    this.currentPresentation.SetParent(Constants.BDNodeType.BDDisease, diseaseId.Value);
                     this.currentPresentation.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
+                    BDMetadata metaData = BDMetadata.CreateMetadata(dataContext, parentMetaData.LayoutVariant, currentPresentation);
+                    //this.currentPresentation = BDPresentation.CreatePresentation(dataContext, diseaseId.Value);
+                    
                 }
             }
 
@@ -163,8 +166,8 @@ namespace BDEditor.Views
 
                 bdLinkedNoteControl1.AssignParentId(null);
                 bdLinkedNoteControl1.AssignScopeId(null);
-                bdLinkedNoteControl1.AssignContextEntityKeyName(BDPresentation.KEY_NAME);
-                bdLinkedNoteControl1.AssignContextPropertyName(BDPresentation.PROPERTYNAME_OVERVIEW);
+              xx  bdLinkedNoteControl1.AssignContextEntityKeyName(BDPresentation.KEY_NAME);
+                bdLinkedNoteControl1.AssignContextPropertyName(BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
             }
             else
             {
@@ -182,7 +185,7 @@ namespace BDEditor.Views
                 bdLinkedNoteControl1.AssignContextPropertyName(BDPresentation.PROPERTYNAME_OVERVIEW);
 
 
-                BDLinkedNoteAssociation association = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, currentPresentation.uuid, BDPresentation.PROPERTYNAME_OVERVIEW);
+                BDLinkedNoteAssociation association = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, currentPresentation.uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
                 if (null != association)
                 {
                     overviewLinkedNote = BDLinkedNote.GetLinkedNoteWithId(dataContext, association.linkedNoteId);

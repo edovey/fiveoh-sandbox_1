@@ -34,9 +34,9 @@ namespace BDEditor.Classes
         }
         #endregion
 
-        public static List<IBDObject> GetChildrenForParentId(Entities pContext, Guid pParentId)
+        public static List<IBDNode> GetChildrenForParentId(Entities pContext, Guid pParentId)
         {
-            List<IBDObject> entryList = new List<IBDObject>();
+            List<IBDNode> entryList = new List<IBDNode>();
 
             if (null != pParentId)
             {
@@ -55,7 +55,7 @@ namespace BDEditor.Classes
                                                                   select entry);
                                 if (tgEntries.Count() > 0)
                                 {
-                                    List<IBDObject> workingList = new List<IBDObject>(tgEntries.ToList<BDTherapyGroup>());
+                                    List<IBDNode> workingList = new List<IBDNode>(tgEntries.ToList<BDTherapyGroup>());
                                     entryList.AddRange(workingList);
                                 }
                                 break;
@@ -66,7 +66,7 @@ namespace BDEditor.Classes
                                                                   select entry);
                                 if (tEntries.Count() > 0)
                                 {
-                                    List<IBDObject> workingList = new List<IBDObject>(tEntries.ToList<BDTherapy>());
+                                    List<IBDNode> workingList = new List<IBDNode>(tEntries.ToList<BDTherapy>());
                                     entryList.AddRange(workingList);
                                 }
                                 break;
@@ -78,7 +78,7 @@ namespace BDEditor.Classes
 
                                 if (nodeEntries.Count() > 0)
                                 {
-                                    List<IBDObject> workingList = new List<IBDObject>(nodeEntries.ToList<BDNode>());
+                                    List<IBDNode> workingList = new List<IBDNode>(nodeEntries.ToList<BDNode>());
                                     entryList.AddRange(workingList);
                                 }
                             break;

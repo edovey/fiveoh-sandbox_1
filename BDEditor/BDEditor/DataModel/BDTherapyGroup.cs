@@ -16,7 +16,7 @@ namespace BDEditor.DataModel
     /// <summary>
     /// Extension of generated BDTherapyGroup
     /// </summary>
-    public partial class BDTherapyGroup : IBDObject
+    public partial class BDTherapyGroup : IBDNode
     {
         //public const string AWS_DOMAIN = @"bd_1_therapyGroups";
 

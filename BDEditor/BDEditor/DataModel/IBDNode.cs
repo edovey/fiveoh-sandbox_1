@@ -6,7 +6,7 @@ using BDEditor.Classes;
 
 namespace BDEditor.DataModel
 {
-    public interface IBDNode
+    public interface IBDNode : IBDObject
     {
         Constants.BDNodeType NodeType { get; }
     }

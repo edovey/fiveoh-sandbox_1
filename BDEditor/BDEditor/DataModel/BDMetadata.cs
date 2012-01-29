@@ -63,22 +63,22 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets the created date and schema version
         /// </summary>
         /// <returns>BDMetadata</returns>
-        public static BDMetadata CreateMetadata(Entities pContext, LayoutVariantType pLayoutVariant, IBDObject pBDObject)
+        public static BDMetadata CreateMetadata(Entities pContext, LayoutVariantType pLayoutVariant, IBDNode pBDNodeObject)
         {
-            if (null == pBDObject) return null;
+            if (null == pBDNodeObject) return null;
 
-            return CreateMetadata(pContext, pLayoutVariant, pBDObject.Uuid, pBDObject.NodeType, Guid.NewGuid());
+            return CreateMetadata(pContext, pLayoutVariant, pBDNodeObject.Uuid, pBDNodeObject.NodeType, Guid.NewGuid());
         }
 
         /// <summary>
         /// Extended Create method that sets the created date and schema version
         /// </summary>
         /// <returns>BDMetadata</returns>
-        public static BDMetadata CreateMetadata(Entities pContext, LayoutVariantType pLayoutVariant, IBDObject pBDObject, Guid pUuid)
+        public static BDMetadata CreateMetadata(Entities pContext, LayoutVariantType pLayoutVariant, IBDNode pBDNodeObject, Guid pUuid)
         {
-            if (null == pBDObject) return null;
+            if (null == pBDNodeObject) return null;
 
-            return CreateMetadata(pContext, pLayoutVariant, pBDObject.Uuid, pBDObject.NodeType, pUuid);
+            return CreateMetadata(pContext, pLayoutVariant, pBDNodeObject.Uuid, pBDNodeObject.NodeType, pUuid);
         }
 
         /// <summary>

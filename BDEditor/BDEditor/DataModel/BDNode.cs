@@ -308,7 +308,7 @@ namespace BDEditor.DataModel
         }
         #endregion
 
-        public void SetParent(IBDObject pParent)
+        public void SetParent(IBDNode pParent)
         {
             if (null == pParent)
             {

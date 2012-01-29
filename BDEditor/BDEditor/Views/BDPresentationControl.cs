@@ -14,7 +14,7 @@ namespace BDEditor.Views
     public partial class BDPresentationControl : UserControl, IBDControl
     {
         private Entities dataContext;
-        private Guid? diseaseId;
+        private Guid? parentId;
         private BDNode currentPresentation;
         private BDLinkedNote overviewLinkedNote;
         private Guid? scopeId;
@@ -54,17 +54,6 @@ namespace BDEditor.Views
             if (null != ReorderToNext) { ReorderToNext(this, e); }
         }
 
-        //protected virtual void OnSearchableItemAdded(SearchableItemEventArgs se)
-        //{
-        //    // make a copy of the handler to avoid race condition
-        //    EventHandler<SearchableItemEventArgs> handler = SearchableItemAdded;
-
-        //    if (null != handler)
-        //    {
-        //        handler(this, se);
-        //    }
-        //}
-
         public BDNode CurrentPresentation
         {
             get { return currentPresentation; }
@@ -74,7 +63,7 @@ namespace BDEditor.Views
         public BDPresentationControl()
         {
             InitializeComponent();
-            btnLinkedNote.Tag = BDPresentation.PROPERTYNAME_NAME;
+            btnLinkedNote.Tag = BDNode.PROPERTYNAME_NAME;
         }
 
         public void AssignScopeId(Guid? pScopeId)
@@ -92,16 +81,16 @@ namespace BDEditor.Views
 
         public void AssignParentId(Guid? pParentId)
         {
-            diseaseId = pParentId;
+            parentId = pParentId;
 
-            this.Enabled = (null != diseaseId); 
+            this.Enabled = (null != parentId); 
         }
 
         public bool Save()
         {
             bool result = false;
 
-            if (null != diseaseId)
+            if (null != parentId)
             {
                 if ((null == currentPresentation) && (tbPresentationName.Text != string.Empty))
                 {
@@ -136,19 +125,17 @@ namespace BDEditor.Views
 
             if (null == this.currentPresentation)
             {
-                if (null == this.diseaseId)
+                if (null == this.parentId)
                 {
                     result = false;
                 }
                 else
                 {
-                    BDMetadata parentMetaData = BDMetadata.GetMetadataWithItemId(dataContext, diseaseId);
+                    BDMetadata parentMetaData = BDMetadata.GetMetadataWithItemId(dataContext, parentId);
                     this.currentPresentation = BDNode.CreateNode(dataContext, Constants.BDNodeType.BDPresentation);
-                    this.currentPresentation.SetParent(Constants.BDNodeType.BDDisease, diseaseId.Value);
+                    this.currentPresentation.SetParent(Constants.BDNodeType.BDDisease, parentId.Value);
                     this.currentPresentation.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                     BDMetadata metaData = BDMetadata.CreateMetadata(dataContext, parentMetaData.LayoutVariant, currentPresentation);
-                    //this.currentPresentation = BDPresentation.CreatePresentation(dataContext, diseaseId.Value);
-                    
                 }
             }
 

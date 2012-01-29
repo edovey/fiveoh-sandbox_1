@@ -224,7 +224,7 @@ namespace BDEditor.Views
         private void LoadChapterDropDown()
         {
             chapterDropDown.Items.Clear();
-            foreach(IBDNode entry in BDFabrik.GetAllForNodeType(dataContext, Constants.BDNodeType.BDChapter)
+            foreach(IBDNode entry in BDFabrik.GetAllForNodeType(dataContext, Constants.BDNodeType.BDChapter))
             {
                 chapterDropDown.Items.Add(entry);
             }

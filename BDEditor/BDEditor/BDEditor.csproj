@@ -131,27 +131,19 @@
     <Compile Include="Classes\SyncInfoDictionary.cs" />
     <Compile Include="Classes\Typeahead.cs" />
     <Compile Include="Classes\UIHelper.cs" />
-    <Compile Include="DataModel\BDCategory.cs" />
-    <Compile Include="DataModel\BDChapter.cs" />
     <Compile Include="DataModel\BDDeletion.cs" />
-    <Compile Include="DataModel\BDDisease.cs" />
     <Compile Include="DataModel\BDLinkedNote.cs" />
     <Compile Include="DataModel\BDLinkedNoteAssociation.cs" />
     <Compile Include="DataModel\BDMetadata.cs" />
     <Compile Include="DataModel\BDNode.cs" />
     <Compile Include="DataModel\BDNodeAssociation.cs" />
-    <Compile Include="DataModel\BDPathogen.cs" />
-    <Compile Include="DataModel\BDPathogenGroup.cs" />
-    <Compile Include="DataModel\BDPresentation.cs" />
     <Compile Include="DataModel\BDSearchEntry.cs" />
     <Compile Include="DataModel\BDSearchEntryAssociation.cs" />
-    <Compile Include="DataModel\BDSection.cs" />
     <Compile Include="DataModel\BDModel1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BDModel1.edmx</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\BDSubcategory.cs" />
     <Compile Include="DataModel\BDSystemSetting.cs" />
     <Compile Include="DataModel\IBDNode.cs" />
     <Compile Include="DataModel\IBDObject.cs" />
@@ -387,7 +379,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
+      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

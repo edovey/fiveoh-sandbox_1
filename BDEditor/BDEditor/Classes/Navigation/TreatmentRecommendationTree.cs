@@ -13,15 +13,76 @@ namespace BDEditor.Classes.Navigation
     {
         private TreatmentRecommendationTree() { }
 
-        public static TreeNode BuildChapterTreeNode(BDNode pChapterNode)
+        public static TreeNode BuildChapterTreeNode(Entities pDataContext, BDNode pChapterNode)
         {
-            TreeNode resultNode = new TreeNode();
+            TreeNode chapterTreeNode = new TreeNode();
 
             if ((null != pChapterNode) && (pChapterNode.NodeType == Constants.BDNodeType.BDChapter))
             {
+                chapterTreeNode.Name = pChapterNode.Name;
 
+                List<IBDNode> sectionList = BDFabrik.GetChildrenForParentId(pDataContext, pChapterNode.Uuid);
+                foreach (IBDNode sectionNode in sectionList)
+                {
+                    BDMetadata sectionMetaData = BDMetadata.GetMetadataWithItemId(pDataContext, sectionNode.Uuid);
+                    switch (sectionMetaData.LayoutVariant)
+                    {
+                        case BDMetadata.LayoutVariantType.TreatmentRecommendation01:
+                            TreeNode treeNode = BuildSectionLayout01TreeNode(pDataContext, sectionNode, sectionMetaData);
+                            if (null != treeNode) chapterTreeNode.Nodes.Add(treeNode);
+                            break;
+                    }
+
+                }
             }
-            return resultNode;
+            return chapterTreeNode;
+        }
+
+        public static TreeNode BuildSectionLayout01TreeNode(Entities pDataContext, IBDNode pSectionNode, BDMetadata pMetaData)
+        {
+            TreeNode sectionTreeNode = null;
+
+            if ((pSectionNode.NodeType == Constants.BDNodeType.BDSection) && (pMetaData.LayoutVariant == BDMetadata.LayoutVariantType.TreatmentRecommendation01))
+            {
+                sectionTreeNode = new TreeNode(pSectionNode.Name);
+                sectionTreeNode.Tag = pSectionNode;
+
+                List<IBDNode> categoryList = BDFabrik.GetChildrenForParentId(pDataContext, pSectionNode.Uuid);
+                foreach (IBDNode categoryNode in categoryList)
+                {
+                    if (categoryNode.NodeType == Constants.BDNodeType.BDCategory)
+                    {
+                        TreeNode categoryTreeNode = new TreeNode(categoryNode.Name);
+                        categoryTreeNode.Tag = categoryNode;
+                        sectionTreeNode.Nodes.Add(categoryTreeNode);
+
+                        List<IBDNode> diseaseList = BDFabrik.GetChildrenForParentId(pDataContext, categoryNode.Uuid);
+                        foreach (IBDNode diseaseNode in diseaseList)
+                        {
+                            if (diseaseNode.NodeType == Constants.BDNodeType.BDDisease)
+                            {
+                                TreeNode diseaseTreeNode = new TreeNode(diseaseNode.Name);
+                                diseaseTreeNode.Tag = diseaseNode;
+                                categoryTreeNode.Nodes.Add(diseaseTreeNode);
+
+                                List<IBDNode> presentationList = BDFabrik.GetChildrenForParentId(pDataContext, diseaseNode.Uuid);
+                                foreach (IBDNode presentationNode in presentationList)
+                                {
+                                    if (presentationNode.NodeType == Constants.BDNodeType.BDPresentation)
+                                    {
+                                        TreeNode presentationTreeNode = new TreeNode(presentationNode.Name);
+                                        presentationTreeNode.Tag = presentationNode;
+                                        diseaseTreeNode.Nodes.Add(presentationTreeNode);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return sectionTreeNode;
         }
     }
+
 }

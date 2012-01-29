@@ -41,10 +41,6 @@ namespace BDEditor.Views
             //sectionDropDown.DataSource = dataContext.BDSections;
             chapterDropDown.DisplayMember = "Name";
 
-            // This will preload the control into memory. 
-            // Startup will be slower, but the first selection from the dropdown will be snappier
-            //BDLinkedNoteControl control = new BDLinkedNoteControl();
-
         }
 
         public DataModel.Entities DataContext
@@ -79,83 +75,13 @@ namespace BDEditor.Views
         //    }
         //}
 
-        public void rebuildTree(BDChapter pChapter)
-        {
-            chapterTree.Nodes.Clear();
-
-            TreeNode rootNode = new TreeNode(pChapter.name);
-
-            List<BDSection> sectionList = BDSection.GetSectionsForParentId(dataContext, pChapter.uuid);
-
-            foreach (BDSection section in sectionList)
-            {
-                TreeNode sectionNode = new TreeNode(section.name);
-                sectionNode.Tag = section;
-
-                List<BDCategory> categoryList = BDCategory.GetCategoriesForParentId(dataContext, section.uuid);
-                foreach (BDCategory category in categoryList)
-                {
-                    TreeNode categoryNode = new TreeNode(category.name);
-                    categoryNode.Tag = category;
-
-                    List<BDSubcategory> subCategoryList = BDSubcategory.GetSubcategoriesForParentId(dataContext, category.uuid);
-                    foreach (BDSubcategory subCategory in subCategoryList)
-                    {
-                        TreeNode subCategoryNode = new TreeNode(subCategory.name);
-                        subCategoryNode.Tag = subCategory;
-
-                        List<BDDisease> diseaseList = BDDisease.GetDiseasesForParentId(dataContext, subCategory.uuid);
-                        foreach (BDDisease disease in diseaseList)
-                        {
-                            TreeNode diseaseNode = new TreeNode(disease.name);
-                            diseaseNode.Tag = disease;
-
-                            List<BDPresentation> presentationList = BDPresentation.GetPresentationsForParentId(dataContext, disease.uuid);
-                            foreach (BDPresentation presentation in presentationList)
-                            {
-                                TreeNode presentationNode = new TreeNode(presentation.name);
-                                presentationNode.Tag = presentation;
-                                diseaseNode.Nodes.Add(presentationNode);
-                            }
-                            subCategoryNode.Nodes.Add(diseaseNode);
-                        }
-                        categoryNode.Nodes.Add(subCategoryNode);
-                    } // subCatg
-
-                    List<BDDisease> categorydiseaseList = BDDisease.GetDiseasesForParentId(dataContext, category.uuid);
-                    foreach (BDDisease disease in categorydiseaseList)
-                    {
-                        TreeNode diseaseNode = new TreeNode(disease.name);
-                        diseaseNode.Tag = disease;
-
-                        List<BDPresentation> presentationList = BDPresentation.GetPresentationsForParentId(dataContext, disease.uuid);
-                        foreach (BDPresentation presentation in presentationList)
-                        {
-                            TreeNode presentationNode = new TreeNode(presentation.name);
-                            presentationNode.Tag = presentation;
-                            diseaseNode.Nodes.Add(presentationNode);
-                        }
-
-                        categoryNode.Nodes.Add(diseaseNode);
-                    } // disease
-
-                    sectionNode.Nodes.Add(categoryNode);
-                } // category
-                chapterTree.Nodes.Add(sectionNode);
-            } // node
-        }
-
         private void listDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
             splitContainer1.Panel2.Controls.Clear();
-            //BDSection node = sectionDropDown.SelectedValue as BDSection;
-            //BDChapter entry = chapterDropDown.SelectedItem as BDChapter;
-            //if (null != entry)
-            //{
-            //    this.Cursor = Cursors.WaitCursor;
-            //    rebuildTree(entry);
-            //    this.Cursor = Cursors.Default;
-            //}
+
+            this.Cursor = Cursors.WaitCursor;
+
+            chapterTree.Nodes.Clear();
 
             BDNode listEntry = chapterDropDown.SelectedItem as BDNode;
             if ((null != listEntry) && (listEntry.NodeType == Constants.BDNodeType.BDChapter))
@@ -166,10 +92,18 @@ namespace BDEditor.Views
                     switch (meta.LayoutVariant)
                     {
                         case BDMetadata.LayoutVariantType.TreatmentRecommendation00:
+                            TreeNode node = TreatmentRecommendationTree.BuildChapterTreeNode(dataContext, listEntry);
+                            // this is only to prevent a single first node
+                            TreeNode[] nodeList = new TreeNode[node.Nodes.Count];
+                            node.Nodes.CopyTo(nodeList, 0);
+                            chapterTree.Nodes.AddRange(nodeList);
+                            // ---
                             break;
                     }
                 }
             }
+
+            this.Cursor = Cursors.Default;
         }
 
         private void sectionTree_AfterSelect(object sender, TreeViewEventArgs e)
@@ -182,6 +116,31 @@ namespace BDEditor.Views
                     splitContainer1.Panel2.SuspendLayout();
                     splitContainer1.Panel2.Controls.Clear();
                     TreeNode selectedNode = e.Node;
+
+                    IBDNode node = selectedNode as IBDNode;
+                    BDMetadata metaData = BDMetadata.GetMetadataWithItemId(dataContext, node.Uuid);
+
+                    switch (node.NodeType)
+                    {
+                        case Constants.BDNodeType.BDSection:
+                            break;
+                        case Constants.BDNodeType.BDCategory:
+                            break;
+                        case Constants.BDNodeType.BDDisease:
+                            break;
+                        case Constants.BDNodeType.BDPresentation:
+                            switch (metaData.LayoutVariant)
+                            {
+                                case BDMetadata.LayoutVariantType.TreatmentRecommendation01:
+                                    break;
+                            }
+                            break;
+                    }
+
+
+
+
+                    /*
                     if(selectedNode.Tag is BDCategory)
                     {
                         BDCategoryControl categoryControl = new BDCategoryControl();
@@ -232,6 +191,8 @@ namespace BDEditor.Views
                         splitContainer1.Panel2.Controls.Add(presentationControl);
                         presentationControl.RefreshLayout();
                     }
+                    */
+
                     splitContainer1.Panel2.ResumeLayout();
                     break;
                 case TreeViewAction.Collapse:
@@ -263,10 +224,11 @@ namespace BDEditor.Views
         private void LoadChapterDropDown()
         {
             chapterDropDown.Items.Clear();
-            foreach (BDChapter entry in BDChapter.GetAll(dataContext))
+            foreach(IBDNode entry in BDFabrik.GetAllForNodeType(dataContext, Constants.BDNodeType.BDChapter)
             {
                 chapterDropDown.Items.Add(entry);
             }
+
             if (chapterDropDown.Items.Count > 2)
                 chapterDropDown.SelectedIndex = 2;
             else if (chapterDropDown.Items.Count > 1)

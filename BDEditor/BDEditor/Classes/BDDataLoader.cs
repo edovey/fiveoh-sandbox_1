@@ -9,7 +9,7 @@ namespace BDEditor.Classes
 {
     public class BDDataLoader
     {
-        public enum baseDataLayoutType
+        public enum baseDataDefinitionType
         {
             chapter2a,
             chapter2b,
@@ -20,29 +20,26 @@ namespace BDEditor.Classes
 
         private Entities dataContext;
 
-        BDChapter bdChapter;
-        BDSection bdSection;
-        BDCategory bdCategory;
-        BDSubcategory bdSubCategory;
-        BDDisease bdDisease;
-        BDPresentation bdPresentation;
+        BDNode chapter;
+        BDNode section;
+        BDNode category;
+        BDNode disease;
+        BDNode presentation;
 
         string uuidData = null;
         string chapterData = null;
         string sectionData = null;
         string categoryData = null;
-        string subCategoryData = null;
         string diseaseData = null;
         string presentationData = null;
 
         short idxChapter = 0;
         short idxSection = 0;
         short idxCategory = 0;
-        //short idxSubCategory = 0;
         short idxDisease = 0;
         short idxPresentation = 0;
 
-        public void ImportData(Entities pDataContext, string pFilename, baseDataLayoutType pLayoutType)
+        public void ImportData(Entities pDataContext, string pFilename, baseDataDefinitionType pDefinitionType)
         {
             dataContext = pDataContext;
 
@@ -61,9 +58,9 @@ namespace BDEditor.Classes
                 while ((input = sr.ReadLine()) != null)
                 {
                     if ( (rowIdx != titleRowIdx) && (rowIdx != headerRowIdx))
-                        switch (pLayoutType)
+                        switch (pDefinitionType)
                         {
-                            case baseDataLayoutType.chapter2a:
+                            case baseDataDefinitionType.chapter2a:
                                 ProcessChapter2aInputLine(input);
                                 break;
                         }
@@ -84,108 +81,92 @@ namespace BDEditor.Classes
             chapterData = elements[1];
             sectionData = elements[2];
             categoryData = elements[3];
-            subCategoryData = elements[4];
+            //subCategoryData = elements[4];
             diseaseData = elements[5];
             presentationData = elements[6];
 
-            if( (chapterData != string.Empty) && ((null == bdChapter) || (bdChapter.name != chapterData)))
+            if( (chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
             {
-                bdChapter = BDChapter.CreateChapter(dataContext, Guid.Parse(uuidData));
-                bdChapter.name = chapterData;
-                bdChapter.displayOrder = idxChapter++;
-                BDChapter.Save(dataContext,bdChapter);
+                chapter = BDNode.CreateNode(dataContext, Constants.BDObjectType.BDChapter,Guid.Parse(uuidData));
+                chapter.name = chapterData;
+                chapter.displayOrder = idxChapter++;
 
-                bdSection = null;
-                bdCategory = null;
-                bdSubCategory = null;
-                bdDisease = null;
-                bdPresentation = null;
+                chapter.SetParent(null);
 
-                BDMetadata meta = BDMetadata.CreateMetadata(dataContext, bdChapter.Uuid, BDChapter.KEY_NAME);
-                meta.layoutVariant = 1;
+                BDNode.Save(dataContext, chapter);
+
+                section = null;
+                category = null;
+                disease = null;
+                presentation = null;
+
+                BDMetadata meta = BDMetadata.CreateMetadata(dataContext, BDMetadata.LayoutVariantType.TreatmentRecommendation00, chapter);
                 BDMetadata.Save(dataContext, meta);
             }
 
-            if ( (sectionData != string.Empty) && ( (null == bdSection) || (bdSection.name != sectionData) ) )
+            if ( (sectionData != string.Empty) && ( (null == section) || (section.name != sectionData) ) )
             {
-                bdSection = BDSection.CreateSection(dataContext, Guid.Parse(uuidData));
-                bdSection.name = sectionData;
-                bdSection.parentId = bdChapter.uuid;
-                bdSection.parentKeyName = BDChapter.KEY_NAME;
-                bdSection.displayOrder = idxSection++;
-                BDSection.Save(dataContext, bdSection);
+                section = BDNode.CreateNode(dataContext, Constants.BDObjectType.BDSection, Guid.Parse(uuidData));
+                section.name = sectionData;
+                section.SetParent(chapter);
+                section.displayOrder = idxSection++;
+                BDNode.Save(dataContext, section);
 
-                bdCategory = null;
-                bdSubCategory = null;
-                bdDisease = null;
-                bdPresentation = null;
+                category = null;
+                disease = null;
+                presentation = null;
 
-                BDNodeAssociation.CreateNodeAssociation(dataContext, bdChapter.uuid, BDChapter.KEY_NAME, BDSection.KEY_NAME);
+                BDNodeAssociation.CreateNodeAssociation(dataContext, chapter, Constants.BDObjectType.BDSection);
 
-                BDMetadata meta = BDMetadata.CreateMetadata(dataContext, bdSection.Uuid, BDSection.KEY_NAME);
-                meta.layoutVariant = 1;
+                BDMetadata meta = BDMetadata.CreateMetadata(dataContext, BDMetadata.LayoutVariantType.TreatmentRecommendation01, section);
                 BDMetadata.Save(dataContext, meta);
             }
 
-            if ((categoryData != string.Empty) && ((null == bdCategory) || (bdCategory.name != categoryData)))
+            if ((categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
             {
-                bdCategory = BDCategory.CreateCategory(dataContext, Guid.Parse(uuidData));
-                bdCategory.name = categoryData;
-                bdCategory.parentId = bdSection.uuid;
-                bdCategory.parentKeyName = BDSection.KEY_NAME;
-                bdCategory.displayOrder = idxCategory++;
-                BDCategory.Save(dataContext, bdCategory);
+                category = BDNode.CreateNode(dataContext, Constants.BDObjectType.BDCategory, Guid.Parse(uuidData));
+                category.name = categoryData;
+                category.SetParent(section);
+                category.displayOrder = idxCategory++;
+                BDNode.Save(dataContext, category);
 
-                bdSubCategory = null;
-                bdDisease = null;
-                bdPresentation = null;
+                disease = null;
+                presentation = null;
 
-                BDNodeAssociation.CreateNodeAssociation(dataContext, bdSection.uuid, BDSection.KEY_NAME, BDCategory.KEY_NAME);
+                BDNodeAssociation.CreateNodeAssociation(dataContext, section, Constants.BDObjectType.BDChapter);
 
-                BDMetadata meta = BDMetadata.CreateMetadata(dataContext, bdCategory.Uuid, BDCategory.KEY_NAME);
-                meta.layoutVariant = 1;
+                BDMetadata meta = BDMetadata.CreateMetadata(dataContext, BDMetadata.LayoutVariantType.TreatmentRecommendation01, category);
                 BDMetadata.Save(dataContext, meta);
             }
 
-            if ((diseaseData != string.Empty) && ((null == bdDisease) || (bdDisease.name != diseaseData)))
+            if ((diseaseData != string.Empty) && ((null == disease) || (disease.name != diseaseData)))
             {
-                bdDisease = BDDisease.CreateDisease(dataContext, Guid.Parse(uuidData));
-                bdDisease.name = diseaseData;
-                bdDisease.displayOrder = idxDisease++;
-                if (null != bdSubCategory)
-                {
-                    BDNodeAssociation.CreateNodeAssociation(dataContext, bdSubCategory.uuid, BDSubcategory.KEY_NAME, BDDisease.KEY_NAME);
-                    bdDisease.parentId = bdSubCategory.uuid;
-                    bdDisease.parentKeyName = BDSubcategory.KEY_NAME;
-                }
-                else
-                {
-                    BDNodeAssociation.CreateNodeAssociation(dataContext, bdCategory.uuid, BDCategory.KEY_NAME, BDDisease.KEY_NAME);
-                    bdDisease.parentId = bdCategory.uuid;
-                    bdDisease.parentKeyName = BDCategory.KEY_NAME;
-                }
-                BDDisease.Save(dataContext, bdDisease);
+                disease = BDNode.CreateNode(dataContext, Constants.BDObjectType.BDDisease, Guid.Parse(uuidData));
+                disease.name = diseaseData;
+                disease.SetParent(category);
+                disease.displayOrder = idxDisease++;
+                BDNode.Save(dataContext, disease);
+
+                presentation = null;
+
+                BDNodeAssociation.CreateNodeAssociation(dataContext, category, Constants.BDObjectType.BDDisease);
       
-                BDMetadata meta = BDMetadata.CreateMetadata(dataContext, bdDisease.Uuid, BDDisease.KEY_NAME);
-                meta.layoutVariant = 1;
+                BDMetadata meta = BDMetadata.CreateMetadata(dataContext, BDMetadata.LayoutVariantType.TreatmentRecommendation01, disease);
                 BDMetadata.Save(dataContext, meta);
-                bdPresentation = null;
             }
 
-            if ((presentationData != string.Empty) && ((null == bdPresentation) || (bdPresentation.name != presentationData)))
+            if ((presentationData != string.Empty) && ((null == presentation) || (presentation.name != presentationData)))
             {
-                bdPresentation = BDPresentation.CreatePresentation(dataContext, bdDisease.uuid, Guid.Parse(uuidData));
-                bdPresentation.parentKeyName = BDDisease.KEY_NAME;
-                bdPresentation.name = presentationData;
-                bdPresentation.displayOrder = idxPresentation++;
-                BDPresentation.Save(dataContext, bdPresentation);
+                presentation = BDNode.CreateNode(dataContext, Constants.BDObjectType.BDPresentation, Guid.Parse(uuidData));
+                presentation.name = presentationData;
+                presentation.SetParent(disease);
+                presentation.displayOrder = idxPresentation++;
+                BDNode.Save(dataContext, presentation);
 
-                BDNodeAssociation.CreateNodeAssociation(dataContext, bdDisease.uuid, BDDisease.KEY_NAME, BDPresentation.KEY_NAME);
+                BDNodeAssociation.CreateNodeAssociation(dataContext, disease, Constants.BDObjectType.BDPresentation);
+                BDNodeAssociation.CreateNodeAssociation(dataContext, presentation, Constants.BDObjectType.BDPathogenGroup);
 
-                BDNodeAssociation.CreateNodeAssociation(dataContext, bdPresentation.uuid, BDPresentation.KEY_NAME, BDPathogenGroup.KEY_NAME);
-
-                BDMetadata meta = BDMetadata.CreateMetadata(dataContext, bdPresentation.Uuid, BDPresentation.KEY_NAME);
-                meta.layoutVariant = 1;
+                BDMetadata meta = BDMetadata.CreateMetadata(dataContext, BDMetadata.LayoutVariantType.TreatmentRecommendation01, presentation);
                 BDMetadata.Save(dataContext, meta);
             }
         }

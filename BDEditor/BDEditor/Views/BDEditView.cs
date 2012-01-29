@@ -8,21 +8,23 @@ using System.Text;
 using System.Windows.Forms;
 using BDEditor.DataModel;
 using BDEditor.Classes;
+using BDEditor.Classes.Navigation;
+
 using System.Diagnostics;
 
 namespace BDEditor.Views
 {
-    public enum BDNodeContextType
-    {
-        Chapter = 1,
-        Section = 2,
-        Category = 3,
-        SubCategory = 4,
-        Disease = 5,
-        Presentation = 6,
-        Therapy = 7,
-        Pathogen = 8
-    }
+    //public enum BDNodeContextType
+    //{
+    //    Chapter = 1,
+    //    Section = 2,
+    //    Category = 3,
+    //    SubCategory = 4,
+    //    Disease = 5,
+    //    Presentation = 6,
+    //    Therapy = 7,
+    //    Pathogen = 8
+    //}
 
     public partial class BDEditView : Form
     {
@@ -62,20 +64,20 @@ namespace BDEditor.Views
             }
         }
 
-        public void createEntry(BDNodeContextType context)
-        {            
-            switch (context)
-            {
-                case BDNodeContextType.Section:
-                    BDSection section = BDSection.CreateSection(dataContext);
-                    section.name = @"New Section";
-                    BDSection.Save(dataContext,section);
-                    break;
+        //public void createEntry(BDNodeContextType context)
+        //{            
+        //    switch (context)
+        //    {
+        //        case BDNodeContextType.Section:
+        //            BDSection section = BDSection.CreateSection(dataContext);
+        //            section.name = @"New Section";
+        //            BDSection.Save(dataContext,section);
+        //            break;
 
-                default:
-                    break;
-            }
-        }
+        //        default:
+        //            break;
+        //    }
+        //}
 
         public void rebuildTree(BDChapter pChapter)
         {
@@ -153,6 +155,20 @@ namespace BDEditor.Views
                 this.Cursor = Cursors.WaitCursor;
                 rebuildTree(entry);
                 this.Cursor = Cursors.Default;
+            }
+
+            BDNode listEntry = chapterDropDown.SelectedItem as BDNode;
+            if ((null != listEntry) && (listEntry.NodeType == Constants.BDObjectType.BDChapter))
+            {
+                BDMetadata meta = BDMetadata.GetMetadataWithItemId(dataContext, listEntry.Uuid);
+                if (null != meta)
+                {
+                    switch (meta.LayoutVariant)
+                    {
+                        case BDMetadata.LayoutVariantType.TreatmentRecommendation00:
+                            break;
+                    }
+                }
             }
         }
 
@@ -233,7 +249,7 @@ namespace BDEditor.Views
             this.Cursor = Cursors.WaitCursor;
             BDDataLoader dataLoader = new BDDataLoader();
 
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_2a.txt", BDDataLoader.baseDataLayoutType.chapter2a);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_2a.txt", BDDataLoader.baseDataDefinitionType.chapter2a);
 
             LoadChapterDropDown();
             BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);

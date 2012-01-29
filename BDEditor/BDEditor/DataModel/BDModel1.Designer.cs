@@ -29,7 +29,7 @@ namespace BDEditor.DataModel
         #region Constructors
     
         /// <summary>
-        /// Initializes a new Entities object using the connection string found in the 'Entities' node of the application configuration file.
+        /// Initializes a new Entities object using the connection string found in the 'Entities' section of the application configuration file.
         /// </summary>
         public Entities() : base("name=Entities", "Entities")
         {
@@ -196,22 +196,6 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<BDSearchEntryAssociation> BDSearchEntryAssociations
-        {
-            get
-            {
-                if ((_BDSearchEntryAssociations == null))
-                {
-                    _BDSearchEntryAssociations = base.CreateObjectSet<BDSearchEntryAssociation>("BDSearchEntryAssociations");
-                }
-                return _BDSearchEntryAssociations;
-            }
-        }
-        private ObjectSet<BDSearchEntryAssociation> _BDSearchEntryAssociations;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<BDDisease> BDDiseases
         {
             get
@@ -372,6 +356,22 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<BDSearchEntryAssociation> BDSearchEntryAssociations
+        {
+            get
+            {
+                if ((_BDSearchEntryAssociations == null))
+                {
+                    _BDSearchEntryAssociations = base.CreateObjectSet<BDSearchEntryAssociation>("BDSearchEntryAssociations");
+                }
+                return _BDSearchEntryAssociations;
+            }
+        }
+        private ObjectSet<BDSearchEntryAssociation> _BDSearchEntryAssociations;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<BDNode> BDNodes
         {
             get
@@ -453,14 +453,6 @@ namespace BDEditor.DataModel
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the BDSearchEntryAssociations EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDSearchEntryAssociations(BDSearchEntryAssociation bDSearchEntryAssociation)
-        {
-            base.AddObject("BDSearchEntryAssociations", bDSearchEntryAssociation);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the BDDiseases EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToBDDiseases(BDDisease bDDisease)
@@ -538,6 +530,14 @@ namespace BDEditor.DataModel
         public void AddToBDNodeAssociations(BDNodeAssociation bDNodeAssociation)
         {
             base.AddObject("BDNodeAssociations", bDNodeAssociation);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDSearchEntryAssociations EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDSearchEntryAssociations(BDSearchEntryAssociation bDSearchEntryAssociation)
+        {
+            base.AddObject("BDSearchEntryAssociations", bDSearchEntryAssociation);
         }
     
         /// <summary>
@@ -1368,6 +1368,30 @@ namespace BDEditor.DataModel
         private global::System.String _targetName;
         partial void OntargetNameChanging(global::System.String value);
         partial void OntargetNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> targetType
+        {
+            get
+            {
+                return _targetType;
+            }
+            set
+            {
+                OntargetTypeChanging(value);
+                ReportPropertyChanging("targetType");
+                _targetType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("targetType");
+                OntargetTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _targetType;
+        partial void OntargetTypeChanging(Nullable<global::System.Int32> value);
+        partial void OntargetTypeChanged();
 
         #endregion
     
@@ -2451,6 +2475,30 @@ namespace BDEditor.DataModel
         private global::System.String _parentKeyPropertyName;
         partial void OnparentKeyPropertyNameChanging(global::System.String value);
         partial void OnparentKeyPropertyNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> parentType
+        {
+            get
+            {
+                return _parentType;
+            }
+            set
+            {
+                OnparentTypeChanging(value);
+                ReportPropertyChanging("parentType");
+                _parentType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("parentType");
+                OnparentTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _parentType;
+        partial void OnparentTypeChanging(Nullable<global::System.Int32> value);
+        partial void OnparentTypeChanged();
 
         #endregion
     
@@ -2770,6 +2818,54 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Int32> _layoutVariant;
         partial void OnlayoutVariantChanging(Nullable<global::System.Int32> value);
         partial void OnlayoutVariantChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> displayParentType
+        {
+            get
+            {
+                return _displayParentType;
+            }
+            set
+            {
+                OndisplayParentTypeChanging(value);
+                ReportPropertyChanging("displayParentType");
+                _displayParentType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("displayParentType");
+                OndisplayParentTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _displayParentType;
+        partial void OndisplayParentTypeChanging(Nullable<global::System.Int32> value);
+        partial void OndisplayParentTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> itemType
+        {
+            get
+            {
+                return _itemType;
+            }
+            set
+            {
+                OnitemTypeChanging(value);
+                ReportPropertyChanging("itemType");
+                _itemType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("itemType");
+                OnitemTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _itemType;
+        partial void OnitemTypeChanging(Nullable<global::System.Int32> value);
+        partial void OnitemTypeChanged();
 
         #endregion
     
@@ -3113,6 +3209,30 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Guid> _inUseBy;
         partial void OninUseByChanging(Nullable<global::System.Guid> value);
         partial void OninUseByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> parentType
+        {
+            get
+            {
+                return _parentType;
+            }
+            set
+            {
+                OnparentTypeChanging(value);
+                ReportPropertyChanging("parentType");
+                _parentType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("parentType");
+                OnparentTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _parentType;
+        partial void OnparentTypeChanging(Nullable<global::System.Int32> value);
+        partial void OnparentTypeChanged();
 
         #endregion
     
@@ -3288,6 +3408,54 @@ namespace BDEditor.DataModel
         private Nullable<global::System.DateTime> _createdDate;
         partial void OncreatedDateChanging(Nullable<global::System.DateTime> value);
         partial void OncreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> childNodeType
+        {
+            get
+            {
+                return _childNodeType;
+            }
+            set
+            {
+                OnchildNodeTypeChanging(value);
+                ReportPropertyChanging("childNodeType");
+                _childNodeType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("childNodeType");
+                OnchildNodeTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _childNodeType;
+        partial void OnchildNodeTypeChanging(Nullable<global::System.Int32> value);
+        partial void OnchildNodeTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> nodeType
+        {
+            get
+            {
+                return _nodeType;
+            }
+            set
+            {
+                OnnodeTypeChanging(value);
+                ReportPropertyChanging("nodeType");
+                _nodeType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("nodeType");
+                OnnodeTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _nodeType;
+        partial void OnnodeTypeChanging(Nullable<global::System.Int32> value);
+        partial void OnnodeTypeChanged();
 
         #endregion
     
@@ -4800,6 +4968,30 @@ namespace BDEditor.DataModel
         private global::System.String _displayParentKeyName;
         partial void OndisplayParentKeyNameChanging(global::System.String value);
         partial void OndisplayParentKeyNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> displayParentType
+        {
+            get
+            {
+                return _displayParentType;
+            }
+            set
+            {
+                OndisplayParentTypeChanging(value);
+                ReportPropertyChanging("displayParentType");
+                _displayParentType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("displayParentType");
+                OndisplayParentTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _displayParentType;
+        partial void OndisplayParentTypeChanging(Nullable<global::System.Int32> value);
+        partial void OndisplayParentTypeChanged();
 
         #endregion
     
@@ -6084,6 +6276,30 @@ namespace BDEditor.DataModel
         private global::System.String _parentKeyName;
         partial void OnparentKeyNameChanging(global::System.String value);
         partial void OnparentKeyNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> parentType
+        {
+            get
+            {
+                return _parentType;
+            }
+            set
+            {
+                OnparentTypeChanging(value);
+                ReportPropertyChanging("parentType");
+                _parentType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("parentType");
+                OnparentTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _parentType;
+        partial void OnparentTypeChanging(Nullable<global::System.Int32> value);
+        partial void OnparentTypeChanged();
 
         #endregion
     
@@ -6453,6 +6669,30 @@ namespace BDEditor.DataModel
         private global::System.String _parentKeyName;
         partial void OnparentKeyNameChanging(global::System.String value);
         partial void OnparentKeyNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> parentType
+        {
+            get
+            {
+                return _parentType;
+            }
+            set
+            {
+                OnparentTypeChanging(value);
+                ReportPropertyChanging("parentType");
+                _parentType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("parentType");
+                OnparentTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _parentType;
+        partial void OnparentTypeChanging(Nullable<global::System.Int32> value);
+        partial void OnparentTypeChanged();
 
         #endregion
     

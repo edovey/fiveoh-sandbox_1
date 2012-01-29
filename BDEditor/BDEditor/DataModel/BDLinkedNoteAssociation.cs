@@ -473,6 +473,11 @@ namespace BDEditor.DataModel
         {
             return this.uuid.ToString();
         }
+
+        public Constants.BDObjectType NodeType
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 
 }

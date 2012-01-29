@@ -42,27 +42,35 @@ namespace BDEditor.DataModel
         private const string MODIFIEDDATE = @"no_modifiedDate";
         private const string NAME = @"no_name";
         private const string DISPLAYORDER = @"no_displayOrder";
+
         private const string PARENTID = @"no_parentId";
+        private const string PARENTTYPE = @"no_parentType";
         private const string PARENTKEYNAME = @"no_parentKeyName";
-        private const string NODEKEYNAME = @"no_nodeKeyName";
+
         private const string NODETYPE = @"no_nodeType";
+        private const string NODEKEYNAME = @"no_nodeKeyName";
+
+        private const string INUSEBY = @"no_inUseBy";
+
 
         /// <summary>
         /// Extended Create method that sets the created date and the schema version
         /// </summary>
         /// <returns></returns>
-        public static BDNode CreateNode(Entities pContext)
+        public static BDNode CreateNode(Entities pContext, Constants.BDObjectType pNodeType)
         {
-            return CreateNode(pContext, Guid.NewGuid());
+            return CreateNode(pContext, pNodeType, Guid.NewGuid());
         }
 
         /// <summary>
         /// Extended Create method that sets the created date and the schema version
         /// </summary>
         /// <returns></returns>
-        public static BDNode CreateNode(Entities pContext, Guid pUuid)
+        public static BDNode CreateNode(Entities pContext, Constants.BDObjectType pNodeType, Guid pUuid)
         {
             BDNode node = CreateBDNode(pUuid);
+            node.nodeType = (int)pNodeType;
+            node.nodeKeyName = pNodeType.ToString();
             node.createdBy = Guid.Empty;
             node.createdDate = DateTime.Now;
             node.schemaVersion = ENTITY_SCHEMAVERSION;
@@ -105,11 +113,11 @@ namespace BDEditor.DataModel
             }
 
             // delete children
-            List<BDNode> children = BDNode.GetChildNodesForParentId(pContext, pEntity.uuid);
-            foreach (BDNode n in children)
-            {
-                BDNode.Delete(pContext, n);
-            }
+            //List<BDNode> children = BDNode.GetChildNodesForParentId(pContext, pEntity.uuid);
+            //foreach (BDNode n in children)
+            //{
+            //    BDNode.Delete(pContext, n);
+            //}
 
             // create BDDeletion record for the object to be deleted
             BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
@@ -145,34 +153,19 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pParentId"></param>
         /// <returns>BDNode object.</returns>
-        public static BDNode GetNodeWithId(Entities pContext, Guid pNodeId)
+        public static BDNode GetNodeWithId(Entities pContext, Guid pUuid)
         {
             BDNode section = null;
 
-            if (null != pNodeId)
+            if (null != pUuid)
             {
                 IQueryable<BDNode> entries = (from bdNodes in pContext.BDNodes
-                                                  where bdNodes.uuid == pNodeId
+                                                  where bdNodes.uuid == pUuid
                                                   select bdNodes);
                 if (entries.Count<BDNode>() > 0)
                     section = entries.AsQueryable().First<BDNode>();
             }
             return section;
-        }
-
-        public static List<BDNode> GetChildNodesForParentId(Entities pContext, Guid pParentId)
-        {
-            List<BDNode> entryList = new List<BDNode>();
-
-            if (null != pParentId)
-            {
-                IQueryable<BDNode> entries = (from entry in pContext.BDNodes
-                                                 where entry.parentId == pParentId
-                                                 select entry);
-                if (entries.Count<BDNode>() > 0)
-                    entryList = entries.ToList<BDNode>();
-            }
-            return entryList;
         }
 
         public static List<BDNode> GetAll(Entities pContext)
@@ -218,22 +211,22 @@ namespace BDEditor.DataModel
         public static List<IBDObject> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
         {
             List<IBDObject> entryList = new List<IBDObject>();
-            IQueryable<BDSection> entries;
+            IQueryable<BDNode> entries;
 
             if (null == pUpdateDateTime)
             {
-                entries = (from entry in pContext.BDSections
+                entries = (from entry in pContext.BDNodes
                            select entry);
             }
             else
             {
-                entries = (from entry in pContext.BDSections
+                entries = (from entry in pContext.BDNodes
                            where entry.modifiedDate > pUpdateDateTime.Value
                            select entry);
             }
 
             if (entries.Count() > 0)
-                entryList = new List<IBDObject>(entries.ToList<BDSection>());
+                entryList = new List<IBDObject>(entries.ToList<BDNode>());
 
             return entryList;
         }
@@ -260,7 +253,7 @@ namespace BDEditor.DataModel
         public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
-            BDSection entry = BDSection.GetSectionWithId(pDataContext, uuid);
+            BDNode entry = BDNode.GetNodeWithId(pDataContext, uuid);
 
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
             entry.schemaVersion = schemaVersion;
@@ -271,8 +264,15 @@ namespace BDEditor.DataModel
             entry.modifiedBy = Guid.Parse(pAttributeDictionary[MODIFIEDBY]);
             entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
             entry.name = pAttributeDictionary[NAME];
+
             entry.parentId = Guid.Parse(pAttributeDictionary[PARENTID]);
+            entry.parentType = (null == pAttributeDictionary[PARENTTYPE]) ? (short)-1 : short.Parse(pAttributeDictionary[PARENTTYPE]);
             entry.parentKeyName = pAttributeDictionary[PARENTKEYNAME];
+
+            entry.nodeType = (null == pAttributeDictionary[NODETYPE]) ? (short)-1 : short.Parse(pAttributeDictionary[NODETYPE]);
+            entry.nodeKeyName = pAttributeDictionary[NODEKEYNAME];
+
+            entry.inUseBy = Guid.Parse(pAttributeDictionary[INUSEBY]);
 
             if (pSaveChanges)
                 pDataContext.SaveChanges();
@@ -293,16 +293,66 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDNode.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDNode.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
-            if (schemaVersion > 0)
-            {
-                attributeList.Add(new ReplaceableAttribute().WithName(BDNode.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
-                attributeList.Add(new ReplaceableAttribute().WithName(BDNode.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));
-            }
+
+            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.PARENTTYPE).WithValue(string.Format(@"{0}", parentType)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));
+
+            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.NODETYPE).WithValue(string.Format(@"{0}", nodeType)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.NODEKEYNAME).WithValue((null == nodeKeyName) ? string.Empty : nodeKeyName).WithReplace(true));
+
+            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.INUSEBY).WithValue(inUseBy.ToString().ToUpper()).WithReplace(true));
 
             return putAttributeRequest;
         }
         #endregion
 
+        public void SetParent(IBDObject pParent)
+        {
+            if (null == pParent)
+            {
+                SetParent(Constants.BDObjectType.None, null);
+            }
+            else
+            {
+                SetParent(pParent.NodeType, pParent.Uuid);
+            }
+        }
+
+        public void SetParent(Constants.BDObjectType pParentType, Guid? pParentId)
+        {
+            parentId = pParentId;
+            parentType = (int)pParentType;
+            parentKeyName = pParentType.ToString();
+        }
+
+        public Constants.BDObjectType NodeType
+        {
+            get
+            {
+                Constants.BDObjectType result = Constants.BDObjectType.None;
+
+                if (Enum.IsDefined(typeof(Constants.BDObjectType), nodeType))
+                {
+                    result = (Constants.BDObjectType)nodeType;
+                }
+                return result;
+            }
+        }
+
+        public Constants.BDObjectType ParentType
+        {
+            get
+            {
+                Constants.BDObjectType result = Constants.BDObjectType.None;
+
+                if (Enum.IsDefined(typeof(Constants.BDObjectType), parentType))
+                {
+                    result = (Constants.BDObjectType)parentType;
+                }
+                return result;
+            }
+        }
 
         public Guid Uuid
         {

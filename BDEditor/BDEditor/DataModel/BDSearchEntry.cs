@@ -280,5 +280,11 @@ namespace BDEditor.DataModel
         {
             get { throw new NotImplementedException(); }
         }
+
+
+        public Constants.BDObjectType NodeType
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

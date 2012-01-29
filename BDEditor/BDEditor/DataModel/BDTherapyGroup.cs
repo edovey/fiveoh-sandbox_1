@@ -227,6 +227,11 @@ namespace BDEditor.DataModel
             get { return this.uuid; }
         }
 
+        public Constants.BDObjectType NodeType
+        {
+            get { return Constants.BDObjectType.BDTherapyGroup; }
+        }
+
         public string Description
         {
             get { return string.Format("[{0}]", this.name); }

@@ -15,7 +15,7 @@ namespace BDEditor.Views
     {
         private Entities dataContext;
         private Guid? diseaseId;
-        private BDPresentation currentPresentation;
+        private BDNode currentPresentation;
         private BDLinkedNote overviewLinkedNote;
         private Guid? scopeId;
         public int? DisplayOrder { get; set; }
@@ -26,7 +26,6 @@ namespace BDEditor.Views
         public event EventHandler RequestItemDelete;
         public event EventHandler ReorderToPrevious;
         public event EventHandler ReorderToNext;
-        public event EventHandler<SearchableItemEventArgs> SearchableItemAdded;
 
         public event EventHandler NotesChanged;
 
@@ -55,18 +54,18 @@ namespace BDEditor.Views
             if (null != ReorderToNext) { ReorderToNext(this, e); }
         }
 
-        protected virtual void OnSearchableItemAdded(SearchableItemEventArgs se)
-        {
-            // make a copy of the handler to avoid race condition
-            EventHandler<SearchableItemEventArgs> handler = SearchableItemAdded;
+        //protected virtual void OnSearchableItemAdded(SearchableItemEventArgs se)
+        //{
+        //    // make a copy of the handler to avoid race condition
+        //    EventHandler<SearchableItemEventArgs> handler = SearchableItemAdded;
 
-            if (null != handler)
-            {
-                handler(this, se);
-            }
-        }
-        
-        public BDPresentation CurrentPresentation
+        //    if (null != handler)
+        //    {
+        //        handler(this, se);
+        //    }
+        //}
+
+        public BDNode CurrentPresentation
         {
             get { return currentPresentation; }
             set { currentPresentation = value; }
@@ -119,7 +118,7 @@ namespace BDEditor.Views
                     }
                   
                     System.Diagnostics.Debug.WriteLine(@"Presentation Control Save");
-                    BDPresentation.Save(dataContext, currentPresentation);
+                    BDNode.Save(dataContext, currentPresentation);
                 }
             }
            
@@ -143,7 +142,9 @@ namespace BDEditor.Views
                 }
                 else
                 {
-                    this.currentPresentation = BDPresentation.CreatePresentation(dataContext, diseaseId.Value);
+                    this.currentPresentation = BDNode.CreateNode(dataContext, Constants.BDObjectType.BDPresentation);
+                    this.currentPresentation.SetParent(Constants.BDObjectType.BDDisease, diseaseId.Value);
+                    //this.currentPresentation = BDPresentation.CreatePresentation(dataContext, diseaseId.Value);
                     this.currentPresentation.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                 }
             }
@@ -222,7 +223,6 @@ namespace BDEditor.Views
                 pathogenGroupControl.ReorderToNext += new EventHandler(PathogenGroup_ReorderToNext);
                 pathogenGroupControl.ReorderToPrevious += new EventHandler(PathogenGroup_ReorderToPrevious);
                 pathogenGroupControl.NotesChanged += new EventHandler(notesChanged_Action);
-                pathogenGroupControl.SearchableItemAdded += new EventHandler<SearchableItemEventArgs>(PathogenGroup_SearchableItemAdded);
 
                 pathogenGroupControlList.Add(pathogenGroupControl);
 
@@ -242,7 +242,6 @@ namespace BDEditor.Views
             pPathogenGroupControl.ReorderToNext -= new EventHandler(PathogenGroup_ReorderToNext);
             pPathogenGroupControl.ReorderToPrevious -= new EventHandler(PathogenGroup_ReorderToPrevious);
             pPathogenGroupControl.NotesChanged -= new EventHandler(notesChanged_Action);
-            pPathogenGroupControl.SearchableItemAdded -= new EventHandler<SearchableItemEventArgs>(PathogenGroup_SearchableItemAdded);
 
             pathogenGroupControlList.Remove(pPathogenGroupControl);
             
@@ -369,16 +368,6 @@ namespace BDEditor.Views
             {
                 ReorderPathogenGroupControl(control, -1);
             }
-        }
-
-        private void PathogenGroup_SearchableItemAdded(object sender, SearchableItemEventArgs se)
-        {
-            BDMetadata md = BDMetadata.CreateMetadata(dataContext, se.ItemId, se.ItemKeyName);
-            md.displayParentKeyName = BDPresentation.KEY_NAME;
-            md.displayParentId = this.currentPresentation.Uuid;
-            BDMetadata.Save(dataContext, md);
-
-            OnSearchableItemAdded(se);
         }
 
         private void btnMenu_Click(object sender, EventArgs e)

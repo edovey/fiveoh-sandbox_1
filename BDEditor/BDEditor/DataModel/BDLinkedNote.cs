@@ -390,5 +390,10 @@ namespace BDEditor.DataModel
         {
             return this.uuid.ToString();
         }
+
+        public Constants.BDObjectType NodeType
+        {
+            get { return Constants.BDObjectType.BDLinkedNote; }
+        }
     }
 }

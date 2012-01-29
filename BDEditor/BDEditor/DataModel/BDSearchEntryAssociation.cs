@@ -343,8 +343,12 @@ namespace BDEditor.DataModel
             return this.uuid.ToString();
         }
 
-
         public string DescriptionForLinkedNote
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public Constants.BDObjectType NodeType
         {
             get { throw new NotImplementedException(); }
         }

@@ -15,6 +15,14 @@ namespace BDEditor.DataModel
 {
     public partial class BDMetadata : IBDObject
     {
+        public enum LayoutVariantType
+        {
+            Undefined = -1,
+            TreatmentRecommendation00 = 100, // Chapter
+            TreatmentRecommendation01 = 101, // format specific section within chapter
+            TreatmentRecommendation02 = 102,
+            TreatmentRecommendation03 = 103
+        }
         //public const string AWS_DOMAIN = @"bd_1_metadatas";
 
         public const string AWS_PROD_DOMAIN = @"bd_2_metadatas";
@@ -43,8 +51,10 @@ namespace BDEditor.DataModel
         private const string MODIFIEDBY = @"md_modifieddBy";
         private const string MODIFIEDDATE = @"md_modifiedDate";
         private const string ITEMID = @"md_itemId";
+        private const string ITEMTYPE = @"md_itemType";
         private const string ITEMKEYNAME = @"md_itemKeyName";
         private const string DISPLAYPARENTID = @"md_displayParentId";
+        private const string DISPLAYPARENTTYPE = @"md_displayParentType";
         private const string DISPLAYPARENTKEYNAME = @"md_displayParentKeyName";
         private const string DEMOGRAPHIC = @"md_demographic";
         private const string LAYOUTVARIANT = @"md_layoutVariant";
@@ -53,16 +63,38 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets the created date and schema version
         /// </summary>
         /// <returns>BDMetadata</returns>
-        public static BDMetadata CreateMetadata(Entities pContext, Guid pItemId, string pItemKeyName)
+        public static BDMetadata CreateMetadata(Entities pContext, LayoutVariantType pLayoutVariant, IBDObject pBDObject)
         {
-            return CreateMetadata(pContext, pItemId, pItemKeyName, Guid.NewGuid());
+            if (null == pBDObject) return null;
+
+            return CreateMetadata(pContext, pLayoutVariant, pBDObject.Uuid, pBDObject.NodeType, Guid.NewGuid());
         }
 
         /// <summary>
         /// Extended Create method that sets the created date and schema version
         /// </summary>
         /// <returns>BDMetadata</returns>
-        public static BDMetadata CreateMetadata(Entities pContext, Guid pItemId, string pItemKeyName, Guid pUuid)
+        public static BDMetadata CreateMetadata(Entities pContext, LayoutVariantType pLayoutVariant, IBDObject pBDObject, Guid pUuid)
+        {
+            if (null == pBDObject) return null;
+
+            return CreateMetadata(pContext, pLayoutVariant, pBDObject.Uuid, pBDObject.NodeType, pUuid);
+        }
+
+        /// <summary>
+        /// Extended Create method that sets the created date and schema version
+        /// </summary>
+        /// <returns>BDMetadata</returns>
+        public static BDMetadata CreateMetadata(Entities pContext, LayoutVariantType pLayoutVariant, Guid pItemId, Constants.BDObjectType pItemKeyType)
+        {
+            return CreateMetadata(pContext,pLayoutVariant, pItemId,pItemKeyType, Guid.NewGuid());
+        }
+
+        /// <summary>
+        /// Extended Create method that sets the created date and schema version. Returns instance if already exists.
+        /// </summary>
+        /// <returns>BDMetadata</returns>
+        public static BDMetadata CreateMetadata(Entities pContext, LayoutVariantType pLayoutVariant, Guid pItemId, Constants.BDObjectType pItemKeyType, Guid pUuid)
         {
             BDMetadata entry = GetMetadataWithItemId(pContext, pItemId);
             if (null == entry)
@@ -72,7 +104,9 @@ namespace BDEditor.DataModel
                 entry.createdDate = DateTime.Now;
                 entry.schemaVersion = ENTITY_SCHEMAVERSION;
                 entry.itemId = pItemId;
-                entry.itemKeyName = pItemKeyName;
+                entry.itemType = (int)pItemKeyType;
+                entry.itemKeyName = pItemKeyType.ToString();
+                entry.SetLayoutVariant(pLayoutVariant);
 
                 pContext.AddObject(ENTITYNAME, entry);
             }
@@ -119,9 +153,7 @@ namespace BDEditor.DataModel
                 BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
                 // delete record from local data store
                 pContext.DeleteObject(pEntity);
-                pContext.SaveChanges();
-
-                
+                pContext.SaveChanges();      
             }
         }
 
@@ -264,15 +296,38 @@ namespace BDEditor.DataModel
             entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
 
             entry.itemId = Guid.Parse(pAttributeDictionary[ITEMID]);
+            entry.itemType = (null == pAttributeDictionary[ITEMTYPE]) ? (short)-1 : short.Parse(pAttributeDictionary[ITEMTYPE]);
             entry.itemKeyName = pAttributeDictionary[ITEMKEYNAME];
+
             entry.displayParentId = Guid.Parse(pAttributeDictionary[DISPLAYPARENTID]);
+            entry.displayParentType = (null == pAttributeDictionary[DISPLAYPARENTTYPE]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYPARENTTYPE]);
             entry.displayParentKeyName = pAttributeDictionary[DISPLAYPARENTKEYNAME];
+
             entry.layoutVariant = short.Parse(pAttributeDictionary[LAYOUTVARIANT]);
 
             if (pSaveChanges)
                 pDataContext.SaveChanges();
 
             return uuid;
+        }
+
+        public void SetLayoutVariant(LayoutVariantType pLayoutVariantType)
+        {
+            layoutVariant = (int)pLayoutVariantType;
+        }
+
+        public LayoutVariantType LayoutVariant
+        {
+            get
+            {
+                LayoutVariantType result = LayoutVariantType.Undefined;
+
+                if (Enum.IsDefined(typeof(LayoutVariantType), layoutVariant))
+                {
+                    result = (LayoutVariantType)layoutVariant;
+                }
+                return result;
+            }
         }
 
         public PutAttributesRequest PutAttributes()
@@ -286,11 +341,15 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.LAYOUTVARIANT).WithValue(string.Format(@"{0}", layoutVariant)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.ITEMID).WithValue((null == itemId) ? Guid.Empty.ToString() : itemId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.ITEMTYPE).WithValue(string.Format(@"{0}", itemType)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.ITEMKEYNAME).WithValue((null == itemKeyName) ? string.Empty : itemKeyName).WithReplace(true));
+
             attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.DISPLAYPARENTID).WithValue((null == displayParentId) ? Guid.Empty.ToString() : displayParentId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.DISPLAYPARENTTYPE).WithValue(string.Format(@"{0}", displayParentType)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.DISPLAYPARENTKEYNAME).WithValue((null == displayParentKeyName) ? string.Empty : displayParentKeyName).WithReplace(true));
+
+            attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.LAYOUTVARIANT).WithValue(string.Format(@"{0}", layoutVariant)).WithReplace(true));
 
             return putAttributeRequest;
         }
@@ -313,6 +372,11 @@ namespace BDEditor.DataModel
         }
 
         public string DescriptionForLinkedNote
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public Constants.BDObjectType NodeType
         {
             get { throw new NotImplementedException(); }
         }

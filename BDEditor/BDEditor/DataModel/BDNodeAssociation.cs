@@ -32,22 +32,31 @@ namespace BDEditor.DataModel
         private const string SCHEMAVERSION = @"na_schemaVersion";
         private const string CREATEDDATE = @"na_createdDate";
         private const string NODEID = @"na_nodeId";
+        private const string NODETYPE = @"na_nodeType";
         private const string NODEKEYNAME = @"na_nodeKeyName";
+        private const string CHILDNODETYPE = @"na_childNodeType";
         private const string CHILDKEYNAME = @"na_childKeyName";
 
-        public static void CreateNodeAssociation(Entities pContext, Guid pNodeId, string pNodeKeyName, string pChildKeyName)
+        public static void CreateNodeAssociation(Entities pContext, IBDObject pNodeObject, Constants.BDObjectType pChildNodeType)
         {
-            CreateNodeAssociation(pContext, pNodeId, pNodeKeyName, pChildKeyName, Guid.NewGuid());
+            CreateNodeAssociation(pContext, pNodeObject.Uuid, pNodeObject.NodeType, pChildNodeType, Guid.NewGuid());
         }
 
-        public static void CreateNodeAssociation(Entities pContext, Guid pNodeId, string pNodeKeyName, string pChildKeyName, Guid pUuid)
+        public static void CreateNodeAssociation(Entities pContext, IBDObject pNodeObject, Constants.BDObjectType pChildNodeType, Guid pUuid)
         {
-            if (!Exists(pContext, pNodeId, pNodeKeyName, pChildKeyName, pUuid))
+            CreateNodeAssociation(pContext, pNodeObject.Uuid, pNodeObject.NodeType, pChildNodeType, pUuid);
+        }
+
+        private static void CreateNodeAssociation(Entities pContext, Guid pNodeId, Constants.BDObjectType pNodeType, Constants.BDObjectType pChildNodeType, Guid pUuid)
+        {
+            if (!Exists(pContext, pNodeId, pChildNodeType))
             {
                 BDNodeAssociation association = CreateBDNodeAssociation(pUuid);
                 association.nodeId = pNodeId;
-                association.nodeKeyName = pNodeKeyName;
-                association.childKeyName = pChildKeyName;
+                association.nodeType = (int)pNodeType;
+                association.nodeKeyName = pNodeType.ToString();
+                association.childNodeType = (int)pChildNodeType;
+                association.childKeyName = pChildNodeType.ToString();
                 association.schemaVersion = ENTITY_SCHEMAVERSION;
                 association.createdDate = DateTime.Now;
 
@@ -72,10 +81,10 @@ namespace BDEditor.DataModel
             }
         }
 
-        public static Boolean Exists(Entities pContext, Guid pObjectId, string pObjectKeyName, string pChildKeyName, Guid pUuid)
+        public static Boolean Exists(Entities pContext, Guid pObjectId, Constants.BDObjectType pChildNodeType)
         {
             IQueryable<BDNodeAssociation> entries = (from entry in pContext.BDNodeAssociations
-                                                            where (entry.nodeId == pObjectId) && (entry.nodeKeyName == pObjectKeyName) && (entry.childKeyName == pChildKeyName)
+                                                     where (entry.nodeId == pObjectId) && (entry.childNodeType == (int)pChildNodeType)
                                                             select entry);
 
             Boolean result = (entries.Count<BDNodeAssociation>() > 0);
@@ -113,6 +122,34 @@ namespace BDEditor.DataModel
             }
 
             return resultList;
+        }
+
+        public Constants.BDObjectType NodeType
+        {
+            get
+            {
+                Constants.BDObjectType result = Constants.BDObjectType.None;
+
+                if (Enum.IsDefined(typeof(Constants.BDObjectType), nodeType))
+                {
+                    result = (Constants.BDObjectType)nodeType;
+                }
+                return result;
+            }
+        }
+
+        public Constants.BDObjectType ChildNodeType
+        {
+            get
+            {
+                Constants.BDObjectType result = Constants.BDObjectType.None;
+
+                if (Enum.IsDefined(typeof(Constants.BDObjectType), childNodeType))
+                {
+                    result = (Constants.BDObjectType)childNodeType;
+                }
+                return result;
+            }
         }
 
         public Guid Uuid
@@ -179,13 +216,14 @@ namespace BDEditor.DataModel
                 pDataContext.AddObject(ENTITYNAME, entry);
             }
 
-            short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
-            entry.schemaVersion = schemaVersion;
+            entry.schemaVersion = (null == pAttributeDictionary[SCHEMAVERSION]) ? (short)0 : short.Parse(pAttributeDictionary[SCHEMAVERSION]); ;
             entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
 
             entry.nodeId = Guid.Parse(pAttributeDictionary[NODEID]);
+            entry.nodeType = (null == pAttributeDictionary[NODETYPE]) ? (short)-1 : short.Parse(pAttributeDictionary[NODETYPE]);
             entry.nodeKeyName = pAttributeDictionary[NODEKEYNAME];
 
+            entry.childNodeType = (null == pAttributeDictionary[CHILDNODETYPE]) ? (short)-1 : short.Parse(pAttributeDictionary[CHILDNODETYPE]);
             entry.childKeyName = pAttributeDictionary[CHILDKEYNAME];
 
             if (pSaveChanges)
@@ -198,13 +236,17 @@ namespace BDEditor.DataModel
         {
             PutAttributesRequest putAttributeRequest = new PutAttributesRequest().WithDomainName(AWS_DOMAIN).WithItemName(this.uuid.ToString().ToUpper());
             List<ReplaceableAttribute> attributeList = putAttributeRequest.Attribute;
+
             attributeList.Add(new ReplaceableAttribute().WithName(BDNodeAssociation.UUID).WithValue(uuid.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDNodeAssociation.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDNodeAssociation.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDNodeAssociation.NODEKEYNAME).WithValue((null == nodeKeyName) ? string.Empty : nodeKeyName).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDNodeAssociation.CHILDKEYNAME).WithValue((null == childKeyName) ? string.Empty : childKeyName).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDNodeAssociation.NODEID).WithValue((null == nodeId) ? Guid.Empty.ToString() : nodeId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDNodeAssociation.NODETYPE).WithValue(string.Format(@"{0}", nodeType)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDNodeAssociation.NODEKEYNAME).WithValue((null == nodeKeyName) ? string.Empty : nodeKeyName).WithReplace(true));
+
+            attributeList.Add(new ReplaceableAttribute().WithName(BDNodeAssociation.CHILDNODETYPE).WithValue(string.Format(@"{0}", childNodeType)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDNodeAssociation.CHILDKEYNAME).WithValue((null == childKeyName) ? string.Empty : childKeyName).WithReplace(true));
 
             return putAttributeRequest;
         }

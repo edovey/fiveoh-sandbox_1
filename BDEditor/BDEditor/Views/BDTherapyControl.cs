@@ -16,7 +16,7 @@ namespace BDEditor.Views
     {
         private Entities dataContext;
         private BDTherapy currentTherapy;
-        private Guid? therapyGroupId;
+        private Guid? parentId;
         private Guid? scopeId;
         private bool displayLeftBracket;
         private bool displayRightBracket;
@@ -33,7 +33,6 @@ namespace BDEditor.Views
         public event EventHandler ReorderToPrevious;
         public event EventHandler ReorderToNext;
         public event EventHandler NotesChanged;
-        public event EventHandler<SearchableItemEventArgs> SearchableItemAdded;
 
         protected virtual void OnNotesChanged(EventArgs e)
         {
@@ -58,16 +57,6 @@ namespace BDEditor.Views
         protected virtual void OnReorderToNext(EventArgs e)
         {
             if (null != ReorderToNext) { ReorderToNext(this, e); }
-        }
-
-        protected virtual void OnSearchableItemAdded(SearchableItemEventArgs se)
-        {
-            // make a copy of the handler to avoid race condition
-            EventHandler<SearchableItemEventArgs> handler = SearchableItemAdded;
-
-            if (null != handler) { 
-                handler(this,se); 
-            }
         }
 
         public BDTherapy CurrentTherapy
@@ -253,17 +242,16 @@ namespace BDEditor.Views
 
             if (null == this.currentTherapy)
             {
-                if (null == this.therapyGroupId)
+                if (null == this.parentId)
                 {
                     result = false;
                 }
                 else
                 {
-                    this.currentTherapy = BDTherapy.CreateTherapy(this.dataContext, this.therapyGroupId.Value);
+                    this.currentTherapy = BDTherapy.CreateTherapy(this.dataContext, this.parentId.Value);
                     this.currentTherapy.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
 
-                    // raise event to begin metadata entry creation
-                    OnSearchableItemAdded(new SearchableItemEventArgs(this.currentTherapy.uuid, BDTherapy.KEY_NAME));
+                    BDMetadata.CreateMetadata(dataContext, BDMetadata.LayoutVariantType.TreatmentRecommendation01, currentTherapy);
                 }
             }
 
@@ -273,7 +261,7 @@ namespace BDEditor.Views
         public bool Save()
         {
             bool result = false;
-            if (null != therapyGroupId)
+            if (null != parentId)
             {
                 if ((null == currentTherapy) &&
                     ((tbName.Text != string.Empty) ||
@@ -349,7 +337,7 @@ namespace BDEditor.Views
 
         public void AssignParentId(Guid? pParentId)
         {
-            therapyGroupId = pParentId;
+            parentId = pParentId;
         }
 
         #endregion
@@ -478,7 +466,6 @@ namespace BDEditor.Views
 
         private void notesChanged_Action(object sender, EventArgs e)
         {
-            //ShowLinksInUse(true);
             OnNotesChanged(new EventArgs());
         }
 

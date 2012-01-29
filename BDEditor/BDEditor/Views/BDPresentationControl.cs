@@ -153,23 +153,27 @@ namespace BDEditor.Views
 
                 bdLinkedNoteControl1.AssignParentId(null);
                 bdLinkedNoteControl1.AssignScopeId(null);
-              xx  bdLinkedNoteControl1.AssignContextEntityKeyName(BDPresentation.KEY_NAME);
+                bdLinkedNoteControl1.AssignContextNodeType(currentPresentation.NodeType);
                 bdLinkedNoteControl1.AssignContextPropertyName(BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
             }
             else
             {
                 tbPresentationName.Text = currentPresentation.name;
-                List<BDPathogenGroup> list = BDPathogenGroup.GetPathogenGroupsForParentId(dataContext, currentPresentation.uuid);
+                List<IBDNode> list = BDFabrik.GetChildrenForParentId(dataContext, currentPresentation.uuid);
                 for (int idx = 0; idx < list.Count; idx++)
                 {
-                    BDPathogenGroup entry = list[idx];
-                    addPathogenGroupControl(entry, idx);
+                    IBDNode listEntry = list[idx];
+                    if (listEntry.NodeType == (Constants.BDNodeType.BDPathogenGroup))
+                    {
+                        BDNode node = listEntry as BDNode;
+                        addPathogenGroupControl(node, idx);
+                    }
                 }
 
                 bdLinkedNoteControl1.AssignParentId(currentPresentation.uuid);
                 bdLinkedNoteControl1.AssignScopeId(scopeId);
-                bdLinkedNoteControl1.AssignContextEntityKeyName(BDPresentation.KEY_NAME);
-                bdLinkedNoteControl1.AssignContextPropertyName(BDPresentation.PROPERTYNAME_OVERVIEW);
+                bdLinkedNoteControl1.AssignContextNodeType(currentPresentation.NodeType);
+                bdLinkedNoteControl1.AssignContextPropertyName(BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
 
 
                 BDLinkedNoteAssociation association = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, currentPresentation.uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
@@ -237,10 +241,10 @@ namespace BDEditor.Views
             
             if (pDeleteRecord)
             {
-                BDPathogenGroup entry = pPathogenGroupControl.CurrentPathogenGroup;
+                BDNode entry = pPathogenGroupControl.CurrentPathogenGroup;
                 if (null != entry)
                 {
-                    BDPathogenGroup.Delete(dataContext, entry);
+                    BDNode.Delete(dataContext, entry);
                     for (int idx = 0; idx < pathogenGroupControlList.Count; idx++)
                     {
                         pathogenGroupControlList[idx].DisplayOrder = idx;
@@ -263,13 +267,13 @@ namespace BDEditor.Views
                     pathogenGroupControlList[requestedPosition].DisplayOrder = currentPosition;
 
                     pathogenGroupControlList[requestedPosition].CurrentPathogenGroup.displayOrder = currentPosition;
-                    BDPathogenGroup.Save(dataContext, pathogenGroupControlList[requestedPosition].CurrentPathogenGroup);
+                    BDNode.Save(dataContext, pathogenGroupControlList[requestedPosition].CurrentPathogenGroup);
 
                     pathogenGroupControlList[currentPosition].CreateCurrentObject();
                     pathogenGroupControlList[currentPosition].DisplayOrder = requestedPosition;
 
                     pathogenGroupControlList[currentPosition].CurrentPathogenGroup.displayOrder = requestedPosition;
-                    BDPathogenGroup.Save(dataContext, pathogenGroupControlList[currentPosition].CurrentPathogenGroup);
+                    BDNode.Save(dataContext, pathogenGroupControlList[currentPosition].CurrentPathogenGroup);
 
                     BDPathogenGroupControl temp = pathogenGroupControlList[requestedPosition];
                     pathogenGroupControlList[requestedPosition] = pathogenGroupControlList[currentPosition];
@@ -304,7 +308,7 @@ namespace BDEditor.Views
                 BDLinkedNoteView view = new BDLinkedNoteView();
                 view.AssignDataContext(dataContext);
                 view.AssignContextPropertyName(pProperty);
-                view.AssignContextEntityKeyName(BDPresentation.KEY_NAME);
+                view.AssignContextEntityKeyName(BDNode.KEY_NAME);
                 view.AssignScopeId(scopeId);
                 view.AssignLinkedNoteType(LinkedNoteType.Footnote, true, true);
                 view.NotesChanged += new EventHandler(notesChanged_Action);

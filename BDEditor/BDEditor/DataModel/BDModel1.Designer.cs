@@ -6588,9 +6588,9 @@ namespace BDEditor.DataModel
             set
             {
                 OnpathogenGroupIdChanging(value);
-                ReportPropertyChanging("pathogenGroupId");
+                ReportPropertyChanging("parentId");
                 _pathogenGroupId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("pathogenGroupId");
+                ReportPropertyChanged("parentId");
                 OnpathogenGroupIdChanged();
             }
         }

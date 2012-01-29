@@ -16,8 +16,8 @@ namespace BDEditor.Views
         #region Class properties
 
         private Entities dataContext;
-        private Guid? pathogenGroupId;
-        private BDPathogen currentPathogen;
+        private Guid? parentId;
+        private BDNode currentPathogen;
         private Guid? scopeId;
         public int? DisplayOrder { get; set; }
 
@@ -26,7 +26,6 @@ namespace BDEditor.Views
         public event EventHandler ReorderToPrevious;
         public event EventHandler ReorderToNext;
         public event EventHandler NotesChanged;
-        public event EventHandler<SearchableItemEventArgs> SearchableItemAdded;
 
         protected virtual void OnNotesChanged(EventArgs e)
         {
@@ -53,18 +52,7 @@ namespace BDEditor.Views
             if (null != ReorderToNext) { ReorderToNext(this, e); }
         }
 
-        protected virtual void OnSearchableItemAdded(SearchableItemEventArgs se)
-        {
-            // make a copy of the handler to avoid race condition
-            EventHandler<SearchableItemEventArgs> handler = SearchableItemAdded;
-
-            if (null != handler)
-            {
-                handler(this, se);
-            }
-        }
-
-        public BDPathogen CurrentPathogen
+        public BDNode CurrentPathogen
         {
             get { return currentPathogen; }
             set { currentPathogen = value; }
@@ -76,7 +64,7 @@ namespace BDEditor.Views
         {
             InitializeComponent();
 
-            btnLink.Tag = BDPathogen.PROPERTYNAME_NAME;
+            btnLink.Tag = BDNode.PROPERTYNAME_NAME;
         }
 
         public void AssignScopeId(Guid? pScopeId)
@@ -103,10 +91,10 @@ namespace BDEditor.Views
             {
                 if(currentPathogen.name != tbPathogenName.Text) currentPathogen.name = tbPathogenName.Text;
                 if (currentPathogen.displayOrder != DisplayOrder) currentPathogen.displayOrder = DisplayOrder;
-                BDPathogen.Save(dataContext, currentPathogen);
+                BDNode.Save(dataContext, currentPathogen);
                 result = true;
 
-                Typeahead.AddToCollection(BDPathogen.KEY_NAME, BDPathogen.PROPERTYNAME_NAME, currentPathogen.name);
+                Typeahead.AddToCollection(BDNode.KEY_NAME, BDNode.PROPERTYNAME_NAME, currentPathogen.name);
             }
 
             return result;
@@ -119,8 +107,8 @@ namespace BDEditor.Views
 
         public void AssignParentId(Guid? pParentId)
         {
-            pathogenGroupId = pParentId;
-            this.Enabled = (null != pathogenGroupId);
+            parentId = pParentId;
+            this.Enabled = (null != parentId);
         }
 
         public bool CreateCurrentObject()
@@ -129,17 +117,19 @@ namespace BDEditor.Views
 
             if (null == this.currentPathogen)
             {
-                if (null == this.pathogenGroupId)
+                if (null == this.parentId)
                 {
                     result = false;
                 }
                 else
                 {
-                    this.currentPathogen = BDPathogen.CreatePathogen(dataContext, pathogenGroupId.Value);
+                    this.currentPathogen = BDNode.CreateNode(dataContext, Constants.BDNodeType.BDPathogen);
+                    this.currentPathogen.SetParent(Constants.BDNodeType.BDPathogenGroup, parentId);
                     this.currentPathogen.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
+                    BDNode.Save(dataContext, currentPathogen);
 
-                    // raise event to begin metadata entry creation
-                    OnSearchableItemAdded(new SearchableItemEventArgs(this.currentPathogen.uuid, BDPathogen.KEY_NAME));
+                    BDMetadata.CreateMetadata(dataContext, BDMetadata.LayoutVariantType.TreatmentRecommendation01, currentPathogen);
+                    
                 }
             }
 

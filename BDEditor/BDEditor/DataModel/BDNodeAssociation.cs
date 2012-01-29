@@ -37,12 +37,12 @@ namespace BDEditor.DataModel
         private const string CHILDNODETYPE = @"na_childNodeType";
         private const string CHILDKEYNAME = @"na_childKeyName";
 
-        public static void CreateNodeAssociation(Entities pContext, IBDObject pNodeObject, Constants.BDNodeType pChildNodeType)
+        public static void CreateNodeAssociation(Entities pContext, IBDNode pNodeObject, Constants.BDNodeType pChildNodeType)
         {
             CreateNodeAssociation(pContext, pNodeObject.Uuid, pNodeObject.NodeType, pChildNodeType, Guid.NewGuid());
         }
 
-        public static void CreateNodeAssociation(Entities pContext, IBDObject pNodeObject, Constants.BDNodeType pChildNodeType, Guid pUuid)
+        public static void CreateNodeAssociation(Entities pContext, IBDNode pNodeObject, Constants.BDNodeType pChildNodeType, Guid pUuid)
         {
             CreateNodeAssociation(pContext, pNodeObject.Uuid, pNodeObject.NodeType, pChildNodeType, pUuid);
         }

@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using BDEditor.DataModel;
+using BDEditor.Classes;
+
 namespace BDEditor.Views
 {
     public partial class BDLinkedNoteControl : UserControl, IBDControl
@@ -14,7 +16,8 @@ namespace BDEditor.Views
         private Entities dataContext;
         private Guid? scopeId;
         private Guid? contextParentId;
-        private string contextEntityName;
+
+        private Constants.BDNodeType contextNodeType;
         private string contextPropertyName;
         private bool saveOnLeave = true;
         private BDLinkedNote currentLinkedNote;
@@ -50,9 +53,9 @@ namespace BDEditor.Views
                 Save();
         }
 
-        public void AssignContextEntityKeyName(string pContextEntityKeyName)
+        public void AssignContextNodeType(Constants.BDNodeType pContextNodeType)
         {
-            contextEntityName = pContextEntityKeyName;
+            contextNodeType = pContextNodeType;
         }
 
         public void AssignContextPropertyName(string pContextPropertyName)

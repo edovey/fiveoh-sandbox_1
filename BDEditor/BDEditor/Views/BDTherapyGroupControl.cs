@@ -10,7 +10,7 @@ namespace BDEditor.Views
     public partial class BDTherapyGroupControl : UserControl, IBDControl
     {
         private Entities dataContext;
-        private Guid? pathogenGroupId;
+        private Guid? parentId;
         private BDTherapyGroup currentTherapyGroup;
         private IBDControl parentControl;
         private Guid? scopeId;
@@ -25,22 +25,10 @@ namespace BDEditor.Views
         public event EventHandler ReorderToNext;
 
         public event EventHandler NotesChanged;
-        public event EventHandler<SearchableItemEventArgs> SearchableItemAdded;
 
         protected virtual void OnNotesChanged(EventArgs e)
         {
             if (null != NotesChanged) { NotesChanged(this, e); }
-        }
-
-        protected virtual void OnSearchableItemAdded(SearchableItemEventArgs se)
-        {
-            // make a copy of the handler to avoid race condition
-            EventHandler<SearchableItemEventArgs> handler = SearchableItemAdded;
-
-            if (null != handler)
-            {
-                handler(this, se);
-            }
         }
 
         protected virtual void OnItemAddRequested(EventArgs e)
@@ -79,11 +67,7 @@ namespace BDEditor.Views
         public void RefreshLayout()
         {
             this.SuspendLayout();
-            //for (int idx = 0; idx < therapyControlList.Count; idx++)
-            //{
-            //    BDTherapyControl control = therapyControlList[idx];
-            //    removeTherapyControl(control, false);
-            //}
+            
             therapyControlList.Clear();
             panelTherapies.Controls.Clear();
 
@@ -145,13 +129,13 @@ namespace BDEditor.Views
 
         public void AssignParentId(Guid? pParentId)
         {
-            pathogenGroupId = pParentId;
+            parentId = pParentId;
         }
 
         public bool Save()
         {
             bool result = false;
-            if (null != pathogenGroupId)
+            if (null != parentId)
             {
                 foreach (BDTherapyControl control in therapyControlList)
                 {
@@ -210,14 +194,16 @@ namespace BDEditor.Views
 
             if (null == this.currentTherapyGroup)
             {
-                if (null == this.pathogenGroupId)
+                if (null == this.parentId)
                 {
                     result = false;
                 }
                 else
                 {
-                    this.currentTherapyGroup = BDTherapyGroup.CreateTherapyGroup(dataContext, this.pathogenGroupId.Value);
+                    this.currentTherapyGroup = BDTherapyGroup.CreateTherapyGroup(dataContext, this.parentId.Value);
                     this.currentTherapyGroup.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
+
+                    BDMetadata.CreateMetadata(dataContext, BDMetadata.LayoutVariantType.TreatmentRecommendation01, currentTherapyGroup);
                 }
             }
 
@@ -249,7 +235,6 @@ namespace BDEditor.Views
                 therapyControl.ReorderToNext += new EventHandler(Therapy_ReorderToNext);
                 therapyControl.ReorderToPrevious += new EventHandler(Therapy_ReorderToPrevious);
                 therapyControl.NotesChanged += new EventHandler(notesChanged_Action);
-                therapyControl.SearchableItemAdded += new EventHandler<SearchableItemEventArgs>(Therapy_SearchableItemAdded);
 
                 therapyControlList.Add(therapyControl);
 
@@ -271,7 +256,6 @@ namespace BDEditor.Views
             pTherapyControl.ReorderToNext -= new EventHandler(Therapy_ReorderToNext);
             pTherapyControl.ReorderToPrevious -= new EventHandler(Therapy_ReorderToPrevious);
             pTherapyControl.NotesChanged -= new EventHandler(notesChanged_Action);
-            pTherapyControl.SearchableItemAdded -= new EventHandler<SearchableItemEventArgs>(Therapy_SearchableItemAdded);
             
             therapyControlList.Remove(pTherapyControl);
 
@@ -436,11 +420,6 @@ namespace BDEditor.Views
             {
                 ReorderTherapyControl(control, -1);
             }
-        }
-
-        private void Therapy_SearchableItemAdded(object sender, SearchableItemEventArgs se)
-        {
-            OnSearchableItemAdded(se);
         }
 
         private void btnReorderToPrevious_Click(object sender, EventArgs e)

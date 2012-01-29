@@ -126,7 +126,6 @@
     <Compile Include="Classes\Constants.cs" />
     <Compile Include="Classes\Navigation\TreatmentRecommendationTree.cs" />
     <Compile Include="Classes\RepositoryHandler.cs" />
-    <Compile Include="Classes\SearchableItemEventArgs.cs" />
     <Compile Include="Classes\SearchEntryGenerator.cs" />
     <Compile Include="Classes\SyncInfo.cs" />
     <Compile Include="Classes\SyncInfoDictionary.cs" />
@@ -388,7 +387,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
+      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

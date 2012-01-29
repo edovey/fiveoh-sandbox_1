@@ -254,6 +254,12 @@ namespace BDEditor.DataModel
             get { return string.Format("Therapy - {0} Dosage:{1} Duration:{2}", this.name, this.dosage, this.duration); }
         }
 
+        public string Name
+        {
+            get { return this.name; }
+            set { this.name = value; }
+        }
+
         protected override void OnPropertyChanged(string property)
         {
             if (!Common.Settings.IsSyncLoad)

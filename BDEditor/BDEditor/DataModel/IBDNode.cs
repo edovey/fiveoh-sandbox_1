@@ -8,6 +8,7 @@ namespace BDEditor.DataModel
 {
     public interface IBDNode : IBDObject
     {
+        string Name { get; set; }
         Constants.BDNodeType NodeType { get; }
     }
 }

@@ -242,6 +242,12 @@ namespace BDEditor.DataModel
             get { return string.Format("Therapy Group - {0}", this.name); }
         }
 
+        public string Name
+        {
+            get { return this.name; }
+            set { this.name = value; }
+        }
+
         public override string ToString()
         {
             return this.name;

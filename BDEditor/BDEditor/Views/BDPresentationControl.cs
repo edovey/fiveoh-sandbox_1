@@ -92,9 +92,12 @@ namespace BDEditor.Views
         private void BDPresentationControl_Load(object sender, EventArgs e)
         {
             bdLinkedNoteControl1.AssignDataContext(dataContext);
-            bdLinkedNoteControl1.AssignContextNodeType(Constants.BDNodeType.BDPresentation);
+            if(null != currentPresentation)
+            {
+                bdLinkedNoteControl1.AssignParentInfo(currentPresentation.Uuid, currentPresentation.NodeType);
+            }
+            
             bdLinkedNoteControl1.AssignScopeId(scopeId);
-            bdLinkedNoteControl1.AssignParentId(currentPresentation.Uuid); // This expects that currentPresentation is never null
         }
 
         public void AssignScopeId(Guid? pScopeId)
@@ -162,6 +165,13 @@ namespace BDEditor.Views
                     this.currentPresentation.SetParent(Constants.BDNodeType.BDDisease, parentId.Value);
                     this.currentPresentation.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                     this.currentPresentation.LayoutVariant = defaultLayoutVariantType;
+
+                    switch (defaultLayoutVariantType)
+                    {
+                        case Constants.LayoutVariantType.TreatmentRecommendation01:
+                            BDNodeAssociation.CreateNodeAssociation(dataContext, currentPresentation, Constants.BDNodeType.BDPathogenGroup);
+                            break;
+                    }
                 }
             }
 
@@ -177,9 +187,9 @@ namespace BDEditor.Views
                 tbPresentationName.Text = @"";
                 overviewLinkedNote = null;
 
-                bdLinkedNoteControl1.AssignParentId(null);
+                bdLinkedNoteControl1.AssignDataContext(dataContext);
+                bdLinkedNoteControl1.AssignParentInfo(null, Constants.BDNodeType.BDPresentation);
                 bdLinkedNoteControl1.AssignScopeId(null);
-                bdLinkedNoteControl1.AssignContextNodeType(currentPresentation.NodeType);
                 bdLinkedNoteControl1.AssignContextPropertyName(BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
             }
             else
@@ -196,9 +206,9 @@ namespace BDEditor.Views
                     }
                 }
 
-                bdLinkedNoteControl1.AssignParentId(currentPresentation.uuid);
+                bdLinkedNoteControl1.AssignDataContext(dataContext);
+                bdLinkedNoteControl1.AssignParentInfo(currentPresentation.Uuid, Constants.BDNodeType.BDPresentation);
                 bdLinkedNoteControl1.AssignScopeId(scopeId);
-                bdLinkedNoteControl1.AssignContextNodeType(currentPresentation.NodeType);
                 bdLinkedNoteControl1.AssignContextPropertyName(BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
 
 
@@ -233,7 +243,7 @@ namespace BDEditor.Views
                 pathogenGroupControl.Dock = DockStyle.Top;
                 pathogenGroupControl.TabIndex = pTabIndex;
                 pathogenGroupControl.DisplayOrder = pTabIndex;
-                pathogenGroupControl.AssignParentId(currentPresentation.uuid);
+                pathogenGroupControl.AssignParentInfo(currentPresentation.Uuid, currentPresentation.NodeType);
                 pathogenGroupControl.AssignDataContext(dataContext);
                 pathogenGroupControl.AssignScopeId(scopeId);
                 pathogenGroupControl.AssignTypeaheadSource(Typeahead.PathogenGroups);
@@ -336,18 +346,10 @@ namespace BDEditor.Views
                 BDLinkedNoteView view = new BDLinkedNoteView();
                 view.AssignDataContext(dataContext);
                 view.AssignContextPropertyName(pProperty);
-                view.AssignContextEntityNodeType(Constants.BDNodeType.BDPresentation);
+                view.AssignParentInfo(currentPresentation.Uuid, currentPresentation.NodeType);
                 view.AssignScopeId(scopeId);
                 view.AssignLinkedNoteType(LinkedNoteType.Footnote, true, true);
                 view.NotesChanged += new EventHandler(notesChanged_Action);
-                if (null != currentPresentation)
-                {
-                    view.AssignParentId(currentPresentation.uuid);
-                }
-                else
-                {
-                    view.AssignParentId(null);
-                }
                 view.PopulateControl();
                 view.ShowDialog(this);
                 view.NotesChanged -= new EventHandler(notesChanged_Action);

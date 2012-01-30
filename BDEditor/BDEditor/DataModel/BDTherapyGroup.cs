@@ -275,6 +275,12 @@ namespace BDEditor.DataModel
             get { return parentId; }
         }
 
+        public int? DisplayOrder
+        {
+            get { return displayOrder; }
+            set { displayOrder = value; }
+        }
+
         public Constants.BDNodeType ParentType
         {
             get

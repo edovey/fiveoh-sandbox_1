@@ -137,7 +137,7 @@ namespace BDEditor.Classes
                 disease = null;
                 presentation = null;
 
-                BDNodeAssociation.CreateNodeAssociation(dataContext, section, Constants.BDNodeType.BDChapter);
+                BDNodeAssociation.CreateNodeAssociation(dataContext, section, Constants.BDNodeType.BDCategory);
             }
 
             if ((diseaseData != string.Empty) && ((null == disease) || (disease.name != diseaseData)))
@@ -163,7 +163,7 @@ namespace BDEditor.Classes
                 presentation.LayoutVariant = Constants.LayoutVariantType.TreatmentRecommendation01;
                 BDNode.Save(dataContext, presentation);
 
-                BDNodeAssociation.CreateNodeAssociation(dataContext, disease, Constants.BDNodeType.BDPresentation);
+                BDNodeAssociation.CreateNodeAssociation(dataContext, presentation, Constants.BDNodeType.BDDisease);
                 BDNodeAssociation.CreateNodeAssociation(dataContext, presentation, Constants.BDNodeType.BDPathogenGroup);
             }
         }

@@ -13,15 +13,14 @@ namespace BDEditor.Views
 {
     public partial class BDNodeControl : UserControl, IBDControl
     {
-        private BDNode currentNode;
+        private IBDNode currentNode;
         private Entities dataContext;
         private BDLinkedNote overviewLinkedNote;
-        private IBDNode node;
         private Guid? scopeId;
         private Guid? parentId;
         private Constants.BDNodeType parentType = Constants.BDNodeType.None;
         private Constants.LayoutVariantType defaultLayoutVariantType;
-        private Constants.BDNodeType nodeType;
+        private Constants.BDNodeType defaultNodeType;
 
         public int? DisplayOrder { get; set; }
 
@@ -32,7 +31,7 @@ namespace BDEditor.Views
             if (null != NotesChanged) { NotesChanged(this, e); }
         }
 
-        public BDNode CurrentNode
+        public IBDNode CurrentNode
         {
             get { return currentNode; }
             set { currentNode = value; }
@@ -40,26 +39,25 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
+            bdLinkedNoteControl1.AssignDataContext(dataContext);
             if (currentNode == null)
             {
                 tbName.Text = @"";
                 overviewLinkedNote = null;
 
                 bdLinkedNoteControl1.CurrentLinkedNote = null;
-                bdLinkedNoteControl1.AssignParentId(null);
+                bdLinkedNoteControl1.AssignParentInfo(null, defaultNodeType);
                 bdLinkedNoteControl1.AssignScopeId(scopeId);
-                bdLinkedNoteControl1.AssignContextNodeType(node.NodeType);
                 bdLinkedNoteControl1.AssignContextPropertyName(BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
             }
             else
             {
-                tbName.Text = currentNode.name;
-                bdLinkedNoteControl1.AssignParentId(currentNode.uuid);
+                tbName.Text = currentNode.Name;
+                bdLinkedNoteControl1.AssignParentInfo(currentNode.Uuid, currentNode.NodeType);
                 bdLinkedNoteControl1.AssignScopeId(scopeId);
-                bdLinkedNoteControl1.AssignContextNodeType(node.NodeType);
                 bdLinkedNoteControl1.AssignContextPropertyName(BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
 
-                BDLinkedNoteAssociation association = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, currentNode.uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
+                BDLinkedNoteAssociation association = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, currentNode.Uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
                 if (null != association)
                 {
                     overviewLinkedNote = BDLinkedNote.GetLinkedNoteWithId(dataContext, association.linkedNoteId);
@@ -82,36 +80,39 @@ namespace BDEditor.Views
         public BDNodeControl(Entities pDataContext, IBDNode pNode)
         {
             dataContext = pDataContext;
-            node = pNode;             
-            
+            currentNode = pNode;
+            defaultLayoutVariantType = pNode.LayoutVariant;
+            parentId = pNode.ParentId;
+            defaultNodeType = pNode.NodeType;
+
             InitializeComponent();
-}
+        }
 
         /// <summary>
         /// Initialize form without an existing BDNode
         /// </summary>
         /// <param name="pDataContext"></param>
-        /// <param name="pNodeType"></param>
+        /// <param name="pDefaultNodeType"></param>
         /// <param name="pDefaultLayoutType"></param>
         /// <param name="pParentId"></param>
-        public BDNodeControl(Entities pDataContext, Constants.BDNodeType pNodeType, Constants.LayoutVariantType pDefaultLayoutType, Guid pParentId)
+        public BDNodeControl(Entities pDataContext, Constants.BDNodeType pDefaultNodeType, Constants.LayoutVariantType pDefaultLayoutType, Guid pParentId)
         {    
             dataContext = pDataContext;
             currentNode = null;
             defaultLayoutVariantType = pDefaultLayoutType;
             parentId = pParentId;
-            nodeType = pNodeType;
+            defaultNodeType = pDefaultNodeType;
 
             InitializeComponent();
         }
 
         private void BDNodeControl_Load(object sender, EventArgs e)
         {
-            if (null != node)
-            {
-                this.nodeType = node.NodeType;
+            btnLinkedNote.Tag = BDNode.VIRTUALPROPERTYNAME_OVERVIEW;
 
-                switch (this.nodeType)
+            if (null != currentNode)
+            {
+                switch (this.defaultNodeType)
                 {
                     case Constants.BDNodeType.BDSection:
                     case Constants.BDNodeType.BDCategory:
@@ -124,16 +125,11 @@ namespace BDEditor.Views
                     default:
                         break;
                 }
-
-                currentNode = node as BDNode;
-                parentId = currentNode.ParentId;
-
-                this.defaultLayoutVariantType = node.LayoutVariant;
             }
 
-            if (currentNode != null)
+            if (null != currentNode)
             {
-                if(tbName.Text != currentNode.name) tbName.Text = currentNode.name;
+                if(tbName.Text != currentNode.Name) tbName.Text = currentNode.Name;
             }
         }
 
@@ -158,6 +154,8 @@ namespace BDEditor.Views
 
         public bool Save()
         {
+            System.Diagnostics.Debug.WriteLine(@"Node Control Save");
+            
             bool result = false;
 
             if (null != parentId)
@@ -167,13 +165,37 @@ namespace BDEditor.Views
                     CreateCurrentObject();
                 }
 
-                if(null != currentNode)
+                if (null != currentNode)
                 {
-                    if(currentNode.name != tbName.Text) currentNode.name = tbName.Text;
+                    if (currentNode.Name != tbName.Text) currentNode.Name = tbName.Text;
+
                     bdLinkedNoteControl1.Save();
+
+                    switch (currentNode.NodeType)
+                    {
+                        case Constants.BDNodeType.BDTherapy:
+                            BDTherapy therapy = currentNode as BDTherapy;
+                            if (null != therapy)
+                            {
+                                BDTherapy.Save(dataContext, therapy);
+                            }
+                            break;
+                        case Constants.BDNodeType.BDTherapyGroup:
+                            BDTherapyGroup therapyGroup = currentNode as BDTherapyGroup;
+                            if (null != therapyGroup)
+                            {
+                                BDTherapyGroup.Save(dataContext, therapyGroup);
+                            }
+                            break;
+                        default:
+                            BDNode node = currentNode as BDNode;
+                            if (null != node)
+                            {
+                                BDNode.Save(dataContext, node);
+                            }
+                            break;
+                    }
                 }
-                System.Diagnostics.Debug.WriteLine(@"Node Control Save");
-                BDNode.Save(dataContext, currentNode);
             }
             return result;
         }
@@ -195,8 +217,20 @@ namespace BDEditor.Views
                 }
                 else
                 {
-                    this.currentNode = BDNode.CreateNode(this.dataContext, this.nodeType);
-                    this.currentNode.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
+                    switch (defaultNodeType)
+                    {
+                        case Constants.BDNodeType.BDTherapy:
+                            currentNode = BDTherapy.CreateTherapy(dataContext, parentId.Value);
+                            break;
+                        case Constants.BDNodeType.BDTherapyGroup:
+                            currentNode = BDTherapyGroup.CreateTherapyGroup(dataContext, parentId.Value);
+                            break;
+                        default:
+                            currentNode = BDNode.CreateNode(this.dataContext, this.defaultNodeType);
+                            break;
+                    }
+                    
+                    this.currentNode.DisplayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                     this.currentNode.LayoutVariant = this.defaultLayoutVariantType;
                 }
             }
@@ -206,25 +240,22 @@ namespace BDEditor.Views
 
         private void CreateLink(string pProperty)
         {
-            BDLinkedNoteView view = new BDLinkedNoteView();
-            view.AssignDataContext(dataContext);
-            view.AssignContextPropertyName(pProperty);
-            view.AssignContextEntityNodeType(currentNode.NodeType);
-            view.AssignScopeId(scopeId);
-            view.AssignLinkedNoteType(LinkedNoteType.Footnote, true, true);
-            view.NotesChanged += new EventHandler(notesChanged_Action);
-            if (null != currentNode)
+            if(CreateCurrentObject())
             {
-                view.AssignParentId(currentNode.Uuid);
+                Save();
+                
+                BDLinkedNoteView view = new BDLinkedNoteView();
+                view.AssignDataContext(dataContext);
+                view.AssignContextPropertyName(pProperty);
+                view.AssignParentInfo(currentNode.Uuid, currentNode.NodeType);
+                view.AssignScopeId(scopeId);
+                view.AssignLinkedNoteType(LinkedNoteType.Footnote, true, true);
+                view.NotesChanged += new EventHandler(notesChanged_Action);
+                view.PopulateControl();
+                view.ShowDialog(this);
+                view.NotesChanged -= new EventHandler(notesChanged_Action);
+                ShowLinksInUse(false);
             }
-            else
-            {
-                view.AssignParentId(null);
-            }
-            view.PopulateControl();
-            view.ShowDialog(this);
-            view.NotesChanged -= new EventHandler(notesChanged_Action);
-            ShowLinksInUse(false);
         }
 
         public void ShowLinksInUse(bool pPropagateToChildren)
@@ -246,7 +277,7 @@ namespace BDEditor.Views
             {
                 if (CreateCurrentObject())
                 {
-                    control.AssignParentId(this.currentNode.Uuid);
+                    control.AssignParentInfo(currentNode.Uuid, currentNode.NodeType);
                     control.Save();
                 }
             }

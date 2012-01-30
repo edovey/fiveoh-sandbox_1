@@ -56,7 +56,7 @@ namespace BDEditor.Views
 
             chapterTree.Nodes.Clear();
 
-            BDNode listEntry = chapterDropDown.SelectedItem as BDNode;
+            IBDNode listEntry = chapterDropDown.SelectedItem as IBDNode;
             if ((null != listEntry) && (listEntry.NodeType == Constants.BDNodeType.BDChapter))
             {
                 switch (listEntry.LayoutVariant)

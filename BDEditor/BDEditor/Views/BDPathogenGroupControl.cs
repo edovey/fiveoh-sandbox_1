@@ -153,9 +153,17 @@ namespace BDEditor.Views
                 else
                 {
                     this.currentPathogenGroup = BDNode.CreateNode(dataContext, Constants.BDNodeType.BDPathogenGroup);
-                    this.currentPathogenGroup.SetParent(Constants.BDNodeType.BDPresentation, parentId);
+                    this.currentPathogenGroup.SetParent(parentType, parentId);
                     this.currentPathogenGroup.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                     this.currentPathogenGroup.LayoutVariant = DefaultLayoutVariantType;
+                    switch (DefaultLayoutVariantType)
+                    {
+                        case Constants.LayoutVariantType.TreatmentRecommendation01:
+                            BDNodeAssociation.CreateNodeAssociation(dataContext, currentPathogenGroup, Constants.BDNodeType.BDPathogen);
+                            BDNodeAssociation.CreateNodeAssociation(dataContext, currentPathogenGroup, Constants.BDNodeType.BDTherapyGroup);
+                            break;
+                    }
+
                     BDNode.Save(dataContext, currentPathogenGroup);
                 }
             }
@@ -224,7 +232,7 @@ namespace BDEditor.Views
                 pathogenControl.Dock = DockStyle.Top;
                 pathogenControl.TabIndex = pTabIndex;
                 pathogenControl.DisplayOrder = pTabIndex;
-                pathogenControl.AssignParentId(currentPathogenGroup.uuid);
+                pathogenControl.AssignParentInfo(currentPathogenGroup.Uuid, currentPathogenGroup.NodeType);
                 pathogenControl.AssignDataContext(dataContext);
                 pathogenControl.AssignScopeId(scopeId);
                 pathogenControl.AssignTypeaheadSource(Typeahead.Pathogens);
@@ -319,7 +327,7 @@ namespace BDEditor.Views
                 therapyGroupControl.Dock = DockStyle.Top;
                 therapyGroupControl.TabIndex = pTabIndex;
                 therapyGroupControl.DisplayOrder = pTabIndex;
-                therapyGroupControl.AssignParentId(currentPathogenGroup.uuid);
+                therapyGroupControl.AssignParentInfo(currentPathogenGroup.uuid, currentPathogenGroup.NodeType);
                 therapyGroupControl.AssignScopeId(scopeId);
                 therapyGroupControl.AssignDataContext(dataContext);
                 therapyGroupControl.AssignTypeaheadSource(Typeahead.TherapyGroups);
@@ -513,17 +521,9 @@ namespace BDEditor.Views
                 BDLinkedNoteView view = new BDLinkedNoteView();
                 view.AssignDataContext(dataContext);
                 view.AssignContextPropertyName(pProperty);
-                view.AssignContextEntityNodeType(Constants.BDNodeType.BDPathogenGroup);
+                view.AssignParentInfo(currentPathogenGroup.Uuid, currentPathogenGroup.NodeType);
                 view.AssignScopeId(scopeId);
                 view.NotesChanged += new EventHandler(notesChanged_Action);
-                if (null != currentPathogenGroup)
-                {
-                    view.AssignParentId(currentPathogenGroup.uuid);
-                }
-                else
-                {
-                    view.AssignParentId(null);
-                }
                 view.PopulateControl();
                 view.ShowDialog(this);
                 view.NotesChanged -= new EventHandler(notesChanged_Action);

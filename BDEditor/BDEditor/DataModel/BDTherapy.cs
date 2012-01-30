@@ -479,5 +479,12 @@ namespace BDEditor.DataModel
         {
             return this.name;
         }
+
+
+        public int? DisplayOrder
+        {
+            get { return displayOrder; }
+            set { displayOrder = value; }
+        }
     }
 }

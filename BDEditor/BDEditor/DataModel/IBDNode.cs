@@ -11,6 +11,7 @@ namespace BDEditor.DataModel
         string Name { get; set; }
         Constants.BDNodeType NodeType { get; }
         Constants.LayoutVariantType LayoutVariant { get; set; }
+        int? DisplayOrder { get; set; }
         Guid? ParentId { get; }
         Constants.BDNodeType ParentType { get; }
         void SetParent(IBDNode pParent);

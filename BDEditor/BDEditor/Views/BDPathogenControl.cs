@@ -17,6 +17,7 @@ namespace BDEditor.Views
 
         private Entities dataContext;
         private Guid? parentId;
+        private Constants.BDNodeType parentType;
         private BDNode currentPathogen;
         public Constants.LayoutVariantType DefaultLayoutVariantType;
         private Guid? scopeId;
@@ -106,9 +107,10 @@ namespace BDEditor.Views
             throw new NotImplementedException();
         }
 
-        public void AssignParentId(Guid? pParentId)
+        public void AssignParentInfo(Guid? pParentId, Constants.BDNodeType pParentType)
         {
             parentId = pParentId;
+            parentType = pParentType;
             this.Enabled = (null != parentId);
         }
 
@@ -128,6 +130,7 @@ namespace BDEditor.Views
                     this.currentPathogen.SetParent(Constants.BDNodeType.BDPathogenGroup, parentId);
                     this.currentPathogen.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                     this.currentPathogen.LayoutVariant = DefaultLayoutVariantType;
+                    
                     BDNode.Save(dataContext, currentPathogen);
                 }
             }
@@ -160,29 +163,21 @@ namespace BDEditor.Views
         #region Class methods
         private void CreateLink()
         {
-            CreateCurrentObject();
-            Save();
-            BDLinkedNoteView noteView = new BDLinkedNoteView();
-            noteView.AssignDataContext(dataContext);
-            noteView.AssignParentId(currentPathogen.uuid);
-            noteView.AssignContextEntityNodeType(Constants.BDNodeType.BDPathogen);
-            noteView.AssignContextPropertyName(BDNode.PROPERTYNAME_NAME);
-            noteView.AssignScopeId(scopeId);
-            noteView.NotesChanged += new EventHandler(notesChanged_Action);
-
-            if (null != currentPathogen)
+            if (CreateCurrentObject())
             {
-                noteView.AssignParentId(currentPathogen.uuid);
-            }
-            else
-            {
-                noteView.AssignParentId(null);
-            }
+                Save();
+                BDLinkedNoteView noteView = new BDLinkedNoteView();
+                noteView.AssignDataContext(dataContext);
+                noteView.AssignParentInfo(currentPathogen.Uuid, currentPathogen.NodeType);
+                noteView.AssignContextPropertyName(BDNode.PROPERTYNAME_NAME);
+                noteView.AssignScopeId(scopeId);
+                noteView.NotesChanged += new EventHandler(notesChanged_Action);
 
-            noteView.PopulateControl();
-            noteView.ShowDialog(this);
-            noteView.NotesChanged -= new EventHandler(notesChanged_Action);
-            ShowLinksInUse(false);
+                noteView.PopulateControl();
+                noteView.ShowDialog(this);
+                noteView.NotesChanged -= new EventHandler(notesChanged_Action);
+                ShowLinksInUse(false);
+            }
         }
 
         public void AssignTypeaheadSource(AutoCompleteStringCollection pSource)

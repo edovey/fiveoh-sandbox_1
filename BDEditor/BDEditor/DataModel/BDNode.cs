@@ -270,8 +270,20 @@ namespace BDEditor.DataModel
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
             BDNode entry = BDNode.GetNodeWithId(pDataContext, uuid);
 
-            short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
-            entry.schemaVersion = schemaVersion;
+            if (null == entry)
+            {
+                int nt = (null == pAttributeDictionary[NODETYPE]) ? (short)-1 : short.Parse(pAttributeDictionary[NODETYPE]);
+                Constants.BDNodeType nodeType = Constants.BDNodeType.None;
+
+                if (Enum.IsDefined(typeof(Constants.BDNodeType), nt))
+                {
+                    nodeType = (Constants.BDNodeType)nt;
+                }
+                entry = BDNode.CreateNode(pDataContext, nodeType);
+            }
+
+            entry.nodeType = (null == pAttributeDictionary[NODETYPE]) ? (short)-1 : short.Parse(pAttributeDictionary[NODETYPE]);
+            entry.schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
             entry.displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]); 
             entry.createdBy = Guid.Parse(pAttributeDictionary[CREATEDBY]);
             entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
@@ -282,13 +294,10 @@ namespace BDEditor.DataModel
             entry.parentId = Guid.Parse(pAttributeDictionary[PARENTID]);
             entry.parentType = (null == pAttributeDictionary[PARENTTYPE]) ? (short)-1 : short.Parse(pAttributeDictionary[PARENTTYPE]);
             entry.parentKeyName = pAttributeDictionary[PARENTKEYNAME];
-
-            entry.nodeType = (null == pAttributeDictionary[NODETYPE]) ? (short)-1 : short.Parse(pAttributeDictionary[NODETYPE]);
+  
             entry.nodeKeyName = pAttributeDictionary[NODEKEYNAME];
 
             entry.layoutVariant = short.Parse(pAttributeDictionary[LAYOUTVARIANT]);
-
-            entry.inUseBy = Guid.Parse(pAttributeDictionary[INUSEBY]);
 
             if (pSaveChanges)
                 pDataContext.SaveChanges();
@@ -319,7 +328,7 @@ namespace BDEditor.DataModel
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDNode.LAYOUTVARIANT).WithValue(string.Format(@"{0}", layoutVariant)).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.INUSEBY).WithValue(inUseBy.ToString().ToUpper()).WithReplace(true));
+            //attributeList.Add(new ReplaceableAttribute().WithName(BDNode.INUSEBY).WithValue(inUseBy.ToString().ToUpper()).WithReplace(true));
 
             return putAttributeRequest;
         }
@@ -419,6 +428,12 @@ namespace BDEditor.DataModel
         {
             get { return this.name; }
             set { this.name = value; }
+        }
+
+        public int? DisplayOrder
+        {
+            get { return displayOrder; }
+            set { displayOrder = value; }
         }
     }
 }

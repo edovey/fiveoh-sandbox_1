@@ -11,6 +11,7 @@ namespace BDEditor.Views
     {
         private Entities dataContext;
         private Guid? parentId;
+        private Constants.BDNodeType parentType;
         private BDTherapyGroup currentTherapyGroup;
         public Constants.LayoutVariantType DefaultLayoutVariantType;
         private IBDControl parentControl;
@@ -128,9 +129,11 @@ namespace BDEditor.Views
             dataContext = pDataContext;
         }
 
-        public void AssignParentId(Guid? pParentId)
+        public void AssignParentInfo(Guid? pParentId, Constants.BDNodeType pParentType)
         {
             parentId = pParentId;
+            parentType = pParentType;
+            this.Enabled = (null != parentId);
         }
 
         public bool Save()
@@ -204,6 +207,12 @@ namespace BDEditor.Views
                     this.currentTherapyGroup = BDTherapyGroup.CreateTherapyGroup(dataContext, this.parentId.Value);
                     this.currentTherapyGroup.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                     this.currentTherapyGroup.LayoutVariant = DefaultLayoutVariantType;
+                    switch (DefaultLayoutVariantType)
+                    {
+                        case Constants.LayoutVariantType.TreatmentRecommendation01:
+                            BDNodeAssociation.CreateNodeAssociation(dataContext, currentTherapyGroup, Constants.BDNodeType.BDTherapy);
+                            break;
+                    }
                 }
             }
 
@@ -223,7 +232,7 @@ namespace BDEditor.Views
                 therapyControl.Dock = DockStyle.Top;
                 therapyControl.TabIndex = pTabIndex;
                 therapyControl.DisplayOrder = pTabIndex;
-                therapyControl.AssignParentId(currentTherapyGroup.uuid);
+                therapyControl.AssignParentInfo(currentTherapyGroup.Uuid, currentTherapyGroup.NodeType);
                 therapyControl.AssignDataContext(dataContext);
                 therapyControl.AssignScopeId(scopeId);
                 therapyControl.AssignTypeaheadSource(Typeahead.TherapyNames, BDTherapy.PROPERTYNAME_THERAPY);
@@ -312,17 +321,9 @@ namespace BDEditor.Views
                 BDLinkedNoteView view = new BDLinkedNoteView();
                 view.AssignDataContext(dataContext);
                 view.AssignContextPropertyName(pProperty);
-                view.AssignContextEntityNodeType(Constants.BDNodeType.BDTherapyGroup);
+                view.AssignParentInfo(currentTherapyGroup.Uuid, currentTherapyGroup.NodeType);
                 view.AssignScopeId(scopeId);
                 view.NotesChanged += new EventHandler(notesChanged_Action);
-                if (null != currentTherapyGroup)
-                {
-                    view.AssignParentId(currentTherapyGroup.uuid);
-                }
-                else
-                {
-                    view.AssignParentId(null);
-                }
                 view.PopulateControl();
                 view.ShowDialog(this);
                 view.NotesChanged -= new EventHandler(notesChanged_Action);

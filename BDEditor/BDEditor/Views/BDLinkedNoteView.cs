@@ -13,15 +13,15 @@ namespace BDEditor.Views
 {
     public partial class BDLinkedNoteView : Form
     {
-        Entities dataContext;
-        Constants.BDNodeType contextNodeType;
-        string contextPropertyName;
-        Guid? parentId;
-        Guid? scopeId;
-        bool isRendering = false;
-        BDLinkedNoteAssociation existingAssociation;
-        List<BDLinkedNoteAssociation> existingLinksList;
-        List<BDLinkedNote> existingNotesInScopeList;
+        private Entities dataContext;
+        private Constants.BDNodeType parentType;
+        private string contextPropertyName;
+        private Guid? parentId;
+        private Guid? scopeId;
+        private bool isRendering = false;
+        private BDLinkedNoteAssociation existingAssociation;
+        private List<BDLinkedNoteAssociation> existingLinksList;
+        private List<BDLinkedNote> existingNotesInScopeList;
 
         public event EventHandler NotesChanged;
 
@@ -55,22 +55,17 @@ namespace BDEditor.Views
             bdLinkedNoteControl1.AssignDataContext(dataContext);
         }
 
-        public void AssignContextEntityNodeType(Constants.BDNodeType pNodeType)
-        {
-            contextNodeType = pNodeType;
-            bdLinkedNoteControl1.AssignContextNodeType(pNodeType);
-        }
-
         public void AssignContextPropertyName(string pContextPropertyName)
         {
             contextPropertyName = pContextPropertyName;
             bdLinkedNoteControl1.AssignContextPropertyName(contextPropertyName);
         }
 
-        public void AssignParentId(Guid? pParentId)
+        public void AssignParentInfo(Guid? pParentId, Constants.BDNodeType pParentType)
         {
             parentId = pParentId;
-            bdLinkedNoteControl1.AssignParentId(parentId);
+            parentType = pParentType;
+            bdLinkedNoteControl1.AssignParentInfo(pParentId, pParentType);
         }
 
         public void AssignScopeId(Guid? pScopeId)
@@ -87,7 +82,7 @@ namespace BDEditor.Views
             bdLinkedNoteControl1.CurrentLinkedNote = null;
 
             this.existingAssociation = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, parentId, contextPropertyName);
-            rtfContextInfo.Text = BDLinkedNoteAssociation.GetDescription(dataContext, parentId, contextNodeType, contextPropertyName);
+            rtfContextInfo.Text = BDLinkedNoteAssociation.GetDescription(dataContext, parentId, parentType, contextPropertyName);
             if (null != this.existingAssociation)
             {
                 this.linkedNoteTypeCombo.SelectedIndex = this.existingAssociation.linkedNoteType.Value;
@@ -219,7 +214,7 @@ namespace BDEditor.Views
                 if (null == this.existingAssociation)
                 {
                     this.existingAssociation = BDLinkedNoteAssociation.CreateLinkedNoteAssociation(dataContext);
-                    this.existingAssociation.parentType = (int)contextNodeType;
+                    this.existingAssociation.parentType = (int)parentType;
                     this.existingAssociation.parentKeyPropertyName = contextPropertyName;
                     this.existingAssociation.parentId = parentId;
                 }

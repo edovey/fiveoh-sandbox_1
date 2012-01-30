@@ -13,7 +13,7 @@ namespace BDEditor.Classes.Navigation
     {
         private TreatmentRecommendationTree() { }
 
-        public static TreeNode BuildChapterTreeNode(Entities pDataContext, BDNode pChapterNode)
+        public static TreeNode BuildChapterTreeNode(Entities pDataContext, IBDNode pChapterNode)
         {
             TreeNode chapterTreeNode = new TreeNode();
 

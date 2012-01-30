@@ -15,9 +15,8 @@ namespace BDEditor.Views
     {
         private Entities dataContext;
         private Guid? scopeId;
-        private Guid? contextParentId;
-
-        private Constants.BDNodeType contextNodeType;
+        private Guid? parentId;
+        private Constants.BDNodeType parentType;
         private string contextPropertyName;
         private bool saveOnLeave = true;
         private BDLinkedNote currentLinkedNote;
@@ -53,11 +52,6 @@ namespace BDEditor.Views
                 Save();
         }
 
-        public void AssignContextNodeType(Constants.BDNodeType pContextNodeType)
-        {
-            contextNodeType = pContextNodeType;
-        }
-
         public void AssignContextPropertyName(string pContextPropertyName)
         {
             contextPropertyName = pContextPropertyName;
@@ -79,15 +73,18 @@ namespace BDEditor.Views
         {
             dataContext = pDataContext;
         }
-        public void AssignParentId(Guid? pParentId)
+
+        public void AssignParentInfo(Guid? pParentId, Constants.BDNodeType pParentType)
         {
-            contextParentId = pParentId;
+            parentId = pParentId;
+            parentType = pParentType;
         }
+
         public bool Save()
         {
             bool result = false;
 
-            if (null == contextParentId)
+            if (null == parentId)
             {
                 System.Diagnostics.Debug.WriteLine(@"Linked Note OnSaveAttemptWithoutParent");
                 OnSaveAttemptWithoutParent(new EventArgs());
@@ -138,7 +135,7 @@ namespace BDEditor.Views
 
             if (null == currentLinkedNote)
             {
-                if (null == this.contextParentId)
+                if (null == this.parentId)
                 {
                     result = false;
                 }
@@ -147,8 +144,8 @@ namespace BDEditor.Views
                     currentLinkedNote = BDLinkedNote.CreateLinkedNote(dataContext);
                     BDLinkedNoteAssociation association = BDLinkedNoteAssociation.CreateLinkedNoteAssociation(dataContext);
                     association.linkedNoteId = currentLinkedNote.uuid;
-                    association.parentId = contextParentId;
-                    association.parentType =(int) contextNodeType;
+                    association.parentId = parentId;
+                    association.parentType =(int) parentType;
                     association.parentKeyPropertyName = contextPropertyName;
                     association.linkedNoteType = 0;
                     //currentLinkedNote.linkedNoteAssociationId = association.uuid;

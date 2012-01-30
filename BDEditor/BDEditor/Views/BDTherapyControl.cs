@@ -17,6 +17,7 @@ namespace BDEditor.Views
         private Entities dataContext;
         private BDTherapy currentTherapy;
         private Guid? parentId;
+        private Constants.BDNodeType parentType;
         private Guid? scopeId;
         private bool displayLeftBracket;
         private bool displayRightBracket;
@@ -190,17 +191,10 @@ namespace BDEditor.Views
                 BDLinkedNoteView view = new BDLinkedNoteView();
                 view.AssignDataContext(dataContext);
                 view.AssignContextPropertyName(pProperty);
-                view.AssignContextEntityNodeType(Constants.BDNodeType.BDTherapy);
+                view.AssignParentInfo(currentTherapy.Uuid, currentTherapy.NodeType);
                 view.AssignScopeId(scopeId);
                 view.NotesChanged += new EventHandler(notesChanged_Action);
-                if (null != currentTherapy)
-                {
-                    view.AssignParentId(currentTherapy.uuid);
-                }
-                else
-                {
-                    view.AssignParentId(null);
-                }
+                
                 view.PopulateControl();
                 view.ShowDialog(this);
                 view.NotesChanged -= new EventHandler(notesChanged_Action);
@@ -335,9 +329,11 @@ namespace BDEditor.Views
             throw new NotImplementedException();
         }
 
-        public void AssignParentId(Guid? pParentId)
+        public void AssignParentInfo(Guid? pParentId, Constants.BDNodeType pParentType)
         {
             parentId = pParentId;
+            parentType = pParentType;
+            this.Enabled = (null != parentId);
         }
 
         #endregion

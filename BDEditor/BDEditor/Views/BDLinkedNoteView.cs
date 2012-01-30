@@ -33,9 +33,6 @@ namespace BDEditor.Views
         public BDLinkedNoteView()
         {
             InitializeComponent();
-
-            List<LinkedNoteType> noteTypes =Enum.GetValues(typeof(LinkedNoteType)).Cast<LinkedNoteType>().ToList<LinkedNoteType>();
-            this.linkedNoteTypeCombo.DataSource = noteTypes;
         }
 
         public void AssignLinkedNoteType(LinkedNoteType pType, bool isEditable, bool isRestrictedType)
@@ -90,7 +87,7 @@ namespace BDEditor.Views
             bdLinkedNoteControl1.CurrentLinkedNote = null;
 
             this.existingAssociation = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, parentId, contextPropertyName);
-            rtfContextInfo.Text = BDLinkedNoteAssociation.GetDescription(dataContext, parentId, (Constants.BDNodeType)existingAssociation.parentType, contextPropertyName);
+            rtfContextInfo.Text = BDLinkedNoteAssociation.GetDescription(dataContext, parentId, contextNodeType, contextPropertyName);
             if (null != this.existingAssociation)
             {
                 this.linkedNoteTypeCombo.SelectedIndex = this.existingAssociation.linkedNoteType.Value;
@@ -299,6 +296,12 @@ namespace BDEditor.Views
         {
             if(null != existingAssociation)
                 existingAssociation.linkedNoteType = linkedNoteTypeCombo.SelectedIndex;
+        }
+
+        private void BDLinkedNoteView_Load(object sender, EventArgs e)
+        {
+            List<LinkedNoteType> noteTypes = Enum.GetValues(typeof(LinkedNoteType)).Cast<LinkedNoteType>().ToList<LinkedNoteType>();
+            this.linkedNoteTypeCombo.DataSource = noteTypes;
         }
     }
 }

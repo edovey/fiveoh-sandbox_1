@@ -39,14 +39,14 @@
             this.chListNotes = new System.Windows.Forms.CheckedListBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.headerPanel = new System.Windows.Forms.Panel();
+            this.noteTypeLabel = new System.Windows.Forms.Label();
+            this.linkedNoteTypeCombo = new System.Windows.Forms.ComboBox();
             this.rtfContextInfo = new System.Windows.Forms.RichTextBox();
             this.contextMenuStripEvents = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.linkedNoteTypeCombo = new System.Windows.Forms.ComboBox();
             this.bdLinkedNoteControl1 = new BDEditor.Views.BDLinkedNoteControl();
-            this.noteTypeLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPageLinks.SuspendLayout();
@@ -168,6 +168,24 @@
             this.headerPanel.Size = new System.Drawing.Size(810, 53);
             this.headerPanel.TabIndex = 3;
             // 
+            // noteTypeLabel
+            // 
+            this.noteTypeLabel.AutoSize = true;
+            this.noteTypeLabel.Location = new System.Drawing.Point(9, 9);
+            this.noteTypeLabel.Name = "noteTypeLabel";
+            this.noteTypeLabel.Size = new System.Drawing.Size(57, 13);
+            this.noteTypeLabel.TabIndex = 2;
+            this.noteTypeLabel.Text = "Note Type";
+            // 
+            // linkedNoteTypeCombo
+            // 
+            this.linkedNoteTypeCombo.FormattingEnabled = true;
+            this.linkedNoteTypeCombo.Location = new System.Drawing.Point(9, 24);
+            this.linkedNoteTypeCombo.Name = "linkedNoteTypeCombo";
+            this.linkedNoteTypeCombo.Size = new System.Drawing.Size(135, 21);
+            this.linkedNoteTypeCombo.TabIndex = 1;
+            this.linkedNoteTypeCombo.SelectedIndexChanged += new System.EventHandler(this.linkedNoteType_SelectedIndexChanged);
+            // 
             // rtfContextInfo
             // 
             this.rtfContextInfo.Dock = System.Windows.Forms.DockStyle.Right;
@@ -209,15 +227,6 @@
             this.deleteNoteToolStripMenuItem.Text = "Delete Note";
             this.deleteNoteToolStripMenuItem.Click += new System.EventHandler(this.DeleteCurrentNote_Action);
             // 
-            // linkedNoteTypeCombo
-            // 
-            this.linkedNoteTypeCombo.FormattingEnabled = true;
-            this.linkedNoteTypeCombo.Location = new System.Drawing.Point(9, 24);
-            this.linkedNoteTypeCombo.Name = "linkedNoteTypeCombo";
-            this.linkedNoteTypeCombo.Size = new System.Drawing.Size(135, 21);
-            this.linkedNoteTypeCombo.TabIndex = 1;
-            this.linkedNoteTypeCombo.SelectedIndexChanged += new System.EventHandler(this.linkedNoteType_SelectedIndexChanged);
-            // 
             // bdLinkedNoteControl1
             // 
             this.bdLinkedNoteControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -230,15 +239,6 @@
             this.bdLinkedNoteControl1.Size = new System.Drawing.Size(810, 256);
             this.bdLinkedNoteControl1.TabIndex = 1;
             // 
-            // noteTypeLabel
-            // 
-            this.noteTypeLabel.AutoSize = true;
-            this.noteTypeLabel.Location = new System.Drawing.Point(9, 9);
-            this.noteTypeLabel.Name = "noteTypeLabel";
-            this.noteTypeLabel.Size = new System.Drawing.Size(57, 13);
-            this.noteTypeLabel.TabIndex = 2;
-            this.noteTypeLabel.Text = "Note Type";
-            // 
             // BDLinkedNoteView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -249,6 +249,7 @@
             this.Controls.Add(this.panel1);
             this.Name = "BDLinkedNoteView";
             this.Text = "BDLinkedNoteView";
+            this.Load += new System.EventHandler(this.BDLinkedNoteView_Load);
             this.panel1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPageLinks.ResumeLayout(false);

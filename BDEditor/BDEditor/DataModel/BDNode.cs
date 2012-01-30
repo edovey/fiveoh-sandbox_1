@@ -235,11 +235,11 @@ namespace BDEditor.DataModel
         public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime pCurrentSyncDate)
         {
             SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
-            syncInfo.PushList = BDSection.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+            syncInfo.PushList = BDNode.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
             syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
             for (int idx = 0; idx < syncInfo.PushList.Count; idx++)
             {
-                ((BDSection)syncInfo.PushList[idx]).modifiedDate = pCurrentSyncDate;
+                ((BDNode)syncInfo.PushList[idx]).modifiedDate = pCurrentSyncDate;
             }
             if (syncInfo.PushList.Count > 0) { pDataContext.SaveChanges(); }
             return syncInfo;
@@ -307,6 +307,11 @@ namespace BDEditor.DataModel
             return putAttributeRequest;
         }
         #endregion
+
+        public Guid? ParentId
+        {
+            get { return parentId; }
+        }
 
         public void SetParent(IBDNode pParent)
         {

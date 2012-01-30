@@ -14,18 +14,6 @@ using System.Diagnostics;
 
 namespace BDEditor.Views
 {
-    //public enum BDNodeContextType
-    //{
-    //    Chapter = 1,
-    //    Section = 2,
-    //    Category = 3,
-    //    SubCategory = 4,
-    //    Disease = 5,
-    //    Presentation = 6,
-    //    Therapy = 7,
-    //    Pathogen = 8
-    //}
-
     public partial class BDEditView : Form
     {
         BDEditor.DataModel.Entities dataContext;
@@ -59,21 +47,6 @@ namespace BDEditor.Views
                 dataContext = value;
             }
         }
-
-        //public void createEntry(BDNodeContextType context)
-        //{            
-        //    switch (context)
-        //    {
-        //        case BDNodeContextType.Section:
-        //            BDSection section = BDSection.CreateSection(dataContext);
-        //            section.name = @"New Section";
-        //            BDSection.Save(dataContext,section);
-        //            break;
-
-        //        default:
-        //            break;
-        //    }
-        //}
 
         private void listDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -129,15 +102,24 @@ namespace BDEditor.Views
                         case Constants.BDNodeType.BDDisease:
                             break;
                         case Constants.BDNodeType.BDPresentation:
+                            BDNode presentation = node as BDNode;
                             switch (metaData.LayoutVariant)
                             {
                                 case BDMetadata.LayoutVariantType.TreatmentRecommendation01:
+
+                                    BDPresentationControl presentationControl_tr01 = new BDPresentationControl();
+                                    presentationControl_tr01.AssignDataContext(dataContext);
+                                    presentationControl_tr01.Dock = DockStyle.Fill;
+                                    presentationControl_tr01.CurrentPresentation = presentation;
+                                    presentationControl_tr01.AssignScopeId((null != presentation) ? presentation.Uuid : Guid.Empty);
+                                    presentationControl_tr01.AssignParentId(presentation.ParentId);
+
+                                    splitContainer1.Panel2.Controls.Add(presentationControl_tr01);
+                                    presentationControl_tr01.RefreshLayout();
                                     break;
                             }
                             break;
                     }
-
-
 
 
                     /*
@@ -215,7 +197,8 @@ namespace BDEditor.Views
             LoadChapterDropDown();
             BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
-            loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
+
+            loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDNodes.Count() <= 0);
 
             this.Cursor = Cursors.Default;
             
@@ -276,7 +259,7 @@ namespace BDEditor.Views
 
             systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             lastSyncDate = systemSetting.settingDateTimeValue;
-            loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
+            loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDNodes.Count() <= 0);
 
             this.Cursor = Cursors.Default;
         }
@@ -294,7 +277,7 @@ namespace BDEditor.Views
 
             BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
-            loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
+            loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDNodes.Count() <= 0);
             UpdateSyncLabel();
         }
 
@@ -387,7 +370,7 @@ namespace BDEditor.Views
 
             systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             lastSyncDate = systemSetting.settingDateTimeValue;
-            loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDSections.Count() <= 0);
+            loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDNodes.Count() <= 0);
 
             this.Cursor = Cursors.Default;
 #else

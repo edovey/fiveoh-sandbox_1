@@ -33,7 +33,7 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME_FRIENDLY = @"Therapy";
         public const string KEY_NAME = @"BDTherapy";
 
-        public const int ENTITY_SCHEMAVERSION = 2;
+        public const int ENTITY_SCHEMAVERSION = 0;
         public const string PROPERTYNAME_THERAPY = @"Therapy";
         public const string PROPERTYNAME_DOSAGE = @"Dosage"; 
         public const string PROPERTYNAME_DURATION = @"Duration";
@@ -47,6 +47,7 @@ namespace BDEditor.DataModel
         private const string DEPRECATED = @"th_deprecated";
         private const string DISPLAYORDER = @"th_displayOrder";
         private const string PARENTID = @"th_parentId";
+        private const string PARENTTYPE = @"th_parentType";
         private const string PARENTKEYNAME = @"th_parentKeyName";
         private const string THERAPYJOINTYPE = @"th_therapyJoinType";
         private const string LEFTBRACKET = @"th_leftBracket";
@@ -260,6 +261,25 @@ namespace BDEditor.DataModel
             set { this.name = value; }
         }
 
+        public Guid? ParentId
+        {
+            get { return parentId; }
+        }
+
+        public Constants.BDNodeType ParentType
+        {
+            get
+            {
+                Constants.BDNodeType result = Constants.BDNodeType.None;
+
+                if (Enum.IsDefined(typeof(Constants.BDNodeType), parentType))
+                {
+                    result = (Constants.BDNodeType)parentType;
+                }
+                return result;
+            }
+        }
+
         protected override void OnPropertyChanged(string property)
         {
             if (!Common.Settings.IsSyncLoad)
@@ -352,9 +372,9 @@ namespace BDEditor.DataModel
             entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
             entry.modifiedBy = Guid.Parse(pAttributeDictionary[MODIFIEDBY]);
             entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
-            short displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]);
-            entry.displayOrder = displayOrder;
+            entry.displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]);
             entry.parentId = Guid.Parse(pAttributeDictionary[PARENTID]);
+            entry.parentType = (null == pAttributeDictionary[PARENTTYPE]) ? (short)-1 : short.Parse(pAttributeDictionary[PARENTTYPE]);
             entry.parentKeyName = pAttributeDictionary[PARENTKEYNAME];
             entry.therapyJoinType = int.Parse(pAttributeDictionary[THERAPYJOINTYPE]);
             entry.leftBracket = Boolean.Parse(pAttributeDictionary[LEFTBRACKET]);
@@ -363,18 +383,13 @@ namespace BDEditor.DataModel
             entry.dosage = pAttributeDictionary[DOSAGE];
             entry.duration = pAttributeDictionary[DURATION];
 
-            if (schemaVersion >= 1)
-            {
-                entry.nameSameAsPrevious = Boolean.Parse(pAttributeDictionary[NAMEPREVIOUS]);
-                entry.dosageSameAsPrevious = Boolean.Parse(pAttributeDictionary[DOSAGEPREVIOUS]);
-                entry.durationSameAsPrevious = Boolean.Parse(pAttributeDictionary[DURATIONPREVIOUS]);
-            }
-            else
-            {
-                entry.nameSameAsPrevious = false;
-                entry.dosageSameAsPrevious = false;
-                entry.durationSameAsPrevious = false;
-            }
+            entry.nameSameAsPrevious = Boolean.Parse(pAttributeDictionary[NAMEPREVIOUS]);
+            entry.dosageSameAsPrevious = Boolean.Parse(pAttributeDictionary[DOSAGEPREVIOUS]);
+            entry.durationSameAsPrevious = Boolean.Parse(pAttributeDictionary[DURATIONPREVIOUS]);
+
+            entry.nameSameAsPrevious = false;
+            entry.dosageSameAsPrevious = false;
+            entry.durationSameAsPrevious = false;
 
             if (pSaveChanges)
                 pDataContext.SaveChanges();
@@ -405,11 +420,10 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.NAMEPREVIOUS).WithValue(nameSameAsPrevious.ToString()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DOSAGEPREVIOUS).WithValue(dosageSameAsPrevious.ToString()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DURATIONPREVIOUS).WithValue(durationSameAsPrevious.ToString()).WithReplace(true));
-            if (schemaVersion > 0)
-            {
-                attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
-                attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));
-            }
+
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.PARENTTYPE).WithValue(string.Format(@"{0}", parentType)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));
 
             return putAttributeRequest;
         }

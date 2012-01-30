@@ -96,6 +96,7 @@ namespace BDEditor.Views
                                 case Constants.LayoutVariantType.TreatmentRecommendation01:
                                     BDNodeControl control_tr01 = null;
                                     control_tr01 = new BDNodeControl(dataContext, node);
+                                    control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
                                     control_tr01.Dock = DockStyle.Fill;
                                     splitContainer1.Panel2.Controls.Add(control_tr01);
                                     control_tr01.RefreshLayout();
@@ -108,6 +109,7 @@ namespace BDEditor.Views
                                 case Constants.LayoutVariantType.TreatmentRecommendation01:
                                     BDNodeControl control_tr01 = null;
                                     control_tr01 = new BDNodeControl(dataContext, node);
+                                    control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
                                     control_tr01.Dock = DockStyle.Fill;
                                     splitContainer1.Panel2.Controls.Add(control_tr01);
                                     control_tr01.RefreshLayout();
@@ -120,6 +122,7 @@ namespace BDEditor.Views
                                 case Constants.LayoutVariantType.TreatmentRecommendation01:
                                     BDNodeControl control_tr01 = null;
                                     control_tr01 = new BDNodeControl(dataContext, node);
+                                    control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
                                     control_tr01.Dock = DockStyle.Fill;
                                     splitContainer1.Panel2.Controls.Add(control_tr01);
                                     control_tr01.RefreshLayout();
@@ -135,7 +138,7 @@ namespace BDEditor.Views
                                     control_tr01.Dock = DockStyle.Fill;
                                     control_tr01.CurrentPresentation = presentation;
                                     control_tr01.AssignScopeId((null != presentation) ? presentation.Uuid : Guid.Empty);
-                                    control_tr01.AssignParentId(presentation.ParentId);
+                                    control_tr01.AssignParentInfo(presentation.ParentId, presentation.ParentType);
 
                                     splitContainer1.Panel2.Controls.Add(control_tr01);
                                     control_tr01.RefreshLayout();

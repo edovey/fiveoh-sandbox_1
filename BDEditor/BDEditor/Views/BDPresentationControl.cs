@@ -15,6 +15,7 @@ namespace BDEditor.Views
     {
         private Entities dataContext;
         private Guid? parentId;
+        private Constants.BDNodeType parentType = Constants.BDNodeType.None;
         private BDNode currentPresentation;
         private BDLinkedNote overviewLinkedNote;
         private Guid? scopeId;
@@ -103,9 +104,10 @@ namespace BDEditor.Views
 
         #region IBDControl
 
-        public void AssignParentId(Guid? pParentId)
+        public void AssignParentInfo(Guid? pParentId, Constants.BDNodeType pParentType)
         {
             parentId = pParentId;
+            parentType = pParentType;
 
             this.Enabled = (null != parentId); 
         }

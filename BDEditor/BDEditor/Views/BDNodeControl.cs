@@ -19,6 +19,7 @@ namespace BDEditor.Views
         private IBDNode node;
         private Guid? scopeId;
         private Guid? parentId;
+        private Constants.BDNodeType parentType = Constants.BDNodeType.None;
         private Constants.LayoutVariantType defaultLayoutVariantType;
         private Constants.BDNodeType nodeType;
 
@@ -148,9 +149,10 @@ namespace BDEditor.Views
 
         #region IBDControl
 
-        public void AssignParentId(Guid? pParentId)
+        public void AssignParentInfo(Guid? pParentId, Constants.BDNodeType pParentType)
         {
             parentId = pParentId;
+            parentType = pParentType;
             this.Enabled = (null != parentId);
         }
 

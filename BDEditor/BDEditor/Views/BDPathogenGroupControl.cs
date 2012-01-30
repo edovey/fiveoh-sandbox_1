@@ -16,6 +16,7 @@ namespace BDEditor.Views
         #region Class properties
         private Entities dataContext;
         private Guid? parentId;
+        private Constants.BDNodeType parentType;
         private BDNode currentPathogenGroup;
         public Constants.LayoutVariantType DefaultLayoutVariantType;
         private Guid? scopeId;
@@ -81,7 +82,6 @@ namespace BDEditor.Views
             textBoxPathogenGroupName.AutoCompleteSource = AutoCompleteSource.CustomSource;
         }
 
-
         #region IBDControl
         
         public void AssignDataContext(Entities pDataContext)
@@ -89,9 +89,10 @@ namespace BDEditor.Views
             dataContext = pDataContext;
         }
 
-        public void AssignParentId(Guid? pParentId)
+        public void AssignParentInfo(Guid? pParentId, Constants.BDNodeType pParentType)
         {
             parentId = pParentId;
+            parentType = pParentType;
             this.Enabled = (null != parentId);
         }
 

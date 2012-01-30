@@ -125,7 +125,7 @@ namespace BDEditor.Views
 
                     BDNode.Save(dataContext, currentPathogenGroup);
 
-                    Typeahead.AddToCollection(BDNode.KEY_NAME, BDNode.PROPERTYNAME_NAME, currentPathogenGroup.name);
+                    Typeahead.AddToCollection(Constants.BDNodeType.BDPathogenGroup, BDNode.PROPERTYNAME_NAME, currentPathogenGroup.name);
 
                     result = true;
                 }
@@ -510,7 +510,7 @@ namespace BDEditor.Views
                 BDLinkedNoteView view = new BDLinkedNoteView();
                 view.AssignDataContext(dataContext);
                 view.AssignContextPropertyName(pProperty);
-                view.AssignContextEntityKeyName(BDNode.KEY_NAME);
+                view.AssignContextEntityNodeType(Constants.BDNodeType.BDPathogenGroup);
                 view.AssignScopeId(scopeId);
                 view.NotesChanged += new EventHandler(notesChanged_Action);
                 if (null != currentPathogenGroup)

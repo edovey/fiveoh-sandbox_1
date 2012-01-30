@@ -24,7 +24,7 @@ namespace BDEditor.Classes
                 if (null == pathogenGroups)
                 {
                     pathogenGroups = new AutoCompleteStringCollection();
-                    string [] names = BDPathogenGroup.GetPathogenGroupNames(new BDEditor.DataModel.Entities());
+                    string [] names = BDNode.GetNodeNamesForType(new BDEditor.DataModel.Entities(), Constants.BDNodeType.BDPathogenGroup);
                     pathogenGroups.AddRange(names);
                 }
                 return pathogenGroups;
@@ -38,7 +38,7 @@ namespace BDEditor.Classes
                 if (null == pathogens)
                 {
                     pathogens = new AutoCompleteStringCollection();
-                    string[] names = BDPathogen.GetPathogenNames(new BDEditor.DataModel.Entities());
+                    string[] names = BDNode.GetNodeNamesForType(new BDEditor.DataModel.Entities(), Constants.BDNodeType.BDPathogen);
                     pathogens.AddRange(names);
                 }
                 return pathogens;
@@ -101,38 +101,38 @@ namespace BDEditor.Classes
             }
         }
 
-        public static void AddToCollection(string pEntityKeyName, string pEntityMember, string pEntityValue)
+        public static void AddToCollection(Constants.BDNodeType pNodeType, string pEntityMember, string pValue)
         {
-            if (!string.IsNullOrEmpty(pEntityValue))
+            if (!string.IsNullOrEmpty(pValue))
             {
-                switch (pEntityKeyName)
+                switch (pNodeType)
                 {
-                    case BDPathogenGroup.KEY_NAME:
+                    case Constants.BDNodeType.BDPathogenGroup:
                         {
-                            if (!pathogenGroups.Contains(pEntityValue))
-                                pathogenGroups.Add(pEntityValue);
+                            if (!pathogenGroups.Contains(pValue))
+                                pathogenGroups.Add(pValue);
                         }
                         break;
-                    case BDPathogen.KEY_NAME:
+                    case Constants.BDNodeType.BDPathogen:
                         {
-                            if (!pathogens.Contains(pEntityValue))
-                                pathogens.Add(pEntityValue);
+                            if (!pathogens.Contains(pValue))
+                                pathogens.Add(pValue);
                         }
                         break;
-                    case BDTherapyGroup.KEY_NAME:
+                    case Constants.BDNodeType.BDTherapyGroup:
                         {
-                            if (!therapyGroups.Contains(pEntityValue))
-                                therapyGroups.Add(pEntityValue);
+                            if (!therapyGroups.Contains(pValue))
+                                therapyGroups.Add(pValue);
                         }
                         break;
-                    case BDTherapy.KEY_NAME:
+                    case Constants.BDNodeType.BDTherapy:
                         {
-                            if ((pEntityMember == string.Empty || pEntityMember == BDTherapy.PROPERTYNAME_THERAPY) && !therapyNames.Contains(pEntityValue))
-                                therapyNames.Add(pEntityValue);
-                            else if (pEntityMember == BDTherapy.PROPERTYNAME_DOSAGE && !therapyDosages.Contains(pEntityValue))
-                                therapyDosages.Add(pEntityValue);
-                            else if (pEntityMember == BDTherapy.PROPERTYNAME_DURATION && !therapyDurations.Contains(pEntityValue))
-                                therapyDurations.Add(pEntityValue);
+                            if ((pEntityMember == string.Empty || pEntityMember == BDTherapy.PROPERTYNAME_THERAPY) && !therapyNames.Contains(pValue))
+                                therapyNames.Add(pValue);
+                            else if (pEntityMember == BDTherapy.PROPERTYNAME_DOSAGE && !therapyDosages.Contains(pValue))
+                                therapyDosages.Add(pValue);
+                            else if (pEntityMember == BDTherapy.PROPERTYNAME_DURATION && !therapyDurations.Contains(pValue))
+                                therapyDurations.Add(pValue);
                         }
                         break;
                 }

@@ -189,7 +189,7 @@ namespace BDEditor.Views
                 BDLinkedNoteView view = new BDLinkedNoteView();
                 view.AssignDataContext(dataContext);
                 view.AssignContextPropertyName(pProperty);
-                view.AssignContextEntityKeyName(BDTherapy.KEY_NAME);
+                view.AssignContextEntityNodeType(Constants.BDNodeType.BDTherapy);
                 view.AssignScopeId(scopeId);
                 view.NotesChanged += new EventHandler(notesChanged_Action);
                 if (null != currentTherapy)
@@ -318,11 +318,11 @@ namespace BDEditor.Views
                     result = true;
 
                     if(currentTherapy.name.Length > 0) 
-                       Typeahead.AddToCollection(BDTherapy.KEY_NAME, BDTherapy.PROPERTYNAME_THERAPY, currentTherapy.name);
+                       Typeahead.AddToCollection(Constants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_THERAPY, currentTherapy.name);
                    if(currentTherapy.dosage.Length > 0)
-                       Typeahead.AddToCollection(BDTherapy.KEY_NAME, BDTherapy.PROPERTYNAME_DOSAGE, currentTherapy.dosage);
+                       Typeahead.AddToCollection(Constants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, currentTherapy.dosage);
                     if(currentTherapy.duration.Length > 0)
-                       Typeahead.AddToCollection(BDTherapy.KEY_NAME, BDTherapy.PROPERTYNAME_DURATION, currentTherapy.duration);
+                        Typeahead.AddToCollection(Constants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DURATION, currentTherapy.duration);
 
                 }
             }

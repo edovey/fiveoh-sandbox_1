@@ -235,6 +235,25 @@ namespace BDEditor.DataModel
             return durations.ToArray();
         }
 
+        public void SetParent(IBDNode pParent)
+        {
+            if (null == pParent)
+            {
+                SetParent(Constants.BDNodeType.None, null);
+            }
+            else
+            {
+                SetParent(pParent.NodeType, pParent.Uuid);
+            }
+        }
+
+        public void SetParent(Constants.BDNodeType pParentType, Guid? pParentId)
+        {
+            parentId = pParentId;
+            parentType = (int)pParentType;
+            parentKeyName = pParentType.ToString();
+        }
+
         public Guid Uuid
         {
             get { return this.uuid; }

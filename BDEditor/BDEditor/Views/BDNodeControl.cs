@@ -178,7 +178,7 @@ namespace BDEditor.Views
             BDLinkedNoteView view = new BDLinkedNoteView();
             view.AssignDataContext(dataContext);
             view.AssignContextPropertyName(pProperty);
-            view.AssignContextEntityKeyName(BDNode.KEY_NAME);
+            view.AssignContextEntityNodeType(currentNode.NodeType);
             view.AssignScopeId(scopeId);
             view.AssignLinkedNoteType(LinkedNoteType.Footnote, true, true);
             view.NotesChanged += new EventHandler(notesChanged_Action);

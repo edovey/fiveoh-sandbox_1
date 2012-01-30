@@ -7,13 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using BDEditor.DataModel;
+using BDEditor.Classes;
 
 namespace BDEditor.Views
 {
     public partial class BDLinkedNoteView : Form
     {
         Entities dataContext;
-        string contextEntityKeyName;
+        Constants.BDNodeType contextNodeType;
         string contextPropertyName;
         Guid? parentId;
         Guid? scopeId;
@@ -57,10 +58,10 @@ namespace BDEditor.Views
             bdLinkedNoteControl1.AssignDataContext(dataContext);
         }
 
-        public void AssignContextEntityKeyName(string pContextEntityKeyName)
+        public void AssignContextEntityNodeType(Constants.BDNodeType pNodeType)
         {
-            contextEntityKeyName = pContextEntityKeyName;
-            bdLinkedNoteControl1.AssignContextEntityKeyName(contextEntityKeyName);
+            contextNodeType = pNodeType;
+            bdLinkedNoteControl1.AssignContextNodeType(pNodeType);
         }
 
         public void AssignContextPropertyName(string pContextPropertyName)
@@ -89,7 +90,7 @@ namespace BDEditor.Views
             bdLinkedNoteControl1.CurrentLinkedNote = null;
 
             this.existingAssociation = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, parentId, contextPropertyName);
-            rtfContextInfo.Text = BDLinkedNoteAssociation.GetDescription(dataContext, parentId, contextEntityKeyName, contextPropertyName);
+            rtfContextInfo.Text = BDLinkedNoteAssociation.GetDescription(dataContext, parentId, (Constants.BDNodeType)existingAssociation.parentType, contextPropertyName);
             if (null != this.existingAssociation)
             {
                 this.linkedNoteTypeCombo.SelectedIndex = this.existingAssociation.linkedNoteType.Value;
@@ -221,7 +222,7 @@ namespace BDEditor.Views
                 if (null == this.existingAssociation)
                 {
                     this.existingAssociation = BDLinkedNoteAssociation.CreateLinkedNoteAssociation(dataContext);
-                    this.existingAssociation.parentKeyName = contextEntityKeyName;
+                    this.existingAssociation.parentType = (int)contextNodeType;
                     this.existingAssociation.parentKeyPropertyName = contextPropertyName;
                     this.existingAssociation.parentId = parentId;
                 }

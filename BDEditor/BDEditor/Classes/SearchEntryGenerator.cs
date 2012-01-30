@@ -80,8 +80,8 @@ namespace BDEditor.Classes
                     result = BDTherapy.GetTherapyWithId(pContext, metadata.itemId.Value).name;
                     break;
 
-                case BDPathogen.ENTITYNAME:
-                    result = BDPathogen.GetPathogenWithId(pContext, metadata.itemId.Value).name;
+                case BDNode.ENTITYNAME:
+                    result = BDNode.GetNodeWithId(pContext, metadata.itemId.Value).name;
                     break;
 
                 default:
@@ -94,13 +94,13 @@ namespace BDEditor.Classes
         {
             string result = String.Empty;
 
-            switch (pMetadata.displayParentKeyName)
+            switch (pMetadata.NodeType)
             {
-                case BDDisease.ENTITYNAME:
+                case Constants.BDNodeType.BDDisease:
                     {
 
-                        BDDisease disease = BDDisease.GetDiseaseWithId(pContext, pMetadata.displayParentId.Value);
-                        BDCategory category = BDCategory.GetCategoryWithId(pContext, disease.categoryId.Value);
+                        BDNode disease = BDNode.GetNodeWithId(pContext, pMetadata.displayParentId.Value); 
+                        BDNode category = BDNode.GetNodeWithId(pContext, disease.ParentId.Value);
                         result = string.Format("{0} : {1}", category.name, disease.name);
                     }
                     break;

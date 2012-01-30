@@ -94,7 +94,7 @@ namespace BDEditor.Views
                 BDNode.Save(dataContext, currentPathogen);
                 result = true;
 
-                Typeahead.AddToCollection(BDNode.KEY_NAME, BDNode.PROPERTYNAME_NAME, currentPathogen.name);
+                Typeahead.AddToCollection(Constants.BDNodeType.BDPathogen, BDNode.PROPERTYNAME_NAME, currentPathogen.name);
             }
 
             return result;
@@ -166,8 +166,8 @@ namespace BDEditor.Views
             BDLinkedNoteView noteView = new BDLinkedNoteView();
             noteView.AssignDataContext(dataContext);
             noteView.AssignParentId(currentPathogen.uuid);
-            noteView.AssignContextEntityKeyName(BDPathogen.KEY_NAME);
-            noteView.AssignContextPropertyName(BDPathogen.PROPERTYNAME_NAME);
+            noteView.AssignContextEntityNodeType(Constants.BDNodeType.BDPathogen);
+            noteView.AssignContextPropertyName(BDNode.PROPERTYNAME_NAME);
             noteView.AssignScopeId(scopeId);
             noteView.NotesChanged += new EventHandler(notesChanged_Action);
 

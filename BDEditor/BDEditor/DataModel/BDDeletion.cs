@@ -112,35 +112,14 @@ namespace BDEditor.DataModel
                 BDDeletion deletion = deletionEntry as BDDeletion;
                 switch (deletion.targetName)
                 {
-                    case BDCategory.KEY_NAME:
-                        BDCategory.Delete(pDataContext, deletion.targetId.Value,false);
-                        break;
-                    case BDChapter.KEY_NAME:
-                        BDChapter.Delete(pDataContext, deletion.targetId.Value, false);
-                        break;
-                    case BDDisease.KEY_NAME:
-                        BDDisease.Delete(pDataContext, deletion.targetId.Value, false);
+                    case BDNode.KEY_NAME:
+                        BDNode.Delete(pDataContext, deletion.targetId.Value,false);
                         break;
                     case BDLinkedNote.KEY_NAME:
                         BDLinkedNote.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
                     case BDLinkedNoteAssociation.KEY_NAME:
                         BDLinkedNoteAssociation.Delete(pDataContext, deletion.targetId.Value, false);
-                        break;
-                    case BDPathogen.KEY_NAME:
-                        BDPathogen.Delete(pDataContext, deletion.targetId.Value, false);
-                        break;
-                    case BDPathogenGroup.KEY_NAME:
-                        BDPathogenGroup.Delete(pDataContext, deletion.targetId.Value, false);
-                        break;
-                    case BDPresentation.KEY_NAME:
-                        BDPresentation.Delete(pDataContext, deletion.targetId.Value, false);
-                        break;
-                    case BDSection.KEY_NAME:
-                        BDSection.Delete(pDataContext, deletion.targetId.Value, false);
-                        break;
-                    case BDSubcategory.KEY_NAME:
-                        BDSubcategory.Delete(pDataContext, deletion.targetId.Value, false);
                         break;
                     case BDTherapy.KEY_NAME:
                         BDTherapy.Delete(pDataContext, deletion.targetId.Value, false);

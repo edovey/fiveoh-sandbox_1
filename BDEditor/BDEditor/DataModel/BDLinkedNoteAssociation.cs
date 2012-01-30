@@ -56,6 +56,7 @@ namespace BDEditor.DataModel
         private const string PARENTID = @"la_parentId";
         private const string PARENTKEYNAME = @"la_parentKeyName";
         private const string PARENTKEYPROPERTYNAME = @"la_parentKeyPropertyName";
+        private const string PARENTTYPE = @"la_parentType";
 
         /// <summary>
         /// Extended Create method that sets the created data and schema version. Does not save.
@@ -91,16 +92,16 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pLinkedNoteType"></param>
         /// <param name="pLinkedNoteId"></param>
-        /// <param name="pParentKeyName"></param>
+        /// <param name="pParentNodeType"></param>
         /// <param name="pParentId"></param>
-        /// <param name="pParentEntityKeyName"></param>
+        /// <param name="pParentPropertyName"></param>
         /// <returns>BDLinkedNoteAssociation</returns>
         public static BDLinkedNoteAssociation CreateLinkedNoteAssociation(Entities pContext, 
                                                                             LinkedNoteType pLinkedNoteType, 
                                                                             Guid pLinkedNoteId, 
-                                                                            string pParentKeyName, 
+                                                                            Constants.BDNodeType pParentType, 
                                                                             Guid pParentId, 
-                                                                            string pParentEntityKeyName)
+                                                                            string pParentPropertyName)
         {
             BDLinkedNoteAssociation linkedNoteAssociation = CreateBDLinkedNoteAssociation(Guid.NewGuid(), false);
             linkedNoteAssociation.createdBy = Guid.Empty;
@@ -109,8 +110,8 @@ namespace BDEditor.DataModel
 
             linkedNoteAssociation.linkedNoteId = pLinkedNoteId;
             linkedNoteAssociation.parentId = pParentId;
-            linkedNoteAssociation.parentKeyName = pParentKeyName;
-            linkedNoteAssociation.parentKeyPropertyName = pParentEntityKeyName;
+            linkedNoteAssociation.parentType = (int)pParentType;
+            linkedNoteAssociation.parentKeyPropertyName = pParentPropertyName;
 
             pContext.AddObject(ENTITYNAME, linkedNoteAssociation);
 
@@ -279,15 +280,15 @@ namespace BDEditor.DataModel
             return result;
         }
 
-        public static string GetDescription(Entities pDataContext, Guid? pParentId, string pParentKeyName, string pParentEntityPropertyName)
+        public static string GetDescription(Entities pDataContext, Guid? pParentId, Constants.BDNodeType pParentNodeType, string pParentEntityPropertyName)
         {
-            string result = string.Format("{0} [{1}]", pParentKeyName, pParentEntityPropertyName);
+            string result = string.Format("{0} [{1}]", pParentNodeType.ToString(), pParentEntityPropertyName);
 
             if (null != pParentId)
             {
-                switch (pParentKeyName)
+                switch (pParentNodeType)
                 {
-                    case BDTherapy.KEY_NAME:
+                    case Constants.BDNodeType.BDTherapy:
                         {
                             BDTherapy therapy = BDTherapy.GetTherapyWithId(pDataContext, pParentId.Value);
                             if (null != therapy)
@@ -296,7 +297,8 @@ namespace BDEditor.DataModel
                             }
                         }
                         break;
-                    case BDTherapyGroup.KEY_NAME:
+
+                    case Constants.BDNodeType.BDTherapyGroup:
                         {
                             BDTherapyGroup therapyGroup = BDTherapyGroup.GetTherapyGroupWithId(pDataContext, pParentId.Value);
                             if (null != therapyGroup)
@@ -305,23 +307,17 @@ namespace BDEditor.DataModel
                             }
                         }
                         break;
-                    case BDPathogen.KEY_NAME:
+
+                    case Constants.BDNodeType.BDPathogen:
+                    case Constants.BDNodeType.BDPresentation:
+                    default:
                         {
-                            BDPathogen pathogen = BDPathogen.GetPathogenWithId(pDataContext, pParentId.Value);
-                            if (null != pathogen)
+                            BDNode node = BDNode.GetNodeWithId(pDataContext, pParentId.Value); //PathogenWithId(pDataContext, pParentId.Value);
+                            if (null != node)
                             {
-                                result = string.Format("{0} [{1}]", pathogen.DescriptionForLinkedNote, pParentEntityPropertyName);
+                                result = string.Format("{0} [{1}]", node.DescriptionForLinkedNote, pParentEntityPropertyName);
                             }
                         }
-                        break;
-                    case BDPresentation.KEY_NAME:
-                        {
-                            result = string.Format("{0} [{1}]", pParentKeyName, pParentEntityPropertyName);
-                        }
-                        break;
-
-                    default:
-                        result = string.Format("{0} [{1}]", pParentKeyName, pParentEntityPropertyName);
                         break;
                 }
             }
@@ -330,7 +326,7 @@ namespace BDEditor.DataModel
 
         public string GetDescription(Entities pDataContext)
         {
-            return GetDescription(pDataContext, this.parentId, this.parentKeyName, this.parentKeyPropertyName);
+            return GetDescription(pDataContext, this.parentId, this.NodeType, this.parentKeyPropertyName);
         }
 
         protected override void OnPropertyChanged(string property)

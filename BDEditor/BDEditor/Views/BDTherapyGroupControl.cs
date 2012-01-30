@@ -169,7 +169,7 @@ namespace BDEditor.Views
                     }
                     
                     BDTherapyGroup.Save(dataContext, currentTherapyGroup);
-                    Typeahead.AddToCollection(BDTherapyGroup.KEY_NAME, BDTherapyGroup.PROPERTYNAME_NAME, currentTherapyGroup.name);
+                    Typeahead.AddToCollection(Constants.BDNodeType.BDTherapyGroup, BDTherapyGroup.PROPERTYNAME_NAME, currentTherapyGroup.name);
 
                     result = true;
                 }
@@ -311,7 +311,7 @@ namespace BDEditor.Views
                 BDLinkedNoteView view = new BDLinkedNoteView();
                 view.AssignDataContext(dataContext);
                 view.AssignContextPropertyName(pProperty);
-                view.AssignContextEntityKeyName(BDTherapyGroup.KEY_NAME);
+                view.AssignContextEntityNodeType(Constants.BDNodeType.BDTherapyGroup);
                 view.AssignScopeId(scopeId);
                 view.NotesChanged += new EventHandler(notesChanged_Action);
                 if (null != currentTherapyGroup)

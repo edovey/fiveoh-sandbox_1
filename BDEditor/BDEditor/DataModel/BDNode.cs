@@ -180,6 +180,19 @@ namespace BDEditor.DataModel
             return entryList;
         }
 
+        /// <summary>
+        /// Get a string array of distinct names for all  nodes of the specified BDNodeType
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pNodeType"></param>
+        /// <returns></returns>
+        public static string[] GetNodeNamesForType(Entities pContext, Constants.BDNodeType pNodeType)
+        {
+            var nodeNames = pContext.BDNodes.Where(x => (!string.IsNullOrEmpty(x.Name) && x.NodeType == pNodeType)).Select(node => node.Name).Distinct();
+            return nodeNames.ToArray();
+        }
+
+
         protected override void OnPropertyChanged(string property)
         {
             if (!Common.Settings.IsSyncLoad)

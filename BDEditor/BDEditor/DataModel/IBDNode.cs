@@ -10,5 +10,9 @@ namespace BDEditor.DataModel
     {
         string Name { get; set; }
         Constants.BDNodeType NodeType { get; }
+        Guid? ParentId { get; }
+        Constants.BDNodeType ParentType { get; }
+        void SetParent(IBDNode pParent);
+        void SetParent(Constants.BDNodeType pParentType, Guid? pParentId);
     }
 }

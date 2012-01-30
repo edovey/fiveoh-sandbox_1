@@ -33,7 +33,7 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME_FRIENDLY = @"Therapy Group";
         public const string KEY_NAME = @"BDTherapyGroup";
 
-        public const int ENTITY_SCHEMAVERSION = 1;
+        public const int ENTITY_SCHEMAVERSION = 0;
         //public const string PROPERTYNAME_DEFAULT = "TherapyGroup";
         public const string PROPERTYNAME_NAME = @"Name";
 
@@ -49,6 +49,7 @@ namespace BDEditor.DataModel
         private const string NAME = @"tg_name";
         private const string DEPRECATED = @"tg_deprecated";
         private const string PARENTID = @"tg_parentId";
+        private const string PARENTTYPE = @"tg_parentType";
         private const string PARENTKEYNAME = @"tg_parentKeyName";
 
         public enum TherapyGroupJoinType
@@ -248,6 +249,25 @@ namespace BDEditor.DataModel
             set { this.name = value; }
         }
 
+        public Guid? ParentId
+        {
+            get { return parentId; }
+        }
+
+        public Constants.BDNodeType ParentType
+        {
+            get
+            {
+                Constants.BDNodeType result = Constants.BDNodeType.None;
+
+                if (Enum.IsDefined(typeof(Constants.BDNodeType), parentType))
+                {
+                    result = (Constants.BDNodeType)parentType;
+                }
+                return result;
+            }
+        }
+
         public override string ToString()
         {
             return this.name;
@@ -313,8 +333,7 @@ namespace BDEditor.DataModel
 
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
             entry.schemaVersion = schemaVersion;
-            short displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]);
-            entry.displayOrder = displayOrder;
+            entry.displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]); ;
             entry.createdBy = Guid.Parse(pAttributeDictionary[CREATEDBY]);
             entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
             entry.modifiedBy = Guid.Parse(pAttributeDictionary[MODIFIEDBY]);
@@ -322,11 +341,9 @@ namespace BDEditor.DataModel
             entry.therapyGroupJoinType = int.Parse(pAttributeDictionary[THERAPYGROUPJOINTYPE]);
             entry.name = pAttributeDictionary[NAME];
 
-            if(schemaVersion >= 1)
-            {
-                entry.parentId = Guid.Parse(pAttributeDictionary[PARENTID]);
-                entry.parentKeyName = pAttributeDictionary[PARENTKEYNAME];
-            }
+            entry.parentId = Guid.Parse(pAttributeDictionary[PARENTID]);
+            entry.parentType = (null == pAttributeDictionary[PARENTTYPE]) ? (short)-1 : short.Parse(pAttributeDictionary[PARENTTYPE]);
+            entry.parentKeyName = pAttributeDictionary[PARENTKEYNAME];
 
             if (pSaveChanges)
                 pDataContext.SaveChanges();
@@ -350,11 +367,10 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.THERAPYGROUPJOINTYPE).WithValue(therapyGroupJoinType.ToString()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
 
-            if(schemaVersion >= 1)
-            {
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.PARENTTYPE).WithValue(string.Format(@"{0}", parentType)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));
-        }
+
             return putAttributeRequest;
         }
         #endregion

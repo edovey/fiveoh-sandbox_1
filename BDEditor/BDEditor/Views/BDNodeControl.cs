@@ -19,6 +19,8 @@ namespace BDEditor.Views
         private IBDNode node;
         private Guid? scopeId;
         private Guid? parentId;
+        private BDMetadata.LayoutVariantType layoutVariantType;
+        private Constants.BDNodeType nodeType;
 
         public int? DisplayOrder { get; set; }
 
@@ -71,14 +73,21 @@ namespace BDEditor.Views
             InitializeComponent();
         }
 
-        public BDNodeControl(IBDNode pNode)
+        /// <summary>
+        /// Initialize form with existing BDNode
+        /// </summary>
+        /// <param name="pDataContext"></param>
+        /// <param name="pNode"></param>
+        public BDNodeControl(Entities pDataContext, IBDNode pNode)
         {
+            dataContext = pDataContext;
+
             if (null != pNode)
             {
                 this.node = pNode;
-                //  initialize form
+                this.nodeType = pNode.NodeType;
 
-                switch (node.NodeType)
+                switch (this.nodeType)
                 {
                     case Constants.BDNodeType.BDSection:
                     case Constants.BDNodeType.BDCategory:
@@ -94,7 +103,29 @@ namespace BDEditor.Views
 
                 currentNode = node as BDNode;
                 parentId = currentNode.ParentId;
+
+               BDMetadata metadata = BDMetadata.GetMetadataWithItemId(dataContext, pNode.ParentId);
+               this.layoutVariantType = metadata.LayoutVariant;
+
             }
+
+            InitializeComponent();
+        }
+
+        /// <summary>
+        /// Initialize form without an existing BDNode
+        /// </summary>
+        /// <param name="pDataContext"></param>
+        /// <param name="pNodeType"></param>
+        /// <param name="pLayoutType"></param>
+        /// <param name="pParentId"></param>
+        public BDNodeControl(Entities pDataContext, Constants.BDNodeType pNodeType, BDMetadata.LayoutVariantType pLayoutType, Guid pParentId)
+        {
+            dataContext = pDataContext;
+            currentNode = null;
+            this.layoutVariantType = pLayoutType;
+            this.parentId = pParentId;
+            this.nodeType = pNodeType;
 
             InitializeComponent();
         }
@@ -149,6 +180,7 @@ namespace BDEditor.Views
 
         public void Delete()
         {
+            throw new NotImplementedException();
         }
 
         public bool CreateCurrentObject()
@@ -163,10 +195,10 @@ namespace BDEditor.Views
                 }
                 else
                 {
-                    this.currentNode = BDNode.CreateNode(this.dataContext, Constants.BDNodeType.BDCategory);
+                    this.currentNode = BDNode.CreateNode(this.dataContext, this.nodeType);
                     this.currentNode.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
 
-                    BDMetadata.CreateMetadata(dataContext, BDMetadata.LayoutVariantType.TreatmentRecommendation01, currentNode);
+                    BDMetadata.CreateMetadata(dataContext, this.layoutVariantType, currentNode);
                 }
             }
 
@@ -184,7 +216,7 @@ namespace BDEditor.Views
             view.NotesChanged += new EventHandler(notesChanged_Action);
             if (null != currentNode)
             {
-                view.AssignParentId(currentNode.uuid);
+                view.AssignParentId(currentNode.Uuid);
             }
             else
             {

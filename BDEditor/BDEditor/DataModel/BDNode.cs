@@ -157,7 +157,7 @@ namespace BDEditor.DataModel
         /// <returns>BDNode object.</returns>
         public static BDNode GetNodeWithId(Entities pContext, Guid pUuid)
         {
-            BDNode section = null;
+            BDNode entry = null;
 
             if (null != pUuid)
             {
@@ -165,9 +165,9 @@ namespace BDEditor.DataModel
                                                   where bdNodes.uuid == pUuid
                                                   select bdNodes);
                 if (entries.Count<BDNode>() > 0)
-                    section = entries.AsQueryable().First<BDNode>();
+                    entry = entries.AsQueryable().First<BDNode>();
             }
-            return section;
+            return entry;
         }
 
         public static List<BDNode> GetAll(Entities pContext)
@@ -189,7 +189,7 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static string[] GetNodeNamesForType(Entities pContext, Constants.BDNodeType pNodeType)
         {
-            var nodeNames = pContext.BDNodes.Where(x => (!string.IsNullOrEmpty(x.Name) && x.NodeType == pNodeType)).Select(node => node.Name).Distinct();
+            var nodeNames = pContext.BDNodes.Where(x => (!string.IsNullOrEmpty(x.name) && x.nodeType == (int)pNodeType)).Select(node => node.name).Distinct();
             return nodeNames.ToArray();
         }
 
@@ -272,8 +272,7 @@ namespace BDEditor.DataModel
 
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
             entry.schemaVersion = schemaVersion;
-            short displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]);
-            entry.displayOrder = displayOrder;
+            entry.displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]); 
             entry.createdBy = Guid.Parse(pAttributeDictionary[CREATEDBY]);
             entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
             entry.modifiedBy = Guid.Parse(pAttributeDictionary[MODIFIEDBY]);

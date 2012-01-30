@@ -88,6 +88,14 @@ namespace BDEditor.Views
             btnLinkedNote.Tag = BDNode.PROPERTYNAME_NAME;
         }
 
+        private void BDPresentationControl_Load(object sender, EventArgs e)
+        {
+            bdLinkedNoteControl1.AssignDataContext(dataContext);
+            bdLinkedNoteControl1.AssignContextNodeType(Constants.BDNodeType.BDPresentation);
+            bdLinkedNoteControl1.AssignScopeId(scopeId);
+            bdLinkedNoteControl1.AssignParentId(currentPresentation.Uuid); // This expects that currentPresentation is never null
+        }
+
         public void AssignScopeId(Guid? pScopeId)
         {
             scopeId = pScopeId;
@@ -407,5 +415,7 @@ namespace BDEditor.Views
         {
             Save();
         }
+
+
     }
 }

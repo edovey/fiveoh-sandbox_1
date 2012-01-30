@@ -81,11 +81,34 @@ namespace BDEditor.Views
         public BDNodeControl(Entities pDataContext, IBDNode pNode)
         {
             dataContext = pDataContext;
+            node = pNode;             
+            
+            InitializeComponent();
+}
 
-            if (null != pNode)
+        /// <summary>
+        /// Initialize form without an existing BDNode
+        /// </summary>
+        /// <param name="pDataContext"></param>
+        /// <param name="pNodeType"></param>
+        /// <param name="pDefaultLayoutType"></param>
+        /// <param name="pParentId"></param>
+        public BDNodeControl(Entities pDataContext, Constants.BDNodeType pNodeType, Constants.LayoutVariantType pDefaultLayoutType, Guid pParentId)
+        {    
+            dataContext = pDataContext;
+            currentNode = null;
+            defaultLayoutVariantType = pDefaultLayoutType;
+            parentId = pParentId;
+            nodeType = pNodeType;
+
+            InitializeComponent();
+        }
+
+        private void BDNodeControl_Load(object sender, EventArgs e)
+        {
+            if (null != node)
             {
-                this.node = pNode;
-                this.nodeType = pNode.NodeType;
+                this.nodeType = node.NodeType;
 
                 switch (this.nodeType)
                 {
@@ -104,32 +127,9 @@ namespace BDEditor.Views
                 currentNode = node as BDNode;
                 parentId = currentNode.ParentId;
 
-                this.defaultLayoutVariantType = pNode.LayoutVariant;
+                this.defaultLayoutVariantType = node.LayoutVariant;
             }
 
-            InitializeComponent();
-        }
-
-        /// <summary>
-        /// Initialize form without an existing BDNode
-        /// </summary>
-        /// <param name="pDataContext"></param>
-        /// <param name="pNodeType"></param>
-        /// <param name="pDefaultLayoutType"></param>
-        /// <param name="pParentId"></param>
-        public BDNodeControl(Entities pDataContext, Constants.BDNodeType pNodeType, Constants.LayoutVariantType pDefaultLayoutType, Guid pParentId)
-        {
-            dataContext = pDataContext;
-            currentNode = null;
-            this.defaultLayoutVariantType = pDefaultLayoutType;
-            this.parentId = pParentId;
-            this.nodeType = pNodeType;
-
-            InitializeComponent();
-        }
-
-        private void BDNodeControl_Load(object sender, EventArgs e)
-        {
             if (currentNode != null)
             {
                 if(tbName.Text != currentNode.name) tbName.Text = currentNode.name;

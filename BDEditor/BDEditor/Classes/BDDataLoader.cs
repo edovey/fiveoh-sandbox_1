@@ -76,14 +76,22 @@ namespace BDEditor.Classes
             string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
             //Expectation that a row contains only one element with data
-            uuidData = elements[0];
 
-            chapterData = elements[1];
-            sectionData = elements[2];
-            categoryData = elements[3];
-            //subCategoryData = elements[4];
-            diseaseData = elements[5];
-            presentationData = elements[6];
+            uuidData = string.Empty;
+            chapterData = string.Empty;
+            sectionData = string.Empty;
+            categoryData = string.Empty;
+            //subCategoryData = string.Empty;
+            diseaseData = string.Empty;
+            presentationData = string.Empty;
+
+            if(elements.Length > 0) uuidData = elements[0];
+            if (elements.Length > 1) chapterData = elements[1];
+            if (elements.Length > 2) sectionData = elements[2];
+            if (elements.Length > 3) categoryData = elements[3];
+            //if(elements.Length > 4) subCategoryData = elements[4];
+            if (elements.Length > 5) diseaseData = elements[5];
+            if(elements.Length > 6) presentationData = elements[6];
 
             if( (chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
             {

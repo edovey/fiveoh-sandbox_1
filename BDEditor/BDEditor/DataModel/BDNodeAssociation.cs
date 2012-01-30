@@ -15,8 +15,8 @@ namespace BDEditor.DataModel
 {
     public partial class BDNodeAssociation: IBDObject
     {
-        public const string AWS_PROD_DOMAIN = @"bd_2_nodeAssociation";
-        public const string AWS_DEV_DOMAIN = @"bd_dev_2_nodeAssociation";
+        public const string AWS_PROD_DOMAIN = @"bd_2_nodeAssociations";
+        public const string AWS_DEV_DOMAIN = @"bd_dev_2_nodeAssociations";
 
 #if DEBUG
         public const string AWS_DOMAIN = AWS_DEV_DOMAIN;
@@ -76,7 +76,7 @@ namespace BDEditor.DataModel
                 if (pEntry.schemaVersion != ENTITY_SCHEMAVERSION)
                     pEntry.schemaVersion = ENTITY_SCHEMAVERSION;
 
-                System.Diagnostics.Debug.WriteLine(@"ObjectAssociation Save");
+                System.Diagnostics.Debug.WriteLine(@"Node Association Save");
                 pContext.SaveChanges();
             }
         }

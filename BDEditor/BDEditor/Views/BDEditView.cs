@@ -86,7 +86,7 @@ namespace BDEditor.Views
                     splitContainer1.Panel2.Controls.Clear();
                     TreeNode selectedNode = e.Node;
 
-                    IBDNode node = selectedNode as IBDNode;
+                    IBDNode node = selectedNode.Tag as IBDNode;
 
                     switch (node.NodeType)
                     {

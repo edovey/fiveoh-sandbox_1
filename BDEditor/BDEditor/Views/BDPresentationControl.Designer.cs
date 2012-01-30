@@ -159,7 +159,8 @@
             this.Controls.Add(this.panelHeader);
             this.MinimumSize = new System.Drawing.Size(880, 325);
             this.Name = "BDPresentationControl";
-            this.Size = new System.Drawing.Size(880, 338);
+            this.Size = new System.Drawing.Size(880, 325);
+            this.Load += new System.EventHandler(this.BDPresentationControl_Load);
             this.Leave += new System.EventHandler(this.BDPresentationControl_Leave);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();

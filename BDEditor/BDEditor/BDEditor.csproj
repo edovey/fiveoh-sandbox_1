@@ -165,25 +165,13 @@
     <Compile Include="Views\BDPathogenGroupControl.Designer.cs">
       <DependentUpon>BDPathogenGroupControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\BDSubCategoryControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\BDSubCategoryControl.Designer.cs">
-      <DependentUpon>BDSubCategoryControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\BDTherapy.cs" />
     <Compile Include="DataModel\BDTherapyGroup.cs" />
-    <Compile Include="Views\BDCategoryControl.cs">
+    <Compile Include="Views\BDNodeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\BDCategoryControl.Designer.cs">
-      <DependentUpon>BDCategoryControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\BDDiseaseControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\BDDiseaseControl.Designer.cs">
-      <DependentUpon>BDDiseaseControl.cs</DependentUpon>
+    <Compile Include="Views\BDNodeControl.Designer.cs">
+      <DependentUpon>BDNodeControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\BDEditView.cs">
       <SubType>Form</SubType>
@@ -203,12 +191,6 @@
     <Compile Include="Views\BDPresentationControl.Designer.cs">
       <DependentUpon>BDPresentationControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\BDSectionControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\BDSectionControl.Designer.cs">
-      <DependentUpon>BDSectionControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\BDTherapyControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -227,11 +209,8 @@
     <EmbeddedResource Include="Properties\licenses.licx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\BDCategoryControl.resx">
-      <DependentUpon>BDCategoryControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\BDDiseaseControl.resx">
-      <DependentUpon>BDDiseaseControl.cs</DependentUpon>
+    <EmbeddedResource Include="Views\BDNodeControl.resx">
+      <DependentUpon>BDNodeControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDEditView.resx">
       <DependentUpon>BDEditView.cs</DependentUpon>
@@ -250,12 +229,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDPresentationControl.resx">
       <DependentUpon>BDPresentationControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\BDSectionControl.resx">
-      <DependentUpon>BDSectionControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\BDSubCategoryControl.resx">
-      <DependentUpon>BDSubCategoryControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDTherapyControl.resx">
       <DependentUpon>BDTherapyControl.cs</DependentUpon>
@@ -379,7 +352,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
+      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

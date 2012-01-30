@@ -1,6 +1,6 @@
 ﻿namespace BDEditor.Views
 {
-    partial class BDDiseaseControl
+    partial class BDNodeControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDDiseaseControl));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDNodeControl));
             this.lblDisease = new System.Windows.Forms.Label();
-            this.tbDiseaseName = new System.Windows.Forms.TextBox();
+            this.tbName = new System.Windows.Forms.TextBox();
             this.lblOverview = new System.Windows.Forms.Label();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.btnLinkedNote = new System.Windows.Forms.Button();
@@ -48,15 +48,15 @@
             this.lblDisease.TabIndex = 0;
             this.lblDisease.Text = "Disease";
             // 
-            // tbDiseaseName
+            // tbName
             // 
-            this.tbDiseaseName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbDiseaseName.Location = new System.Drawing.Point(39, 31);
-            this.tbDiseaseName.Name = "tbDiseaseName";
-            this.tbDiseaseName.ReadOnly = true;
-            this.tbDiseaseName.Size = new System.Drawing.Size(475, 24);
-            this.tbDiseaseName.TabIndex = 1;
-            this.tbDiseaseName.TextChanged += new System.EventHandler(this.tbDiseaseName_TextChanged);
+            this.tbName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbName.Location = new System.Drawing.Point(39, 31);
+            this.tbName.Name = "tbName";
+            this.tbName.ReadOnly = true;
+            this.tbName.Size = new System.Drawing.Size(475, 24);
+            this.tbName.TabIndex = 1;
+            this.tbName.TextChanged += new System.EventHandler(this.tbName_TextChanged);
             // 
             // lblOverview
             // 
@@ -72,7 +72,7 @@
             // 
             this.panelHeader.Controls.Add(this.btnLinkedNote);
             this.panelHeader.Controls.Add(this.lblOverview);
-            this.panelHeader.Controls.Add(this.tbDiseaseName);
+            this.panelHeader.Controls.Add(this.tbName);
             this.panelHeader.Controls.Add(this.lblDisease);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
@@ -111,7 +111,7 @@
             this.Controls.Add(this.panelHeader);
             this.Name = "BDDiseaseControl";
             this.Size = new System.Drawing.Size(826, 550);
-            this.Load += new System.EventHandler(this.BDDiseaseControl_Load);
+            this.Load += new System.EventHandler(this.BDNodeControl_Load);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.ResumeLayout(false);
@@ -121,7 +121,7 @@
         #endregion
 
         private System.Windows.Forms.Label lblDisease;
-        private System.Windows.Forms.TextBox tbDiseaseName;
+        private System.Windows.Forms.TextBox tbName;
         private System.Windows.Forms.Label lblOverview;
         private BDLinkedNoteControl bdLinkedNoteControl1;
         private System.Windows.Forms.Panel panelHeader;

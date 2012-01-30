@@ -197,7 +197,7 @@ namespace BDEditor.Views
             Save();
         }
 
-        private BDPathogenGroupControl addPathogenGroupControl(BDPathogenGroup pPathogenGroup, int pTabIndex)
+        private BDPathogenGroupControl addPathogenGroupControl(BDNode pNode, int pTabIndex)
         {
             BDPathogenGroupControl pathogenGroupControl = null;
             if (CreateCurrentObject())
@@ -211,7 +211,7 @@ namespace BDEditor.Views
                 pathogenGroupControl.AssignDataContext(dataContext);
                 pathogenGroupControl.AssignScopeId(scopeId);
                 pathogenGroupControl.AssignTypeaheadSource(Typeahead.PathogenGroups);
-                pathogenGroupControl.CurrentPathogenGroup = pPathogenGroup;
+                pathogenGroupControl.CurrentPathogenGroup = pNode;
                 pathogenGroupControl.RequestItemAdd += new EventHandler(PathogenGroup_RequestItemAdd);
                 pathogenGroupControl.RequestItemDelete += new EventHandler(PathogenGroup_RequestItemDelete);
                 pathogenGroupControl.ReorderToNext += new EventHandler(PathogenGroup_ReorderToNext);

@@ -11,15 +11,15 @@ using BDEditor.Classes;
 
 namespace BDEditor.Views
 {
-    public partial class BDDiseaseControl : UserControl, IBDControl
+    public partial class BDNodeControl : UserControl, IBDControl
     {
-        private BDDisease currentDisease;
+        private BDNode currentNode;
         private Entities dataContext;
         private BDLinkedNote overviewLinkedNote;
+        private IBDNode node;
         private Guid? scopeId;
         private Guid? parentId;
-        public Guid? SubCategoryId { get; set; }
-        public Guid? CategoryId { get; set; }
+
         public int? DisplayOrder { get; set; }
 
         public event EventHandler NotesChanged;
@@ -29,34 +29,34 @@ namespace BDEditor.Views
             if (null != NotesChanged) { NotesChanged(this, e); }
         }
 
-        public BDDisease CurrentDisease
+        public BDNode CurrentNode
         {
-            get { return currentDisease; }
-            set { currentDisease = value; }
+            get { return currentNode; }
+            set { currentNode = value; }
         }
 
         public void RefreshLayout()
         {
-            if (currentDisease == null)
+            if (currentNode == null)
             {
-                tbDiseaseName.Text = @"";
+                tbName.Text = @"";
                 overviewLinkedNote = null;
 
                 bdLinkedNoteControl1.CurrentLinkedNote = null;
                 bdLinkedNoteControl1.AssignParentId(null);
                 bdLinkedNoteControl1.AssignScopeId(null);
-                bdLinkedNoteControl1.AssignContextEntityKeyName(BDDisease.KEY_NAME);
-                bdLinkedNoteControl1.AssignContextPropertyName(BDDisease.PROPERTYNAME_OVERVIEW);
+                bdLinkedNoteControl1.AssignContextNodeType(node.NodeType);
+                bdLinkedNoteControl1.AssignContextPropertyName(BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
             }
             else
             {
-                tbDiseaseName.Text = currentDisease.name;
-                bdLinkedNoteControl1.AssignParentId(currentDisease.uuid);
-                bdLinkedNoteControl1.AssignScopeId(currentDisease.uuid);
-                bdLinkedNoteControl1.AssignContextEntityKeyName(BDDisease.KEY_NAME);
-                bdLinkedNoteControl1.AssignContextPropertyName(BDDisease.PROPERTYNAME_OVERVIEW);
+                tbName.Text = currentNode.name;
+                bdLinkedNoteControl1.AssignParentId(currentNode.uuid);
+                bdLinkedNoteControl1.AssignScopeId(currentNode.uuid);
+                bdLinkedNoteControl1.AssignContextNodeType(node.NodeType);
+                bdLinkedNoteControl1.AssignContextPropertyName(BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
 
-                BDLinkedNoteAssociation association = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, currentDisease.uuid, BDDisease.PROPERTYNAME_OVERVIEW);
+                BDLinkedNoteAssociation association = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, currentNode.uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
                 if (null != association)
                 {
                     overviewLinkedNote = BDLinkedNote.GetLinkedNoteWithId(dataContext, association.linkedNoteId);
@@ -66,20 +66,48 @@ namespace BDEditor.Views
             bdLinkedNoteControl1.RefreshLayout();
         }
 
-        public BDDiseaseControl()
+        public BDNodeControl()
         {
             InitializeComponent();
         }
 
-        private void BDDiseaseControl_Load(object sender, EventArgs e)
+        public BDNodeControl(IBDNode pNode)
         {
-            if (currentDisease != null)
+            if (null != pNode)
             {
-                if(tbDiseaseName.Text != currentDisease.name) tbDiseaseName.Text = currentDisease.name;
+                this.node = pNode;
+                //  initialize form
+
+                switch (node.NodeType)
+                {
+                    case Constants.BDNodeType.BDSection:
+                    case Constants.BDNodeType.BDCategory:
+                    case Constants.BDNodeType.BDSubCategory:
+                        lblOverview.Visible = false;
+                        bdLinkedNoteControl1.Visible = false;
+                        bdLinkedNoteControl1.Enabled = false;
+                        break;
+                    case Constants.BDNodeType.BDDisease:
+                    default:
+                        break;
+                }
+
+                currentNode = node as BDNode;
+                parentId = currentNode.ParentId;
+            }
+
+            InitializeComponent();
+        }
+
+        private void BDNodeControl_Load(object sender, EventArgs e)
+        {
+            if (currentNode != null)
+            {
+                if(tbName.Text != currentNode.name) tbName.Text = currentNode.name;
             }
         }
 
-        private void tbDiseaseName_TextChanged(object sender, EventArgs e)
+        private void tbName_TextChanged(object sender, EventArgs e)
         {
 
         }
@@ -103,18 +131,18 @@ namespace BDEditor.Views
 
             if (null != parentId)
             {
-                if ((null == currentDisease) && (tbDiseaseName.Text != string.Empty))
+                if ((null == currentNode) && (tbName.Text != string.Empty))
                 {
                     CreateCurrentObject();
                 }
 
-                if(null != currentDisease)
+                if(null != currentNode)
                 {
-                    if(currentDisease.name != tbDiseaseName.Text) currentDisease.name = tbDiseaseName.Text;
+                    if(currentNode.name != tbName.Text) currentNode.name = tbName.Text;
                     bdLinkedNoteControl1.Save();
                 }
-                System.Diagnostics.Debug.WriteLine(@"Disease Control Save");
-                BDDisease.Save(dataContext, currentDisease);
+                System.Diagnostics.Debug.WriteLine(@"Node Control Save");
+                BDNode.Save(dataContext, currentNode);
             }
             return result;
         }
@@ -127,7 +155,7 @@ namespace BDEditor.Views
         {
             bool result = true;
 
-            if (null == this.currentDisease)
+            if (null == this.currentNode)
             {
                 if (null == this.parentId)
                 {
@@ -135,10 +163,10 @@ namespace BDEditor.Views
                 }
                 else
                 {
-                    this.currentDisease = BDDisease.CreateDisease(this.dataContext);
-                    this.currentDisease.subcategoryId = SubCategoryId;
-                    this.currentDisease.categoryId = CategoryId;
-                    this.currentDisease.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
+                    this.currentNode = BDNode.CreateNode(this.dataContext, Constants.BDNodeType.BDCategory);
+                    this.currentNode.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
+
+                    BDMetadata.CreateMetadata(dataContext, BDMetadata.LayoutVariantType.TreatmentRecommendation01, currentNode);
                 }
             }
 
@@ -150,13 +178,13 @@ namespace BDEditor.Views
             BDLinkedNoteView view = new BDLinkedNoteView();
             view.AssignDataContext(dataContext);
             view.AssignContextPropertyName(pProperty);
-            view.AssignContextEntityKeyName(BDDisease.KEY_NAME);
+            view.AssignContextEntityKeyName(BDNode.KEY_NAME);
             view.AssignScopeId(scopeId);
             view.AssignLinkedNoteType(LinkedNoteType.Footnote, true, true);
             view.NotesChanged += new EventHandler(notesChanged_Action);
-            if (null != currentDisease)
+            if (null != currentNode)
             {
-                view.AssignParentId(currentDisease.uuid);
+                view.AssignParentId(currentNode.uuid);
             }
             else
             {
@@ -187,7 +215,7 @@ namespace BDEditor.Views
             {
                 if (CreateCurrentObject())
                 {
-                    control.AssignParentId(this.currentDisease.uuid);
+                    control.AssignParentId(this.currentNode.Uuid);
                     control.Save();
                 }
             }

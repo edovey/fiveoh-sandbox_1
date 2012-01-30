@@ -26,7 +26,8 @@ namespace BDEditor.Views
         private const string DOSAGE_TEXTBOX = "Dosage";
         private const string DURATION_TEXTBOX = "Duration";
 
-        public int? DisplayOrder {get; set;}
+        public int? DisplayOrder { get; set; }
+        public Constants.LayoutVariantType DefaultLayoutVariantType;
 
         public event EventHandler RequestItemAdd;
         public event EventHandler RequestItemDelete;
@@ -250,8 +251,7 @@ namespace BDEditor.Views
                 {
                     this.currentTherapy = BDTherapy.CreateTherapy(this.dataContext, this.parentId.Value);
                     this.currentTherapy.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
-
-                    BDMetadata.CreateMetadata(dataContext, BDMetadata.LayoutVariantType.TreatmentRecommendation01, currentTherapy);
+                    this.currentTherapy.LayoutVariant = DefaultLayoutVariantType;
                 }
             }
 

@@ -85,7 +85,6 @@
           <Property Name="displayParentId" Type="uniqueidentifier" />
           <Property Name="displayParentKeyName" Type="nvarchar" MaxLength="100" />
           <Property Name="itemKeyName" Type="nvarchar" MaxLength="100" />
-          <Property Name="layoutVariant" Type="int" />
           <Property Name="displayParentType" Type="int" />
           <Property Name="itemType" Type="int" />
         </EntityType>
@@ -120,6 +119,7 @@
           <Property Name="schemaVersion" Type="int" />
           <Property Name="inUseBy" Type="uniqueidentifier" />
           <Property Name="parentType" Type="int" />
+          <Property Name="layoutVariant" Type="int" />
         </EntityType>
         <EntityType Name="BDSearchEntries">
           <Key>
@@ -180,6 +180,7 @@
           <Property Name="parentId" Type="uniqueidentifier" />
           <Property Name="parentKeyName" Type="nvarchar" MaxLength="100" />
           <Property Name="parentType" Type="int" />
+          <Property Name="layoutVariant" Type="int" />
         </EntityType>
         <EntityType Name="BDTherapyGroups">
           <Key>
@@ -200,6 +201,7 @@
           <Property Name="parentId" Type="uniqueidentifier" />
           <Property Name="parentKeyName" Type="nvarchar" MaxLength="100" />
           <Property Name="parentType" Type="int" />
+          <Property Name="layoutVariant" Type="int" />
         </EntityType>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -289,6 +291,7 @@
           <Property Type="Guid" Name="parentId" />
           <Property Type="String" Name="parentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="parentType" />
+          <Property Type="Int32" Name="layoutVariant" />
         </EntityType>
         <EntityType Name="BDMetadata">
           <Key>
@@ -305,7 +308,6 @@
           <Property Type="Guid" Name="displayParentId" />
           <Property Type="String" Name="displayParentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="itemKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="layoutVariant" />
           <Property Type="Int32" Name="displayParentType" />
           <Property Type="Int32" Name="itemType" />
         </EntityType>
@@ -353,6 +355,7 @@
           <Property Type="Guid" Name="parentId" />
           <Property Type="String" Name="parentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="parentType" />
+          <Property Type="Int32" Name="layoutVariant" />
         </EntityType>
         <EntityType Name="BDNodeAssociation">
           <Key>
@@ -400,6 +403,7 @@
           <Property Type="Int32" Name="schemaVersion" />
           <Property Type="Guid" Name="inUseBy" />
           <Property Type="Int32" Name="parentType" />
+          <Property Type="Int32" Name="layoutVariant" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -466,6 +470,7 @@
           <EntitySetMapping Name="BDTherapyGroups">
             <EntityTypeMapping TypeName="BDDataModel.BDTherapyGroup">
               <MappingFragment StoreEntitySet="BDTherapyGroups">
+                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
                 <ScalarProperty Name="parentType" ColumnName="parentType" />
                 <ScalarProperty Name="parentKeyName" ColumnName="parentKeyName" />
                 <ScalarProperty Name="parentId" ColumnName="parentId" />
@@ -489,7 +494,6 @@
               <MappingFragment StoreEntitySet="BDMetadata">
                 <ScalarProperty Name="itemType" ColumnName="itemType" />
                 <ScalarProperty Name="displayParentType" ColumnName="displayParentType" />
-                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
                 <ScalarProperty Name="itemKeyName" ColumnName="itemKeyName" />
                 <ScalarProperty Name="displayParentKeyName" ColumnName="displayParentKeyName" />
                 <ScalarProperty Name="displayParentId" ColumnName="displayParentId" />
@@ -527,6 +531,7 @@
           <EntitySetMapping Name="BDTherapies">
             <EntityTypeMapping TypeName="BDDataModel.BDTherapy">
               <MappingFragment StoreEntitySet="BDTherapies">
+                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
                 <ScalarProperty Name="parentType" ColumnName="parentType" />
                 <ScalarProperty Name="parentKeyName" ColumnName="parentKeyName" />
                 <ScalarProperty Name="parentId" ColumnName="parentId" />
@@ -584,6 +589,7 @@
           <EntitySetMapping Name="BDNodes">
             <EntityTypeMapping TypeName="BDDataModel.BDNode">
               <MappingFragment StoreEntitySet="BDNodes">
+                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
                 <ScalarProperty Name="parentType" ColumnName="parentType" />
                 <ScalarProperty Name="inUseBy" ColumnName="inUseBy" />
                 <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
@@ -626,7 +632,7 @@
         <EntityTypeShape EntityType="BDDataModel.BDSearchEntry" Width="1.5" PointX="0.5" PointY="8.5" Height="1.7566536458333335" />
         <EntityTypeShape EntityType="BDDataModel.BDSystemSetting" Width="2" PointX="10.75" PointY="4.75" Height="1.5923063151041665" />
         <EntityTypeShape EntityType="BDDataModel.BDTherapyGroup" Width="1.875" PointX="13" PointY="7.5" Height="3.4001269531249996" />
-        <EntityTypeShape EntityType="BDDataModel.BDMetadata" Width="1.5" PointX="3.125" PointY="0.625" Height="3.2357796223958331" />
+        <EntityTypeShape EntityType="BDDataModel.BDMetadata" Width="1.5" PointX="3.125" PointY="0.625" Height="3.0714322916666665" />
         <EntityTypeShape EntityType="BDDataModel.BDLinkedNoteAssociation" Width="2.25" PointX="2.625" PointY="4.25" Height="3.0714322916666656" />
         <EntityTypeShape EntityType="BDDataModel.BDTherapy" Width="1.5" PointX="10.875" PointY="7.125" Height="4.8648079427083246" />
         <EntityTypeShape EntityType="BDDataModel.BDNodeAssociation" Width="2.5" PointX="7.375" PointY="4.125" Height="2.2496956380208326" />

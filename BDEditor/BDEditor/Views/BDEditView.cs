@@ -59,12 +59,9 @@ namespace BDEditor.Views
             BDNode listEntry = chapterDropDown.SelectedItem as BDNode;
             if ((null != listEntry) && (listEntry.NodeType == Constants.BDNodeType.BDChapter))
             {
-                BDMetadata meta = BDMetadata.GetMetadataWithItemId(dataContext, listEntry.Uuid);
-                if (null != meta)
-                {
-                    switch (meta.LayoutVariant)
+                switch (listEntry.LayoutVariant)
                     {
-                        case BDMetadata.LayoutVariantType.TreatmentRecommendation00:
+                        case Constants.LayoutVariantType.TreatmentRecommendation00:
                             TreeNode node = TreatmentRecommendationTree.BuildChapterTreeNode(dataContext, listEntry);
                             // this is only to prevent a single first node
                             TreeNode[] nodeList = new TreeNode[node.Nodes.Count];
@@ -73,7 +70,6 @@ namespace BDEditor.Views
                             // ---
                             break;
                     }
-                }
             }
 
             this.Cursor = Cursors.Default;
@@ -91,89 +87,62 @@ namespace BDEditor.Views
                     TreeNode selectedNode = e.Node;
 
                     IBDNode node = selectedNode as IBDNode;
-                    BDMetadata metaData = BDMetadata.GetMetadataWithItemId(dataContext, node.Uuid);
 
                     switch (node.NodeType)
                     {
                         case Constants.BDNodeType.BDSection:
+                            switch (node.LayoutVariant)
+                            {
+                                case Constants.LayoutVariantType.TreatmentRecommendation01:
+                                    BDNodeControl control_tr01 = null;
+                                    control_tr01 = new BDNodeControl(dataContext, node);
+                                    control_tr01.Dock = DockStyle.Fill;
+                                    splitContainer1.Panel2.Controls.Add(control_tr01);
+                                    control_tr01.RefreshLayout();
+                                    break;
+                            }
                             break;
                         case Constants.BDNodeType.BDCategory:
+                            switch (node.LayoutVariant)
+                            {
+                                case Constants.LayoutVariantType.TreatmentRecommendation01:
+                                    BDNodeControl control_tr01 = null;
+                                    control_tr01 = new BDNodeControl(dataContext, node);
+                                    control_tr01.Dock = DockStyle.Fill;
+                                    splitContainer1.Panel2.Controls.Add(control_tr01);
+                                    control_tr01.RefreshLayout();
+                                    break;
+                            }
                             break;
                         case Constants.BDNodeType.BDDisease:
+                            switch (node.LayoutVariant)
+                            {
+                                case Constants.LayoutVariantType.TreatmentRecommendation01:
+                                    BDNodeControl control_tr01 = null;
+                                    control_tr01 = new BDNodeControl(dataContext, node);
+                                    control_tr01.Dock = DockStyle.Fill;
+                                    splitContainer1.Panel2.Controls.Add(control_tr01);
+                                    control_tr01.RefreshLayout();
+                                    break;
+                            }
                             break;
                         case Constants.BDNodeType.BDPresentation:
                             BDNode presentation = node as BDNode;
-                            switch (metaData.LayoutVariant)
+                            switch (node.LayoutVariant)
                             {
-                                case BDMetadata.LayoutVariantType.TreatmentRecommendation01:
+                                case Constants.LayoutVariantType.TreatmentRecommendation01:
+                                    BDPresentationControl control_tr01 = new BDPresentationControl(dataContext, presentation);
+                                    control_tr01.Dock = DockStyle.Fill;
+                                    control_tr01.CurrentPresentation = presentation;
+                                    control_tr01.AssignScopeId((null != presentation) ? presentation.Uuid : Guid.Empty);
+                                    control_tr01.AssignParentId(presentation.ParentId);
 
-                                    BDPresentationControl presentationControl_tr01 = new BDPresentationControl();
-                                    presentationControl_tr01.AssignDataContext(dataContext);
-                                    presentationControl_tr01.Dock = DockStyle.Fill;
-                                    presentationControl_tr01.CurrentPresentation = presentation;
-                                    presentationControl_tr01.AssignScopeId((null != presentation) ? presentation.Uuid : Guid.Empty);
-                                    presentationControl_tr01.AssignParentId(presentation.ParentId);
-
-                                    splitContainer1.Panel2.Controls.Add(presentationControl_tr01);
-                                    presentationControl_tr01.RefreshLayout();
+                                    splitContainer1.Panel2.Controls.Add(control_tr01);
+                                    control_tr01.RefreshLayout();
                                     break;
                             }
                             break;
                     }
-
-
-                    /*
-                    if(selectedNode.Tag is BDCategory)
-                    {
-                        BDCategoryControl categoryControl = new BDCategoryControl();
-                        categoryControl.AssignDataContext(dataContext);
-                        categoryControl.Dock = DockStyle.Fill;
-                        categoryControl.CurrentCategory = selectedNode.Tag as BDCategory;
-
-                        splitContainer1.Panel2.Controls.Add(categoryControl);
-                    }
-                    else if (selectedNode.Tag is BDSubcategory)
-                    {
-                        BDSubCategoryControl subCategoryControl = new BDSubCategoryControl();
-                        subCategoryControl.Dock = DockStyle.Fill;
-                        subCategoryControl.CurrentSubcategory = selectedNode.Tag as BDSubcategory;
-                        splitContainer1.Panel2.Controls.Add(subCategoryControl);
-                    }
-                    else if (selectedNode.Tag is BDDisease)
-                    {
-                        BDDiseaseControl diseaseControl = new BDDiseaseControl();
-                        diseaseControl.AssignDataContext(dataContext);
-                        
-                        diseaseControl.Dock = DockStyle.Fill;
-                        diseaseControl.CurrentDisease = selectedNode.Tag as BDDisease;
-                        BDCategory category = selectedNode.Tag as BDCategory;
-                        if (null != category)
-                        {
-                            diseaseControl.AssignParentId(category.uuid);
-                            diseaseControl.CategoryId = category.uuid;
-                        }
-
-                        splitContainer1.Panel2.Controls.Add(diseaseControl);
-                        diseaseControl.RefreshLayout();
-
-                    }
-                    else if (selectedNode.Tag is BDPresentation)
-                    {
-                        BDPresentationControl presentationControl = new BDPresentationControl();
-                        presentationControl.AssignDataContext(dataContext);
-                        presentationControl.Dock = DockStyle.Fill;
-                        presentationControl.CurrentPresentation = selectedNode.Tag as BDPresentation;
-                        presentationControl.AssignScopeId((null != presentationControl.CurrentPresentation) ? presentationControl.CurrentPresentation.uuid : Guid.Empty);
-                        BDDisease disease = selectedNode.Parent.Tag as BDDisease;
-                        if (null != disease)
-                        {
-                            presentationControl.AssignParentId(disease.uuid);
-                        }
-
-                        splitContainer1.Panel2.Controls.Add(presentationControl);
-                        presentationControl.RefreshLayout();
-                    }
-                    */
 
                     splitContainer1.Panel2.ResumeLayout();
                     break;
@@ -201,7 +170,6 @@ namespace BDEditor.Views
             loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDNodes.Count() <= 0);
 
             this.Cursor = Cursors.Default;
-            
         }
 
         private void LoadChapterDropDown()

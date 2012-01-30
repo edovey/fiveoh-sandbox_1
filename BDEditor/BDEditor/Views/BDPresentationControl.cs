@@ -18,6 +18,8 @@ namespace BDEditor.Views
         private BDNode currentPresentation;
         private BDLinkedNote overviewLinkedNote;
         private Guid? scopeId;
+        private Constants.LayoutVariantType defaultLayoutVariantType;
+
         public int? DisplayOrder { get; set; }
 
         private List<BDPathogenGroupControl> pathogenGroupControlList = new List<BDPathogenGroupControl>();
@@ -66,18 +68,32 @@ namespace BDEditor.Views
             btnLinkedNote.Tag = BDNode.PROPERTYNAME_NAME;
         }
 
+        public BDPresentationControl(Entities pDataContext, BDNode pNode)
+        {
+            InitializeComponent();
+            dataContext = pDataContext;
+            defaultLayoutVariantType = pNode.LayoutVariant;
+            
+            currentPresentation = pNode;
+
+            btnLinkedNote.Tag = BDNode.PROPERTYNAME_NAME;
+        }
+
+        public BDPresentationControl(Entities pDataContext, Constants.LayoutVariantType pDefaultLayoutVariantType)
+        {
+            InitializeComponent();
+            dataContext = pDataContext;
+            defaultLayoutVariantType = pDefaultLayoutVariantType;
+
+            btnLinkedNote.Tag = BDNode.PROPERTYNAME_NAME;
+        }
+
         public void AssignScopeId(Guid? pScopeId)
         {
             scopeId = pScopeId;
         }
 
         #region IBDControl
-
-        public void AssignDataContext(Entities pDataContext)
-        {
-            dataContext = pDataContext;
-            bdLinkedNoteControl1.AssignDataContext(dataContext);
-        }
 
         public void AssignParentId(Guid? pParentId)
         {
@@ -135,7 +151,7 @@ namespace BDEditor.Views
                     this.currentPresentation = BDNode.CreateNode(dataContext, Constants.BDNodeType.BDPresentation);
                     this.currentPresentation.SetParent(Constants.BDNodeType.BDDisease, parentId.Value);
                     this.currentPresentation.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
-                    BDMetadata metaData = BDMetadata.CreateMetadata(dataContext, parentMetaData.LayoutVariant, currentPresentation);
+                    this.currentPresentation.LayoutVariant = defaultLayoutVariantType;
                 }
             }
 
@@ -212,6 +228,8 @@ namespace BDEditor.Views
                 pathogenGroupControl.AssignScopeId(scopeId);
                 pathogenGroupControl.AssignTypeaheadSource(Typeahead.PathogenGroups);
                 pathogenGroupControl.CurrentPathogenGroup = pNode;
+                pathogenGroupControl.DefaultLayoutVariantType = this.defaultLayoutVariantType;
+
                 pathogenGroupControl.RequestItemAdd += new EventHandler(PathogenGroup_RequestItemAdd);
                 pathogenGroupControl.RequestItemDelete += new EventHandler(PathogenGroup_RequestItemDelete);
                 pathogenGroupControl.ReorderToNext += new EventHandler(PathogenGroup_ReorderToNext);

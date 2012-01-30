@@ -46,9 +46,12 @@ namespace BDEditor.DataModel
         private const string MODIFIEDDATE = @"th_modifiedDate";
         private const string DEPRECATED = @"th_deprecated";
         private const string DISPLAYORDER = @"th_displayOrder";
+
+        private const string LAYOUTVARIANT = @"th_layoutVariant";
         private const string PARENTID = @"th_parentId";
         private const string PARENTTYPE = @"th_parentType";
         private const string PARENTKEYNAME = @"th_parentKeyName";
+
         private const string THERAPYJOINTYPE = @"th_therapyJoinType";
         private const string LEFTBRACKET = @"th_leftBracket";
         private const string RIGHTBRACKET = @"th_rightBracket";
@@ -299,6 +302,24 @@ namespace BDEditor.DataModel
             }
         }
 
+        public Constants.LayoutVariantType LayoutVariant
+        {
+            get
+            {
+                Constants.LayoutVariantType result = Constants.LayoutVariantType.Undefined;
+
+                if (Enum.IsDefined(typeof(Constants.LayoutVariantType), layoutVariant))
+                {
+                    result = (Constants.LayoutVariantType)layoutVariant;
+                }
+                return result;
+            }
+            set
+            {
+                layoutVariant = (int)value;
+            }
+        }
+
         protected override void OnPropertyChanged(string property)
         {
             if (!Common.Settings.IsSyncLoad)
@@ -392,9 +413,13 @@ namespace BDEditor.DataModel
             entry.modifiedBy = Guid.Parse(pAttributeDictionary[MODIFIEDBY]);
             entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
             entry.displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]);
+
             entry.parentId = Guid.Parse(pAttributeDictionary[PARENTID]);
             entry.parentType = (null == pAttributeDictionary[PARENTTYPE]) ? (short)-1 : short.Parse(pAttributeDictionary[PARENTTYPE]);
             entry.parentKeyName = pAttributeDictionary[PARENTKEYNAME];
+
+            entry.layoutVariant = short.Parse(pAttributeDictionary[LAYOUTVARIANT]);
+
             entry.therapyJoinType = int.Parse(pAttributeDictionary[THERAPYJOINTYPE]);
             entry.leftBracket = Boolean.Parse(pAttributeDictionary[LEFTBRACKET]);
             entry.rightBracket = Boolean.Parse(pAttributeDictionary[RIGHTBRACKET]);
@@ -443,6 +468,8 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.PARENTTYPE).WithValue(string.Format(@"{0}", parentType)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));
+
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.LAYOUTVARIANT).WithValue(string.Format(@"{0}", layoutVariant)).WithReplace(true));
 
             return putAttributeRequest;
         }

@@ -11,7 +11,7 @@ namespace BDEditor.Classes
         public enum BDNodeType
         {
             None = -1,
-            //BDNode
+            //BDNode class
             BDChapter = 1,
             BDSection = 2,
             BDCategory = 3,
@@ -20,10 +20,19 @@ namespace BDEditor.Classes
             BDPresentation = 6,
             BDPathogenGroup = 7,
             BDPathogen = 8,
-            //BDDTherapyGroup
+            //BDTherapyGroup class
             BDTherapyGroup = 9,
-            //BDTherapy
+            //BDTherapy class
             BDTherapy = 10
+        }
+
+        public enum LayoutVariantType
+        {
+            Undefined = -1,
+            TreatmentRecommendation00 = 100, // Chapter
+            TreatmentRecommendation01 = 101, // format specific section within chapter
+            TreatmentRecommendation02 = 102,
+            TreatmentRecommendation03 = 103
         }
 
         public const string DATETIMEFORMAT = @"yyyy-MM-dd'T'HH:mm:ss";

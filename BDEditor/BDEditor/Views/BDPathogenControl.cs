@@ -18,6 +18,7 @@ namespace BDEditor.Views
         private Entities dataContext;
         private Guid? parentId;
         private BDNode currentPathogen;
+        public Constants.LayoutVariantType DefaultLayoutVariantType;
         private Guid? scopeId;
         public int? DisplayOrder { get; set; }
 
@@ -126,10 +127,8 @@ namespace BDEditor.Views
                     this.currentPathogen = BDNode.CreateNode(dataContext, Constants.BDNodeType.BDPathogen);
                     this.currentPathogen.SetParent(Constants.BDNodeType.BDPathogenGroup, parentId);
                     this.currentPathogen.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
+                    this.currentPathogen.LayoutVariant = DefaultLayoutVariantType;
                     BDNode.Save(dataContext, currentPathogen);
-
-                    BDMetadata.CreateMetadata(dataContext, BDMetadata.LayoutVariantType.TreatmentRecommendation01, currentPathogen);
-                    
                 }
             }
 

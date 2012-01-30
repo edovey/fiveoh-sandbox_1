@@ -24,11 +24,10 @@ namespace BDEditor.Classes.Navigation
                 List<IBDNode> sectionList = BDFabrik.GetChildrenForParentId(pDataContext, pChapterNode.Uuid);
                 foreach (IBDNode sectionNode in sectionList)
                 {
-                    BDMetadata sectionMetaData = BDMetadata.GetMetadataWithItemId(pDataContext, sectionNode.Uuid);
-                    switch (sectionMetaData.LayoutVariant)
+                    switch (sectionNode.LayoutVariant)
                     {
-                        case BDMetadata.LayoutVariantType.TreatmentRecommendation01:
-                            TreeNode treeNode = BuildSectionLayout01TreeNode(pDataContext, sectionNode, sectionMetaData);
+                        case Constants.LayoutVariantType.TreatmentRecommendation01:
+                            TreeNode treeNode = BuildSectionLayout01TreeNode(pDataContext, sectionNode);
                             if (null != treeNode) chapterTreeNode.Nodes.Add(treeNode);
                             break;
                     }
@@ -38,11 +37,11 @@ namespace BDEditor.Classes.Navigation
             return chapterTreeNode;
         }
 
-        public static TreeNode BuildSectionLayout01TreeNode(Entities pDataContext, IBDNode pSectionNode, BDMetadata pMetaData)
+        public static TreeNode BuildSectionLayout01TreeNode(Entities pDataContext, IBDNode pSectionNode)
         {
             TreeNode sectionTreeNode = null;
 
-            if ((pSectionNode.NodeType == Constants.BDNodeType.BDSection) && (pMetaData.LayoutVariant == BDMetadata.LayoutVariantType.TreatmentRecommendation01))
+            if ((pSectionNode.NodeType == Constants.BDNodeType.BDSection) && (pSectionNode.LayoutVariant == Constants.LayoutVariantType.TreatmentRecommendation01))
             {
                 sectionTreeNode = new TreeNode(pSectionNode.Name);
                 sectionTreeNode.Tag = pSectionNode;

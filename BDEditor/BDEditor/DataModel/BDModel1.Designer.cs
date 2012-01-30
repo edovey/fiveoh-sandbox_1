@@ -1621,30 +1621,6 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> layoutVariant
-        {
-            get
-            {
-                return _layoutVariant;
-            }
-            set
-            {
-                OnlayoutVariantChanging(value);
-                ReportPropertyChanging("layoutVariant");
-                _layoutVariant = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("layoutVariant");
-                OnlayoutVariantChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _layoutVariant;
-        partial void OnlayoutVariantChanging(Nullable<global::System.Int32> value);
-        partial void OnlayoutVariantChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
         public Nullable<global::System.Int32> displayParentType
         {
             get
@@ -2054,6 +2030,30 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Int32> _parentType;
         partial void OnparentTypeChanging(Nullable<global::System.Int32> value);
         partial void OnparentTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> layoutVariant
+        {
+            get
+            {
+                return _layoutVariant;
+            }
+            set
+            {
+                OnlayoutVariantChanging(value);
+                ReportPropertyChanging("layoutVariant");
+                _layoutVariant = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("layoutVariant");
+                OnlayoutVariantChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _layoutVariant;
+        partial void OnlayoutVariantChanging(Nullable<global::System.Int32> value);
+        partial void OnlayoutVariantChanged();
 
         #endregion
     
@@ -3365,6 +3365,30 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Int32> _parentType;
         partial void OnparentTypeChanging(Nullable<global::System.Int32> value);
         partial void OnparentTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> layoutVariant
+        {
+            get
+            {
+                return _layoutVariant;
+            }
+            set
+            {
+                OnlayoutVariantChanging(value);
+                ReportPropertyChanging("layoutVariant");
+                _layoutVariant = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("layoutVariant");
+                OnlayoutVariantChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _layoutVariant;
+        partial void OnlayoutVariantChanging(Nullable<global::System.Int32> value);
+        partial void OnlayoutVariantChanged();
 
         #endregion
     
@@ -3758,6 +3782,30 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Int32> _parentType;
         partial void OnparentTypeChanging(Nullable<global::System.Int32> value);
         partial void OnparentTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> layoutVariant
+        {
+            get
+            {
+                return _layoutVariant;
+            }
+            set
+            {
+                OnlayoutVariantChanging(value);
+                ReportPropertyChanging("layoutVariant");
+                _layoutVariant = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("layoutVariant");
+                OnlayoutVariantChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _layoutVariant;
+        partial void OnlayoutVariantChanging(Nullable<global::System.Int32> value);
+        partial void OnlayoutVariantChanged();
 
         #endregion
     

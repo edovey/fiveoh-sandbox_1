@@ -17,6 +17,7 @@ namespace BDEditor.Views
         private Entities dataContext;
         private Guid? parentId;
         private BDNode currentPathogenGroup;
+        public Constants.LayoutVariantType DefaultLayoutVariantType;
         private Guid? scopeId;
         public int? DisplayOrder { get; set; }
 
@@ -153,9 +154,8 @@ namespace BDEditor.Views
                     this.currentPathogenGroup = BDNode.CreateNode(dataContext, Constants.BDNodeType.BDPathogenGroup);
                     this.currentPathogenGroup.SetParent(Constants.BDNodeType.BDPresentation, parentId);
                     this.currentPathogenGroup.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
+                    this.currentPathogenGroup.LayoutVariant = DefaultLayoutVariantType;
                     BDNode.Save(dataContext, currentPathogenGroup);
-
-                    BDMetadata.CreateMetadata(dataContext, BDMetadata.LayoutVariantType.TreatmentRecommendation01, currentPathogenGroup);
                 }
             }
 
@@ -228,6 +228,7 @@ namespace BDEditor.Views
                 pathogenControl.AssignScopeId(scopeId);
                 pathogenControl.AssignTypeaheadSource(Typeahead.Pathogens);
                 pathogenControl.CurrentPathogen = pNode;
+                pathogenControl.DefaultLayoutVariantType = this.DefaultLayoutVariantType;
                 pathogenControl.RequestItemAdd += new EventHandler(Pathogen_RequestItemAdd);
                 pathogenControl.RequestItemDelete += new EventHandler(Pathogen_RequestItemDelete);
                 pathogenControl.ReorderToNext += new EventHandler(Pathogen_ReorderToNext);
@@ -322,6 +323,7 @@ namespace BDEditor.Views
                 therapyGroupControl.AssignDataContext(dataContext);
                 therapyGroupControl.AssignTypeaheadSource(Typeahead.TherapyGroups);
                 therapyGroupControl.CurrentTherapyGroup = pTherapyGroup;
+                therapyGroupControl.DefaultLayoutVariantType = this.DefaultLayoutVariantType;
                 therapyGroupControl.RequestItemAdd += new EventHandler(TherapyGroup_RequestItemAdd);
                 therapyGroupControl.RequestItemDelete += new EventHandler(TherapyGroup_RequestItemDelete);
                 therapyGroupControl.ReorderToNext += new EventHandler(TherapyGroup_ReorderToNext);

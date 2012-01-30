@@ -12,6 +12,7 @@ namespace BDEditor.Views
         private Entities dataContext;
         private Guid? parentId;
         private BDTherapyGroup currentTherapyGroup;
+        public Constants.LayoutVariantType DefaultLayoutVariantType;
         private IBDControl parentControl;
         private Guid? scopeId;
         public int? DisplayOrder { get; set; }
@@ -202,8 +203,7 @@ namespace BDEditor.Views
                 {
                     this.currentTherapyGroup = BDTherapyGroup.CreateTherapyGroup(dataContext, this.parentId.Value);
                     this.currentTherapyGroup.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
-
-                    BDMetadata.CreateMetadata(dataContext, BDMetadata.LayoutVariantType.TreatmentRecommendation01, currentTherapyGroup);
+                    this.currentTherapyGroup.LayoutVariant = DefaultLayoutVariantType;
                 }
             }
 
@@ -230,6 +230,7 @@ namespace BDEditor.Views
                 therapyControl.AssignTypeaheadSource(Typeahead.TherapyDosages, BDTherapy.PROPERTYNAME_DOSAGE);
                 therapyControl.AssignTypeaheadSource(Typeahead.TherapyDurations, BDTherapy.PROPERTYNAME_DURATION);
                 therapyControl.CurrentTherapy = pTherapy;
+                therapyControl.DefaultLayoutVariantType = this.DefaultLayoutVariantType;
                 therapyControl.RequestItemAdd += new EventHandler(Therapy_RequestItemAdd);
                 therapyControl.RequestItemDelete += new EventHandler(Therapy_RequestItemDelete);
                 therapyControl.ReorderToNext += new EventHandler(Therapy_ReorderToNext);

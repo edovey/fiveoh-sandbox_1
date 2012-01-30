@@ -48,9 +48,11 @@ namespace BDEditor.DataModel
         private const string THERAPYGROUPJOINTYPE = @"tg_therapyGroupJoinType";
         private const string NAME = @"tg_name";
         private const string DEPRECATED = @"tg_deprecated";
+
         private const string PARENTID = @"tg_parentId";
         private const string PARENTTYPE = @"tg_parentType";
         private const string PARENTKEYNAME = @"tg_parentKeyName";
+        private const string LAYOUTVARIANT = @"tg_layoutVariant";
 
         public enum TherapyGroupJoinType
         {
@@ -287,6 +289,24 @@ namespace BDEditor.DataModel
             }
         }
 
+        public Constants.LayoutVariantType LayoutVariant
+        {
+            get
+            {
+                Constants.LayoutVariantType result = Constants.LayoutVariantType.Undefined;
+
+                if (Enum.IsDefined(typeof(Constants.LayoutVariantType), layoutVariant))
+                {
+                    result = (Constants.LayoutVariantType)layoutVariant;
+                }
+                return result;
+            }
+            set
+            {
+                layoutVariant = (int)value;
+            }
+        }
+
         public override string ToString()
         {
             return this.name;
@@ -364,6 +384,8 @@ namespace BDEditor.DataModel
             entry.parentType = (null == pAttributeDictionary[PARENTTYPE]) ? (short)-1 : short.Parse(pAttributeDictionary[PARENTTYPE]);
             entry.parentKeyName = pAttributeDictionary[PARENTKEYNAME];
 
+            entry.layoutVariant = short.Parse(pAttributeDictionary[LAYOUTVARIANT]);
+
             if (pSaveChanges)
                 pDataContext.SaveChanges();
 
@@ -390,9 +412,14 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.PARENTTYPE).WithValue(string.Format(@"{0}", parentType)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));
 
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapyGroup.LAYOUTVARIANT).WithValue(string.Format(@"{0}", layoutVariant)).WithReplace(true));
+
             return putAttributeRequest;
         }
         #endregion
+
+
+
 
     }
 }

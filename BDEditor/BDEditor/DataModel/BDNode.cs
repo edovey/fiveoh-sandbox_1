@@ -43,6 +43,7 @@ namespace BDEditor.DataModel
         private const string MODIFIEDDATE = @"no_modifiedDate";
         private const string NAME = @"no_name";
         private const string DISPLAYORDER = @"no_displayOrder";
+        private const string LAYOUTVARIANT = @"no_layoutVariant";
 
         private const string PARENTID = @"no_parentId";
         private const string PARENTTYPE = @"no_parentType";
@@ -286,6 +287,8 @@ namespace BDEditor.DataModel
             entry.nodeType = (null == pAttributeDictionary[NODETYPE]) ? (short)-1 : short.Parse(pAttributeDictionary[NODETYPE]);
             entry.nodeKeyName = pAttributeDictionary[NODEKEYNAME];
 
+            entry.layoutVariant = short.Parse(pAttributeDictionary[LAYOUTVARIANT]);
+
             entry.inUseBy = Guid.Parse(pAttributeDictionary[INUSEBY]);
 
             if (pSaveChanges)
@@ -314,6 +317,8 @@ namespace BDEditor.DataModel
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDNode.NODETYPE).WithValue(string.Format(@"{0}", nodeType)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDNode.NODEKEYNAME).WithValue((null == nodeKeyName) ? string.Empty : nodeKeyName).WithReplace(true));
+
+            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.LAYOUTVARIANT).WithValue(string.Format(@"{0}", layoutVariant)).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDNode.INUSEBY).WithValue(inUseBy.ToString().ToUpper()).WithReplace(true));
 
@@ -370,6 +375,24 @@ namespace BDEditor.DataModel
                     result = (Constants.BDNodeType)parentType;
                 }
                 return result;
+            }
+        }
+
+        public Constants.LayoutVariantType LayoutVariant
+        {
+            get
+            {
+                Constants.LayoutVariantType result = Constants.LayoutVariantType.Undefined;
+
+                if (Enum.IsDefined(typeof(Constants.LayoutVariantType), layoutVariant))
+                {
+                    result = (Constants.LayoutVariantType)layoutVariant;
+                }
+                return result;
+            }
+            set
+            {
+                layoutVariant = (int)value;
             }
         }
 

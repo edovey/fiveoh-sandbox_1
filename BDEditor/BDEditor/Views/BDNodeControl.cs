@@ -19,7 +19,7 @@ namespace BDEditor.Views
         private IBDNode node;
         private Guid? scopeId;
         private Guid? parentId;
-        private BDMetadata.LayoutVariantType layoutVariantType;
+        private Constants.LayoutVariantType defaultLayoutVariantType;
         private Constants.BDNodeType nodeType;
 
         public int? DisplayOrder { get; set; }
@@ -46,7 +46,7 @@ namespace BDEditor.Views
 
                 bdLinkedNoteControl1.CurrentLinkedNote = null;
                 bdLinkedNoteControl1.AssignParentId(null);
-                bdLinkedNoteControl1.AssignScopeId(null);
+                bdLinkedNoteControl1.AssignScopeId(scopeId);
                 bdLinkedNoteControl1.AssignContextNodeType(node.NodeType);
                 bdLinkedNoteControl1.AssignContextPropertyName(BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
             }
@@ -54,7 +54,7 @@ namespace BDEditor.Views
             {
                 tbName.Text = currentNode.name;
                 bdLinkedNoteControl1.AssignParentId(currentNode.uuid);
-                bdLinkedNoteControl1.AssignScopeId(currentNode.uuid);
+                bdLinkedNoteControl1.AssignScopeId(scopeId);
                 bdLinkedNoteControl1.AssignContextNodeType(node.NodeType);
                 bdLinkedNoteControl1.AssignContextPropertyName(BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
 
@@ -104,9 +104,7 @@ namespace BDEditor.Views
                 currentNode = node as BDNode;
                 parentId = currentNode.ParentId;
 
-               BDMetadata metadata = BDMetadata.GetMetadataWithItemId(dataContext, pNode.ParentId);
-               this.layoutVariantType = metadata.LayoutVariant;
-
+                this.defaultLayoutVariantType = pNode.LayoutVariant;
             }
 
             InitializeComponent();
@@ -117,13 +115,13 @@ namespace BDEditor.Views
         /// </summary>
         /// <param name="pDataContext"></param>
         /// <param name="pNodeType"></param>
-        /// <param name="pLayoutType"></param>
+        /// <param name="pDefaultLayoutType"></param>
         /// <param name="pParentId"></param>
-        public BDNodeControl(Entities pDataContext, Constants.BDNodeType pNodeType, BDMetadata.LayoutVariantType pLayoutType, Guid pParentId)
+        public BDNodeControl(Entities pDataContext, Constants.BDNodeType pNodeType, Constants.LayoutVariantType pDefaultLayoutType, Guid pParentId)
         {
             dataContext = pDataContext;
             currentNode = null;
-            this.layoutVariantType = pLayoutType;
+            this.defaultLayoutVariantType = pDefaultLayoutType;
             this.parentId = pParentId;
             this.nodeType = pNodeType;
 
@@ -143,12 +141,12 @@ namespace BDEditor.Views
 
         }
 
-        #region IBDControl
-        public void AssignDataContext(Entities pDataContext)
+        public void AssignScopeId(Guid? pScopeId)
         {
-            dataContext = pDataContext;
-            bdLinkedNoteControl1.AssignDataContext(dataContext);
+            scopeId = pScopeId;
         }
+
+        #region IBDControl
 
         public void AssignParentId(Guid? pParentId)
         {
@@ -197,8 +195,7 @@ namespace BDEditor.Views
                 {
                     this.currentNode = BDNode.CreateNode(this.dataContext, this.nodeType);
                     this.currentNode.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
-
-                    BDMetadata.CreateMetadata(dataContext, this.layoutVariantType, currentNode);
+                    this.currentNode.LayoutVariant = this.defaultLayoutVariantType;
                 }
             }
 

@@ -224,6 +224,13 @@ namespace BDEditor.Views
 
         #endregion    
 
+        private void insertText(TextBox pTextBox, string pText)
+        {
+            int x = pTextBox.SelectionStart;
+            pTextBox.Text = pTextBox.Text.Insert(pTextBox.SelectionStart, pText);
+            pTextBox.SelectionStart = x + 1;
+        }
+
         private BDPathogenControl addPathogenControl(BDNode pNode, int pTabIndex)
         {
             BDPathogenControl pathogenControl = null;
@@ -575,6 +582,48 @@ namespace BDEditor.Views
         private void textBoxPathogenGroupName_Leave(object sender, EventArgs e)
         {
             Save();
+        }
+
+        private void bToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(textBoxPathogenGroupName, "ß");
+        }
+
+        private void degreeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(textBoxPathogenGroupName, "°");
+        }
+
+        private void µToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(textBoxPathogenGroupName, "µ");
+        }
+
+        private void geToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(textBoxPathogenGroupName, "≥");
+        }
+
+        private void leToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(textBoxPathogenGroupName, "≤");
+        }
+
+        private void plusMinusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(textBoxPathogenGroupName, "±");
+        }
+
+        private void textBoxPathogenGroupName_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                undoToolStripMenuItem.Enabled = textBoxPathogenGroupName.CanUndo;
+                pasteToolStripMenuItem.Enabled = (Clipboard.ContainsText());
+                cutToolStripMenuItem.Enabled = (textBoxPathogenGroupName.SelectionLength > 0);
+                copyToolStripMenuItem.Enabled = (textBoxPathogenGroupName.SelectionLength > 0);
+                deleteToolStripMenuItem.Enabled = (textBoxPathogenGroupName.SelectionLength > 0);
+            }
         }
     }
 }

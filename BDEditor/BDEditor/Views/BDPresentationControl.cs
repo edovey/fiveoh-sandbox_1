@@ -337,6 +337,13 @@ namespace BDEditor.Views
             }
         }
 
+        private void insertText(TextBox pTextBox, string pText)
+        {
+            int x = pTextBox.SelectionStart;
+            pTextBox.Text = pTextBox.Text.Insert(pTextBox.SelectionStart, pText);
+            pTextBox.SelectionStart = x + 1;
+        }
+
         private void CreateLink(string pProperty)
         {
             if (CreateCurrentObject())
@@ -419,6 +426,45 @@ namespace BDEditor.Views
             Save();
         }
 
+        private void bToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbPresentationName, "ß");
+        }
 
+        private void degreeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbPresentationName, "°");
+        }
+
+        private void µToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbPresentationName, "µ");
+        }
+
+        private void geToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbPresentationName, "≥");
+        }
+
+        private void leToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbPresentationName, "≤");
+        }
+
+        private void plusMinusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbPresentationName, "±");
+        }
+        private void tbPresentationName_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                undoToolStripMenuItem.Enabled = tbPresentationName.CanUndo;
+                pasteToolStripMenuItem.Enabled = (Clipboard.ContainsText());
+                cutToolStripMenuItem.Enabled = (tbPresentationName.SelectionLength > 0);
+                copyToolStripMenuItem.Enabled = (tbPresentationName.SelectionLength > 0);
+                deleteToolStripMenuItem.Enabled = (tbPresentationName.SelectionLength > 0);
+            }
+        }
     }
 }

@@ -299,15 +299,6 @@ namespace BDEditor.Views
             pTherapyControl = null;
         }
 
-        private void textBox_TextChanged(object sender, EventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            if (null != textBox)
-            {
-                //this.BackColor = (textBox.Text.Trim() != string.Empty) ? SystemColors.Control : SystemColors.ControlDark;
-            }
-        }
-
         private void BDTherapyGroupControl_Leave(object sender, EventArgs e)
         {
             Save();

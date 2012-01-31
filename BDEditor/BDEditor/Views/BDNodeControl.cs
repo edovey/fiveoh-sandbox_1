@@ -24,11 +24,37 @@ namespace BDEditor.Views
 
         public int? DisplayOrder { get; set; }
 
+        public event EventHandler RequestItemAdd;
+        public event EventHandler RequestItemDelete;
+
+        public event EventHandler ReorderToPrevious;
+        public event EventHandler ReorderToNext;
+
         public event EventHandler NotesChanged;
 
         protected virtual void OnNotesChanged(EventArgs e)
         {
             if (null != NotesChanged) { NotesChanged(this, e); }
+        }
+
+        protected virtual void OnItemAddRequested(EventArgs e)
+        {
+            if (null != RequestItemAdd) { RequestItemAdd(this, e); }
+        }
+
+        protected virtual void OnItemDeleteRequested(EventArgs e)
+        {
+            if (null != RequestItemDelete) { RequestItemDelete(this, e); }
+        }
+
+        protected virtual void OnReorderToPrevious(EventArgs e)
+        {
+            if (null != ReorderToPrevious) { ReorderToPrevious(this, e); }
+        }
+
+        protected virtual void OnReorderToNext(EventArgs e)
+        {
+            if (null != ReorderToNext) { ReorderToNext(this, e); }
         }
 
         public IBDNode CurrentNode
@@ -109,23 +135,7 @@ namespace BDEditor.Views
         private void BDNodeControl_Load(object sender, EventArgs e)
         {
             btnLinkedNote.Tag = BDNode.VIRTUALPROPERTYNAME_OVERVIEW;
-
-            if (null != currentNode)
-            {
-                switch (this.defaultNodeType)
-                {
-                    case BDConstants.BDNodeType.BDSection:
-                    case BDConstants.BDNodeType.BDCategory:
-                    case BDConstants.BDNodeType.BDSubCategory:
-                        lblOverview.Visible = false;
-                        bdLinkedNoteControl1.Visible = false;
-                        bdLinkedNoteControl1.Enabled = false;
-                        break;
-                    case BDConstants.BDNodeType.BDDisease:
-                    default:
-                        break;
-                }
-            }
+            lblNode.Text = BDUtilities.GetEnumDescription(defaultNodeType);
 
             if (null != currentNode)
             {
@@ -264,6 +274,13 @@ namespace BDEditor.Views
 
         #endregion
 
+        private void insertText(TextBox pTextBox, string pText)
+        {
+            int x = pTextBox.SelectionStart;
+            pTextBox.Text = pTextBox.Text.Insert(pTextBox.SelectionStart, pText);
+            pTextBox.SelectionStart = x + 1;
+        }
+        
         private void notesChanged_Action(object sender, EventArgs e)
         {
             OnNotesChanged(new EventArgs());
@@ -290,6 +307,63 @@ namespace BDEditor.Views
                 string tag = control.Tag as string;
                 CreateLink(tag);
             }
+        }
+
+        private void btnReorderToPrevious_Click(object sender, EventArgs e)
+        {
+            OnReorderToPrevious(new EventArgs());
+        }
+
+        private void btnReorderToNext_Click(object sender, EventArgs e)
+        {
+            OnReorderToNext(new EventArgs());
+        }
+
+        private void bToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbName, "ß");
+        }
+
+        private void degreeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbName, "°");
+        }
+
+        private void µToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbName, "µ");
+        }
+
+        private void geToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbName, "≥");
+        }
+
+        private void leToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbName, "≤");
+        }
+
+        private void plusMinusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbName, "±");
+        }
+
+        private void tbName_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                undoToolStripMenuItem.Enabled = tbName.CanUndo;
+                pasteToolStripMenuItem.Enabled = (Clipboard.ContainsText());
+                cutToolStripMenuItem.Enabled = (tbName.SelectionLength > 0);
+                copyToolStripMenuItem.Enabled = (tbName.SelectionLength > 0);
+                deleteToolStripMenuItem.Enabled = (tbName.SelectionLength > 0);
+            }
+        }
+
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+            this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
         }
     }
 }

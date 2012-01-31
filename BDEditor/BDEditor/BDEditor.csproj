@@ -122,8 +122,9 @@
     <Compile Include="Classes\BDDataLoader.cs" />
     <Compile Include="Classes\BDFabrik.cs" />
     <Compile Include="Classes\BDTreeNode.cs" />
-    <Compile Include="Classes\Common.cs" />
-    <Compile Include="Classes\Constants.cs" />
+    <Compile Include="Classes\BDCommon.cs" />
+    <Compile Include="Classes\BDConstants.cs" />
+    <Compile Include="Classes\BDUtilities.cs" />
     <Compile Include="Classes\Navigation\TreatmentRecommendationTree.cs" />
     <Compile Include="Classes\RepositoryHandler.cs" />
     <Compile Include="Classes\SearchEntryGenerator.cs" />
@@ -352,7 +353,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
+      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

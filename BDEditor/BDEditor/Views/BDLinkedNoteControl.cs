@@ -16,7 +16,7 @@ namespace BDEditor.Views
         private Entities dataContext;
         private Guid? scopeId;
         private Guid? parentId;
-        private Constants.BDNodeType parentType;
+        private BDConstants.BDNodeType parentType;
         private string contextPropertyName;
         private bool saveOnLeave = true;
         private BDLinkedNote currentLinkedNote;
@@ -74,7 +74,7 @@ namespace BDEditor.Views
             dataContext = pDataContext;
         }
 
-        public void AssignParentInfo(Guid? pParentId, Constants.BDNodeType pParentType)
+        public void AssignParentInfo(Guid? pParentId, BDConstants.BDNodeType pParentType)
         {
             parentId = pParentId;
             parentType = pParentType;

@@ -208,7 +208,7 @@ namespace BDEditor.DataModel
 
         protected override void OnPropertyChanged(string property)
         {
-            if (!Common.Settings.IsSyncLoad)
+            if (!BDCommon.Settings.IsSyncLoad)
                 switch (property)
                 {
                     case "createdBy":
@@ -355,9 +355,9 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.UUID).WithValue(uuid.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.CREATEDBY).WithValue((null == createdBy) ? Guid.Empty.ToString() : createdBy.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(BDConstants.DATETIMEFORMAT)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(BDConstants.DATETIMEFORMAT)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
 
             //attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNote.LINKEDNOTEASSOCIATIONID).WithValue((null == linkedNoteAssociationId) ? Guid.Empty.ToString() : linkedNoteAssociationId.ToString().ToUpper()).WithReplace(true));

@@ -16,9 +16,9 @@ namespace BDEditor.Views
         #region Class properties
         private Entities dataContext;
         private Guid? parentId;
-        private Constants.BDNodeType parentType;
+        private BDConstants.BDNodeType parentType;
         private BDNode currentPathogenGroup;
-        public Constants.LayoutVariantType DefaultLayoutVariantType;
+        public BDConstants.LayoutVariantType DefaultLayoutVariantType;
         private Guid? scopeId;
         public int? DisplayOrder { get; set; }
 
@@ -89,7 +89,7 @@ namespace BDEditor.Views
             dataContext = pDataContext;
         }
 
-        public void AssignParentInfo(Guid? pParentId, Constants.BDNodeType pParentType)
+        public void AssignParentInfo(Guid? pParentId, BDConstants.BDNodeType pParentType)
         {
             parentId = pParentId;
             parentType = pParentType;
@@ -127,7 +127,7 @@ namespace BDEditor.Views
 
                     BDNode.Save(dataContext, currentPathogenGroup);
 
-                    Typeahead.AddToCollection(Constants.BDNodeType.BDPathogenGroup, BDNode.PROPERTYNAME_NAME, currentPathogenGroup.name);
+                    Typeahead.AddToCollection(BDConstants.BDNodeType.BDPathogenGroup, BDNode.PROPERTYNAME_NAME, currentPathogenGroup.name);
 
                     result = true;
                 }
@@ -152,15 +152,15 @@ namespace BDEditor.Views
                 }
                 else
                 {
-                    this.currentPathogenGroup = BDNode.CreateNode(dataContext, Constants.BDNodeType.BDPathogenGroup);
+                    this.currentPathogenGroup = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDPathogenGroup);
                     this.currentPathogenGroup.SetParent(parentType, parentId);
                     this.currentPathogenGroup.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                     this.currentPathogenGroup.LayoutVariant = DefaultLayoutVariantType;
                     switch (DefaultLayoutVariantType)
                     {
-                        case Constants.LayoutVariantType.TreatmentRecommendation01:
-                            BDNodeAssociation.CreateNodeAssociation(dataContext, currentPathogenGroup, Constants.BDNodeType.BDPathogen);
-                            BDNodeAssociation.CreateNodeAssociation(dataContext, currentPathogenGroup, Constants.BDNodeType.BDTherapyGroup);
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                            BDNodeAssociation.CreateNodeAssociation(dataContext, currentPathogenGroup, BDConstants.BDNodeType.BDPathogen);
+                            BDNodeAssociation.CreateNodeAssociation(dataContext, currentPathogenGroup, BDConstants.BDNodeType.BDTherapyGroup);
                             break;
                     }
 
@@ -205,11 +205,11 @@ namespace BDEditor.Views
                 {
                     switch (listEntry.NodeType)
                     {
-                        case Constants.BDNodeType.BDPathogen:
+                        case BDConstants.BDNodeType.BDPathogen:
                             BDNode node = listEntry as BDNode;
                             addPathogenControl(node, idxPathogen++);
                             break;
-                        case Constants.BDNodeType.BDTherapyGroup:
+                        case BDConstants.BDNodeType.BDTherapyGroup:
                             BDTherapyGroup therapyGroup = listEntry as BDTherapyGroup;
                             addTherapyGroupControl(therapyGroup, idxTherapyGroup++);
                             break;
@@ -536,7 +536,7 @@ namespace BDEditor.Views
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentPathogenGroup) ? this.currentPathogenGroup.uuid : Guid.Empty);
-            btnPathogenGroupLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnPathogenGroupLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
+            btnPathogenGroupLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnPathogenGroupLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
 
             if (pPropagateToChildren)
             {

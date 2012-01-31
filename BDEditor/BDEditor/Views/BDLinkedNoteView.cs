@@ -14,7 +14,7 @@ namespace BDEditor.Views
     public partial class BDLinkedNoteView : Form
     {
         private Entities dataContext;
-        private Constants.BDNodeType parentType;
+        private BDConstants.BDNodeType parentType;
         private string contextPropertyName;
         private Guid? parentId;
         private Guid? scopeId;
@@ -61,7 +61,7 @@ namespace BDEditor.Views
             bdLinkedNoteControl1.AssignContextPropertyName(contextPropertyName);
         }
 
-        public void AssignParentInfo(Guid? pParentId, Constants.BDNodeType pParentType)
+        public void AssignParentInfo(Guid? pParentId, BDConstants.BDNodeType pParentType)
         {
             parentId = pParentId;
             parentType = pParentType;

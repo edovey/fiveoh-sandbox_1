@@ -17,9 +17,9 @@ namespace BDEditor.Views
 
         private Entities dataContext;
         private Guid? parentId;
-        private Constants.BDNodeType parentType;
+        private BDConstants.BDNodeType parentType;
         private BDNode currentPathogen;
-        public Constants.LayoutVariantType DefaultLayoutVariantType;
+        public BDConstants.LayoutVariantType DefaultLayoutVariantType;
         private Guid? scopeId;
         public int? DisplayOrder { get; set; }
 
@@ -96,7 +96,7 @@ namespace BDEditor.Views
                 BDNode.Save(dataContext, currentPathogen);
                 result = true;
 
-                Typeahead.AddToCollection(Constants.BDNodeType.BDPathogen, BDNode.PROPERTYNAME_NAME, currentPathogen.name);
+                Typeahead.AddToCollection(BDConstants.BDNodeType.BDPathogen, BDNode.PROPERTYNAME_NAME, currentPathogen.name);
             }
 
             return result;
@@ -107,7 +107,7 @@ namespace BDEditor.Views
             throw new NotImplementedException();
         }
 
-        public void AssignParentInfo(Guid? pParentId, Constants.BDNodeType pParentType)
+        public void AssignParentInfo(Guid? pParentId, BDConstants.BDNodeType pParentType)
         {
             parentId = pParentId;
             parentType = pParentType;
@@ -126,8 +126,8 @@ namespace BDEditor.Views
                 }
                 else
                 {
-                    this.currentPathogen = BDNode.CreateNode(dataContext, Constants.BDNodeType.BDPathogen);
-                    this.currentPathogen.SetParent(Constants.BDNodeType.BDPathogenGroup, parentId);
+                    this.currentPathogen = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDPathogen);
+                    this.currentPathogen.SetParent(BDConstants.BDNodeType.BDPathogenGroup, parentId);
                     this.currentPathogen.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                     this.currentPathogen.LayoutVariant = DefaultLayoutVariantType;
                     
@@ -196,7 +196,7 @@ namespace BDEditor.Views
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentPathogen) ? this.currentPathogen.uuid : Guid.Empty);
-            btnLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
+            btnLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
         }  
 
         private void textBox_TextChanged(object sender, EventArgs e)

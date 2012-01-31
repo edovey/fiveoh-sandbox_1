@@ -15,11 +15,11 @@ namespace BDEditor.Views
     {
         private Entities dataContext;
         private Guid? parentId;
-        private Constants.BDNodeType parentType = Constants.BDNodeType.None;
+        private BDConstants.BDNodeType parentType = BDConstants.BDNodeType.None;
         private BDNode currentPresentation;
         private BDLinkedNote overviewLinkedNote;
         private Guid? scopeId;
-        private Constants.LayoutVariantType defaultLayoutVariantType;
+        private BDConstants.LayoutVariantType defaultLayoutVariantType;
 
         public int? DisplayOrder { get; set; }
 
@@ -80,7 +80,7 @@ namespace BDEditor.Views
             btnLinkedNote.Tag = BDNode.PROPERTYNAME_NAME;
         }
 
-        public BDPresentationControl(Entities pDataContext, Constants.LayoutVariantType pDefaultLayoutVariantType)
+        public BDPresentationControl(Entities pDataContext, BDConstants.LayoutVariantType pDefaultLayoutVariantType)
         {
             InitializeComponent();
             dataContext = pDataContext;
@@ -107,7 +107,7 @@ namespace BDEditor.Views
 
         #region IBDControl
 
-        public void AssignParentInfo(Guid? pParentId, Constants.BDNodeType pParentType)
+        public void AssignParentInfo(Guid? pParentId, BDConstants.BDNodeType pParentType)
         {
             parentId = pParentId;
             parentType = pParentType;
@@ -161,15 +161,15 @@ namespace BDEditor.Views
                 else
                 {
                     BDMetadata parentMetaData = BDMetadata.GetMetadataWithItemId(dataContext, parentId);
-                    this.currentPresentation = BDNode.CreateNode(dataContext, Constants.BDNodeType.BDPresentation);
-                    this.currentPresentation.SetParent(Constants.BDNodeType.BDDisease, parentId.Value);
+                    this.currentPresentation = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDPresentation);
+                    this.currentPresentation.SetParent(BDConstants.BDNodeType.BDDisease, parentId.Value);
                     this.currentPresentation.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                     this.currentPresentation.LayoutVariant = defaultLayoutVariantType;
 
                     switch (defaultLayoutVariantType)
                     {
-                        case Constants.LayoutVariantType.TreatmentRecommendation01:
-                            BDNodeAssociation.CreateNodeAssociation(dataContext, currentPresentation, Constants.BDNodeType.BDPathogenGroup);
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                            BDNodeAssociation.CreateNodeAssociation(dataContext, currentPresentation, BDConstants.BDNodeType.BDPathogenGroup);
                             break;
                     }
                 }
@@ -188,7 +188,7 @@ namespace BDEditor.Views
                 overviewLinkedNote = null;
 
                 bdLinkedNoteControl1.AssignDataContext(dataContext);
-                bdLinkedNoteControl1.AssignParentInfo(null, Constants.BDNodeType.BDPresentation);
+                bdLinkedNoteControl1.AssignParentInfo(null, BDConstants.BDNodeType.BDPresentation);
                 bdLinkedNoteControl1.AssignScopeId(null);
                 bdLinkedNoteControl1.AssignContextPropertyName(BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
             }
@@ -199,7 +199,7 @@ namespace BDEditor.Views
                 for (int idx = 0; idx < list.Count; idx++)
                 {
                     IBDNode listEntry = list[idx];
-                    if (listEntry.NodeType == (Constants.BDNodeType.BDPathogenGroup))
+                    if (listEntry.NodeType == (BDConstants.BDNodeType.BDPathogenGroup))
                     {
                         BDNode node = listEntry as BDNode;
                         addPathogenGroupControl(node, idx);
@@ -207,7 +207,7 @@ namespace BDEditor.Views
                 }
 
                 bdLinkedNoteControl1.AssignDataContext(dataContext);
-                bdLinkedNoteControl1.AssignParentInfo(currentPresentation.Uuid, Constants.BDNodeType.BDPresentation);
+                bdLinkedNoteControl1.AssignParentInfo(currentPresentation.Uuid, BDConstants.BDNodeType.BDPresentation);
                 bdLinkedNoteControl1.AssignScopeId(scopeId);
                 bdLinkedNoteControl1.AssignContextPropertyName(BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
 
@@ -327,7 +327,7 @@ namespace BDEditor.Views
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentPresentation) ? this.currentPresentation.uuid : Guid.Empty);
-            btnLinkedNote.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnLinkedNote.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
+            btnLinkedNote.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnLinkedNote.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
             if (pPropagateToChildren)
             {
                 for (int idx = 0; idx < pathogenGroupControlList.Count; idx++)

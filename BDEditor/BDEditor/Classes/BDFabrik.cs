@@ -34,16 +34,16 @@ namespace BDEditor.Classes
         }
         #endregion
 
-        public static List<IBDNode> GetAllForNodeType(Entities pDataContext, Constants.BDNodeType pNodeType)
+        public static List<IBDNode> GetAllForNodeType(Entities pDataContext, BDConstants.BDNodeType pNodeType)
         {
             List<IBDNode> entryList = new List<IBDNode>();
 
             switch (pNodeType)
             {
-                case Constants.BDNodeType.None:
+                case BDConstants.BDNodeType.None:
                     // do nothing
                     break;
-                case Constants.BDNodeType.BDTherapy:
+                case BDConstants.BDNodeType.BDTherapy:
                     IQueryable<BDTherapy> tEntries = (from entry in pDataContext.BDTherapies
                                                                   orderby entry.displayOrder
                                                                   select entry);
@@ -53,7 +53,7 @@ namespace BDEditor.Classes
                         entryList.AddRange(workingList);
                     }
                     break;
-                case Constants.BDNodeType.BDTherapyGroup:
+                case BDConstants.BDNodeType.BDTherapyGroup:
                     IQueryable<BDTherapyGroup> tgEntries = (from entry in pDataContext.BDTherapyGroups
                                                                   orderby entry.displayOrder
                                                                   select entry);
@@ -92,10 +92,10 @@ namespace BDEditor.Classes
                 {
                     if (null != association.childNodeType)
                     {
-                        Constants.BDNodeType childNodeType = association.ChildNodeType;
+                        BDConstants.BDNodeType childNodeType = association.ChildNodeType;
                         switch (childNodeType)
                         {
-                            case Constants.BDNodeType.BDTherapyGroup:
+                            case BDConstants.BDNodeType.BDTherapyGroup:
                                 IQueryable<BDTherapyGroup> tgEntries = (from entry in pContext.BDTherapyGroups
                                                                   where entry.parentId == pParentId
                                                                   orderby entry.displayOrder
@@ -107,7 +107,7 @@ namespace BDEditor.Classes
                                 }
                                 break;
 
-                            case Constants.BDNodeType.BDTherapy:
+                            case BDConstants.BDNodeType.BDTherapy:
                                 IQueryable<BDTherapy> tEntries = (from entry in pContext.BDTherapies
                                                                   where entry.parentId == pParentId
                                                                   orderby entry.displayOrder

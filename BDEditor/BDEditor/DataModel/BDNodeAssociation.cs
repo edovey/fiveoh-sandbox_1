@@ -37,17 +37,17 @@ namespace BDEditor.DataModel
         private const string CHILDNODETYPE = @"na_childNodeType";
         private const string CHILDKEYNAME = @"na_childKeyName";
 
-        public static void CreateNodeAssociation(Entities pContext, IBDNode pNodeObject, Constants.BDNodeType pChildNodeType)
+        public static void CreateNodeAssociation(Entities pContext, IBDNode pNodeObject, BDConstants.BDNodeType pChildNodeType)
         {
             CreateNodeAssociation(pContext, pNodeObject.Uuid, pNodeObject.NodeType, pChildNodeType, Guid.NewGuid());
         }
 
-        public static void CreateNodeAssociation(Entities pContext, IBDNode pNodeObject, Constants.BDNodeType pChildNodeType, Guid pUuid)
+        public static void CreateNodeAssociation(Entities pContext, IBDNode pNodeObject, BDConstants.BDNodeType pChildNodeType, Guid pUuid)
         {
             CreateNodeAssociation(pContext, pNodeObject.Uuid, pNodeObject.NodeType, pChildNodeType, pUuid);
         }
 
-        private static void CreateNodeAssociation(Entities pContext, Guid pNodeId, Constants.BDNodeType pNodeType, Constants.BDNodeType pChildNodeType, Guid pUuid)
+        private static void CreateNodeAssociation(Entities pContext, Guid pNodeId, BDConstants.BDNodeType pNodeType, BDConstants.BDNodeType pChildNodeType, Guid pUuid)
         {
             if (!Exists(pContext, pNodeId, pChildNodeType))
             {
@@ -81,7 +81,7 @@ namespace BDEditor.DataModel
             }
         }
 
-        public static Boolean Exists(Entities pContext, Guid pObjectId, Constants.BDNodeType pChildNodeType)
+        public static Boolean Exists(Entities pContext, Guid pObjectId, BDConstants.BDNodeType pChildNodeType)
         {
             IQueryable<BDNodeAssociation> entries = (from entry in pContext.BDNodeAssociations
                                                      where (entry.nodeId == pObjectId) && (entry.childNodeType == (int)pChildNodeType)
@@ -124,29 +124,29 @@ namespace BDEditor.DataModel
             return resultList;
         }
 
-        public Constants.BDNodeType NodeType
+        public BDConstants.BDNodeType NodeType
         {
             get
             {
-                Constants.BDNodeType result = Constants.BDNodeType.None;
+                BDConstants.BDNodeType result = BDConstants.BDNodeType.None;
 
-                if (Enum.IsDefined(typeof(Constants.BDNodeType), nodeType))
+                if (Enum.IsDefined(typeof(BDConstants.BDNodeType), nodeType))
                 {
-                    result = (Constants.BDNodeType)nodeType;
+                    result = (BDConstants.BDNodeType)nodeType;
                 }
                 return result;
             }
         }
 
-        public Constants.BDNodeType ChildNodeType
+        public BDConstants.BDNodeType ChildNodeType
         {
             get
             {
-                Constants.BDNodeType result = Constants.BDNodeType.None;
+                BDConstants.BDNodeType result = BDConstants.BDNodeType.None;
 
-                if (Enum.IsDefined(typeof(Constants.BDNodeType), childNodeType))
+                if (Enum.IsDefined(typeof(BDConstants.BDNodeType), childNodeType))
                 {
-                    result = (Constants.BDNodeType)childNodeType;
+                    result = (BDConstants.BDNodeType)childNodeType;
                 }
                 return result;
             }
@@ -239,7 +239,7 @@ namespace BDEditor.DataModel
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDNodeAssociation.UUID).WithValue(uuid.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDNodeAssociation.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDNodeAssociation.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDNodeAssociation.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(BDConstants.DATETIMEFORMAT)).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDNodeAssociation.NODEID).WithValue((null == nodeId) ? Guid.Empty.ToString() : nodeId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDNodeAssociation.NODETYPE).WithValue(string.Format(@"{0}", nodeType)).WithReplace(true));

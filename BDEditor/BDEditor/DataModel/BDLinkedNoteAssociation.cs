@@ -99,7 +99,7 @@ namespace BDEditor.DataModel
         public static BDLinkedNoteAssociation CreateLinkedNoteAssociation(Entities pContext, 
                                                                             LinkedNoteType pLinkedNoteType, 
                                                                             Guid pLinkedNoteId, 
-                                                                            Constants.BDNodeType pParentType, 
+                                                                            BDConstants.BDNodeType pParentType, 
                                                                             Guid pParentId, 
                                                                             string pParentPropertyName)
         {
@@ -281,7 +281,7 @@ namespace BDEditor.DataModel
             return result;
         }
 
-        public static string GetDescription(Entities pDataContext, Guid? pParentId, Constants.BDNodeType pParentNodeType, string pParentEntityPropertyName)
+        public static string GetDescription(Entities pDataContext, Guid? pParentId, BDConstants.BDNodeType pParentNodeType, string pParentEntityPropertyName)
         {
             string result = string.Format("{0} [{1}]", pParentNodeType.ToString(), pParentEntityPropertyName);
 
@@ -289,7 +289,7 @@ namespace BDEditor.DataModel
             {
                 switch (pParentNodeType)
                 {
-                    case Constants.BDNodeType.BDTherapy:
+                    case BDConstants.BDNodeType.BDTherapy:
                         {
                             BDTherapy therapy = BDTherapy.GetTherapyWithId(pDataContext, pParentId.Value);
                             if (null != therapy)
@@ -299,7 +299,7 @@ namespace BDEditor.DataModel
                         }
                         break;
 
-                    case Constants.BDNodeType.BDTherapyGroup:
+                    case BDConstants.BDNodeType.BDTherapyGroup:
                         {
                             BDTherapyGroup therapyGroup = BDTherapyGroup.GetTherapyGroupWithId(pDataContext, pParentId.Value);
                             if (null != therapyGroup)
@@ -309,8 +309,8 @@ namespace BDEditor.DataModel
                         }
                         break;
 
-                    case Constants.BDNodeType.BDPathogen:
-                    case Constants.BDNodeType.BDPresentation:
+                    case BDConstants.BDNodeType.BDPathogen:
+                    case BDConstants.BDNodeType.BDPresentation:
                     default:
                         {
                             BDNode node = BDNode.GetNodeWithId(pDataContext, pParentId.Value); //PathogenWithId(pDataContext, pParentId.Value);
@@ -332,7 +332,7 @@ namespace BDEditor.DataModel
 
         protected override void OnPropertyChanged(string property)
         {
-            if (!Common.Settings.IsSyncLoad)
+            if (!BDCommon.Settings.IsSyncLoad)
                 switch (property)
                 {
                     case "createdBy":
@@ -436,9 +436,9 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.DISPLAYORDER).WithValue(string.Format(@"{0}", displayOrder)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.CREATEDBY).WithValue((null == createdBy) ? Guid.Empty.ToString() : createdBy.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(BDConstants.DATETIMEFORMAT)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(BDConstants.DATETIMEFORMAT)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.LINKEDNOTEID).WithValue((null == linkedNoteId) ? Guid.Empty.ToString() : linkedNoteId.ToString().ToUpper()).WithReplace(true));
@@ -471,15 +471,15 @@ namespace BDEditor.DataModel
             return this.uuid.ToString();
         }
 
-        public Constants.BDNodeType ParentType
+        public BDConstants.BDNodeType ParentType
         {
             get 
             {
-                Constants.BDNodeType result = Constants.BDNodeType.None;
+                BDConstants.BDNodeType result = BDConstants.BDNodeType.None;
 
-                if (Enum.IsDefined(typeof(Constants.BDNodeType), parentType))
+                if (Enum.IsDefined(typeof(BDConstants.BDNodeType), parentType))
                 {
-                    result = (Constants.BDNodeType)parentType;
+                    result = (BDConstants.BDNodeType)parentType;
                 }
                 return result;
             }

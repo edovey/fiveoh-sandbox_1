@@ -59,7 +59,7 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets the created date and the schema version
         /// </summary>
         /// <returns></returns>
-        public static BDNode CreateNode(Entities pContext, Constants.BDNodeType pNodeType)
+        public static BDNode CreateNode(Entities pContext, BDConstants.BDNodeType pNodeType)
         {
             return CreateNode(pContext, pNodeType, Guid.NewGuid());
         }
@@ -68,7 +68,7 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets the created date and the schema version
         /// </summary>
         /// <returns></returns>
-        public static BDNode CreateNode(Entities pContext, Constants.BDNodeType pNodeType, Guid pUuid)
+        public static BDNode CreateNode(Entities pContext, BDConstants.BDNodeType pNodeType, Guid pUuid)
         {
             BDNode node = CreateBDNode(pUuid);
             node.nodeType = (int)pNodeType;
@@ -187,7 +187,7 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pNodeType"></param>
         /// <returns></returns>
-        public static string[] GetNodeNamesForType(Entities pContext, Constants.BDNodeType pNodeType)
+        public static string[] GetNodeNamesForType(Entities pContext, BDConstants.BDNodeType pNodeType)
         {
             var nodeNames = pContext.BDNodes.Where(x => (!string.IsNullOrEmpty(x.name) && x.nodeType == (int)pNodeType)).Select(node => node.name).Distinct();
             return nodeNames.ToArray();
@@ -196,7 +196,7 @@ namespace BDEditor.DataModel
 
         protected override void OnPropertyChanged(string property)
         {
-            if (!Common.Settings.IsSyncLoad)
+            if (!BDCommon.Settings.IsSyncLoad)
                 switch (property)
                 {
                     case "createdBy":
@@ -273,11 +273,11 @@ namespace BDEditor.DataModel
             if (null == entry)
             {
                 int nt = (null == pAttributeDictionary[NODETYPE]) ? (short)-1 : short.Parse(pAttributeDictionary[NODETYPE]);
-                Constants.BDNodeType nodeType = Constants.BDNodeType.None;
+                BDConstants.BDNodeType nodeType = BDConstants.BDNodeType.None;
 
-                if (Enum.IsDefined(typeof(Constants.BDNodeType), nt))
+                if (Enum.IsDefined(typeof(BDConstants.BDNodeType), nt))
                 {
-                    nodeType = (Constants.BDNodeType)nt;
+                    nodeType = (BDConstants.BDNodeType)nt;
                 }
                 entry = BDNode.CreateNode(pDataContext, nodeType);
             }
@@ -313,9 +313,9 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDNode.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDNode.DISPLAYORDER).WithValue(string.Format(@"{0}", displayOrder)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDNode.CREATEDBY).WithValue((null == createdBy) ? Guid.Empty.ToString() : createdBy.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(BDConstants.DATETIMEFORMAT)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDNode.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(BDConstants.DATETIMEFORMAT)).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDNode.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
 
@@ -343,7 +343,7 @@ namespace BDEditor.DataModel
         {
             if (null == pParent)
             {
-                SetParent(Constants.BDNodeType.None, null);
+                SetParent(BDConstants.BDNodeType.None, null);
             }
             else
             {
@@ -351,50 +351,50 @@ namespace BDEditor.DataModel
             }
         }
 
-        public void SetParent(Constants.BDNodeType pParentType, Guid? pParentId)
+        public void SetParent(BDConstants.BDNodeType pParentType, Guid? pParentId)
         {
             parentId = pParentId;
             parentType = (int)pParentType;
             parentKeyName = pParentType.ToString();
         }
 
-        public Constants.BDNodeType NodeType
+        public BDConstants.BDNodeType NodeType
         {
             get
             {
-                Constants.BDNodeType result = Constants.BDNodeType.None;
+                BDConstants.BDNodeType result = BDConstants.BDNodeType.None;
 
-                if (Enum.IsDefined(typeof(Constants.BDNodeType), nodeType))
+                if (Enum.IsDefined(typeof(BDConstants.BDNodeType), nodeType))
                 {
-                    result = (Constants.BDNodeType)nodeType;
+                    result = (BDConstants.BDNodeType)nodeType;
                 }
                 return result;
             }
         }
 
-        public Constants.BDNodeType ParentType
+        public BDConstants.BDNodeType ParentType
         {
             get
             {
-                Constants.BDNodeType result = Constants.BDNodeType.None;
+                BDConstants.BDNodeType result = BDConstants.BDNodeType.None;
 
-                if (Enum.IsDefined(typeof(Constants.BDNodeType), parentType))
+                if (Enum.IsDefined(typeof(BDConstants.BDNodeType), parentType))
                 {
-                    result = (Constants.BDNodeType)parentType;
+                    result = (BDConstants.BDNodeType)parentType;
                 }
                 return result;
             }
         }
 
-        public Constants.LayoutVariantType LayoutVariant
+        public BDConstants.LayoutVariantType LayoutVariant
         {
             get
             {
-                Constants.LayoutVariantType result = Constants.LayoutVariantType.Undefined;
+                BDConstants.LayoutVariantType result = BDConstants.LayoutVariantType.Undefined;
 
-                if (Enum.IsDefined(typeof(Constants.LayoutVariantType), layoutVariant))
+                if (Enum.IsDefined(typeof(BDConstants.LayoutVariantType), layoutVariant))
                 {
-                    result = (Constants.LayoutVariantType)layoutVariant;
+                    result = (BDConstants.LayoutVariantType)layoutVariant;
                 }
                 return result;
             }
@@ -416,7 +416,7 @@ namespace BDEditor.DataModel
 
         public string DescriptionForLinkedNote
         {
-            get { return string.Format("{0}: {1}", NodeType.ToString(), this.name); }
+            get { return string.Format("{0}: {1}", BDUtilities.GetEnumDescription(NodeType), this.name); }
         }
 
         public override string ToString()

@@ -57,11 +57,11 @@ namespace BDEditor.Views
             chapterTree.Nodes.Clear();
 
             IBDNode listEntry = chapterDropDown.SelectedItem as IBDNode;
-            if ((null != listEntry) && (listEntry.NodeType == Constants.BDNodeType.BDChapter))
+            if ((null != listEntry) && (listEntry.NodeType == BDConstants.BDNodeType.BDChapter))
             {
                 switch (listEntry.LayoutVariant)
                     {
-                        case Constants.LayoutVariantType.TreatmentRecommendation00:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation00:
                             TreeNode node = TreatmentRecommendationTree.BuildChapterTreeNode(dataContext, listEntry);
                             // this is only to prevent a single first node
                             TreeNode[] nodeList = new TreeNode[node.Nodes.Count];
@@ -90,10 +90,10 @@ namespace BDEditor.Views
 
                     switch (node.NodeType)
                     {
-                        case Constants.BDNodeType.BDSection:
+                        case BDConstants.BDNodeType.BDSection:
                             switch (node.LayoutVariant)
                             {
-                                case Constants.LayoutVariantType.TreatmentRecommendation01:
+                                case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                                     BDNodeControl control_tr01 = null;
                                     control_tr01 = new BDNodeControl(dataContext, node);
                                     control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
@@ -103,10 +103,10 @@ namespace BDEditor.Views
                                     break;
                             }
                             break;
-                        case Constants.BDNodeType.BDCategory:
+                        case BDConstants.BDNodeType.BDCategory:
                             switch (node.LayoutVariant)
                             {
-                                case Constants.LayoutVariantType.TreatmentRecommendation01:
+                                case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                                     BDNodeControl control_tr01 = null;
                                     control_tr01 = new BDNodeControl(dataContext, node);
                                     control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
@@ -116,10 +116,10 @@ namespace BDEditor.Views
                                     break;
                             }
                             break;
-                        case Constants.BDNodeType.BDDisease:
+                        case BDConstants.BDNodeType.BDDisease:
                             switch (node.LayoutVariant)
                             {
-                                case Constants.LayoutVariantType.TreatmentRecommendation01:
+                                case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                                     BDNodeControl control_tr01 = null;
                                     control_tr01 = new BDNodeControl(dataContext, node);
                                     control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
@@ -129,11 +129,11 @@ namespace BDEditor.Views
                                     break;
                             }
                             break;
-                        case Constants.BDNodeType.BDPresentation:
+                        case BDConstants.BDNodeType.BDPresentation:
                             BDNode presentation = node as BDNode;
                             switch (node.LayoutVariant)
                             {
-                                case Constants.LayoutVariantType.TreatmentRecommendation01:
+                                case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                                     BDPresentationControl control_tr01 = new BDPresentationControl(dataContext, presentation);
                                     control_tr01.Dock = DockStyle.Fill;
                                     control_tr01.CurrentPresentation = presentation;
@@ -178,7 +178,7 @@ namespace BDEditor.Views
         private void LoadChapterDropDown()
         {
             chapterDropDown.Items.Clear();
-            foreach(IBDNode entry in BDFabrik.GetAllForNodeType(dataContext, Constants.BDNodeType.BDChapter))
+            foreach(IBDNode entry in BDFabrik.GetAllForNodeType(dataContext, BDConstants.BDNodeType.BDChapter))
             {
                 chapterDropDown.Items.Add(entry);
             }
@@ -200,7 +200,7 @@ namespace BDEditor.Views
             }
             else
             {
-                lbLastSyncDateTime.Text = lastSyncDate.Value.ToString(Constants.DATETIMEFORMAT);
+                lbLastSyncDateTime.Text = lastSyncDate.Value.ToString(BDConstants.DATETIMEFORMAT);
             }
         }
 

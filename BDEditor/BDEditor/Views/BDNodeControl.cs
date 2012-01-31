@@ -18,9 +18,9 @@ namespace BDEditor.Views
         private BDLinkedNote overviewLinkedNote;
         private Guid? scopeId;
         private Guid? parentId;
-        private Constants.BDNodeType parentType = Constants.BDNodeType.None;
-        private Constants.LayoutVariantType defaultLayoutVariantType;
-        private Constants.BDNodeType defaultNodeType;
+        private BDConstants.BDNodeType parentType = BDConstants.BDNodeType.None;
+        private BDConstants.LayoutVariantType defaultLayoutVariantType;
+        private BDConstants.BDNodeType defaultNodeType;
 
         public int? DisplayOrder { get; set; }
 
@@ -95,7 +95,7 @@ namespace BDEditor.Views
         /// <param name="pDefaultNodeType"></param>
         /// <param name="pDefaultLayoutType"></param>
         /// <param name="pParentId"></param>
-        public BDNodeControl(Entities pDataContext, Constants.BDNodeType pDefaultNodeType, Constants.LayoutVariantType pDefaultLayoutType, Guid pParentId)
+        public BDNodeControl(Entities pDataContext, BDConstants.BDNodeType pDefaultNodeType, BDConstants.LayoutVariantType pDefaultLayoutType, Guid pParentId)
         {    
             dataContext = pDataContext;
             currentNode = null;
@@ -114,14 +114,14 @@ namespace BDEditor.Views
             {
                 switch (this.defaultNodeType)
                 {
-                    case Constants.BDNodeType.BDSection:
-                    case Constants.BDNodeType.BDCategory:
-                    case Constants.BDNodeType.BDSubCategory:
+                    case BDConstants.BDNodeType.BDSection:
+                    case BDConstants.BDNodeType.BDCategory:
+                    case BDConstants.BDNodeType.BDSubCategory:
                         lblOverview.Visible = false;
                         bdLinkedNoteControl1.Visible = false;
                         bdLinkedNoteControl1.Enabled = false;
                         break;
-                    case Constants.BDNodeType.BDDisease:
+                    case BDConstants.BDNodeType.BDDisease:
                     default:
                         break;
                 }
@@ -145,7 +145,7 @@ namespace BDEditor.Views
 
         #region IBDControl
 
-        public void AssignParentInfo(Guid? pParentId, Constants.BDNodeType pParentType)
+        public void AssignParentInfo(Guid? pParentId, BDConstants.BDNodeType pParentType)
         {
             parentId = pParentId;
             parentType = pParentType;
@@ -173,14 +173,14 @@ namespace BDEditor.Views
 
                     switch (currentNode.NodeType)
                     {
-                        case Constants.BDNodeType.BDTherapy:
+                        case BDConstants.BDNodeType.BDTherapy:
                             BDTherapy therapy = currentNode as BDTherapy;
                             if (null != therapy)
                             {
                                 BDTherapy.Save(dataContext, therapy);
                             }
                             break;
-                        case Constants.BDNodeType.BDTherapyGroup:
+                        case BDConstants.BDNodeType.BDTherapyGroup:
                             BDTherapyGroup therapyGroup = currentNode as BDTherapyGroup;
                             if (null != therapyGroup)
                             {
@@ -219,10 +219,10 @@ namespace BDEditor.Views
                 {
                     switch (defaultNodeType)
                     {
-                        case Constants.BDNodeType.BDTherapy:
+                        case BDConstants.BDNodeType.BDTherapy:
                             currentNode = BDTherapy.CreateTherapy(dataContext, parentId.Value);
                             break;
-                        case Constants.BDNodeType.BDTherapyGroup:
+                        case BDConstants.BDNodeType.BDTherapyGroup:
                             currentNode = BDTherapyGroup.CreateTherapyGroup(dataContext, parentId.Value);
                             break;
                         default:

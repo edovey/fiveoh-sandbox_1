@@ -76,7 +76,7 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets the created date and schema version
         /// </summary>
         /// <returns>BDMetadata</returns>
-        public static BDMetadata CreateMetadata(Entities pContext, Guid pItemId, Constants.BDNodeType pItemKeyType)
+        public static BDMetadata CreateMetadata(Entities pContext, Guid pItemId, BDConstants.BDNodeType pItemKeyType)
         {
             return CreateMetadata(pContext, pItemId,pItemKeyType, Guid.NewGuid());
         }
@@ -85,7 +85,7 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets the created date and schema version. Returns instance if already exists.
         /// </summary>
         /// <returns>BDMetadata</returns>
-        public static BDMetadata CreateMetadata(Entities pContext, Guid pItemId, Constants.BDNodeType pItemKeyType, Guid pUuid)
+        public static BDMetadata CreateMetadata(Entities pContext, Guid pItemId, BDConstants.BDNodeType pItemKeyType, Guid pUuid)
         {
             BDMetadata entry = GetMetadataWithItemId(pContext, pItemId);
             if (null == entry)
@@ -306,9 +306,9 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.UUID).WithValue(uuid.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.CREATEDBY).WithValue((null == createdBy) ? Guid.Empty.ToString() : createdBy.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(BDConstants.DATETIMEFORMAT)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(BDConstants.DATETIMEFORMAT)).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.ITEMID).WithValue((null == itemId) ? Guid.Empty.ToString() : itemId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDMetadata.ITEMTYPE).WithValue(string.Format(@"{0}", itemType)).WithReplace(true));
@@ -343,7 +343,7 @@ namespace BDEditor.DataModel
             get { throw new NotImplementedException(); }
         }
 
-        public Constants.BDNodeType NodeType
+        public BDConstants.BDNodeType NodeType
         {
             get { throw new NotImplementedException(); }
         }

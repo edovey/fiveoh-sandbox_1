@@ -24,7 +24,7 @@ namespace BDEditor.Classes
                 if (null == pathogenGroups)
                 {
                     pathogenGroups = new AutoCompleteStringCollection();
-                    string [] names = BDNode.GetNodeNamesForType(new BDEditor.DataModel.Entities(), Constants.BDNodeType.BDPathogenGroup);
+                    string [] names = BDNode.GetNodeNamesForType(new BDEditor.DataModel.Entities(), BDConstants.BDNodeType.BDPathogenGroup);
                     pathogenGroups.AddRange(names);
                 }
                 return pathogenGroups;
@@ -38,7 +38,7 @@ namespace BDEditor.Classes
                 if (null == pathogens)
                 {
                     pathogens = new AutoCompleteStringCollection();
-                    string[] names = BDNode.GetNodeNamesForType(new BDEditor.DataModel.Entities(), Constants.BDNodeType.BDPathogen);
+                    string[] names = BDNode.GetNodeNamesForType(new BDEditor.DataModel.Entities(), BDConstants.BDNodeType.BDPathogen);
                     pathogens.AddRange(names);
                 }
                 return pathogens;
@@ -101,31 +101,31 @@ namespace BDEditor.Classes
             }
         }
 
-        public static void AddToCollection(Constants.BDNodeType pNodeType, string pEntityMember, string pValue)
+        public static void AddToCollection(BDConstants.BDNodeType pNodeType, string pEntityMember, string pValue)
         {
             if (!string.IsNullOrEmpty(pValue))
             {
                 switch (pNodeType)
                 {
-                    case Constants.BDNodeType.BDPathogenGroup:
+                    case BDConstants.BDNodeType.BDPathogenGroup:
                         {
                             if (!pathogenGroups.Contains(pValue))
                                 pathogenGroups.Add(pValue);
                         }
                         break;
-                    case Constants.BDNodeType.BDPathogen:
+                    case BDConstants.BDNodeType.BDPathogen:
                         {
                             if (!pathogens.Contains(pValue))
                                 pathogens.Add(pValue);
                         }
                         break;
-                    case Constants.BDNodeType.BDTherapyGroup:
+                    case BDConstants.BDNodeType.BDTherapyGroup:
                         {
                             if (!therapyGroups.Contains(pValue))
                                 therapyGroups.Add(pValue);
                         }
                         break;
-                    case Constants.BDNodeType.BDTherapy:
+                    case BDConstants.BDNodeType.BDTherapy:
                         {
                             if ((pEntityMember == string.Empty || pEntityMember == BDTherapy.PROPERTYNAME_THERAPY) && !therapyNames.Contains(pValue))
                                 therapyNames.Add(pValue);

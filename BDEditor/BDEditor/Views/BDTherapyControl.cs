@@ -17,7 +17,7 @@ namespace BDEditor.Views
         private Entities dataContext;
         private BDTherapy currentTherapy;
         private Guid? parentId;
-        private Constants.BDNodeType parentType;
+        private BDConstants.BDNodeType parentType;
         private Guid? scopeId;
         private bool displayLeftBracket;
         private bool displayRightBracket;
@@ -28,7 +28,7 @@ namespace BDEditor.Views
         private const string DURATION_TEXTBOX = "Duration";
 
         public int? DisplayOrder { get; set; }
-        public Constants.LayoutVariantType DefaultLayoutVariantType;
+        public BDConstants.LayoutVariantType DefaultLayoutVariantType;
 
         public event EventHandler RequestItemAdd;
         public event EventHandler RequestItemDelete;
@@ -160,9 +160,9 @@ namespace BDEditor.Views
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentTherapy) ? this.currentTherapy.uuid : Guid.Empty);
-            btnTherapyLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnTherapyLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
-            btnDosageLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnDosageLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
-            btnDurationLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnDurationLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
+            btnTherapyLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnTherapyLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
+            btnDosageLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnDosageLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
+            btnDurationLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnDurationLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
         }     
         
         public void AssignScopeId(Guid? pScopeId)
@@ -311,11 +311,11 @@ namespace BDEditor.Views
                     result = true;
 
                     if(currentTherapy.name.Length > 0) 
-                       Typeahead.AddToCollection(Constants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_THERAPY, currentTherapy.name);
+                       Typeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_THERAPY, currentTherapy.name);
                    if(currentTherapy.dosage.Length > 0)
-                       Typeahead.AddToCollection(Constants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, currentTherapy.dosage);
+                       Typeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, currentTherapy.dosage);
                     if(currentTherapy.duration.Length > 0)
-                        Typeahead.AddToCollection(Constants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DURATION, currentTherapy.duration);
+                        Typeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DURATION, currentTherapy.duration);
 
                 }
             }
@@ -328,7 +328,7 @@ namespace BDEditor.Views
             throw new NotImplementedException();
         }
 
-        public void AssignParentInfo(Guid? pParentId, Constants.BDNodeType pParentType)
+        public void AssignParentInfo(Guid? pParentId, BDConstants.BDNodeType pParentType)
         {
             parentId = pParentId;
             parentType = pParentType;

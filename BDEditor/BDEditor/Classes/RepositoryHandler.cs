@@ -224,7 +224,7 @@ namespace BDEditor.Classes
 
         public SyncInfoDictionary Pull(Entities pDataContext, DateTime? pLastSyncDate, SyncInfoDictionary pSyncDictionary)
         {
-            Common.Settings.IsSyncLoad = true;
+            BDCommon.Settings.IsSyncLoad = true;
 
             foreach (SyncInfo syncInfoEntry in pSyncDictionary.Values)
             {
@@ -338,7 +338,7 @@ namespace BDEditor.Classes
                 } while (selectResponse.SelectResult.IsSetNextToken());
             }
 
-            Common.Settings.IsSyncLoad = false;
+            BDCommon.Settings.IsSyncLoad = false;
 
             return pSyncDictionary;
         }
@@ -349,7 +349,7 @@ namespace BDEditor.Classes
 
             SyncInfoDictionary syncDictionary = InitializeSyncDictionary(pDataContext, pLastSyncDate, currentSyncDate, false);
 
-            Common.Settings.IsSyncLoad = true;
+            BDCommon.Settings.IsSyncLoad = true;
 
             foreach (SyncInfo syncInfoEntry in syncDictionary.Values)
             {
@@ -475,7 +475,7 @@ namespace BDEditor.Classes
                 } while (selectResponse.SelectResult.IsSetNextToken());
             }
 
-            Common.Settings.IsSyncLoad = false;
+            BDCommon.Settings.IsSyncLoad = false;
 
             return syncDictionary;
         }

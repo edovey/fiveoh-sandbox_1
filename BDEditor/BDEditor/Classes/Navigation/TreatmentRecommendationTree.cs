@@ -17,7 +17,7 @@ namespace BDEditor.Classes.Navigation
         {
             TreeNode chapterTreeNode = new TreeNode();
 
-            if ((null != pChapterNode) && (pChapterNode.NodeType == Constants.BDNodeType.BDChapter))
+            if ((null != pChapterNode) && (pChapterNode.NodeType == BDConstants.BDNodeType.BDChapter))
             {
                 chapterTreeNode.Name = pChapterNode.Name;
 
@@ -26,7 +26,7 @@ namespace BDEditor.Classes.Navigation
                 {
                     switch (sectionNode.LayoutVariant)
                     {
-                        case Constants.LayoutVariantType.TreatmentRecommendation01:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                             TreeNode treeNode = BuildSectionLayout01TreeNode(pDataContext, sectionNode);
                             if (null != treeNode) chapterTreeNode.Nodes.Add(treeNode);
                             break;
@@ -41,7 +41,7 @@ namespace BDEditor.Classes.Navigation
         {
             TreeNode sectionTreeNode = null;
 
-            if ((pSectionNode.NodeType == Constants.BDNodeType.BDSection) && (pSectionNode.LayoutVariant == Constants.LayoutVariantType.TreatmentRecommendation01))
+            if ((pSectionNode.NodeType == BDConstants.BDNodeType.BDSection) && (pSectionNode.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation01))
             {
                 sectionTreeNode = new TreeNode(pSectionNode.Name);
                 sectionTreeNode.Tag = pSectionNode;
@@ -49,7 +49,7 @@ namespace BDEditor.Classes.Navigation
                 List<IBDNode> categoryList = BDFabrik.GetChildrenForParentId(pDataContext, pSectionNode.Uuid);
                 foreach (IBDNode categoryNode in categoryList)
                 {
-                    if (categoryNode.NodeType == Constants.BDNodeType.BDCategory)
+                    if (categoryNode.NodeType == BDConstants.BDNodeType.BDCategory)
                     {
                         TreeNode categoryTreeNode = new TreeNode(categoryNode.Name);
                         categoryTreeNode.Tag = categoryNode;
@@ -58,7 +58,7 @@ namespace BDEditor.Classes.Navigation
                         List<IBDNode> diseaseList = BDFabrik.GetChildrenForParentId(pDataContext, categoryNode.Uuid);
                         foreach (IBDNode diseaseNode in diseaseList)
                         {
-                            if (diseaseNode.NodeType == Constants.BDNodeType.BDDisease)
+                            if (diseaseNode.NodeType == BDConstants.BDNodeType.BDDisease)
                             {
                                 TreeNode diseaseTreeNode = new TreeNode(diseaseNode.Name);
                                 diseaseTreeNode.Tag = diseaseNode;
@@ -67,7 +67,7 @@ namespace BDEditor.Classes.Navigation
                                 List<IBDNode> presentationList = BDFabrik.GetChildrenForParentId(pDataContext, diseaseNode.Uuid);
                                 foreach (IBDNode presentationNode in presentationList)
                                 {
-                                    if (presentationNode.NodeType == Constants.BDNodeType.BDPresentation)
+                                    if (presentationNode.NodeType == BDConstants.BDNodeType.BDPresentation)
                                     {
                                         TreeNode presentationTreeNode = new TreeNode(presentationNode.Name);
                                         presentationTreeNode.Tag = presentationNode;

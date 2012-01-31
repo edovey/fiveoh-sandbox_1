@@ -242,7 +242,7 @@ namespace BDEditor.DataModel
         {
             if (null == pParent)
             {
-                SetParent(Constants.BDNodeType.None, null);
+                SetParent(BDConstants.BDNodeType.None, null);
             }
             else
             {
@@ -250,7 +250,7 @@ namespace BDEditor.DataModel
             }
         }
 
-        public void SetParent(Constants.BDNodeType pParentType, Guid? pParentId)
+        public void SetParent(BDConstants.BDNodeType pParentType, Guid? pParentId)
         {
             parentId = pParentId;
             parentType = (int)pParentType;
@@ -262,9 +262,9 @@ namespace BDEditor.DataModel
             get { return this.uuid; }
         }
 
-        public Constants.BDNodeType NodeType
+        public BDConstants.BDNodeType NodeType
         {
-            get { return Constants.BDNodeType.BDTherapy; }
+            get { return BDConstants.BDNodeType.BDTherapy; }
         }
 
         public string Description
@@ -288,29 +288,29 @@ namespace BDEditor.DataModel
             get { return parentId; }
         }
 
-        public Constants.BDNodeType ParentType
+        public BDConstants.BDNodeType ParentType
         {
             get
             {
-                Constants.BDNodeType result = Constants.BDNodeType.None;
+                BDConstants.BDNodeType result = BDConstants.BDNodeType.None;
 
-                if (Enum.IsDefined(typeof(Constants.BDNodeType), parentType))
+                if (Enum.IsDefined(typeof(BDConstants.BDNodeType), parentType))
                 {
-                    result = (Constants.BDNodeType)parentType;
+                    result = (BDConstants.BDNodeType)parentType;
                 }
                 return result;
             }
         }
 
-        public Constants.LayoutVariantType LayoutVariant
+        public BDConstants.LayoutVariantType LayoutVariant
         {
             get
             {
-                Constants.LayoutVariantType result = Constants.LayoutVariantType.Undefined;
+                BDConstants.LayoutVariantType result = BDConstants.LayoutVariantType.Undefined;
 
-                if (Enum.IsDefined(typeof(Constants.LayoutVariantType), layoutVariant))
+                if (Enum.IsDefined(typeof(BDConstants.LayoutVariantType), layoutVariant))
                 {
-                    result = (Constants.LayoutVariantType)layoutVariant;
+                    result = (BDConstants.LayoutVariantType)layoutVariant;
                 }
                 return result;
             }
@@ -322,7 +322,7 @@ namespace BDEditor.DataModel
 
         protected override void OnPropertyChanged(string property)
         {
-            if (!Common.Settings.IsSyncLoad)
+            if (!BDCommon.Settings.IsSyncLoad)
                 switch (property)
                 {
                     case "createdBy":
@@ -448,9 +448,9 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.UUID).WithValue(uuid.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.CREATEDBY).WithValue((null == createdBy) ? Guid.Empty.ToString() : createdBy.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(BDConstants.DATETIMEFORMAT)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(BDConstants.DATETIMEFORMAT)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DEPRECATED).WithValue(deprecated.ToString()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DISPLAYORDER).WithValue(displayOrder.ToString()).WithReplace(true));
 

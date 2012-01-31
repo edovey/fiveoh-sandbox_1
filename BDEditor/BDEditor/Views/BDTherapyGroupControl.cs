@@ -11,9 +11,9 @@ namespace BDEditor.Views
     {
         private Entities dataContext;
         private Guid? parentId;
-        private Constants.BDNodeType parentType;
+        private BDConstants.BDNodeType parentType;
         private BDTherapyGroup currentTherapyGroup;
-        public Constants.LayoutVariantType DefaultLayoutVariantType;
+        public BDConstants.LayoutVariantType DefaultLayoutVariantType;
         private IBDControl parentControl;
         private Guid? scopeId;
         public int? DisplayOrder { get; set; }
@@ -137,7 +137,7 @@ namespace BDEditor.Views
             dataContext = pDataContext;
         }
 
-        public void AssignParentInfo(Guid? pParentId, Constants.BDNodeType pParentType)
+        public void AssignParentInfo(Guid? pParentId, BDConstants.BDNodeType pParentType)
         {
             parentId = pParentId;
             parentType = pParentType;
@@ -181,7 +181,7 @@ namespace BDEditor.Views
                     }
                     
                     BDTherapyGroup.Save(dataContext, currentTherapyGroup);
-                    Typeahead.AddToCollection(Constants.BDNodeType.BDTherapyGroup, BDTherapyGroup.PROPERTYNAME_NAME, currentTherapyGroup.name);
+                    Typeahead.AddToCollection(BDConstants.BDNodeType.BDTherapyGroup, BDTherapyGroup.PROPERTYNAME_NAME, currentTherapyGroup.name);
 
                     result = true;
                 }
@@ -218,8 +218,8 @@ namespace BDEditor.Views
                     currentTherapyGroup.LayoutVariant = DefaultLayoutVariantType;
                     switch (DefaultLayoutVariantType)
                     {
-                        case Constants.LayoutVariantType.TreatmentRecommendation01:
-                            BDNodeAssociation.CreateNodeAssociation(dataContext, currentTherapyGroup, Constants.BDNodeType.BDTherapy);
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                            BDNodeAssociation.CreateNodeAssociation(dataContext, currentTherapyGroup, BDConstants.BDNodeType.BDTherapy);
                             break;
                     }
                 }
@@ -342,7 +342,7 @@ namespace BDEditor.Views
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentTherapyGroup) ? this.currentTherapyGroup.uuid : Guid.Empty);
-            btnTherapyGroupLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnTherapyGroupLink.Tag) ? Constants.ACTIVELINK_COLOR : Constants.INACTIVELINK_COLOR;
+            btnTherapyGroupLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnTherapyGroupLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
 
             if (pPropagateToChildren)
             {

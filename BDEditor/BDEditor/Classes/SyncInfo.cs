@@ -60,7 +60,7 @@ namespace BDEditor.Classes
             }
             else
             {
-                selectStatement = string.Format(@"Select * from {0} where {1} > '{2}'", pRemoteEntityName, ModifiedDatePropertyName, pLastSyncDate.Value.ToString(Constants.DATETIMEFORMAT));
+                selectStatement = string.Format(@"Select * from {0} where {1} > '{2}'", pRemoteEntityName, ModifiedDatePropertyName, pLastSyncDate.Value.ToString(BDConstants.DATETIMEFORMAT));
             }
 
             return selectStatement;

@@ -8,7 +8,7 @@ namespace BDEditor.Views
 {
     public interface IBDControl
     {
-        void AssignParentInfo(Guid? pParentId, Constants.BDNodeType pParentType);
+        void AssignParentInfo(Guid? pParentId, BDConstants.BDNodeType pParentType);
         bool Save();
         void Delete();
         bool CreateCurrentObject();

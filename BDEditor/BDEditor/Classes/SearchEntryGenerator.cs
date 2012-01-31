@@ -96,7 +96,7 @@ namespace BDEditor.Classes
 
             switch (pMetadata.NodeType)
             {
-                case Constants.BDNodeType.BDDisease:
+                case BDConstants.BDNodeType.BDDisease:
                     {
 
                         BDNode disease = BDNode.GetNodeWithId(pContext, pMetadata.displayParentId.Value); 

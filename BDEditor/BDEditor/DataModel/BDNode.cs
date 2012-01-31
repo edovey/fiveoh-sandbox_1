@@ -416,7 +416,7 @@ namespace BDEditor.DataModel
 
         public string DescriptionForLinkedNote
         {
-            get { return string.Format("{0}: {1}", ENTITYNAME_FRIENDLY, this.name); }
+            get { return string.Format("{0}: {1}", NodeType.ToString(), this.name); }
         }
 
         public override string ToString()

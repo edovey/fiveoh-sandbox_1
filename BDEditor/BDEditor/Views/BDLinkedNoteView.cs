@@ -79,17 +79,17 @@ namespace BDEditor.Views
         /// </summary>
         public void PopulateControl()
         {
-            bdLinkedNoteControl1.CurrentLinkedNote = null;
+            //bdLinkedNoteControl1.CurrentLinkedNote = null;
 
-            this.existingAssociation = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, parentId, contextPropertyName);
-            rtfContextInfo.Text = BDLinkedNoteAssociation.GetDescription(dataContext, parentId, parentType, contextPropertyName);
-            if (null != this.existingAssociation)
-            {
-                this.linkedNoteTypeCombo.SelectedIndex = this.existingAssociation.linkedNoteType.Value;
-            }
+            //this.existingAssociation = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, parentId, contextPropertyName);
+            //rtfContextInfo.Text = BDLinkedNoteAssociation.GetDescription(dataContext, parentId, parentType, contextPropertyName);
+            //if (null != this.existingAssociation)
+            //{
+            //    this.linkedNoteTypeCombo.SelectedIndex = this.existingAssociation.linkedNoteType.Value;
+            //}
 
-            RefreshListOfAssociatedLinks();
-            DisplayLinkedNote(this.existingAssociation, false);
+            //RefreshListOfAssociatedLinks();
+            //DisplayLinkedNote(this.existingAssociation, false);
         }
 
         private void RefreshListOfAssociatedLinks()
@@ -297,6 +297,18 @@ namespace BDEditor.Views
         {
             List<LinkedNoteType> noteTypes = Enum.GetValues(typeof(LinkedNoteType)).Cast<LinkedNoteType>().ToList<LinkedNoteType>();
             this.linkedNoteTypeCombo.DataSource = noteTypes;
+
+            bdLinkedNoteControl1.CurrentLinkedNote = null;
+
+            this.existingAssociation = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, parentId, contextPropertyName);
+            rtfContextInfo.Text = BDLinkedNoteAssociation.GetDescription(dataContext, parentId, parentType, contextPropertyName);
+            if (null != this.existingAssociation)
+            {
+                this.linkedNoteTypeCombo.SelectedIndex = this.existingAssociation.linkedNoteType.Value;
+            }
+
+            RefreshListOfAssociatedLinks();
+            DisplayLinkedNote(this.existingAssociation, false);
         }
     }
 }

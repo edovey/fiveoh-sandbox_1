@@ -111,6 +111,7 @@ namespace BDEditor.DataModel
             linkedNoteAssociation.linkedNoteId = pLinkedNoteId;
             linkedNoteAssociation.parentId = pParentId;
             linkedNoteAssociation.parentType = (int)pParentType;
+            linkedNoteAssociation.parentKeyName = pParentType.ToString();
             linkedNoteAssociation.parentKeyPropertyName = pParentPropertyName;
 
             pContext.AddObject(ENTITYNAME, linkedNoteAssociation);
@@ -326,7 +327,7 @@ namespace BDEditor.DataModel
 
         public string GetDescription(Entities pDataContext)
         {
-            return GetDescription(pDataContext, this.parentId, this.NodeType, this.parentKeyPropertyName);
+            return GetDescription(pDataContext, this.parentId, this.ParentType, this.parentKeyPropertyName);
         }
 
         protected override void OnPropertyChanged(string property)
@@ -470,9 +471,18 @@ namespace BDEditor.DataModel
             return this.uuid.ToString();
         }
 
-        public Constants.BDNodeType NodeType
+        public Constants.BDNodeType ParentType
         {
-            get { throw new NotImplementedException(); }
+            get 
+            {
+                Constants.BDNodeType result = Constants.BDNodeType.None;
+
+                if (Enum.IsDefined(typeof(Constants.BDNodeType), parentType))
+                {
+                    result = (Constants.BDNodeType)parentType;
+                }
+                return result;
+            }
         }
     }
 

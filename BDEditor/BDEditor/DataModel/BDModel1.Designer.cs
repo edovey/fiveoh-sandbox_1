@@ -3668,30 +3668,6 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Guid> pathogenGroupId
-        {
-            get
-            {
-                return _pathogenGroupId;
-            }
-            set
-            {
-                OnpathogenGroupIdChanging(value);
-                ReportPropertyChanging("pathogenGroupId");
-                _pathogenGroupId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("pathogenGroupId");
-                OnpathogenGroupIdChanged();
-            }
-        }
-        private Nullable<global::System.Guid> _pathogenGroupId;
-        partial void OnpathogenGroupIdChanging(Nullable<global::System.Guid> value);
-        partial void OnpathogenGroupIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
         public Nullable<global::System.Int32> therapyGroupJoinType
         {
             get

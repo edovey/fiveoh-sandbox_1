@@ -196,7 +196,6 @@
           <Property Name="modifiedDate" Type="datetime" />
           <Property Name="name" Type="nvarchar" MaxLength="1000" />
           <Property Name="schemaVersion" Type="int" />
-          <Property Name="pathogenGroupId" Type="uniqueidentifier" />
           <Property Name="therapyGroupJoinType" Type="int" />
           <Property Name="parentId" Type="uniqueidentifier" />
           <Property Name="parentKeyName" Type="nvarchar" MaxLength="100" />
@@ -286,7 +285,6 @@
           <Property Type="DateTime" Name="modifiedDate" />
           <Property Type="String" Name="name" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="schemaVersion" />
-          <Property Type="Guid" Name="pathogenGroupId" />
           <Property Type="Int32" Name="therapyGroupJoinType" />
           <Property Type="Guid" Name="parentId" />
           <Property Type="String" Name="parentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -475,7 +473,6 @@
                 <ScalarProperty Name="parentKeyName" ColumnName="parentKeyName" />
                 <ScalarProperty Name="parentId" ColumnName="parentId" />
                 <ScalarProperty Name="therapyGroupJoinType" ColumnName="therapyGroupJoinType" />
-                <ScalarProperty Name="pathogenGroupId" ColumnName="pathogenGroupId" />
                 <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />

@@ -163,7 +163,7 @@ namespace BDEditor.Classes
                 presentation.LayoutVariant = Constants.LayoutVariantType.TreatmentRecommendation01;
                 BDNode.Save(dataContext, presentation);
 
-                BDNodeAssociation.CreateNodeAssociation(dataContext, presentation, Constants.BDNodeType.BDDisease);
+                BDNodeAssociation.CreateNodeAssociation(dataContext, disease, Constants.BDNodeType.BDPresentation);
                 BDNodeAssociation.CreateNodeAssociation(dataContext, presentation, Constants.BDNodeType.BDPathogenGroup);
             }
         }

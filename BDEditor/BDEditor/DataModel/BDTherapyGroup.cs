@@ -44,7 +44,6 @@ namespace BDEditor.DataModel
         private const string MODIFIEDBY = @"tg_modifiedBy";
         private const string MODIFIEDDATE = @"tg_modifiedDate";
         private const string DISPLAYORDER = @"tg_displayOrder";
-        private const string PATHOGENGROUPID = @"tg_pathogenGroupId";
         private const string THERAPYGROUPJOINTYPE = @"tg_therapyGroupJoinType";
         private const string NAME = @"tg_name";
         private const string DEPRECATED = @"tg_deprecated";
@@ -166,7 +165,7 @@ namespace BDEditor.DataModel
         {
             List<BDTherapyGroup> therapyGroupList = new List<BDTherapyGroup>();
                 IQueryable<BDTherapyGroup> therapyGroups = (from entry in pContext.BDTherapyGroups
-                                                            where entry.pathogenGroupId == pParentId
+                                                            where entry.parentId == pParentId
                                                             orderby entry.displayOrder
                                                             select entry);
                 foreach (BDTherapyGroup therapyGroup in therapyGroups)
@@ -181,9 +180,9 @@ namespace BDEditor.DataModel
             BDTherapyGroup entry = null;
             if (null != pUuid)
             {
-                IQueryable<BDTherapyGroup> entryList = (from bdTherapGroups in pContext.BDTherapyGroups
-                                                        where bdTherapGroups.uuid == pUuid
-                                                        select bdTherapGroups);
+                IQueryable<BDTherapyGroup> entryList = (from bdTherapyGroups in pContext.BDTherapyGroups
+                                                        where bdTherapyGroups.uuid == pUuid
+                                                        select bdTherapyGroups);
 
                 if (entryList.Count<BDTherapyGroup>() > 0)
                     entry = entryList.AsQueryable().First<BDTherapyGroup>();

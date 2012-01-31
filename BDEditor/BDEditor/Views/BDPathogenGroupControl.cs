@@ -175,26 +175,12 @@ namespace BDEditor.Views
         {
             this.SuspendLayout();
 
+            for (int idx = 0; idx < pathogenControlList.Count; idx++)
+            {
+                BDPathogenControl control = pathogenControlList[idx];
+                removePathogenControl(control, false);
+            }
             pathogenControlList.Clear();
-
-            if (null == currentPathogenGroup)
-            {
-                textBoxPathogenGroupName.Text = @"";
-            }
-            else
-            {
-                textBoxPathogenGroupName.Text = currentPathogenGroup.name;
-                List<IBDNode> list = BDFabrik.GetChildrenForParentId(dataContext, currentPathogenGroup.uuid);
-                for(int idx = 0; idx < list.Count; idx++)
-                {
-                    IBDNode listEntry = list[idx];
-                    if(listEntry.NodeType == (Constants.BDNodeType.BDPathogen))
-                    {
-                        BDNode node = listEntry as BDNode;
-                        addPathogenControl(node, idx);
-                    }
-                }
-            }
 
             for (int idx = 0; idx < therapyGroupControlList.Count; idx++)
             {
@@ -204,13 +190,30 @@ namespace BDEditor.Views
             therapyGroupControlList.Clear();
             panelTherapyGroups.Controls.Clear();
 
-             if (null != currentPathogenGroup)
+            if (null == currentPathogenGroup)
             {
-                List<BDTherapyGroup> list = BDTherapyGroup.getTherapyGroupsForParentId(dataContext, currentPathogenGroup.uuid);
-                for (int idx = 0; idx < list.Count; idx++)
+                textBoxPathogenGroupName.Text = @"";
+            }
+            else
+            {
+                // This is assuming Constants.LayoutVariantType.TreatmentRecommendation01
+                textBoxPathogenGroupName.Text = currentPathogenGroup.name;
+                List<IBDNode> list = BDFabrik.GetChildrenForParentId(dataContext, currentPathogenGroup.uuid);
+                int idxPathogen = 0;
+                int idxTherapyGroup = 0;
+                foreach(IBDNode listEntry in list)
                 {
-                    BDTherapyGroup entry = list[idx];
-                    addTherapyGroupControl(entry, idx);
+                    switch (listEntry.NodeType)
+                    {
+                        case Constants.BDNodeType.BDPathogen:
+                            BDNode node = listEntry as BDNode;
+                            addPathogenControl(node, idxPathogen++);
+                            break;
+                        case Constants.BDNodeType.BDTherapyGroup:
+                            BDTherapyGroup therapyGroup = listEntry as BDTherapyGroup;
+                            addTherapyGroupControl(therapyGroup, idxTherapyGroup++);
+                            break;
+                    }
                 }
             }
 

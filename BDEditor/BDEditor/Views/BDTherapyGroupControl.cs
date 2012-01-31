@@ -69,7 +69,15 @@ namespace BDEditor.Views
         public void RefreshLayout()
         {
             this.SuspendLayout();
-            
+
+            // This is generic for Constants.LayoutVariantType.TreatmentRecommendation01
+
+            for (int idx = 0; idx < therapyControlList.Count; idx++)
+            {
+                BDTherapyControl control = therapyControlList[idx];
+                removeTherapyControl(control, false);
+            }
+
             therapyControlList.Clear();
             panelTherapies.Controls.Clear();
 
@@ -204,9 +212,10 @@ namespace BDEditor.Views
                 }
                 else
                 {
-                    this.currentTherapyGroup = BDTherapyGroup.CreateTherapyGroup(dataContext, this.parentId.Value);
-                    this.currentTherapyGroup.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
-                    this.currentTherapyGroup.LayoutVariant = DefaultLayoutVariantType;
+                    currentTherapyGroup = BDTherapyGroup.CreateTherapyGroup(dataContext, this.parentId.Value);
+                    currentTherapyGroup.SetParent(parentType, parentId);
+                    currentTherapyGroup.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
+                    currentTherapyGroup.LayoutVariant = DefaultLayoutVariantType;
                     switch (DefaultLayoutVariantType)
                     {
                         case Constants.LayoutVariantType.TreatmentRecommendation01:

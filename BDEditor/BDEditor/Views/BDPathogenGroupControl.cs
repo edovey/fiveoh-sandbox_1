@@ -527,7 +527,6 @@ namespace BDEditor.Views
                 view.AssignParentInfo(currentPathogenGroup.Uuid, currentPathogenGroup.NodeType);
                 view.AssignScopeId(scopeId);
                 view.NotesChanged += new EventHandler(notesChanged_Action);
-                view.PopulateControl();
                 view.ShowDialog(this);
                 view.NotesChanged -= new EventHandler(notesChanged_Action);
                 ShowLinksInUse(false);

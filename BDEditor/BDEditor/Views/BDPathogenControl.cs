@@ -172,8 +172,6 @@ namespace BDEditor.Views
                 noteView.AssignContextPropertyName(BDNode.PROPERTYNAME_NAME);
                 noteView.AssignScopeId(scopeId);
                 noteView.NotesChanged += new EventHandler(notesChanged_Action);
-
-                noteView.PopulateControl();
                 noteView.ShowDialog(this);
                 noteView.NotesChanged -= new EventHandler(notesChanged_Action);
                 ShowLinksInUse(false);

@@ -350,7 +350,6 @@ namespace BDEditor.Views
                 view.AssignScopeId(scopeId);
                 view.AssignLinkedNoteType(LinkedNoteType.Footnote, true, true);
                 view.NotesChanged += new EventHandler(notesChanged_Action);
-                view.PopulateControl();
                 view.ShowDialog(this);
                 view.NotesChanged -= new EventHandler(notesChanged_Action);
                 ShowLinksInUse(false);

@@ -74,24 +74,6 @@ namespace BDEditor.Views
             bdLinkedNoteControl1.AssignScopeId(pScopeId);
         }
 
-        /// <summary>
-        /// Fetch the LinkedNote associations related to the context attributes
-        /// </summary>
-        public void PopulateControl()
-        {
-            //bdLinkedNoteControl1.CurrentLinkedNote = null;
-
-            //this.existingAssociation = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, parentId, contextPropertyName);
-            //rtfContextInfo.Text = BDLinkedNoteAssociation.GetDescription(dataContext, parentId, parentType, contextPropertyName);
-            //if (null != this.existingAssociation)
-            //{
-            //    this.linkedNoteTypeCombo.SelectedIndex = this.existingAssociation.linkedNoteType.Value;
-            //}
-
-            //RefreshListOfAssociatedLinks();
-            //DisplayLinkedNote(this.existingAssociation, false);
-        }
-
         private void RefreshListOfAssociatedLinks()
         {
             this.Cursor = Cursors.WaitCursor;
@@ -308,7 +290,7 @@ namespace BDEditor.Views
             }
 
             RefreshListOfAssociatedLinks();
-            DisplayLinkedNote(this.existingAssociation, false);
+            DisplayLinkedNote(this.existingAssociation, true);
         }
     }
 }

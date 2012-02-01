@@ -351,6 +351,8 @@ namespace BDEditor.Classes
 
             BDCommon.Settings.IsSyncLoad = true;
 
+            #region Pull from Prod
+
             foreach (SyncInfo syncInfoEntry in syncDictionary.Values)
             {
                 System.Diagnostics.Debug.WriteLine(syncInfoEntry.FriendlyName);
@@ -430,8 +432,15 @@ namespace BDEditor.Classes
 
                                             Guid originalLinkedNoteUuid = note.tempProductionUuid.Value;
 
-                                            pDataContext.ExecuteStoreCommand("UPDATE BDLinkedNoteAssociations SET linkedNoteId = {0} WHERE linkedNoteId = {1}", note.uuid, originalLinkedNoteUuid);
-
+                                            List<BDLinkedNoteAssociation> associationList = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForLinkedNoteId(pDataContext, originalLinkedNoteUuid);
+                                            foreach (BDLinkedNoteAssociation association in associationList)
+                                            {
+                                                DateTime? modifiedDate = association.modifiedDate;
+                                                association.linkedNoteId = note.Uuid;
+                                                association.modifiedDate = modifiedDate; // reset the modified date because the above change will automatically update it
+                                            }
+                                            //pDataContext.ExecuteStoreCommand("UPDATE BDLinkedNoteAssociations SET linkedNoteId = {0} WHERE linkedNoteId = {1}", note.uuid, originalLinkedNoteUuid);
+                                            pDataContext.SaveChanges();
                                             // This expects that the LinkedNoteAssociation data has already been loaded
                                         }
 
@@ -474,13 +483,50 @@ namespace BDEditor.Classes
 
                 } while (selectResponse.SelectResult.IsSetNextToken());
             }
+            
+            BDCommon.Settings.IsSyncLoad = false;
+            
+            #endregion
 
-            // **** Clear the sync date
-            BDSystemSetting systemSetting = BDSystemSetting.GetSetting(pDataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
-            systemSetting.settingDateTimeValue = null;
-            pDataContext.SaveChanges();
+            #region Push to dev
+
+            // reload the push lists
+            syncDictionary = InitializeSyncDictionary(pDataContext, null, null, false);
+            
+            BDCommon.Settings.IsSyncLoad = true;
+            foreach (SyncInfo syncInfoEntry in syncDictionary.Values)
+            {
+                System.Diagnostics.Debug.WriteLine(string.Format("Push {0}", syncInfoEntry.RemoteEntityName));
+                foreach (IBDObject changeEntry in syncInfoEntry.PushList)
+                {
+                    SimpleDb.PutAttributes(changeEntry.PutAttributes());
+                    syncInfoEntry.RowsPushed++;
+
+                    if (changeEntry is BDLinkedNote)
+                    {
+                        BDLinkedNote linkedNote = changeEntry as BDLinkedNote;
+                        PutObjectRequest putObjectRequest = new PutObjectRequest()
+                                    .WithContentType(@"text/plain")
+                                    .WithContentBody(linkedNote.documentText)
+                                    .WithBucketName(BDLinkedNote.AWS_BUCKET)
+                                    .WithKey(linkedNote.storageKey);
+
+                        S3Response s3Response = S3.PutObject(putObjectRequest);
+                        s3Response.Dispose();
+                    }
+                }
+
+                System.Diagnostics.Debug.WriteLine("Pushed {0} Records for {1}", syncInfoEntry.RowsPushed, syncInfoEntry.RemoteEntityName);
+            }
 
             BDCommon.Settings.IsSyncLoad = false;
+            #endregion
+
+            BDSystemSetting systemSetting = BDSystemSetting.GetSetting(pDataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            systemSetting.settingDateTimeValue = DateTime.Now;
+            pDataContext.SaveChanges();
+
+           
 
             return syncDictionary;
         }

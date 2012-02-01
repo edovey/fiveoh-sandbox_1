@@ -82,6 +82,7 @@ namespace BDEditor.Views
             pBranch.Nodes.CopyTo(nodeList, 0);
             pTree.Nodes.Clear();
             pTree.Nodes.AddRange(nodeList);
+            pTree.Expand();
         }
 
         private void sectionTree_AfterSelect(object sender, TreeViewEventArgs e)

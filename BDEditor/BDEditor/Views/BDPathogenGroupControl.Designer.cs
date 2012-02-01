@@ -35,17 +35,6 @@
             this.btnPathogenGroupLink = new System.Windows.Forms.Button();
             this.labelPathogen = new System.Windows.Forms.Label();
             this.textBoxPathogenGroupName = new System.Windows.Forms.TextBox();
-            this.btnMenu = new System.Windows.Forms.Button();
-            this.contextMenuStripEvents = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.movePreviousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.moveNeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.addPathogenGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addPathogenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addTherapyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.deletePathogenGroupMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.panelPathogens = new System.Windows.Forms.Panel();
             this.contextMenuStripTextBox = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.bToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,9 +49,20 @@
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnMenu = new System.Windows.Forms.Button();
+            this.contextMenuStripEvents = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.movePreviousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveNeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.addPathogenGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addPathogenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addTherapyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.deletePathogenGroupMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panelPathogens = new System.Windows.Forms.Panel();
             this.panelpathogenGroups.SuspendLayout();
-            this.contextMenuStripEvents.SuspendLayout();
             this.contextMenuStripTextBox.SuspendLayout();
+            this.contextMenuStripEvents.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelPathogenGroupName
@@ -104,7 +104,7 @@
             // btnPathogenGroupLink
             // 
             this.btnPathogenGroupLink.Image = global::BDEditor.Properties.Resources.link_16;
-            this.btnPathogenGroupLink.Location = new System.Drawing.Point(334, 24);
+            this.btnPathogenGroupLink.Location = new System.Drawing.Point(520, 24);
             this.btnPathogenGroupLink.Name = "btnPathogenGroupLink";
             this.btnPathogenGroupLink.Size = new System.Drawing.Size(31, 25);
             this.btnPathogenGroupLink.TabIndex = 20;
@@ -127,104 +127,10 @@
             this.textBoxPathogenGroupName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxPathogenGroupName.Location = new System.Drawing.Point(42, 25);
             this.textBoxPathogenGroupName.Name = "textBoxPathogenGroupName";
-            this.textBoxPathogenGroupName.Size = new System.Drawing.Size(286, 24);
+            this.textBoxPathogenGroupName.Size = new System.Drawing.Size(472, 24);
             this.textBoxPathogenGroupName.TabIndex = 18;
             this.textBoxPathogenGroupName.Leave += new System.EventHandler(this.textBoxPathogenGroupName_Leave);
             this.textBoxPathogenGroupName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.textBoxPathogenGroupName_MouseDown);
-            // 
-            // btnMenu
-            // 
-            this.btnMenu.Image = global::BDEditor.Properties.Resources.apps_16;
-            this.btnMenu.Location = new System.Drawing.Point(6, 23);
-            this.btnMenu.Name = "btnMenu";
-            this.btnMenu.Size = new System.Drawing.Size(28, 28);
-            this.btnMenu.TabIndex = 17;
-            this.btnMenu.UseVisualStyleBackColor = true;
-            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
-            // 
-            // contextMenuStripEvents
-            // 
-            this.contextMenuStripEvents.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.movePreviousToolStripMenuItem,
-            this.moveNeToolStripMenuItem,
-            this.toolStripSeparator2,
-            this.addPathogenGroupToolStripMenuItem,
-            this.addPathogenToolStripMenuItem,
-            this.addTherapyToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.deletePathogenGroupMenuItem});
-            this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(187, 148);
-            // 
-            // movePreviousToolStripMenuItem
-            // 
-            this.movePreviousToolStripMenuItem.Image = global::BDEditor.Properties.Resources.previous_16;
-            this.movePreviousToolStripMenuItem.Name = "movePreviousToolStripMenuItem";
-            this.movePreviousToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.movePreviousToolStripMenuItem.Text = "Move &Previous";
-            this.movePreviousToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToPrevious_Click);
-            // 
-            // moveNeToolStripMenuItem
-            // 
-            this.moveNeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.next_16;
-            this.moveNeToolStripMenuItem.Name = "moveNeToolStripMenuItem";
-            this.moveNeToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.moveNeToolStripMenuItem.Text = "Move &Next";
-            this.moveNeToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToNext_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(183, 6);
-            // 
-            // addPathogenGroupToolStripMenuItem
-            // 
-            this.addPathogenGroupToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_16x16;
-            this.addPathogenGroupToolStripMenuItem.Name = "addPathogenGroupToolStripMenuItem";
-            this.addPathogenGroupToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.addPathogenGroupToolStripMenuItem.Text = "Add Pathogen Group";
-            this.addPathogenGroupToolStripMenuItem.Click += new System.EventHandler(this.PathogenGroup_RequestItemAdd);
-            // 
-            // addPathogenToolStripMenuItem
-            // 
-            this.addPathogenToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_record_16;
-            this.addPathogenToolStripMenuItem.Name = "addPathogenToolStripMenuItem";
-            this.addPathogenToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.addPathogenToolStripMenuItem.Text = "Add Pathogen";
-            this.addPathogenToolStripMenuItem.Click += new System.EventHandler(this.Pathogen_RequestItemAdd);
-            // 
-            // addTherapyToolStripMenuItem
-            // 
-            this.addTherapyToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_record_16;
-            this.addTherapyToolStripMenuItem.Name = "addTherapyToolStripMenuItem";
-            this.addTherapyToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.addTherapyToolStripMenuItem.Text = "&Add Therapy Group";
-            this.addTherapyToolStripMenuItem.Click += new System.EventHandler(this.TherapyGroup_RequestItemAdd);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(183, 6);
-            // 
-            // deletePathogenGroupMenuItem
-            // 
-            this.deletePathogenGroupMenuItem.Image = global::BDEditor.Properties.Resources.remove;
-            this.deletePathogenGroupMenuItem.Name = "deletePathogenGroupMenuItem";
-            this.deletePathogenGroupMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.deletePathogenGroupMenuItem.Text = "Delete";
-            this.deletePathogenGroupMenuItem.Click += new System.EventHandler(this.PathogenGroup_RequestItemDelete);
-            // 
-            // panelPathogens
-            // 
-            this.panelPathogens.AutoSize = true;
-            this.panelPathogens.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panelPathogens.BackColor = System.Drawing.SystemColors.Control;
-            this.panelPathogens.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelPathogens.Location = new System.Drawing.Point(0, 74);
-            this.panelPathogens.MinimumSize = new System.Drawing.Size(870, 5);
-            this.panelPathogens.Name = "panelPathogens";
-            this.panelPathogens.Size = new System.Drawing.Size(870, 5);
-            this.panelPathogens.TabIndex = 20;
             // 
             // contextMenuStripTextBox
             // 
@@ -341,6 +247,100 @@
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Visible = false;
             // 
+            // btnMenu
+            // 
+            this.btnMenu.Image = global::BDEditor.Properties.Resources.apps_16;
+            this.btnMenu.Location = new System.Drawing.Point(6, 23);
+            this.btnMenu.Name = "btnMenu";
+            this.btnMenu.Size = new System.Drawing.Size(28, 28);
+            this.btnMenu.TabIndex = 17;
+            this.btnMenu.UseVisualStyleBackColor = true;
+            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
+            // 
+            // contextMenuStripEvents
+            // 
+            this.contextMenuStripEvents.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.movePreviousToolStripMenuItem,
+            this.moveNeToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.addPathogenGroupToolStripMenuItem,
+            this.addPathogenToolStripMenuItem,
+            this.addTherapyToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.deletePathogenGroupMenuItem});
+            this.contextMenuStripEvents.Name = "contextMenuStripEvents";
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(187, 148);
+            // 
+            // movePreviousToolStripMenuItem
+            // 
+            this.movePreviousToolStripMenuItem.Image = global::BDEditor.Properties.Resources.previous_16;
+            this.movePreviousToolStripMenuItem.Name = "movePreviousToolStripMenuItem";
+            this.movePreviousToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.movePreviousToolStripMenuItem.Text = "Move &Previous";
+            this.movePreviousToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToPrevious_Click);
+            // 
+            // moveNeToolStripMenuItem
+            // 
+            this.moveNeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.next_16;
+            this.moveNeToolStripMenuItem.Name = "moveNeToolStripMenuItem";
+            this.moveNeToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.moveNeToolStripMenuItem.Text = "Move &Next";
+            this.moveNeToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToNext_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(183, 6);
+            // 
+            // addPathogenGroupToolStripMenuItem
+            // 
+            this.addPathogenGroupToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_16x16;
+            this.addPathogenGroupToolStripMenuItem.Name = "addPathogenGroupToolStripMenuItem";
+            this.addPathogenGroupToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.addPathogenGroupToolStripMenuItem.Text = "Add Pathogen Group";
+            this.addPathogenGroupToolStripMenuItem.Click += new System.EventHandler(this.PathogenGroup_RequestItemAdd);
+            // 
+            // addPathogenToolStripMenuItem
+            // 
+            this.addPathogenToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_record_16;
+            this.addPathogenToolStripMenuItem.Name = "addPathogenToolStripMenuItem";
+            this.addPathogenToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.addPathogenToolStripMenuItem.Text = "Add Pathogen";
+            this.addPathogenToolStripMenuItem.Click += new System.EventHandler(this.Pathogen_RequestItemAdd);
+            // 
+            // addTherapyToolStripMenuItem
+            // 
+            this.addTherapyToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_record_16;
+            this.addTherapyToolStripMenuItem.Name = "addTherapyToolStripMenuItem";
+            this.addTherapyToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.addTherapyToolStripMenuItem.Text = "&Add Therapy Group";
+            this.addTherapyToolStripMenuItem.Click += new System.EventHandler(this.TherapyGroup_RequestItemAdd);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(183, 6);
+            // 
+            // deletePathogenGroupMenuItem
+            // 
+            this.deletePathogenGroupMenuItem.Image = global::BDEditor.Properties.Resources.remove;
+            this.deletePathogenGroupMenuItem.Name = "deletePathogenGroupMenuItem";
+            this.deletePathogenGroupMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.deletePathogenGroupMenuItem.Text = "Delete";
+            this.deletePathogenGroupMenuItem.Click += new System.EventHandler(this.PathogenGroup_RequestItemDelete);
+            // 
+            // panelPathogens
+            // 
+            this.panelPathogens.AutoSize = true;
+            this.panelPathogens.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panelPathogens.BackColor = System.Drawing.SystemColors.Control;
+            this.panelPathogens.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelPathogens.Location = new System.Drawing.Point(0, 74);
+            this.panelPathogens.MinimumSize = new System.Drawing.Size(870, 5);
+            this.panelPathogens.Name = "panelPathogens";
+            this.panelPathogens.Size = new System.Drawing.Size(870, 5);
+            this.panelPathogens.TabIndex = 20;
+            // 
             // BDPathogenGroupControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -356,8 +356,8 @@
             this.Size = new System.Drawing.Size(870, 110);
             this.panelpathogenGroups.ResumeLayout(false);
             this.panelpathogenGroups.PerformLayout();
-            this.contextMenuStripEvents.ResumeLayout(false);
             this.contextMenuStripTextBox.ResumeLayout(false);
+            this.contextMenuStripEvents.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

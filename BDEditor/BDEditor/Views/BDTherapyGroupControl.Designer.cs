@@ -83,7 +83,7 @@
             this.tbName.ContextMenuStrip = this.contextMenuStrip1;
             this.tbName.Location = new System.Drawing.Point(42, 25);
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(286, 20);
+            this.tbName.Size = new System.Drawing.Size(454, 20);
             this.tbName.TabIndex = 7;
             this.tbName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbName_MouseDown);
             // 
@@ -210,7 +210,7 @@
             // orRadioButton
             // 
             this.orRadioButton.AutoSize = true;
-            this.orRadioButton.Location = new System.Drawing.Point(605, 25);
+            this.orRadioButton.Location = new System.Drawing.Point(764, 25);
             this.orRadioButton.Name = "orRadioButton";
             this.orRadioButton.Size = new System.Drawing.Size(87, 17);
             this.orRadioButton.TabIndex = 14;
@@ -221,7 +221,7 @@
             // andRadioButton
             // 
             this.andRadioButton.AutoSize = true;
-            this.andRadioButton.Location = new System.Drawing.Point(504, 25);
+            this.andRadioButton.Location = new System.Drawing.Point(663, 25);
             this.andRadioButton.Name = "andRadioButton";
             this.andRadioButton.Size = new System.Drawing.Size(95, 17);
             this.andRadioButton.TabIndex = 13;
@@ -232,7 +232,7 @@
             // noneRadioButton
             // 
             this.noneRadioButton.AutoSize = true;
-            this.noneRadioButton.Location = new System.Drawing.Point(383, 25);
+            this.noneRadioButton.Location = new System.Drawing.Point(542, 25);
             this.noneRadioButton.Name = "noneRadioButton";
             this.noneRadioButton.Size = new System.Drawing.Size(121, 17);
             this.noneRadioButton.TabIndex = 12;
@@ -286,7 +286,7 @@
             // btnTherapyGroupLink
             // 
             this.btnTherapyGroupLink.Image = global::BDEditor.Properties.Resources.link_16;
-            this.btnTherapyGroupLink.Location = new System.Drawing.Point(335, 23);
+            this.btnTherapyGroupLink.Location = new System.Drawing.Point(502, 23);
             this.btnTherapyGroupLink.Name = "btnTherapyGroupLink";
             this.btnTherapyGroupLink.Size = new System.Drawing.Size(31, 25);
             this.btnTherapyGroupLink.TabIndex = 19;
@@ -397,7 +397,7 @@
             this.Controls.Add(this.panelHeader);
             this.MinimumSize = new System.Drawing.Size(860, 100);
             this.Name = "BDTherapyGroupControl";
-            this.Size = new System.Drawing.Size(856, 111);
+            this.Size = new System.Drawing.Size(856, 96);
             this.Leave += new System.EventHandler(this.BDTherapyGroupControl_Leave);
             this.contextMenuStrip1.ResumeLayout(false);
             this.panelHeader.ResumeLayout(false);

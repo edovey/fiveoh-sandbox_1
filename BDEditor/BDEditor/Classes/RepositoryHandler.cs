@@ -184,6 +184,18 @@ namespace BDEditor.Classes
                             break;
                         case BDLinkedNote.KEY_NAME:
                             domainName = BDLinkedNote.AWS_DOMAIN;
+                            DeleteObjectRequest s3DeleteRequest = new DeleteObjectRequest()
+                                .WithBucketName(BDLinkedNote.AWS_BUCKET)
+                                .WithKey(BDLinkedNote.GenerateStorageKey(entry.targetId.Value));
+                            try
+                            {
+                                S3.DeleteObject(s3DeleteRequest);
+                            }
+                            catch (AmazonS3Exception s3Exception)
+                            {
+                                Console.WriteLine(s3Exception.Message, s3Exception.InnerException);
+                            }
+
                             break;
                         case BDLinkedNoteAssociation.KEY_NAME:
                             domainName = BDLinkedNoteAssociation.AWS_DOMAIN;
@@ -207,7 +219,6 @@ namespace BDEditor.Classes
 
                     DeleteAttributesRequest request = new DeleteAttributesRequest().WithDomainName(domainName).WithItemName(entry.targetId.Value.ToString().ToUpper());
                     SimpleDb.DeleteAttributes(request);
-                    break;
                 }
                 #endregion
 

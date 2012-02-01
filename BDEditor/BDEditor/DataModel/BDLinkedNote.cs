@@ -339,7 +339,13 @@ namespace BDEditor.DataModel
 
         public static string GenerateStorageKey(BDLinkedNote pNote)
         {
-            string result = string.Format("{0}{1}{2}", AWS_S3_PREFIX, pNote.uuid.ToString().ToUpper(), AWS_S3_FILEEXTENSION);
+            string result = GenerateStorageKey(pNote.Uuid);
+            return result;
+        }
+
+        public static string GenerateStorageKey(Guid pUuid)
+        {
+            string result = string.Format("{0}{1}{2}", AWS_S3_PREFIX, pUuid.ToString().ToUpper(), AWS_S3_FILEEXTENSION);
             return result;
         }
 

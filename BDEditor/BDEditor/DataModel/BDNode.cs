@@ -286,8 +286,8 @@ namespace BDEditor.DataModel
         /// <returns>Uuid of the created/updated entry</returns>
         public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
         {
-            Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
-            BDNode entry = BDNode.GetNodeWithId(pDataContext, uuid);
+            Guid dataUuid = Guid.Parse(pAttributeDictionary[UUID]);
+            BDNode entry = BDNode.GetNodeWithId(pDataContext, dataUuid);
 
             if (null == entry)
             {
@@ -298,7 +298,11 @@ namespace BDEditor.DataModel
                 {
                     nodeType = (BDConstants.BDNodeType)nt;
                 }
-                entry = BDNode.CreateNode(pDataContext, nodeType);
+
+                entry = BDNode.CreateBDNode(dataUuid);
+                entry.nodeType = nt;
+
+                pDataContext.AddObject(ENTITYNAME, entry);
             }
 
             entry.nodeType = (null == pAttributeDictionary[NODETYPE]) ? (short)-1 : short.Parse(pAttributeDictionary[NODETYPE]);
@@ -321,7 +325,7 @@ namespace BDEditor.DataModel
             if (pSaveChanges)
                 pDataContext.SaveChanges();
 
-            return uuid;
+            return dataUuid;
         }
 
         public PutAttributesRequest PutAttributes()

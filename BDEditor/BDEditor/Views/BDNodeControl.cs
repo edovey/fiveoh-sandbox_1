@@ -65,6 +65,8 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
+            this.SuspendLayout();
+
             bdLinkedNoteControl1.AssignDataContext(dataContext);
             if (currentNode == null)
             {
@@ -91,6 +93,10 @@ namespace BDEditor.Views
                 }
             }
             bdLinkedNoteControl1.RefreshLayout();
+
+            ShowLinksInUse(false);
+            this.ResumeLayout();
+
         }
 
         public BDNodeControl()
@@ -141,11 +147,6 @@ namespace BDEditor.Views
             {
                 if(tbName.Text != currentNode.Name) tbName.Text = currentNode.Name;
             }
-        }
-
-        private void tbName_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         public void AssignScopeId(Guid? pScopeId)
@@ -269,6 +270,17 @@ namespace BDEditor.Views
 
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
+            List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentNode) ? this.currentNode.Uuid : Guid.Empty);
+            btnLinkedNote.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnLinkedNote.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
+            
+            // Note:  this control contains no children
+            /* if (pPropagateToChildren)
+            {
+                for (int idx = 0; idx < pathogenGroupControlList.Count; idx++)
+                {
+                    pathogenGroupControlList[idx].ShowLinksInUse(true);
+                }
+            } */
 
         }
 

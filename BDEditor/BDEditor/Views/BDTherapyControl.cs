@@ -142,6 +142,10 @@ namespace BDEditor.Views
             tbDosage.Tag = btnDosageLink;
             tbDuration.Tag = btnDurationLink;
 
+            chkPreviousName.Tag = btnTherapyLink;
+            chkPreviousDose.Tag = btnDosageLink;
+            chkPreviousDuration.Tag = btnDurationLink;
+
             btnTherapyLink.Tag = BDTherapy.PROPERTYNAME_THERAPY;
             btnDosageLink.Tag = BDTherapy.PROPERTYNAME_DOSAGE;
             btnDurationLink.Tag = BDTherapy.PROPERTYNAME_DURATION;
@@ -353,6 +357,18 @@ namespace BDEditor.Views
                     linkButton.Enabled = true;
             }
         }
+
+        private void checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox chkBox = sender as CheckBox;
+            if (null != chkBox)
+            {
+                Button linkButton = chkBox.Tag as Button;
+                if (null != linkButton)
+                    linkButton.Enabled = true;
+            }
+        }
+
 
         private void BDTherapyControl_Leave(object sender, EventArgs e)
         {

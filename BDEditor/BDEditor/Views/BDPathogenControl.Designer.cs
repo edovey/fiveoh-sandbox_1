@@ -46,10 +46,10 @@
             // 
             this.tbPathogenName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.tbPathogenName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.tbPathogenName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPathogenName.Location = new System.Drawing.Point(40, 0);
+            this.tbPathogenName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPathogenName.Location = new System.Drawing.Point(42, 0);
             this.tbPathogenName.Name = "tbPathogenName";
-            this.tbPathogenName.Size = new System.Drawing.Size(303, 20);
+            this.tbPathogenName.Size = new System.Drawing.Size(472, 23);
             this.tbPathogenName.TabIndex = 1;
             this.tbPathogenName.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
@@ -57,7 +57,7 @@
             // 
             this.btnLink.Enabled = false;
             this.btnLink.Image = global::BDEditor.Properties.Resources.link_16;
-            this.btnLink.Location = new System.Drawing.Point(349, -1);
+            this.btnLink.Location = new System.Drawing.Point(520, -1);
             this.btnLink.Name = "btnLink";
             this.btnLink.Size = new System.Drawing.Size(28, 28);
             this.btnLink.TabIndex = 2;
@@ -67,7 +67,7 @@
             // btnMenu
             // 
             this.btnMenu.Image = global::BDEditor.Properties.Resources.apps_16;
-            this.btnMenu.Location = new System.Drawing.Point(396, -1);
+            this.btnMenu.Location = new System.Drawing.Point(556, -1);
             this.btnMenu.Name = "btnMenu";
             this.btnMenu.Size = new System.Drawing.Size(28, 28);
             this.btnMenu.TabIndex = 17;
@@ -84,7 +84,7 @@
             this.toolStripMenuItem2,
             this.deleteToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(153, 126);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(153, 104);
             // 
             // reorderPreviousToolStripMenuItem
             // 
@@ -138,7 +138,7 @@
             this.Controls.Add(this.btnLink);
             this.Controls.Add(this.tbPathogenName);
             this.Name = "BDPathogenControl";
-            this.Size = new System.Drawing.Size(427, 30);
+            this.Size = new System.Drawing.Size(587, 30);
             this.Leave += new System.EventHandler(this.BDPathogenControl_Leave);
             this.contextMenuStripEvents.ResumeLayout(false);
             this.ResumeLayout(false);

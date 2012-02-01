@@ -345,6 +345,7 @@
             this.chkPreviousName.TabIndex = 0;
             this.toolTip1.SetToolTip(this.chkPreviousName, "Same as previous");
             this.chkPreviousName.UseVisualStyleBackColor = true;
+            this.chkPreviousName.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
             // 
             // chkPreviousDose
             // 
@@ -355,6 +356,7 @@
             this.chkPreviousDose.TabIndex = 3;
             this.toolTip1.SetToolTip(this.chkPreviousDose, "Same as previous");
             this.chkPreviousDose.UseVisualStyleBackColor = true;
+            this.chkPreviousDose.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
             // 
             // chkPreviousDuration
             // 
@@ -365,6 +367,7 @@
             this.chkPreviousDuration.TabIndex = 6;
             this.toolTip1.SetToolTip(this.chkPreviousDuration, "Same as previous");
             this.chkPreviousDuration.UseVisualStyleBackColor = true;
+            this.chkPreviousDuration.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
             // 
             // BDTherapyControl
             // 

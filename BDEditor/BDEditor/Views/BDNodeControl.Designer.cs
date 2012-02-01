@@ -83,7 +83,6 @@
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(475, 24);
             this.tbName.TabIndex = 1;
-            this.tbName.TextChanged += new System.EventHandler(this.tbName_TextChanged);
             this.tbName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbName_MouseDown);
             // 
             // contextMenuStripTextBox

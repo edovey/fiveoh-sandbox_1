@@ -17,8 +17,8 @@ namespace BDEditor.DataModel
     {
         Inline = 0,
         Comment = 1,
-        Footnote = 2,
-        EndNote = 3
+        Endnote = 2,
+        Footnote = 3
     }
 
     /// <summary>

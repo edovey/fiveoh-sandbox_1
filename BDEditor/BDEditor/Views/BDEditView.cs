@@ -62,7 +62,8 @@ namespace BDEditor.Views
                 switch (listEntry.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation00:
-                            TreeNode node = TreatmentRecommendationTree.BuildChapterTreeNode(dataContext, listEntry);
+                            //TreeNode node = TreatmentRecommendationTree.BuildChapterTreeNode(dataContext, listEntry);
+                            TreeNode node = TreatmentRecommendationTree.BuildBranch(dataContext, listEntry);
                             // this is only to prevent a single first node
                             TreeNode[] nodeList = new TreeNode[node.Nodes.Count];
                             node.Nodes.CopyTo(nodeList, 0);
@@ -73,6 +74,14 @@ namespace BDEditor.Views
             }
 
             this.Cursor = Cursors.Default;
+        }
+
+        private void graftTreeNode(TreeNode pTree, TreeNode pBranch)
+        {
+            TreeNode[] nodeList = new TreeNode[pBranch.Nodes.Count];
+            pBranch.Nodes.CopyTo(nodeList, 0);
+            pTree.Nodes.Clear();
+            pTree.Nodes.AddRange(nodeList);
         }
 
         private void sectionTree_AfterSelect(object sender, TreeViewEventArgs e)
@@ -112,6 +121,9 @@ namespace BDEditor.Views
                             switch (node.LayoutVariant)
                             {
                                 case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                                    TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
+                                    graftTreeNode(selectedNode, childTreeNode);
+
                                     BDNodeControl control_tr01 = null;
                                     control_tr01 = new BDNodeControl(dataContext, node);
                                     control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
@@ -126,6 +138,9 @@ namespace BDEditor.Views
                             switch (node.LayoutVariant)
                             {
                                 case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                                    TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
+                                    graftTreeNode(selectedNode, childTreeNode);
+
                                     BDNodeControl control_tr01 = null;
                                     control_tr01 = new BDNodeControl(dataContext, node);
                                     control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
@@ -140,6 +155,9 @@ namespace BDEditor.Views
                             switch (node.LayoutVariant)
                             {
                                 case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                                    TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
+                                    graftTreeNode(selectedNode, childTreeNode);
+
                                     BDNodeControl control_tr01 = null;
                                     control_tr01 = new BDNodeControl(dataContext, node);
                                     control_tr01.AssignParentInfo(node.ParentId, node.ParentType);

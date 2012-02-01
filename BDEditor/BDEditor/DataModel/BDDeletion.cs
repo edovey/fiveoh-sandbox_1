@@ -109,25 +109,42 @@ namespace BDEditor.DataModel
             List<IBDObject> newDeletionsForLocal = BDDeletion.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
             foreach (IBDObject deletionEntry in newDeletionsForLocal)
             {
-                BDDeletion deletion = deletionEntry as BDDeletion;
-                switch (deletion.targetName)
+                BDDeletion entry = deletionEntry as BDDeletion;
+                switch (entry.targetName)
                 {
                     case BDNode.KEY_NAME:
-                        BDNode.Delete(pDataContext, deletion.targetId.Value,false);
+                        BDNode.DeleteLocal(pDataContext, entry.targetId.Value);
                         break;
+                     case BDNodeAssociation.KEY_NAME:
+                        BDNodeAssociation.DeleteLocal(pDataContext, entry.targetId.Value);
+                        break;    
+               
                     case BDLinkedNote.KEY_NAME:
-                        BDLinkedNote.Delete(pDataContext, deletion.targetId.Value, false);
+                        BDLinkedNote.DeleteLocal(pDataContext, entry.targetId.Value);
                         break;
                     case BDLinkedNoteAssociation.KEY_NAME:
-                        BDLinkedNoteAssociation.Delete(pDataContext, deletion.targetId.Value, false);
+                        BDLinkedNoteAssociation.DeleteLocal(pDataContext, entry.targetId.Value);
                         break;
+
                     case BDTherapy.KEY_NAME:
-                        BDTherapy.Delete(pDataContext, deletion.targetId.Value, false);
+                        BDTherapy.DeleteLocal(pDataContext, entry.targetId.Value);
                         break;
                     case BDTherapyGroup.KEY_NAME:
-                        BDTherapyGroup.Delete(pDataContext, deletion.targetId.Value, false);
+                        BDTherapyGroup.DeleteLocal(pDataContext, entry.targetId.Value);
+                        break;
+
+                    case BDMetadata.KEY_NAME:
+                        BDMetadata.DeleteLocal(pDataContext, entry.targetId.Value);
+                        break;
+
+                    case BDSearchEntry.KEY_NAME:
+                        BDSearchEntry.DeleteLocal(pDataContext, entry.targetId.Value);
+                        break;
+                    case BDSearchEntryAssociation.KEY_NAME:
+                        BDSearchEntryAssociation.DeleteLocal(pDataContext, entry.targetId.Value);
                         break;
                 }
+
                 pDataContext.SaveChanges();
 
             }

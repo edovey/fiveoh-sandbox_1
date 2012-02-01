@@ -108,12 +108,12 @@ namespace BDEditor.DataModel
             return result;
         }
 
-        public static List<BDNodeAssociation> RetrieveList(Entities pContext, Guid pObjectId)
+        public static List<BDNodeAssociation> RetrieveList(Entities pContext, Guid pNodeId)
         {
             List<BDNodeAssociation> resultList = new List<BDNodeAssociation>();
 
             IQueryable<BDNodeAssociation> entries = (from entry in pContext.BDNodeAssociations
-                                                       where (entry.nodeId == pObjectId) 
+                                                       where (entry.nodeId == pNodeId) 
                                                        select entry);
 
             foreach (BDNodeAssociation item in entries)
@@ -122,6 +122,43 @@ namespace BDEditor.DataModel
             }
 
             return resultList;
+        }
+
+        /// <summary>
+        /// Extended Delete method that creates a deletion record as well as deleting the local record. 
+        /// Deletes all assoications for the node
+        /// </summary>
+        /// <param name="pContext">the data context</param>
+        /// <param name="pNode">the node whose child associations are to be deleted</param>
+        public static void Delete(Entities pContext, IBDNode pNode, bool pCreateDeletion)
+        {
+            if (null == pNode) return;
+
+            List<BDNodeAssociation> nodeAssociationList = RetrieveList(pContext, pNode.Uuid);
+            foreach (BDNodeAssociation association in nodeAssociationList)
+            {
+                if(pCreateDeletion)
+                    BDDeletion.CreateDeletion(pContext, KEY_NAME, association.Uuid);
+                pContext.DeleteObject(association);
+            }
+            pContext.SaveChanges();
+        }
+
+        /// <summary>
+        /// Delete from the local datastore without creating a deletion record nor deleting any children. Does not save.
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pUuid"></param>
+        public static void DeleteLocal(Entities pContext, Guid? pUuid)
+        {
+            if (null != pUuid)
+            {
+                BDNodeAssociation entry = BDNodeAssociation.RetrieveWithId(pContext, pUuid.Value);
+                if (null != entry)
+                {
+                    pContext.DeleteObject(entry);
+                }
+            }
         }
 
         public BDConstants.BDNodeType NodeType

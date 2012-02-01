@@ -136,17 +136,15 @@ namespace BDEditor.DataModel
         public static void Delete(Entities pContext, BDSearchEntryAssociation pEntity, bool pCreateDeletion)
         {
             // Don't delete the note from here. Deletion of a note will delete all association entries
-            if (null != pEntity)
+            if (null == pEntity) return;
+            if (pCreateDeletion)
             {
-                if (pCreateDeletion)
-                {
-                    // create BDDeletion record for the object to be deleted
-                    BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
-                }
-                // delete record from local data store
-                pContext.DeleteObject(pEntity);
-                pContext.SaveChanges();
+                // create BDDeletion record for the object to be deleted
+                BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
             }
+            // delete record from local data store
+            pContext.DeleteObject(pEntity);
+            pContext.SaveChanges();
         }
 
         /// <summary>
@@ -158,16 +156,22 @@ namespace BDEditor.DataModel
         public static void Delete(Entities pContext, Guid pUuid, bool pCreateDeletion)
         {
             BDSearchEntryAssociation entity = BDSearchEntryAssociation.GetSearchEntryAssociationWithId(pContext, pUuid);
-            if (null != entity)
+            BDSearchEntryAssociation.Delete(pContext, entity, pCreateDeletion);
+        }
+
+        /// <summary>
+        /// Delete from the local datastore without creating a deletion record nor deleting any children. Does not save.
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pUuid"></param>
+        public static void DeleteLocal(Entities pContext, Guid? pUuid)
+        {
+            if (null != pUuid)
             {
-                if (pCreateDeletion)
+                BDSearchEntryAssociation entry = BDSearchEntryAssociation.GetSearchEntryAssociationWithId(pContext, pUuid.Value);
+                if (null != entry)
                 {
-                    BDSearchEntryAssociation.Delete(pContext, entity);
-                }
-                else
-                {
-                    pContext.DeleteObject(entity);
-                    pContext.SaveChanges();
+                    pContext.DeleteObject(entry);
                 }
             }
         }
@@ -176,6 +180,15 @@ namespace BDEditor.DataModel
         {
             BDEditor.DataModel.Entities dataContext = new BDEditor.DataModel.Entities();
             dataContext.ExecuteStoreCommand("DELETE FROM BDSearchEntryAssociations");
+        }
+
+        public static void DeleteForSearchEntryId(Entities pContext, Guid pUuid, bool pCreateDeletion)
+        {
+            List<BDSearchEntryAssociation> children = BDSearchEntryAssociation.GetSearchEntryAssociationsForSearchEntryId(pContext, pUuid);
+            foreach (BDSearchEntryAssociation t in children)
+            {
+                BDSearchEntryAssociation.Delete(pContext, t, pCreateDeletion);
+            }
         }
 
         public static List<BDSearchEntryAssociation> GetSearchEntryAssociationsForDisplayParentId(Entities pContext, Guid? pDisplayParentId)

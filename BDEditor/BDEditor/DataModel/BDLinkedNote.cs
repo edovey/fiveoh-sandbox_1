@@ -110,12 +110,12 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext">the data context</param>
         /// <param name="pEntity">the entry to be deleted</param>
-        public static void Delete(Entities pContext, BDLinkedNote pEntity)
+        public static void Delete(Entities pContext, BDLinkedNote pEntity, bool pCreateDeletion)
         {
-            // delet the note associations
-            DeleteNoteAssociations(pContext, pEntity.uuid, true);
-            // create BDDeletion record for the object to be deleted
-            BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
+            BDLinkedNoteAssociation.DeleteForNote(pContext, pEntity, pCreateDeletion);
+            BDMetadata.DeleteForItemId(pContext, pEntity.Uuid, pCreateDeletion);
+            if(pCreateDeletion)
+                BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
             // delete record from local data store
             pContext.DeleteObject(pEntity);
             pContext.SaveChanges();
@@ -130,28 +130,23 @@ namespace BDEditor.DataModel
         public static void Delete(Entities pContext, Guid pUuid, bool pCreateDeletion)
         {
             BDLinkedNote entity = BDLinkedNote.GetLinkedNoteWithId(pContext, pUuid);
-            if (null != entity)
-            {
-                DeleteNoteAssociations(pContext, pUuid, pCreateDeletion);
-
-                if (pCreateDeletion)
-                {
-                    BDLinkedNote.Delete(pContext, entity);
-                }
-                else
-                {
-                    pContext.DeleteObject(entity);
-                    pContext.SaveChanges();
-                }
-            }
+            Delete(pContext, entity, pCreateDeletion);
         }
 
-        private static void DeleteNoteAssociations(Entities pContext, Guid pUuid, bool pCreateDeletion)
+        /// <summary>
+        /// Delete from the local datastore without creating a deletion record nor deleting any children. Does not save.
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pUuid"></param>
+        public static void DeleteLocal(Entities pContext, Guid? pUuid)
         {
-            List<BDLinkedNoteAssociation> children = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForLinkedNoteId(pContext, pUuid);
-            foreach (BDLinkedNoteAssociation t in children)
+            if (null != pUuid)
             {
-                BDLinkedNoteAssociation.Delete(pContext, t, pCreateDeletion);
+                BDLinkedNote entry = BDLinkedNote.GetLinkedNoteWithId(pContext, pUuid.Value);
+                if (null != entry)
+                {
+                    pContext.DeleteObject(entry);
+                }
             }
         }
 

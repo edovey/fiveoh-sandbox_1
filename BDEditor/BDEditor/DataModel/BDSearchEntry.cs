@@ -94,12 +94,15 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext">the data context</param>
         /// <param name="pEntity">the entry to be deleted</param>
-        public static void Delete(Entities pContext, BDSearchEntry pEntity)
+        public static void Delete(Entities pContext, BDSearchEntry pEntity, bool pCreateDeletion)
         {
-            // delet the note associations
-            DeleteSearchEntryAssociations(pContext, pEntity.uuid, true);
+            if (null == pEntity) return;
+
+            // delete the associations
+            BDSearchEntryAssociation.DeleteForSearchEntryId(pContext, pEntity.Uuid, pCreateDeletion);
             // create BDDeletion record for the object to be deleted
-            BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
+            if(pCreateDeletion)
+                BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
             // delete record from local data store
             pContext.DeleteObject(pEntity);
             pContext.SaveChanges();
@@ -114,20 +117,7 @@ namespace BDEditor.DataModel
         public static void Delete(Entities pContext, Guid pUuid, bool pCreateDeletion)
         {
             BDSearchEntry entity = BDSearchEntry.GetSearchEntryWithId(pContext, pUuid);
-            if (null != entity)
-            {
-                DeleteSearchEntryAssociations(pContext, pUuid, pCreateDeletion);
-
-                if (pCreateDeletion)
-                {
-                    BDSearchEntry.Delete(pContext, entity);
-                }
-                else
-                {
-                    pContext.DeleteObject(entity);
-                    pContext.SaveChanges();
-                }
-            }
+            BDSearchEntry.Delete(pContext, entity, pCreateDeletion);
         }
 
         public static void DeleteAll()
@@ -135,13 +125,21 @@ namespace BDEditor.DataModel
             BDEditor.DataModel.Entities dataContext = new BDEditor.DataModel.Entities();
             dataContext.ExecuteStoreCommand("DELETE FROM BDSearchEntries");
         }
-        
-        private static void DeleteSearchEntryAssociations(Entities pContext, Guid pUuid, bool pCreateDeletion)
+
+        /// <summary>
+        /// Delete from the local datastore without creating a deletion record nor deleting any children. Does not save.
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pUuid"></param>
+        public static void DeleteLocal(Entities pContext, Guid? pUuid)
         {
-            List<BDSearchEntryAssociation> children = BDSearchEntryAssociation.GetSearchEntryAssociationsForSearchEntryId(pContext, pUuid);
-            foreach (BDSearchEntryAssociation t in children)
+            if (null != pUuid)
             {
-                BDSearchEntryAssociation.Delete(pContext, t, pCreateDeletion);
+                BDSearchEntry entry = BDSearchEntry.GetSearchEntryWithId(pContext, pUuid.Value);
+                if (null != entry)
+                {
+                    pContext.DeleteObject(entry);
+                }
             }
         }
 

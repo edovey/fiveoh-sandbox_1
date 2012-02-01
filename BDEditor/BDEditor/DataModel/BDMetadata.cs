@@ -136,15 +136,14 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext">the data context</param>
         /// <param name="pEntity">the entry to be deleted</param>
-        public static void Delete(Entities pContext, BDMetadata pEntity)
+        public static void Delete(Entities pContext, BDMetadata pEntity, bool pCreateDeletion)
         {
-            if (pEntity != null)
-            {
+            if (pEntity == null) return;
+            if(pCreateDeletion)
                 BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
-                // delete record from local data store
-                pContext.DeleteObject(pEntity);
-                pContext.SaveChanges();      
-            }
+            // delete record from local data store
+            pContext.DeleteObject(pEntity);
+            pContext.SaveChanges();      
         }
 
         /// <summary>
@@ -156,18 +155,30 @@ namespace BDEditor.DataModel
         public static void Delete(Entities pContext, Guid pUuid, bool pCreateDeletion)
         {
             BDMetadata entity = BDMetadata.GetMetadataWithId(pContext, pUuid);
-            if (null != entity)
-            {
-                BDDeletion.CreateDeletion(pContext, KEY_NAME, pUuid);
-                pContext.DeleteObject(entity);
-                pContext.SaveChanges();
-            }
+            Delete(pContext, entity, pCreateDeletion);
         }
 
-        public static void DeleteForItemId(Entities pContext, Guid? pItemId)
+        public static void DeleteForItemId(Entities pContext, Guid? pItemId, bool pCreateDeletion)
         {
             BDMetadata meta = GetMetadataWithItemId(pContext, pItemId);
-            Delete(pContext, meta);
+            Delete(pContext, meta, pCreateDeletion);
+        }
+
+        /// <summary>
+        /// Delete from the local datastore without creating a deletion record nor deleting any children. Does not save.
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pUuid"></param>
+        public static void DeleteLocal(Entities pContext, Guid? pUuid)
+        {
+            if (null != pUuid)
+            {
+                BDMetadata entry = BDMetadata.GetMetadataWithId(pContext, pUuid.Value);
+                if (null != entry)
+                {
+                    pContext.DeleteObject(entry);
+                }
+            }
         }
 
         /// <summary>

@@ -282,7 +282,7 @@ namespace BDEditor.Views
                 BDNode entry = pPathogenGroupControl.CurrentPathogenGroup;
                 if (null != entry)
                 {
-                    BDNode.Delete(dataContext, entry);
+                    BDNode.Delete(dataContext, entry, pDeleteRecord);
                     for (int idx = 0; idx < pathogenGroupControlList.Count; idx++)
                     {
                         pathogenGroupControlList[idx].DisplayOrder = idx;

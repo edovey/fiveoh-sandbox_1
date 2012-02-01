@@ -128,18 +128,16 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext">the data context</param>
         /// <param name="pEntity">the entry to be deleted</param>
-        public static void Delete(Entities pContext, BDTherapy pEntity)
+        public static void Delete(Entities pContext, BDTherapy pEntity, bool pCreateDeletion)
         {
-            // delete linked notes
-            List<BDLinkedNoteAssociation> linkedNotes = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(pContext, pEntity.uuid);
-            foreach (BDLinkedNoteAssociation a in linkedNotes)
-            {
-                BDLinkedNoteAssociation.Delete(pContext, a);
-            }
+            if (null == pEntity) return;
 
-            BDMetadata.DeleteForItemId(pContext, pEntity.Uuid);
+            BDLinkedNoteAssociation.DeleteForParentId(pContext, pEntity.Uuid, pCreateDeletion);
+            BDMetadata.DeleteForItemId(pContext, pEntity.Uuid, pCreateDeletion);
+            BDNodeAssociation.Delete(pContext, pEntity, pCreateDeletion);
             // create BDDeletion record for the object to be deleted
-            BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
+            if(pCreateDeletion)
+                BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
 
             // delete record from local data store
             pContext.DeleteObject(pEntity);
@@ -155,19 +153,34 @@ namespace BDEditor.DataModel
         public static void Delete(Entities pContext, Guid pUuid, bool pCreateDeletion)
         {
             BDTherapy entity = BDTherapy.GetTherapyWithId(pContext, pUuid);
-            if (null != entity)
+            BDTherapy.Delete(pContext, entity, pCreateDeletion);
+        }
+
+        public static void DeleteForParentId(Entities pContext, Guid pUuid, bool pCreateDeletion)
+        {
+            List<BDTherapy> children = BDTherapy.GetTherapiesForTherapyParentId(pContext, pUuid);
+            foreach (BDTherapy child in children)
             {
-                if (pCreateDeletion)
-                {
-                    BDTherapy.Delete(pContext, entity);
-                }
-                else
-                {
-                    pContext.DeleteObject(entity);
-                }
+                BDTherapy.Delete(pContext, child, pCreateDeletion);
             }
         }
 
+        /// <summary>
+        /// Delete from the local datastore without creating a deletion record nor deleting any children. Does not save.
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pUuid"></param>
+        public static void DeleteLocal(Entities pContext, Guid? pUuid)
+        {
+            if (null != pUuid)
+            {
+                BDTherapy entry = BDTherapy.GetTherapyWithId(pContext, pUuid.Value);
+                if (null != entry)
+                {
+                    pContext.DeleteObject(entry);
+                }
+            }
+        }
         /// <summary>
         /// Gets all Therapies in the model with the specified Therapy Group ID
         /// </summary>

@@ -104,27 +104,39 @@ namespace BDEditor.DataModel
         /// Extended Delete method that created a deletion record as well as deleting the local record
         /// </summary>
         /// <param name="pContext">the data context</param>
-        /// <param name="pEntity">the entry to be deleted</param>
-        public static void Delete(Entities pContext, BDNode pEntity)
+        /// <param name="pNode">the entry to be deleted</param>
+        public static void Delete(Entities pContext, IBDNode pNode, bool pCreateDeletion)
         {
-            // delete linked notes
-            List<BDLinkedNoteAssociation> linkedNotes = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(pContext, pEntity.uuid);
-            foreach (BDLinkedNoteAssociation a in linkedNotes)
+            if (null == pNode) return;
+
+            BDLinkedNoteAssociation.DeleteForParentId(pContext, pNode.Uuid, pCreateDeletion);
+
+            List<IBDNode> children = BDFabrik.GetChildrenForParentId(pContext, pNode.Uuid);
+            foreach (IBDNode child in children)
             {
-                BDLinkedNoteAssociation.Delete(pContext, a);
+                switch (child.NodeType)
+                {
+                    case BDConstants.BDNodeType.BDTherapy:
+                        BDTherapy therapyChild = child as BDTherapy;
+                        BDTherapy.Delete(pContext, therapyChild, pCreateDeletion);
+                        break;
+                    case BDConstants.BDNodeType.BDTherapyGroup:
+                        BDTherapyGroup therapyGroupChild = child as BDTherapyGroup;
+                        BDTherapyGroup.Delete(pContext, therapyGroupChild, pCreateDeletion);
+                        break;
+                    default:
+                        BDNode.Delete(pContext, child, pCreateDeletion);
+                        break;
+                }
             }
 
-            // delete children
-            //List<BDNode> children = BDNode.GetChildNodesForParentId(pContext, pEntity.uuid);
-            //foreach (BDNode n in children)
-            //{
-            //    BDNode.Delete(pContext, n);
-            //}
-
+            BDMetadata.DeleteForItemId(pContext, pNode.Uuid, pCreateDeletion);
+            BDNodeAssociation.Delete(pContext, pNode, pCreateDeletion);
             // create BDDeletion record for the object to be deleted
-            BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
+            if(pCreateDeletion)
+                BDDeletion.CreateDeletion(pContext, KEY_NAME, pNode.Uuid);
             // delete record from local data store
-            pContext.DeleteObject(pEntity);
+            pContext.DeleteObject(pNode);
             pContext.SaveChanges();
         }
 
@@ -137,15 +149,22 @@ namespace BDEditor.DataModel
         public static void Delete(Entities pContext, Guid pUuid, bool pCreateDeletion)
         {
             BDNode entity = BDNode.GetNodeWithId(pContext, pUuid);
-            if (null != entity)
+            BDNode.Delete(pContext, entity, pCreateDeletion);
+        }
+
+        /// <summary>
+        /// Delete from the local datastore without creating a deletion record nor deleting any children. Does not save.
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pUuid"></param>
+        public static void DeleteLocal(Entities pContext, Guid? pUuid)
+        {
+            if (null != pUuid)
             {
-                if (pCreateDeletion)
+                BDNode entry = BDNode.GetNodeWithId(pContext, pUuid.Value);
+                if (null != entry)
                 {
-                    BDNode.Delete(pContext, entity);
-                }
-                else
-                {
-                    pContext.DeleteObject(entity);
+                    pContext.DeleteObject(entry);
                 }
             }
         }

@@ -279,16 +279,12 @@ namespace BDEditor.Views
                 BDNode node = pPathogenControl.CurrentPathogen;
                 if (null != node)
                 {
-                    BDNode.Delete(dataContext, node);
+                    BDNode.Delete(dataContext, node, pDeleteRecord);
 
                     for (int idx = 0; idx < pathogenControlList.Count; idx++)
                     {
                         pathogenControlList[idx].DisplayOrder = idx;
                     }
-
-                    BDMetadata mdEntry = BDMetadata.GetMetadataWithId(dataContext, node.uuid);
-                    if (null != mdEntry)
-                        BDMetadata.Delete(dataContext, mdEntry);
                 }
             }
 
@@ -377,7 +373,7 @@ namespace BDEditor.Views
                 BDTherapyGroup entry = pTherapyGroupControl.CurrentTherapyGroup;
                 if (null != entry)
                 {
-                    BDTherapyGroup.Delete(dataContext, entry);
+                    BDTherapyGroup.Delete(dataContext, entry, pDeleteRecord);
                     for (int idx = 0; idx < therapyGroupControlList.Count; idx++)
                     {
                         therapyGroupControlList[idx].DisplayOrder = idx;

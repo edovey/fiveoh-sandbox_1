@@ -283,15 +283,11 @@ namespace BDEditor.Views
                 BDTherapy entry = pTherapyControl.CurrentTherapy;
                 if (null != entry)
                 {
-                    BDTherapy.Delete(dataContext, entry);
+                    BDTherapy.Delete(dataContext, entry, pDeleteRecord);
                     for (int idx = 0; idx < therapyControlList.Count; idx++)
                     {
                         therapyControlList[idx].DisplayOrder = idx;
                     }
-                    // remove associated metadata 
-                    BDMetadata mdEntry = BDMetadata.GetMetadataWithId(dataContext, entry.uuid);
-                    if(null != mdEntry)
-                        BDMetadata.Delete(dataContext, mdEntry);
                 }
             }
 

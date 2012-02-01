@@ -31,6 +31,14 @@ namespace BDEditor.Views
         public event EventHandler ReorderToNext;
 
         public event EventHandler NotesChanged;
+        public event EventHandler<NodeEventArgs> NameChanged;
+
+        protected virtual void OnNameChanged(NodeEventArgs e)
+        {
+            EventHandler<NodeEventArgs> handler = NameChanged;
+
+            if (null != handler) { handler(this, e); }
+        }
 
         protected virtual void OnNotesChanged(EventArgs e)
         {
@@ -178,7 +186,11 @@ namespace BDEditor.Views
 
                 if (null != currentNode)
                 {
-                    if (currentNode.Name != tbName.Text) currentNode.Name = tbName.Text;
+                    if (currentNode.Name != tbName.Text)
+                    {
+                        currentNode.Name = tbName.Text;
+                        OnNameChanged( new NodeEventArgs(dataContext, currentNode.Uuid, currentNode.Name));
+                    }
 
                     bdLinkedNoteControl1.Save();
 
@@ -376,6 +388,16 @@ namespace BDEditor.Views
         private void btnMenu_Click(object sender, EventArgs e)
         {
             this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
+        }
+
+        private void BDNodeControl_Leave(object sender, EventArgs e)
+        {
+            Save();
+        }
+
+        private void tbName_Leave(object sender, EventArgs e)
+        {
+            Save();
         }
     }
 }

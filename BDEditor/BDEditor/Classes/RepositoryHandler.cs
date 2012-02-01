@@ -51,7 +51,7 @@ namespace BDEditor.Classes
             }
         }
 
-        private SyncInfoDictionary InitializeSyncDictionary(Entities pDataContext, DateTime? pLastSyncDate, DateTime pCurrentSyncDate, Boolean pCreateMissing)
+        private SyncInfoDictionary InitializeSyncDictionary(Entities pDataContext, DateTime? pLastSyncDate, DateTime? pCurrentSyncDate, Boolean pCreateMissing)
         {
             SyncInfoDictionary syncDictionary = new SyncInfoDictionary();
 
@@ -117,7 +117,7 @@ namespace BDEditor.Classes
         /// <returns></returns>
         public SyncInfoDictionary Sync(Entities pDataContext, DateTime? pLastSyncDate)
         {
-            DateTime currentSyncDate = DateTime.Now;
+            DateTime? currentSyncDate = DateTime.Now;
             #region Initialize Sync
 
             SyncInfoDictionary syncDictionary = InitializeSyncDictionary(pDataContext, pLastSyncDate, currentSyncDate, true);
@@ -345,7 +345,7 @@ namespace BDEditor.Classes
 
         public SyncInfoDictionary ImportFromProduction(Entities pDataContext, DateTime? pLastSyncDate)
         {
-            DateTime currentSyncDate = DateTime.Now;
+            DateTime? currentSyncDate = null; // DateTime.Now;
 
             SyncInfoDictionary syncDictionary = InitializeSyncDictionary(pDataContext, pLastSyncDate, currentSyncDate, false);
 
@@ -474,6 +474,11 @@ namespace BDEditor.Classes
 
                 } while (selectResponse.SelectResult.IsSetNextToken());
             }
+
+            // **** Clear the sync date
+            BDSystemSetting systemSetting = BDSystemSetting.GetSetting(pDataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            systemSetting.settingDateTimeValue = null;
+            pDataContext.SaveChanges();
 
             BDCommon.Settings.IsSyncLoad = false;
 

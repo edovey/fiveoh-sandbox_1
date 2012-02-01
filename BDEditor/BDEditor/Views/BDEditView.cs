@@ -319,7 +319,7 @@ namespace BDEditor.Views
 #if DEBUG
             this.Cursor = Cursors.WaitCursor;
             BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
-            DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
+            DateTime? lastSyncDate = null;
 
             SyncInfoDictionary syncResultList = RepositoryHandler.Aws.ImportFromProduction(dataContext, null);
 
@@ -329,12 +329,12 @@ namespace BDEditor.Views
             {
                 System.Diagnostics.Debug.WriteLine(syncInfo.FriendlyName);
                 if ((syncInfo.RowsPulled > 0) || (syncInfo.RowsPushed > 0))
-                    resultMessage = string.Format("Procustion Import {0}{1}{4}: Pulled {2}, Pushed {3}", resultMessage, (string.IsNullOrEmpty(resultMessage) ? "" : "\n"), syncInfo.RowsPulled, syncInfo.RowsPushed, syncInfo.FriendlyName);
+                    resultMessage = string.Format("Production Import {0}{1}{4}: Pulled {2}, Pushed {3}", resultMessage, (string.IsNullOrEmpty(resultMessage) ? "" : "\n"), syncInfo.RowsPulled, syncInfo.RowsPushed, syncInfo.FriendlyName);
             }
 
             if (string.IsNullOrEmpty(resultMessage)) resultMessage = "No changes";
 
-            MessageBox.Show(resultMessage, "Snchronization");
+            MessageBox.Show(resultMessage, "Synchronization");
 
             UpdateSyncLabel();
             LoadChapterDropDown();

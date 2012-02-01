@@ -107,7 +107,6 @@ namespace BDEditor.DataModel
             linkedNoteAssociation.createdBy = Guid.Empty;
             linkedNoteAssociation.schemaVersion = 0;
             linkedNoteAssociation.linkedNoteType = (int)pLinkedNoteType;
-
             linkedNoteAssociation.linkedNoteId = pLinkedNoteId;
             linkedNoteAssociation.parentId = pParentId;
             linkedNoteAssociation.parentType = (int)pParentType;
@@ -405,16 +404,19 @@ namespace BDEditor.DataModel
             return entryList;
         }
 
-        public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime pCurrentSyncDate)
+        public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime? pCurrentSyncDate)
         {
             SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
             syncInfo.PushList = BDLinkedNoteAssociation.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
             syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
-            for (int idx = 0; idx < syncInfo.PushList.Count; idx++)
+            if (null != pCurrentSyncDate)
             {
-                ((BDLinkedNoteAssociation)syncInfo.PushList[idx]).modifiedDate = pCurrentSyncDate;
+                for (int idx = 0; idx < syncInfo.PushList.Count; idx++)
+                {
+                    ((BDLinkedNoteAssociation)syncInfo.PushList[idx]).modifiedDate = pCurrentSyncDate;
+                }
+                if (syncInfo.PushList.Count > 0) { pDataContext.SaveChanges(); }
             }
-            if (syncInfo.PushList.Count > 0) { pDataContext.SaveChanges(); }
             return syncInfo;
         }
 
@@ -446,6 +448,7 @@ namespace BDEditor.DataModel
             entry.linkedNoteId = Guid.Parse(pAttributeDictionary[LINKEDNOTEID]);
             entry.parentId = Guid.Parse(pAttributeDictionary[PARENTID]);
             entry.parentKeyName = pAttributeDictionary[PARENTKEYNAME];
+            entry.parentType = int.Parse(pAttributeDictionary[PARENTTYPE]);
             entry.parentKeyPropertyName = pAttributeDictionary[PARENTKEYPROPERTYNAME];
             entry.linkedNoteType = int.Parse(pAttributeDictionary[LINKEDNOTETYPE]);
             if (pSaveChanges)
@@ -470,6 +473,7 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.LINKEDNOTEID).WithValue((null == linkedNoteId) ? Guid.Empty.ToString() : linkedNoteId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.LINKEDNOTETYPE).WithValue(string.Format(@"{0}", linkedNoteType)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.PARENTTYPE).WithValue(string.Format(@"{0}", parentType)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDLinkedNoteAssociation.PARENTKEYPROPERTYNAME).WithValue((null == parentKeyPropertyName) ? string.Empty : parentKeyPropertyName).WithReplace(true));
 

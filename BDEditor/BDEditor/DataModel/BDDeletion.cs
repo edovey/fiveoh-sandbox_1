@@ -150,16 +150,19 @@ namespace BDEditor.DataModel
             }
         }
 
-        public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime pCurrentSyncDate)
+        public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime? pCurrentSyncDate)
         {
             SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
             syncInfo.PushList = BDDeletion.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
             syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
-            for (int idx = 0; idx < syncInfo.PushList.Count; idx++)
+            if (null != pCurrentSyncDate)
             {
-                ((BDDeletion)syncInfo.PushList[idx]).modifiedDate = pCurrentSyncDate;
+                for (int idx = 0; idx < syncInfo.PushList.Count; idx++)
+                {
+                    ((BDDeletion)syncInfo.PushList[idx]).modifiedDate = pCurrentSyncDate;
+                }
+                if (syncInfo.PushList.Count > 0) { pDataContext.SaveChanges(); }
             }
-            if (syncInfo.PushList.Count > 0) { pDataContext.SaveChanges(); }
             return syncInfo;
         }
 

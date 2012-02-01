@@ -197,13 +197,13 @@ namespace BDEditor.Views
                 {
                     this.existingAssociation = BDLinkedNoteAssociation.CreateLinkedNoteAssociation(dataContext);
                     this.existingAssociation.parentType = (int)parentType;
+                    this.existingAssociation.parentKeyName = parentType.ToString();
                     this.existingAssociation.parentKeyPropertyName = contextPropertyName;
                     this.existingAssociation.parentId = parentId;
                 }
 
                 this.existingAssociation.linkedNoteId = selectedNote.uuid;
                 
-
                 BDLinkedNoteAssociation.Save(dataContext, this.existingAssociation);
 
                 DisplayLinkedNote(this.existingAssociation, true);

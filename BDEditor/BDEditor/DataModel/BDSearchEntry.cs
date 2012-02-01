@@ -29,10 +29,6 @@ namespace BDEditor.DataModel
         public const string AWS_DOMAIN = AWS_PROD_DOMAIN;
 #endif
 
-        //public const string AWS_BUCKET = @"bdDataStore";
-        //public const string AWS_S3_PREFIX = @"bd~";
-        //public const string AWS_S3_FILEEXTENSION = @".txt";
-
         public const string ENTITYNAME = @"BDSearchEntries";
         public const string ENTITYNAME_FRIENDLY = @"Search Entry";
         public const string KEY_NAME = @"BDSearchEntry";

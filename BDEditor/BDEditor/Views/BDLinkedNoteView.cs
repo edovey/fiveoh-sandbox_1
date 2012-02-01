@@ -43,7 +43,7 @@ namespace BDEditor.Views
             {
                 List<LinkedNoteType> noteTypes = Enum.GetValues(typeof(LinkedNoteType)).Cast<LinkedNoteType>().ToList<LinkedNoteType>();
                 noteTypes.Remove(LinkedNoteType.Comment);
-                // for disease and presentation, the 'inline' type is the overview which is already represented on the view
+                // for node and presentation, the 'inline' type is the overview which is already represented on the view
                 noteTypes.Remove(LinkedNoteType.Inline);
                 this.linkedNoteTypeCombo.DataSource = noteTypes;
             }
@@ -152,6 +152,16 @@ namespace BDEditor.Views
         private void btnOK_Click(object sender, EventArgs e)
         {
             bdLinkedNoteControl1.Save();
+            
+            if (null == existingAssociation)
+                existingAssociation = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, parentId, contextPropertyName);
+
+            if (null != existingAssociation)
+            {
+                existingAssociation.linkedNoteType = (int)Enum.Parse(typeof(LinkedNoteType), this.linkedNoteTypeCombo.GetItemText(this.linkedNoteTypeCombo.SelectedItem));
+                dataContext.SaveChanges();
+            }
+
             this.Close();
         }
 
@@ -272,7 +282,7 @@ namespace BDEditor.Views
         private void linkedNoteType_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(null != existingAssociation)
-                existingAssociation.linkedNoteType = linkedNoteTypeCombo.SelectedIndex;
+                existingAssociation.linkedNoteType = (int)Enum.Parse(typeof(LinkedNoteType), this.linkedNoteTypeCombo.GetItemText(this.linkedNoteTypeCombo.SelectedItem));
         }
 
         private void BDLinkedNoteView_Load(object sender, EventArgs e)
@@ -286,7 +296,7 @@ namespace BDEditor.Views
             rtfContextInfo.Text = BDLinkedNoteAssociation.GetDescription(dataContext, parentId, parentType, contextPropertyName);
             if (null != this.existingAssociation)
             {
-                this.linkedNoteTypeCombo.SelectedIndex = this.existingAssociation.linkedNoteType.Value;
+                this.linkedNoteTypeCombo.SelectedItem = this.existingAssociation.linkedNoteType.Value;
             }
 
             RefreshListOfAssociatedLinks();

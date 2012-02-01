@@ -83,6 +83,24 @@ namespace BDEditor.Views
                 case TreeViewAction.ByKeyboard:
                 case TreeViewAction.ByMouse:
                     splitContainer1.Panel2.SuspendLayout();
+
+                    foreach (Control ctrl in splitContainer1.Panel2.Controls)
+                    {
+                        BDNodeControl nodeCtrl = ctrl as BDNodeControl;
+                        if (null != nodeCtrl)
+                        {
+                            nodeCtrl.NameChanged -= new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                        }
+                        else
+                        {
+                            BDPresentationControl presCtrl = ctrl as BDPresentationControl;
+                            if (null != presCtrl)
+                            {
+                                presCtrl.NameChanged -= new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                            }
+                        }
+                    }
+
                     splitContainer1.Panel2.Controls.Clear();
                     TreeNode selectedNode = e.Node;
 
@@ -98,6 +116,7 @@ namespace BDEditor.Views
                                     control_tr01 = new BDNodeControl(dataContext, node);
                                     control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
                                     control_tr01.Dock = DockStyle.Fill;
+                                    control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
                                     splitContainer1.Panel2.Controls.Add(control_tr01);
                                     control_tr01.RefreshLayout();
                                     break;
@@ -111,6 +130,7 @@ namespace BDEditor.Views
                                     control_tr01 = new BDNodeControl(dataContext, node);
                                     control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
                                     control_tr01.Dock = DockStyle.Fill;
+                                    control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
                                     splitContainer1.Panel2.Controls.Add(control_tr01);
                                     control_tr01.RefreshLayout();
                                     break;
@@ -124,6 +144,7 @@ namespace BDEditor.Views
                                     control_tr01 = new BDNodeControl(dataContext, node);
                                     control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
                                     control_tr01.Dock = DockStyle.Fill;
+                                    control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
                                     splitContainer1.Panel2.Controls.Add(control_tr01);
                                     control_tr01.RefreshLayout();
                                     break;
@@ -139,7 +160,7 @@ namespace BDEditor.Views
                                     control_tr01.CurrentPresentation = presentation;
                                     control_tr01.AssignScopeId((null != presentation) ? presentation.Uuid : Guid.Empty);
                                     control_tr01.AssignParentInfo(presentation.ParentId, presentation.ParentType);
-
+                                    control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
                                     splitContainer1.Panel2.Controls.Add(control_tr01);
                                     control_tr01.RefreshLayout();
                                     break;
@@ -156,6 +177,16 @@ namespace BDEditor.Views
                     break;
             }
             this.Cursor = Cursors.Default;
+        }
+
+        void nodeControl_NameChanged(object sender, NodeEventArgs e)
+        {
+            //TreeNode node = chapterTree.SelectedNode;
+            IBDNode node = chapterTree.SelectedNode.Tag as IBDNode;
+            if (node.Uuid == e.Uuid)
+            {
+                chapterTree.SelectedNode.Text = e.Text;
+            }
         }
 
   
@@ -317,33 +348,36 @@ namespace BDEditor.Views
         {
 
 #if DEBUG
-            this.Cursor = Cursors.WaitCursor;
-            BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
-            DateTime? lastSyncDate = null;
-
-            SyncInfoDictionary syncResultList = RepositoryHandler.Aws.ImportFromProduction(dataContext, null);
-
-            string resultMessage = string.Empty;
-
-            foreach (SyncInfo syncInfo in syncResultList.Values)
+            if (MessageBox.Show("Have the development respository domains (bd_dev_2*) and bdDevStore bucket been cleared?", "Import from Production", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
             {
-                System.Diagnostics.Debug.WriteLine(syncInfo.FriendlyName);
-                if ((syncInfo.RowsPulled > 0) || (syncInfo.RowsPushed > 0))
-                    resultMessage = string.Format("Production Import {0}{1}{4}: Pulled {2}, Pushed {3}", resultMessage, (string.IsNullOrEmpty(resultMessage) ? "" : "\n"), syncInfo.RowsPulled, syncInfo.RowsPushed, syncInfo.FriendlyName);
+                this.Cursor = Cursors.WaitCursor;
+                BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+                DateTime? lastSyncDate = null;
+
+                SyncInfoDictionary syncResultList = RepositoryHandler.Aws.ImportFromProduction(dataContext, null);
+
+                string resultMessage = string.Empty;
+
+                foreach (SyncInfo syncInfo in syncResultList.Values)
+                {
+                    System.Diagnostics.Debug.WriteLine(syncInfo.FriendlyName);
+                    if ((syncInfo.RowsPulled > 0) || (syncInfo.RowsPushed > 0))
+                        resultMessage = string.Format("Production Import {0}{1}{4}: Pulled {2}, Pushed {3}", resultMessage, (string.IsNullOrEmpty(resultMessage) ? "" : "\n"), syncInfo.RowsPulled, syncInfo.RowsPushed, syncInfo.FriendlyName);
+                }
+
+                if (string.IsNullOrEmpty(resultMessage)) resultMessage = "No changes";
+
+                MessageBox.Show(resultMessage, "Synchronization");
+
+                UpdateSyncLabel();
+                LoadChapterDropDown();
+
+                systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+                lastSyncDate = systemSetting.settingDateTimeValue;
+                loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDNodes.Count() <= 0);
+
+                this.Cursor = Cursors.Default;
             }
-
-            if (string.IsNullOrEmpty(resultMessage)) resultMessage = "No changes";
-
-            MessageBox.Show(resultMessage, "Synchronization");
-
-            UpdateSyncLabel();
-            LoadChapterDropDown();
-
-            systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
-            lastSyncDate = systemSetting.settingDateTimeValue;
-            loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDNodes.Count() <= 0);
-
-            this.Cursor = Cursors.Default;
 #else
             MessageBox.Show(@"May not import in this environment" , "Import");
 #endif

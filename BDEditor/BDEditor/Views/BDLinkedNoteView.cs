@@ -35,20 +35,6 @@ namespace BDEditor.Views
             InitializeComponent();
         }
 
-        public void AssignLinkedNoteType(LinkedNoteType pType, bool isEditable, bool isRestrictedType)
-        {
-            this.linkedNoteTypeCombo.SelectedItem = pType;
-            this.linkedNoteTypeCombo.Enabled = isEditable;
-            if (isRestrictedType)
-            {
-                List<LinkedNoteType> noteTypes = Enum.GetValues(typeof(LinkedNoteType)).Cast<LinkedNoteType>().ToList<LinkedNoteType>();
-                noteTypes.Remove(LinkedNoteType.Comment);
-                // for node and presentation, the 'inline' type is the overview which is already represented on the view
-                noteTypes.Remove(LinkedNoteType.Inline);
-                this.linkedNoteTypeCombo.DataSource = noteTypes;
-            }
-        }
-
         public void AssignDataContext(Entities pDataContext)
         {
             dataContext = pDataContext;
@@ -296,7 +282,7 @@ namespace BDEditor.Views
             rtfContextInfo.Text = BDLinkedNoteAssociation.GetDescription(dataContext, parentId, parentType, contextPropertyName);
             if (null != this.existingAssociation)
             {
-                this.linkedNoteTypeCombo.SelectedItem = this.existingAssociation.linkedNoteType.Value;
+                this.linkedNoteTypeCombo.SelectedIndex = this.existingAssociation.linkedNoteType.Value;
             }
 
             RefreshListOfAssociatedLinks();

@@ -83,6 +83,7 @@
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(475, 24);
             this.tbName.TabIndex = 1;
+            this.tbName.Leave += new System.EventHandler(this.tbName_Leave);
             this.tbName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbName_MouseDown);
             // 
             // contextMenuStripTextBox
@@ -333,6 +334,7 @@
             this.Name = "BDNodeControl";
             this.Size = new System.Drawing.Size(826, 550);
             this.Load += new System.EventHandler(this.BDNodeControl_Load);
+            this.Leave += new System.EventHandler(this.BDNodeControl_Leave);
             this.contextMenuStripTextBox.ResumeLayout(false);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();

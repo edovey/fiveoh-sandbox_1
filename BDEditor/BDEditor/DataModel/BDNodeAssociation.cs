@@ -92,6 +92,20 @@ namespace BDEditor.DataModel
             return result;
         }
 
+        public static BDNodeAssociation RetrieveForNodeIdAndChildType(Entities pContext, Guid pNodeId, BDConstants.BDNodeType pChildNodeType)
+        {
+            BDNodeAssociation result = null;
+
+            IQueryable<BDNodeAssociation> entries = (from entry in pContext.BDNodeAssociations
+                                                     where (entry.nodeId == pNodeId) && (entry.childNodeType == (int)pChildNodeType)
+                                                     select entry);
+
+            if (entries.Count<BDNodeAssociation>() > 0)
+                result = entries.AsQueryable().First<BDNodeAssociation>();
+
+            return result;
+        } 
+
         public static BDNodeAssociation RetrieveWithId(Entities pContext, Guid pUuid)
         {
             BDNodeAssociation result = null;
@@ -249,12 +263,20 @@ namespace BDEditor.DataModel
 
         public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
         {
-            Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
+            Guid dataUuid = Guid.Parse(pAttributeDictionary[UUID]);
+            Guid dataNodeId = Guid.Parse(pAttributeDictionary[NODEID]);
+            int dataChildNodeInt = (null == pAttributeDictionary[CHILDNODETYPE]) ? (short)-1 : short.Parse(pAttributeDictionary[CHILDNODETYPE]);
 
-            BDNodeAssociation entry = BDNodeAssociation.RetrieveWithId(pDataContext, uuid);
+            BDConstants.BDNodeType dataChildNodeType = BDConstants.BDNodeType.None;
+            if (Enum.IsDefined(typeof(BDConstants.BDNodeType), dataChildNodeInt))
+            {
+                dataChildNodeType = (BDConstants.BDNodeType)dataChildNodeInt;
+            }
+
+            BDNodeAssociation entry = BDNodeAssociation.RetrieveForNodeIdAndChildType(pDataContext, dataNodeId, dataChildNodeType);
             if (null == entry)
             {
-                entry = BDNodeAssociation.CreateBDNodeAssociation(uuid);
+                entry = BDNodeAssociation.CreateBDNodeAssociation(dataUuid);
                 pDataContext.AddObject(ENTITYNAME, entry);
             }
 
@@ -271,7 +293,7 @@ namespace BDEditor.DataModel
             if (pSaveChanges)
                 pDataContext.SaveChanges();
 
-            return uuid;
+            return dataUuid;
         }
 
         public PutAttributesRequest PutAttributes()

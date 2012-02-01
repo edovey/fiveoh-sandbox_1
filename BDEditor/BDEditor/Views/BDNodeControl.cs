@@ -134,7 +134,7 @@ namespace BDEditor.Views
 
         private void BDNodeControl_Load(object sender, EventArgs e)
         {
-            btnLinkedNote.Tag = BDNode.VIRTUALPROPERTYNAME_OVERVIEW;
+            btnLinkedNote.Tag = BDNode.PROPERTYNAME_NAME;
             lblNode.Text = BDUtilities.GetEnumDescription(defaultNodeType);
 
             if (null != currentNode)

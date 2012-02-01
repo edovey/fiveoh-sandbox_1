@@ -223,7 +223,7 @@ namespace BDEditor.Views
 
             if (string.IsNullOrEmpty(resultMessage)) resultMessage = "No changes";
 
-            MessageBox.Show(resultMessage, "Snchronization");
+            MessageBox.Show(resultMessage, "Synchronization");
 
             UpdateSyncLabel();
             LoadChapterDropDown();

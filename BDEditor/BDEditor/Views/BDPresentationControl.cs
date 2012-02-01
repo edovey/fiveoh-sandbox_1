@@ -31,6 +31,14 @@ namespace BDEditor.Views
         public event EventHandler ReorderToNext;
 
         public event EventHandler NotesChanged;
+        public event EventHandler<NodeEventArgs> NameChanged;
+
+        protected virtual void OnNameChanged(NodeEventArgs e)
+        {
+            EventHandler<NodeEventArgs> handler = NameChanged;
+
+            if (null != handler) { handler(this, e); }
+        }
 
         protected virtual void OnNotesChanged(EventArgs e)
         {
@@ -127,7 +135,12 @@ namespace BDEditor.Views
                 }
                 if (null != currentPresentation)
                 {
-                    if(currentPresentation.name != tbPresentationName.Text) currentPresentation.name = tbPresentationName.Text;
+                    if (currentPresentation.name != tbPresentationName.Text)
+                    {
+                        currentPresentation.name = tbPresentationName.Text;
+                        OnNameChanged(new NodeEventArgs(dataContext, currentPresentation.Uuid, currentPresentation.Name));
+                    }
+
                     bdLinkedNoteControl1.Save();
 
                     foreach (BDPathogenGroupControl control in pathogenGroupControlList)

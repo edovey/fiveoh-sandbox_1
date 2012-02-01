@@ -91,6 +91,14 @@ namespace BDEditor.Views
                         {
                             nodeCtrl.NameChanged -= new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
                         }
+                        else
+                        {
+                            BDPresentationControl presCtrl = ctrl as BDPresentationControl;
+                            if (null != presCtrl)
+                            {
+                                presCtrl.NameChanged -= new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                            }
+                        }
                     }
 
                     splitContainer1.Panel2.Controls.Clear();
@@ -152,7 +160,7 @@ namespace BDEditor.Views
                                     control_tr01.CurrentPresentation = presentation;
                                     control_tr01.AssignScopeId((null != presentation) ? presentation.Uuid : Guid.Empty);
                                     control_tr01.AssignParentInfo(presentation.ParentId, presentation.ParentType);
-
+                                    control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
                                     splitContainer1.Panel2.Controls.Add(control_tr01);
                                     control_tr01.RefreshLayout();
                                     break;

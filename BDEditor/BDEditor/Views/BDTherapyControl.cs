@@ -349,26 +349,37 @@ namespace BDEditor.Views
 
         private void textBox_TextChanged(object sender, EventArgs e)
         {
-            TextBox textBox = sender as TextBox;
-            if (null != textBox)
-            {
-                Button linkButton = textBox.Tag as Button;
-                if (null != linkButton)
-                    linkButton.Enabled = true;
-            }
+            //TextBox textBox = sender as TextBox;
+            //if (null != textBox)
+            //{
+            //    Button linkButton = textBox.Tag as Button;
+            //    if (null != linkButton)
+            //        linkButton.Enabled = true;
+            //}
+            toggleLinkButtonEnablement();
         }
 
         private void checkBox_CheckedChanged(object sender, EventArgs e)
         {
-            CheckBox chkBox = sender as CheckBox;
-            if (null != chkBox)
-            {
-                Button linkButton = chkBox.Tag as Button;
-                if (null != linkButton)
-                    linkButton.Enabled = true;
-            }
+            //CheckBox chkBox = sender as CheckBox;
+            //if (null != chkBox)
+            //{
+            //    Button linkButton = chkBox.Tag as Button;
+            //    if (null != linkButton)
+            //        linkButton.Enabled = true;
+            //}
+            toggleLinkButtonEnablement();
         }
 
+        private void toggleLinkButtonEnablement()
+        {
+            bool enabled = ((chkPreviousDose.Checked || chkPreviousDuration.Checked || chkPreviousName.Checked) ||
+                ((tbDosage.Text.Length > 0) || (tbDuration.Text.Length > 0) || (tbName.Text.Length > 0)));
+
+            btnTherapyLink.Enabled = enabled;
+            btnDosageLink.Enabled = enabled;
+            btnDurationLink.Enabled = enabled;
+        }
 
         private void BDTherapyControl_Leave(object sender, EventArgs e)
         {

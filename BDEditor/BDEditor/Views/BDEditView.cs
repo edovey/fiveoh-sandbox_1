@@ -292,8 +292,10 @@ namespace BDEditor.Views
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
             this.btnImportFromProduction.Visible = true;
+            this.brewButton.Visible = true;
 #else
             this.btnImportFromProduction.Visible = false;
+            this.brewButton.Visible = false;
 #endif
 
             BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);

@@ -13,9 +13,9 @@ namespace BDEditor.Classes
     /// <summary>
     /// Clear existing search entries and generate new search entry and search entry association entities 
     /// </summary>
-    public class SearchEntryGenerator
+    public class BDSearchEntryGenerator
     {
-        public SearchEntryGenerator() { }
+        public BDSearchEntryGenerator() { }
         
         /// <summary>
         /// Generate new Search Entries from the data

@@ -362,7 +362,7 @@ namespace BDEditor.Views
 
         private void brewButton_Click(object sender, EventArgs e)
         {
-            SearchEntryGenerator.Generate();
+            BDSearchEntryGenerator.Generate();
         }
 
         private void btnImportFromProduction_Click(object sender, EventArgs e)

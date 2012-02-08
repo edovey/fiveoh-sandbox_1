@@ -46,6 +46,7 @@ namespace BDEditor.DataModel
         private const string DISPLAYPARENTID = @"sa_displayParentId";
         private const string DISPLAYPARENTTYPE = @"sa_displayParentYype";
         private const string PARENTENTITYPROPERTYNAME = @"sa_parentEntityPropertyName";
+        
         private const string DISPLAYCONTEXT = @"sa_displayContext";
 
         /// <summary>

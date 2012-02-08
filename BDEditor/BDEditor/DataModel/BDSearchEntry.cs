@@ -39,23 +39,25 @@ namespace BDEditor.DataModel
         private const string SCHEMAVERSION = @"se_schemaVersion";
         private const string CREATEDBY = @"se_createdBy";
         private const string CREATEDDATE = @"se_createdDate";
-        //private const string MODIFIEDBY = @"se_modifieddBy";
-        //private const string MODIFIEDDATE = @"se_modifiedDate";
         private const string NAME = @"se_name";
 
         /// <summary>
-        /// Extended Create method that sets the created date and schema version
+        /// Extended Create method that sets the created date, schema version and name.  Saves the instance.
         /// </summary>
-        /// <returns>BDLinkedNote</returns>
-        public static BDSearchEntry CreateSearchEntry(Entities pContext)
+        /// <returns>BDsearchEntry</returns>
+        public static BDSearchEntry CreateSearchEntry(Entities pContext, string pName)
         {
-            return CreateSearchEntry(pContext, Guid.NewGuid());
+            BDSearchEntry entry = CreateSearchEntry(pContext, Guid.NewGuid());
+            entry.name = pName;
+
+            Save(pContext, entry);
+            return entry;
         }
 
         /// <summary>
         /// Extended Create method that sets the created date and schema version
         /// </summary>
-        /// <returns>BDLinkedNote</returns>
+        /// <returns>BDSearchEntry</returns>
         public static BDSearchEntry CreateSearchEntry(Entities pContext, Guid pUuid)
         {
             BDSearchEntry entry = CreateBDSearchEntry(pUuid);

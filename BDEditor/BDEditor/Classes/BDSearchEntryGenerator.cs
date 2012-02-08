@@ -125,11 +125,11 @@ namespace BDEditor.Classes
             // if matching search entry is not found, create one
             if (entries.Count() == 0)
             {
-                BDSearchEntry searchEntry = BDSearchEntry.CreateSearchEntry(pDataContext);
-                searchEntry.name = entryName;
-                // also create search association record
-                Guid assnGuid = CreateEntryAssociation(pDataContext, pDisplayParent, searchEntry, pDisplayContext, pNode);
-                BDSearchEntry.Save(pDataContext, searchEntry);
+                // create and save new search entry
+                BDSearchEntry searchEntry = BDSearchEntry.CreateSearchEntry(pDataContext, entryName);
+                
+                // Create search association record
+                BDSearchEntryAssociation.CreateSearchEntryAssociation(pDataContext, pNode.Uuid, pNode.NodeType, pDisplayParent.Uuid, pDisplayParent.NodeType, pNode.LayoutVariant, pDisplayContext);
             }
             else
             {
@@ -143,25 +143,9 @@ namespace BDEditor.Classes
 
                 if (associations.Count() == 0)
                 {
-                    Guid newAssociation = CreateEntryAssociation(pDataContext, pDisplayParent, searchEntry, pDisplayContext, pNode);
+                    BDSearchEntryAssociation.CreateSearchEntryAssociation(pDataContext, pNode.Uuid, pNode.NodeType, pDisplayParent.Uuid, pDisplayParent.NodeType, pNode.LayoutVariant, pDisplayContext);
                 }
             }
-        }
-
-        private static Guid CreateEntryAssociation(Entities pContext, IBDNode pParent, BDSearchEntry pSearchEntry, string pDisplayContext, IBDNode pNode)
-        {
-            BDSearchEntryAssociation a = BDSearchEntryAssociation.CreateSearchEntryAssociation(pContext);
-            a.searchEntryId = pSearchEntry.uuid;
-            a.displayParentId = pParent.Uuid;
-            a.displayParentType = (int)pParent.NodeType;
-            // string representation of where the detail page is located
-            a.displayContext = pDisplayContext;
-            a.layoutVariant = (int)pParent.LayoutVariant;
-            a.searchEntryType = (int)pNode.NodeType;
-            
-            BDSearchEntryAssociation.Save(pContext, a);
-
-            return a.uuid;
         }
     }
 }

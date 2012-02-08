@@ -39,13 +39,12 @@ namespace BDEditor.DataModel
         private const string SCHEMAVERSION = @"sa_schemaVersion";
         private const string CREATEDBY = @"sa_createdBy";
         private const string CREATEDDATE = @"sa_createdDate";
-        private const string MODIFIEDBY = @"sa_modifiedBy";
-        private const string MODIFIEDDATE = @"sa_modifiedDate";
         private const string DISPLAYORDER = @"sa_displayOrder";
         private const string SEARCHENTRYID = @"sa_searchEntryId";
+        private const string SEARCHENTRYTYPE = @"sa_searchEntryType";
         private const string DISPLAYPARENTID = @"sa_displayParentId";
-        private const string DISPLAYPARENTTYPE = @"sa_displayParentYype";
-        private const string PARENTENTITYPROPERTYNAME = @"sa_parentEntityPropertyName";
+        private const string DISPLAYPARENTTYPE = @"sa_displayParentType";
+        private const string LAYOUTVARIANT = @"sa_layoutVariant";
         
         private const string DISPLAYCONTEXT = @"sa_displayContext";
 
@@ -80,15 +79,18 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pSearchEntryId"></param>
-        /// <param name="pDisplayParentEntityName"></param>
+        /// <param name="pSearchEntryType"></param>
+        /// <param name="pDisplayParentType"></param>
         /// <param name="pDisplayParentId"></param>
+        /// <param name="pLayoutVariant"></param>
         /// <param name="pDisplayContext"></param>
-        /// <returns>BDSearchEntryAssociation</returns>
+        /// <returns></returns>
         public static BDSearchEntryAssociation CreateSearchEntryAssociation(Entities pContext,
                                                                             Guid pSearchEntryId,
-                                                                            BDConstants.BDNodeType pDisplayParentType,
+                                                                            BDConstants.BDNodeType pSearchEntryType,
                                                                             Guid pDisplayParentId,
-            BDConstants.LayoutVariantType pLayoutVariant,
+                                                                            BDConstants.BDNodeType pDisplayParentType,
+                                                                            BDConstants.LayoutVariantType pLayoutVariant,
                                                                             string pDisplayContext)
         {
             BDSearchEntryAssociation association = CreateBDSearchEntryAssociation(Guid.NewGuid());
@@ -96,6 +98,7 @@ namespace BDEditor.DataModel
             association.schemaVersion = 0;
 
             association.searchEntryId = pSearchEntryId;
+            association._searchEntryType = (int)pSearchEntryType;
             association.displayParentId = pDisplayParentId;
             association._displayParentType = (int)pDisplayParentType;
             association.displayContext = pDisplayContext;
@@ -277,7 +280,7 @@ namespace BDEditor.DataModel
 
         public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime? pCurrentSyncDate)
         {
-            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
+            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, CREATEDDATE, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
             syncInfo.PushList = BDSearchEntryAssociation.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
             syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
             if (null != pCurrentSyncDate)
@@ -313,12 +316,12 @@ namespace BDEditor.DataModel
             entry.displayOrder = displayOrder;
             entry.createdBy = Guid.Parse(pAttributeDictionary[CREATEDBY]);
             entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
-            //entry.modifiedBy = Guid.Parse(pAttributeDictionary[MODIFIEDBY]);
-            //entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
             entry.searchEntryId = Guid.Parse(pAttributeDictionary[SEARCHENTRYID]);
+            entry._searchEntryType = short.Parse(pAttributeDictionary[SEARCHENTRYTYPE]);
             entry.displayParentId = Guid.Parse(pAttributeDictionary[DISPLAYPARENTID]);
             entry.displayParentType = short.Parse(pAttributeDictionary[DISPLAYPARENTTYPE]);
             entry.displayContext = pAttributeDictionary[DISPLAYCONTEXT];
+            entry.layoutVariant = short.Parse(pAttributeDictionary[LAYOUTVARIANT]);
             if (pSaveChanges)
                 pDataContext.SaveChanges();
 
@@ -334,13 +337,13 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDSearchEntryAssociation.DISPLAYORDER).WithValue(string.Format(@"{0}", displayOrder)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDSearchEntryAssociation.CREATEDBY).WithValue((null == createdBy) ? Guid.Empty.ToString() : createdBy.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDSearchEntryAssociation.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(BDConstants.DATETIMEFORMAT)).WithReplace(true));
-            //attributeList.Add(new ReplaceableAttribute().WithName(BDSearchEntryAssociation.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()).WithReplace(true));
-            //attributeList.Add(new ReplaceableAttribute().WithName(BDSearchEntryAssociation.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(Constants.DATETIMEFORMAT)).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDSearchEntryAssociation.SEARCHENTRYID).WithValue((null == searchEntryId) ? Guid.Empty.ToString() : searchEntryId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSearchEntryAssociation.SEARCHENTRYTYPE).WithValue(string.Format(@"{0}", searchEntryType)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDSearchEntryAssociation.DISPLAYPARENTID).WithValue((null == displayParentId) ? Guid.Empty.ToString() : displayParentId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDSearchEntryAssociation.DISPLAYPARENTTYPE).WithValue(string.Format(@"{0}", _displayParentType)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDSearchEntryAssociation.DISPLAYCONTEXT).WithValue((null == displayContext) ? string.Empty : displayContext).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSearchEntryAssociation.LAYOUTVARIANT).WithValue(string.Format(@"{0}", layoutVariant)).WithReplace(true));
 
             return putAttributeRequest;
         }

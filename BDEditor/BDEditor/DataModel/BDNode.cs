@@ -16,8 +16,6 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDNode: IBDNode
     {
-        //public const string AWS_DOMAIN = @"bd_1_nodes";
-
         public const string AWS_PROD_DOMAIN = @"bd_2_nodes";
         public const string AWS_DEV_DOMAIN = @"bd_dev_2_nodes";
 
@@ -148,7 +146,7 @@ namespace BDEditor.DataModel
         /// <param name="pCreateDeletion"create entry in deletion table (bool)</param>
         public static void Delete(Entities pContext, Guid pUuid, bool pCreateDeletion)
         {
-            BDNode entity = BDNode.GetNodeWithId(pContext, pUuid);
+            BDNode entity = BDNode.RetrieveNodeWithId(pContext, pUuid);
             BDNode.Delete(pContext, entity, pCreateDeletion);
         }
 
@@ -161,7 +159,7 @@ namespace BDEditor.DataModel
         {
             if (null != pUuid)
             {
-                BDNode entry = BDNode.GetNodeWithId(pContext, pUuid.Value);
+                BDNode entry = BDNode.RetrieveNodeWithId(pContext, pUuid.Value);
                 if (null != entry)
                 {
                     pContext.DeleteObject(entry);
@@ -170,11 +168,11 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Get Node with the specified ID
+        /// Retrieve Node with the specified ID
         /// </summary>
         /// <param name="pParentId"></param>
         /// <returns>BDNode object.</returns>
-        public static BDNode GetNodeWithId(Entities pContext, Guid pUuid)
+        public static BDNode RetrieveNodeWithId(Entities pContext, Guid pUuid)
         {
             BDNode entry = null;
 
@@ -189,27 +187,34 @@ namespace BDEditor.DataModel
             return entry;
         }
 
-        public static List<BDNode> GetAll(Entities pContext)
-        {
-            List<BDNode> entryList = new List<BDNode>();
-            IQueryable<BDNode> entries = (from entry in pContext.BDNodes
-                                                 orderby entry.displayOrder
-                                                 select entry);
-            if (entries.Count() > 0)
-                entryList = entries.ToList<BDNode>();
-            return entryList;
-        }
-
         /// <summary>
-        /// Get a string array of distinct names for all  nodes of the specified BDNodeType
+        /// Retrieve a string array of distinct names for all  nodes of the specified BDNodeType
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pNodeType"></param>
         /// <returns></returns>
-        public static string[] GetNodeNamesForType(Entities pContext, BDConstants.BDNodeType pNodeType)
+        public static string[] RetrieveNodeNamesForType(Entities pContext, BDConstants.BDNodeType pNodeType)
         {
             var nodeNames = pContext.BDNodes.Where(x => (!string.IsNullOrEmpty(x.name) && x.nodeType == (int)pNodeType)).Select(node => node.name).Distinct();
             return nodeNames.ToArray();
+        }
+
+        /// <summary>
+        /// Retrieve all nodes of a specified type in display order
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pNodeType"></param>
+        /// <returns></returns>
+        public static List<BDNode> RetrieveNodesForType(Entities pContext, BDConstants.BDNodeType pNodeType)
+        {
+            List<BDNode> entryList = new List<BDNode>();
+            IQueryable<BDNode> entries = (from entry in pContext.BDNodes
+                                          where entry.nodeType == (int)pNodeType
+                                          orderby entry.displayOrder
+                                          select entry);
+            if (entries.Count() > 0)
+                entryList = entries.ToList<BDNode>();
+            return entryList;
         }
 
 
@@ -290,7 +295,7 @@ namespace BDEditor.DataModel
         public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
         {
             Guid dataUuid = Guid.Parse(pAttributeDictionary[UUID]);
-            BDNode entry = BDNode.GetNodeWithId(pDataContext, dataUuid);
+            BDNode entry = BDNode.RetrieveNodeWithId(pDataContext, dataUuid);
 
             if (null == entry)
             {

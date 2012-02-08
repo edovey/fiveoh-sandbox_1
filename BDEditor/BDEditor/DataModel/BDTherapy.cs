@@ -68,7 +68,7 @@ namespace BDEditor.DataModel
             AndWithNext = 1,
             OrWithNext = 2,
             ThenWithNext = 3,
-            AndOrWithNext = 4,
+            WithOrWithoutWithNext = 4,
         }
 
         /// <summary>
@@ -181,6 +181,7 @@ namespace BDEditor.DataModel
                 }
             }
         }
+
         /// <summary>
         /// Gets all Therapies in the model with the specified Therapy Group ID
         /// </summary>

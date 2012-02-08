@@ -24,7 +24,7 @@ namespace BDEditor.Classes
                 if (null == pathogenGroups)
                 {
                     pathogenGroups = new AutoCompleteStringCollection();
-                    string [] names = BDNode.GetNodeNamesForType(new BDEditor.DataModel.Entities(), BDConstants.BDNodeType.BDPathogenGroup);
+                    string [] names = BDNode.RetrieveNodeNamesForType(new BDEditor.DataModel.Entities(), BDConstants.BDNodeType.BDPathogenGroup);
                     pathogenGroups.AddRange(names);
                 }
                 return pathogenGroups;
@@ -38,7 +38,7 @@ namespace BDEditor.Classes
                 if (null == pathogens)
                 {
                     pathogens = new AutoCompleteStringCollection();
-                    string[] names = BDNode.GetNodeNamesForType(new BDEditor.DataModel.Entities(), BDConstants.BDNodeType.BDPathogen);
+                    string[] names = BDNode.RetrieveNodeNamesForType(new BDEditor.DataModel.Entities(), BDConstants.BDNodeType.BDPathogen);
                     pathogens.AddRange(names);
                 }
                 return pathogens;

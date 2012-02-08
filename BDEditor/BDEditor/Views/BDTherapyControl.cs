@@ -295,8 +295,8 @@ namespace BDEditor.Views
                     }
                     else if (andOrRadioButton.Checked)
                     {
-                       if (currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.AndOrWithNext)
-                            currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.AndOrWithNext;
+                       if (currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.WithOrWithoutWithNext)
+                            currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.WithOrWithoutWithNext;
                     }
                    else 
                     {

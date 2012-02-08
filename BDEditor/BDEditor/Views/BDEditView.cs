@@ -292,7 +292,7 @@ namespace BDEditor.Views
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
             this.btnImportFromProduction.Visible = true;
-            this.brewButton.Visible = true;
+            this.btnPublish.Visible = true;
 #else
             this.btnImportFromProduction.Visible = false;
             this.brewButton.Visible = false;
@@ -360,9 +360,14 @@ namespace BDEditor.Views
             }
         }
 
-        private void brewButton_Click(object sender, EventArgs e)
+        private void btnPublish_Click(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
+            BDHtmlPageGenerator.Generate();
+            System.Diagnostics.Debug.WriteLine("HTML page generation complete.");
             BDSearchEntryGenerator.Generate();
+            System.Diagnostics.Debug.WriteLine("Search entry generation complete.");
+            this.Cursor = Cursors.Default;
         }
 
         private void btnImportFromProduction_Click(object sender, EventArgs e)

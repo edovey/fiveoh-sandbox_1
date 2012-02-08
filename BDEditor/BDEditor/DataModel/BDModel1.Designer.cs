@@ -84,82 +84,18 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<BDLinkedNote> BDLinkedNotes
+        public ObjectSet<BDHtmlPage> BDHtmlPages
         {
             get
             {
-                if ((_BDLinkedNotes == null))
+                if ((_BDHtmlPages == null))
                 {
-                    _BDLinkedNotes = base.CreateObjectSet<BDLinkedNote>("BDLinkedNotes");
+                    _BDHtmlPages = base.CreateObjectSet<BDHtmlPage>("BDHtmlPages");
                 }
-                return _BDLinkedNotes;
+                return _BDHtmlPages;
             }
         }
-        private ObjectSet<BDLinkedNote> _BDLinkedNotes;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<BDSearchEntry> BDSearchEntries
-        {
-            get
-            {
-                if ((_BDSearchEntries == null))
-                {
-                    _BDSearchEntries = base.CreateObjectSet<BDSearchEntry>("BDSearchEntries");
-                }
-                return _BDSearchEntries;
-            }
-        }
-        private ObjectSet<BDSearchEntry> _BDSearchEntries;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<BDSystemSetting> BDSystemSettings
-        {
-            get
-            {
-                if ((_BDSystemSettings == null))
-                {
-                    _BDSystemSettings = base.CreateObjectSet<BDSystemSetting>("BDSystemSettings");
-                }
-                return _BDSystemSettings;
-            }
-        }
-        private ObjectSet<BDSystemSetting> _BDSystemSettings;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<BDTherapyGroup> BDTherapyGroups
-        {
-            get
-            {
-                if ((_BDTherapyGroups == null))
-                {
-                    _BDTherapyGroups = base.CreateObjectSet<BDTherapyGroup>("BDTherapyGroups");
-                }
-                return _BDTherapyGroups;
-            }
-        }
-        private ObjectSet<BDTherapyGroup> _BDTherapyGroups;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<BDMetadata> BDMetadatas
-        {
-            get
-            {
-                if ((_BDMetadatas == null))
-                {
-                    _BDMetadatas = base.CreateObjectSet<BDMetadata>("BDMetadatas");
-                }
-                return _BDMetadatas;
-            }
-        }
-        private ObjectSet<BDMetadata> _BDMetadatas;
+        private ObjectSet<BDHtmlPage> _BDHtmlPages;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -180,18 +116,34 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<BDTherapy> BDTherapies
+        public ObjectSet<BDLinkedNote> BDLinkedNotes
         {
             get
             {
-                if ((_BDTherapies == null))
+                if ((_BDLinkedNotes == null))
                 {
-                    _BDTherapies = base.CreateObjectSet<BDTherapy>("BDTherapies");
+                    _BDLinkedNotes = base.CreateObjectSet<BDLinkedNote>("BDLinkedNotes");
                 }
-                return _BDTherapies;
+                return _BDLinkedNotes;
             }
         }
-        private ObjectSet<BDTherapy> _BDTherapies;
+        private ObjectSet<BDLinkedNote> _BDLinkedNotes;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDMetadata> BDMetadatas
+        {
+            get
+            {
+                if ((_BDMetadatas == null))
+                {
+                    _BDMetadatas = base.CreateObjectSet<BDMetadata>("BDMetadatas");
+                }
+                return _BDMetadatas;
+            }
+        }
+        private ObjectSet<BDMetadata> _BDMetadatas;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -212,6 +164,38 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<BDNode> BDNodes
+        {
+            get
+            {
+                if ((_BDNodes == null))
+                {
+                    _BDNodes = base.CreateObjectSet<BDNode>("BDNodes");
+                }
+                return _BDNodes;
+            }
+        }
+        private ObjectSet<BDNode> _BDNodes;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDSearchEntry> BDSearchEntries
+        {
+            get
+            {
+                if ((_BDSearchEntries == null))
+                {
+                    _BDSearchEntries = base.CreateObjectSet<BDSearchEntry>("BDSearchEntries");
+                }
+                return _BDSearchEntries;
+            }
+        }
+        private ObjectSet<BDSearchEntry> _BDSearchEntries;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<BDSearchEntryAssociation> BDSearchEntryAssociations
         {
             get
@@ -228,18 +212,50 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<BDNode> BDNodes
+        public ObjectSet<BDSystemSetting> BDSystemSettings
         {
             get
             {
-                if ((_BDNodes == null))
+                if ((_BDSystemSettings == null))
                 {
-                    _BDNodes = base.CreateObjectSet<BDNode>("BDNodes");
+                    _BDSystemSettings = base.CreateObjectSet<BDSystemSetting>("BDSystemSettings");
                 }
-                return _BDNodes;
+                return _BDSystemSettings;
             }
         }
-        private ObjectSet<BDNode> _BDNodes;
+        private ObjectSet<BDSystemSetting> _BDSystemSettings;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDTherapy> BDTherapies
+        {
+            get
+            {
+                if ((_BDTherapies == null))
+                {
+                    _BDTherapies = base.CreateObjectSet<BDTherapy>("BDTherapies");
+                }
+                return _BDTherapies;
+            }
+        }
+        private ObjectSet<BDTherapy> _BDTherapies;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDTherapyGroup> BDTherapyGroups
+        {
+            get
+            {
+                if ((_BDTherapyGroups == null))
+                {
+                    _BDTherapyGroups = base.CreateObjectSet<BDTherapyGroup>("BDTherapyGroups");
+                }
+                return _BDTherapyGroups;
+            }
+        }
+        private ObjectSet<BDTherapyGroup> _BDTherapyGroups;
 
         #endregion
         #region AddTo Methods
@@ -253,43 +269,11 @@ namespace BDEditor.DataModel
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the BDLinkedNotes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the BDHtmlPages EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToBDLinkedNotes(BDLinkedNote bDLinkedNote)
+        public void AddToBDHtmlPages(BDHtmlPage bDHtmlPage)
         {
-            base.AddObject("BDLinkedNotes", bDLinkedNote);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDSearchEntries EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDSearchEntries(BDSearchEntry bDSearchEntry)
-        {
-            base.AddObject("BDSearchEntries", bDSearchEntry);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDSystemSettings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDSystemSettings(BDSystemSetting bDSystemSetting)
-        {
-            base.AddObject("BDSystemSettings", bDSystemSetting);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDTherapyGroups EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDTherapyGroups(BDTherapyGroup bDTherapyGroup)
-        {
-            base.AddObject("BDTherapyGroups", bDTherapyGroup);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDMetadatas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDMetadatas(BDMetadata bDMetadata)
-        {
-            base.AddObject("BDMetadatas", bDMetadata);
+            base.AddObject("BDHtmlPages", bDHtmlPage);
         }
     
         /// <summary>
@@ -301,11 +285,19 @@ namespace BDEditor.DataModel
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the BDTherapies EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the BDLinkedNotes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToBDTherapies(BDTherapy bDTherapy)
+        public void AddToBDLinkedNotes(BDLinkedNote bDLinkedNote)
         {
-            base.AddObject("BDTherapies", bDTherapy);
+            base.AddObject("BDLinkedNotes", bDLinkedNote);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDMetadatas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDMetadatas(BDMetadata bDMetadata)
+        {
+            base.AddObject("BDMetadatas", bDMetadata);
         }
     
         /// <summary>
@@ -317,6 +309,22 @@ namespace BDEditor.DataModel
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the BDNodes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDNodes(BDNode bDNode)
+        {
+            base.AddObject("BDNodes", bDNode);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDSearchEntries EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDSearchEntries(BDSearchEntry bDSearchEntry)
+        {
+            base.AddObject("BDSearchEntries", bDSearchEntry);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the BDSearchEntryAssociations EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToBDSearchEntryAssociations(BDSearchEntryAssociation bDSearchEntryAssociation)
@@ -325,11 +333,27 @@ namespace BDEditor.DataModel
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the BDNodes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the BDSystemSettings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToBDNodes(BDNode bDNode)
+        public void AddToBDSystemSettings(BDSystemSetting bDSystemSetting)
         {
-            base.AddObject("BDNodes", bDNode);
+            base.AddObject("BDSystemSettings", bDSystemSetting);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDTherapies EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDTherapies(BDTherapy bDTherapy)
+        {
+            base.AddObject("BDTherapies", bDTherapy);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDTherapyGroups EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDTherapyGroups(BDTherapyGroup bDTherapyGroup)
+        {
+            base.AddObject("BDTherapyGroups", bDTherapyGroup);
         }
 
         #endregion
@@ -582,6 +606,229 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Int32> _targetType;
         partial void OntargetTypeChanging(Nullable<global::System.Int32> value);
         partial void OntargetTypeChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="BDDataModel", Name="BDHtmlPage")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class BDHtmlPage : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new BDHtmlPage object.
+        /// </summary>
+        /// <param name="uuid">Initial value of the uuid property.</param>
+        public static BDHtmlPage CreateBDHtmlPage(global::System.Guid uuid)
+        {
+            BDHtmlPage bDHtmlPage = new BDHtmlPage();
+            bDHtmlPage.uuid = uuid;
+            return bDHtmlPage;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid uuid
+        {
+            get
+            {
+                return _uuid;
+            }
+            set
+            {
+                if (_uuid != value)
+                {
+                    OnuuidChanging(value);
+                    ReportPropertyChanging("uuid");
+                    _uuid = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("uuid");
+                    OnuuidChanged();
+                }
+            }
+        }
+        private global::System.Guid _uuid;
+        partial void OnuuidChanging(global::System.Guid value);
+        partial void OnuuidChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> createdDate
+        {
+            get
+            {
+                return _createdDate;
+            }
+            set
+            {
+                OncreatedDateChanging(value);
+                ReportPropertyChanging("createdDate");
+                _createdDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("createdDate");
+                OncreatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _createdDate;
+        partial void OncreatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OncreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Guid> createdBy
+        {
+            get
+            {
+                return _createdBy;
+            }
+            set
+            {
+                OncreatedByChanging(value);
+                ReportPropertyChanging("createdBy");
+                _createdBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("createdBy");
+                OncreatedByChanged();
+            }
+        }
+        private Nullable<global::System.Guid> _createdBy;
+        partial void OncreatedByChanging(Nullable<global::System.Guid> value);
+        partial void OncreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> schemaVersion
+        {
+            get
+            {
+                return _schemaVersion;
+            }
+            set
+            {
+                OnschemaVersionChanging(value);
+                ReportPropertyChanging("schemaVersion");
+                _schemaVersion = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("schemaVersion");
+                OnschemaVersionChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _schemaVersion;
+        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
+        partial void OnschemaVersionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String documentText
+        {
+            get
+            {
+                return _documentText;
+            }
+            set
+            {
+                OndocumentTextChanging(value);
+                ReportPropertyChanging("documentText");
+                _documentText = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("documentText");
+                OndocumentTextChanged();
+            }
+        }
+        private global::System.String _documentText;
+        partial void OndocumentTextChanging(global::System.String value);
+        partial void OndocumentTextChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String storageKey
+        {
+            get
+            {
+                return _storageKey;
+            }
+            set
+            {
+                OnstorageKeyChanging(value);
+                ReportPropertyChanging("storageKey");
+                _storageKey = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("storageKey");
+                OnstorageKeyChanged();
+            }
+        }
+        private global::System.String _storageKey;
+        partial void OnstorageKeyChanging(global::System.String value);
+        partial void OnstorageKeyChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> displayParentType
+        {
+            get
+            {
+                return _displayParentType;
+            }
+            set
+            {
+                OndisplayParentTypeChanging(value);
+                ReportPropertyChanging("displayParentType");
+                _displayParentType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("displayParentType");
+                OndisplayParentTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _displayParentType;
+        partial void OndisplayParentTypeChanging(Nullable<global::System.Int32> value);
+        partial void OndisplayParentTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Guid> displayParentId
+        {
+            get
+            {
+                return _displayParentId;
+            }
+            set
+            {
+                OndisplayParentIdChanging(value);
+                ReportPropertyChanging("displayParentId");
+                _displayParentId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("displayParentId");
+                OndisplayParentIdChanged();
+            }
+        }
+        private Nullable<global::System.Guid> _displayParentId;
+        partial void OndisplayParentIdChanging(Nullable<global::System.Guid> value);
+        partial void OndisplayParentIdChanged();
 
         #endregion
     
@@ -2657,30 +2904,6 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String displayParentKeyName
-        {
-            get
-            {
-                return _displayParentKeyName;
-            }
-            set
-            {
-                OndisplayParentKeyNameChanging(value);
-                ReportPropertyChanging("displayParentKeyName");
-                _displayParentKeyName = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("displayParentKeyName");
-                OndisplayParentKeyNameChanged();
-            }
-        }
-        private global::System.String _displayParentKeyName;
-        partial void OndisplayParentKeyNameChanging(global::System.String value);
-        partial void OndisplayParentKeyNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
         public Nullable<global::System.Int32> displayParentType
         {
             get
@@ -2699,6 +2922,54 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Int32> _displayParentType;
         partial void OndisplayParentTypeChanging(Nullable<global::System.Int32> value);
         partial void OndisplayParentTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> layoutVariant
+        {
+            get
+            {
+                return _layoutVariant;
+            }
+            set
+            {
+                OnlayoutVariantChanging(value);
+                ReportPropertyChanging("layoutVariant");
+                _layoutVariant = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("layoutVariant");
+                OnlayoutVariantChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _layoutVariant;
+        partial void OnlayoutVariantChanging(Nullable<global::System.Int32> value);
+        partial void OnlayoutVariantChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> searchEntryType
+        {
+            get
+            {
+                return _searchEntryType;
+            }
+            set
+            {
+                OnsearchEntryTypeChanging(value);
+                ReportPropertyChanging("searchEntryType");
+                _searchEntryType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("searchEntryType");
+                OnsearchEntryTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _searchEntryType;
+        partial void OnsearchEntryTypeChanging(Nullable<global::System.Int32> value);
+        partial void OnsearchEntryTypeChanged();
 
         #endregion
     

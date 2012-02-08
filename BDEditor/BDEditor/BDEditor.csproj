@@ -135,6 +135,7 @@
     <Compile Include="Classes\Typeahead.cs" />
     <Compile Include="Classes\UIHelper.cs" />
     <Compile Include="DataModel\BDDeletion.cs" />
+    <Compile Include="DataModel\BDHtmlPage.cs" />
     <Compile Include="DataModel\BDLinkedNote.cs" />
     <Compile Include="DataModel\BDLinkedNoteAssociation.cs" />
     <Compile Include="DataModel\BDMetadata.cs" />

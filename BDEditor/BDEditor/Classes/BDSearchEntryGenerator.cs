@@ -32,91 +32,132 @@ namespace BDEditor.Classes
         private static void GenerateSearchEntries()
         {
             Entities dataContext = new Entities();
-            List<BDMetadata> metadataList = BDMetadata.GetAll(dataContext);
+            List<BDNode> chapters = BDNode.RetrieveNodesForType(dataContext, BDConstants.BDNodeType.BDChapter);
 
-            foreach (BDMetadata mdEntry in metadataList)
+            foreach (BDNode chapter in chapters)
             {
-                // get metadata entry entity to get search term
-                string entryName = GetEntryName(dataContext, mdEntry);
-
-                // get existing matching search entries
-                IQueryable<BDSearchEntry> entries = (from entry in dataContext.BDSearchEntries
-                                                     where entry.name == entryName
-                                                     select entry);
-
-                // if matching search entry is not found, create one
-                if (entries.Count() == 0)
+                string chapterDisplayContext = chapter.Name;
+                switch (chapter.LayoutVariant)
                 {
-                    BDSearchEntry searchEntry = BDSearchEntry.CreateSearchEntry(dataContext);
-                    searchEntry.name = entryName;
-                    // also create search association record
-                    Guid assnGuid = CreateEntryAssociation(dataContext, mdEntry, searchEntry);
-                    BDSearchEntry.Save(dataContext, searchEntry);
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation00:
+                        {
+                            List<IBDNode> sections = BDFabrik.GetChildrenForParentId(dataContext, chapter.Uuid);
+                            foreach (IBDNode section in sections)
+                            {
+                                string sectionDisplayContext = chapterDisplayContext + " : " + section.Name;
+                                switch (section.LayoutVariant)
+                                {
+                                    case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                                        {
+                                            List<IBDNode> categories = BDFabrik.GetChildrenForParentId(dataContext, section.Uuid);
+                                            foreach (IBDNode category in categories)
+                                            {
+                                                string categoryDisplayContext = sectionDisplayContext + " : " + category.Name;
+                                                List<IBDNode> diseases = BDFabrik.GetChildrenForParentId(dataContext, category.Uuid);
+                                                foreach (IBDNode disease in diseases)
+                                                {
+                                                    string diseaseDisplayContext = categoryDisplayContext + " : " + disease.Name;
+
+                                                    //TODO:  how will we navigate to diseases in the viewer when a disease-search-entry is selected?
+                                                    List<IBDNode> presentations = BDFabrik.GetChildrenForParentId(dataContext, disease.Uuid);
+                                                    foreach (IBDNode presentation in presentations)
+                                                    {
+                                                        string presentationDisplayContext = diseaseDisplayContext + " : " + presentation.Name;
+
+                                                        List<IBDNode> pathogenGroups = BDFabrik.GetChildrenForParentId(dataContext, presentation.Uuid);
+                                                        foreach (IBDNode pathogenGroup in pathogenGroups)
+                                                        {
+                                                            List<IBDNode> childNodes = BDFabrik.GetChildrenForParentId(dataContext, pathogenGroup.Uuid);
+                                                            foreach (IBDNode node in childNodes)
+                                                            {
+                                                                BDNode parentNode = presentation as BDNode;
+                                                                switch (node.NodeType)
+                                                                {
+                                                                    case BDConstants.BDNodeType.BDPathogen:
+                                                                        {
+                                                                            if (null != parentNode)
+                                                                                generateEntryWithDisplayParent(dataContext, parentNode, node, presentationDisplayContext.ToString());
+                                                                        }
+                                                                        break;
+                                                                    case BDConstants.BDNodeType.BDTherapyGroup:
+                                                                        {
+                                                                            List<IBDNode> therapies = BDFabrik.GetChildrenForParentId(dataContext, node.Uuid);
+                                                                            foreach (IBDNode therapy in therapies)
+                                                                            {
+                                                                                if (null != parentNode)
+                                                                                    generateEntryWithDisplayParent(dataContext, parentNode, therapy, presentationDisplayContext.ToString());
+                                                                            }
+                                                                        }
+                                                                        break;
+
+                                                                    default:
+                                                                        break;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+                        break;
+                    default:
+                        break;
                 }
-                else
+            }
+        }
+
+
+        private static void generateEntryWithDisplayParent(Entities pDataContext, BDNode pDisplayParent, IBDNode pNode, string pDisplayContext)
+        {
+            string entryName = pNode.Name;
+
+            // get existing matching search entries
+            IQueryable<BDSearchEntry> entries = (from entry in pDataContext.BDSearchEntries
+                                                 where entry.name == entryName
+                                                 select entry);
+
+            // if matching search entry is not found, create one
+            if (entries.Count() == 0)
+            {
+                BDSearchEntry searchEntry = BDSearchEntry.CreateSearchEntry(pDataContext);
+                searchEntry.name = entryName;
+                // also create search association record
+                Guid assnGuid = CreateEntryAssociation(pDataContext, pDisplayParent, searchEntry, pDisplayContext, pNode);
+                BDSearchEntry.Save(pDataContext, searchEntry);
+            }
+            else
+            {
+                BDSearchEntry searchEntry = entries.First<BDSearchEntry>();
+                // get matching search association records for search entry
+                IQueryable<BDSearchEntryAssociation> associations = (from entry in pDataContext.BDSearchEntryAssociations
+                                                                     where (entry.searchEntryId == searchEntry.uuid
+                                                                     && entry.displayParentId == pDisplayParent.Uuid
+                                                                     && entry.displayParentType == (int)pDisplayParent.NodeType)
+                                                                     select entry);
+
+                if (associations.Count() == 0)
                 {
-                    BDSearchEntry searchEntry = entries.First<BDSearchEntry>();
-                    // get matching search association records for search entry
-                    IQueryable<BDSearchEntryAssociation> associations = (from entry in dataContext.BDSearchEntryAssociations
-                                                                         where (entry.searchEntryId == searchEntry.uuid
-                                                                         && entry.displayParentId == mdEntry.displayParentId
-                                                                         && entry.displayParentKeyName == mdEntry.displayParentKeyName)
-                                                                         select entry);
-
-                    if (associations.Count() == 0)
-                    {
-                        Guid newAssociation = CreateEntryAssociation(dataContext, mdEntry, searchEntry);
-                    }
+                    Guid newAssociation = CreateEntryAssociation(pDataContext, pDisplayParent, searchEntry, pDisplayContext, pNode);
                 }
             }
         }
 
-        private static string GetEntryName(Entities pContext, BDMetadata metadata)
-        {
-            string result = String.Empty;
-            switch (metadata.itemKeyName)
-            {
-                case BDTherapy.ENTITYNAME:
-                    result = BDTherapy.GetTherapyWithId(pContext, metadata.itemId.Value).name;
-                    break;
-
-                case BDNode.ENTITYNAME:
-                    result = BDNode.GetNodeWithId(pContext, metadata.itemId.Value).name;
-                    break;
-
-                default:
-                    break;
-            }
-            return result;
-        }
-
-        private static string GetDisplayContext(Entities pContext, BDMetadata pMetadata)
-        {
-            string result = String.Empty;
-
-            switch (pMetadata.NodeType)
-            {
-                case BDConstants.BDNodeType.BDDisease:
-                    {
-
-                        BDNode disease = BDNode.GetNodeWithId(pContext, pMetadata.displayParentId.Value); 
-                        BDNode category = BDNode.GetNodeWithId(pContext, disease.ParentId.Value);
-                        result = string.Format("{0} : {1}", category.name, disease.name);
-                    }
-                    break;
-                    
-            }
-            return result;
-        }
-
-        private static Guid CreateEntryAssociation(Entities pContext, BDMetadata pMetadata, BDSearchEntry pSearchEntry)
+        private static Guid CreateEntryAssociation(Entities pContext, IBDNode pParent, BDSearchEntry pSearchEntry, string pDisplayContext, IBDNode pNode)
         {
             BDSearchEntryAssociation a = BDSearchEntryAssociation.CreateSearchEntryAssociation(pContext);
             a.searchEntryId = pSearchEntry.uuid;
-            a.displayParentId = pMetadata.displayParentId;
-            a.displayParentKeyName = pMetadata.displayParentKeyName;
-
-            a.displayContext = GetDisplayContext(pContext, pMetadata);
+            a.displayParentId = pParent.Uuid;
+            a.displayParentType = (int)pParent.NodeType;
+            // string representation of where the detail page is located
+            a.displayContext = pDisplayContext;
+            a.layoutVariant = (int)pParent.LayoutVariant;
+            a.searchEntryType = (int)pNode.NodeType;
             
             BDSearchEntryAssociation.Save(pContext, a);
 

@@ -338,7 +338,7 @@ namespace BDEditor.DataModel
                     case BDConstants.BDNodeType.BDPresentation:
                     default:
                         {
-                            BDNode node = BDNode.GetNodeWithId(pDataContext, pParentId.Value); //PathogenWithId(pDataContext, pParentId.Value);
+                            BDNode node = BDNode.RetrieveNodeWithId(pDataContext, pParentId.Value); //PathogenWithId(pDataContext, pParentId.Value);
                             if (null != node)
                             {
                                 result = string.Format("{0} [{1}]", node.DescriptionForLinkedNote, pParentEntityPropertyName);

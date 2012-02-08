@@ -32,7 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDEditView));
             this.headerPanel = new System.Windows.Forms.Panel();
             this.btnImportFromProduction = new System.Windows.Forms.Button();
-            this.brewButton = new System.Windows.Forms.Button();
+            this.btnPublish = new System.Windows.Forms.Button();
             this.btnSyncWithReplaceLocal = new System.Windows.Forms.Button();
             this.lbLastSyncDateTime = new System.Windows.Forms.Label();
             this.btnSync = new System.Windows.Forms.Button();
@@ -53,7 +53,7 @@
             // headerPanel
             // 
             this.headerPanel.Controls.Add(this.btnImportFromProduction);
-            this.headerPanel.Controls.Add(this.brewButton);
+            this.headerPanel.Controls.Add(this.btnPublish);
             this.headerPanel.Controls.Add(this.btnSyncWithReplaceLocal);
             this.headerPanel.Controls.Add(this.lbLastSyncDateTime);
             this.headerPanel.Controls.Add(this.btnSync);
@@ -76,15 +76,15 @@
             this.btnImportFromProduction.Visible = false;
             this.btnImportFromProduction.Click += new System.EventHandler(this.btnImportFromProduction_Click);
             // 
-            // brewButton
+            // btnPublish
             // 
-            this.brewButton.Location = new System.Drawing.Point(728, 10);
-            this.brewButton.Name = "brewButton";
-            this.brewButton.Size = new System.Drawing.Size(75, 23);
-            this.brewButton.TabIndex = 5;
-            this.brewButton.Text = "brew";
-            this.brewButton.UseVisualStyleBackColor = true;
-            this.brewButton.Click += new System.EventHandler(this.brewButton_Click);
+            this.btnPublish.Location = new System.Drawing.Point(728, 10);
+            this.btnPublish.Name = "btnPublish";
+            this.btnPublish.Size = new System.Drawing.Size(75, 23);
+            this.btnPublish.TabIndex = 5;
+            this.btnPublish.Text = "Publish";
+            this.btnPublish.UseVisualStyleBackColor = true;
+            this.btnPublish.Click += new System.EventHandler(this.btnPublish_Click);
             // 
             // btnSyncWithReplaceLocal
             // 
@@ -217,7 +217,7 @@
         private System.Windows.Forms.Label lbLastSyncDateTime;
         private System.Windows.Forms.Button btnSync;
         private System.Windows.Forms.Button btnSyncWithReplaceLocal;
-        private System.Windows.Forms.Button brewButton;
+        private System.Windows.Forms.Button btnPublish;
         private System.Windows.Forms.Button btnImportFromProduction;
 
     }

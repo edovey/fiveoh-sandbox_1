@@ -44,7 +44,9 @@ namespace BDEditor.Classes
             TreatmentRecommendation00 = 100, // Chapter
             TreatmentRecommendation01 = 101, // format specific section within chapter
             TreatmentRecommendation02 = 102,
-            TreatmentRecommendation03 = 103
+            TreatmentRecommendation03 = 103,
+            TreatmentRecommendation04 = 104,
+            TreatmentRecommendation05 = 105
         }
 
         public const string DATETIMEFORMAT = @"yyyy-MM-dd'T'HH:mm:ss";

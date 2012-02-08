@@ -87,7 +87,7 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Extended Save method that sets the modified date
+        /// Extended Save method that resets the schema version
         /// </summary>
         /// <param name="pLinkedNote"></param>
         public static void Save(Entities pContext, BDLinkedNote pLinkedNote)

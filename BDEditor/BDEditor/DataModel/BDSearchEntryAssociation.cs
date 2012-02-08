@@ -44,7 +44,7 @@ namespace BDEditor.DataModel
         private const string DISPLAYORDER = @"sa_displayOrder";
         private const string SEARCHENTRYID = @"sa_searchEntryId";
         private const string DISPLAYPARENTID = @"sa_displayParentId";
-        private const string DISPLAYPARENTKEYNAME = @"sa_displayParentKeyName";
+        private const string DISPLAYPARENTTYPE = @"sa_displayParentYype";
         private const string PARENTENTITYPROPERTYNAME = @"sa_parentEntityPropertyName";
         private const string DISPLAYCONTEXT = @"sa_displayContext";
 
@@ -85,8 +85,9 @@ namespace BDEditor.DataModel
         /// <returns>BDSearchEntryAssociation</returns>
         public static BDSearchEntryAssociation CreateSearchEntryAssociation(Entities pContext,
                                                                             Guid pSearchEntryId,
-                                                                            string pDisplayParentKeyName,
+                                                                            BDConstants.BDNodeType pDisplayParentType,
                                                                             Guid pDisplayParentId,
+            BDConstants.LayoutVariantType pLayoutVariant,
                                                                             string pDisplayContext)
         {
             BDSearchEntryAssociation association = CreateBDSearchEntryAssociation(Guid.NewGuid());
@@ -95,9 +96,9 @@ namespace BDEditor.DataModel
 
             association.searchEntryId = pSearchEntryId;
             association.displayParentId = pDisplayParentId;
-            association.displayParentKeyName = pDisplayParentKeyName;
+            association._displayParentType = (int)pDisplayParentType;
             association.displayContext = pDisplayContext;
-
+            association.layoutVariant = (int)pLayoutVariant;
             pContext.AddObject(ENTITYNAME, association);
 
             Save(pContext, association);
@@ -215,7 +216,7 @@ namespace BDEditor.DataModel
         {
             IQueryable<BDSearchEntryAssociation> entries = (from entities in pContext.BDSearchEntryAssociations
                                                             where entities.searchEntryId == pSearchEntryId
-                                                            orderby entities.displayParentKeyName ascending, entities.displayContext ascending
+                                                            orderby entities.displayParentType ascending, entities.displayContext ascending
                                                             select entities);
             List<BDSearchEntryAssociation> resultList = entries.ToList<BDSearchEntryAssociation>();
             return resultList;
@@ -315,7 +316,7 @@ namespace BDEditor.DataModel
             //entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
             entry.searchEntryId = Guid.Parse(pAttributeDictionary[SEARCHENTRYID]);
             entry.displayParentId = Guid.Parse(pAttributeDictionary[DISPLAYPARENTID]);
-            entry.displayParentKeyName = pAttributeDictionary[DISPLAYPARENTKEYNAME];
+            entry.displayParentType = short.Parse(pAttributeDictionary[DISPLAYPARENTTYPE]);
             entry.displayContext = pAttributeDictionary[DISPLAYCONTEXT];
             if (pSaveChanges)
                 pDataContext.SaveChanges();
@@ -337,7 +338,7 @@ namespace BDEditor.DataModel
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDSearchEntryAssociation.SEARCHENTRYID).WithValue((null == searchEntryId) ? Guid.Empty.ToString() : searchEntryId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDSearchEntryAssociation.DISPLAYPARENTID).WithValue((null == displayParentId) ? Guid.Empty.ToString() : displayParentId.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDSearchEntryAssociation.DISPLAYPARENTKEYNAME).WithValue((null == displayParentKeyName) ? string.Empty : displayParentKeyName).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSearchEntryAssociation.DISPLAYPARENTTYPE).WithValue(string.Format(@"{0}", _displayParentType)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDSearchEntryAssociation.DISPLAYCONTEXT).WithValue((null == displayContext) ? string.Empty : displayContext).WithReplace(true));
 
             return putAttributeRequest;

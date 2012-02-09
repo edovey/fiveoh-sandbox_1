@@ -1,0 +1,1 @@
+C:\Program Files\AWS SDK for .NET\Samples\AmazonSimpleDB_Sample\AmazonSimpleDB_Sample\bin\Debug\AmazonSimpleDB_Sample.exe.config

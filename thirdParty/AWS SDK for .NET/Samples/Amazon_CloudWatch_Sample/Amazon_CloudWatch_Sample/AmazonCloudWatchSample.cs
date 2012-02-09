@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************
-* Copyright 2009-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+* Copyright 2009-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 * 
 * Licensed under the Apache License, Version 2.0 (the "License"). You may
 * not use this file except in compliance with the License. A copy of the
@@ -20,8 +20,6 @@ using System.Text;
 
 using System.Diagnostics;
 using System.Threading;
-using System.Configuration;
-using System.Collections.Specialized;
 
 using Amazon;
 using Amazon.CloudWatch;
@@ -36,12 +34,8 @@ namespace GettingStartedGuide
             PerformanceCounter percentPageFile = new PerformanceCounter("Paging File", "% Usage",      "_Total");
             PerformanceCounter peakPageFile    = new PerformanceCounter("Paging File", "% Usage Peak", "_Total");
 
-            NameValueCollection appConfig = ConfigurationManager.AppSettings;
 
-            string accessKeyID = appConfig["AWSAccessKey"];
-            string secretAccessKeyID = appConfig["AWSSecretKey"];
-
-            AmazonCloudWatch client = Amazon.AWSClientFactory.CreateAmazonCloudWatchClient(accessKeyID, secretAccessKeyID);
+            AmazonCloudWatch client = Amazon.AWSClientFactory.CreateAmazonCloudWatchClient();
 
             // Once a minute, send paging file usage statistics to CloudWatch
             for (; ; )

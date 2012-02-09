@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************
- *  Copyright 2008-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  Copyright 2008-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  Licensed under the Apache License, Version 2.0 (the "License"). You may not use
  *  this file except in compliance with the License. A copy of the License is located at
  *
@@ -185,9 +185,9 @@ namespace Petboard.Util
         {
             string domainName = String.Format(Settings.Default.SimpleDbDomainNameFormat, HttpContext.Current.User.Identity.Name);
 
-            using (AmazonSimpleDBClient sdbClient = new AmazonSimpleDBClient(Settings.Default.AWSAccessKey.Trim(), Settings.Default.AWSSecretAccessKey.Trim()))
+            using (AmazonSimpleDBClient sdbClient = new AmazonSimpleDBClient())
             {
-                using (AmazonS3Client s3Client = new AmazonS3Client(Settings.Default.AWSAccessKey.Trim(), Settings.Default.AWSSecretAccessKey.Trim()))
+                using (AmazonS3Client s3Client = new AmazonS3Client())
                 {
 
                     foreach (Pet pet in pets)

@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************
- *  Copyright 2008-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  Copyright 2008-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  Licensed under the Apache License, Version 2.0 (the "License"). You may not use
  *  this file except in compliance with the License. A copy of the License is located at
  *
@@ -52,10 +52,7 @@ namespace Petboard
         {
             if (_simpleDBClient == null)
             {
-                _simpleDBClient = new AmazonSimpleDBClient(
-                    Settings.Default.AWSAccessKey.Trim(),
-                    Settings.Default.AWSSecretAccessKey.Trim()
-                    );
+                _simpleDBClient = new AmazonSimpleDBClient();
             }
             System.Threading.Thread.MemoryBarrier();
         }
@@ -171,7 +168,7 @@ namespace Petboard
 
                     this.Public.Checked = bool.Parse(attrs.First(a => a.Name == "Public").Value);
 
-                    using (AmazonS3Client s3Client = new AmazonS3Client(Settings.Default.AWSAccessKey.Trim(), Settings.Default.AWSSecretAccessKey.Trim()))
+                    using (AmazonS3Client s3Client = new AmazonS3Client())
                     {
                         BucketHelper.CheckForBucket(this._petIdString, s3Client);
                         ListObjectsRequest listObjectsRequest = new ListObjectsRequest()
@@ -246,7 +243,7 @@ namespace Petboard
                 return;
             }
             string bucketName = String.Format(Settings.Default.BucketNameFormat, this.Context.User.Identity.Name, this._itemName);
-            using (AmazonS3Client s3Client = new AmazonS3Client(Settings.Default.AWSAccessKey.Trim(), Settings.Default.AWSSecretAccessKey.Trim()))
+            using (AmazonS3Client s3Client = new AmazonS3Client())
             {
                 Pet.PutPhoto(this._domainName, this._itemName, bucketName, this.PhotoUpload.FileName, this.PhotoUpload.FileContent, this.Public.Checked, this._simpleDBClient, s3Client);
             }

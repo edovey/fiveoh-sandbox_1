@@ -1,0 +1,1 @@
+C:\Program Files\AWS SDK for .NET\Samples\AmazonS3Sample\AmazonS3Sample\bin\Debug\AmazonS3Sample.exe.config

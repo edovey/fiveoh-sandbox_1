@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************
-* Copyright 2009-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+* Copyright 2009-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 * 
 * Licensed under the Apache License, Version 2.0 (the "License"). You may
 * not use this file except in compliance with the License. A copy of the
@@ -14,8 +14,8 @@
 *******************************************************************************/
 
 using System;
-using System.Configuration;
 using System.Collections.Specialized;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -40,12 +40,7 @@ namespace GettingStartedGuide
         {
             if (checkRequiredFields())
             {
-                NameValueCollection appConfig = ConfigurationManager.AppSettings;
-
-                string accessKeyID = appConfig["AWSAccessKey"];
-                string secretAccessKeyID = appConfig["AWSSecretKey"];
-
-                using (client = Amazon.AWSClientFactory.CreateAmazonS3Client(accessKeyID, secretAccessKeyID))
+                using (client = Amazon.AWSClientFactory.CreateAmazonS3Client())
                 {
                     Console.WriteLine("Listing buckets");
                     ListingBuckets();

@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************
-* Copyright 2009-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+* Copyright 2009-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 * 
 * Licensed under the Apache License, Version 2.0 (the "License"). You may
 * not use this file except in compliance with the License. A copy of the
@@ -14,8 +14,6 @@
 *******************************************************************************/
 
 using System;
-using System.Collections.Specialized;
-using System.Configuration;
 using System.Linq;
 using System.Xml.Serialization;
 using System.Collections.Generic;
@@ -30,12 +28,7 @@ namespace AmazonSQS_Sample
     {
         public static void Main(string[] args)
         {
-            NameValueCollection appConfig = ConfigurationManager.AppSettings;
-
-            AmazonSQS sqs = AWSClientFactory.CreateAmazonSQSClient(
-                appConfig["AWSAccessKey"],
-                appConfig["AWSSecretKey"]
-                );
+            AmazonSQS sqs = AWSClientFactory.CreateAmazonSQSClient();
 
             try
             {
@@ -121,7 +114,7 @@ namespace AmazonSQS_Sample
                 DeleteMessageRequest deleteRequest = new DeleteMessageRequest();
                 deleteRequest.QueueUrl = myQueueUrl;
                 deleteRequest.ReceiptHandle = messageRecieptHandle;
-                
+                sqs.DeleteMessage(deleteRequest);
 
             }
             catch (AmazonSQSException ex)

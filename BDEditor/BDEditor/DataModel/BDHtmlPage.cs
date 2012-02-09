@@ -32,11 +32,11 @@ namespace BDEditor.DataModel
         public const string AWS_BUCKET = AWS_PROD_BUCKET;
 #endif
 
-        public const string AWS_S3_PREFIX = @"bd~";
-        public const string AWS_S3_FILEEXTENSION = @".txt";
+        public const string AWS_S3_PREFIX = @"bdhp~";
+        public const string AWS_S3_FILEEXTENSION = @".html";
 
         public const string ENTITYNAME = @"BDHtmlPages";
-        public const string ENTITYNAME_FRIENDLY = @"HTML ";
+        public const string ENTITYNAME_FRIENDLY = @"HTML Pages";
         public const string KEY_NAME = @"BDHtmlPage";
 
         public const int ENTITY_SCHEMAVERSION = 0;
@@ -152,6 +152,19 @@ namespace BDEditor.DataModel
             return resultList;
         }
 
+        public static List<BDHtmlPage> RetrieveAll(Entities pContext)
+        {
+            List<BDHtmlPage> entryList = new List<BDHtmlPage>();
+            IQueryable<BDHtmlPage> entries;
+
+            entries = (from entry in pContext.BDHtmlPages
+                   select entry);
+            if (entries.Count() > 0)
+                return entries.ToList<BDHtmlPage>();
+
+            return entryList;
+        }
+
         #region Repository
 
         /// <summary>
@@ -165,17 +178,9 @@ namespace BDEditor.DataModel
             List<IBDObject> entryList = new List<IBDObject>();
             IQueryable<BDHtmlPage> entries;
 
-            if (null == pUpdateDateTime)
-            {
-                entries = (from entry in pContext.BDHtmlPages
-                           select entry);
-            }
-            else
-            {
-                entries = (from entry in pContext.BDHtmlPages
-                           where entry.createdDate > pUpdateDateTime.Value
-                           select entry);
-            }
+            // get ALL entries - this is a full refresh.
+            entries = (from entry in pContext.BDHtmlPages
+                       select entry);
 
             if (entries.Count() > 0)
                 entryList = new List<IBDObject>(entries.ToList<BDHtmlPage>());

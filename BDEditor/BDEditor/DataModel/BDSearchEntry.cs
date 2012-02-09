@@ -18,8 +18,6 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDSearchEntry: IBDObject
     {
-        //public const string AWS_DOMAIN = @"bd_1_searchEntries";
-
         public const string AWS_PROD_DOMAIN = @"bd_2_searchEntries";
         public const string AWS_DEV_DOMAIN = @"bd_dev_2_searchEntries";
 
@@ -178,18 +176,10 @@ namespace BDEditor.DataModel
             List<IBDObject> entryList = new List<IBDObject>();
             IQueryable<BDSearchEntry> entries;
 
-            if (null == pUpdateDateTime)
-            {
-                entries = (from entry in pContext.BDSearchEntries
-                           select entry);
-            }
-            else
-            {
-                entries = (from entry in pContext.BDSearchEntries
-                           where entry.createdDate > pUpdateDateTime.Value
-                           select entry);
-            }
-
+            // Get ALL entries - this is a full refresh.
+            entries = (from entry in pContext.BDSearchEntries
+                      select entry);
+            
             if (entries.Count() > 0)
                 entryList = new List<IBDObject>(entries.ToList<BDSearchEntry>());
 

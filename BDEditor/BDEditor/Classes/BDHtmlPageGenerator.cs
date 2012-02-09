@@ -14,6 +14,11 @@ namespace BDEditor.Classes
         private const int EMPTY_PARAGRAPH = 8;  // <p> </p>
         public static void Generate()
         {
+            // Clear the data from the remote store.
+            Entities dataContext = new Entities();
+            RepositoryHandler.Aws.DeleteRemoteForPages(dataContext);
+
+            // Clear the data from the local store.
             BDHtmlPage.DeleteAll();
 
             generatePages();
@@ -183,7 +188,7 @@ namespace BDEditor.Classes
                 string pName = string.Empty;
 
                 if (null == pNode.Name || pNode.Name.Length == 0)
-                    pName = @"See note.";
+                    pName = @"See page.";
                 else if(pNode.Name.Length > 0)
                     pName = pNode.Name;
 
@@ -235,7 +240,7 @@ namespace BDEditor.Classes
 
             string tgName = string.Empty;
             if (null == pTherapyGroup.Name || pTherapyGroup.Name.Length == 0)
-                tgName = @"See note.";
+                tgName = @"See page.";
             else if (pTherapyGroup.Name.Length > 0)
                 tgName = pTherapyGroup.Name;
 
@@ -305,7 +310,7 @@ namespace BDEditor.Classes
                 if (pTherapy.dosage.Length > 0)
                     therapyHtml.AppendFormat(@"<td><a href=""{0}"">{1}</a></td>", dosageNoteGuid, pTherapy.dosage.Trim());
                 else
-                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See note.</a></td>", dosageNoteGuid);
+                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See page.</a></td>", dosageNoteGuid);
             }
             else
                 therapyHtml.AppendFormat(@"<td>{0}</td>", pTherapy.dosage);
@@ -319,7 +324,7 @@ namespace BDEditor.Classes
                 if (pTherapy.duration.Length > 0)
                     therapyHtml.AppendFormat(@"<td><a href=""{0}"">{1}</a></td>", durationNoteGuid, pTherapy.duration.Trim());
                 else
-                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See note.</a></td>", durationNoteGuid);
+                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See page.</a></td>", durationNoteGuid);
             }
             else
                 therapyHtml.AppendFormat(@"<td>{0}</td>", pTherapy.duration);

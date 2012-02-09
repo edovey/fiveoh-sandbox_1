@@ -18,8 +18,6 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDSearchEntryAssociation : IBDObject
     {
-        //public const string AWS_DOMAIN = @"bd_1_searchEntryAssociations";
-
         public const string AWS_PROD_DOMAIN = @"bd_2_searchEntryAssociations";
         public const string AWS_DEV_DOMAIN = @"bd_dev_2_searchEntryAssociations";
 
@@ -95,7 +93,8 @@ namespace BDEditor.DataModel
         {
             BDSearchEntryAssociation association = CreateBDSearchEntryAssociation(Guid.NewGuid());
             association.createdBy = Guid.Empty;
-            association.schemaVersion = 0;
+            association.schemaVersion = ENTITY_SCHEMAVERSION;
+            association.displayOrder = -1;
 
             association.searchEntryId = pSearchEntryId;
             association._searchEntryType = (int)pSearchEntryType;
@@ -260,18 +259,11 @@ namespace BDEditor.DataModel
         {
             List<IBDObject> entryList = new List<IBDObject>();
             IQueryable<BDSearchEntryAssociation> entries;
-
-            if (null == pUpdateDateTime)
-            {
-                entries = (from entry in pContext.BDSearchEntryAssociations
-                           select entry);
-            }
-            else
-            {
-                entries = (from entry in pContext.BDSearchEntryAssociations
-                           where entry.createdDate > pUpdateDateTime.Value
-                           select entry);
-            }
+            
+            // retrieve ALL entries - this is a full refresh.
+            entries = (from entry in pContext.BDSearchEntryAssociations
+                      select entry);
+            
             if (entries.Count() > 0)
                 entryList = new List<IBDObject>(entries.ToList<BDSearchEntryAssociation>());
 

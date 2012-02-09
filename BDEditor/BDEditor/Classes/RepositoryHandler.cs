@@ -51,25 +51,33 @@ namespace BDEditor.Classes
             }
         }
 
-        private SyncInfoDictionary InitializeSyncDictionary(Entities pDataContext, DateTime? pLastSyncDate, DateTime? pCurrentSyncDate, Boolean pCreateMissing)
+        private SyncInfoDictionary InitializeSyncDictionary(Entities pDataContext, DateTime? pLastSyncDate, DateTime? pCurrentSyncDate, Boolean pCreateMissing, BDConstants.SyncType pSyncType)
         {
             SyncInfoDictionary syncDictionary = new SyncInfoDictionary();
 
-            // Create the SyncInfo instance and update the modified date of all the changed records to be the currentSyncDate
-            syncDictionary.Add(BDNode.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
-            syncDictionary.Add(BDNodeAssociation.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
+            if (pSyncType == BDConstants.SyncType.Default)
+            {
+                // Create the SyncInfo instance and update the modified date of all the changed records to be the currentSyncDate
+                syncDictionary.Add(BDNode.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
+                syncDictionary.Add(BDNodeAssociation.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
 
-            // It is relevent that LinkedNoteAssociation is BEFORE LinkedNote
-            syncDictionary.Add(BDLinkedNoteAssociation.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate)); 
-            syncDictionary.Add(BDLinkedNote.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
+                // It is relevant that LinkedNoteAssociation is BEFORE LinkedNote
+                syncDictionary.Add(BDLinkedNoteAssociation.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
+                syncDictionary.Add(BDLinkedNote.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
 
-            syncDictionary.Add(BDTherapy.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
-            syncDictionary.Add(BDTherapyGroup.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
-            syncDictionary.Add(BDDeletion.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
-            syncDictionary.Add(BDSearchEntry.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
-            syncDictionary.Add(BDSearchEntryAssociation.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
-            syncDictionary.Add(BDMetadata.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
-            
+                syncDictionary.Add(BDTherapy.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
+                syncDictionary.Add(BDTherapyGroup.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
+                syncDictionary.Add(BDDeletion.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
+                syncDictionary.Add(BDMetadata.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
+            }
+
+            if (pSyncType == BDConstants.SyncType.Publish)
+            {
+                syncDictionary.Add(BDHtmlPage.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
+                syncDictionary.Add(BDSearchEntry.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
+                syncDictionary.Add(BDSearchEntryAssociation.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
+            }
+
             // List the remote domains
             ListDomainsResponse sdbListDomainsResponse = SimpleDb.ListDomains(new ListDomainsRequest());
             if (sdbListDomainsResponse.IsSetListDomainsResult())
@@ -115,12 +123,12 @@ namespace BDEditor.Classes
         /// <param name="pDataContext"></param>
         /// <param name="pLastSyncDate"></param>
         /// <returns></returns>
-        public SyncInfoDictionary Sync(Entities pDataContext, DateTime? pLastSyncDate)
+        public SyncInfoDictionary Sync(Entities pDataContext, DateTime? pLastSyncDate, BDConstants.SyncType pSyncType)
         {
             DateTime? currentSyncDate = DateTime.Now;
             #region Initialize Sync
 
-            SyncInfoDictionary syncDictionary = InitializeSyncDictionary(pDataContext, pLastSyncDate, currentSyncDate, true);
+            SyncInfoDictionary syncDictionary = InitializeSyncDictionary(pDataContext, pLastSyncDate, currentSyncDate, true, pSyncType);
 
             // Create the SyncInfo instance and update the modified date of all the changed records to be the currentSyncDate
 
@@ -157,6 +165,19 @@ namespace BDEditor.Classes
                                         .WithContentBody(linkedNote.documentText)
                                         .WithBucketName(BDLinkedNote.AWS_BUCKET)
                                         .WithKey(linkedNote.storageKey);
+
+                            S3Response s3Response = S3.PutObject(putObjectRequest);
+                            s3Response.Dispose();
+                        }
+
+                        if (changeEntry is BDHtmlPage)
+                        {
+                            BDHtmlPage htmlPage = changeEntry as BDHtmlPage;
+                            PutObjectRequest putObjectRequest = new PutObjectRequest()
+                                        .WithContentType(@"text/html")
+                                        .WithContentBody(htmlPage.documentText)
+                                        .WithBucketName(BDHtmlPage.AWS_BUCKET)
+                                        .WithKey(htmlPage.storageKey);
 
                             S3Response s3Response = S3.PutObject(putObjectRequest);
                             s3Response.Dispose();
@@ -214,6 +235,20 @@ namespace BDEditor.Classes
                             break;
                         case BDMetadata.KEY_NAME:
                             domainName = BDMetadata.AWS_DOMAIN;
+                            break;
+                        case BDHtmlPage.KEY_NAME:
+                            domainName = BDLinkedNote.AWS_DOMAIN;
+                            DeleteObjectRequest s3DeleteHtmlPage = new DeleteObjectRequest()
+                                .WithBucketName(BDHtmlPage.AWS_BUCKET)
+                                .WithKey(BDHtmlPage.GenerateStorageKey(entry.targetId.Value));
+                            try
+                            {
+                                S3.DeleteObject(s3DeleteHtmlPage);
+                            }
+                            catch (AmazonS3Exception s3Exception)
+                            {
+                                Console.WriteLine(s3Exception.Message, s3Exception.InnerException);
+                            }
                             break;
                     }
 
@@ -332,6 +367,51 @@ namespace BDEditor.Classes
                                 case BDNodeAssociation.AWS_DOMAIN:
                                     entryGuid = BDNodeAssociation.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                     break;
+                                case BDHtmlPage.AWS_DOMAIN:
+                                    {
+                                        entryGuid = BDHtmlPage.LoadFromAttributes(pDataContext, attributeDictionary, true); // We need the note for the S3 call, so save
+                                        if (null != entryGuid) // retrieve the note body
+                                        {
+                                            BDHtmlPage page = BDHtmlPage.RetrieveWithId(pDataContext, entryGuid);
+                                            if (null != page)
+                                            {
+                                                try
+                                                {
+                                                    GetObjectRequest getObjectRequest = new GetObjectRequest()
+                                                        .WithBucketName(BDHtmlPage.AWS_BUCKET)
+                                                        .WithKey(page.storageKey);
+
+                                                    using (GetObjectResponse response = S3.GetObject(getObjectRequest))
+                                                    {
+                                                        if ((response.ContentType == @"text/html") || (response.ContentType == @"text/plain"))
+                                                        {
+                                                            using (StreamReader reader = new StreamReader(response.ResponseStream))
+                                                            {
+                                                                String encodedString = reader.ReadToEnd();
+                                                                page.documentText = encodedString;
+                                                            }
+                                                        }
+
+                                                    }
+                                                }
+                                                catch (AmazonS3Exception amazonS3Exception)
+                                                {
+                                                    if (amazonS3Exception.ErrorCode != null &&
+                                                        (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId") ||
+                                                        amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
+                                                    {
+                                                        Console.WriteLine("Please check the provided AWS Credentials.");
+                                                        Console.WriteLine("If you haven't signed up for Amazon S3, please visit http://aws.amazon.com/s3");
+                                                    }
+                                                    else
+                                                    {
+                                                        Console.WriteLine("An error occurred with the message '{0}' when reading an object", amazonS3Exception.Message);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    break;
                             }
                             // The entry id will be null if a sync conflict prevented create/update so add it to the conflict list
                             if (null == entryGuid) syncInfoEntry.SyncConflictList.Add(attributeDictionary);
@@ -358,7 +438,7 @@ namespace BDEditor.Classes
         {
             DateTime? currentSyncDate = null; // DateTime.Now;
 
-            SyncInfoDictionary syncDictionary = InitializeSyncDictionary(pDataContext, pLastSyncDate, currentSyncDate, false);
+            SyncInfoDictionary syncDictionary = InitializeSyncDictionary(pDataContext, pLastSyncDate, currentSyncDate, false, BDConstants.SyncType.Default);
 
             BDCommon.Settings.IsSyncLoad = true;
 
@@ -502,7 +582,7 @@ namespace BDEditor.Classes
             #region Push to dev
 
             // reload the push lists
-            syncDictionary = InitializeSyncDictionary(pDataContext, null, null, false);
+            syncDictionary = InitializeSyncDictionary(pDataContext, null, null, false, BDConstants.SyncType.Default);
             
             BDCommon.Settings.IsSyncLoad = true;
             foreach (SyncInfo syncInfoEntry in syncDictionary.Values)
@@ -554,6 +634,7 @@ namespace BDEditor.Classes
             pDataContext.ExecuteStoreCommand("DELETE FROM BDSearchEntryAssociations");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDSearchEntries");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDMetata");
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDHtmlPage");
         }
 
         #region Helper Methods
@@ -573,5 +654,43 @@ namespace BDEditor.Classes
             return attributeDictionary;
         }
         #endregion
+
+        public void DeleteRemoteForSearch()
+        {
+            DeleteDomainRequest saRequest = new DeleteDomainRequest().WithDomainName(BDSearchEntry.AWS_DOMAIN);
+            SimpleDb.DeleteDomain(saRequest);
+            DeleteDomainRequest seRequest = new DeleteDomainRequest().WithDomainName(BDSearchEntryAssociation.AWS_DOMAIN);
+            SimpleDb.DeleteDomain(seRequest);
+        }
+
+        public void DeleteRemoteForPages(Entities pContext)
+        {
+            DeleteObjectsRequest s3DeleteHtmlPages = new DeleteObjectsRequest()
+                .WithBucketName(BDHtmlPage.AWS_BUCKET);
+
+            List<BDHtmlPage> allPages = BDHtmlPage.RetrieveAll(pContext);
+            foreach (BDHtmlPage page in allPages)
+            {
+                s3DeleteHtmlPages.AddKey(page.storageKey);
+            }
+            try
+            {
+                S3.DeleteObjects(s3DeleteHtmlPages);
+            }
+            catch (DeleteObjectsException e)
+            {
+                var errorResponse = e.ErrorResponse;
+                Console.WriteLine("No. of objects successfully deleted = {0}", errorResponse.DeletedObjects.Count);
+                Console.WriteLine("No. of objects failed to delete = {0}", errorResponse.DeleteErrors.Count);
+                Console.WriteLine("Printing error data...");
+                foreach (DeleteError deleteError in errorResponse.DeleteErrors)
+                {
+                    Console.WriteLine("Object Key: {0}\t{1}\t{2}", deleteError.Key, deleteError.Code, deleteError.Message);
+                }
+            }
+         
+            DeleteDomainRequest htDomain = new DeleteDomainRequest().WithDomainName(BDHtmlPage.AWS_DOMAIN);
+            SimpleDb.DeleteDomain(htDomain);
+        }
     }
 }

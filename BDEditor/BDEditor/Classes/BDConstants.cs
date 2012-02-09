@@ -49,6 +49,13 @@ namespace BDEditor.Classes
             TreatmentRecommendation05 = 105
         }
 
+        public enum SyncType
+        {
+            Undefined = -1,
+            Default = 0,
+            Publish = 2
+        }
+
         public const string DATETIMEFORMAT = @"yyyy-MM-dd'T'HH:mm:ss";
         public static readonly Color ACTIVELINK_COLOR = Color.LightSteelBlue;
         public static readonly Color INACTIVELINK_COLOR = SystemColors.Control;

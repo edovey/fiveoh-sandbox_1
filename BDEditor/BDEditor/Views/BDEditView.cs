@@ -260,7 +260,7 @@ namespace BDEditor.Views
             BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
 
-            SyncInfoDictionary syncResultList = RepositoryHandler.Aws.Sync(DataContext, lastSyncDate);
+            SyncInfoDictionary syncResultList = RepositoryHandler.Aws.Sync(DataContext, lastSyncDate, BDConstants.SyncType.Default);
 
             string resultMessage = string.Empty;
 
@@ -367,6 +367,24 @@ namespace BDEditor.Views
             System.Diagnostics.Debug.WriteLine("HTML page generation complete.");
             BDSearchEntryGenerator.Generate();
             System.Diagnostics.Debug.WriteLine("Search entry generation complete.");
+
+            BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
+
+            SyncInfoDictionary syncResultList = RepositoryHandler.Aws.Sync(DataContext, lastSyncDate, BDConstants.SyncType.Publish);
+
+            string resultMessage = string.Empty;
+
+            foreach (SyncInfo syncInfo in syncResultList.Values)
+            {
+                System.Diagnostics.Debug.WriteLine(syncInfo.FriendlyName);
+                if ((syncInfo.RowsPulled > 0) || (syncInfo.RowsPushed > 0))
+                    resultMessage = string.Format("{0}{1}{4}: Pulled {2}, Pushed {3}", resultMessage, (string.IsNullOrEmpty(resultMessage) ? "" : "\n"), syncInfo.RowsPulled, syncInfo.RowsPushed, syncInfo.FriendlyName);
+            }
+
+            if (string.IsNullOrEmpty(resultMessage)) resultMessage = "No changes";
+
+            MessageBox.Show(resultMessage, "Synchronization");
             this.Cursor = Cursors.Default;
         }
 

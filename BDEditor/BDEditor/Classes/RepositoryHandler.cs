@@ -673,22 +673,24 @@ namespace BDEditor.Classes
             {
                 s3DeleteHtmlPages.AddKey(page.storageKey);
             }
-            try
+            if (s3DeleteHtmlPages.Keys.Count > 0)
             {
-                S3.DeleteObjects(s3DeleteHtmlPages);
-            }
-            catch (DeleteObjectsException e)
-            {
-                var errorResponse = e.ErrorResponse;
-                Console.WriteLine("No. of objects successfully deleted = {0}", errorResponse.DeletedObjects.Count);
-                Console.WriteLine("No. of objects failed to delete = {0}", errorResponse.DeleteErrors.Count);
-                Console.WriteLine("Printing error data...");
-                foreach (DeleteError deleteError in errorResponse.DeleteErrors)
+                try
                 {
-                    Console.WriteLine("Object Key: {0}\t{1}\t{2}", deleteError.Key, deleteError.Code, deleteError.Message);
+                    S3.DeleteObjects(s3DeleteHtmlPages);
+                }
+                catch (DeleteObjectsException e)
+                {
+                    var errorResponse = e.ErrorResponse;
+                    Console.WriteLine("No. of objects successfully deleted = {0}", errorResponse.DeletedObjects.Count);
+                    Console.WriteLine("No. of objects failed to delete = {0}", errorResponse.DeleteErrors.Count);
+                    Console.WriteLine("Printing error data...");
+                    foreach (DeleteError deleteError in errorResponse.DeleteErrors)
+                    {
+                        Console.WriteLine("Object Key: {0}\t{1}\t{2}", deleteError.Key, deleteError.Code, deleteError.Message);
+                    }
                 }
             }
-         
             DeleteDomainRequest htDomain = new DeleteDomainRequest().WithDomainName(BDHtmlPage.AWS_DOMAIN);
             SimpleDb.DeleteDomain(htDomain);
         }

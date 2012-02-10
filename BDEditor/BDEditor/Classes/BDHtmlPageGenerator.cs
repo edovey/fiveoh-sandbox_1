@@ -16,7 +16,7 @@ namespace BDEditor.Classes
         {
             // Clear the data from the remote store.
             Entities dataContext = new Entities();
-            RepositoryHandler.Aws.DeleteRemoteForPages(dataContext);
+            RepositoryHandler.Aws.DeleteRemotePages(dataContext);
 
             // Clear the data from the local store.
             BDHtmlPage.DeleteAll();

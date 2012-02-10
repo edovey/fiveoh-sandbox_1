@@ -655,7 +655,7 @@ namespace BDEditor.Classes
         }
         #endregion
 
-        public void DeleteRemoteForSearch()
+        public void DeleteRemoteSearch()
         {
             DeleteDomainRequest saRequest = new DeleteDomainRequest().WithDomainName(BDSearchEntry.AWS_DOMAIN);
             SimpleDb.DeleteDomain(saRequest);
@@ -663,36 +663,73 @@ namespace BDEditor.Classes
             SimpleDb.DeleteDomain(seRequest);
         }
 
-        public void DeleteRemoteForPages(Entities pContext)
+        public void DeleteRemotePages(Entities pContext)
         {
-            DeleteObjectsRequest s3DeleteHtmlPages = new DeleteObjectsRequest()
-                .WithBucketName(BDHtmlPage.AWS_BUCKET);
+            try
+            {
+                DeleteObjectsRequest s3DeleteHtmlPages = new DeleteObjectsRequest()
+                    .WithBucketName(BDHtmlPage.AWS_BUCKET);
+               ListObjectsRequest request = new ListObjectsRequest().WithBucketName(BDHtmlPage.AWS_BUCKET).WithPrefix(@"bdhp~");
 
-            List<BDHtmlPage> allPages = BDHtmlPage.RetrieveAll(pContext);
-            foreach (BDHtmlPage page in allPages)
-            {
-                s3DeleteHtmlPages.AddKey(page.storageKey);
-            }
-            if (s3DeleteHtmlPages.Keys.Count > 0)
-            {
-                try
+                do
                 {
-                    S3.DeleteObjects(s3DeleteHtmlPages);
-                }
-                catch (DeleteObjectsException e)
-                {
-                    var errorResponse = e.ErrorResponse;
-                    Console.WriteLine("No. of objects successfully deleted = {0}", errorResponse.DeletedObjects.Count);
-                    Console.WriteLine("No. of objects failed to delete = {0}", errorResponse.DeleteErrors.Count);
-                    Console.WriteLine("Printing error data...");
-                    foreach (DeleteError deleteError in errorResponse.DeleteErrors)
+                    ListObjectsResponse response = S3.ListObjects(request);
+
+                    foreach (S3Object entry in response.S3Objects)
                     {
-                        Console.WriteLine("Object Key: {0}\t{1}\t{2}", deleteError.Key, deleteError.Code, deleteError.Message);
+                        s3DeleteHtmlPages.AddKey(entry.Key);
                     }
+
+                    if (s3DeleteHtmlPages.Keys.Count > 0)
+                    {
+                        try
+                        {
+                            S3.DeleteObjects(s3DeleteHtmlPages);
+                        }
+                        catch (DeleteObjectsException e)
+                        {
+                            var errorResponse = e.ErrorResponse;
+                            Console.WriteLine("No. of objects successfully deleted = {0}", errorResponse.DeletedObjects.Count);
+                            Console.WriteLine("No. of objects failed to delete = {0}", errorResponse.DeleteErrors.Count);
+                            Console.WriteLine("Printing error data...");
+                            foreach (DeleteError deleteError in errorResponse.DeleteErrors)
+                            {
+                                Console.WriteLine("Object Key: {0}\t{1}\t{2}", deleteError.Key, deleteError.Code, deleteError.Message);
+                            }
+                        }
+                    }
+                    DeleteDomainRequest htDomain = new DeleteDomainRequest().WithDomainName(BDHtmlPage.AWS_DOMAIN);
+                    SimpleDb.DeleteDomain(htDomain);
+
+                    if (response.IsTruncated)
+                    {
+                        request.Marker = response.NextMarker;
+                    }
+                    else
+                    {
+                        request = null;
+                    }
+                } while (request != null);
+            }
+
+            catch (AmazonS3Exception amazonS3Exception)
+            {
+                if (amazonS3Exception.ErrorCode != null &&
+                                    (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId")
+                                    ||
+                                    amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
+                {
+                    Console.WriteLine("Check the provided AWS Credentials.");
+                    Console.WriteLine(
+                    "To sign up for service, go to http://aws.amazon.com/s3");
+                }
+                else
+                {
+                    Console.WriteLine(
+                     "Error occurred. Message:'{0}' when listing objects",
+                     amazonS3Exception.Message);
                 }
             }
-            DeleteDomainRequest htDomain = new DeleteDomainRequest().WithDomainName(BDHtmlPage.AWS_DOMAIN);
-            SimpleDb.DeleteDomain(htDomain);
         }
     }
 }

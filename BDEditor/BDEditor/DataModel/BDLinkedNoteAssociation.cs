@@ -13,14 +13,6 @@ using BDEditor.Classes;
 
 namespace BDEditor.DataModel
 {
-    public enum LinkedNoteType
-    {
-        Inline = 0,
-        Comment = 1,
-        Endnote = 2,
-        Footnote = 3
-    }
-
     /// <summary>
     /// Extension of generated BDLinkedNoteAssociation
     /// </summary>
@@ -80,7 +72,7 @@ namespace BDEditor.DataModel
             linkedNoteAssociation.createdDate = DateTime.Now;
             linkedNoteAssociation.deprecated = false;
             linkedNoteAssociation.schemaVersion = ENTITY_SCHEMAVERSION;
-            linkedNoteAssociation.linkedNoteType = (int)LinkedNoteType.Inline;
+            linkedNoteAssociation.linkedNoteType = (int)BDConstants.LinkedNoteType.Inline;
             linkedNoteAssociation.displayOrder = -1;
             pContext.AddObject(ENTITYNAME, linkedNoteAssociation);
             return linkedNoteAssociation;
@@ -97,7 +89,7 @@ namespace BDEditor.DataModel
         /// <param name="pParentPropertyName"></param>
         /// <returns>BDLinkedNoteAssociation</returns>
         public static BDLinkedNoteAssociation CreateLinkedNoteAssociation(Entities pContext, 
-                                                                            LinkedNoteType pLinkedNoteType, 
+                                                                            BDConstants.LinkedNoteType pLinkedNoteType, 
                                                                             Guid pLinkedNoteId, 
                                                                             BDConstants.BDNodeType pParentType, 
                                                                             Guid pParentId, 

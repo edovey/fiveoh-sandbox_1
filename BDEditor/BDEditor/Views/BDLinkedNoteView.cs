@@ -144,7 +144,7 @@ namespace BDEditor.Views
 
             if (null != existingAssociation)
             {
-                existingAssociation.linkedNoteType = (int)Enum.Parse(typeof(LinkedNoteType), this.linkedNoteTypeCombo.GetItemText(this.linkedNoteTypeCombo.SelectedItem));
+                existingAssociation.linkedNoteType = (int)Enum.Parse(typeof(BDConstants.LinkedNoteType), this.linkedNoteTypeCombo.GetItemText(this.linkedNoteTypeCombo.SelectedItem));
                 dataContext.SaveChanges();
             }
 
@@ -268,12 +268,12 @@ namespace BDEditor.Views
         private void linkedNoteType_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(null != existingAssociation)
-                existingAssociation.linkedNoteType = (int)Enum.Parse(typeof(LinkedNoteType), this.linkedNoteTypeCombo.GetItemText(this.linkedNoteTypeCombo.SelectedItem));
+                existingAssociation.linkedNoteType = (int)Enum.Parse(typeof(BDConstants.LinkedNoteType), this.linkedNoteTypeCombo.GetItemText(this.linkedNoteTypeCombo.SelectedItem));
         }
 
         private void BDLinkedNoteView_Load(object sender, EventArgs e)
         {
-            List<LinkedNoteType> noteTypes = Enum.GetValues(typeof(LinkedNoteType)).Cast<LinkedNoteType>().ToList<LinkedNoteType>();
+            List<BDConstants.LinkedNoteType> noteTypes = Enum.GetValues(typeof(BDConstants.LinkedNoteType)).Cast<BDConstants.LinkedNoteType>().ToList<BDConstants.LinkedNoteType>();
             this.linkedNoteTypeCombo.DataSource = noteTypes;
 
             bdLinkedNoteControl1.CurrentLinkedNote = null;

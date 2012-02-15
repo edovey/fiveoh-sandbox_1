@@ -248,7 +248,7 @@
             this.Controls.Add(this.headerPanel);
             this.Controls.Add(this.panel1);
             this.Name = "BDLinkedNoteView";
-            this.Text = "BDLinkedNoteView";
+            this.Text = "Linked Note Editor";
             this.Load += new System.EventHandler(this.BDLinkedNoteView_Load);
             this.panel1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);

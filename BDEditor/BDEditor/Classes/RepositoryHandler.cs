@@ -301,8 +301,8 @@ namespace BDEditor.Classes
                                     break;
                                 case BDLinkedNote.AWS_DOMAIN:
                                     {
-                                        entryGuid = BDLinkedNote.LoadFromAttributes(pDataContext, attributeDictionary, true); // We need the note for the S3 call, so save
-                                        if (null != entryGuid) // retrieve the note body
+                                        entryGuid = BDLinkedNote.LoadFromAttributes(pDataContext, attributeDictionary, true); // We need the iNote for the S3 call, so save
+                                        if (null != entryGuid) // retrieve the iNote body
                                         {
                                             BDLinkedNote note = BDLinkedNote.GetLinkedNoteWithId(pDataContext, entryGuid);
                                             if (null != note)
@@ -321,7 +321,7 @@ namespace BDEditor.Classes
                                                             {
                                                                 String encodedString = reader.ReadToEnd();
                                                                 String unencodedString = System.Net.WebUtility.HtmlDecode(encodedString);
-                                                                //note.documentText = unencodedString;
+                                                                //iNote.documentText = unencodedString;
                                                                 note.documentText = encodedString;
                                                             }
                                                         }
@@ -369,8 +369,8 @@ namespace BDEditor.Classes
                                     break;
                                 case BDHtmlPage.AWS_DOMAIN:
                                     {
-                                        entryGuid = BDHtmlPage.LoadFromAttributes(pDataContext, attributeDictionary, true); // We need the note for the S3 call, so save
-                                        if (null != entryGuid) // retrieve the note body
+                                        entryGuid = BDHtmlPage.LoadFromAttributes(pDataContext, attributeDictionary, true); // We need the iNote for the S3 call, so save
+                                        if (null != entryGuid) // retrieve the iNote body
                                         {
                                             BDHtmlPage page = BDHtmlPage.RetrieveWithId(pDataContext, entryGuid);
                                             if (null != page)
@@ -477,7 +477,7 @@ namespace BDEditor.Classes
                                 case BDLinkedNote.AWS_PROD_DOMAIN:
                                     {
 
-                                        //TODO: Get the existing and create a new note within the dev environment.
+                                        //TODO: Get the existing and create a new iNote within the dev environment.
                                         // change all the association records.
                                         // NOTE: LinkedNoteAssociations MUST be loaded first.
 
@@ -530,7 +530,7 @@ namespace BDEditor.Classes
                                                 association.linkedNoteId = note.Uuid;
                                                 association.modifiedDate = modifiedDate; // reset the modified date because the above change will automatically update it
                                             }
-                                            //pDataContext.ExecuteStoreCommand("UPDATE BDLinkedNoteAssociations SET linkedNoteId = {0} WHERE linkedNoteId = {1}", note.uuid, originalLinkedNoteUuid);
+                                            //pDataContext.ExecuteStoreCommand("UPDATE BDLinkedNoteAssociations SET linkedNoteId = {0} WHERE linkedNoteId = {1}", iNote.uuid, originalLinkedNoteUuid);
                                             pDataContext.SaveChanges();
                                             // This expects that the LinkedNoteAssociation data has already been loaded
                                         }

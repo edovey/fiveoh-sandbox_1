@@ -139,7 +139,7 @@ namespace BDEditor.DataModel
         /// <param name="pCreateDeletion">Create entry in the deletion table (bool)</param>
         public static void Delete(Entities pContext, BDSearchEntryAssociation pEntity, bool pCreateDeletion)
         {
-            // Don't delete the note from here. Deletion of a note will delete all association entries
+            // Don't delete the iNote from here. Deletion of a iNote will delete all association entries
             if (null == pEntity) return;
             if (pCreateDeletion)
             {

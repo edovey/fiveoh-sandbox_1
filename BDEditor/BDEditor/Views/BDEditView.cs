@@ -363,7 +363,8 @@ namespace BDEditor.Views
         private void btnPublish_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            BDHtmlPageGenerator.Generate();
+            BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
+            generator.Generate();
             System.Diagnostics.Debug.WriteLine("HTML page generation complete.");
             BDSearchEntryGenerator.Generate();
             System.Diagnostics.Debug.WriteLine("Search entry generation complete.");

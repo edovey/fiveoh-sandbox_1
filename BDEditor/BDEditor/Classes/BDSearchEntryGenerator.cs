@@ -78,7 +78,7 @@ namespace BDEditor.Classes
                                                                 {
                                                                     case BDConstants.BDNodeType.BDPathogen:
                                                                         {
-                                                                            if (null != parentNode)
+                                                                            if (null != parentNode && node.Name.Length > 0)
                                                                                 generateEntryWithDisplayParent(dataContext, parentNode, node, presentationDisplayContext.ToString());
                                                                         }
                                                                         break;
@@ -87,7 +87,7 @@ namespace BDEditor.Classes
                                                                             List<IBDNode> therapies = BDFabrik.GetChildrenForParentId(dataContext, node.Uuid);
                                                                             foreach (IBDNode therapy in therapies)
                                                                             {
-                                                                                if (null != parentNode)
+                                                                                if (null != parentNode && therapy.Name.Length > 0)
                                                                                     generateEntryWithDisplayParent(dataContext, parentNode, therapy, presentationDisplayContext.ToString());
                                                                             }
                                                                         }

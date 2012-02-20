@@ -240,5 +240,47 @@ namespace BDEditor.Views
             //ShowLinksInUse(true);
             OnNotesChanged(new EventArgs());
         }
+
+        private void insertText(TextBox pTextBox, string pText)
+        {
+            int x = pTextBox.SelectionStart;
+            pTextBox.Text = pTextBox.Text.Insert(pTextBox.SelectionStart, pText);
+            pTextBox.SelectionStart = x + 1;
+        }
+
+        private void bToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbPathogenName, "ß");
+        }
+
+        private void degreeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbPathogenName, "°");
+        }
+
+        private void µToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbPathogenName, "µ");
+        }
+
+        private void geToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbPathogenName, "≥");
+        }
+
+        private void leToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbPathogenName, "≤");
+        }
+
+        private void plusMinusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbPathogenName, "±");
+        }
+
+        private void sOneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbPathogenName, "¹");
+        }
     }
 }

@@ -456,6 +456,17 @@ namespace BDEditor.Views
                 insertTextFromMenu(tbDuration, newText, tbDuration.SelectionStart);
         }
 
+        private void sOneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText =  "¹";
+            if (currentControlName == NAME_TEXTBOX)
+                insertTextFromMenu(tbName, newText, tbName.SelectionStart);
+            else if (currentControlName == DOSAGE_TEXTBOX)
+                insertTextFromMenu(tbDosage, newText, tbDosage.SelectionStart);
+            else if (currentControlName == DURATION_TEXTBOX)
+                insertTextFromMenu(tbDuration, newText, tbDuration.SelectionStart);
+        }
+
         private void btnAdd_Click(object sender, EventArgs e)
         {
             OnItemAddRequested(new EventArgs());

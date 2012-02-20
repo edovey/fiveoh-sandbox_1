@@ -459,6 +459,11 @@ namespace BDEditor.Views
             insertText(tbName, "±");
         }
 
+        private void sOneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbName, "¹");
+        }
+
         private void Menu_Copy(System.Object sender, System.EventArgs e)
         {
             // Ensure that text is selected in the text box.   

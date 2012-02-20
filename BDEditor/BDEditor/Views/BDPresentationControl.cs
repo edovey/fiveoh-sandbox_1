@@ -467,6 +467,12 @@ namespace BDEditor.Views
         {
             insertText(tbPresentationName, "±");
         }
+
+        private void sOneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(tbPresentationName, "¹");
+        }
+
         private void tbPresentationName_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)

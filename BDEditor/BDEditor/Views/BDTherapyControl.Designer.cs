@@ -62,6 +62,7 @@
             this.chkPreviousDose = new System.Windows.Forms.CheckBox();
             this.chkPreviousDuration = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.sOneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
             this.SuspendLayout();
@@ -85,10 +86,11 @@
             this.leToolStripMenuItem,
             this.plusMinusToolStripMenuItem,
             this.degreeToolStripMenuItem,
-            this.µToolStripMenuItem});
+            this.µToolStripMenuItem,
+            this.sOneToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.ShowImageMargin = false;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(128, 158);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(128, 180);
             this.contextMenuStrip1.Text = "Insert Symbol";
             // 
             // bToolStripMenuItem
@@ -369,6 +371,14 @@
             this.chkPreviousDuration.UseVisualStyleBackColor = true;
             this.chkPreviousDuration.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
             // 
+            // sOneToolStripMenuItem
+            // 
+            this.sOneToolStripMenuItem.Name = "sOneToolStripMenuItem";
+            this.sOneToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.sOneToolStripMenuItem.Text = "¹";
+            this.sOneToolStripMenuItem.ToolTipText = "Insert ¹";
+            this.sOneToolStripMenuItem.Click += new System.EventHandler(this.sOneToolStripMenuItem_Click);
+            // 
             // BDTherapyControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -435,5 +445,6 @@
         private System.Windows.Forms.CheckBox chkPreviousDuration;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ToolStripMenuItem µToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sOneToolStripMenuItem;
     }
 }

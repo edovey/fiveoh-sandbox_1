@@ -610,6 +610,11 @@ namespace BDEditor.Views
             insertText(textBoxPathogenGroupName, "±");
         }
 
+        private void sOneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(textBoxPathogenGroupName, "¹");
+        }
+
         private void textBoxPathogenGroupName_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)

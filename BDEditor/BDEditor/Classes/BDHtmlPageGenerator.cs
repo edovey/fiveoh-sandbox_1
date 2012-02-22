@@ -49,12 +49,21 @@ namespace BDEditor.Classes
                                 {
                                     case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                                         {
+                                            List<BDLinkedNote> sectionOverviewNotes = retrieveNotesForParentAndPropertyForType(dataContext, section.Uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW, BDConstants.LinkedNoteType.Inline);
+                                            if(sectionOverviewNotes.Count > 0)
+                                                generatePageForOverview(dataContext, section.Uuid, BDConstants.BDNodeType.BDSection, sectionOverviewNotes[0]);
                                             List<IBDNode> categories = BDFabrik.GetChildrenForParentId(dataContext, section.Uuid);
                                             foreach (IBDNode category in categories)
                                             {
+                                                List<BDLinkedNote> categoryOverviewNotes = retrieveNotesForParentAndPropertyForType(dataContext, category.Uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW, BDConstants.LinkedNoteType.Inline);
+                                                if(categoryOverviewNotes.Count > 0)
+                                                    generatePageForOverview(dataContext, category.Uuid, BDConstants.BDNodeType.BDCategory, categoryOverviewNotes[0]);
                                                 List<IBDNode> diseases = BDFabrik.GetChildrenForParentId(dataContext, category.Uuid);
                                                 foreach (IBDNode disease in diseases)
                                                 {
+                                                    List<BDLinkedNote> diseaseOverviewNotes = retrieveNotesForParentAndPropertyForType(dataContext, disease.Uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW, BDConstants.LinkedNoteType.Inline);
+                                                    if (diseaseOverviewNotes.Count > 0)
+                                                        generatePageForOverview(dataContext, disease.Uuid, BDConstants.BDNodeType.BDDisease, diseaseOverviewNotes[0]);
                                                     List<IBDNode> presentations = BDFabrik.GetChildrenForParentId(dataContext, disease.Uuid);
                                                     foreach (IBDNode presentation in presentations)
                                                     {
@@ -410,6 +419,25 @@ namespace BDEditor.Classes
             return therapyHtml.ToString();
         }
 
+        private Guid generatePageForOverview(Entities pContext, Guid pParentId, BDConstants.BDNodeType pParentType, BDLinkedNote pOverviewNote)
+        {
+            StringBuilder noteHtml = new StringBuilder();
+
+            Guid returnGuid = Guid.Empty;
+           if (pOverviewNote.documentText.Length > EMPTY_PARAGRAPH)
+            {
+                BDHtmlPage notePage = BDHtmlPage.CreateHtmlPage(pContext);
+                notePage.displayParentId = pParentId;
+                notePage.displayParentType = (int)pParentType;
+                notePage.documentText = topHtml + noteHtml.ToString() + bottomHtml;
+
+                BDHtmlPage.Save(pContext, notePage);
+
+                returnGuid = notePage.Uuid;
+            }
+            return returnGuid;
+        }
+
         private Guid generatePageForLinkedNotes(Entities pContext, Guid pParentId, BDConstants.BDNodeType pParentType, List<BDLinkedNote> pInlineNotes, List<BDLinkedNote> pMarkedNotes, List<BDLinkedNote> pUnmarkedNotes)
         {
             StringBuilder noteHtml = new StringBuilder();
@@ -475,7 +503,6 @@ namespace BDEditor.Classes
             {
                 if (note.documentText.Length > EMPTY_PARAGRAPH)
                 {
-                    // BDLinkedNoteAssociation lna = BDLinkedNoteAssociation.G
                     hasContent = true;
                     break;
                 }

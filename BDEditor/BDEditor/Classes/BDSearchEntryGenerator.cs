@@ -61,11 +61,14 @@ namespace BDEditor.Classes
                                                 {
                                                     string diseaseDisplayContext = categoryDisplayContext + " : " + disease.Name;
 
-                                                    //TODO:  how will we navigate to diseases in the viewer when a disease-search-entry is selected?
                                                     List<IBDNode> presentations = BDFabrik.GetChildrenForParentId(dataContext, disease.Uuid);
                                                     foreach (IBDNode presentation in presentations)
                                                     {
-                                                        string presentationDisplayContext = diseaseDisplayContext + " : " + presentation.Name;
+                                                        string presentationDisplayContext = string.Empty;
+                                                        if (presentation.Name != "SINGLE PRESENTATION")
+                                                            presentationDisplayContext = diseaseDisplayContext + " : " + presentation.Name;
+                                                        else
+                                                            presentationDisplayContext = diseaseDisplayContext;
 
                                                         List<IBDNode> pathogenGroups = BDFabrik.GetChildrenForParentId(dataContext, presentation.Uuid);
                                                         foreach (IBDNode pathogenGroup in pathogenGroups)
@@ -118,7 +121,7 @@ namespace BDEditor.Classes
 
         private static void generateEntryWithDisplayParent(Entities pDataContext, BDNode pDisplayParent, IBDNode pNode, string pDisplayContext)
         {
-            string entryName = pNode.Name;
+            string entryName = pNode.Name.Trim();
 
             // get existing matching search entries
             IQueryable<BDSearchEntry> entries = (from entry in pDataContext.BDSearchEntries

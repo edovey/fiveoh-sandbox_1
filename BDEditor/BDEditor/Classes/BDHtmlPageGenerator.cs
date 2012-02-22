@@ -421,15 +421,13 @@ namespace BDEditor.Classes
 
         private Guid generatePageForOverview(Entities pContext, Guid pParentId, BDConstants.BDNodeType pParentType, BDLinkedNote pOverviewNote)
         {
-            StringBuilder noteHtml = new StringBuilder();
-
             Guid returnGuid = Guid.Empty;
            if (pOverviewNote.documentText.Length > EMPTY_PARAGRAPH)
             {
                 BDHtmlPage notePage = BDHtmlPage.CreateHtmlPage(pContext);
                 notePage.displayParentId = pParentId;
                 notePage.displayParentType = (int)pParentType;
-                notePage.documentText = topHtml + noteHtml.ToString() + bottomHtml;
+                notePage.documentText = topHtml + pOverviewNote.documentText + bottomHtml;
 
                 BDHtmlPage.Save(pContext, notePage);
 

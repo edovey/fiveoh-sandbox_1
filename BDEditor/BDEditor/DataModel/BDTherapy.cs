@@ -137,7 +137,6 @@ namespace BDEditor.DataModel
 
             BDLinkedNoteAssociation.DeleteForParentId(pContext, pEntity.Uuid, pCreateDeletion);
             BDMetadata.DeleteForItemId(pContext, pEntity.Uuid, pCreateDeletion);
-            BDNodeAssociation.Delete(pContext, pEntity, pCreateDeletion);
             // create BDDeletion record for the object to be deleted
             if(pCreateDeletion)
                 BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);

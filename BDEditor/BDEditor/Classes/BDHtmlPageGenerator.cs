@@ -42,7 +42,7 @@ namespace BDEditor.Classes
                 {
                     case BDConstants.LayoutVariantType.TreatmentRecommendation00:
                         {
-                            List<IBDNode> sections = BDFabrik.GetChildrenForParentId(dataContext, chapter.Uuid);
+                            List<IBDNode> sections = BDFabrik.GetChildrenForParent(dataContext, chapter);
                             foreach (IBDNode section in sections)
                             {
                                 switch (section.LayoutVariant)
@@ -52,19 +52,19 @@ namespace BDEditor.Classes
                                             List<BDLinkedNote> sectionOverviewNotes = retrieveNotesForParentAndPropertyForType(dataContext, section.Uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW, BDConstants.LinkedNoteType.Inline);
                                             if(sectionOverviewNotes.Count > 0)
                                                 generatePageForOverview(dataContext, section.Uuid, BDConstants.BDNodeType.BDSection, sectionOverviewNotes[0]);
-                                            List<IBDNode> categories = BDFabrik.GetChildrenForParentId(dataContext, section.Uuid);
+                                            List<IBDNode> categories = BDFabrik.GetChildrenForParent(dataContext, section);
                                             foreach (IBDNode category in categories)
                                             {
                                                 List<BDLinkedNote> categoryOverviewNotes = retrieveNotesForParentAndPropertyForType(dataContext, category.Uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW, BDConstants.LinkedNoteType.Inline);
                                                 if(categoryOverviewNotes.Count > 0)
                                                     generatePageForOverview(dataContext, category.Uuid, BDConstants.BDNodeType.BDCategory, categoryOverviewNotes[0]);
-                                                List<IBDNode> diseases = BDFabrik.GetChildrenForParentId(dataContext, category.Uuid);
+                                                List<IBDNode> diseases = BDFabrik.GetChildrenForParent(dataContext, category);
                                                 foreach (IBDNode disease in diseases)
                                                 {
                                                     List<BDLinkedNote> diseaseOverviewNotes = retrieveNotesForParentAndPropertyForType(dataContext, disease.Uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW, BDConstants.LinkedNoteType.Inline);
                                                     if (diseaseOverviewNotes.Count > 0)
                                                         generatePageForOverview(dataContext, disease.Uuid, BDConstants.BDNodeType.BDDisease, diseaseOverviewNotes[0]);
-                                                    List<IBDNode> presentations = BDFabrik.GetChildrenForParentId(dataContext, disease.Uuid);
+                                                    List<IBDNode> presentations = BDFabrik.GetChildrenForParent(dataContext, disease);
                                                     foreach (IBDNode presentation in presentations)
                                                     {
                                                         BDNode node = presentation as BDNode;
@@ -113,7 +113,7 @@ namespace BDEditor.Classes
                 bodyHTML.Append(presentationOverviewHtml);
 
             // process pathogen groups (and pathogens)
-            List<IBDNode> pathogenGroups = BDFabrik.GetChildrenForParentId(pContext, pNode.Uuid);
+            List<IBDNode> pathogenGroups = BDFabrik.GetChildrenForParent(pContext, pNode);
             foreach (IBDNode pathogenGroup in pathogenGroups)
             {
                 bodyHTML.Append(buildPathogenGroupHtml(pContext, pathogenGroup));
@@ -228,7 +228,7 @@ namespace BDEditor.Classes
                 pathogenGroupHtml.Append(buildTextFromNotes(markedNotes));
                 pathogenGroupHtml.Append(buildTextFromNotes(unmarkedNotes));
 
-                List<IBDNode> pathogens = BDFabrik.GetChildrenForParentId(pContext, pathogenGroup.Uuid);
+                List<IBDNode> pathogens = BDFabrik.GetChildrenForParent(pContext, pathogenGroup);
 
                 if (pathogens.Count > 0)
                     pathogenGroupHtml.Append(@"<h3>Usual Pathogens</h3>");

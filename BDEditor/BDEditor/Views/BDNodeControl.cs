@@ -255,8 +255,6 @@ namespace BDEditor.Views
                     
                     this.currentNode.DisplayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                     this.currentNode.LayoutVariant = this.defaultLayoutVariantType;
-
-                    BDNodeAssociation.CreateAssociationsForNode(dataContext, currentNode);
                 }
             }
 

@@ -158,8 +158,6 @@ namespace BDEditor.Views
                     this.currentPathogenGroup.LayoutVariant = DefaultLayoutVariantType;
 
                     BDNode.Save(dataContext, currentPathogenGroup);
-
-                    BDNodeAssociation.CreateAssociationsForNode(dataContext, currentPathogenGroup);
                 }
             }
 
@@ -193,7 +191,7 @@ namespace BDEditor.Views
             {
                 // This is assuming Constants.LayoutVariantType.TreatmentRecommendation01
                 textBoxPathogenGroupName.Text = currentPathogenGroup.name;
-                List<IBDNode> list = BDFabrik.GetChildrenForParentId(dataContext, currentPathogenGroup.uuid);
+                List<IBDNode> list = BDFabrik.GetChildrenForParent(dataContext, currentPathogenGroup);
                 int idxPathogen = 0;
                 int idxTherapyGroup = 0;
                 foreach(IBDNode listEntry in list)

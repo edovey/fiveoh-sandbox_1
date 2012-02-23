@@ -115,10 +115,6 @@ namespace BDEditor.DataModel
                     case BDNode.KEY_NAME:
                         BDNode.DeleteLocal(pDataContext, entry.targetId.Value);
                         break;
-                     case BDNodeAssociation.KEY_NAME:
-                        BDNodeAssociation.DeleteLocal(pDataContext, entry.targetId.Value);
-                        break;    
-               
                     case BDLinkedNote.KEY_NAME:
                         BDLinkedNote.DeleteLocal(pDataContext, entry.targetId.Value);
                         break;

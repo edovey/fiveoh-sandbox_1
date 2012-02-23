@@ -112,7 +112,7 @@ namespace BDEditor.Views
 
             deleteToolStripMenuItem.Text = string.Format("Delete {0}: {1}", nodeTypeName, pBDNode.Name);
 
-            List<BDConstants.BDNodeType> childTypes = BDNodeAssociation.ChildTypeDefinitionListForNode(pBDNode);
+            List<BDConstants.BDNodeType> childTypes = BDFabrik.ChildTypeDefinitionListForNode(pBDNode);
             if (childTypes.Count == 1)
             {
                 string childNodeTypeName = BDUtilities.GetEnumDescription(childTypes[0]);

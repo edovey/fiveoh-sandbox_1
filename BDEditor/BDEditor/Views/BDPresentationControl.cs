@@ -179,8 +179,6 @@ namespace BDEditor.Views
                     this.currentPresentation.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                     this.currentPresentation.LayoutVariant = defaultLayoutVariantType;
 
-                    BDNodeAssociation.CreateAssociationsForNode(dataContext, currentPresentation);
-
                 }
             }
 
@@ -204,7 +202,7 @@ namespace BDEditor.Views
             else
             {
                 tbPresentationName.Text = currentPresentation.name;
-                List<IBDNode> list = BDFabrik.GetChildrenForParentId(dataContext, currentPresentation.uuid);
+                List<IBDNode> list = BDFabrik.GetChildrenForParent(dataContext, currentPresentation);
                 for (int idx = 0; idx < list.Count; idx++)
                 {
                     IBDNode listEntry = list[idx];

@@ -132,8 +132,6 @@ namespace BDEditor.Views
                     this.currentPathogen.LayoutVariant = DefaultLayoutVariantType;
                     
                     BDNode.Save(dataContext, currentPathogen);
-
-                    BDNodeAssociation.CreateAssociationsForNode(dataContext, currentPathogen);
                 }
             }
 

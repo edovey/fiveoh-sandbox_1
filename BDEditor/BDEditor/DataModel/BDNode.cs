@@ -112,7 +112,7 @@ namespace BDEditor.DataModel
 
             BDLinkedNoteAssociation.DeleteForParentId(pContext, pNode.Uuid, pCreateDeletion);
 
-            List<IBDNode> children = BDFabrik.GetChildrenForParentId(pContext, pNode.Uuid);
+            List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
             foreach (IBDNode child in children)
             {
                 switch (child.NodeType)
@@ -132,7 +132,6 @@ namespace BDEditor.DataModel
             }
 
             BDMetadata.DeleteForItemId(pContext, pNode.Uuid, pCreateDeletion);
-            BDNodeAssociation.Delete(pContext, pNode, pCreateDeletion);
             // create BDDeletion record for the object to be deleted
             if(pCreateDeletion)
                 BDDeletion.CreateDeletion(pContext, KEY_NAME, pNode.Uuid);

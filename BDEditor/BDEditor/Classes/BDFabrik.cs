@@ -103,6 +103,7 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDChapter:
                     switch (layoutVariant)
                     {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation00:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                             definitionList.Add(BDConstants.BDNodeType.BDSection);
                             break;
@@ -240,20 +241,17 @@ namespace BDEditor.Classes
             return entryList;
         }
 
-        public static List<IBDNode> GetChildrenForParentId(Entities pContext, Guid pParentId)
+        public static List<IBDNode> GetChildrenForParent(Entities pContext, IBDNode pParent)
         {
             List<IBDNode> entryList = new List<IBDNode>();
 
-            if (null != pParentId)
+            if (null != pParent)
             {
-                List<BDNodeAssociation> childNodeAssociationList = BDNodeAssociation.RetrieveList(pContext, pParentId);
+                List<BDConstants.BDNodeType> childTypes = ChildTypeDefinitionListForNode(pParent);
 
-                foreach (BDNodeAssociation association in childNodeAssociationList)
+                foreach (BDConstants.BDNodeType cType in childTypes)
                 {
-                    if (null != association.childNodeType)
-                    {
-                        entryList.AddRange(GetChildrenForParentIdAndChildType(pContext, pParentId, association.ChildNodeType));
-                    }
+                    entryList.AddRange(GetChildrenForParentIdAndChildType(pContext, pParent.Uuid, cType));
                 }
             }
             return entryList;
@@ -356,8 +354,6 @@ namespace BDEditor.Classes
 
             List<IBDNode> siblingList = RepairSiblingNodeDisplayOrder(pContext, pParentNode.Uuid, pChildType);
 
-            BDNodeAssociation.CreateAssociationsForNode(pContext, pParentNode);
-
             switch (pChildType)
             {
                 case BDConstants.BDNodeType.BDTherapyGroup:
@@ -367,7 +363,6 @@ namespace BDEditor.Classes
                     therapyGroup.LayoutVariant = pParentNode.LayoutVariant;
                     therapyGroup.Name = String.Format("New Therapy Group {0}", therapyGroup.displayOrder + 1);
                     BDTherapyGroup.Save(pContext, therapyGroup);
-                    BDNodeAssociation.CreateAssociationsForNode(pContext, therapyGroup);
                     break;
 
                 case BDConstants.BDNodeType.BDTherapy:
@@ -377,7 +372,6 @@ namespace BDEditor.Classes
                     therapy.LayoutVariant = pParentNode.LayoutVariant;
                     therapy.Name = String.Format("New Therapy {0}", therapy.displayOrder + 1);
                     BDTherapy.Save(pContext, therapy);
-                    BDNodeAssociation.CreateAssociationsForNode(pContext, therapy);
                     break;
 
                 default:
@@ -387,7 +381,6 @@ namespace BDEditor.Classes
                     node.LayoutVariant = pParentNode.LayoutVariant;
                     node.Name = String.Format("New {0}-{1}", BDUtilities.GetEnumDescription(pChildType), node.displayOrder + 1);
                     BDNode.Save(pContext, node);
-                    BDNodeAssociation.CreateAssociationsForNode(pContext, node);
                     break;
             }
             return result;

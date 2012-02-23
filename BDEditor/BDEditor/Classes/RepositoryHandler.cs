@@ -59,7 +59,6 @@ namespace BDEditor.Classes
             {
                 // Create the SyncInfo instance and update the modified date of all the changed records to be the currentSyncDate
                 syncDictionary.Add(BDNode.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
-                syncDictionary.Add(BDNodeAssociation.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
 
                 // It is relevant that LinkedNoteAssociation is BEFORE LinkedNote
                 syncDictionary.Add(BDLinkedNoteAssociation.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
@@ -199,9 +198,6 @@ namespace BDEditor.Classes
                     {
                         case BDNode.KEY_NAME:
                             domainName = BDNode.AWS_DOMAIN;
-                            break;
-                        case BDNodeAssociation.KEY_NAME:
-                            domainName = BDNodeAssociation.AWS_DOMAIN;
                             break;
                         case BDLinkedNote.KEY_NAME:
                             domainName = BDLinkedNote.AWS_DOMAIN;
@@ -363,9 +359,6 @@ namespace BDEditor.Classes
                                     break;
                                 case BDNode.AWS_DOMAIN:
                                     entryGuid = BDNode.LoadFromAttributes(pDataContext, attributeDictionary, false);
-                                    break;
-                                case BDNodeAssociation.AWS_DOMAIN:
-                                    entryGuid = BDNodeAssociation.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                     break;
                                 case BDHtmlPage.AWS_DOMAIN:
                                     {
@@ -555,9 +548,6 @@ namespace BDEditor.Classes
                                 case BDNode.AWS_PROD_DOMAIN:
                                     entryGuid = BDNode.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                     break;
-                                case BDNodeAssociation.AWS_PROD_DOMAIN:
-                                    entryGuid = BDNodeAssociation.LoadFromAttributes(pDataContext, attributeDictionary, false);
-                                    break;
                             }
                             // The entry id will be null if a sync conflict prevented create/update so add it to the conflict list
                             if (null == entryGuid) syncInfoEntry.SyncConflictList.Add(attributeDictionary);
@@ -633,8 +623,8 @@ namespace BDEditor.Classes
             pDataContext.ExecuteStoreCommand("DELETE FROM BDTherapyGroups");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDSearchEntryAssociations");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDSearchEntries");
-            pDataContext.ExecuteStoreCommand("DELETE FROM BDMetata");
-            pDataContext.ExecuteStoreCommand("DELETE FROM BDHtmlPage");
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDMetadata");
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDHtmlPages");
         }
 
         #region Helper Methods

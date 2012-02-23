@@ -18,7 +18,7 @@ namespace BDEditor.Classes.Navigation
             if(null == pNode) return null;
 
             TreeNode branchTreeNode = new TreeNode(pNode.Name);
-            List<IBDNode> childList = BDFabrik.GetChildrenForParentId(pDataContext, pNode.Uuid);
+            List<IBDNode> childList = BDFabrik.GetChildrenForParent(pDataContext, pNode);
 
             switch (pNode.NodeType)
             {

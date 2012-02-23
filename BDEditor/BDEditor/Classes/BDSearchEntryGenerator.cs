@@ -44,7 +44,7 @@ namespace BDEditor.Classes
                 {
                     case BDConstants.LayoutVariantType.TreatmentRecommendation00:
                         {
-                            List<IBDNode> sections = BDFabrik.GetChildrenForParentId(dataContext, chapter.Uuid);
+                            List<IBDNode> sections = BDFabrik.GetChildrenForParent(dataContext, chapter);
                             foreach (IBDNode section in sections)
                             {
                                 string sectionDisplayContext = chapterDisplayContext + " : " + section.Name;
@@ -52,16 +52,16 @@ namespace BDEditor.Classes
                                 {
                                     case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                                         {
-                                            List<IBDNode> categories = BDFabrik.GetChildrenForParentId(dataContext, section.Uuid);
+                                            List<IBDNode> categories = BDFabrik.GetChildrenForParent(dataContext, section);
                                             foreach (IBDNode category in categories)
                                             {
                                                 string categoryDisplayContext = sectionDisplayContext + " : " + category.Name;
-                                                List<IBDNode> diseases = BDFabrik.GetChildrenForParentId(dataContext, category.Uuid);
+                                                List<IBDNode> diseases = BDFabrik.GetChildrenForParent(dataContext, category);
                                                 foreach (IBDNode disease in diseases)
                                                 {
                                                     string diseaseDisplayContext = categoryDisplayContext + " : " + disease.Name;
 
-                                                    List<IBDNode> presentations = BDFabrik.GetChildrenForParentId(dataContext, disease.Uuid);
+                                                    List<IBDNode> presentations = BDFabrik.GetChildrenForParent(dataContext, disease);
                                                     foreach (IBDNode presentation in presentations)
                                                     {
                                                         string presentationDisplayContext = string.Empty;
@@ -70,28 +70,30 @@ namespace BDEditor.Classes
                                                         else
                                                             presentationDisplayContext = diseaseDisplayContext;
 
-                                                        List<IBDNode> pathogenGroups = BDFabrik.GetChildrenForParentId(dataContext, presentation.Uuid);
+                                                        List<IBDNode> pathogenGroups = BDFabrik.GetChildrenForParent(dataContext, presentation);
                                                         foreach (IBDNode pathogenGroup in pathogenGroups)
                                                         {
-                                                            List<IBDNode> childNodes = BDFabrik.GetChildrenForParentId(dataContext, pathogenGroup.Uuid);
+                                                            string pathogenGroupDisplayContext = presentationDisplayContext + " : " + pathogenGroup.Name;
+                                                            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(dataContext, pathogenGroup);
                                                             foreach (IBDNode node in childNodes)
                                                             {
-                                                                BDNode parentNode = presentation as BDNode;
+                                                                BDNode displayParentNode = presentation as BDNode;
                                                                 switch (node.NodeType)
                                                                 {
                                                                     case BDConstants.BDNodeType.BDPathogen:
                                                                         {
-                                                                            if (null != parentNode && node.Name.Length > 0)
-                                                                                generateEntryWithDisplayParent(dataContext, parentNode, node, presentationDisplayContext.ToString());
+                                                                            if (null != displayParentNode && node.Name.Length > 0)
+                                                                                generateEntryWithDisplayParent(dataContext, displayParentNode, node, pathogenGroupDisplayContext);
                                                                         }
                                                                         break;
                                                                     case BDConstants.BDNodeType.BDTherapyGroup:
                                                                         {
-                                                                            List<IBDNode> therapies = BDFabrik.GetChildrenForParentId(dataContext, node.Uuid);
+                                                                            string therapyGroupDisplayContext = pathogenGroupDisplayContext + " : " + node.Name;
+                                                                           List<IBDNode> therapies = BDFabrik.GetChildrenForParent(dataContext, node);
                                                                             foreach (IBDNode therapy in therapies)
                                                                             {
-                                                                                if (null != parentNode && therapy.Name.Length > 0)
-                                                                                    generateEntryWithDisplayParent(dataContext, parentNode, therapy, presentationDisplayContext.ToString());
+                                                                                if (null != displayParentNode && therapy.Name.Length > 0)
+                                                                                    generateEntryWithDisplayParent(dataContext, displayParentNode, therapy, therapyGroupDisplayContext);
                                                                             }
                                                                         }
                                                                         break;

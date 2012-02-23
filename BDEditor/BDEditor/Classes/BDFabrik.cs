@@ -68,6 +68,132 @@ namespace BDEditor.Classes
             }
         }
 
+        public static List<BDConstants.BDNodeType> ChildTypeDefinitionListForNode(IBDNode pNode)
+        {
+            if (null == pNode)
+                return null;
+
+            if ((pNode.LayoutVariant == BDConstants.LayoutVariantType.Undefined) || (null == pNode.LayoutVariant))
+            {
+                string message = string.Format("Undefined Layout Variant for node parameter in ChildTypeDefinitionListForNode method call. [{0}]", BDUtilities.GetEnumDescription(pNode.NodeType));
+                throw new BDException(message, pNode);
+            }
+
+            return ChildTypeDefinitionListForNode(pNode.NodeType, pNode.LayoutVariant);
+        }
+
+        public static List<BDConstants.BDNodeType> ChildTypeDefinitionListForNode(BDConstants.BDNodeType pNodeType, BDConstants.LayoutVariantType pLayoutVariant)
+        {
+            List<BDConstants.BDNodeType> definitionList = new List<BDConstants.BDNodeType>();
+
+            BDConstants.LayoutVariantType layoutVariant = pLayoutVariant;
+            switch (pNodeType)
+            {
+                case BDConstants.BDNodeType.BDCategory:
+                    switch (layoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                            definitionList.Add(BDConstants.BDNodeType.BDDisease);
+                            //definitionList.Add(BDConstants.BDNodeType.BDSubCategory);  //Test of multiple child types in nav tree
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDChapter:
+                    switch (layoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                            definitionList.Add(BDConstants.BDNodeType.BDSection);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDDisease:
+                    switch (layoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                            definitionList.Add(BDConstants.BDNodeType.BDPresentation);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDPathogen:
+                    switch (layoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                        default:
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDPathogenGroup:
+                    switch (layoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                            definitionList.Add(BDConstants.BDNodeType.BDPathogen);
+                            definitionList.Add(BDConstants.BDNodeType.BDTherapyGroup);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDPresentation:
+                    switch (layoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                            definitionList.Add(BDConstants.BDNodeType.BDPathogenGroup);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDSection:
+                    switch (layoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                            definitionList.Add(BDConstants.BDNodeType.BDCategory);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDSubCategory:
+                    switch (layoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                        default:
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDTherapy:
+                    switch (layoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                        default:
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDTherapyGroup:
+                    switch (layoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                            definitionList.Add(BDConstants.BDNodeType.BDTherapy);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.None:
+                default:
+                    definitionList = null;
+                    break;
+            }
+
+            return definitionList;
+        }
+
         public static List<IBDNode> GetAllForNodeType(Entities pDataContext, BDConstants.BDNodeType pNodeType)
         {
             List<IBDNode> entryList = new List<IBDNode>();

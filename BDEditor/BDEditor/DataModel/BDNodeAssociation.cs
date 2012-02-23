@@ -76,12 +76,24 @@ namespace BDEditor.DataModel
 
         public static List<BDConstants.BDNodeType> ChildTypeDefinitionListForNode(IBDNode pNode)
         {
-            List<BDConstants.BDNodeType> definitionList = new List<BDConstants.BDNodeType>();
-            if (null == pNode) 
-                return definitionList;
+            if (null == pNode)
+                return null;
 
-            BDConstants.LayoutVariantType layoutVariant = pNode.LayoutVariant;
-            switch (pNode.NodeType)
+            if ((pNode.LayoutVariant == BDConstants.LayoutVariantType.Undefined) || (null == pNode.LayoutVariant))
+            {
+                string message = string.Format("Undefined Layout Variant for node parameter in ChildTypeDefinitionListForNode method call. [{0}]", BDUtilities.GetEnumDescription(pNode.NodeType));
+                throw new BDException(message, pNode);
+            }
+
+            return ChildTypeDefinitionListForNode(pNode.NodeType, pNode.LayoutVariant);
+        }
+
+        public static List<BDConstants.BDNodeType> ChildTypeDefinitionListForNode(BDConstants.BDNodeType pNodeType, BDConstants.LayoutVariantType pLayoutVariant)
+        {
+            List<BDConstants.BDNodeType> definitionList = new List<BDConstants.BDNodeType>();
+
+            BDConstants.LayoutVariantType layoutVariant = pLayoutVariant;
+            switch (pNodeType)
             {
                 case BDConstants.BDNodeType.BDCategory:
                     switch (layoutVariant)
@@ -185,11 +197,6 @@ namespace BDEditor.DataModel
                     break;
             }
 
-            if (null == definitionList)
-            {
-                string message = string.Format("Undefined Layout Variant for node parameter in ChildTypeDefinitionListForNode method call. [{0}]", BDUtilities.GetEnumDescription(pNode.NodeType));
-                throw new BDException(message, pNode);
-            }
             return definitionList;
         }
 

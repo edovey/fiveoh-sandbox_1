@@ -113,13 +113,16 @@ namespace BDEditor.DataModel
         /// <param name="pTherapy"></param>
         public static void Save(Entities pContext, BDTherapy pTherapy)
         {
-            if (pTherapy.EntityState != EntityState.Unchanged)
+            if (null != pTherapy)
             {
-                if (pTherapy.schemaVersion != ENTITY_SCHEMAVERSION)
-                    pTherapy.schemaVersion = ENTITY_SCHEMAVERSION;
-                
-                System.Diagnostics.Debug.WriteLine(@"Therapy Save");
-                pContext.SaveChanges();
+                if (pTherapy.EntityState != EntityState.Unchanged)
+                {
+                    if (pTherapy.schemaVersion != ENTITY_SCHEMAVERSION)
+                        pTherapy.schemaVersion = ENTITY_SCHEMAVERSION;
+
+                    System.Diagnostics.Debug.WriteLine(@"Therapy Save");
+                    pContext.SaveChanges();
+                }
             }
         }
 

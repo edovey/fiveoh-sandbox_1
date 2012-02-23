@@ -18,6 +18,8 @@ namespace BDEditor.Views
     {
         BDEditor.DataModel.Entities dataContext;
 
+        List<ToolStripMenuItem> addNodeToolStripMenuItemList = new List<ToolStripMenuItem>();
+
         public BDEditView()
         {
             InitializeComponent();
@@ -50,30 +52,38 @@ namespace BDEditor.Views
 
         private void listDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            splitContainer1.Panel2.Controls.Clear();
+            IBDNode listEntry = chapterDropDown.SelectedItem as IBDNode;
 
+            displayChapter(listEntry);
+        }
+
+        private void displayChapter(IBDNode pNode)
+        {
+            Cursor _cursor = this.Cursor;
             this.Cursor = Cursors.WaitCursor;
+            
+            splitContainer1.Panel2.Controls.Clear();
 
             chapterTree.Nodes.Clear();
 
-            IBDNode listEntry = chapterDropDown.SelectedItem as IBDNode;
-            if ((null != listEntry) && (listEntry.NodeType == BDConstants.BDNodeType.BDChapter))
+            if ((null != pNode) && (pNode.NodeType == BDConstants.BDNodeType.BDChapter))
             {
-                switch (listEntry.LayoutVariant)
-                    {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation00:
-                            //TreeNode node = TreatmentRecommendationTree.BuildChapterTreeNode(dataContext, listEntry);
-                            TreeNode node = TreatmentRecommendationTree.BuildBranch(dataContext, listEntry);
-                            // this is only to prevent a single first node
-                            TreeNode[] nodeList = new TreeNode[node.Nodes.Count];
-                            node.Nodes.CopyTo(nodeList, 0);
-                            chapterTree.Nodes.AddRange(nodeList);
-                            // ---
-                            break;
-                    }
+                switch (pNode.LayoutVariant)
+                {
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation00:
+                        //TreeNode node = TreatmentRecommendationTree.BuildChapterTreeNode(dataContext, listEntry);
+                        TreeNode node = TreatmentRecommendationTree.BuildBranch(dataContext, pNode);
+                        // this is only to prevent a single first node
+                        TreeNode[] nodeList = new TreeNode[node.Nodes.Count];
+                        node.Nodes.CopyTo(nodeList, 0);
+                        chapterTree.Nodes.AddRange(nodeList);
+
+                        // ---
+                        break;
+                }
             }
 
-            this.Cursor = Cursors.Default;
+            this.Cursor = _cursor;
         }
 
         private void graftTreeNode(TreeNode pTree, TreeNode pBranch)
@@ -85,109 +95,167 @@ namespace BDEditor.Views
             pTree.Expand();
         }
 
+        private void buildNavContextMenuStrip(TreeNode pTreeNode, IBDNode pBDNode)
+        {
+            foreach (ToolStripMenuItem entry in addNodeToolStripMenuItemList)
+            {
+                entry.Click -= new System.EventHandler(this.addChildNode_Click);
+            }
+            addNodeToolStripMenuItemList.Clear();
+            addChildNodeToolStripMenuItem.DropDownItems.Clear();
+
+            reorderNextToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pTreeNode);
+            reorderPreviousToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pTreeNode);
+            deleteToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pTreeNode);
+
+            string nodeTypeName = BDUtilities.GetEnumDescription(pBDNode.NodeType);
+
+            deleteToolStripMenuItem.Text = string.Format("Delete {0}: {1}", nodeTypeName, pBDNode.Name);
+
+            List<BDConstants.BDNodeType> childTypes = BDNodeAssociation.ChildTypeDefinitionListForNode(pBDNode);
+            if (childTypes.Count == 1)
+            {
+                string childNodeTypeName = BDUtilities.GetEnumDescription(childTypes[0]);
+                addChildNodeToolStripMenuItem.Text = string.Format("Add {0}", childNodeTypeName);
+                addChildNodeToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, childTypes[0], pTreeNode);
+            }
+            else if (childTypes.Count > 1)
+            {
+                addChildNodeToolStripMenuItem.Text = string.Format("Add");
+
+                for (int idx = 0; idx < childTypes.Count; idx++)
+                {
+                    ToolStripMenuItem item = new ToolStripMenuItem();
+
+                    item.Image = global::BDEditor.Properties.Resources.add_16x16;
+                    item.Name = string.Format("dynamicAddChild{0}", idx);
+                    item.Size = new System.Drawing.Size(179, 22);
+                    item.Text = string.Format("&Add {0}", BDUtilities.GetEnumDescription(childTypes[idx]));
+                    item.Tag = new BDNodeWrapper(pBDNode, childTypes[idx], pTreeNode);
+                    item.Click += new System.EventHandler(this.addChildNode_Click);
+                    addChildNodeToolStripMenuItem.DropDownItems.Add(item);
+                }
+
+            }
+        }
+
+        void reorderNodeToPrevious_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
+            if (null != menuItem)
+            {
+                BDNodeWrapper nodeWrapper = menuItem.Tag as BDNodeWrapper;
+
+                BDFabrik.ReorderNode(DataContext, nodeWrapper.Node, -1);
+
+                TreeNode parentNode = nodeWrapper.NodeTreeNode.Parent;
+                if (null == parentNode)
+                {
+                    IBDNode listEntry = chapterDropDown.SelectedItem as IBDNode;
+
+                    displayChapter(listEntry);
+                }
+                else
+                {
+                    chapterTree.SelectedNode = parentNode;
+                    showNavSelection(parentNode);
+                }
+            }
+        }
+
+        void reorderNodeToNext_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
+            if (null != menuItem)
+            {
+                BDNodeWrapper nodeWrapper = menuItem.Tag as BDNodeWrapper;
+
+                BDFabrik.ReorderNode(DataContext, nodeWrapper.Node, 1);
+
+                TreeNode parentNode = nodeWrapper.NodeTreeNode.Parent;
+                if (null == parentNode)
+                {
+                    IBDNode listEntry = chapterDropDown.SelectedItem as IBDNode;
+
+                    displayChapter(listEntry);
+                }
+                else
+                {
+                    chapterTree.SelectedNode = parentNode;
+                    showNavSelection(parentNode);
+                }
+            }
+        }
+
+        void addChildNode_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
+            if (null != menuItem)
+            {
+                BDNodeWrapper nodeWrapper = menuItem.Tag as BDNodeWrapper;
+                if (null != nodeWrapper)
+                {
+                    BDFabrik.CreateChildNode(DataContext, nodeWrapper.Node, nodeWrapper.TargetNodeType);
+                    showNavSelection(nodeWrapper.NodeTreeNode);
+                }
+            }
+        }
+
+        void deleteNode_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
+            if (null != menuItem)
+            {
+                BDNodeWrapper nodeWrapper = menuItem.Tag as BDNodeWrapper;
+                if (null != nodeWrapper)
+                {
+                    string nodeTypeName = BDUtilities.GetEnumDescription(nodeWrapper.Node.NodeType);
+                    string message = string.Format("Are you sure you want to delete the {0} named [{1}]?\nThis will also delete all associated child information and cannot be undone", nodeTypeName, nodeWrapper.Node.Name);
+
+                    if (MessageBox.Show(this, message, "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        BDFabrik.DeleteNode(DataContext, nodeWrapper.Node);
+                        showNavSelection(nodeWrapper.NodeTreeNode.Parent);
+                    }
+                }
+            }
+        }
+
+        private void chapterTree_MouseUp(object sender, MouseEventArgs e)
+        {
+            TreeView tree = sender as TreeView;
+            if (null == tree)
+                return;
+
+            // only need to change selected note during right-click - otherwise tree does fine by itself      
+            if (e.Button == MouseButtons.Right)
+            {
+                Point pt = new Point(e.X, e.Y);
+                tree.PointToClient(pt);
+                TreeNode treeNode = tree.GetNodeAt(pt);
+                if (null != treeNode)
+                {
+                    if (treeNode.Bounds.Contains(pt))
+                    {
+                        if (!treeNode.IsSelected)
+                        {
+                            chapterTree.SelectedNode = treeNode;
+                            showNavSelection(treeNode);
+                        }
+                        IBDNode bdNode = treeNode.Tag as IBDNode;
+                        buildNavContextMenuStrip(treeNode, bdNode);
+                            navTreeContextMenuStrip.Show(tree, pt);
+                    }
+                }
+            } 
+        }
         private void sectionTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            this.Cursor = Cursors.WaitCursor;
             switch (e.Action)
             {
                 case TreeViewAction.ByKeyboard:
                 case TreeViewAction.ByMouse:
-                    splitContainer1.Panel2.SuspendLayout();
-
-                    foreach (Control ctrl in splitContainer1.Panel2.Controls)
-                    {
-                        BDNodeControl nodeCtrl = ctrl as BDNodeControl;
-                        if (null != nodeCtrl)
-                        {
-                            nodeCtrl.NameChanged -= new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
-                        }
-                        else
-                        {
-                            BDPresentationControl presCtrl = ctrl as BDPresentationControl;
-                            if (null != presCtrl)
-                            {
-                                presCtrl.NameChanged -= new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
-                            }
-                        }
-                    }
-
-                    splitContainer1.Panel2.Controls.Clear();
-                    TreeNode selectedNode = e.Node;
-
-                    IBDNode node = selectedNode.Tag as IBDNode;
-
-                    switch (node.NodeType)
-                    {
-                        case BDConstants.BDNodeType.BDSection:
-                            switch (node.LayoutVariant)
-                            {
-                                case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                                    TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
-                                    graftTreeNode(selectedNode, childTreeNode);
-
-                                    BDNodeControl control_tr01 = null;
-                                    control_tr01 = new BDNodeControl(dataContext, node);
-                                    control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
-                                    control_tr01.Dock = DockStyle.Fill;
-                                    control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
-                                    splitContainer1.Panel2.Controls.Add(control_tr01);
-                                    control_tr01.RefreshLayout();
-                                    break;
-                            }
-                            break;
-                        case BDConstants.BDNodeType.BDCategory:
-                            switch (node.LayoutVariant)
-                            {
-                                case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                                    TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
-                                    graftTreeNode(selectedNode, childTreeNode);
-
-                                    BDNodeControl control_tr01 = null;
-                                    control_tr01 = new BDNodeControl(dataContext, node);
-                                    control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
-                                    control_tr01.Dock = DockStyle.Fill;
-                                    control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
-                                    splitContainer1.Panel2.Controls.Add(control_tr01);
-                                    control_tr01.RefreshLayout();
-                                    break;
-                            }
-                            break;
-                        case BDConstants.BDNodeType.BDDisease:
-                            switch (node.LayoutVariant)
-                            {
-                                case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                                    TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
-                                    graftTreeNode(selectedNode, childTreeNode);
-
-                                    BDNodeControl control_tr01 = null;
-                                    control_tr01 = new BDNodeControl(dataContext, node);
-                                    control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
-                                    control_tr01.Dock = DockStyle.Fill;
-                                    control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
-                                    splitContainer1.Panel2.Controls.Add(control_tr01);
-                                    control_tr01.RefreshLayout();
-                                    break;
-                            }
-                            break;
-                        case BDConstants.BDNodeType.BDPresentation:
-                            BDNode presentation = node as BDNode;
-                            switch (node.LayoutVariant)
-                            {
-                                case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                                    BDPresentationControl control_tr01 = new BDPresentationControl(dataContext, presentation);
-                                    control_tr01.Dock = DockStyle.Fill;
-                                    control_tr01.CurrentPresentation = presentation;
-                                    control_tr01.AssignScopeId((null != presentation) ? presentation.Uuid : Guid.Empty);
-                                    control_tr01.AssignParentInfo(presentation.ParentId, presentation.ParentType);
-                                    control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
-                                    splitContainer1.Panel2.Controls.Add(control_tr01);
-                                    control_tr01.RefreshLayout();
-                                    break;
-                            }
-                            break;
-                    }
-
-                    splitContainer1.Panel2.ResumeLayout();
+                    showNavSelection(e.Node);
                     break;
                 case TreeViewAction.Collapse:
                 case TreeViewAction.Expand:
@@ -195,6 +263,126 @@ namespace BDEditor.Views
                 default:
                     break;
             }
+        }
+
+        private void showNavSelection(TreeNode pSelectedNode)
+        {
+            this.Cursor = Cursors.WaitCursor;
+
+            splitContainer1.Panel2.SuspendLayout();
+
+            foreach (Control ctrl in splitContainer1.Panel2.Controls)
+            {
+                BDNodeControl nodeCtrl = ctrl as BDNodeControl;
+                if (null != nodeCtrl)
+                {
+                    nodeCtrl.NameChanged -= new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                }
+                else
+                {
+                    BDPresentationControl presCtrl = ctrl as BDPresentationControl;
+                    if (null != presCtrl)
+                    {
+                        presCtrl.NameChanged -= new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                    }
+                }
+            }
+
+            splitContainer1.Panel2.Controls.Clear();
+            TreeNode selectedNode = pSelectedNode;
+
+            IBDNode node = selectedNode.Tag as IBDNode;
+
+            switch (node.NodeType)
+            {
+                case BDConstants.BDNodeType.BDSection:
+                    switch (node.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                            TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
+                            graftTreeNode(selectedNode, childTreeNode);
+
+                            BDNodeControl control_tr01 = null;
+                            control_tr01 = new BDNodeControl(dataContext, node);
+                            control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
+                            control_tr01.Dock = DockStyle.Fill;
+                            control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                            splitContainer1.Panel2.Controls.Add(control_tr01);
+                            control_tr01.RefreshLayout();
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDCategory:
+                    switch (node.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                            TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
+                            graftTreeNode(selectedNode, childTreeNode);
+
+                            BDNodeControl control_tr01 = null;
+                            control_tr01 = new BDNodeControl(dataContext, node);
+                            control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
+                            control_tr01.Dock = DockStyle.Fill;
+                            control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                            splitContainer1.Panel2.Controls.Add(control_tr01);
+                            control_tr01.RefreshLayout();
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDDisease:
+                    switch (node.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                            TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
+                            graftTreeNode(selectedNode, childTreeNode);
+
+                            BDNodeControl control_tr01 = null;
+                            control_tr01 = new BDNodeControl(dataContext, node);
+                            control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
+                            control_tr01.Dock = DockStyle.Fill;
+                            control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                            splitContainer1.Panel2.Controls.Add(control_tr01);
+                            control_tr01.RefreshLayout();
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDSubCategory:
+                    switch (node.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                            TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
+                            graftTreeNode(selectedNode, childTreeNode);
+
+                            BDNodeControl control_tr01 = null;
+                            control_tr01 = new BDNodeControl(dataContext, node);
+                            control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
+                            control_tr01.Dock = DockStyle.Fill;
+                            control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                            splitContainer1.Panel2.Controls.Add(control_tr01);
+                            control_tr01.RefreshLayout();
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDPresentation:
+                    BDNode presentation = node as BDNode;
+                    switch (node.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                            BDPresentationControl control_tr01 = new BDPresentationControl(dataContext, presentation);
+                            control_tr01.Dock = DockStyle.Fill;
+                            control_tr01.CurrentPresentation = presentation;
+                            control_tr01.AssignScopeId((null != presentation) ? presentation.Uuid : Guid.Empty);
+                            control_tr01.AssignParentInfo(presentation.ParentId, presentation.ParentType);
+                            control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                            splitContainer1.Panel2.Controls.Add(control_tr01);
+                            control_tr01.RefreshLayout();
+                            break;
+                    }
+                    break;
+            }
+
+            splitContainer1.Panel2.ResumeLayout();
+
             this.Cursor = Cursors.Default;
         }
 
@@ -297,6 +485,26 @@ namespace BDEditor.Views
             this.btnImportFromProduction.Visible = false;
             this.brewButton.Visible = false;
 #endif
+
+            //ToolStripSeparator separator = new ToolStripSeparator();
+
+            //reorderNodeToPrevious = new ToolStripMenuItem();
+            //reorderNodeToNext = new ToolStripMenuItem();
+            //addChildNode = new ToolStripMenuItem();
+            //deleteNode = new ToolStripMenuItem();
+
+            //reorderNodeToPrevious.Image = global::BDEditor.Properties.Resources.reorder_previous;
+            //reorderNodeToPrevious.Name = "reorderPreviousToolStripMenuItem";
+            //reorderNodeToPrevious.Size = new System.Drawing.Size(179, 22);
+            //reorderNodeToPrevious.Text = "Move &Previous";
+            //reorderNodeToPrevious.Click += new EventHandler(reorderPrevious_Click);
+
+            //reorderNodeToPrevious.Image = global::BDEditor.Properties.Resources.reorder_next;
+            //reorderNodeToPrevious.Name = "reorderNextToolStripMenuItem";
+            //reorderNodeToPrevious.Size = new System.Drawing.Size(179, 22);
+            //reorderNodeToPrevious.Text = "Move &Next";
+            //reorderNodeToPrevious.Click
+
 
             BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
@@ -427,5 +635,7 @@ namespace BDEditor.Views
             MessageBox.Show(@"May not import in this environment" , "Import");
 #endif
         }
+
+
     }
 }

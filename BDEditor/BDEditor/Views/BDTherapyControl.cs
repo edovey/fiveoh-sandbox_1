@@ -249,6 +249,8 @@ namespace BDEditor.Views
                     currentTherapy.SetParent(parentType, parentId);
                     currentTherapy.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                     currentTherapy.LayoutVariant = DefaultLayoutVariantType;
+
+                    BDNodeAssociation.CreateAssociationsForNode(dataContext, currentTherapy);
                 }
             }
 

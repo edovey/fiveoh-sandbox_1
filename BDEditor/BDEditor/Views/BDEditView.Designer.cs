@@ -42,12 +42,20 @@
             this.chapterTree = new System.Windows.Forms.TreeView();
             this.entitiesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.entitiesBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.navTreeContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.reorderPreviousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reorderNextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.addChildNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.headerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.entitiesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.entitiesBindingSource1)).BeginInit();
+            this.navTreeContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // headerPanel
@@ -171,6 +179,7 @@
             this.chapterTree.Size = new System.Drawing.Size(286, 915);
             this.chapterTree.TabIndex = 0;
             this.chapterTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.sectionTree_AfterSelect);
+            this.chapterTree.MouseUp += new System.Windows.Forms.MouseEventHandler(this.chapterTree_MouseUp);
             // 
             // entitiesBindingSource
             // 
@@ -179,6 +188,60 @@
             // entitiesBindingSource1
             // 
             this.entitiesBindingSource1.DataSource = typeof(BDEditor.DataModel.Entities);
+            // 
+            // navTreeContextMenuStrip
+            // 
+            this.navTreeContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.reorderPreviousToolStripMenuItem,
+            this.reorderNextToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.addChildNodeToolStripMenuItem,
+            this.toolStripMenuItem2,
+            this.deleteToolStripMenuItem});
+            this.navTreeContextMenuStrip.Name = "contextMenuStripEvents";
+            this.navTreeContextMenuStrip.Size = new System.Drawing.Size(180, 126);
+            // 
+            // reorderPreviousToolStripMenuItem
+            // 
+            this.reorderPreviousToolStripMenuItem.Image = global::BDEditor.Properties.Resources.reorder_previous;
+            this.reorderPreviousToolStripMenuItem.Name = "reorderPreviousToolStripMenuItem";
+            this.reorderPreviousToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.reorderPreviousToolStripMenuItem.Text = "Move &Previous";
+            this.reorderPreviousToolStripMenuItem.Click += new System.EventHandler(this.reorderNodeToPrevious_Click);
+            // 
+            // reorderNextToolStripMenuItem
+            // 
+            this.reorderNextToolStripMenuItem.Image = global::BDEditor.Properties.Resources.reorder_next;
+            this.reorderNextToolStripMenuItem.Name = "reorderNextToolStripMenuItem";
+            this.reorderNextToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.reorderNextToolStripMenuItem.Text = "Move &Next";
+            this.reorderNextToolStripMenuItem.Click += new System.EventHandler(this.reorderNodeToNext_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(176, 6);
+            // 
+            // addChildNodeToolStripMenuItem
+            // 
+            this.addChildNodeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_16x16;
+            this.addChildNodeToolStripMenuItem.Name = "addChildNodeToolStripMenuItem";
+            this.addChildNodeToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.addChildNodeToolStripMenuItem.Text = "&Add Therapy Group";
+            this.addChildNodeToolStripMenuItem.Click += new System.EventHandler(this.addChildNode_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(176, 6);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Image = global::BDEditor.Properties.Resources.remove;
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteNode_Click);
             // 
             // BDEditView
             // 
@@ -201,6 +264,7 @@
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.entitiesBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.entitiesBindingSource1)).EndInit();
+            this.navTreeContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -219,6 +283,13 @@
         private System.Windows.Forms.Button btnSyncWithReplaceLocal;
         private System.Windows.Forms.Button btnPublish;
         private System.Windows.Forms.Button btnImportFromProduction;
+        private System.Windows.Forms.ContextMenuStrip navTreeContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem reorderPreviousToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reorderNextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem addChildNodeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
 
     }
 }

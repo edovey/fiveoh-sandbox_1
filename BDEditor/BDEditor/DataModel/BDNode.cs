@@ -88,13 +88,16 @@ namespace BDEditor.DataModel
         /// <param name="pNode"></param>
         public static void Save(Entities pContext, BDNode pNode)
         {
-            if (pNode.EntityState != EntityState.Unchanged)
+            if (null != pNode)
             {
-                if (pNode.schemaVersion != ENTITY_SCHEMAVERSION)
-                    pNode.schemaVersion = ENTITY_SCHEMAVERSION;
+                if (pNode.EntityState != EntityState.Unchanged)
+                {
+                    if (pNode.schemaVersion != ENTITY_SCHEMAVERSION)
+                        pNode.schemaVersion = ENTITY_SCHEMAVERSION;
 
-                System.Diagnostics.Debug.WriteLine(@"Node Save");
-                pContext.SaveChanges();
+                    System.Diagnostics.Debug.WriteLine(@"Node Save");
+                    pContext.SaveChanges();
+                }
             }
         }
 

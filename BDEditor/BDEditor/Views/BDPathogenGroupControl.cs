@@ -156,15 +156,10 @@ namespace BDEditor.Views
                     this.currentPathogenGroup.SetParent(parentType, parentId);
                     this.currentPathogenGroup.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                     this.currentPathogenGroup.LayoutVariant = DefaultLayoutVariantType;
-                    switch (DefaultLayoutVariantType)
-                    {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                            BDNodeAssociation.CreateNodeAssociation(dataContext, currentPathogenGroup, BDConstants.BDNodeType.BDPathogen);
-                            BDNodeAssociation.CreateNodeAssociation(dataContext, currentPathogenGroup, BDConstants.BDNodeType.BDTherapyGroup);
-                            break;
-                    }
 
                     BDNode.Save(dataContext, currentPathogenGroup);
+
+                    BDNodeAssociation.CreateAssociationsForNode(dataContext, currentPathogenGroup);
                 }
             }
 

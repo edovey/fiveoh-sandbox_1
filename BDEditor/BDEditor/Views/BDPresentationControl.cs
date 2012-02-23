@@ -179,12 +179,8 @@ namespace BDEditor.Views
                     this.currentPresentation.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                     this.currentPresentation.LayoutVariant = defaultLayoutVariantType;
 
-                    switch (defaultLayoutVariantType)
-                    {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                            BDNodeAssociation.CreateNodeAssociation(dataContext, currentPresentation, BDConstants.BDNodeType.BDPathogenGroup);
-                            break;
-                    }
+                    BDNodeAssociation.CreateAssociationsForNode(dataContext, currentPresentation);
+
                 }
             }
 

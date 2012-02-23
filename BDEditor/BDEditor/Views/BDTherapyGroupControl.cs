@@ -216,12 +216,8 @@ namespace BDEditor.Views
                     currentTherapyGroup.SetParent(parentType, parentId);
                     currentTherapyGroup.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                     currentTherapyGroup.LayoutVariant = DefaultLayoutVariantType;
-                    switch (DefaultLayoutVariantType)
-                    {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                            BDNodeAssociation.CreateNodeAssociation(dataContext, currentTherapyGroup, BDConstants.BDNodeType.BDTherapy);
-                            break;
-                    }
+
+                    BDNodeAssociation.CreateAssociationsForNode(dataContext, currentTherapyGroup);
                 }
             }
 

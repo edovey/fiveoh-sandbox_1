@@ -312,8 +312,6 @@
     <Content Include="Resources\Chapter_2a.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\flag-green.bmp" />
-    <Content Include="Resources\Flag-Green.png" />
     <None Include="Resources\Flag-Green1.PNG" />
     <Content Include="Resources\Flag-Red.png" />
     <Content Include="Resources\Ok2.png" />

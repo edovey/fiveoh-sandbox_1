@@ -488,7 +488,7 @@ namespace BDEditor.Views
             this.btnPublish.Visible = true;
 #else
             this.btnImportFromProduction.Visible = false;
-            this.brewButton.Visible = false;
+            this.btnPublish.Visible = false;
 #endif
 
 

@@ -123,6 +123,20 @@ namespace BDEditor.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Flag_Green1 {
+            get {
+                object obj = ResourceManager.GetObject("Flag_Green1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Flag_Red {
+            get {
+                object obj = ResourceManager.GetObject("Flag_Red", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap link_16 {
             get {
                 object obj = ResourceManager.GetObject("link_16", resourceCulture);

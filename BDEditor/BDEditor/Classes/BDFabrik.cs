@@ -73,7 +73,7 @@ namespace BDEditor.Classes
             if (null == pNode)
                 return null;
 
-            if ((pNode.LayoutVariant == BDConstants.LayoutVariantType.Undefined) || (null == pNode.LayoutVariant))
+            if (pNode.LayoutVariant == BDConstants.LayoutVariantType.Undefined) 
             {
                 string message = string.Format("Undefined Layout Variant for node parameter in ChildTypeDefinitionListForNode method call. [{0}]", BDUtilities.GetEnumDescription(pNode.NodeType));
                 throw new BDException(message, pNode);

@@ -11,7 +11,10 @@ namespace BDEditor.Classes
         private static volatile BDCommon instance;
         private static object syncRoot = new object();
 
+        private const string MAJICPHRASE = "dontbugme";
+
         private Boolean isSyncLoad = false;
+        private Boolean syncPushEnabled = false;
 
         private BDCommon() { }
 
@@ -41,6 +44,22 @@ namespace BDEditor.Classes
         {
             get { return isSyncLoad; }
             set { isSyncLoad = value; }
+        }
+
+        public Boolean Validate(string pMajicPhrase)
+        {
+            return (pMajicPhrase == MAJICPHRASE);
+        }
+
+        public Boolean Authenticate(string pMajicPhrase)
+        {
+            syncPushEnabled = (pMajicPhrase == MAJICPHRASE);
+            return syncPushEnabled;
+        }
+
+        public Boolean SyncPushEnabled
+        {
+            get { return syncPushEnabled; }
         }
     }
 }

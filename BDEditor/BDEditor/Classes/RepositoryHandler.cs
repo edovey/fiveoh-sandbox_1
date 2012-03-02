@@ -144,115 +144,118 @@ namespace BDEditor.Classes
             // Process all deletion records in database since last sync: will include records received in last pull
             BDDeletion.DeleteLocalSinceDate(pDataContext, pLastSyncDate);
 
-            if (null != pLastSyncDate)
+            if (BDCommon.Settings.SyncPushEnabled)
             {
-                #region Push
-
-                foreach (SyncInfo syncInfoEntry in syncDictionary.Values)
+                if (null != pLastSyncDate)
                 {
-                    System.Diagnostics.Debug.WriteLine(string.Format("Push {0}", syncInfoEntry.RemoteEntityName));
-                    foreach (IBDObject changeEntry in syncInfoEntry.PushList)
+                    #region Push
+
+                    foreach (SyncInfo syncInfoEntry in syncDictionary.Values)
                     {
-                        SimpleDb.PutAttributes(changeEntry.PutAttributes());
-                        syncInfoEntry.RowsPushed++;
-
-                        if (changeEntry is BDLinkedNote)
+                        System.Diagnostics.Debug.WriteLine(string.Format("Push {0}", syncInfoEntry.RemoteEntityName));
+                        foreach (IBDObject changeEntry in syncInfoEntry.PushList)
                         {
-                            BDLinkedNote linkedNote = changeEntry as BDLinkedNote;
-                            PutObjectRequest putObjectRequest = new PutObjectRequest()
-                                        .WithContentType(@"text/plain")
-                                        .WithContentBody(linkedNote.documentText)
-                                        .WithBucketName(BDLinkedNote.AWS_BUCKET)
-                                        .WithKey(linkedNote.storageKey);
+                            SimpleDb.PutAttributes(changeEntry.PutAttributes());
+                            syncInfoEntry.RowsPushed++;
 
-                            S3Response s3Response = S3.PutObject(putObjectRequest);
-                            s3Response.Dispose();
+                            if (changeEntry is BDLinkedNote)
+                            {
+                                BDLinkedNote linkedNote = changeEntry as BDLinkedNote;
+                                PutObjectRequest putObjectRequest = new PutObjectRequest()
+                                            .WithContentType(@"text/plain")
+                                            .WithContentBody(linkedNote.documentText)
+                                            .WithBucketName(BDLinkedNote.AWS_BUCKET)
+                                            .WithKey(linkedNote.storageKey);
+
+                                S3Response s3Response = S3.PutObject(putObjectRequest);
+                                s3Response.Dispose();
+                            }
+
+                            if (changeEntry is BDHtmlPage)
+                            {
+                                BDHtmlPage htmlPage = changeEntry as BDHtmlPage;
+                                PutObjectRequest putObjectRequest = new PutObjectRequest()
+                                            .WithContentType(@"text/html")
+                                            .WithContentBody(htmlPage.documentText)
+                                            .WithBucketName(BDHtmlPage.AWS_BUCKET)
+                                            .WithKey(htmlPage.storageKey);
+
+                                S3Response s3Response = S3.PutObject(putObjectRequest);
+                                s3Response.Dispose();
+                            }
                         }
 
-                        if (changeEntry is BDHtmlPage)
-                        {
-                            BDHtmlPage htmlPage = changeEntry as BDHtmlPage;
-                            PutObjectRequest putObjectRequest = new PutObjectRequest()
-                                        .WithContentType(@"text/html")
-                                        .WithContentBody(htmlPage.documentText)
-                                        .WithBucketName(BDHtmlPage.AWS_BUCKET)
-                                        .WithKey(htmlPage.storageKey);
-
-                            S3Response s3Response = S3.PutObject(putObjectRequest);
-                            s3Response.Dispose();
-                        }
+                        System.Diagnostics.Debug.WriteLine("Pushed {0} Records for {1}", syncInfoEntry.RowsPushed, syncInfoEntry.RemoteEntityName);
                     }
+                    #endregion
 
-                    System.Diagnostics.Debug.WriteLine("Pushed {0} Records for {1}", syncInfoEntry.RowsPushed, syncInfoEntry.RemoteEntityName);
-                }
-            #endregion
-
-                #region Delete Remote
-                // Process all deletion records in database since last sync: will include records received in last pull
-                List<IBDObject> newDeletionsForRemote = BDDeletion.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
-                string domainName = "";
-                foreach (IBDObject entryObject in newDeletionsForRemote)
-                {
-                    BDDeletion entry = entryObject as BDDeletion;
-                    switch(entry.targetName)
+                    #region Delete Remote
+                    // Process all deletion records in database since last sync: will include records received in last pull
+                    List<IBDObject> newDeletionsForRemote = BDDeletion.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+                    string domainName = "";
+                    foreach (IBDObject entryObject in newDeletionsForRemote)
                     {
-                        case BDNode.KEY_NAME:
-                            domainName = BDNode.AWS_DOMAIN;
-                            break;
-                        case BDLinkedNote.KEY_NAME:
-                            domainName = BDLinkedNote.AWS_DOMAIN;
-                            DeleteObjectRequest s3DeleteRequest = new DeleteObjectRequest()
-                                .WithBucketName(BDLinkedNote.AWS_BUCKET)
-                                .WithKey(BDLinkedNote.GenerateStorageKey(entry.targetId.Value));
-                            try
-                            {
-                                S3.DeleteObject(s3DeleteRequest);
-                            }
-                            catch (AmazonS3Exception s3Exception)
-                            {
-                                Console.WriteLine(s3Exception.Message, s3Exception.InnerException);
-                            }
+                        BDDeletion entry = entryObject as BDDeletion;
+                        switch (entry.targetName)
+                        {
+                            case BDNode.KEY_NAME:
+                                domainName = BDNode.AWS_DOMAIN;
+                                break;
+                            case BDLinkedNote.KEY_NAME:
+                                domainName = BDLinkedNote.AWS_DOMAIN;
+                                DeleteObjectRequest s3DeleteRequest = new DeleteObjectRequest()
+                                    .WithBucketName(BDLinkedNote.AWS_BUCKET)
+                                    .WithKey(BDLinkedNote.GenerateStorageKey(entry.targetId.Value));
+                                try
+                                {
+                                    S3.DeleteObject(s3DeleteRequest);
+                                }
+                                catch (AmazonS3Exception s3Exception)
+                                {
+                                    Console.WriteLine(s3Exception.Message, s3Exception.InnerException);
+                                }
 
-                            break;
-                        case BDLinkedNoteAssociation.KEY_NAME:
-                            domainName = BDLinkedNoteAssociation.AWS_DOMAIN;
-                            break;
-                        case BDTherapy.KEY_NAME:
-                            domainName = BDTherapy.AWS_DOMAIN;
-                            break;
-                        case BDTherapyGroup.KEY_NAME:
-                            domainName = BDTherapyGroup.AWS_DOMAIN;
-                            break;
-                        case BDSearchEntry.KEY_NAME:
-                            domainName = BDSearchEntry.AWS_DOMAIN;
-                            break;
-                        case BDSearchEntryAssociation.KEY_NAME:
-                            domainName = BDSearchEntryAssociation.AWS_DOMAIN;
-                            break;
-                        case BDMetadata.KEY_NAME:
-                            domainName = BDMetadata.AWS_DOMAIN;
-                            break;
-                        case BDHtmlPage.KEY_NAME:
-                            domainName = BDLinkedNote.AWS_DOMAIN;
-                            DeleteObjectRequest s3DeleteHtmlPage = new DeleteObjectRequest()
-                                .WithBucketName(BDHtmlPage.AWS_BUCKET)
-                                .WithKey(BDHtmlPage.GenerateStorageKey(entry.targetId.Value));
-                            try
-                            {
-                                S3.DeleteObject(s3DeleteHtmlPage);
-                            }
-                            catch (AmazonS3Exception s3Exception)
-                            {
-                                Console.WriteLine(s3Exception.Message, s3Exception.InnerException);
-                            }
-                            break;
+                                break;
+                            case BDLinkedNoteAssociation.KEY_NAME:
+                                domainName = BDLinkedNoteAssociation.AWS_DOMAIN;
+                                break;
+                            case BDTherapy.KEY_NAME:
+                                domainName = BDTherapy.AWS_DOMAIN;
+                                break;
+                            case BDTherapyGroup.KEY_NAME:
+                                domainName = BDTherapyGroup.AWS_DOMAIN;
+                                break;
+                            case BDSearchEntry.KEY_NAME:
+                                domainName = BDSearchEntry.AWS_DOMAIN;
+                                break;
+                            case BDSearchEntryAssociation.KEY_NAME:
+                                domainName = BDSearchEntryAssociation.AWS_DOMAIN;
+                                break;
+                            case BDMetadata.KEY_NAME:
+                                domainName = BDMetadata.AWS_DOMAIN;
+                                break;
+                            case BDHtmlPage.KEY_NAME:
+                                domainName = BDLinkedNote.AWS_DOMAIN;
+                                DeleteObjectRequest s3DeleteHtmlPage = new DeleteObjectRequest()
+                                    .WithBucketName(BDHtmlPage.AWS_BUCKET)
+                                    .WithKey(BDHtmlPage.GenerateStorageKey(entry.targetId.Value));
+                                try
+                                {
+                                    S3.DeleteObject(s3DeleteHtmlPage);
+                                }
+                                catch (AmazonS3Exception s3Exception)
+                                {
+                                    Console.WriteLine(s3Exception.Message, s3Exception.InnerException);
+                                }
+                                break;
+                        }
+
+                        DeleteAttributesRequest request = new DeleteAttributesRequest().WithDomainName(domainName).WithItemName(entry.targetId.Value.ToString().ToUpper());
+                        SimpleDb.DeleteAttributes(request);
                     }
+                    #endregion
 
-                    DeleteAttributesRequest request = new DeleteAttributesRequest().WithDomainName(domainName).WithItemName(entry.targetId.Value.ToString().ToUpper());
-                    SimpleDb.DeleteAttributes(request);
                 }
-                #endregion
-
             }
 
             pLastSyncDate = currentSyncDate;

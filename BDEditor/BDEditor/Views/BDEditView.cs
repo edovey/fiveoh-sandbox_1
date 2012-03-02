@@ -415,16 +415,21 @@ namespace BDEditor.Views
 
         private void LoadChapterDropDown()
         {
+            splitContainer1.Panel2.Controls.Clear();
+
+            chapterTree.Nodes.Clear();
+
             chapterDropDown.Items.Clear();
             foreach(IBDNode entry in BDFabrik.GetAllForNodeType(dataContext, BDConstants.BDNodeType.BDChapter))
             {
                 chapterDropDown.Items.Add(entry);
             }
 
-            if (chapterDropDown.Items.Count > 2)
-                chapterDropDown.SelectedIndex = 2;
-            else if (chapterDropDown.Items.Count > 1)
-                chapterDropDown.SelectedIndex = 1;
+            //if (chapterDropDown.Items.Count > 2)
+            //    chapterDropDown.SelectedIndex = 2;
+            if (chapterDropDown.Items.Count >= 1)
+                chapterDropDown.SelectedIndex = 0;
+
         }
 
         private void UpdateSyncLabel()
@@ -483,33 +488,22 @@ namespace BDEditor.Views
             this.btnPublish.Visible = true;
 #else
             this.btnImportFromProduction.Visible = false;
-            this.brewButton.Visible = false;
+            this.btnPublish.Visible = false;
 #endif
-
-            //ToolStripSeparator separator = new ToolStripSeparator();
-
-            //reorderNodeToPrevious = new ToolStripMenuItem();
-            //reorderNodeToNext = new ToolStripMenuItem();
-            //addChildNode = new ToolStripMenuItem();
-            //deleteNode = new ToolStripMenuItem();
-
-            //reorderNodeToPrevious.Image = global::BDEditor.Properties.Resources.reorder_previous;
-            //reorderNodeToPrevious.Name = "reorderPreviousToolStripMenuItem";
-            //reorderNodeToPrevious.Size = new System.Drawing.Size(179, 22);
-            //reorderNodeToPrevious.Text = "Move &Previous";
-            //reorderNodeToPrevious.Click += new EventHandler(reorderPrevious_Click);
-
-            //reorderNodeToPrevious.Image = global::BDEditor.Properties.Resources.reorder_next;
-            //reorderNodeToPrevious.Name = "reorderNextToolStripMenuItem";
-            //reorderNodeToPrevious.Size = new System.Drawing.Size(179, 22);
-            //reorderNodeToPrevious.Text = "Move &Next";
-            //reorderNodeToPrevious.Click
 
 
             BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
             loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDNodes.Count() <= 0);
             UpdateSyncLabel();
+
+            AuthenticationInputBox authenticationForm = new AuthenticationInputBox();
+            authenticationForm.ShowDialog(this);
+
+            if (!BDCommon.Settings.SyncPushEnabled)
+            {
+                btnSync.Text = "Pull Only";
+            }
         }
 
         private void btnSync_Click(object sender, EventArgs e)

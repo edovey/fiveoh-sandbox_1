@@ -166,4 +166,10 @@
   <data name="apps_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\apps_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Flag_Red" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Flag-Red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Flag_Green1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Flag-Green1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

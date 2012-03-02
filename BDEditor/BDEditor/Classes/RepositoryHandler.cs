@@ -647,10 +647,37 @@ namespace BDEditor.Classes
 
         public void DeleteRemoteSearch()
         {
-            DeleteDomainRequest saRequest = new DeleteDomainRequest().WithDomainName(BDSearchEntry.AWS_DOMAIN);
-            SimpleDb.DeleteDomain(saRequest);
-            DeleteDomainRequest seRequest = new DeleteDomainRequest().WithDomainName(BDSearchEntryAssociation.AWS_DOMAIN);
-            SimpleDb.DeleteDomain(seRequest);
+            try
+            {
+                DeleteDomainRequest saRequest = new DeleteDomainRequest().WithDomainName(BDSearchEntry.AWS_DOMAIN);
+                SimpleDb.DeleteDomain(saRequest);
+                DeleteDomainRequest seRequest = new DeleteDomainRequest().WithDomainName(BDSearchEntryAssociation.AWS_DOMAIN);
+                SimpleDb.DeleteDomain(seRequest);
+
+                CreateDomainRequest createDomainRequest1 = (new CreateDomainRequest()).WithDomainName(BDSearchEntry.AWS_DOMAIN);
+                CreateDomainRequest createDomainRequest2 = (new CreateDomainRequest()).WithDomainName(BDSearchEntryAssociation.AWS_DOMAIN);
+                CreateDomainResponse createResponse1 = simpleDb.CreateDomain(createDomainRequest1);
+                CreateDomainResponse createResponse2 = simpleDb.CreateDomain(createDomainRequest2);
+            }
+            catch (AmazonS3Exception amazonS3Exception)
+            {
+                if (amazonS3Exception.ErrorCode != null &&
+                                    (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId")
+                                    ||
+                                    amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
+                {
+                    Console.WriteLine("Check the provided AWS Credentials.");
+                    Console.WriteLine(
+                    "To sign up for service, go to http://aws.amazon.com/s3");
+                }
+                else
+                {
+                    Console.WriteLine(
+                     "Error occurred. Message:'{0}' when listing objects",
+                     amazonS3Exception.Message);
+                }
+            }
+
         }
 
         public void DeleteRemotePages(Entities pContext)
@@ -702,6 +729,30 @@ namespace BDEditor.Classes
                 } while (request != null);
             }
 
+            catch (AmazonS3Exception amazonS3Exception)
+            {
+                if (amazonS3Exception.ErrorCode != null &&
+                                    (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId")
+                                    ||
+                                    amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
+                {
+                    Console.WriteLine("Check the provided AWS Credentials.");
+                    Console.WriteLine(
+                    "To sign up for service, go to http://aws.amazon.com/s3");
+                }
+                else
+                {
+                    Console.WriteLine(
+                     "Error occurred. Message:'{0}' when listing objects",
+                     amazonS3Exception.Message);
+                }
+            }
+
+            try
+            {
+                CreateDomainRequest createDomainRequest = (new CreateDomainRequest()).WithDomainName(BDHtmlPage.AWS_DOMAIN);
+                CreateDomainResponse createResponse = simpleDb.CreateDomain(createDomainRequest);
+            }
             catch (AmazonS3Exception amazonS3Exception)
             {
                 if (amazonS3Exception.ErrorCode != null &&

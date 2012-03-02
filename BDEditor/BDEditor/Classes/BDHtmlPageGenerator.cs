@@ -70,9 +70,6 @@ namespace BDEditor.Classes
                                                         BDNode node = presentation as BDNode;
                                                         if (null != node && node.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation01 && node.NodeType == BDConstants.BDNodeType.BDPresentation)
                                                         {
-                                                            // in the case of a disease having a single presentation, the construction of the web page with the
-                                                            // disease overview on top and the presentation page below will be handled by the viewer.  
-                                                            // The presentation pages are built and saved here without consideration for that variant.
                                                             GeneratePresentationPagesForTreatmentRecommendation01(dataContext, node);
                                                         }
                                                     }
@@ -295,8 +292,15 @@ namespace BDEditor.Classes
         private string buildTherapyHtml(Entities pContext, BDTherapy pTherapy)
         {
             StringBuilder therapyHtml = new StringBuilder();
+            string styleString = string.Empty;
 
-            therapyHtml.Append(@"<tr><td>");
+            // check join type - if none, then don't draw the bottom border on the table row
+            if (pTherapy.therapyJoinType == (int)BDTherapy.TherapyJoinType.None)
+                styleString = @"class=""d0""";
+            else
+                styleString = @"class=""d1""";
+
+            therapyHtml.AppendFormat(@"<tr {0}><td>", styleString);
 
             if (pTherapy.leftBracket.Value == true)
                 therapyHtml.Append(@"&#91");
@@ -304,7 +308,7 @@ namespace BDEditor.Classes
             Guid nameNoteParentId = Guid.Empty;
             string tName = string.Empty;
 
-            if (pTherapy.nameSameAsPrevious.Value)
+            if (pTherapy.nameSameAsPrevious.Value == true)
             {
                 nameNoteParentId = previousTherapyId;
                 tName = previousTherapyName;
@@ -333,31 +337,13 @@ namespace BDEditor.Classes
             if (pTherapy.rightBracket.Value == true)
                 therapyHtml.Append(@"&#93");
 
-            // check for conjunctions and add any that are found
-            switch (pTherapy.therapyJoinType)
-            {
-                case (int)BDTherapy.TherapyJoinType.AndWithNext:
-                    therapyHtml.Append(@" +");
-                    break;
-                case (int)BDTherapy.TherapyJoinType.OrWithNext:
-                    therapyHtml.Append(@" or");
-                    break;
-                case (int)BDTherapy.TherapyJoinType.ThenWithNext:
-                    therapyHtml.Append(@" then");
-                    break;
-                case (int)BDTherapy.TherapyJoinType.WithOrWithoutWithNext:
-                    therapyHtml.Append(@" +/-");
-                    break;
-                default:
-                    break;
-            }
             therapyHtml.Append(@"</td>");
 
             // Dosage
             Guid dosageNoteParentId = Guid.Empty;
             string tDosage = string.Empty;
 
-            if (pTherapy.dosageSameAsPrevious.Value)
+            if (pTherapy.dosageSameAsPrevious.Value == true)
             {
                 dosageNoteParentId = previousTherapyId;
                 tDosage = previousTherapyDosage;
@@ -388,7 +374,7 @@ namespace BDEditor.Classes
             Guid durationNoteParentId = Guid.Empty;
             string tDuration = string.Empty;
 
-            if (pTherapy.durationSameAsPrevious.Value)
+            if (pTherapy.durationSameAsPrevious.Value == true)
             {
                 durationNoteParentId = previousTherapyId;
                 tDuration = previousTherapyDuration;
@@ -416,6 +402,25 @@ namespace BDEditor.Classes
                 therapyHtml.AppendFormat(@"<td>{0}</td>", tDuration.Trim());
 
             therapyHtml.Append(@"</tr>");
+
+            // check for conjunctions and add a row for any that are found
+            switch (pTherapy.therapyJoinType)
+            {
+                case (int)BDTherapy.TherapyJoinType.AndWithNext:
+                    therapyHtml.Append(@"<tr><td> + </td><td/><td></tr>");
+                    break;
+                case (int)BDTherapy.TherapyJoinType.OrWithNext:
+                    therapyHtml.Append(@"<tr><td> or</td><td/><td></tr>");
+                    break;
+                case (int)BDTherapy.TherapyJoinType.ThenWithNext:
+                    therapyHtml.Append(@"<tr><td> then</td><td/><td></tr>");
+                    break;
+                case (int)BDTherapy.TherapyJoinType.WithOrWithoutWithNext:
+                    therapyHtml.Append(@"<tr><td> +/-</td><td/><td></tr>");
+                    break;
+                default:
+                    break;
+            }
             return therapyHtml.ToString();
         }
 

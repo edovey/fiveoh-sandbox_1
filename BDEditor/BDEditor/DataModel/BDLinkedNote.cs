@@ -198,6 +198,19 @@ namespace BDEditor.DataModel
             return resultList;
         }
 
+        public static List<BDLinkedNote> RetrieveLinkedNotesWithText(Entities pContext, string pText)
+        {
+            List<BDLinkedNote> returnList = new List<BDLinkedNote>();
+            if (null != pText && pText.Length > 0)
+            {
+                IQueryable<BDLinkedNote> entries = (from entry in pContext.BDLinkedNotes
+                                                 where entry.documentText.Contains(pText)
+                                                 select entry);
+                returnList = entries.ToList<BDLinkedNote>();
+            }
+            return returnList;
+        }
+
         protected override void OnPropertyChanged(string property)
         {
             if (!BDCommon.Settings.IsSyncLoad)

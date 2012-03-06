@@ -254,6 +254,45 @@ namespace BDEditor.DataModel
             return durations.ToArray();
         }
 
+        public static List<BDTherapy> RetrieveTherapiesNameWithText(Entities pContext, string pText)
+        {
+            List<BDTherapy> returnList = new List<BDTherapy>();
+            if (null != pText && pText.Length > 0)
+            {
+                IQueryable<BDTherapy> entries = (from entry in pContext.BDTherapies
+                                                 where entry.name.Contains(pText)
+                                                 select entry);
+                returnList = entries.ToList<BDTherapy>();
+            }
+            return returnList;
+        }
+
+        public static List<BDTherapy> RetrieveTherapiesDosageWithText(Entities pContext, string pText)
+        {
+            List<BDTherapy> returnList = new List<BDTherapy>();
+            if (null != pText && pText.Length > 0)
+            {
+                IQueryable<BDTherapy> entries = (from entry in pContext.BDTherapies
+                                                 where entry.dosage.Contains(pText)
+                                                 select entry);
+                returnList = entries.ToList<BDTherapy>();
+            }
+            return returnList;
+        }
+
+        public static List<BDTherapy> RetrieveTherapiesDurationWithText(Entities pContext, string pText)
+        {
+            List<BDTherapy> returnList = new List<BDTherapy>();
+            if(null != pText && pText.Length > 0)
+            {
+                IQueryable<BDTherapy> entries = (from entry in pContext.BDTherapies
+                                                 where entry.duration.Contains(pText)
+                                                 select entry);
+                returnList = entries.ToList<BDTherapy>();
+            }
+            return returnList;
+        }
+
         public void SetParent(IBDNode pParent)
         {
             if (null == pParent)

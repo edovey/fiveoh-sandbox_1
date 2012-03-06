@@ -82,6 +82,43 @@ namespace BDEditor.Classes
             return ChildTypeDefinitionListForNode(pNode.NodeType, pNode.LayoutVariant);
         }
 
+        public static List<IBDNode> SearchNodesForText(Entities pDataContext, List<int> pNodes, string pText)
+        {
+            List<IBDNode> nodeList = new List<IBDNode>();
+
+            foreach (int nodeType in pNodes)
+            {
+                switch (nodeType)
+                {
+                    case (int)BDConstants.BDNodeType.BDChapter:
+                    case (int)BDConstants.BDNodeType.BDSection:
+                    case (int)BDConstants.BDNodeType.BDCategory:
+                    case (int)BDConstants.BDNodeType.BDSubCategory:
+                    case (int)BDConstants.BDNodeType.BDDisease:
+                    case (int)BDConstants.BDNodeType.BDPathogenGroup:
+                    case (int)BDConstants.BDNodeType.BDPathogen:
+                        {
+                            BDConstants.BDNodeType nType = (BDConstants.BDNodeType)nodeType;
+                            nodeList.AddRange(BDNode.RetrieveNodesNameWithTextForType(pDataContext, pText,nType));
+                        } break;
+                    case (int)BDConstants.BDNodeType.BDTherapyGroup:
+                        nodeList.AddRange(BDTherapyGroup.RetrieveTherapyGroupsNameWithText(pDataContext, pText));
+                        break;
+                    case (int)BDConstants.BDNodeType.BDTherapy:
+                        {
+                            nodeList.AddRange(BDTherapy.RetrieveTherapiesDosageWithText(pDataContext, pText));
+                            nodeList.AddRange(BDTherapy.RetrieveTherapiesNameWithText(pDataContext, pText));
+                            nodeList.AddRange(BDTherapy.RetrieveTherapiesDurationWithText(pDataContext, pText));
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return nodeList;
+        }
+
         public static List<BDConstants.BDNodeType> ChildTypeDefinitionListForNode(BDConstants.BDNodeType pNodeType, BDConstants.LayoutVariantType pLayoutVariant)
         {
             List<BDConstants.BDNodeType> definitionList = new List<BDConstants.BDNodeType>();

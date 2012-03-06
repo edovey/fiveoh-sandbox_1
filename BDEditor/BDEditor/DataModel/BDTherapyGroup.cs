@@ -206,6 +206,19 @@ namespace BDEditor.DataModel
             return therapyGroupNames.ToArray();
         }
 
+        public static List<BDTherapyGroup> RetrieveTherapyGroupsNameWithText(Entities pContext, string pText)
+        {
+            List<BDTherapyGroup> returnList = new List<BDTherapyGroup>();
+            if (null != pText && pText.Length > 0)
+            {
+                IQueryable<BDTherapyGroup> entries = (from entry in pContext.BDTherapyGroups
+                                                 where entry.name.Contains(pText)
+                                                 select entry);
+                returnList = entries.ToList<BDTherapyGroup>();
+            }
+            return returnList;
+        }
+
         protected override void OnPropertyChanged(string property)
         {
             if (!BDCommon.Settings.IsSyncLoad)

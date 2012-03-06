@@ -630,6 +630,13 @@ namespace BDEditor.Views
 #endif
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // search for a term:  open the search window
+            BDSearchView searchView = new BDSearchView();
+            searchView.ShowDialog(this);
+        }
+
 
     }
 }

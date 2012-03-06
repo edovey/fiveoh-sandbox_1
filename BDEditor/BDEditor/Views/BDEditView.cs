@@ -395,7 +395,6 @@ namespace BDEditor.Views
                 chapterTree.SelectedNode.Text = e.Text;
             }
         }
-
   
         private void loadSeedData_Click(object sender, EventArgs e)
         {
@@ -630,13 +629,24 @@ namespace BDEditor.Views
 #endif
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnSearch_Click(object sender, EventArgs e)
         {
+            TreeNode treeNode = chapterTree.SelectedNode;
+
             // search for a term:  open the search window
             BDSearchView searchView = new BDSearchView();
+            searchView.AssignDataContext(dataContext);
             searchView.ShowDialog(this);
+
+            if (null != chapterTree.SelectedNode)
+            {
+                this.Cursor = Cursors.WaitCursor;
+                IBDNode newNode = chapterTree.SelectedNode.Tag as IBDNode;
+                if (newNode.Name != treeNode.Text)
+                    treeNode.Text = newNode.Name;
+                showNavSelection(treeNode);
+                this.Cursor = Cursors.Default;
+            }
         }
-
-
     }
 }

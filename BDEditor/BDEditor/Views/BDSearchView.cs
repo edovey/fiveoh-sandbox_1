@@ -13,26 +13,31 @@ namespace BDEditor.Views
 {
     public partial class BDSearchView : Form
     {
-        BDEditor.DataModel.Entities dataContext;
+        private BDEditor.DataModel.Entities dataContext;
         List<IBDNode> nodeList;
         List<BDLinkedNote> linkedNoteList;
-
 
         public BDSearchView()
         {
             InitializeComponent();
-            dataContext = new DataModel.Entities();
             nodeList = new List<IBDNode>();
             linkedNoteList = new List<BDLinkedNote>();
-            DataGridViewTextBoxColumn col1 = new DataGridViewTextBoxColumn();
-            col1.DataPropertyName = "name";
-            col1.HeaderText = "Name";
+            
             DataGridViewTextBoxColumn col0 = new DataGridViewTextBoxColumn();
             col0.DataPropertyName = "nodeType";
             col0.HeaderText = "Type";
+
+            DataGridViewTextBoxColumn col1 = new DataGridViewTextBoxColumn();
+            col1.DataPropertyName = "name";
+            col1.HeaderText = "Name";
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void AssignDataContext(Entities pDataContext)
+        {
+            dataContext = pDataContext;
+        }
+
+        private void srch()
         {
             nodeList.Clear();
             linkedNoteList.Clear();
@@ -49,11 +54,6 @@ namespace BDEditor.Views
                 {
                     dataGridView1.DataSource = nodeList;
                     // set up grid columns
-                    DataGridViewTextBoxColumn nodeId = new DataGridViewTextBoxColumn();
-                    dataGridView1.Columns.Add(nodeId);
-                    nodeId.DataPropertyName = "Uuid";
-                    nodeId.Visible = false;
-
                     DataGridViewTextBoxColumn nodeClass = new DataGridViewTextBoxColumn();
                     dataGridView1.Columns.Add(nodeClass);
                     nodeClass.DataPropertyName = "NodeType";
@@ -85,11 +85,6 @@ namespace BDEditor.Views
                 {
                     dataGridView1.DataSource = linkedNoteList;
                     // set up grid columns
-                    DataGridViewTextBoxColumn nodeId = new DataGridViewTextBoxColumn();
-                    nodeId.DataPropertyName = "Uuid";
-                    nodeId.Visible = false;
-                    dataGridView1.Columns.Add(nodeId);
-
                     DataGridViewTextBoxColumn nodeName = new DataGridViewTextBoxColumn();
                     nodeName.DataPropertyName = "DescriptionForLinkedNote";
                     nodeName.HeaderText = "Description";
@@ -108,9 +103,13 @@ namespace BDEditor.Views
                 else
                     MessageBox.Show(this, "No matching entries found", "Not Found", MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
             }
-            if(dataGridView1.Columns.Count > 0)
-                dataGridView1.Columns[0].Visible = false;
+
             dataGridView1.Refresh();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            srch();
         }
 
         void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -119,25 +118,44 @@ namespace BDEditor.Views
             if (e.RowIndex < 0 || e.ColumnIndex !=
                 dataGridView1.Columns["Edit"].Index) return;
 
-            // Retrieve the ID.
-            Guid rowId = (Guid)dataGridView1[0, e.RowIndex].Value;
+            // Retrieve the node ID.
             if (dataGridView1.Tag.ToString() == "LinkedNote")
             {
-                BDLinkedNote note = BDLinkedNote.GetLinkedNoteWithId(dataContext, rowId);
-                List<BDLinkedNoteAssociation> assns = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForLinkedNoteId(dataContext, rowId);
+                Guid linkedNoteId = (Guid)linkedNoteList[e.RowIndex].Uuid;
+
+                BDLinkedNote note = BDLinkedNote.GetLinkedNoteWithId(dataContext, linkedNoteId);
+                List<BDLinkedNoteAssociation> assns = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForLinkedNoteId(dataContext, linkedNoteId);
                 BDLinkedNoteView noteView = new BDLinkedNoteView();
                 noteView.AssignDataContext(dataContext);
                 noteView.AssignParentInfo(assns[0].parentId, assns[0].ParentType);
                 noteView.AssignContextPropertyName(assns[0].parentKeyPropertyName);
                 noteView.AssignScopeId(assns[0].parentId);
-                //noteView.NotesChanged += new EventHandler(notesChanged_Action);
                 noteView.ShowDialog(this);
-                //noteView.NotesChanged -= new EventHandler(notesChanged_Action);
+                srch();
             }
             else
             {
-                MessageBox.Show(rowId.ToString());
+                Guid nodeId = (Guid)nodeList[e.RowIndex].Uuid;
+                if (((IBDNode)nodeList[e.RowIndex]).NodeType == BDConstants.BDNodeType.BDTherapy)
+                {
+                    // open BDTherapyEditView
+                    BDTherapyEditView therapyEditView = new BDTherapyEditView();
+                    therapyEditView.CurrentTherapy = BDTherapy.GetTherapyWithId(dataContext,nodeId);
+                    therapyEditView.AssignDataContext(dataContext);
+                    therapyEditView.ShowDialog(this);
 
+                }
+                else
+                {
+                    BDNodeEditView nodeEditView = new BDNodeEditView();
+                    if (((IBDNode)nodeList[e.RowIndex]).NodeType == BDConstants.BDNodeType.BDTherapyGroup)
+                        nodeEditView.CurrentNode = BDTherapyGroup.GetTherapyGroupWithId(dataContext, nodeId);
+                    else
+                        nodeEditView.CurrentNode = BDNode.RetrieveNodeWithId(dataContext, nodeId);
+                    nodeEditView.AssignDataContext(dataContext);
+                    nodeEditView.ShowDialog(this);
+                }
+                srch();
             }
         }
 
@@ -162,6 +180,7 @@ namespace BDEditor.Views
         private void rbNodes_CheckedChanged(object sender, EventArgs e)
         {
             if (rbNodes.Checked == true)
+            {
                 groupBox1.Enabled = true;
                 cbChapter.Checked = true;
                 cbSection.Checked = true;
@@ -173,6 +192,8 @@ namespace BDEditor.Views
                 cbPathogen.Checked = true;
                 cbTherapyGroup.Checked = true;
                 cbTherapy.Checked = true;
+            }
+            dataGridView1.Columns.Clear();
         }
 
         private List<int> loadTypesFromUI()

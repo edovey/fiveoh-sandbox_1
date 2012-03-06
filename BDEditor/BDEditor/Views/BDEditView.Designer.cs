@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDEditView));
             this.headerPanel = new System.Windows.Forms.Panel();
+            this.btnSearch = new System.Windows.Forms.Button();
             this.btnImportFromProduction = new System.Windows.Forms.Button();
             this.btnPublish = new System.Windows.Forms.Button();
             this.btnSyncWithReplaceLocal = new System.Windows.Forms.Button();
@@ -41,15 +42,14 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.chapterTree = new System.Windows.Forms.TreeView();
             this.navTreeContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.entitiesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.entitiesBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.reorderPreviousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reorderNextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.addChildNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.button1 = new System.Windows.Forms.Button();
+            this.entitiesBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.entitiesBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.headerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -61,7 +61,7 @@
             // 
             // headerPanel
             // 
-            this.headerPanel.Controls.Add(this.button1);
+            this.headerPanel.Controls.Add(this.btnSearch);
             this.headerPanel.Controls.Add(this.btnImportFromProduction);
             this.headerPanel.Controls.Add(this.btnPublish);
             this.headerPanel.Controls.Add(this.btnSyncWithReplaceLocal);
@@ -74,6 +74,16 @@
             this.headerPanel.Name = "headerPanel";
             this.headerPanel.Size = new System.Drawing.Size(1192, 39);
             this.headerPanel.TabIndex = 0;
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Location = new System.Drawing.Point(1094, 10);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(75, 23);
+            this.btnSearch.TabIndex = 7;
+            this.btnSearch.Text = "Search";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // btnImportFromProduction
             // 
@@ -195,24 +205,6 @@
             this.navTreeContextMenuStrip.Name = "contextMenuStripEvents";
             this.navTreeContextMenuStrip.Size = new System.Drawing.Size(179, 104);
             // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(175, 6);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(175, 6);
-            // 
-            // entitiesBindingSource
-            // 
-            this.entitiesBindingSource.DataSource = typeof(BDEditor.DataModel.Entities);
-            // 
-            // entitiesBindingSource1
-            // 
-            this.entitiesBindingSource1.DataSource = typeof(BDEditor.DataModel.Entities);
-            // 
             // reorderPreviousToolStripMenuItem
             // 
             this.reorderPreviousToolStripMenuItem.Image = global::BDEditor.Properties.Resources.reorder_previous;
@@ -229,6 +221,11 @@
             this.reorderNextToolStripMenuItem.Text = "Move &Next";
             this.reorderNextToolStripMenuItem.Click += new System.EventHandler(this.reorderNodeToNext_Click);
             // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(175, 6);
+            // 
             // addChildNodeToolStripMenuItem
             // 
             this.addChildNodeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_16x16;
@@ -236,6 +233,11 @@
             this.addChildNodeToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.addChildNodeToolStripMenuItem.Text = "&Add Therapy Group";
             this.addChildNodeToolStripMenuItem.Click += new System.EventHandler(this.addChildNode_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(175, 6);
             // 
             // deleteToolStripMenuItem
             // 
@@ -245,15 +247,13 @@
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteNode_Click);
             // 
-            // button1
+            // entitiesBindingSource
             // 
-            this.button1.Location = new System.Drawing.Point(1094, 10);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Search";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.entitiesBindingSource.DataSource = typeof(BDEditor.DataModel.Entities);
+            // 
+            // entitiesBindingSource1
+            // 
+            this.entitiesBindingSource1.DataSource = typeof(BDEditor.DataModel.Entities);
             // 
             // BDEditView
             // 
@@ -302,7 +302,7 @@
         private System.Windows.Forms.ToolStripMenuItem addChildNodeToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnSearch;
 
     }
 }

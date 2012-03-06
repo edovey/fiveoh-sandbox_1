@@ -28,22 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDSearchView));
             this.tbSearchTerm = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbDisease = new System.Windows.Forms.CheckBox();
+            this.cbTherapy = new System.Windows.Forms.CheckBox();
+            this.cbTherapyGroup = new System.Windows.Forms.CheckBox();
+            this.cbPathogen = new System.Windows.Forms.CheckBox();
+            this.cbPathogenGroup = new System.Windows.Forms.CheckBox();
+            this.cbPresentation = new System.Windows.Forms.CheckBox();
+            this.cbCategory = new System.Windows.Forms.CheckBox();
+            this.cbSubcategory = new System.Windows.Forms.CheckBox();
+            this.cbSection = new System.Windows.Forms.CheckBox();
+            this.cbChapter = new System.Windows.Forms.CheckBox();
             this.rbNodes = new System.Windows.Forms.RadioButton();
             this.rbLinkedNotes = new System.Windows.Forms.RadioButton();
-            this.cbChapter = new System.Windows.Forms.CheckBox();
-            this.cbSection = new System.Windows.Forms.CheckBox();
-            this.cbSubcategory = new System.Windows.Forms.CheckBox();
-            this.cbCategory = new System.Windows.Forms.CheckBox();
-            this.cbPresentation = new System.Windows.Forms.CheckBox();
-            this.cbPathogenGroup = new System.Windows.Forms.CheckBox();
-            this.cbPathogen = new System.Windows.Forms.CheckBox();
-            this.cbTherapyGroup = new System.Windows.Forms.CheckBox();
-            this.cbTherapy = new System.Windows.Forms.CheckBox();
-            this.cbDisease = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -98,6 +99,126 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Search for:";
             // 
+            // cbDisease
+            // 
+            this.cbDisease.AutoSize = true;
+            this.cbDisease.Checked = true;
+            this.cbDisease.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbDisease.Location = new System.Drawing.Point(100, 42);
+            this.cbDisease.Name = "cbDisease";
+            this.cbDisease.Size = new System.Drawing.Size(64, 17);
+            this.cbDisease.TabIndex = 9;
+            this.cbDisease.Text = "Disease";
+            this.cbDisease.UseVisualStyleBackColor = true;
+            // 
+            // cbTherapy
+            // 
+            this.cbTherapy.AutoSize = true;
+            this.cbTherapy.Checked = true;
+            this.cbTherapy.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbTherapy.Location = new System.Drawing.Point(319, 19);
+            this.cbTherapy.Name = "cbTherapy";
+            this.cbTherapy.Size = new System.Drawing.Size(65, 17);
+            this.cbTherapy.TabIndex = 8;
+            this.cbTherapy.Text = "Therapy";
+            this.cbTherapy.UseVisualStyleBackColor = true;
+            // 
+            // cbTherapyGroup
+            // 
+            this.cbTherapyGroup.AutoSize = true;
+            this.cbTherapyGroup.Checked = true;
+            this.cbTherapyGroup.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbTherapyGroup.Location = new System.Drawing.Point(209, 65);
+            this.cbTherapyGroup.Name = "cbTherapyGroup";
+            this.cbTherapyGroup.Size = new System.Drawing.Size(97, 17);
+            this.cbTherapyGroup.TabIndex = 7;
+            this.cbTherapyGroup.Text = "Therapy Group";
+            this.cbTherapyGroup.UseVisualStyleBackColor = true;
+            // 
+            // cbPathogen
+            // 
+            this.cbPathogen.AutoSize = true;
+            this.cbPathogen.Checked = true;
+            this.cbPathogen.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbPathogen.Location = new System.Drawing.Point(209, 42);
+            this.cbPathogen.Name = "cbPathogen";
+            this.cbPathogen.Size = new System.Drawing.Size(72, 17);
+            this.cbPathogen.TabIndex = 6;
+            this.cbPathogen.Text = "Pathogen";
+            this.cbPathogen.UseVisualStyleBackColor = true;
+            // 
+            // cbPathogenGroup
+            // 
+            this.cbPathogenGroup.AutoSize = true;
+            this.cbPathogenGroup.Checked = true;
+            this.cbPathogenGroup.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbPathogenGroup.Location = new System.Drawing.Point(209, 19);
+            this.cbPathogenGroup.Name = "cbPathogenGroup";
+            this.cbPathogenGroup.Size = new System.Drawing.Size(104, 17);
+            this.cbPathogenGroup.TabIndex = 5;
+            this.cbPathogenGroup.Text = "Pathogen Group";
+            this.cbPathogenGroup.UseVisualStyleBackColor = true;
+            // 
+            // cbPresentation
+            // 
+            this.cbPresentation.AutoSize = true;
+            this.cbPresentation.Checked = true;
+            this.cbPresentation.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbPresentation.Location = new System.Drawing.Point(100, 65);
+            this.cbPresentation.Name = "cbPresentation";
+            this.cbPresentation.Size = new System.Drawing.Size(85, 17);
+            this.cbPresentation.TabIndex = 4;
+            this.cbPresentation.Text = "Presentation";
+            this.cbPresentation.UseVisualStyleBackColor = true;
+            // 
+            // cbCategory
+            // 
+            this.cbCategory.AutoSize = true;
+            this.cbCategory.Checked = true;
+            this.cbCategory.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbCategory.Location = new System.Drawing.Point(7, 68);
+            this.cbCategory.Name = "cbCategory";
+            this.cbCategory.Size = new System.Drawing.Size(68, 17);
+            this.cbCategory.TabIndex = 3;
+            this.cbCategory.Text = "Category";
+            this.cbCategory.UseVisualStyleBackColor = true;
+            // 
+            // cbSubcategory
+            // 
+            this.cbSubcategory.AutoSize = true;
+            this.cbSubcategory.Checked = true;
+            this.cbSubcategory.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbSubcategory.Location = new System.Drawing.Point(100, 19);
+            this.cbSubcategory.Name = "cbSubcategory";
+            this.cbSubcategory.Size = new System.Drawing.Size(86, 17);
+            this.cbSubcategory.TabIndex = 2;
+            this.cbSubcategory.Text = "Subcategory";
+            this.cbSubcategory.UseVisualStyleBackColor = true;
+            // 
+            // cbSection
+            // 
+            this.cbSection.AutoSize = true;
+            this.cbSection.Checked = true;
+            this.cbSection.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbSection.Location = new System.Drawing.Point(7, 44);
+            this.cbSection.Name = "cbSection";
+            this.cbSection.Size = new System.Drawing.Size(62, 17);
+            this.cbSection.TabIndex = 1;
+            this.cbSection.Text = "Section";
+            this.cbSection.UseVisualStyleBackColor = true;
+            // 
+            // cbChapter
+            // 
+            this.cbChapter.AutoSize = true;
+            this.cbChapter.Checked = true;
+            this.cbChapter.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbChapter.Location = new System.Drawing.Point(7, 20);
+            this.cbChapter.Name = "cbChapter";
+            this.cbChapter.Size = new System.Drawing.Size(63, 17);
+            this.cbChapter.TabIndex = 0;
+            this.cbChapter.Text = "Chapter";
+            this.cbChapter.UseVisualStyleBackColor = true;
+            // 
             // rbNodes
             // 
             this.rbNodes.AutoSize = true;
@@ -122,126 +243,6 @@
             this.rbLinkedNotes.UseVisualStyleBackColor = true;
             this.rbLinkedNotes.CheckedChanged += new System.EventHandler(this.rbLinkedNotes_CheckedChanged);
             // 
-            // cbChapter
-            // 
-            this.cbChapter.AutoSize = true;
-            this.cbChapter.Checked = true;
-            this.cbChapter.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbChapter.Location = new System.Drawing.Point(7, 20);
-            this.cbChapter.Name = "cbChapter";
-            this.cbChapter.Size = new System.Drawing.Size(63, 17);
-            this.cbChapter.TabIndex = 0;
-            this.cbChapter.Text = "Chapter";
-            this.cbChapter.UseVisualStyleBackColor = true;
-            // 
-            // cbSection
-            // 
-            this.cbSection.AutoSize = true;
-            this.cbSection.Checked = true;
-            this.cbSection.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbSection.Location = new System.Drawing.Point(7, 44);
-            this.cbSection.Name = "cbSection";
-            this.cbSection.Size = new System.Drawing.Size(62, 17);
-            this.cbSection.TabIndex = 1;
-            this.cbSection.Text = "Section";
-            this.cbSection.UseVisualStyleBackColor = true;
-            // 
-            // cbSubcategory
-            // 
-            this.cbSubcategory.AutoSize = true;
-            this.cbSubcategory.Checked = true;
-            this.cbSubcategory.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbSubcategory.Location = new System.Drawing.Point(100, 19);
-            this.cbSubcategory.Name = "cbSubcategory";
-            this.cbSubcategory.Size = new System.Drawing.Size(86, 17);
-            this.cbSubcategory.TabIndex = 2;
-            this.cbSubcategory.Text = "Subcategory";
-            this.cbSubcategory.UseVisualStyleBackColor = true;
-            // 
-            // cbCategory
-            // 
-            this.cbCategory.AutoSize = true;
-            this.cbCategory.Checked = true;
-            this.cbCategory.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbCategory.Location = new System.Drawing.Point(7, 68);
-            this.cbCategory.Name = "cbCategory";
-            this.cbCategory.Size = new System.Drawing.Size(68, 17);
-            this.cbCategory.TabIndex = 3;
-            this.cbCategory.Text = "Category";
-            this.cbCategory.UseVisualStyleBackColor = true;
-            // 
-            // cbPresentation
-            // 
-            this.cbPresentation.AutoSize = true;
-            this.cbPresentation.Checked = true;
-            this.cbPresentation.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbPresentation.Location = new System.Drawing.Point(100, 65);
-            this.cbPresentation.Name = "cbPresentation";
-            this.cbPresentation.Size = new System.Drawing.Size(85, 17);
-            this.cbPresentation.TabIndex = 4;
-            this.cbPresentation.Text = "Presentation";
-            this.cbPresentation.UseVisualStyleBackColor = true;
-            // 
-            // cbPathogenGroup
-            // 
-            this.cbPathogenGroup.AutoSize = true;
-            this.cbPathogenGroup.Checked = true;
-            this.cbPathogenGroup.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbPathogenGroup.Location = new System.Drawing.Point(209, 19);
-            this.cbPathogenGroup.Name = "cbPathogenGroup";
-            this.cbPathogenGroup.Size = new System.Drawing.Size(104, 17);
-            this.cbPathogenGroup.TabIndex = 5;
-            this.cbPathogenGroup.Text = "Pathogen Group";
-            this.cbPathogenGroup.UseVisualStyleBackColor = true;
-            // 
-            // cbPathogen
-            // 
-            this.cbPathogen.AutoSize = true;
-            this.cbPathogen.Checked = true;
-            this.cbPathogen.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbPathogen.Location = new System.Drawing.Point(209, 42);
-            this.cbPathogen.Name = "cbPathogen";
-            this.cbPathogen.Size = new System.Drawing.Size(72, 17);
-            this.cbPathogen.TabIndex = 6;
-            this.cbPathogen.Text = "Pathogen";
-            this.cbPathogen.UseVisualStyleBackColor = true;
-            // 
-            // cbTherapyGroup
-            // 
-            this.cbTherapyGroup.AutoSize = true;
-            this.cbTherapyGroup.Checked = true;
-            this.cbTherapyGroup.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbTherapyGroup.Location = new System.Drawing.Point(209, 65);
-            this.cbTherapyGroup.Name = "cbTherapyGroup";
-            this.cbTherapyGroup.Size = new System.Drawing.Size(97, 17);
-            this.cbTherapyGroup.TabIndex = 7;
-            this.cbTherapyGroup.Text = "Therapy Group";
-            this.cbTherapyGroup.UseVisualStyleBackColor = true;
-            // 
-            // cbTherapy
-            // 
-            this.cbTherapy.AutoSize = true;
-            this.cbTherapy.Checked = true;
-            this.cbTherapy.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbTherapy.Location = new System.Drawing.Point(319, 19);
-            this.cbTherapy.Name = "cbTherapy";
-            this.cbTherapy.Size = new System.Drawing.Size(65, 17);
-            this.cbTherapy.TabIndex = 8;
-            this.cbTherapy.Text = "Therapy";
-            this.cbTherapy.UseVisualStyleBackColor = true;
-            // 
-            // cbDisease
-            // 
-            this.cbDisease.AutoSize = true;
-            this.cbDisease.Checked = true;
-            this.cbDisease.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbDisease.Location = new System.Drawing.Point(100, 42);
-            this.cbDisease.Name = "cbDisease";
-            this.cbDisease.Size = new System.Drawing.Size(64, 17);
-            this.cbDisease.TabIndex = 9;
-            this.cbDisease.Text = "Disease";
-            this.cbDisease.UseVisualStyleBackColor = true;
-            // 
             // BDSearchView
             // 
             this.AcceptButton = this.button1;
@@ -254,8 +255,10 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.tbSearchTerm);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "BDSearchView";
-            this.Text = "BDSearchView";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Bugs & Drugs Search";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

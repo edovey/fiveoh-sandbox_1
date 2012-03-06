@@ -165,6 +165,12 @@
     <Compile Include="Views\BDLinkedNoteView.Designer.cs">
       <DependentUpon>BDLinkedNoteView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\BDNodeEditView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\BDNodeEditView.Designer.cs">
+      <DependentUpon>BDNodeEditView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\BDPathogenGroupControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -209,6 +215,12 @@
     <Compile Include="Views\BDTherapyControl.Designer.cs">
       <DependentUpon>BDTherapyControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\BDTherapyEditView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\BDTherapyEditView.Designer.cs">
+      <DependentUpon>BDTherapyEditView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\BDTherapyGroupControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -239,6 +251,9 @@
     <EmbeddedResource Include="Views\BDLinkedNoteView.resx">
       <DependentUpon>BDLinkedNoteView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDNodeEditView.resx">
+      <DependentUpon>BDNodeEditView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\BDPathogenControl.resx">
       <DependentUpon>BDPathogenControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -253,6 +268,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDTherapyControl.resx">
       <DependentUpon>BDTherapyControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDTherapyEditView.resx">
+      <DependentUpon>BDTherapyEditView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDTherapyGroupControl.resx">
       <DependentUpon>BDTherapyGroupControl.cs</DependentUpon>
@@ -324,6 +342,8 @@
     <None Include="Resources\Flag-Green1.PNG" />
     <Content Include="Resources\Flag-Red.png" />
     <Content Include="Resources\Ok2.png" />
+    <Content Include="Resources\pen.ico" />
+    <Content Include="Resources\search.ico" />
     <Content Include="sqlceca35.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

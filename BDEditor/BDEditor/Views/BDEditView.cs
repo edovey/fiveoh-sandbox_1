@@ -304,6 +304,7 @@ namespace BDEditor.Views
 
                             BDNodeControl control_tr01 = null;
                             control_tr01 = new BDNodeControl(dataContext, node);
+                            control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);
                             control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
                             control_tr01.Dock = DockStyle.Fill;
                             control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
@@ -321,6 +322,7 @@ namespace BDEditor.Views
 
                             BDNodeControl control_tr01 = null;
                             control_tr01 = new BDNodeControl(dataContext, node);
+                            control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);
                             control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
                             control_tr01.Dock = DockStyle.Fill;
                             control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
@@ -338,6 +340,7 @@ namespace BDEditor.Views
 
                             BDNodeControl control_tr01 = null;
                             control_tr01 = new BDNodeControl(dataContext, node);
+                            control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);
                             control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
                             control_tr01.Dock = DockStyle.Fill;
                             control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
@@ -355,6 +358,7 @@ namespace BDEditor.Views
 
                             BDNodeControl control_tr01 = null;
                             control_tr01 = new BDNodeControl(dataContext, node);
+                            control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);
                             control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
                             control_tr01.Dock = DockStyle.Fill;
                             control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);

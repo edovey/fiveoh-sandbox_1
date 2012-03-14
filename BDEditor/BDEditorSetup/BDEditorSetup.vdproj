@@ -15,19 +15,7 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_1D40AF0109084DCDAD77CA68CBC51C20"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_1D40AF0109084DCDAD77CA68CBC51C20"
-        "OwnerKey" = "8:_7D783B5EA11E44379669FAA734BF0BDA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_31C10809BB3BB08C75B36D20598BC1FD"
+        "MsmKey" = "8:_08E128B4B36B77A0F8775F2BA13120B4"
         "OwnerKey" = "8:_7D783B5EA11E44379669FAA734BF0BDA"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -39,20 +27,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_B95F451A62696AC80B5DB937F3766C34"
+        "MsmKey" = "8:_917B0E2B7DE5431EB796AB5EE97DFCF6"
         "OwnerKey" = "8:_7D783B5EA11E44379669FAA734BF0BDA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_B95F451A62696AC80B5DB937F3766C34"
-        "OwnerKey" = "8:_31C10809BB3BB08C75B36D20598BC1FD"
+        "MsmKey" = "8:_D449626C6FF9B0C32568693C367D38B1"
+        "OwnerKey" = "8:_7D783B5EA11E44379669FAA734BF0BDA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_CB292F0A907A3B5BA27D575FED2C36FA"
-        "OwnerKey" = "8:_7D783B5EA11E44379669FAA734BF0BDA"
+        "MsmKey" = "8:_D449626C6FF9B0C32568693C367D38B1"
+        "OwnerKey" = "8:_08E128B4B36B77A0F8775F2BA13120B4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -63,6 +51,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_E888096CED706D2BF38B458B27DE1ACD"
+        "OwnerKey" = "8:_7D783B5EA11E44379669FAA734BF0BDA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_7D783B5EA11E44379669FAA734BF0BDA"
         "MsmSig" = "8:_UNDEFINED"
@@ -70,25 +64,25 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_1D40AF0109084DCDAD77CA68CBC51C20"
+        "OwnerKey" = "8:_E888096CED706D2BF38B458B27DE1ACD"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_CB292F0A907A3B5BA27D575FED2C36FA"
+        "OwnerKey" = "8:_08E128B4B36B77A0F8775F2BA13120B4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_31C10809BB3BB08C75B36D20598BC1FD"
+        "OwnerKey" = "8:_D449626C6FF9B0C32568693C367D38B1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B95F451A62696AC80B5DB937F3766C34"
+        "OwnerKey" = "8:_917B0E2B7DE5431EB796AB5EE97DFCF6"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -160,6 +154,11 @@
                     "Name" = "8:Microsoft .NET Framework 4 (x86 and x64)"
                     "ProductCode" = "8:.NETFramework,Version=v4.0"
                     }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.SQL.Server.Compact.3.5"
+                    {
+                    "Name" = "8:SQL Server Compact 3.5 SP2"
+                    "ProductCode" = "8:Microsoft.SQL.Server.Compact.3.5"
+                    }
                     "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
                     {
                     "Name" = "8:Windows Installer 3.1"
@@ -196,14 +195,14 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_31C10809BB3BB08C75B36D20598BC1FD"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_08E128B4B36B77A0F8775F2BA13120B4"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:System.Data.SqlServerCe.Entity, Version=3.5.1.50, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_31C10809BB3BB08C75B36D20598BC1FD"
+                    "_08E128B4B36B77A0F8775F2BA13120B4"
                     {
                     "Name" = "8:System.Data.SqlServerCe.Entity.dll"
                     "Attributes" = "3:512"
@@ -227,51 +226,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B95F451A62696AC80B5DB937F3766C34"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D449626C6FF9B0C32568693C367D38B1"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:System.Data.SqlServerCe, Version=3.5.1.50, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_B95F451A62696AC80B5DB937F3766C34"
+                    "_D449626C6FF9B0C32568693C367D38B1"
                     {
                     "Name" = "8:System.Data.SqlServerCe.dll"
                     "Attributes" = "3:512"
                     }
                 }
             "SourcePath" = "8:System.Data.SqlServerCe.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_90736ED4E69A43E99604B8CB99408F28"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CB292F0A907A3B5BA27D575FED2C36FA"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:AWSSDK, Version=1.4.1.0, Culture=neutral, PublicKeyToken=cd2d24cd2bace800, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_CB292F0A907A3B5BA27D575FED2C36FA"
-                    {
-                    "Name" = "8:AWSSDK.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:AWSSDK.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_90736ED4E69A43E99604B8CB99408F28"
@@ -307,6 +275,37 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E888096CED706D2BF38B458B27DE1ACD"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:AWSSDK, Version=1.4.1.0, Culture=neutral, PublicKeyToken=cd2d24cd2bace800, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_E888096CED706D2BF38B458B27DE1ACD"
+                    {
+                    "Name" = "8:AWSSDK.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:AWSSDK.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_90736ED4E69A43E99604B8CB99408F28"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
         }
@@ -932,44 +931,44 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_1D40AF0109084DCDAD77CA68CBC51C20"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_917B0E2B7DE5431EB796AB5EE97DFCF6"
             {
             "UseDynamicProperties" = "11:TRUE"
-            "IsDependency" = "11:FALSE"
-            "SourcePath" = "8:C:\\Program Files\\Common Files\\Merge Modules\\TXTextControl_WinForms_16.0.Express.msm"
+            "IsDependency" = "11:TRUE"
+            "SourcePath" = "8:txtextcontrol_winforms_17.0.msm"
                 "Properties"
                 {
-                    "_4404029B8857901A0580097138FB7A8C.1318558AC8B9415496B59CFE9D7F45E6"
+                    "_4404029B8857901A0580097138FB7A8C.D58DA1D6749141F3BCC3BA7DCF10679B"
                     {
-                    "Name" = "8:_4404029B8857901A0580097138FB7A8C.1318558AC8B9415496B59CFE9D7F45E6"
+                    "Name" = "8:_4404029B8857901A0580097138FB7A8C.D58DA1D6749141F3BCC3BA7DCF10679B"
                     "DisplayName" = "8:"
                     "Description" = "8:"
                     "Type" = "3:2"
-                    "ContextData" = "8:InstallToGAC=;IsolateToManifest=_3EC34E339753431CB87BFB5CF6A9EB49.1318558AC8B9415496B59CFE9D7F45E6"
+                    "ContextData" = "8:InstallToGAC=;IsolateToManifest=_3EC34E339753431CB87BFB5CF6A9EB49.D58DA1D6749141F3BCC3BA7DCF10679B"
                     "Attributes" = "3:0"
                     "Setting" = "3:2"
-                    "Value" = "8:_3EC34E339753431CB87BFB5CF6A9EB49.1318558AC8B9415496B59CFE9D7F45E6"
-                    "DefaultValue" = "8:_3EC34E339753431CB87BFB5CF6A9EB49.1318558AC8B9415496B59CFE9D7F45E6"
-                    "ParentName" = "8:_A5F4126034E4430F82021A5E32900510.1318558AC8B9415496B59CFE9D7F45E6"
+                    "Value" = "8:_3EC34E339753431CB87BFB5CF6A9EB49.D58DA1D6749141F3BCC3BA7DCF10679B"
+                    "DefaultValue" = "8:_3EC34E339753431CB87BFB5CF6A9EB49.D58DA1D6749141F3BCC3BA7DCF10679B"
+                    "ParentName" = "8:_A5F4126034E4430F82021A5E32900510.D58DA1D6749141F3BCC3BA7DCF10679B"
                     "UsePlugInResources" = "11:FALSE"
                     }
-                    "_8FFE0B56A09BF0D76847836DBEAF4D0E.1318558AC8B9415496B59CFE9D7F45E6"
+                    "_8FFE0B56A09BF0D76847836DBEAF4D0E.D58DA1D6749141F3BCC3BA7DCF10679B"
                     {
-                    "Name" = "8:_8FFE0B56A09BF0D76847836DBEAF4D0E.1318558AC8B9415496B59CFE9D7F45E6"
+                    "Name" = "8:_8FFE0B56A09BF0D76847836DBEAF4D0E.D58DA1D6749141F3BCC3BA7DCF10679B"
                     "DisplayName" = "8:"
                     "Description" = "8:"
                     "Type" = "3:2"
-                    "ContextData" = "8:InstallToGAC=;IsolateToManifest=_F08674FF256043D585BBA3318BCFCB08.1318558AC8B9415496B59CFE9D7F45E6"
+                    "ContextData" = "8:InstallToGAC=;IsolateToManifest=_F08674FF256043D585BBA3318BCFCB08.D58DA1D6749141F3BCC3BA7DCF10679B"
                     "Attributes" = "3:0"
                     "Setting" = "3:2"
-                    "Value" = "8:_F08674FF256043D585BBA3318BCFCB08.1318558AC8B9415496B59CFE9D7F45E6"
-                    "DefaultValue" = "8:_F08674FF256043D585BBA3318BCFCB08.1318558AC8B9415496B59CFE9D7F45E6"
-                    "ParentName" = "8:_A5F4126034E4430F82021A5E32900510.1318558AC8B9415496B59CFE9D7F45E6"
+                    "Value" = "8:_F08674FF256043D585BBA3318BCFCB08.D58DA1D6749141F3BCC3BA7DCF10679B"
+                    "DefaultValue" = "8:_F08674FF256043D585BBA3318BCFCB08.D58DA1D6749141F3BCC3BA7DCF10679B"
+                    "ParentName" = "8:_A5F4126034E4430F82021A5E32900510.D58DA1D6749141F3BCC3BA7DCF10679B"
                     "UsePlugInResources" = "11:FALSE"
                     }
-                    "_A5F4126034E4430F82021A5E32900510.1318558AC8B9415496B59CFE9D7F45E6"
+                    "_A5F4126034E4430F82021A5E32900510.D58DA1D6749141F3BCC3BA7DCF10679B"
                     {
-                    "Name" = "8:_A5F4126034E4430F82021A5E32900510.1318558AC8B9415496B59CFE9D7F45E6"
+                    "Name" = "8:_A5F4126034E4430F82021A5E32900510.D58DA1D6749141F3BCC3BA7DCF10679B"
                     "DisplayName" = "8:Module Retargetable Folder"
                     "Description" = "8:"
                     "Type" = "3:32769"
@@ -978,60 +977,60 @@
                     "Setting" = "3:1"
                     "UsePlugInResources" = "11:FALSE"
                     }
-                    "_CF82547BA687EAA07154E78C77E2EA56.1318558AC8B9415496B59CFE9D7F45E6"
+                    "_CF82547BA687EAA07154E78C77E2EA56.D58DA1D6749141F3BCC3BA7DCF10679B"
                     {
-                    "Name" = "8:_CF82547BA687EAA07154E78C77E2EA56.1318558AC8B9415496B59CFE9D7F45E6"
+                    "Name" = "8:_CF82547BA687EAA07154E78C77E2EA56.D58DA1D6749141F3BCC3BA7DCF10679B"
                     "DisplayName" = "8:"
                     "Description" = "8:"
                     "Type" = "3:2"
-                    "ContextData" = "8:InstallToGAC=;IsolateToManifest=_131B419BF2D6494398686AA6DF2E350A.1318558AC8B9415496B59CFE9D7F45E6"
+                    "ContextData" = "8:InstallToGAC=;IsolateToManifest=_131B419BF2D6494398686AA6DF2E350A.D58DA1D6749141F3BCC3BA7DCF10679B"
                     "Attributes" = "3:0"
                     "Setting" = "3:2"
-                    "Value" = "8:_131B419BF2D6494398686AA6DF2E350A.1318558AC8B9415496B59CFE9D7F45E6"
-                    "DefaultValue" = "8:_131B419BF2D6494398686AA6DF2E350A.1318558AC8B9415496B59CFE9D7F45E6"
-                    "ParentName" = "8:_A5F4126034E4430F82021A5E32900510.1318558AC8B9415496B59CFE9D7F45E6"
+                    "Value" = "8:_131B419BF2D6494398686AA6DF2E350A.D58DA1D6749141F3BCC3BA7DCF10679B"
+                    "DefaultValue" = "8:_131B419BF2D6494398686AA6DF2E350A.D58DA1D6749141F3BCC3BA7DCF10679B"
+                    "ParentName" = "8:_A5F4126034E4430F82021A5E32900510.D58DA1D6749141F3BCC3BA7DCF10679B"
                     "UsePlugInResources" = "11:FALSE"
                     }
-                    "_D68FD1A26CED2165FE962B8F37EFD13A.1318558AC8B9415496B59CFE9D7F45E6"
+                    "_D68FD1A26CED2165FE962B8F37EFD13A.D58DA1D6749141F3BCC3BA7DCF10679B"
                     {
-                    "Name" = "8:_D68FD1A26CED2165FE962B8F37EFD13A.1318558AC8B9415496B59CFE9D7F45E6"
+                    "Name" = "8:_D68FD1A26CED2165FE962B8F37EFD13A.D58DA1D6749141F3BCC3BA7DCF10679B"
                     "DisplayName" = "8:"
                     "Description" = "8:"
                     "Type" = "3:2"
-                    "ContextData" = "8:InstallToGAC=;IsolateToManifest=_130C162C982B477092B919E1921504F3.1318558AC8B9415496B59CFE9D7F45E6"
+                    "ContextData" = "8:InstallToGAC=;IsolateToManifest=_130C162C982B477092B919E1921504F3.D58DA1D6749141F3BCC3BA7DCF10679B"
                     "Attributes" = "3:0"
                     "Setting" = "3:2"
-                    "Value" = "8:_130C162C982B477092B919E1921504F3.1318558AC8B9415496B59CFE9D7F45E6"
-                    "DefaultValue" = "8:_130C162C982B477092B919E1921504F3.1318558AC8B9415496B59CFE9D7F45E6"
-                    "ParentName" = "8:_A5F4126034E4430F82021A5E32900510.1318558AC8B9415496B59CFE9D7F45E6"
+                    "Value" = "8:_130C162C982B477092B919E1921504F3.D58DA1D6749141F3BCC3BA7DCF10679B"
+                    "DefaultValue" = "8:_130C162C982B477092B919E1921504F3.D58DA1D6749141F3BCC3BA7DCF10679B"
+                    "ParentName" = "8:_A5F4126034E4430F82021A5E32900510.D58DA1D6749141F3BCC3BA7DCF10679B"
                     "UsePlugInResources" = "11:FALSE"
                     }
-                    "_E35E54483FCA5986246916D4E8EE432E.1318558AC8B9415496B59CFE9D7F45E6"
+                    "_E35E54483FCA5986246916D4E8EE432E.D58DA1D6749141F3BCC3BA7DCF10679B"
                     {
-                    "Name" = "8:_E35E54483FCA5986246916D4E8EE432E.1318558AC8B9415496B59CFE9D7F45E6"
+                    "Name" = "8:_E35E54483FCA5986246916D4E8EE432E.D58DA1D6749141F3BCC3BA7DCF10679B"
                     "DisplayName" = "8:"
                     "Description" = "8:"
                     "Type" = "3:2"
-                    "ContextData" = "8:InstallToGAC=;IsolateToManifest=_C2F7257502584987996E3BFA3981BA9B.1318558AC8B9415496B59CFE9D7F45E6"
+                    "ContextData" = "8:InstallToGAC=;IsolateToManifest=_C2F7257502584987996E3BFA3981BA9B.D58DA1D6749141F3BCC3BA7DCF10679B"
                     "Attributes" = "3:0"
                     "Setting" = "3:2"
-                    "Value" = "8:_C2F7257502584987996E3BFA3981BA9B.1318558AC8B9415496B59CFE9D7F45E6"
-                    "DefaultValue" = "8:_C2F7257502584987996E3BFA3981BA9B.1318558AC8B9415496B59CFE9D7F45E6"
-                    "ParentName" = "8:_A5F4126034E4430F82021A5E32900510.1318558AC8B9415496B59CFE9D7F45E6"
+                    "Value" = "8:_C2F7257502584987996E3BFA3981BA9B.D58DA1D6749141F3BCC3BA7DCF10679B"
+                    "DefaultValue" = "8:_C2F7257502584987996E3BFA3981BA9B.D58DA1D6749141F3BCC3BA7DCF10679B"
+                    "ParentName" = "8:_A5F4126034E4430F82021A5E32900510.D58DA1D6749141F3BCC3BA7DCF10679B"
                     "UsePlugInResources" = "11:FALSE"
                     }
-                    "_E99C3E545CC36546210DC5E984ED065E.1318558AC8B9415496B59CFE9D7F45E6"
+                    "_E99C3E545CC36546210DC5E984ED065E.D58DA1D6749141F3BCC3BA7DCF10679B"
                     {
-                    "Name" = "8:_E99C3E545CC36546210DC5E984ED065E.1318558AC8B9415496B59CFE9D7F45E6"
+                    "Name" = "8:_E99C3E545CC36546210DC5E984ED065E.D58DA1D6749141F3BCC3BA7DCF10679B"
                     "DisplayName" = "8:"
                     "Description" = "8:"
                     "Type" = "3:2"
-                    "ContextData" = "8:InstallToGAC=;IsolateToManifest=_A0D27B566BF644BE8D9AF0D40260D78E.1318558AC8B9415496B59CFE9D7F45E6"
+                    "ContextData" = "8:InstallToGAC=;IsolateToManifest=_A0D27B566BF644BE8D9AF0D40260D78E.D58DA1D6749141F3BCC3BA7DCF10679B"
                     "Attributes" = "3:0"
                     "Setting" = "3:2"
-                    "Value" = "8:_A0D27B566BF644BE8D9AF0D40260D78E.1318558AC8B9415496B59CFE9D7F45E6"
-                    "DefaultValue" = "8:_A0D27B566BF644BE8D9AF0D40260D78E.1318558AC8B9415496B59CFE9D7F45E6"
-                    "ParentName" = "8:_A5F4126034E4430F82021A5E32900510.1318558AC8B9415496B59CFE9D7F45E6"
+                    "Value" = "8:_A0D27B566BF644BE8D9AF0D40260D78E.D58DA1D6749141F3BCC3BA7DCF10679B"
+                    "DefaultValue" = "8:_A0D27B566BF644BE8D9AF0D40260D78E.D58DA1D6749141F3BCC3BA7DCF10679B"
+                    "ParentName" = "8:_A5F4126034E4430F82021A5E32900510.D58DA1D6749141F3BCC3BA7DCF10679B"
                     "UsePlugInResources" = "11:FALSE"
                     }
                 }

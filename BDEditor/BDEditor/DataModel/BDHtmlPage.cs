@@ -165,6 +165,23 @@ namespace BDEditor.DataModel
             return entryList;
         }
 
+        public static List<Guid> RetrieveAllIDs(Entities pContext)
+        {
+            IQueryable<Guid> pages = (from entry in pContext.BDHtmlPages
+                                            select entry.uuid);
+            return pages.ToList<Guid>();
+        }
+
+        public static Guid RetrievePageIdForAnchorId(Entities pContext, string pAnchorIdAsText)
+        {
+            IQueryable<Guid> query = from lna in pContext.BDLinkedNoteAssociations
+                                     join p in pContext.BDHtmlPages
+                                     on lna.linkedNoteId equals p.displayParentId 
+                                     where lna.parentKeyPropertyName == pAnchorIdAsText
+                                     select p.uuid;
+            return query.ToList<Guid>()[0];
+        }
+
         #region Repository
 
         /// <summary>

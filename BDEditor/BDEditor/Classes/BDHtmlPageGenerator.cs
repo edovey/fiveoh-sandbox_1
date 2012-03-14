@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 
 using BDEditor.DataModel;
 
@@ -29,6 +30,12 @@ namespace BDEditor.Classes
             BDHtmlPage.DeleteAll();
 
             generatePages();
+
+            List<BDHtmlPage> pages = BDHtmlPage.RetrieveAll(dataContext);
+            List<Guid> htmlPageIds = BDHtmlPage.RetrieveAllIDs(dataContext);
+
+            foreach (BDHtmlPage page in pages)
+                processTextForInternalLinks (dataContext, page, htmlPageIds);
         }
 
         private void generatePages()
@@ -49,19 +56,19 @@ namespace BDEditor.Classes
                                 {
                                     case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                                         {
-                                            List<BDLinkedNote> sectionOverviewNotes = retrieveNotesForParentAndPropertyForType(dataContext, section.Uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW, BDConstants.LinkedNoteType.Inline);
+                                            List<BDLinkedNote> sectionOverviewNotes = retrieveNotesForParentAndPropertyForLinkedNoteType(dataContext, section.Uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW, BDConstants.LinkedNoteType.Inline);
                                             if(sectionOverviewNotes.Count > 0)
                                                 generatePageForOverview(dataContext, section.Uuid, BDConstants.BDNodeType.BDSection, sectionOverviewNotes[0]);
                                             List<IBDNode> categories = BDFabrik.GetChildrenForParent(dataContext, section);
                                             foreach (IBDNode category in categories)
                                             {
-                                                List<BDLinkedNote> categoryOverviewNotes = retrieveNotesForParentAndPropertyForType(dataContext, category.Uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW, BDConstants.LinkedNoteType.Inline);
+                                                List<BDLinkedNote> categoryOverviewNotes = retrieveNotesForParentAndPropertyForLinkedNoteType(dataContext, category.Uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW, BDConstants.LinkedNoteType.Inline);
                                                 if(categoryOverviewNotes.Count > 0)
                                                     generatePageForOverview(dataContext, category.Uuid, BDConstants.BDNodeType.BDCategory, categoryOverviewNotes[0]);
                                                 List<IBDNode> diseases = BDFabrik.GetChildrenForParent(dataContext, category);
                                                 foreach (IBDNode disease in diseases)
                                                 {
-                                                    List<BDLinkedNote> diseaseOverviewNotes = retrieveNotesForParentAndPropertyForType(dataContext, disease.Uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW, BDConstants.LinkedNoteType.Inline);
+                                                    List<BDLinkedNote> diseaseOverviewNotes = retrieveNotesForParentAndPropertyForLinkedNoteType(dataContext, disease.Uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW, BDConstants.LinkedNoteType.Inline);
                                                     if (diseaseOverviewNotes.Count > 0)
                                                         generatePageForOverview(dataContext, disease.Uuid, BDConstants.BDNodeType.BDDisease, diseaseOverviewNotes[0]);
                                                     List<IBDNode> presentations = BDFabrik.GetChildrenForParent(dataContext, disease);
@@ -85,6 +92,21 @@ namespace BDEditor.Classes
                         break;
                     default:
                         break;
+                }
+            }
+
+            // generate html pages for all linkedNotes that have at least one linkedAssociation where the parent type is 11
+            List<BDLinkedNote> notesWithinNotes = BDLinkedNote.RetrieveLinkedNotesWithLinkedNoteParentType(dataContext);
+            foreach (BDLinkedNote n in notesWithinNotes)
+            {
+                List<BDLinkedNoteAssociation> assns = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForLinkedNoteId(dataContext, n.uuid);
+                foreach (BDLinkedNoteAssociation a in assns)
+                {
+                    if (a.parentType == (int)BDConstants.BDNodeType.BDLinkedNote)
+                    {
+                        Guid pageGuid = generatePageForLinkedNotes(dataContext, a.linkedNoteId.Value, BDConstants.BDNodeType.BDLinkedNote, n.documentText);
+                        break;
+                    }
                 }
             }
         }
@@ -125,7 +147,7 @@ namespace BDEditor.Classes
                     if (null != group)
                     {
                         // therapy group header
-                        // therapy group linked notes:  inline, marked, unmarked
+                        // therapy group linked allNotes:  inline, marked, unmarked
                         // add footnote and endnote to footer
                         List<BDTherapy> therapies = BDTherapy.GetTherapiesForTherapyParentId(pContext, group.Uuid);
                         if (therapies.Count > 0)
@@ -177,7 +199,7 @@ namespace BDEditor.Classes
             return linkedNoteHtml.ToString();
         }
 
-        private List<BDLinkedNote> retrieveNotesForParentAndPropertyForType(Entities pContext, Guid pParentId, string pPropertyName, BDConstants.LinkedNoteType pNoteType)
+        private List<BDLinkedNote> retrieveNotesForParentAndPropertyForLinkedNoteType(Entities pContext, Guid pParentId, string pPropertyName, BDConstants.LinkedNoteType pNoteType)
         {
             List<BDLinkedNote> noteList = new List<BDLinkedNote>();
             if (null != pPropertyName && pPropertyName.Length > 0)
@@ -212,9 +234,9 @@ namespace BDEditor.Classes
                 // Get overview for Pathogen Group
                 pathogenGroupHtml.Append(retrieveNoteTextForParentAndProperty(pContext, pathogenGroup.Uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW));
 
-                List<BDLinkedNote> inlineNotes = retrieveNotesForParentAndPropertyForType(pContext, pathogenGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Inline);
-                List<BDLinkedNote> markedNotes = retrieveNotesForParentAndPropertyForType(pContext, pathogenGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.MarkedComment);
-                List<BDLinkedNote> unmarkedNotes = retrieveNotesForParentAndPropertyForType(pContext, pathogenGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.UnmarkedComment);
+                List<BDLinkedNote> inlineNotes = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, pathogenGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Inline);
+                List<BDLinkedNote> markedNotes = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, pathogenGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.MarkedComment);
+                List<BDLinkedNote> unmarkedNotes = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, pathogenGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.UnmarkedComment);
 
                 // TODO:  DEAL WITH FOOTNOTES & ENDNOTES - will need to tag the pathogen group name, manage symbols?
 
@@ -246,9 +268,9 @@ namespace BDEditor.Classes
         private string buildPathogenHtml(Entities pContext, BDNode pPathogen)
         {
             StringBuilder pathogenHtml = new StringBuilder();
-            List<BDLinkedNote> inlineNotes = retrieveNotesForParentAndPropertyForType(pContext, pPathogen.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Inline);
-            List<BDLinkedNote> markedNotes = retrieveNotesForParentAndPropertyForType(pContext, pPathogen.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> unmarkedNotes = retrieveNotesForParentAndPropertyForType(pContext, pPathogen.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.UnmarkedComment);
+            List<BDLinkedNote> inlineNotes = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, pPathogen.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Inline);
+            List<BDLinkedNote> markedNotes = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, pPathogen.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.MarkedComment);
+            List<BDLinkedNote> unmarkedNotes = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, pPathogen.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.UnmarkedComment);
 
             if (pPathogen.Name.Length > 0)
                 pathogenHtml.AppendFormat(@"{0}<br>", pPathogen.name);
@@ -265,13 +287,13 @@ namespace BDEditor.Classes
         private string buildTherapyGroupHtml(Entities pContext, BDTherapyGroup pTherapyGroup)
         {
             StringBuilder therapyGroupHtml = new StringBuilder();
-            List<BDLinkedNote> inlineNotes = retrieveNotesForParentAndPropertyForType(pContext, pTherapyGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Inline);
-            List<BDLinkedNote> markedNotes = retrieveNotesForParentAndPropertyForType(pContext, pTherapyGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> unmarkedNotes = retrieveNotesForParentAndPropertyForType(pContext, pTherapyGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.UnmarkedComment);
+            List<BDLinkedNote> inlineNotes = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, pTherapyGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Inline);
+            List<BDLinkedNote> markedNotes = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, pTherapyGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.MarkedComment);
+            List<BDLinkedNote> unmarkedNotes = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, pTherapyGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.UnmarkedComment);
 
             // TODO:  DEAL WITH FOOTNOTES / ENDNOTES
 
-            // MAY NEED THIS if we decide to generate a page for the notes rather than putting them in-line.
+            // MAY NEED THIS if we decide to generate a page for the allNotes rather than putting them in-line.
             //if (notesListHasContent(pContext, pNotes))
             //{
             //    Guid noteGuid = generatePageForLinkedNotes(pContext, pTherapyGroup.Uuid, pTherapyGroup.NodeType, pNotes, new List<BDLinkedNote>(), new List<BDLinkedNote>());
@@ -319,9 +341,9 @@ namespace BDEditor.Classes
                 tName = pTherapy.Name;
             }
 
-            List<BDLinkedNote> tNameInline = retrieveNotesForParentAndPropertyForType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.Inline);
-            List<BDLinkedNote> tNameMarked = retrieveNotesForParentAndPropertyForType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> tNameUnmarked = retrieveNotesForParentAndPropertyForType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.UnmarkedComment);
+            List<BDLinkedNote> tNameInline = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.Inline);
+            List<BDLinkedNote> tNameMarked = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.MarkedComment);
+            List<BDLinkedNote> tNameUnmarked = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.UnmarkedComment);
 
             Guid tNameNotePageGuid = generatePageForLinkedNotes(pContext, pTherapy.Uuid, BDConstants.BDNodeType.BDTherapy, tNameInline, tNameMarked, tNameUnmarked);
             if (tNameNotePageGuid != Guid.Empty)
@@ -329,7 +351,7 @@ namespace BDEditor.Classes
                 if (tName.Length > 0)
                     therapyHtml.AppendFormat(@"<a href=""{0}""><b>{1}</b></a>", tNameNotePageGuid, tName);
                 else
-                    therapyHtml.AppendFormat(@"<a href=""{0}""><b>See notes.</b></a>", tNameNotePageGuid);
+                    therapyHtml.AppendFormat(@"<a href=""{0}""><b>See allNotes.</b></a>", tNameNotePageGuid);
             }
             else
                 therapyHtml.AppendFormat(@"<b>{0}</b>", tName);
@@ -354,9 +376,9 @@ namespace BDEditor.Classes
                 tDosage = pTherapy.dosage;
             }
 
-            List<BDLinkedNote> tDosageInline = retrieveNotesForParentAndPropertyForType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.Inline);
-            List<BDLinkedNote> tDosageMarked = retrieveNotesForParentAndPropertyForType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> tDosageUnmarked = retrieveNotesForParentAndPropertyForType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.UnmarkedComment);
+            List<BDLinkedNote> tDosageInline = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.Inline);
+            List<BDLinkedNote> tDosageMarked = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.MarkedComment);
+            List<BDLinkedNote> tDosageUnmarked = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.UnmarkedComment);
 
             Guid tDosageNotePageGuid = generatePageForLinkedNotes(pContext, pTherapy.Uuid, BDConstants.BDNodeType.BDTherapy, tDosageInline, tDosageMarked, tDosageUnmarked);
 
@@ -365,7 +387,7 @@ namespace BDEditor.Classes
                 if (pTherapy.dosage.Length > 0)
                     therapyHtml.AppendFormat(@"<td><a href=""{0}"">{1}</a></td>", tDosageNotePageGuid, tDosage.Trim());
                 else
-                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See notes.</a></td>", tDosageNotePageGuid);
+                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See allNotes.</a></td>", tDosageNotePageGuid);
             }
             else
                 therapyHtml.AppendFormat(@"<td>{0}</td>", tDosage.Trim());
@@ -385,9 +407,9 @@ namespace BDEditor.Classes
                 tDuration = pTherapy.duration;
             }
 
-            List<BDLinkedNote> tDurationInline = retrieveNotesForParentAndPropertyForType(pContext, pTherapy.Uuid, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.Inline);
-            List<BDLinkedNote> tDurationMarked = retrieveNotesForParentAndPropertyForType(pContext, pTherapy.Uuid, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> tDurationUnmarked = retrieveNotesForParentAndPropertyForType(pContext, pTherapy.Uuid, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.UnmarkedComment);
+            List<BDLinkedNote> tDurationInline = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, pTherapy.Uuid, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.Inline);
+            List<BDLinkedNote> tDurationMarked = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, pTherapy.Uuid, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.MarkedComment);
+            List<BDLinkedNote> tDurationUnmarked = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, pTherapy.Uuid, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.UnmarkedComment);
 
             Guid tDurationNotePageGuid = generatePageForLinkedNotes(pContext, pTherapy.Uuid, BDConstants.BDNodeType.BDTherapy, tDurationInline, tDurationMarked, tDurationUnmarked);
 
@@ -396,7 +418,7 @@ namespace BDEditor.Classes
                 if (pTherapy.duration.Length > 0)
                     therapyHtml.AppendFormat(@"<td><a href=""{0}"">{1}</a></td>", tDurationNotePageGuid, tDuration.Trim());
                 else
-                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See notes.</a></td>", tDurationNotePageGuid);
+                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See allNotes.</a></td>", tDurationNotePageGuid);
             }
             else
                 therapyHtml.AppendFormat(@"<td>{0}</td>", tDuration.Trim());
@@ -484,19 +506,24 @@ namespace BDEditor.Classes
                 }
             }
 
-            Guid returnGuid = Guid.Empty;
-            if (noteHtml.Length > EMPTY_PARAGRAPH)
+            Guid returnGuid = generatePageForLinkedNotes(pContext, pParentId, pParentType, noteHtml.ToString());
+            return returnGuid;
+        }
+
+        private Guid generatePageForLinkedNotes(Entities pContext, Guid pParentId, BDConstants.BDNodeType pParentType, string pPageHtml)
+        {
+            if (pPageHtml.Length > EMPTY_PARAGRAPH)
             {
                 BDHtmlPage notePage = BDHtmlPage.CreateHtmlPage(pContext);
                 notePage.displayParentId = pParentId;
                 notePage.displayParentType = (int)pParentType;
-                notePage.documentText = topHtml + noteHtml.ToString() + bottomHtml;
+                notePage.documentText = topHtml + pPageHtml + bottomHtml;
 
                 BDHtmlPage.Save(pContext, notePage);
 
-                returnGuid = notePage.Uuid;
+                return notePage.Uuid;
             }
-            return returnGuid;
+            return Guid.Empty;
         }
 
         private bool notesListHasContent(Entities pContext, List<BDLinkedNote> pNotes)
@@ -522,6 +549,44 @@ namespace BDEditor.Classes
                     noteString.Append(note.documentText);
             }
             return noteString.ToString();
+        }
+
+        private void processTextForInternalLinks(Entities pContext, BDHtmlPage pPage, List<Guid>pPageGuids)
+        {
+            string compareString = @"<a href=";
+            StringBuilder newString = new StringBuilder();
+            if (pPage.documentText.Contains(compareString))
+            {
+                int startPosition = 0;
+
+                while (startPosition < pPage.documentText.Length)
+                {
+                    // find the anchor tag
+                    int tagLocation = pPage.documentText.IndexOf(compareString, startPosition);
+                    if (tagLocation >= 0)
+                    {
+                        // inspect the 'guid'
+                        int guidStart = tagLocation + 1 + compareString.Length;
+                        string guidString = pPage.documentText.Substring(guidStart, 36);
+                        if (!guidString.Contains("http://www"))
+                        {
+                            Guid anchorGuid = new Guid(guidString);
+                            // if the guid exists as an html page, dont change it...
+                            if (!pPageGuids.Contains(anchorGuid))
+                            {
+                                // otherwise...   look up the guid as the property name in the linked note association table
+                                Guid linkGuid = BDHtmlPage.RetrievePageIdForAnchorId(pContext, guidString);
+                                string newText = pPage.documentText.Replace(anchorGuid.ToString(), linkGuid.ToString());
+                                pPage.documentText = newText;
+                                BDHtmlPage.Save(pContext, pPage);
+                            }
+                        }
+                        startPosition = guidStart;
+                    }
+                    else
+                        startPosition = pPage.documentText.Length;
+                }
+            }
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using BDEditor.DataModel;
 using BDEditor.Classes;
+using TXTextControl;
 
 namespace BDEditor.Views
 {
@@ -19,7 +20,11 @@ namespace BDEditor.Views
         private BDConstants.BDNodeType parentType;
         private string contextPropertyName;
         private bool saveOnLeave = true;
+        private string linkValue = string.Empty;
         private BDLinkedNote currentLinkedNote;
+        private BDLinkedNoteView linkView;
+        private bool newLinkSaved = false;
+        public event EventHandler NotesChanged;
 
         public event EventHandler SaveAttemptWithoutParent;
 
@@ -31,7 +36,7 @@ namespace BDEditor.Views
         public BDLinkedNote CurrentLinkedNote
         {
             get { return currentLinkedNote; }
-            set { currentLinkedNote = value;  }
+            set { currentLinkedNote = value; }
         }
 
         public bool SaveOnLeave
@@ -60,6 +65,61 @@ namespace BDEditor.Views
         public void AssignScopeId(Guid? pScopeId)
         {
             scopeId = pScopeId;
+        }
+
+        private void notesChanged_Action(object sender, EventArgs e)
+        {
+            OnNotesChanged(new EventArgs());
+        }
+
+        protected virtual void OnNotesChanged(EventArgs e)
+        {
+            if (this.linkValue.Length > 0 && this.linkView.HasNewLink)
+            {
+                // if this was called as a result of clicking the button (as opposed to clicking an existing link) insert new hypertextlink
+                TXTextControl.HypertextLink newLink = new HypertextLink(textControl.Selection.Text, this.linkValue);
+                textControl.Selection.Text = string.Empty;
+                textControl.HypertextLinks.Add(newLink);
+
+                // highlight the link text 
+                textControl.Selection.Start = newLink.Start - 1;
+                textControl.Selection.Length = newLink.Length;
+                textControl.Selection.ForeColor = Color.Blue;
+                textControl.Selection.Underline = TXTextControl.FontUnderlineStyle.Single;
+
+                // reset the caret position and turn off color / underline
+                // (color and underline tags get removed anyway when we clean the html on save)
+                int newPosition = newLink.Start + newLink.Length;
+                textControl.Select(newPosition + 1, 0);
+                textControl.Selection.ForeColor = Color.Black;
+                textControl.Selection.Underline = TXTextControl.FontUnderlineStyle.None;
+            }
+
+            int currentLocation = textControl.Selection.Start;
+            int currentLength = textControl.Selection.Length;
+
+            // re-evaluate all the hypertextlinks to see if they are valid.
+            textControl.SelectAll();
+            for (int i = 0; i < textControl.HypertextLinks.Count; i++)
+            {
+                HypertextLink h = textControl.HypertextLinks.GetItem(i);
+                if (null != h)
+                {
+                    BDLinkedNoteAssociation na = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, currentLinkedNote.Uuid, h.Target);
+                    if (null == na)
+                    {
+                        textControl.Select(h.Start - 1, h.Length);
+                        textControl.Selection.ForeColor = Color.Black;
+                        textControl.Selection.Underline = TXTextControl.FontUnderlineStyle.None;
+                        textControl.HypertextLinks.Remove(h, true);
+                    }
+                }
+            }
+            // reset caret back to user's location
+            textControl.Select(currentLocation, 0);
+            Save();
+
+            if (null != NotesChanged) { NotesChanged(this, e); }
         }
 
         private void BDLinkedNoteControl_Load(object sender, EventArgs e)
@@ -91,16 +151,16 @@ namespace BDEditor.Views
             }
             else
             {
-                if ((null == currentLinkedNote) && (textControl.Text != string.Empty)) 
+                if ((null == currentLinkedNote) && !string.IsNullOrEmpty(textControl.Text))
                 {
                     CreateCurrentObject();
                 }
-                if (null != currentLinkedNote)
+                if (null != currentLinkedNote && !string.IsNullOrEmpty(textControl.Text))
                 {
                     TXTextControl.SaveSettings ss = new TXTextControl.SaveSettings();
-                    
+
                     string plainText;
-                    textControl.Save(out plainText, TXTextControl.StringStreamType.PlainText,ss);
+                    textControl.Save(out plainText, TXTextControl.StringStreamType.PlainText, ss);
                     string htmltext;
                     textControl.Save(out htmltext, TXTextControl.StringStreamType.HTMLFormat, ss);
 
@@ -114,6 +174,7 @@ namespace BDEditor.Views
                             currentLinkedNote.previewText = plainText;
                     }
                     BDLinkedNote.Save(dataContext, currentLinkedNote);
+                    result = true;
                 }
             }
             return result;
@@ -145,7 +206,7 @@ namespace BDEditor.Views
                     BDLinkedNoteAssociation association = BDLinkedNoteAssociation.CreateLinkedNoteAssociation(dataContext);
                     association.linkedNoteId = currentLinkedNote.uuid;
                     association.parentId = parentId;
-                    association.parentType =(int) parentType;
+                    association.parentType = (int)parentType;
                     association.parentKeyPropertyName = contextPropertyName;
                     association.linkedNoteType = 0;
                     //currentLinkedNote.linkedNoteAssociationId = association.uuid;
@@ -176,7 +237,7 @@ namespace BDEditor.Views
         }
 
         #endregion
-        
+
         #region text cleaning / manipulation
         /// <summary>
         /// Get the HTML body from the text control contents
@@ -258,7 +319,7 @@ namespace BDEditor.Views
             {
                 string endTag = "</span>";
                 int referenceIndex = pText.IndexOf(pTag);
-                int tagStartIndex = pText.IndexOf(endTag,referenceIndex);
+                int tagStartIndex = pText.IndexOf(endTag, referenceIndex);
 
                 string cleanString = pText.Remove(tagStartIndex, endTag.Length);
                 cleanString = cleanString.Replace(pTag, "");
@@ -369,7 +430,7 @@ namespace BDEditor.Views
 
         private void textControl_KeyUp(object sender, KeyEventArgs e)
         {
-           // enable 'select all' so user can change font in one operation
+            // enable 'select all' so user can change font in one operation
             if (e.KeyData == (Keys.Control | Keys.A))
             {
                 textControl.SelectAll();
@@ -380,13 +441,13 @@ namespace BDEditor.Views
 
                 ReformatTextControl(textControl);
             }
-            else if(e.KeyData == (Keys.Control | Keys.B))
+            else if (e.KeyData == (Keys.Control | Keys.B))
             {
                 textControl.Selection.Bold = !textControl.Selection.Bold;
             }
             else if (e.KeyData == (Keys.Control | Keys.U))
             {
-                if(textControl.Selection.Underline != TXTextControl.FontUnderlineStyle.Single)
+                if (textControl.Selection.Underline != TXTextControl.FontUnderlineStyle.Single)
                     textControl.Selection.Underline = TXTextControl.FontUnderlineStyle.Single;
             }
             else if (e.KeyData == (Keys.Control | Keys.Alt | Keys.R))
@@ -425,7 +486,7 @@ namespace BDEditor.Views
         {
             textControl.Selection.Text = "°";
         }
-        
+
         private void toolStripButton6_Click(object sender, EventArgs e)
         {
             // superscript: move baseline of text up, reduce fontsize.
@@ -450,9 +511,41 @@ namespace BDEditor.Views
         {
             textControl.Selection.Text = "µ";
         }
+
+        private void toolStripButton10_Click(object sender, EventArgs e)
+        {
+            if (textControl.Selection.Length > 0)
+                openLinkEditor(string.Empty);
+            else
+                MessageBox.Show("Please select the text to be linked.", "No Text Selected");
+        }
+
+        private void textControl_HypertextLinkClicked(object sender, TXTextControl.HypertextLinkEventArgs e)
+        {
+            TXTextControl.HypertextLink link = textControl.HypertextLinks.GetItem();
+            if (!link.Target.Contains(@"http://"))
+                openLinkEditor(link.Target);
+        }
         #endregion
 
+        private void openLinkEditor(string pProperty)
+        {
+            Save();
 
+            this.linkValue = (pProperty.Length > 0) ? pProperty : Guid.NewGuid().ToString();
+            bool linkExists = (pProperty.Length > 0) ? true : false;
 
+            linkView = new BDLinkedNoteView();
+            linkView.AssignParentInfo(currentLinkedNote.Uuid, BDConstants.BDNodeType.BDLinkedNote);
+            linkView.AssignDataContext(dataContext);
+            linkView.AssignScopeId(scopeId);
+            linkView.AssignContextPropertyName(linkValue);
+
+            linkView.NotesChanged += new EventHandler(notesChanged_Action);
+            linkView.ShowDialog(this);
+            linkView.NotesChanged -= new EventHandler(notesChanged_Action);
+
+            this.linkValue = string.Empty;
+        }
     }
 }

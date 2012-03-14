@@ -171,7 +171,7 @@ namespace BDEditor.DataModel
         }
 
         ///// <summary>
-        ///// Get all linked notes with the specified association ID
+        ///// Get all linked allNotes with the specified association ID
         ///// </summary>
         ///// <param name="pContext"></param>
         ///// <param name="pParentId"></param>
@@ -208,6 +208,17 @@ namespace BDEditor.DataModel
                                                  select entry);
                 returnList = entries.ToList<BDLinkedNote>();
             }
+            return returnList;
+        }
+
+        public static List<BDLinkedNote> RetrieveLinkedNotesWithLinkedNoteParentType(Entities pContext)
+        {
+            List<BDLinkedNote> returnList = new List<BDLinkedNote>();
+            IQueryable<BDLinkedNote> entries = (from assn in pContext.BDLinkedNoteAssociations
+                                            from entry in pContext.BDLinkedNotes
+                                            where assn.parentType == 11 && assn.linkedNoteId == entry.uuid
+                                            select entry);
+            returnList = entries.ToList<BDLinkedNote>();
             return returnList;
         }
 

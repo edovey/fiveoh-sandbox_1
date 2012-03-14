@@ -46,6 +46,8 @@
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton10 = new System.Windows.Forms.ToolStripButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
@@ -54,7 +56,9 @@
             // 
             // textControl
             // 
+            this.textControl.BackgroundStyle = TXTextControl.BackgroundStyle.ClassicColors;
             this.textControl.BorderStyle = TXTextControl.BorderStyle.None;
+            this.textControl.ButtonBar = this.buttonBar;
             this.textControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textControl.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textControl.IsSpellCheckingEnabled = true;
@@ -63,8 +67,10 @@
             this.textControl.Padding = new System.Windows.Forms.Padding(3);
             this.textControl.PageSize.Height = 300D;
             this.textControl.PageSize.Width = 790D;
+            this.textControl.SelectionViewMode = TXTextControl.SelectionViewMode.Classic;
             this.textControl.Size = new System.Drawing.Size(789, 188);
             this.textControl.TabIndex = 0;
+            this.textControl.HypertextLinkClicked += new TXTextControl.HypertextLinkEventHandler(this.textControl_HypertextLinkClicked);
             this.textControl.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textControl_KeyUp);
             // 
             // buttonBar
@@ -169,10 +175,12 @@
             this.toolStripButton6,
             this.toolStripButton7,
             this.toolStripSeparator2,
-            this.toolStripButton8});
+            this.toolStripButton8,
+            this.toolStripSeparator3,
+            this.toolStripButton10});
             this.toolStrip1.Location = new System.Drawing.Point(122, 2);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(320, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(360, 25);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -248,7 +256,7 @@
             this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton6.Name = "toolStripButton6";
-            this.toolStripButton6.Size = new System.Drawing.Size(65, 22);
+            this.toolStripButton6.Size = new System.Drawing.Size(70, 22);
             this.toolStripButton6.Text = "Superscript";
             this.toolStripButton6.ToolTipText = "Superscript selected text";
             this.toolStripButton6.Click += new System.EventHandler(this.toolStripButton6_Click);
@@ -258,7 +266,7 @@
             this.toolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton7.Name = "toolStripButton7";
-            this.toolStripButton7.Size = new System.Drawing.Size(55, 22);
+            this.toolStripButton7.Size = new System.Drawing.Size(60, 22);
             this.toolStripButton7.Text = "Subscript";
             this.toolStripButton7.ToolTipText = "Subscript selected text";
             this.toolStripButton7.Click += new System.EventHandler(this.toolStripButton7_Click);
@@ -273,10 +281,26 @@
             this.toolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton8.Name = "toolStripButton8";
-            this.toolStripButton8.Size = new System.Drawing.Size(38, 22);
+            this.toolStripButton8.Size = new System.Drawing.Size(39, 22);
             this.toolStripButton8.Text = "Paste";
             this.toolStripButton8.ToolTipText = "Paste Clipboard contents";
             this.toolStripButton8.Click += new System.EventHandler(this.toolStripButton8_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton10
+            // 
+            this.toolStripButton10.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton10.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toolStripButton10.Image = global::BDEditor.Properties.Resources.link_16;
+            this.toolStripButton10.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton10.Name = "toolStripButton10";
+            this.toolStripButton10.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton10.Text = "New Link";
+            this.toolStripButton10.Click += new System.EventHandler(this.toolStripButton10_Click);
             // 
             // panel2
             // 
@@ -338,6 +362,8 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.ToolStripButton toolStripButton9;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton toolStripButton10;
 
     }
 }

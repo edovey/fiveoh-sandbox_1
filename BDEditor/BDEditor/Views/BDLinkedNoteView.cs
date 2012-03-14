@@ -19,6 +19,7 @@ namespace BDEditor.Views
         private Guid? parentId;
         private Guid? scopeId;
         private bool isRendering = false;
+        private bool hasNewLink = false;
         private BDLinkedNoteAssociation existingAssociation;
         private List<BDLinkedNoteAssociation> existingLinksList;
         private List<BDLinkedNote> existingNotesInScopeList;
@@ -29,6 +30,13 @@ namespace BDEditor.Views
         {
             if (null != NotesChanged) { NotesChanged(this, e); }
         }
+
+        public bool HasNewLink
+        {
+            get { return hasNewLink; }
+            set { }
+        }
+
 
         public BDLinkedNoteView()
         {
@@ -102,7 +110,7 @@ namespace BDEditor.Views
                 for (int i = 0; i < existingNotesInScopeList.Count; i++)
                 {
                     bool isCurrent = false;
-                    if(null != bdLinkedNoteControl1.CurrentLinkedNote)
+                    if (null != bdLinkedNoteControl1.CurrentLinkedNote)
                     {
                         isCurrent = (existingNotesInScopeList[i].uuid == bdLinkedNoteControl1.CurrentLinkedNote.uuid);
                     }
@@ -137,18 +145,32 @@ namespace BDEditor.Views
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            bdLinkedNoteControl1.Save();
-            
-            if (null == existingAssociation)
-                existingAssociation = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, parentId, contextPropertyName);
+            hasNewLink = false;
 
-            if (null != existingAssociation)
+            if (bdLinkedNoteControl1.Save())
             {
-                existingAssociation.linkedNoteType = (int)Enum.Parse(typeof(BDConstants.LinkedNoteType), this.linkedNoteTypeCombo.GetItemText(this.linkedNoteTypeCombo.SelectedItem));
-                dataContext.SaveChanges();
+                if (null == existingAssociation)
+                    existingAssociation = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, parentId, contextPropertyName);
+
+                if (null != existingAssociation)
+                {
+                    existingAssociation.linkedNoteType = (int)Enum.Parse(typeof(BDConstants.LinkedNoteType), this.linkedNoteTypeCombo.GetItemText(this.linkedNoteTypeCombo.SelectedItem));
+                    dataContext.SaveChanges();
+                }
+                hasNewLink = true;
+            }
+            else
+            {
+                if (null != bdLinkedNoteControl1.CurrentLinkedNote)
+                {
+                    // DELETE linked notes & associations if they exist
+                    BDLinkedNote.Delete(dataContext, bdLinkedNoteControl1.CurrentLinkedNote, true);
+                    dataContext.SaveChanges();
+                }
             }
 
-            this.Close();
+            OnNotesChanged(new EventArgs());
+           this.Close();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -172,14 +194,14 @@ namespace BDEditor.Views
                     RefreshListOfScopeNotes();
                     break;
                 default:
-                    
+
                     break;
             }
         }
 
         private void linkedNoteView_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if(!isRendering)
+            if (!isRendering)
                 e.NewValue = e.CurrentValue;
         }
 
@@ -199,7 +221,7 @@ namespace BDEditor.Views
                 }
 
                 this.existingAssociation.linkedNoteId = selectedNote.uuid;
-                
+
                 BDLinkedNoteAssociation.Save(dataContext, this.existingAssociation);
 
                 DisplayLinkedNote(this.existingAssociation, true);
@@ -267,7 +289,7 @@ namespace BDEditor.Views
 
         private void linkedNoteType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(null != existingAssociation)
+            if (null != existingAssociation)
                 existingAssociation.linkedNoteType = (int)Enum.Parse(typeof(BDConstants.LinkedNoteType), this.linkedNoteTypeCombo.GetItemText(this.linkedNoteTypeCombo.SelectedItem));
         }
 

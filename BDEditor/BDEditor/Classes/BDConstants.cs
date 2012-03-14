@@ -35,7 +35,10 @@ namespace BDEditor.Classes
             BDTherapyGroup = 9,
             //BDTherapy class
             [Description("Therapy")]
-            BDTherapy = 10
+            BDTherapy = 10,
+            // BDLinkedNote class
+            [Description("Linked Note")]
+            BDLinkedNote = 11
         }
 
         public enum LayoutVariantType

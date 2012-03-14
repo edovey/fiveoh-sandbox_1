@@ -148,6 +148,7 @@
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Location = new System.Drawing.Point(723, 146);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
@@ -248,6 +249,7 @@
             this.Controls.Add(this.headerPanel);
             this.Controls.Add(this.panel1);
             this.Name = "BDLinkedNoteView";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Linked Note Editor";
             this.Load += new System.EventHandler(this.BDLinkedNoteView_Load);
             this.panel1.ResumeLayout(false);

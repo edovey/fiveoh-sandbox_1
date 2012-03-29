@@ -221,18 +221,21 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
-            textControl.Text = @"";
+            if (textControl.Visible)
+            {
+                textControl.Text = @"";
 
-            if (currentLinkedNote != null && currentLinkedNote.documentText != null && currentLinkedNote.documentText.Length > 0)
-            {
-                if (currentLinkedNote.documentText.Contains("<"))
-                    textControl.Append(currentLinkedNote.documentText, TXTextControl.StringStreamType.HTMLFormat, TXTextControl.AppendSettings.None);
+                if (currentLinkedNote != null && currentLinkedNote.documentText != null && currentLinkedNote.documentText.Length > 0)
+                {
+                    if (currentLinkedNote.documentText.Contains("<"))
+                        textControl.Append(currentLinkedNote.documentText, TXTextControl.StringStreamType.HTMLFormat, TXTextControl.AppendSettings.None);
+                    else
+                        textControl.Append(currentLinkedNote.documentText, TXTextControl.StringStreamType.RichTextFormat, TXTextControl.AppendSettings.None);
+                }
                 else
-                    textControl.Append(currentLinkedNote.documentText, TXTextControl.StringStreamType.RichTextFormat, TXTextControl.AppendSettings.None);
-            }
-            else
-            {
-                textControl.Append(@"", TXTextControl.StringStreamType.HTMLFormat, TXTextControl.AppendSettings.None);
+                {
+                    textControl.Append(@"", TXTextControl.StringStreamType.HTMLFormat, TXTextControl.AppendSettings.None);
+                }
             }
         }
 

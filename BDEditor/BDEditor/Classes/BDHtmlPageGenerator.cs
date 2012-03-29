@@ -19,6 +19,8 @@ namespace BDEditor.Classes
         string previousTherapyDosage = string.Empty;
         string previousTherapyDuration = string.Empty;
         Guid previousTherapyId = Guid.Empty;
+        bool therapiesHaveDosage = false;
+        bool therapiesHaveDuration = false;
 
         public void Generate()
         {
@@ -154,20 +156,43 @@ namespace BDEditor.Classes
                         {
                             bodyHTML.Append(buildTherapyGroupHtml(pContext, group));
                             bodyHTML.Append(@"<table>");
-                            bodyHTML.Append(@"<tr><th>Therapy</th><th>Dosage</th><th>Duration</th></tr>");
 
+                            StringBuilder therapyHTML = new StringBuilder();
+                            therapiesHaveDosage = false;
+                            therapiesHaveDuration = false;
                             foreach (BDTherapy therapy in therapies)
                             {
-                                bodyHTML.Append(buildTherapyHtml(pContext, therapy));
+                                therapyHTML.Append(buildTherapyHtml(pContext, therapy));
 
-                                if (therapy.Name != null && therapy.Name.Length > 0 && therapy.nameSameAsPrevious == false)
+                                if (!string.IsNullOrEmpty(therapy.Name) && therapy.nameSameAsPrevious == false)
                                     previousTherapyName = therapy.Name;
-                                if (therapy.dosage != null && therapy.dosage.Length > 0 && therapy.dosageSameAsPrevious == false)
-                                    previousTherapyDosage = therapy.dosage;
-                                if (therapy.duration != null && therapy.duration.Length > 0 && therapy.dosageSameAsPrevious == false)
-                                    previousTherapyDosage = therapy.dosage;
-
+                                if (!string.IsNullOrEmpty(therapy.dosage)) 
+                                {
+                                    if(therapy.dosageSameAsPrevious == false)
+                                        previousTherapyDosage = therapy.dosage;
+                                    therapiesHaveDosage = true;
+                                }
+                                if (!string.IsNullOrEmpty(therapy.duration))
+                                {
+                                    if(therapy.dosageSameAsPrevious == false)
+                                        previousTherapyDosage = therapy.dosage;
+                                    therapiesHaveDuration = true;
+                                }
                             }
+
+                            bodyHTML.Append(@"<tr><th>Therapy</th>");
+                            if(therapiesHaveDosage)
+                                bodyHTML.Append(@"<th>Dosage</th>");
+                            else
+                                bodyHTML.Append(@"<th></th>");
+                            if(therapiesHaveDuration)
+                                bodyHTML.Append(@"<th>Duration</th>");
+                            else
+                                bodyHTML.Append(@"<th></th>");
+
+                            bodyHTML.Append(@"</tr>");
+
+                            bodyHTML.Append(therapyHTML);
                             bodyHTML.Append(@"</table>");
                         }
                     }
@@ -296,10 +321,10 @@ namespace BDEditor.Classes
             // MAY NEED THIS if we decide to generate a page for the allNotes rather than putting them in-line.
             //if (notesListHasContent(pContext, pNotes))
             //{
-            //    Guid noteGuid = generatePageForLinkedNotes(pContext, pTherapyGroup.Uuid, pTherapyGroup.NodeType, pNotes, new List<BDLinkedNote>(), new List<BDLinkedNote>());
+            //    Guid noteGuid = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.NodeType, pNotes, new List<BDLinkedNote>(), new List<BDLinkedNote>());
             //    therapyGroupHtml.AppendFormat(@"<h4><a href""{0}"">{1}</a></h4>", noteGuid, tgName);
             //}
-            // else if (pTherapyGroup.Name.Length > 0)
+            // else if (pNode.Name.Length > 0)
 
             if (pTherapyGroup.Name.Length > 0)
                 therapyGroupHtml.AppendFormat(@"<h4>{0}</h4>", pTherapyGroup.Name);
@@ -351,7 +376,7 @@ namespace BDEditor.Classes
                 if (tName.Length > 0)
                     therapyHtml.AppendFormat(@"<a href=""{0}""><b>{1}</b></a>", tNameNotePageGuid, tName);
                 else
-                    therapyHtml.AppendFormat(@"<a href=""{0}""><b>See allNotes.</b></a>", tNameNotePageGuid);
+                    therapyHtml.AppendFormat(@"<a href=""{0}""><b>See Notes.</b></a>", tNameNotePageGuid);
             }
             else
                 therapyHtml.AppendFormat(@"<b>{0}</b>", tName);
@@ -418,7 +443,7 @@ namespace BDEditor.Classes
                 if (pTherapy.duration.Length > 0)
                     therapyHtml.AppendFormat(@"<td><a href=""{0}"">{1}</a></td>", tDurationNotePageGuid, tDuration.Trim());
                 else
-                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See allNotes.</a></td>", tDurationNotePageGuid);
+                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See Notes.</a></td>", tDurationNotePageGuid);
             }
             else
                 therapyHtml.AppendFormat(@"<td>{0}</td>", tDuration.Trim());

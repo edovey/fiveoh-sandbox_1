@@ -113,29 +113,31 @@ namespace BDEditor.Views
             deleteToolStripMenuItem.Text = string.Format("Delete {0}: {1}", nodeTypeName, pBDNode.Name);
 
             List<BDConstants.BDNodeType> childTypes = BDFabrik.ChildTypeDefinitionListForNode(pBDNode);
-            if (childTypes.Count == 1)
+            if(null != childTypes)
             {
-                string childNodeTypeName = BDUtilities.GetEnumDescription(childTypes[0]);
-                addChildNodeToolStripMenuItem.Text = string.Format("Add {0}", childNodeTypeName);
-                addChildNodeToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, childTypes[0], pTreeNode);
-            }
-            else if (childTypes.Count > 1)
-            {
-                addChildNodeToolStripMenuItem.Text = string.Format("Add");
-
-                for (int idx = 0; idx < childTypes.Count; idx++)
+                if (childTypes.Count == 1)
                 {
-                    ToolStripMenuItem item = new ToolStripMenuItem();
-
-                    item.Image = global::BDEditor.Properties.Resources.add_16x16;
-                    item.Name = string.Format("dynamicAddChild{0}", idx);
-                    item.Size = new System.Drawing.Size(179, 22);
-                    item.Text = string.Format("&Add {0}", BDUtilities.GetEnumDescription(childTypes[idx]));
-                    item.Tag = new BDNodeWrapper(pBDNode, childTypes[idx], pTreeNode);
-                    item.Click += new System.EventHandler(this.addChildNode_Click);
-                    addChildNodeToolStripMenuItem.DropDownItems.Add(item);
+                    string childNodeTypeName = BDUtilities.GetEnumDescription(childTypes[0]);
+                    addChildNodeToolStripMenuItem.Text = string.Format("Add {0}", childNodeTypeName);
+                    addChildNodeToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, childTypes[0], pTreeNode);
                 }
+                else if (childTypes.Count > 1)
+                {
+                    addChildNodeToolStripMenuItem.Text = string.Format("Add");
 
+                    for (int idx = 0; idx < childTypes.Count; idx++)
+                    {
+                        ToolStripMenuItem item = new ToolStripMenuItem();
+
+                        item.Image = global::BDEditor.Properties.Resources.add_16x16;
+                        item.Name = string.Format("dynamicAddChild{0}", idx);
+                        item.Size = new System.Drawing.Size(179, 22);
+                        item.Text = string.Format("&Add {0}", BDUtilities.GetEnumDescription(childTypes[idx]));
+                        item.Tag = new BDNodeWrapper(pBDNode, childTypes[idx], pTreeNode);
+                        item.Click += new System.EventHandler(this.addChildNode_Click);
+                        addChildNodeToolStripMenuItem.DropDownItems.Add(item);
+                    }
+                }
             }
         }
 
@@ -249,6 +251,7 @@ namespace BDEditor.Views
                 }
             } 
         }
+        
         private void sectionTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
             switch (e.Action)
@@ -273,7 +276,7 @@ namespace BDEditor.Views
 
             foreach (Control ctrl in splitContainer1.Panel2.Controls)
             {
-                BDNodeControl nodeCtrl = ctrl as BDNodeControl;
+                BDNodeWithOverviewControl nodeCtrl = ctrl as BDNodeWithOverviewControl;
                 if (null != nodeCtrl)
                 {
                     nodeCtrl.NameChanged -= new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
@@ -302,8 +305,8 @@ namespace BDEditor.Views
                             TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
                             graftTreeNode(selectedNode, childTreeNode);
 
-                            BDNodeControl control_tr01 = null;
-                            control_tr01 = new BDNodeControl(dataContext, node);
+                            BDNodeWithOverviewControl control_tr01 = null;
+                            control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
                             control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);
                             control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
                             control_tr01.Dock = DockStyle.Fill;
@@ -320,8 +323,8 @@ namespace BDEditor.Views
                             TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
                             graftTreeNode(selectedNode, childTreeNode);
 
-                            BDNodeControl control_tr01 = null;
-                            control_tr01 = new BDNodeControl(dataContext, node);
+                            BDNodeWithOverviewControl control_tr01 = null;
+                            control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
                             control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);
                             control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
                             control_tr01.Dock = DockStyle.Fill;
@@ -338,8 +341,8 @@ namespace BDEditor.Views
                             TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
                             graftTreeNode(selectedNode, childTreeNode);
 
-                            BDNodeControl control_tr01 = null;
-                            control_tr01 = new BDNodeControl(dataContext, node);
+                            BDNodeWithOverviewControl control_tr01 = null;
+                            control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
                             control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);
                             control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
                             control_tr01.Dock = DockStyle.Fill;
@@ -356,8 +359,8 @@ namespace BDEditor.Views
                             TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
                             graftTreeNode(selectedNode, childTreeNode);
 
-                            BDNodeControl control_tr01 = null;
-                            control_tr01 = new BDNodeControl(dataContext, node);
+                            BDNodeWithOverviewControl control_tr01 = null;
+                            control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
                             control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);
                             control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
                             control_tr01.Dock = DockStyle.Fill;
@@ -377,6 +380,22 @@ namespace BDEditor.Views
                             control_tr01.CurrentPresentation = presentation;
                             control_tr01.AssignScopeId((null != presentation) ? presentation.Uuid : Guid.Empty);
                             control_tr01.AssignParentInfo(presentation.ParentId, presentation.ParentType);
+                            control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                            splitContainer1.Panel2.Controls.Add(control_tr01);
+                            control_tr01.RefreshLayout();
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDTable:
+                    switch (node.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation02:
+
+                            BDTableControl control_tr01 = null;
+                            control_tr01 = new BDTableControl(dataContext, node);
+                            control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);
+                            control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
+                            control_tr01.Dock = DockStyle.Fill;
                             control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
                             splitContainer1.Panel2.Controls.Add(control_tr01);
                             control_tr01.RefreshLayout();

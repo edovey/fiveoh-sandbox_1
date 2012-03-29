@@ -116,6 +116,7 @@
             this.Controls.Add(this.maskedTextBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AuthenticationInputBox";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Sync Authentication";
             this.Load += new System.EventHandler(this.AuthenticationInputBox_Load);
             ((System.ComponentModel.ISupportInitialize)(this.flagRed)).EndInit();

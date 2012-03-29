@@ -172,6 +172,12 @@
     <Compile Include="Views\BDLinkedNoteView.Designer.cs">
       <DependentUpon>BDLinkedNoteView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\BDNodeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDNodeControl.Designer.cs">
+      <DependentUpon>BDNodeControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\BDNodeEditView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -186,11 +192,11 @@
     </Compile>
     <Compile Include="DataModel\BDTherapy.cs" />
     <Compile Include="DataModel\BDTherapyGroup.cs" />
-    <Compile Include="Views\BDNodeControl.cs">
+    <Compile Include="Views\BDNodeWithOverviewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\BDNodeControl.Designer.cs">
-      <DependentUpon>BDNodeControl.cs</DependentUpon>
+    <Compile Include="Views\BDNodeWithOverviewControl.Designer.cs">
+      <DependentUpon>BDNodeWithOverviewControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\BDEditView.cs">
       <SubType>Form</SubType>
@@ -215,6 +221,12 @@
     </Compile>
     <Compile Include="Views\BDSearchView.Designer.cs">
       <DependentUpon>BDSearchView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BDTableControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDTableControl.Designer.cs">
+      <DependentUpon>BDTableControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\BDTherapyControl.cs">
       <SubType>UserControl</SubType>
@@ -249,6 +261,9 @@
     <EmbeddedResource Include="Views\BDNodeControl.resx">
       <DependentUpon>BDNodeControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDNodeWithOverviewControl.resx">
+      <DependentUpon>BDNodeWithOverviewControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\BDEditView.resx">
       <DependentUpon>BDEditView.cs</DependentUpon>
     </EmbeddedResource>
@@ -272,6 +287,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDSearchView.resx">
       <DependentUpon>BDSearchView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDTableControl.resx">
+      <DependentUpon>BDTableControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDTherapyControl.resx">
       <DependentUpon>BDTherapyControl.cs</DependentUpon>
@@ -407,7 +425,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
+      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -48,6 +48,8 @@ namespace BDEditor.Classes
                     case BDConstants.BDNodeType.BDPresentation:
                     case BDConstants.BDNodeType.BDSection:
                     case BDConstants.BDNodeType.BDSubCategory:
+                    case BDConstants.BDNodeType.BDTable:
+                    case BDConstants.BDNodeType.BDTableRow:
                         BDNode node = pNode as BDNode;
                         BDNode.Save(pDataContext, node);
                         break;
@@ -131,6 +133,7 @@ namespace BDEditor.Classes
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                             definitionList.Add(BDConstants.BDNodeType.BDDisease);
+                            definitionList.Add(BDConstants.BDNodeType.BDTable);
                             //definitionList.Add(BDConstants.BDNodeType.BDSubCategory);  //Test of multiple child types in nav tree
                             break;
                         default:
@@ -202,6 +205,15 @@ namespace BDEditor.Classes
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         default:
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDTable:
+                    switch (layoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation02:
+                        default:
+                            definitionList.Add(BDConstants.BDNodeType.BDTableRow);
                             break;
                     }
                     break;
@@ -291,10 +303,23 @@ namespace BDEditor.Classes
                     entryList.AddRange(GetChildrenForParentIdAndChildType(pContext, pParent.Uuid, cType));
                 }
             }
+
+            entryList.Sort(delegate(IBDNode n1, IBDNode n2) 
+            {
+                if (n1.DisplayOrder == null && n2.DisplayOrder == null) return 0;
+
+                else if (n1.DisplayOrder != null && n2.DisplayOrder == null) return -1;
+
+                else if (n1.DisplayOrder == null && n2.DisplayOrder != null) return 1;
+                
+                else
+                    return (n1.DisplayOrder as IComparable).CompareTo(n2.DisplayOrder as IComparable);
+            });
+
             return entryList;
         }
 
-        public static List<IBDNode> GetChildrenForParentIdAndChildType(Entities pContext, Guid pParentId, BDConstants.BDNodeType pChildNodeType)
+        private static List<IBDNode> GetChildrenForParentIdAndChildType(Entities pContext, Guid pParentId, BDConstants.BDNodeType pChildNodeType)
         {
             List<IBDNode> entryList = new List<IBDNode>();
 
@@ -345,9 +370,11 @@ namespace BDEditor.Classes
             return entryList;
         }
 
-        public static List<IBDNode> RepairSiblingNodeDisplayOrder(Entities pContext, Guid pUuid, BDConstants.BDNodeType pNodeType)
+        public static List<IBDNode> RepairSiblingNodeDisplayOrder(Entities pContext, Guid pParentId, BDConstants.BDNodeType pNodeType)
         {
-            List<IBDNode> siblingList = GetChildrenForParentIdAndChildType(pContext, pUuid, pNodeType);
+            // List<IBDNode> siblingList = GetChildrenForParentIdAndChildType(pContext, pParentId, pNodeType);
+            BDNode parentNode = BDNode.RetrieveNodeWithId(pContext, pParentId);
+            List<IBDNode> siblingList = GetChildrenForParent(pContext, parentNode);
             for (int idx = 0; idx < siblingList.Count; idx++)
             {
                 siblingList[idx].DisplayOrder = idx;
@@ -359,7 +386,7 @@ namespace BDEditor.Classes
 
         public static void ReorderNode(Entities pContext, IBDNode pNode, int pOffset)
         {
-            if (!((null != pNode) && (null != pNode.ParentId) && (null != pNode.DisplayOrder)) ) return;
+            if (!((null != pNode) && (null != pNode.ParentId) && (null != pNode.DisplayOrder))) return;
 
             List<IBDNode> siblingList = RepairSiblingNodeDisplayOrder(pContext, pNode.ParentId.Value, pNode.NodeType);
 
@@ -388,7 +415,6 @@ namespace BDEditor.Classes
             IBDNode result = null;
 
             // get the existing siblings to the new node
-
             List<IBDNode> siblingList = RepairSiblingNodeDisplayOrder(pContext, pParentNode.Uuid, pChildType);
 
             switch (pChildType)
@@ -409,6 +435,15 @@ namespace BDEditor.Classes
                     therapy.LayoutVariant = pParentNode.LayoutVariant;
                     therapy.Name = String.Format("New Therapy {0}", therapy.displayOrder + 1);
                     BDTherapy.Save(pContext, therapy);
+                    break;
+
+                case BDConstants.BDNodeType.BDTable:
+                    BDNode tableNode = BDNode.CreateNode(pContext, pChildType);
+                    tableNode.displayOrder = siblingList.Count;
+                    tableNode.SetParent(pParentNode);
+                    tableNode.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation02;
+                    tableNode.Name = String.Format("New {0}-{1}", BDUtilities.GetEnumDescription(pChildType), tableNode.displayOrder + 1);
+                    BDNode.Save(pContext, tableNode);
                     break;
 
                 default:

@@ -266,7 +266,7 @@
             this.contextMenuStripEvents.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addPathogenGroupToolStripMenuItem1});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(187, 26);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(187, 48);
             // 
             // addPathogenGroupToolStripMenuItem1
             // 

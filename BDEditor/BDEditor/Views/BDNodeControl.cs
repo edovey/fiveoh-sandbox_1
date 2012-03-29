@@ -15,12 +15,12 @@ namespace BDEditor.Views
     {
         private IBDNode currentNode;
         private Entities dataContext;
-        private BDLinkedNote overviewLinkedNote;
         private Guid? scopeId;
         private Guid? parentId;
         private BDConstants.BDNodeType parentType = BDConstants.BDNodeType.None;
         private BDConstants.LayoutVariantType defaultLayoutVariantType;
         private BDConstants.BDNodeType defaultNodeType;
+        private List<BDNodeWithOverviewControl> childNodes;
 
         public int? DisplayOrder { get; set; }
 
@@ -75,34 +75,15 @@ namespace BDEditor.Views
         {
             this.SuspendLayout();
 
-            bdLinkedNoteControl1.AssignDataContext(dataContext);
             if (currentNode == null)
             {
                 tbName.Text = @"";
-                overviewLinkedNote = null;
-
-                bdLinkedNoteControl1.CurrentLinkedNote = null;
-                bdLinkedNoteControl1.AssignParentInfo(null, defaultNodeType);
-                bdLinkedNoteControl1.AssignScopeId(scopeId);
-                bdLinkedNoteControl1.AssignContextPropertyName(BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
             }
             else
             {
                 tbName.Text = currentNode.Name;
-                bdLinkedNoteControl1.AssignParentInfo(currentNode.Uuid, currentNode.NodeType);
-                bdLinkedNoteControl1.AssignScopeId(scopeId);
-                bdLinkedNoteControl1.AssignContextPropertyName(BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
-
-                BDLinkedNoteAssociation association = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, currentNode.Uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
-                if (null != association)
-                {
-                    overviewLinkedNote = BDLinkedNote.GetLinkedNoteWithId(dataContext, association.linkedNoteId);
-                    bdLinkedNoteControl1.CurrentLinkedNote = overviewLinkedNote;
-                }
+                ShowLinksInUse(false);
             }
-            bdLinkedNoteControl1.RefreshLayout();
-
-            ShowLinksInUse(false);
             this.ResumeLayout();
 
         }
@@ -149,11 +130,21 @@ namespace BDEditor.Views
         private void BDNodeControl_Load(object sender, EventArgs e)
         {
             btnLinkedNote.Tag = BDNode.PROPERTYNAME_NAME;
-            lblNode.Text = BDUtilities.GetEnumDescription(defaultNodeType);
+            // lblNodeDetail.Text = BDUtilities.GetEnumDescription(defaultNodeType);
 
             if (null != currentNode)
             {
                 if(tbName.Text != currentNode.Name) tbName.Text = currentNode.Name;
+                if (currentNode.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation02)
+                {
+                    btnMenu.Enabled = true;
+                    btnMenu.Visible = true;
+                }
+                else
+                {
+                    btnMenu.Visible = false;
+                    btnMenu.Enabled = false;
+                }
             }
         }
 
@@ -192,8 +183,6 @@ namespace BDEditor.Views
                         OnNameChanged( new NodeEventArgs(dataContext, currentNode.Uuid, currentNode.Name));
                     }
 
-                    bdLinkedNoteControl1.Save();
-
                     switch (currentNode.NodeType)
                     {
                         case BDConstants.BDNodeType.BDTherapy:
@@ -214,6 +203,8 @@ namespace BDEditor.Views
                             BDNode node = currentNode as BDNode;
                             if (null != node)
                             {
+                                if (null == node.parentId || Guid.Empty == node.ParentId)
+                                    node.SetParent(parentType, parentId);
                                 BDNode.Save(dataContext, node);
                             }
                             break;
@@ -247,7 +238,7 @@ namespace BDEditor.Views
                             break;
                         case BDConstants.BDNodeType.BDTherapyGroup:
                             currentNode = BDTherapyGroup.CreateTherapyGroup(dataContext, parentId.Value);
-                            break;
+                            break; 
                         default:
                             currentNode = BDNode.CreateNode(this.dataContext, this.defaultNodeType);
                             break;
@@ -284,15 +275,13 @@ namespace BDEditor.Views
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentNode) ? this.currentNode.Uuid : Guid.Empty);
             btnLinkedNote.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnLinkedNote.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
             
-            // Note:  this control contains no children
-            /* if (pPropagateToChildren)
+            if (pPropagateToChildren)
             {
-                for (int idx = 0; idx < pathogenGroupControlList.Count; idx++)
+                for (int idx = 0; idx < childNodes.Count; idx++)
                 {
-                    pathogenGroupControlList[idx].ShowLinksInUse(true);
+                    childNodes[idx].ShowLinksInUse(true);
                 }
-            } */
-
+            }
         }
 
         #endregion
@@ -303,7 +292,7 @@ namespace BDEditor.Views
             pTextBox.Text = pTextBox.Text.Insert(pTextBox.SelectionStart, pText);
             pTextBox.SelectionStart = x + 1;
         }
-        
+
         private void notesChanged_Action(object sender, EventArgs e)
         {
             OnNotesChanged(new EventArgs());
@@ -330,6 +319,16 @@ namespace BDEditor.Views
                 string tag = control.Tag as string;
                 CreateLink(tag);
             }
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            OnItemAddRequested(new EventArgs());
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            OnItemDeleteRequested(new EventArgs());
         }
 
         private void btnReorderToPrevious_Click(object sender, EventArgs e)

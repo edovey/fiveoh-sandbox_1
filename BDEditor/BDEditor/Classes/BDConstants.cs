@@ -38,7 +38,13 @@ namespace BDEditor.Classes
             BDTherapy = 10,
             // BDLinkedNote class
             [Description("Linked Note")]
-            BDLinkedNote = 11
+            BDLinkedNote = 11,
+            // BDTable class
+            [Description("Table")]
+            BDTable = 12,
+            // BDRow class
+            [Description("Section")]
+            BDTableRow = 13
         }
 
         public enum LayoutVariantType
@@ -46,8 +52,8 @@ namespace BDEditor.Classes
             Undefined = -1,
             TreatmentRecommendation00 = 100, // Chapter
             TreatmentRecommendation01 = 101, // format specific section within chapter
-            TreatmentRecommendation02 = 102,
-            TreatmentRecommendation03 = 103,
+            TreatmentRecommendation02 = 102, // table 1 - wound management
+            TreatmentRecommendation03 = 103, // table 2 - wound classification
             TreatmentRecommendation04 = 104,
             TreatmentRecommendation05 = 105
         }

@@ -31,8 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.labelPathogenGroupName = new System.Windows.Forms.Label();
             this.panelTherapyGroups = new System.Windows.Forms.Panel();
-            this.panelpathogenGroups = new System.Windows.Forms.Panel();
-            this.btnPathogenGroupLink = new System.Windows.Forms.Button();
+            this.panelPathogenGroups = new System.Windows.Forms.Panel();
             this.labelPathogen = new System.Windows.Forms.Label();
             this.textBoxPathogenGroupName = new System.Windows.Forms.TextBox();
             this.contextMenuStripTextBox = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -42,6 +41,7 @@
             this.plusMinusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.degreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.µToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sOneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
@@ -49,19 +49,19 @@
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnMenu = new System.Windows.Forms.Button();
             this.contextMenuStripEvents = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.panelPathogens = new System.Windows.Forms.Panel();
+            this.btnPathogenGroupLink = new System.Windows.Forms.Button();
+            this.btnMenu = new System.Windows.Forms.Button();
             this.movePreviousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveNeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.addPathogenGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addPathogenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addTherapyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.deletePathogenGroupMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.panelPathogens = new System.Windows.Forms.Panel();
-            this.sOneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.panelpathogenGroups.SuspendLayout();
+            this.panelPathogenGroups.SuspendLayout();
             this.contextMenuStripTextBox.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
             this.SuspendLayout();
@@ -89,28 +89,18 @@
             this.panelTherapyGroups.Size = new System.Drawing.Size(870, 5);
             this.panelTherapyGroups.TabIndex = 5;
             // 
-            // panelpathogenGroups
+            // panelPathogenGroups
             // 
-            this.panelpathogenGroups.Controls.Add(this.btnPathogenGroupLink);
-            this.panelpathogenGroups.Controls.Add(this.labelPathogen);
-            this.panelpathogenGroups.Controls.Add(this.textBoxPathogenGroupName);
-            this.panelpathogenGroups.Controls.Add(this.btnMenu);
-            this.panelpathogenGroups.Controls.Add(this.labelPathogenGroupName);
-            this.panelpathogenGroups.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelpathogenGroups.Location = new System.Drawing.Point(0, 0);
-            this.panelpathogenGroups.Name = "panelpathogenGroups";
-            this.panelpathogenGroups.Size = new System.Drawing.Size(870, 74);
-            this.panelpathogenGroups.TabIndex = 7;
-            // 
-            // btnPathogenGroupLink
-            // 
-            this.btnPathogenGroupLink.Image = global::BDEditor.Properties.Resources.link_16;
-            this.btnPathogenGroupLink.Location = new System.Drawing.Point(520, 24);
-            this.btnPathogenGroupLink.Name = "btnPathogenGroupLink";
-            this.btnPathogenGroupLink.Size = new System.Drawing.Size(28, 28);
-            this.btnPathogenGroupLink.TabIndex = 20;
-            this.btnPathogenGroupLink.UseVisualStyleBackColor = true;
-            this.btnPathogenGroupLink.Click += new System.EventHandler(this.btnLink_Click);
+            this.panelPathogenGroups.Controls.Add(this.btnPathogenGroupLink);
+            this.panelPathogenGroups.Controls.Add(this.labelPathogen);
+            this.panelPathogenGroups.Controls.Add(this.textBoxPathogenGroupName);
+            this.panelPathogenGroups.Controls.Add(this.btnMenu);
+            this.panelPathogenGroups.Controls.Add(this.labelPathogenGroupName);
+            this.panelPathogenGroups.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelPathogenGroups.Location = new System.Drawing.Point(0, 0);
+            this.panelPathogenGroups.Name = "panelPathogenGroups";
+            this.panelPathogenGroups.Size = new System.Drawing.Size(870, 74);
+            this.panelPathogenGroups.TabIndex = 7;
             // 
             // labelPathogen
             // 
@@ -152,13 +142,13 @@
             this.deleteToolStripMenuItem});
             this.contextMenuStripTextBox.Name = "contextMenuStrip1";
             this.contextMenuStripTextBox.ShowImageMargin = false;
-            this.contextMenuStripTextBox.Size = new System.Drawing.Size(128, 302);
+            this.contextMenuStripTextBox.Size = new System.Drawing.Size(83, 280);
             this.contextMenuStripTextBox.Text = "Insert Symbol";
             // 
             // bToolStripMenuItem
             // 
             this.bToolStripMenuItem.Name = "bToolStripMenuItem";
-            this.bToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.bToolStripMenuItem.Size = new System.Drawing.Size(82, 22);
             this.bToolStripMenuItem.Text = "ß";
             this.bToolStripMenuItem.ToolTipText = "Insert ß";
             this.bToolStripMenuItem.Click += new System.EventHandler(this.bToolStripMenuItem_Click);
@@ -166,7 +156,7 @@
             // geToolStripMenuItem
             // 
             this.geToolStripMenuItem.Name = "geToolStripMenuItem";
-            this.geToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.geToolStripMenuItem.Size = new System.Drawing.Size(82, 22);
             this.geToolStripMenuItem.Text = "≥";
             this.geToolStripMenuItem.ToolTipText = "Insert ≥";
             this.geToolStripMenuItem.Click += new System.EventHandler(this.geToolStripMenuItem_Click);
@@ -174,7 +164,7 @@
             // leToolStripMenuItem
             // 
             this.leToolStripMenuItem.Name = "leToolStripMenuItem";
-            this.leToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.leToolStripMenuItem.Size = new System.Drawing.Size(82, 22);
             this.leToolStripMenuItem.Text = "≤";
             this.leToolStripMenuItem.ToolTipText = "Insert ≤";
             this.leToolStripMenuItem.Click += new System.EventHandler(this.leToolStripMenuItem_Click);
@@ -182,7 +172,7 @@
             // plusMinusToolStripMenuItem
             // 
             this.plusMinusToolStripMenuItem.Name = "plusMinusToolStripMenuItem";
-            this.plusMinusToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.plusMinusToolStripMenuItem.Size = new System.Drawing.Size(82, 22);
             this.plusMinusToolStripMenuItem.Text = "±";
             this.plusMinusToolStripMenuItem.ToolTipText = "Insert ±";
             this.plusMinusToolStripMenuItem.Click += new System.EventHandler(this.plusMinusToolStripMenuItem_Click);
@@ -190,7 +180,7 @@
             // degreeToolStripMenuItem
             // 
             this.degreeToolStripMenuItem.Name = "degreeToolStripMenuItem";
-            this.degreeToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.degreeToolStripMenuItem.Size = new System.Drawing.Size(82, 22);
             this.degreeToolStripMenuItem.Text = "°";
             this.degreeToolStripMenuItem.ToolTipText = "Insert °";
             this.degreeToolStripMenuItem.Click += new System.EventHandler(this.degreeToolStripMenuItem_Click);
@@ -198,66 +188,64 @@
             // µToolStripMenuItem
             // 
             this.µToolStripMenuItem.Name = "µToolStripMenuItem";
-            this.µToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.µToolStripMenuItem.Size = new System.Drawing.Size(82, 22);
             this.µToolStripMenuItem.Text = "µ";
             this.µToolStripMenuItem.Click += new System.EventHandler(this.µToolStripMenuItem_Click);
+            // 
+            // sOneToolStripMenuItem
+            // 
+            this.sOneToolStripMenuItem.Name = "sOneToolStripMenuItem";
+            this.sOneToolStripMenuItem.Size = new System.Drawing.Size(82, 22);
+            this.sOneToolStripMenuItem.Text = "¹";
+            this.sOneToolStripMenuItem.ToolTipText = "Insert ¹";
+            this.sOneToolStripMenuItem.Click += new System.EventHandler(this.sOneToolStripMenuItem_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(124, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(79, 6);
             this.toolStripMenuItem3.Visible = false;
             // 
             // undoToolStripMenuItem
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(82, 22);
             this.undoToolStripMenuItem.Text = "Undo";
             this.undoToolStripMenuItem.Visible = false;
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(124, 6);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(79, 6);
             this.toolStripMenuItem4.Visible = false;
             // 
             // cutToolStripMenuItem
             // 
             this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.cutToolStripMenuItem.Size = new System.Drawing.Size(82, 22);
             this.cutToolStripMenuItem.Text = "Cut";
             this.cutToolStripMenuItem.Visible = false;
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(82, 22);
             this.copyToolStripMenuItem.Text = "Copy";
             this.copyToolStripMenuItem.Visible = false;
             // 
             // pasteToolStripMenuItem
             // 
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(82, 22);
             this.pasteToolStripMenuItem.Text = "Paste";
             this.pasteToolStripMenuItem.Visible = false;
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(82, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Visible = false;
-            // 
-            // btnMenu
-            // 
-            this.btnMenu.Image = global::BDEditor.Properties.Resources.apps_16;
-            this.btnMenu.Location = new System.Drawing.Point(6, 23);
-            this.btnMenu.Name = "btnMenu";
-            this.btnMenu.Size = new System.Drawing.Size(28, 28);
-            this.btnMenu.TabIndex = 17;
-            this.btnMenu.UseVisualStyleBackColor = true;
-            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
             // 
             // contextMenuStripEvents
             // 
@@ -272,6 +260,48 @@
             this.deletePathogenGroupMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
             this.contextMenuStripEvents.Size = new System.Drawing.Size(187, 148);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(183, 6);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(183, 6);
+            // 
+            // panelPathogens
+            // 
+            this.panelPathogens.AutoSize = true;
+            this.panelPathogens.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panelPathogens.BackColor = System.Drawing.SystemColors.Control;
+            this.panelPathogens.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelPathogens.Location = new System.Drawing.Point(0, 74);
+            this.panelPathogens.MinimumSize = new System.Drawing.Size(870, 5);
+            this.panelPathogens.Name = "panelPathogens";
+            this.panelPathogens.Size = new System.Drawing.Size(870, 5);
+            this.panelPathogens.TabIndex = 20;
+            // 
+            // btnPathogenGroupLink
+            // 
+            this.btnPathogenGroupLink.Image = global::BDEditor.Properties.Resources.link_16;
+            this.btnPathogenGroupLink.Location = new System.Drawing.Point(520, 24);
+            this.btnPathogenGroupLink.Name = "btnPathogenGroupLink";
+            this.btnPathogenGroupLink.Size = new System.Drawing.Size(28, 28);
+            this.btnPathogenGroupLink.TabIndex = 20;
+            this.btnPathogenGroupLink.UseVisualStyleBackColor = true;
+            this.btnPathogenGroupLink.Click += new System.EventHandler(this.btnLink_Click);
+            // 
+            // btnMenu
+            // 
+            this.btnMenu.Image = global::BDEditor.Properties.Resources.apps_16;
+            this.btnMenu.Location = new System.Drawing.Point(6, 23);
+            this.btnMenu.Name = "btnMenu";
+            this.btnMenu.Size = new System.Drawing.Size(28, 28);
+            this.btnMenu.TabIndex = 17;
+            this.btnMenu.UseVisualStyleBackColor = true;
+            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
             // 
             // movePreviousToolStripMenuItem
             // 
@@ -288,11 +318,6 @@
             this.moveNeToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.moveNeToolStripMenuItem.Text = "Move &Next";
             this.moveNeToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToNext_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(183, 6);
             // 
             // addPathogenGroupToolStripMenuItem
             // 
@@ -318,11 +343,6 @@
             this.addTherapyToolStripMenuItem.Text = "&Add Therapy Group";
             this.addTherapyToolStripMenuItem.Click += new System.EventHandler(this.TherapyGroup_RequestItemAdd);
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(183, 6);
-            // 
             // deletePathogenGroupMenuItem
             // 
             this.deletePathogenGroupMenuItem.Image = global::BDEditor.Properties.Resources.remove;
@@ -330,26 +350,6 @@
             this.deletePathogenGroupMenuItem.Size = new System.Drawing.Size(186, 22);
             this.deletePathogenGroupMenuItem.Text = "Delete";
             this.deletePathogenGroupMenuItem.Click += new System.EventHandler(this.PathogenGroup_RequestItemDelete);
-            // 
-            // panelPathogens
-            // 
-            this.panelPathogens.AutoSize = true;
-            this.panelPathogens.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panelPathogens.BackColor = System.Drawing.SystemColors.Control;
-            this.panelPathogens.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelPathogens.Location = new System.Drawing.Point(0, 74);
-            this.panelPathogens.MinimumSize = new System.Drawing.Size(870, 5);
-            this.panelPathogens.Name = "panelPathogens";
-            this.panelPathogens.Size = new System.Drawing.Size(870, 5);
-            this.panelPathogens.TabIndex = 20;
-            // 
-            // sOneToolStripMenuItem
-            // 
-            this.sOneToolStripMenuItem.Name = "sOneToolStripMenuItem";
-            this.sOneToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
-            this.sOneToolStripMenuItem.Text = "¹";
-            this.sOneToolStripMenuItem.ToolTipText = "Insert ¹";
-            this.sOneToolStripMenuItem.Click += new System.EventHandler(this.sOneToolStripMenuItem_Click);
             // 
             // BDPathogenGroupControl
             // 
@@ -360,12 +360,12 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.panelTherapyGroups);
             this.Controls.Add(this.panelPathogens);
-            this.Controls.Add(this.panelpathogenGroups);
+            this.Controls.Add(this.panelPathogenGroups);
             this.MinimumSize = new System.Drawing.Size(870, 110);
             this.Name = "BDPathogenGroupControl";
             this.Size = new System.Drawing.Size(870, 110);
-            this.panelpathogenGroups.ResumeLayout(false);
-            this.panelpathogenGroups.PerformLayout();
+            this.panelPathogenGroups.ResumeLayout(false);
+            this.panelPathogenGroups.PerformLayout();
             this.contextMenuStripTextBox.ResumeLayout(false);
             this.contextMenuStripEvents.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -377,7 +377,7 @@
 
         private System.Windows.Forms.Label labelPathogenGroupName;
         private System.Windows.Forms.Panel panelTherapyGroups;
-        private System.Windows.Forms.Panel panelpathogenGroups;
+        private System.Windows.Forms.Panel panelPathogenGroups;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripEvents;
         private System.Windows.Forms.Button btnMenu;
         private System.Windows.Forms.ToolStripMenuItem addPathogenGroupToolStripMenuItem;

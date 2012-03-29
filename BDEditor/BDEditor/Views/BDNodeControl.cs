@@ -18,10 +18,10 @@ namespace BDEditor.Views
         private Guid? scopeId;
         private Guid? parentId;
         private BDConstants.BDNodeType parentType = BDConstants.BDNodeType.None;
-        private BDConstants.LayoutVariantType defaultLayoutVariantType;
         private BDConstants.BDNodeType defaultNodeType;
         private List<BDNodeWithOverviewControl> childNodes;
 
+        public BDConstants.LayoutVariantType DefaultLayoutVariantType;
         public int? DisplayOrder { get; set; }
 
         public event EventHandler RequestItemAdd;
@@ -102,10 +102,9 @@ namespace BDEditor.Views
         {
             dataContext = pDataContext;
             currentNode = pNode;
-            defaultLayoutVariantType = pNode.LayoutVariant;
             parentId = pNode.ParentId;
             defaultNodeType = pNode.NodeType;
-
+            DefaultLayoutVariantType = pNode.LayoutVariant;
             InitializeComponent();
         }
 
@@ -120,7 +119,7 @@ namespace BDEditor.Views
         {    
             dataContext = pDataContext;
             currentNode = null;
-            defaultLayoutVariantType = pDefaultLayoutType;
+            DefaultLayoutVariantType = pDefaultLayoutType;
             parentId = pParentId;
             defaultNodeType = pDefaultNodeType;
 
@@ -130,12 +129,14 @@ namespace BDEditor.Views
         private void BDNodeControl_Load(object sender, EventArgs e)
         {
             btnLinkedNote.Tag = BDNode.PROPERTYNAME_NAME;
-            // lblNodeDetail.Text = BDUtilities.GetEnumDescription(defaultNodeType);
-
+            lblNodeDetail.Text = (defaultNodeType > 0)? BDUtilities.GetEnumDescription(defaultNodeType):@"Section";
+            lblNodeDetail.Enabled = true;
+            lblNodeDetail.Visible = true;
             if (null != currentNode)
             {
                 if(tbName.Text != currentNode.Name) tbName.Text = currentNode.Name;
-                if (currentNode.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt)
+            }
+                if (DefaultLayoutVariantType == BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt)
                 {
                     btnMenu.Enabled = true;
                     btnMenu.Visible = true;
@@ -145,12 +146,16 @@ namespace BDEditor.Views
                     btnMenu.Visible = false;
                     btnMenu.Enabled = false;
                 }
-            }
         }
 
         public void AssignScopeId(Guid? pScopeId)
         {
             scopeId = pScopeId;
+        }
+
+        public void AssignDataContext(Entities pDataContext)
+        {
+            dataContext = pDataContext;
         }
 
         #region IBDControl
@@ -245,7 +250,7 @@ namespace BDEditor.Views
                     }
                     
                     this.currentNode.DisplayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
-                    this.currentNode.LayoutVariant = this.defaultLayoutVariantType;
+                    this.currentNode.LayoutVariant = this.DefaultLayoutVariantType;
                 }
             }
 

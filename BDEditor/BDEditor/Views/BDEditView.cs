@@ -387,12 +387,13 @@ namespace BDEditor.Views
                     }
                     break;
                 case BDConstants.BDNodeType.BDTable:
+                    BDNode table = node as BDNode;
                     switch (node.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
 
                             BDTableControl control_tr01 = null;
-                            control_tr01 = new BDTableControl(dataContext, node);
+                            control_tr01 = new BDTableControl(dataContext, table);
                             control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);
                             control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
                             control_tr01.Dock = DockStyle.Fill;

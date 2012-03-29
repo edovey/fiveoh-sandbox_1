@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.pnlTableHeader = new System.Windows.Forms.Panel();
-            this.btnTableNameLink = new System.Windows.Forms.Button();
+            this.btnLinkedNote = new System.Windows.Forms.Button();
             this.tbTableName = new System.Windows.Forms.TextBox();
             this.contextMenuStripTextBox = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.bToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,7 +59,7 @@
             // 
             // pnlTableHeader
             // 
-            this.pnlTableHeader.Controls.Add(this.btnTableNameLink);
+            this.pnlTableHeader.Controls.Add(this.btnLinkedNote);
             this.pnlTableHeader.Controls.Add(this.tbTableName);
             this.pnlTableHeader.Controls.Add(this.btnMenu);
             this.pnlTableHeader.Controls.Add(this.lblTableName);
@@ -69,15 +69,15 @@
             this.pnlTableHeader.Size = new System.Drawing.Size(880, 57);
             this.pnlTableHeader.TabIndex = 22;
             // 
-            // btnTableNameLink
+            // btnLinkedNote
             // 
-            this.btnTableNameLink.Image = global::BDEditor.Properties.Resources.link_16;
-            this.btnTableNameLink.Location = new System.Drawing.Point(520, 24);
-            this.btnTableNameLink.Name = "btnTableNameLink";
-            this.btnTableNameLink.Size = new System.Drawing.Size(28, 28);
-            this.btnTableNameLink.TabIndex = 20;
-            this.btnTableNameLink.UseVisualStyleBackColor = true;
-            this.btnTableNameLink.Click += new System.EventHandler(this.btnLink_Click);
+            this.btnLinkedNote.Image = global::BDEditor.Properties.Resources.link_16;
+            this.btnLinkedNote.Location = new System.Drawing.Point(520, 24);
+            this.btnLinkedNote.Name = "btnLinkedNote";
+            this.btnLinkedNote.Size = new System.Drawing.Size(28, 28);
+            this.btnLinkedNote.TabIndex = 20;
+            this.btnLinkedNote.UseVisualStyleBackColor = true;
+            this.btnLinkedNote.Click += new System.EventHandler(this.btnLink_Click);
             // 
             // tbTableName
             // 
@@ -238,7 +238,7 @@
             this.addSectionToolStripMenuItem.Name = "addSectionToolStripMenuItem";
             this.addSectionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.addSectionToolStripMenuItem.Text = "Add Section";
-            this.addSectionToolStripMenuItem.Click += new System.EventHandler(this.Section_RequestItemAdd);
+            this.addSectionToolStripMenuItem.Click += new System.EventHandler(this.TableSection_RequestItemAdd);
             // 
             // pnlSections
             // 
@@ -246,7 +246,7 @@
             this.pnlSections.AutoScrollMinSize = new System.Drawing.Size(0, 10);
             this.pnlSections.AutoSize = true;
             this.pnlSections.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.pnlSections.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.pnlSections.BackColor = System.Drawing.SystemColors.Control;
             this.pnlSections.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlSections.Location = new System.Drawing.Point(0, 57);
             this.pnlSections.MinimumSize = new System.Drawing.Size(870, 5);
@@ -263,9 +263,9 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.pnlSections);
             this.Controls.Add(this.pnlTableHeader);
-            this.MinimumSize = new System.Drawing.Size(880, 100);
+            this.MinimumSize = new System.Drawing.Size(880, 60);
             this.Name = "BDTableControl";
-            this.Size = new System.Drawing.Size(880, 100);
+            this.Size = new System.Drawing.Size(880, 62);
             this.Load += new System.EventHandler(this.BDTableControl_Load);
             this.Leave += new System.EventHandler(this.BDTableControl_Leave);
             this.pnlTableHeader.ResumeLayout(false);
@@ -281,7 +281,7 @@
 
         private System.Windows.Forms.Button btnMenu;
         private System.Windows.Forms.Panel pnlTableHeader;
-        private System.Windows.Forms.Button btnTableNameLink;
+        private System.Windows.Forms.Button btnLinkedNote;
         private System.Windows.Forms.TextBox tbTableName;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripTextBox;
         private System.Windows.Forms.ToolStripMenuItem bToolStripMenuItem;

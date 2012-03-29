@@ -55,7 +55,7 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.addSectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addDetailToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnlDetail = new System.Windows.Forms.Panel();
             this.panelHeader.SuspendLayout();
             this.contextMenuStripTextBox.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
@@ -67,9 +67,9 @@
             this.lblNodeDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNodeDetail.Location = new System.Drawing.Point(41, 10);
             this.lblNodeDetail.Name = "lblNodeDetail";
-            this.lblNodeDetail.Size = new System.Drawing.Size(103, 20);
+            this.lblNodeDetail.Size = new System.Drawing.Size(55, 20);
             this.lblNodeDetail.TabIndex = 31;
-            this.lblNodeDetail.Text = "Node Detail";
+            this.lblNodeDetail.Text = "Name";
             this.lblNodeDetail.Visible = false;
             // 
             // panelHeader
@@ -82,7 +82,7 @@
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(682, 72);
+            this.panelHeader.Size = new System.Drawing.Size(870, 72);
             this.panelHeader.TabIndex = 7;
             // 
             // btnMenu
@@ -95,6 +95,7 @@
             this.btnMenu.TabIndex = 30;
             this.btnMenu.UseVisualStyleBackColor = true;
             this.btnMenu.Visible = false;
+            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
             // 
             // btnLinkedNote
             // 
@@ -277,25 +278,29 @@
             this.addDetailToolStripMenuItem.Text = "Add Detail (Row)";
             this.addDetailToolStripMenuItem.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // panel1
+            // pnlDetail
             // 
-            this.panel1.AutoSize = true;
-            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 72);
-            this.panel1.MinimumSize = new System.Drawing.Size(600, 5);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(682, 5);
-            this.panel1.TabIndex = 8;
+            this.pnlDetail.AutoSize = true;
+            this.pnlDetail.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.pnlDetail.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlDetail.Location = new System.Drawing.Point(0, 72);
+            this.pnlDetail.MinimumSize = new System.Drawing.Size(600, 5);
+            this.pnlDetail.Name = "pnlDetail";
+            this.pnlDetail.Size = new System.Drawing.Size(870, 5);
+            this.pnlDetail.TabIndex = 8;
             // 
             // BDNodeControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.panel1);
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Controls.Add(this.pnlDetail);
             this.Controls.Add(this.panelHeader);
+            this.MinimumSize = new System.Drawing.Size(870, 50);
             this.Name = "BDNodeControl";
-            this.Size = new System.Drawing.Size(682, 103);
+            this.Size = new System.Drawing.Size(870, 77);
+            this.Load += new System.EventHandler(this.BDNodeControl_Load);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             this.contextMenuStripTextBox.ResumeLayout(false);
@@ -332,6 +337,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem addSectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addDetailToolStripMenuItem;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnlDetail;
     }
 }

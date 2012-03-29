@@ -49,6 +49,7 @@ namespace BDEditor.Classes
                     case BDConstants.BDNodeType.BDSection:
                     case BDConstants.BDNodeType.BDSubCategory:
                     case BDConstants.BDNodeType.BDTable:
+                    case BDConstants.BDNodeType.BDTableSection:
                     case BDConstants.BDNodeType.BDTableRow:
                         BDNode node = pNode as BDNode;
                         BDNode.Save(pDataContext, node);
@@ -121,6 +122,8 @@ namespace BDEditor.Classes
             return nodeList;
         }
 
+        //TODO: Return 2 dimensional array: index = 0:childtype index = 1:list of possible layoutvariants
+        //TODO: optional display order for childtypes
         public static List<BDConstants.BDNodeType> ChildTypeDefinitionListForNode(BDConstants.BDNodeType pNodeType, BDConstants.LayoutVariantType pLayoutVariant)
         {
             List<BDConstants.BDNodeType> definitionList = new List<BDConstants.BDNodeType>();
@@ -211,9 +214,24 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDTable:
                     switch (layoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation02:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
+                        //default:
+                            definitionList.Add(BDConstants.BDNodeType.BDTableSection);
+                            break;
                         default:
+                            throw new Exception();
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDTableSection:
+                    switch (layoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
+                        //default:
                             definitionList.Add(BDConstants.BDNodeType.BDTableRow);
+                            break;
+                        default:
+                            throw new Exception();
                             break;
                     }
                     break;
@@ -410,6 +428,7 @@ namespace BDEditor.Classes
             }
         }
 
+        //TODO: Pass child layoutvariant type. Multiple types possible.
         public static IBDNode CreateChildNode(Entities pContext, IBDNode pParentNode, BDConstants.BDNodeType pChildType)
         {
             IBDNode result = null;
@@ -441,7 +460,7 @@ namespace BDEditor.Classes
                     BDNode tableNode = BDNode.CreateNode(pContext, pChildType);
                     tableNode.displayOrder = siblingList.Count;
                     tableNode.SetParent(pParentNode);
-                    tableNode.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation02;
+                    tableNode.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt;
                     tableNode.Name = String.Format("New {0}-{1}", BDUtilities.GetEnumDescription(pChildType), tableNode.displayOrder + 1);
                     BDNode.Save(pContext, tableNode);
                     break;

@@ -154,7 +154,7 @@ namespace BDEditor.Views
             if (null != currentNode)
             {
                 if(tbName.Text != currentNode.Name) tbName.Text = currentNode.Name;
-                if (currentNode.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation02)
+                if (currentNode.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt)
                 {
                     btnMenu.Enabled = true;
                     btnMenu.Visible = true;

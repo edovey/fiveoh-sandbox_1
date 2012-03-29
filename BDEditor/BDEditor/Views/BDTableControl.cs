@@ -239,7 +239,7 @@ namespace BDEditor.Views
 
             if (CreateCurrentObject())
             {
-                nodeControl = new BDNodeWithOverviewControl(dataContext, BDConstants.BDNodeType.BDTableRow, BDConstants.LayoutVariantType.TreatmentRecommendation02, currentTable.Uuid);
+                nodeControl = new BDNodeWithOverviewControl(dataContext, BDConstants.BDNodeType.BDTableSection, BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt, currentTable.Uuid);
 
                 nodeControl.Dock = DockStyle.Top;
                 nodeControl.TabIndex = pTabIndex;
@@ -326,7 +326,7 @@ namespace BDEditor.Views
 
             if (CreateCurrentObject())
             {
-                nodeControl = new BDNodeWithOverviewControl(dataContext, BDConstants.BDNodeType.BDTableRow, BDConstants.LayoutVariantType.TreatmentRecommendation02, currentSection.Uuid);
+                nodeControl = new BDNodeWithOverviewControl(dataContext, BDConstants.BDNodeType.BDTableSection, BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt, currentSection.Uuid);
 
                 nodeControl.Dock = DockStyle.Top;
                 nodeControl.TabIndex = pTabIndex;

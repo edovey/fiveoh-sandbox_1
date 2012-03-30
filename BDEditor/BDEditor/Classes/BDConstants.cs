@@ -50,12 +50,13 @@ namespace BDEditor.Classes
         public enum LayoutVariantType
         {
             Undefined = -1,
+            [Description("Treatment Recommendation")]
             TreatmentRecommendation00 = 100, // Chapter
             TreatmentRecommendation01 = 101, // format specific section within chapter
             [Description("Wound Management")]
             TreatmentRecommendation02_WoundMgmt = 102, // table 1 - wound management
             [Description("Wound Classification")]
-            TreatmentRecommendation03 = 103, // table 2 - wound classification
+            TreatmentRecommendation03_WoundClass = 103, // table 2 - wound classification
             TreatmentRecommendation04 = 104,
             TreatmentRecommendation05 = 105
         }

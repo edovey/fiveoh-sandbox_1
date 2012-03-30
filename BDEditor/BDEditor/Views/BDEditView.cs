@@ -104,37 +104,74 @@ namespace BDEditor.Views
             addNodeToolStripMenuItemList.Clear();
             addChildNodeToolStripMenuItem.DropDownItems.Clear();
 
-            reorderNextToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pTreeNode);
-            reorderPreviousToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pTreeNode);
-            deleteToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pTreeNode);
+            reorderNextToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, pTreeNode);
+            reorderPreviousToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, pTreeNode);
+            deleteToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, pTreeNode);
 
             string nodeTypeName = BDUtilities.GetEnumDescription(pBDNode.NodeType);
 
             deleteToolStripMenuItem.Text = string.Format("Delete {0}: {1}", nodeTypeName, pBDNode.Name);
 
-            List<BDConstants.BDNodeType> childTypes = BDFabrik.ChildTypeDefinitionListForNode(pBDNode);
-            if(null != childTypes)
+            //List<BDConstants.BDNodeType> childTypes = BDFabrik.ChildTypeDefinitionListForNode(pBDNode);
+            List<Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>> childTypeInfoList = BDFabrik.ChildTypeDefinitionListForNode(pBDNode);
+            if (null != childTypeInfoList)
             {
-                if (childTypes.Count == 1)
+                if (childTypeInfoList.Count == 1)
                 {
-                    string childNodeTypeName = BDUtilities.GetEnumDescription(childTypes[0]);
+                    string childNodeTypeName = BDUtilities.GetEnumDescription(childTypeInfoList[0].Item1);
                     addChildNodeToolStripMenuItem.Text = string.Format("Add {0}", childNodeTypeName);
-                    addChildNodeToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, childTypes[0], pTreeNode);
+
+                    if (childTypeInfoList[0].Item2.Length == 1)
+                    {
+                        addChildNodeToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, childTypeInfoList[0].Item1, childTypeInfoList[0].Item2[0], pTreeNode);
+                    }
+                    else
+                    {
+                        for (int idx = 0; idx < childTypeInfoList[0].Item2.Length; idx++)
+                        {
+                            ToolStripMenuItem item = new ToolStripMenuItem();
+
+                            item.Image = global::BDEditor.Properties.Resources.add_16x16;
+                            item.Name = string.Format("dynamicAddChildLayoutVariant{0}", idx);
+                            item.Size = new System.Drawing.Size(179, 22);
+                            item.Text = string.Format("&Add {0}", BDUtilities.GetEnumDescription(childTypeInfoList[0].Item2[idx]));
+                            item.Tag = new BDNodeWrapper(pBDNode, childTypeInfoList[0].Item1, childTypeInfoList[0].Item2[idx], pTreeNode);
+                            item.Click += new System.EventHandler(this.addChildNode_Click);
+                            addChildNodeToolStripMenuItem.DropDownItems.Add(item);
+                        }
+                    }
                 }
-                else if (childTypes.Count > 1)
+                else if (childTypeInfoList.Count > 1)
                 {
                     addChildNodeToolStripMenuItem.Text = string.Format("Add");
 
-                    for (int idx = 0; idx < childTypes.Count; idx++)
+                    for (int idx = 0; idx < childTypeInfoList.Count; idx++)
                     {
                         ToolStripMenuItem item = new ToolStripMenuItem();
 
                         item.Image = global::BDEditor.Properties.Resources.add_16x16;
                         item.Name = string.Format("dynamicAddChild{0}", idx);
                         item.Size = new System.Drawing.Size(179, 22);
-                        item.Text = string.Format("&Add {0}", BDUtilities.GetEnumDescription(childTypes[idx]));
-                        item.Tag = new BDNodeWrapper(pBDNode, childTypes[idx], pTreeNode);
+                        item.Text = string.Format("&Add {0}", BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item1));
+                        item.Tag = new BDNodeWrapper(pBDNode, childTypeInfoList[idx].Item1, childTypeInfoList[idx].Item2[0], pTreeNode);
                         item.Click += new System.EventHandler(this.addChildNode_Click);
+
+                        if (childTypeInfoList[idx].Item2.Length > 1)
+                        {
+                            for (int idy = 0; idy < childTypeInfoList[idx].Item2.Length; idy++)
+                            {
+                                ToolStripMenuItem layoutItem = new ToolStripMenuItem();
+
+                                layoutItem.Image = global::BDEditor.Properties.Resources.add_16x16;
+                                layoutItem.Name = string.Format("dynamicAddChildLayoutVariant{0}", idy);
+                                layoutItem.Size = new System.Drawing.Size(179, 22);
+                                layoutItem.Text = string.Format("Add {0}", BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item2[idy]));
+                                layoutItem.Tag = new BDNodeWrapper(pBDNode, childTypeInfoList[idx].Item1, childTypeInfoList[idx].Item2[idy], pTreeNode);
+                                layoutItem.Click += new System.EventHandler(this.addChildNode_Click);
+                                item.DropDownItems.Add(layoutItem);
+                            }
+                        }
+
                         addChildNodeToolStripMenuItem.DropDownItems.Add(item);
                     }
                 }
@@ -197,7 +234,7 @@ namespace BDEditor.Views
                 BDNodeWrapper nodeWrapper = menuItem.Tag as BDNodeWrapper;
                 if (null != nodeWrapper)
                 {
-                    BDFabrik.CreateChildNode(DataContext, nodeWrapper.Node, nodeWrapper.TargetNodeType);
+                    BDFabrik.CreateChildNode(DataContext, nodeWrapper.Node, nodeWrapper.TargetNodeType, nodeWrapper.TargetLayoutVariant);
                     showNavSelection(nodeWrapper.NodeTreeNode);
                 }
             }

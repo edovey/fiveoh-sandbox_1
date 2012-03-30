@@ -19,7 +19,6 @@ namespace BDEditor.Views
         private Guid? parentId;
         private BDConstants.BDNodeType parentType;
         private BDNode currentTable;
-        private BDNode currentSection;
         private BDConstants.LayoutVariantType defaultLayoutVariantType;
         private BDConstants.BDNodeType defaultNodeType;
         private Guid? scopeId;
@@ -248,6 +247,7 @@ namespace BDEditor.Views
                 nodeControl.AssignParentInfo(currentTable.Uuid, currentTable.NodeType);
                 nodeControl.AssignDataContext(dataContext);
                 nodeControl.AssignScopeId(scopeId);
+                nodeControl.AssignMenuButton(true, false);
                 nodeControl.CurrentNode = pNode;
                 nodeControl.DefaultLayoutVariantType = this.defaultLayoutVariantType;
 

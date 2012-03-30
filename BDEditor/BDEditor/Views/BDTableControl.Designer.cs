@@ -230,14 +230,14 @@
             this.contextMenuStripEvents.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addSectionToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(153, 48);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(171, 26);
             // 
             // addSectionToolStripMenuItem
             // 
             this.addSectionToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_16x16;
             this.addSectionToolStripMenuItem.Name = "addSectionToolStripMenuItem";
-            this.addSectionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.addSectionToolStripMenuItem.Text = "Add Section";
+            this.addSectionToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.addSectionToolStripMenuItem.Text = "Add Table Section";
             this.addSectionToolStripMenuItem.Click += new System.EventHandler(this.TableSection_RequestItemAdd);
             // 
             // pnlSections

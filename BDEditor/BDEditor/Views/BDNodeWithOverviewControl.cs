@@ -19,8 +19,10 @@ namespace BDEditor.Views
         private Guid? scopeId;
         private Guid? parentId;
         private BDConstants.BDNodeType parentType = BDConstants.BDNodeType.None;
-        private BDConstants.LayoutVariantType defaultLayoutVariantType;
+        public BDConstants.LayoutVariantType DefaultLayoutVariantType;
         private BDConstants.BDNodeType defaultNodeType;
+        private bool enableRightMenu = false;
+        private bool enableLeftMenu = false;
 
         public int? DisplayOrder { get; set; }
 
@@ -121,27 +123,9 @@ namespace BDEditor.Views
         {
             dataContext = pDataContext;
             currentNode = pNode;
-            defaultLayoutVariantType = pNode.LayoutVariant;
+            DefaultLayoutVariantType = pNode.LayoutVariant;
             parentId = pNode.ParentId;
             defaultNodeType = pNode.NodeType;
-
-            InitializeComponent();
-        }
-
-        /// <summary>
-        /// Initialize form without an existing BDNode
-        /// </summary>
-        /// <param name="pDataContext"></param>
-        /// <param name="pDefaultNodeType"></param>
-        /// <param name="pDefaultLayoutType"></param>
-        /// <param name="pParentId"></param>
-        public BDNodeWithOverviewControl(Entities pDataContext, BDConstants.BDNodeType pDefaultNodeType, BDConstants.LayoutVariantType pDefaultLayoutType, Guid pParentId)
-        {    
-            dataContext = pDataContext;
-            currentNode = null;
-            defaultLayoutVariantType = pDefaultLayoutType;
-            parentId = pParentId;
-            defaultNodeType = pDefaultNodeType;
 
             InitializeComponent();
         }
@@ -156,13 +140,13 @@ namespace BDEditor.Views
                 if(tbName.Text != currentNode.Name) tbName.Text = currentNode.Name;
                 if (currentNode.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt)
                 {
-                    btnMenu.Enabled = true;
-                    btnMenu.Visible = true;
+                    btnMenuLeft.Enabled = true;
+                    btnMenuLeft.Visible = true;
                 }
                 else
                 {
-                    btnMenu.Visible = false;
-                    btnMenu.Enabled = false;
+                    btnMenuLeft.Visible = false;
+                    btnMenuLeft.Enabled = false;
                 }
             }
         }
@@ -170,6 +154,17 @@ namespace BDEditor.Views
         public void AssignScopeId(Guid? pScopeId)
         {
             scopeId = pScopeId;
+        }
+
+        public void AssignDataContext(Entities pDataContext)
+        {
+            dataContext = pDataContext;
+        }
+
+        public void AssignMenuButton(bool pEnableLeft, bool pEnableRight)
+        {
+            enableLeftMenu = pEnableLeft;
+            enableRightMenu = pEnableRight;
         }
 
         #region IBDControl
@@ -266,7 +261,7 @@ namespace BDEditor.Views
                     }
                     
                     this.currentNode.DisplayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
-                    this.currentNode.LayoutVariant = this.defaultLayoutVariantType;
+                    this.currentNode.LayoutVariant = this.DefaultLayoutVariantType;
                 }
             }
 
@@ -314,6 +309,14 @@ namespace BDEditor.Views
             int x = pTextBox.SelectionStart;
             pTextBox.Text = pTextBox.Text.Insert(pTextBox.SelectionStart, pText);
             pTextBox.SelectionStart = x + 1;
+        }
+
+        private void setMenuButtonState()
+        {
+            btnMenuLeft.Enabled = enableLeftMenu;
+            btnMenuLeft.Visible = enableLeftMenu;
+            btnMenuRight.Enabled = enableRightMenu;
+            btnMenuRight.Visible = enableRightMenu;
         }
 
         private void notesChanged_Action(object sender, EventArgs e)
@@ -408,7 +411,7 @@ namespace BDEditor.Views
 
         private void btnMenu_Click(object sender, EventArgs e)
         {
-            this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
+            this.contextMenuStripEvents.Show(btnMenuLeft, new System.Drawing.Point(0, btnMenuLeft.Height));
         }
 
         private void BDNodeControl_Leave(object sender, EventArgs e)

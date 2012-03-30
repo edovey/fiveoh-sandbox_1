@@ -49,7 +49,7 @@
             this.lblOverview = new System.Windows.Forms.Label();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.lblNodeDetail = new System.Windows.Forms.Label();
-            this.btnMenu = new System.Windows.Forms.Button();
+            this.btnMenuLeft = new System.Windows.Forms.Button();
             this.btnLinkedNote = new System.Windows.Forms.Button();
             this.contextMenuStripEvents = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.movePreviousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,6 +59,7 @@
             this.addDetailToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlEditor = new System.Windows.Forms.Panel();
             this.bdLinkedNoteControl1 = new BDEditor.Views.BDLinkedNoteControl();
+            this.btnMenuRight = new System.Windows.Forms.Button();
             this.contextMenuStripTextBox.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
@@ -215,8 +216,9 @@
             // panelHeader
             // 
             this.panelHeader.BackColor = System.Drawing.SystemColors.Control;
+            this.panelHeader.Controls.Add(this.btnMenuRight);
             this.panelHeader.Controls.Add(this.lblNodeDetail);
-            this.panelHeader.Controls.Add(this.btnMenu);
+            this.panelHeader.Controls.Add(this.btnMenuLeft);
             this.panelHeader.Controls.Add(this.btnLinkedNote);
             this.panelHeader.Controls.Add(this.lblOverview);
             this.panelHeader.Controls.Add(this.tbName);
@@ -238,17 +240,17 @@
             this.lblNodeDetail.Text = "Detail";
             this.lblNodeDetail.Visible = false;
             // 
-            // btnMenu
+            // btnMenuLeft
             // 
-            this.btnMenu.Enabled = false;
-            this.btnMenu.Image = global::BDEditor.Properties.Resources.apps_16;
-            this.btnMenu.Location = new System.Drawing.Point(7, 30);
-            this.btnMenu.Name = "btnMenu";
-            this.btnMenu.Size = new System.Drawing.Size(28, 28);
-            this.btnMenu.TabIndex = 30;
-            this.btnMenu.UseVisualStyleBackColor = true;
-            this.btnMenu.Visible = false;
-            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
+            this.btnMenuLeft.Enabled = false;
+            this.btnMenuLeft.Image = global::BDEditor.Properties.Resources.apps_16;
+            this.btnMenuLeft.Location = new System.Drawing.Point(7, 30);
+            this.btnMenuLeft.Name = "btnMenuLeft";
+            this.btnMenuLeft.Size = new System.Drawing.Size(28, 28);
+            this.btnMenuLeft.TabIndex = 30;
+            this.btnMenuLeft.UseVisualStyleBackColor = true;
+            this.btnMenuLeft.Visible = false;
+            this.btnMenuLeft.Click += new System.EventHandler(this.btnMenu_Click);
             // 
             // btnLinkedNote
             // 
@@ -330,6 +332,17 @@
             this.bdLinkedNoteControl1.TabIndex = 4;
             this.bdLinkedNoteControl1.SaveAttemptWithoutParent += new System.EventHandler(this.bdLinkedNoteControl_SaveAttemptWithoutParent);
             // 
+            // btnMenuRight
+            // 
+            this.btnMenuRight.Enabled = false;
+            this.btnMenuRight.Image = global::BDEditor.Properties.Resources.apps_16;
+            this.btnMenuRight.Location = new System.Drawing.Point(554, 27);
+            this.btnMenuRight.Name = "btnMenuRight";
+            this.btnMenuRight.Size = new System.Drawing.Size(28, 28);
+            this.btnMenuRight.TabIndex = 32;
+            this.btnMenuRight.UseVisualStyleBackColor = true;
+            this.btnMenuRight.Visible = false;
+            // 
             // BDNodeWithOverviewControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -341,7 +354,7 @@
             this.Controls.Add(this.panelHeader);
             this.MinimumSize = new System.Drawing.Size(826, 550);
             this.Name = "BDNodeWithOverviewControl";
-            this.Size = new System.Drawing.Size(826, 569);
+            this.Size = new System.Drawing.Size(826, 550);
             this.Load += new System.EventHandler(this.BDNodeControl_Load);
             this.Leave += new System.EventHandler(this.BDNodeControl_Leave);
             this.contextMenuStripTextBox.ResumeLayout(false);
@@ -375,7 +388,7 @@
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.Button btnMenu;
+        private System.Windows.Forms.Button btnMenuLeft;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripEvents;
         private System.Windows.Forms.ToolStripMenuItem movePreviousToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem moveNeToolStripMenuItem;
@@ -384,5 +397,6 @@
         private System.Windows.Forms.ToolStripMenuItem addDetailToolStripMenuItem;
         private System.Windows.Forms.Label lblNodeDetail;
         private System.Windows.Forms.Panel pnlEditor;
+        private System.Windows.Forms.Button btnMenuRight;
     }
 }

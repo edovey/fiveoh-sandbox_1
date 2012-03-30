@@ -247,9 +247,10 @@ namespace BDEditor.Views
                 nodeControl.AssignParentInfo(currentTable.Uuid, currentTable.NodeType);
                 nodeControl.AssignDataContext(dataContext);
                 nodeControl.AssignScopeId(scopeId);
-                nodeControl.AssignMenuButton(true, false);
+                nodeControl.ShowAsChild = false;
                 nodeControl.CurrentNode = pNode;
                 nodeControl.DefaultLayoutVariantType = this.defaultLayoutVariantType;
+                nodeControl.DefaultNodeType = BDConstants.BDNodeType.BDTableSection;
 
                 nodeControl.RequestItemAdd += new EventHandler(TableSection_RequestItemAdd);
                 nodeControl.RequestItemDelete += new EventHandler(TableSection_RequestItemDelete);
@@ -295,7 +296,7 @@ namespace BDEditor.Views
             pNodeControl = null;
         }
 
-        private void reorderTableSectionNodeControl(BDNodeControl pNodeControl, int pOffset)
+        private void reorderNodeControlForTableSection(BDNodeControl pNodeControl, int pOffset)
         {
             int currentPosition = sectionControlList.FindIndex(t => t == pNodeControl);
             if (currentPosition >= 0)
@@ -348,7 +349,7 @@ namespace BDEditor.Views
             BDNodeControl control = sender as BDNodeControl;
             if (null != control)
             {
-                reorderTableSectionNodeControl(control, -1);
+                reorderNodeControlForTableSection(control, -1);
             }
         }
 
@@ -357,7 +358,7 @@ namespace BDEditor.Views
             BDNodeControl control = sender as BDNodeControl;
             if (null != control)
             {
-                reorderTableSectionNodeControl(control, 1);
+                reorderNodeControlForTableSection(control, 1);
             }
         }
 

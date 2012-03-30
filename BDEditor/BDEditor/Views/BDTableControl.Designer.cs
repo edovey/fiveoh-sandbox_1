@@ -72,7 +72,7 @@
             // btnLinkedNote
             // 
             this.btnLinkedNote.Image = global::BDEditor.Properties.Resources.link_16;
-            this.btnLinkedNote.Location = new System.Drawing.Point(520, 24);
+            this.btnLinkedNote.Location = new System.Drawing.Point(520, 27);
             this.btnLinkedNote.Name = "btnLinkedNote";
             this.btnLinkedNote.Size = new System.Drawing.Size(28, 28);
             this.btnLinkedNote.TabIndex = 20;
@@ -83,7 +83,7 @@
             // 
             this.tbTableName.ContextMenuStrip = this.contextMenuStripTextBox;
             this.tbTableName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbTableName.Location = new System.Drawing.Point(42, 25);
+            this.tbTableName.Location = new System.Drawing.Point(39, 31);
             this.tbTableName.Name = "tbTableName";
             this.tbTableName.Size = new System.Drawing.Size(472, 24);
             this.tbTableName.TabIndex = 18;
@@ -208,7 +208,7 @@
             // btnMenu
             // 
             this.btnMenu.Image = global::BDEditor.Properties.Resources.apps_16;
-            this.btnMenu.Location = new System.Drawing.Point(6, 23);
+            this.btnMenu.Location = new System.Drawing.Point(7, 30);
             this.btnMenu.Name = "btnMenu";
             this.btnMenu.Size = new System.Drawing.Size(28, 28);
             this.btnMenu.TabIndex = 17;
@@ -218,10 +218,10 @@
             // lblTableName
             // 
             this.lblTableName.AutoSize = true;
-            this.lblTableName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTableName.Location = new System.Drawing.Point(39, 4);
+            this.lblTableName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTableName.Location = new System.Drawing.Point(3, 6);
             this.lblTableName.Name = "lblTableName";
-            this.lblTableName.Size = new System.Drawing.Size(98, 18);
+            this.lblTableName.Size = new System.Drawing.Size(114, 24);
             this.lblTableName.TabIndex = 1;
             this.lblTableName.Text = "Table Name";
             // 
@@ -230,7 +230,7 @@
             this.contextMenuStripEvents.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addSectionToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(171, 26);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(171, 48);
             // 
             // addSectionToolStripMenuItem
             // 
@@ -265,7 +265,7 @@
             this.Controls.Add(this.pnlTableHeader);
             this.MinimumSize = new System.Drawing.Size(880, 60);
             this.Name = "BDTableControl";
-            this.Size = new System.Drawing.Size(880, 62);
+            this.Size = new System.Drawing.Size(880, 86);
             this.Load += new System.EventHandler(this.BDTableControl_Load);
             this.Leave += new System.EventHandler(this.BDTableControl_Leave);
             this.pnlTableHeader.ResumeLayout(false);

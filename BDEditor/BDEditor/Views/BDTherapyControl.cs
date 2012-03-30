@@ -67,6 +67,72 @@ namespace BDEditor.Views
             set { currentTherapy = value; }
         }
 
+        public bool DisplayLeftBracket
+        {
+            get { return displayLeftBracket; }
+            set { displayLeftBracket = value; }
+        }
+
+        public bool DisplayRightBracket
+        {
+            get { return displayRightBracket; }
+            set { displayRightBracket = value; }
+        }
+
+        public BDTherapyControl()
+        {
+            InitializeComponent();
+
+            tbName.Tag = btnTherapyLink;
+            tbDosage.Tag = btnDosageLink;
+            tbDuration.Tag = btnDurationLink;
+
+            chkPreviousName.Tag = btnTherapyLink;
+            chkPreviousDose.Tag = btnDosageLink;
+            chkPreviousDuration.Tag = btnDurationLink;
+
+            btnTherapyLink.Tag = BDTherapy.PROPERTYNAME_THERAPY;
+            btnDosageLink.Tag = BDTherapy.PROPERTYNAME_DOSAGE;
+            btnDurationLink.Tag = BDTherapy.PROPERTYNAME_DURATION;
+        }
+
+        public void ShowLinksInUse(bool pPropagateToChildren)
+        {
+            List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentTherapy) ? this.currentTherapy.uuid : Guid.Empty);
+            btnTherapyLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnTherapyLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
+            btnDosageLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnDosageLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
+            btnDurationLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnDurationLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
+        }     
+        
+        public void AssignScopeId(Guid? pScopeId)
+        {
+            scopeId = pScopeId;
+        }
+
+        public void AssignTypeaheadSource(AutoCompleteStringCollection pSource, string pProperty)
+        {
+            if (pProperty == string.Empty || pProperty == BDTherapy.PROPERTYNAME_THERAPY)
+            {
+                tbName.AutoCompleteCustomSource = pSource;
+                tbName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                tbName.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            } 
+            else if (pProperty == BDTherapy.PROPERTYNAME_DOSAGE)
+            {
+                tbDosage.AutoCompleteCustomSource = pSource;
+                tbDosage.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                tbDosage.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            } 
+            else if (pProperty == BDTherapy.PROPERTYNAME_DURATION)
+            {
+                tbDuration.AutoCompleteCustomSource = pSource;
+                tbDuration.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                tbDuration.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            }    
+        }
+
+        #region IBDControl
+
         public void RefreshLayout()
         {
             if (currentTherapy == null)
@@ -121,112 +187,6 @@ namespace BDEditor.Views
             }
             ShowLinksInUse(false);
         }
-
-        public bool DisplayLeftBracket
-        {
-            get { return displayLeftBracket; }
-            set { displayLeftBracket = value; }
-        }
-
-        public bool DisplayRightBracket
-        {
-            get { return displayRightBracket; }
-            set { displayRightBracket = value; }
-        }
-
-        public BDTherapyControl()
-        {
-            InitializeComponent();
-
-            tbName.Tag = btnTherapyLink;
-            tbDosage.Tag = btnDosageLink;
-            tbDuration.Tag = btnDurationLink;
-
-            chkPreviousName.Tag = btnTherapyLink;
-            chkPreviousDose.Tag = btnDosageLink;
-            chkPreviousDuration.Tag = btnDurationLink;
-
-            btnTherapyLink.Tag = BDTherapy.PROPERTYNAME_THERAPY;
-            btnDosageLink.Tag = BDTherapy.PROPERTYNAME_DOSAGE;
-            btnDurationLink.Tag = BDTherapy.PROPERTYNAME_DURATION;
-        }
-
-        private void btnLink_Click(object sender, EventArgs e)
-        {
-            Button control = sender as Button;
-            if (null != control)
-            {
-                string tag = control.Tag as string;
-                CreateLink(tag);
-            }
-        }
-
-        public void ShowLinksInUse(bool pPropagateToChildren)
-        {
-            List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentTherapy) ? this.currentTherapy.uuid : Guid.Empty);
-            btnTherapyLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnTherapyLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
-            btnDosageLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnDosageLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
-            btnDurationLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnDurationLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
-        }     
-        
-        public void AssignScopeId(Guid? pScopeId)
-        {
-            scopeId = pScopeId;
-        }
-
-        private void lblLeftBracket_Click(object sender, EventArgs e)
-        {
-            this.displayLeftBracket = !this.displayLeftBracket;
-            lblLeftBracket.ForeColor = (this.displayLeftBracket) ? SystemColors.ControlText : SystemColors.ControlLight;
-        }
-
-        private void lblRightBracket_Click(object sender, EventArgs e)
-        {
-            this.displayRightBracket = !this.displayRightBracket;
-            lblRightBracket.ForeColor = (this.displayRightBracket) ? SystemColors.ControlText : SystemColors.ControlLight;
-        }
-
-        private void CreateLink(string pProperty)
-        {
-            if (CreateCurrentObject())
-            {
-                Save();
-
-                BDLinkedNoteView view = new BDLinkedNoteView();
-                view.AssignDataContext(dataContext);
-                view.AssignContextPropertyName(pProperty);
-                view.AssignParentInfo(currentTherapy.Uuid, currentTherapy.NodeType);
-                view.AssignScopeId(scopeId);
-                view.NotesChanged += new EventHandler(notesChanged_Action);
-                view.ShowDialog(this);
-                view.NotesChanged -= new EventHandler(notesChanged_Action);
-                ShowLinksInUse(false);
-            }
-        }
-
-        public void AssignTypeaheadSource(AutoCompleteStringCollection pSource, string pProperty)
-        {
-            if (pProperty == string.Empty || pProperty == BDTherapy.PROPERTYNAME_THERAPY)
-            {
-                tbName.AutoCompleteCustomSource = pSource;
-                tbName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                tbName.AutoCompleteSource = AutoCompleteSource.CustomSource;
-            } 
-            else if (pProperty == BDTherapy.PROPERTYNAME_DOSAGE)
-            {
-                tbDosage.AutoCompleteCustomSource = pSource;
-                tbDosage.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                tbDosage.AutoCompleteSource = AutoCompleteSource.CustomSource;
-            } 
-            else if (pProperty == BDTherapy.PROPERTYNAME_DURATION)
-            {
-                tbDuration.AutoCompleteCustomSource = pSource;
-                tbDuration.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                tbDuration.AutoCompleteSource = AutoCompleteSource.CustomSource;
-            }    
-        }
-
-        #region IBDControl
 
         public void AssignDataContext(Entities pDataContext)
         {
@@ -341,10 +301,38 @@ namespace BDEditor.Views
 
         #endregion
 
+        private void createLink(string pProperty)
+        {
+            if (CreateCurrentObject())
+            {
+                Save();
+
+                BDLinkedNoteView view = new BDLinkedNoteView();
+                view.AssignDataContext(dataContext);
+                view.AssignContextPropertyName(pProperty);
+                view.AssignParentInfo(currentTherapy.Uuid, currentTherapy.NodeType);
+                view.AssignScopeId(scopeId);
+                view.NotesChanged += new EventHandler(notesChanged_Action);
+                view.ShowDialog(this);
+                view.NotesChanged -= new EventHandler(notesChanged_Action);
+                ShowLinksInUse(false);
+            }
+        }
+
         private void insertTextFromMenu(TextBox textbox, string textToInsert, int selectionStart)
         {
             textbox.Text = textbox.Text.Insert(selectionStart, textToInsert);
             textbox.SelectionStart = selectionStart + 1;
+        }
+
+        private void toggleLinkButtonEnablement()
+        {
+            bool enabled = ((chkPreviousDose.Checked || chkPreviousDuration.Checked || chkPreviousName.Checked) ||
+                ((tbDosage.Text.Length > 0) || (tbDuration.Text.Length > 0) || (tbName.Text.Length > 0)));
+
+            btnTherapyLink.Enabled = enabled;
+            btnDosageLink.Enabled = enabled;
+            btnDurationLink.Enabled = enabled;
         }
 
         private void textBox_TextChanged(object sender, EventArgs e)
@@ -371,19 +359,31 @@ namespace BDEditor.Views
             toggleLinkButtonEnablement();
         }
 
-        private void toggleLinkButtonEnablement()
-        {
-            bool enabled = ((chkPreviousDose.Checked || chkPreviousDuration.Checked || chkPreviousName.Checked) ||
-                ((tbDosage.Text.Length > 0) || (tbDuration.Text.Length > 0) || (tbName.Text.Length > 0)));
-
-            btnTherapyLink.Enabled = enabled;
-            btnDosageLink.Enabled = enabled;
-            btnDurationLink.Enabled = enabled;
-        }
-
         private void BDTherapyControl_Leave(object sender, EventArgs e)
         {
             Save();
+        }
+
+        private void btnLink_Click(object sender, EventArgs e)
+        {
+            Button control = sender as Button;
+            if (null != control)
+            {
+                string tag = control.Tag as string;
+                createLink(tag);
+            }
+        }
+
+        private void lblLeftBracket_Click(object sender, EventArgs e)
+        {
+            this.displayLeftBracket = !this.displayLeftBracket;
+            lblLeftBracket.ForeColor = (this.displayLeftBracket) ? SystemColors.ControlText : SystemColors.ControlLight;
+        }
+
+        private void lblRightBracket_Click(object sender, EventArgs e)
+        {
+            this.displayRightBracket = !this.displayRightBracket;
+            lblRightBracket.ForeColor = (this.displayRightBracket) ? SystemColors.ControlText : SystemColors.ControlLight;
         }
 
         private void bToolStripMenuItem_Click(object sender, EventArgs e)

@@ -30,8 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDNodeControl));
-            this.lblNodeDetail = new System.Windows.Forms.Label();
+            this.lblNodeAsChild = new System.Windows.Forms.Label();
             this.panelHeader = new System.Windows.Forms.Panel();
+            this.lblNode = new System.Windows.Forms.Label();
             this.btnMenuRight = new System.Windows.Forms.Button();
             this.btnMenuLeft = new System.Windows.Forms.Button();
             this.btnLinkedNote = new System.Windows.Forms.Button();
@@ -54,6 +55,7 @@
             this.movePreviousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveNeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.addSectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addDetailToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,30 +65,41 @@
             this.contextMenuStripEvents.SuspendLayout();
             this.SuspendLayout();
             // 
-            // lblNodeDetail
+            // lblNodeAsChild
             // 
-            this.lblNodeDetail.AutoSize = true;
-            this.lblNodeDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNodeDetail.Location = new System.Drawing.Point(41, 10);
-            this.lblNodeDetail.Name = "lblNodeDetail";
-            this.lblNodeDetail.Size = new System.Drawing.Size(55, 20);
-            this.lblNodeDetail.TabIndex = 31;
-            this.lblNodeDetail.Text = "Name";
-            this.lblNodeDetail.Visible = false;
+            this.lblNodeAsChild.AutoSize = true;
+            this.lblNodeAsChild.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNodeAsChild.Location = new System.Drawing.Point(41, 10);
+            this.lblNodeAsChild.Name = "lblNodeAsChild";
+            this.lblNodeAsChild.Size = new System.Drawing.Size(55, 20);
+            this.lblNodeAsChild.TabIndex = 31;
+            this.lblNodeAsChild.Text = "Name";
+            this.lblNodeAsChild.Visible = false;
             // 
             // panelHeader
             // 
             this.panelHeader.BackColor = System.Drawing.SystemColors.Control;
+            this.panelHeader.Controls.Add(this.lblNode);
             this.panelHeader.Controls.Add(this.btnMenuRight);
-            this.panelHeader.Controls.Add(this.lblNodeDetail);
+            this.panelHeader.Controls.Add(this.lblNodeAsChild);
             this.panelHeader.Controls.Add(this.btnMenuLeft);
             this.panelHeader.Controls.Add(this.btnLinkedNote);
             this.panelHeader.Controls.Add(this.tbName);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(870, 72);
+            this.panelHeader.Size = new System.Drawing.Size(870, 66);
             this.panelHeader.TabIndex = 7;
+            // 
+            // lblNode
+            // 
+            this.lblNode.AutoSize = true;
+            this.lblNode.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNode.Location = new System.Drawing.Point(3, 6);
+            this.lblNode.Name = "lblNode";
+            this.lblNode.Size = new System.Drawing.Size(57, 24);
+            this.lblNode.TabIndex = 33;
+            this.lblNode.Text = "Node";
             // 
             // btnMenuRight
             // 
@@ -252,17 +265,18 @@
             this.movePreviousToolStripMenuItem,
             this.moveNeToolStripMenuItem,
             this.toolStripSeparator2,
+            this.addSectionToolStripMenuItem,
             this.addDetailToolStripMenuItem,
             this.toolStripSeparator1,
             this.deleteNodeToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(162, 126);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(171, 148);
             // 
             // movePreviousToolStripMenuItem
             // 
             this.movePreviousToolStripMenuItem.Image = global::BDEditor.Properties.Resources.previous_16;
             this.movePreviousToolStripMenuItem.Name = "movePreviousToolStripMenuItem";
-            this.movePreviousToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.movePreviousToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.movePreviousToolStripMenuItem.Text = "Move &Previous";
             this.movePreviousToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToPrevious_Click);
             // 
@@ -270,42 +284,50 @@
             // 
             this.moveNeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.next_16;
             this.moveNeToolStripMenuItem.Name = "moveNeToolStripMenuItem";
-            this.moveNeToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.moveNeToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.moveNeToolStripMenuItem.Text = "Move &Next";
             this.moveNeToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToNext_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(158, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(167, 6);
+            // 
+            // addSectionToolStripMenuItem
+            // 
+            this.addSectionToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_16x16;
+            this.addSectionToolStripMenuItem.Name = "addSectionToolStripMenuItem";
+            this.addSectionToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.addSectionToolStripMenuItem.Text = "Add Table Section";
+            this.addSectionToolStripMenuItem.Click += new System.EventHandler(this.TableSection_RequestItemAdd);
             // 
             // addDetailToolStripMenuItem
             // 
             this.addDetailToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_record_16;
             this.addDetailToolStripMenuItem.Name = "addDetailToolStripMenuItem";
-            this.addDetailToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.addDetailToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.addDetailToolStripMenuItem.Text = "Add Table Detail";
-            this.addDetailToolStripMenuItem.Click += new System.EventHandler(this.btnAdd_Click);
+            this.addDetailToolStripMenuItem.Click += new System.EventHandler(this.TableDetail_RequestItemAdd);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(158, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(167, 6);
             // 
             // deleteNodeToolStripMenuItem
             // 
             this.deleteNodeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.remove;
             this.deleteNodeToolStripMenuItem.Name = "deleteNodeToolStripMenuItem";
-            this.deleteNodeToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.deleteNodeToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.deleteNodeToolStripMenuItem.Text = "Delete";
-            this.deleteNodeToolStripMenuItem.Click += new System.EventHandler(this.btnDelete_Click);
+            this.deleteNodeToolStripMenuItem.Click += new System.EventHandler(this.TableSection_RequestItemDelete);
             // 
             // pnlDetail
             // 
             this.pnlDetail.AutoSize = true;
             this.pnlDetail.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pnlDetail.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlDetail.Location = new System.Drawing.Point(0, 72);
+            this.pnlDetail.Location = new System.Drawing.Point(0, 66);
             this.pnlDetail.MinimumSize = new System.Drawing.Size(600, 5);
             this.pnlDetail.Name = "pnlDetail";
             this.pnlDetail.Size = new System.Drawing.Size(870, 5);
@@ -321,7 +343,7 @@
             this.Controls.Add(this.panelHeader);
             this.MinimumSize = new System.Drawing.Size(870, 50);
             this.Name = "BDNodeControl";
-            this.Size = new System.Drawing.Size(870, 101);
+            this.Size = new System.Drawing.Size(870, 95);
             this.Load += new System.EventHandler(this.BDNodeControl_Load);
             this.Leave += new System.EventHandler(this.BDNodeControl_Leave);
             this.panelHeader.ResumeLayout(false);
@@ -335,7 +357,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lblNodeDetail;
+        private System.Windows.Forms.Label lblNodeAsChild;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Button btnMenuLeft;
         private System.Windows.Forms.Button btnLinkedNote;
@@ -363,5 +385,7 @@
         private System.Windows.Forms.Button btnMenuRight;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem deleteNodeToolStripMenuItem;
+        private System.Windows.Forms.Label lblNode;
+        private System.Windows.Forms.ToolStripMenuItem addSectionToolStripMenuItem;
     }
 }

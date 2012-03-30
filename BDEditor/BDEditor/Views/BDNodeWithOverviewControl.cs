@@ -19,10 +19,9 @@ namespace BDEditor.Views
         private Guid? scopeId;
         private Guid? parentId;
         private BDConstants.BDNodeType parentType = BDConstants.BDNodeType.None;
+        private bool showAsChild = false;
         public BDConstants.LayoutVariantType DefaultLayoutVariantType;
-        private BDConstants.BDNodeType defaultNodeType;
-        private bool enableRightMenu = false;
-        private bool enableLeftMenu = false;
+        public BDConstants.BDNodeType DefaultNodeType;
 
         public int? DisplayOrder { get; set; }
 
@@ -67,11 +66,65 @@ namespace BDEditor.Views
             if (null != ReorderToNext) { ReorderToNext(this, e); }
         }
 
+        public bool ShowAsChild
+        {
+            get { return showAsChild; }
+            set { showAsChild = value; }
+        }
+
         public IBDNode CurrentNode
         {
             get { return currentNode; }
             set { currentNode = value; }
         }
+
+        public BDNodeWithOverviewControl()
+        {
+            InitializeComponent();
+        }
+
+        /// <summary>
+        /// Initialize form with existing BDNode
+        /// </summary>
+        /// <param name="pDataContext"></param>
+        /// <param name="pNode"></param>
+        public BDNodeWithOverviewControl(Entities pDataContext, IBDNode pNode)
+        {
+            dataContext = pDataContext;
+            currentNode = pNode;
+            DefaultLayoutVariantType = pNode.LayoutVariant;
+            parentId = pNode.ParentId;
+            DefaultNodeType = pNode.NodeType;
+
+            InitializeComponent();
+        }
+
+        private void BDNodeControl_Load(object sender, EventArgs e)
+        {
+            btnLinkedNote.Tag = BDNode.PROPERTYNAME_NAME;
+            setFormLayoutState();
+            if (null != currentNode)
+            {
+                if(tbName.Text != currentNode.Name) tbName.Text = currentNode.Name;
+            }
+        }
+
+        private void BDNodeControl_Leave(object sender, EventArgs e)
+        {
+            Save();
+        }
+
+        public void AssignScopeId(Guid? pScopeId)
+        {
+            scopeId = pScopeId;
+        }
+
+        public void AssignDataContext(Entities pDataContext)
+        {
+            dataContext = pDataContext;
+        }
+
+        #region IBDControl
 
         public void RefreshLayout()
         {
@@ -84,7 +137,7 @@ namespace BDEditor.Views
                 overviewLinkedNote = null;
 
                 bdLinkedNoteControl1.CurrentLinkedNote = null;
-                bdLinkedNoteControl1.AssignParentInfo(null, defaultNodeType);
+                bdLinkedNoteControl1.AssignParentInfo(null, DefaultNodeType);
                 bdLinkedNoteControl1.AssignScopeId(scopeId);
                 bdLinkedNoteControl1.AssignContextPropertyName(BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
             }
@@ -108,66 +161,6 @@ namespace BDEditor.Views
             this.ResumeLayout();
 
         }
-
-        public BDNodeWithOverviewControl()
-        {
-            InitializeComponent();
-        }
-
-        /// <summary>
-        /// Initialize form with existing BDNode
-        /// </summary>
-        /// <param name="pDataContext"></param>
-        /// <param name="pNode"></param>
-        public BDNodeWithOverviewControl(Entities pDataContext, IBDNode pNode)
-        {
-            dataContext = pDataContext;
-            currentNode = pNode;
-            DefaultLayoutVariantType = pNode.LayoutVariant;
-            parentId = pNode.ParentId;
-            defaultNodeType = pNode.NodeType;
-
-            InitializeComponent();
-        }
-
-        private void BDNodeControl_Load(object sender, EventArgs e)
-        {
-            btnLinkedNote.Tag = BDNode.PROPERTYNAME_NAME;
-            lblNode.Text = BDUtilities.GetEnumDescription(defaultNodeType);
-
-            if (null != currentNode)
-            {
-                if(tbName.Text != currentNode.Name) tbName.Text = currentNode.Name;
-                if (currentNode.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt)
-                {
-                    btnMenuLeft.Enabled = true;
-                    btnMenuLeft.Visible = true;
-                }
-                else
-                {
-                    btnMenuLeft.Visible = false;
-                    btnMenuLeft.Enabled = false;
-                }
-            }
-        }
-
-        public void AssignScopeId(Guid? pScopeId)
-        {
-            scopeId = pScopeId;
-        }
-
-        public void AssignDataContext(Entities pDataContext)
-        {
-            dataContext = pDataContext;
-        }
-
-        public void AssignMenuButton(bool pEnableLeft, bool pEnableRight)
-        {
-            enableLeftMenu = pEnableLeft;
-            enableRightMenu = pEnableRight;
-        }
-
-        #region IBDControl
 
         public void AssignParentInfo(Guid? pParentId, BDConstants.BDNodeType pParentType)
         {
@@ -247,7 +240,7 @@ namespace BDEditor.Views
                 }
                 else
                 {
-                    switch (defaultNodeType)
+                    switch (DefaultNodeType)
                     {
                         case BDConstants.BDNodeType.BDTherapy:
                             currentNode = BDTherapy.CreateTherapy(dataContext, parentId.Value);
@@ -256,7 +249,7 @@ namespace BDEditor.Views
                             currentNode = BDTherapyGroup.CreateTherapyGroup(dataContext, parentId.Value);
                             break; 
                         default:
-                            currentNode = BDNode.CreateNode(this.dataContext, this.defaultNodeType);
+                            currentNode = BDNode.CreateNode(this.dataContext, this.DefaultNodeType);
                             break;
                     }
                     
@@ -266,24 +259,6 @@ namespace BDEditor.Views
             }
 
             return result;
-        }
-
-        private void CreateLink(string pProperty)
-        {
-            if(CreateCurrentObject())
-            {
-                Save();
-                
-                BDLinkedNoteView view = new BDLinkedNoteView();
-                view.AssignDataContext(dataContext);
-                view.AssignContextPropertyName(pProperty);
-                view.AssignParentInfo(currentNode.Uuid, currentNode.NodeType);
-                view.AssignScopeId(scopeId);
-                view.NotesChanged += new EventHandler(notesChanged_Action);
-                view.ShowDialog(this);
-                view.NotesChanged -= new EventHandler(notesChanged_Action);
-                ShowLinksInUse(false);
-            }
         }
 
         public void ShowLinksInUse(bool pPropagateToChildren)
@@ -311,12 +286,39 @@ namespace BDEditor.Views
             pTextBox.SelectionStart = x + 1;
         }
 
-        private void setMenuButtonState()
+        private void setFormLayoutState()
         {
-            btnMenuLeft.Enabled = enableLeftMenu;
-            btnMenuLeft.Visible = enableLeftMenu;
-            btnMenuRight.Enabled = enableRightMenu;
-            btnMenuRight.Visible = enableRightMenu;
+            btnMenuLeft.Enabled = !showAsChild;
+            btnMenuLeft.Visible = !showAsChild;
+            lblNode.Text = BDUtilities.GetEnumDescription(DefaultNodeType);
+            lblNode.Enabled = !showAsChild;
+            lblNode.Visible = !showAsChild;
+            lblOverview.Visible = !showAsChild;
+            
+            btnMenuRight.Enabled = showAsChild;
+            btnMenuRight.Visible = showAsChild;
+            lblNodeAsChild.Text = @"Table Row Title";
+            lblNodeAsChild.Enabled = showAsChild;
+            lblNodeAsChild.Visible = showAsChild;
+
+        }
+
+        private void createLink(string pProperty)
+        {
+            if(CreateCurrentObject())
+            {
+                Save();
+                
+                BDLinkedNoteView view = new BDLinkedNoteView();
+                view.AssignDataContext(dataContext);
+                view.AssignContextPropertyName(pProperty);
+                view.AssignParentInfo(currentNode.Uuid, currentNode.NodeType);
+                view.AssignScopeId(scopeId);
+                view.NotesChanged += new EventHandler(notesChanged_Action);
+                view.ShowDialog(this);
+                view.NotesChanged -= new EventHandler(notesChanged_Action);
+                ShowLinksInUse(false);
+            }
         }
 
         private void notesChanged_Action(object sender, EventArgs e)
@@ -343,7 +345,7 @@ namespace BDEditor.Views
             if (null != control)
             {
                 string tag = control.Tag as string;
-                CreateLink(tag);
+                createLink(tag);
             }
         }
 
@@ -412,11 +414,6 @@ namespace BDEditor.Views
         private void btnMenu_Click(object sender, EventArgs e)
         {
             this.contextMenuStripEvents.Show(btnMenuLeft, new System.Drawing.Point(0, btnMenuLeft.Height));
-        }
-
-        private void BDNodeControl_Leave(object sender, EventArgs e)
-        {
-            Save();
         }
 
         private void tbName_Leave(object sender, EventArgs e)

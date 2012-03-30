@@ -130,6 +130,20 @@ namespace BDEditor.Views
             tbName.AutoCompleteSource = AutoCompleteSource.CustomSource;
         }
 
+        public void ShowLinksInUse(bool pPropagateToChildren)
+        {
+            List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentTherapyGroup) ? this.currentTherapyGroup.uuid : Guid.Empty);
+            btnTherapyGroupLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnTherapyGroupLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
+
+            if (pPropagateToChildren)
+            {
+                for (int idx = 0; idx < therapyControlList.Count; idx++)
+                {
+                    therapyControlList[idx].ShowLinksInUse(true);
+                }
+            }
+        }
+
         #region IBDControl
 
         public void AssignDataContext(Entities pDataContext)
@@ -224,6 +238,35 @@ namespace BDEditor.Views
 
         #endregion
 
+        private void CreateLink(string pProperty)
+        {
+            if (CreateCurrentObject())
+            {
+                Save();
+                BDLinkedNoteView view = new BDLinkedNoteView();
+                view.AssignDataContext(dataContext);
+                view.AssignContextPropertyName(pProperty);
+                view.AssignParentInfo(currentTherapyGroup.Uuid, currentTherapyGroup.NodeType);
+                view.AssignScopeId(scopeId);
+                view.NotesChanged += new EventHandler(notesChanged_Action);
+                view.ShowDialog(this);
+                view.NotesChanged -= new EventHandler(notesChanged_Action);
+                ShowLinksInUse(false);
+            }
+        }
+
+        private void insertText(TextBox pTextBox, string pText)
+        {
+            int x = pTextBox.SelectionStart;
+            pTextBox.Text = pTextBox.Text.Insert(pTextBox.SelectionStart, pText);
+            pTextBox.SelectionStart = x + 1;
+        }
+
+        public override string ToString()
+        {
+            return (null == this.currentTherapyGroup) ? "No Therapy Group" : this.currentTherapyGroup.name;
+        }
+
         private BDTherapyControl addTherapyControl(BDTherapy pTherapy, int pTabIndex)
         {
             BDTherapyControl therapyControl = null;
@@ -289,52 +332,7 @@ namespace BDEditor.Views
             pTherapyControl = null;
         }
 
-        private void BDTherapyGroupControl_Leave(object sender, EventArgs e)
-        {
-            Save();
-        }
-
-        private void btnLink_Click(object sender, EventArgs e)
-        {
-            Button control = sender as Button;
-            if (null != control)
-            {
-                CreateLink(control.Tag as string);
-            }
-        }
-
-        private void CreateLink(string pProperty)
-        {
-            if (CreateCurrentObject())
-            {
-                Save();
-                BDLinkedNoteView view = new BDLinkedNoteView();
-                view.AssignDataContext(dataContext);
-                view.AssignContextPropertyName(pProperty);
-                view.AssignParentInfo(currentTherapyGroup.Uuid, currentTherapyGroup.NodeType);
-                view.AssignScopeId(scopeId);
-                view.NotesChanged += new EventHandler(notesChanged_Action);
-                view.ShowDialog(this);
-                view.NotesChanged -= new EventHandler(notesChanged_Action);
-                ShowLinksInUse(false);
-            }
-        }
-
-        public void ShowLinksInUse(bool pPropagateToChildren)
-        {
-            List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentTherapyGroup) ? this.currentTherapyGroup.uuid : Guid.Empty);
-            btnTherapyGroupLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnTherapyGroupLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
-
-            if (pPropagateToChildren)
-            {
-                for (int idx = 0; idx < therapyControlList.Count; idx++)
-                {
-                    therapyControlList[idx].ShowLinksInUse(true);
-                }
-            }
-        }
-
-        private void ReorderTherapyControl(BDTherapyControl pTherapyControl, int pOffset)
+        private void reorderTherapyControl(BDTherapyControl pTherapyControl, int pOffset)
         {
             int currentPosition = therapyControlList.FindIndex(t => t == pTherapyControl);
             if (currentPosition >= 0)
@@ -400,7 +398,7 @@ namespace BDEditor.Views
             BDTherapyControl control = sender as BDTherapyControl;
             if (null != control)
             {
-                ReorderTherapyControl(control, 1);
+                reorderTherapyControl(control, 1);
             }
         }
 
@@ -409,7 +407,7 @@ namespace BDEditor.Views
             BDTherapyControl control = sender as BDTherapyControl;
             if (null != control)
             {
-                ReorderTherapyControl(control, -1);
+                reorderTherapyControl(control, -1);
             }
         }
 
@@ -421,6 +419,15 @@ namespace BDEditor.Views
         private void btnReorderToNext_Click(object sender, EventArgs e)
         {
             OnReorderToNext(new EventArgs());
+        }
+
+        private void btnLink_Click(object sender, EventArgs e)
+        {
+            Button control = sender as Button;
+            if (null != control)
+            {
+                CreateLink(control.Tag as string);
+            }
         }
 
         private void bToolStripMenuItem_Click(object sender, EventArgs e)
@@ -502,18 +509,6 @@ namespace BDEditor.Views
             tbName.SelectedText = string.Empty;
         }
 
-        private void insertText(TextBox pTextBox, string pText)
-        {
-            int x = pTextBox.SelectionStart;
-            pTextBox.Text = pTextBox.Text.Insert(pTextBox.SelectionStart, pText);
-            pTextBox.SelectionStart = x + 1;
-        }
-
-        public override string ToString()
-        {
-            return (null == this.currentTherapyGroup) ? "No Therapy Group" : this.currentTherapyGroup.name;
-        }
-
         private void btnMenu_Click(object sender, EventArgs e)
         {
             this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
@@ -536,5 +531,10 @@ namespace BDEditor.Views
                 deleteToolStripMenuItem1.Enabled = (tbName.SelectionLength > 0);
             }
         }
-    }
+
+        private void BDTherapyGroupControl_Leave(object sender, EventArgs e)
+        {
+            Save();
+        }
+   }
 }

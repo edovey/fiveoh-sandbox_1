@@ -14,5 +14,12 @@ namespace BDEditor.Views
         bool CreateCurrentObject();
         void RefreshLayout();
         void ShowLinksInUse(bool pPropagateToChildren);
+
+        event EventHandler<NodeEventArgs> RequestItemAdd;
+        event EventHandler<NodeEventArgs> RequestItemDelete;
+        event EventHandler<NodeEventArgs> ReorderToPrevious;
+        event EventHandler<NodeEventArgs> ReorderToNext;
+        event EventHandler<NodeEventArgs> NotesChanged;
+        event EventHandler<NodeEventArgs> NameChanged;
     }
 }

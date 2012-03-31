@@ -313,18 +313,10 @@ namespace BDEditor.Views
 
             foreach (Control ctrl in splitContainer1.Panel2.Controls)
             {
-                BDNodeWithOverviewControl nodeCtrl = ctrl as BDNodeWithOverviewControl;
+                IBDControl nodeCtrl = ctrl as IBDControl;
                 if (null != nodeCtrl)
                 {
                     nodeCtrl.NameChanged -= new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
-                }
-                else
-                {
-                    BDPresentationControl presCtrl = ctrl as BDPresentationControl;
-                    if (null != presCtrl)
-                    {
-                        presCtrl.NameChanged -= new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
-                    }
                 }
             }
 

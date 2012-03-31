@@ -27,42 +27,48 @@ namespace BDEditor.Views
 
         private List<BDNodeControl> sectionControlList = new List<BDNodeControl>();
 
-        public event EventHandler RequestItemAdd;
-        public event EventHandler RequestItemDelete;
-        public event EventHandler ReorderToPrevious;
-        public event EventHandler ReorderToNext;
-        public event EventHandler NotesChanged;
+        public event EventHandler<NodeEventArgs> RequestItemAdd;
+        public event EventHandler<NodeEventArgs> RequestItemDelete;
+
+        public event EventHandler<NodeEventArgs> ReorderToPrevious;
+        public event EventHandler<NodeEventArgs> ReorderToNext;
+
+        public event EventHandler<NodeEventArgs> NotesChanged;
         public event EventHandler<NodeEventArgs> NameChanged;
-
-        protected virtual void OnNotesChanged(EventArgs e)
-        {
-            if (null != NotesChanged) { NotesChanged(this, e); }
-        }
-
-        protected virtual void OnItemAddRequested(EventArgs e)
-        {
-            if (null != RequestItemAdd) { RequestItemAdd(this, e); }
-        }
-
-        protected virtual void OnItemDeleteRequested(EventArgs e)
-        {
-            if (null != RequestItemDelete) { RequestItemDelete(this, e); }
-        }
-
-        protected virtual void OnReorderToPrevious(EventArgs e)
-        {
-            if (null != ReorderToPrevious) { ReorderToPrevious(this, e); }
-        }
-
-        protected virtual void OnReorderToNext(EventArgs e)
-        {
-            if (null != ReorderToNext) { ReorderToNext(this, e); }
-        }
 
         protected virtual void OnNameChanged(NodeEventArgs e)
         {
             EventHandler<NodeEventArgs> handler = NameChanged;
+            if (null != handler) { handler(this, e); }
+        }
 
+        protected virtual void OnNotesChanged(NodeEventArgs e)
+        {
+            EventHandler<NodeEventArgs> handler = NotesChanged;
+            if (null != handler) { handler(this, e); }
+        }
+
+        protected virtual void OnItemAddRequested(NodeEventArgs e)
+        {
+            EventHandler<NodeEventArgs> handler = RequestItemAdd;
+            if (null != handler) { handler(this, e); }
+        }
+
+        protected virtual void OnItemDeleteRequested(NodeEventArgs e)
+        {
+            EventHandler<NodeEventArgs> handler = RequestItemDelete;
+            if (null != handler) { handler(this, e); }
+        }
+
+        protected virtual void OnReorderToPrevious(NodeEventArgs e)
+        {
+            EventHandler<NodeEventArgs> handler = ReorderToPrevious;
+            if (null != handler) { handler(this, e); }
+        }
+
+        protected virtual void OnReorderToNext(NodeEventArgs e)
+        {
+            EventHandler<NodeEventArgs> handler = ReorderToNext;
             if (null != handler) { handler(this, e); }
         }
 

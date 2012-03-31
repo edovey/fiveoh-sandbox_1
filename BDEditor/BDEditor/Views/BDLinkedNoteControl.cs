@@ -24,9 +24,47 @@ namespace BDEditor.Views
         private BDLinkedNote currentLinkedNote;
         private BDLinkedNoteView linkView;
         private bool newLinkSaved = false;
-        public event EventHandler NotesChanged;
 
         public event EventHandler SaveAttemptWithoutParent;
+
+        public event EventHandler<NodeEventArgs> RequestItemAdd;
+        public event EventHandler<NodeEventArgs> RequestItemDelete;
+
+        public event EventHandler<NodeEventArgs> ReorderToPrevious;
+        public event EventHandler<NodeEventArgs> ReorderToNext;
+
+        public event EventHandler<NodeEventArgs> NotesChanged;
+        public event EventHandler<NodeEventArgs> NameChanged;
+
+        protected virtual void OnNameChanged(NodeEventArgs e)
+        {
+            EventHandler<NodeEventArgs> handler = NameChanged;
+            if (null != handler) { handler(this, e); }
+        }
+
+        protected virtual void OnItemAddRequested(NodeEventArgs e)
+        {
+            EventHandler<NodeEventArgs> handler = RequestItemAdd;
+            if (null != handler) { handler(this, e); }
+        }
+
+        protected virtual void OnItemDeleteRequested(NodeEventArgs e)
+        {
+            EventHandler<NodeEventArgs> handler = RequestItemDelete;
+            if (null != handler) { handler(this, e); }
+        }
+
+        protected virtual void OnReorderToPrevious(NodeEventArgs e)
+        {
+            EventHandler<NodeEventArgs> handler = ReorderToPrevious;
+            if (null != handler) { handler(this, e); }
+        }
+
+        protected virtual void OnReorderToNext(NodeEventArgs e)
+        {
+            EventHandler<NodeEventArgs> handler = ReorderToNext;
+            if (null != handler) { handler(this, e); }
+        }
 
         protected virtual void OnSaveAttemptWithoutParent(EventArgs e)
         {
@@ -67,12 +105,12 @@ namespace BDEditor.Views
             scopeId = pScopeId;
         }
 
-        private void notesChanged_Action(object sender, EventArgs e)
+        private void notesChanged_Action(object sender, NodeEventArgs e)
         {
-            OnNotesChanged(new EventArgs());
+            OnNotesChanged(new NodeEventArgs());
         }
 
-        protected virtual void OnNotesChanged(EventArgs e)
+        protected virtual void OnNotesChanged(NodeEventArgs e)
         {
             if (this.linkValue.Length > 0 && this.linkView.HasNewLink)
             {
@@ -119,7 +157,8 @@ namespace BDEditor.Views
             textControl.Select(currentLocation, 0);
             Save();
 
-            if (null != NotesChanged) { NotesChanged(this, e); }
+            EventHandler<NodeEventArgs> handler = NotesChanged;
+            if (null != handler) { handler(this, e); }
         }
 
         private void BDLinkedNoteControl_Load(object sender, EventArgs e)

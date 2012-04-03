@@ -22,9 +22,10 @@ namespace BDEditor.Views
 
         public BDConstants.BDNodeType DefaultNodeType;
         public BDConstants.LayoutVariantType DefaultLayoutVariantType;
-        public int? DisplayOrder { get; set; }
+        public int? DisplayOrder;
 
-        private List<BDNodeWithOverviewControl> detailControlList = new List<BDNodeWithOverviewControl>();
+        //private List<BDNodeWithOverviewControl> detailControlList = new List<BDNodeWithOverviewControl>();
+        private List<IBDControl> childNodeControlList = new List<IBDControl>();
 
         private List<ToolStripMenuItem> addChildNodeToolStripMenuItemList = new List<ToolStripMenuItem>(); //List of possible children
         private List<ToolStripMenuItem> addSiblingNodeToolStripMenuItemList = new List<ToolStripMenuItem>(); //Bubbles to parent for creation
@@ -137,12 +138,12 @@ namespace BDEditor.Views
         {
             this.SuspendLayout();
 
-            for (int idx = 0; idx < detailControlList.Count; idx++)
+            for (int idx = 0; idx < childNodeControlList.Count; idx++)
             {
-                BDNodeWithOverviewControl control = detailControlList[idx];
-                removeNodeControlForTableDetail(control, false);
+                IBDControl control = childNodeControlList[idx];
+                removeChildNodeControl(control, false);
             }
-            detailControlList.Clear();
+            childNodeControlList.Clear();
             pnlDetail.Controls.Clear();
 
             if (currentNode == null)
@@ -156,8 +157,7 @@ namespace BDEditor.Views
                 int idxDetail = 0;
                 foreach (IBDNode entry in list)
                 {
-                    BDNode node = entry as BDNode;
-                    addNodeControlForTableDetail(node, idxDetail++);
+                    addChildNodeControl(entry, idxDetail++);
                 }
             }
             ShowLinksInUse(false);
@@ -249,6 +249,8 @@ namespace BDEditor.Views
                 {
                     switch (DefaultNodeType)
                     {
+                        case BDConstants.BDNodeType.None:
+                            break;
                         case BDConstants.BDNodeType.BDTherapy:
                             currentNode = BDTherapy.CreateTherapy(dataContext, parentId.Value);
                             break;
@@ -275,9 +277,9 @@ namespace BDEditor.Views
 
             if (pPropagateToChildren)
             {
-                for (int idx = 0; idx < detailControlList.Count; idx++)
+                for (int idx = 0; idx < childNodeControlList.Count; idx++)
                 {
-                    detailControlList[idx].ShowLinksInUse(true);
+                    childNodeControlList[idx].ShowLinksInUse(true);
                 }
             }
         }
@@ -324,98 +326,172 @@ namespace BDEditor.Views
             }
         }
 
-        private BDNodeWithOverviewControl addNodeControlForTableDetail(BDNode pNode, int pTabIndex)
+        private IBDControl addChildNodeControl(IBDNode pNode, int pTabIndex)
         {
-            BDNodeWithOverviewControl nodeControl = null;
+            IBDControl nodeControl = null;
 
             if (CreateCurrentObject())
             {
-                nodeControl = new BDNodeWithOverviewControl();
+                switch (pNode.NodeType)
+                {
+                    case BDConstants.BDNodeType.BDTableSection:
+                        switch(pNode.LayoutVariant)
+                        {
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
+                            default:
+                                nodeControl = new BDNodeControl();
+                            break;
+                        }
+                        break;
+                    case BDConstants.BDNodeType.BDTableRow:
+                         switch(pNode.LayoutVariant)
+                        {
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
+                            default:
+                                nodeControl = new BDNodeWithOverviewControl();
+                            break;
+                        }
+                        break;
+                    default:
 
-                nodeControl.Dock = DockStyle.Top;
-                nodeControl.TabIndex = pTabIndex;
-                nodeControl.DisplayOrder = pTabIndex;
-                nodeControl.AssignParentInfo(currentNode.Uuid, currentNode.NodeType);
-                nodeControl.AssignDataContext(dataContext);
-                nodeControl.AssignScopeId(scopeId);
-                nodeControl.ShowAsChild = true;
-                nodeControl.CurrentNode = pNode;
-                nodeControl.DefaultLayoutVariantType = this.DefaultLayoutVariantType;
-                nodeControl.DefaultNodeType = BDConstants.BDNodeType.BDTableRow;
+                        break;
+                }
 
-                nodeControl.RequestItemAdd += new EventHandler(TableDetail_RequestItemAdd);
-                nodeControl.RequestItemDelete += new EventHandler(TableDetail_RequestItemDelete);
-                nodeControl.ReorderToNext += new EventHandler(TableDetail_ReorderToNext);
-                nodeControl.ReorderToPrevious += new EventHandler(TableDetail_ReorderToPrevious);
-                nodeControl.NotesChanged += new EventHandler(notesChanged_Action);
-                detailControlList.Add(nodeControl);
+                if(null != nodeControl)
+                {
+                    ((System.Windows.Forms.UserControl)nodeControl).Dock = DockStyle.Top;
+                    ((System.Windows.Forms.UserControl)nodeControl).TabIndex = pTabIndex;
+                    nodeControl.DisplayOrder = pTabIndex;
+                    nodeControl.AssignParentInfo(currentNode.Uuid, currentNode.NodeType);
+                    nodeControl.AssignDataContext(dataContext);
+                    nodeControl.AssignScopeId(scopeId);
+                    nodeControl.ShowAsChild = true;
+                    nodeControl.CurrentNode = pNode;
+                    nodeControl.DefaultLayoutVariantType = this.DefaultLayoutVariantType;
+                    nodeControl.DefaultNodeType = BDConstants.BDNodeType.BDTableRow;
 
-                pnlDetail.Controls.Add(nodeControl);
-                nodeControl.BringToFront();
-                nodeControl.RefreshLayout();
+                    nodeControl.ReorderToNext += new EventHandler<NodeEventArgs>(childNodeControl_ReorderToNext);
+                    nodeControl.ReorderToPrevious += new EventHandler<NodeEventArgs>(childNodeControl_ReorderToPrevious);
+                    nodeControl.RequestItemAdd += new EventHandler<NodeEventArgs>(childNodeControl_RequestItemAdd);
+                    nodeControl.RequestItemDelete += new EventHandler<NodeEventArgs>(childNodeControl_RequestItemDelete);
+                    nodeControl.NotesChanged += new EventHandler<NodeEventArgs>(childNodeControl_NotesChanged);
+                    nodeControl.NameChanged += new EventHandler<NodeEventArgs>(childNodeControl_NameChanged);
+
+                    childNodeControlList.Add(nodeControl);
+
+                    pnlDetail.Controls.Add(((System.Windows.Forms.UserControl)nodeControl));
+
+                    ((System.Windows.Forms.UserControl)nodeControl).BringToFront();
+                    nodeControl.RefreshLayout();
+                }
             }
             return nodeControl;
         }
 
-        private void removeNodeControlForTableDetail(BDNodeWithOverviewControl pNodeControl, bool pDeleteRecord)
+        void childNodeControl_NameChanged(object sender, NodeEventArgs e)
         {
-            this.Controls.Remove(pNodeControl);
+            throw new NotImplementedException();
+        }
 
-            pNodeControl.RequestItemAdd -= new EventHandler(TableDetail_RequestItemAdd);
-            pNodeControl.RequestItemDelete -= new EventHandler(TableDetail_RequestItemDelete);
-            pNodeControl.ReorderToNext -= new EventHandler(TableDetail_ReorderToNext);
-            pNodeControl.ReorderToPrevious -= new EventHandler(TableDetail_ReorderToPrevious);
-            pNodeControl.NotesChanged -= new EventHandler(notesChanged_Action);
+        void childNodeControl_NotesChanged(object sender, NodeEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
 
-            detailControlList.Remove(pNodeControl);
+        void childNodeControl_RequestItemDelete(object sender, NodeEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        void childNodeControl_RequestItemAdd(object sender, NodeEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        void childNodeControl_ReorderToPrevious(object sender, NodeEventArgs e)
+        {
+
+            reorderChildNodeControl(e.Uuid.Value, -1);
+        }
+
+        void childNodeControl_ReorderToNext(object sender, NodeEventArgs e)
+        {
+            reorderChildNodeControl(e.Uuid.Value, 1);
+        }
+
+        private void removeChildNodeControl(IBDControl pChildNodeControl, bool pDeleteRecord)
+        {
+            this.Controls.Remove(((System.Windows.Forms.UserControl)pChildNodeControl));
+
+            pChildNodeControl.NameChanged -= new EventHandler<NodeEventArgs>(childNodeControl_NameChanged);
+            pChildNodeControl.NotesChanged -= new EventHandler<NodeEventArgs>(childNodeControl_NotesChanged);
+            pChildNodeControl.ReorderToNext -= new EventHandler<NodeEventArgs>(childNodeControl_ReorderToNext);
+            pChildNodeControl.ReorderToPrevious -= new EventHandler<NodeEventArgs>(childNodeControl_ReorderToPrevious);
+            pChildNodeControl.RequestItemAdd -= new EventHandler<NodeEventArgs>(childNodeControl_RequestItemAdd);
+            pChildNodeControl.RequestItemDelete -= new EventHandler<NodeEventArgs>(childNodeControl_RequestItemDelete);
+
+            childNodeControlList.Remove(pChildNodeControl);
 
             if (pDeleteRecord)
             {
-                BDNode node = (BDNode)pNodeControl.CurrentNode;
+                IBDNode node = pChildNodeControl.CurrentNode;
                 if (null != node)
                 {
                     BDNode.Delete(dataContext, node, pDeleteRecord);
 
-                    for (int idx = 0; idx < detailControlList.Count; idx++)
+                    for (int idx = 0; idx < childNodeControlList.Count; idx++)
                     {
-                        detailControlList[idx].DisplayOrder = idx;
+                        childNodeControlList[idx].DisplayOrder = idx;
                     }
                 }
             }
 
-            pNodeControl.Dispose();
-            pNodeControl = null;
+            ((System.Windows.Forms.UserControl)pChildNodeControl).Dispose();
+            pChildNodeControl = null;
         }
 
-        private void reorderNodeControlForTableDetail(BDNodeWithOverviewControl pNodeControl, int pOffset)
+
+        private void reorderChildNodeControl(Guid pChildNodeUuid, int pOffset)
         {
-            int currentPosition = detailControlList.FindIndex(t => t == pNodeControl);
+            int position = childNodeControlList.FindIndex(t => t.CurrentNode.Uuid == pChildNodeUuid);
+            if (position >= 0)
+            {
+                IBDControl control = childNodeControlList[position];
+                reorderChildNodeControl(control, pOffset);
+            }
+        }
+
+        private void reorderChildNodeControl(IBDControl pChildNodeControl, int pOffset)
+        {
+            int currentPosition = childNodeControlList.FindIndex(t => t == pChildNodeControl);
             if (currentPosition >= 0)
             {
                 int requestedPosition = currentPosition += pOffset;
-                if ((requestedPosition >= 0) && (requestedPosition < detailControlList.Count))
+                if ((requestedPosition >= 0) && (requestedPosition < childNodeControlList.Count))
                 {
-                    detailControlList[requestedPosition].CreateCurrentObject();
-                    detailControlList[requestedPosition].DisplayOrder = currentPosition;
+                    childNodeControlList[requestedPosition].CreateCurrentObject();
+                    childNodeControlList[requestedPosition].DisplayOrder = currentPosition;
+                    childNodeControlList[requestedPosition].CurrentNode.DisplayOrder = currentPosition;
+                    BDFabrik.SaveNode(dataContext, childNodeControlList[requestedPosition].CurrentNode);
 
-                    detailControlList[requestedPosition].CurrentNode.DisplayOrder = currentPosition;
-                    BDNode.Save(dataContext, detailControlList[requestedPosition].CurrentNode as BDNode);
+                    childNodeControlList[currentPosition].CreateCurrentObject();
+                    childNodeControlList[currentPosition].DisplayOrder = requestedPosition;
+                    childNodeControlList[currentPosition].CurrentNode.DisplayOrder = requestedPosition;
+                    BDFabrik.SaveNode(dataContext, childNodeControlList[currentPosition].CurrentNode);
 
-                    detailControlList[currentPosition].CreateCurrentObject();
-                    detailControlList[currentPosition].DisplayOrder = requestedPosition;
-                    detailControlList[currentPosition].CurrentNode.DisplayOrder = requestedPosition;
-                    BDNode.Save(dataContext, detailControlList[currentPosition].CurrentNode as BDNode);
+                    IBDControl temp = childNodeControlList[requestedPosition];
+                    childNodeControlList[requestedPosition] = childNodeControlList[currentPosition];
+                    childNodeControlList[currentPosition] = temp;
 
-                    BDNodeWithOverviewControl temp = detailControlList[requestedPosition];
-                    detailControlList[requestedPosition] = detailControlList[currentPosition];
-                    detailControlList[currentPosition] = temp;
-
-                    int zOrder = pnlDetail.Controls.GetChildIndex(pNodeControl);
+                    int zOrder = pnlDetail.Controls.GetChildIndex(((System.Windows.Forms.UserControl)pChildNodeControl));
                     zOrder = zOrder + (pOffset * -1);
-                    pnlDetail.Controls.SetChildIndex(pNodeControl, zOrder);
+                    pnlDetail.Controls.SetChildIndex(((System.Windows.Forms.UserControl)pChildNodeControl), zOrder);
                 }
             }
         }
+        /*
 
         private void TableSection_RequestItemAdd(object sender, EventArgs e)
         {
@@ -462,11 +538,14 @@ namespace BDEditor.Views
                 reorderNodeControlForTableDetail(control, 1);
             }
         }
+        
 
         private void notesChanged_Action(object sender, EventArgs e)
         {
             OnNotesChanged(new EventArgs());
         }
+        
+        */
 
         private void bdLinkedNoteControl_SaveAttemptWithoutParent(object sender, EventArgs e)
         {
@@ -577,8 +656,8 @@ namespace BDEditor.Views
                 BDNodeWrapper nodeWrapper = menuItem.Tag as BDNodeWrapper;
                 if (null != nodeWrapper)
                 {
-                    BDFabrik.CreateChildNode(DataContext, nodeWrapper.Node, nodeWrapper.TargetNodeType, nodeWrapper.TargetLayoutVariant);
-                    showNavSelection(nodeWrapper.NodeTreeNode);
+                    IBDNode node = BDFabrik.CreateChildNode(dataContext, nodeWrapper.Node, nodeWrapper.TargetNodeType, nodeWrapper.TargetLayoutVariant);
+                    addChildNodeControl(node, childNodeControlList.Count);
                 }
             }
         }
@@ -614,9 +693,9 @@ namespace BDEditor.Views
             addChildNodeToolStripMenuItem.DropDownItems.Clear();
             addSiblingNodeToolStripMenuItem.DropDownItems.Clear();
 
-            reorderNextToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, pTreeNode);
-            reorderPreviousToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, pTreeNode);
-            deleteToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, pTreeNode);
+            reorderNextToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, null);
+            reorderPreviousToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, null);
+            deleteToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, null);
 
             string nodeTypeName = BDUtilities.GetEnumDescription(pBDNode.NodeType);
 

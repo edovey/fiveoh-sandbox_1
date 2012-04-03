@@ -34,12 +34,25 @@ namespace BDEditor.Classes
         }
         #endregion
 
-        public static void Save(Entities pDataContext, IBDNode pNode)
+        public static void SaveNode(Entities pDataContext, IBDNode pNode)
         {
             if (null != pNode)
             {
                 switch (pNode.NodeType)
                 {
+                    case BDConstants.BDNodeType.BDTherapy:
+                        BDTherapy therapy = pNode as BDTherapy;
+                        BDTherapy.Save(pDataContext, therapy);
+                        break;
+                    case BDConstants.BDNodeType.BDTherapyGroup:
+                        BDTherapyGroup therapyGroup = pNode as BDTherapyGroup;
+                        BDTherapyGroup.Save(pDataContext, therapyGroup);
+                        break;
+
+                    case BDConstants.BDNodeType.None:
+                        // Do nothing
+                        break;
+
                     case BDConstants.BDNodeType.BDCategory:
                     case BDConstants.BDNodeType.BDChapter:
                     case BDConstants.BDNodeType.BDDisease:
@@ -51,21 +64,9 @@ namespace BDEditor.Classes
                     case BDConstants.BDNodeType.BDTable:
                     case BDConstants.BDNodeType.BDTableSection:
                     case BDConstants.BDNodeType.BDTableRow:
+                    default:
                         BDNode node = pNode as BDNode;
                         BDNode.Save(pDataContext, node);
-                        break;
-
-                    case BDConstants.BDNodeType.BDTherapy:
-                        BDTherapy therapy = pNode as BDTherapy;
-                        BDTherapy.Save(pDataContext, therapy);
-                        break;
-                    case BDConstants.BDNodeType.BDTherapyGroup:
-                        BDTherapyGroup therapyGroup = pNode as BDTherapyGroup;
-                        BDTherapyGroup.Save(pDataContext, therapyGroup);
-                        break;
-
-                    case BDConstants.BDNodeType.None:
-                    default:
                         break;
                 }
             }
@@ -421,7 +422,7 @@ namespace BDEditor.Classes
             for (int idx = 0; idx < siblingList.Count; idx++)
             {
                 siblingList[idx].DisplayOrder = idx;
-                Save(pContext, siblingList[idx]);
+                SaveNode(pContext, siblingList[idx]);
             }
 
             return siblingList;
@@ -445,10 +446,10 @@ namespace BDEditor.Classes
                 if ((requestedIndex >= 0) && (requestedIndex < siblingList.Count))
                 {
                     siblingList[requestedIndex].DisplayOrder = currentIndex;
-                    Save(pContext, siblingList[requestedIndex]);
+                    SaveNode(pContext, siblingList[requestedIndex]);
 
                     siblingList[currentIndex].DisplayOrder = requestedIndex;
-                    Save(pContext, siblingList[currentIndex]);
+                    SaveNode(pContext, siblingList[currentIndex]);
                 }
             }
         }
@@ -504,6 +505,11 @@ namespace BDEditor.Classes
 
         public static void DeleteNode(Entities pContext, IBDNode pNode)
         {
+            DeleteNode(pContext, pNode, true);
+        }
+
+        public static void DeleteNode(Entities pContext, IBDNode pNode, bool pCreateDeletionRecord)
+        {
             Guid parentId = pNode.ParentId.Value;
             BDConstants.BDNodeType nodeType = pNode.NodeType;
 
@@ -511,18 +517,18 @@ namespace BDEditor.Classes
             {
                 case BDConstants.BDNodeType.BDTherapyGroup:
                     BDTherapyGroup therapyGroup = pNode as BDTherapyGroup;
-                    BDTherapyGroup.Delete(pContext, therapyGroup, true);
+                    BDTherapyGroup.Delete(pContext, therapyGroup, pCreateDeletionRecord);
                     break;
 
                 case BDConstants.BDNodeType.BDTherapy:
 
                     BDTherapy therapy = pNode as BDTherapy;
-                    BDTherapy.Delete(pContext, therapy, true);
+                    BDTherapy.Delete(pContext, therapy, pCreateDeletionRecord);
                     break;
 
                 default:
                     BDNode node = pNode as BDNode;
-                    BDNode.Delete(pContext, node, true);
+                    BDNode.Delete(pContext, node, pCreateDeletionRecord);
                     break;
             }
 

@@ -299,7 +299,6 @@
             this.addSiblingNodeToolStripMenuItem.Name = "addSiblingNodeToolStripMenuItem";
             this.addSiblingNodeToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.addSiblingNodeToolStripMenuItem.Text = "Add Table Section";
-            this.addSiblingNodeToolStripMenuItem.Click += new System.EventHandler(this.TableSection_RequestItemAdd);
             // 
             // addChildNodeToolStripMenuItem
             // 
@@ -307,7 +306,6 @@
             this.addChildNodeToolStripMenuItem.Name = "addChildNodeToolStripMenuItem";
             this.addChildNodeToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.addChildNodeToolStripMenuItem.Text = "Add Table Detail";
-            this.addChildNodeToolStripMenuItem.Click += new System.EventHandler(this.TableDetail_RequestItemAdd);
             // 
             // toolStripSeparator1
             // 
@@ -320,7 +318,6 @@
             this.deleteNodeToolStripMenuItem.Name = "deleteNodeToolStripMenuItem";
             this.deleteNodeToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.deleteNodeToolStripMenuItem.Text = "Delete";
-            this.deleteNodeToolStripMenuItem.Click += new System.EventHandler(this.TableSection_RequestItemDelete);
             // 
             // pnlDetail
             // 

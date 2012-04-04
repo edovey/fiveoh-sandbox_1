@@ -26,10 +26,10 @@ namespace BDEditor.Views
         void RefreshLayout();
         void ShowLinksInUse(bool pPropagateToChildren);
 
-        BDConstants.BDNodeType DefaultNodeType;
-        BDConstants.LayoutVariantType DefaultLayoutVariantType;
-        IBDNode CurrentNode;
-        int? DisplayOrder;
-        bool ShowAsChild;
+        BDConstants.BDNodeType DefaultNodeType {get; set;}
+        BDConstants.LayoutVariantType DefaultLayoutVariantType { get; set; }
+        IBDNode CurrentNode { get; set; }
+        int? DisplayOrder { get; set; }
+        bool ShowAsChild { get; set; }
     }
 }

@@ -326,9 +326,9 @@ namespace BDEditor.Views
                 view.AssignContextPropertyName(pProperty);
                 view.AssignParentInfo(currentTherapy.Uuid, currentTherapy.NodeType);
                 view.AssignScopeId(scopeId);
-                view.NotesChanged += new EventHandler(notesChanged_Action);
+                view.NotesChanged += new EventHandler<NodeEventArgs>(notesChanged_Action);
                 view.ShowDialog(this);
-                view.NotesChanged -= new EventHandler(notesChanged_Action);
+                view.NotesChanged -= new EventHandler<NodeEventArgs>(notesChanged_Action);
                 ShowLinksInUse(false);
             }
         }
@@ -483,12 +483,12 @@ namespace BDEditor.Views
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            OnItemAddRequested(new EventArgs());
+            OnItemAddRequested(new NodeEventArgs(dataContext, BDConstants.BDNodeType.BDTherapy, DefaultLayoutVariantType));
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            OnItemDeleteRequested(new EventArgs());
+            OnItemDeleteRequested(new NodeEventArgs(dataContext, currentTherapy.Uuid));
         }
 
         public override string ToString()
@@ -498,12 +498,12 @@ namespace BDEditor.Views
 
         private void btnReorderToPrevious_Click(object sender, EventArgs e)
         {
-            OnReorderToPrevious(new EventArgs());
+            OnReorderToPrevious(new NodeEventArgs(dataContext, currentTherapy.Uuid));
         }
 
         private void btnReorderToNext_Click(object sender, EventArgs e)
         {
-            OnReorderToNext(new EventArgs());
+            OnReorderToNext(new NodeEventArgs(dataContext, currentTherapy.Uuid));
         }
 
         private void btnMenu_Click(object sender, EventArgs e)
@@ -511,9 +511,9 @@ namespace BDEditor.Views
             this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
         }
 
-        private void notesChanged_Action(object sender, EventArgs e)
+        void notesChanged_Action(object sender, NodeEventArgs e)
         {
-            OnNotesChanged(new EventArgs());
+            OnNotesChanged(e);
         }
 
         private void tbName_MouseDown(object sender, MouseEventArgs e)
@@ -531,5 +531,24 @@ namespace BDEditor.Views
             currentControlName = DURATION_TEXTBOX;
         }
 
+
+
+        public BDConstants.BDNodeType DefaultNodeType { get; set; }
+
+        BDConstants.LayoutVariantType IBDControl.DefaultLayoutVariantType { get; set; }
+
+        public IBDNode CurrentNode
+        {
+            get
+            {
+                return CurrentTherapy;
+            }
+            set
+            {
+                CurrentTherapy = value as BDTherapy;
+            }
+        }
+
+        public bool ShowAsChild { get; set; }
     }
 }

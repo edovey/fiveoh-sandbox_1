@@ -185,9 +185,9 @@ namespace BDEditor.Views
                 noteView.AssignParentInfo(currentPathogen.Uuid, currentPathogen.NodeType);
                 noteView.AssignContextPropertyName(BDNode.PROPERTYNAME_NAME);
                 noteView.AssignScopeId(scopeId);
-                noteView.NotesChanged += new EventHandler(notesChanged_Action);
+                noteView.NotesChanged += new EventHandler<NodeEventArgs>(notesChanged_Action);
                 noteView.ShowDialog(this);
-                noteView.NotesChanged -= new EventHandler(notesChanged_Action);
+                noteView.NotesChanged -= new EventHandler<NodeEventArgs>(notesChanged_Action);
                 ShowLinksInUse(false);
             }
         }
@@ -226,22 +226,22 @@ namespace BDEditor.Views
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            OnItemAddRequested(new EventArgs());
+            OnItemAddRequested(new NodeEventArgs(dataContext, BDConstants.BDNodeType.BDPathogen, DefaultLayoutVariantType));
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            OnItemDeleteRequested(new EventArgs());
+            OnItemDeleteRequested(new NodeEventArgs(dataContext, CurrentPathogen.Uuid));
         }
 
         private void btnReorderToPrevious_Click(object sender, EventArgs e)
         {
-            OnReorderToPrevious(new EventArgs());
+            OnReorderToPrevious(new NodeEventArgs(dataContext, CurrentPathogen.Uuid));
         }
 
         private void btnReorderToNext_Click(object sender, EventArgs e)
         {
-            OnReorderToNext(new EventArgs());
+            OnReorderToNext(new NodeEventArgs(dataContext, CurrentPathogen.Uuid));
         }
 
         private void btnMenu_Click(object sender, EventArgs e)
@@ -249,10 +249,10 @@ namespace BDEditor.Views
             this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
         }
 
-        private void notesChanged_Action(object sender, EventArgs e)
+        private void notesChanged_Action(object sender, NodeEventArgs e)
         {
             //ShowLinksInUse(true);
-            OnNotesChanged(new EventArgs());
+            OnNotesChanged(e);
         }
 
         private void insertText(TextBox pTextBox, string pText)
@@ -296,5 +296,24 @@ namespace BDEditor.Views
         {
             insertText(tbPathogenName, "¹");
         }
+
+
+        public BDConstants.BDNodeType DefaultNodeType { get; set; }
+
+        BDConstants.LayoutVariantType IBDControl.DefaultLayoutVariantType { get; set; }
+
+        public IBDNode CurrentNode
+        {
+            get
+            {
+                return CurrentPathogen;
+            }
+            set
+            {
+                CurrentPathogen = value as BDNode;
+            }
+        }
+
+        public bool ShowAsChild { get; set; }
     }
 }

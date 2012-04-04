@@ -318,16 +318,16 @@ namespace BDEditor.Views
                 view.AssignContextPropertyName(pProperty);
                 view.AssignParentInfo(currentNode.Uuid, currentNode.NodeType);
                 view.AssignScopeId(scopeId);
-                view.NotesChanged += new EventHandler(notesChanged_Action);
+                view.NotesChanged += new EventHandler<NodeEventArgs>(notesChanged_Action);
                 view.ShowDialog(this);
-                view.NotesChanged -= new EventHandler(notesChanged_Action);
+                view.NotesChanged -= new EventHandler<NodeEventArgs>(notesChanged_Action);
                 ShowLinksInUse(false);
             }
         }
 
-        private void notesChanged_Action(object sender, EventArgs e)
+        private void notesChanged_Action(object sender, NodeEventArgs e)
         {
-            OnNotesChanged(new EventArgs());
+            OnNotesChanged(e);
         }
 
         private void bdLinkedNoteControl_SaveAttemptWithoutParent(object sender, EventArgs e)
@@ -424,5 +424,10 @@ namespace BDEditor.Views
         {
             Save();
         }
+
+
+        BDConstants.BDNodeType IBDControl.DefaultNodeType { get; set; }
+
+        BDConstants.LayoutVariantType IBDControl.DefaultLayoutVariantType { get; set; }
     }
 }

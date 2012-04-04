@@ -238,6 +238,7 @@ namespace BDEditor.Views
             this.ResumeLayout();
         }
 
+
         #endregion
 
         private void BDPresentationControl_Leave(object sender, EventArgs e)
@@ -262,11 +263,11 @@ namespace BDEditor.Views
                 pathogenGroupControl.CurrentPathogenGroup = pNode;
                 pathogenGroupControl.DefaultLayoutVariantType = this.defaultLayoutVariantType;
 
-                pathogenGroupControl.RequestItemAdd += new EventHandler(PathogenGroup_RequestItemAdd);
-                pathogenGroupControl.RequestItemDelete += new EventHandler(PathogenGroup_RequestItemDelete);
-                pathogenGroupControl.ReorderToNext += new EventHandler(PathogenGroup_ReorderToNext);
-                pathogenGroupControl.ReorderToPrevious += new EventHandler(PathogenGroup_ReorderToPrevious);
-                pathogenGroupControl.NotesChanged += new EventHandler(notesChanged_Action);
+                pathogenGroupControl.RequestItemAdd += new EventHandler<NodeEventArgs>(PathogenGroup_RequestItemAdd);
+                pathogenGroupControl.RequestItemDelete += new EventHandler<NodeEventArgs>(PathogenGroup_RequestItemDelete);
+                pathogenGroupControl.ReorderToNext += new EventHandler<NodeEventArgs>(PathogenGroup_ReorderToNext);
+                pathogenGroupControl.ReorderToPrevious += new EventHandler<NodeEventArgs>(PathogenGroup_ReorderToPrevious);
+                pathogenGroupControl.NotesChanged += new EventHandler<NodeEventArgs>(notesChanged_Action);
 
                 pathogenGroupControlList.Add(pathogenGroupControl);
 
@@ -281,11 +282,11 @@ namespace BDEditor.Views
         {
             panelPathogenGroups.Controls.Remove(pPathogenGroupControl);
 
-            pPathogenGroupControl.RequestItemAdd -= new EventHandler(PathogenGroup_RequestItemAdd);
-            pPathogenGroupControl.RequestItemDelete -= new EventHandler(PathogenGroup_RequestItemDelete);
-            pPathogenGroupControl.ReorderToNext -= new EventHandler(PathogenGroup_ReorderToNext);
-            pPathogenGroupControl.ReorderToPrevious -= new EventHandler(PathogenGroup_ReorderToPrevious);
-            pPathogenGroupControl.NotesChanged -= new EventHandler(notesChanged_Action);
+            pPathogenGroupControl.RequestItemAdd -= new EventHandler<NodeEventArgs>(PathogenGroup_RequestItemAdd);
+            pPathogenGroupControl.RequestItemDelete -= new EventHandler<NodeEventArgs>(PathogenGroup_RequestItemDelete);
+            pPathogenGroupControl.ReorderToNext -= new EventHandler<NodeEventArgs>(PathogenGroup_ReorderToNext);
+            pPathogenGroupControl.ReorderToPrevious -= new EventHandler<NodeEventArgs>(PathogenGroup_ReorderToPrevious);
+            pPathogenGroupControl.NotesChanged -= new EventHandler<NodeEventArgs>(notesChanged_Action);
 
             pathogenGroupControlList.Remove(pPathogenGroupControl);
             
@@ -367,9 +368,9 @@ namespace BDEditor.Views
                 view.AssignContextPropertyName(pProperty);
                 view.AssignParentInfo(currentPresentation.Uuid, currentPresentation.NodeType);
                 view.AssignScopeId(scopeId);
-                view.NotesChanged += new EventHandler(notesChanged_Action);
+                view.NotesChanged += new EventHandler<NodeEventArgs>(notesChanged_Action);
                 view.ShowDialog(this);
-                view.NotesChanged -= new EventHandler(notesChanged_Action);
+                view.NotesChanged -= new EventHandler<NodeEventArgs>(notesChanged_Action);
                 ShowLinksInUse(false);
             }
         }
@@ -383,7 +384,7 @@ namespace BDEditor.Views
             }
         }
 
-        private void PathogenGroup_RequestItemDelete(object sender, EventArgs e)
+        private void PathogenGroup_RequestItemDelete(object sender, NodeEventArgs e)
         {
             BDPathogenGroupControl control = sender as BDPathogenGroupControl;
             if (null != control)
@@ -393,7 +394,7 @@ namespace BDEditor.Views
             }
         }
 
-        private void PathogenGroup_ReorderToNext(object sender, EventArgs e)
+        private void PathogenGroup_ReorderToNext(object sender, NodeEventArgs e)
         {
             BDPathogenGroupControl control = sender as BDPathogenGroupControl;
             if (null != control)
@@ -402,7 +403,7 @@ namespace BDEditor.Views
             }
         }
 
-        private void PathogenGroup_ReorderToPrevious(object sender, EventArgs e)
+        private void PathogenGroup_ReorderToPrevious(object sender, NodeEventArgs e)
         {
             BDPathogenGroupControl control = sender as BDPathogenGroupControl;
             if (null != control)
@@ -416,10 +417,10 @@ namespace BDEditor.Views
             this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
         }
 
-        private void notesChanged_Action(object sender, EventArgs e)
+        private void notesChanged_Action(object sender, NodeEventArgs e)
         {
             ShowLinksInUse(true);
-            OnNotesChanged(new EventArgs());
+            OnNotesChanged(e);
         }
 
         private void btnLinkedNote_Click(object sender, EventArgs e)
@@ -483,5 +484,31 @@ namespace BDEditor.Views
                 deleteToolStripMenuItem.Enabled = (tbPresentationName.SelectionLength > 0);
             }
         }
+
+
+        public void AssignDataContext(Entities pDataContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        public BDConstants.BDNodeType DefaultNodeType { get; set; }
+
+
+        public BDConstants.LayoutVariantType DefaultLayoutVariantType { get; set; }
+
+        public IBDNode CurrentNode
+        {
+            get
+            {
+                return CurrentPresentation;
+            }
+            set
+            {
+                CurrentPresentation = value as BDNode;
+            }
+        }
+
+        public bool ShowAsChild { get; set; }
+
     }
 }

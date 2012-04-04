@@ -589,5 +589,28 @@ namespace BDEditor.Views
 
             this.linkValue = string.Empty;
         }
+
+
+        public BDConstants.BDNodeType DefaultNodeType { get; set; }
+
+        public BDConstants.LayoutVariantType DefaultLayoutVariantType { get; set; }
+
+        public IBDNode CurrentNode
+        {
+            get
+            {
+                // on purpose: should never be trying to get the node of a linked note.
+                throw new NotImplementedException();
+            }
+            set
+            {
+                // on purpose
+                throw new NotImplementedException();
+            }
+        }
+
+        public int? DisplayOrder { get; set; }
+
+        public bool ShowAsChild { get; set; }
     }
 }

@@ -258,11 +258,11 @@ namespace BDEditor.Views
                 nodeControl.DefaultLayoutVariantType = this.defaultLayoutVariantType;
                 nodeControl.DefaultNodeType = BDConstants.BDNodeType.BDTableSection;
 
-                nodeControl.RequestItemAdd += new EventHandler(TableSection_RequestItemAdd);
-                nodeControl.RequestItemDelete += new EventHandler(TableSection_RequestItemDelete);
-                nodeControl.ReorderToNext += new EventHandler(TableSection_ReorderToNext);
-                nodeControl.ReorderToPrevious += new EventHandler(TableSection_ReorderToPrevious);
-                nodeControl.NotesChanged += new EventHandler(notesChanged_Action);
+                nodeControl.RequestItemAdd += new EventHandler<NodeEventArgs>(TableSection_RequestItemAdd);
+                nodeControl.RequestItemDelete += new EventHandler<NodeEventArgs>(TableSection_RequestItemDelete);
+                nodeControl.ReorderToNext += new EventHandler<NodeEventArgs>(TableSection_ReorderToNext);
+                nodeControl.ReorderToPrevious += new EventHandler<NodeEventArgs>(TableSection_ReorderToPrevious);
+                nodeControl.NotesChanged += new EventHandler<NodeEventArgs>(notesChanged_Action);
                 sectionControlList.Add(nodeControl);
 
                 pnlSections.Controls.Add(nodeControl);
@@ -276,11 +276,11 @@ namespace BDEditor.Views
         {
             this.Controls.Remove(pNodeControl);
 
-            pNodeControl.RequestItemAdd -= new EventHandler(TableSection_RequestItemAdd);
-            pNodeControl.RequestItemDelete -= new EventHandler(TableSection_RequestItemDelete);
-            pNodeControl.ReorderToNext -= new EventHandler(TableSection_ReorderToNext);
-            pNodeControl.ReorderToPrevious -= new EventHandler(TableSection_ReorderToPrevious);
-            pNodeControl.NotesChanged -= new EventHandler(notesChanged_Action);
+            pNodeControl.RequestItemAdd -= new EventHandler<NodeEventArgs>(TableSection_RequestItemAdd);
+            pNodeControl.RequestItemDelete -= new EventHandler<NodeEventArgs>(TableSection_RequestItemDelete);
+            pNodeControl.ReorderToNext -= new EventHandler<NodeEventArgs>(TableSection_ReorderToNext);
+            pNodeControl.ReorderToPrevious -= new EventHandler<NodeEventArgs>(TableSection_ReorderToPrevious);
+            pNodeControl.NotesChanged -= new EventHandler<NodeEventArgs>(notesChanged_Action);
 
             sectionControlList.Remove(pNodeControl);
 
@@ -332,16 +332,15 @@ namespace BDEditor.Views
             }
         }
 
-        private void TableSection_RequestItemAdd(object sender, EventArgs e)
+        private void TableSection_RequestItemAdd(object sender, NodeEventArgs e)
         {
             BDNodeControl control = addNodeControlForTableSection(null, sectionControlList.Count);
             if (null != control)
                 control.Focus();
         }
 
-        private void TableSection_RequestItemDelete(object sender, EventArgs e)
+        private void TableSection_RequestItemDelete(object sender, NodeEventArgs e)
         {
-            OnItemDeleteRequested(new EventArgs());
             BDNodeControl control = sender as BDNodeControl;
             if(null != control)
             {
@@ -350,7 +349,7 @@ namespace BDEditor.Views
             }
         }
 
-        private void TableSection_ReorderToPrevious(object sender, EventArgs e)
+        private void TableSection_ReorderToPrevious(object sender, NodeEventArgs e)
         {
             BDNodeControl control = sender as BDNodeControl;
             if (null != control)
@@ -359,7 +358,7 @@ namespace BDEditor.Views
             }
         }
 
-        private void TableSection_ReorderToNext(object sender, EventArgs e)
+        private void TableSection_ReorderToNext(object sender, NodeEventArgs e)
         {
             BDNodeControl control = sender as BDNodeControl;
             if (null != control)
@@ -392,9 +391,9 @@ namespace BDEditor.Views
                 view.AssignContextPropertyName(pProperty);
                 view.AssignParentInfo(currentTable.Uuid, currentTable.NodeType);
                 view.AssignScopeId(scopeId);
-                view.NotesChanged += new EventHandler(notesChanged_Action);
+                view.NotesChanged += new EventHandler<NodeEventArgs>(notesChanged_Action);
                 view.ShowDialog(this);
-                view.NotesChanged -= new EventHandler(notesChanged_Action);
+                view.NotesChanged -= new EventHandler<NodeEventArgs>(notesChanged_Action);
                 ShowLinksInUse(false);
             }
         }
@@ -420,18 +419,18 @@ namespace BDEditor.Views
 
         private void btnReorderToPrevious_Click(object sender, EventArgs e)
         {
-            OnReorderToPrevious(new EventArgs());
+            OnReorderToPrevious(new NodeEventArgs(dataContext, CurrentTable.Uuid));
         }
 
         private void btnReorderToNext_Click(object sender, EventArgs e)
         {
-            OnReorderToNext(new EventArgs());
+            OnReorderToNext(new NodeEventArgs(dataContext, CurrentTable.Uuid));
         }
 
-        private void notesChanged_Action(object sender, EventArgs e)
+        private void notesChanged_Action(object sender, NodeEventArgs e)
         {
             ShowLinksInUse(true);
-            OnNotesChanged(new EventArgs());
+            OnNotesChanged(e);
         }
 
         private void textBoxPathogenGroupName_Leave(object sender, EventArgs e)

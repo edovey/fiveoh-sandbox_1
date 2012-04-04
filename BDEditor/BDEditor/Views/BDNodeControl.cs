@@ -20,9 +20,9 @@ namespace BDEditor.Views
         private BDConstants.BDNodeType parentType = BDConstants.BDNodeType.None;
         private bool showAsChild = false;
 
-        public BDConstants.BDNodeType DefaultNodeType;
-        public BDConstants.LayoutVariantType DefaultLayoutVariantType;
-        public int? DisplayOrder;
+        public BDConstants.BDNodeType DefaultNodeType { get; set; }
+        public BDConstants.LayoutVariantType DefaultLayoutVariantType { get; set; }
+        public int? DisplayOrder{ get; set; }
 
         //private List<BDNodeWithOverviewControl> detailControlList = new List<BDNodeWithOverviewControl>();
         private List<IBDControl> childNodeControlList = new List<IBDControl>();
@@ -725,6 +725,8 @@ namespace BDEditor.Views
             }
         }
         #endregion
+
+
 
 
     }

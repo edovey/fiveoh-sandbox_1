@@ -260,9 +260,9 @@ namespace BDEditor.Views
                 view.AssignContextPropertyName(pProperty);
                 view.AssignParentInfo(currentTherapyGroup.Uuid, currentTherapyGroup.NodeType);
                 view.AssignScopeId(scopeId);
-                view.NotesChanged += new EventHandler(notesChanged_Action);
+                view.NotesChanged += new EventHandler<NodeEventArgs>(notesChanged_Action);
                 view.ShowDialog(this);
-                view.NotesChanged -= new EventHandler(notesChanged_Action);
+                view.NotesChanged -= new EventHandler<NodeEventArgs>(notesChanged_Action);
                 ShowLinksInUse(false);
             }
         }
@@ -298,11 +298,11 @@ namespace BDEditor.Views
                 therapyControl.AssignTypeaheadSource(Typeahead.TherapyDurations, BDTherapy.PROPERTYNAME_DURATION);
                 therapyControl.CurrentTherapy = pTherapy;
                 therapyControl.DefaultLayoutVariantType = this.DefaultLayoutVariantType;
-                therapyControl.RequestItemAdd += new EventHandler(Therapy_RequestItemAdd);
-                therapyControl.RequestItemDelete += new EventHandler(Therapy_RequestItemDelete);
-                therapyControl.ReorderToNext += new EventHandler(Therapy_ReorderToNext);
-                therapyControl.ReorderToPrevious += new EventHandler(Therapy_ReorderToPrevious);
-                therapyControl.NotesChanged += new EventHandler(notesChanged_Action);
+                therapyControl.RequestItemAdd += new EventHandler<NodeEventArgs>(Therapy_RequestItemAdd);
+                therapyControl.RequestItemDelete += new EventHandler<NodeEventArgs>(Therapy_RequestItemDelete);
+                therapyControl.ReorderToNext += new EventHandler<NodeEventArgs>(Therapy_ReorderToNext);
+                therapyControl.ReorderToPrevious += new EventHandler<NodeEventArgs>(Therapy_ReorderToPrevious);
+                therapyControl.NotesChanged += new EventHandler<NodeEventArgs>(notesChanged_Action);
 
                 therapyControlList.Add(therapyControl);
 
@@ -319,11 +319,11 @@ namespace BDEditor.Views
         {
             panelTherapies.Controls.Remove(pTherapyControl);
 
-            pTherapyControl.RequestItemAdd -= new EventHandler(Therapy_RequestItemAdd);
-            pTherapyControl.RequestItemDelete -= new EventHandler(Therapy_RequestItemDelete);
-            pTherapyControl.ReorderToNext -= new EventHandler(Therapy_ReorderToNext);
-            pTherapyControl.ReorderToPrevious -= new EventHandler(Therapy_ReorderToPrevious);
-            pTherapyControl.NotesChanged -= new EventHandler(notesChanged_Action);
+            pTherapyControl.RequestItemAdd -= new EventHandler<NodeEventArgs>(Therapy_RequestItemAdd);
+            pTherapyControl.RequestItemDelete -= new EventHandler<NodeEventArgs>(Therapy_RequestItemDelete);
+            pTherapyControl.ReorderToNext -= new EventHandler<NodeEventArgs>(Therapy_ReorderToNext);
+            pTherapyControl.ReorderToPrevious -= new EventHandler<NodeEventArgs>(Therapy_ReorderToPrevious);
+            pTherapyControl.NotesChanged -= new EventHandler<NodeEventArgs>(notesChanged_Action);
             
             therapyControlList.Remove(pTherapyControl);
 
@@ -378,12 +378,12 @@ namespace BDEditor.Views
 
         private void TherapyGroup_RequestItemAdd(object sender, EventArgs e)
         {
-            OnItemAddRequested(new EventArgs());
+            OnItemAddRequested(new NodeEventArgs(dataContext, BDConstants.BDNodeType.BDTherapyGroup, DefaultLayoutVariantType));
         }
 
         private void TherapyGroup_RequestItemDelete(object sender, EventArgs e)
         {
-            OnItemDeleteRequested(new EventArgs());
+            OnItemDeleteRequested(new NodeEventArgs(dataContext, CurrentTherapyGroup.Uuid));
         }
 
         private void Therapy_RequestItemAdd(object sender, EventArgs e)
@@ -405,7 +405,7 @@ namespace BDEditor.Views
             }
         }
 
-        private void Therapy_ReorderToNext(object sender, EventArgs e)
+        private void Therapy_ReorderToNext(object sender, NodeEventArgs e)
         {
             BDTherapyControl control = sender as BDTherapyControl;
             if (null != control)
@@ -414,7 +414,7 @@ namespace BDEditor.Views
             }
         }
 
-        private void Therapy_ReorderToPrevious(object sender, EventArgs e)
+        private void Therapy_ReorderToPrevious(object sender, NodeEventArgs e)
         {
             BDTherapyControl control = sender as BDTherapyControl;
             if (null != control)
@@ -425,12 +425,12 @@ namespace BDEditor.Views
 
         private void btnReorderToPrevious_Click(object sender, EventArgs e)
         {
-            OnReorderToPrevious(new EventArgs());
+            OnReorderToPrevious(new NodeEventArgs(dataContext, CurrentTherapyGroup.Uuid));
         }
 
         private void btnReorderToNext_Click(object sender, EventArgs e)
         {
-            OnReorderToNext(new EventArgs());
+            OnReorderToNext(new NodeEventArgs(dataContext, CurrentTherapyGroup.Uuid));
         }
 
         private void btnLink_Click(object sender, EventArgs e)
@@ -503,7 +503,6 @@ namespace BDEditor.Views
             }
         }
 
-
         private void Menu_Undo(System.Object sender, System.EventArgs e)
         {
             // Determine if last operation can be undone in text box.   
@@ -526,10 +525,10 @@ namespace BDEditor.Views
             this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
         }
 
-        private void notesChanged_Action(object sender, EventArgs e)
+        private void notesChanged_Action(object sender, NodeEventArgs e)
         {
             //ShowLinksInUse(true);
-            OnNotesChanged(new NodeEventArgs());
+            OnNotesChanged(e);
         }
 
         private void tbName_MouseDown(object sender, MouseEventArgs e)
@@ -548,5 +547,24 @@ namespace BDEditor.Views
         {
             Save();
         }
-   }
+
+
+        public BDConstants.BDNodeType DefaultNodeType { get; set; }
+
+        BDConstants.LayoutVariantType IBDControl.DefaultLayoutVariantType { get; set; }
+
+        public IBDNode CurrentNode
+        {
+            get
+            {
+                return CurrentTherapyGroup;
+            }
+            set
+            {
+                CurrentTherapyGroup = value as BDTherapyGroup;
+            }
+        }
+
+        public bool ShowAsChild { get; set; }
+    }
 }

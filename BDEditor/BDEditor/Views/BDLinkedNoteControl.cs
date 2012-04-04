@@ -23,7 +23,7 @@ namespace BDEditor.Views
         private string linkValue = string.Empty;
         private BDLinkedNote currentLinkedNote;
         private BDLinkedNoteView linkView;
-        private bool newLinkSaved = false;
+        //private bool newLinkSaved = false;
 
         public event EventHandler SaveAttemptWithoutParent;
 

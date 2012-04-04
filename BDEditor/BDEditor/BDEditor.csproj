@@ -191,12 +191,6 @@
     </Compile>
     <Compile Include="DataModel\BDTherapy.cs" />
     <Compile Include="DataModel\BDTherapyGroup.cs" />
-    <Compile Include="Views\BDNodeWithOverviewControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\BDNodeWithOverviewControl.Designer.cs">
-      <DependentUpon>BDNodeWithOverviewControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\BDEditView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -248,14 +242,17 @@
     <Compile Include="Views\AuthenticationInputBox.Designer.cs">
       <DependentUpon>AuthenticationInputBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\BDNodeWithOverviewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDNodeWithOverviewControl.Designer.cs">
+      <DependentUpon>BDNodeWithOverviewControl.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\licenses.licx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDNodeControl.resx">
       <DependentUpon>BDNodeControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\BDNodeWithOverviewControl.resx">
-      <DependentUpon>BDNodeWithOverviewControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDEditView.resx">
       <DependentUpon>BDEditView.cs</DependentUpon>
@@ -302,6 +299,9 @@
     </Compile>
     <EmbeddedResource Include="Views\AuthenticationInputBox.resx">
       <DependentUpon>AuthenticationInputBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDNodeWithOverviewControl.resx">
+      <DependentUpon>BDNodeWithOverviewControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.Config">
       <SubType>Designer</SubType>

@@ -24,11 +24,12 @@ namespace BDEditor.Views
         private List<BDLinkedNoteAssociation> existingLinksList;
         private List<BDLinkedNote> existingNotesInScopeList;
 
-        public event EventHandler NotesChanged;
+        public event EventHandler<NodeEventArgs> NotesChanged;
 
-        protected virtual void OnNotesChanged(EventArgs e)
+        protected virtual void OnNotesChanged(NodeEventArgs e)
         {
-            if (null != NotesChanged) { NotesChanged(this, e); }
+            EventHandler<NodeEventArgs> handler = NotesChanged;
+            if (null != handler) { handler(this, e); }
         }
 
         public bool HasNewLink
@@ -169,7 +170,8 @@ namespace BDEditor.Views
                 }
             }
 
-            OnNotesChanged(new EventArgs());
+            OnNotesChanged(new NodeEventArgs());
+
            this.Close();
         }
 
@@ -282,7 +284,7 @@ namespace BDEditor.Views
                     this.existingAssociation = null;
                     DisplayLinkedNote(null, true);
                     RefreshSelectedTab();
-                    OnNotesChanged(new EventArgs());
+                    OnNotesChanged(new NodeEventArgs());
                 }
             }
         }

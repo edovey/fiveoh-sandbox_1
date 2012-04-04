@@ -529,7 +529,7 @@ namespace BDEditor.Views
         private void notesChanged_Action(object sender, EventArgs e)
         {
             //ShowLinksInUse(true);
-            OnNotesChanged(new EventArgs());
+            OnNotesChanged(new NodeEventArgs());
         }
 
         private void tbName_MouseDown(object sender, MouseEventArgs e)

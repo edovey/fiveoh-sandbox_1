@@ -583,9 +583,9 @@ namespace BDEditor.Views
             linkView.AssignScopeId(scopeId);
             linkView.AssignContextPropertyName(linkValue);
 
-            linkView.NotesChanged += new EventHandler(notesChanged_Action);
+            linkView.NotesChanged += new EventHandler<NodeEventArgs>(notesChanged_Action);
             linkView.ShowDialog(this);
-            linkView.NotesChanged -= new EventHandler(notesChanged_Action);
+            linkView.NotesChanged -= new EventHandler<NodeEventArgs>(notesChanged_Action);
 
             this.linkValue = string.Empty;
         }

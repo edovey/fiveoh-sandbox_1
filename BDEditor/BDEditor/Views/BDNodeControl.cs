@@ -187,7 +187,7 @@ namespace BDEditor.Views
 
                 if (null != currentNode)
                 {
-                    foreach (BDNodeWithOverviewControl control in detailControlList)
+                    foreach (IBDControl control in childNodeControlList)
                     {
                         result = control.Save() || result;
                     }
@@ -198,33 +198,10 @@ namespace BDEditor.Views
                         OnNameChanged(new NodeEventArgs(dataContext, currentNode.Uuid, currentNode.Name));
                     }
 
-                    switch (currentNode.NodeType)
-                    {
-                        case BDConstants.BDNodeType.BDTherapy:
-                            BDTherapy therapy = currentNode as BDTherapy;
-                            if (null != therapy)
-                            {
-                                BDTherapy.Save(dataContext, therapy);
-                            }
-                            break;
-                        case BDConstants.BDNodeType.BDTherapyGroup:
-                            BDTherapyGroup therapyGroup = currentNode as BDTherapyGroup;
-                            if (null != therapyGroup)
-                            {
-                                BDTherapyGroup.Save(dataContext, therapyGroup);
-                            }
-                            break;
-                        default:
-                            BDNode node = currentNode as BDNode;
-                            if (null != node)
-                            {
-                                if (null == node.parentId || Guid.Empty == node.ParentId)
-                                    node.SetParent(parentType, parentId);
-                                BDNode.Save(dataContext, node);
-                                result = true;
-                            }
-                            break;
-                    }
+                    if (null == currentNode.ParentId || Guid.Empty == currentNode.ParentId)
+                        currentNode.SetParent(parentType, parentId);
+                    
+                    BDFabrik.SaveNode(dataContext, currentNode);  
                 }
             }
             return result;
@@ -319,9 +296,9 @@ namespace BDEditor.Views
                 view.AssignContextPropertyName(pProperty);
                 view.AssignParentInfo(currentNode.Uuid, currentNode.NodeType);
                 view.AssignScopeId(scopeId);
-                view.NotesChanged += new EventHandler(notesChanged_Action);
+                view.NotesChanged += new EventHandler<NodeEventArgs>(notesChanged_Action);
                 view.ShowDialog(this);
-                view.NotesChanged -= new EventHandler(notesChanged_Action);
+                view.NotesChanged -= new EventHandler<NodeEventArgs>(notesChanged_Action);
                 ShowLinksInUse(false);
             }
         }
@@ -390,35 +367,50 @@ namespace BDEditor.Views
             return nodeControl;
         }
 
+        void notesChanged_Action(object sender, NodeEventArgs e) // Same as though child control originated event
+        {
+            OnNotesChanged(e);
+        }
+
         void childNodeControl_NameChanged(object sender, NodeEventArgs e)
         {
-            throw new NotImplementedException();
+            OnNameChanged(e);
         }
 
         void childNodeControl_NotesChanged(object sender, NodeEventArgs e)
         {
-            throw new NotImplementedException();
+            OnNotesChanged(e);
         }
 
         void childNodeControl_RequestItemDelete(object sender, NodeEventArgs e)
         {
-            throw new NotImplementedException();
+            removeChildNodeControl(e.Uuid.Value, true);
         }
 
         void childNodeControl_RequestItemAdd(object sender, NodeEventArgs e)
         {
-            throw new NotImplementedException();
+            IBDNode node = BDFabrik.CreateChildNode(e.DataContext, CurrentNode, e.NodeType, e.LayoutVariant);
+            addChildNodeControl(node, childNodeControlList.Count);
         }
 
         void childNodeControl_ReorderToPrevious(object sender, NodeEventArgs e)
         {
-
             reorderChildNodeControl(e.Uuid.Value, -1);
         }
 
         void childNodeControl_ReorderToNext(object sender, NodeEventArgs e)
         {
             reorderChildNodeControl(e.Uuid.Value, 1);
+        }
+
+        private void removeChildNodeControl(Guid pChildNodeUuid, bool pDeleteRecord)
+        {
+            int position = childNodeControlList.FindIndex(t => t.CurrentNode.Uuid == pChildNodeUuid);
+            if (position >= 0)
+            {
+                IBDControl control = childNodeControlList[position];
+                removeChildNodeControl(control, pDeleteRecord);
+            }
         }
 
         private void removeChildNodeControl(IBDControl pChildNodeControl, bool pDeleteRecord)
@@ -491,61 +483,6 @@ namespace BDEditor.Views
                 }
             }
         }
-        /*
-
-        private void TableSection_RequestItemAdd(object sender, EventArgs e)
-        {
-            OnItemAddRequested(new EventArgs());
-        }
-
-        private void TableSection_RequestItemDelete(object sender, EventArgs e)
-        {
-            OnItemDeleteRequested(new EventArgs());
-        }
-
-        private void TableDetail_RequestItemAdd(object sender, EventArgs e)
-        {
-            BDNodeWithOverviewControl control = addNodeControlForTableDetail(null, detailControlList.Count);
-            if (null != control)
-                control.Focus();
-        }
-
-        private void TableDetail_RequestItemDelete(object sender, EventArgs e)
-        {
-            OnItemDeleteRequested(new EventArgs());
-            BDNodeWithOverviewControl control = sender as BDNodeWithOverviewControl;
-            if (null != control)
-            {
-                if (MessageBox.Show("Delete Table Detail?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
-                    removeNodeControlForTableDetail(control, true);
-            }
-        }
-
-        private void TableDetail_ReorderToPrevious(object sender, EventArgs e)
-        {
-            BDNodeWithOverviewControl control = sender as BDNodeWithOverviewControl;
-            if (null != control)
-            {
-                reorderNodeControlForTableDetail(control, -1);
-            }
-        }
-
-        private void TableDetail_ReorderToNext(object sender, EventArgs e)
-        {
-            BDNodeWithOverviewControl control = sender as BDNodeWithOverviewControl;
-            if (null != control)
-            {
-                reorderNodeControlForTableDetail(control, 1);
-            }
-        }
-        
-
-        private void notesChanged_Action(object sender, EventArgs e)
-        {
-            OnNotesChanged(new EventArgs());
-        }
-        
-        */
 
         private void bdLinkedNoteControl_SaveAttemptWithoutParent(object sender, EventArgs e)
         {
@@ -570,6 +507,7 @@ namespace BDEditor.Views
             }
         }
 
+        // Context Menu events for children
         private void btnReorderToPrevious_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
@@ -592,6 +530,23 @@ namespace BDEditor.Views
                 if (null != nodeWrapper)
                 {
                     OnReorderToNext(new NodeEventArgs(dataContext, nodeWrapper.Node.Uuid));
+                }
+            }
+        }
+
+        private void btnDeleteNode_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
+            if (null != menuItem)
+            {
+                BDNodeWrapper nodeWrapper = menuItem.Tag as BDNodeWrapper;
+                if (null != nodeWrapper)
+                {
+                    string message = string.Format("Delete {0}?", BDUtilities.GetEnumDescription(nodeWrapper.TargetNodeType));
+                    if (MessageBox.Show(message, "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                    {
+                        OnItemDeleteRequested(new NodeEventArgs(dataContext, nodeWrapper.Node.Uuid));
+                    }
                 }
             }
         }
@@ -657,7 +612,9 @@ namespace BDEditor.Views
                 if (null != nodeWrapper)
                 {
                     IBDNode node = BDFabrik.CreateChildNode(dataContext, nodeWrapper.Node, nodeWrapper.TargetNodeType, nodeWrapper.TargetLayoutVariant);
-                    addChildNodeControl(node, childNodeControlList.Count);
+                    IBDControl control = addChildNodeControl(node, childNodeControlList.Count);
+                    if (null != control)
+                        ((System.Windows.Forms.UserControl)control).Focus();
                 }
             }
         }
@@ -674,6 +631,7 @@ namespace BDEditor.Views
                 }
             }
         }
+
         #region Context Menu
 
         private void buildNavContextMenuStrip(IBDNode pBDNode)
@@ -712,7 +670,7 @@ namespace BDEditor.Views
 
                     if (childTypeInfoList[0].Item2.Length == 1)
                     {
-                        addChildNodeToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, childTypeInfoList[0].Item1, childTypeInfoList[0].Item2[0], pTreeNode);
+                        addChildNodeToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, childTypeInfoList[0].Item1, childTypeInfoList[0].Item2[0], null);
                     }
                     else
                     {
@@ -724,7 +682,7 @@ namespace BDEditor.Views
                             item.Name = string.Format("dynamicAddChildLayoutVariant{0}", idx);
                             item.Size = new System.Drawing.Size(179, 22);
                             item.Text = string.Format("&Add {0}", BDUtilities.GetEnumDescription(childTypeInfoList[0].Item2[idx]));
-                            item.Tag = new BDNodeWrapper(pBDNode, childTypeInfoList[0].Item1, childTypeInfoList[0].Item2[idx], pTreeNode);
+                            item.Tag = new BDNodeWrapper(pBDNode, childTypeInfoList[0].Item1, childTypeInfoList[0].Item2[idx], null);
                             item.Click += new System.EventHandler(this.addChildNode_Click);
                             addChildNodeToolStripMenuItem.DropDownItems.Add(item);
                         }
@@ -742,7 +700,7 @@ namespace BDEditor.Views
                         item.Name = string.Format("dynamicAddChild{0}", idx);
                         item.Size = new System.Drawing.Size(179, 22);
                         item.Text = string.Format("&Add {0}", BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item1));
-                        item.Tag = new BDNodeWrapper(pBDNode, childTypeInfoList[idx].Item1, childTypeInfoList[idx].Item2[0], pTreeNode);
+                        item.Tag = new BDNodeWrapper(pBDNode, childTypeInfoList[idx].Item1, childTypeInfoList[idx].Item2[0], null);
                         item.Click += new System.EventHandler(this.addChildNode_Click);
 
                         if (childTypeInfoList[idx].Item2.Length > 1)
@@ -755,7 +713,7 @@ namespace BDEditor.Views
                                 layoutItem.Name = string.Format("dynamicAddChildLayoutVariant{0}", idy);
                                 layoutItem.Size = new System.Drawing.Size(179, 22);
                                 layoutItem.Text = string.Format("Add {0}", BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item2[idy]));
-                                layoutItem.Tag = new BDNodeWrapper(pBDNode, childTypeInfoList[idx].Item1, childTypeInfoList[idx].Item2[idy], pTreeNode);
+                                layoutItem.Tag = new BDNodeWrapper(pBDNode, childTypeInfoList[idx].Item1, childTypeInfoList[idx].Item2[idy], null);
                                 layoutItem.Click += new System.EventHandler(this.addChildNode_Click);
                                 item.DropDownItems.Add(layoutItem);
                             }
@@ -767,5 +725,7 @@ namespace BDEditor.Views
             }
         }
         #endregion
+
+
     }
 }

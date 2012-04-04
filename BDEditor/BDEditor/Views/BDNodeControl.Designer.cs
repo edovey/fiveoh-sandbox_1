@@ -299,6 +299,7 @@
             this.addSiblingNodeToolStripMenuItem.Name = "addSiblingNodeToolStripMenuItem";
             this.addSiblingNodeToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.addSiblingNodeToolStripMenuItem.Text = "Add Table Section";
+            this.addSiblingNodeToolStripMenuItem.Click += new System.EventHandler(this.addSiblingNode_Click);
             // 
             // addChildNodeToolStripMenuItem
             // 

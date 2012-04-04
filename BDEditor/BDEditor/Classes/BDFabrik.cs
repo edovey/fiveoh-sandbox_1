@@ -341,10 +341,12 @@ namespace BDEditor.Classes
             if (null != pParent)
             {
                 List<Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>> childTypeInfoList = ChildTypeDefinitionListForNode(pParent);
-
-                foreach (Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]> childTypeInfo in childTypeInfoList)
+                if (null != childTypeInfoList)
                 {
-                    entryList.AddRange(GetChildrenForParentIdAndChildType(pContext, pParent.Uuid, childTypeInfo.Item1));
+                    foreach (Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]> childTypeInfo in childTypeInfoList)
+                    {
+                        entryList.AddRange(GetChildrenForParentIdAndChildType(pContext, pParent.Uuid, childTypeInfo.Item1));
+                    }
                 }
             }
 
@@ -471,6 +473,7 @@ namespace BDEditor.Classes
                     therapyGroup.LayoutVariant = pLayoutVariant;
                     therapyGroup.Name = String.Format("New Therapy Group {0}", therapyGroup.displayOrder + 1);
                     BDTherapyGroup.Save(pContext, therapyGroup);
+                    result = therapyGroup;
                     break;
 
                 case BDConstants.BDNodeType.BDTherapy:
@@ -480,6 +483,7 @@ namespace BDEditor.Classes
                     therapy.LayoutVariant = pLayoutVariant;
                     therapy.Name = String.Format("New Therapy {0}", therapy.displayOrder + 1);
                     BDTherapy.Save(pContext, therapy);
+                    result = therapy;
                     break;
 
                 case BDConstants.BDNodeType.BDTable:
@@ -489,6 +493,7 @@ namespace BDEditor.Classes
                     tableNode.LayoutVariant = pLayoutVariant;
                     tableNode.Name = String.Format("New {0}-{1}", BDUtilities.GetEnumDescription(pChildType), tableNode.displayOrder + 1);
                     BDNode.Save(pContext, tableNode);
+                    result = tableNode;
                     break;
 
                 default:
@@ -498,6 +503,7 @@ namespace BDEditor.Classes
                     node.LayoutVariant = pLayoutVariant;
                     node.Name = String.Format("New {0}-{1}", BDUtilities.GetEnumDescription(pChildType), node.displayOrder + 1);
                     BDNode.Save(pContext, node);
+                    result = node;
                     break;
             }
             return result;
@@ -533,6 +539,31 @@ namespace BDEditor.Classes
             }
 
             List<IBDNode> siblingList = RepairSiblingNodeDisplayOrder(pContext, parentId, nodeType);
+        }
+
+        public static IBDNode RetrieveNode(Entities pContext, BDConstants.BDNodeType pNodeType, Guid? pUuid)
+        {
+            IBDNode result = null;
+
+            if (null != pUuid)
+            {
+                switch (pNodeType)
+                {
+                    case BDConstants.BDNodeType.BDTherapyGroup:
+                        result = BDTherapyGroup.GetTherapyGroupWithId(pContext, pUuid.Value);
+                        
+                        break;
+
+                    case BDConstants.BDNodeType.BDTherapy:
+                        result = BDTherapy.GetTherapyWithId(pContext, pUuid.Value);
+                        break;
+
+                    default:
+                        result = BDNode.RetrieveNodeWithId(pContext, pUuid.Value);
+                        break;
+                }
+            }
+            return result;
         }
     }
 }

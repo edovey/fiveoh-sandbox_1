@@ -317,6 +317,7 @@ namespace BDEditor.Views
                 if (null != nodeCtrl)
                 {
                     nodeCtrl.NameChanged -= new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                    nodeCtrl.RequestItemAdd -= new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
                 }
             }
 
@@ -340,6 +341,7 @@ namespace BDEditor.Views
                             control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
                             control_tr01.Dock = DockStyle.Fill;
                             control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                            control_tr01.RequestItemAdd += new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
                             splitContainer1.Panel2.Controls.Add(control_tr01);
                             control_tr01.RefreshLayout();
                             break;
@@ -358,6 +360,7 @@ namespace BDEditor.Views
                             control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
                             control_tr01.Dock = DockStyle.Fill;
                             control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                            control_tr01.RequestItemAdd += new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
                             splitContainer1.Panel2.Controls.Add(control_tr01);
                             control_tr01.RefreshLayout();
                             break;
@@ -376,6 +379,7 @@ namespace BDEditor.Views
                             control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
                             control_tr01.Dock = DockStyle.Fill;
                             control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                            control_tr01.RequestItemAdd += new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
                             splitContainer1.Panel2.Controls.Add(control_tr01);
                             control_tr01.RefreshLayout();
                             break;
@@ -394,6 +398,7 @@ namespace BDEditor.Views
                             control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
                             control_tr01.Dock = DockStyle.Fill;
                             control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                            control_tr01.RequestItemAdd += new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
                             splitContainer1.Panel2.Controls.Add(control_tr01);
                             control_tr01.RefreshLayout();
                             break;
@@ -410,6 +415,7 @@ namespace BDEditor.Views
                             control_tr01.AssignScopeId((null != presentation) ? presentation.Uuid : Guid.Empty);
                             control_tr01.AssignParentInfo(presentation.ParentId, presentation.ParentType);
                             control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                            control_tr01.RequestItemAdd += new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
                             splitContainer1.Panel2.Controls.Add(control_tr01);
                             control_tr01.RefreshLayout();
                             break;
@@ -429,6 +435,7 @@ namespace BDEditor.Views
                             control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
                             control_tr01.Dock = DockStyle.Fill;
                             control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                            control_tr01.RequestItemAdd += new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
                             splitContainer1.Panel2.Controls.Add(control_tr01);
                             control_tr01.RefreshLayout();
                             break;
@@ -450,7 +457,18 @@ namespace BDEditor.Views
                 chapterTree.SelectedNode.Text = e.Text;
             }
         }
-  
+
+        void siblingNodeCreateRequest(object sender, NodeEventArgs e)
+        {
+            IBDNode siblingNode = BDFabrik.RetrieveNode(e.DataContext, e.NodeType, e.Uuid);
+            if(null != siblingNode)
+            {
+                IBDNode parentNode = BDFabrik.RetrieveNode(e.DataContext, siblingNode.ParentType, siblingNode.ParentId);
+                BDFabrik.CreateChildNode(DataContext, parentNode, e.NodeType, e.LayoutVariant);
+                showNavSelection(chapterTree.SelectedNode);
+            }
+        }
+
         private void loadSeedData_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;

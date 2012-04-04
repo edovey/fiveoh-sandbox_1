@@ -617,6 +617,7 @@ namespace BDEditor.Views
 
         private void btnMenu_Click(object sender, EventArgs e)
         {
+            buildNavContextMenuStrip(CurrentNode);
             this.contextMenuStripEvents.Show(btnMenuLeft, new System.Drawing.Point(0, btnMenuLeft.Height));
         }
 
@@ -663,6 +664,7 @@ namespace BDEditor.Views
                 entry.Click -= new System.EventHandler(this.addChildNode_Click);
             }
             addChildNodeToolStripMenuItemList.Clear();
+            addSiblingNodeToolStripMenuItem.Click -= new EventHandler(addChildNode_Click);
 
             foreach (ToolStripMenuItem entry in addSiblingNodeToolStripMenuItemList)
             {
@@ -676,6 +678,11 @@ namespace BDEditor.Views
             reorderNextToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, null);
             reorderPreviousToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, null);
             deleteToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, null);
+
+            addSiblingNodeToolStripMenuItem.Text = string.Format("&Add {0}", BDUtilities.GetEnumDescription(pBDNode.NodeType));
+            // *****
+            addSiblingNodeToolStripMenuItem.Visible = false;
+            // *****
 
             string nodeTypeName = BDUtilities.GetEnumDescription(pBDNode.NodeType);
 
@@ -693,6 +700,7 @@ namespace BDEditor.Views
                     if (childTypeInfoList[0].Item2.Length == 1)
                     {
                         addChildNodeToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, childTypeInfoList[0].Item1, childTypeInfoList[0].Item2[0], null);
+                        addChildNodeToolStripMenuItem.Click += new EventHandler(addChildNode_Click);
                     }
                     else
                     {

@@ -273,7 +273,7 @@ namespace BDEditor.Views
             
             btnMenuRight.Enabled = showAsChild;
             btnMenuRight.Visible = showAsChild;
-            lblNodeAsChild.Text = (DefaultNodeType > 0) ? BDUtilities.GetEnumDescription(DefaultNodeType) : @"Section";
+            lblNodeAsChild.Text = BDUtilities.GetEnumDescription(DefaultNodeType);
             lblNodeAsChild.Enabled = showAsChild;
             lblNodeAsChild.Visible = showAsChild;
         }
@@ -347,7 +347,7 @@ namespace BDEditor.Views
                     nodeControl.ShowAsChild = true;
                     nodeControl.CurrentNode = pNode;
                     nodeControl.DefaultLayoutVariantType = this.DefaultLayoutVariantType;
-                    nodeControl.DefaultNodeType = BDConstants.BDNodeType.BDTableRow;
+                    nodeControl.DefaultNodeType = pNode.NodeType;
 
                     nodeControl.ReorderToNext += new EventHandler<NodeEventArgs>(childNodeControl_ReorderToNext);
                     nodeControl.ReorderToPrevious += new EventHandler<NodeEventArgs>(childNodeControl_ReorderToPrevious);

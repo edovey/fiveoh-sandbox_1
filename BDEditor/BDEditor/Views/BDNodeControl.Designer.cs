@@ -270,7 +270,7 @@
             this.toolStripSeparator1,
             this.deleteNodeToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(172, 148);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(172, 126);
             // 
             // reorderPreviousToolStripMenuItem
             // 
@@ -336,13 +336,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.pnlDetail);
             this.Controls.Add(this.panelHeader);
             this.MinimumSize = new System.Drawing.Size(870, 50);
             this.Name = "BDNodeControl";
-            this.Size = new System.Drawing.Size(870, 95);
+            this.Size = new System.Drawing.Size(870, 71);
             this.Load += new System.EventHandler(this.BDNodeControl_Load);
             this.Leave += new System.EventHandler(this.BDNodeControl_Leave);
             this.panelHeader.ResumeLayout(false);

@@ -11,8 +11,10 @@ namespace BDEditor.Classes
     {
         public enum BDNodeType
         {
+            [Description("Undefined")]
+            Undefined = -1,
             [Description("None")]
-            None = -1,
+            None = 0,
             //BDNode class
             [Description("Chapter")]
             BDChapter = 1,

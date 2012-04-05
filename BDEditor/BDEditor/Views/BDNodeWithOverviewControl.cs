@@ -295,15 +295,17 @@ namespace BDEditor.Views
 
         private void setFormLayoutState()
         {
+            string title = string.Format("{0} [{1}]", BDUtilities.GetEnumDescription(DefaultNodeType), BDUtilities.GetEnumDescription(DefaultLayoutVariantType));
+
             btnMenuLeft.Enabled = !showAsChild;
             btnMenuLeft.Visible = !showAsChild;
-            lblNode.Text = BDUtilities.GetEnumDescription(DefaultNodeType);
+            lblNode.Text = title;
             lblNode.Enabled = !showAsChild;
             lblNode.Visible = !showAsChild;
             
             btnMenuRight.Enabled = showAsChild;
             btnMenuRight.Visible = showAsChild;
-            lblNodeAsChild.Text = (DefaultNodeType > 0) ? BDUtilities.GetEnumDescription(DefaultNodeType) : @"Section";
+            lblNodeAsChild.Text = title;
             lblNodeAsChild.Enabled = showAsChild;
             lblNodeAsChild.Visible = showAsChild;
         }
@@ -682,7 +684,8 @@ namespace BDEditor.Views
 
             addSiblingNodeToolStripMenuItem.Text = string.Format("&Add {0}", BDUtilities.GetEnumDescription(pBDNode.NodeType));
             // *****
-            addSiblingNodeToolStripMenuItem.Visible = false;
+            addSiblingNodeToolStripMenuItem.Visible = ShowAsChild;
+            addSiblingNodeToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant);
             // *****
 
             string nodeTypeName = BDUtilities.GetEnumDescription(pBDNode.NodeType);
@@ -691,7 +694,11 @@ namespace BDEditor.Views
 
             //List<BDConstants.BDNodeType> childTypes = BDFabrik.ChildTypeDefinitionListForNode(pBDNode);
             List<Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>> childTypeInfoList = BDFabrik.ChildTypeDefinitionListForNode(pBDNode);
-            if (null != childTypeInfoList)
+            if (null == childTypeInfoList)
+            {
+                addChildNodeToolStripMenuItem.Visible = false;
+            }
+            else
             {
                 if (childTypeInfoList.Count == 1)
                 {

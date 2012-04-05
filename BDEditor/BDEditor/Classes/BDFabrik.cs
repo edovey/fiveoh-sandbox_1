@@ -251,9 +251,10 @@ namespace BDEditor.Classes
                     switch (layoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
-                        //default:
-                            //definitionList.Add(BDConstants.BDNodeType.BDTableRow);
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation01 }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt }));
+                            break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass }));
                             break;
                         default:
                             throw new Exception();

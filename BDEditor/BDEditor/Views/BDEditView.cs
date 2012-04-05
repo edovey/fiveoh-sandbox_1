@@ -31,8 +31,22 @@ namespace BDEditor.Views
             //sectionDropDown.DataSource = dataContext.BDSections;
             chapterDropDown.DisplayMember = "Name";
 
+            BDNotification.Notify += new EventHandler<BDNotificationEventArgs>(BDNotification_Notify);
+
         }
 
+        void BDNotification_Notify(object sender, BDNotificationEventArgs e)
+        {
+            switch (e.NotificationType)
+            {
+                case BDNotificationEventArgs.BDNotificationType.Refresh:
+                case BDNotificationEventArgs.BDNotificationType.Addition:
+                case BDNotificationEventArgs.BDNotificationType.Deletion:
+                     showNavSelection(chapterTree.SelectedNode);
+                    break;
+            }
+        }
+        
         public DataModel.Entities DataContext
         {
             get

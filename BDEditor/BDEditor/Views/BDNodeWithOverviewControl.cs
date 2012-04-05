@@ -636,6 +636,7 @@ namespace BDEditor.Views
                 {
                     IBDNode node = BDFabrik.CreateChildNode(dataContext, nodeWrapper.Node, nodeWrapper.TargetNodeType, nodeWrapper.TargetLayoutVariant);
                     IBDControl control = addChildNodeControl(node, childNodeControlList.Count);
+                    BDNotification.SendNotification(new BDNotificationEventArgs(BDNotificationEventArgs.BDNotificationType.Addition));
                     if (null != control)
                         ((System.Windows.Forms.UserControl)control).Focus();
                 }

@@ -136,6 +136,8 @@
     <Compile Include="Classes\BDUtilities.cs" />
     <Compile Include="Classes\Navigation\TreatmentRecommendationTree.cs" />
     <Compile Include="Classes\NodeEventArgs.cs" />
+    <Compile Include="Classes\BDNotification.cs" />
+    <Compile Include="Classes\BDNotificationEventArgs.cs" />
     <Compile Include="Classes\RepositoryHandler.cs" />
     <Compile Include="Classes\BDSearchEntryGenerator.cs" />
     <Compile Include="Classes\SyncInfo.cs" />

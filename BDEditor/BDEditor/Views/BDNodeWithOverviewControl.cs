@@ -518,7 +518,7 @@ namespace BDEditor.Views
 
         private void bdLinkedNoteControl_SaveAttemptWithoutParent(object sender, EventArgs e)
         {
-
+            throw new NotSupportedException();
         }
 
         private void btnLinkedNote_Click(object sender, EventArgs e)

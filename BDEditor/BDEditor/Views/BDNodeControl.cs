@@ -488,6 +488,8 @@ namespace BDEditor.Views
 
         private void bdLinkedNoteControl_SaveAttemptWithoutParent(object sender, EventArgs e)
         {
+            throw new NotSupportedException();
+            /*
             BDLinkedNoteControl control = sender as BDLinkedNoteControl;
             if (null != control)
             {
@@ -497,6 +499,7 @@ namespace BDEditor.Views
                     control.Save();
                 }
             }
+             * */
         }
 
         private void btnLinkedNote_Click(object sender, EventArgs e)

@@ -16,6 +16,8 @@
           <EntitySet Name="BDSearchEntries" EntityType="BDDataModel.Store.BDSearchEntries" store:Type="Tables" />
           <EntitySet Name="BDSearchEntryAssociations" EntityType="BDDataModel.Store.BDSearchEntryAssociations" store:Type="Tables" />
           <EntitySet Name="BDSystemSettings" EntityType="BDDataModel.Store.BDSystemSettings" store:Type="Tables" />
+          <EntitySet Name="BDTableCells" EntityType="BDDataModel.Store.BDTableCells" store:Type="Tables" />
+          <EntitySet Name="BDTableRows" EntityType="BDDataModel.Store.BDTableRows" store:Type="Tables" />
           <EntitySet Name="BDTherapies" EntityType="BDDataModel.Store.BDTherapies" store:Type="Tables" />
           <EntitySet Name="BDTherapyGroups" EntityType="BDDataModel.Store.BDTherapyGroups" store:Type="Tables" />
         </EntityContainer>
@@ -170,6 +172,42 @@
           <Property Name="settingValue" Type="nvarchar" MaxLength="127" />
           <Property Name="settingDateTimeValue" Type="datetime" />
         </EntityType>
+        <EntityType Name="BDTableCells">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="parentId" Type="uniqueidentifier" />
+          <Property Name="parentKeyName" Type="nvarchar" MaxLength="100" />
+          <Property Name="createdDate" Type="datetime" />
+          <Property Name="createdBy" Type="uniqueidentifier" />
+          <Property Name="modifiedDate" Type="datetime" />
+          <Property Name="modifiedBy" Type="uniqueidentifier" />
+          <Property Name="displayOrder" Type="int" />
+          <Property Name="alignment" Type="int" />
+          <Property Name="value" Type="nvarchar" MaxLength="100" />
+          <Property Name="schemaVersion" Type="int" />
+        </EntityType>
+        <EntityType Name="BDTableRows">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="parentId" Type="uniqueidentifier" />
+          <Property Name="parentKeyName" Type="nvarchar" MaxLength="100" />
+          <Property Name="createdDate" Type="datetime" />
+          <Property Name="createdBy" Type="uniqueidentifier" />
+          <Property Name="modifiedDate" Type="datetime" />
+          <Property Name="modifiedBy" Type="uniqueidentifier" />
+          <Property Name="displayOrder" Type="int" />
+          <Property Name="schemaVersion" Type="int" />
+          <Property Name="parentType" Type="int" />
+          <Property Name="layoutVariant" Type="int" />
+          <Property Name="rowType" Type="int" />
+          <Property Name="nodeType" Type="int" />
+          <Property Name="nodeKeyName" Type="nvarchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="BDTherapies">
           <Key>
             <PropertyRef Name="uuid" />
@@ -179,8 +217,6 @@
           <Property Name="createdDate" Type="datetime" />
           <Property Name="deprecated" Type="bit" Nullable="false" />
           <Property Name="displayOrder" Type="int" />
-          <Property Name="dosage" Type="nvarchar" MaxLength="1000" />
-          <Property Name="duration" Type="nvarchar" MaxLength="1000" />
           <Property Name="inUseBy" Type="uniqueidentifier" />
           <Property Name="modifiedBy" Type="uniqueidentifier" />
           <Property Name="modifiedDate" Type="datetime" />
@@ -190,12 +226,22 @@
           <Property Name="leftBracket" Type="bit" />
           <Property Name="rightBracket" Type="bit" />
           <Property Name="nameSameAsPrevious" Type="bit" />
-          <Property Name="dosageSameAsPrevious" Type="bit" />
-          <Property Name="durationSameAsPrevious" Type="bit" />
           <Property Name="parentId" Type="uniqueidentifier" />
           <Property Name="parentKeyName" Type="nvarchar" MaxLength="100" />
           <Property Name="parentType" Type="int" />
           <Property Name="layoutVariant" Type="int" />
+          <Property Name="dosage1" Type="nvarchar" MaxLength="1000" />
+          <Property Name="dosage2" Type="nvarchar" MaxLength="1000" />
+          <Property Name="duration1" Type="nvarchar" MaxLength="1000" />
+          <Property Name="duration2" Type="nvarchar" MaxLength="1000" />
+          <Property Name="duration1SameAsPrevious" Type="bit" />
+          <Property Name="duration2SameAsPrevious" Type="bit" />
+          <Property Name="dosage1SameAsPrevious" Type="bit" />
+          <Property Name="dosage2SameAsPrevious" Type="bit" />
+          <Property Name="duration" Type="nvarchar" MaxLength="1000" />
+          <Property Name="dosage" Type="nvarchar" MaxLength="1000" />
+          <Property Name="durationSameAsPrevious" Type="bit" />
+          <Property Name="dosageSameAsPrevious" Type="bit" />
         </EntityType>
         <EntityType Name="BDTherapyGroups">
           <Key>
@@ -234,6 +280,8 @@
           <EntitySet Name="BDSystemSettings" EntityType="BDDataModel.BDSystemSetting" />
           <EntitySet Name="BDTherapies" EntityType="BDDataModel.BDTherapy" />
           <EntitySet Name="BDTherapyGroups" EntityType="BDDataModel.BDTherapyGroup" />
+          <EntitySet Name="BDTableCells" EntityType="BDDataModel.BDTableCell" />
+          <EntitySet Name="BDTableRows" EntityType="BDDataModel.BDTableRow" />
         </EntityContainer>
         <EntityType Name="BDDeletion">
           <Key>
@@ -395,8 +443,6 @@
           <Property Type="DateTime" Name="createdDate" />
           <Property Type="Boolean" Name="deprecated" Nullable="false" />
           <Property Type="Int32" Name="displayOrder" />
-          <Property Type="String" Name="dosage" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="duration" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Type="Guid" Name="inUseBy" />
           <Property Type="Guid" Name="modifiedBy" />
           <Property Type="DateTime" Name="modifiedDate" />
@@ -406,12 +452,22 @@
           <Property Type="Boolean" Name="leftBracket" />
           <Property Type="Boolean" Name="rightBracket" />
           <Property Type="Boolean" Name="nameSameAsPrevious" />
-          <Property Type="Boolean" Name="dosageSameAsPrevious" />
-          <Property Type="Boolean" Name="durationSameAsPrevious" />
           <Property Type="Guid" Name="parentId" />
           <Property Type="String" Name="parentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="parentType" />
           <Property Type="Int32" Name="layoutVariant" />
+          <Property Type="String" Name="dosage1" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="dosage2" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="duration1" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="duration2" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="duration1SameAsPrevious" />
+          <Property Type="Boolean" Name="duration2SameAsPrevious" />
+          <Property Type="Boolean" Name="dosage1SameAsPrevious" />
+          <Property Type="Boolean" Name="dosage2SameAsPrevious" />
+          <Property Type="String" Name="duration" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="dosage" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="durationSameAsPrevious" />
+          <Property Type="Boolean" Name="dosageSameAsPrevious" />
         </EntityType>
         <EntityType Name="BDTherapyGroup">
           <Key>
@@ -432,6 +488,42 @@
           <Property Type="String" Name="parentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="parentType" />
           <Property Type="Int32" Name="layoutVariant" />
+        </EntityType>
+        <EntityType Name="BDTableCell">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Type="Guid" Name="uuid" Nullable="false" />
+          <Property Type="Guid" Name="parentId" />
+          <Property Type="String" Name="parentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="createdDate" />
+          <Property Type="Guid" Name="createdBy" />
+          <Property Type="DateTime" Name="modifiedDate" />
+          <Property Type="Guid" Name="modifiedBy" />
+          <Property Type="Int32" Name="displayOrder" />
+          <Property Type="Int32" Name="alignment" />
+          <Property Type="String" Name="value" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="schemaVersion" />
+        </EntityType>
+        <EntityType Name="BDTableRow">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Type="Guid" Name="uuid" Nullable="false" />
+          <Property Type="String" Name="name" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="parentId" />
+          <Property Type="String" Name="parentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="createdDate" />
+          <Property Type="Guid" Name="createdBy" />
+          <Property Type="DateTime" Name="modifiedDate" />
+          <Property Type="Guid" Name="modifiedBy" />
+          <Property Type="Int32" Name="displayOrder" />
+          <Property Type="Int32" Name="schemaVersion" />
+          <Property Type="Int32" Name="parentType" />
+          <Property Type="Int32" Name="layoutVariant" />
+          <Property Type="Int32" Name="rowType" />
+          <Property Type="Int32" Name="nodeType" />
+          <Property Type="String" Name="nodeKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -603,12 +695,22 @@
           <EntitySetMapping Name="BDTherapies">
             <EntityTypeMapping TypeName="BDDataModel.BDTherapy">
               <MappingFragment StoreEntitySet="BDTherapies">
+                <ScalarProperty Name="dosageSameAsPrevious" ColumnName="dosageSameAsPrevious" />
+                <ScalarProperty Name="durationSameAsPrevious" ColumnName="durationSameAsPrevious" />
+                <ScalarProperty Name="dosage" ColumnName="dosage" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+                <ScalarProperty Name="dosage2SameAsPrevious" ColumnName="dosage2SameAsPrevious" />
+                <ScalarProperty Name="dosage1SameAsPrevious" ColumnName="dosage1SameAsPrevious" />
+                <ScalarProperty Name="duration2SameAsPrevious" ColumnName="duration2SameAsPrevious" />
+                <ScalarProperty Name="duration1SameAsPrevious" ColumnName="duration1SameAsPrevious" />
+                <ScalarProperty Name="duration2" ColumnName="duration2" />
+                <ScalarProperty Name="duration1" ColumnName="duration1" />
+                <ScalarProperty Name="dosage2" ColumnName="dosage2" />
+                <ScalarProperty Name="dosage1" ColumnName="dosage1" />
                 <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
                 <ScalarProperty Name="parentType" ColumnName="parentType" />
                 <ScalarProperty Name="parentKeyName" ColumnName="parentKeyName" />
                 <ScalarProperty Name="parentId" ColumnName="parentId" />
-                <ScalarProperty Name="durationSameAsPrevious" ColumnName="durationSameAsPrevious" />
-                <ScalarProperty Name="dosageSameAsPrevious" ColumnName="dosageSameAsPrevious" />
                 <ScalarProperty Name="nameSameAsPrevious" ColumnName="nameSameAsPrevious" />
                 <ScalarProperty Name="rightBracket" ColumnName="rightBracket" />
                 <ScalarProperty Name="leftBracket" ColumnName="leftBracket" />
@@ -618,8 +720,6 @@
                 <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
                 <ScalarProperty Name="modifiedBy" ColumnName="modifiedBy" />
                 <ScalarProperty Name="inUseBy" ColumnName="inUseBy" />
-                <ScalarProperty Name="duration" ColumnName="duration" />
-                <ScalarProperty Name="dosage" ColumnName="dosage" />
                 <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
                 <ScalarProperty Name="deprecated" ColumnName="deprecated" />
                 <ScalarProperty Name="createdDate" ColumnName="createdDate" />
@@ -649,6 +749,44 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BDTableCells">
+            <EntityTypeMapping TypeName="BDDataModel.BDTableCell">
+              <MappingFragment StoreEntitySet="BDTableCells">
+                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="alignment" ColumnName="alignment" />
+                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
+                <ScalarProperty Name="modifiedBy" ColumnName="modifiedBy" />
+                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="parentKeyName" ColumnName="parentKeyName" />
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BDTableRows">
+            <EntityTypeMapping TypeName="BDDataModel.BDTableRow">
+              <MappingFragment StoreEntitySet="BDTableRows">
+                <ScalarProperty Name="nodeKeyName" ColumnName="nodeKeyName" />
+                <ScalarProperty Name="nodeType" ColumnName="nodeType" />
+                <ScalarProperty Name="rowType" ColumnName="rowType" />
+                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
+                <ScalarProperty Name="parentType" ColumnName="parentType" />
+                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
+                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
+                <ScalarProperty Name="modifiedBy" ColumnName="modifiedBy" />
+                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="parentKeyName" ColumnName="parentKeyName" />
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -668,7 +806,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model1" ZoomLevel="86">
+      <Diagram Name="Model1" ZoomLevel="98">
         <EntityTypeShape EntityType="BDDataModel.BDDeletion" Width="1.5" PointX="0.75" PointY="0.75" Height="2.7494921875000031" />
         <EntityTypeShape EntityType="BDDataModel.BDHtmlPage" Width="1.5" PointX="2.75" PointY="0.75" Height="2.5571907552083388" />
         <EntityTypeShape EntityType="BDDataModel.BDLinkedNoteAssociation" Width="1.5" PointX="4.75" PointY="0.75" Height="3.7109993489583388" />
@@ -679,8 +817,10 @@
         <EntityTypeShape EntityType="BDDataModel.BDSearchEntry" Width="1.5" PointX="6.75" PointY="5.75" Height="1.9802864583333388" />
         <EntityTypeShape EntityType="BDDataModel.BDSearchEntryAssociation" Width="1.5" PointX="8.75" PointY="0.75" Height="2.9417936197916674" />
         <EntityTypeShape EntityType="BDDataModel.BDSystemSetting" Width="1.5" PointX="8.75" PointY="4.75" Height="1.7879850260416674" />
-        <EntityTypeShape EntityType="BDDataModel.BDTherapy" Width="1.5" PointX="6.75" PointY="8.75" Height="5.2494108072916674" />
+        <EntityTypeShape EntityType="BDDataModel.BDTherapy" Width="2" PointX="12.375" PointY="4.625" Height="6.787822265625" />
         <EntityTypeShape EntityType="BDDataModel.BDTherapyGroup" Width="1.5" PointX="8.75" PointY="7.75" Height="3.9033007812500102" />
+        <EntityTypeShape EntityType="BDDataModel.BDTableCell" Width="1.5" PointX="12.375" PointY="1.125" Height="2.9417936197916674" />
+        <EntityTypeShape EntityType="BDDataModel.BDTableRow" Width="1.5" PointX="10.625" PointY="0.875" Height="3.5186979166666656" />
       </Diagram>
     </Diagrams>
   </Designer>

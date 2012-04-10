@@ -14,7 +14,7 @@ using BDEditor.Classes;
 namespace BDEditor.DataModel
 {
     /// <summary>
-    /// Extention of generated BDHtmlPage
+    /// Extension of generated BDHtmlPage
     /// </summary>
     public partial class BDHtmlPage : IBDObject
     {
@@ -120,10 +120,10 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Return the LinkedNote for the uuid. Returns null if not found.
+        /// Return the HtmlPage for the uuid. Returns null if not found.
         /// </summary>
         /// <param name="pContext"></param>
-        /// <param name="pLinkedNoteId"></param>
+        /// <param name="pEntryId"></param>
         /// <returns></returns>
         public static BDHtmlPage RetrieveWithId(Entities pContext, Guid? pEntryId)
         {
@@ -294,6 +294,9 @@ namespace BDEditor.DataModel
             return result;
         }
 
+         #endregion
+
+        #region IBDObject implementation
         public PutAttributesRequest PutAttributes()
         {
             PutAttributesRequest putAttributeRequest = new PutAttributesRequest().WithDomainName(AWS_DOMAIN).WithItemName(this.uuid.ToString().ToUpper());
@@ -309,16 +312,10 @@ namespace BDEditor.DataModel
 
             return putAttributeRequest;
         }
-        #endregion
 
         public Guid Uuid
         {
             get { return this.uuid; }
-        }
-
-        public override string ToString()
-        {
-            return this.uuid.ToString();
         }
 
         public string Description
@@ -329,6 +326,12 @@ namespace BDEditor.DataModel
         public string DescriptionForLinkedNote
         {
             get { throw new NotImplementedException(); }
+        }
+
+        #endregion
+        public override string ToString()
+        {
+            return this.uuid.ToString();
         }
     }
 }

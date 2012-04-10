@@ -18,8 +18,6 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDTherapy: IBDNode
     {
-        //public const string AWS_DOMAIN = @"bd_1_therapies";
-
         public const string AWS_PROD_DOMAIN = @"bd_2_therapies";
         public const string AWS_DEV_DOMAIN = @"bd_dev_2_therapies";
 
@@ -33,7 +31,7 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME_FRIENDLY = @"Therapy";
         public const string KEY_NAME = @"BDTherapy";
 
-        public const int ENTITY_SCHEMAVERSION = 0;
+        public const int ENTITY_SCHEMAVERSION = 1;
         public const string PROPERTYNAME_THERAPY = @"Therapy";
         public const string PROPERTYNAME_DOSAGE = @"Dosage"; 
         public const string PROPERTYNAME_DURATION = @"Duration";
@@ -57,10 +55,18 @@ namespace BDEditor.DataModel
         private const string RIGHTBRACKET = @"th_rightBracket";
         private const string NAME = @"th_name";
         private const string DOSAGE = @"th_dosage";
+        private const string DOSAGE_1 = @"th_dosage1";
+        private const string DOSAGE_2 = @"th_dosage2";
         private const string DURATION = @"th_duration";
-        private const string NAMEPREVIOUS = @"th_namePrevious";
-        private const string DOSAGEPREVIOUS = @"th_dosagePrevious";
-        private const string DURATIONPREVIOUS = @"th_durationPrevious";
+        private const string DURATION_1 = @"th_duration1";
+        private const string DURATION_2 = @"th_duration2";
+        private const string NAMEPREVIOUS = @"th_nameSameAsPrevious";
+        private const string DOSAGEPREVIOUS = @"th_dosageSameAsPrevious";
+        private const string DOSAGE_1_PREVIOUS = @"th_dosage1SameAsPrevious";
+        private const string DOSAGE_2_PREVIOUS = @"th_dosage2SameAsPrevious"; 
+        private const string DURATIONPREVIOUS = @"th_durationSameAsPrevious";
+        private const string DURATION_1_PREVIOUS = @"th_duration1SameAsPrevious";
+        private const string DURATION_2_PREVIOUS = @"th_duration2SameAsPrevious";
 
         public enum TherapyJoinType
         {
@@ -96,11 +102,19 @@ namespace BDEditor.DataModel
             therapy.displayOrder = -1;
             therapy.name = string.Empty;
             therapy.dosage = string.Empty;
+            therapy.dosage1 = string.Empty;
+            therapy.dosage2 = string.Empty;
             therapy.duration = string.Empty;
+            therapy.duration1 = string.Empty;
+            therapy.duration2 = string.Empty;
             therapy.parentId = pParentId;
             therapy.nameSameAsPrevious = false;
             therapy.dosageSameAsPrevious = false;
+            therapy.dosage1SameAsPrevious = false;
+            therapy.dosage2SameAsPrevious = false;
             therapy.durationSameAsPrevious = false;
+            therapy.duration1SameAsPrevious = false;
+            therapy.duration2SameAsPrevious = false;
 
             pContext.AddObject(ENTITYNAME, therapy);
 
@@ -238,6 +252,7 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static string[] GetTherapyDosages(Entities pContext)
         {
+            //TODO:  refactor for multiple dosage properties
             var dosages = pContext.BDTherapies.Where(x => (!string.IsNullOrEmpty(x.dosage))).Select(pg => pg.dosage).Distinct();
 
             return dosages.ToArray();
@@ -250,6 +265,7 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static string[] GetTherapyDurations(Entities pContext)
         {
+            //TODO:  refactor for multiple duration properties
             var durations = pContext.BDTherapies.Where(x => (!string.IsNullOrEmpty(x.duration))).Select(pg => pg.duration).Distinct();
             return durations.ToArray();
         }
@@ -269,6 +285,7 @@ namespace BDEditor.DataModel
 
         public static List<BDTherapy> RetrieveTherapiesDosageWithText(Entities pContext, string pText)
         {
+            //TODO:  refactor for multiple dosage properties
             List<BDTherapy> returnList = new List<BDTherapy>();
             if (null != pText && pText.Length > 0)
             {
@@ -282,6 +299,7 @@ namespace BDEditor.DataModel
 
         public static List<BDTherapy> RetrieveTherapiesDurationWithText(Entities pContext, string pText)
         {
+            //TODO:  refactor for multiple duration properties
             List<BDTherapy> returnList = new List<BDTherapy>();
             if(null != pText && pText.Length > 0)
             {
@@ -480,16 +498,25 @@ namespace BDEditor.DataModel
             entry.leftBracket = Boolean.Parse(pAttributeDictionary[LEFTBRACKET]);
             entry.rightBracket = Boolean.Parse(pAttributeDictionary[RIGHTBRACKET]);
             entry.name = pAttributeDictionary[NAME];
+            entry.nameSameAsPrevious = Boolean.Parse(pAttributeDictionary[NAMEPREVIOUS]);
             entry.dosage = pAttributeDictionary[DOSAGE];
             entry.duration = pAttributeDictionary[DURATION];
-
-            entry.nameSameAsPrevious = Boolean.Parse(pAttributeDictionary[NAMEPREVIOUS]);
             entry.dosageSameAsPrevious = Boolean.Parse(pAttributeDictionary[DOSAGEPREVIOUS]);
             entry.durationSameAsPrevious = Boolean.Parse(pAttributeDictionary[DURATIONPREVIOUS]);
 
-            entry.nameSameAsPrevious = false;
-            entry.dosageSameAsPrevious = false;
-            entry.durationSameAsPrevious = false;
+            if (entry.schemaVersion > 0)
+            {
+                entry.dosage1 = pAttributeDictionary[DOSAGE_1];
+                entry.dosage2 = pAttributeDictionary[DOSAGE_2];
+                entry.duration1 = pAttributeDictionary[DURATION_1];
+                entry.duration2 = pAttributeDictionary[DURATION_2];
+
+                entry.dosage1SameAsPrevious = Boolean.Parse(pAttributeDictionary[DOSAGE_1_PREVIOUS]);
+                entry.dosage2SameAsPrevious = Boolean.Parse(pAttributeDictionary[DOSAGE_2_PREVIOUS]);
+                entry.duration1SameAsPrevious = Boolean.Parse(pAttributeDictionary[DURATION_1_PREVIOUS]);
+                entry.duration2SameAsPrevious = Boolean.Parse(pAttributeDictionary[DURATION_2_PREVIOUS]);
+            }
+
 
             if (pSaveChanges)
                 pDataContext.SaveChanges();
@@ -515,11 +542,19 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.RIGHTBRACKET).WithValue(rightBracket.ToString()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DOSAGE).WithValue((null == dosage) ? string.Empty : dosage).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DOSAGE_1).WithValue((null == dosage1) ? string.Empty : dosage1).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DOSAGE_2).WithValue((null == dosage2) ? string.Empty : dosage2).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DURATION).WithValue((null == duration) ? string.Empty : duration).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DURATION_1).WithValue((null == duration1) ? string.Empty : duration1).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DURATION_2).WithValue((null == duration2) ? string.Empty : duration2).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.NAMEPREVIOUS).WithValue(nameSameAsPrevious.ToString()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DOSAGEPREVIOUS).WithValue(dosageSameAsPrevious.ToString()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DOSAGE_1_PREVIOUS).WithValue(dosage1SameAsPrevious.ToString()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DOSAGE_2_PREVIOUS).WithValue(dosage2SameAsPrevious.ToString()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DURATIONPREVIOUS).WithValue(durationSameAsPrevious.ToString()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DURATION_1_PREVIOUS).WithValue(duration1SameAsPrevious.ToString()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.DURATION_2_PREVIOUS).WithValue(duration2SameAsPrevious.ToString()).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDTherapy.PARENTTYPE).WithValue(string.Format(@"{0}", parentType)).WithReplace(true));

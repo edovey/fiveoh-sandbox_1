@@ -85,6 +85,26 @@ namespace BDEditor.Classes
             Footnote = 4
         }
 
+        public enum TableCellAlignment
+        {
+            [Description("Left Justified")]
+            LeftJustified = 0,
+            [Description("Centred")]
+            Centred = 1,
+            [Description("Right Justified")]
+            RightJustified = 2
+        }
+
+        public enum TableRowType
+        {
+            [Description("Header")]
+            Header = 0,
+            [Description("Section")]
+            Section = 1,
+            [Description("Content")]
+            Content = 2
+        }
+
         public const string DATETIMEFORMAT = @"yyyy-MM-dd'T'HH:mm:ss";
         public static readonly Color ACTIVELINK_COLOR = Color.LightSteelBlue;
         public static readonly Color INACTIVELINK_COLOR = SystemColors.Control;

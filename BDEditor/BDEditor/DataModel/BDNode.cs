@@ -83,7 +83,7 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Extended Save method that sets the modified date
+        /// Extended Save method 
         /// </summary>
         /// <param name="pNode"></param>
         public static void Save(Entities pContext, BDNode pNode)
@@ -102,7 +102,7 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Extended Delete method that created a deletion record as well as deleting the local record
+        /// Extended Delete method that creates a deletion record as well as deleting the local record
         /// </summary>
         /// <param name="pContext">the data context</param>
         /// <param name="pNode">the entry to be deleted</param>

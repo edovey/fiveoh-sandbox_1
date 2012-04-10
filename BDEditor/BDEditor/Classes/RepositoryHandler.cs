@@ -66,6 +66,8 @@ namespace BDEditor.Classes
 
                 syncDictionary.Add(BDTherapy.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
                 syncDictionary.Add(BDTherapyGroup.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
+                syncDictionary.Add(BDTableRow.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
+                syncDictionary.Add(BDTableCell.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
                 syncDictionary.Add(BDDeletion.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
                 syncDictionary.Add(BDMetadata.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
             }
@@ -363,6 +365,12 @@ namespace BDEditor.Classes
                                 case BDNode.AWS_DOMAIN:
                                     entryGuid = BDNode.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                     break;
+                                case BDTableRow.AWS_DOMAIN:
+                                    entryGuid = BDTableRow.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
+                                case BDTableCell.AWS_DOMAIN:
+                                    entryGuid = BDTableCell.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
                                 case BDHtmlPage.AWS_DOMAIN:
                                     {
                                         entryGuid = BDHtmlPage.LoadFromAttributes(pDataContext, attributeDictionary, true); // We need the iNote for the S3 call, so save
@@ -551,6 +559,12 @@ namespace BDEditor.Classes
                                 case BDNode.AWS_PROD_DOMAIN:
                                     entryGuid = BDNode.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                     break;
+                                case BDTableRow.AWS_PROD_DOMAIN:
+                                    entryGuid = BDTableRow.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
+                                case BDTableCell.AWS_PROD_DOMAIN:
+                                    entryGuid = BDTableCell.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
                             }
                             // The entry id will be null if a sync conflict prevented create/update so add it to the conflict list
                             if (null == entryGuid) syncInfoEntry.SyncConflictList.Add(attributeDictionary);
@@ -624,6 +638,8 @@ namespace BDEditor.Classes
             pDataContext.ExecuteStoreCommand("DELETE FROM BDLinkedNotes");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDTherapies");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDTherapyGroups");
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDTableRows");
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDTableCells");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDSearchEntryAssociations");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDSearchEntries");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDMetadata");

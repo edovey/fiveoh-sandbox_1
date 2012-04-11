@@ -318,7 +318,7 @@ namespace BDEditor.DataModel
 
                     case BDConstants.BDNodeType.BDTherapyGroup:
                         {
-                            BDTherapyGroup therapyGroup = BDTherapyGroup.GetTherapyGroupWithId(pDataContext, pParentId.Value);
+                            BDTherapyGroup therapyGroup = BDTherapyGroup.RetrieveTherapyGroupWithId(pDataContext, pParentId.Value);
                             if (null != therapyGroup)
                             {
                                 result = string.Format("{0} [{1}]", therapyGroup.DescriptionForLinkedNote, pParentEntityPropertyName);

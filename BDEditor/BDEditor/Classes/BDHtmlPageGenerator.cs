@@ -140,7 +140,7 @@ namespace BDEditor.Classes
                 bodyHTML.Append(buildPathogenGroupHtml(pContext, pathogenGroup));
 
                 // process therapy groups
-                List<BDTherapyGroup> therapyGroups = BDTherapyGroup.getTherapyGroupsForParentId(pContext, pathogenGroup.Uuid);
+                List<BDTherapyGroup> therapyGroups = BDTherapyGroup.RetrieveTherapyGroupsForParentId(pContext, pathogenGroup.Uuid);
                 if (therapyGroups.Count > 0)
                     bodyHTML.Append(@"<h2>Recommended Empiric Therapy</h2>");
                 foreach (BDTherapyGroup tGroup in therapyGroups)

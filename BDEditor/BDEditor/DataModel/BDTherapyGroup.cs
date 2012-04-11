@@ -139,7 +139,7 @@ namespace BDEditor.DataModel
         /// <param name="pCreateDeletion"create entry in deletion table (bool)</param>
         public static void Delete(Entities pContext, Guid pUuid, bool pCreateDeletion)
         {
-            BDTherapyGroup entity = BDTherapyGroup.GetTherapyGroupWithId(pContext, pUuid);
+            BDTherapyGroup entity = BDTherapyGroup.RetrieveTherapyGroupWithId(pContext, pUuid);
             BDTherapyGroup.Delete(pContext, entity, pCreateDeletion);
         }
 
@@ -152,7 +152,7 @@ namespace BDEditor.DataModel
         {
             if (null != pUuid)
             {
-                BDTherapyGroup entry = BDTherapyGroup.GetTherapyGroupWithId(pContext, pUuid.Value);
+                BDTherapyGroup entry = BDTherapyGroup.RetrieveTherapyGroupWithId(pContext, pUuid.Value);
                 if (null != entry)
                 {
                     pContext.DeleteObject(entry);
@@ -165,7 +165,7 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pPathogenId"></param>
         /// <returns>List of BDTherapyGroups</returns>
-        public static List<BDTherapyGroup> getTherapyGroupsForParentId(Entities pContext, Guid pParentId)
+        public static List<BDTherapyGroup> RetrieveTherapyGroupsForParentId(Entities pContext, Guid pParentId)
         {
             List<BDTherapyGroup> therapyGroupList = new List<BDTherapyGroup>();
                 IQueryable<BDTherapyGroup> therapyGroups = (from entry in pContext.BDTherapyGroups
@@ -179,7 +179,7 @@ namespace BDEditor.DataModel
             return therapyGroupList;
         }
 
-        public static BDTherapyGroup GetTherapyGroupWithId(Entities pContext, Guid pUuid)
+        public static BDTherapyGroup RetrieveTherapyGroupWithId(Entities pContext, Guid pUuid)
         {
             BDTherapyGroup entry = null;
             if (null != pUuid)
@@ -199,7 +199,7 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext"></param>
         /// <returns></returns>
-        public static string[] GetTherapyGroupNames(Entities pContext)
+        public static string[] RetrieveTherapyGroupNames(Entities pContext)
         {
             var therapyGroupNames = pContext.BDTherapyGroups.Where(x => (!string.IsNullOrEmpty(x.name))).Select(pg => pg.name).Distinct();
 
@@ -388,7 +388,7 @@ namespace BDEditor.DataModel
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
             bool deprecated = bool.Parse(pAttributeDictionary[DEPRECATED]);
-            BDTherapyGroup entry = BDTherapyGroup.GetTherapyGroupWithId(pDataContext, uuid);
+            BDTherapyGroup entry = BDTherapyGroup.RetrieveTherapyGroupWithId(pDataContext, uuid);
             if (null == entry)
             {
                 entry = BDTherapyGroup.CreateBDTherapyGroup(uuid, deprecated);

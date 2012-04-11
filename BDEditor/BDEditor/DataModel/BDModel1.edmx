@@ -15,6 +15,7 @@
           <EntitySet Name="BDNodes" EntityType="BDDataModel.Store.BDNodes" store:Type="Tables" />
           <EntitySet Name="BDSearchEntries" EntityType="BDDataModel.Store.BDSearchEntries" store:Type="Tables" />
           <EntitySet Name="BDSearchEntryAssociations" EntityType="BDDataModel.Store.BDSearchEntryAssociations" store:Type="Tables" />
+          <EntitySet Name="BDStrings" EntityType="BDDataModel.Store.BDStrings" store:Type="Tables" />
           <EntitySet Name="BDSystemSettings" EntityType="BDDataModel.Store.BDSystemSettings" store:Type="Tables" />
           <EntitySet Name="BDTableCells" EntityType="BDDataModel.Store.BDTableCells" store:Type="Tables" />
           <EntitySet Name="BDTableRows" EntityType="BDDataModel.Store.BDTableRows" store:Type="Tables" />
@@ -163,6 +164,17 @@
           <Property Name="layoutVariant" Type="int" />
           <Property Name="searchEntryType" Type="int" />
         </EntityType>
+        <EntityType Name="BDStrings">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="parentId" Type="uniqueidentifier" />
+          <Property Name="displayOrder" Type="int" />
+          <Property Name="modifiedDate" Type="datetime" />
+          <Property Name="value" Type="nvarchar" MaxLength="1000" />
+          <Property Name="schemaVersion" Type="int" />
+        </EntityType>
         <EntityType Name="BDSystemSettings">
           <Key>
             <PropertyRef Name="uuid" />
@@ -282,6 +294,7 @@
           <EntitySet Name="BDTherapyGroups" EntityType="BDDataModel.BDTherapyGroup" />
           <EntitySet Name="BDTableCells" EntityType="BDDataModel.BDTableCell" />
           <EntitySet Name="BDTableRows" EntityType="BDDataModel.BDTableRow" />
+          <EntitySet Name="BDStrings" EntityType="BDDataModel.BDString" />
         </EntityContainer>
         <EntityType Name="BDDeletion">
           <Key>
@@ -524,6 +537,17 @@
           <Property Type="Int32" Name="rowType" />
           <Property Type="Int32" Name="nodeType" />
           <Property Type="String" Name="nodeKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="BDString">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Type="Guid" Name="uuid" Nullable="false" />
+          <Property Type="Guid" Name="parentId" />
+          <Property Type="Int32" Name="displayOrder" />
+          <Property Type="DateTime" Name="modifiedDate" />
+          <Property Type="String" Name="value" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="schemaVersion" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -787,6 +811,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BDStrings">
+            <EntityTypeMapping TypeName="BDDataModel.BDString">
+              <MappingFragment StoreEntitySet="BDStrings">
+                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
+                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -821,6 +857,7 @@
         <EntityTypeShape EntityType="BDDataModel.BDTherapyGroup" Width="1.5" PointX="8.75" PointY="7.75" Height="3.9033007812500102" />
         <EntityTypeShape EntityType="BDDataModel.BDTableCell" Width="1.5" PointX="12.375" PointY="1.125" Height="2.9417936197916674" />
         <EntityTypeShape EntityType="BDDataModel.BDTableRow" Width="1.5" PointX="10.625" PointY="0.875" Height="3.5186979166666656" />
+        <EntityTypeShape EntityType="BDDataModel.BDString" Width="1.5" PointX="5.375" PointY="9.75" Height="1.9802864583333388" />
       </Diagram>
     </Diagrams>
   </Designer>

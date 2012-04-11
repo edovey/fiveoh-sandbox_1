@@ -149,7 +149,7 @@ namespace BDEditor.Views
                 {
                     BDNodeEditView nodeEditView = new BDNodeEditView();
                     if (((IBDNode)nodeList[e.RowIndex]).NodeType == BDConstants.BDNodeType.BDTherapyGroup)
-                        nodeEditView.CurrentNode = BDTherapyGroup.GetTherapyGroupWithId(dataContext, nodeId);
+                        nodeEditView.CurrentNode = BDTherapyGroup.RetrieveTherapyGroupWithId(dataContext, nodeId);
                     else
                         nodeEditView.CurrentNode = BDNode.RetrieveNodeWithId(dataContext, nodeId);
                     nodeEditView.AssignDataContext(dataContext);

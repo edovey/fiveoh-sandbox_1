@@ -158,6 +158,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BDModel1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\BDString.cs" />
     <Compile Include="DataModel\BDSystemSetting.cs" />
     <Compile Include="DataModel\BDTableCell.cs" />
     <Compile Include="DataModel\BDTableRow.cs" />

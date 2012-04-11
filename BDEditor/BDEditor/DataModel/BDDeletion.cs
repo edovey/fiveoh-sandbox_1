@@ -16,8 +16,6 @@ namespace BDEditor.DataModel
     /// </summary>
     public partial class BDDeletion: IBDObject
     {
-        //public const string AWS_DOMAIN = @"bd_1_deletions";
-
         public const string AWS_PROD_DOMAIN = @"bd_2_deletions";
         public const string AWS_DEV_DOMAIN = @"bd_dev_2_deletions";
 

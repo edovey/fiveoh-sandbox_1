@@ -245,7 +245,7 @@ namespace BDEditor.DataModel
        public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime? pCurrentSyncDate)
        {
            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
-           syncInfo.PushList = BDNode.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+           syncInfo.PushList = BDTableRow.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
            syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
            if (null != pCurrentSyncDate)
            {

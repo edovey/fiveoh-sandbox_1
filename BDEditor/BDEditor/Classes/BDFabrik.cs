@@ -551,7 +551,7 @@ namespace BDEditor.Classes
                 switch (pNodeType)
                 {
                     case BDConstants.BDNodeType.BDTherapyGroup:
-                        result = BDTherapyGroup.GetTherapyGroupWithId(pContext, pUuid.Value);
+                        result = BDTherapyGroup.RetrieveTherapyGroupWithId(pContext, pUuid.Value);
                         
                         break;
 

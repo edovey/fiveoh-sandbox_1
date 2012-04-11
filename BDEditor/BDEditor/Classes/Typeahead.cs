@@ -52,7 +52,7 @@ namespace BDEditor.Classes
                 if (null == therapyGroups)
                 {
                     therapyGroups = new AutoCompleteStringCollection();
-                    string[] names = BDTherapyGroup.GetTherapyGroupNames(new BDEditor.DataModel.Entities());
+                    string[] names = BDTherapyGroup.RetrieveTherapyGroupNames(new BDEditor.DataModel.Entities());
                     therapyGroups.AddRange(names);
                 }
                 return therapyGroups;

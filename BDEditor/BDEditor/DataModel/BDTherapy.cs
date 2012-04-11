@@ -60,11 +60,11 @@ namespace BDEditor.DataModel
         private const string DURATION = @"th_duration";
         private const string DURATION_1 = @"th_duration1";
         private const string DURATION_2 = @"th_duration2";
-        private const string NAMEPREVIOUS = @"th_nameSameAsPrevious";
-        private const string DOSAGEPREVIOUS = @"th_dosageSameAsPrevious";
+        private const string NAMEPREVIOUS = @"th_namePrevious";
+        private const string DOSAGEPREVIOUS = @"th_dosagePrevious";
         private const string DOSAGE_1_PREVIOUS = @"th_dosage1SameAsPrevious";
         private const string DOSAGE_2_PREVIOUS = @"th_dosage2SameAsPrevious"; 
-        private const string DURATIONPREVIOUS = @"th_durationSameAsPrevious";
+        private const string DURATIONPREVIOUS = @"th_durationPrevious";
         private const string DURATION_1_PREVIOUS = @"th_duration1SameAsPrevious";
         private const string DURATION_2_PREVIOUS = @"th_duration2SameAsPrevious";
 

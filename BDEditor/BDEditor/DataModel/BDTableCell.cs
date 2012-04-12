@@ -320,6 +320,7 @@ namespace BDEditor.DataModel
         }
 
         #endregion
+
         #region IBDObject implementation
         public Guid Uuid
         {
@@ -356,6 +357,11 @@ namespace BDEditor.DataModel
             return putAttributeRequest;
         }
         #endregion
+
+        public void SetParent(Guid? pParentId)
+        {
+            parentId = pParentId;
+        }
         
         public override string ToString()
         {

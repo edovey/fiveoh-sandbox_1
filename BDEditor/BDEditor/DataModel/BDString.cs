@@ -43,13 +43,15 @@ namespace BDEditor.DataModel
             CreateString(pContext, Guid.NewGuid());
         }
 
-        public static void CreateString(Entities pContext, Guid pUuid)
+        public static BDString CreateString(Entities pContext, Guid pUuid)
         {
             BDString str = CreateBDString(pUuid);
             str.modifiedDate = DateTime.Now;
             str.schemaVersion = ENTITY_SCHEMAVERSION;
 
             pContext.AddObject(ENTITYNAME, str);
+
+            return str;
         }
 
         public static BDString RetrieveStringWithId(Entities pContext, Guid pUuid)
@@ -146,6 +148,25 @@ namespace BDEditor.DataModel
             }
         }
 
+        /// <summary>
+        /// Extended Save method that sets the modified date.
+        /// </summary>
+        /// <param name="pString"></param>
+        public static void Save(Entities pContext, BDString pString)
+        {
+            if (null != pString)
+            {
+                if (pString.EntityState != EntityState.Unchanged)
+                {
+                    if (pString.schemaVersion != ENTITY_SCHEMAVERSION)
+                        pString.schemaVersion = ENTITY_SCHEMAVERSION;
+
+                    System.Diagnostics.Debug.WriteLine(@"BDString Save");
+                    pContext.SaveChanges();
+                }
+            }
+        }
+
         public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime? pCurrentSyncDate)
         {
             SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
@@ -184,7 +205,12 @@ namespace BDEditor.DataModel
         }
 
         #endregion
- 
+
+        public void SetParent(Guid? pParentId)
+        {
+            parentId = pParentId;
+        }
+
         public Guid Uuid
         {
             get { return this.uuid; }

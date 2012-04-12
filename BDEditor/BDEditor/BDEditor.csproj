@@ -220,6 +220,24 @@
     <Compile Include="Views\BDSearchView.Designer.cs">
       <DependentUpon>BDSearchView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\BDStringControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDStringControl.Designer.cs">
+      <DependentUpon>BDStringControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BDTableCellControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDTableCellControl.Designer.cs">
+      <DependentUpon>BDTableCellControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BDTableRowControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDTableRowControl.Designer.cs">
+      <DependentUpon>BDTableRowControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\BDTherapyControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -282,6 +300,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDSearchView.resx">
       <DependentUpon>BDSearchView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDStringControl.resx">
+      <DependentUpon>BDStringControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDTableCellControl.resx">
+      <DependentUpon>BDTableCellControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDTableRowControl.resx">
+      <DependentUpon>BDTableRowControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDTherapyControl.resx">
       <DependentUpon>BDTherapyControl.cs</DependentUpon>

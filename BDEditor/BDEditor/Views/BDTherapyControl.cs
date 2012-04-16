@@ -351,25 +351,11 @@ namespace BDEditor.Views
 
         private void textBox_TextChanged(object sender, EventArgs e)
         {
-            //TextBox textBox = sender as TextBox;
-            //if (null != textBox)
-            //{
-            //    Button linkButton = textBox.Tag as Button;
-            //    if (null != linkButton)
-            //        linkButton.Enabled = true;
-            //}
             toggleLinkButtonEnablement();
         }
 
         private void checkBox_CheckedChanged(object sender, EventArgs e)
         {
-            //CheckBox chkBox = sender as CheckBox;
-            //if (null != chkBox)
-            //{
-            //    Button linkButton = chkBox.Tag as Button;
-            //    if (null != linkButton)
-            //        linkButton.Enabled = true;
-            //}
             toggleLinkButtonEnablement();
         }
 

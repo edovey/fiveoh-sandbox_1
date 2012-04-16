@@ -45,6 +45,7 @@ namespace BDEditor.Classes
             BDTable = 12,
             [Description("Table Section")]
             BDTableSection = 13,
+            // BDTableRow class
             [Description("Table Row")]
             BDTableRow = 14
         }
@@ -55,13 +56,19 @@ namespace BDEditor.Classes
             [Description("Treatment Recommendation Chapter")]
             TreatmentRecommendation00 = 100, // Chapter
             [Description("Treatment Recommendation")]
-            TreatmentRecommendation01 = 101, // format specific section within chapter
+            TreatmentRecommendation01 = 101, // default layout chapter 2, selected infections
             [Description("Wound Management")]
             TreatmentRecommendation02_WoundMgmt = 102, // table 1 - wound management
             [Description("Wound Classification")]
             TreatmentRecommendation03_WoundClass = 103, // table 2 - wound classification
+            [Description("Pneumonia Severity")]
             TreatmentRecommendation04 = 104,
-            TreatmentRecommendation05 = 105
+            [Description("Treatment of Culture-Proven Peritonitis")]
+            TreatmentRecommendation05 = 105,
+            [Description("Treatment of Culture-Proven Meningitis")]
+            TreatmentRecommendation06 = 106,
+            [Description("Treatment of Culture-Proven Endocarditis")]
+            TreatmentRecommendation07 = 107
         }
 
         public enum SyncType
@@ -87,6 +94,8 @@ namespace BDEditor.Classes
 
         public enum TableCellAlignment
         {
+            [Description("Undefined")]
+            Undefined = -1,
             [Description("Left Justified")]
             LeftJustified = 0,
             [Description("Centred")]
@@ -95,8 +104,10 @@ namespace BDEditor.Classes
             RightJustified = 2
         }
 
-        public enum TableRowType
+        public enum TableRowLayoutVariant
         {
+            [Description("Undefined")]
+            Undefined = -1,
             [Description("Header")]
             Header = 0,
             [Description("Section")]

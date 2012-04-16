@@ -28,75 +28,90 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.bdTableCellControl4 = new BDEditor.Views.BDTableCellControl();
-            this.bdTableCellControl3 = new BDEditor.Views.BDTableCellControl();
-            this.bdTableCellControl2 = new BDEditor.Views.BDTableCellControl();
-            this.bdTableCellControl1 = new BDEditor.Views.BDTableCellControl();
+            this.components = new System.ComponentModel.Container();
+            this.pnlControls = new System.Windows.Forms.Panel();
+            this.btnMenu = new System.Windows.Forms.Button();
+            this.contextMenuStripEvents = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.reorderPreviousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reorderNextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.addTherapyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStripEvents.SuspendLayout();
             this.SuspendLayout();
             // 
-            // bdTableCellControl4
+            // pnlControls
             // 
-            this.bdTableCellControl4.AutoSize = true;
-            this.bdTableCellControl4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.bdTableCellControl4.BackColor = System.Drawing.SystemColors.Control;
-            this.bdTableCellControl4.CurrentTableCell = null;
-            this.bdTableCellControl4.DefaultNodeType = BDEditor.Classes.BDConstants.BDNodeType.None;
-            this.bdTableCellControl4.DisplayOrder = 3;
-            this.bdTableCellControl4.Location = new System.Drawing.Point(608, 4);
-            this.bdTableCellControl4.MinimumSize = new System.Drawing.Size(200, 75);
-            this.bdTableCellControl4.Name = "bdTableCellControl4";
-            this.bdTableCellControl4.ShowAsChild = false;
-            this.bdTableCellControl4.Size = new System.Drawing.Size(200, 75);
-            this.bdTableCellControl4.TabIndex = 3;
-            this.bdTableCellControl4.TableCellAlignment = BDEditor.Classes.BDConstants.TableCellAlignment.LeftJustified;
+            this.pnlControls.Location = new System.Drawing.Point(0, 0);
+            this.pnlControls.Name = "pnlControls";
+            this.pnlControls.Size = new System.Drawing.Size(774, 82);
+            this.pnlControls.TabIndex = 0;
             // 
-            // bdTableCellControl3
+            // btnMenu
             // 
-            this.bdTableCellControl3.AutoSize = true;
-            this.bdTableCellControl3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.bdTableCellControl3.BackColor = System.Drawing.SystemColors.Control;
-            this.bdTableCellControl3.CurrentTableCell = null;
-            this.bdTableCellControl3.DefaultNodeType = BDEditor.Classes.BDConstants.BDNodeType.None;
-            this.bdTableCellControl3.DisplayOrder = 2;
-            this.bdTableCellControl3.Location = new System.Drawing.Point(406, 4);
-            this.bdTableCellControl3.MinimumSize = new System.Drawing.Size(200, 75);
-            this.bdTableCellControl3.Name = "bdTableCellControl3";
-            this.bdTableCellControl3.ShowAsChild = false;
-            this.bdTableCellControl3.Size = new System.Drawing.Size(200, 75);
-            this.bdTableCellControl3.TabIndex = 2;
-            this.bdTableCellControl3.TableCellAlignment = BDEditor.Classes.BDConstants.TableCellAlignment.LeftJustified;
+            this.btnMenu.ContextMenuStrip = this.contextMenuStripEvents;
+            this.btnMenu.Image = global::BDEditor.Properties.Resources.apps_16;
+            this.btnMenu.Location = new System.Drawing.Point(780, 3);
+            this.btnMenu.Name = "btnMenu";
+            this.btnMenu.Size = new System.Drawing.Size(28, 28);
+            this.btnMenu.TabIndex = 15;
+            this.btnMenu.UseVisualStyleBackColor = true;
+            this.btnMenu.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // bdTableCellControl2
+            // contextMenuStripEvents
             // 
-            this.bdTableCellControl2.AutoSize = true;
-            this.bdTableCellControl2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.bdTableCellControl2.BackColor = System.Drawing.SystemColors.Control;
-            this.bdTableCellControl2.CurrentTableCell = null;
-            this.bdTableCellControl2.DefaultNodeType = BDEditor.Classes.BDConstants.BDNodeType.None;
-            this.bdTableCellControl2.DisplayOrder = 1;
-            this.bdTableCellControl2.Location = new System.Drawing.Point(205, 4);
-            this.bdTableCellControl2.MinimumSize = new System.Drawing.Size(200, 75);
-            this.bdTableCellControl2.Name = "bdTableCellControl2";
-            this.bdTableCellControl2.ShowAsChild = false;
-            this.bdTableCellControl2.Size = new System.Drawing.Size(200, 75);
-            this.bdTableCellControl2.TabIndex = 1;
-            this.bdTableCellControl2.TableCellAlignment = BDEditor.Classes.BDConstants.TableCellAlignment.LeftJustified;
+            this.contextMenuStripEvents.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.reorderPreviousToolStripMenuItem,
+            this.reorderNextToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.addTherapyToolStripMenuItem,
+            this.toolStripMenuItem2,
+            this.deleteToolStripMenuItem});
+            this.contextMenuStripEvents.Name = "contextMenuStripEvents";
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(153, 104);
             // 
-            // bdTableCellControl1
+            // reorderPreviousToolStripMenuItem
             // 
-            this.bdTableCellControl1.AutoSize = true;
-            this.bdTableCellControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.bdTableCellControl1.BackColor = System.Drawing.SystemColors.Control;
-            this.bdTableCellControl1.CurrentTableCell = null;
-            this.bdTableCellControl1.DefaultNodeType = BDEditor.Classes.BDConstants.BDNodeType.None;
-            this.bdTableCellControl1.DisplayOrder = 0;
-            this.bdTableCellControl1.Location = new System.Drawing.Point(4, 4);
-            this.bdTableCellControl1.MinimumSize = new System.Drawing.Size(200, 75);
-            this.bdTableCellControl1.Name = "bdTableCellControl1";
-            this.bdTableCellControl1.ShowAsChild = false;
-            this.bdTableCellControl1.Size = new System.Drawing.Size(200, 75);
-            this.bdTableCellControl1.TabIndex = 0;
-            this.bdTableCellControl1.TableCellAlignment = BDEditor.Classes.BDConstants.TableCellAlignment.LeftJustified;
+            this.reorderPreviousToolStripMenuItem.Image = global::BDEditor.Properties.Resources.reorder_previous;
+            this.reorderPreviousToolStripMenuItem.Name = "reorderPreviousToolStripMenuItem";
+            this.reorderPreviousToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.reorderPreviousToolStripMenuItem.Text = "Move &Previous";
+            this.reorderPreviousToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToPrevious_Click);
+            // 
+            // reorderNextToolStripMenuItem
+            // 
+            this.reorderNextToolStripMenuItem.Image = global::BDEditor.Properties.Resources.reorder_next;
+            this.reorderNextToolStripMenuItem.Name = "reorderNextToolStripMenuItem";
+            this.reorderNextToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.reorderNextToolStripMenuItem.Text = "Move &Next";
+            this.reorderNextToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToNext_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
+            // 
+            // addTherapyToolStripMenuItem
+            // 
+            this.addTherapyToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_16x16;
+            this.addTherapyToolStripMenuItem.Name = "addTherapyToolStripMenuItem";
+            this.addTherapyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addTherapyToolStripMenuItem.Text = "&Add Row";
+            this.addTherapyToolStripMenuItem.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(149, 6);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Image = global::BDEditor.Properties.Resources.remove;
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // BDTableRowControl
             // 
@@ -104,23 +119,29 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.Controls.Add(this.bdTableCellControl4);
-            this.Controls.Add(this.bdTableCellControl3);
-            this.Controls.Add(this.bdTableCellControl2);
-            this.Controls.Add(this.bdTableCellControl1);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.Controls.Add(this.btnMenu);
+            this.Controls.Add(this.pnlControls);
+            this.MinimumSize = new System.Drawing.Size(811, 82);
             this.Name = "BDTableRowControl";
-            this.Size = new System.Drawing.Size(811, 82);
+            this.Size = new System.Drawing.Size(811, 85);
+            this.contextMenuStripEvents.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private BDTableCellControl bdTableCellControl1;
-        private BDTableCellControl bdTableCellControl2;
-        private BDTableCellControl bdTableCellControl3;
-        private BDTableCellControl bdTableCellControl4;
+        private System.Windows.Forms.Panel pnlControls;
+        private System.Windows.Forms.Button btnMenu;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripEvents;
+        private System.Windows.Forms.ToolStripMenuItem reorderPreviousToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reorderNextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem addTherapyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+
 
     }
 }

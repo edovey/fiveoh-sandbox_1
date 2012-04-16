@@ -17,8 +17,8 @@ namespace BDEditor.Views
         private Entities dataContext;
         private BDTableCell currentTableCell;
         private Guid? parentId;
-        private BDConstants.BDNodeType parentType;
         private Guid? scopeId;
+        private BDConstants.TableCellAlignment alignment;
         private List<BDStringControl> stringControlList = new List<BDStringControl>();
 
         public int? DisplayOrder { get; set; }
@@ -79,6 +79,15 @@ namespace BDEditor.Views
             InitializeComponent();
         }
 
+        public BDTableCellControl(Entities pDataContext, BDTableCell pCell)
+        {
+            dataContext = pDataContext;
+            currentTableCell = pCell;
+            parentId = pCell.parentId;
+            alignment = (BDConstants.TableCellAlignment) pCell.alignment;
+            InitializeComponent();
+        }
+
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
             if (pPropagateToChildren)
@@ -108,8 +117,13 @@ namespace BDEditor.Views
                 removeStringControl(control, false);
             }
 
-            stringControlList.Clear();
-            pnlControls.Controls.Clear();
+            if (currentTableCell != null)
+            {
+                List<BDString> list = BDString.RetrieveStringsForParentId(dataContext, currentTableCell.Uuid);
+                int iDetail = 0;
+                foreach (BDString entry in list)
+                    addStringControl(entry, iDetail++);
+            }
 
             ShowLinksInUse(false);
             this.ResumeLayout();
@@ -175,6 +189,11 @@ namespace BDEditor.Views
             return stringControl;
         }
 
+        /// <summary>
+        /// Remove control from panel & from controls list.  Deregister event handlers.  Create delete record for entry if requested.
+        /// </summary>
+        /// <param name="pControl"></param>
+        /// <param name="pDeleteRecord"></param>
         private void removeStringControl(BDStringControl pControl, bool pDeleteRecord)
         {
             pnlControls.Controls.Remove(pControl);
@@ -267,7 +286,7 @@ namespace BDEditor.Views
         public void AssignParentInfo(Guid? pParentId, BDConstants.BDNodeType pParentType)
         {
             parentId = pParentId;
-            parentType = pParentType;
+            //parentType = pParentType;
             this.Enabled = (null != parentId);
         }
 

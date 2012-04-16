@@ -24,7 +24,6 @@ namespace BDEditor.Views
         public BDConstants.LayoutVariantType DefaultLayoutVariantType { get; set; }
         public int? DisplayOrder{ get; set; }
 
-        //private List<BDNodeWithOverviewControl> detailControlList = new List<BDNodeWithOverviewControl>();
         private List<IBDControl> childNodeControlList = new List<IBDControl>();
 
         private List<ToolStripMenuItem> addChildNodeToolStripMenuItemList = new List<ToolStripMenuItem>(); //List of possible children
@@ -316,8 +315,8 @@ namespace BDEditor.Views
                     case BDConstants.BDNodeType.BDTableSection:
                         switch(pNode.LayoutVariant)
                         {
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
                             default:
                                 nodeControl = new BDNodeControl();
                             break;
@@ -326,11 +325,14 @@ namespace BDEditor.Views
                     case BDConstants.BDNodeType.BDTableRow:
                          switch(pNode.LayoutVariant)
                         {
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
+                                nodeControl = new BDTableRowControl();
+                                break;
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
                             default:
                                 nodeControl = new BDNodeWithOverviewControl();
                             break;
+
                         }
                         break;
                     default:
@@ -348,7 +350,7 @@ namespace BDEditor.Views
                     nodeControl.AssignScopeId(scopeId);
                     nodeControl.ShowAsChild = true;
                     nodeControl.CurrentNode = pNode;
-                    nodeControl.DefaultLayoutVariantType = this.DefaultLayoutVariantType;
+                    nodeControl.DefaultLayoutVariantType = pNode.LayoutVariant;
                     nodeControl.DefaultNodeType = pNode.NodeType;
 
                     nodeControl.ReorderToNext += new EventHandler<NodeEventArgs>(childNodeControl_ReorderToNext);
@@ -611,19 +613,7 @@ namespace BDEditor.Views
 
         void addChildNode_Click(object sender, EventArgs e)
         {
-            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
-            if (null != menuItem)
-            {
-                BDNodeWrapper nodeWrapper = menuItem.Tag as BDNodeWrapper;
-                if (null != nodeWrapper)
-                {
-                    IBDNode node = BDFabrik.CreateChildNode(dataContext, nodeWrapper.Node, nodeWrapper.TargetNodeType, nodeWrapper.TargetLayoutVariant);
-                    IBDControl control = addChildNodeControl(node, childNodeControlList.Count);
-                    BDNotification.SendNotification(new BDNotificationEventArgs(BDNotificationEventArgs.BDNotificationType.Addition));
-                    if (null != control)
-                        ((System.Windows.Forms.UserControl)control).Focus();
-                }
-            }
+
         }
 
         void addSiblingNode_Click(object sender, EventArgs e)
@@ -661,7 +651,7 @@ namespace BDEditor.Views
 
             reorderNextToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, null);
             reorderPreviousToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, null);
-            deleteToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, null);
+            deleteNodeToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, null);
 
             addSiblingNodeToolStripMenuItem.Text = string.Format("&Add {0}", BDUtilities.GetEnumDescription(pBDNode.NodeType));
             // *****
@@ -670,7 +660,7 @@ namespace BDEditor.Views
             // *****
             string nodeTypeName = BDUtilities.GetEnumDescription(pBDNode.NodeType);
 
-            deleteToolStripMenuItem.Text = string.Format("Delete {0}: {1}", nodeTypeName, pBDNode.Name);
+            deleteNodeToolStripMenuItem.Text = string.Format("Delete {0}: {1}", nodeTypeName, pBDNode.Name);
 
             //List<BDConstants.BDNodeType> childTypes = BDFabrik.ChildTypeDefinitionListForNode(pBDNode);
             List<Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>> childTypeInfoList = BDFabrik.ChildTypeDefinitionListForNode(pBDNode);

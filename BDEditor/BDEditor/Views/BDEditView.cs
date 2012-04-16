@@ -440,7 +440,7 @@ namespace BDEditor.Views
                     switch (node.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
-
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
                             //BDTableControl control_tr01 = null;
                             //control_tr01 = new BDTableControl(dataContext, table);
                             BDNodeControl control_tr01 = null;

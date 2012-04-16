@@ -38,9 +38,10 @@ namespace BDEditor.DataModel
         private const string PARENTID = @"st_parentId";
         private const string VALUE = @"st_value";
 
-        public static void CreateString(Entities pContext)
+        public static BDString CreateString(Entities pContext)
         {
-            CreateString(pContext, Guid.NewGuid());
+            BDString newString = CreateString(pContext, Guid.NewGuid());
+            return newString;
         }
 
         public static BDString CreateString(Entities pContext, Guid pUuid)
@@ -67,6 +68,15 @@ namespace BDEditor.DataModel
                     str = entryList.AsQueryable().First<BDString>();
             }
             return str;
+        }
+
+        public static List<BDString> RetrieveStringsForParentId(Entities pContext, Guid? pParentId)
+        {
+            IQueryable<BDString> entries = (from entry in pContext.BDStrings
+                                               where entry.parentId == pParentId
+                                               select entry);
+            List<BDString> resultList = entries.ToList<BDString>();
+            return resultList;
         }
 
         #region Repository

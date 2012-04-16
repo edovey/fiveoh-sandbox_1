@@ -73,6 +73,7 @@ namespace BDEditor.DataModel
             cell.createdDate = DateTime.Now;
             cell.schemaVersion = ENTITY_SCHEMAVERSION;
             cell.displayOrder = -1;
+            cell.alignment = -1;
 
             pContext.AddObject(ENTITYNAME, cell);
             Save(pContext, cell);

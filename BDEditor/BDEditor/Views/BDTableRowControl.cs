@@ -15,11 +15,12 @@ namespace BDEditor.Views
     public partial class BDTableRowControl : UserControl, IBDControl
     {
         private Entities dataContext;
-        private BDTableRow currentTableRow;
+        private IBDNode currentNode;
         private Guid? parentId;
         private BDConstants.BDNodeType parentType;
         private Guid? scopeId;
         private List<BDTableCellControl> cellControlList = new List<BDTableCellControl>();
+        private TextBox textControl;
 
         public int? DisplayOrder { get; set; }
         public BDConstants.LayoutVariantType DefaultLayoutVariantType;
@@ -68,12 +69,6 @@ namespace BDEditor.Views
             if (null != handler) { handler(this, e); }
         }
 
-        public BDTableRow CurrentTableRow
-        {
-            get { return currentTableRow; }
-            set { currentTableRow = value; }
-        }
-
         public BDTableRowControl()
         {
             InitializeComponent();
@@ -102,18 +97,65 @@ namespace BDEditor.Views
         {
             this.SuspendLayout();
 
-            /*
-            for (int i = 0; i < cellControlList.Count; i++)
-            {
-                BDTableCellControl control = cellControlList[i];
-                removeTableCellControl(control, false);
-            }
+            pnlControls.Controls.Clear();
+            addTableRowControls();
 
-            //cellControlList.Clear();
-           // pnlControls.Controls.Clear();
-            */
             ShowLinksInUse(false);
             this.ResumeLayout();
+        }
+
+        private void addTableRowControls()
+        {
+            if (null != currentNode)
+            {
+                List<BDTableCell> list = BDTableCell.RetrieveTableCellsForParentId(dataContext, currentNode.Uuid);
+                switch (currentNode.LayoutVariant)
+                {
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
+                        // add one textbox and 3 string controls
+                        pnlControls.Controls.Add(addTextBoxControl(currentNode.Name));
+                        for (int i = 0; i < 3; i++)
+                            pnlControls.Controls.Add(addChildCellControl(list[i]));
+                        break;
+                    default:
+                        // initialize with 4 cells
+                        for (int i = 0; i < 4; i++)
+                            pnlControls.Controls.Add(addChildCellControl(list[i]));
+                        break;
+                }
+            }
+        }
+
+        private TextBox addTextBoxControl(string name)
+        {
+            TextBox tbControl = new TextBox();
+            tbControl.Dock = DockStyle.Fill;
+            tbControl.TabIndex = 0;
+            if (!string.IsNullOrEmpty(name))
+                tbControl.Text = name;
+            textControl = tbControl;
+
+            return tbControl;
+        }
+        private BDTableCellControl addChildCellControl(BDTableCell cell)
+        {
+            BDTableCellControl cellControl = new BDTableCellControl();
+            ((System.Windows.Forms.UserControl)cellControl).Dock = DockStyle.Right;
+            ((System.Windows.Forms.UserControl)cellControl).TabIndex = cell.displayOrder.Value;
+            cellControl.DisplayOrder = cell.displayOrder;
+            cellControl.AssignParentInfo(currentNode.Uuid, currentNode.NodeType);
+            cellControl.AssignDataContext(dataContext);
+            cellControl.AssignScopeId(scopeId);
+            cellControl.ShowAsChild = true;
+            cellControl.CurrentTableCell = cell;
+
+            cellControl.TableCellAlignment = (BDConstants.TableCellAlignment)cell.alignment;
+
+            cellControl.RefreshLayout();
+
+            cellControlList.Add(cellControl);
+
+            return cellControl;
         }
 
         public void AssignDataContext(Entities pDataContext)
@@ -125,7 +167,7 @@ namespace BDEditor.Views
         {
             bool result = true;
 
-            if (null == this.currentTableRow)
+            if (null == this.currentNode)
             {
                 if (null == this.parentId)
                 {
@@ -133,110 +175,16 @@ namespace BDEditor.Views
                 }
                 else
                 {
-                    currentTableRow = BDTableRow.CreateTableRow(this.dataContext,this.DefaultNodeType);
-                    currentTableRow.SetParent(DefaultNodeType, parentId);
-                    currentTableRow.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
-                    currentTableRow.LayoutVariant = DefaultLayoutVariantType;
+                    currentNode = BDTableRow.CreateTableRow(this.dataContext,this.DefaultNodeType);
+                    currentNode.SetParent(DefaultNodeType, parentId);
+                    //currentNode.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
+                    currentNode.LayoutVariant = DefaultLayoutVariantType;
                 }
             }
 
             return result;
         }
 
-/*        private BDTableCellControl addTableCellControl(BDTableCell pCell, int pTabIndex)
-        {
-            BDTableCellControl stringControl = null;
-
-            if (CreateCurrentObject())
-            {
-                stringControl = new BDTableCellControl();
-
-                stringControl.Dock = DockStyle.Top;
-                stringControl.TabIndex = pTabIndex;
-                stringControl.DisplayOrder = pTabIndex;
-                stringControl.AssignParentInfo(currentTableRow.Uuid, BDConstants.BDNodeType.None);
-                stringControl.AssignDataContext(dataContext);
-                stringControl.AssignScopeId(scopeId);
-                stringControl.CurrentTableCell = pCell;
-                stringControl.DefaultLayoutVariantType = this.DefaultLayoutVariantType;
-                stringControl.RequestItemAdd += new EventHandler<NodeEventArgs>(TableCell_RequestItemAdd);
-                stringControl.RequestItemDelete += new EventHandler<NodeEventArgs>(TableCell_RequestItemDelete);
-                stringControl.ReorderToNext += new EventHandler<NodeEventArgs>(TableCell_ReorderToNext);
-                stringControl.ReorderToPrevious += new EventHandler<NodeEventArgs>(TableCell_ReorderToPrevious);
-                stringControl.NotesChanged += new EventHandler<NodeEventArgs>(notesChanged_Action);
-
-                cellControlList.Add(stringControl);
-
-                this.Controls.Add(stringControl);
-                stringControl.BringToFront();
-
-                stringControl.RefreshLayout();
-            }
-
-            return stringControl;
-        }
-
-        private void removeTableCellControl(BDTableCellControl pControl, bool pDeleteRecord)
-        {
-           // this.Controls.Remove(pControl);
-
-            pControl.RequestItemAdd -= new EventHandler<NodeEventArgs>(TableCell_RequestItemAdd);
-            pControl.RequestItemDelete -= new EventHandler<NodeEventArgs>(TableCell_RequestItemDelete);
-            pControl.ReorderToNext -= new EventHandler<NodeEventArgs>(TableCell_ReorderToNext);
-            pControl.ReorderToPrevious -= new EventHandler<NodeEventArgs>(TableCell_ReorderToPrevious);
-            pControl.NotesChanged -= new EventHandler<NodeEventArgs>(notesChanged_Action);
-
-            cellControlList.Remove(pControl);
-
-            if (pDeleteRecord)
-            {
-                BDTableCell entry = pControl.CurrentTableCell;
-                if (null != entry)
-                {
-                    BDTableCell.Delete(dataContext, entry, pDeleteRecord);
-                    for (int idx = 0; idx < cellControlList.Count; idx++)
-                    {
-                        cellControlList[idx].DisplayOrder = idx;
-                    }
-                }
-            }
-
-            pControl.Dispose();
-            pControl = null;
-        }
-
-        private void reorderTableCellControl(BDTableCellControl pControl, int pOffset)
-        {
-            int currentPosition = cellControlList.FindIndex(t => t == pControl);
-            if (currentPosition >= 0)
-            {
-                int requestedPosition = currentPosition + pOffset;
-                if ((requestedPosition >= 0) && (requestedPosition < cellControlList.Count))
-                {
-                    cellControlList[requestedPosition].CreateCurrentObject();
-                    cellControlList[requestedPosition].DisplayOrder = currentPosition;
-
-                    cellControlList[requestedPosition].CurrentTableCell.displayOrder = currentPosition;
-                    BDTableCell.Save(dataContext, cellControlList[requestedPosition].CurrentTableCell);
-
-
-                    cellControlList[currentPosition].CreateCurrentObject();
-                    cellControlList[currentPosition].DisplayOrder = requestedPosition;
-
-                    cellControlList[currentPosition].CurrentTableCell.displayOrder = requestedPosition;
-                    BDTableCell.Save(dataContext, cellControlList[currentPosition].CurrentTableCell);
-
-                    BDTableCellControl temp = cellControlList[requestedPosition];
-                    cellControlList[requestedPosition] = cellControlList[currentPosition];
-                    cellControlList[currentPosition] = temp;
-
-                    int zOrder = this.Controls.GetChildIndex(pControl);
-                    zOrder = zOrder + (pOffset * -1);
-                    this.Controls.SetChildIndex(pControl, zOrder);
-                }
-            }
-        } */
-        
         public bool Save()
         {
             bool result = false;
@@ -246,11 +194,14 @@ namespace BDEditor.Views
                 {
                     result = control.Save() || result;
                 }
-
-                if(result && (null == currentTableRow))
+                BDTableRow currentTableRow = currentNode as BDTableRow;
+               
+                if (result && (null == currentTableRow))
                     CreateCurrentObject();
-                if(null != currentTableRow)
+                if (null != currentTableRow)
                 {
+                    if(currentTableRow.Name != textControl.Text)
+                        currentTableRow.Name = textControl.Text;
                     BDTableRow.Save(dataContext, currentTableRow);
                     result = true;
                 }
@@ -279,51 +230,32 @@ namespace BDEditor.Views
             Save();
         }
 
-/*        private void TableCell_RequestItemAdd(object sender, EventArgs e)
+        public override string ToString()
         {
-            BDTableCellControl control = addTableCellControl(null, cellControlList.Count);
-            if (null != control)
-            {
-                control.Focus();
-            }
+            return (null == this.currentNode) ? "No Table Row" : this.currentNode.Uuid.ToString();
         }
 
-        private void TableCell_RequestItemDelete(object sender, EventArgs e)
+        void notesChanged_Action(object sender, NodeEventArgs e)
         {
-            BDTableCellControl control = sender as BDTableCellControl;
-            if (null != control)
-            {
-                if (MessageBox.Show("Delete Cell?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
-                    removeTableCellControl(control, true);
-            }
+            OnNotesChanged(e);
         }
 
-        private void TableCell_ReorderToNext(object sender, NodeEventArgs e)
+        public BDConstants.BDNodeType DefaultNodeType { get; set; }
+        public BDConstants.TableRowLayoutVariant TableRowType { get; set; }
+
+        BDConstants.LayoutVariantType IBDControl.DefaultLayoutVariantType { get; set; }
+
+        public IBDNode CurrentNode
         {
-            BDTableCellControl control = sender as BDTableCellControl;
-            if (null != control)
-            {
-                reorderTableCellControl(control, 1);
-            }
+            get { return currentNode; }
+            set { currentNode = value; }
         }
 
-        private void TableCell_ReorderToPrevious(object sender, NodeEventArgs e)
-        {
-            BDTableCellControl control = sender as BDTableCellControl;
-            if (null != control)
-            {
-                reorderTableCellControl(control, -1);
-            }
-        }
+        public bool ShowAsChild { get; set; }
 
-        private void btnReorderToPrevious_Click(object sender, EventArgs e)
+        private void BDTableRowControl_Leave(object sender, EventArgs e)
         {
-            OnReorderToPrevious(new NodeEventArgs(dataContext, CurrentTableRow.Uuid));
-        }
-
-        private void btnReorderToNext_Click(object sender, EventArgs e)
-        {
-            OnReorderToNext(new NodeEventArgs(dataContext, CurrentTableRow.Uuid));
+            Save();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -333,35 +265,22 @@ namespace BDEditor.Views
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            OnItemDeleteRequested(new NodeEventArgs(dataContext, currentTableRow.Uuid));
-        } */
-
-        public override string ToString()
-        {
-            return (null == this.currentTableRow) ? "No Table Row" : this.currentTableRow.Uuid.ToString();
+            OnItemDeleteRequested(new NodeEventArgs(dataContext, currentNode.Uuid));
         }
 
-        void notesChanged_Action(object sender, NodeEventArgs e)
+        private void btnReorderToPrevious_Click(object sender, EventArgs e)
         {
-            OnNotesChanged(e);
+            OnReorderToPrevious(new NodeEventArgs(dataContext, currentNode.Uuid));
         }
 
-        public BDConstants.BDNodeType DefaultNodeType { get; set; }
-        public BDConstants.TableRowType TableRowType { get; set; }
-
-        BDConstants.LayoutVariantType IBDControl.DefaultLayoutVariantType { get; set; }
-
-        public IBDNode CurrentNode
+        private void btnReorderToNext_Click(object sender, EventArgs e)
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            OnReorderToNext(new NodeEventArgs(dataContext, currentNode.Uuid));
         }
 
-        public bool ShowAsChild { get; set; }
-
-        private void BDTableRowControl_Leave(object sender, EventArgs e)
+        private void btnMenu_Click(object sender, EventArgs e)
         {
-            Save();
+            this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
         }
     }
 }

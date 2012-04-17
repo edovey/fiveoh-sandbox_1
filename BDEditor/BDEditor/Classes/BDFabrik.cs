@@ -551,6 +551,32 @@ namespace BDEditor.Classes
             return result;
         }
 
+        public static IBDNode CreateNode(Entities pContext, BDConstants.BDNodeType pNodeType, Guid? pParentUuid, BDConstants.BDNodeType pParentNodeType)
+        {
+            IBDNode entry = null;
+            switch (pNodeType)
+            {
+                case BDConstants.BDNodeType.None:
+                    break;
+                case BDConstants.BDNodeType.BDTherapy:
+                    entry = BDTherapy.CreateTherapy(pContext, pParentUuid.Value);
+                    break;
+                case BDConstants.BDNodeType.BDTherapyGroup:
+                    entry = BDTherapyGroup.CreateTherapyGroup(pContext, pParentUuid.Value);
+                    break;
+                default:
+                    entry = BDNode.CreateNode(pContext, pNodeType);
+                    break;
+            }
+            
+            if (null != entry)
+            {
+                entry.SetParent(pParentNodeType, pParentUuid);
+            }
+
+            return entry;
+        }
+
         public static void DeleteNode(Entities pContext, IBDNode pNode)
         {
             DeleteNode(pContext, pNode, true);

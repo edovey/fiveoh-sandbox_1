@@ -223,20 +223,22 @@ namespace BDEditor.Views
                 }
                 else
                 {
-                    switch (DefaultNodeType)
-                    {
-                        case BDConstants.BDNodeType.None:
-                            break;
-                        case BDConstants.BDNodeType.BDTherapy:
-                            currentNode = BDTherapy.CreateTherapy(dataContext, parentId.Value);
-                            break;
-                        case BDConstants.BDNodeType.BDTherapyGroup:
-                            currentNode = BDTherapyGroup.CreateTherapyGroup(dataContext, parentId.Value);
-                            break;
-                        default:
-                            currentNode = BDNode.CreateNode(this.dataContext, this.DefaultNodeType);
-                            break;
-                    }
+                    currentNode = BDFabrik.CreateNode(dataContext, DefaultNodeType, parentId, parentType );
+
+                    //switch (DefaultNodeType)
+                    //{
+                    //    case BDConstants.BDNodeType.None:
+                    //        break;
+                    //    case BDConstants.BDNodeType.BDTherapy:
+                    //        currentNode = BDTherapy.CreateTherapy(dataContext, parentId.Value);
+                    //        break;
+                    //    case BDConstants.BDNodeType.BDTherapyGroup:
+                    //        currentNode = BDTherapyGroup.CreateTherapyGroup(dataContext, parentId.Value);
+                    //        break;
+                    //    default:
+                    //        currentNode = BDNode.CreateNode(this.dataContext, this.DefaultNodeType);
+                    //        break;
+                    //}
 
                     this.currentNode.DisplayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                     this.currentNode.LayoutVariant = this.DefaultLayoutVariantType;
@@ -336,8 +338,11 @@ namespace BDEditor.Views
                         }
                         break;
                     default:
-
+                        // Require explicit handling for given child types
+                        // i.e. disease does not currently display children within this control
+                        // Don't load children if not explicitly supported here
                         break;
+
                 }
 
                 if(null != nodeControl)
@@ -613,7 +618,19 @@ namespace BDEditor.Views
 
         void addChildNode_Click(object sender, EventArgs e)
         {
-
+            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
+            if (null != menuItem)
+            {
+                BDNodeWrapper nodeWrapper = menuItem.Tag as BDNodeWrapper;
+                if (null != nodeWrapper)
+                {
+                    IBDNode node = BDFabrik.CreateChildNode(dataContext, nodeWrapper.Node, nodeWrapper.TargetNodeType, nodeWrapper.TargetLayoutVariant);
+                    IBDControl control = addChildNodeControl(node, childNodeControlList.Count);
+                    BDNotification.SendNotification(new BDNotificationEventArgs(BDNotificationEventArgs.BDNotificationType.Addition));
+                    if (null != control)
+                        ((System.Windows.Forms.UserControl)control).Focus();
+                }
+            }
         }
 
         void addSiblingNode_Click(object sender, EventArgs e)
@@ -682,6 +699,7 @@ namespace BDEditor.Views
                     }
                     else
                     {
+                        // One child type, many layout variants
                         for (int idx = 0; idx < childTypeInfoList[0].Item2.Length; idx++)
                         {
                             ToolStripMenuItem item = new ToolStripMenuItem();
@@ -698,6 +716,7 @@ namespace BDEditor.Views
                 }
                 else if (childTypeInfoList.Count > 1)
                 {
+                    // Many child types
                     addChildNodeToolStripMenuItem.Text = string.Format("Add");
 
                     for (int idx = 0; idx < childTypeInfoList.Count; idx++)
@@ -713,6 +732,7 @@ namespace BDEditor.Views
 
                         if (childTypeInfoList[idx].Item2.Length > 1)
                         {
+                            // Many layout variants per child type
                             for (int idy = 0; idy < childTypeInfoList[idx].Item2.Length; idy++)
                             {
                                 ToolStripMenuItem layoutItem = new ToolStripMenuItem();

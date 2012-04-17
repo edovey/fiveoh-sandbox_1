@@ -417,7 +417,7 @@ namespace BDEditor.DataModel
         #region IBDObject implementation
         public Guid Uuid
         {
-            get { return this.Uuid; }
+            get { return this.uuid; }
         }
 
         public string Description

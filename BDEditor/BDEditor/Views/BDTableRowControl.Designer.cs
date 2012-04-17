@@ -45,7 +45,7 @@
             // 
             this.pnlControls.Location = new System.Drawing.Point(0, 0);
             this.pnlControls.Name = "pnlControls";
-            this.pnlControls.Size = new System.Drawing.Size(774, 82);
+            this.pnlControls.Size = new System.Drawing.Size(774, 55);
             this.pnlControls.TabIndex = 0;
             // 
             // btnMenu
@@ -122,9 +122,8 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.Controls.Add(this.btnMenu);
             this.Controls.Add(this.pnlControls);
-            this.MinimumSize = new System.Drawing.Size(811, 82);
             this.Name = "BDTableRowControl";
-            this.Size = new System.Drawing.Size(811, 85);
+            this.Size = new System.Drawing.Size(811, 58);
             this.contextMenuStripEvents.ResumeLayout(false);
             this.ResumeLayout(false);
 

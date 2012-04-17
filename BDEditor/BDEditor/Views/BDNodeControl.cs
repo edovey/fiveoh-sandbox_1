@@ -496,17 +496,6 @@ namespace BDEditor.Views
         private void bdLinkedNoteControl_SaveAttemptWithoutParent(object sender, EventArgs e)
         {
             throw new NotSupportedException();
-            /*
-            BDLinkedNoteControl control = sender as BDLinkedNoteControl;
-            if (null != control)
-            {
-                if (CreateCurrentObject())
-                {
-                    control.AssignParentInfo(currentNode.Uuid, currentNode.NodeType);
-                    control.Save();
-                }
-            }
-             * */
         }
 
         private void btnLinkedNote_Click(object sender, EventArgs e)
@@ -679,7 +668,6 @@ namespace BDEditor.Views
 
             deleteNodeToolStripMenuItem.Text = string.Format("Delete {0}: {1}", nodeTypeName, pBDNode.Name);
 
-            //List<BDConstants.BDNodeType> childTypes = BDFabrik.ChildTypeDefinitionListForNode(pBDNode);
             List<Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>> childTypeInfoList = BDFabrik.ChildTypeDefinitionListForNode(pBDNode);
             if (null == childTypeInfoList)
             {

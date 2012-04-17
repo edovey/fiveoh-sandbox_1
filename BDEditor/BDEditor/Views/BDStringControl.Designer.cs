@@ -167,7 +167,7 @@
             // btnLinkedNote
             // 
             this.btnLinkedNote.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkedNote.Image")));
-            this.btnLinkedNote.Location = new System.Drawing.Point(166, 0);
+            this.btnLinkedNote.Location = new System.Drawing.Point(166, 3);
             this.btnLinkedNote.Name = "btnLinkedNote";
             this.btnLinkedNote.Size = new System.Drawing.Size(28, 28);
             this.btnLinkedNote.TabIndex = 32;
@@ -182,7 +182,7 @@
             this.rtbValue.Location = new System.Drawing.Point(3, 3);
             this.rtbValue.Name = "rtbValue";
             this.rtbValue.ShortcutsEnabled = false;
-            this.rtbValue.Size = new System.Drawing.Size(157, 64);
+            this.rtbValue.Size = new System.Drawing.Size(157, 50);
             this.rtbValue.TabIndex = 31;
             this.rtbValue.Text = "";
             // 
@@ -195,7 +195,7 @@
             this.Controls.Add(this.rtbValue);
             this.Controls.Add(this.btnLinkedNote);
             this.Name = "BDStringControl";
-            this.Size = new System.Drawing.Size(197, 70);
+            this.Size = new System.Drawing.Size(197, 56);
             this.Leave += new System.EventHandler(this.BDStringControl_Leave);
             this.contextMenuStripTextBox.ResumeLayout(false);
             this.ResumeLayout(false);

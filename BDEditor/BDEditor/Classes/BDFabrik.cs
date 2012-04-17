@@ -412,6 +412,18 @@ namespace BDEditor.Classes
                             entryList.AddRange(workingList);
                         }
                         break;
+                    
+                    case BDConstants.BDNodeType.BDTableRow:
+                        IQueryable<BDTableRow> trEntries = (from entry in pContext.BDTableRows
+                                                            where entry.parentId == pParentId
+                                                            orderby entry.displayOrder ascending
+                                                            select entry);
+                        if (trEntries.Count() > 0)
+                        {
+                            List<IBDNode> workingList = new List<IBDNode>(trEntries.ToList<BDTableRow>());
+                            entryList.AddRange(workingList);
+                        }
+                        break;
 
                     default:
                         IQueryable<BDNode> nodeEntries = (from entry in pContext.BDNodes
@@ -511,12 +523,12 @@ namespace BDEditor.Classes
                     break;
 
                 case BDConstants.BDNodeType.BDTableRow:
-                    BDNode tableRow = BDNode.CreateNode(pContext, pChildType);
+                    BDTableRow tableRow = BDTableRow.CreateTableRow(pContext, pChildType);
                     tableRow.displayOrder = siblingList.Count;
                     tableRow.SetParent(pParentNode);
                     tableRow.LayoutVariant = pLayoutVariant;
                     tableRow.Name = String.Format("New {0}-{1}", BDUtilities.GetEnumDescription(pChildType), tableRow.displayOrder + 1);
-                    BDNode.Save(pContext, tableRow);
+                    BDTableRow.Save(pContext, tableRow);
                     result = tableRow;
 
                     // add BDTableCells for the row

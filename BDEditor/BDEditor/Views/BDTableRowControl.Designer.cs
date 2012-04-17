@@ -57,7 +57,7 @@
             this.btnMenu.Size = new System.Drawing.Size(28, 28);
             this.btnMenu.TabIndex = 15;
             this.btnMenu.UseVisualStyleBackColor = true;
-            this.btnMenu.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
             // 
             // contextMenuStripEvents
             // 
@@ -69,7 +69,7 @@
             this.toolStripMenuItem2,
             this.deleteToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(153, 104);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(153, 126);
             // 
             // reorderPreviousToolStripMenuItem
             // 

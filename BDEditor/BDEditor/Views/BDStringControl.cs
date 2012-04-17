@@ -247,11 +247,6 @@ namespace BDEditor.Views
             }
         }
 
-        private void BDStringControl_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void BDStringControl_Leave(object sender, EventArgs e)
         {
             Save();

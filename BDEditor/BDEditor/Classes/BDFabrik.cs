@@ -564,6 +564,9 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDTherapyGroup:
                     entry = BDTherapyGroup.CreateTherapyGroup(pContext, pParentUuid.Value);
                     break;
+                case BDConstants.BDNodeType.BDTableRow:
+                    entry = BDTableRow.CreateTableRow(pContext, pParentNodeType, pParentUuid.Value);
+                    break;
                 default:
                     entry = BDNode.CreateNode(pContext, pNodeType);
                     break;

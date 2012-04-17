@@ -23,7 +23,6 @@ namespace BDEditor.Views
         private TextBox textControl;
 
         public int? DisplayOrder { get; set; }
-        public BDConstants.LayoutVariantType DefaultLayoutVariantType;
 
         public event EventHandler<NodeEventArgs> RequestItemAdd;
         public event EventHandler<NodeEventArgs> RequestItemDelete;
@@ -175,10 +174,10 @@ namespace BDEditor.Views
                 }
                 else
                 {
-                    currentNode = BDTableRow.CreateTableRow(this.dataContext,this.DefaultNodeType);
-                    currentNode.SetParent(DefaultNodeType, parentId);
-                    //currentNode.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
-                    currentNode.LayoutVariant = DefaultLayoutVariantType;
+                    this.currentNode = BDFabrik.CreateNode(dataContext, DefaultNodeType, parentId, parentType);
+
+                    this.currentNode.DisplayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
+                    this.currentNode.LayoutVariant = this.DefaultLayoutVariantType;
                 }
             }
 
@@ -242,8 +241,7 @@ namespace BDEditor.Views
 
         public BDConstants.BDNodeType DefaultNodeType { get; set; }
         public BDConstants.TableRowLayoutVariant TableRowType { get; set; }
-
-        BDConstants.LayoutVariantType IBDControl.DefaultLayoutVariantType { get; set; }
+        public BDConstants.LayoutVariantType DefaultLayoutVariantType { get; set; }
 
         public IBDNode CurrentNode
         {
@@ -260,6 +258,7 @@ namespace BDEditor.Views
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
+
             OnItemAddRequested(new NodeEventArgs(dataContext, BDConstants.BDNodeType.BDTableRow, DefaultLayoutVariantType));
         }
 

@@ -205,6 +205,17 @@ namespace BDEditor.Views
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }
         }
+
+        private void btnLinkedNote_Click(object sender, EventArgs e)
+        {
+            Button control = sender as Button;
+            if (null != control)
+            {
+                string tag = control.Tag as string;
+                createLink(tag);
+            }
+        }
+
         private void bToolStripMenuItem_Click(object sender, EventArgs e)
         {
             insertText(rtbValue, "ß");

@@ -337,6 +337,7 @@ namespace BDEditor.Views
 
         private IBDControl addChildNodeControl(IBDNode pNode, int pTabIndex)
         {
+            //Creates the appropriate ui control for the provided node: The pNode will already have been created
             IBDControl nodeControl = null;
 
             if (CreateCurrentObject())

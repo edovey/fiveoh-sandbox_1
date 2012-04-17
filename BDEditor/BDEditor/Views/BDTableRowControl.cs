@@ -111,8 +111,10 @@ namespace BDEditor.Views
                 switch (currentNode.LayoutVariant)
                 {
                     case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
-                        // add one textbox and 3 string controls
-                        pnlControls.Controls.Add(addTextBoxControl(currentNode.Name));
+                        // add one textbox if row is not a header
+                        BDTableRow row = currentNode as BDTableRow;
+                        if(row != null && row.rowType == (int)BDConstants.TableRowLayoutVariant.Content)
+                            pnlControls.Controls.Add(addTextBoxControl(currentNode.Name));
                         for (int i = 0; i < 3; i++)
                             pnlControls.Controls.Add(addChildCellControl(list[i]));
                         break;
@@ -197,7 +199,7 @@ namespace BDEditor.Views
                
                 if (result && (null == currentTableRow))
                     CreateCurrentObject();
-                if (null != currentTableRow)
+                if (null != currentTableRow && null != textControl)
                 {
                     if(currentTableRow.Name != textControl.Text)
                         currentTableRow.Name = textControl.Text;
@@ -280,6 +282,14 @@ namespace BDEditor.Views
         private void btnMenu_Click(object sender, EventArgs e)
         {
             this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
+        }
+
+        private void BDTableRowControl_Load(object sender, EventArgs e)
+        {
+                BDTableRow row = CurrentNode as BDTableRow;
+            if(null != CurrentNode && row.rowType == (int)BDConstants.TableRowLayoutVariant.Header)
+                this.BackColor = SystemColors.ControlDark;
+
         }
     }
 }

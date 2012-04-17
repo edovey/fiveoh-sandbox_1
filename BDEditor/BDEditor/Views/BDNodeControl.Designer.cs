@@ -325,6 +325,7 @@
             // 
             this.pnlDetail.AutoSize = true;
             this.pnlDetail.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.pnlDetail.BackColor = System.Drawing.SystemColors.Control;
             this.pnlDetail.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlDetail.Location = new System.Drawing.Point(0, 66);
             this.pnlDetail.MinimumSize = new System.Drawing.Size(600, 5);
@@ -343,7 +344,7 @@
             this.Controls.Add(this.panelHeader);
             this.MinimumSize = new System.Drawing.Size(870, 50);
             this.Name = "BDNodeControl";
-            this.Size = new System.Drawing.Size(870, 95);
+            this.Size = new System.Drawing.Size(870, 71);
             this.Load += new System.EventHandler(this.BDNodeControl_Load);
             this.Leave += new System.EventHandler(this.BDNodeControl_Leave);
             this.panelHeader.ResumeLayout(false);

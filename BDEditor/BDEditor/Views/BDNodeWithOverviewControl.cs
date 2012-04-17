@@ -499,7 +499,7 @@ namespace BDEditor.Views
             int currentPosition = childNodeControlList.FindIndex(t => t == pChildNodeControl);
             if (currentPosition >= 0)
             {
-                int requestedPosition = currentPosition += pOffset;
+                int requestedPosition = currentPosition + pOffset;
                 if ((requestedPosition >= 0) && (requestedPosition < childNodeControlList.Count))
                 {
                     childNodeControlList[requestedPosition].CreateCurrentObject();

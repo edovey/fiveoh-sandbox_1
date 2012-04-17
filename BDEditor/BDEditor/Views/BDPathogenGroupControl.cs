@@ -304,7 +304,7 @@ namespace BDEditor.Views
             int currentPosition = pathogenControlList.FindIndex(t => t == pPathogenControl);
             if (currentPosition >= 0)
             {
-                int requestedPosition = currentPosition += pOffset;
+                int requestedPosition = currentPosition + pOffset;
                 if ((requestedPosition >= 0) && (requestedPosition < pathogenControlList.Count))
                 {
                     pathogenControlList[requestedPosition].CreateCurrentObject();

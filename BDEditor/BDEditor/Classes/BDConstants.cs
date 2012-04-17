@@ -62,13 +62,13 @@ namespace BDEditor.Classes
             [Description("Wound Classification")]
             TreatmentRecommendation03_WoundClass = 103, // table 2 - wound classification
             [Description("Pneumonia Severity")]
-            TreatmentRecommendation04 = 104,
+            TreatmentRecommendation04_Pneumonia = 104,
             [Description("Treatment of Culture-Proven Peritonitis")]
-            TreatmentRecommendation05 = 105,
+            TreatmentRecommendation05_Peritonitis = 105,
             [Description("Treatment of Culture-Proven Meningitis")]
-            TreatmentRecommendation06 = 106,
+            TreatmentRecommendation06_Meningitis = 106,
             [Description("Treatment of Culture-Proven Endocarditis")]
-            TreatmentRecommendation07 = 107
+            TreatmentRecommendation07_Endocarditis = 107,
         }
 
         public enum SyncType

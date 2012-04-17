@@ -147,7 +147,7 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDisease, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation01 }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt, BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass,
-                            BDConstants.LayoutVariantType.TreatmentRecommendation04,BDConstants.LayoutVariantType.TreatmentRecommendation05,BDConstants.LayoutVariantType.TreatmentRecommendation06,BDConstants.LayoutVariantType.TreatmentRecommendation07 }));
+                            BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia,BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis,BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis,BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis }));
                             break;
                         default:
                             break;
@@ -231,17 +231,17 @@ namespace BDEditor.Classes
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass }));
                             break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation04:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation04 }));
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia }));
                             break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation05:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation05 }));
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis }));
                             break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation06:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation06 }));
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis }));
                             break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation07:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation07 }));
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis }));
                             break;
                         default:
                             throw new Exception();
@@ -257,21 +257,21 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass }));
                             break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation04:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation04 }));
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia }));
                             break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation05:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation05 }));
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis }));
                             break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation06:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation06 }));
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis }));
                             break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation07:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation07 }));
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis }));
                             break;
                         default:
-                            throw new Exception();
-                            //break;
+                            // child types are explicitly defined for each layout variant
+                            throw new NotSupportedException();
                     }
                     break;
                 case BDConstants.BDNodeType.BDTherapy:
@@ -528,6 +528,7 @@ namespace BDEditor.Classes
                     tableRow.SetParent(pParentNode);
                     tableRow.LayoutVariant = pLayoutVariant;
                     tableRow.Name = String.Format("New {0}-{1}", BDUtilities.GetEnumDescription(pChildType), tableRow.displayOrder + 1);
+                    tableRow.rowType = (pParentNode.NodeType == BDConstants.BDNodeType.BDTable) ? (int)BDConstants.TableRowLayoutVariant.Header : (int)BDConstants.TableRowLayoutVariant.Content;
                     BDTableRow.Save(pContext, tableRow);
                     result = tableRow;
 
@@ -540,6 +541,7 @@ namespace BDEditor.Classes
                         BDTableCell tableCell = BDTableCell.CreateTableCell(pContext);
                         tableCell.displayOrder = i + 1;
                         tableCell.SetParent(tableRow.Uuid);
+                        tableCell.alignment = (tableRow.rowType == (int)BDConstants.TableRowLayoutVariant.Header) ? (int)BDConstants.TableCellAlignment.Centred : (int)BDConstants.TableCellAlignment.LeftJustified;
                         BDTableCell.Save(pContext, tableCell);
 
                         BDString cellValue = BDString.CreateString(pContext);

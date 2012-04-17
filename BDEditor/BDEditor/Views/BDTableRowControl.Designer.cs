@@ -69,7 +69,7 @@
             this.toolStripMenuItem2,
             this.deleteToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(153, 126);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(153, 104);
             // 
             // reorderPreviousToolStripMenuItem
             // 
@@ -124,6 +124,7 @@
             this.Controls.Add(this.pnlControls);
             this.Name = "BDTableRowControl";
             this.Size = new System.Drawing.Size(811, 58);
+            this.Load += new System.EventHandler(this.BDTableRowControl_Load);
             this.contextMenuStripEvents.ResumeLayout(false);
             this.ResumeLayout(false);
 

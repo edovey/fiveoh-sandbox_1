@@ -344,28 +344,34 @@ namespace BDEditor.Views
                 switch (pNode.NodeType)
                 {
                     case BDConstants.BDNodeType.BDTableSection:
-                        switch(pNode.LayoutVariant)
+                        switch (pNode.LayoutVariant)
                         {
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
                             default:
-                                nodeControl = new BDNodeWithOverviewControl();
-                            break;
+                                nodeControl = new BDNodeControl();
+                                break;
                         }
                         break;
                     case BDConstants.BDNodeType.BDTableRow:
-                         switch(pNode.LayoutVariant)
+                        switch (pNode.LayoutVariant)
                         {
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
+                                nodeControl = new BDTableRowControl();
+                                break;
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
                             default:
                                 nodeControl = new BDNodeWithOverviewControl();
-                            break;
+                                break;
+
                         }
                         break;
                     default:
-
+                        // Require explicit handling for given child types
+                        // i.e. disease does not currently display children within this control
+                        // Don't load children if not explicitly supported here
                         break;
+
                 }
 
                 if(null != nodeControl)

@@ -109,24 +109,37 @@ namespace BDEditor.Classes
                 {
                     case BDConstants.BDNodeType.BDPathogenGroup:
                         {
+                            if(null == pathogenGroups)
+                                pathogenGroups = new AutoCompleteStringCollection();
                             if (!pathogenGroups.Contains(pValue))
                                 pathogenGroups.Add(pValue);
                         }
                         break;
                     case BDConstants.BDNodeType.BDPathogen:
                         {
+                            if (null == pathogens)
+                                pathogens = new AutoCompleteStringCollection();
                             if (!pathogens.Contains(pValue))
                                 pathogens.Add(pValue);
                         }
                         break;
                     case BDConstants.BDNodeType.BDTherapyGroup:
                         {
+                            if (null == therapyGroups)
+                                therapyGroups = new AutoCompleteStringCollection();
                             if (!therapyGroups.Contains(pValue))
                                 therapyGroups.Add(pValue);
                         }
                         break;
                     case BDConstants.BDNodeType.BDTherapy:
                         {
+                            if (null == therapyNames)
+                                therapyNames = new AutoCompleteStringCollection();
+                            if (null == therapyDosages)
+                                therapyDosages = new AutoCompleteStringCollection();
+                            if (null == therapyDurations)
+                                therapyDurations = new AutoCompleteStringCollection();
+
                             if ((pEntityMember == string.Empty || pEntityMember == BDTherapy.PROPERTYNAME_THERAPY) && !therapyNames.Contains(pValue))
                                 therapyNames.Add(pValue);
                             else if (pEntityMember == BDTherapy.PROPERTYNAME_DOSAGE && !therapyDosages.Contains(pValue))

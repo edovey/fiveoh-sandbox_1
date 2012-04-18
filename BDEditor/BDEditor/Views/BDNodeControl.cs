@@ -341,6 +341,16 @@ namespace BDEditor.Views
 
                         }
                         break;
+                    case BDConstants.BDNodeType.BDPathogenGroup:
+                        switch (pNode.LayoutVariant)
+                        {
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                                nodeControl = new BDPathogenGroupControl();
+                                break;
+                        }
+                        break;
                     default:
                         // Require explicit handling for given child types
                         // i.e. disease does not currently display children within this control

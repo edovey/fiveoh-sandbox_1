@@ -62,15 +62,15 @@ namespace BDEditor.Classes
             [Description("Wound Classification")]
             TreatmentRecommendation03_WoundClass = 103, // table 2 - wound classification
             [Description("Pneumonia Patient Characteristic")]
-            TreatmentRecommendation04_Pneumonia_I = 104,
+            TreatmentRecommendation04_Pneumonia_I = 104,  //  table 3 - top section
             [Description("Pneumonia Risk and Recommendation")]
-            TreatmentRecommendation04_Pneumonia_II = 105,
+            TreatmentRecommendation04_Pneumonia_II = 105,  // table 3 - bottom section
             [Description("Treatment of Culture-Proven Peritonitis")]
-            TreatmentRecommendation05_Peritonitis = 106,
+            TreatmentRecommendation05_Peritonitis = 106,  // table 4
             [Description("Treatment of Culture-Proven Meningitis")]
-            TreatmentRecommendation06_Meningitis = 107,
+            TreatmentRecommendation06_Meningitis = 107,  // table 5
             [Description("Treatment of Culture-Proven Endocarditis")]
-            TreatmentRecommendation07_Endocarditis = 108,
+            TreatmentRecommendation07_Endocarditis = 108, // table 6
         }
 
         public enum SyncType

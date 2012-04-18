@@ -443,6 +443,9 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
                             BDNodeControl control_tr01 = null;
                             control_tr01 = new BDNodeControl(dataContext, table);
                             control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);

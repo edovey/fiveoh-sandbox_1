@@ -319,6 +319,8 @@ namespace BDEditor.Views
                         {
                             case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II:
                             default:
                                 nodeControl = new BDNodeControl();
                             break;
@@ -328,6 +330,8 @@ namespace BDEditor.Views
                          switch(pNode.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II:
                                 nodeControl = new BDTableRowControl();
                                 break;
                             case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:

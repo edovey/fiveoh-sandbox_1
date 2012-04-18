@@ -107,23 +107,28 @@ namespace BDEditor.Views
         {
             if (null != currentNode)
             {
+                int maxColumns;
+                BDTableRow row = currentNode as BDTableRow;
                 List<BDTableCell> list = BDTableCell.RetrieveTableCellsForParentId(dataContext, currentNode.Uuid);
                 switch (currentNode.LayoutVariant)
                 {
                     case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
                         // add one textbox if row is not a header
-                        BDTableRow row = currentNode as BDTableRow;
                         if(row != null && row.rowType == (int)BDConstants.TableRowLayoutVariant.Content)
                             pnlControls.Controls.Add(addTextBoxControl(currentNode.Name));
-                        for (int i = 0; i < 3; i++)
-                            pnlControls.Controls.Add(addChildCellControl(list[i]));
+                        maxColumns = 3;
+                            break;
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
+                        maxColumns = 2;
                         break;
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II:
                     default:
-                        // initialize with 4 cells
-                        for (int i = 0; i < 4; i++)
-                            pnlControls.Controls.Add(addChildCellControl(list[i]));
+                        maxColumns = 4;
                         break;
                 }
+                for (int i = 0; i < maxColumns; i++)
+                    pnlControls.Controls.Add(addChildCellControl(list[i]));
+
             }
         }
 

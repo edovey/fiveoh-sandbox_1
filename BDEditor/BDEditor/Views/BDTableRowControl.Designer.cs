@@ -38,21 +38,24 @@
             this.addTherapyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pnlButton = new System.Windows.Forms.Panel();
             this.contextMenuStripEvents.SuspendLayout();
+            this.pnlButton.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlControls
             // 
+            this.pnlControls.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlControls.Location = new System.Drawing.Point(0, 0);
             this.pnlControls.Name = "pnlControls";
-            this.pnlControls.Size = new System.Drawing.Size(774, 55);
+            this.pnlControls.Size = new System.Drawing.Size(811, 58);
             this.pnlControls.TabIndex = 0;
             // 
             // btnMenu
             // 
             this.btnMenu.ContextMenuStrip = this.contextMenuStripEvents;
             this.btnMenu.Image = global::BDEditor.Properties.Resources.apps_16;
-            this.btnMenu.Location = new System.Drawing.Point(780, 3);
+            this.btnMenu.Location = new System.Drawing.Point(8, 3);
             this.btnMenu.Name = "btnMenu";
             this.btnMenu.Size = new System.Drawing.Size(28, 28);
             this.btnMenu.TabIndex = 15;
@@ -113,19 +116,28 @@
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // pnlButton
+            // 
+            this.pnlButton.Controls.Add(this.btnMenu);
+            this.pnlButton.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnlButton.Location = new System.Drawing.Point(772, 0);
+            this.pnlButton.Name = "pnlButton";
+            this.pnlButton.Size = new System.Drawing.Size(39, 58);
+            this.pnlButton.TabIndex = 16;
+            // 
             // BDTableRowControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.Controls.Add(this.btnMenu);
+            this.Controls.Add(this.pnlButton);
             this.Controls.Add(this.pnlControls);
             this.Name = "BDTableRowControl";
             this.Size = new System.Drawing.Size(811, 58);
             this.Load += new System.EventHandler(this.BDTableRowControl_Load);
             this.contextMenuStripEvents.ResumeLayout(false);
+            this.pnlButton.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -141,6 +153,7 @@
         private System.Windows.Forms.ToolStripMenuItem addTherapyToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.Panel pnlButton;
 
 
     }

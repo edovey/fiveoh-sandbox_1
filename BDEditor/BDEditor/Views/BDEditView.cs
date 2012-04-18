@@ -441,8 +441,8 @@ namespace BDEditor.Views
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
-                            //BDTableControl control_tr01 = null;
-                            //control_tr01 = new BDTableControl(dataContext, table);
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II:
                             BDNodeControl control_tr01 = null;
                             control_tr01 = new BDNodeControl(dataContext, table);
                             control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);

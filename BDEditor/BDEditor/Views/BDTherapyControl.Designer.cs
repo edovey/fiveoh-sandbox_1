@@ -65,24 +65,28 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.chkPreviousDuration1 = new System.Windows.Forms.CheckBox();
             this.chkPreviousDose1 = new System.Windows.Forms.CheckBox();
-            this.chkPreviousDuration2 = new System.Windows.Forms.CheckBox();
-            this.chkPreviousDose2 = new System.Windows.Forms.CheckBox();
             this.btnDuration1Link = new System.Windows.Forms.Button();
             this.btnDosage1Link = new System.Windows.Forms.Button();
             this.tbDuration1 = new System.Windows.Forms.TextBox();
             this.tbDosage1 = new System.Windows.Forms.TextBox();
+            this.pnlRadioButtons = new System.Windows.Forms.Panel();
+            this.pnlMain = new System.Windows.Forms.Panel();
             this.btnDuration2Link = new System.Windows.Forms.Button();
-            this.btnDosage2Link = new System.Windows.Forms.Button();
             this.tbDuration2 = new System.Windows.Forms.TextBox();
+            this.chkPreviousDuration2 = new System.Windows.Forms.CheckBox();
+            this.btnDosage2Link = new System.Windows.Forms.Button();
             this.tbDosage2 = new System.Windows.Forms.TextBox();
+            this.chkPreviousDose2 = new System.Windows.Forms.CheckBox();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
+            this.pnlRadioButtons.SuspendLayout();
+            this.pnlMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbName
             // 
             this.tbName.ContextMenuStrip = this.contextMenuStrip1;
-            this.tbName.Location = new System.Drawing.Point(47, 3);
+            this.tbName.Location = new System.Drawing.Point(46, 2);
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(218, 20);
             this.tbName.TabIndex = 1;
@@ -163,7 +167,7 @@
             // tbDosage
             // 
             this.tbDosage.ContextMenuStrip = this.contextMenuStrip1;
-            this.tbDosage.Location = new System.Drawing.Point(328, 3);
+            this.tbDosage.Location = new System.Drawing.Point(327, 2);
             this.tbDosage.Name = "tbDosage";
             this.tbDosage.Size = new System.Drawing.Size(211, 20);
             this.tbDosage.TabIndex = 4;
@@ -174,7 +178,7 @@
             // tbDuration
             // 
             this.tbDuration.ContextMenuStrip = this.contextMenuStrip1;
-            this.tbDuration.Location = new System.Drawing.Point(606, 3);
+            this.tbDuration.Location = new System.Drawing.Point(605, 2);
             this.tbDuration.Name = "tbDuration";
             this.tbDuration.Size = new System.Drawing.Size(174, 20);
             this.tbDuration.TabIndex = 7;
@@ -185,7 +189,7 @@
             // noneRadioButton
             // 
             this.noneRadioButton.AutoSize = true;
-            this.noneRadioButton.Location = new System.Drawing.Point(30, 98);
+            this.noneRadioButton.Location = new System.Drawing.Point(28, 3);
             this.noneRadioButton.Name = "noneRadioButton";
             this.noneRadioButton.Size = new System.Drawing.Size(89, 17);
             this.noneRadioButton.TabIndex = 9;
@@ -196,7 +200,7 @@
             // andRadioButton
             // 
             this.andRadioButton.AutoSize = true;
-            this.andRadioButton.Location = new System.Drawing.Point(125, 98);
+            this.andRadioButton.Location = new System.Drawing.Point(123, 3);
             this.andRadioButton.Name = "andRadioButton";
             this.andRadioButton.Size = new System.Drawing.Size(95, 17);
             this.andRadioButton.TabIndex = 10;
@@ -207,7 +211,7 @@
             // orRadioButton
             // 
             this.orRadioButton.AutoSize = true;
-            this.orRadioButton.Location = new System.Drawing.Point(226, 98);
+            this.orRadioButton.Location = new System.Drawing.Point(224, 3);
             this.orRadioButton.Name = "orRadioButton";
             this.orRadioButton.Size = new System.Drawing.Size(87, 17);
             this.orRadioButton.TabIndex = 11;
@@ -220,7 +224,7 @@
             this.lblLeftBracket.AutoSize = true;
             this.lblLeftBracket.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLeftBracket.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.lblLeftBracket.Location = new System.Drawing.Point(-6, -8);
+            this.lblLeftBracket.Location = new System.Drawing.Point(-2, -10);
             this.lblLeftBracket.Name = "lblLeftBracket";
             this.lblLeftBracket.Size = new System.Drawing.Size(38, 55);
             this.lblLeftBracket.TabIndex = 15;
@@ -232,7 +236,7 @@
             this.lblRightBracket.AutoSize = true;
             this.lblRightBracket.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRightBracket.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.lblRightBracket.Location = new System.Drawing.Point(810, -8);
+            this.lblRightBracket.Location = new System.Drawing.Point(810, -9);
             this.lblRightBracket.Name = "lblRightBracket";
             this.lblRightBracket.Size = new System.Drawing.Size(38, 55);
             this.lblRightBracket.TabIndex = 16;
@@ -242,7 +246,7 @@
             // thenRadioButton
             // 
             this.thenRadioButton.AutoSize = true;
-            this.thenRadioButton.Location = new System.Drawing.Point(320, 98);
+            this.thenRadioButton.Location = new System.Drawing.Point(318, 3);
             this.thenRadioButton.Name = "thenRadioButton";
             this.thenRadioButton.Size = new System.Drawing.Size(101, 17);
             this.thenRadioButton.TabIndex = 12;
@@ -254,7 +258,7 @@
             // 
             this.btnDurationLink.Enabled = false;
             this.btnDurationLink.Image = ((System.Drawing.Image)(resources.GetObject("btnDurationLink.Image")));
-            this.btnDurationLink.Location = new System.Drawing.Point(786, 2);
+            this.btnDurationLink.Location = new System.Drawing.Point(785, 1);
             this.btnDurationLink.Name = "btnDurationLink";
             this.btnDurationLink.Size = new System.Drawing.Size(28, 28);
             this.btnDurationLink.TabIndex = 8;
@@ -265,7 +269,7 @@
             // 
             this.btnDosageLink.Enabled = false;
             this.btnDosageLink.Image = ((System.Drawing.Image)(resources.GetObject("btnDosageLink.Image")));
-            this.btnDosageLink.Location = new System.Drawing.Point(545, 2);
+            this.btnDosageLink.Location = new System.Drawing.Point(544, 1);
             this.btnDosageLink.Name = "btnDosageLink";
             this.btnDosageLink.Size = new System.Drawing.Size(28, 28);
             this.btnDosageLink.TabIndex = 5;
@@ -276,7 +280,7 @@
             // 
             this.btnTherapyLink.Enabled = false;
             this.btnTherapyLink.Image = ((System.Drawing.Image)(resources.GetObject("btnTherapyLink.Image")));
-            this.btnTherapyLink.Location = new System.Drawing.Point(271, 2);
+            this.btnTherapyLink.Location = new System.Drawing.Point(270, 1);
             this.btnTherapyLink.Name = "btnTherapyLink";
             this.btnTherapyLink.Size = new System.Drawing.Size(28, 28);
             this.btnTherapyLink.TabIndex = 2;
@@ -286,7 +290,7 @@
             // btnMenu
             // 
             this.btnMenu.Image = global::BDEditor.Properties.Resources.apps_16;
-            this.btnMenu.Location = new System.Drawing.Point(838, 3);
+            this.btnMenu.Location = new System.Drawing.Point(837, 0);
             this.btnMenu.Name = "btnMenu";
             this.btnMenu.Size = new System.Drawing.Size(28, 28);
             this.btnMenu.TabIndex = 14;
@@ -350,7 +354,7 @@
             // andOrRadioButton
             // 
             this.andOrRadioButton.AutoSize = true;
-            this.andOrRadioButton.Location = new System.Drawing.Point(428, 98);
+            this.andOrRadioButton.Location = new System.Drawing.Point(426, 3);
             this.andOrRadioButton.Name = "andOrRadioButton";
             this.andOrRadioButton.Size = new System.Drawing.Size(93, 17);
             this.andOrRadioButton.TabIndex = 13;
@@ -361,7 +365,7 @@
             // chkPreviousName
             // 
             this.chkPreviousName.AutoSize = true;
-            this.chkPreviousName.Location = new System.Drawing.Point(30, 7);
+            this.chkPreviousName.Location = new System.Drawing.Point(29, 6);
             this.chkPreviousName.Name = "chkPreviousName";
             this.chkPreviousName.Size = new System.Drawing.Size(15, 14);
             this.chkPreviousName.TabIndex = 0;
@@ -372,7 +376,7 @@
             // chkPreviousDose
             // 
             this.chkPreviousDose.AutoSize = true;
-            this.chkPreviousDose.Location = new System.Drawing.Point(311, 7);
+            this.chkPreviousDose.Location = new System.Drawing.Point(310, 6);
             this.chkPreviousDose.Name = "chkPreviousDose";
             this.chkPreviousDose.Size = new System.Drawing.Size(15, 14);
             this.chkPreviousDose.TabIndex = 3;
@@ -383,7 +387,7 @@
             // chkPreviousDuration
             // 
             this.chkPreviousDuration.AutoSize = true;
-            this.chkPreviousDuration.Location = new System.Drawing.Point(588, 7);
+            this.chkPreviousDuration.Location = new System.Drawing.Point(587, 6);
             this.chkPreviousDuration.Name = "chkPreviousDuration";
             this.chkPreviousDuration.Size = new System.Drawing.Size(15, 14);
             this.chkPreviousDuration.TabIndex = 6;
@@ -394,7 +398,7 @@
             // chkPreviousDuration1
             // 
             this.chkPreviousDuration1.AutoSize = true;
-            this.chkPreviousDuration1.Location = new System.Drawing.Point(588, 41);
+            this.chkPreviousDuration1.Location = new System.Drawing.Point(587, 40);
             this.chkPreviousDuration1.Name = "chkPreviousDuration1";
             this.chkPreviousDuration1.Size = new System.Drawing.Size(15, 14);
             this.chkPreviousDuration1.TabIndex = 20;
@@ -405,7 +409,7 @@
             // chkPreviousDose1
             // 
             this.chkPreviousDose1.AutoSize = true;
-            this.chkPreviousDose1.Location = new System.Drawing.Point(311, 41);
+            this.chkPreviousDose1.Location = new System.Drawing.Point(310, 40);
             this.chkPreviousDose1.Name = "chkPreviousDose1";
             this.chkPreviousDose1.Size = new System.Drawing.Size(15, 14);
             this.chkPreviousDose1.TabIndex = 17;
@@ -413,33 +417,11 @@
             this.chkPreviousDose1.UseVisualStyleBackColor = true;
             this.chkPreviousDose1.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
             // 
-            // chkPreviousDuration2
-            // 
-            this.chkPreviousDuration2.AutoSize = true;
-            this.chkPreviousDuration2.Location = new System.Drawing.Point(588, 75);
-            this.chkPreviousDuration2.Name = "chkPreviousDuration2";
-            this.chkPreviousDuration2.Size = new System.Drawing.Size(15, 14);
-            this.chkPreviousDuration2.TabIndex = 26;
-            this.toolTip1.SetToolTip(this.chkPreviousDuration2, "Same as previous");
-            this.chkPreviousDuration2.UseVisualStyleBackColor = true;
-            this.chkPreviousDuration2.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
-            // 
-            // chkPreviousDose2
-            // 
-            this.chkPreviousDose2.AutoSize = true;
-            this.chkPreviousDose2.Location = new System.Drawing.Point(311, 75);
-            this.chkPreviousDose2.Name = "chkPreviousDose2";
-            this.chkPreviousDose2.Size = new System.Drawing.Size(15, 14);
-            this.chkPreviousDose2.TabIndex = 23;
-            this.toolTip1.SetToolTip(this.chkPreviousDose2, "Same as previous");
-            this.chkPreviousDose2.UseVisualStyleBackColor = true;
-            this.chkPreviousDose2.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
-            // 
             // btnDuration1Link
             // 
             this.btnDuration1Link.Enabled = false;
             this.btnDuration1Link.Image = ((System.Drawing.Image)(resources.GetObject("btnDuration1Link.Image")));
-            this.btnDuration1Link.Location = new System.Drawing.Point(786, 36);
+            this.btnDuration1Link.Location = new System.Drawing.Point(785, 35);
             this.btnDuration1Link.Name = "btnDuration1Link";
             this.btnDuration1Link.Size = new System.Drawing.Size(28, 28);
             this.btnDuration1Link.TabIndex = 22;
@@ -450,7 +432,7 @@
             // 
             this.btnDosage1Link.Enabled = false;
             this.btnDosage1Link.Image = ((System.Drawing.Image)(resources.GetObject("btnDosage1Link.Image")));
-            this.btnDosage1Link.Location = new System.Drawing.Point(545, 36);
+            this.btnDosage1Link.Location = new System.Drawing.Point(544, 35);
             this.btnDosage1Link.Name = "btnDosage1Link";
             this.btnDosage1Link.Size = new System.Drawing.Size(28, 28);
             this.btnDosage1Link.TabIndex = 19;
@@ -460,7 +442,7 @@
             // tbDuration1
             // 
             this.tbDuration1.ContextMenuStrip = this.contextMenuStrip1;
-            this.tbDuration1.Location = new System.Drawing.Point(606, 37);
+            this.tbDuration1.Location = new System.Drawing.Point(605, 36);
             this.tbDuration1.Name = "tbDuration1";
             this.tbDuration1.Size = new System.Drawing.Size(174, 20);
             this.tbDuration1.TabIndex = 21;
@@ -471,7 +453,7 @@
             // tbDosage1
             // 
             this.tbDosage1.ContextMenuStrip = this.contextMenuStrip1;
-            this.tbDosage1.Location = new System.Drawing.Point(328, 37);
+            this.tbDosage1.Location = new System.Drawing.Point(327, 36);
             this.tbDosage1.Name = "tbDosage1";
             this.tbDosage1.Size = new System.Drawing.Size(211, 20);
             this.tbDosage1.TabIndex = 18;
@@ -479,32 +461,71 @@
             this.tbDosage1.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             this.tbDosage1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDosage1_MouseDown);
             // 
+            // pnlRadioButtons
+            // 
+            this.pnlRadioButtons.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlRadioButtons.Controls.Add(this.andOrRadioButton);
+            this.pnlRadioButtons.Controls.Add(this.noneRadioButton);
+            this.pnlRadioButtons.Controls.Add(this.andRadioButton);
+            this.pnlRadioButtons.Controls.Add(this.orRadioButton);
+            this.pnlRadioButtons.Controls.Add(this.thenRadioButton);
+            this.pnlRadioButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlRadioButtons.Location = new System.Drawing.Point(3, 103);
+            this.pnlRadioButtons.Name = "pnlRadioButtons";
+            this.pnlRadioButtons.Size = new System.Drawing.Size(866, 23);
+            this.pnlRadioButtons.TabIndex = 29;
+            // 
+            // pnlMain
+            // 
+            this.pnlMain.AutoSize = true;
+            this.pnlMain.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.pnlMain.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlMain.Controls.Add(this.tbName);
+            this.pnlMain.Controls.Add(this.tbDosage);
+            this.pnlMain.Controls.Add(this.chkPreviousDuration2);
+            this.pnlMain.Controls.Add(this.tbDuration);
+            this.pnlMain.Controls.Add(this.chkPreviousDose2);
+            this.pnlMain.Controls.Add(this.btnTherapyLink);
+            this.pnlMain.Controls.Add(this.btnDuration2Link);
+            this.pnlMain.Controls.Add(this.btnDosageLink);
+            this.pnlMain.Controls.Add(this.btnDosage2Link);
+            this.pnlMain.Controls.Add(this.btnDurationLink);
+            this.pnlMain.Controls.Add(this.tbDuration2);
+            this.pnlMain.Controls.Add(this.tbDosage2);
+            this.pnlMain.Controls.Add(this.chkPreviousName);
+            this.pnlMain.Controls.Add(this.chkPreviousDuration1);
+            this.pnlMain.Controls.Add(this.chkPreviousDose);
+            this.pnlMain.Controls.Add(this.chkPreviousDose1);
+            this.pnlMain.Controls.Add(this.chkPreviousDuration);
+            this.pnlMain.Controls.Add(this.btnDuration1Link);
+            this.pnlMain.Controls.Add(this.tbDosage1);
+            this.pnlMain.Controls.Add(this.btnDosage1Link);
+            this.pnlMain.Controls.Add(this.tbDuration1);
+            this.pnlMain.Controls.Add(this.btnMenu);
+            this.pnlMain.Controls.Add(this.lblRightBracket);
+            this.pnlMain.Controls.Add(this.lblLeftBracket);
+            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlMain.Location = new System.Drawing.Point(3, 3);
+            this.pnlMain.MinimumSize = new System.Drawing.Size(866, 10);
+            this.pnlMain.Name = "pnlMain";
+            this.pnlMain.Size = new System.Drawing.Size(866, 100);
+            this.pnlMain.TabIndex = 30;
+            // 
             // btnDuration2Link
             // 
             this.btnDuration2Link.Enabled = false;
             this.btnDuration2Link.Image = ((System.Drawing.Image)(resources.GetObject("btnDuration2Link.Image")));
-            this.btnDuration2Link.Location = new System.Drawing.Point(786, 70);
+            this.btnDuration2Link.Location = new System.Drawing.Point(785, 69);
             this.btnDuration2Link.Name = "btnDuration2Link";
             this.btnDuration2Link.Size = new System.Drawing.Size(28, 28);
             this.btnDuration2Link.TabIndex = 28;
             this.btnDuration2Link.UseVisualStyleBackColor = true;
             this.btnDuration2Link.Click += new System.EventHandler(this.btnLink_Click);
             // 
-            // btnDosage2Link
-            // 
-            this.btnDosage2Link.Enabled = false;
-            this.btnDosage2Link.Image = ((System.Drawing.Image)(resources.GetObject("btnDosage2Link.Image")));
-            this.btnDosage2Link.Location = new System.Drawing.Point(545, 70);
-            this.btnDosage2Link.Name = "btnDosage2Link";
-            this.btnDosage2Link.Size = new System.Drawing.Size(28, 28);
-            this.btnDosage2Link.TabIndex = 25;
-            this.btnDosage2Link.UseVisualStyleBackColor = true;
-            this.btnDosage2Link.Click += new System.EventHandler(this.btnLink_Click);
-            // 
             // tbDuration2
             // 
             this.tbDuration2.ContextMenuStrip = this.contextMenuStrip1;
-            this.tbDuration2.Location = new System.Drawing.Point(606, 71);
+            this.tbDuration2.Location = new System.Drawing.Point(605, 70);
             this.tbDuration2.Name = "tbDuration2";
             this.tbDuration2.Size = new System.Drawing.Size(174, 20);
             this.tbDuration2.TabIndex = 27;
@@ -512,10 +533,32 @@
             this.tbDuration2.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             this.tbDuration2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDuration2_MouseDown);
             // 
+            // chkPreviousDuration2
+            // 
+            this.chkPreviousDuration2.AutoSize = true;
+            this.chkPreviousDuration2.Location = new System.Drawing.Point(587, 74);
+            this.chkPreviousDuration2.Name = "chkPreviousDuration2";
+            this.chkPreviousDuration2.Size = new System.Drawing.Size(15, 14);
+            this.chkPreviousDuration2.TabIndex = 26;
+            this.toolTip1.SetToolTip(this.chkPreviousDuration2, "Same as previous");
+            this.chkPreviousDuration2.UseVisualStyleBackColor = true;
+            this.chkPreviousDuration2.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // btnDosage2Link
+            // 
+            this.btnDosage2Link.Enabled = false;
+            this.btnDosage2Link.Image = ((System.Drawing.Image)(resources.GetObject("btnDosage2Link.Image")));
+            this.btnDosage2Link.Location = new System.Drawing.Point(544, 69);
+            this.btnDosage2Link.Name = "btnDosage2Link";
+            this.btnDosage2Link.Size = new System.Drawing.Size(28, 28);
+            this.btnDosage2Link.TabIndex = 25;
+            this.btnDosage2Link.UseVisualStyleBackColor = true;
+            this.btnDosage2Link.Click += new System.EventHandler(this.btnLink_Click);
+            // 
             // tbDosage2
             // 
             this.tbDosage2.ContextMenuStrip = this.contextMenuStrip1;
-            this.tbDosage2.Location = new System.Drawing.Point(328, 71);
+            this.tbDosage2.Location = new System.Drawing.Point(327, 70);
             this.tbDosage2.Name = "tbDosage2";
             this.tbDosage2.Size = new System.Drawing.Size(211, 20);
             this.tbDosage2.TabIndex = 24;
@@ -523,48 +566,38 @@
             this.tbDosage2.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             this.tbDosage2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDosage2_MouseDown);
             // 
+            // chkPreviousDose2
+            // 
+            this.chkPreviousDose2.AutoSize = true;
+            this.chkPreviousDose2.Location = new System.Drawing.Point(310, 74);
+            this.chkPreviousDose2.Name = "chkPreviousDose2";
+            this.chkPreviousDose2.Size = new System.Drawing.Size(15, 14);
+            this.chkPreviousDose2.TabIndex = 23;
+            this.toolTip1.SetToolTip(this.chkPreviousDose2, "Same as previous");
+            this.chkPreviousDose2.UseVisualStyleBackColor = true;
+            this.chkPreviousDose2.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
             // BDTherapyControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.Controls.Add(this.chkPreviousDuration2);
-            this.Controls.Add(this.chkPreviousDose2);
-            this.Controls.Add(this.btnDuration2Link);
-            this.Controls.Add(this.btnDosage2Link);
-            this.Controls.Add(this.tbDuration2);
-            this.Controls.Add(this.tbDosage2);
-            this.Controls.Add(this.chkPreviousDuration1);
-            this.Controls.Add(this.chkPreviousDose1);
-            this.Controls.Add(this.btnDuration1Link);
-            this.Controls.Add(this.btnDosage1Link);
-            this.Controls.Add(this.tbDuration1);
-            this.Controls.Add(this.tbDosage1);
-            this.Controls.Add(this.chkPreviousDuration);
-            this.Controls.Add(this.chkPreviousDose);
-            this.Controls.Add(this.chkPreviousName);
-            this.Controls.Add(this.andOrRadioButton);
-            this.Controls.Add(this.thenRadioButton);
-            this.Controls.Add(this.orRadioButton);
-            this.Controls.Add(this.btnMenu);
-            this.Controls.Add(this.andRadioButton);
-            this.Controls.Add(this.noneRadioButton);
-            this.Controls.Add(this.btnDurationLink);
-            this.Controls.Add(this.btnDosageLink);
-            this.Controls.Add(this.btnTherapyLink);
-            this.Controls.Add(this.tbDuration);
-            this.Controls.Add(this.tbDosage);
-            this.Controls.Add(this.tbName);
-            this.Controls.Add(this.lblLeftBracket);
-            this.Controls.Add(this.lblRightBracket);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.Controls.Add(this.pnlMain);
+            this.Controls.Add(this.pnlRadioButtons);
+            this.MinimumSize = new System.Drawing.Size(872, 50);
             this.Name = "BDTherapyControl";
             this.Padding = new System.Windows.Forms.Padding(3);
-            this.Size = new System.Drawing.Size(872, 121);
+            this.Size = new System.Drawing.Size(872, 129);
             this.Load += new System.EventHandler(this.BDTherapyControl_Load);
             this.Leave += new System.EventHandler(this.BDTherapyControl_Leave);
             this.contextMenuStrip1.ResumeLayout(false);
             this.contextMenuStripEvents.ResumeLayout(false);
+            this.pnlRadioButtons.ResumeLayout(false);
+            this.pnlRadioButtons.PerformLayout();
+            this.pnlMain.ResumeLayout(false);
+            this.pnlMain.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -611,6 +644,8 @@
         private System.Windows.Forms.Button btnDosage1Link;
         private System.Windows.Forms.TextBox tbDuration1;
         private System.Windows.Forms.TextBox tbDosage1;
+        private System.Windows.Forms.Panel pnlRadioButtons;
+        private System.Windows.Forms.Panel pnlMain;
         private System.Windows.Forms.CheckBox chkPreviousDuration2;
         private System.Windows.Forms.CheckBox chkPreviousDose2;
         private System.Windows.Forms.Button btnDuration2Link;

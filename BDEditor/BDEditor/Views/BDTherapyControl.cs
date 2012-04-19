@@ -255,13 +255,13 @@ namespace BDEditor.Views
                     if (currentTherapy.duration != tbDuration.Text) currentTherapy.duration = tbDuration.Text;
                     if (currentTherapy.displayOrder != DisplayOrder) currentTherapy.displayOrder = DisplayOrder;
 
-                    if (this.Controls.Contains(tbDosage1) && currentTherapy.dosage1 != tbDosage1.Text)
+                    if (pnlMain.Controls.Contains(tbDosage1) && currentTherapy.dosage1 != tbDosage1.Text)
                         currentTherapy.dosage1 = tbDosage1.Text;
-                    if (this.Controls.Contains(tbDosage2) && currentTherapy.dosage2 != tbDosage2.Text)
+                    if (pnlMain.Controls.Contains(tbDosage2) && currentTherapy.dosage2 != tbDosage2.Text)
                         currentTherapy.dosage2 = tbDosage2.Text;
-                    if (this.Controls.Contains(tbDuration1) && currentTherapy.duration1 != tbDuration1.Text)
+                    if (pnlMain.Controls.Contains(tbDuration1) && currentTherapy.duration1 != tbDuration1.Text)
                         currentTherapy.duration1 = tbDuration1.Text;
-                    if (this.Controls.Contains(tbDuration2) && currentTherapy.duration2 != tbDuration2.Text)
+                    if (pnlMain.Controls.Contains(tbDuration2) && currentTherapy.duration2 != tbDuration2.Text)
                         currentTherapy.duration2 = tbDuration2.Text;
 
                     if (andRadioButton.Checked)
@@ -297,13 +297,13 @@ namespace BDEditor.Views
                     if (currentTherapy.dosageSameAsPrevious != this.chkPreviousDose.Checked) currentTherapy.dosageSameAsPrevious = this.chkPreviousDose.Checked;
                     if (currentTherapy.durationSameAsPrevious != this.chkPreviousDuration.Checked) currentTherapy.durationSameAsPrevious = this.chkPreviousDuration.Checked;
 
-                    if (this.Controls.Contains(chkPreviousDose1) && currentTherapy.dosage1SameAsPrevious != chkPreviousDose1.Checked)
+                    if (pnlMain.Controls.Contains(chkPreviousDose1) && currentTherapy.dosage1SameAsPrevious != chkPreviousDose1.Checked)
                         currentTherapy.dosage1SameAsPrevious = this.chkPreviousDose1.Checked;
-                    if (this.Controls.Contains(chkPreviousDose2) && currentTherapy.dosage2SameAsPrevious != chkPreviousDose2.Checked)
+                    if (pnlMain.Controls.Contains(chkPreviousDose2) && currentTherapy.dosage2SameAsPrevious != chkPreviousDose2.Checked)
                         currentTherapy.dosage2SameAsPrevious = this.chkPreviousDose2.Checked;
-                    if (this.Controls.Contains(chkPreviousDuration1) && currentTherapy.duration1SameAsPrevious != chkPreviousDuration1.Checked)
+                    if (pnlMain.Controls.Contains(chkPreviousDuration1) && currentTherapy.duration1SameAsPrevious != chkPreviousDuration1.Checked)
                         currentTherapy.duration1SameAsPrevious = chkPreviousDuration1.Checked;
-                    if (this.Controls.Contains(chkPreviousDuration2) && currentTherapy.duration2SameAsPrevious != chkPreviousDuration2.Checked)
+                    if (pnlMain.Controls.Contains(chkPreviousDuration2) && currentTherapy.duration2SameAsPrevious != chkPreviousDuration2.Checked)
                         currentTherapy.duration2SameAsPrevious = chkPreviousDuration2.Checked;
 
                     BDTherapy.Save(dataContext, currentTherapy);
@@ -591,42 +591,42 @@ namespace BDEditor.Views
                 case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
                     // remove dosage1, dosage2, duration1, duration2
-                    this.Controls.Remove(tbDosage1);
-                    this.Controls.Remove(chkPreviousDose1);
-                    this.Controls.Remove(btnDosage1Link);
-                    this.Controls.Remove(tbDosage2);
-                    this.Controls.Remove(chkPreviousDose2);
-                    this.Controls.Remove(btnDosage2Link);
-                    this.Controls.Remove(tbDuration1);
-                    this.Controls.Remove(chkPreviousDuration1);
-                    this.Controls.Remove(btnDuration1Link);
-                    this.Controls.Remove(tbDuration2);
-                    this.Controls.Remove(chkPreviousDuration2);
-                    this.Controls.Remove(btnDuration2Link);
+                    pnlMain.Controls.Remove(tbDosage1);
+                    pnlMain.Controls.Remove(chkPreviousDose1);
+                    pnlMain.Controls.Remove(btnDosage1Link);
+                    pnlMain.Controls.Remove(tbDosage2);
+                    pnlMain.Controls.Remove(chkPreviousDose2);
+                    pnlMain.Controls.Remove(btnDosage2Link);
+                    pnlMain.Controls.Remove(tbDuration1);
+                    pnlMain.Controls.Remove(chkPreviousDuration1);
+                    pnlMain.Controls.Remove(btnDuration1Link);
+                    pnlMain.Controls.Remove(tbDuration2);
+                    pnlMain.Controls.Remove(chkPreviousDuration2);
+                    pnlMain.Controls.Remove(btnDuration2Link);
                     break;
                 case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
                     // remove dosage2, duration1, duration2
-                    this.Controls.Remove(tbDosage2);
-                    this.Controls.Remove(chkPreviousDose2);
-                    this.Controls.Remove(btnDosage2Link);
-                    this.Controls.Remove(tbDuration1);
-                    this.Controls.Remove(chkPreviousDuration1);
-                    this.Controls.Remove(btnDuration1Link);
-                    this.Controls.Remove(chkPreviousDuration2);
-                    this.Controls.Remove(btnDuration2Link);
-                    this.Controls.Remove(tbDuration2);
+                    pnlMain.Controls.Remove(tbDosage2);
+                    pnlMain.Controls.Remove(chkPreviousDose2);
+                    pnlMain.Controls.Remove(btnDosage2Link);
+                    pnlMain.Controls.Remove(tbDuration1);
+                    pnlMain.Controls.Remove(chkPreviousDuration1);
+                    pnlMain.Controls.Remove(btnDuration1Link);
+                    pnlMain.Controls.Remove(chkPreviousDuration2);
+                    pnlMain.Controls.Remove(btnDuration2Link);
+                    pnlMain.Controls.Remove(tbDuration2);
                     break;
                 case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
                     // remove dosage1, dosage2, duration2
-                    this.Controls.Remove(tbDosage1);
-                    this.Controls.Remove(chkPreviousDose1);
-                    this.Controls.Remove(btnDosage1Link);
-                    this.Controls.Remove(tbDosage2);
-                    this.Controls.Remove(chkPreviousDose2);
-                    this.Controls.Remove(btnDosage2Link);
-                    this.Controls.Remove(tbDuration2);
-                    this.Controls.Remove(chkPreviousDuration2);
-                    this.Controls.Remove(btnDuration2Link);
+                    pnlMain.Controls.Remove(tbDosage1);
+                    pnlMain.Controls.Remove(chkPreviousDose1);
+                    pnlMain.Controls.Remove(btnDosage1Link);
+                    pnlMain.Controls.Remove(tbDosage2);
+                    pnlMain.Controls.Remove(chkPreviousDose2);
+                    pnlMain.Controls.Remove(btnDosage2Link);
+                    pnlMain.Controls.Remove(tbDuration2);
+                    pnlMain.Controls.Remove(chkPreviousDuration2);
+                    pnlMain.Controls.Remove(btnDuration2Link);
                     break;
                 case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
@@ -636,7 +636,7 @@ namespace BDEditor.Views
                     // no changes - this control is not displayed
                     break;
             }
+            pnlMain.Refresh();
         }
-
     }
 }

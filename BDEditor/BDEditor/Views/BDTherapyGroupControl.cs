@@ -206,7 +206,7 @@ namespace BDEditor.Views
                     }
                     
                     BDTherapyGroup.Save(dataContext, currentTherapyGroup);
-                    Typeahead.AddToCollection(BDConstants.BDNodeType.BDTherapyGroup, BDTherapyGroup.PROPERTYNAME_NAME, currentTherapyGroup.name);
+                    BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDTherapyGroup, BDTherapyGroup.PROPERTYNAME_NAME, currentTherapyGroup.name);
 
                     result = true;
                 }
@@ -292,9 +292,13 @@ namespace BDEditor.Views
                 therapyControl.AssignParentInfo(currentTherapyGroup.Uuid, currentTherapyGroup.NodeType);
                 therapyControl.AssignDataContext(dataContext);
                 therapyControl.AssignScopeId(scopeId);
-                therapyControl.AssignTypeaheadSource(Typeahead.TherapyNames, BDTherapy.PROPERTYNAME_THERAPY);
-                therapyControl.AssignTypeaheadSource(Typeahead.TherapyDosages, BDTherapy.PROPERTYNAME_DOSAGE);
-                therapyControl.AssignTypeaheadSource(Typeahead.TherapyDurations, BDTherapy.PROPERTYNAME_DURATION);
+                therapyControl.AssignTypeaheadSource(BDTypeahead.TherapyNames, BDTherapy.PROPERTYNAME_THERAPY);
+                therapyControl.AssignTypeaheadSource(BDTypeahead.TherapyDosages, BDTherapy.PROPERTYNAME_DOSAGE);
+                therapyControl.AssignTypeaheadSource(BDTypeahead.TherapyDurations, BDTherapy.PROPERTYNAME_DURATION);
+                therapyControl.AssignTypeaheadSource(BDTypeahead.TherapyDosages, BDTherapy.PROPERTYNAME_DOSAGE_1);
+                therapyControl.AssignTypeaheadSource(BDTypeahead.TherapyDosages, BDTherapy.PROPERTYNAME_DOSAGE_2);
+                therapyControl.AssignTypeaheadSource(BDTypeahead.TherapyDurations, BDTherapy.PROPERTYNAME_DURATION_1);
+                therapyControl.AssignTypeaheadSource(BDTypeahead.TherapyDurations, BDTherapy.PROPERTYNAME_DURATION_2);
                 therapyControl.CurrentTherapy = pTherapy;
                 therapyControl.DefaultLayoutVariantType = this.DefaultLayoutVariantType;
                 therapyControl.RequestItemAdd += new EventHandler<NodeEventArgs>(Therapy_RequestItemAdd);

@@ -259,7 +259,7 @@ namespace BDEditor.Views
                 pathogenGroupControl.AssignParentInfo(currentPresentation.Uuid, currentPresentation.NodeType);
                 pathogenGroupControl.AssignDataContext(dataContext);
                 pathogenGroupControl.AssignScopeId(scopeId);
-                pathogenGroupControl.AssignTypeaheadSource(Typeahead.PathogenGroups);
+                pathogenGroupControl.AssignTypeaheadSource(BDTypeahead.PathogenGroups);
                 pathogenGroupControl.CurrentPathogenGroup = pNode;
                 pathogenGroupControl.DefaultLayoutVariantType = this.defaultLayoutVariantType;
 

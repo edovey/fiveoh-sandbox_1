@@ -53,6 +53,10 @@
             this.tbDuration = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.tbDosage1 = new System.Windows.Forms.TextBox();
+            this.tbDosage2 = new System.Windows.Forms.TextBox();
+            this.tbDuration1 = new System.Windows.Forms.TextBox();
+            this.tbDuration2 = new System.Windows.Forms.TextBox();
             this.contextMenuStripTextBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -222,7 +226,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(13, 100);
+            this.label3.Location = new System.Drawing.Point(13, 158);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(55, 13);
             this.label3.TabIndex = 4;
@@ -231,7 +235,7 @@
             // tbDuration
             // 
             this.tbDuration.ContextMenuStrip = this.contextMenuStripTextBox;
-            this.tbDuration.Location = new System.Drawing.Point(16, 117);
+            this.tbDuration.Location = new System.Drawing.Point(16, 175);
             this.tbDuration.Name = "tbDuration";
             this.tbDuration.Size = new System.Drawing.Size(443, 20);
             this.tbDuration.TabIndex = 5;
@@ -239,7 +243,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(384, 147);
+            this.button1.Location = new System.Drawing.Point(384, 257);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 6;
@@ -250,12 +254,48 @@
             // button2
             // 
             this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button2.Location = new System.Drawing.Point(303, 146);
+            this.button2.Location = new System.Drawing.Point(303, 256);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 7;
             this.button2.Text = "Cancel";
             this.button2.UseVisualStyleBackColor = true;
+            // 
+            // tbDosage1
+            // 
+            this.tbDosage1.ContextMenuStrip = this.contextMenuStripTextBox;
+            this.tbDosage1.Location = new System.Drawing.Point(16, 99);
+            this.tbDosage1.Name = "tbDosage1";
+            this.tbDosage1.Size = new System.Drawing.Size(443, 20);
+            this.tbDosage1.TabIndex = 8;
+            this.tbDosage1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDosage1_MouseDown);
+            // 
+            // tbDosage2
+            // 
+            this.tbDosage2.ContextMenuStrip = this.contextMenuStripTextBox;
+            this.tbDosage2.Location = new System.Drawing.Point(16, 125);
+            this.tbDosage2.Name = "tbDosage2";
+            this.tbDosage2.Size = new System.Drawing.Size(443, 20);
+            this.tbDosage2.TabIndex = 9;
+            this.tbDosage2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDosage2_MouseDown);
+            // 
+            // tbDuration1
+            // 
+            this.tbDuration1.ContextMenuStrip = this.contextMenuStripTextBox;
+            this.tbDuration1.Location = new System.Drawing.Point(16, 201);
+            this.tbDuration1.Name = "tbDuration1";
+            this.tbDuration1.Size = new System.Drawing.Size(443, 20);
+            this.tbDuration1.TabIndex = 10;
+            this.tbDuration1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDuration1_MouseDown);
+            // 
+            // tbDuration2
+            // 
+            this.tbDuration2.ContextMenuStrip = this.contextMenuStripTextBox;
+            this.tbDuration2.Location = new System.Drawing.Point(16, 227);
+            this.tbDuration2.Name = "tbDuration2";
+            this.tbDuration2.Size = new System.Drawing.Size(443, 20);
+            this.tbDuration2.TabIndex = 11;
+            this.tbDuration2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDuration2_MouseDown);
             // 
             // BDTherapyEditView
             // 
@@ -263,7 +303,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button2;
-            this.ClientSize = new System.Drawing.Size(469, 182);
+            this.ClientSize = new System.Drawing.Size(469, 291);
+            this.Controls.Add(this.tbDuration2);
+            this.Controls.Add(this.tbDuration1);
+            this.Controls.Add(this.tbDosage2);
+            this.Controls.Add(this.tbDosage1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.tbDuration);
@@ -312,5 +356,9 @@
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
+        private System.Windows.Forms.TextBox tbDosage1;
+        private System.Windows.Forms.TextBox tbDosage2;
+        private System.Windows.Forms.TextBox tbDuration1;
+        private System.Windows.Forms.TextBox tbDuration2;
     }
 }

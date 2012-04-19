@@ -143,8 +143,7 @@
     <Compile Include="Classes\BDSearchEntryGenerator.cs" />
     <Compile Include="Classes\SyncInfo.cs" />
     <Compile Include="Classes\SyncInfoDictionary.cs" />
-    <Compile Include="Classes\Typeahead.cs" />
-    <Compile Include="Classes\UIHelper.cs" />
+    <Compile Include="Classes\BDTypeahead.cs" />
     <Compile Include="DataModel\BDDeletion.cs" />
     <Compile Include="DataModel\BDHtmlPage.cs" />
     <Compile Include="DataModel\BDLinkedNote.cs" />

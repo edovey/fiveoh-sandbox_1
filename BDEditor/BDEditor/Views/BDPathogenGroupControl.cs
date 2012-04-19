@@ -140,7 +140,7 @@ namespace BDEditor.Views
 
                     BDNode.Save(dataContext, currentPathogenGroup);
 
-                    Typeahead.AddToCollection(BDConstants.BDNodeType.BDPathogenGroup, BDNode.PROPERTYNAME_NAME, currentPathogenGroup.name);
+                    BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDPathogenGroup, BDNode.PROPERTYNAME_NAME, currentPathogenGroup.name);
 
                     result = true;
                 }
@@ -251,7 +251,7 @@ namespace BDEditor.Views
                 pathogenControl.AssignParentInfo(currentPathogenGroup.Uuid, currentPathogenGroup.NodeType);
                 pathogenControl.AssignDataContext(dataContext);
                 pathogenControl.AssignScopeId(scopeId);
-                pathogenControl.AssignTypeaheadSource(Typeahead.Pathogens);
+                pathogenControl.AssignTypeaheadSource(BDTypeahead.Pathogens);
                 pathogenControl.CurrentPathogen = pNode;
                 pathogenControl.DefaultLayoutVariantType = this.DefaultLayoutVariantType;
                 pathogenControl.RequestItemAdd += new EventHandler<NodeEventArgs>(Pathogen_RequestItemAdd);
@@ -342,7 +342,7 @@ namespace BDEditor.Views
                 therapyGroupControl.AssignParentInfo(currentPathogenGroup.uuid, currentPathogenGroup.NodeType);
                 therapyGroupControl.AssignScopeId(scopeId);
                 therapyGroupControl.AssignDataContext(dataContext);
-                therapyGroupControl.AssignTypeaheadSource(Typeahead.TherapyGroups);
+                therapyGroupControl.AssignTypeaheadSource(BDTypeahead.TherapyGroups);
                 therapyGroupControl.CurrentTherapyGroup = pTherapyGroup;
                 therapyGroupControl.DefaultLayoutVariantType = this.DefaultLayoutVariantType;
                 therapyGroupControl.RequestItemAdd += new EventHandler<NodeEventArgs>(TherapyGroup_RequestItemAdd);

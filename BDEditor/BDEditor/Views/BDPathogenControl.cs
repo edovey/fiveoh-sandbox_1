@@ -110,7 +110,7 @@ namespace BDEditor.Views
                 BDNode.Save(dataContext, currentPathogen);
                 result = true;
 
-                Typeahead.AddToCollection(BDConstants.BDNodeType.BDPathogen, BDNode.PROPERTYNAME_NAME, currentPathogen.name);
+                BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDPathogen, BDNode.PROPERTYNAME_NAME, currentPathogen.name);
             }
 
             return result;

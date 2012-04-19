@@ -145,7 +145,31 @@ namespace BDEditor.Views
                 tbDuration.AutoCompleteCustomSource = pSource;
                 tbDuration.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
                 tbDuration.AutoCompleteSource = AutoCompleteSource.CustomSource;
-            }    
+            }
+            else if (pProperty == BDTherapy.PROPERTYNAME_DOSAGE_1)
+            {
+                tbDosage1.AutoCompleteCustomSource = pSource;
+                tbDosage1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                tbDosage1.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            }
+            else if (pProperty == BDTherapy.PROPERTYNAME_DOSAGE_2)
+            {
+                tbDosage2.AutoCompleteCustomSource = pSource;
+                tbDosage2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                tbDosage2.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            }
+            else if (pProperty == BDTherapy.PROPERTYNAME_DURATION_1)
+            {
+                tbDuration1.AutoCompleteCustomSource = pSource;
+                tbDuration1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                tbDuration1.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            }
+            else if (pProperty == BDTherapy.PROPERTYNAME_DURATION_2)
+            {
+                tbDuration2.AutoCompleteCustomSource = pSource;
+                tbDuration2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                tbDuration2.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            }
         }
 
         #region IBDControl
@@ -173,6 +197,15 @@ namespace BDEditor.Views
                 tbDosage.Text = currentTherapy.dosage;
                 tbDuration.Text = currentTherapy.duration;
                 DisplayOrder = currentTherapy.displayOrder;
+
+                if (pnlMain.Controls.Contains(tbDosage1))
+                    tbDosage1.Text = currentTherapy.dosage1;
+                if(pnlMain.Controls.Contains(tbDosage2))
+                    tbDosage2.Text = currentTherapy.dosage2;
+                if(pnlMain.Controls.Contains(tbDuration1))
+                    tbDuration1.Text = currentTherapy.duration1;
+                if(pnlMain.Controls.Contains(tbDuration2))
+                    tbDuration2.Text = currentTherapy.duration2;
 
                 switch ((BDTherapy.TherapyJoinType)currentTherapy.therapyJoinType)
                 {
@@ -312,19 +345,19 @@ namespace BDEditor.Views
                     result = true;
 
                     if(currentTherapy.name.Length > 0) 
-                       Typeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_THERAPY, currentTherapy.name);
+                       BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_THERAPY, currentTherapy.name);
                    if(currentTherapy.dosage.Length > 0)
-                       Typeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, currentTherapy.dosage);
+                       BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, currentTherapy.dosage);
                     if(currentTherapy.duration.Length > 0)
-                        Typeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DURATION, currentTherapy.duration);
+                        BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DURATION, currentTherapy.duration);
                     if (currentTherapy.dosage1.Length > 0)
-                        Typeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, currentTherapy.dosage1);
+                        BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, currentTherapy.dosage1);
                     if (currentTherapy.dosage2.Length > 0)
-                        Typeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, currentTherapy.dosage2);
+                        BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, currentTherapy.dosage2);
                     if (currentTherapy.duration1.Length > 0)
-                        Typeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DURATION, currentTherapy.duration1);
+                        BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DURATION, currentTherapy.duration1);
                     if (currentTherapy.duration2.Length > 0)
-                        Typeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DURATION, currentTherapy.duration2);
+                        BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DURATION, currentTherapy.duration2);
 
                 }
             }
@@ -568,6 +601,7 @@ namespace BDEditor.Views
         {
             currentControlName = DURATION_2_TEXTBOX; 
         }
+
         public BDConstants.BDNodeType DefaultNodeType { get; set; }
 
         public BDConstants.LayoutVariantType DefaultLayoutVariantType { get; set; }

@@ -8,7 +8,7 @@ using BDEditor.DataModel;
 
 namespace BDEditor.Classes
 {
-    public static class Typeahead
+    public static class BDTypeahead
     {
         private static AutoCompleteStringCollection pathogenGroups;
         private static AutoCompleteStringCollection pathogens;
@@ -145,6 +145,14 @@ namespace BDEditor.Classes
                             else if (pEntityMember == BDTherapy.PROPERTYNAME_DOSAGE && !therapyDosages.Contains(pValue))
                                 therapyDosages.Add(pValue);
                             else if (pEntityMember == BDTherapy.PROPERTYNAME_DURATION && !therapyDurations.Contains(pValue))
+                                therapyDurations.Add(pValue);
+                            else if (pEntityMember == BDTherapy.PROPERTYNAME_DOSAGE_1 && !therapyDosages.Contains(pValue))
+                                therapyDosages.Add(pValue);
+                            else if (pEntityMember == BDTherapy.PROPERTYNAME_DOSAGE_2 && !therapyDosages.Contains(pValue))
+                                therapyDosages.Add(pValue);
+                            else if (pEntityMember == BDTherapy.PROPERTYNAME_DURATION_1 && !therapyDurations.Contains(pValue))
+                                therapyDurations.Add(pValue);
+                            else if (pEntityMember == BDTherapy.PROPERTYNAME_DURATION_2 && !therapyDurations.Contains(pValue))
                                 therapyDurations.Add(pValue);
                         }
                         break;

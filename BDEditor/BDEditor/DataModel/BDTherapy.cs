@@ -33,8 +33,12 @@ namespace BDEditor.DataModel
 
         public const int ENTITY_SCHEMAVERSION = 1;
         public const string PROPERTYNAME_THERAPY = @"Therapy";
-        public const string PROPERTYNAME_DOSAGE = @"Dosage"; 
+        public const string PROPERTYNAME_DOSAGE = @"Dosage";
+        public const string PROPERTYNAME_DOSAGE_1 = @"Dosage1";
+        public const string PROPERTYNAME_DOSAGE_2 = @"Dosage2";
         public const string PROPERTYNAME_DURATION = @"Duration";
+        public const string PROPERTYNAME_DURATION_1 = @"Duration1";
+        public const string PROPERTYNAME_DURATION_2 = @"Duration2";
 
         private const string UUID = @"th_uuid";
         private const string SCHEMAVERSION = @"th_schemaVersion";
@@ -252,10 +256,13 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static string[] GetTherapyDosages(Entities pContext)
         {
-            //TODO:  refactor for multiple dosage properties
             var dosages = pContext.BDTherapies.Where(x => (!string.IsNullOrEmpty(x.dosage))).Select(pg => pg.dosage).Distinct();
+            var dosage1 = pContext.BDTherapies.Where(x => (!string.IsNullOrEmpty(x.dosage1))).Select(pg => pg.dosage1).Distinct();
+            var dosage2 = pContext.BDTherapies.Where(x => (!string.IsNullOrEmpty(x.dosage2))).Select(pg => pg.dosage2).Distinct();
+            // concatenate the results into a distinct array
+            string[] dosageArray = dosages.Concat(dosage1.Concat(dosage2).Distinct()).Distinct().ToArray();
 
-            return dosages.ToArray();
+            return dosageArray;
         }
 
         /// <summary>
@@ -267,7 +274,11 @@ namespace BDEditor.DataModel
         {
             //TODO:  refactor for multiple duration properties
             var durations = pContext.BDTherapies.Where(x => (!string.IsNullOrEmpty(x.duration))).Select(pg => pg.duration).Distinct();
-            return durations.ToArray();
+            var duration1 = pContext.BDTherapies.Where(x => (!string.IsNullOrEmpty(x.duration1))).Select(pg => pg.duration1).Distinct();
+            var duration2 = pContext.BDTherapies.Where(x => (!string.IsNullOrEmpty(x.duration2))).Select(pg => pg.duration2).Distinct();
+            // concatenate results into a distinct array
+            string[] durationArray = durations.Concat(duration1.Concat(duration2).Distinct()).Distinct().ToArray();
+            return durationArray;
         }
 
         public static List<BDTherapy> RetrieveTherapiesNameWithText(Entities pContext, string pText)

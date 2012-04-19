@@ -134,6 +134,7 @@
     <Compile Include="Classes\BDCommon.cs" />
     <Compile Include="Classes\BDConstants.cs" />
     <Compile Include="Classes\BDUtilities.cs" />
+    <Compile Include="Classes\ControlHelper.cs" />
     <Compile Include="Classes\Navigation\TreatmentRecommendationTree.cs" />
     <Compile Include="Classes\NodeEventArgs.cs" />
     <Compile Include="Classes\BDNotification.cs" />
@@ -447,7 +448,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
+      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

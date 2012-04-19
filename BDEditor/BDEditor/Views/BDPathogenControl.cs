@@ -154,7 +154,7 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
-            this.SuspendLayout();
+            ControlHelper.SuspendDrawing(this);
             if (currentPathogen == null)
             {
                 this.tbPathogenName.Text = @"";
@@ -165,7 +165,7 @@ namespace BDEditor.Views
                 DisplayOrder = currentPathogen.displayOrder;
             }
             ShowLinksInUse(false);
-            this.ResumeLayout();
+            ControlHelper.ResumeDrawing(this);
         }
         
 

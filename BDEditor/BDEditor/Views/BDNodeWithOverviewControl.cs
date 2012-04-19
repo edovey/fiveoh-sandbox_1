@@ -138,7 +138,7 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
-            this.SuspendLayout();
+            ControlHelper.SuspendDrawing(this);
 
             for (int idx = 0; idx < childNodeControlList.Count; idx++)
             {
@@ -192,7 +192,7 @@ namespace BDEditor.Views
 
             ShowLinksInUse(false);
             setFormLayoutState();
-            this.ResumeLayout();
+            ControlHelper.ResumeDrawing(this);
         }
 
         public void AssignParentInfo(Guid? pParentId, BDConstants.BDNodeType pParentType)

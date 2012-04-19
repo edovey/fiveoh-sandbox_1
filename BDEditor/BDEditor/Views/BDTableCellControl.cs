@@ -109,7 +109,7 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
-            this.SuspendLayout();
+            ControlHelper.SuspendDrawing(this);
 
             for (int i = 0; i < stringControlList.Count; i++)
             {
@@ -126,7 +126,7 @@ namespace BDEditor.Views
             }
 
             ShowLinksInUse(false);
-            this.ResumeLayout();
+            ControlHelper.ResumeDrawing(this);
         }
 
         public void AssignDataContext(Entities pDataContext)

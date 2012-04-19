@@ -47,6 +47,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.pnlControls);
+            this.DoubleBuffered = true;
             this.MinimumSize = new System.Drawing.Size(200, 75);
             this.Name = "BDTableCellControl";
             this.Size = new System.Drawing.Size(200, 75);

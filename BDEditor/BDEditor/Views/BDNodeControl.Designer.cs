@@ -342,6 +342,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.pnlDetail);
             this.Controls.Add(this.panelHeader);
+            this.DoubleBuffered = true;
             this.MinimumSize = new System.Drawing.Size(870, 50);
             this.Name = "BDNodeControl";
             this.Size = new System.Drawing.Size(870, 71);

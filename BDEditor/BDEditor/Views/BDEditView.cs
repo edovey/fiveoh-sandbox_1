@@ -324,6 +324,7 @@ namespace BDEditor.Views
             this.Cursor = Cursors.WaitCursor;
 
             splitContainer1.Panel2.SuspendLayout();
+            ControlHelper.SuspendDrawing(splitContainer1.Panel2);
 
             foreach (Control ctrl in splitContainer1.Panel2.Controls)
             {
@@ -460,6 +461,7 @@ namespace BDEditor.Views
                     break;
             }
 
+            ControlHelper.ResumeDrawing(splitContainer1.Panel2);
             splitContainer1.Panel2.ResumeLayout();
 
             this.Cursor = Cursors.Default;

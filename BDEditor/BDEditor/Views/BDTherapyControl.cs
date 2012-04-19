@@ -152,7 +152,7 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
-            this.SuspendLayout();
+            ControlHelper.SuspendDrawing(this);
             if (currentTherapy == null)
             {
                 tbName.Text = @"";
@@ -204,7 +204,7 @@ namespace BDEditor.Views
                 chkPreviousDuration.Checked = currentTherapy.durationSameAsPrevious.Value;
             }
             ShowLinksInUse(false);
-            this.ResumeLayout();
+            ControlHelper.ResumeDrawing(this);
         }
 
         public void AssignDataContext(Entities pDataContext)

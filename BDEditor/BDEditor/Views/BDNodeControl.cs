@@ -135,7 +135,7 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
-            this.SuspendLayout();
+            ControlHelper.SuspendDrawing(this);
 
             for (int idx = 0; idx < childNodeControlList.Count; idx++)
             {
@@ -161,7 +161,7 @@ namespace BDEditor.Views
             }
             ShowLinksInUse(false);
             setFormLayoutState();
-            this.ResumeLayout();
+            ControlHelper.ResumeDrawing(this);
         }
 
         public void AssignParentInfo(Guid? pParentId, BDConstants.BDNodeType pParentType)
@@ -412,8 +412,10 @@ namespace BDEditor.Views
 
         void childNodeControl_RequestItemAdd(object sender, NodeEventArgs e)
         {
+            ControlHelper.SuspendDrawing(this);
             IBDNode node = BDFabrik.CreateChildNode(e.DataContext, CurrentNode, e.NodeType, e.LayoutVariant);
             addChildNodeControl(node, childNodeControlList.Count);
+            ControlHelper.ResumeDrawing(this);
         }
 
         void childNodeControl_ReorderToPrevious(object sender, NodeEventArgs e)
@@ -438,6 +440,7 @@ namespace BDEditor.Views
 
         private void removeChildNodeControl(IBDControl pChildNodeControl, bool pDeleteRecord)
         {
+            ControlHelper.SuspendDrawing(this);
             this.Controls.Remove(((System.Windows.Forms.UserControl)pChildNodeControl));
 
             pChildNodeControl.NameChanged -= new EventHandler<NodeEventArgs>(childNodeControl_NameChanged);
@@ -465,6 +468,7 @@ namespace BDEditor.Views
 
             ((System.Windows.Forms.UserControl)pChildNodeControl).Dispose();
             pChildNodeControl = null;
+            ControlHelper.ResumeDrawing(this);
         }
 
 
@@ -480,6 +484,7 @@ namespace BDEditor.Views
 
         private void reorderChildNodeControl(IBDControl pChildNodeControl, int pOffset)
         {
+            ControlHelper.SuspendDrawing(this);
             int currentPosition = childNodeControlList.FindIndex(t => t == pChildNodeControl);
             if (currentPosition >= 0)
             {
@@ -505,6 +510,7 @@ namespace BDEditor.Views
                     pnlDetail.Controls.SetChildIndex(((System.Windows.Forms.UserControl)pChildNodeControl), zOrder);
                 }
             }
+            ControlHelper.ResumeDrawing(this);
         }
 
         private void bdLinkedNoteControl_SaveAttemptWithoutParent(object sender, EventArgs e)

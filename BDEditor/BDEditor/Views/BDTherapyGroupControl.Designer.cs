@@ -405,9 +405,10 @@
             this.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.Controls.Add(this.panelTherapies);
             this.Controls.Add(this.panelHeader);
+            this.DoubleBuffered = true;
             this.MinimumSize = new System.Drawing.Size(860, 100);
             this.Name = "BDTherapyGroupControl";
-            this.Size = new System.Drawing.Size(856, 111);
+            this.Size = new System.Drawing.Size(856, 96);
             this.Leave += new System.EventHandler(this.BDTherapyGroupControl_Leave);
             this.contextMenuStrip1.ResumeLayout(false);
             this.panelHeader.ResumeLayout(false);

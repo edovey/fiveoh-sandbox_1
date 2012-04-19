@@ -192,7 +192,7 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
-            this.SuspendLayout();
+            ControlHelper.SuspendDrawing(this);
 
             if (null == currentPresentation)
             {
@@ -235,7 +235,7 @@ namespace BDEditor.Views
             bdLinkedNoteControl1.RefreshLayout();
 
             ShowLinksInUse(false);
-            this.ResumeLayout();
+            ControlHelper.ResumeDrawing(this);
         }
 
 

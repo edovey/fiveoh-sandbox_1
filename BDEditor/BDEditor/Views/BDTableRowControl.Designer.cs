@@ -133,6 +133,7 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.Controls.Add(this.pnlButton);
             this.Controls.Add(this.pnlControls);
+            this.DoubleBuffered = true;
             this.Name = "BDTableRowControl";
             this.Size = new System.Drawing.Size(811, 58);
             this.Load += new System.EventHandler(this.BDTableRowControl_Load);

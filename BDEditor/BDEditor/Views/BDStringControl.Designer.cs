@@ -194,6 +194,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.rtbValue);
             this.Controls.Add(this.btnLinkedNote);
+            this.DoubleBuffered = true;
             this.Name = "BDStringControl";
             this.Size = new System.Drawing.Size(197, 56);
             this.Leave += new System.EventHandler(this.BDStringControl_Leave);

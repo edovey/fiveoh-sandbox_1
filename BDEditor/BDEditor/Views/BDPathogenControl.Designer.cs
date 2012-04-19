@@ -278,6 +278,7 @@
             this.Controls.Add(this.btnMenu);
             this.Controls.Add(this.btnLink);
             this.Controls.Add(this.tbPathogenName);
+            this.DoubleBuffered = true;
             this.Name = "BDPathogenControl";
             this.Size = new System.Drawing.Size(587, 30);
             this.Leave += new System.EventHandler(this.BDPathogenControl_Leave);

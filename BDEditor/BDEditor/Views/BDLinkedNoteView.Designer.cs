@@ -232,11 +232,14 @@
             // 
             this.bdLinkedNoteControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.bdLinkedNoteControl1.CurrentLinkedNote = null;
+            this.bdLinkedNoteControl1.DefaultNodeType = BDEditor.Classes.BDConstants.BDNodeType.None;
+            this.bdLinkedNoteControl1.DisplayOrder = null;
             this.bdLinkedNoteControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.bdLinkedNoteControl1.Location = new System.Drawing.Point(0, 53);
             this.bdLinkedNoteControl1.Name = "bdLinkedNoteControl1";
             this.bdLinkedNoteControl1.Padding = new System.Windows.Forms.Padding(3);
             this.bdLinkedNoteControl1.SaveOnLeave = false;
+            this.bdLinkedNoteControl1.ShowAsChild = false;
             this.bdLinkedNoteControl1.Size = new System.Drawing.Size(810, 256);
             this.bdLinkedNoteControl1.TabIndex = 1;
             // 
@@ -248,6 +251,7 @@
             this.Controls.Add(this.bdLinkedNoteControl1);
             this.Controls.Add(this.headerPanel);
             this.Controls.Add(this.panel1);
+            this.DoubleBuffered = true;
             this.Name = "BDLinkedNoteView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Linked Note Editor";

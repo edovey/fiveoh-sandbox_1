@@ -179,7 +179,7 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
-            this.SuspendLayout();
+            ControlHelper.SuspendDrawing(this);
 
             for (int idx = 0; idx < pathogenControlList.Count; idx++)
             {
@@ -225,7 +225,7 @@ namespace BDEditor.Views
 
             ShowLinksInUse(false);
 
-            this.ResumeLayout();
+            ControlHelper.ResumeDrawing(this);
         }
 
         #endregion    

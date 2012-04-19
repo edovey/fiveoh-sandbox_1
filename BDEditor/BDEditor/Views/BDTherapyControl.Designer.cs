@@ -65,6 +65,8 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.chkPreviousDuration1 = new System.Windows.Forms.CheckBox();
             this.chkPreviousDose1 = new System.Windows.Forms.CheckBox();
+            this.chkPreviousDuration2 = new System.Windows.Forms.CheckBox();
+            this.chkPreviousDose2 = new System.Windows.Forms.CheckBox();
             this.btnDuration1Link = new System.Windows.Forms.Button();
             this.btnDosage1Link = new System.Windows.Forms.Button();
             this.tbDuration1 = new System.Windows.Forms.TextBox();
@@ -72,11 +74,9 @@
             this.pnlRadioButtons = new System.Windows.Forms.Panel();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.btnDuration2Link = new System.Windows.Forms.Button();
-            this.tbDuration2 = new System.Windows.Forms.TextBox();
-            this.chkPreviousDuration2 = new System.Windows.Forms.CheckBox();
             this.btnDosage2Link = new System.Windows.Forms.Button();
+            this.tbDuration2 = new System.Windows.Forms.TextBox();
             this.tbDosage2 = new System.Windows.Forms.TextBox();
-            this.chkPreviousDose2 = new System.Windows.Forms.CheckBox();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
             this.pnlRadioButtons.SuspendLayout();
@@ -417,6 +417,28 @@
             this.chkPreviousDose1.UseVisualStyleBackColor = true;
             this.chkPreviousDose1.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
             // 
+            // chkPreviousDuration2
+            // 
+            this.chkPreviousDuration2.AutoSize = true;
+            this.chkPreviousDuration2.Location = new System.Drawing.Point(587, 74);
+            this.chkPreviousDuration2.Name = "chkPreviousDuration2";
+            this.chkPreviousDuration2.Size = new System.Drawing.Size(15, 14);
+            this.chkPreviousDuration2.TabIndex = 26;
+            this.toolTip1.SetToolTip(this.chkPreviousDuration2, "Same as previous");
+            this.chkPreviousDuration2.UseVisualStyleBackColor = true;
+            this.chkPreviousDuration2.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // chkPreviousDose2
+            // 
+            this.chkPreviousDose2.AutoSize = true;
+            this.chkPreviousDose2.Location = new System.Drawing.Point(310, 74);
+            this.chkPreviousDose2.Name = "chkPreviousDose2";
+            this.chkPreviousDose2.Size = new System.Drawing.Size(15, 14);
+            this.chkPreviousDose2.TabIndex = 23;
+            this.toolTip1.SetToolTip(this.chkPreviousDose2, "Same as previous");
+            this.chkPreviousDose2.UseVisualStyleBackColor = true;
+            this.chkPreviousDose2.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
             // btnDuration1Link
             // 
             this.btnDuration1Link.Enabled = false;
@@ -522,28 +544,6 @@
             this.btnDuration2Link.UseVisualStyleBackColor = true;
             this.btnDuration2Link.Click += new System.EventHandler(this.btnLink_Click);
             // 
-            // tbDuration2
-            // 
-            this.tbDuration2.ContextMenuStrip = this.contextMenuStrip1;
-            this.tbDuration2.Location = new System.Drawing.Point(605, 70);
-            this.tbDuration2.Name = "tbDuration2";
-            this.tbDuration2.Size = new System.Drawing.Size(174, 20);
-            this.tbDuration2.TabIndex = 27;
-            this.tbDuration2.Tag = "";
-            this.tbDuration2.TextChanged += new System.EventHandler(this.textBox_TextChanged);
-            this.tbDuration2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDuration2_MouseDown);
-            // 
-            // chkPreviousDuration2
-            // 
-            this.chkPreviousDuration2.AutoSize = true;
-            this.chkPreviousDuration2.Location = new System.Drawing.Point(587, 74);
-            this.chkPreviousDuration2.Name = "chkPreviousDuration2";
-            this.chkPreviousDuration2.Size = new System.Drawing.Size(15, 14);
-            this.chkPreviousDuration2.TabIndex = 26;
-            this.toolTip1.SetToolTip(this.chkPreviousDuration2, "Same as previous");
-            this.chkPreviousDuration2.UseVisualStyleBackColor = true;
-            this.chkPreviousDuration2.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
-            // 
             // btnDosage2Link
             // 
             this.btnDosage2Link.Enabled = false;
@@ -554,6 +554,17 @@
             this.btnDosage2Link.TabIndex = 25;
             this.btnDosage2Link.UseVisualStyleBackColor = true;
             this.btnDosage2Link.Click += new System.EventHandler(this.btnLink_Click);
+            // 
+            // tbDuration2
+            // 
+            this.tbDuration2.ContextMenuStrip = this.contextMenuStrip1;
+            this.tbDuration2.Location = new System.Drawing.Point(605, 70);
+            this.tbDuration2.Name = "tbDuration2";
+            this.tbDuration2.Size = new System.Drawing.Size(174, 20);
+            this.tbDuration2.TabIndex = 27;
+            this.tbDuration2.Tag = "";
+            this.tbDuration2.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.tbDuration2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDuration2_MouseDown);
             // 
             // tbDosage2
             // 
@@ -566,17 +577,6 @@
             this.tbDosage2.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             this.tbDosage2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDosage2_MouseDown);
             // 
-            // chkPreviousDose2
-            // 
-            this.chkPreviousDose2.AutoSize = true;
-            this.chkPreviousDose2.Location = new System.Drawing.Point(310, 74);
-            this.chkPreviousDose2.Name = "chkPreviousDose2";
-            this.chkPreviousDose2.Size = new System.Drawing.Size(15, 14);
-            this.chkPreviousDose2.TabIndex = 23;
-            this.toolTip1.SetToolTip(this.chkPreviousDose2, "Same as previous");
-            this.chkPreviousDose2.UseVisualStyleBackColor = true;
-            this.chkPreviousDose2.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
-            // 
             // BDTherapyControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -586,6 +586,7 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.pnlRadioButtons);
+            this.DoubleBuffered = true;
             this.MinimumSize = new System.Drawing.Size(872, 50);
             this.Name = "BDTherapyControl";
             this.Padding = new System.Windows.Forms.Padding(3);

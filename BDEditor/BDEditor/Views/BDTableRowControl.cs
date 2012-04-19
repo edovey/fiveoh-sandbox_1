@@ -94,13 +94,13 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
-            this.SuspendLayout();
+            ControlHelper.SuspendDrawing(this);
 
             pnlControls.Controls.Clear();
             addTableRowControls();
 
             ShowLinksInUse(false);
-            this.ResumeLayout();
+            ControlHelper.ResumeDrawing(this);
         }
 
         private void addTableRowControls()

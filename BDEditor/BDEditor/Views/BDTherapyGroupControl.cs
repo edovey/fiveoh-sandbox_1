@@ -79,7 +79,7 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
-            this.SuspendLayout();
+            ControlHelper.SuspendDrawing(this);
 
             // This is generic for Constants.LayoutVariantType.TreatmentRecommendation01
 
@@ -126,7 +126,7 @@ namespace BDEditor.Views
 
             ShowLinksInUse(false);
 
-            this.ResumeLayout();
+            ControlHelper.ResumeDrawing(this);
         }
 
         public void AssignScopeId(Guid? pScopeId)

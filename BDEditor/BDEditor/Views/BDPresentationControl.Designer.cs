@@ -280,11 +280,14 @@
             // 
             this.bdLinkedNoteControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.bdLinkedNoteControl1.CurrentLinkedNote = null;
+            this.bdLinkedNoteControl1.DefaultNodeType = BDEditor.Classes.BDConstants.BDNodeType.None;
+            this.bdLinkedNoteControl1.DisplayOrder = null;
             this.bdLinkedNoteControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.bdLinkedNoteControl1.Location = new System.Drawing.Point(0, 78);
             this.bdLinkedNoteControl1.Name = "bdLinkedNoteControl1";
             this.bdLinkedNoteControl1.Padding = new System.Windows.Forms.Padding(3);
             this.bdLinkedNoteControl1.SaveOnLeave = true;
+            this.bdLinkedNoteControl1.ShowAsChild = false;
             this.bdLinkedNoteControl1.Size = new System.Drawing.Size(880, 221);
             this.bdLinkedNoteControl1.TabIndex = 6;
             // 
@@ -298,9 +301,10 @@
             this.Controls.Add(this.panelPathogenGroups);
             this.Controls.Add(this.bdLinkedNoteControl1);
             this.Controls.Add(this.panelHeader);
+            this.DoubleBuffered = true;
             this.MinimumSize = new System.Drawing.Size(880, 325);
             this.Name = "BDPresentationControl";
-            this.Size = new System.Drawing.Size(880, 338);
+            this.Size = new System.Drawing.Size(880, 325);
             this.Load += new System.EventHandler(this.BDPresentationControl_Load);
             this.Leave += new System.EventHandler(this.BDPresentationControl_Leave);
             this.contextMenuStripTextBox.ResumeLayout(false);

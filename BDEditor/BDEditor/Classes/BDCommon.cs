@@ -15,6 +15,7 @@ namespace BDEditor.Classes
 
         private Boolean isSyncLoad = false;
         private Boolean syncPushEnabled = false;
+        private int suspendDrawingCounter = 0;
 
         private BDCommon() { }
 
@@ -60,6 +61,12 @@ namespace BDEditor.Classes
         public Boolean SyncPushEnabled
         {
             get { return syncPushEnabled; }
+        }
+
+        public int SuspendDrawingCounter
+        {
+            get { return suspendDrawingCounter; }
+            set { suspendDrawingCounter = value; }
         }
     }
 }

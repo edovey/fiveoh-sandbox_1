@@ -19,13 +19,17 @@ namespace BDEditor.Classes
 
         public static void SuspendDrawing(this Control target)
         {
-            SendMessage(target.Handle, WM_SETREDRAW, 0, 0);
+            if(BDCommon.Settings.SuspendDrawingCounter == 0)
+                SendMessage(target.Handle, WM_SETREDRAW, 0, 0);
+            BDCommon.Settings.SuspendDrawingCounter++;
         }
 
         public static void ResumeDrawing(this Control target) { ResumeDrawing(target, true); }
         public static void ResumeDrawing(this Control target, bool redraw)
         {
-            SendMessage(target.Handle, WM_SETREDRAW, 1, 0);
+            BDCommon.Settings.SuspendDrawingCounter--;
+            if(BDCommon.Settings.SuspendDrawingCounter == 0)
+                SendMessage(target.Handle, WM_SETREDRAW, 1, 0);
 
             if (redraw)
             {

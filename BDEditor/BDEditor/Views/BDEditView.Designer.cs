@@ -125,7 +125,6 @@
             this.lbLastSyncDateTime.Size = new System.Drawing.Size(83, 13);
             this.lbLastSyncDateTime.TabIndex = 3;
             this.lbLastSyncDateTime.Text = "<Never Sync\'d>";
-            this.lbLastSyncDateTime.Click += new System.EventHandler(this.lbLastSyncDateTime_Click);
             // 
             // btnSync
             // 

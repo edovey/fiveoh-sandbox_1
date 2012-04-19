@@ -631,11 +631,6 @@ namespace BDEditor.Views
             save();
         }
 
-        private void lbLastSyncDateTime_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void BDEditView_FormClosing(object sender, FormClosingEventArgs e)
         {
             save();

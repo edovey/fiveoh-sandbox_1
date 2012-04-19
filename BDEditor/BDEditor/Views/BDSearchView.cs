@@ -39,6 +39,7 @@ namespace BDEditor.Views
 
         private void srch()
         {
+            this.SuspendLayout();
             nodeList.Clear();
             linkedNoteList.Clear();
             dataGridView1.Columns.Clear();
@@ -105,6 +106,7 @@ namespace BDEditor.Views
             }
 
             dataGridView1.Refresh();
+            this.ResumeLayout();
         }
 
         private void button1_Click(object sender, EventArgs e)

@@ -112,6 +112,7 @@ namespace BDEditor.Views
 
         protected virtual void OnNotesChanged(NodeEventArgs e)
         {
+            this.SuspendLayout();
             if (this.linkValue.Length > 0 && this.linkView.HasNewLink)
             {
                 // if this was called as a result of clicking the button (as opposed to clicking an existing link) insert new hypertextlink
@@ -159,6 +160,7 @@ namespace BDEditor.Views
 
             EventHandler<NodeEventArgs> handler = NotesChanged;
             if (null != handler) { handler(this, e); }
+            this.ResumeLayout();
         }
 
         private void BDLinkedNoteControl_Load(object sender, EventArgs e)
@@ -260,6 +262,7 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
+            this.SuspendLayout();
             if (textControl.Visible)
             {
                 textControl.Text = @"";
@@ -276,6 +279,7 @@ namespace BDEditor.Views
                     textControl.Append(@"", TXTextControl.StringStreamType.HTMLFormat, TXTextControl.AppendSettings.None);
                 }
             }
+            this.ResumeLayout();
         }
 
         #endregion
@@ -600,12 +604,12 @@ namespace BDEditor.Views
             get
             {
                 // on purpose: should never be trying to get the node of a linked note.
-                throw new NotImplementedException();
+                throw new NotSupportedException();
             }
             set
             {
                 // on purpose
-                throw new NotImplementedException();
+                throw new NotSupportedException();
             }
         }
 

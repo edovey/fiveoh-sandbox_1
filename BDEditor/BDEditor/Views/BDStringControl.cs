@@ -177,6 +177,7 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
+            this.SuspendLayout();
             if (currentString == null)
                 rtbValue.Text = string.Empty;
             else
@@ -186,6 +187,7 @@ namespace BDEditor.Views
                 DisplayOrder = currentString.displayOrder;
             }
             ShowLinksInUse(false);
+            this.ResumeLayout();
         }
 
         public BDConstants.BDNodeType DefaultNodeType

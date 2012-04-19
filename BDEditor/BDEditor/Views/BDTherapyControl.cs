@@ -25,10 +25,13 @@ namespace BDEditor.Views
 
         private const string NAME_TEXTBOX = "Name";
         private const string DOSAGE_TEXTBOX = "Dosage";
+        private const string DOSAGE_1_TEXTBOX = "Dosage1";
+        private const string DOSAGE_2_TEXTBOX = "Dosage2";
         private const string DURATION_TEXTBOX = "Duration";
+        private const string DURATION_1_TEXTBOX = "Duration1";
+        private const string DURATION_2_TEXTBOX = "Duration2";
 
         public int? DisplayOrder { get; set; }
-        public BDConstants.LayoutVariantType DefaultLayoutVariantType;
 
         public event EventHandler<NodeEventArgs> RequestItemAdd;
         public event EventHandler<NodeEventArgs> RequestItemDelete;
@@ -252,6 +255,15 @@ namespace BDEditor.Views
                     if (currentTherapy.duration != tbDuration.Text) currentTherapy.duration = tbDuration.Text;
                     if (currentTherapy.displayOrder != DisplayOrder) currentTherapy.displayOrder = DisplayOrder;
 
+                    if (this.Controls.Contains(tbDosage1) && currentTherapy.dosage1 != tbDosage1.Text)
+                        currentTherapy.dosage1 = tbDosage1.Text;
+                    if (this.Controls.Contains(tbDosage2) && currentTherapy.dosage2 != tbDosage2.Text)
+                        currentTherapy.dosage2 = tbDosage2.Text;
+                    if (this.Controls.Contains(tbDuration1) && currentTherapy.duration1 != tbDuration1.Text)
+                        currentTherapy.duration1 = tbDuration1.Text;
+                    if (this.Controls.Contains(tbDuration2) && currentTherapy.duration2 != tbDuration2.Text)
+                        currentTherapy.duration2 = tbDuration2.Text;
+
                     if (andRadioButton.Checked)
                     {
                         if (currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.AndWithNext)
@@ -285,6 +297,15 @@ namespace BDEditor.Views
                     if (currentTherapy.dosageSameAsPrevious != this.chkPreviousDose.Checked) currentTherapy.dosageSameAsPrevious = this.chkPreviousDose.Checked;
                     if (currentTherapy.durationSameAsPrevious != this.chkPreviousDuration.Checked) currentTherapy.durationSameAsPrevious = this.chkPreviousDuration.Checked;
 
+                    if (this.Controls.Contains(chkPreviousDose1) && currentTherapy.dosage1SameAsPrevious != chkPreviousDose1.Checked)
+                        currentTherapy.dosage1SameAsPrevious = this.chkPreviousDose1.Checked;
+                    if (this.Controls.Contains(chkPreviousDose2) && currentTherapy.dosage2SameAsPrevious != chkPreviousDose2.Checked)
+                        currentTherapy.dosage2SameAsPrevious = this.chkPreviousDose2.Checked;
+                    if (this.Controls.Contains(chkPreviousDuration1) && currentTherapy.duration1SameAsPrevious != chkPreviousDuration1.Checked)
+                        currentTherapy.duration1SameAsPrevious = chkPreviousDuration1.Checked;
+                    if (this.Controls.Contains(chkPreviousDuration2) && currentTherapy.duration2SameAsPrevious != chkPreviousDuration2.Checked)
+                        currentTherapy.duration2SameAsPrevious = chkPreviousDuration2.Checked;
+
                     BDTherapy.Save(dataContext, currentTherapy);
                     result = true;
 
@@ -294,6 +315,14 @@ namespace BDEditor.Views
                        Typeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, currentTherapy.dosage);
                     if(currentTherapy.duration.Length > 0)
                         Typeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DURATION, currentTherapy.duration);
+                    if (currentTherapy.dosage1.Length > 0)
+                        Typeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, currentTherapy.dosage1);
+                    if (currentTherapy.dosage2.Length > 0)
+                        Typeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, currentTherapy.dosage2);
+                    if (currentTherapy.duration1.Length > 0)
+                        Typeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DURATION, currentTherapy.duration1);
+                    if (currentTherapy.duration2.Length > 0)
+                        Typeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DURATION, currentTherapy.duration2);
 
                 }
             }
@@ -333,20 +362,59 @@ namespace BDEditor.Views
             }
         }
 
-        private void insertTextFromMenu(TextBox textbox, string textToInsert, int selectionStart)
+        private void insertTextFromMenu(string textToInsert)
         {
-            textbox.Text = textbox.Text.Insert(selectionStart, textToInsert);
-            textbox.SelectionStart = selectionStart + 1;
+            if (currentControlName == NAME_TEXTBOX)
+            {
+                tbName.Text = tbName.Text.Insert(tbName.SelectionStart, textToInsert);
+                tbName.SelectionStart += textToInsert.Length;
+            }
+            else if (currentControlName == DOSAGE_TEXTBOX)
+            {
+                tbDosage.Text = tbName.Text.Insert(tbName.SelectionStart, textToInsert);
+                tbDosage.SelectionStart += textToInsert.Length;
+            }
+            else if (currentControlName == DURATION_TEXTBOX)
+            {
+                tbDuration.Text = tbName.Text.Insert(tbName.SelectionStart, textToInsert);
+                tbDuration.SelectionStart += textToInsert.Length;
+            }
+            else if (currentControlName == DOSAGE_1_TEXTBOX)
+            {
+                tbDosage1.Text = tbName.Text.Insert(tbName.SelectionStart, textToInsert);
+                tbDosage1.SelectionStart += textToInsert.Length;
+            }
+            else if (currentControlName == DOSAGE_2_TEXTBOX)
+            {
+                tbDosage2.Text = tbName.Text.Insert(tbName.SelectionStart, textToInsert);
+                tbDosage2.SelectionStart += textToInsert.Length;
+            }
+            else if (currentControlName == DURATION_1_TEXTBOX)
+            {
+                tbDuration1.Text = tbName.Text.Insert(tbName.SelectionStart, textToInsert);
+                tbDuration1.SelectionStart += textToInsert.Length;
+            }
+            else if (currentControlName == DURATION_2_TEXTBOX)
+            {
+                tbDuration2.Text = tbName.Text.Insert(tbName.SelectionStart, textToInsert);
+                tbDuration2.SelectionStart += textToInsert.Length;
+            }
         }
 
         private void toggleLinkButtonEnablement()
         {
             bool enabled = ((chkPreviousDose.Checked || chkPreviousDuration.Checked || chkPreviousName.Checked) ||
-                ((tbDosage.Text.Length > 0) || (tbDuration.Text.Length > 0) || (tbName.Text.Length > 0)));
+                chkPreviousDose1.Checked || chkPreviousDose2.Checked || chkPreviousDuration1.Checked || chkPreviousDuration2.Checked ||
+                ((tbDosage.Text.Length > 0) || (tbDuration.Text.Length > 0) || (tbName.Text.Length > 0) ||
+                (tbDosage1.Text.Length > 0) || (tbDosage2.Text.Length > 0) || (tbDuration1.Text.Length > 0) || (tbDuration2.Text.Length > 0) ));
 
             btnTherapyLink.Enabled = enabled;
             btnDosageLink.Enabled = enabled;
             btnDurationLink.Enabled = enabled;
+            btnDosage1Link.Enabled = enabled;
+            btnDosage2Link.Enabled = enabled;
+            btnDuration1Link.Enabled = enabled;
+            btnDuration2Link.Enabled = enabled;
         }
 
         private void textBox_TextChanged(object sender, EventArgs e)
@@ -389,82 +457,44 @@ namespace BDEditor.Views
         private void bToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string newText = "ß";
-            if (currentControlName == NAME_TEXTBOX)
-                insertTextFromMenu(tbName, newText, tbName.SelectionStart);
-            else if (currentControlName == DOSAGE_TEXTBOX)
-                insertTextFromMenu(tbDosage, newText, tbDosage.SelectionStart);
-            else if (currentControlName == DURATION_TEXTBOX)
-                insertTextFromMenu(tbDuration, newText, tbDuration.SelectionStart);
+            insertTextFromMenu(newText);
         }
 
         private void degreeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string newText = "°";
-            if (currentControlName == NAME_TEXTBOX)
-                insertTextFromMenu(tbName, newText, tbName.SelectionStart);
-            else if (currentControlName == DOSAGE_TEXTBOX)
-                insertTextFromMenu(tbDosage, newText, tbDosage.SelectionStart);
-            else if (currentControlName == DURATION_TEXTBOX)
-                insertTextFromMenu(tbDuration, newText, tbDuration.SelectionStart);
+            insertTextFromMenu(newText);
         }
 
         private void µToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string newText = "µ";
 
-            if (currentControlName == NAME_TEXTBOX)
-                insertTextFromMenu(tbName, newText, tbName.SelectionStart);
-            else if (currentControlName == DOSAGE_TEXTBOX)
-                insertTextFromMenu(tbDosage, newText, tbDosage.SelectionStart);
-            else if (currentControlName == DURATION_TEXTBOX)
-                insertTextFromMenu(tbDuration, newText, tbDuration.SelectionStart);
+            insertTextFromMenu(newText);
         }
 
         private void geToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string newText = "≥";
-
-            if (currentControlName == NAME_TEXTBOX)
-                insertTextFromMenu(tbName, newText, tbName.SelectionStart);
-            else if (currentControlName == DOSAGE_TEXTBOX)
-                insertTextFromMenu(tbDosage, newText, tbDosage.SelectionStart);
-            else if (currentControlName == DURATION_TEXTBOX)
-                insertTextFromMenu(tbDuration, newText, tbDuration.SelectionStart);
+            insertTextFromMenu(newText);
         }
 
         private void leToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string newText = "≤";
-
-            if (currentControlName == NAME_TEXTBOX)
-                insertTextFromMenu(tbName, newText, tbName.SelectionStart);
-            else if (currentControlName == DOSAGE_TEXTBOX)
-                insertTextFromMenu(tbDosage, newText, tbDosage.SelectionStart);
-            else if (currentControlName == DURATION_TEXTBOX)
-                insertTextFromMenu(tbDuration, newText, tbDuration.SelectionStart);
+            insertTextFromMenu(newText);
         }
 
         private void plusMinusToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string newText = "±";
-
-            if (currentControlName == NAME_TEXTBOX)
-                insertTextFromMenu(tbName, newText, tbName.SelectionStart);
-            else if (currentControlName == DOSAGE_TEXTBOX)
-                insertTextFromMenu(tbDosage, newText, tbDosage.SelectionStart);
-            else if (currentControlName == DURATION_TEXTBOX)
-                insertTextFromMenu(tbDuration, newText, tbDuration.SelectionStart);
+            insertTextFromMenu(newText);
         }
 
         private void sOneToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string newText =  "¹";
-            if (currentControlName == NAME_TEXTBOX)
-                insertTextFromMenu(tbName, newText, tbName.SelectionStart);
-            else if (currentControlName == DOSAGE_TEXTBOX)
-                insertTextFromMenu(tbDosage, newText, tbDosage.SelectionStart);
-            else if (currentControlName == DURATION_TEXTBOX)
-                insertTextFromMenu(tbDuration, newText, tbDuration.SelectionStart);
+            insertTextFromMenu(newText);
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -517,11 +547,28 @@ namespace BDEditor.Views
             currentControlName = DURATION_TEXTBOX;
         }
 
+        private void tbDosage1_MouseDown(object sender, MouseEventArgs e)
+        {
+            currentControlName = DOSAGE_1_TEXTBOX;
+        }
 
+        private void tbDosage2_MouseDown(object sender, MouseEventArgs e)
+        {
+            currentControlName = DOSAGE_2_TEXTBOX;
+        }
 
+        private void tbDuration1_MouseDown(object sender, MouseEventArgs e)
+        {
+            currentControlName = DURATION_1_TEXTBOX;
+        }
+
+        private void tbDuration2_MouseDown(object sender, MouseEventArgs e)
+        {
+            currentControlName = DURATION_2_TEXTBOX; 
+        }
         public BDConstants.BDNodeType DefaultNodeType { get; set; }
 
-        BDConstants.LayoutVariantType IBDControl.DefaultLayoutVariantType { get; set; }
+        public BDConstants.LayoutVariantType DefaultLayoutVariantType { get; set; }
 
         public IBDNode CurrentNode
         {
@@ -536,5 +583,60 @@ namespace BDEditor.Views
         }
 
         public bool ShowAsChild { get; set; }
+
+        private void BDTherapyControl_Load(object sender, EventArgs e)
+        {
+            switch (DefaultLayoutVariantType)
+            {
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
+                    // remove dosage1, dosage2, duration1, duration2
+                    this.Controls.Remove(tbDosage1);
+                    this.Controls.Remove(chkPreviousDose1);
+                    this.Controls.Remove(btnDosage1Link);
+                    this.Controls.Remove(tbDosage2);
+                    this.Controls.Remove(chkPreviousDose2);
+                    this.Controls.Remove(btnDosage2Link);
+                    this.Controls.Remove(tbDuration1);
+                    this.Controls.Remove(chkPreviousDuration1);
+                    this.Controls.Remove(btnDuration1Link);
+                    this.Controls.Remove(tbDuration2);
+                    this.Controls.Remove(chkPreviousDuration2);
+                    this.Controls.Remove(btnDuration2Link);
+                    break;
+                case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
+                    // remove dosage2, duration1, duration2
+                    this.Controls.Remove(tbDosage2);
+                    this.Controls.Remove(chkPreviousDose2);
+                    this.Controls.Remove(btnDosage2Link);
+                    this.Controls.Remove(tbDuration1);
+                    this.Controls.Remove(chkPreviousDuration1);
+                    this.Controls.Remove(btnDuration1Link);
+                    this.Controls.Remove(chkPreviousDuration2);
+                    this.Controls.Remove(btnDuration2Link);
+                    this.Controls.Remove(tbDuration2);
+                    break;
+                case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                    // remove dosage1, dosage2, duration2
+                    this.Controls.Remove(tbDosage1);
+                    this.Controls.Remove(chkPreviousDose1);
+                    this.Controls.Remove(btnDosage1Link);
+                    this.Controls.Remove(tbDosage2);
+                    this.Controls.Remove(chkPreviousDose2);
+                    this.Controls.Remove(btnDosage2Link);
+                    this.Controls.Remove(tbDuration2);
+                    this.Controls.Remove(chkPreviousDuration2);
+                    this.Controls.Remove(btnDuration2Link);
+                    break;
+                case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II:
+                default:
+                    // no changes - this control is not displayed
+                    break;
+            }
+        }
+
     }
 }

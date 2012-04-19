@@ -38,6 +38,7 @@
             this.plusMinusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.degreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.µToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sOneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tbDosage = new System.Windows.Forms.TextBox();
             this.tbDuration = new System.Windows.Forms.TextBox();
             this.noneRadioButton = new System.Windows.Forms.RadioButton();
@@ -62,7 +63,18 @@
             this.chkPreviousDose = new System.Windows.Forms.CheckBox();
             this.chkPreviousDuration = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.sOneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chkPreviousDuration1 = new System.Windows.Forms.CheckBox();
+            this.chkPreviousDose1 = new System.Windows.Forms.CheckBox();
+            this.chkPreviousDuration2 = new System.Windows.Forms.CheckBox();
+            this.chkPreviousDose2 = new System.Windows.Forms.CheckBox();
+            this.btnDuration1Link = new System.Windows.Forms.Button();
+            this.btnDosage1Link = new System.Windows.Forms.Button();
+            this.tbDuration1 = new System.Windows.Forms.TextBox();
+            this.tbDosage1 = new System.Windows.Forms.TextBox();
+            this.btnDuration2Link = new System.Windows.Forms.Button();
+            this.btnDosage2Link = new System.Windows.Forms.Button();
+            this.tbDuration2 = new System.Windows.Forms.TextBox();
+            this.tbDosage2 = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
             this.SuspendLayout();
@@ -90,13 +102,13 @@
             this.sOneToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.ShowImageMargin = false;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(128, 180);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(58, 158);
             this.contextMenuStrip1.Text = "Insert Symbol";
             // 
             // bToolStripMenuItem
             // 
             this.bToolStripMenuItem.Name = "bToolStripMenuItem";
-            this.bToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.bToolStripMenuItem.Size = new System.Drawing.Size(57, 22);
             this.bToolStripMenuItem.Text = "ß";
             this.bToolStripMenuItem.ToolTipText = "Insert ß";
             this.bToolStripMenuItem.Click += new System.EventHandler(this.bToolStripMenuItem_Click);
@@ -104,7 +116,7 @@
             // geToolStripMenuItem
             // 
             this.geToolStripMenuItem.Name = "geToolStripMenuItem";
-            this.geToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.geToolStripMenuItem.Size = new System.Drawing.Size(57, 22);
             this.geToolStripMenuItem.Text = "≥";
             this.geToolStripMenuItem.ToolTipText = "Insert ≥";
             this.geToolStripMenuItem.Click += new System.EventHandler(this.geToolStripMenuItem_Click);
@@ -112,7 +124,7 @@
             // leToolStripMenuItem
             // 
             this.leToolStripMenuItem.Name = "leToolStripMenuItem";
-            this.leToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.leToolStripMenuItem.Size = new System.Drawing.Size(57, 22);
             this.leToolStripMenuItem.Text = "≤";
             this.leToolStripMenuItem.ToolTipText = "Insert ≤";
             this.leToolStripMenuItem.Click += new System.EventHandler(this.leToolStripMenuItem_Click);
@@ -120,7 +132,7 @@
             // plusMinusToolStripMenuItem
             // 
             this.plusMinusToolStripMenuItem.Name = "plusMinusToolStripMenuItem";
-            this.plusMinusToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.plusMinusToolStripMenuItem.Size = new System.Drawing.Size(57, 22);
             this.plusMinusToolStripMenuItem.Text = "±";
             this.plusMinusToolStripMenuItem.ToolTipText = "Insert ±";
             this.plusMinusToolStripMenuItem.Click += new System.EventHandler(this.plusMinusToolStripMenuItem_Click);
@@ -128,7 +140,7 @@
             // degreeToolStripMenuItem
             // 
             this.degreeToolStripMenuItem.Name = "degreeToolStripMenuItem";
-            this.degreeToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.degreeToolStripMenuItem.Size = new System.Drawing.Size(57, 22);
             this.degreeToolStripMenuItem.Text = "°";
             this.degreeToolStripMenuItem.ToolTipText = "Insert °";
             this.degreeToolStripMenuItem.Click += new System.EventHandler(this.degreeToolStripMenuItem_Click);
@@ -136,9 +148,17 @@
             // µToolStripMenuItem
             // 
             this.µToolStripMenuItem.Name = "µToolStripMenuItem";
-            this.µToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.µToolStripMenuItem.Size = new System.Drawing.Size(57, 22);
             this.µToolStripMenuItem.Text = "µ";
             this.µToolStripMenuItem.Click += new System.EventHandler(this.µToolStripMenuItem_Click);
+            // 
+            // sOneToolStripMenuItem
+            // 
+            this.sOneToolStripMenuItem.Name = "sOneToolStripMenuItem";
+            this.sOneToolStripMenuItem.Size = new System.Drawing.Size(57, 22);
+            this.sOneToolStripMenuItem.Text = "¹";
+            this.sOneToolStripMenuItem.ToolTipText = "Insert ¹";
+            this.sOneToolStripMenuItem.Click += new System.EventHandler(this.sOneToolStripMenuItem_Click);
             // 
             // tbDosage
             // 
@@ -165,7 +185,7 @@
             // noneRadioButton
             // 
             this.noneRadioButton.AutoSize = true;
-            this.noneRadioButton.Location = new System.Drawing.Point(30, 30);
+            this.noneRadioButton.Location = new System.Drawing.Point(30, 98);
             this.noneRadioButton.Name = "noneRadioButton";
             this.noneRadioButton.Size = new System.Drawing.Size(89, 17);
             this.noneRadioButton.TabIndex = 9;
@@ -176,7 +196,7 @@
             // andRadioButton
             // 
             this.andRadioButton.AutoSize = true;
-            this.andRadioButton.Location = new System.Drawing.Point(125, 30);
+            this.andRadioButton.Location = new System.Drawing.Point(125, 98);
             this.andRadioButton.Name = "andRadioButton";
             this.andRadioButton.Size = new System.Drawing.Size(95, 17);
             this.andRadioButton.TabIndex = 10;
@@ -187,7 +207,7 @@
             // orRadioButton
             // 
             this.orRadioButton.AutoSize = true;
-            this.orRadioButton.Location = new System.Drawing.Point(226, 30);
+            this.orRadioButton.Location = new System.Drawing.Point(226, 98);
             this.orRadioButton.Name = "orRadioButton";
             this.orRadioButton.Size = new System.Drawing.Size(87, 17);
             this.orRadioButton.TabIndex = 11;
@@ -222,7 +242,7 @@
             // thenRadioButton
             // 
             this.thenRadioButton.AutoSize = true;
-            this.thenRadioButton.Location = new System.Drawing.Point(320, 30);
+            this.thenRadioButton.Location = new System.Drawing.Point(320, 98);
             this.thenRadioButton.Name = "thenRadioButton";
             this.thenRadioButton.Size = new System.Drawing.Size(101, 17);
             this.thenRadioButton.TabIndex = 12;
@@ -330,7 +350,7 @@
             // andOrRadioButton
             // 
             this.andOrRadioButton.AutoSize = true;
-            this.andOrRadioButton.Location = new System.Drawing.Point(428, 30);
+            this.andOrRadioButton.Location = new System.Drawing.Point(428, 98);
             this.andOrRadioButton.Name = "andOrRadioButton";
             this.andOrRadioButton.Size = new System.Drawing.Size(93, 17);
             this.andOrRadioButton.TabIndex = 13;
@@ -371,18 +391,156 @@
             this.chkPreviousDuration.UseVisualStyleBackColor = true;
             this.chkPreviousDuration.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
             // 
-            // sOneToolStripMenuItem
+            // chkPreviousDuration1
             // 
-            this.sOneToolStripMenuItem.Name = "sOneToolStripMenuItem";
-            this.sOneToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
-            this.sOneToolStripMenuItem.Text = "¹";
-            this.sOneToolStripMenuItem.ToolTipText = "Insert ¹";
-            this.sOneToolStripMenuItem.Click += new System.EventHandler(this.sOneToolStripMenuItem_Click);
+            this.chkPreviousDuration1.AutoSize = true;
+            this.chkPreviousDuration1.Location = new System.Drawing.Point(588, 41);
+            this.chkPreviousDuration1.Name = "chkPreviousDuration1";
+            this.chkPreviousDuration1.Size = new System.Drawing.Size(15, 14);
+            this.chkPreviousDuration1.TabIndex = 20;
+            this.toolTip1.SetToolTip(this.chkPreviousDuration1, "Same as previous");
+            this.chkPreviousDuration1.UseVisualStyleBackColor = true;
+            this.chkPreviousDuration1.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // chkPreviousDose1
+            // 
+            this.chkPreviousDose1.AutoSize = true;
+            this.chkPreviousDose1.Location = new System.Drawing.Point(311, 41);
+            this.chkPreviousDose1.Name = "chkPreviousDose1";
+            this.chkPreviousDose1.Size = new System.Drawing.Size(15, 14);
+            this.chkPreviousDose1.TabIndex = 17;
+            this.toolTip1.SetToolTip(this.chkPreviousDose1, "Same as previous");
+            this.chkPreviousDose1.UseVisualStyleBackColor = true;
+            this.chkPreviousDose1.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // chkPreviousDuration2
+            // 
+            this.chkPreviousDuration2.AutoSize = true;
+            this.chkPreviousDuration2.Location = new System.Drawing.Point(588, 75);
+            this.chkPreviousDuration2.Name = "chkPreviousDuration2";
+            this.chkPreviousDuration2.Size = new System.Drawing.Size(15, 14);
+            this.chkPreviousDuration2.TabIndex = 26;
+            this.toolTip1.SetToolTip(this.chkPreviousDuration2, "Same as previous");
+            this.chkPreviousDuration2.UseVisualStyleBackColor = true;
+            this.chkPreviousDuration2.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // chkPreviousDose2
+            // 
+            this.chkPreviousDose2.AutoSize = true;
+            this.chkPreviousDose2.Location = new System.Drawing.Point(311, 75);
+            this.chkPreviousDose2.Name = "chkPreviousDose2";
+            this.chkPreviousDose2.Size = new System.Drawing.Size(15, 14);
+            this.chkPreviousDose2.TabIndex = 23;
+            this.toolTip1.SetToolTip(this.chkPreviousDose2, "Same as previous");
+            this.chkPreviousDose2.UseVisualStyleBackColor = true;
+            this.chkPreviousDose2.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // btnDuration1Link
+            // 
+            this.btnDuration1Link.Enabled = false;
+            this.btnDuration1Link.Image = ((System.Drawing.Image)(resources.GetObject("btnDuration1Link.Image")));
+            this.btnDuration1Link.Location = new System.Drawing.Point(786, 36);
+            this.btnDuration1Link.Name = "btnDuration1Link";
+            this.btnDuration1Link.Size = new System.Drawing.Size(28, 28);
+            this.btnDuration1Link.TabIndex = 22;
+            this.btnDuration1Link.UseVisualStyleBackColor = true;
+            this.btnDuration1Link.Click += new System.EventHandler(this.btnLink_Click);
+            // 
+            // btnDosage1Link
+            // 
+            this.btnDosage1Link.Enabled = false;
+            this.btnDosage1Link.Image = ((System.Drawing.Image)(resources.GetObject("btnDosage1Link.Image")));
+            this.btnDosage1Link.Location = new System.Drawing.Point(545, 36);
+            this.btnDosage1Link.Name = "btnDosage1Link";
+            this.btnDosage1Link.Size = new System.Drawing.Size(28, 28);
+            this.btnDosage1Link.TabIndex = 19;
+            this.btnDosage1Link.UseVisualStyleBackColor = true;
+            this.btnDosage1Link.Click += new System.EventHandler(this.btnLink_Click);
+            // 
+            // tbDuration1
+            // 
+            this.tbDuration1.ContextMenuStrip = this.contextMenuStrip1;
+            this.tbDuration1.Location = new System.Drawing.Point(606, 37);
+            this.tbDuration1.Name = "tbDuration1";
+            this.tbDuration1.Size = new System.Drawing.Size(174, 20);
+            this.tbDuration1.TabIndex = 21;
+            this.tbDuration1.Tag = "";
+            this.tbDuration1.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.tbDuration1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDuration1_MouseDown);
+            // 
+            // tbDosage1
+            // 
+            this.tbDosage1.ContextMenuStrip = this.contextMenuStrip1;
+            this.tbDosage1.Location = new System.Drawing.Point(328, 37);
+            this.tbDosage1.Name = "tbDosage1";
+            this.tbDosage1.Size = new System.Drawing.Size(211, 20);
+            this.tbDosage1.TabIndex = 18;
+            this.tbDosage1.Tag = "";
+            this.tbDosage1.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.tbDosage1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDosage1_MouseDown);
+            // 
+            // btnDuration2Link
+            // 
+            this.btnDuration2Link.Enabled = false;
+            this.btnDuration2Link.Image = ((System.Drawing.Image)(resources.GetObject("btnDuration2Link.Image")));
+            this.btnDuration2Link.Location = new System.Drawing.Point(786, 70);
+            this.btnDuration2Link.Name = "btnDuration2Link";
+            this.btnDuration2Link.Size = new System.Drawing.Size(28, 28);
+            this.btnDuration2Link.TabIndex = 28;
+            this.btnDuration2Link.UseVisualStyleBackColor = true;
+            this.btnDuration2Link.Click += new System.EventHandler(this.btnLink_Click);
+            // 
+            // btnDosage2Link
+            // 
+            this.btnDosage2Link.Enabled = false;
+            this.btnDosage2Link.Image = ((System.Drawing.Image)(resources.GetObject("btnDosage2Link.Image")));
+            this.btnDosage2Link.Location = new System.Drawing.Point(545, 70);
+            this.btnDosage2Link.Name = "btnDosage2Link";
+            this.btnDosage2Link.Size = new System.Drawing.Size(28, 28);
+            this.btnDosage2Link.TabIndex = 25;
+            this.btnDosage2Link.UseVisualStyleBackColor = true;
+            this.btnDosage2Link.Click += new System.EventHandler(this.btnLink_Click);
+            // 
+            // tbDuration2
+            // 
+            this.tbDuration2.ContextMenuStrip = this.contextMenuStrip1;
+            this.tbDuration2.Location = new System.Drawing.Point(606, 71);
+            this.tbDuration2.Name = "tbDuration2";
+            this.tbDuration2.Size = new System.Drawing.Size(174, 20);
+            this.tbDuration2.TabIndex = 27;
+            this.tbDuration2.Tag = "";
+            this.tbDuration2.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.tbDuration2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDuration2_MouseDown);
+            // 
+            // tbDosage2
+            // 
+            this.tbDosage2.ContextMenuStrip = this.contextMenuStrip1;
+            this.tbDosage2.Location = new System.Drawing.Point(328, 71);
+            this.tbDosage2.Name = "tbDosage2";
+            this.tbDosage2.Size = new System.Drawing.Size(211, 20);
+            this.tbDosage2.TabIndex = 24;
+            this.tbDosage2.Tag = "";
+            this.tbDosage2.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.tbDosage2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDosage2_MouseDown);
             // 
             // BDTherapyControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Controls.Add(this.chkPreviousDuration2);
+            this.Controls.Add(this.chkPreviousDose2);
+            this.Controls.Add(this.btnDuration2Link);
+            this.Controls.Add(this.btnDosage2Link);
+            this.Controls.Add(this.tbDuration2);
+            this.Controls.Add(this.tbDosage2);
+            this.Controls.Add(this.chkPreviousDuration1);
+            this.Controls.Add(this.chkPreviousDose1);
+            this.Controls.Add(this.btnDuration1Link);
+            this.Controls.Add(this.btnDosage1Link);
+            this.Controls.Add(this.tbDuration1);
+            this.Controls.Add(this.tbDosage1);
             this.Controls.Add(this.chkPreviousDuration);
             this.Controls.Add(this.chkPreviousDose);
             this.Controls.Add(this.chkPreviousName);
@@ -402,7 +560,8 @@
             this.Controls.Add(this.lblRightBracket);
             this.Name = "BDTherapyControl";
             this.Padding = new System.Windows.Forms.Padding(3);
-            this.Size = new System.Drawing.Size(880, 60);
+            this.Size = new System.Drawing.Size(872, 121);
+            this.Load += new System.EventHandler(this.BDTherapyControl_Load);
             this.Leave += new System.EventHandler(this.BDTherapyControl_Leave);
             this.contextMenuStrip1.ResumeLayout(false);
             this.contextMenuStripEvents.ResumeLayout(false);
@@ -446,5 +605,17 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ToolStripMenuItem µToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sOneToolStripMenuItem;
+        private System.Windows.Forms.CheckBox chkPreviousDuration1;
+        private System.Windows.Forms.CheckBox chkPreviousDose1;
+        private System.Windows.Forms.Button btnDuration1Link;
+        private System.Windows.Forms.Button btnDosage1Link;
+        private System.Windows.Forms.TextBox tbDuration1;
+        private System.Windows.Forms.TextBox tbDosage1;
+        private System.Windows.Forms.CheckBox chkPreviousDuration2;
+        private System.Windows.Forms.CheckBox chkPreviousDose2;
+        private System.Windows.Forms.Button btnDuration2Link;
+        private System.Windows.Forms.Button btnDosage2Link;
+        private System.Windows.Forms.TextBox tbDuration2;
+        private System.Windows.Forms.TextBox tbDosage2;
     }
 }

@@ -13,7 +13,6 @@ namespace BDEditor.Views
         private Guid? parentId;
         private BDConstants.BDNodeType parentType;
         private BDTherapyGroup currentTherapyGroup;
-        public BDConstants.LayoutVariantType DefaultLayoutVariantType;
         private IBDControl parentControl;
         private Guid? scopeId;
         public int? DisplayOrder { get; set; }
@@ -551,7 +550,7 @@ namespace BDEditor.Views
 
         public BDConstants.BDNodeType DefaultNodeType { get; set; }
 
-        BDConstants.LayoutVariantType IBDControl.DefaultLayoutVariantType { get; set; }
+        public BDConstants.LayoutVariantType DefaultLayoutVariantType { get; set; }
 
         public IBDNode CurrentNode
         {

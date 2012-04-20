@@ -188,12 +188,6 @@
     <Compile Include="Views\BDNodeEditView.Designer.cs">
       <DependentUpon>BDNodeEditView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\BDPathogenGroupControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\BDPathogenGroupControl.Designer.cs">
-      <DependentUpon>BDPathogenGroupControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\BDTherapy.cs" />
     <Compile Include="DataModel\BDTherapyGroup.cs" />
     <Compile Include="Views\BDEditView.cs">
@@ -201,18 +195,6 @@
     </Compile>
     <Compile Include="Views\BDEditView.Designer.cs">
       <DependentUpon>BDEditView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\BDPathogenControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\BDPathogenControl.Designer.cs">
-      <DependentUpon>BDPathogenControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\BDPresentationControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\BDPresentationControl.Designer.cs">
-      <DependentUpon>BDPresentationControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\BDSearchView.cs">
       <SubType>Form</SubType>
@@ -288,15 +270,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDNodeEditView.resx">
       <DependentUpon>BDNodeEditView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\BDPathogenControl.resx">
-      <DependentUpon>BDPathogenControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\BDPathogenGroupControl.resx">
-      <DependentUpon>BDPathogenGroupControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\BDPresentationControl.resx">
-      <DependentUpon>BDPresentationControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDSearchView.resx">
       <DependentUpon>BDSearchView.cs</DependentUpon>

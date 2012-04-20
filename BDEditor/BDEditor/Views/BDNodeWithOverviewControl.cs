@@ -26,7 +26,6 @@ namespace BDEditor.Views
         public BDConstants.LayoutVariantType DefaultLayoutVariantType { get; set; }
         public int? DisplayOrder{ get; set; }
 
-        //private List<BDNodeWithOverviewControl> detailControlList = new List<BDNodeWithOverviewControl>();
         private List<IBDControl> childNodeControlList = new List<IBDControl>();
 
         private List<ToolStripMenuItem> addChildNodeToolStripMenuItemList = new List<ToolStripMenuItem>(); //List of possible children
@@ -138,6 +137,11 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
+            RefreshLayout(true);
+        }
+
+        public void RefreshLayout(bool pShowChildren)
+        {
             ControlHelper.SuspendDrawing(this);
 
             for (int idx = 0; idx < childNodeControlList.Count; idx++)
@@ -155,11 +159,14 @@ namespace BDEditor.Views
             else
             {
                 tbName.Text = currentNode.Name;
-                List<IBDNode> list = BDFabrik.GetChildrenForParent(dataContext, currentNode);
-                int idxDetail = 0;
-                foreach (IBDNode entry in list)
+                if (pShowChildren)
                 {
-                    addChildNodeControl(entry, idxDetail++);
+                    List<IBDNode> list = BDFabrik.GetChildrenForParent(dataContext, currentNode);
+                    int idxDetail = 0;
+                    foreach (IBDNode entry in list)
+                    {
+                        addChildNodeControl(entry, idxDetail++);
+                    }
                 }
             }
 
@@ -342,38 +349,7 @@ namespace BDEditor.Views
 
             if (CreateCurrentObject())
             {
-                switch (pNode.NodeType)
-                {
-                    case BDConstants.BDNodeType.BDTableSection:
-                        switch (pNode.LayoutVariant)
-                        {
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
-                            default:
-                                nodeControl = new BDNodeControl();
-                                break;
-                        }
-                        break;
-                    case BDConstants.BDNodeType.BDTableRow:
-                        switch (pNode.LayoutVariant)
-                        {
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
-                                nodeControl = new BDTableRowControl();
-                                break;
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
-                            default:
-                                nodeControl = new BDNodeWithOverviewControl();
-                                break;
-
-                        }
-                        break;
-                    default:
-                        // Require explicit handling for given child types
-                        // i.e. disease does not currently display children within this control
-                        // Don't load children if not explicitly supported here
-                        break;
-
-                }
+                nodeControl = BDFabrik.CreateControlForNode(dataContext, pNode);
 
                 if(null != nodeControl)
                 {
@@ -386,7 +362,7 @@ namespace BDEditor.Views
                     nodeControl.ShowAsChild = true;
                     nodeControl.CurrentNode = pNode;
                     nodeControl.DefaultLayoutVariantType = this.DefaultLayoutVariantType;
-                    nodeControl.DefaultNodeType = BDConstants.BDNodeType.BDTableRow;
+                    nodeControl.DefaultNodeType = pNode.NodeType;
 
                     nodeControl.ReorderToNext += new EventHandler<NodeEventArgs>(childNodeControl_ReorderToNext);
                     nodeControl.ReorderToPrevious += new EventHandler<NodeEventArgs>(childNodeControl_ReorderToPrevious);

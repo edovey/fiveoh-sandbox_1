@@ -94,6 +94,11 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
+            RefreshLayout(true);
+        }
+
+        public void RefreshLayout(bool pShowChildren)
+        {
             ControlHelper.SuspendDrawing(this);
 
             pnlControls.Controls.Clear();
@@ -112,15 +117,10 @@ namespace BDEditor.Views
                 List<BDTableCell> list = BDTableCell.RetrieveTableCellsForParentId(dataContext, currentNode.Uuid);
                 switch (currentNode.LayoutVariant)
                 {
-                    case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
-                        // add one textbox if row is not a header
-                        if(row != null && row.rowType == (int)BDConstants.TableRowLayoutVariant.Content)
-                            pnlControls.Controls.Add(addTextBoxControl(currentNode.Name));
-                        maxColumns = 3;
-                            break;
                     case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
                         maxColumns = 2;
                         break;
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II:
                     default:
                         maxColumns = 4;

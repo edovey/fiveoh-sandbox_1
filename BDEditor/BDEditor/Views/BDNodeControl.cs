@@ -135,6 +135,11 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
+            RefreshLayout(true);
+        }
+
+        public void RefreshLayout(bool pShowChildren)
+        {
             ControlHelper.SuspendDrawing(this);
 
             for (int idx = 0; idx < childNodeControlList.Count; idx++)
@@ -152,11 +157,14 @@ namespace BDEditor.Views
             else
             {
                 tbName.Text = currentNode.Name;
-                List<IBDNode> list = BDFabrik.GetChildrenForParent(dataContext, currentNode);
-                int idxDetail = 0;
-                foreach (IBDNode entry in list)
+                if (pShowChildren)
                 {
-                    addChildNodeControl(entry, idxDetail++);
+                    List<IBDNode> list = BDFabrik.GetChildrenForParent(dataContext, currentNode);
+                    int idxDetail = 0;
+                    foreach (IBDNode entry in list)
+                    {
+                        addChildNodeControl(entry, idxDetail++);
+                    }
                 }
             }
             ShowLinksInUse(false);
@@ -312,52 +320,7 @@ namespace BDEditor.Views
 
             if (CreateCurrentObject())
             {
-                switch (pNode.NodeType)
-                {
-                    case BDConstants.BDNodeType.BDTableSection:
-                        switch(pNode.LayoutVariant)
-                        {
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II:
-                            default:
-                                nodeControl = new BDNodeControl();
-                            break;
-                        }
-                        break;
-                    case BDConstants.BDNodeType.BDTableRow:
-                         switch(pNode.LayoutVariant)
-                        {
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II:
-                                nodeControl = new BDTableRowControl();
-                                break;
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
-                            default:
-                                nodeControl = new BDNodeWithOverviewControl();
-                            break;
-
-                        }
-                        break;
-                    case BDConstants.BDNodeType.BDPathogenGroup:
-                        switch (pNode.LayoutVariant)
-                        {
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
-                                nodeControl = new BDPathogenGroupControl();
-                                break;
-                        }
-                        break;
-                    default:
-                        // Require explicit handling for given child types
-                        // i.e. disease does not currently display children within this control
-                        // Don't load children if not explicitly supported here
-                        break;
-
-                }
+                nodeControl = BDFabrik.CreateControlForNode(dataContext, pNode);
 
                 if(null != nodeControl)
                 {

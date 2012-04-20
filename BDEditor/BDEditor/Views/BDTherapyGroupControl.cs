@@ -79,6 +79,11 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
+            RefreshLayout(true);
+        }
+
+        public void RefreshLayout(bool pShowChildren)
+        {
             ControlHelper.SuspendDrawing(this);
 
             // This is generic for Constants.LayoutVariantType.TreatmentRecommendation01
@@ -116,11 +121,14 @@ namespace BDEditor.Views
                         break;
                 }
 
-                List<BDTherapy> list = BDTherapy.GetTherapiesForTherapyParentId(dataContext, currentTherapyGroup.uuid);
-                for (int idx = 0; idx < list.Count; idx++)
+                if (pShowChildren)
                 {
-                    BDTherapy entry = list[idx];
-                    addTherapyControl(entry, idx);
+                    List<BDTherapy> list = BDTherapy.GetTherapiesForTherapyParentId(dataContext, currentTherapyGroup.uuid);
+                    for (int idx = 0; idx < list.Count; idx++)
+                    {
+                        BDTherapy entry = list[idx];
+                        addTherapyControl(entry, idx);
+                    }
                 }
             }
 

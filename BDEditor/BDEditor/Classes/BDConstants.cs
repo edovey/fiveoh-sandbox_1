@@ -47,7 +47,9 @@ namespace BDEditor.Classes
             BDTableSection = 13,
             // BDTableRow class
             [Description("Table Row")]
-            BDTableRow = 14
+            BDTableRow = 14,
+            [Description("Pathogen Resistance")]
+            BDPathogenResistance = 15,
         }
 
         public enum LayoutVariantType

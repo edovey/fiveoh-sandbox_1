@@ -106,8 +106,12 @@ namespace BDEditor.Views
 
 
         #region IBDControl
-
         public void RefreshLayout()
+        {
+            RefreshLayout(true);
+        }
+
+        public void RefreshLayout(bool pShowChildren)
         {
             ControlHelper.SuspendDrawing(this);
 
@@ -117,7 +121,7 @@ namespace BDEditor.Views
                 removeStringControl(control, false);
             }
 
-            if (currentTableCell != null)
+            if (currentTableCell != null && pShowChildren)
             {
                 List<BDString> list = BDString.RetrieveStringsForParentId(dataContext, currentTableCell.Uuid);
                 int iDetail = 0;

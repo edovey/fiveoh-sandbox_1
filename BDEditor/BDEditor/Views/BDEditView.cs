@@ -340,6 +340,8 @@ namespace BDEditor.Views
             TreeNode selectedNode = pSelectedNode;
 
             IBDNode node = selectedNode.Tag as IBDNode;
+            IBDControl control_tr01 = null;
+            bool showChildControls = true;
 
             switch (node.NodeType)
             {
@@ -350,15 +352,8 @@ namespace BDEditor.Views
                             TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
                             graftTreeNode(selectedNode, childTreeNode);
 
-                            BDNodeWithOverviewControl control_tr01 = null;
                             control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
-                            control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);
-                            control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
-                            control_tr01.Dock = DockStyle.Fill;
-                            control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
-                            control_tr01.RequestItemAdd += new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
-                            splitContainer1.Panel2.Controls.Add(control_tr01);
-                            control_tr01.RefreshLayout();
+                            showChildControls = false;
                             break;
                     }
                     break;
@@ -369,15 +364,8 @@ namespace BDEditor.Views
                             TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
                             graftTreeNode(selectedNode, childTreeNode);
 
-                            BDNodeWithOverviewControl control_tr01 = null;
                             control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
-                            control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);
-                            control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
-                            control_tr01.Dock = DockStyle.Fill;
-                            control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
-                            control_tr01.RequestItemAdd += new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
-                            splitContainer1.Panel2.Controls.Add(control_tr01);
-                            control_tr01.RefreshLayout();
+                            showChildControls = false;
                             break;
                     }
                     break;
@@ -388,15 +376,8 @@ namespace BDEditor.Views
                             TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
                             graftTreeNode(selectedNode, childTreeNode);
 
-                            BDNodeWithOverviewControl control_tr01 = null;
                             control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
-                            control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);
-                            control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
-                            control_tr01.Dock = DockStyle.Fill;
-                            control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
-                            control_tr01.RequestItemAdd += new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
-                            splitContainer1.Panel2.Controls.Add(control_tr01);
-                            control_tr01.RefreshLayout();
+                            showChildControls = false;
                             break;
                     }
                     break;
@@ -407,37 +388,21 @@ namespace BDEditor.Views
                             TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
                             graftTreeNode(selectedNode, childTreeNode);
 
-                            BDNodeWithOverviewControl control_tr01 = null;
                             control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
-                            control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);
-                            control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
-                            control_tr01.Dock = DockStyle.Fill;
-                            control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
-                            control_tr01.RequestItemAdd += new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
-                            splitContainer1.Panel2.Controls.Add(control_tr01);
-                            control_tr01.RefreshLayout();
+                            showChildControls = false;
                             break;
                     }
                     break;
                 case BDConstants.BDNodeType.BDPresentation:
-                    BDNode presentation = node as BDNode;
                     switch (node.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                            BDPresentationControl control_tr01 = new BDPresentationControl(dataContext, presentation);
-                            control_tr01.Dock = DockStyle.Fill;
-                            control_tr01.CurrentPresentation = presentation;
-                            control_tr01.AssignScopeId((null != presentation) ? presentation.Uuid : Guid.Empty);
-                            control_tr01.AssignParentInfo(presentation.ParentId, presentation.ParentType);
-                            control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
-                            control_tr01.RequestItemAdd += new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
-                            splitContainer1.Panel2.Controls.Add(control_tr01);
-                            control_tr01.RefreshLayout();
+                            control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
+                            showChildControls = true;
                             break;
                     }
                     break;
                 case BDConstants.BDNodeType.BDTable:
-                    BDNode table = node as BDNode;
                     switch (node.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
@@ -447,18 +412,22 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
-                            BDNodeControl control_tr01 = null;
-                            control_tr01 = new BDNodeControl(dataContext, table);
-                            control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);
-                            control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
-                            control_tr01.Dock = DockStyle.Fill;
-                            control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
-                            control_tr01.RequestItemAdd += new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
-                            splitContainer1.Panel2.Controls.Add(control_tr01);
-                            control_tr01.RefreshLayout();
+                            control_tr01 = new BDNodeControl(dataContext, node);
+                            showChildControls = true;
                             break;
                     }
                     break;
+            }
+
+            if (null != control_tr01)
+            {
+                control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);
+                control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
+                ((System.Windows.Forms.UserControl)control_tr01).Dock = DockStyle.Fill;
+                control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                control_tr01.RequestItemAdd += new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
+                splitContainer1.Panel2.Controls.Add((System.Windows.Forms.UserControl)control_tr01);
+                control_tr01.RefreshLayout(showChildControls);
             }
 
             ControlHelper.ResumeDrawing(splitContainer1.Panel2);
@@ -469,7 +438,6 @@ namespace BDEditor.Views
 
         void nodeControl_NameChanged(object sender, NodeEventArgs e)
         {
-            //TreeNode node = chapterTree.SelectedNode;
             IBDNode node = chapterTree.SelectedNode.Tag as IBDNode;
             if (node.Uuid == e.Uuid)
             {
@@ -516,8 +484,6 @@ namespace BDEditor.Views
                 chapterDropDown.Items.Add(entry);
             }
 
-            //if (chapterDropDown.Items.Count > 2)
-            //    chapterDropDown.SelectedIndex = 2;
             if (chapterDropDown.Items.Count >= 1)
                 chapterDropDown.SelectedIndex = 0;
 

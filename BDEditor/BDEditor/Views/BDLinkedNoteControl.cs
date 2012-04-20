@@ -262,6 +262,11 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
+            RefreshLayout(true);
+        }
+
+        public void RefreshLayout(bool pShowChildren)
+        {
             ControlHelper.SuspendDrawing(this);
             if (textControl.Visible)
             {

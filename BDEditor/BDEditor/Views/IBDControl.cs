@@ -24,6 +24,7 @@ namespace BDEditor.Views
         void Delete();
         bool CreateCurrentObject();
         void RefreshLayout();
+        void RefreshLayout(bool pShowChildren);
         void ShowLinksInUse(bool pPropagateToChildren);
 
         BDConstants.BDNodeType DefaultNodeType {get; set;}

@@ -175,7 +175,12 @@ namespace BDEditor.Views
             return result;
         }
 
-        public void RefreshLayout()
+        public void RefreshLayout() 
+        {
+            RefreshLayout(true);
+        }
+
+        public void RefreshLayout(bool pShowChildren)
         {
             ControlHelper.SuspendDrawing(this);
             if (currentString == null)

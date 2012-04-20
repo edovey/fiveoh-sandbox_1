@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using BDEditor.DataModel;
+using BDEditor.Views;
 
 namespace BDEditor.Classes
 {
@@ -48,6 +49,10 @@ namespace BDEditor.Classes
                         BDTherapyGroup therapyGroup = pNode as BDTherapyGroup;
                         BDTherapyGroup.Save(pDataContext, therapyGroup);
                         break;
+                    case BDConstants.BDNodeType.BDTableRow:
+                        BDTableRow tableRow = pNode as BDTableRow;
+                        BDTableRow.Save(pDataContext, tableRow);
+                        break;
 
                     case BDConstants.BDNodeType.None:
                         // Do nothing
@@ -63,7 +68,6 @@ namespace BDEditor.Classes
                     case BDConstants.BDNodeType.BDSubCategory:
                     case BDConstants.BDNodeType.BDTable:
                     case BDConstants.BDNodeType.BDTableSection:
-                    case BDConstants.BDNodeType.BDTableRow:
                     default:
                         BDNode node = pNode as BDNode;
                         BDNode.Save(pDataContext, node);
@@ -72,7 +76,6 @@ namespace BDEditor.Classes
             }
         }
 
-        //public static List<BDConstants.BDNodeType> ChildTypeDefinitionListForNode(IBDNode pNode)
         public static List<Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>> ChildTypeDefinitionListForNode(IBDNode pNode)
         {
             if (null == pNode)
@@ -190,19 +193,30 @@ namespace BDEditor.Classes
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation01 }));
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogen, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis }));
+                            //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogen, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis }));
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogen, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis }));
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogenResistance, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis }));
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogen, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis }));
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogenResistance, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis }));
                             break;
                         default:
                             break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDPathogenResistance:
+                    switch (layoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis }));
+                            break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis }));
+                            break;
+                        default:
+                            throw new NotSupportedException();
                     }
                     break;
                 case BDConstants.BDNodeType.BDPresentation:
@@ -261,8 +275,7 @@ namespace BDEditor.Classes
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogenGroup, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis }));
                             break;
                         default:
-                            throw new Exception();
-                            //break;
+                            throw new NotSupportedException();
                     }
                     break;
                 case BDConstants.BDNodeType.BDTableSection:
@@ -285,14 +298,6 @@ namespace BDEditor.Classes
                             throw new NotSupportedException();
                     }
                     break;
-                case BDConstants.BDNodeType.BDTherapy:
-                    switch (layoutVariant)
-                    {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                        default:
-                            break;
-                    }
-                    break;
                 case BDConstants.BDNodeType.BDTherapyGroup:
                     switch (layoutVariant)
                     {
@@ -313,6 +318,7 @@ namespace BDEditor.Classes
                     }
                     break;
                 case BDConstants.BDNodeType.None:
+                case BDConstants.BDNodeType.BDTherapy:
                 case BDConstants.BDNodeType.BDTableRow:
                 default:
                     childDefinitionList = null;
@@ -532,16 +538,6 @@ namespace BDEditor.Classes
                     result = therapy;
                     break;
 
-                case BDConstants.BDNodeType.BDTable:
-                    BDNode tableNode = BDNode.CreateNode(pContext, pChildType);
-                    tableNode.displayOrder = siblingList.Count;
-                    tableNode.SetParent(pParentNode);
-                    tableNode.LayoutVariant = pLayoutVariant;
-                    tableNode.Name = String.Format("New {0}-{1}", BDUtilities.GetEnumDescription(pChildType), tableNode.displayOrder + 1);
-                    BDNode.Save(pContext, tableNode);
-                    result = tableNode;
-                    break;
-
                 case BDConstants.BDNodeType.BDTableRow:
                     BDTableRow tableRow = BDTableRow.CreateTableRow(pContext, pChildType);
                     tableRow.displayOrder = siblingList.Count;
@@ -556,10 +552,10 @@ namespace BDEditor.Classes
                     int cellCount;
                     switch (pLayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
-                            cellCount = 3;
+                            cellCount = 2;
                             break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II:
                         default:
                             cellCount = 4;
@@ -581,6 +577,7 @@ namespace BDEditor.Classes
                     
                     break;
 
+                case BDConstants.BDNodeType.BDTable:
                 default:
                     BDNode node = BDNode.CreateNode(pContext, pChildType);
                     node.displayOrder = siblingList.Count;
@@ -592,35 +589,6 @@ namespace BDEditor.Classes
                     break;
             }
             return result;
-        }
-
-        public static IBDNode CreateNode(Entities pContext, BDConstants.BDNodeType pNodeType, Guid? pParentUuid, BDConstants.BDNodeType pParentNodeType)
-        {
-            IBDNode entry = null;
-            switch (pNodeType)
-            {
-                case BDConstants.BDNodeType.None:
-                    break;
-                case BDConstants.BDNodeType.BDTherapy:
-                    entry = BDTherapy.CreateTherapy(pContext, pParentUuid.Value);
-                    break;
-                case BDConstants.BDNodeType.BDTherapyGroup:
-                    entry = BDTherapyGroup.CreateTherapyGroup(pContext, pParentUuid.Value);
-                    break;
-                case BDConstants.BDNodeType.BDTableRow:
-                    entry = BDTableRow.CreateTableRow(pContext, pParentNodeType, pParentUuid.Value);
-                    break;
-                default:
-                    entry = BDNode.CreateNode(pContext, pNodeType);
-                    break;
-            }
-            
-            if (null != entry)
-            {
-                entry.SetParent(pParentNodeType, pParentUuid);
-            }
-
-            return entry;
         }
 
         public static void DeleteNode(Entities pContext, IBDNode pNode)
@@ -644,6 +612,14 @@ namespace BDEditor.Classes
 
                     BDTherapy therapy = pNode as BDTherapy;
                     BDTherapy.Delete(pContext, therapy, pCreateDeletionRecord);
+                    break;
+
+                case BDConstants.BDNodeType.BDTableRow:
+                    BDTableRow row = pNode as BDTableRow;
+                    List<BDTableCell> cells = BDTableCell.RetrieveTableCellsForParentId(pContext, pNode.Uuid);
+                    foreach (BDTableCell cell in cells)
+                        BDTableCell.Delete(pContext, cell, pCreateDeletionRecord);
+                    BDTableRow.Delete(pContext, row, pCreateDeletionRecord);
                     break;
 
                 default:
@@ -672,12 +648,152 @@ namespace BDEditor.Classes
                         result = BDTherapy.GetTherapyWithId(pContext, pUuid.Value);
                         break;
 
+                    case BDConstants.BDNodeType.BDTableRow:
+                        result = BDTableRow.RetrieveTableRowWithId(pContext, pUuid.Value);
+                        break;
+
                     default:
                         result = BDNode.RetrieveNodeWithId(pContext, pUuid.Value);
                         break;
                 }
             }
             return result;
+        }
+
+        public static IBDNode CreateNode(Entities pContext, BDConstants.BDNodeType pNodeType, Guid? pParentUuid, BDConstants.BDNodeType pParentNodeType)
+        {
+            IBDNode entry = null;
+            switch (pNodeType)
+            {
+                case BDConstants.BDNodeType.None:
+                    break;
+                case BDConstants.BDNodeType.BDTherapy:
+                    entry = BDTherapy.CreateTherapy(pContext, pParentUuid.Value);
+                    break;
+                case BDConstants.BDNodeType.BDTherapyGroup:
+                    entry = BDTherapyGroup.CreateTherapyGroup(pContext, pParentUuid.Value);
+                    break;
+                case BDConstants.BDNodeType.BDTableRow:
+                    entry = BDTableRow.CreateTableRow(pContext, pParentNodeType, pParentUuid.Value);
+                    break;
+                default:
+                    entry = BDNode.CreateNode(pContext, pNodeType);
+                    break;
+            }
+
+            if (null != entry)
+            {
+                entry.SetParent(pParentNodeType, pParentUuid);
+            }
+
+            return entry;
+        }
+
+        public static IBDControl CreateControlForNode(Entities pContext, IBDNode pNode)
+        {
+            IBDControl nodeControl = null;
+            switch (pNode.NodeType)
+            {
+                case BDConstants.BDNodeType.BDPathogen:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                            nodeControl = new BDNodeControl();
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDPathogenGroup:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                            nodeControl = new BDNodeControl();
+                            break;
+                        default:
+                            throw new NotSupportedException();
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDPathogenResistance:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                            nodeControl = new BDNodeControl();
+                            break;
+                        default:
+                            throw new NotSupportedException();
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDPresentation:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                            nodeControl = new BDNodeWithOverviewControl();
+                            break;
+                        default:
+                            throw new NotSupportedException();
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDTableRow:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II:
+                            nodeControl = new BDTableRowControl();
+                            break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
+                        default:
+                            nodeControl = new BDNodeWithOverviewControl();
+                            break;
+
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDTableSection:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
+                        default:
+                            nodeControl = new BDNodeControl();
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDTherapy:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                            nodeControl = new BDTherapyControl();
+                            break;
+                        default:
+                            throw new NotSupportedException();
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDTherapyGroup:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                            nodeControl = new BDTherapyGroupControl();
+                            break;
+                    }
+                    break;
+
+                default:
+                    // Require explicit handling for given child types
+                    // i.e. disease does not currently display children within this control
+                    // Don't load children if not explicitly supported here
+                    break;
+            }
+            return nodeControl;
+
         }
     }
 }

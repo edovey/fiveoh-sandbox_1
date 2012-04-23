@@ -113,6 +113,7 @@ namespace BDEditor.Views
             if (null != currentNode)
             {
                 if (tbName.Text != currentNode.Name) tbName.Text = currentNode.Name;
+                tbName.Select();
             }
         }
 

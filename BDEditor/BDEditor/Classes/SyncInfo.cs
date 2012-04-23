@@ -15,6 +15,8 @@ namespace BDEditor.Classes
         public int RowsPulled { get; set; }
         public int RowsPushed { get; set; }
         public bool ExistsOnRemote { get; set; }
+        public bool ExistsOnRemoteProduction { get; set; }
+        public bool ExistsOnRemoteDevelopment { get; set; }
         public string ModifiedDatePropertyName { get; set; }
         public Exception Exception { get; set; }
         public List<BDEditor.DataModel.IBDObject> PushList { get; set; }
@@ -39,6 +41,8 @@ namespace BDEditor.Classes
             ModifiedDatePropertyName = pModifiedDatePropertyName;
             RowsPulled = 0;
             RowsPushed = 0;
+            ExistsOnRemoteProduction = false;
+            ExistsOnRemoteDevelopment = false;
             ExistsOnRemote = false;
             SyncConflictList = new List<AttributeDictionary>();
             Exception = null;

@@ -119,6 +119,15 @@ namespace BDEditor.Views
             btnTherapyLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnTherapyLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
             btnDosageLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnDosageLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
             btnDurationLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnDurationLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
+
+            if (pnlMain.Controls.Contains(btnDosage1Link))
+                btnDosage1Link.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnDosage1Link.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
+            if (pnlMain.Controls.Contains(btnDosage2Link))
+                btnDosage2Link.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnDosage2Link.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
+            if (pnlMain.Controls.Contains(btnDuration1Link))
+                btnDuration1Link.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnDuration1Link.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
+            if (pnlMain.Controls.Contains(btnDuration2Link))
+                btnDuration2Link.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnDuration2Link.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
         }     
         
         public void AssignScopeId(Guid? pScopeId)
@@ -355,13 +364,14 @@ namespace BDEditor.Views
                        BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, currentTherapy.dosage);
                     if(currentTherapy.duration.Length > 0)
                         BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DURATION, currentTherapy.duration);
-                    if (currentTherapy.dosage1.Length > 0)
+
+                    if (pnlMain.Controls.Contains(tbDosage1) && currentTherapy.dosage1.Length > 0)
                         BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, currentTherapy.dosage1);
-                    if (currentTherapy.dosage2.Length > 0)
+                    if (pnlMain.Controls.Contains(tbDosage2) && currentTherapy.dosage2.Length > 0)
                         BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, currentTherapy.dosage2);
-                    if (currentTherapy.duration1.Length > 0)
+                    if (pnlMain.Controls.Contains(tbDuration1) && currentTherapy.duration1.Length > 0)
                         BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DURATION, currentTherapy.duration1);
-                    if (currentTherapy.duration2.Length > 0)
+                    if (pnlMain.Controls.Contains(tbDuration2) && currentTherapy.duration2.Length > 0)
                         BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DURATION, currentTherapy.duration2);
 
                 }

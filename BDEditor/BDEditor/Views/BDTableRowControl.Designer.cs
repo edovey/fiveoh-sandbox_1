@@ -48,7 +48,7 @@
             this.pnlControls.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlControls.Location = new System.Drawing.Point(0, 0);
             this.pnlControls.Name = "pnlControls";
-            this.pnlControls.Size = new System.Drawing.Size(811, 58);
+            this.pnlControls.Size = new System.Drawing.Size(772, 58);
             this.pnlControls.TabIndex = 0;
             // 
             // btnMenu
@@ -131,8 +131,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.Controls.Add(this.pnlButton);
             this.Controls.Add(this.pnlControls);
+            this.Controls.Add(this.pnlButton);
             this.DoubleBuffered = true;
             this.Name = "BDTableRowControl";
             this.Size = new System.Drawing.Size(811, 58);

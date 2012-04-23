@@ -85,12 +85,23 @@ namespace BDEditor.Classes
             if (sdbListDomainsResponse.IsSetListDomainsResult())
             {
                 ListDomainsResult listDomainsResult = sdbListDomainsResponse.ListDomainsResult;
-                foreach (String domainName in listDomainsResult.DomainName)
+
+                foreach (SyncInfo sInfo in syncDictionary.Values)
+                {
+                    if (listDomainsResult.DomainName.Contains(sInfo.RemoteDevelopmentEntityName))
+                        sInfo.ExistsOnRemoteDevelopment = true;
+                    if(listDomainsResult.DomainName.Contains(sInfo.RemoteProductionEntityName))
+                        sInfo.ExistsOnRemoteProduction = true;
+                    if (listDomainsResult.DomainName.Contains(sInfo.RemoteEntityName))
+                        sInfo.ExistsOnRemote = true;
+                }
+
+               /* foreach (String domainName in listDomainsResult.DomainName)
                 {
                     System.Diagnostics.Debug.WriteLine(string.Format("Found domain: {0}", domainName));
                     if (syncDictionary.ContainsKey(domainName))
                         syncDictionary[domainName].ExistsOnRemote = true;
-                }
+                } */
             }
 
             if (pCreateMissing)
@@ -115,6 +126,7 @@ namespace BDEditor.Classes
                     }
                 }
             }
+
 
             return syncDictionary;
         }
@@ -227,6 +239,15 @@ namespace BDEditor.Classes
                                 break;
                             case BDTherapyGroup.KEY_NAME:
                                 domainName = BDTherapyGroup.AWS_DOMAIN;
+                                break;
+                            case BDTableRow.KEY_NAME:
+                                domainName = BDTableRow.AWS_DOMAIN;
+                                break;
+                            case BDTableCell.KEY_NAME:
+                                domainName = BDTableCell.AWS_DOMAIN;
+                                break;
+                            case BDString.KEY_NAME:
+                                domainName = BDString.AWS_DOMAIN;
                                 break;
                             case BDSearchEntry.KEY_NAME:
                                 domainName = BDSearchEntry.AWS_DOMAIN;
@@ -455,7 +476,7 @@ namespace BDEditor.Classes
             foreach (SyncInfo syncInfoEntry in syncDictionary.Values)
             {
                 System.Diagnostics.Debug.WriteLine(syncInfoEntry.FriendlyName);
-                if (!syncInfoEntry.ExistsOnRemote) continue;
+                if (!syncInfoEntry.ExistsOnRemoteProduction) continue;
 
                 System.Diagnostics.Debug.WriteLine(string.Format("Production Pull {0}", syncInfoEntry.RemoteProductionEntityName));
                 SelectRequest selectRequestAction = new SelectRequest().WithSelectExpression(syncInfoEntry.GetLatestRemoteSelectString(pLastSyncDate, syncInfoEntry.RemoteProductionEntityName));

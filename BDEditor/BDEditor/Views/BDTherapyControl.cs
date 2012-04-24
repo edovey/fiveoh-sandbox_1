@@ -235,6 +235,9 @@ namespace BDEditor.Views
                     case BDTherapy.TherapyJoinType.ThenWithNext:
                         thenRadioButton.Checked = true;
                         break;
+                    case BDTherapy.TherapyJoinType.WithOrWithoutWithNext:
+                        andOrRadioButton.Checked = true;
+                        break;
                     default:
                         noneRadioButton.Checked = true;
                         break;

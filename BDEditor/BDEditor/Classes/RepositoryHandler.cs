@@ -394,7 +394,7 @@ namespace BDEditor.Classes
                                     entryGuid = BDTableCell.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                     break;
                                 case BDString.AWS_DOMAIN:
-                                    entryGuid = BDTableCell.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    entryGuid = BDString.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                     break;
                                 case BDHtmlPage.AWS_DOMAIN:
                                     {

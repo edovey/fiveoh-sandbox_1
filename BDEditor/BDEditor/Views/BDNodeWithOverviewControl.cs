@@ -677,7 +677,7 @@ namespace BDEditor.Views
 
             //List<BDConstants.BDNodeType> childTypes = BDFabrik.ChildTypeDefinitionListForNode(pBDNode);
             List<Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>> childTypeInfoList = BDFabrik.ChildTypeDefinitionListForNode(pBDNode);
-            if (null == childTypeInfoList)
+            if (null == childTypeInfoList || childTypeInfoList.Count == 0)
             {
                 addChildNodeToolStripMenuItem.Visible = false;
             }

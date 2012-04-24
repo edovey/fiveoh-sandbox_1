@@ -552,6 +552,10 @@ namespace BDEditor.Classes
                     int cellCount;
                     switch (pLayoutVariant)
                     {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
+                            // no cells:  data is stored in the Name property and in a Linked Note (type Overview)
+                            cellCount = 0;
+                            break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
                             cellCount = 2;
                             break;

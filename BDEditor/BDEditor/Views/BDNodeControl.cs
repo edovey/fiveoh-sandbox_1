@@ -234,21 +234,6 @@ namespace BDEditor.Views
                 {
                     currentNode = BDFabrik.CreateNode(dataContext, DefaultNodeType, parentId, parentType );
 
-                    //switch (DefaultNodeType)
-                    //{
-                    //    case BDConstants.BDNodeType.None:
-                    //        break;
-                    //    case BDConstants.BDNodeType.BDTherapy:
-                    //        currentNode = BDTherapy.CreateTherapy(dataContext, parentId.Value);
-                    //        break;
-                    //    case BDConstants.BDNodeType.BDTherapyGroup:
-                    //        currentNode = BDTherapyGroup.CreateTherapyGroup(dataContext, parentId.Value);
-                    //        break;
-                    //    default:
-                    //        currentNode = BDNode.CreateNode(this.dataContext, this.DefaultNodeType);
-                    //        break;
-                    //}
-
                     this.currentNode.DisplayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                     this.currentNode.LayoutVariant = this.DefaultLayoutVariantType;
                 }
@@ -653,7 +638,7 @@ namespace BDEditor.Views
             deleteNodeToolStripMenuItem.Text = string.Format("Delete {0}: {1}", nodeTypeName, pBDNode.Name);
 
             List<Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>> childTypeInfoList = BDFabrik.ChildTypeDefinitionListForNode(pBDNode);
-            if (null == childTypeInfoList)
+            if (null == childTypeInfoList || childTypeInfoList.Count == 0)
             {
                 addChildNodeToolStripMenuItem.Visible = false;
             }

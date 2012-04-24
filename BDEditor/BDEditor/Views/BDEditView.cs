@@ -561,6 +561,8 @@ namespace BDEditor.Views
             {
                 btnSync.Text = "Pull Only";
             }
+            btnPublish.Enabled = BDCommon.Settings.SyncPushEnabled;
+            btnImportFromProduction.Enabled = BDCommon.Settings.SyncPushEnabled;
         }
 
         private void btnSync_Click(object sender, EventArgs e)

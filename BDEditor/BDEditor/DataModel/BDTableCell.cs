@@ -255,7 +255,7 @@ namespace BDEditor.DataModel
             BDTableCell entry = BDTableCell.RetrieveWithId(pDataContext, uuid);
             if (null == entry)
             {
-                entry = BDTableCell.CreateTableCell(pDataContext, uuid);
+                entry = BDTableCell.CreateBDTableCell(uuid);
                 pDataContext.AddObject(ENTITYNAME, entry);
             }
 

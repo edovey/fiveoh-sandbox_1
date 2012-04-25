@@ -352,7 +352,8 @@ namespace BDEditor.Views
                             TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
                             graftTreeNode(selectedNode, childTreeNode);
 
-                            control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
+                            //control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
+                            control_tr01 = new BDNodeOverviewControl(dataContext, node);
                             showChildControls = false;
                             break;
                     }
@@ -364,7 +365,8 @@ namespace BDEditor.Views
                             TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
                             graftTreeNode(selectedNode, childTreeNode);
 
-                            control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
+                            //control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
+                            control_tr01 = new BDNodeOverviewControl(dataContext, node);
                             showChildControls = false;
                             break;
                     }
@@ -376,7 +378,8 @@ namespace BDEditor.Views
                             TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
                             graftTreeNode(selectedNode, childTreeNode);
 
-                            control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
+                            //control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
+                            control_tr01 = new BDNodeOverviewControl(dataContext, node);
                             showChildControls = false;
                             break;
                     }
@@ -388,7 +391,8 @@ namespace BDEditor.Views
                             TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
                             graftTreeNode(selectedNode, childTreeNode);
 
-                            control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
+                            //control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
+                            control_tr01 = new BDNodeOverviewControl(dataContext, node);
                             showChildControls = false;
                             break;
                     }
@@ -397,7 +401,8 @@ namespace BDEditor.Views
                     switch (node.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                            control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
+                            //control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
+                            control_tr01 = new BDNodeOverviewControl(dataContext, node);
                             showChildControls = true;
                             break;
                     }

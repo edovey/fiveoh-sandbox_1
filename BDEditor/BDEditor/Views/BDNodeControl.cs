@@ -13,21 +13,21 @@ namespace BDEditor.Views
 {
     public partial class BDNodeControl : UserControl, IBDControl
     {
-        private IBDNode currentNode;
-        private Entities dataContext;
-        private Guid? scopeId;
-        private Guid? parentId;
-        private BDConstants.BDNodeType parentType = BDConstants.BDNodeType.None;
-        private bool showAsChild = false;
+        protected IBDNode currentNode;
+        protected Entities dataContext;
+        protected Guid? scopeId;
+        protected Guid? parentId;
+        protected BDConstants.BDNodeType parentType = BDConstants.BDNodeType.None;
+        protected bool showAsChild = false;
 
         public BDConstants.BDNodeType DefaultNodeType { get; set; }
         public BDConstants.LayoutVariantType DefaultLayoutVariantType { get; set; }
         public int? DisplayOrder{ get; set; }
 
-        private List<IBDControl> childNodeControlList = new List<IBDControl>();
+        protected List<IBDControl> childNodeControlList = new List<IBDControl>();
 
-        private List<ToolStripMenuItem> addChildNodeToolStripMenuItemList = new List<ToolStripMenuItem>(); //List of possible children
-        private List<ToolStripMenuItem> addSiblingNodeToolStripMenuItemList = new List<ToolStripMenuItem>(); //Bubbles to parent for creation
+        protected List<ToolStripMenuItem> addChildNodeToolStripMenuItemList = new List<ToolStripMenuItem>(); //List of possible children
+        protected List<ToolStripMenuItem> addSiblingNodeToolStripMenuItemList = new List<ToolStripMenuItem>(); //Bubbles to parent for creation
        
         public event EventHandler<NodeEventArgs> RequestItemAdd;
         public event EventHandler<NodeEventArgs> RequestItemDelete;
@@ -139,7 +139,7 @@ namespace BDEditor.Views
             RefreshLayout(true);
         }
 
-        public void RefreshLayout(bool pShowChildren)
+        public virtual void RefreshLayout(bool pShowChildren)
         {
             ControlHelper.SuspendDrawing(this);
 

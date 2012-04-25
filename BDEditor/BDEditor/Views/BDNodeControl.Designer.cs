@@ -60,6 +60,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlDetail = new System.Windows.Forms.Panel();
+            this.pnlOverview = new System.Windows.Forms.Panel();
             this.panelHeader.SuspendLayout();
             this.contextMenuStripTextBox.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
@@ -328,11 +329,19 @@
             this.pnlDetail.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pnlDetail.BackColor = System.Drawing.SystemColors.Control;
             this.pnlDetail.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlDetail.Location = new System.Drawing.Point(0, 66);
+            this.pnlDetail.Location = new System.Drawing.Point(0, 76);
             this.pnlDetail.MinimumSize = new System.Drawing.Size(600, 5);
             this.pnlDetail.Name = "pnlDetail";
             this.pnlDetail.Size = new System.Drawing.Size(870, 5);
             this.pnlDetail.TabIndex = 8;
+            // 
+            // pnlOverview
+            // 
+            this.pnlOverview.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlOverview.Location = new System.Drawing.Point(0, 66);
+            this.pnlOverview.Name = "pnlOverview";
+            this.pnlOverview.Size = new System.Drawing.Size(870, 10);
+            this.pnlOverview.TabIndex = 10;
             // 
             // BDNodeControl
             // 
@@ -342,11 +351,12 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.pnlDetail);
+            this.Controls.Add(this.pnlOverview);
             this.Controls.Add(this.panelHeader);
             this.DoubleBuffered = true;
             this.MinimumSize = new System.Drawing.Size(870, 50);
             this.Name = "BDNodeControl";
-            this.Size = new System.Drawing.Size(870, 71);
+            this.Size = new System.Drawing.Size(870, 81);
             this.Load += new System.EventHandler(this.BDNodeControl_Load);
             this.Leave += new System.EventHandler(this.BDNodeControl_Leave);
             this.panelHeader.ResumeLayout(false);
@@ -390,5 +400,6 @@
         private System.Windows.Forms.ToolStripMenuItem deleteNodeToolStripMenuItem;
         private System.Windows.Forms.Label lblNode;
         private System.Windows.Forms.ToolStripMenuItem addSiblingNodeToolStripMenuItem;
+        protected System.Windows.Forms.Panel pnlOverview;
     }
 }

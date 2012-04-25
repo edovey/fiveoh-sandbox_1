@@ -173,7 +173,6 @@ namespace BDEditor.Views
             bdLinkedNoteControl1.AssignDataContext(dataContext);
             if (currentNode == null)
             {
-                tbName.Text = @"";
                 overviewLinkedNote = null;
 
                 bdLinkedNoteControl1.CurrentLinkedNote = null;
@@ -183,7 +182,6 @@ namespace BDEditor.Views
             }
             else
             {
-                tbName.Text = currentNode.Name;
                 bdLinkedNoteControl1.AssignParentInfo(currentNode.Uuid, currentNode.NodeType);
                 bdLinkedNoteControl1.AssignScopeId(scopeId);
                 bdLinkedNoteControl1.AssignContextPropertyName(BDNode.VIRTUALPROPERTYNAME_OVERVIEW);

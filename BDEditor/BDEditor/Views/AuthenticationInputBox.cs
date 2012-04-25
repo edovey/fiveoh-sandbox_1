@@ -28,20 +28,20 @@ namespace BDEditor.Views
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if (!BDCommon.Settings.Authenticate(maskedTextBox1.Text))
-            {
-                MessageBox.Show("You may only retrieve data from the remote repository.", "Synchronization Permissions", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            //if (!BDCommon.Settings.Authenticate(maskedTextBox1.Text))
+            //{
+            //    MessageBox.Show("You may only retrieve data from the remote repository.", "Synchronization Permissions", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //}
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Close();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            if (!BDCommon.Settings.SyncPushEnabled)
-            {
-                MessageBox.Show("You may only retrieve data from the remote repository.", "Synchronization Permissions", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            //if (!BDCommon.Settings.SyncPushEnabled)
+            //{
+            //    MessageBox.Show("You may only retrieve data from the remote repository.", "Synchronization Permissions", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //}
             this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Close();
         }

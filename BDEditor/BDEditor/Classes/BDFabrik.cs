@@ -734,7 +734,8 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                            nodeControl = new BDNodeWithOverviewControl();
+                            //nodeControl = new BDNodeWithOverviewControl();
+                            nodeControl = new BDNodeOverviewControl();
                             break;
                         default:
                             throw new NotSupportedException();
@@ -750,7 +751,8 @@ namespace BDEditor.Classes
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
                         default:
-                            nodeControl = new BDNodeWithOverviewControl();
+                            //nodeControl = new BDNodeWithOverviewControl();
+                            nodeControl = new BDNodeOverviewControl();
                             break;
 
                     }

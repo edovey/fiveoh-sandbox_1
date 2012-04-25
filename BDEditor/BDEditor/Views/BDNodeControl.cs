@@ -566,7 +566,9 @@ namespace BDEditor.Views
         private void btnMenu_Click(object sender, EventArgs e)
         {
             buildNavContextMenuStrip(CurrentNode);
-            this.contextMenuStripEvents.Show(btnMenuLeft, new System.Drawing.Point(0, btnMenuLeft.Height));
+
+            Control anchor = (showAsChild) ? btnMenuRight : btnMenuLeft;
+            this.contextMenuStripEvents.Show(anchor, new System.Drawing.Point(0, anchor.Height));
         }
 
         private void tbName_Leave(object sender, EventArgs e)

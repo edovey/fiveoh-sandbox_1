@@ -143,6 +143,7 @@
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(475, 24);
             this.tbName.TabIndex = 1;
+            this.tbName.Leave += new System.EventHandler(this.tbName_Leave);
             // 
             // contextMenuStripTextBox
             // 

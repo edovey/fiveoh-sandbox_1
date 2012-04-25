@@ -76,20 +76,6 @@ namespace BDEditor.Classes
             }
         }
 
-        public static List<Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>> ChildTypeDefinitionListForNode(IBDNode pNode)
-        {
-            if (null == pNode)
-                return null;
-
-            if (pNode.LayoutVariant == BDConstants.LayoutVariantType.Undefined) 
-            {
-                string message = string.Format("Undefined Layout Variant for node parameter in ChildTypeDefinitionListForNode method call. [{0}]", BDUtilities.GetEnumDescription(pNode.NodeType));
-                throw new BDException(message, pNode);
-            }
-
-            return ChildTypeDefinitionListForNode(pNode.NodeType, pNode.LayoutVariant);
-        }
-
         public static List<IBDNode> SearchNodesForText(Entities pDataContext, List<int> pNodes, string pText)
         {
             List<IBDNode> nodeList = new List<IBDNode>();
@@ -125,6 +111,20 @@ namespace BDEditor.Classes
             }
 
             return nodeList;
+        }
+
+        public static List<Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>> ChildTypeDefinitionListForNode(IBDNode pNode)
+        {
+            if (null == pNode)
+                return null;
+
+            if (pNode.LayoutVariant == BDConstants.LayoutVariantType.Undefined) 
+            {
+                string message = string.Format("Undefined Layout Variant for node parameter in ChildTypeDefinitionListForNode method call. [{0}]", BDUtilities.GetEnumDescription(pNode.NodeType));
+                throw new BDException(message, pNode);
+            }
+
+            return ChildTypeDefinitionListForNode(pNode.NodeType, pNode.LayoutVariant);
         }
 
         //TODO: Return 2 dimensional array: index = 0:childtype index = 1:list of possible layoutvariants
@@ -180,6 +180,9 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDPathogen:
                     switch (layoutVariant)
                     {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogenResistance, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis }));
+                            break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         default:
                             break;
@@ -200,7 +203,7 @@ namespace BDEditor.Classes
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogenResistance, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis }));
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogenResistance, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogen, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis }));
                             break;
                         default:
                             break;
@@ -702,6 +705,7 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
                             nodeControl = new BDNodeControl();
                             break;
                     }

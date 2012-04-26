@@ -132,6 +132,17 @@ namespace BDEditor.Views
             dataContext = pDataContext;
         }
 
+        public void AssignTypeaheadSource(AutoCompleteStringCollection pSource, string pProperty)
+        {
+            if (pProperty == string.Empty || pProperty == BDNode.PROPERTYNAME_NAME)
+            {
+                tbName.AutoCompleteCustomSource = pSource;
+                tbName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                tbName.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            }
+        }
+
         #region IBDControl
 
         public void RefreshLayout()
@@ -210,6 +221,16 @@ namespace BDEditor.Views
                         currentNode.SetParent(parentType, parentId);
                     
                     BDFabrik.SaveNode(dataContext, currentNode);  
+
+                    switch (currentNode.NodeType)
+                    {
+                        case BDConstants.BDNodeType.BDPathogen:
+                            BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDPathogen, BDNode.PROPERTYNAME_NAME, currentNode.Name);
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
             }
             return result;

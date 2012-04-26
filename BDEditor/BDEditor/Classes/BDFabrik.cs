@@ -706,7 +706,11 @@ namespace BDEditor.Classes
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
-                            nodeControl = new BDNodeControl();
+                            {
+                                nodeControl = new BDNodeControl();
+                                BDNodeControl newControl = nodeControl as BDNodeControl;
+                                newControl.AssignTypeaheadSource(BDTypeahead.Pathogens, BDNode.PROPERTYNAME_NAME);
+                            }
                             break;
                     }
                     break;

@@ -28,6 +28,7 @@ namespace BDEditor.Views
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            BDCommon.Settings.Authenticate(maskedTextBox1.Text);
             //if (!BDCommon.Settings.Authenticate(maskedTextBox1.Text))
             //{
             //    MessageBox.Show("You may only retrieve data from the remote repository.", "Synchronization Permissions", MessageBoxButtons.OK, MessageBoxIcon.Information);

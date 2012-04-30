@@ -73,6 +73,12 @@ namespace BDEditor.Classes
             TreatmentRecommendation06_Meningitis = 107,  // table 5
             [Description("Treatment of Culture-Proven Endocarditis")]
             TreatmentRecommendation07_Endocarditis = 108, // table 6
+            [Description("Treatment of Opthalmic Infections")]
+            TreatmentRecommendation08_Opthalmic = 109,
+            [Description("Treatment of Enteric Parasitic Infections")]
+            TreatmentRecommendation09_Parasitic = 110,
+            [Description("Treatment of Fungal Infections")]
+            TreatmentRecommendation10_Fungal = 111,
         }
 
         public enum SyncType

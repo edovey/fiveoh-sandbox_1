@@ -658,7 +658,11 @@ namespace BDEditor.Views
             // *****
             string nodeTypeName = BDUtilities.GetEnumDescription(pBDNode.NodeType);
 
-            deleteNodeToolStripMenuItem.Text = string.Format("Delete {0}: {1}", nodeTypeName, pBDNode.Name);
+            EventHandler<NodeEventArgs> handler = RequestItemDelete;
+            if (null == handler) 
+                deleteNodeToolStripMenuItem.Visible = false;
+            else
+                deleteNodeToolStripMenuItem.Text = string.Format("Delete {0}: {1}", nodeTypeName, pBDNode.Name);
 
             List<Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>> childTypeInfoList = BDFabrik.ChildTypeDefinitionListForNode(pBDNode);
             if (null == childTypeInfoList || childTypeInfoList.Count == 0)

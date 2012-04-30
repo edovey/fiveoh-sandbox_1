@@ -272,13 +272,13 @@
             this.toolStripSeparator1,
             this.deleteNodeToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(156, 148);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(153, 148);
             // 
             // reorderPreviousToolStripMenuItem
             // 
             this.reorderPreviousToolStripMenuItem.Image = global::BDEditor.Properties.Resources.previous_16;
             this.reorderPreviousToolStripMenuItem.Name = "reorderPreviousToolStripMenuItem";
-            this.reorderPreviousToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.reorderPreviousToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.reorderPreviousToolStripMenuItem.Text = "Move &Previous";
             this.reorderPreviousToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToPrevious_Click);
             // 
@@ -286,20 +286,20 @@
             // 
             this.reorderNextToolStripMenuItem.Image = global::BDEditor.Properties.Resources.next_16;
             this.reorderNextToolStripMenuItem.Name = "reorderNextToolStripMenuItem";
-            this.reorderNextToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.reorderNextToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.reorderNextToolStripMenuItem.Text = "Move &Next";
             this.reorderNextToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToNext_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(152, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
             // 
             // addSiblingNodeToolStripMenuItem
             // 
             this.addSiblingNodeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_16x16;
             this.addSiblingNodeToolStripMenuItem.Name = "addSiblingNodeToolStripMenuItem";
-            this.addSiblingNodeToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.addSiblingNodeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.addSiblingNodeToolStripMenuItem.Text = "Add Sibling";
             this.addSiblingNodeToolStripMenuItem.Click += new System.EventHandler(this.addSiblingNode_Click);
             // 
@@ -307,19 +307,19 @@
             // 
             this.addChildNodeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_record_16;
             this.addChildNodeToolStripMenuItem.Name = "addChildNodeToolStripMenuItem";
-            this.addChildNodeToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.addChildNodeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.addChildNodeToolStripMenuItem.Text = "Add Child";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(152, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // deleteNodeToolStripMenuItem
             // 
             this.deleteNodeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.remove;
             this.deleteNodeToolStripMenuItem.Name = "deleteNodeToolStripMenuItem";
-            this.deleteNodeToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.deleteNodeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.deleteNodeToolStripMenuItem.Text = "Delete";
             this.deleteNodeToolStripMenuItem.Click += new System.EventHandler(this.btnDeleteNode_Click);
             // 
@@ -356,7 +356,7 @@
             this.DoubleBuffered = true;
             this.MinimumSize = new System.Drawing.Size(870, 50);
             this.Name = "BDNodeControl";
-            this.Size = new System.Drawing.Size(870, 81);
+            this.Size = new System.Drawing.Size(870, 105);
             this.Load += new System.EventHandler(this.BDNodeControl_Load);
             this.Leave += new System.EventHandler(this.BDNodeControl_Leave);
             this.panelHeader.ResumeLayout(false);

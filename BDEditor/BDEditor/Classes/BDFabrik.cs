@@ -181,6 +181,7 @@ namespace BDEditor.Classes
                     switch (layoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogenResistance, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis }));
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
@@ -200,7 +201,7 @@ namespace BDEditor.Classes
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis }));
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogenResistance, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogen, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis }));
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogen, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis }));
@@ -706,6 +707,7 @@ namespace BDEditor.Classes
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
                             {
                                 nodeControl = new BDNodeControl();
                                 BDNodeControl newControl = nodeControl as BDNodeControl;

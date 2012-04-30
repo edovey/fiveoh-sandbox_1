@@ -795,7 +795,11 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
-                            nodeControl = new BDTherapyGroupControl();
+                            {
+                                nodeControl = new BDNodeControl();
+                                BDNodeControl newControl = nodeControl as BDNodeControl;
+                                newControl.AssignTypeaheadSource(BDTypeahead.TherapyGroups, BDNode.PROPERTYNAME_NAME);
+                            }
                             break;
                     }
                     break;

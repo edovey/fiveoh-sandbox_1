@@ -571,6 +571,7 @@ namespace BDEditor.Views
             if (!BDCommon.Settings.SyncPushEnabled)
             {
                 btnSync.Text = "Pull Only";
+                this.Text = string.Format("{0} < CLOUD DATA IS READ ONLY >", this.Text);
             }
             btnPublish.Enabled = BDCommon.Settings.SyncPushEnabled;
             btnImportFromProduction.Enabled = BDCommon.Settings.SyncPushEnabled;
@@ -712,6 +713,95 @@ namespace BDEditor.Views
                 showNavSelection(treeNode);
                 this.Cursor = Cursors.Default;
             }
+        }
+
+        private void chapterTree_DragDrop(object sender, DragEventArgs e)
+        {
+            bool validTarget = false;
+            IBDNode targetNode = null;
+            IBDNode sourceNode = null;
+
+            TreeNode targetTreeNode = null;
+            TreeNode sourceTreeNode = null;
+            TreeNode parentTreeNode = null;
+
+            targetTreeNode = this.chapterTree.GetNodeAt(this.chapterTree.PointToClient(new Point(e.X, e.Y)));
+            if (targetTreeNode != null)
+            {
+                targetNode = targetTreeNode.Tag as IBDNode;
+                
+
+                if (null != targetNode)
+                {
+                    if (e.Data.GetDataPresent("System.Windows.Forms.TreeNode", false))
+                    {
+                        sourceTreeNode = (TreeNode)e.Data.GetData("System.Windows.Forms.TreeNode");
+                        parentTreeNode = sourceTreeNode.Parent;
+                        sourceNode = sourceTreeNode.Tag as IBDNode;
+                        validTarget = (((sourceNode.Uuid != targetNode.Uuid) && (sourceNode.ParentId == targetNode.ParentId)) || (targetNode.Uuid == sourceNode.ParentId));
+                    }
+                }
+            }
+
+            if (validTarget)
+            {
+                IBDNode parentNode = BDFabrik.RetrieveNode(this.DataContext, sourceNode.ParentType, sourceNode.ParentId);
+                List<IBDNode> siblingList = BDFabrik.GetChildrenForParent(this.DataContext, parentNode);
+
+                siblingList.Remove(sourceNode);
+                int targetIdx = (targetNode.Uuid == sourceNode.ParentId) ? 0 : siblingList.IndexOf(targetNode) + 1;
+                siblingList.Insert(targetIdx, sourceNode);
+
+                for (int idx = 0; idx < siblingList.Count; idx++)
+                {
+                    siblingList[idx].DisplayOrder = idx;
+                    BDFabrik.SaveNode(this.DataContext, siblingList[idx]);
+                }
+
+                parentTreeNode.Nodes.Remove(sourceTreeNode);
+                parentTreeNode.Nodes.Insert(targetIdx, sourceTreeNode);
+                Debug.WriteLine("---");
+            }
+        }
+
+        private void chapterTree_DragEnter(object sender, DragEventArgs e)
+        {
+            //e.Effect = DragDropEffects.Move;
+        }
+
+        private void chapterTree_DragOver(object sender, DragEventArgs e)
+        {
+            bool validTarget = false;
+
+            TreeNode nodeToDropIn = this.chapterTree.GetNodeAt(this.chapterTree.PointToClient(new Point(e.X, e.Y)));
+            if (nodeToDropIn != null)
+            {
+                IBDNode targetNode = nodeToDropIn.Tag as IBDNode;
+                if (null != targetNode)
+                {
+                    if (e.Data.GetDataPresent("System.Windows.Forms.TreeNode", false))
+                    {
+                        TreeNode source = (TreeNode)e.Data.GetData("System.Windows.Forms.TreeNode");
+                        IBDNode sourceNode = source.Tag as IBDNode;
+                        validTarget = (((sourceNode.Uuid != targetNode.Uuid) &&  (sourceNode.ParentId == targetNode.ParentId)) || (targetNode.Uuid == sourceNode.ParentId) );
+                    }
+                }
+            }
+
+            if (validTarget)
+                e.Effect = DragDropEffects.Move;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        private void chapterTree_DragLeave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chapterTree_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            DoDragDrop(e.Item, DragDropEffects.Move);
         }
     }
 }

@@ -184,13 +184,19 @@
             // 
             // chapterTree
             // 
+            this.chapterTree.AllowDrop = true;
             this.chapterTree.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chapterTree.HideSelection = false;
             this.chapterTree.Location = new System.Drawing.Point(4, 4);
             this.chapterTree.Name = "chapterTree";
             this.chapterTree.Size = new System.Drawing.Size(286, 915);
             this.chapterTree.TabIndex = 0;
+            this.chapterTree.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.chapterTree_ItemDrag);
             this.chapterTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.sectionTree_AfterSelect);
+            this.chapterTree.DragDrop += new System.Windows.Forms.DragEventHandler(this.chapterTree_DragDrop);
+            this.chapterTree.DragEnter += new System.Windows.Forms.DragEventHandler(this.chapterTree_DragEnter);
+            this.chapterTree.DragOver += new System.Windows.Forms.DragEventHandler(this.chapterTree_DragOver);
+            this.chapterTree.DragLeave += new System.EventHandler(this.chapterTree_DragLeave);
             this.chapterTree.MouseUp += new System.Windows.Forms.MouseEventHandler(this.chapterTree_MouseUp);
             // 
             // navTreeContextMenuStrip
@@ -203,13 +209,13 @@
             this.toolStripMenuItem2,
             this.deleteToolStripMenuItem});
             this.navTreeContextMenuStrip.Name = "contextMenuStripEvents";
-            this.navTreeContextMenuStrip.Size = new System.Drawing.Size(179, 104);
+            this.navTreeContextMenuStrip.Size = new System.Drawing.Size(180, 104);
             // 
             // reorderPreviousToolStripMenuItem
             // 
             this.reorderPreviousToolStripMenuItem.Image = global::BDEditor.Properties.Resources.reorder_previous;
             this.reorderPreviousToolStripMenuItem.Name = "reorderPreviousToolStripMenuItem";
-            this.reorderPreviousToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.reorderPreviousToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.reorderPreviousToolStripMenuItem.Text = "Move &Previous";
             this.reorderPreviousToolStripMenuItem.Click += new System.EventHandler(this.reorderNodeToPrevious_Click);
             // 
@@ -217,33 +223,33 @@
             // 
             this.reorderNextToolStripMenuItem.Image = global::BDEditor.Properties.Resources.reorder_next;
             this.reorderNextToolStripMenuItem.Name = "reorderNextToolStripMenuItem";
-            this.reorderNextToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.reorderNextToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.reorderNextToolStripMenuItem.Text = "Move &Next";
             this.reorderNextToolStripMenuItem.Click += new System.EventHandler(this.reorderNodeToNext_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(175, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(176, 6);
             // 
             // addChildNodeToolStripMenuItem
             // 
             this.addChildNodeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_16x16;
             this.addChildNodeToolStripMenuItem.Name = "addChildNodeToolStripMenuItem";
-            this.addChildNodeToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.addChildNodeToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.addChildNodeToolStripMenuItem.Text = "&Add Therapy Group";
             this.addChildNodeToolStripMenuItem.Click += new System.EventHandler(this.addChildNode_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(175, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(176, 6);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Image = global::BDEditor.Properties.Resources.remove;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteNode_Click);
             // 

@@ -32,7 +32,12 @@ namespace BDEditor.Classes.Navigation
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                             foreach (IBDNode childNode in childList)
                             {
-                                TreeNode childTreeNode = new TreeNode(childNode.Name);
+                                string name = childNode.Name;
+                                if ((null == name) || (name.Length == 0))
+                                {
+                                    name = childNode.Uuid.ToString();
+                                }
+                                TreeNode childTreeNode = new TreeNode(name);
                                 childTreeNode.Tag = childNode;
                                 branchTreeNode.Nodes.Add(childTreeNode);
                             }

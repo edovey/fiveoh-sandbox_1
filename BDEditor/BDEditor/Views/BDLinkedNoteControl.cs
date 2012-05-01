@@ -249,8 +249,7 @@ namespace BDEditor.Views
                     association.parentId = parentId;
                     association.parentType = (int)parentType;
                     association.parentKeyPropertyName = contextPropertyName;
-                    association.linkedNoteType = 0;
-                    //currentLinkedNote.linkedNoteAssociationId = association.uuid;
+                    association.linkedNoteType =(int) BDConstants.LinkedNoteType.MarkedComment;
                     currentLinkedNote.scopeId = scopeId;
                     BDLinkedNote.Save(dataContext, currentLinkedNote);
                     BDLinkedNoteAssociation.Save(dataContext, association);

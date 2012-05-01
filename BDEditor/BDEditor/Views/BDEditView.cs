@@ -28,7 +28,6 @@ namespace BDEditor.Views
 
             LoadChapterDropDown();
 
-            //sectionDropDown.DataSource = dataContext.BDSections;
             chapterDropDown.DisplayMember = "Name";
 
             BDNotification.Notify += new EventHandler<BDNotificationEventArgs>(BDNotification_Notify);
@@ -85,7 +84,6 @@ namespace BDEditor.Views
                 switch (pNode.LayoutVariant)
                 {
                     case BDConstants.LayoutVariantType.TreatmentRecommendation00:
-                        //TreeNode node = TreatmentRecommendationTree.BuildChapterTreeNode(dataContext, listEntry);
                         TreeNode node = TreatmentRecommendationTree.BuildBranch(dataContext, pNode);
                         // this is only to prevent a single first node
                         TreeNode[] nodeList = new TreeNode[node.Nodes.Count];
@@ -126,7 +124,6 @@ namespace BDEditor.Views
 
             deleteToolStripMenuItem.Text = string.Format("Delete {0}: {1}", nodeTypeName, pBDNode.Name);
 
-            //List<BDConstants.BDNodeType> childTypes = BDFabrik.ChildTypeDefinitionListForNode(pBDNode);
             List<Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>> childTypeInfoList = BDFabrik.ChildTypeDefinitionListForNode(pBDNode);
             if (null != childTypeInfoList)
             {
@@ -349,10 +346,12 @@ namespace BDEditor.Views
                     switch (node.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                             TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
                             graftTreeNode(selectedNode, childTreeNode);
 
-                            //control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
                             control_tr01 = new BDNodeOverviewControl(dataContext, node);
                             showChildControls = false;
                             break;
@@ -362,10 +361,10 @@ namespace BDEditor.Views
                     switch (node.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic:
                             TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
                             graftTreeNode(selectedNode, childTreeNode);
 
-                            //control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
                             control_tr01 = new BDNodeOverviewControl(dataContext, node);
                             showChildControls = false;
                             break;
@@ -375,10 +374,12 @@ namespace BDEditor.Views
                     switch (node.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                             TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
                             graftTreeNode(selectedNode, childTreeNode);
 
-                            //control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
                             control_tr01 = new BDNodeOverviewControl(dataContext, node);
                             showChildControls = false;
                             break;
@@ -388,10 +389,10 @@ namespace BDEditor.Views
                     switch (node.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic:
                             TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
                             graftTreeNode(selectedNode, childTreeNode);
 
-                            //control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
                             control_tr01 = new BDNodeOverviewControl(dataContext, node);
                             showChildControls = false;
                             break;
@@ -401,7 +402,9 @@ namespace BDEditor.Views
                     switch (node.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                            //control_tr01 = new BDNodeWithOverviewControl(dataContext, node);
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                             control_tr01 = new BDNodeOverviewControl(dataContext, node);
                             showChildControls = true;
                             break;
@@ -466,13 +469,16 @@ namespace BDEditor.Views
             this.Cursor = Cursors.WaitCursor;
             BDDataLoader dataLoader = new BDDataLoader();
 
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_2a.txt", BDDataLoader.baseDataDefinitionType.chapter2a);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_2a.txt", BDDataLoader.baseDataDefinitionType.chapter2a);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_2b.txt", BDDataLoader.baseDataDefinitionType.chapter2b);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_2c.txt", BDDataLoader.baseDataDefinitionType.chapter2c);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_2d.txt", BDDataLoader.baseDataDefinitionType.chapter2d);
 
             LoadChapterDropDown();
             BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
 
-            loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDNodes.Count() <= 0);
+            //loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDNodes.Count() <= 0);
 
             this.Cursor = Cursors.Default;
         }
@@ -535,7 +541,7 @@ namespace BDEditor.Views
 
             systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             lastSyncDate = systemSetting.settingDateTimeValue;
-            loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDNodes.Count() <= 0);
+            //loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDNodes.Count() <= 0);
 
             this.Cursor = Cursors.Default;
         }
@@ -556,7 +562,7 @@ namespace BDEditor.Views
 
             BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
-            loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDNodes.Count() <= 0);
+            //loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDNodes.Count() <= 0);
             UpdateSyncLabel();
 
             AuthenticationInputBox authenticationForm = new AuthenticationInputBox();
@@ -592,7 +598,6 @@ namespace BDEditor.Views
                 BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
                 systemSetting.settingDateTimeValue = null;
                 dataContext.SaveChanges();
-                //BDSystemSetting.SaveTimestamp(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP, null);
                 this.Cursor = Cursors.Default;
 
                 SyncData();          

@@ -25,11 +25,15 @@ namespace BDEditor.Classes.Navigation
                 case BDConstants.BDNodeType.BDChapter:
                 case BDConstants.BDNodeType.BDSection:
                 case BDConstants.BDNodeType.BDCategory:
+                case BDConstants.BDNodeType.BDSubCategory:
                 case BDConstants.BDNodeType.BDDisease:
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation00:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                             foreach (IBDNode childNode in childList)
                             {
                                 TreeNode childTreeNode = new TreeNode(childNode.Name);

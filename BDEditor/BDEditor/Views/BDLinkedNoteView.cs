@@ -305,9 +305,9 @@ namespace BDEditor.Views
             this.existingAssociation = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, parentId, contextPropertyName);
             rtfContextInfo.Text = BDLinkedNoteAssociation.GetDescription(dataContext, parentId, parentType, contextPropertyName);
             if (null != this.existingAssociation)
-            {
                 this.linkedNoteTypeCombo.SelectedIndex = this.existingAssociation.linkedNoteType.Value;
-            }
+            else
+                this.linkedNoteTypeCombo.SelectedIndex = (int)BDConstants.LinkedNoteType.MarkedComment;
 
             RefreshListOfAssociatedLinks();
             DisplayLinkedNote(this.existingAssociation, true);

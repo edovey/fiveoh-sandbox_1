@@ -95,13 +95,6 @@ namespace BDEditor.Classes
                     if (listDomainsResult.DomainName.Contains(sInfo.RemoteEntityName))
                         sInfo.ExistsOnRemote = true;
                 }
-
-               /* foreach (String domainName in listDomainsResult.DomainName)
-                {
-                    System.Diagnostics.Debug.WriteLine(string.Format("Found domain: {0}", domainName));
-                    if (syncDictionary.ContainsKey(domainName))
-                        syncDictionary[domainName].ExistsOnRemote = true;
-                } */
             }
 
             if (pCreateMissing)

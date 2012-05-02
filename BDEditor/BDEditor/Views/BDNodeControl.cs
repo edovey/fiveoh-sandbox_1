@@ -225,7 +225,8 @@ namespace BDEditor.Views
                     switch (currentNode.NodeType)
                     {
                         case BDConstants.BDNodeType.BDPathogen:
-                            BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDPathogen, BDNode.PROPERTYNAME_NAME, currentNode.Name);
+                        case BDConstants.BDNodeType.BDTherapyGroup:
+                            BDTypeahead.AddToCollection(currentNode.NodeType, BDNode.PROPERTYNAME_NAME, currentNode.Name);
                             break;
 
                         default:

@@ -644,6 +644,8 @@ namespace BDEditor.Views
             {
                 case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                     // remove dosage1, dosage2, duration1, duration2
                     pnlMain.Controls.Remove(tbDosage1);
                     pnlMain.Controls.Remove(chkPreviousDose1);
@@ -675,6 +677,15 @@ namespace BDEditor.Views
                     pnlMain.Controls.Remove(tbDosage1);
                     pnlMain.Controls.Remove(chkPreviousDose1);
                     pnlMain.Controls.Remove(btnDosage1Link);
+                    pnlMain.Controls.Remove(tbDosage2);
+                    pnlMain.Controls.Remove(chkPreviousDose2);
+                    pnlMain.Controls.Remove(btnDosage2Link);
+                    pnlMain.Controls.Remove(tbDuration2);
+                    pnlMain.Controls.Remove(chkPreviousDuration2);
+                    pnlMain.Controls.Remove(btnDuration2Link);
+                    break;
+                case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                     pnlMain.Controls.Remove(tbDosage2);
                     pnlMain.Controls.Remove(chkPreviousDose2);
                     pnlMain.Controls.Remove(btnDosage2Link);

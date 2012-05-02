@@ -50,6 +50,7 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.entitiesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.entitiesBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.btnMove = new System.Windows.Forms.Button();
             this.headerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -61,6 +62,7 @@
             // 
             // headerPanel
             // 
+            this.headerPanel.Controls.Add(this.btnMove);
             this.headerPanel.Controls.Add(this.btnSearch);
             this.headerPanel.Controls.Add(this.btnImportFromProduction);
             this.headerPanel.Controls.Add(this.btnPublish);
@@ -261,6 +263,16 @@
             // 
             this.entitiesBindingSource1.DataSource = typeof(BDEditor.DataModel.Entities);
             // 
+            // btnMove
+            // 
+            this.btnMove.Location = new System.Drawing.Point(810, 10);
+            this.btnMove.Name = "btnMove";
+            this.btnMove.Size = new System.Drawing.Size(75, 23);
+            this.btnMove.TabIndex = 8;
+            this.btnMove.Text = "Move";
+            this.btnMove.UseVisualStyleBackColor = true;
+            this.btnMove.Click += new System.EventHandler(this.btnMove_Click);
+            // 
             // BDEditView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -309,6 +321,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.Button btnMove;
 
     }
 }

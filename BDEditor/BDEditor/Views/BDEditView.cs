@@ -20,6 +20,11 @@ namespace BDEditor.Views
 
         List<ToolStripMenuItem> addNodeToolStripMenuItemList = new List<ToolStripMenuItem>();
 
+        // reset the following on BDEditView_Load when adding seed data
+        private bool isSeedDataLoadAvailable = false;
+        private string seedDataFileName = string.Empty;
+        private BDDataLoader.baseDataDefinitionType seedDataType = BDDataLoader.baseDataDefinitionType.none;
+
         public BDEditView()
         {
             InitializeComponent();
@@ -347,7 +352,8 @@ namespace BDEditor.Views
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                             TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
                             graftTreeNode(selectedNode, childTreeNode);
@@ -361,7 +367,8 @@ namespace BDEditor.Views
                     switch (node.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                             TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
                             graftTreeNode(selectedNode, childTreeNode);
 
@@ -375,7 +382,6 @@ namespace BDEditor.Views
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                             TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
                             graftTreeNode(selectedNode, childTreeNode);
@@ -389,7 +395,6 @@ namespace BDEditor.Views
                     switch (node.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic:
                             TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
                             graftTreeNode(selectedNode, childTreeNode);
 
@@ -403,7 +408,6 @@ namespace BDEditor.Views
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                             control_tr01 = new BDNodeOverviewControl(dataContext, node);
                             showChildControls = true;
@@ -421,6 +425,28 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
                             control_tr01 = new BDNodeControl(dataContext, node);
+                            showChildControls = true;
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDPathogenGroup:
+                    switch (node.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
+                            TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
+                            graftTreeNode(selectedNode, childTreeNode);
+
+                            control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                            showChildControls = false;
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDPathogen:
+                    switch (node.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
+                            control_tr01 = new BDNodeOverviewControl(dataContext, node);
                             showChildControls = true;
                             break;
                     }
@@ -469,16 +495,14 @@ namespace BDEditor.Views
             this.Cursor = Cursors.WaitCursor;
             BDDataLoader dataLoader = new BDDataLoader();
 
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_2a.txt", BDDataLoader.baseDataDefinitionType.chapter2a);
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_2b.txt", BDDataLoader.baseDataDefinitionType.chapter2b);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_2c.txt", BDDataLoader.baseDataDefinitionType.chapter2c);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_2d.txt", BDDataLoader.baseDataDefinitionType.chapter2d);
+            dataLoader.ImportData(dataContext, seedDataFileName, seedDataType);
 
             LoadChapterDropDown();
             BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
 
-            //loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDNodes.Count() <= 0);
+            loadSeedDataButton.Visible = isSeedDataLoadAvailable;
+            loadSeedDataButton.Enabled = false;
 
             this.Cursor = Cursors.Default;
         }
@@ -541,7 +565,7 @@ namespace BDEditor.Views
 
             systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             lastSyncDate = systemSetting.settingDateTimeValue;
-            //loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDNodes.Count() <= 0);
+            loadSeedDataButton.Visible = isSeedDataLoadAvailable;
 
             this.Cursor = Cursors.Default;
         }
@@ -550,19 +574,26 @@ namespace BDEditor.Views
         {
             this.Text = string.Format("{0} - {1}" , "Bugs & Drugs Editor", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
+            // Loading Seed Data:  set the following variables
+            //isSeedDataLoadAvailable = true;
+            //seedDataFileName = @"Resources\Chapter_2e.txt";
+            //seedDataType = BDDataLoader.baseDataDefinitionType.chapter2e;
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
             this.btnImportFromProduction.Visible = true;
             this.btnPublish.Visible = true;
+            this.btnMove.Visible = !isSeedDataLoadAvailable;
+            this.btnMove.Enabled = !isSeedDataLoadAvailable;
 #else
             this.btnImportFromProduction.Visible = false;
             this.btnPublish.Visible = false;
+            this.btnMove.Visible = false;
+            this.btnMove.Enabled = false;
 #endif
-
 
             BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
-            //loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDNodes.Count() <= 0);
+            loadSeedDataButton.Visible = isSeedDataLoadAvailable;
             UpdateSyncLabel();
 
             AuthenticationInputBox authenticationForm = new AuthenticationInputBox();
@@ -686,7 +717,7 @@ namespace BDEditor.Views
 
                 systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
                 lastSyncDate = systemSetting.settingDateTimeValue;
-                loadSeedDataButton.Visible = (null != lastSyncDate) && (dataContext.BDNodes.Count() <= 0);
+                loadSeedDataButton.Visible = isSeedDataLoadAvailable;
 
                 this.Cursor = Cursors.Default;
             }
@@ -802,6 +833,22 @@ namespace BDEditor.Views
         private void chapterTree_ItemDrag(object sender, ItemDragEventArgs e)
         {
             DoDragDrop(e.Item, DragDropEffects.Move);
+        }
+
+        private void btnMove_Click(object sender, EventArgs e)
+        {
+            // These operations are CUSTOM, ** BY REQUEST ONLY **
+           
+            // move Pharyngitis to Respiratory
+            BDNode node = BDNode.RetrieveNodeWithId(dataContext, new Guid("a55e8e97-16cf-4074-ae98-26627bb25143"));
+            BDUtilities.MoveNode(dataContext, node, "Respiratory");
+
+            // move Zoster subentries to Vesicular Lesions
+            BDUtilities.MoveAllChildren(dataContext, new Guid("10dce9db-6b5a-4249-b156-c86b18635852"), new Guid("5ce93aff-137f-487b-8f8a-1e9076acc8cb"));
+
+            // Move Gastroenteritis Mild-moderate to Gastroenteritis - Severe 
+            //BDNode node = BDNode.RetrieveNodeWithId(dataContext, new Guid("f80d2660-66c0-4640-9d35-c4f90a369a97"));
+            //BDUtilities.MoveNode(dataContext, node, "Gastroenteritis - Severe");
         }
     }
 }

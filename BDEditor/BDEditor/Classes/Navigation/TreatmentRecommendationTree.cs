@@ -32,8 +32,27 @@ namespace BDEditor.Classes.Navigation
                         case BDConstants.LayoutVariantType.TreatmentRecommendation00:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
+                            foreach (IBDNode childNode in childList)
+                            {
+                                string name = childNode.Name;
+                                if ((null == name) || (name.Length == 0))
+                                {
+                                    name = childNode.Uuid.ToString();
+                                }
+                                TreeNode childTreeNode = new TreeNode(name);
+                                childTreeNode.Tag = childNode;
+                                branchTreeNode.Nodes.Add(childTreeNode);
+                            }
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDPathogenGroup:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                             foreach (IBDNode childNode in childList)
                             {
                                 string name = childNode.Name;

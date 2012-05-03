@@ -479,15 +479,18 @@ namespace BDEditor.Classes
             return entryList;
         }
 
-        public static List<IBDNode> RepairSiblingNodeDisplayOrder(Entities pContext, Guid pParentId, BDConstants.BDNodeType pNodeType)
+        public static List<IBDNode> RepairSiblingNodeDisplayOrder(Entities pContext, IBDNode pParentNode, BDConstants.BDNodeType pNodeType)
         {
             // List<IBDNode> siblingList = GetChildrenForParentIdAndChildType(pContext, pParentId, pNodeType);
-            BDNode parentNode = BDNode.RetrieveNodeWithId(pContext, pParentId);
-            List<IBDNode> siblingList = GetChildrenForParent(pContext, parentNode);
+            //BDNode parentNode = BDNode.RetrieveNodeWithId(pContext, pParentId);
+            List<IBDNode> siblingList = GetChildrenForParent(pContext, pParentNode);
             for (int idx = 0; idx < siblingList.Count; idx++)
             {
-                siblingList[idx].DisplayOrder = idx;
-                SaveNode(pContext, siblingList[idx]);
+                if (siblingList[idx].DisplayOrder != idx)
+                {
+                    siblingList[idx].DisplayOrder = idx;
+                    SaveNode(pContext, siblingList[idx]);
+                }
             }
 
             return siblingList;
@@ -497,7 +500,8 @@ namespace BDEditor.Classes
         {
             if (!((null != pNode) && (null != pNode.ParentId) && (null != pNode.DisplayOrder))) return;
 
-            List<IBDNode> siblingList = RepairSiblingNodeDisplayOrder(pContext, pNode.ParentId.Value, pNode.NodeType);
+            IBDNode parentNode = RetrieveNode(pContext, pNode.ParentType, pNode.ParentId);
+            List<IBDNode> siblingList = RepairSiblingNodeDisplayOrder(pContext, parentNode, pNode.NodeType);
 
             int currentIndex = siblingList.FindIndex(t => t == pNode);
             if (currentIndex != pNode.DisplayOrder)
@@ -525,7 +529,8 @@ namespace BDEditor.Classes
             IBDNode result = null;
 
             // get the existing siblings to the new node
-            List<IBDNode> siblingList = RepairSiblingNodeDisplayOrder(pContext, pParentNode.Uuid, pChildType);
+            //Ensure that the display orders for the sibling list is sequential so the new node is 
+            List<IBDNode> siblingList = RepairSiblingNodeDisplayOrder(pContext, pParentNode, pChildType);
 
             switch (pChildType)
             {
@@ -613,7 +618,7 @@ namespace BDEditor.Classes
 
         public static void DeleteNode(Entities pContext, IBDNode pNode, bool pCreateDeletionRecord)
         {
-            Guid parentId = pNode.ParentId.Value;
+            IBDNode parentNode = RetrieveNode(pContext, pNode.ParentType, pNode.ParentId);
             BDConstants.BDNodeType nodeType = pNode.NodeType;
 
             switch (nodeType)
@@ -643,7 +648,7 @@ namespace BDEditor.Classes
                     break;
             }
 
-            List<IBDNode> siblingList = RepairSiblingNodeDisplayOrder(pContext, parentId, nodeType);
+            List<IBDNode> siblingList = RepairSiblingNodeDisplayOrder(pContext, parentNode, nodeType);
         }
 
         public static IBDNode RetrieveNode(Entities pContext, BDConstants.BDNodeType pNodeType, Guid? pUuid)

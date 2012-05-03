@@ -606,8 +606,8 @@ namespace BDEditor.Views
             IBDControl control = addChildNodeControl(node, childNodeControlList.Count);
             BDNotification.SendNotification(new BDNotificationEventArgs(BDNotificationEventArgs.BDNotificationType.Addition));
             ControlHelper.ResumeDrawing(this);
-            //if (null != control)
-            //    ((System.Windows.Forms.UserControl)control).Focus();
+            if (null != control)
+                ((System.Windows.Forms.UserControl)control).Focus();
         }
 
         void addChildNode_Click(object sender, EventArgs e)

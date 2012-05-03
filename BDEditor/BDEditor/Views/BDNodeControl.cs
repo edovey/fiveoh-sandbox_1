@@ -383,10 +383,11 @@ namespace BDEditor.Views
 
         void childNodeControl_RequestItemAdd(object sender, NodeEventArgs e)
         {
-            ControlHelper.SuspendDrawing(this);
-            IBDNode node = BDFabrik.CreateChildNode(e.DataContext, CurrentNode, e.NodeType, e.LayoutVariant);
-            addChildNodeControl(node, childNodeControlList.Count);
-            ControlHelper.ResumeDrawing(this);
+            addChildControl(e.DataContext, CurrentNode, e.NodeType, e.LayoutVariant);
+            //ControlHelper.SuspendDrawing(this);
+            //IBDNode node = BDFabrik.CreateChildNode(e.DataContext, CurrentNode, e.NodeType, e.LayoutVariant);
+            //addChildNodeControl(node, childNodeControlList.Count);
+            //ControlHelper.ResumeDrawing(this);
         }
 
         void childNodeControl_ReorderToPrevious(object sender, NodeEventArgs e)
@@ -598,6 +599,17 @@ namespace BDEditor.Views
             Save();
         }
 
+        void addChildControl(Entities pDataContext, IBDNode pParentNode, BDConstants.BDNodeType pChildNodeType, BDConstants.LayoutVariantType pChildLayoutVariant )
+        {
+            ControlHelper.SuspendDrawing(this);
+            IBDNode node = BDFabrik.CreateChildNode(dataContext, pParentNode, pChildNodeType, pChildLayoutVariant);
+            IBDControl control = addChildNodeControl(node, childNodeControlList.Count);
+            BDNotification.SendNotification(new BDNotificationEventArgs(BDNotificationEventArgs.BDNotificationType.Addition));
+            ControlHelper.ResumeDrawing(this);
+            //if (null != control)
+            //    ((System.Windows.Forms.UserControl)control).Focus();
+        }
+
         void addChildNode_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
@@ -606,11 +618,12 @@ namespace BDEditor.Views
                 BDNodeWrapper nodeWrapper = menuItem.Tag as BDNodeWrapper;
                 if (null != nodeWrapper)
                 {
-                    IBDNode node = BDFabrik.CreateChildNode(dataContext, nodeWrapper.Node, nodeWrapper.TargetNodeType, nodeWrapper.TargetLayoutVariant);
-                    IBDControl control = addChildNodeControl(node, childNodeControlList.Count);
-                    BDNotification.SendNotification(new BDNotificationEventArgs(BDNotificationEventArgs.BDNotificationType.Addition));
-                    if (null != control)
-                        ((System.Windows.Forms.UserControl)control).Focus();
+                    addChildControl(dataContext, nodeWrapper.Node, nodeWrapper.TargetNodeType, nodeWrapper.TargetLayoutVariant);
+                    //IBDNode node = BDFabrik.CreateChildNode(dataContext, nodeWrapper.Node, nodeWrapper.TargetNodeType, nodeWrapper.TargetLayoutVariant);
+                    //IBDControl control = addChildNodeControl(node, childNodeControlList.Count);
+                    //BDNotification.SendNotification(new BDNotificationEventArgs(BDNotificationEventArgs.BDNotificationType.Addition));
+                    //if (null != control)
+                    //    ((System.Windows.Forms.UserControl)control).Focus();
                 }
             }
         }

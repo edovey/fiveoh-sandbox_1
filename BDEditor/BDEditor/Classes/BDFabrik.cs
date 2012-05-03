@@ -842,9 +842,9 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                             {
-                                nodeControl = new BDNodeControl();
-                                BDNodeControl newControl = nodeControl as BDNodeControl;
-                                newControl.AssignTypeaheadSource(BDTypeahead.TherapyGroups, BDNode.PROPERTYNAME_NAME);
+                                nodeControl = new BDTherapyGroupControl();
+                                BDTherapyGroupControl newControl = nodeControl as BDTherapyGroupControl;
+                                newControl.AssignTypeaheadSource(BDTypeahead.TherapyGroups);
                             }
                             break;
                     }

@@ -46,7 +46,12 @@ namespace BDEditor.Views
                 case BDNotificationEventArgs.BDNotificationType.Refresh:
                 case BDNotificationEventArgs.BDNotificationType.Addition:
                 case BDNotificationEventArgs.BDNotificationType.Deletion:
-                     showNavSelection(chapterTree.SelectedNode);
+                    TreeNode childTreeNode = showNavSelection(chapterTree.SelectedNode, true);
+                    if( (null != childTreeNode) && (chapterTree.SelectedNode.Nodes.Count != childTreeNode.Nodes.Count))
+                    {
+                        Debug.WriteLine("Refresh child tree nodes");
+                        showNavSelection(chapterTree.SelectedNode, false);
+                    }
                     break;
             }
         }
@@ -213,7 +218,7 @@ namespace BDEditor.Views
                 else
                 {
                     chapterTree.SelectedNode = parentNode;
-                    showNavSelection(parentNode);
+                    showNavSelection(parentNode, false);
                 }
             }
         }
@@ -237,7 +242,7 @@ namespace BDEditor.Views
                 else
                 {
                     chapterTree.SelectedNode = parentNode;
-                    showNavSelection(parentNode);
+                    showNavSelection(parentNode, false);
                 }
             }
         }
@@ -251,7 +256,7 @@ namespace BDEditor.Views
                 if (null != nodeWrapper)
                 {
                     BDFabrik.CreateChildNode(DataContext, nodeWrapper.Node, nodeWrapper.TargetNodeType, nodeWrapper.TargetLayoutVariant);
-                    showNavSelection(nodeWrapper.NodeTreeNode);
+                    showNavSelection(nodeWrapper.NodeTreeNode, false);
                 }
             }
         }
@@ -270,7 +275,7 @@ namespace BDEditor.Views
                     if (MessageBox.Show(this, message, "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
                     {
                         BDFabrik.DeleteNode(DataContext, nodeWrapper.Node);
-                        showNavSelection(nodeWrapper.NodeTreeNode.Parent);
+                        showNavSelection(nodeWrapper.NodeTreeNode.Parent, false);
                     }
                 }
             }
@@ -295,7 +300,7 @@ namespace BDEditor.Views
                         if (!treeNode.IsSelected)
                         {
                             chapterTree.SelectedNode = treeNode;
-                            showNavSelection(treeNode);
+                            showNavSelection(treeNode, false);
                         }
                         IBDNode bdNode = treeNode.Tag as IBDNode;
                         buildNavContextMenuStrip(treeNode, bdNode);
@@ -311,7 +316,7 @@ namespace BDEditor.Views
             {
                 case TreeViewAction.ByKeyboard:
                 case TreeViewAction.ByMouse:
-                    showNavSelection(e.Node);
+                    showNavSelection(e.Node, false);
                     break;
                 case TreeViewAction.Collapse:
                 case TreeViewAction.Expand:
@@ -321,29 +326,33 @@ namespace BDEditor.Views
             }
         }
 
-        private void showNavSelection(TreeNode pSelectedNode)
+        private TreeNode showNavSelection(TreeNode pSelectedNode, Boolean pInterogateOnly)
         {
-            this.Cursor = Cursors.WaitCursor;
+            TreeNode childTreeNode = null;
 
-            splitContainer1.Panel2.SuspendLayout();
-            ControlHelper.SuspendDrawing(splitContainer1.Panel2);
-
-            foreach (Control ctrl in splitContainer1.Panel2.Controls)
-            {
-                IBDControl nodeCtrl = ctrl as IBDControl;
-                if (null != nodeCtrl)
-                {
-                    nodeCtrl.NameChanged -= new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
-                    nodeCtrl.RequestItemAdd -= new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
-                }
-            }
-
-            splitContainer1.Panel2.Controls.Clear();
-            TreeNode selectedNode = pSelectedNode;
-
-            IBDNode node = selectedNode.Tag as IBDNode;
             IBDControl control_tr01 = null;
+            TreeNode selectedNode = pSelectedNode;
+            IBDNode node = selectedNode.Tag as IBDNode;
             bool showChildControls = true;
+
+            this.Cursor = Cursors.WaitCursor;
+            if (!pInterogateOnly)
+            {
+                splitContainer1.Panel2.SuspendLayout();
+                ControlHelper.SuspendDrawing(splitContainer1.Panel2);
+
+                foreach (Control ctrl in splitContainer1.Panel2.Controls)
+                {
+                    IBDControl nodeCtrl = ctrl as IBDControl;
+                    if (null != nodeCtrl)
+                    {
+                        nodeCtrl.NameChanged -= new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                        nodeCtrl.RequestItemAdd -= new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
+                    }
+                }
+
+                splitContainer1.Panel2.Controls.Clear(); 
+            }
 
             switch (node.NodeType)
             {
@@ -355,11 +364,14 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
-                            TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
-                            graftTreeNode(selectedNode, childTreeNode);
+                            childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
+                            if (!pInterogateOnly)
+                            {
+                                graftTreeNode(selectedNode, childTreeNode);
 
-                            control_tr01 = new BDNodeOverviewControl(dataContext, node);
-                            showChildControls = false;
+                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = false;
+                            }
                             break;
                     }
                     break;
@@ -369,11 +381,14 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
-                            TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
-                            graftTreeNode(selectedNode, childTreeNode);
+                            childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
+                            if (!pInterogateOnly)
+                            {
+                                graftTreeNode(selectedNode, childTreeNode);
 
-                            control_tr01 = new BDNodeOverviewControl(dataContext, node);
-                            showChildControls = false;
+                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = false;
+                            }
                             break;
                     }
                     break;
@@ -383,11 +398,14 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
-                            TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
-                            graftTreeNode(selectedNode, childTreeNode);
+                            childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
+                            if (!pInterogateOnly)
+                            {
+                                graftTreeNode(selectedNode, childTreeNode);
 
-                            control_tr01 = new BDNodeOverviewControl(dataContext, node);
-                            showChildControls = false;
+                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = false;
+                            }
                             break;
                     }
                     break;
@@ -395,11 +413,14 @@ namespace BDEditor.Views
                     switch (node.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                            TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
-                            graftTreeNode(selectedNode, childTreeNode);
+                            childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
+                            if (!pInterogateOnly)
+                            {
+                                graftTreeNode(selectedNode, childTreeNode);
 
-                            control_tr01 = new BDNodeOverviewControl(dataContext, node);
-                            showChildControls = false;
+                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = false;
+                            }
                             break;
                     }
                     break;
@@ -409,8 +430,11 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
-                            control_tr01 = new BDNodeOverviewControl(dataContext, node);
-                            showChildControls = true;
+                            if (!pInterogateOnly)
+                            {
+                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = true;
+                            }
                             break;
                     }
                     break;
@@ -424,8 +448,11 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
-                            control_tr01 = new BDNodeControl(dataContext, node);
-                            showChildControls = true;
+                            if (!pInterogateOnly)
+                            {
+                                control_tr01 = new BDNodeControl(dataContext, node);
+                                showChildControls = true;
+                            }
                             break;
                     }
                     break;
@@ -433,11 +460,14 @@ namespace BDEditor.Views
                     switch (node.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
-                            TreeNode childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
-                            graftTreeNode(selectedNode, childTreeNode);
+                            childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
+                            if (!pInterogateOnly)
+                            {
+                                graftTreeNode(selectedNode, childTreeNode);
 
-                            control_tr01 = new BDNodeOverviewControl(dataContext, node);
-                            showChildControls = false;
+                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = false;
+                            }
                             break;
                     }
                     break;
@@ -446,28 +476,33 @@ namespace BDEditor.Views
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
-                            control_tr01 = new BDNodeOverviewControl(dataContext, node);
-                            showChildControls = true;
+                            if (!pInterogateOnly)
+                            {
+                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = true;
+                            }
                             break;
                     }
                     break;
             }
-
-            if (null != control_tr01)
+            if (!pInterogateOnly)
             {
-                control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);
-                control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
-                ((System.Windows.Forms.UserControl)control_tr01).Dock = DockStyle.Fill;
-                control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
-                control_tr01.RequestItemAdd += new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
-                splitContainer1.Panel2.Controls.Add((System.Windows.Forms.UserControl)control_tr01);
-                control_tr01.RefreshLayout(showChildControls);
+                if (null != control_tr01)
+                {
+                    control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);
+                    control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
+                    ((System.Windows.Forms.UserControl)control_tr01).Dock = DockStyle.Fill;
+                    control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                    control_tr01.RequestItemAdd += new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
+                    splitContainer1.Panel2.Controls.Add((System.Windows.Forms.UserControl)control_tr01);
+                    control_tr01.RefreshLayout(showChildControls);
+                }
+
+                ControlHelper.ResumeDrawing(splitContainer1.Panel2);
+                splitContainer1.Panel2.ResumeLayout();
             }
-
-            ControlHelper.ResumeDrawing(splitContainer1.Panel2);
-            splitContainer1.Panel2.ResumeLayout();
-
             this.Cursor = Cursors.Default;
+            return childTreeNode;
         }
 
         void nodeControl_NameChanged(object sender, NodeEventArgs e)
@@ -486,7 +521,7 @@ namespace BDEditor.Views
             {
                 IBDNode parentNode = BDFabrik.RetrieveNode(e.DataContext, siblingNode.ParentType, siblingNode.ParentId);
                 BDFabrik.CreateChildNode(DataContext, parentNode, e.NodeType, e.LayoutVariant);
-                showNavSelection(chapterTree.SelectedNode);
+                showNavSelection(chapterTree.SelectedNode, false);
             }
         }
 
@@ -741,7 +776,7 @@ namespace BDEditor.Views
                 IBDNode newNode = chapterTree.SelectedNode.Tag as IBDNode;
                 if (newNode.Name != treeNode.Text)
                     treeNode.Text = newNode.Name;
-                showNavSelection(treeNode);
+                showNavSelection(treeNode, false);
                 this.Cursor = Cursors.Default;
             }
         }

@@ -282,19 +282,19 @@ namespace BDEditor.Views
 
         private void setFormLayoutState()
         {
-            string title = string.Format("{0} [{1}]", BDUtilities.GetEnumDescription(DefaultNodeType), BDUtilities.GetEnumDescription(DefaultLayoutVariantType));
-
             btnMenuLeft.Enabled = !showAsChild;
-            btnMenuLeft.Visible = !showAsChild;   
-            lblNode.Text = title;
+            btnMenuLeft.Visible = !showAsChild;
+            lblNode.Text = BDUtilities.GetEnumDescription(DefaultNodeType);
             lblNode.Enabled = !showAsChild;
             lblNode.Visible = !showAsChild;
+            toolTip1.SetToolTip(lblNode, BDUtilities.GetEnumDescription(DefaultLayoutVariantType));
             
             btnMenuRight.Enabled = showAsChild;
             btnMenuRight.Visible = showAsChild;
-            lblNodeAsChild.Text = title;
+            lblNodeAsChild.Text = BDUtilities.GetEnumDescription(DefaultNodeType);
             lblNodeAsChild.Enabled = showAsChild;
             lblNodeAsChild.Visible = showAsChild;
+            toolTip1.SetToolTip(lblNodeAsChild, BDUtilities.GetEnumDescription(DefaultLayoutVariantType));
         }
 
         private void insertText(TextBox pTextBox, string pText)
@@ -338,7 +338,6 @@ namespace BDEditor.Views
                     nodeControl.AssignParentInfo(currentNode.Uuid, currentNode.NodeType);
                     nodeControl.AssignDataContext(dataContext);
                     nodeControl.AssignScopeId(scopeId);
-                    nodeControl.ShowAsChild = true;
                     nodeControl.CurrentNode = pNode;
                     nodeControl.DefaultLayoutVariantType = pNode.LayoutVariant;
                     nodeControl.DefaultNodeType = pNode.NodeType;

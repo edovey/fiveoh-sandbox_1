@@ -61,6 +61,7 @@
             this.deleteNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlDetail = new System.Windows.Forms.Panel();
             this.pnlOverview = new System.Windows.Forms.Panel();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panelHeader.SuspendLayout();
             this.contextMenuStripTextBox.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
@@ -356,7 +357,7 @@
             this.DoubleBuffered = true;
             this.MinimumSize = new System.Drawing.Size(870, 50);
             this.Name = "BDNodeControl";
-            this.Size = new System.Drawing.Size(870, 105);
+            this.Size = new System.Drawing.Size(870, 81);
             this.Load += new System.EventHandler(this.BDNodeControl_Load);
             this.Leave += new System.EventHandler(this.BDNodeControl_Leave);
             this.panelHeader.ResumeLayout(false);
@@ -401,5 +402,6 @@
         private System.Windows.Forms.Label lblNode;
         private System.Windows.Forms.ToolStripMenuItem addSiblingNodeToolStripMenuItem;
         protected System.Windows.Forms.Panel pnlOverview;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

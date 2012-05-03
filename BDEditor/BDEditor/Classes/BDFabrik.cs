@@ -726,11 +726,14 @@ namespace BDEditor.Classes
                                 nodeControl = new BDNodeControl();
                                 BDNodeControl newControl = nodeControl as BDNodeControl;
                                 newControl.AssignTypeaheadSource(BDTypeahead.Pathogens, BDNode.PROPERTYNAME_NAME);
+                                newControl.ShowAsChild = true;
                             }
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                             nodeControl = new BDNodeOverviewControl();
+                            BDNodeOverviewControl newOverviewControl = nodeControl as BDNodeOverviewControl;
+                            newOverviewControl.ShowAsChild = true;
                             break;
                     }
                     break;
@@ -748,6 +751,7 @@ namespace BDEditor.Classes
                                 nodeControl = new BDNodeControl();
                                 BDNodeControl newControl = nodeControl as BDNodeControl;
                                 newControl.AssignTypeaheadSource(BDTypeahead.PathogenGroups, BDNode.PROPERTYNAME_NAME);
+                                newControl.ShowAsChild = false;
                             }
                             break;
                         default:
@@ -760,6 +764,8 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
                             nodeControl = new BDNodeControl();
+                            BDNodeControl newControl = nodeControl as BDNodeControl;
+                            newControl.ShowAsChild = true;
                             break;
                         default:
                             throw new NotSupportedException();
@@ -771,7 +777,7 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
-                            nodeControl = new BDNodeOverviewControl();
+                                nodeControl = new BDNodeOverviewControl();
                             break;
                         default:
                             throw new NotSupportedException();
@@ -788,6 +794,8 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
                         default:
                             nodeControl = new BDNodeOverviewControl();
+                            BDNodeOverviewControl newOverviewControl = nodeControl as BDNodeOverviewControl;
+                            newOverviewControl.ShowAsChild = true;
                             break;
 
                     }
@@ -799,6 +807,8 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
                         default:
                             nodeControl = new BDNodeControl();
+                            BDNodeControl newControl = nodeControl as BDNodeControl;
+                            newControl.ShowAsChild = true;
                             break;
                     }
                     break;

@@ -617,8 +617,8 @@ namespace BDEditor.Views
             this.Text = this.Text + @" < DEVELOPMENT >";
             this.btnImportFromProduction.Visible = true;
             this.btnPublish.Visible = true;
-            this.btnMove.Visible = !isSeedDataLoadAvailable;
-            this.btnMove.Enabled = !isSeedDataLoadAvailable;
+            this.btnMove.Visible = false; // !isSeedDataLoadAvailable;
+            this.btnMove.Enabled = false; // !isSeedDataLoadAvailable;
 #else
             this.btnImportFromProduction.Visible = false;
             this.btnPublish.Visible = false;
@@ -874,6 +874,8 @@ namespace BDEditor.Views
         {
             // These operations are CUSTOM, ** BY REQUEST ONLY **
            
+            // the following are complete, but left as samples.
+            /*
             // move Pharyngitis to Respiratory
             BDNode node = BDNode.RetrieveNodeWithId(dataContext, new Guid("a55e8e97-16cf-4074-ae98-26627bb25143"));
             BDUtilities.MoveNode(dataContext, node, "Respiratory");
@@ -884,6 +886,7 @@ namespace BDEditor.Views
             // Move Gastroenteritis Mild-moderate to Gastroenteritis - Severe 
             //BDNode node = BDNode.RetrieveNodeWithId(dataContext, new Guid("f80d2660-66c0-4640-9d35-c4f90a369a97"));
             //BDUtilities.MoveNode(dataContext, node, "Gastroenteritis - Severe");
+             */
         }
     }
 }

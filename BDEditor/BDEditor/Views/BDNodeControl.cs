@@ -644,6 +644,8 @@ namespace BDEditor.Views
 
         private void buildNavContextMenuStrip(IBDNode pBDNode)
         {
+            string subDescription = string.Empty;
+
             foreach (ToolStripMenuItem entry in addChildNodeToolStripMenuItemList)
             {
                 entry.Click -= new System.EventHandler(this.addChildNode_Click);
@@ -654,9 +656,24 @@ namespace BDEditor.Views
             foreach (ToolStripMenuItem entry in addSiblingNodeToolStripMenuItemList)
             {
                 entry.Click -= new System.EventHandler(this.addSiblingNode_Click);
+                foreach (ToolStripMenuItem child in entry.DropDownItems)
+                {
+                    child.Click -= new System.EventHandler(this.addSiblingNode_Click);
+
+                }
             }
             addSiblingNodeToolStripMenuItemList.Clear();
 
+            addChildNodeToolStripMenuItem.Click -= new System.EventHandler(this.addChildNode_Click);
+            foreach (ToolStripMenuItem entry in addChildNodeToolStripMenuItem.DropDownItems)
+            {
+                entry.Click -= new System.EventHandler(this.addChildNode_Click);
+                foreach (ToolStripMenuItem child in entry.DropDownItems)
+                {
+                    child.Click -= new System.EventHandler(this.addChildNode_Click);
+
+                }
+            }
             addChildNodeToolStripMenuItem.DropDownItems.Clear();
             addSiblingNodeToolStripMenuItem.DropDownItems.Clear();
 
@@ -664,7 +681,9 @@ namespace BDEditor.Views
             reorderPreviousToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, null);
             deleteNodeToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, null);
 
-            addSiblingNodeToolStripMenuItem.Text = string.Format("&Add {0}", BDUtilities.GetEnumDescription(pBDNode.NodeType));
+            subDescription = (pBDNode.NodeType == BDConstants.BDNodeType.BDTableRow) ? string.Format(" ({0})", BDUtilities.GetEnumDescription(pBDNode.LayoutVariant)) : string.Empty;
+            addSiblingNodeToolStripMenuItem.Text = string.Format("&Add {0}{1}", BDUtilities.GetEnumDescription(pBDNode.NodeType), subDescription);
+
             // *****
             addSiblingNodeToolStripMenuItem.Visible = ShowAsChild;
             addSiblingNodeToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant);
@@ -687,7 +706,9 @@ namespace BDEditor.Views
                 if (childTypeInfoList.Count == 1)
                 {
                     string childNodeTypeName = BDUtilities.GetEnumDescription(childTypeInfoList[0].Item1);
-                    addChildNodeToolStripMenuItem.Text = string.Format("Add {0}", childNodeTypeName);
+                    subDescription = (childTypeInfoList[0].Item1 == BDConstants.BDNodeType.BDTableRow) ? string.Format(" ({0})", BDUtilities.GetEnumDescription(childTypeInfoList[0].Item2[0])) : string.Empty;
+
+                    addChildNodeToolStripMenuItem.Text = string.Format("Add {0}{1}", childNodeTypeName, subDescription);
 
                     if (childTypeInfoList[0].Item2.Length == 1)
                     {
@@ -704,7 +725,8 @@ namespace BDEditor.Views
                             item.Image = global::BDEditor.Properties.Resources.add_16x16;
                             item.Name = string.Format("dynamicAddChildLayoutVariant{0}", idx);
                             item.Size = new System.Drawing.Size(179, 22);
-                            item.Text = string.Format("&Add {0}", BDUtilities.GetEnumDescription(childTypeInfoList[0].Item2[idx]));
+                            subDescription = (childTypeInfoList[0].Item1 == BDConstants.BDNodeType.BDTableRow) ? string.Format(" ({0})", BDUtilities.GetEnumDescription(childTypeInfoList[0].Item2[idx])) : string.Empty;
+                            item.Text = string.Format("&Add {0}{1}", BDUtilities.GetEnumDescription(childTypeInfoList[0].Item2[idx]), subDescription);
                             item.Tag = new BDNodeWrapper(pBDNode, childTypeInfoList[0].Item1, childTypeInfoList[0].Item2[idx], null);
                             item.Click += new System.EventHandler(this.addChildNode_Click);
                             addChildNodeToolStripMenuItem.DropDownItems.Add(item);
@@ -723,7 +745,9 @@ namespace BDEditor.Views
                         item.Image = global::BDEditor.Properties.Resources.add_16x16;
                         item.Name = string.Format("dynamicAddChild{0}", idx);
                         item.Size = new System.Drawing.Size(179, 22);
-                        item.Text = string.Format("&Add {0}", BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item1));
+                        subDescription = (pBDNode.NodeType == BDConstants.BDNodeType.BDTableRow) ? string.Format(" ({0})", BDUtilities.GetEnumDescription(((BDTableRow)pBDNode).RowType)) : string.Empty;
+                        subDescription = (childTypeInfoList[idx].Item1 == BDConstants.BDNodeType.BDTableRow) ? string.Format(" ({0})", BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item2[0])) : string.Empty;
+                        item.Text = string.Format("&Add {0}{1}", BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item1), subDescription);
                         item.Tag = new BDNodeWrapper(pBDNode, childTypeInfoList[idx].Item1, childTypeInfoList[idx].Item2[0], null);
                         item.Click += new System.EventHandler(this.addChildNode_Click);
 
@@ -737,7 +761,8 @@ namespace BDEditor.Views
                                 layoutItem.Image = global::BDEditor.Properties.Resources.add_16x16;
                                 layoutItem.Name = string.Format("dynamicAddChildLayoutVariant{0}", idy);
                                 layoutItem.Size = new System.Drawing.Size(179, 22);
-                                layoutItem.Text = string.Format("Add {0}", BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item2[idy]));
+                                subDescription = (childTypeInfoList[idx].Item1 == BDConstants.BDNodeType.BDTableRow) ? string.Format(" ({0})", BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item2[idy])) : string.Empty;
+                                layoutItem.Text = string.Format("Add {0}{1}", BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item2[idy]), subDescription);
                                 layoutItem.Tag = new BDNodeWrapper(pBDNode, childTypeInfoList[idx].Item1, childTypeInfoList[idx].Item2[idy], null);
                                 layoutItem.Click += new System.EventHandler(this.addChildNode_Click);
                                 item.DropDownItems.Add(layoutItem);

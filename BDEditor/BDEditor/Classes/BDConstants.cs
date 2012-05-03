@@ -61,18 +61,49 @@ namespace BDEditor.Classes
             TreatmentRecommendation01 = 101, // default layout chapter 2, selected infections
             [Description("Wound Management")]
             TreatmentRecommendation02_WoundMgmt = 102, // table 1 - wound management
+            [Description("Wound Content Row")]
+            TreatmentRecommendation02_WoundMgmt_ContentRow = 1021, // table 1 - wound management
+
             [Description("Wound Classification")]
             TreatmentRecommendation03_WoundClass = 103, // table 2 - wound classification
+            [Description("Wound Header Row")]
+            TreatmentRecommendation03_WoundClass_HeaderRow = 1031, // table 2 - wound classification header row
+            [Description("Wound Content Row")]
+            TreatmentRecommendation03_WoundClass_ContentRow = 1032, // table 2 - wound classification content row
+
             [Description("Pneumonia Patient Characteristic")]
             TreatmentRecommendation04_Pneumonia_I = 104,  //  table 3 - top section
+            [Description("Pneumonia Content Row")]
+            TreatmentRecommendation04_Pneumonia_I_ContentRow = 1041,  //  table 3 - top section
+
             [Description("Pneumonia Risk and Recommendation")]
             TreatmentRecommendation04_Pneumonia_II = 105,  // table 3 - bottom section
+            [Description("Pneumonia Header Row")]
+            TreatmentRecommendation04_Pneumonia_II_HeaderRow = 1051,  // table 3 - bottom section header row
+            [Description("Pneumonia Content Row")]
+            TreatmentRecommendation04_Pneumonia_II_ContentRow = 1052,  // table 3 - bottom section content row
+
             [Description("Treatment of Culture-Proven Peritonitis")]
             TreatmentRecommendation05_Peritonitis = 106,  // table 4
+            [Description("Peritonitis Header Row")]
+            TreatmentRecommendation05_Peritonitis_HeaderRow = 1061,  // table 4 header row
+            [Description("Peritonitis Content Row")]
+            TreatmentRecommendation05_Peritonitis_ContentRow = 1062,  // table 4 content row
+
             [Description("Treatment of Culture-Proven Meningitis")]
             TreatmentRecommendation06_Meningitis = 107,  // table 5
+            [Description("Meningitis Header Row")]
+            TreatmentRecommendation06_Meningitis_HeaderRow = 1071,  // table 5 header row
+            [Description("Meningitis Content Row")]
+            TreatmentRecommendation06_Meningitis_ContentRow = 1072,  // table 5 content row
+
             [Description("Treatment of Culture-Proven Endocarditis")]
             TreatmentRecommendation07_Endocarditis = 108, // table 6
+            [Description("Endocarditis Header Row")]
+            TreatmentRecommendation07_Endocarditis_HeaderRow = 1081, // table 6
+            [Description("Endocarditis Content Row")]
+            TreatmentRecommendation07_Endocarditis_ContentRow = 1082, // table 6
+
             [Description("Treatment of Opthalmic Infections")]
             TreatmentRecommendation08_Opthalmic = 109,
             [Description("Treatment of Enteric Parasitic Infections I")]

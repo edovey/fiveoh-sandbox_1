@@ -337,6 +337,19 @@ namespace BDEditor.DataModel
        }
        #endregion
 
+       public BDConstants.TableRowLayoutVariant RowType
+       {
+           get
+           {
+               BDConstants.TableRowLayoutVariant result = BDConstants.TableRowLayoutVariant.Undefined;
+
+               if (Enum.IsDefined(typeof(BDConstants.TableRowLayoutVariant), rowType))
+               {
+                   result = (BDConstants.TableRowLayoutVariant)rowType;
+               }
+               return result;
+           }
+       }
 
        #region IBDNode implementation
        public string Name

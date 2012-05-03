@@ -604,7 +604,7 @@ namespace BDEditor.Views
             ControlHelper.SuspendDrawing(this);
             IBDNode node = BDFabrik.CreateChildNode(dataContext, pParentNode, pChildNodeType, pChildLayoutVariant);
             IBDControl control = addChildNodeControl(node, childNodeControlList.Count);
-            BDNotification.SendNotification(new BDNotificationEventArgs(BDNotificationEventArgs.BDNotificationType.Addition));
+            BDNotification.SendNotification(new BDNotificationEventArgs(BDNotificationEventArgs.BDNotificationType.Addition, pDataContext, node.NodeType, node.LayoutVariant, node.Uuid));
             ControlHelper.ResumeDrawing(this);
             if (null != control)
                 ((System.Windows.Forms.UserControl)control).Focus();

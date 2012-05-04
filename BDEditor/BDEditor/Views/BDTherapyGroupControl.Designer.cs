@@ -305,6 +305,7 @@
             // 
             // panelHeader
             // 
+            this.panelHeader.BackColor = System.Drawing.SystemColors.ControlDark;
             this.panelHeader.Controls.Add(this.btnMenu);
             this.panelHeader.Controls.Add(this.therapyGroupName);
             this.panelHeader.Controls.Add(this.tbName);
@@ -401,7 +402,7 @@
             this.AutoScroll = true;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.Controls.Add(this.panelTherapies);
             this.Controls.Add(this.panelHeader);

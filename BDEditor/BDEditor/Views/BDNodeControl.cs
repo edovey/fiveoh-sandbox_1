@@ -19,6 +19,7 @@ namespace BDEditor.Views
         protected Guid? parentId;
         protected BDConstants.BDNodeType parentType = BDConstants.BDNodeType.None;
         protected bool showAsChild = false;
+        protected bool showSiblingAdd = false;
 
         public BDConstants.BDNodeType DefaultNodeType { get; set; }
         public BDConstants.LayoutVariantType DefaultLayoutVariantType { get; set; }
@@ -84,6 +85,12 @@ namespace BDEditor.Views
         {
             get { return showAsChild; }
             set { showAsChild = value; }
+        }
+
+        public bool ShowSiblingAdd
+        {
+            get { return showSiblingAdd; }
+            set { showSiblingAdd = value; }
         }
 
         public BDNodeControl()
@@ -685,7 +692,7 @@ namespace BDEditor.Views
             addSiblingNodeToolStripMenuItem.Text = string.Format("&Add {0}{1}", BDUtilities.GetEnumDescription(pBDNode.NodeType), subDescription);
 
             // *****
-            addSiblingNodeToolStripMenuItem.Visible = ShowAsChild;
+            addSiblingNodeToolStripMenuItem.Visible = ShowSiblingAdd;
             addSiblingNodeToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant);
             // *****
             string nodeTypeName = BDUtilities.GetEnumDescription(pBDNode.NodeType);

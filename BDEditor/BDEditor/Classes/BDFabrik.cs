@@ -746,6 +746,7 @@ namespace BDEditor.Classes
                                 BDNodeControl newControl = nodeControl as BDNodeControl;
                                 newControl.AssignTypeaheadSource(BDTypeahead.Pathogens, BDNode.PROPERTYNAME_NAME);
                                 newControl.ShowAsChild = true;
+                                newControl.ShowSiblingAdd = true;
                             }
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
@@ -753,6 +754,7 @@ namespace BDEditor.Classes
                             nodeControl = new BDNodeOverviewControl();
                             BDNodeOverviewControl newOverviewControl = nodeControl as BDNodeOverviewControl;
                             newOverviewControl.ShowAsChild = true;
+                            newOverviewControl.ShowSiblingAdd = true;
                             break;
                     }
                     break;
@@ -771,6 +773,7 @@ namespace BDEditor.Classes
                                 BDNodeControl newControl = nodeControl as BDNodeControl;
                                 newControl.AssignTypeaheadSource(BDTypeahead.PathogenGroups, BDNode.PROPERTYNAME_NAME);
                                 newControl.ShowAsChild = false;
+                                newControl.ShowSiblingAdd = true;
                             }
                             break;
                         default:
@@ -785,6 +788,7 @@ namespace BDEditor.Classes
                             nodeControl = new BDNodeControl();
                             BDNodeControl newControl = nodeControl as BDNodeControl;
                             newControl.ShowAsChild = true;
+                            newControl.ShowSiblingAdd = true;
                             break;
                         default:
                             throw new NotSupportedException();
@@ -817,6 +821,7 @@ namespace BDEditor.Classes
                             nodeControl = new BDNodeOverviewControl();
                             BDNodeOverviewControl newOverviewControl = nodeControl as BDNodeOverviewControl;
                             newOverviewControl.ShowAsChild = true;
+                            newOverviewControl.ShowSiblingAdd = true;
                             break;
                     }
                     break;
@@ -829,6 +834,7 @@ namespace BDEditor.Classes
                             nodeControl = new BDNodeControl();
                             BDNodeControl newControl = nodeControl as BDNodeControl;
                             newControl.ShowAsChild = true;
+                            newControl.ShowSiblingAdd = true;
                             break;
                     }
                     break;

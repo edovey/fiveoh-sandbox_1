@@ -71,7 +71,7 @@
             // 
             this.lblNodeAsChild.AutoSize = true;
             this.lblNodeAsChild.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNodeAsChild.Location = new System.Drawing.Point(41, 10);
+            this.lblNodeAsChild.Location = new System.Drawing.Point(41, 7);
             this.lblNodeAsChild.Name = "lblNodeAsChild";
             this.lblNodeAsChild.Size = new System.Drawing.Size(55, 20);
             this.lblNodeAsChild.TabIndex = 31;
@@ -90,14 +90,14 @@
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(870, 66);
+            this.panelHeader.Size = new System.Drawing.Size(870, 56);
             this.panelHeader.TabIndex = 7;
             // 
             // lblNode
             // 
             this.lblNode.AutoSize = true;
             this.lblNode.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNode.Location = new System.Drawing.Point(3, 6);
+            this.lblNode.Location = new System.Drawing.Point(3, 3);
             this.lblNode.Name = "lblNode";
             this.lblNode.Size = new System.Drawing.Size(57, 24);
             this.lblNode.TabIndex = 33;
@@ -107,7 +107,7 @@
             // 
             this.btnMenuRight.Enabled = false;
             this.btnMenuRight.Image = global::BDEditor.Properties.Resources.apps_16;
-            this.btnMenuRight.Location = new System.Drawing.Point(554, 27);
+            this.btnMenuRight.Location = new System.Drawing.Point(554, 26);
             this.btnMenuRight.Name = "btnMenuRight";
             this.btnMenuRight.Size = new System.Drawing.Size(28, 28);
             this.btnMenuRight.TabIndex = 32;
@@ -119,7 +119,7 @@
             // 
             this.btnMenuLeft.Enabled = false;
             this.btnMenuLeft.Image = global::BDEditor.Properties.Resources.apps_16;
-            this.btnMenuLeft.Location = new System.Drawing.Point(7, 30);
+            this.btnMenuLeft.Location = new System.Drawing.Point(7, 26);
             this.btnMenuLeft.Name = "btnMenuLeft";
             this.btnMenuLeft.Size = new System.Drawing.Size(28, 28);
             this.btnMenuLeft.TabIndex = 30;
@@ -130,7 +130,7 @@
             // btnLinkedNote
             // 
             this.btnLinkedNote.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkedNote.Image")));
-            this.btnLinkedNote.Location = new System.Drawing.Point(520, 27);
+            this.btnLinkedNote.Location = new System.Drawing.Point(520, 26);
             this.btnLinkedNote.Name = "btnLinkedNote";
             this.btnLinkedNote.Size = new System.Drawing.Size(28, 28);
             this.btnLinkedNote.TabIndex = 29;
@@ -141,7 +141,7 @@
             // 
             this.tbName.ContextMenuStrip = this.contextMenuStripTextBox;
             this.tbName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbName.Location = new System.Drawing.Point(39, 31);
+            this.tbName.Location = new System.Drawing.Point(39, 28);
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(475, 24);
             this.tbName.TabIndex = 1;
@@ -330,7 +330,7 @@
             this.pnlDetail.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pnlDetail.BackColor = System.Drawing.SystemColors.Control;
             this.pnlDetail.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlDetail.Location = new System.Drawing.Point(0, 76);
+            this.pnlDetail.Location = new System.Drawing.Point(0, 58);
             this.pnlDetail.MinimumSize = new System.Drawing.Size(600, 5);
             this.pnlDetail.Name = "pnlDetail";
             this.pnlDetail.Size = new System.Drawing.Size(870, 5);
@@ -339,9 +339,9 @@
             // pnlOverview
             // 
             this.pnlOverview.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlOverview.Location = new System.Drawing.Point(0, 66);
+            this.pnlOverview.Location = new System.Drawing.Point(0, 56);
             this.pnlOverview.Name = "pnlOverview";
-            this.pnlOverview.Size = new System.Drawing.Size(870, 10);
+            this.pnlOverview.Size = new System.Drawing.Size(870, 2);
             this.pnlOverview.TabIndex = 10;
             // 
             // BDNodeControl
@@ -357,7 +357,7 @@
             this.DoubleBuffered = true;
             this.MinimumSize = new System.Drawing.Size(870, 50);
             this.Name = "BDNodeControl";
-            this.Size = new System.Drawing.Size(870, 81);
+            this.Size = new System.Drawing.Size(870, 63);
             this.Load += new System.EventHandler(this.BDNodeControl_Load);
             this.Leave += new System.EventHandler(this.BDNodeControl_Leave);
             this.panelHeader.ResumeLayout(false);

@@ -419,38 +419,45 @@ namespace BDEditor.Views
         {
             if (currentControlName == NAME_TEXTBOX)
             {
+                int position = tbName.SelectionStart;
                 tbName.Text = tbName.Text.Insert(tbName.SelectionStart, textToInsert);
-                tbName.SelectionStart += textToInsert.Length;
+                tbName.SelectionStart = textToInsert.Length + position;
             }
             else if (currentControlName == DOSAGE_TEXTBOX)
             {
-                tbDosage.Text = tbName.Text.Insert(tbName.SelectionStart, textToInsert);
-                tbDosage.SelectionStart += textToInsert.Length;
+                int position = tbDosage.SelectionStart;
+                tbDosage.Text = tbDosage.Text.Insert(tbDosage.SelectionStart, textToInsert);
+                tbDosage.SelectionStart = textToInsert.Length + position;
             }
             else if (currentControlName == DURATION_TEXTBOX)
             {
-                tbDuration.Text = tbName.Text.Insert(tbName.SelectionStart, textToInsert);
-                tbDuration.SelectionStart += textToInsert.Length;
+                int position = tbDuration.SelectionStart;
+                tbDuration.Text = tbDuration.Text.Insert(tbDuration.SelectionStart, textToInsert);
+                tbDuration.SelectionStart = textToInsert.Length + position;
             }
             else if (currentControlName == DOSAGE_1_TEXTBOX)
             {
-                tbDosage1.Text = tbName.Text.Insert(tbName.SelectionStart, textToInsert);
-                tbDosage1.SelectionStart += textToInsert.Length;
+                int position = tbDosage1.SelectionStart;
+                tbDosage1.Text = tbDosage1.Text.Insert(tbDosage1.SelectionStart, textToInsert);
+                tbDosage1.SelectionStart = textToInsert.Length + position;
             }
             else if (currentControlName == DOSAGE_2_TEXTBOX)
             {
-                tbDosage2.Text = tbName.Text.Insert(tbName.SelectionStart, textToInsert);
-                tbDosage2.SelectionStart += textToInsert.Length;
+                int position = tbDosage2.SelectionStart;
+                tbDosage2.Text = tbDosage2.Text.Insert(tbDosage2.SelectionStart, textToInsert);
+                tbDosage2.SelectionStart = textToInsert.Length + position;
             }
             else if (currentControlName == DURATION_1_TEXTBOX)
             {
-                tbDuration1.Text = tbName.Text.Insert(tbName.SelectionStart, textToInsert);
-                tbDuration1.SelectionStart += textToInsert.Length;
+                int position = tbDuration1.SelectionStart;
+                tbDuration1.Text = tbDuration1.Text.Insert(tbDuration1.SelectionStart, textToInsert);
+                tbDuration1.SelectionStart = textToInsert.Length + position;
             }
             else if (currentControlName == DURATION_2_TEXTBOX)
             {
-                tbDuration2.Text = tbName.Text.Insert(tbName.SelectionStart, textToInsert);
-                tbDuration2.SelectionStart += textToInsert.Length;
+                int position = tbDuration2.SelectionStart;
+                tbDuration2.Text = tbDuration2.Text.Insert(tbDuration2.SelectionStart, textToInsert);
+                tbDuration2.SelectionStart = textToInsert.Length + position;
             }
         }
 

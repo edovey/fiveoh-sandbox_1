@@ -40,7 +40,8 @@ namespace BDEditor.Classes.Navigation
                                 string name = childNode.Name;
                                 if ((null == name) || (name.Length == 0))
                                 {
-                                    name = childNode.Uuid.ToString();
+                                    //name = childNode.Uuid.ToString();
+                                    name = @"< intentionally blank >";
                                 }
                                 TreeNode childTreeNode = new TreeNode(name);
                                 childTreeNode.Tag = childNode;

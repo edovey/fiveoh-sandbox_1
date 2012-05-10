@@ -112,6 +112,26 @@ namespace BDEditor.Classes
             TreatmentRecommendation10_Fungal = 111,
             [Description("Treatment of Enteric Parasitic Infections II")]
             TreatmentRecommendation09_Parasitic_II = 112,
+
+            [Description("Antibiotics")]
+            Antibiotics = 200, 
+            [Description("Clinical Antibiotic Guidelines")]
+            Antibiotics_ClinicalGuidelines = 201,
+            [Description("Pharmacodynamics")]
+            Antibiotics_Pharmacodynamics = 202,
+            [Description("Pharmacodynamics Header Row")]
+            Antibiotics_Pharmacodynamics_HeaderRow = 2021,
+            [Description("Pharmacodynamics Content Row")]
+            Antibiotics_Pharmacodynamics_ContentRow = 2022,
+
+            [Description("Prophylaxis Recommendations")]
+            Prophylaxis = 300, 
+
+            [Description("Dental")]
+            Dental = 400,
+
+            [Description(" Pregnancy / Lactation")]
+            PregancyLactation = 500,
         }
 
         public enum SyncType

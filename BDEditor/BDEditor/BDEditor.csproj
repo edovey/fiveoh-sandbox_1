@@ -135,6 +135,8 @@
     <Compile Include="Classes\BDConstants.cs" />
     <Compile Include="Classes\BDUtilities.cs" />
     <Compile Include="Classes\ControlHelper.cs" />
+    <Compile Include="Classes\Navigation\BDAntibioticsTree.cs" />
+    <Compile Include="Classes\Navigation\BDProphylaxisTree.cs" />
     <Compile Include="Classes\Navigation\TreatmentRecommendationTree.cs" />
     <Compile Include="Classes\NodeEventArgs.cs" />
     <Compile Include="Classes\BDNotification.cs" />
@@ -351,6 +353,9 @@
     <None Include="Resources\del_16.png" />
     <None Include="Resources\down_16.png" />
     <Content Include="Resources\Cancel2.png" />
+    <Content Include="Resources\Chapter_1a.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Chapter_2c.txt" />
     <Content Include="Resources\Chapter_2b.txt" />
     <Content Include="Resources\Chapter_2a.txt" />
@@ -417,7 +422,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
+      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

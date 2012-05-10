@@ -91,18 +91,19 @@ namespace BDEditor.Views
 
             if ((null != pNode) && (pNode.NodeType == BDConstants.BDNodeType.BDChapter))
             {
+                TreeNode node = null;
                 switch (pNode.LayoutVariant)
                 {
                     case BDConstants.LayoutVariantType.TreatmentRecommendation00:
-                        TreeNode node = TreatmentRecommendationTree.BuildBranch(dataContext, pNode);
-                        // this is only to prevent a single first node
-                        TreeNode[] nodeList = new TreeNode[node.Nodes.Count];
-                        node.Nodes.CopyTo(nodeList, 0);
-                        chapterTree.Nodes.AddRange(nodeList);
-
-                        // ---
+                        node = TreatmentRecommendationTree.BuildBranch(dataContext, pNode);
+                        break;
+                    case BDConstants.LayoutVariantType.Antibiotics:
+                        node = BDAntibioticsTree.BuildBranch(dataContext, pNode);
                         break;
                 }
+                TreeNode[] nodeList = new TreeNode[node.Nodes.Count];
+                node.Nodes.CopyTo(nodeList, 0);
+                chapterTree.Nodes.AddRange(nodeList);
             }
 
             this.Cursor = _cursor;
@@ -326,7 +327,7 @@ namespace BDEditor.Views
             }
         }
 
-        private TreeNode showNavSelection(TreeNode pSelectedNode, Boolean pInterogateOnly)
+        private TreeNode showNavSelection(TreeNode pSelectedNode, Boolean pInterrogateOnly)
         {
             TreeNode childTreeNode = null;
 
@@ -336,7 +337,7 @@ namespace BDEditor.Views
             bool showChildControls = true;
 
             this.Cursor = Cursors.WaitCursor;
-            if (!pInterogateOnly)
+            if (!pInterrogateOnly)
             {
                 splitContainer1.Panel2.SuspendLayout();
                 ControlHelper.SuspendDrawing(splitContainer1.Panel2);
@@ -365,7 +366,19 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                             childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
-                            if (!pInterogateOnly)
+                            if (!pInterrogateOnly)
+                            {
+                                graftTreeNode(selectedNode, childTreeNode);
+
+                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = false;
+                            }
+                            break;
+
+                        case BDConstants.LayoutVariantType.Antibiotics:
+                        case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
+                            childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
+                            if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
 
@@ -382,7 +395,7 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                             childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
-                            if (!pInterogateOnly)
+                            if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
 
@@ -399,7 +412,7 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                             childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
-                            if (!pInterogateOnly)
+                            if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
 
@@ -414,7 +427,7 @@ namespace BDEditor.Views
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                             childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
-                            if (!pInterogateOnly)
+                            if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
 
@@ -430,7 +443,7 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
-                            if (!pInterogateOnly)
+                            if (!pInterrogateOnly)
                             {
                                 control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = true;
@@ -448,7 +461,8 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
-                            if (!pInterogateOnly)
+                        case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
+                            if (!pInterrogateOnly)
                             {
                                 control_tr01 = new BDNodeControl(dataContext, node);
                                 showChildControls = true;
@@ -461,7 +475,7 @@ namespace BDEditor.Views
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                             childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
-                            if (!pInterogateOnly)
+                            if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
 
@@ -476,7 +490,7 @@ namespace BDEditor.Views
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
-                            if (!pInterogateOnly)
+                            if (!pInterrogateOnly)
                             {
                                 control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = true;
@@ -485,7 +499,7 @@ namespace BDEditor.Views
                     }
                     break;
             }
-            if (!pInterogateOnly)
+            if (!pInterrogateOnly)
             {
                 if (null != control_tr01)
                 {
@@ -610,9 +624,9 @@ namespace BDEditor.Views
             this.Text = string.Format("{0} - {1}" , "Bugs & Drugs Editor", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
             // Loading Seed Data:  set the following variables
-            //isSeedDataLoadAvailable = true;
-            //seedDataFileName = @"Resources\Chapter_2e.txt";
-            //seedDataType = BDDataLoader.baseDataDefinitionType.chapter2e;
+            isSeedDataLoadAvailable = true;
+            seedDataFileName = @"Resources\Chapter_1a.txt";
+            seedDataType = BDDataLoader.baseDataDefinitionType.chapter1a;
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
             this.btnImportFromProduction.Visible = true;

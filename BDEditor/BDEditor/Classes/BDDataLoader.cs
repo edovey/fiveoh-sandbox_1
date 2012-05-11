@@ -37,8 +37,8 @@ namespace BDEditor.Classes
         BDNode pathogen;
         BDNode table;
         BDNode tableSection;
-        BDNode tableRow;
-        BDNode tableCell;
+        BDTableRow tableRow;
+        BDTableCell tableCell;
 
         string uuidData = null;
         string chapterData = null;
@@ -94,6 +94,9 @@ namespace BDEditor.Classes
                         {
                             case baseDataDefinitionType.chapter1a:
                                 ProcessChapter1aInputLine(input);
+                                break;
+                            case baseDataDefinitionType.chapter1b:
+                                ProcessChapter1bInputLine(input);
                                 break;
                             case baseDataDefinitionType.chapter2a:
                                 ProcessChapter2aInputLine(input);
@@ -581,6 +584,144 @@ namespace BDEditor.Classes
                     tableRow = null;
                     tableCell = null;
                 }
+            }
+        }
+
+        private void ProcessChapter1bInputLine(string pInputLine)
+        {
+            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
+
+            //Expectation that a row contains only one element with data
+
+            uuidData = string.Empty;
+            chapterData = string.Empty;
+            sectionData = string.Empty;
+            categoryData = string.Empty;
+            pathogenData = string.Empty;
+            tableData = string.Empty;
+            tableSectionData = string.Empty;
+            tableRowData = string.Empty;
+            tableCellData = string.Empty;
+
+            if (elements.Length > 0) uuidData = elements[0];
+            if (elements.Length > 1) chapterData = elements[1];
+            if (elements.Length > 2) sectionData = elements[2];
+            if (elements.Length > 3) tableData = elements[3];
+            if (elements.Length > 4) tableRowData = elements[4];
+            if (elements.Length > 5) tableCellData = elements[5];
+
+            if ((null != chapterData && chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
+            {
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, chapter1Uuid);
+                if (null == tmpNode)
+                {
+                    chapter = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
+                    chapter.name = chapterData;
+                    chapter.displayOrder = idxChapter++;
+                    chapter.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics;
+                    chapter.SetParent(null);
+                    BDNode.Save(dataContext, chapter);
+                }
+                else
+                    chapter = tmpNode;
+                section = null;
+                table = null;
+                tableSection = null;
+                tableRow = null;
+                tableCell = null;
+            }
+
+            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+            {
+                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == sectionNode)
+                {
+                    section = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+                    section.name = sectionData;
+                    section.SetParent(chapter);
+                    section.displayOrder = idxSection++;
+                    section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics;
+                    BDNode.Save(dataContext, section);
+                }
+                else
+                    section = sectionNode; // assign Parasitic section
+                table = null;
+                tableSection = null;
+                tableRow = null;
+                tableCell = null;
+
+            }
+            if ((null != tableData && tableData != string.Empty) && ((null == table) || (table.name != tableData)))
+            {
+                BDNode tableNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == tableNode)
+                {
+                    table = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDTable, Guid.Parse(uuidData));
+                    table.name = (tableData == @"<blank>") ? string.Empty : tableData;
+                    table.SetParent(section);
+                    table.displayOrder = idxTable++;
+                    table.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics;
+                    BDNode.Save(dataContext, table);
+                }
+                else
+                    table = tableNode;
+
+                tableSection = null;
+                tableRow = null;
+                tableCell = null;
+            }
+
+            if ((null != tableRowData && tableRowData != string.Empty) && ((null == tableRow) || (tableRow.name != tableRowData)))
+            {
+                BDTableRow tmpRow = BDTableRow.RetrieveTableRowWithId(dataContext, Guid.Parse(uuidData));
+                if (null == tmpRow)
+                {
+                    tableRow = BDTableRow.CreateTableRow(dataContext, BDConstants.BDNodeType.BDTableRow, Guid.Parse(uuidData));
+
+                    string name = String.Empty;
+                    BDConstants.LayoutVariantType rowType = BDConstants.LayoutVariantType.Undefined;
+                    if (tableRowData == @"(Header row)")
+                        rowType = BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics_HeaderRow;
+                    else if (tableRowData == @"(Data row)")
+                        rowType = BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics_ContentRow;
+                    else
+                        name = tableRowData;
+
+                    tableRow.name = name;
+                    tableRow.SetParent(table);
+                    tableRow.displayOrder = idxTableRow++;
+                    tableRow.LayoutVariant = rowType;
+                    BDNode.Save(dataContext, table);
+                }
+                    else 
+                    tableRow = tmpRow;
+
+                    tableCell = null;
+            }
+
+            if ((null != tableCellData && tableCellData != string.Empty) && ((null == tableCell) || tableCell.Uuid.ToString() != uuidData))
+            {
+                BDTableCell tmpCell = BDTableCell.RetrieveWithId(dataContext, Guid.Parse(uuidData)); 
+                if (null == tmpCell)
+                {
+                    tableCell = BDTableCell.CreateTableCell(dataContext, Guid.Parse(uuidData));
+                    tableCell.displayOrder = idxTableCell++;
+                    tableCell.SetParent(tableRow.Uuid);
+                    if (tableRow.layoutVariant == (int)BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics_HeaderRow)
+                        tableCell.alignment = (int)BDConstants.TableCellAlignment.Centred;
+                    else
+                        tableCell.alignment = (int)BDConstants.TableCellAlignment.LeftJustified;
+
+                    BDTableCell.Save(dataContext, tableCell);
+
+                    BDString cellValue = BDString.CreateString(dataContext);
+                    cellValue.displayOrder = 0;
+                    cellValue.SetParent(tableCell.Uuid);
+                    cellValue.value = tableCellData;
+                    BDString.Save(dataContext, cellValue);
+                }
+                else
+                    tableCell = tmpCell;
             }
         }
     }

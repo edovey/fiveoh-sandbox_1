@@ -112,20 +112,9 @@ namespace BDEditor.Views
         {
             if (null != currentNode)
             {
-                int maxColumns;
+                int maxColumns = BDFabrik.GetTableColumnCount(currentNode.LayoutVariant);
                 BDTableRow row = currentNode as BDTableRow;
                 List<BDTableCell> list = BDTableCell.RetrieveTableCellsForParentId(dataContext, currentNode.Uuid);
-                switch (currentNode.LayoutVariant)
-                {
-                    case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
-                        maxColumns = 2;
-                        break;
-                    case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
-                    case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II:
-                    default:
-                        maxColumns = 4;
-                        break;
-                }
                 for (int i = 0; i < maxColumns; i++)
                     pnlControls.Controls.Add(addChildCellControl(list[i]));
 
@@ -291,10 +280,24 @@ namespace BDEditor.Views
 
         private void BDTableRowControl_Load(object sender, EventArgs e)
         {
-                BDTableRow row = CurrentNode as BDTableRow;
-            if(null != CurrentNode && row.rowType == (int)BDConstants.TableRowLayoutVariant.Header)
-                this.BackColor = SystemColors.ControlDark;
-
+            BDTableRow row = CurrentNode as BDTableRow;
+            if (null != CurrentNode)
+            {
+                switch (row.LayoutVariant)
+                {
+                    case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics_HeaderRow:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass_HeaderRow:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_HeaderRow:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis_HeaderRow:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis_HeaderRow:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis_HeaderRow:
+                        this.BackColor = SystemColors.ControlDark;
+                        break;
+                    default:
+                        this.BackColor = SystemColors.Control;
+                        break;
+                }
+            }
         }
     }
 }

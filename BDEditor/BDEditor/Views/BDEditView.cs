@@ -377,6 +377,7 @@ namespace BDEditor.Views
 
                         case BDConstants.LayoutVariantType.Antibiotics:
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
+                        case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
                             childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
                             if (!pInterrogateOnly)
                             {
@@ -462,6 +463,7 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
+                        case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
                             if (!pInterrogateOnly)
                             {
                                 control_tr01 = new BDNodeControl(dataContext, node);
@@ -624,9 +626,9 @@ namespace BDEditor.Views
             this.Text = string.Format("{0} - {1}" , "Bugs & Drugs Editor", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
             // Loading Seed Data:  set the following variables
-            isSeedDataLoadAvailable = true;
-            seedDataFileName = @"Resources\Chapter_1a.txt";
-            seedDataType = BDDataLoader.baseDataDefinitionType.chapter1a;
+            //isSeedDataLoadAvailable = true;
+            //seedDataFileName = @"Resources\Chapter_1b.txt";
+            //seedDataType = BDDataLoader.baseDataDefinitionType.chapter1b;
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
             this.btnImportFromProduction.Visible = true;

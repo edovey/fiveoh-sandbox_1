@@ -173,6 +173,7 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                         case BDConstants.LayoutVariantType.Antibiotics:
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
+                        case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         default:
@@ -265,6 +266,7 @@ namespace BDEditor.Classes
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDisease, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
+                        case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         default:
@@ -304,6 +306,9 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogenGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics_HeaderRow, BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics_ContentRow }));
                             break;
                         default:
                             throw new NotSupportedException();
@@ -581,33 +586,18 @@ namespace BDEditor.Classes
                     tableRow.SetParent(pParentNode);
                     tableRow.LayoutVariant = pLayoutVariant;
                     tableRow.Name = String.Format("New {0}-{1}", BDUtilities.GetEnumDescription(pChildType), tableRow.displayOrder + 1);
-                    tableRow.rowType = (pParentNode.NodeType == BDConstants.BDNodeType.BDTable) ? (int)BDConstants.TableRowLayoutVariant.Header : (int)BDConstants.TableRowLayoutVariant.Content;
+                    tableRow.rowType = 0;
                     BDTableRow.Save(pContext, tableRow);
                     result = tableRow;
 
                     // add BDTableCells for the row
-                    int cellCount;
-                    switch (pLayoutVariant)
-                    {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
-                            // no cells:  data is stored in the Name property and in a Linked Note (type Overview)
-                            cellCount = 0;
-                            break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
-                            cellCount = 2;
-                            break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II:
-                        default:
-                            cellCount = 4;
-                            break;
-                    }
+                    int cellCount = GetTableColumnCount(pLayoutVariant);
                     for (int i = 0; i < cellCount; i++)
                     {
                         BDTableCell tableCell = BDTableCell.CreateTableCell(pContext);
                         tableCell.displayOrder = i + 1;
                         tableCell.SetParent(tableRow.Uuid);
-                        tableCell.alignment = (tableRow.rowType == (int)BDConstants.TableRowLayoutVariant.Header) ? (int)BDConstants.TableCellAlignment.Centred : (int)BDConstants.TableCellAlignment.LeftJustified;
+                        tableCell.alignment = 0;
                         BDTableCell.Save(pContext, tableCell);
 
                         BDString cellValue = BDString.CreateString(pContext);
@@ -816,6 +806,8 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I_ContentRow:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_ContentRow:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_HeaderRow:
+                        case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics_HeaderRow:
+                        case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics_ContentRow:
                             nodeControl = new BDTableRowControl();
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
@@ -902,6 +894,37 @@ namespace BDEditor.Classes
             }
             return nodeControl;
 
+        }
+
+        public static int GetTableColumnCount(BDConstants.LayoutVariantType pLayoutVariant)
+        {
+            int maxColumns = 0;
+            switch (pLayoutVariant)
+            {
+                case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt_ContentRow:
+                    // no cells:  data is stored in the Name property and in a Linked Note (type Overview)
+                    maxColumns = 0;
+                    break;
+                case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I_ContentRow:
+                    maxColumns = 2;
+                    break;
+                case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics_ContentRow:
+                case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics_HeaderRow:
+                    maxColumns = 3;
+                    break;
+                case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass_HeaderRow:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass_ContentRow:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_HeaderRow:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_ContentRow:
+                default:
+                    maxColumns = 4;
+                    break;
+            }
+            return maxColumns;
         }
     }
 }

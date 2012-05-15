@@ -168,6 +168,12 @@
     <Compile Include="DataModel\BDTableRow.cs" />
     <Compile Include="DataModel\IBDNode.cs" />
     <Compile Include="DataModel\IBDObject.cs" />
+    <Compile Include="Views\BDDosageControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDDosageControl.Designer.cs">
+      <DependentUpon>BDDosageControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\BDLinkedNoteControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -259,6 +265,9 @@
     </Compile>
     <EmbeddedResource Include="Properties\licenses.licx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDDosageControl.resx">
+      <DependentUpon>BDDosageControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDNodeControl.resx">
       <DependentUpon>BDNodeControl.cs</DependentUpon>

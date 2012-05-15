@@ -38,7 +38,10 @@ namespace BDEditor.DataModel
 
         public const int ENTITY_SCHEMAVERSION = 0;
 
-        private const string UUID = @"do_uuid";
+        public const string PROPERTYNAME_DOSAGE = @"Dosage";
+        public const string PROPERTYNAME_COST = @"Cost";
+
+       private const string UUID = @"do_uuid";
         private const string SCHEMAVERSION = @"do_schemaVersion";
         private const string MODIFIEDDATE = @"do_modifiedDate";
         private const string DISPLAYORDER = @"do_displayOrder";
@@ -58,22 +61,24 @@ namespace BDEditor.DataModel
             None = 0,
             AndWithNext = 1,
             OrWithNext = 2,
+            ThenWithNext = 3,
+            WithOrWithoutWithNext = 4,
         }
 
         /// <summary>
         /// Extended Create method that sets the schema version
         /// </summary>
         /// <returns>BDDosage</returns>
-        public static BDDosage CreateBDDosage(Entities pContext, BDConstants.BDNodeType pNodeType)
+        public static BDDosage CreateBDDosage(Entities pContext, Guid pParentId)
         {
-            return CreateBDDosage(pContext, pNodeType, Guid.NewGuid());
+            return CreateBDDosage(pContext, pParentId, Guid.NewGuid());
         }
 
         /// <summary>
         /// Extended Create method that sets the schema version, and initializes variables
         /// </summary>
         /// <returns>BDPrecaution</returns>
-        public static BDDosage CreateBDDosage(Entities pContext, BDConstants.BDNodeType pNodeType, Guid pUuid)
+        public static BDDosage CreateBDDosage(Entities pContext, Guid pParentId, Guid pUuid)
         {
             BDDosage entity = CreateBDDosage(pUuid);
             entity.schemaVersion = ENTITY_SCHEMAVERSION;
@@ -83,6 +88,7 @@ namespace BDEditor.DataModel
             entity.cost = string.Empty;
             entity.joinType = 0;
             entity.layoutVariant = -1;
+            entity.parentId = pParentId;
 
             pContext.AddObject(ENTITYNAME, entity);
 

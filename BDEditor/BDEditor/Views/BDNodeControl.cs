@@ -390,10 +390,6 @@ namespace BDEditor.Views
         void childNodeControl_RequestItemAdd(object sender, NodeEventArgs e)
         {
             addChildControl(e.DataContext, CurrentNode, e.NodeType, e.LayoutVariant);
-            //ControlHelper.SuspendDrawing(this);
-            //IBDNode node = BDFabrik.CreateChildNode(e.DataContext, CurrentNode, e.NodeType, e.LayoutVariant);
-            //addChildNodeControl(node, childNodeControlList.Count);
-            //ControlHelper.ResumeDrawing(this);
         }
 
         void childNodeControl_ReorderToPrevious(object sender, NodeEventArgs e)
@@ -625,11 +621,6 @@ namespace BDEditor.Views
                 if (null != nodeWrapper)
                 {
                     addChildControl(dataContext, nodeWrapper.Node, nodeWrapper.TargetNodeType, nodeWrapper.TargetLayoutVariant);
-                    //IBDNode node = BDFabrik.CreateChildNode(dataContext, nodeWrapper.Node, nodeWrapper.TargetNodeType, nodeWrapper.TargetLayoutVariant);
-                    //IBDControl control = addChildNodeControl(node, childNodeControlList.Count);
-                    //BDNotification.SendNotification(new BDNotificationEventArgs(BDNotificationEventArgs.BDNotificationType.Addition));
-                    //if (null != control)
-                    //    ((System.Windows.Forms.UserControl)control).Focus();
                 }
             }
         }

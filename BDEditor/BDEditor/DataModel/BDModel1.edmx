@@ -7,12 +7,14 @@
     <Schema Namespace="BDDataModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.3.5" ProviderManifestToken="3.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="BDDataModelStoreContainer">
           <EntitySet Name="BDDeletions" EntityType="BDDataModel.Store.BDDeletions" store:Type="Tables" />
+          <EntitySet Name="BDDosages" EntityType="BDDataModel.Store.BDDosages" store:Type="Tables" />
           <EntitySet Name="BDHtmlPages" EntityType="BDDataModel.Store.BDHtmlPages" store:Type="Tables" />
           <EntitySet Name="BDLinkedNoteAssociations" EntityType="BDDataModel.Store.BDLinkedNoteAssociations" store:Type="Tables" />
           <EntitySet Name="BDLinkedNotes" EntityType="BDDataModel.Store.BDLinkedNotes" store:Type="Tables" />
           <EntitySet Name="BDMetadata" EntityType="BDDataModel.Store.BDMetadata" store:Type="Tables" />
           <EntitySet Name="BDNodeAssociations" EntityType="BDDataModel.Store.BDNodeAssociations" store:Type="Tables" />
           <EntitySet Name="BDNodes" EntityType="BDDataModel.Store.BDNodes" store:Type="Tables" />
+          <EntitySet Name="BDPrecautions" EntityType="BDDataModel.Store.BDPrecautions" store:Type="Tables" />
           <EntitySet Name="BDSearchEntries" EntityType="BDDataModel.Store.BDSearchEntries" store:Type="Tables" />
           <EntitySet Name="BDSearchEntryAssociations" EntityType="BDDataModel.Store.BDSearchEntryAssociations" store:Type="Tables" />
           <EntitySet Name="BDStrings" EntityType="BDDataModel.Store.BDStrings" store:Type="Tables" />
@@ -35,6 +37,23 @@
           <Property Name="targetId" Type="uniqueidentifier" />
           <Property Name="targetName" Type="nvarchar" MaxLength="100" />
           <Property Name="targetType" Type="int" />
+        </EntityType>
+        <EntityType Name="BDDosages">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="displayOrder" Type="int" />
+          <Property Name="modifiedDate" Type="datetime" />
+          <Property Name="cost" Type="nvarchar" MaxLength="100" />
+          <Property Name="dosage" Type="nvarchar" MaxLength="100" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="joinType" Type="int" />
+          <Property Name="parentId" Type="uniqueidentifier" />
+          <Property Name="parentType" Type="int" />
+          <Property Name="layoutVariant" Type="int" />
+          <Property Name="schemaVersion" Type="int" />
+          <Property Name="parentKeyName" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="BDHtmlPages">
           <Key>
@@ -137,6 +156,32 @@
           <Property Name="inUseBy" Type="uniqueidentifier" />
           <Property Name="parentType" Type="int" />
           <Property Name="layoutVariant" Type="int" />
+        </EntityType>
+        <EntityType Name="BDPrecautions">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="parentId" Type="uniqueidentifier" />
+          <Property Name="parentType" Type="int" />
+          <Property Name="schemaVersion" Type="int" />
+          <Property Name="layoutVariant" Type="int" />
+          <Property Name="modifiedDate" Type="datetime" />
+          <Property Name="parentKeyName" Type="nvarchar" MaxLength="100" />
+          <Property Name="displayOrder" Type="int" />
+          <Property Name="organism1" Type="nvarchar" MaxLength="100" />
+          <Property Name="organism2" Type="nvarchar" MaxLength="100" />
+          <Property Name="infectiveMaterial" Type="nvarchar" MaxLength="100" />
+          <Property Name="modeOfTransmission" Type="nvarchar" MaxLength="100" />
+          <Property Name="singleRoomAcute" Type="nvarchar" MaxLength="100" />
+          <Property Name="singleRoomLongTerm" Type="nvarchar" MaxLength="100" />
+          <Property Name="glovesAcute" Type="nvarchar" MaxLength="100" />
+          <Property Name="glovesLongTerm" Type="nvarchar" MaxLength="100" />
+          <Property Name="gownsAcute" Type="nvarchar" MaxLength="100" />
+          <Property Name="gownsLongTerm" Type="nvarchar" MaxLength="100" />
+          <Property Name="maskAcute" Type="nvarchar" MaxLength="100" />
+          <Property Name="maskLongTerm" Type="nvarchar" MaxLength="100" />
+          <Property Name="duration" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="BDSearchEntries">
           <Key>
@@ -295,6 +340,8 @@
           <EntitySet Name="BDTableCells" EntityType="BDDataModel.BDTableCell" />
           <EntitySet Name="BDTableRows" EntityType="BDDataModel.BDTableRow" />
           <EntitySet Name="BDStrings" EntityType="BDDataModel.BDString" />
+          <EntitySet Name="BDDosages" EntityType="BDDataModel.BDDosage" />
+          <EntitySet Name="BDPrecautions" EntityType="BDDataModel.BDPrecaution" />
         </EntityContainer>
         <EntityType Name="BDDeletion">
           <Key>
@@ -548,6 +595,49 @@
           <Property Type="DateTime" Name="modifiedDate" />
           <Property Type="String" Name="value" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="schemaVersion" />
+        </EntityType>
+        <EntityType Name="BDDosage">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Type="Guid" Name="uuid" Nullable="false" />
+          <Property Type="Int32" Name="displayOrder" />
+          <Property Type="DateTime" Name="modifiedDate" />
+          <Property Type="String" Name="cost" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="dosage" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="name" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="joinType" />
+          <Property Type="Guid" Name="parentId" />
+          <Property Type="Int32" Name="parentType" />
+          <Property Type="Int32" Name="layoutVariant" />
+          <Property Type="Int32" Name="schemaVersion" />
+          <Property Type="String" Name="parentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="BDPrecaution">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Type="Guid" Name="uuid" Nullable="false" />
+          <Property Type="Guid" Name="parentId" />
+          <Property Type="Int32" Name="parentType" />
+          <Property Type="Int32" Name="schemaVersion" />
+          <Property Type="Int32" Name="layoutVariant" />
+          <Property Type="DateTime" Name="modifiedDate" />
+          <Property Type="String" Name="parentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="displayOrder" />
+          <Property Type="String" Name="organism1" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="organism2" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="infectiveMaterial" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="modeOfTransmission" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="singleRoomAcute" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="singleRoomLongTerm" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="glovesAcute" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="glovesLongTerm" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="gownsAcute" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="gownsLongTerm" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="maskAcute" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="maskLongTerm" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="duration" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -823,6 +913,51 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BDDosages">
+            <EntityTypeMapping TypeName="BDDataModel.BDDosage">
+              <MappingFragment StoreEntitySet="BDDosages">
+                <ScalarProperty Name="parentKeyName" ColumnName="parentKeyName" />
+                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
+                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
+                <ScalarProperty Name="parentType" ColumnName="parentType" />
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
+                <ScalarProperty Name="joinType" ColumnName="joinType" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="dosage" ColumnName="dosage" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
+                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BDPrecautions">
+            <EntityTypeMapping TypeName="BDDataModel.BDPrecaution">
+              <MappingFragment StoreEntitySet="BDPrecautions">
+                <ScalarProperty Name="duration" ColumnName="duration" />
+                <ScalarProperty Name="maskLongTerm" ColumnName="maskLongTerm" />
+                <ScalarProperty Name="maskAcute" ColumnName="maskAcute" />
+                <ScalarProperty Name="gownsLongTerm" ColumnName="gownsLongTerm" />
+                <ScalarProperty Name="gownsAcute" ColumnName="gownsAcute" />
+                <ScalarProperty Name="glovesLongTerm" ColumnName="glovesLongTerm" />
+                <ScalarProperty Name="glovesAcute" ColumnName="glovesAcute" />
+                <ScalarProperty Name="singleRoomLongTerm" ColumnName="singleRoomLongTerm" />
+                <ScalarProperty Name="singleRoomAcute" ColumnName="singleRoomAcute" />
+                <ScalarProperty Name="modeOfTransmission" ColumnName="modeOfTransmission" />
+                <ScalarProperty Name="infectiveMaterial" ColumnName="infectiveMaterial" />
+                <ScalarProperty Name="organism2" ColumnName="organism2" />
+                <ScalarProperty Name="organism1" ColumnName="organism1" />
+                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
+                <ScalarProperty Name="parentKeyName" ColumnName="parentKeyName" />
+                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
+                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
+                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
+                <ScalarProperty Name="parentType" ColumnName="parentType" />
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -858,6 +993,8 @@
         <EntityTypeShape EntityType="BDDataModel.BDTableCell" Width="1.5" PointX="12.375" PointY="1.125" Height="2.9417936197916674" />
         <EntityTypeShape EntityType="BDDataModel.BDTableRow" Width="1.5" PointX="10.625" PointY="0.875" Height="3.5186979166666656" />
         <EntityTypeShape EntityType="BDDataModel.BDString" Width="1.5" PointX="5.375" PointY="9.75" Height="1.9802864583333388" />
+        <EntityTypeShape EntityType="BDDataModel.BDDosage" Width="1.5" PointX="0.75" PointY="10.75" Height="3.3263964843750031" />
+        <EntityTypeShape EntityType="BDDataModel.BDPrecaution" Width="1.5" PointX="3.375" PointY="12.75" Height="5.0571093750000031" />
       </Diagram>
     </Diagrams>
   </Designer>

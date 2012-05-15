@@ -50,6 +50,16 @@ namespace BDEditor.Classes
             BDTableRow = 14,
             [Description("Pathogen Resistance")]
             BDPathogenResistance = 15,
+            [Description("Dosage Group")]
+            BDDosageGroup = 16,
+            // BDDosage class
+            [Description("Dosage")]
+            BDDosage = 17,
+            [Description("Antimicrobial")]
+            BDAntimicrobial = 18,
+            // BDPrecaution class
+            [Description("Precaution")]
+            BDPrecaution = 19,
         }
 
         public enum LayoutVariantType
@@ -123,7 +133,21 @@ namespace BDEditor.Classes
             Antibiotics_Pharmacodynamics_HeaderRow = 2021,
             [Description("Pharmacodynamics Content Row")]
             Antibiotics_Pharmacodynamics_ContentRow = 2022,
-
+            [Description("Antibiotics Dosing and Costs")]
+            Antibiotics_DosingAndCosts = 203,
+            [Description("Antibiotics Dosing for Renal Impairment")]
+            Antibiotics_Dosing_RenalImpairment = 204,
+            [Description("Antibiotics Dosing for Hepatic Impairment")]
+            Antibiotics_Dosing_HepaticImpairment = 205,
+            [Description("Antibiotics Name Listing")]
+            Antibiotics_NameListing = 206,
+            [Description("Antibiotics Stepdown Recommendations")]
+            Antibiotics_Stepdown = 207,
+            [Description("Antibiotics CSF Penetration")]
+            Antibiotics_CSFPenetration = 208,
+            [Description("Antibiotics B Lactam Allergy")]
+            Antibiotics_BLactamAllergy = 209,
+            
             [Description("Prophylaxis Recommendations")]
             Prophylaxis = 300, 
 

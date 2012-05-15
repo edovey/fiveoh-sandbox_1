@@ -32,6 +32,7 @@ namespace BDEditor.Classes.Navigation
                         case BDConstants.LayoutVariantType.Antibiotics:
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                         case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
                             foreach (IBDNode childNode in childList)
                             {
                                 string name = childNode.Name;

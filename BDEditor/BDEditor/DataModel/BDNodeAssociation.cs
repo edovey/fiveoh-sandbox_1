@@ -100,7 +100,7 @@
 //                    {
 //                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
 //                            definitionList.Add(BDConstants.BDNodeType.BDDisease);
-//                            //definitionList.Add(BDConstants.BDNodeType.BDSubCategory);  //Test of multiple child types in nav tree
+//                            //definitionList.Add(BDConstants.BDNodeType.BDSubcategory);  //Test of multiple child types in nav tree
 //                            break;
 //                        default:
 //                            break;
@@ -165,7 +165,7 @@
 //                            break;
 //                    }
 //                    break;
-//                case BDConstants.BDNodeType.BDSubCategory:
+//                case BDConstants.BDNodeType.BDSubcategory:
 //                    switch (layoutVariant)
 //                    {
 //                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:

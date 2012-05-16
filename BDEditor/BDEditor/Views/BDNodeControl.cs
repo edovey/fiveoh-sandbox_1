@@ -773,10 +773,5 @@ namespace BDEditor.Views
             }
         }
         #endregion
-
-
-
-
-
     }
 }

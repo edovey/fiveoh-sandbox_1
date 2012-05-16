@@ -40,6 +40,7 @@ namespace BDEditor.DataModel
 
         public const string PROPERTYNAME_DOSAGE = @"Dosage";
         public const string PROPERTYNAME_COST = @"Cost";
+        public const string PROPERTYNAME_NAME = @"Name";
 
        private const string UUID = @"do_uuid";
         private const string SCHEMAVERSION = @"do_schemaVersion";

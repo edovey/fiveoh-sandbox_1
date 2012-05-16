@@ -14,6 +14,7 @@ namespace BDEditor.Classes
             none,
             chapter1a,
             chapter1b,
+            chapter1c,
             chapter2a,
             chapter2b,
             chapter2c,
@@ -39,6 +40,7 @@ namespace BDEditor.Classes
         BDNode tableSection;
         BDTableRow tableRow;
         BDTableCell tableCell;
+        
 
         string uuidData = null;
         string chapterData = null;
@@ -112,6 +114,9 @@ namespace BDEditor.Classes
                                 break;
                             case baseDataDefinitionType.chapter2e:
                                 ProcessChapter2eInputLine(input);
+                                break;
+                            case baseDataDefinitionType.chapter1c:
+                                ProcessChapter1cInputLine(input);
                                 break;
                         }
                         
@@ -722,6 +727,76 @@ namespace BDEditor.Classes
                 }
                 else
                     tableCell = tmpCell;
+            }
+        }
+        
+        private void ProcessChapter1cInputLine(string pInputLine)
+        {
+            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
+
+            //Expectation that a row contains only one element with data
+
+            uuidData = string.Empty;
+            chapterData = string.Empty;
+            sectionData = string.Empty;
+            categoryData = string.Empty;
+            subcategoryData = string.Empty;
+            diseaseData = string.Empty;
+            presentationData = string.Empty;
+
+            if (elements.Length > 0) uuidData = elements[0];
+            if (elements.Length > 1) chapterData = elements[1];
+            if (elements.Length > 2) sectionData = elements[2];
+            if (elements.Length > 3) categoryData = elements[3];
+            if(elements.Length > 4) subcategoryData = elements[4];
+
+            if ((chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
+            {
+                chapter = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
+                chapter.name = chapterData;
+                chapter.displayOrder = idxChapter++;
+                chapter.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics;
+                chapter.SetParent(null);
+
+                BDNode.Save(dataContext, chapter);
+
+                section = null;
+                category = null;
+                subcategory = null;
+            }
+
+            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+            {
+                section = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+                section.name = sectionData;
+                section.SetParent(chapter);
+                section.displayOrder = idxSection++;
+                section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts;
+                BDNode.Save(dataContext, section);
+
+                category = null;
+                subcategory = null;
+
+            }
+            if ((categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
+            {
+                category = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
+                category.name = categoryData;
+                category.SetParent(section);
+                category.displayOrder = idxCategory++;
+                category.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts;
+                BDNode.Save(dataContext, category);
+
+                subcategory = null;
+            }
+            if ((subcategoryData != string.Empty) && ((null == subcategory) || (subcategory.name != subcategoryData)))
+            {
+                subcategory = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDSubcategory, Guid.Parse(uuidData));
+                subcategory.name = subcategoryData;
+                subcategory.SetParent(category);
+                subcategory.displayOrder = idxSubcategory++;
+                subcategory.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts;
+                BDNode.Save(dataContext, subcategory);
             }
         }
     }

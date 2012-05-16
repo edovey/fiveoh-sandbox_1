@@ -16,6 +16,7 @@ namespace BDEditor.Classes
         private static AutoCompleteStringCollection therapyNames;
         private static AutoCompleteStringCollection therapyDosages;
         private static AutoCompleteStringCollection therapyDurations;
+        private static AutoCompleteStringCollection antimicrobials;
 
         public static AutoCompleteStringCollection PathogenGroups
         {
@@ -101,6 +102,20 @@ namespace BDEditor.Classes
             }
         }
 
+        public static AutoCompleteStringCollection Antimicrobials
+        {
+            get
+            {
+                if (null == antimicrobials)
+                {
+                    antimicrobials = new AutoCompleteStringCollection();
+                    string[] names = BDNode.RetrieveNodeNamesForType(new BDEditor.DataModel.Entities(), BDConstants.BDNodeType.BDAntimicrobial);
+                    antimicrobials.AddRange(names);
+                }
+                return antimicrobials;
+            }
+        }
+
         public static void AddToCollection(BDConstants.BDNodeType pNodeType, string pEntityMember, string pValue)
         {
             if (!string.IsNullOrEmpty(pValue))
@@ -121,6 +136,14 @@ namespace BDEditor.Classes
                                 pathogens = new AutoCompleteStringCollection();
                             if (!pathogens.Contains(pValue))
                                 pathogens.Add(pValue);
+                        }
+                        break;
+                    case BDConstants.BDNodeType.BDAntimicrobial:
+                        {
+                            if (null == antimicrobials)
+                                antimicrobials = new AutoCompleteStringCollection();
+                            if (!antimicrobials.Contains(pValue))
+                                antimicrobials.Add(pValue);
                         }
                         break;
                     case BDConstants.BDNodeType.BDTherapyGroup:

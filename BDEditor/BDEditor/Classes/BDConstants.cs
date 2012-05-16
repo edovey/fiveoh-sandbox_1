@@ -22,8 +22,8 @@ namespace BDEditor.Classes
             BDSection = 2,
             [Description("Category")]
             BDCategory = 3,
-            [Description("Sub Category")]
-            BDSubCategory = 4,
+            [Description("Subcategory")]
+            BDSubcategory = 4,
             [Description("Disease")]
             BDDisease = 5,
             [Description("Presentation")]

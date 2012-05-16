@@ -378,6 +378,7 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.Antibiotics:
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                         case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
                             childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
                             if (!pInterrogateOnly)
                             {
@@ -396,6 +397,16 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                             childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
+                            if (!pInterrogateOnly)
+                            {
+                                graftTreeNode(selectedNode, childTreeNode);
+
+                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = false;
+                            }
+                            break;
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                            childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
                             if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
@@ -423,7 +434,7 @@ namespace BDEditor.Views
                             break;
                     }
                     break;
-                case BDConstants.BDNodeType.BDSubCategory:
+                case BDConstants.BDNodeType.BDSubcategory:
                     switch (node.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
@@ -434,6 +445,13 @@ namespace BDEditor.Views
 
                                 control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = false;
+                            }
+                            break;
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                            if (!pInterrogateOnly)
+                            {
+                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = true;
                             }
                             break;
                     }
@@ -626,9 +644,9 @@ namespace BDEditor.Views
             this.Text = string.Format("{0} - {1}" , "Bugs & Drugs Editor", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
             // Loading Seed Data:  set the following variables
-            //isSeedDataLoadAvailable = true;
-            //seedDataFileName = @"Resources\Chapter_1b.txt";
-            //seedDataType = BDDataLoader.baseDataDefinitionType.chapter1b;
+            isSeedDataLoadAvailable = true;
+            seedDataFileName = @"Resources\Chapter_1c.txt";
+            seedDataType = BDDataLoader.baseDataDefinitionType.chapter1c;
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
             this.btnImportFromProduction.Visible = true;

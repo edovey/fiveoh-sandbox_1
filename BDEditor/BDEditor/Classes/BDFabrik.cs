@@ -65,7 +65,7 @@ namespace BDEditor.Classes
                     case BDConstants.BDNodeType.BDPathogenGroup:
                     case BDConstants.BDNodeType.BDPresentation:
                     case BDConstants.BDNodeType.BDSection:
-                    case BDConstants.BDNodeType.BDSubCategory:
+                    case BDConstants.BDNodeType.BDSubcategory:
                     case BDConstants.BDNodeType.BDTable:
                     case BDConstants.BDNodeType.BDTableSection:
                     default:
@@ -87,7 +87,7 @@ namespace BDEditor.Classes
                     case (int)BDConstants.BDNodeType.BDChapter:
                     case (int)BDConstants.BDNodeType.BDSection:
                     case (int)BDConstants.BDNodeType.BDCategory:
-                    case (int)BDConstants.BDNodeType.BDSubCategory:
+                    case (int)BDConstants.BDNodeType.BDSubcategory:
                     case (int)BDConstants.BDNodeType.BDDisease:
                     case (int)BDConstants.BDNodeType.BDPathogenGroup:
                     case (int)BDConstants.BDNodeType.BDPathogen:
@@ -144,6 +144,14 @@ namespace BDEditor.Classes
             BDConstants.LayoutVariantType layoutVariant = pLayoutVariant;
             switch (pNodeType)
             {
+                case BDConstants.BDNodeType.BDAntimicrobial:
+                    switch (layoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDosageGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                    }
+                    break;
                 case BDConstants.BDNodeType.BDCategory:
                     switch (layoutVariant)
                     {
@@ -157,6 +165,9 @@ namespace BDEditor.Classes
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogen, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubcategory, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         default:
                             break;
@@ -174,6 +185,7 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Antibiotics:
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                         case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         default:
@@ -190,6 +202,14 @@ namespace BDEditor.Classes
                             break;
                         default:
                             break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDDosageGroup:
+                    switch (layoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDosage, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                        break;
                     }
                     break;
                 case BDConstants.BDNodeType.BDPathogen:
@@ -259,6 +279,7 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDCategory, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
@@ -273,9 +294,12 @@ namespace BDEditor.Classes
                             break;
                     }
                     break;
-                case BDConstants.BDNodeType.BDSubCategory:
+                case BDConstants.BDNodeType.BDSubcategory:
                     switch (layoutVariant)
                     {
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAntimicrobial, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
@@ -357,6 +381,7 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.None:
                 case BDConstants.BDNodeType.BDTherapy:
                 case BDConstants.BDNodeType.BDTableRow:
+                case BDConstants.BDNodeType.BDDosage:
                 default:
                     childDefinitionList = null;
                     break;
@@ -487,6 +512,29 @@ namespace BDEditor.Classes
                             entryList.AddRange(workingList);
                         }
                         break;
+                    case BDConstants.BDNodeType.BDDosage:
+                        IQueryable<BDDosage> doEntries = (from entry in pContext.BDDosages
+                                                            where entry.parentId == pParentId
+                                                            orderby entry.displayOrder ascending
+                                                            select entry);
+                        if (doEntries.Count() > 0)
+                        {
+                            List<IBDNode> workingList = new List<IBDNode>(doEntries.ToList<BDDosage>());
+                            entryList.AddRange(workingList);
+                        }
+                        break;
+
+                    case BDConstants.BDNodeType.BDPrecaution:
+                        IQueryable<BDPrecaution> prEntries = (from entry in pContext.BDPrecautions
+                                                            where entry.parentId == pParentId
+                                                            orderby entry.displayOrder ascending
+                                                            select entry);
+                        if (prEntries.Count() > 0)
+                        {
+                            List<IBDNode> workingList = new List<IBDNode>(prEntries.ToList<BDPrecaution>());
+                            entryList.AddRange(workingList);
+                        }
+                        break;
 
                     default:
                         IQueryable<BDNode> nodeEntries = (from entry in pContext.BDNodes
@@ -560,6 +608,22 @@ namespace BDEditor.Classes
 
             switch (pChildType)
             {
+                case BDConstants.BDNodeType.BDDosage:
+                    BDDosage dosage = BDDosage.CreateBDDosage(pContext, pParentNode.Uuid);
+                    dosage.DisplayOrder = siblingList.Count;
+                    dosage.SetParent(pParentNode);
+                    dosage.LayoutVariant = pLayoutVariant;
+                    BDDosage.Save(pContext, dosage);
+                    result = dosage;
+                    break;
+                case BDConstants.BDNodeType.BDPrecaution:
+                    BDPrecaution precaution = BDPrecaution.CreateBDPrecaution(pContext, pParentNode.Uuid);
+                    precaution.DisplayOrder = siblingList.Count;
+                    precaution.SetParent(pParentNode);
+                    precaution.LayoutVariant = pLayoutVariant;
+                    BDPrecaution.Save(pContext, precaution);
+                    result = precaution;
+                    break;
                 case BDConstants.BDNodeType.BDTherapyGroup:
                     BDTherapyGroup therapyGroup = BDTherapyGroup.CreateTherapyGroup(pContext, pParentNode.Uuid);
                     therapyGroup.displayOrder = siblingList.Count;
@@ -725,6 +789,44 @@ namespace BDEditor.Classes
             IBDControl nodeControl = null;
             switch (pNode.NodeType)
             {
+                case BDConstants.BDNodeType.BDAntimicrobial:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                            {
+                                nodeControl = new BDNodeControl();
+                                BDNodeControl newControl = nodeControl as BDNodeControl;
+                                newControl.AssignTypeaheadSource(BDTypeahead.Antimicrobials, BDNode.PROPERTYNAME_NAME);
+                                newControl.ShowAsChild = true;
+                                newControl.ShowSiblingAdd = true;
+                            }
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDDosage:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                            {
+                                nodeControl = new BDDosageControl();
+                            }
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDDosageGroup:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                            {
+                                nodeControl = new BDNodeControl();
+                                BDNodeControl newControl = nodeControl as BDNodeControl;
+                                //newControl.AssignTypeaheadSource(BDTypeahead.Pathogens, BDNode.PROPERTYNAME_NAME);
+                                newControl.ShowAsChild = true;
+                                newControl.ShowSiblingAdd = true;
+                            }
+                            break;
+                    }
+                    break;
                 case BDConstants.BDNodeType.BDPathogen:
                     switch (pNode.LayoutVariant)
                     {

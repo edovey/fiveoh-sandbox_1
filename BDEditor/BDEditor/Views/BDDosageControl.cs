@@ -23,6 +23,7 @@ namespace BDEditor.Views
 
         private const string COST_TEXTBOX = "Cost";
         private const string DOSAGE_TEXTBOX = "Dosage";
+        private const string NAME_TEXTBUX = "Name";
 
         public int? DisplayOrder { get; set; }
 
@@ -80,17 +81,18 @@ namespace BDEditor.Views
         public BDDosageControl()
         {
             InitializeComponent();
-
-            tbDosage.Tag = btnDosageLink;
-            tbCost.Tag = btnCostLink;
+            rtbName.Tag = btnNameLink;
+            rtbDosage.Tag = btnDosageLink;
+            rtbCost.Tag = btnCostLink;
 
             btnDosageLink.Tag = BDDosage.PROPERTYNAME_DOSAGE;
-            btnCostLink.Tag = BDTherapy.PROPERTYNAME_DURATION;
+            btnCostLink.Tag = BDDosage.PROPERTYNAME_COST;
         }
 
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentDosage) ? this.currentDosage.uuid : Guid.Empty);
+            btnNameLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnNameLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR; 
             btnDosageLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnDosageLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
             btnCostLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnCostLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
         }
@@ -102,12 +104,7 @@ namespace BDEditor.Views
 
         public void AssignTypeaheadSource(AutoCompleteStringCollection pSource, string pProperty)
         {
-            if (pProperty == string.Empty || pProperty == BDDosage.PROPERTYNAME_DOSAGE)
-            {
-                tbDosage.AutoCompleteCustomSource = pSource;
-                tbDosage.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                tbDosage.AutoCompleteSource = AutoCompleteSource.CustomSource;
-            }
+            throw new NotSupportedException();
         }
 
         #region IBDControl
@@ -122,16 +119,18 @@ namespace BDEditor.Views
             ControlHelper.SuspendDrawing(this);
             if (currentDosage == null)
             {
-                tbDosage.Text = @"";
-                tbCost.Text = @"";
+                rtbName.Text = @"";
+                rtbDosage.Text = @"";
+                rtbCost.Text = @"";
                 noneRadioButton.Checked = true;
             }
             else
             {
                 this.BackColor = SystemColors.Control;
 
-                tbDosage.Text = currentDosage.dosage;
-                tbCost.Text = currentDosage.cost;
+                rtbName.Text = currentDosage.name;
+                rtbDosage.Text = currentDosage.dosage;
+                rtbCost.Text = currentDosage.cost;
                 DisplayOrder = currentDosage.displayOrder;
 
                 switch ((BDDosage.DosageJoinType)currentDosage.joinType)
@@ -193,16 +192,18 @@ namespace BDEditor.Views
             if (null != parentId)
             {
                 if ((null == currentDosage) &&
-                    (tbDosage.Text != string.Empty) ||
-                    (tbCost.Text != string.Empty))
+                    (rtbName.Text != string.Empty) ||
+                    (rtbDosage.Text != string.Empty) ||
+                    (rtbCost.Text != string.Empty))
                 {
                     CreateCurrentObject();
                 }
 
                 if (null != currentDosage)
                 {
-                    if (currentDosage.dosage != tbDosage.Text) currentDosage.dosage = tbDosage.Text;
-                    if (currentDosage.cost != tbCost.Text) currentDosage.cost = tbCost.Text;
+                    if (currentDosage.Name != rtbName.Text) currentDosage.Name = rtbName.Text;
+                    if (currentDosage.dosage != rtbDosage.Text) currentDosage.dosage = rtbDosage.Text;
+                    if (currentDosage.cost != rtbCost.Text) currentDosage.cost = rtbCost.Text;
                     if (currentDosage.displayOrder != DisplayOrder) currentDosage.displayOrder = DisplayOrder;
 
                     if (andRadioButton.Checked)
@@ -233,11 +234,6 @@ namespace BDEditor.Views
 
                     BDDosage.Save(dataContext, currentDosage);
                     result = true;
-
-                    if (currentDosage.name.Length > 0)
-                        BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_THERAPY, currentDosage.name);
-                    if (currentDosage.dosage.Length > 0)
-                        BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, currentDosage.dosage);
                 }
             }
 
@@ -278,24 +274,31 @@ namespace BDEditor.Views
 
         private void insertTextFromMenu(string textToInsert)
         {
+            if (currentControlName == NAME_TEXTBUX)
+            {
+                int position = rtbName.SelectionStart;
+                rtbName.Text = rtbName.Text.Insert(rtbName.SelectionStart, textToInsert);
+                rtbName.SelectionStart = textToInsert.Length + position;
+            }
             if (currentControlName == COST_TEXTBOX)
             {
-                int position = tbCost.SelectionStart;
-                tbCost.Text = tbCost.Text.Insert(tbCost.SelectionStart, textToInsert);
-                tbCost.SelectionStart = textToInsert.Length + position;
+                int position = rtbCost.SelectionStart;
+                rtbCost.Text = rtbCost.Text.Insert(rtbCost.SelectionStart, textToInsert);
+                rtbCost.SelectionStart = textToInsert.Length + position;
             }
             else if (currentControlName == DOSAGE_TEXTBOX)
             {
-                int position = tbDosage.SelectionStart;
-                tbDosage.Text = tbDosage.Text.Insert(tbDosage.SelectionStart, textToInsert);
-                tbDosage.SelectionStart = textToInsert.Length + position;
+                int position = rtbDosage.SelectionStart;
+                rtbDosage.Text = rtbDosage.Text.Insert(rtbDosage.SelectionStart, textToInsert);
+                rtbDosage.SelectionStart = textToInsert.Length + position;
             }
         }
 
         private void toggleLinkButtonEnablement()
         {
-            bool enabled = ( (tbDosage.Text.Length > 0) || (tbCost.Text.Length > 0) );
+            bool enabled = ( (rtbName.Text.Length > 0) || (rtbDosage.Text.Length > 0) || (rtbCost.Text.Length > 0) );
 
+            btnNameLink.Enabled = enabled;
             btnDosageLink.Enabled = enabled;
             btnCostLink.Enabled = enabled;
         }
@@ -308,11 +311,6 @@ namespace BDEditor.Views
         private void checkBox_CheckedChanged(object sender, EventArgs e)
         {
             toggleLinkButtonEnablement();
-        }
-
-        private void BDTherapyControl_Leave(object sender, EventArgs e)
-        {
-            Save();
         }
 
         private void btnLink_Click(object sender, EventArgs e)
@@ -370,7 +368,7 @@ namespace BDEditor.Views
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            OnItemAddRequested(new NodeEventArgs(dataContext, BDConstants.BDNodeType.BDTherapy, DefaultLayoutVariantType));
+            OnItemAddRequested(new NodeEventArgs(dataContext, BDConstants.BDNodeType.BDDosage, DefaultLayoutVariantType));
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -403,9 +401,19 @@ namespace BDEditor.Views
             OnNotesChanged(e);
         }
 
-        private void tbDosage_MouseDown(object sender, MouseEventArgs e)
+        private void rtbDosage_MouseDown(object sender, MouseEventArgs e)
         {
             currentControlName = DOSAGE_TEXTBOX;
+        }
+
+        private void rtbName_MouseDown(object sender, MouseEventArgs e)
+        {
+            currentControlName = NAME_TEXTBUX;
+        }
+
+        private void rtbCost_MouseDown(object sender, MouseEventArgs e)
+        {
+            currentControlName = COST_TEXTBOX;
         }
 
         public BDConstants.BDNodeType DefaultNodeType { get; set; }
@@ -426,9 +434,15 @@ namespace BDEditor.Views
 
         public bool ShowAsChild { get; set; }
 
-        private void BDTherapyControl_Load(object sender, EventArgs e)
+        private void BDDosageControl_Leave(object sender, EventArgs e)
         {
-            pnlMain.Refresh();
+            Save();
         }
+
+        private void BDDosageControl_Load(object sender, EventArgs e)
+        {
+            rtbName.SelectAll();
+        }
+
     }
 }

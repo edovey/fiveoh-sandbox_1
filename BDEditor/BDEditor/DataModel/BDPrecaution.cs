@@ -66,16 +66,16 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets the schema version
         /// </summary>
         /// <returns>BDPrecaution</returns>
-        public static BDPrecaution CreateBDPrecaution(Entities pContext, BDConstants.BDNodeType pNodeType)
+        public static BDPrecaution CreateBDPrecaution(Entities pContext, Guid pParentId)
         {
-            return CreateBDPrecaution(pContext, pNodeType, Guid.NewGuid());
+            return CreateBDPrecaution(pContext, pParentId, Guid.NewGuid());
         }
 
         /// <summary>
         /// Extended Create method that sets created date and schema version, and initializes variables
         /// </summary>
         /// <returns>BDPrecaution</returns>
-        public static BDPrecaution CreateBDPrecaution(Entities pContext, BDConstants.BDNodeType pNodeType, Guid pUuid)
+        public static BDPrecaution CreateBDPrecaution(Entities pContext, Guid pParentId, Guid pUuid)
         {
             BDPrecaution entity = CreateBDPrecaution(pUuid);
             entity.schemaVersion = ENTITY_SCHEMAVERSION;
@@ -93,6 +93,7 @@ namespace BDEditor.DataModel
             entity.maskAcute = string.Empty;
             entity.maskLongTerm = string.Empty;
             entity.duration = string.Empty;
+            entity.parentId = pParentId;
 
             pContext.AddObject(ENTITYNAME, entity);
 

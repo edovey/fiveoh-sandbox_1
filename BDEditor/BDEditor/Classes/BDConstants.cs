@@ -135,18 +135,20 @@ namespace BDEditor.Classes
             Antibiotics_Pharmacodynamics_ContentRow = 2022,
             [Description("Antibiotics Dosing and Costs")]
             Antibiotics_DosingAndCosts = 203,
-            [Description("Antibiotics Dosing for Renal Impairment")]
-            Antibiotics_Dosing_RenalImpairment = 204,
-            [Description("Antibiotics Dosing for Hepatic Impairment")]
-            Antibiotics_Dosing_HepaticImpairment = 205,
+            [Description("Antibiotics Dosing and Monitoring")]
+            Antibiotics_DosingAndMonitoring = 204,
+            [Description("Antibiotics Dosing in Renal Impairment")]
+            Antibiotics_Dosing_RenalImpairment = 205,
+            [Description("Antibiotics Dosing in Hepatic Impairment")]
+            Antibiotics_Dosing_HepaticImpairment = 206,
             [Description("Antibiotics Name Listing")]
-            Antibiotics_NameListing = 206,
+            Antibiotics_NameListing = 207,
             [Description("Antibiotics Stepdown Recommendations")]
-            Antibiotics_Stepdown = 207,
+            Antibiotics_Stepdown = 208,
             [Description("Antibiotics CSF Penetration")]
-            Antibiotics_CSFPenetration = 208,
+            Antibiotics_CSFPenetration = 209,
             [Description("Antibiotics B Lactam Allergy")]
-            Antibiotics_BLactamAllergy = 209,
+            Antibiotics_BLactamAllergy = 210,
             
             [Description("Prophylaxis Recommendations")]
             Prophylaxis = 300, 

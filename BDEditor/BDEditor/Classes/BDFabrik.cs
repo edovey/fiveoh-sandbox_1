@@ -148,6 +148,7 @@ namespace BDEditor.Classes
                     switch (layoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDosageGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                     }
@@ -169,6 +170,10 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubcategory, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAntimicrobial, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
                         default:
                             break;
                     }
@@ -186,6 +191,8 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                         case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         default:
@@ -208,6 +215,7 @@ namespace BDEditor.Classes
                     switch (layoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDosage, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         break;
                     }
@@ -280,6 +288,8 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDCategory, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
@@ -793,6 +803,7 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                             {
                                 nodeControl = new BDNodeControl();
                                 BDNodeControl newControl = nodeControl as BDNodeControl;
@@ -801,12 +812,21 @@ namespace BDEditor.Classes
                                 newControl.ShowSiblingAdd = true;
                             }
                             break;
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
+                            {
+                                nodeControl = new BDNodeOverviewControl();
+                                BDNodeOverviewControl newOverviewControl = nodeControl as BDNodeOverviewControl;
+                                newOverviewControl.ShowAsChild = true;
+                                newOverviewControl.ShowSiblingAdd = true;
+                            }
+                            break;
                     }
                     break;
                 case BDConstants.BDNodeType.BDDosage:
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                             {
                                 nodeControl = new BDDosageControl();
                             }
@@ -817,6 +837,7 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                             {
                                 nodeControl = new BDNodeControl();
                                 BDNodeControl newControl = nodeControl as BDNodeControl;

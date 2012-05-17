@@ -33,6 +33,28 @@ namespace BDEditor.Classes.Navigation
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                         case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
+                            foreach (IBDNode childNode in childList)
+                            {
+                                string name = childNode.Name;
+                                if ((null == name) || (name.Length == 0))
+                                {
+                                    //name = childNode.Uuid.ToString();
+                                    name = @"< intentionally blank >";
+                                }
+                                TreeNode childTreeNode = new TreeNode(name);
+                                childTreeNode.Tag = childNode;
+                                branchTreeNode.Nodes.Add(childTreeNode);
+                            }
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDAntimicrobial:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                             foreach (IBDNode childNode in childList)
                             {
                                 string name = childNode.Name;

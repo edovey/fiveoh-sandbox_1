@@ -15,6 +15,13 @@ namespace BDEditor.Classes
             chapter1a,
             chapter1b,
             chapter1c,
+            chapter1d,
+            chapter1e,
+            chapter1f,
+            chapter1g,
+            chapter1h,
+                chapter1i,
+            chapter1j,
             chapter2a,
             chapter2b,
             chapter2c,
@@ -40,6 +47,9 @@ namespace BDEditor.Classes
         BDNode tableSection;
         BDTableRow tableRow;
         BDTableCell tableCell;
+        BDNode antimicrobial;
+        BDNode dosageGroup;
+        BDDosage dosage;
         
 
         string uuidData = null;
@@ -55,6 +65,9 @@ namespace BDEditor.Classes
         string tableSectionData = null;
         string tableRowData = null;
         string tableCellData = null;
+        string antimicrobialData = null;
+        string dosageGroupData = null;
+        string dosageData = null;
 
         short idxChapter = 0;
         short idxSection = 0;
@@ -68,6 +81,9 @@ namespace BDEditor.Classes
         short idxTableSection = 0;
         short idxTableRow = 0;
         short idxTableCell = 0;
+        short idxAntimicrobial = 0;
+        short idxDosageGroup = 0;
+        short idxDosage = 0;
 
         public void ImportData(Entities pDataContext, string pFilename, baseDataDefinitionType pDefinitionType)
         {
@@ -100,6 +116,18 @@ namespace BDEditor.Classes
                             case baseDataDefinitionType.chapter1b:
                                 ProcessChapter1bInputLine(input);
                                 break;
+                            case baseDataDefinitionType.chapter1c:
+                                ProcessChapter1cInputLine(input);
+                                break;
+                            case baseDataDefinitionType.chapter1d:
+                                ProcessChapter1dInputLine(input);
+                                break;
+                            case baseDataDefinitionType.chapter1e:
+                                ProcessChapter1eInputLine(input);
+                                break;
+                            case baseDataDefinitionType.chapter1f:
+                                ProcessChapter1fInputLine(input);
+                                break;
                             case baseDataDefinitionType.chapter2a:
                                 ProcessChapter2aInputLine(input);
                                 break;
@@ -114,9 +142,6 @@ namespace BDEditor.Classes
                                 break;
                             case baseDataDefinitionType.chapter2e:
                                 ProcessChapter2eInputLine(input);
-                                break;
-                            case baseDataDefinitionType.chapter1c:
-                                ProcessChapter1cInputLine(input);
                                 break;
                         }
                         
@@ -797,6 +822,337 @@ namespace BDEditor.Classes
                 subcategory.displayOrder = idxSubcategory++;
                 subcategory.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts;
                 BDNode.Save(dataContext, subcategory);
+            }
+        }
+
+        private void ProcessChapter1dInputLine(string pInputLine)
+        {
+            /*string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
+
+            //Expectation that a row contains only one element with data
+
+            uuidData = string.Empty;
+            chapterData = string.Empty;
+            sectionData = string.Empty;
+            categoryData = string.Empty;
+            subcategoryData = string.Empty;
+            diseaseData = string.Empty;
+            presentationData = string.Empty;
+
+            if (elements.Length > 0) uuidData = elements[0];
+            if (elements.Length > 1) chapterData = elements[1];
+            if (elements.Length > 2) sectionData = elements[2];
+            if (elements.Length > 3) categoryData = elements[3];
+            if (elements.Length > 4) subcategoryData = elements[4];
+
+            if ((chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
+            {
+                chapter = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
+                chapter.name = chapterData;
+                chapter.displayOrder = idxChapter++;
+                chapter.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics;
+                chapter.SetParent(null);
+
+                BDNode.Save(dataContext, chapter);
+
+                section = null;
+                category = null;
+                subcategory = null;
+            }
+
+            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+            {
+                section = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+                section.name = sectionData;
+                section.SetParent(chapter);
+                section.displayOrder = idxSection++;
+                section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts;
+                BDNode.Save(dataContext, section);
+
+                category = null;
+                subcategory = null;
+
+            }
+            if ((categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
+            {
+                category = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
+                category.name = categoryData;
+                category.SetParent(section);
+                category.displayOrder = idxCategory++;
+                category.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts;
+                BDNode.Save(dataContext, category);
+
+                subcategory = null;
+            }
+            if ((subcategoryData != string.Empty) && ((null == subcategory) || (subcategory.name != subcategoryData)))
+            {
+                subcategory = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDSubcategory, Guid.Parse(uuidData));
+                subcategory.name = subcategoryData;
+                subcategory.SetParent(category);
+                subcategory.displayOrder = idxSubcategory++;
+                subcategory.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts;
+                BDNode.Save(dataContext, subcategory);
+            } */
+        }
+
+        /// <summary>
+        /// Renal Impairment
+        /// </summary>
+        /// <param name="pInputLine"></param>
+        private void ProcessChapter1eInputLine(string pInputLine)
+        {
+            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
+
+            //Expectation that a row contains only one element with data
+
+            uuidData = string.Empty;
+            chapterData = string.Empty;
+            sectionData = string.Empty;
+            categoryData = string.Empty;
+            antimicrobialData = string.Empty;
+            dosageGroupData = string.Empty;
+            dosageData = string.Empty;
+
+            if (elements.Length > 0) uuidData = elements[0];
+            if (elements.Length > 1) chapterData = elements[1];
+            if (elements.Length > 2) sectionData = elements[2];
+            if (elements.Length > 3) categoryData = elements[3];
+            if (elements.Length > 4) antimicrobialData = elements[4];
+            if (elements.Length > 5) dosageGroupData = elements[5];
+            if (elements.Length > 6) dosageData = elements[6];
+
+            if ((chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
+            {
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, chapter1Uuid);
+                if (null == tmpNode)
+                {
+                    chapter = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
+                    chapter.name = chapterData;
+                    chapter.displayOrder = idxChapter++;
+                    chapter.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics;
+                    chapter.SetParent(null);
+                    BDNode.Save(dataContext, chapter);
+                }
+                else
+                {
+                    chapter = tmpNode;
+                    idxChapter++;
+                }
+
+                section = null;
+                category = null;
+                subcategory = null;
+            }
+
+            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+            {
+                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == sectionNode)
+                {
+                    section = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+                    section.name = sectionData;
+                    section.SetParent(chapter);
+                    section.displayOrder = idxSection++;
+                    section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment;
+                    BDNode.Save(dataContext, section);
+                }
+                else
+                {
+                    section = sectionNode;
+                    idxSection++;
+                }
+                
+                category = null;
+                antimicrobial = null;
+                dosageGroup = null;
+                dosage = null;
+
+            }
+            if ((categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
+            {
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == tmpNode)
+                {
+                    category = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
+                    category.name = categoryData;
+                    category.SetParent(section);
+                    category.displayOrder = idxCategory++;
+                    category.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment;
+                    BDNode.Save(dataContext, category);
+                }
+                else
+                {
+                    category = tmpNode;
+                    idxCategory++;
+                }
+                antimicrobial = null;
+                dosageGroup = null;
+                dosage = null;
+            }
+            if ((antimicrobialData != string.Empty) && ((null == antimicrobial) || (antimicrobial.name != antimicrobialData)))
+            {
+                BDNode amNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == amNode)
+                {
+                    antimicrobial = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDAntimicrobial, Guid.Parse(uuidData));
+                    antimicrobial.name = antimicrobialData;
+                    antimicrobial.SetParent(category);
+                    antimicrobial.displayOrder = idxAntimicrobial++;
+                    antimicrobial.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment;
+                    BDNode.Save(dataContext, antimicrobial);
+                }
+                else
+                {
+                    antimicrobial = amNode;
+                    idxAntimicrobial++;
+                }
+                dosageGroup = null;
+                dosage = null;
+            }
+            if ((dosageGroupData != string.Empty) && ((null == dosageGroup) || (dosageGroup.name != dosageGroupData)))
+            {
+                BDNode dgNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == dgNode
+                    )
+                {
+                    dosageGroup = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDDosageGroup, Guid.Parse(uuidData));
+                    dosageGroup.name = dosageGroupData;
+                    dosageGroup.SetParent(antimicrobial);
+                    dosageGroup.displayOrder = idxDosageGroup++;
+                    dosageGroup.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment;
+                    BDNode.Save(dataContext, dosageGroup);
+                }
+                else
+                {
+                    dosageGroup = dgNode;
+                    idxDosageGroup++;
+                }
+                dosage = null;
+            }
+            if ((dosageData != string.Empty) && ((null == dosage) || (dosage.name != dosageData)))
+            {
+                BDDosage tmpDosage = BDDosage.RetrieveDosageWithId(dataContext, Guid.Parse(uuidData));
+                if (null == tmpDosage)
+                {
+                    dosage = BDDosage.CreateBDDosage(dataContext, Guid.Parse(uuidData));
+                    dosage.name = dosageData;
+                    dosage.SetParent(dosageGroup);
+                    dosage.displayOrder = idxDosage++;
+                    dosage.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment;
+                    BDDosage.Save(dataContext, dosage);
+                }
+                else
+                {
+                    dosage = tmpDosage;
+                    idxDosage++;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Hepatic impairment
+        /// </summary>
+        /// <param name="pInputLine"></param>
+        private void ProcessChapter1fInputLine(string pInputLine)
+        {
+            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
+
+            //Expectation that a row contains only one element with data
+
+            uuidData = string.Empty;
+            chapterData = string.Empty;
+            sectionData = string.Empty;
+            categoryData = string.Empty;
+            antimicrobialData = string.Empty;
+
+            if (elements.Length > 0) uuidData = elements[0];
+            if (elements.Length > 1) chapterData = elements[1];
+            if (elements.Length > 2) sectionData = elements[2];
+            if (elements.Length > 3) categoryData = elements[3];
+            if (elements.Length > 4) antimicrobialData = elements[4];
+
+            if ((chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
+            {
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, chapter1Uuid);
+                if (null == tmpNode)
+                {
+                    chapter = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
+                    chapter.name = chapterData;
+                    chapter.displayOrder = idxChapter++;
+                    chapter.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics;
+                    chapter.SetParent(null);
+                    BDNode.Save(dataContext, chapter);
+                }
+                else
+                {
+                    chapter = tmpNode;
+                    idxChapter++;
+                }
+
+                section = null;
+                category = null;
+                antimicrobial = null;
+            }
+
+            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+            {
+                BDNode sNode = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(uuidData));
+                if (null == sNode)
+                {
+                section = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+                section.name = sectionData;
+                section.SetParent(chapter);
+                section.displayOrder = idxSection++;
+                section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment;
+                BDNode.Save(dataContext, section);
+                }
+                else
+                                    {
+                    section = sNode;
+                    idxSection++;
+                }
+
+                category = null;
+                antimicrobial = null;
+
+            }
+            if ((categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
+            {
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(uuidData));
+                if(null == tmpNode)
+                {
+                category = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
+                category.name = categoryData;
+                category.SetParent(section);
+                category.displayOrder = idxCategory++;
+                category.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment;
+                BDNode.Save(dataContext, category);
+                }
+                else
+                                    {
+                    category = tmpNode;
+                    idxCategory++;
+                }
+
+                antimicrobial = null;
+            }
+            if ((antimicrobialData != string.Empty) && ((null == antimicrobial) || (antimicrobial.name != antimicrobialData)))
+            {
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(uuidData));
+                if (null == tmpNode)
+                {
+                    antimicrobial = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDAntimicrobial, Guid.Parse(uuidData));
+                    antimicrobial.name = antimicrobialData;
+                    antimicrobial.SetParent(category);
+                    antimicrobial.displayOrder = idxAntimicrobial++;
+                    antimicrobial.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment;
+                    BDNode.Save(dataContext, antimicrobial);
+                }
+                else
+                {
+                    antimicrobial = tmpNode;
+                    idxAntimicrobial++;
+                }
             }
         }
     }

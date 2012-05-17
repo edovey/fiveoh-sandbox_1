@@ -379,6 +379,8 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                         case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
                             childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
                             if (!pInterrogateOnly)
                             {
@@ -389,6 +391,18 @@ namespace BDEditor.Views
                             }
                             break;
                     }
+                    break;
+                case BDConstants.BDNodeType.BDAntimicrobial:
+                    switch (node.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
+                            if (!pInterrogateOnly)
+                            {
+                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = true;
+                            }
+                            break;
+}
                     break;
                 case BDConstants.BDNodeType.BDCategory:
                     switch (node.LayoutVariant)
@@ -406,6 +420,7 @@ namespace BDEditor.Views
                             }
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                             childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
                             if (!pInterrogateOnly)
                             {
@@ -413,6 +428,13 @@ namespace BDEditor.Views
 
                                 control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = false;
+                            }
+                            break;
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
+                            if (!pInterrogateOnly)
+                            {
+                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = true;
                             }
                             break;
                     }
@@ -448,6 +470,8 @@ namespace BDEditor.Views
                             }
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
                             if (!pInterrogateOnly)
                             {
                                 control_tr01 = new BDNodeOverviewControl(dataContext, node);
@@ -645,8 +669,8 @@ namespace BDEditor.Views
 
             // Loading Seed Data:  set the following variables
             isSeedDataLoadAvailable = true;
-            seedDataFileName = @"Resources\Chapter_1c.txt";
-            seedDataType = BDDataLoader.baseDataDefinitionType.chapter1c;
+            seedDataFileName = @"Resources\Chapter_1f.txt";
+            seedDataType = BDDataLoader.baseDataDefinitionType.chapter1f;
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
             this.btnImportFromProduction.Visible = true;

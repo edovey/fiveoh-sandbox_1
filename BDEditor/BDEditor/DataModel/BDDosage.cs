@@ -141,13 +141,13 @@ namespace BDEditor.DataModel
         /// <param name="pCreateDeletion"create entry in deletion table (bool)</param>
         public static void Delete(Entities pContext, Guid pUuid, bool pCreateDeletion)
         {
-            BDDosage entity = BDDosage.GetDosageWithId(pContext, pUuid);
+            BDDosage entity = BDDosage.RetrieveDosageWithId(pContext, pUuid);
             BDDosage.Delete(pContext, entity, pCreateDeletion);
         }
 
         public static void DeleteForParent(Entities pContext, Guid pUuid, bool pCreateDeletion)
         {
-            List<BDDosage> children = BDDosage.GetDosagesForParentId(pContext, pUuid);
+            List<BDDosage> children = BDDosage.RetrieveDosagesForParentId(pContext, pUuid);
             foreach (BDDosage child in children)
             {
                 BDDosage.Delete(pContext, child, pCreateDeletion);
@@ -163,7 +163,7 @@ namespace BDEditor.DataModel
         {
             if (null != pUuid)
             {
-                BDDosage entry = BDDosage.GetDosageWithId(pContext, pUuid.Value);
+                BDDosage entry = BDDosage.RetrieveDosageWithId(pContext, pUuid.Value);
                 if (null != entry)
                 {
                     pContext.DeleteObject(entry);
@@ -176,7 +176,7 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pParentId"></param>
         /// <returns>List of Precautions</returns>
-        public static List<BDDosage> GetDosagesForParentId(Entities pContext, Guid pParentId)
+        public static List<BDDosage> RetrieveDosagesForParentId(Entities pContext, Guid pParentId)
         {
             IQueryable<BDDosage> entries = (from entry in pContext.BDDosages
                                                 where entry.parentId == pParentId
@@ -185,7 +185,7 @@ namespace BDEditor.DataModel
             return entries.ToList<BDDosage>();
         }
 
-        public static BDDosage GetDosageWithId(Entities pContext, Guid pEntityId)
+        public static BDDosage RetrieveDosageWithId(Entities pContext, Guid pEntityId)
         {
             BDDosage entity = null;
 
@@ -353,7 +353,7 @@ namespace BDEditor.DataModel
         public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
-            BDDosage entry = BDDosage.GetDosageWithId(pDataContext, uuid);
+            BDDosage entry = BDDosage.RetrieveDosageWithId(pDataContext, uuid);
             if (null == entry)
             {
                 entry = BDDosage.CreateBDDosage(uuid);

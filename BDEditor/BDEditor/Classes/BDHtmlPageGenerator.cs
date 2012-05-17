@@ -200,7 +200,7 @@ namespace BDEditor.Classes
 
                 // inject Html into page html & save as a page to the database.
                 string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
-                BDHtmlPage newPage = BDHtmlPage.CreateHtmlPage(pContext);
+                BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
                 newPage.displayParentType = (int)BDConstants.BDNodeType.BDPresentation;
                 newPage.displayParentId = pNode.Uuid;
                 newPage.documentText = pageHtml;
@@ -476,7 +476,7 @@ namespace BDEditor.Classes
             Guid returnGuid = Guid.Empty;
            if (pOverviewNote.documentText.Length > EMPTY_PARAGRAPH)
             {
-                BDHtmlPage notePage = BDHtmlPage.CreateHtmlPage(pContext);
+                BDHtmlPage notePage = BDHtmlPage.CreateBDHtmlPage(pContext);
                 notePage.displayParentId = pParentId;
                 notePage.displayParentType = (int)pParentType;
                 notePage.documentText = topHtml + pOverviewNote.documentText + bottomHtml;
@@ -539,7 +539,7 @@ namespace BDEditor.Classes
         {
             if (pPageHtml.Length > EMPTY_PARAGRAPH)
             {
-                BDHtmlPage notePage = BDHtmlPage.CreateHtmlPage(pContext);
+                BDHtmlPage notePage = BDHtmlPage.CreateBDHtmlPage(pContext);
                 notePage.displayParentId = pParentId;
                 notePage.displayParentType = (int)pParentType;
                 notePage.documentText = topHtml + pPageHtml + bottomHtml;

@@ -85,16 +85,16 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets created date and schema version
         /// </summary>
         /// <returns></returns>
-        public static BDTherapy CreateTherapy(Entities pContext, Guid pParentId)
+        public static BDTherapy CreateBDTherapy(Entities pContext, Guid pParentId)
         {
-            return CreateTherapy(pContext, pParentId, Guid.NewGuid());
+            return CreateBDTherapy(pContext, pParentId, Guid.NewGuid());
         }
 
         /// <summary>
         /// Extended Create method that sets created date and schema version
         /// </summary>
         /// <returns></returns>
-        public static BDTherapy CreateTherapy(Entities pContext, Guid pParentId, Guid pUuid)
+        public static BDTherapy CreateBDTherapy(Entities pContext, Guid pParentId, Guid pUuid)
         {
             BDTherapy therapy = CreateBDTherapy(pUuid, false);
             therapy.createdBy = Guid.Empty;
@@ -157,7 +157,7 @@ namespace BDEditor.DataModel
             BDMetadata.DeleteForItemId(pContext, pEntity.Uuid, pCreateDeletion);
             // create BDDeletion record for the object to be deleted
             if(pCreateDeletion)
-                BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
+                BDDeletion.CreateBDDeletion(pContext, KEY_NAME, pEntity.uuid);
 
             // delete record from local data store
             pContext.DeleteObject(pEntity);

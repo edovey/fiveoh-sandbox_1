@@ -55,9 +55,9 @@ namespace BDEditor.DataModel
 
         public Guid? tempProductionUuid { get; set; }
 
-        public static BDTableCell CreateTableCell(Entities pContext)
+        public static BDTableCell CreateBDTableCell(Entities pContext)
         {
-            return CreateTableCell(pContext, Guid.NewGuid());
+            return CreateBDTableCell(pContext, Guid.NewGuid());
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pUuid"></param>
         /// <returns></returns>
-        public static BDTableCell CreateTableCell(Entities pContext, Guid pUuid)
+        public static BDTableCell CreateBDTableCell(Entities pContext, Guid pUuid)
         {
             BDTableCell cell = CreateBDTableCell(pUuid);
             cell.createdBy = Guid.Empty;
@@ -133,7 +133,7 @@ namespace BDEditor.DataModel
             if (pCreateDeletion)
             {
                 // create BDDeletion record for the object to be deleted
-                BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
+                BDDeletion.CreateBDDeletion(pContext, KEY_NAME, pEntity.uuid);
             }
 
             BDMetadata.DeleteForItemId(pContext, pEntity.Uuid, pCreateDeletion);
@@ -288,7 +288,7 @@ namespace BDEditor.DataModel
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
 
-            BDTableCell entry = BDTableCell.CreateTableCell(pDataContext);
+            BDTableCell entry = BDTableCell.CreateBDTableCell(pDataContext);
             entry.tempProductionUuid = uuid;
 
             entry.schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);

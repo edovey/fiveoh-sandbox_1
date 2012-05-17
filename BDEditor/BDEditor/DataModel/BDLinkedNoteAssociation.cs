@@ -55,9 +55,9 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext"></param>
         /// <returns>BDLinkedNoteAssociation</returns>
-        public static BDLinkedNoteAssociation CreateLinkedNoteAssociation(Entities pContext)
+        public static BDLinkedNoteAssociation CreateBDLinkedNoteAssociation(Entities pContext)
         {
-            return CreateLinkedNoteAssociation(pContext, Guid.NewGuid());
+            return CreateBDLinkedNoteAssociation(pContext, Guid.NewGuid());
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext"></param>
         /// <returns>BDLinkedNoteAssociation</returns>
-        public static BDLinkedNoteAssociation CreateLinkedNoteAssociation(Entities pContext, Guid pUuid)
+        public static BDLinkedNoteAssociation CreateBDLinkedNoteAssociation(Entities pContext, Guid pUuid)
         {
             BDLinkedNoteAssociation linkedNoteAssociation = CreateBDLinkedNoteAssociation(pUuid, false);
             linkedNoteAssociation.createdBy = Guid.Empty;
@@ -88,7 +88,7 @@ namespace BDEditor.DataModel
         /// <param name="pParentId"></param>
         /// <param name="pParentPropertyName"></param>
         /// <returns>BDLinkedNoteAssociation</returns>
-        public static BDLinkedNoteAssociation CreateLinkedNoteAssociation(Entities pContext, 
+        public static BDLinkedNoteAssociation CreateBDLinkedNoteAssociation(Entities pContext, 
                                                                             BDConstants.LinkedNoteType pLinkedNoteType, 
                                                                             Guid pLinkedNoteId, 
                                                                             BDConstants.BDNodeType pParentType, 
@@ -147,7 +147,7 @@ namespace BDEditor.DataModel
             if (pCreateDeletion)
             {
                 // create BDDeletion record for the object to be deleted
-                BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
+                BDDeletion.CreateBDDeletion(pContext, KEY_NAME, pEntity.uuid);
             }
 
             BDMetadata.DeleteForItemId(pContext, pEntity.Uuid, pCreateDeletion);

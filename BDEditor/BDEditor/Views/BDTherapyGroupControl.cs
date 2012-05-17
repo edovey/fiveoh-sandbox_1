@@ -245,7 +245,7 @@ namespace BDEditor.Views
                 }
                 else
                 {
-                    currentTherapyGroup = BDTherapyGroup.CreateTherapyGroup(dataContext, this.parentId.Value);
+                    currentTherapyGroup = BDTherapyGroup.CreateBDTherapyGroup(dataContext, this.parentId.Value);
                     currentTherapyGroup.SetParent(parentType, parentId);
                     currentTherapyGroup.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                     currentTherapyGroup.LayoutVariant = DefaultLayoutVariantType;

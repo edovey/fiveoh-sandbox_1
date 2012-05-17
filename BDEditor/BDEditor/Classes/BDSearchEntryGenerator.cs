@@ -134,10 +134,10 @@ namespace BDEditor.Classes
             if (entries.Count() == 0)
             {
                 // create and save new search entry
-                BDSearchEntry searchEntry = BDSearchEntry.CreateSearchEntry(pDataContext, entryName);
+                BDSearchEntry searchEntry = BDSearchEntry.CreateBDSearchEntry(pDataContext, entryName);
                 
                 // Create search association record
-                BDSearchEntryAssociation.CreateSearchEntryAssociation(pDataContext, searchEntry.Uuid, pNode.NodeType, pDisplayParent.Uuid, pDisplayParent.NodeType, pNode.LayoutVariant, pDisplayContext);
+                BDSearchEntryAssociation.CreateBDSearchEntryAssociation(pDataContext, searchEntry.Uuid, pNode.NodeType, pDisplayParent.Uuid, pDisplayParent.NodeType, pNode.LayoutVariant, pDisplayContext);
             }
             else
             {
@@ -151,7 +151,7 @@ namespace BDEditor.Classes
 
                 if (associations.Count() == 0)
                 {
-                    BDSearchEntryAssociation.CreateSearchEntryAssociation(pDataContext, searchEntry.Uuid, pNode.NodeType, pDisplayParent.Uuid, pDisplayParent.NodeType, pNode.LayoutVariant, pDisplayContext);
+                    BDSearchEntryAssociation.CreateBDSearchEntryAssociation(pDataContext, searchEntry.Uuid, pNode.NodeType, pDisplayParent.Uuid, pDisplayParent.NodeType, pNode.LayoutVariant, pDisplayContext);
                 }
             }
         }

@@ -9,7 +9,7 @@ namespace BDEditor.DataModel
     {
         public const string LASTSYNC_TIMESTAMP = @"lastSync";
 
-        public static BDSystemSetting GetSetting(Entities pDataContext, string pSettingName)
+        public static BDSystemSetting RetrieveSetting(Entities pDataContext, string pSettingName)
         {
             BDSystemSetting setting;
             IQueryable<BDSystemSetting> entries = (from entry in pDataContext.BDSystemSettings
@@ -33,7 +33,7 @@ namespace BDEditor.DataModel
         //public static DateTime? GetTimestamp(Entities pDataContext, string pTimestampName)
         //{
         //    DateTime? result = null;
-        //    BDSystemSetting entry = GetSetting(pDataContext, pTimestampName);
+        //    BDSystemSetting entry = RetrieveSetting(pDataContext, pTimestampName);
         //    if (null != entry.settingValue)
         //    {
         //        result = DateTime.Parse(entry.settingValue);
@@ -43,7 +43,7 @@ namespace BDEditor.DataModel
 
         //public static void SaveTimestamp(Entities pDataContext, string pTimestampName, DateTime? pDateTime)
         //{
-        //    BDSystemSetting entry = GetSetting(pDataContext, pTimestampName);
+        //    BDSystemSetting entry = RetrieveSetting(pDataContext, pTimestampName);
         //    if (null == pDateTime)
         //        entry.settingValue = null;
         //    else

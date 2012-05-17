@@ -64,16 +64,16 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets creation date and schema version.
         /// </summary>
         /// <returns></returns>
-        public static BDTherapyGroup CreateTherapyGroup(Entities pContext, Guid pParentId)
+        public static BDTherapyGroup CreateBDTherapyGroup(Entities pContext, Guid pParentId)
         {
-            return CreateTherapyGroup(pContext, pParentId, Guid.NewGuid());
+            return CreateBDTherapyGroup(pContext, pParentId, Guid.NewGuid());
         }
 
         /// <summary>
         /// Extended Create method that sets creation date and schema version.
         /// </summary>
         /// <returns></returns>
-        public static BDTherapyGroup CreateTherapyGroup(Entities pContext, Guid pParentId, Guid pUuid)
+        public static BDTherapyGroup CreateBDTherapyGroup(Entities pContext, Guid pParentId, Guid pUuid)
         {
             BDTherapyGroup therapyGroup = CreateBDTherapyGroup(pUuid, false);
             therapyGroup.createdBy = Guid.Empty;
@@ -125,7 +125,7 @@ namespace BDEditor.DataModel
             // create BDDeletion record for the object to be deleted
 
             if (pCreateDeletion)
-                BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
+                BDDeletion.CreateBDDeletion(pContext, KEY_NAME, pEntity.uuid);
 
             pContext.DeleteObject(pEntity);
             pContext.SaveChanges();

@@ -61,16 +61,16 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets the created date and schema version
         /// </summary>
         /// <returns>BDLinkedNote</returns>
-        public static BDLinkedNote CreateLinkedNote(Entities pContext)
+        public static BDLinkedNote CreateBDLinkedNote(Entities pContext)
         {
-            return CreateLinkedNote(pContext, Guid.NewGuid());
+            return CreateBDLinkedNote(pContext, Guid.NewGuid());
         }
 
         /// <summary>
         /// Extended Create method that sets the created date and schema version
         /// </summary>
         /// <returns>BDLinkedNote</returns>
-        public static BDLinkedNote CreateLinkedNote(Entities pContext, Guid pUuid)
+        public static BDLinkedNote CreateBDLinkedNote(Entities pContext, Guid pUuid)
         {
             BDLinkedNote linkedNote = CreateBDLinkedNote(pUuid, false);
             linkedNote.createdBy = Guid.Empty;
@@ -112,7 +112,7 @@ namespace BDEditor.DataModel
             BDLinkedNoteAssociation.DeleteForNote(pContext, pEntity, pCreateDeletion);
             BDMetadata.DeleteForItemId(pContext, pEntity.Uuid, pCreateDeletion);
             if(pCreateDeletion)
-                BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
+                BDDeletion.CreateBDDeletion(pContext, KEY_NAME, pEntity.uuid);
             // delete record from local data store
             pContext.DeleteObject(pEntity);
             pContext.SaveChanges();
@@ -339,7 +339,7 @@ namespace BDEditor.DataModel
 
             bool deprecated = bool.Parse(pAttributeDictionary[DEPRECATED]);
 
-            BDLinkedNote entry = BDLinkedNote.CreateLinkedNote(pDataContext);
+            BDLinkedNote entry = BDLinkedNote.CreateBDLinkedNote(pDataContext);
             entry.tempProductionUuid = uuid;
             entry.deprecated = deprecated;
 

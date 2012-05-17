@@ -277,7 +277,7 @@ namespace BDEditor.Classes
 
             pLastSyncDate = currentSyncDate;
 
-            BDSystemSetting systemSetting = BDSystemSetting.GetSetting(pDataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(pDataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             systemSetting.settingDateTimeValue = currentSyncDate;
             pDataContext.SaveChanges();
 
@@ -641,7 +641,7 @@ namespace BDEditor.Classes
             BDCommon.Settings.IsSyncLoad = false;
             #endregion
 
-            BDSystemSetting systemSetting = BDSystemSetting.GetSetting(pDataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(pDataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             systemSetting.settingDateTimeValue = DateTime.Now;
             pDataContext.SaveChanges();
 

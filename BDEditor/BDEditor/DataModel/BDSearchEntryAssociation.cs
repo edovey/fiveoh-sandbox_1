@@ -51,9 +51,9 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext"></param>
         /// <returns>BDSearchEntryAssociation</returns>
-        public static BDSearchEntryAssociation CreateSearchEntryAssociation(Entities pContext)
+        public static BDSearchEntryAssociation CreateBDSearchEntryAssociation(Entities pContext)
         {
-            return CreateSearchEntryAssociation(pContext, Guid.NewGuid());
+            return CreateBDSearchEntryAssociation(pContext, Guid.NewGuid());
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext"></param>
         /// <returns>BDSearchEntryAssociation</returns>
-        public static BDSearchEntryAssociation CreateSearchEntryAssociation(Entities pContext, Guid pUuid)
+        public static BDSearchEntryAssociation CreateBDSearchEntryAssociation(Entities pContext, Guid pUuid)
         {
             BDSearchEntryAssociation entry = CreateBDSearchEntryAssociation(pUuid);
             entry.createdBy = Guid.Empty;
@@ -83,7 +83,7 @@ namespace BDEditor.DataModel
         /// <param name="pLayoutVariant"></param>
         /// <param name="pDisplayContext"></param>
         /// <returns></returns>
-        public static BDSearchEntryAssociation CreateSearchEntryAssociation(Entities pContext,
+        public static BDSearchEntryAssociation CreateBDSearchEntryAssociation(Entities pContext,
                                                                             Guid pSearchEntryId,
                                                                             BDConstants.BDNodeType pSearchEntryType,
                                                                             Guid pDisplayParentId,
@@ -144,7 +144,7 @@ namespace BDEditor.DataModel
             if (pCreateDeletion)
             {
                 // create BDDeletion record for the object to be deleted
-                BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
+                BDDeletion.CreateBDDeletion(pContext, KEY_NAME, pEntity.uuid);
             }
             // delete record from local data store
             pContext.DeleteObject(pEntity);

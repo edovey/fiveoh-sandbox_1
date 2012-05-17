@@ -153,7 +153,6 @@
     <Compile Include="DataModel\BDLinkedNoteAssociation.cs" />
     <Compile Include="DataModel\BDMetadata.cs" />
     <Compile Include="DataModel\BDNode.cs" />
-    <Compile Include="DataModel\BDNodeAssociation.cs" />
     <Compile Include="DataModel\BDPrecaution.cs" />
     <Compile Include="DataModel\BDSearchEntry.cs" />
     <Compile Include="DataModel\BDSearchEntryAssociation.cs" />

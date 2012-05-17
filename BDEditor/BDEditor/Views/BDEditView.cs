@@ -591,7 +591,7 @@ namespace BDEditor.Views
             dataLoader.ImportData(dataContext, seedDataFileName, seedDataType);
 
             LoadChapterDropDown();
-            BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
 
             loadSeedDataButton.Visible = isSeedDataLoadAvailable;
@@ -619,7 +619,7 @@ namespace BDEditor.Views
 
         private void UpdateSyncLabel()
         {
-            BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
 
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
             if (null == lastSyncDate)
@@ -635,7 +635,7 @@ namespace BDEditor.Views
         private void SyncData()
         {
             this.Cursor = Cursors.WaitCursor;
-            BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
 
             SyncInfoDictionary syncResultList = RepositoryHandler.Aws.Sync(DataContext, lastSyncDate, BDConstants.SyncType.Default);
@@ -656,7 +656,7 @@ namespace BDEditor.Views
             UpdateSyncLabel();
             LoadChapterDropDown();
 
-            systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             lastSyncDate = systemSetting.settingDateTimeValue;
             loadSeedDataButton.Visible = isSeedDataLoadAvailable;
 
@@ -684,7 +684,7 @@ namespace BDEditor.Views
             this.btnMove.Enabled = false;
 #endif
 
-            BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
             loadSeedDataButton.Visible = isSeedDataLoadAvailable;
             UpdateSyncLabel();
@@ -720,7 +720,7 @@ namespace BDEditor.Views
                 dataContext = null;
                 dataContext = new Entities();
 
-                BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+                BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
                 systemSetting.settingDateTimeValue = null;
                 dataContext.SaveChanges();
                 this.Cursor = Cursors.Default;
@@ -760,7 +760,7 @@ namespace BDEditor.Views
             BDSearchEntryGenerator.Generate();
             System.Diagnostics.Debug.WriteLine("Search entry generation complete.");
 
-            BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+            BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
 
             SyncInfoDictionary syncResultList = RepositoryHandler.Aws.Sync(DataContext, lastSyncDate, BDConstants.SyncType.Publish);
@@ -787,7 +787,7 @@ namespace BDEditor.Views
             if (MessageBox.Show("Have the development respository domains (bd_dev_2*) and bdDevStore bucket been cleared?", "Import from Production", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
             {
                 this.Cursor = Cursors.WaitCursor;
-                BDSystemSetting systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+                BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
                 DateTime? lastSyncDate = null;
 
                 SyncInfoDictionary syncResultList = RepositoryHandler.Aws.ImportFromProduction(dataContext, null);
@@ -808,7 +808,7 @@ namespace BDEditor.Views
                 UpdateSyncLabel();
                 LoadChapterDropDown();
 
-                systemSetting = BDSystemSetting.GetSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+                systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
                 lastSyncDate = systemSetting.settingDateTimeValue;
                 loadSeedDataButton.Visible = isSeedDataLoadAvailable;
 

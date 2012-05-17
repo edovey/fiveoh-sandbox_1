@@ -56,9 +56,9 @@ namespace BDEditor.DataModel
 
        public Guid? tempProductionUuid { get; set; }
 
-       public static BDTableRow CreateTableRow(Entities pContext, BDConstants.BDNodeType pNodeType)
+       public static BDTableRow CreateBDTableRow(Entities pContext, BDConstants.BDNodeType pNodeType)
        {
-           return CreateTableRow(pContext, pNodeType, Guid.NewGuid());
+           return CreateBDTableRow(pContext, pNodeType, Guid.NewGuid());
        }
 
        /// <summary>
@@ -67,7 +67,7 @@ namespace BDEditor.DataModel
        /// <param name="pContext"></param>
        /// <param name="pNodeType"></param>
        /// <returns></returns>
-       public static BDTableRow CreateTableRow(Entities pContext, BDConstants.BDNodeType pNodeType, Guid pUuid)
+       public static BDTableRow CreateBDTableRow(Entities pContext, BDConstants.BDNodeType pNodeType, Guid pUuid)
        {
            BDTableRow row = CreateBDTableRow(pUuid);
            row.nodeType = (int)pNodeType;
@@ -135,7 +135,7 @@ namespace BDEditor.DataModel
            BDMetadata.DeleteForItemId(pContext, pNode.Uuid, pCreateDeletion);
            // create BDDeletion record for the object to be deleted
            if (pCreateDeletion)
-               BDDeletion.CreateDeletion(pContext, KEY_NAME, pNode.Uuid);
+               BDDeletion.CreateBDDeletion(pContext, KEY_NAME, pNode.Uuid);
            // delete record from local data store
            pContext.DeleteObject(pNode);
            pContext.SaveChanges();

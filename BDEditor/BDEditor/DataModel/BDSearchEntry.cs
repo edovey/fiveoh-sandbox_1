@@ -43,9 +43,9 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets the created date, schema version and name.  Saves the instance.
         /// </summary>
         /// <returns>BDsearchEntry</returns>
-        public static BDSearchEntry CreateSearchEntry(Entities pContext, string pName)
+        public static BDSearchEntry CreateBDSearchEntry(Entities pContext, string pName)
         {
-            BDSearchEntry entry = CreateSearchEntry(pContext, Guid.NewGuid());
+            BDSearchEntry entry = CreateBDSearchEntry(pContext, Guid.NewGuid());
             entry.name = pName;
 
             Save(pContext, entry);
@@ -56,7 +56,7 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets the created date and schema version
         /// </summary>
         /// <returns>BDSearchEntry</returns>
-        public static BDSearchEntry CreateSearchEntry(Entities pContext, Guid pUuid)
+        public static BDSearchEntry CreateBDSearchEntry(Entities pContext, Guid pUuid)
         {
             BDSearchEntry entry = CreateBDSearchEntry(pUuid);
             entry.createdBy = Guid.Empty;
@@ -98,7 +98,7 @@ namespace BDEditor.DataModel
             BDSearchEntryAssociation.DeleteForSearchEntryId(pContext, pEntity.Uuid, pCreateDeletion);
             // create BDDeletion record for the object to be deleted
             if(pCreateDeletion)
-                BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
+                BDDeletion.CreateBDDeletion(pContext, KEY_NAME, pEntity.uuid);
             // delete record from local data store
             pContext.DeleteObject(pEntity);
             pContext.SaveChanges();

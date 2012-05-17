@@ -150,7 +150,7 @@ namespace BDEditor.Views
                 }
                 else
                 {
-                    currentTableCell = BDTableCell.CreateTableCell(this.dataContext);
+                    currentTableCell = BDTableCell.CreateBDTableCell(this.dataContext);
                     currentTableCell.SetParent(parentId);
                     currentTableCell.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                     //currentTableCell.LayoutVariant = DefaultLayoutVariantType;

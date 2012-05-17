@@ -243,8 +243,8 @@ namespace BDEditor.Views
                 }
                 else
                 {
-                    currentLinkedNote = BDLinkedNote.CreateLinkedNote(dataContext);
-                    BDLinkedNoteAssociation association = BDLinkedNoteAssociation.CreateLinkedNoteAssociation(dataContext);
+                    currentLinkedNote = BDLinkedNote.CreateBDLinkedNote(dataContext);
+                    BDLinkedNoteAssociation association = BDLinkedNoteAssociation.CreateBDLinkedNoteAssociation(dataContext);
                     association.linkedNoteId = currentLinkedNote.uuid;
                     association.parentId = parentId;
                     association.parentType = (int)parentType;

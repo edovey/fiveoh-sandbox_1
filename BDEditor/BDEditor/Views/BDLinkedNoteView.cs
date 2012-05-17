@@ -215,7 +215,7 @@ namespace BDEditor.Views
 
                 if (null == this.existingAssociation)
                 {
-                    this.existingAssociation = BDLinkedNoteAssociation.CreateLinkedNoteAssociation(dataContext);
+                    this.existingAssociation = BDLinkedNoteAssociation.CreateBDLinkedNoteAssociation(dataContext);
                     this.existingAssociation.parentType = (int)parentType;
                     this.existingAssociation.parentKeyName = parentType.ToString();
                     this.existingAssociation.parentKeyPropertyName = contextPropertyName;

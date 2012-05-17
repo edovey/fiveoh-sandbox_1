@@ -635,7 +635,7 @@ namespace BDEditor.Classes
                     result = precaution;
                     break;
                 case BDConstants.BDNodeType.BDTherapyGroup:
-                    BDTherapyGroup therapyGroup = BDTherapyGroup.CreateTherapyGroup(pContext, pParentNode.Uuid);
+                    BDTherapyGroup therapyGroup = BDTherapyGroup.CreateBDTherapyGroup(pContext, pParentNode.Uuid);
                     therapyGroup.displayOrder = siblingList.Count;
                     therapyGroup.SetParent(pParentNode);
                     therapyGroup.LayoutVariant = pLayoutVariant;
@@ -645,7 +645,7 @@ namespace BDEditor.Classes
                     break;
 
                 case BDConstants.BDNodeType.BDTherapy:
-                    BDTherapy therapy = BDTherapy.CreateTherapy(pContext, pParentNode.Uuid);
+                    BDTherapy therapy = BDTherapy.CreateBDTherapy(pContext, pParentNode.Uuid);
                     therapy.displayOrder = siblingList.Count;
                     therapy.SetParent(pParentNode);
                     therapy.LayoutVariant = pLayoutVariant;
@@ -655,7 +655,7 @@ namespace BDEditor.Classes
                     break;
 
                 case BDConstants.BDNodeType.BDTableRow:
-                    BDTableRow tableRow = BDTableRow.CreateTableRow(pContext, pChildType);
+                    BDTableRow tableRow = BDTableRow.CreateBDTableRow(pContext, pChildType);
                     tableRow.displayOrder = siblingList.Count;
                     tableRow.SetParent(pParentNode);
                     tableRow.LayoutVariant = pLayoutVariant;
@@ -668,13 +668,13 @@ namespace BDEditor.Classes
                     int cellCount = GetTableColumnCount(pLayoutVariant);
                     for (int i = 0; i < cellCount; i++)
                     {
-                        BDTableCell tableCell = BDTableCell.CreateTableCell(pContext);
+                        BDTableCell tableCell = BDTableCell.CreateBDTableCell(pContext);
                         tableCell.displayOrder = i + 1;
                         tableCell.SetParent(tableRow.Uuid);
                         tableCell.alignment = 0;
                         BDTableCell.Save(pContext, tableCell);
 
-                        BDString cellValue = BDString.CreateString(pContext);
+                        BDString cellValue = BDString.CreateBDString(pContext);
                         cellValue.displayOrder = i;
                         cellValue.SetParent(tableCell.Uuid);
                         BDString.Save(pContext, cellValue);
@@ -684,7 +684,7 @@ namespace BDEditor.Classes
 
                 case BDConstants.BDNodeType.BDTable:
                 default:
-                    BDNode node = BDNode.CreateNode(pContext, pChildType);
+                    BDNode node = BDNode.CreateBDNode(pContext, pChildType);
                     node.displayOrder = siblingList.Count;
                     node.SetParent(pParentNode);
                     node.LayoutVariant = pLayoutVariant;
@@ -773,16 +773,16 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.None:
                     break;
                 case BDConstants.BDNodeType.BDTherapy:
-                    entry = BDTherapy.CreateTherapy(pContext, pParentUuid.Value);
+                    entry = BDTherapy.CreateBDTherapy(pContext, pParentUuid.Value);
                     break;
                 case BDConstants.BDNodeType.BDTherapyGroup:
-                    entry = BDTherapyGroup.CreateTherapyGroup(pContext, pParentUuid.Value);
+                    entry = BDTherapyGroup.CreateBDTherapyGroup(pContext, pParentUuid.Value);
                     break;
                 case BDConstants.BDNodeType.BDTableRow:
-                    entry = BDTableRow.CreateTableRow(pContext, pParentNodeType, pParentUuid.Value);
+                    entry = BDTableRow.CreateBDTableRow(pContext, pParentNodeType, pParentUuid.Value);
                     break;
                 default:
-                    entry = BDNode.CreateNode(pContext, pNodeType);
+                    entry = BDNode.CreateBDNode(pContext, pNodeType);
                     break;
             }
 

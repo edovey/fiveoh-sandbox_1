@@ -57,16 +57,16 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets the created date and the schema version
         /// </summary>
         /// <returns></returns>
-        public static BDNode CreateNode(Entities pContext, BDConstants.BDNodeType pNodeType)
+        public static BDNode CreateBDNode(Entities pContext, BDConstants.BDNodeType pNodeType)
         {
-            return CreateNode(pContext, pNodeType, Guid.NewGuid());
+            return CreateBDNode(pContext, pNodeType, Guid.NewGuid());
         }
 
         /// <summary>
         /// Extended Create method that sets the created date and the schema version
         /// </summary>
         /// <returns></returns>
-        public static BDNode CreateNode(Entities pContext, BDConstants.BDNodeType pNodeType, Guid pUuid)
+        public static BDNode CreateBDNode(Entities pContext, BDConstants.BDNodeType pNodeType, Guid pUuid)
         {
             BDNode node = CreateBDNode(pUuid);
             node.nodeType = (int)pNodeType;
@@ -134,7 +134,7 @@ namespace BDEditor.DataModel
             BDMetadata.DeleteForItemId(pContext, pNode.Uuid, pCreateDeletion);
             // create BDDeletion record for the object to be deleted
             if(pCreateDeletion)
-                BDDeletion.CreateDeletion(pContext, KEY_NAME, pNode.Uuid);
+                BDDeletion.CreateBDDeletion(pContext, KEY_NAME, pNode.Uuid);
             // delete record from local data store
             pContext.DeleteObject(pNode);
             pContext.SaveChanges();

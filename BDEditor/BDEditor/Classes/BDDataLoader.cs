@@ -175,7 +175,7 @@ namespace BDEditor.Classes
 
             if( (chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
             {
-                chapter = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDChapter,Guid.Parse(uuidData));
+                chapter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter,Guid.Parse(uuidData));
                 chapter.name = chapterData;
                 chapter.displayOrder = idxChapter++;
                 chapter.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation00;
@@ -191,7 +191,7 @@ namespace BDEditor.Classes
 
             if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
             {
-                section = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+                section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
                 section.name = sectionData;
                 section.SetParent(chapter);
                 section.displayOrder = idxSection++;
@@ -205,7 +205,7 @@ namespace BDEditor.Classes
             }
             if ((categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
             {
-                category = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
+                category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
                 category.name = categoryData;
                 category.SetParent(section);
                 category.displayOrder = idxCategory++;
@@ -218,7 +218,7 @@ namespace BDEditor.Classes
 
             if ((diseaseData != string.Empty) && ((null == disease) || (disease.name != diseaseData)))
             {
-                disease = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDDisease, Guid.Parse(uuidData));
+                disease = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDDisease, Guid.Parse(uuidData));
                 disease.name = diseaseData;
                 disease.SetParent(category);
                 disease.displayOrder = idxDisease++;
@@ -230,7 +230,7 @@ namespace BDEditor.Classes
 
             if ((presentationData != string.Empty) && ((null == presentation) || (presentation.name != presentationData)))
             {
-                presentation = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDPresentation, Guid.Parse(uuidData));
+                presentation = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDPresentation, Guid.Parse(uuidData));
                 presentation.name = presentationData;
                 presentation.SetParent(disease);
                 presentation.displayOrder = idxPresentation++;
@@ -272,7 +272,7 @@ namespace BDEditor.Classes
 
             if ((chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
             {
-                chapter = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
+                chapter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
                 chapter.name = chapterData;
                 chapter.displayOrder = idxChapter++;
                 chapter.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation00;
@@ -292,7 +292,7 @@ namespace BDEditor.Classes
                 BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
                 if (null == sectionNode)
                 {
-                    section = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
                     section.name = sectionData;
                     section.SetParent(chapter);
                     section.displayOrder = idxSection++;
@@ -308,7 +308,7 @@ namespace BDEditor.Classes
 
             if ((null != diseaseData && diseaseData != string.Empty) && ((null == disease) || (disease.name != diseaseData)))
             {
-                disease = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDDisease, Guid.Parse(uuidData));
+                disease = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDDisease, Guid.Parse(uuidData));
                 disease.name = diseaseData;
                 disease.SetParent(section);
                 disease.displayOrder = idxDisease++;
@@ -320,7 +320,7 @@ namespace BDEditor.Classes
 
             if ((null != presentationData && presentationData != string.Empty) && ((null == presentation) || (presentation.name != presentationData)))
             {
-                presentation = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDPresentation, Guid.Parse(uuidData));
+                presentation = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDPresentation, Guid.Parse(uuidData));
                 presentation.name = presentationData;
                 presentation.SetParent(disease);
                 presentation.displayOrder = idxPresentation++;
@@ -356,7 +356,7 @@ namespace BDEditor.Classes
 
             if ((null != chapterData && chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
             {
-                chapter = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
+                chapter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
                 chapter.name = chapterData;
                 chapter.displayOrder = idxChapter++;
                 chapter.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation00;
@@ -379,7 +379,7 @@ namespace BDEditor.Classes
                 BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
                 if (null == sectionNode)
                 {
-                    section = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
                     section.name = sectionData;
                     section.SetParent(chapter);
                     section.displayOrder = idxSection++;
@@ -395,7 +395,7 @@ namespace BDEditor.Classes
             }
             if ((null != categoryData && categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
             {
-                category = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
+                category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
                 category.name = categoryData;
                 category.SetParent(section);
                 category.displayOrder = idxCategory++;
@@ -408,7 +408,7 @@ namespace BDEditor.Classes
 
             if ((null != pathogenGroupData && pathogenGroupData != string.Empty) && ((null == pathogenGroup) || (pathogenGroup.name != pathogenGroupData)))
             {
-                pathogenGroup = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDPathogenGroup, Guid.Parse(uuidData));
+                pathogenGroup = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDPathogenGroup, Guid.Parse(uuidData));
                 pathogenGroup.name = pathogenGroupData;
                 pathogenGroup.SetParent(category);
                 pathogenGroup.displayOrder = idxPathogenGroup++;
@@ -420,7 +420,7 @@ namespace BDEditor.Classes
 
             if ((null != pathogenData && pathogenData != string.Empty) && ((null == pathogen) || (pathogen.name != pathogenData)))
             {
-                pathogen = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDPathogen, Guid.Parse(uuidData));
+                pathogen = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDPathogen, Guid.Parse(uuidData));
                 pathogen.name = pathogenData;
                 pathogen.SetParent(pathogenGroup);
                 pathogen.displayOrder = idxPathogen++;
@@ -450,7 +450,7 @@ namespace BDEditor.Classes
 
             if ((null != chapterData && chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
             {
-                chapter = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
+                chapter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
                 chapter.name = chapterData;
                 chapter.displayOrder = idxChapter++;
                 chapter.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation00;
@@ -473,7 +473,7 @@ namespace BDEditor.Classes
                 BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
                 if (null == sectionNode)
                 {
-                    section = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
                     section.name = sectionData;
                     section.SetParent(chapter);
                     section.displayOrder = idxSection++;
@@ -491,7 +491,7 @@ namespace BDEditor.Classes
                 BDNode categoryNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
                 if (null == categoryNode)
                 {
-                    category = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
+                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
                     category.name = categoryData;
                     category.SetParent(section);
                     category.displayOrder = idxCategory++;
@@ -505,7 +505,7 @@ namespace BDEditor.Classes
 
             if ((null != pathogenData && pathogenData != string.Empty) && ((null == pathogen) || (pathogen.name != pathogenData)))
             {
-                pathogen = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDPathogen, Guid.Parse(uuidData));
+                pathogen = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDPathogen, Guid.Parse(uuidData));
                 pathogen.name = pathogenData;
                 pathogen.SetParent(category);
                 pathogen.displayOrder = idxPathogen++;
@@ -542,7 +542,7 @@ namespace BDEditor.Classes
                 BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, chapter1Uuid);
                 if (null == tmpNode)
                 {
-                    chapter = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
+                    chapter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
                     chapter.name = chapterData;
                     chapter.displayOrder = idxChapter++;
                     chapter.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics;
@@ -563,7 +563,7 @@ namespace BDEditor.Classes
                 BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
                 if (null == sectionNode)
                 {
-                    section = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
                     section.name = sectionData;
                     section.SetParent(chapter);
                     section.displayOrder = idxSection++;
@@ -583,7 +583,7 @@ namespace BDEditor.Classes
                 BDNode tableNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
                 if (null == tableNode)
                 {
-                    table = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDTable, Guid.Parse(uuidData));
+                    table = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTable, Guid.Parse(uuidData));
                     table.name = tableData;
                     table.SetParent(section);
                     table.displayOrder = idxTable++;
@@ -604,7 +604,7 @@ namespace BDEditor.Classes
                 BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
                 if (null == tmpNode)
                 {
-                    tableSection = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDTableSection, Guid.Parse(uuidData));
+                    tableSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTableSection, Guid.Parse(uuidData));
                     tableSection.name = tableSectionData;
                     tableSection.SetParent(table);
                     tableSection.displayOrder = idxTableSection++;
@@ -645,7 +645,7 @@ namespace BDEditor.Classes
                 BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, chapter1Uuid);
                 if (null == tmpNode)
                 {
-                    chapter = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
+                    chapter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
                     chapter.name = chapterData;
                     chapter.displayOrder = idxChapter++;
                     chapter.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics;
@@ -666,7 +666,7 @@ namespace BDEditor.Classes
                 BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
                 if (null == sectionNode)
                 {
-                    section = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
                     section.name = sectionData;
                     section.SetParent(chapter);
                     section.displayOrder = idxSection++;
@@ -686,7 +686,7 @@ namespace BDEditor.Classes
                 BDNode tableNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
                 if (null == tableNode)
                 {
-                    table = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDTable, Guid.Parse(uuidData));
+                    table = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTable, Guid.Parse(uuidData));
                     table.name = (tableData == @"<blank>") ? string.Empty : tableData;
                     table.SetParent(section);
                     table.displayOrder = idxTable++;
@@ -706,7 +706,7 @@ namespace BDEditor.Classes
                 BDTableRow tmpRow = BDTableRow.RetrieveTableRowWithId(dataContext, Guid.Parse(uuidData));
                 if (null == tmpRow)
                 {
-                    tableRow = BDTableRow.CreateTableRow(dataContext, BDConstants.BDNodeType.BDTableRow, Guid.Parse(uuidData));
+                    tableRow = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow, Guid.Parse(uuidData));
 
                     string name = String.Empty;
                     BDConstants.LayoutVariantType rowType = BDConstants.LayoutVariantType.Undefined;
@@ -734,7 +734,7 @@ namespace BDEditor.Classes
                 BDTableCell tmpCell = BDTableCell.RetrieveWithId(dataContext, Guid.Parse(uuidData)); 
                 if (null == tmpCell)
                 {
-                    tableCell = BDTableCell.CreateTableCell(dataContext, Guid.Parse(uuidData));
+                    tableCell = BDTableCell.CreateBDTableCell(dataContext, Guid.Parse(uuidData));
                     tableCell.displayOrder = idxTableCell++;
                     tableCell.SetParent(tableRow.Uuid);
                     if (tableRow.layoutVariant == (int)BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics_HeaderRow)
@@ -744,7 +744,7 @@ namespace BDEditor.Classes
 
                     BDTableCell.Save(dataContext, tableCell);
 
-                    BDString cellValue = BDString.CreateString(dataContext);
+                    BDString cellValue = BDString.CreateBDString(dataContext);
                     cellValue.displayOrder = 0;
                     cellValue.SetParent(tableCell.Uuid);
                     cellValue.value = tableCellData;
@@ -777,7 +777,7 @@ namespace BDEditor.Classes
 
             if ((chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
             {
-                chapter = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
+                chapter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
                 chapter.name = chapterData;
                 chapter.displayOrder = idxChapter++;
                 chapter.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics;
@@ -792,7 +792,7 @@ namespace BDEditor.Classes
 
             if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
             {
-                section = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+                section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
                 section.name = sectionData;
                 section.SetParent(chapter);
                 section.displayOrder = idxSection++;
@@ -805,7 +805,7 @@ namespace BDEditor.Classes
             }
             if ((categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
             {
-                category = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
+                category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
                 category.name = categoryData;
                 category.SetParent(section);
                 category.displayOrder = idxCategory++;
@@ -816,7 +816,7 @@ namespace BDEditor.Classes
             }
             if ((subcategoryData != string.Empty) && ((null == subcategory) || (subcategory.name != subcategoryData)))
             {
-                subcategory = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDSubcategory, Guid.Parse(uuidData));
+                subcategory = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSubcategory, Guid.Parse(uuidData));
                 subcategory.name = subcategoryData;
                 subcategory.SetParent(category);
                 subcategory.displayOrder = idxSubcategory++;
@@ -847,7 +847,7 @@ namespace BDEditor.Classes
 
             if ((chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
             {
-                chapter = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
+                chapter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
                 chapter.name = chapterData;
                 chapter.displayOrder = idxChapter++;
                 chapter.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics;
@@ -862,7 +862,7 @@ namespace BDEditor.Classes
 
             if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
             {
-                section = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+                section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
                 section.name = sectionData;
                 section.SetParent(chapter);
                 section.displayOrder = idxSection++;
@@ -875,7 +875,7 @@ namespace BDEditor.Classes
             }
             if ((categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
             {
-                category = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
+                category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
                 category.name = categoryData;
                 category.SetParent(section);
                 category.displayOrder = idxCategory++;
@@ -886,7 +886,7 @@ namespace BDEditor.Classes
             }
             if ((subcategoryData != string.Empty) && ((null == subcategory) || (subcategory.name != subcategoryData)))
             {
-                subcategory = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDSubcategory, Guid.Parse(uuidData));
+                subcategory = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSubcategory, Guid.Parse(uuidData));
                 subcategory.name = subcategoryData;
                 subcategory.SetParent(category);
                 subcategory.displayOrder = idxSubcategory++;
@@ -926,7 +926,7 @@ namespace BDEditor.Classes
                 BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, chapter1Uuid);
                 if (null == tmpNode)
                 {
-                    chapter = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
+                    chapter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
                     chapter.name = chapterData;
                     chapter.displayOrder = idxChapter++;
                     chapter.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics;
@@ -949,7 +949,7 @@ namespace BDEditor.Classes
                 BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
                 if (null == sectionNode)
                 {
-                    section = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
                     section.name = sectionData;
                     section.SetParent(chapter);
                     section.displayOrder = idxSection++;
@@ -973,7 +973,7 @@ namespace BDEditor.Classes
                 BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
                 if (null == tmpNode)
                 {
-                    category = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
+                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
                     category.name = categoryData;
                     category.SetParent(section);
                     category.displayOrder = idxCategory++;
@@ -994,7 +994,7 @@ namespace BDEditor.Classes
                 BDNode amNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
                 if (null == amNode)
                 {
-                    antimicrobial = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDAntimicrobial, Guid.Parse(uuidData));
+                    antimicrobial = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDAntimicrobial, Guid.Parse(uuidData));
                     antimicrobial.name = antimicrobialData;
                     antimicrobial.SetParent(category);
                     antimicrobial.displayOrder = idxAntimicrobial++;
@@ -1015,7 +1015,7 @@ namespace BDEditor.Classes
                 if (null == dgNode
                     )
                 {
-                    dosageGroup = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDDosageGroup, Guid.Parse(uuidData));
+                    dosageGroup = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDDosageGroup, Guid.Parse(uuidData));
                     dosageGroup.name = dosageGroupData;
                     dosageGroup.SetParent(antimicrobial);
                     dosageGroup.displayOrder = idxDosageGroup++;
@@ -1076,7 +1076,7 @@ namespace BDEditor.Classes
                 BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, chapter1Uuid);
                 if (null == tmpNode)
                 {
-                    chapter = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
+                    chapter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
                     chapter.name = chapterData;
                     chapter.displayOrder = idxChapter++;
                     chapter.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics;
@@ -1099,7 +1099,7 @@ namespace BDEditor.Classes
                 BDNode sNode = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(uuidData));
                 if (null == sNode)
                 {
-                section = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+                section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
                 section.name = sectionData;
                 section.SetParent(chapter);
                 section.displayOrder = idxSection++;
@@ -1121,7 +1121,7 @@ namespace BDEditor.Classes
                 BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(uuidData));
                 if(null == tmpNode)
                 {
-                category = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
+                category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
                 category.name = categoryData;
                 category.SetParent(section);
                 category.displayOrder = idxCategory++;
@@ -1141,7 +1141,7 @@ namespace BDEditor.Classes
                 BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(uuidData));
                 if (null == tmpNode)
                 {
-                    antimicrobial = BDNode.CreateNode(dataContext, BDConstants.BDNodeType.BDAntimicrobial, Guid.Parse(uuidData));
+                    antimicrobial = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDAntimicrobial, Guid.Parse(uuidData));
                     antimicrobial.name = antimicrobialData;
                     antimicrobial.SetParent(category);
                     antimicrobial.displayOrder = idxAntimicrobial++;

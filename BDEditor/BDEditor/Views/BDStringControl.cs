@@ -167,7 +167,7 @@ namespace BDEditor.Views
                     result = false;
                 else
                 {
-                    currentString = BDString.CreateString(this.dataContext, this.parentId.Value);
+                    currentString = BDString.CreateBDString(this.dataContext, this.parentId.Value);
                     currentString.SetParent(parentId);
                     currentString.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                 }

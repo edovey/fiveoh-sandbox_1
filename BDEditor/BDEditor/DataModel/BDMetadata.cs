@@ -50,38 +50,38 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets the created date and schema version
         /// </summary>
         /// <returns>BDMetadata</returns>
-        public static BDMetadata CreateMetadata(Entities pContext, IBDNode pBDNodeObject)
+        public static BDMetadata CreateBDMetadata(Entities pContext, IBDNode pBDNodeObject)
         {
             if (null == pBDNodeObject) return null;
 
-            return CreateMetadata(pContext,pBDNodeObject.Uuid, pBDNodeObject.NodeType, Guid.NewGuid());
+            return CreateBDMetadata(pContext,pBDNodeObject.Uuid, pBDNodeObject.NodeType, Guid.NewGuid());
         }
 
         /// <summary>
         /// Extended Create method that sets the created date and schema version
         /// </summary>
         /// <returns>BDMetadata</returns>
-        public static BDMetadata CreateMetadata(Entities pContext, IBDNode pBDNodeObject, Guid pUuid)
+        public static BDMetadata CreateBDMetadata(Entities pContext, IBDNode pBDNodeObject, Guid pUuid)
         {
             if (null == pBDNodeObject) return null;
 
-            return CreateMetadata(pContext, pBDNodeObject.Uuid, pBDNodeObject.NodeType, pUuid);
+            return CreateBDMetadata(pContext, pBDNodeObject.Uuid, pBDNodeObject.NodeType, pUuid);
         }
 
         /// <summary>
         /// Extended Create method that sets the created date and schema version
         /// </summary>
         /// <returns>BDMetadata</returns>
-        public static BDMetadata CreateMetadata(Entities pContext, Guid pItemId, BDConstants.BDNodeType pItemKeyType)
+        public static BDMetadata CreateBDMetadata(Entities pContext, Guid pItemId, BDConstants.BDNodeType pItemKeyType)
         {
-            return CreateMetadata(pContext, pItemId,pItemKeyType, Guid.NewGuid());
+            return CreateBDMetadata(pContext, pItemId,pItemKeyType, Guid.NewGuid());
         }
 
         /// <summary>
         /// Extended Create method that sets the created date and schema version. Returns instance if already exists.
         /// </summary>
         /// <returns>BDMetadata</returns>
-        public static BDMetadata CreateMetadata(Entities pContext, Guid pItemId, BDConstants.BDNodeType pItemKeyType, Guid pUuid)
+        public static BDMetadata CreateBDMetadata(Entities pContext, Guid pItemId, BDConstants.BDNodeType pItemKeyType, Guid pUuid)
         {
             BDMetadata entry = GetMetadataWithItemId(pContext, pItemId);
             if (null == entry)
@@ -136,7 +136,7 @@ namespace BDEditor.DataModel
         {
             if (pEntity == null) return;
             if(pCreateDeletion)
-                BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
+                BDDeletion.CreateBDDeletion(pContext, KEY_NAME, pEntity.uuid);
             // delete record from local data store
             pContext.DeleteObject(pEntity);
             pContext.SaveChanges();      

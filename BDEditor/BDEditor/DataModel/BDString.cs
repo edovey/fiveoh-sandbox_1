@@ -38,13 +38,13 @@ namespace BDEditor.DataModel
         private const string PARENTID = @"st_parentId";
         private const string VALUE = @"st_value";
 
-        public static BDString CreateString(Entities pContext)
+        public static BDString CreateBDString(Entities pContext)
         {
-            BDString newString = CreateString(pContext, Guid.NewGuid());
+            BDString newString = CreateBDString(pContext, Guid.NewGuid());
             return newString;
         }
 
-        public static BDString CreateString(Entities pContext, Guid pUuid)
+        public static BDString CreateBDString(Entities pContext, Guid pUuid)
         {
             BDString str = CreateBDString(pUuid);
             str.modifiedDate = DateTime.Now;
@@ -123,7 +123,7 @@ namespace BDEditor.DataModel
             // create BDDeletion record for the object to be deleted
 
             if (pCreateDeletion)
-                BDDeletion.CreateDeletion(pContext, KEY_NAME, pEntity.uuid);
+                BDDeletion.CreateBDDeletion(pContext, KEY_NAME, pEntity.uuid);
 
             pContext.DeleteObject(pEntity);
             pContext.SaveChanges();

@@ -52,9 +52,9 @@ namespace BDEditor.DataModel
 
         public Guid? tempProductionUuid { get; set; }
 
-        public static BDHtmlPage CreateHtmlPage(Entities pContext)
+        public static BDHtmlPage CreateBDHtmlPage(Entities pContext)
         {
-            return CreateHtmlPage(pContext, Guid.NewGuid());
+            return CreateBDHtmlPage(pContext, Guid.NewGuid());
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pUuid"></param>
         /// <returns></returns>
-        public static BDHtmlPage CreateHtmlPage(Entities pContext, Guid pUuid)
+        public static BDHtmlPage CreateBDHtmlPage(Entities pContext, Guid pUuid)
         {
             BDHtmlPage page = CreateBDHtmlPage(pUuid);
             page.createdBy = Guid.Empty;
@@ -233,7 +233,7 @@ namespace BDEditor.DataModel
             BDHtmlPage entry = BDHtmlPage.RetrieveWithId(pDataContext, uuid);
             if (null == entry)
             {
-                entry = BDHtmlPage.CreateHtmlPage(pDataContext, uuid);
+                entry = BDHtmlPage.CreateBDHtmlPage(pDataContext, uuid);
                 pDataContext.AddObject(ENTITYNAME, entry);
             }
 
@@ -264,7 +264,7 @@ namespace BDEditor.DataModel
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
 
-            BDHtmlPage entry = BDHtmlPage.CreateHtmlPage(pDataContext);
+            BDHtmlPage entry = BDHtmlPage.CreateBDHtmlPage(pDataContext);
             entry.tempProductionUuid = uuid;
 
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);

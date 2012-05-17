@@ -40,12 +40,12 @@ namespace BDEditor.DataModel
         private const string TARGETID = @"de_targetId";
         private const string TARGETNAME = @"de_targetName";
 
-        public static void CreateDeletion(Entities pContext, string pTargetName, Guid pTargetId)
+        public static void CreateBDDeletion(Entities pContext, string pTargetName, Guid pTargetId)
         {
-            CreateDeletion(pContext, pTargetName, pTargetId, Guid.NewGuid());
+            CreateBDDeletion(pContext, pTargetName, pTargetId, Guid.NewGuid());
         }
 
-        public static void CreateDeletion(Entities pContext, string pTargetName, Guid pTargetId, Guid pUuid)
+        public static void CreateBDDeletion(Entities pContext, string pTargetName, Guid pTargetId, Guid pUuid)
         {
             BDDeletion deletion = CreateBDDeletion(pUuid);
             deletion.createdBy = Guid.Empty;

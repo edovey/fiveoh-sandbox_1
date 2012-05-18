@@ -45,21 +45,23 @@ namespace BDEditor.Classes
             BDTable = 12,
             [Description("Table Section")]
             BDTableSection = 13,
+            [Description("Table Subsection")]
+            BDTableSubsection = 14,
             // BDTableRow class
             [Description("Table Row")]
-            BDTableRow = 14,
+            BDTableRow = 15,
             [Description("Pathogen Resistance")]
-            BDPathogenResistance = 15,
+            BDPathogenResistance = 16,
             [Description("Dosage Group")]
-            BDDosageGroup = 16,
+            BDDosageGroup = 17,
             // BDDosage class
             [Description("Dosage")]
-            BDDosage = 17,
+            BDDosage = 18,
             [Description("Antimicrobial")]
-            BDAntimicrobial = 18,
+            BDAntimicrobial = 19,
             // BDPrecaution class
             [Description("Precaution")]
-            BDPrecaution = 19,
+            BDPrecaution = 20,
         }
 
         public enum LayoutVariantType
@@ -142,13 +144,33 @@ namespace BDEditor.Classes
             [Description("Antibiotics Dosing in Hepatic Impairment")]
             Antibiotics_Dosing_HepaticImpairment = 206,
             [Description("Antibiotics Name Listing")]
+            
             Antibiotics_NameListing = 207,
+            [Description("Antibiotics Name Listing Header Row")]
+            Antibiotics_NameListing_HeaderRow = 2071,
+            [Description("Antibiotics Name Listing Content Row")]
+            Antibiotics_NameListing_ContentRow = 2072,
+
             [Description("Antibiotics Stepdown Recommendations")]
             Antibiotics_Stepdown = 208,
+            [Description("Antibiotics Stepdown Recommendations Header Row")]
+            Antibiotics_Stepdown_HeaderRow = 2081,
+            [Description("Antibiotics Stepdown Recommendations Content Row")]
+            Antibiotics_Stepdown_ContentRow = 2082,
+
             [Description("Antibiotics CSF Penetration")]
             Antibiotics_CSFPenetration = 209,
+            [Description("Antibiotics CSF Penetration Header Row")]
+            Antibiotics_CSFPenetration_HeaderRow = 2091,
+            [Description("Antibiotics CSF Penetration Content Row")]
+            Antibiotics_CSFPenetration_ContentRow = 2092,
+
             [Description("Antibiotics B Lactam Allergy")]
             Antibiotics_BLactamAllergy = 210,
+            [Description("Antibiotics B Lactam Allergy Header Row")]
+            Antibiotics_BLactamAllergy_HeaderRow = 2101,
+            [Description("Antibiotics B Lactam Allergy Content Row")]
+            Antibiotics_BLactamAllergy_ContentRow = 2102,
             
             [Description("Prophylaxis Recommendations")]
             Prophylaxis = 300, 

@@ -381,11 +381,24 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
+                        case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
                             childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
                             if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
 
+                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = false;
+                            }
+                            break;
+                        case BDConstants.LayoutVariantType.Antibiotics_NameListing:
+                        case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
+                        case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
+                            childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
+                            if (!pInterrogateOnly)
+                            {
+                                graftTreeNode(selectedNode, childTreeNode);
                                 control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = false;
                             }
@@ -421,6 +434,7 @@ namespace BDEditor.Views
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
+                        case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
                             childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
                             if (!pInterrogateOnly)
                             {
@@ -472,6 +486,7 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
+                        case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
                             if (!pInterrogateOnly)
                             {
                                 control_tr01 = new BDNodeOverviewControl(dataContext, node);
@@ -506,12 +521,16 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                         case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
+                        case BDConstants.LayoutVariantType.Antibiotics_NameListing:
+                        case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
+                        case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
                             if (!pInterrogateOnly)
                             {
                                 control_tr01 = new BDNodeControl(dataContext, node);
                                 showChildControls = true;
                             }
                             break;
+
                     }
                     break;
                 case BDConstants.BDNodeType.BDPathogenGroup:
@@ -669,8 +688,8 @@ namespace BDEditor.Views
 
             // Loading Seed Data:  set the following variables
             isSeedDataLoadAvailable = true;
-            seedDataFileName = @"Resources\Chapter_1f.txt";
-            seedDataType = BDDataLoader.baseDataDefinitionType.chapter1f;
+            seedDataFileName = @"Resources\Chapter_1i.txt";
+            seedDataType = BDDataLoader.baseDataDefinitionType.chapter1i;
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
             this.btnImportFromProduction.Visible = true;

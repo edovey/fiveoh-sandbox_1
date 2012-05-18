@@ -291,6 +291,10 @@ namespace BDEditor.Views
                     case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis_HeaderRow:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis_HeaderRow:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis_HeaderRow:
+                    case BDConstants.LayoutVariantType.Antibiotics_NameListing_HeaderRow:
+                    case BDConstants.LayoutVariantType.Antibiotics_Stepdown_HeaderRow:
+                    case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration_HeaderRow:
+                    case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_HeaderRow:
                         this.BackColor = SystemColors.ControlDark;
                         break;
                     default:

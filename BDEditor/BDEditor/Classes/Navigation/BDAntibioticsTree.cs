@@ -36,6 +36,10 @@ namespace BDEditor.Classes.Navigation
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
+                        case BDConstants.LayoutVariantType.Antibiotics_NameListing:
+                        case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
+                        case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
+                        case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
                             foreach (IBDNode childNode in childList)
                             {
                                 string name = childNode.Name;
@@ -70,24 +74,6 @@ namespace BDEditor.Classes.Navigation
                             break;
                     }
                     break;
-/*                case BDConstants.BDNodeType.BDPathogenGroup:
-                    switch (pNode.LayoutVariant)
-                    {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
-                            foreach (IBDNode childNode in childList)
-                            {
-                                string name = childNode.Name;
-                                if ((null == name) || (name.Length == 0))
-                                {
-                                    name = childNode.Uuid.ToString();
-                                }
-                                TreeNode childTreeNode = new TreeNode(name);
-                                childTreeNode.Tag = childNode;
-                                branchTreeNode.Nodes.Add(childTreeNode);
-                            }
-                            break;
-                    } 
-                    break; */
             }
 
             return branchTreeNode;

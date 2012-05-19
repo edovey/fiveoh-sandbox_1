@@ -62,11 +62,16 @@ namespace BDEditor.Classes
             // BDPrecaution class
             [Description("Precaution")]
             BDPrecaution = 20,
+            [Description("Subsection")]
+            BDSubsection = 21,
+            [Description("Topic")]
+            BDTopic = 22,
         }
 
         public enum LayoutVariantType
         {
             Undefined = -1,
+
             [Description("Treatment Recommendation Chapter")]
             TreatmentRecommendation00 = 100, // Chapter
             [Description("Treatment Recommendation")]
@@ -180,6 +185,37 @@ namespace BDEditor.Classes
 
             [Description(" Pregnancy / Lactation")]
             PregancyLactation = 500,
+
+            [Description("Organisms")]
+            Organisms = 600,
+
+            [Description("2-column Table")]
+            Table_2_Column = 900,
+            [Description("2-column Table Header Row")]
+            Table_2_Column_HeaderRow = 9001,
+            [Description("2-column Table Content Row")]
+            Table_2_Column_ContentRow = 9002,
+
+            [Description("3-column Table")]
+            Table_3_Column = 901,
+            [Description("3-column Table Header Row")]
+            Table_3_Column_HeaderRow = 9011,
+            [Description("3-column Table Content Row")]
+            Table_3_Column_ContentRow = 9012,
+            
+            [Description("4 column Table")]
+            Table_4_Column = 902,
+            [Description("4-column Table Header Row")]
+            Table_4_Column_HeaderRow = 9021,
+            [Description("4-column Table Content Row")]
+            Table_4_Column_ContentRow = 9022,
+            
+            [Description("5-column Table")]
+            Table_5_Column = 903,
+            [Description("5-column Table Header Row")]
+            Table_5_Column_HeaderRow = 9031,
+            [Description("5-column Table Content Row")]
+            Table_5_Column_ContentRow = 9032,
         }
 
         public enum SyncType
@@ -213,18 +249,6 @@ namespace BDEditor.Classes
             Centred = 1,
             [Description("Right Justified")]
             RightJustified = 2
-        }
-
-        public enum TableRowLayoutVariant
-        {
-            [Description("Undefined")]
-            Undefined = -1,
-            [Description("Header")]
-            Header = 0,
-            [Description("Section")]
-            Section = 1,
-            [Description("Content")]
-            Content = 2
         }
 
         public const string DATETIMEFORMAT = @"yyyy-MM-dd'T'HH:mm:ss";

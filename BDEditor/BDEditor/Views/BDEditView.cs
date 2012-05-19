@@ -382,19 +382,10 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
-                        case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
-                            childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
-                            if (!pInterrogateOnly)
-                            {
-                                graftTreeNode(selectedNode, childTreeNode);
-
-                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
-                                showChildControls = false;
-                            }
-                            break;
                         case BDConstants.LayoutVariantType.Antibiotics_NameListing:
                         case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
                         case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
+                        case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
                             childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
                             if (!pInterrogateOnly)
                             {
@@ -434,7 +425,6 @@ namespace BDEditor.Views
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
-                        case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
                             childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
                             if (!pInterrogateOnly)
                             {
@@ -486,7 +476,6 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
-                        case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
                             if (!pInterrogateOnly)
                             {
                                 control_tr01 = new BDNodeOverviewControl(dataContext, node);
@@ -561,6 +550,33 @@ namespace BDEditor.Views
                             break;
                     }
                     break;
+                case BDConstants.BDNodeType.BDSubsection:
+                    switch (node.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
+                            childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
+                            if (!pInterrogateOnly)
+                            {
+                                graftTreeNode(selectedNode, childTreeNode);
+                                control_tr01 = new BDNodeControl(dataContext, node);
+                                showChildControls = false;
+                            }
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDTopic:
+                    switch (node.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
+                        case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
+                            if (!pInterrogateOnly)
+                            {
+                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = true;
+                            }
+                            break;
+                    }
+                    break;
             }
             if (!pInterrogateOnly)
             {
@@ -607,7 +623,16 @@ namespace BDEditor.Views
             this.Cursor = Cursors.WaitCursor;
             BDDataLoader dataLoader = new BDDataLoader();
 
-            dataLoader.ImportData(dataContext, seedDataFileName, seedDataType);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_1a.txt", BDDataLoader.baseDataDefinitionType.chapter1a);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_1b.txt", BDDataLoader.baseDataDefinitionType.chapter1b);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_1c.txt", BDDataLoader.baseDataDefinitionType.chapter1c);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_1d.txt", BDDataLoader.baseDataDefinitionType.chapter1d);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_1e.txt", BDDataLoader.baseDataDefinitionType.chapter1e);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_1f.txt", BDDataLoader.baseDataDefinitionType.chapter1f);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_1g.txt", BDDataLoader.baseDataDefinitionType.chapter1g);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_1h.txt", BDDataLoader.baseDataDefinitionType.chapter1h);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_1i.txt", BDDataLoader.baseDataDefinitionType.chapter1i);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_1j.txt", BDDataLoader.baseDataDefinitionType.chapter1j);
 
             LoadChapterDropDown();
             BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
@@ -688,8 +713,6 @@ namespace BDEditor.Views
 
             // Loading Seed Data:  set the following variables
             isSeedDataLoadAvailable = true;
-            seedDataFileName = @"Resources\Chapter_1i.txt";
-            seedDataType = BDDataLoader.baseDataDefinitionType.chapter1i;
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
             this.btnImportFromProduction.Visible = true;

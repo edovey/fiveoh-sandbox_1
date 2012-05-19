@@ -253,21 +253,53 @@ namespace BDEditor.Views
             insertText(rtbValue, "±");
         }
 
-        private void rtbValue_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                undoToolStripMenuItem.Enabled = rtbValue.CanUndo;
-                pasteToolStripMenuItem.Enabled = (Clipboard.ContainsText());
-                cutToolStripMenuItem.Enabled = (rtbValue.SelectionLength > 0);
-                copyToolStripMenuItem.Enabled = (rtbValue.SelectionLength > 0);
-                deleteToolStripMenuItem.Enabled = (rtbValue.SelectionLength > 0);
-            }
-        }
-
         private void BDStringControl_Leave(object sender, EventArgs e)
         {
             Save();
+        }
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtbValue.Undo();
+        }
+
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtbValue.Cut();
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtbValue.Copy();
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtbValue.Paste();
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int i = rtbValue.SelectionStart;
+            rtbValue.Text = rtbValue.Text.Substring(0, i) + rtbValue.Text.Substring(i + rtbValue.SelectionLength);
+            rtbValue.SelectionStart = i;
+            rtbValue.SelectionLength = 0;
+        }
+
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtbValue.SelectionStart = 0;
+            rtbValue.SelectionLength = rtbValue.Text.Length;
+            rtbValue.Focus();
+        }
+
+        private void contextMenuStripTextBox_Opening(object sender, CancelEventArgs e)
+        {
+            undoToolStripMenuItem.Enabled = rtbValue.CanUndo;
+            pasteToolStripMenuItem.Enabled = (Clipboard.ContainsText());
+            cutToolStripMenuItem.Enabled = (rtbValue.SelectionLength > 0);
+            copyToolStripMenuItem.Enabled = (rtbValue.SelectionLength > 0);
+            deleteToolStripMenuItem.Enabled = (rtbValue.SelectionLength > 0);
         }
     }
 }

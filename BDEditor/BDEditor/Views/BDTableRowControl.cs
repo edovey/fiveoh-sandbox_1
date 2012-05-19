@@ -236,7 +236,6 @@ namespace BDEditor.Views
         }
 
         public BDConstants.BDNodeType DefaultNodeType { get; set; }
-        public BDConstants.TableRowLayoutVariant TableRowType { get; set; }
         public BDConstants.LayoutVariantType DefaultLayoutVariantType { get; set; }
 
         public IBDNode CurrentNode
@@ -295,6 +294,10 @@ namespace BDEditor.Views
                     case BDConstants.LayoutVariantType.Antibiotics_Stepdown_HeaderRow:
                     case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration_HeaderRow:
                     case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_HeaderRow:
+                    case BDConstants.LayoutVariantType.Table_2_Column_HeaderRow:
+                    case BDConstants.LayoutVariantType.Table_3_Column_HeaderRow:
+                    case BDConstants.LayoutVariantType.Table_4_Column_HeaderRow:
+                    case BDConstants.LayoutVariantType.Table_5_Column_HeaderRow:
                         this.BackColor = SystemColors.ControlDark;
                         break;
                     default:

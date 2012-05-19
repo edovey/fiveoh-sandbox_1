@@ -24,6 +24,7 @@ namespace BDEditor.Classes.Navigation
             {
                 case BDConstants.BDNodeType.BDChapter:
                 case BDConstants.BDNodeType.BDSection:
+                case BDConstants.BDNodeType.BDSubsection:
                 case BDConstants.BDNodeType.BDCategory:
                 case BDConstants.BDNodeType.BDSubcategory:
                 case BDConstants.BDNodeType.BDDisease:
@@ -45,7 +46,6 @@ namespace BDEditor.Classes.Navigation
                                 string name = childNode.Name;
                                 if ((null == name) || (name.Length == 0))
                                 {
-                                    //name = childNode.Uuid.ToString();
                                     name = @"< intentionally blank >";
                                 }
                                 TreeNode childTreeNode = new TreeNode(name);
@@ -64,7 +64,6 @@ namespace BDEditor.Classes.Navigation
                                 string name = childNode.Name;
                                 if ((null == name) || (name.Length == 0))
                                 {
-                                    //name = childNode.Uuid.ToString();
                                     name = @"< intentionally blank >";
                                 }
                                 TreeNode childTreeNode = new TreeNode(name);

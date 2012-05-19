@@ -743,7 +743,7 @@ namespace BDEditor.Views
                         item.Image = global::BDEditor.Properties.Resources.add_16x16;
                         item.Name = string.Format("dynamicAddChild{0}", idx);
                         item.Size = new System.Drawing.Size(179, 22);
-                        subDescription = (pBDNode.NodeType == BDConstants.BDNodeType.BDTableRow) ? string.Format(" ({0})", BDUtilities.GetEnumDescription(((BDTableRow)pBDNode).RowType)) : string.Empty;
+                        subDescription = (pBDNode.NodeType == BDConstants.BDNodeType.BDTableRow) ? string.Format(" ({0})", BDUtilities.GetEnumDescription(((BDTableRow)pBDNode).NodeType)) : string.Empty;
                         subDescription = (childTypeInfoList[idx].Item1 == BDConstants.BDNodeType.BDTableRow) ? string.Format(" ({0})", BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item2[0])) : string.Empty;
                         item.Text = string.Format("&Add {0}{1}", BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item1), subDescription);
                         item.Tag = new BDNodeWrapper(pBDNode, childTypeInfoList[idx].Item1, childTypeInfoList[idx].Item2[0], null);

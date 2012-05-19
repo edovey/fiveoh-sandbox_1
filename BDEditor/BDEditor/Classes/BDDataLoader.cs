@@ -53,6 +53,8 @@ namespace BDEditor.Classes
         BDNode antimicrobial;
         BDNode dosageGroup;
         BDDosage dosage;
+        BDNode subsection;
+        BDNode topic;
         
 
         string uuidData = null;
@@ -74,6 +76,8 @@ namespace BDEditor.Classes
         string antimicrobialData = null;
         string dosageGroupData = null;
         string dosageData = null;
+        string subsectionData = null;
+        string topicData = null;
 
         short idxChapter = 0;
         short idxSection = 0;
@@ -90,6 +94,8 @@ namespace BDEditor.Classes
         short idxAntimicrobial = 0;
         short idxDosageGroup = 0;
         short idxDosage = 0;
+        short idxSubsection = 0;
+        short idxTopic = 0;
 
         public void ImportData(Entities pDataContext, string pFilename, baseDataDefinitionType pDefinitionType)
         {
@@ -857,72 +863,85 @@ namespace BDEditor.Classes
         /// <param name="pInputLine"></param>
         private void ProcessChapter1dInputLine(string pInputLine)
         {
-            /*string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
+            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
             //Expectation that a row contains only one element with data
 
             uuidData = string.Empty;
             chapterData = string.Empty;
             sectionData = string.Empty;
-            categoryData = string.Empty;
-            subcategoryData = string.Empty;
-            diseaseData = string.Empty;
-            presentationData = string.Empty;
+            subsectionData = string.Empty;
+            topicData = string.Empty;
 
             if (elements.Length > 0) uuidData = elements[0];
             if (elements.Length > 1) chapterData = elements[1];
             if (elements.Length > 2) sectionData = elements[2];
-            if (elements.Length > 3) categoryData = elements[3];
-            if (elements.Length > 4) subcategoryData = elements[4];
-
-            if ((chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
+            if (elements.Length > 3) topicData = elements[3];
+            
+            if ((null != chapterData && chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
             {
-                chapter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
-                chapter.name = chapterData;
-                chapter.displayOrder = idxChapter++;
-                chapter.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics;
-                chapter.SetParent(null);
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, chapter1Uuid);
+                if (null == tmpNode)
+                {
+                    chapter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
+                    chapter.name = chapterData;
+                    chapter.displayOrder = idxChapter++;
+                    chapter.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics;
+                    chapter.SetParent(null);
+                    BDNode.Save(dataContext, chapter);
 
-                BDNode.Save(dataContext, chapter);
-
+                    idxSection = 0;
+                    idxTopic = 0;
+                }
+                else
+                {
+                    chapter = tmpNode;
+                    idxChapter++;
+                }
                 section = null;
-                category = null;
-                subcategory = null;
+                topic = null;
             }
 
             if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
             {
-                section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-                section.name = sectionData;
-                section.SetParent(chapter);
-                section.displayOrder = idxSection++;
-                section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts;
-                BDNode.Save(dataContext, section);
+                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == sectionNode)
+                {
+                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+                    section.name = sectionData;
+                    section.SetParent(chapter);
+                    section.displayOrder = idxSection++;
+                    section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring;
+                    BDNode.Save(dataContext, section);
 
-                category = null;
-                subcategory = null;
-
+                    idxTopic = 0;
+                }
+                else
+                {
+                    section = sectionNode; // assign Parasitic section
+                    idxSection++;
+                }
+                topic = null;
             }
-            if ((categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
+            
+            if ((topicData != string.Empty) && ((null == topic) || (topic.name != topicData)))
             {
-                category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
-                category.name = categoryData;
-                category.SetParent(section);
-                category.displayOrder = idxCategory++;
-                category.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts;
-                BDNode.Save(dataContext, category);
-
-                subcategory = null;
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == tmpNode)
+                {
+                    topic = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
+                    topic.name = topicData;
+                    topic.SetParent(section);
+                    topic.displayOrder = idxTopic++;
+                    topic.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring;
+                    BDNode.Save(dataContext, topic);
+                }
+                else
+                {
+                    topic = tmpNode;
+                    idxTopic++;
+                }
             }
-            if ((subcategoryData != string.Empty) && ((null == subcategory) || (subcategory.name != subcategoryData)))
-            {
-                subcategory = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSubcategory, Guid.Parse(uuidData));
-                subcategory.name = subcategoryData;
-                subcategory.SetParent(category);
-                subcategory.displayOrder = idxSubcategory++;
-                subcategory.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts;
-                BDNode.Save(dataContext, subcategory);
-            } */
         }
 
         /// <summary>
@@ -1645,7 +1664,7 @@ namespace BDEditor.Classes
                     {
                         tableHeaderRow = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow);
                         tableHeaderRow.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Stepdown_HeaderRow;
-                        tableHeaderRow.SetParent(tableSection);
+                        tableHeaderRow.SetParent(table);
                         tableHeaderRow.displayOrder = idxTableChildren++;
                         BDTableRow.Save(dataContext, tableHeaderRow);
 
@@ -1673,6 +1692,10 @@ namespace BDEditor.Classes
             }
         }
 
+        /// <summary>
+        /// CSF Penetration
+        /// </summary>
+        /// <param name="pInputLine"></param>
         private void ProcessChapter1iInputLine(string pInputLine)
         {
             string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
@@ -1810,7 +1833,7 @@ namespace BDEditor.Classes
                     {
                         tableHeaderRow = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow);
                         tableHeaderRow.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_CSFPenetration_HeaderRow;
-                        tableHeaderRow.SetParent(tableSection);
+                        tableHeaderRow.SetParent(table);
                         tableHeaderRow.displayOrder = idxTableChildren++;
                         BDTableRow.Save(dataContext, tableHeaderRow);
 
@@ -1864,6 +1887,336 @@ namespace BDEditor.Classes
             }
         }
 
-        private void ProcessChapter1jInputLine(string pInputLine) { }
+        /// <summary>
+        /// B-Lactam Allergy
+        /// </summary>
+        /// <param name="pInputLine"></param>
+        private void ProcessChapter1jInputLine(string pInputLine)
+        {
+            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
+
+            //Expectation that a row contains only one element with data
+
+            uuidData = string.Empty;
+            chapterData = string.Empty;
+            sectionData = string.Empty;
+            subsectionData = string.Empty;
+            topicData = string.Empty;
+            tableData = string.Empty;
+            tableHeaderRowData = string.Empty;
+            tableHeaderCellData = string.Empty;
+            tableSectionData = string.Empty;
+            tableSubsectionData = string.Empty;
+            tableRowData = string.Empty;
+            tableCellData = string.Empty;
+
+            if (elements.Length > 0) uuidData = elements[0];
+            if (elements.Length > 1) chapterData = elements[1];
+            if (elements.Length > 2) sectionData = elements[2];
+            if (elements.Length > 3) subsectionData = elements[3];
+            if (elements.Length > 4) topicData = elements[4];
+            if (elements.Length > 5) tableData = elements[5];
+            if (elements.Length > 6) tableHeaderRowData = elements[6];
+            if (elements.Length > 7) tableHeaderCellData = elements[7];
+            if (elements.Length > 8) tableSectionData = elements[8];
+            if (elements.Length > 9) tableCellData = elements[9];
+
+            if ((null != chapterData && chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
+            {
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, chapter1Uuid);
+                if (null == tmpNode)
+                {
+                    chapter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
+                    chapter.name = chapterData;
+                    chapter.displayOrder = idxChapter++;
+                    chapter.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics;
+                    chapter.SetParent(null);
+                    BDNode.Save(dataContext, chapter);
+
+                    idxSection = 0;
+                    idxTable = 0;
+                    idxTableChildren = 0;
+                    idxTableHeaderCell = 0;
+                    idxTableCell = 0;
+                }
+                else
+                {
+                    chapter = tmpNode;
+                    idxChapter++;
+                }
+                section = null;
+                table = null;
+                tableHeaderRow = null;
+                tableHeaderCell = null;
+                tableSection = null;
+                tableRow = null;
+                tableCell = null;
+            }
+
+            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+            {
+                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == sectionNode)
+                {
+                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+                    section.name = sectionData;
+                    section.SetParent(chapter);
+                    section.displayOrder = idxSection++;
+                    section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy;
+                    BDNode.Save(dataContext, section);
+
+                    idxTable = 0;
+                    idxTableChildren = 0;
+                    idxTableHeaderCell = 0;
+                    idxTableCell = 0;
+                }
+                else
+                {
+                    section = sectionNode; // assign Parasitic section
+                    idxSection++;
+                }
+                table = null;
+                tableHeaderRow = null;
+                tableHeaderCell = null;
+                tableSection = null;
+                tableRow = null;
+                tableCell = null;
+            }
+            if ((subsectionData != string.Empty) && ((null == subsection) || (subsection.name != subsectionData)))
+            {
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == tmpNode)
+                {
+                    subsection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSubsection, Guid.Parse(uuidData));
+                    subsection.name = subsectionData;
+                    subsection.SetParent(section);
+                    subsection.displayOrder = idxSubsection++;
+                    subsection.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy;
+                    BDNode.Save(dataContext, subsection);
+
+                    idxTopic = 0;
+                    idxTable = 0;
+                    idxTableChildren = 0;
+                    idxTableHeaderCell = 0;
+                    idxTableCell = 0;
+                }
+                else
+                {
+                    subsection = tmpNode; // assign Parasitic section
+                    idxSubsection++;
+                }
+                topic = null;
+                table = null;
+                tableHeaderRow = null;
+                tableHeaderCell = null;
+                tableSection = null;
+                tableRow = null;
+                tableCell = null;
+            }
+            if ((topicData != string.Empty) && ((null == topic) || (topic.name != topicData)))
+            {
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == tmpNode)
+                {
+                    topic = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
+                    topic.name = topicData;
+                    topic.SetParent(subsection);
+                    topic.displayOrder = idxTopic++;
+                    topic.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy;
+                    BDNode.Save(dataContext, topic);
+
+                    idxTable = 0;
+                    idxTableChildren = 0;
+                    idxTableHeaderCell = 0;
+                    idxTableCell = 0;
+                }
+                else
+                {
+                    topic = tmpNode;
+                    idxTopic++;
+                }
+                table = null;
+                tableHeaderRow = null;
+                tableHeaderCell = null;
+                tableSection = null;
+                tableRow = null;
+                tableCell = null;
+            }
+            if ((null != tableData && tableData != string.Empty) && ((null == table) || (table.name != tableData)))
+            {
+                BDNode tableNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == tableNode)
+                {
+                    table = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTable, Guid.Parse(uuidData));
+                    table.name = (tableData == @"<blank>") ? string.Empty : tableData;
+                    table.SetParent(topic);
+                    table.displayOrder = idxTable++;
+                    table.LayoutVariant = BDConstants.LayoutVariantType.Table_3_Column;
+                    BDNode.Save(dataContext, table);
+
+                    idxTableChildren = 0;
+                    idxTableHeaderCell = 0;
+                    idxTableCell = 0;
+                }
+                else
+                {
+                    table = tableNode;
+                    idxTable++;
+                }
+
+                tableHeaderRow = null;
+                tableHeaderCell = null;
+                tableSection = null;
+                tableRow = null;
+                tableCell = null;
+            }
+
+            if ((null != tableHeaderRowData && tableHeaderRowData != string.Empty) && ((null == tableHeaderRow) || (tableHeaderRow.name != tableHeaderRowData)))
+            {
+                BDTableRow tmpRow = BDTableRow.RetrieveTableRowWithId(dataContext, Guid.Parse(uuidData));
+                if (null == tmpRow)
+                {
+                    tableHeaderRow = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow, Guid.Parse(uuidData));
+
+                    tableHeaderRow.name = (tableHeaderRowData == @"<blank>") ? string.Empty : tableHeaderRowData;
+                    tableHeaderRow.SetParent(table);
+                    tableHeaderRow.displayOrder = idxTableChildren++;
+                    tableHeaderRow.LayoutVariant = BDConstants.LayoutVariantType.Table_3_Column_HeaderRow;
+                    BDTableRow.Save(dataContext, tableHeaderRow);
+
+                    idxTableHeaderCell = 0;
+                    idxTableCell = 0;
+
+                }
+                else
+                {
+                    tableHeaderRow = tmpRow;
+                    idxTableChildren++;
+                }
+                tableHeaderCell = null;
+                tableSection = null;
+                tableRow = null;
+                tableCell = null;
+            }
+
+            if ((null != tableHeaderCellData && tableHeaderCellData != string.Empty) && ((null == tableHeaderCell) || tableHeaderCell.Uuid.ToString() != uuidData))
+            {
+                BDTableCell tmpCell = BDTableCell.RetrieveWithId(dataContext, Guid.Parse(uuidData));
+                if (null == tmpCell)
+                {
+                    if (null == tableHeaderRow)
+                    {
+                        tableHeaderRow = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow);
+                        tableHeaderRow.LayoutVariant = BDConstants.LayoutVariantType.Table_3_Column_HeaderRow;
+                        tableHeaderRow.SetParent(table);
+                        tableHeaderRow.displayOrder = idxTableChildren++;
+                        BDTableRow.Save(dataContext, tableHeaderRow);
+
+                        idxTableCell = 0;
+                    }
+
+                    tableHeaderCell = BDTableCell.CreateBDTableCell(dataContext, Guid.Parse(uuidData));
+                    tableHeaderCell.displayOrder = idxTableHeaderCell++;
+                    tableHeaderCell.SetParent(tableHeaderRow.Uuid);
+                    tableHeaderCell.alignment = (int)BDConstants.TableCellAlignment.Centred;
+
+                    BDTableCell.Save(dataContext, tableHeaderCell);
+
+                    BDString cellValue = BDString.CreateBDString(dataContext);
+                    cellValue.displayOrder = 0;
+                    cellValue.SetParent(tableHeaderCell.Uuid);
+                    cellValue.value = tableHeaderCellData;
+                    BDString.Save(dataContext, cellValue);
+                }
+                else
+                {
+                    tableHeaderCell = tmpCell;
+                    idxTableHeaderCell++;
+                }
+                tableSection = null;
+                tableRow = null;
+                tableCell = null;
+
+            }
+            if ((null != tableSectionData && tableSectionData != string.Empty) && ((null == tableSection) || (tableSection.name != tableSectionData)))
+            {
+                BDNode tmpRow = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(uuidData));
+                if (null == tmpRow)
+                {
+                    tableSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTableSection, Guid.Parse(uuidData));
+
+                    tableSection.name = (tableSectionData == @"<blank>") ? string.Empty : tableSectionData;
+                    tableSection.SetParent(table);
+                    tableSection.displayOrder = idxTableChildren++;
+                    tableSection.LayoutVariant = BDConstants.LayoutVariantType.Table_3_Column;
+                    BDNode.Save(dataContext, tableSection);
+
+                    // do not reset table row counter - otherwise child rows will not sort correctly with header row
+                    idxTableCell = 0;
+                }
+                else
+                {
+                    tableSection = tmpRow;
+                    idxTableChildren++;
+                }
+
+                tableRow = null;
+                tableCell = null;
+            }
+            if ((null != tableCellData && tableCellData != string.Empty) && ((null == tableCell) || tableCell.Uuid.ToString() != uuidData))
+            {
+                BDTableCell tmpCell = BDTableCell.RetrieveWithId(dataContext, Guid.Parse(uuidData));
+                if (null == tmpCell)
+                {
+                    if (null == tableRow)
+                    {
+                        tableRow = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow);
+                        tableRow.LayoutVariant = BDConstants.LayoutVariantType.Table_3_Column_ContentRow;
+                        tableRow.SetParent(tableSection);
+                        tableRow.displayOrder = idxTableChildren++;
+                        BDTableRow.Save(dataContext, tableRow);
+                        idxTableCell = 0;
+                    }
+                    tableCell = BDTableCell.CreateBDTableCell(dataContext, Guid.Parse(uuidData));
+                    tableCell.displayOrder = idxTableCell++;
+                    tableCell.SetParent(tableRow.Uuid);
+                    tableCell.alignment = (int)BDConstants.TableCellAlignment.LeftJustified;
+
+                    BDTableCell.Save(dataContext, tableCell);
+
+                    BDString cellValue = BDString.CreateBDString(dataContext);
+                    cellValue.displayOrder = 0;
+                    cellValue.SetParent(tableCell.Uuid);
+                    cellValue.value = tableCellData;
+                    BDString.Save(dataContext, cellValue);
+
+                    BDTableCell cell2 = BDTableCell.CreateBDTableCell(dataContext);
+                    cell2.displayOrder = idxTableCell++;
+                    cell2.SetParent(tableRow.Uuid);
+                    cell2.alignment = (int)BDConstants.TableCellAlignment.LeftJustified;
+                    BDTableCell.Save(dataContext, cell2);
+
+                    BDString cell2Value = BDString.CreateBDString(dataContext);
+                    cell2Value.displayOrder = 0;
+                    cell2Value.SetParent(cell2.Uuid);
+                    cell2Value.value = string.Empty;
+                    BDString.Save(dataContext, cell2Value);
+
+                    BDTableCell cell3 = BDTableCell.CreateBDTableCell(dataContext);
+                    cell3.displayOrder = idxTableCell++;
+                    cell3.SetParent(tableRow.Uuid);
+                    cell3.alignment = (int)BDConstants.TableCellAlignment.LeftJustified;
+                    BDTableCell.Save(dataContext, cell3);
+
+                    BDString cell3Value = BDString.CreateBDString(dataContext);
+                    cell3Value.displayOrder = 0;
+                    cell3Value.SetParent(cell3.Uuid);
+                    cell3Value.value = string.Empty;
+                    BDString.Save(dataContext, cell3Value);
+                }
+                tableRow = null;
+                tableCell = null;
+            }
+        }
     }
 }

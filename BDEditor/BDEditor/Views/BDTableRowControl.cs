@@ -284,16 +284,11 @@ namespace BDEditor.Views
             {
                 switch (row.LayoutVariant)
                 {
-                    case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics_HeaderRow:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass_HeaderRow:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_HeaderRow:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis_HeaderRow:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis_HeaderRow:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis_HeaderRow:
-                    case BDConstants.LayoutVariantType.Antibiotics_NameListing_HeaderRow:
-                    case BDConstants.LayoutVariantType.Antibiotics_Stepdown_HeaderRow:
-                    case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration_HeaderRow:
-                    case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_HeaderRow:
                     case BDConstants.LayoutVariantType.Table_2_Column_HeaderRow:
                     case BDConstants.LayoutVariantType.Table_3_Column_HeaderRow:
                     case BDConstants.LayoutVariantType.Table_4_Column_HeaderRow:

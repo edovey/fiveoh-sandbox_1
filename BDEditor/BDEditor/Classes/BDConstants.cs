@@ -134,12 +134,9 @@ namespace BDEditor.Classes
             Antibiotics = 200, 
             [Description("Clinical Antibiotic Guidelines")]
             Antibiotics_ClinicalGuidelines = 201,
+
             [Description("Pharmacodynamics")]
             Antibiotics_Pharmacodynamics = 202,
-            [Description("Pharmacodynamics Header Row")]
-            Antibiotics_Pharmacodynamics_HeaderRow = 2021,
-            [Description("Pharmacodynamics Content Row")]
-            Antibiotics_Pharmacodynamics_ContentRow = 2022,
             [Description("Antibiotics Dosing and Costs")]
             Antibiotics_DosingAndCosts = 203,
             [Description("Antibiotics Dosing and Monitoring")]
@@ -149,33 +146,13 @@ namespace BDEditor.Classes
             [Description("Antibiotics Dosing in Hepatic Impairment")]
             Antibiotics_Dosing_HepaticImpairment = 206,
             [Description("Antibiotics Name Listing")]
-            
             Antibiotics_NameListing = 207,
-            [Description("Antibiotics Name Listing Header Row")]
-            Antibiotics_NameListing_HeaderRow = 2071,
-            [Description("Antibiotics Name Listing Content Row")]
-            Antibiotics_NameListing_ContentRow = 2072,
-
             [Description("Antibiotics Stepdown Recommendations")]
             Antibiotics_Stepdown = 208,
-            [Description("Antibiotics Stepdown Recommendations Header Row")]
-            Antibiotics_Stepdown_HeaderRow = 2081,
-            [Description("Antibiotics Stepdown Recommendations Content Row")]
-            Antibiotics_Stepdown_ContentRow = 2082,
-
             [Description("Antibiotics CSF Penetration")]
             Antibiotics_CSFPenetration = 209,
-            [Description("Antibiotics CSF Penetration Header Row")]
-            Antibiotics_CSFPenetration_HeaderRow = 2091,
-            [Description("Antibiotics CSF Penetration Content Row")]
-            Antibiotics_CSFPenetration_ContentRow = 2092,
-
             [Description("Antibiotics B Lactam Allergy")]
             Antibiotics_BLactamAllergy = 210,
-            [Description("Antibiotics B Lactam Allergy Header Row")]
-            Antibiotics_BLactamAllergy_HeaderRow = 2101,
-            [Description("Antibiotics B Lactam Allergy Content Row")]
-            Antibiotics_BLactamAllergy_ContentRow = 2102,
             
             [Description("Prophylaxis Recommendations")]
             Prophylaxis = 300, 

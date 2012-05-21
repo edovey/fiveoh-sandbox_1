@@ -406,7 +406,14 @@ namespace BDEditor.Views
                                 showChildControls = true;
                             }
                             break;
-}
+                        case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
+                            if (!pInterrogateOnly)
+                            {
+                                control_tr01 = new BDNodeControl(dataContext, node);
+                                showChildControls = true;
+                            }
+                            break;
+                    }
                     break;
                 case BDConstants.BDNodeType.BDCategory:
                     switch (node.LayoutVariant)
@@ -513,6 +520,10 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.Antibiotics_NameListing:
                         case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
                         case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
+                        case BDConstants.LayoutVariantType.Table_2_Column:
+                        case BDConstants.LayoutVariantType.Table_3_Column:
+                        case BDConstants.LayoutVariantType.Table_4_Column:
+                        case BDConstants.LayoutVariantType.Table_5_Column:
                             if (!pInterrogateOnly)
                             {
                                 control_tr01 = new BDNodeControl(dataContext, node);

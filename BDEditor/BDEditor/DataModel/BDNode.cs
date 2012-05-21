@@ -232,6 +232,18 @@ namespace BDEditor.DataModel
             return returnList;
         }
 
+        /// <summary>
+        /// Return the maximum value of the display order found in the children of the specified parent
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pParent"></param>
+        /// <returns></returns>
+        public static int? RetrieveMaximumDisplayOrderForChildren(Entities pContext, BDNode pParent)
+        {
+            var maxDisplayorder = pContext.BDNodes.Where(x => (x.parentId == pParent.Uuid)).Select(node => node.displayOrder).Max();
+            return maxDisplayorder;
+        }
+
         protected override void OnPropertyChanged(string property)
         {
             if (!BDCommon.Settings.IsSyncLoad)

@@ -149,6 +149,9 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDosageGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
+                        case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
                     }
                     break;
                 case BDConstants.BDNodeType.BDCategory:
@@ -301,11 +304,19 @@ namespace BDEditor.Classes
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDisease, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAntimicrobial, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
                         case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
-                        case BDConstants.LayoutVariantType.Antibiotics_NameListing:
-                        case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
-                        case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        case BDConstants.LayoutVariantType.Antibiotics_NameListing:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Table_3_Column }));
+                            break;
+                        case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Table_5_Column }));
+                            break;
+                        case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Table_4_Column }));
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubsection, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -367,20 +378,6 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogenGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
-                        case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics_HeaderRow, BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics_ContentRow }));
-                            break;
-                        case BDConstants.LayoutVariantType.Antibiotics_NameListing:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_NameListing_HeaderRow }));
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                            break;
-                        case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_Stepdown_HeaderRow, BDConstants.LayoutVariantType.Antibiotics_Stepdown_ContentRow }));
-                            break;
-                        case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_CSFPenetration_HeaderRow }));
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                            break;
                         case BDConstants.LayoutVariantType.Table_2_Column:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Table_2_Column_HeaderRow }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -419,17 +416,11 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                             childDefinitionList = null;
                             break;
-                        case BDConstants.LayoutVariantType.Antibiotics_NameListing:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSubsection, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_NameListing }));
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_NameListing_ContentRow }));
-                            break;
-                        case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_CSFPenetration_ContentRow }));
-                            break;
                         case BDConstants.LayoutVariantType.Table_2_Column:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Table_2_Column_ContentRow }));
                             break;
                         case BDConstants.LayoutVariantType.Table_3_Column:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSubsection, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Table_3_Column }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Table_3_Column_ContentRow }));
                             break;
                         case BDConstants.LayoutVariantType.Table_4_Column:
@@ -446,8 +437,8 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDTableSubsection:
                     switch (layoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.Antibiotics_NameListing:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_NameListing_ContentRow }));
+                        case BDConstants.LayoutVariantType.Table_3_Column:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Table_3_Column_ContentRow }));
                             break;
                         default:
                             // child types are explicitly defined for each layout variant
@@ -477,6 +468,9 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
                         case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Table_2_Column, BDConstants.LayoutVariantType.Table_3_Column, BDConstants.LayoutVariantType.Table_4_Column, BDConstants.LayoutVariantType.Table_5_Column }));
+                            break;
+                        case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
+                            childDefinitionList = null;
                             break;
                         default:
                             // child types are explicitly defined for each layout variant
@@ -895,6 +889,7 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDAntimicrobial:
                     switch (pNode.LayoutVariant)
                     {
+                        case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                             {
@@ -1041,14 +1036,6 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I_ContentRow:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_ContentRow:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_HeaderRow:
-                        case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics_HeaderRow:
-                        case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics_ContentRow:
-                        case BDConstants.LayoutVariantType.Antibiotics_NameListing_HeaderRow:
-                        case BDConstants.LayoutVariantType.Antibiotics_NameListing_ContentRow:
-                        case BDConstants.LayoutVariantType.Antibiotics_Stepdown_HeaderRow:
-                        case BDConstants.LayoutVariantType.Antibiotics_Stepdown_ContentRow:
-                        case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration_HeaderRow:
-                        case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration_ContentRow:
                         case BDConstants.LayoutVariantType.Table_2_Column_ContentRow:
                         case BDConstants.LayoutVariantType.Table_2_Column_HeaderRow:
                         case BDConstants.LayoutVariantType.Table_3_Column_ContentRow:
@@ -1154,6 +1141,7 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDTopic:
                     switch (pNode.LayoutVariant)
                     {
+                        case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
                         case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
                             {
@@ -1196,19 +1184,11 @@ namespace BDEditor.Classes
                     maxColumns = 2;
                     break;
                 case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
-                case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics_ContentRow:
-                case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics_HeaderRow:
-                case BDConstants.LayoutVariantType.Antibiotics_NameListing:
-                case BDConstants.LayoutVariantType.Antibiotics_NameListing_HeaderRow:
-                case BDConstants.LayoutVariantType.Antibiotics_NameListing_ContentRow:
                 case BDConstants.LayoutVariantType.Table_3_Column:
                 case BDConstants.LayoutVariantType.Table_3_Column_HeaderRow:
                 case BDConstants.LayoutVariantType.Table_3_Column_ContentRow:
                     maxColumns = 3;
                     break;
-                case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
-                case BDConstants.LayoutVariantType.Antibiotics_Stepdown_HeaderRow:
-                case BDConstants.LayoutVariantType.Antibiotics_Stepdown_ContentRow:
                 case BDConstants.LayoutVariantType.Table_5_Column:
                 case BDConstants.LayoutVariantType.Table_5_Column_HeaderRow:
                 case BDConstants.LayoutVariantType.Table_5_Column_ContentRow:
@@ -1220,9 +1200,6 @@ namespace BDEditor.Classes
                 case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_HeaderRow:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_ContentRow:
-                case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
-                case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration_HeaderRow:
-                case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration_ContentRow:
                 case BDConstants.LayoutVariantType.Table_4_Column:
                 case BDConstants.LayoutVariantType.Table_4_Column_HeaderRow:
                 case BDConstants.LayoutVariantType.Table_4_Column_ContentRow:

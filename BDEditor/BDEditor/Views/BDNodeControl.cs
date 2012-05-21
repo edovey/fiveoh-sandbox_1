@@ -773,5 +773,49 @@ namespace BDEditor.Views
             }
         }
         #endregion
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tbName.Undo();
+        }
+
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tbName.Cut();
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tbName.Copy();
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tbName.Paste();
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int i = tbName.SelectionStart;
+            tbName.Text = tbName.Text.Substring(0, i) + tbName.Text.Substring(i + tbName.SelectionLength);
+            tbName.SelectionStart = i;
+            tbName.SelectionLength = 0;
+        }
+
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tbName.SelectionStart = 0;
+            tbName.SelectionLength = tbName.Text.Length;
+            tbName.Focus();
+        }
+
+        private void contextMenuStripTextBox_Opening(object sender, CancelEventArgs e)
+        {
+            undoToolStripMenuItem.Enabled = tbName.CanUndo;
+            pasteToolStripMenuItem.Enabled = (Clipboard.ContainsText());
+            cutToolStripMenuItem.Enabled = (tbName.SelectionLength > 0);
+            copyToolStripMenuItem.Enabled = (tbName.SelectionLength > 0);
+            deleteToolStripMenuItem.Enabled = (tbName.SelectionLength > 0);
+        }
     }
 }

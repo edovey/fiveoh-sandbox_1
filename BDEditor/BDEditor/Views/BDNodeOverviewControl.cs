@@ -75,6 +75,15 @@ namespace BDEditor.Views
                     bdLinkedNoteControl1.CurrentLinkedNote = overviewLinkedNote;
                 }
             }
+
+            System.Drawing.Size textControlSize;
+            if (base.showAsChild)
+                textControlSize = new System.Drawing.Size(870, 225);
+            else
+                textControlSize = new System.Drawing.Size(870, 467);
+            this.bdLinkedNoteControl1.Size = textControlSize;
+            base.pnlOverview.Size = textControlSize;
+
             bdLinkedNoteControl1.RefreshLayout();
 
             ControlHelper.ResumeDrawing(this);

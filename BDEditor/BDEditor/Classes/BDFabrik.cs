@@ -1147,7 +1147,7 @@ namespace BDEditor.Classes
                             {
                                 nodeControl = new BDNodeOverviewControl();
                                 BDNodeOverviewControl newOverviewControl = nodeControl as BDNodeOverviewControl;
-                                newOverviewControl.ShowAsChild = false;
+                                newOverviewControl.ShowAsChild = true;
                                 newOverviewControl.ShowSiblingAdd = true;
                             }
                             break;

@@ -179,6 +179,10 @@ namespace BDEditor.Classes
             Dental_Prophylaxis_Endocarditis_AntibioticRegimen_ContentRow = 4032,
             [Description("Dental Prophylaxis Prosthetics")]
             Dental_Prophylaxis_Prosthetics = 404,
+            [Description("Dental Prophylaxis Prosthetics Header Row")]
+            Dental_Prophylaxis_Prosthetics_HeaderRow = 4041,
+            [Description("Dental Prophylaxis Prosthetics Content Row")]
+            Dental_Prophylaxis_Prosthetics_ContentRow = 4042,
             [Description("Dental Prophylaxis DrugRegimens")]
             Dental_Prophylaxis_DrugRegimens = 405,
             [Description("Dental Prophylaxis DrugRegimens Header Row")]
@@ -193,6 +197,8 @@ namespace BDEditor.Classes
             Dental_RecommendedTherapy_AntimicrobialActivity_ContentRow = 4062,
             [Description("Dental Recommended Therapy Microorganisms")]
             Dental_RecommendedTherapy_Microorganisms = 407,
+            [Description("Dental Recommended Therapy Microorganisms Content Row")]
+            Dental_RecommendedTherapy_Microorganisms_ContentRow = 4071,
             [Description("Dental Recommended Therapy")]
             Dental_RecommendedTherapy = 408,
 

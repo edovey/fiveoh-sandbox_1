@@ -17,7 +17,7 @@ namespace BDEditor.DataModel
     /// <summary>
     /// Extension of BDTableCell class generated from model
     /// </summary>
-    public partial class BDTableCell : IBDObject
+    public partial class BDTableCell : IBDNode
     {
         public const string AWS_PROD_DOMAIN = @"bd_2_tableCells";
         public const string AWS_DEV_DOMAIN = @"bd_dev_2_tableCells";
@@ -39,7 +39,7 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME_FRIENDLY = @"Table Cells";
         public const string KEY_NAME = @"BDTableCell";
 
-        public const int ENTITY_SCHEMAVERSION = 0;
+        public const int ENTITY_SCHEMAVERSION = 1;
 
         private const string UUID = @"tc_uuid";
         private const string SCHEMAVERSION = @"tc_schemaVersion";
@@ -52,6 +52,9 @@ namespace BDEditor.DataModel
         private const string PARENTKEYNAME = @"tc_parentKeyName";
         private const string ALIGNMENT = @"tc_alignment";
         private const string VALUE = @"tc_value";
+        private const string NODETYPE = @"tc_nodeType";
+        private const string LAYOUTVARIANT = @"tc_layoutVariant";
+        private const string PARENTTYPE = @"tc_parentType";
 
         public Guid? tempProductionUuid { get; set; }
 
@@ -270,7 +273,12 @@ namespace BDEditor.DataModel
             entry.displayOrder = short.Parse(pAttributeDictionary[DISPLAYORDER]);
             entry.value = pAttributeDictionary[VALUE];
             entry.alignment = (null == pAttributeDictionary[ALIGNMENT]) ? (short)-1 : short.Parse(pAttributeDictionary[ALIGNMENT]);
-            
+            if (schemaVersion == 1)
+            {
+                entry.nodeType = short.Parse(pAttributeDictionary[NODETYPE]);
+                entry.layoutVariant = short.Parse(pAttributeDictionary[LAYOUTVARIANT]);
+                entry.parentType = short.Parse(pAttributeDictionary[PARENTTYPE]);
+            }
             if (pSaveChanges)
                 pDataContext.SaveChanges();
 
@@ -302,6 +310,13 @@ namespace BDEditor.DataModel
             entry.parentId = Guid.Parse(pAttributeDictionary[PARENTID]);
             entry.parentKeyName = pAttributeDictionary[PARENTKEYNAME];
             entry.value = pAttributeDictionary[VALUE];
+
+            if (entry.schemaVersion == 1)
+            {
+                entry.nodeType = short.Parse(pAttributeDictionary[NODETYPE]);
+                entry.layoutVariant = short.Parse(pAttributeDictionary[LAYOUTVARIANT]);
+                entry.parentType = short.Parse(pAttributeDictionary[PARENTTYPE]);
+            }
 
             pDataContext.SaveChanges();
 
@@ -358,15 +373,85 @@ namespace BDEditor.DataModel
             return putAttributeRequest;
         }
         #endregion
-
-        public void SetParent(Guid? pParentId)
-        {
-            parentId = pParentId;
-        }
-        
+      
         public override string ToString()
         {
             return this.uuid.ToString();
         }
+
+        #region IBDNode implementation
+        public string Name
+        { get; set; }
+
+        public BDConstants.BDNodeType NodeType
+        {
+            get
+            {
+                BDConstants.BDNodeType result = BDConstants.BDNodeType.None;
+
+                if (Enum.IsDefined(typeof(BDConstants.BDNodeType), nodeType))
+                {
+                    result = (BDConstants.BDNodeType)nodeType;
+                }
+                return result;
+            }
+        }
+
+        public BDConstants.LayoutVariantType LayoutVariant
+        {
+            get
+            {
+                BDConstants.LayoutVariantType result = BDConstants.LayoutVariantType.Undefined;
+
+                if (Enum.IsDefined(typeof(BDConstants.LayoutVariantType), layoutVariant))
+                {
+                    result = (BDConstants.LayoutVariantType)layoutVariant;
+                }
+                return result;
+            }
+            set { layoutVariant = (int)value; }
+        }
+
+        public int? DisplayOrder
+        {
+            get { return displayOrder; }
+            set { displayOrder = value; }
+        }
+
+        public Guid? ParentId
+        {
+            get { return parentId; }
+        }
+
+        public BDConstants.BDNodeType ParentType
+        {
+            get
+            {
+                BDConstants.BDNodeType result = BDConstants.BDNodeType.None;
+
+                if (Enum.IsDefined(typeof(BDConstants.BDNodeType), parentType))
+                {
+                    result = (BDConstants.BDNodeType)parentType;
+                }
+                return result;
+            }
+        }
+
+        public void SetParent(IBDNode pParent)
+        {
+            if (null == pParent)
+                SetParent(BDConstants.BDNodeType.None, null);
+            else
+                SetParent(pParent.NodeType, pParent.Uuid);
+        }
+
+        public void SetParent(BDConstants.BDNodeType pParentType, Guid? pParentId)
+        {
+            parentId = pParentId;
+            parentType = (int)pParentType;
+            parentKeyName = pParentType.ToString();
+        }
+
+        #endregion
     }
 }

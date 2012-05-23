@@ -66,6 +66,11 @@ namespace BDEditor.Classes
             BDSubsection = 21,
             [Description("Topic")]
             BDTopic = 22,
+            // BDTableCell class
+            [Description("Table Cell")]
+            BDTableCell = 23,
+            [Description("Table Group")]
+            BDTableGroup = 24,
         }
 
         public enum LayoutVariantType
@@ -178,9 +183,25 @@ namespace BDEditor.Classes
 
             [Description(" Pregnancy / Lactation")]
             PregancyLactation = 500,
+            [Description("Antimicrobials in Pregancy")]
+            PregnancyLactation_Antimicrobials_Pregnancy = 501,
+            [Description("Antimicrobials in Lactation")]
+            PregnancyLactation_Antimicrobials_Lactation = 502,
+            [Description("Exposure to Communicable Diseases during Pregnancy")]
+            PregnancyLactation_Exposure_CommunicableDiseases = 503,
+            [Description("Prevention of Perinatal Infection")]
+            PregnancyLactation_Prevention_PerinatalInfection = 504,
 
             [Description("Organisms")]
             Organisms = 600,
+            [Description("Gram Stain Interpretation")]
+            Organisms_GramStainInterpretation = 601,
+            [Description("Organisms for Specific Body Sites")]
+            Organisms_CommensalAndPathogenic = 602,
+            [Description("Empiric Therapy of Specific Organisms")]
+            Organisms_EmpiricTherapy = 603,
+            [Description("Antibiogram")]
+            Organisms_Antibiogram = 604,
 
             [Description("2-column Table")]
             Table_2_Column = 900,

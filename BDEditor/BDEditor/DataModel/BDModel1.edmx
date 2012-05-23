@@ -244,6 +244,9 @@
           <Property Name="alignment" Type="int" />
           <Property Name="value" Type="nvarchar" MaxLength="100" />
           <Property Name="schemaVersion" Type="int" />
+          <Property Name="nodeType" Type="int" />
+          <Property Name="layoutVariant" Type="int" />
+          <Property Name="parentType" Type="int" />
         </EntityType>
         <EntityType Name="BDTableRows">
           <Key>
@@ -564,6 +567,9 @@
           <Property Type="Int32" Name="alignment" />
           <Property Type="String" Name="value" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="schemaVersion" />
+          <Property Type="Int32" Name="nodeType" />
+          <Property Type="Int32" Name="layoutVariant" />
+          <Property Type="Int32" Name="parentType" />
         </EntityType>
         <EntityType Name="BDTableRow">
           <Key>
@@ -866,6 +872,9 @@
           <EntitySetMapping Name="BDTableCells">
             <EntityTypeMapping TypeName="BDDataModel.BDTableCell">
               <MappingFragment StoreEntitySet="BDTableCells">
+                <ScalarProperty Name="parentType" ColumnName="parentType" />
+                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
+                <ScalarProperty Name="nodeType" ColumnName="nodeType" />
                 <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
                 <ScalarProperty Name="value" ColumnName="value" />
                 <ScalarProperty Name="alignment" ColumnName="alignment" />
@@ -988,7 +997,7 @@
         <EntityTypeShape EntityType="BDDataModel.BDSearchEntry" Width="1.5" PointX="6.75" PointY="5.75" Height="1.9802864583333388" />
         <EntityTypeShape EntityType="BDDataModel.BDSearchEntryAssociation" Width="1.5" PointX="8.75" PointY="0.75" Height="2.9417936197916674" />
         <EntityTypeShape EntityType="BDDataModel.BDSystemSetting" Width="1.5" PointX="8.75" PointY="4.75" Height="1.7879850260416674" />
-        <EntityTypeShape EntityType="BDDataModel.BDTherapy" Width="2" PointX="12.375" PointY="4.625" Height="6.787822265625" />
+        <EntityTypeShape EntityType="BDDataModel.BDTherapy" Width="2" PointX="12.125" PointY="4.875" Height="6.787822265625" />
         <EntityTypeShape EntityType="BDDataModel.BDTherapyGroup" Width="1.5" PointX="8.75" PointY="7.75" Height="3.9033007812500102" />
         <EntityTypeShape EntityType="BDDataModel.BDTableCell" Width="1.5" PointX="12.375" PointY="1.125" Height="2.9417936197916674" />
         <EntityTypeShape EntityType="BDDataModel.BDTableRow" Width="1.5" PointX="10.625" PointY="0.875" Height="3.5186979166666656" />

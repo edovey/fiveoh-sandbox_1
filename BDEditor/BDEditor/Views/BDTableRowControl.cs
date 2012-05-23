@@ -19,7 +19,7 @@ namespace BDEditor.Views
         private Guid? parentId;
         private BDConstants.BDNodeType parentType;
         private Guid? scopeId;
-        private List<BDTableCellControl> cellControlList = new List<BDTableCellControl>();
+        private List<IBDControl> cellControlList = new List<IBDControl>();
         private TextBox textControl;
 
         public int? DisplayOrder { get; set; }
@@ -115,42 +115,56 @@ namespace BDEditor.Views
                 int maxColumns = BDFabrik.GetTableColumnCount(currentNode.LayoutVariant);
                 BDTableRow row = currentNode as BDTableRow;
                 List<BDTableCell> list = BDTableCell.RetrieveTableCellsForParentId(dataContext, currentNode.Uuid);
-                for (int i = 0; i < maxColumns; i++)
-                    pnlControls.Controls.Add(addChildCellControl(list[i]));
 
+                switch (currentNode.LayoutVariant)
+                {
+                    case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
+                        for (int i = 0; i < maxColumns; i++)
+                            pnlControls.Controls.Add(addChildCellControl(list[i]));
+                        break;
+                    default:
+                        for (int i = 0; i < maxColumns; i++)
+                            pnlControls.Controls.Add(addChildCellControl(list[i]));
+                        break;
+                }
             }
         }
 
-        private TextBox addTextBoxControl(string name)
-        {
-            TextBox tbControl = new TextBox();
-            tbControl.Dock = DockStyle.Fill;
-            tbControl.TabIndex = 0;
-            if (!string.IsNullOrEmpty(name))
-                tbControl.Text = name;
-            textControl = tbControl;
-
-            return tbControl;
-        }
         private BDTableCellControl addChildCellControl(BDTableCell cell)
         {
             BDTableCellControl cellControl = new BDTableCellControl();
             ((System.Windows.Forms.UserControl)cellControl).Dock = DockStyle.Right;
-            ((System.Windows.Forms.UserControl)cellControl).TabIndex = cell.displayOrder.Value;
-            cellControl.DisplayOrder = cell.displayOrder;
+            ((System.Windows.Forms.UserControl)cellControl).TabIndex = cell.DisplayOrder.Value;
+            cellControl.DisplayOrder = cell.DisplayOrder;
             cellControl.AssignParentInfo(currentNode.Uuid, currentNode.NodeType);
             cellControl.AssignDataContext(dataContext);
             cellControl.AssignScopeId(scopeId);
             cellControl.ShowAsChild = true;
+
             cellControl.CurrentTableCell = cell;
-
             cellControl.TableCellAlignment = (BDConstants.TableCellAlignment)cell.alignment;
-
             cellControl.RefreshLayout();
 
             cellControlList.Add(cellControl);
-
             return cellControl;
+        }
+
+        private BDNodeOverviewControl addNodeOverviewControl(BDTableCell cell)
+        {
+            BDNodeOverviewControl cellControl = new BDNodeOverviewControl();
+            ((System.Windows.Forms.UserControl)cellControl).Dock = DockStyle.Right;
+            ((System.Windows.Forms.UserControl)cellControl).TabIndex = cell.DisplayOrder.Value;
+            cellControl.DisplayOrder = cell.DisplayOrder;
+            cellControl.AssignParentInfo(currentNode.Uuid, currentNode.NodeType);
+            cellControl.AssignDataContext(dataContext);
+            cellControl.AssignScopeId(scopeId);
+            cellControl.ShowAsChild = true;
+            cellControl.CurrentNode = cell;
+            cellControl.RefreshLayout();
+
+            cellControlList.Add(cellControl);
+            return cellControl;
+
         }
 
         public void AssignDataContext(Entities pDataContext)

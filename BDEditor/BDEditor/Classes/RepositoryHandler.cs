@@ -71,6 +71,8 @@ namespace BDEditor.Classes
                 syncDictionary.Add(BDString.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
                 syncDictionary.Add(BDDeletion.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
                 syncDictionary.Add(BDMetadata.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
+                syncDictionary.Add(BDDosage.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
+                syncDictionary.Add(BDPrecaution.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
             }
 
             if (pSyncType == BDConstants.SyncType.Publish)
@@ -265,6 +267,12 @@ namespace BDEditor.Classes
                                     Console.WriteLine(s3Exception.Message, s3Exception.InnerException);
                                 }
                                 break;
+                            case BDDosage.KEY_NAME:
+                                domainName = BDDosage.AWS_DOMAIN;
+                                break;
+                            case BDPrecaution.KEY_NAME:
+                                domainName = BDPrecaution.AWS_DOMAIN;
+                                break;
                         }
 
                         DeleteAttributesRequest request = new DeleteAttributesRequest().WithDomainName(domainName).WithItemName(entry.targetId.Value.ToString().ToUpper());
@@ -434,6 +442,12 @@ namespace BDEditor.Classes
                                         }
                                     }
                                     break;
+                                case BDDosage.AWS_DOMAIN:
+                                    entryGuid = BDDosage.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
+                                case BDPrecaution.AWS_DOMAIN:
+                                    entryGuid = BDPrecaution.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
                             }
                             // The entry id will be null if a sync conflict prevented create/update so add it to the conflict list
                             if (null == entryGuid) syncInfoEntry.SyncConflictList.Add(attributeDictionary);
@@ -586,6 +600,12 @@ namespace BDEditor.Classes
                                 case BDString.AWS_PROD_DOMAIN:
                                     entryGuid = BDString.LoadFromAttributes(pDataContext, attributeDictionary, false);
                                     break;
+                                case BDDosage.AWS_PROD_DOMAIN:
+                                    entryGuid = BDDosage.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
+                                case BDPrecaution.AWS_PROD_DOMAIN:
+                                    entryGuid = BDPrecaution.LoadFromAttributes(pDataContext, attributeDictionary, false);
+                                    break;
                             }
                             // The entry id will be null if a sync conflict prevented create/update so add it to the conflict list
                             if (null == entryGuid) syncInfoEntry.SyncConflictList.Add(attributeDictionary);
@@ -666,6 +686,8 @@ namespace BDEditor.Classes
             pDataContext.ExecuteStoreCommand("DELETE FROM BDSearchEntries");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDMetadata");
             pDataContext.ExecuteStoreCommand("DELETE FROM BDHtmlPages");
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDDosages");
+            pDataContext.ExecuteStoreCommand("DELETE FROM BDPrecautions");
         }
 
         #region Helper Methods

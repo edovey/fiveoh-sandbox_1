@@ -15,9 +15,10 @@ namespace BDEditor.Views
     public partial class BDTableCellControl : UserControl, IBDControl
     {
         private Entities dataContext;
-        private BDTableCell currentTableCell;
+        private IBDNode currentNode;
         private Guid? parentId;
         private Guid? scopeId;
+        private BDConstants.BDNodeType parentType;
         private BDConstants.TableCellAlignment alignment;
         private List<BDStringControl> stringControlList = new List<BDStringControl>();
 
@@ -70,8 +71,8 @@ namespace BDEditor.Views
 
         public BDTableCell CurrentTableCell
         {
-            get { return currentTableCell; }
-            set { currentTableCell = value; }
+            get { return currentNode as BDTableCell; }
+            set { currentNode = value; }
         }
 
         public BDTableCellControl()
@@ -82,7 +83,7 @@ namespace BDEditor.Views
         public BDTableCellControl(Entities pDataContext, BDTableCell pCell)
         {
             dataContext = pDataContext;
-            currentTableCell = pCell;
+            currentNode = pCell;
             parentId = pCell.parentId;
             alignment = (BDConstants.TableCellAlignment) pCell.alignment;
             InitializeComponent();
@@ -121,9 +122,9 @@ namespace BDEditor.Views
                 removeStringControl(control, false);
             }
 
-            if (currentTableCell != null && pShowChildren)
+            if (currentNode != null && pShowChildren)
             {
-                List<BDString> list = BDString.RetrieveStringsForParentId(dataContext, currentTableCell.Uuid);
+                List<BDString> list = BDString.RetrieveStringsForParentId(dataContext, currentNode.Uuid);
                 int iDetail = 0;
                 foreach (BDString entry in list)
                     addStringControl(entry, iDetail++);
@@ -142,7 +143,7 @@ namespace BDEditor.Views
         {
             bool result = true;
 
-            if (null == this.currentTableCell)
+            if (null == this.currentNode)
             {
                 if (null == this.parentId)
                 {
@@ -150,10 +151,10 @@ namespace BDEditor.Views
                 }
                 else
                 {
-                    currentTableCell = BDTableCell.CreateBDTableCell(this.dataContext);
-                    currentTableCell.SetParent(parentId);
-                    currentTableCell.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
-                    //currentTableCell.LayoutVariant = DefaultLayoutVariantType;
+                    currentNode = BDTableCell.CreateBDTableCell(this.dataContext);
+                    currentNode = BDFabrik.CreateNode(dataContext, DefaultNodeType, parentId, parentType);
+                    currentNode.DisplayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
+                    currentNode.LayoutVariant = DefaultLayoutVariantType;
                 }
             }
 
@@ -171,7 +172,7 @@ namespace BDEditor.Views
                 stringControl.Dock = DockStyle.Top;
                 stringControl.TabIndex = pTabIndex;
                 stringControl.DisplayOrder = pTabIndex;
-                stringControl.AssignParentInfo(currentTableCell.Uuid, BDConstants.BDNodeType.None);
+                stringControl.AssignParentInfo(currentNode.Uuid, BDConstants.BDNodeType.None);
                 stringControl.AssignDataContext(dataContext);
                 stringControl.AssignScopeId(scopeId);
                 stringControl.CurrentString = pString;
@@ -269,10 +270,11 @@ namespace BDEditor.Views
                     result = control.Save() || result;
                 }
 
-                if(result && (null == currentTableCell))
+                if (result && (null == currentNode))
                     CreateCurrentObject();
-                if(null != currentTableCell)
+                if (null != currentNode)
                 {
+                    BDTableCell currentTableCell  = currentNode as BDTableCell;
                     currentTableCell.alignment = (int)TableCellAlignment;
                     BDTableCell.Save(dataContext, currentTableCell);
                     result = true;
@@ -356,12 +358,12 @@ namespace BDEditor.Views
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            OnItemDeleteRequested(new NodeEventArgs(dataContext, currentTableCell.Uuid));
+            OnItemDeleteRequested(new NodeEventArgs(dataContext, currentNode.Uuid));
         }
 
         public override string ToString()
         {
-            return (null == this.currentTableCell) ? "No Cell" : this.currentTableCell.Uuid.ToString();
+            return (null == this.currentNode) ? "No Cell" : this.currentNode.Uuid.ToString();
         }
 
         void notesChanged_Action(object sender, NodeEventArgs e)

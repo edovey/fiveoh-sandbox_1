@@ -167,11 +167,11 @@
     <Compile Include="DataModel\BDTableRow.cs" />
     <Compile Include="DataModel\IBDNode.cs" />
     <Compile Include="DataModel\IBDObject.cs" />
-    <Compile Include="Views\BDDosageControl.cs">
+    <Compile Include="Views\BDDosageAndCostControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\BDDosageControl.Designer.cs">
-      <DependentUpon>BDDosageControl.cs</DependentUpon>
+    <Compile Include="Views\BDDosageAndCostControl.Designer.cs">
+      <DependentUpon>BDDosageAndCostControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\BDLinkedNoteControl.cs">
       <SubType>UserControl</SubType>
@@ -265,8 +265,8 @@
     <EmbeddedResource Include="Properties\licenses.licx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\BDDosageControl.resx">
-      <DependentUpon>BDDosageControl.cs</DependentUpon>
+    <EmbeddedResource Include="Views\BDDosageAndCostControl.resx">
+      <DependentUpon>BDDosageAndCostControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDNodeControl.resx">
       <DependentUpon>BDNodeControl.cs</DependentUpon>
@@ -459,7 +459,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
+      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -916,7 +916,7 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                             {
-                                nodeControl = new BDDosageControl();
+                                nodeControl = new BDDosageAndCostControl();
                             }
                             break;
                     }

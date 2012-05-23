@@ -12,7 +12,7 @@ using BDEditor.Classes;
 
 namespace BDEditor.Views
 {
-    public partial class BDDosageControl : UserControl, IBDControl
+    public partial class BDDosageAndCostControl : UserControl, IBDControl
     {
         private Entities dataContext;
         private BDDosage currentDosage;
@@ -78,7 +78,7 @@ namespace BDEditor.Views
             set { currentDosage = value; }
         }
 
-        public BDDosageControl()
+        public BDDosageAndCostControl()
         {
             InitializeComponent();
             rtbName.Tag = btnNameLink;
@@ -444,5 +444,46 @@ namespace BDEditor.Views
             rtbName.SelectAll();
         }
 
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtbName.Undo();
+        }
+
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtbName.Cut();
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtbName.Copy();
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtbName.Paste();
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int i = rtbName.SelectionStart;
+            rtbName.Text = rtbName.Text.Substring(0, i) + rtbName.Text.Substring(i + rtbName.SelectionLength);
+            rtbName.SelectionStart = i;
+            rtbName.SelectionLength = 0;
+        }
+
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtbName.SelectAll();
+        }
+
+        private void contextMenuStripTextBox_Opening(object sender, CancelEventArgs e)
+        {
+            undoToolStripMenuItem.Enabled = rtbName.CanUndo;
+            pasteToolStripMenuItem.Enabled = (Clipboard.ContainsText());
+            cutToolStripMenuItem.Enabled = (rtbName.SelectionLength > 0);
+            copyToolStripMenuItem.Enabled = (rtbName.SelectionLength > 0);
+            deleteToolStripMenuItem.Enabled = (rtbName.SelectionLength > 0);
+        }
     }
 }

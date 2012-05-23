@@ -26,7 +26,16 @@ namespace BDEditor.Classes
             chapter2b,
             chapter2c,
             chapter2d,
-            chapter2e
+            chapter2e,
+
+            chapter4a, //Dental
+            chapter4b,
+            chapter4c,
+            chapter4d,
+            chapter4e,
+            chapter4f,
+            chapter4g,
+            chapter4h
         }
 
         char[] delimiters = new char[] { '\t' };
@@ -88,6 +97,7 @@ namespace BDEditor.Classes
         short idxPathogenGroup = 0;
         short idxPathogen = 0;
         short idxTable = 0;
+        short idxTableSection = 0;
         short idxTableChildren = 0;
         short idxTableCell = 0;
         short idxTableHeaderCell = 0;
@@ -166,6 +176,32 @@ namespace BDEditor.Classes
                                 break;
                             case baseDataDefinitionType.chapter2e:
                                 ProcessChapter2eInputLine(input);
+                                break;
+
+                                //dental
+                            case baseDataDefinitionType.chapter4a:
+                                ProcessChapter4aInputLine(input);
+                                break;
+                            case baseDataDefinitionType.chapter4b:
+                                ProcessChapter4bInputLine(input);
+                                break;
+                            case baseDataDefinitionType.chapter4c:
+                                ProcessChapter4cInputLine(input);
+                                break;
+                            case baseDataDefinitionType.chapter4d:
+                                ProcessChapter4dInputLine(input);
+                                break;
+                            case baseDataDefinitionType.chapter4e:
+                                ProcessChapter4eInputLine(input);
+                                break;
+                            case baseDataDefinitionType.chapter4f:
+                                ProcessChapter4fInputLine(input);
+                                break;
+                            case baseDataDefinitionType.chapter4g:
+                                ProcessChapter4gInputLine(input);
+                                break;
+                            case baseDataDefinitionType.chapter4h:
+                                ProcessChapter4hInputLine(input);
                                 break;
                         }
                         
@@ -760,7 +796,7 @@ namespace BDEditor.Classes
                 {
                     tableCell = BDTableCell.CreateBDTableCell(dataContext, Guid.Parse(uuidData));
                     tableCell.displayOrder = idxTableCell++;
-                    tableCell.SetParent(tableRow.Uuid);
+                    tableCell.SetParent(tableRow);
                     if (tableRow.layoutVariant == (int)BDConstants.LayoutVariantType.Table_3_Column_HeaderRow)
                         tableCell.alignment = (int)BDConstants.TableCellAlignment.Centred;
                     else
@@ -1368,7 +1404,7 @@ namespace BDEditor.Classes
 
                     tableHeaderCell = BDTableCell.CreateBDTableCell(dataContext, Guid.Parse(uuidData));
                     tableHeaderCell.displayOrder = idxTableHeaderCell++;
-                    tableHeaderCell.SetParent(tableHeaderRow.Uuid);
+                    tableHeaderCell.SetParent(tableHeaderRow);
                     tableHeaderCell.alignment = (int)BDConstants.TableCellAlignment.Centred;
 
                     BDTableCell.Save(dataContext, tableHeaderCell);
@@ -1458,7 +1494,7 @@ namespace BDEditor.Classes
                     }
                     tableCell = BDTableCell.CreateBDTableCell(dataContext, Guid.Parse(uuidData));
                     tableCell.displayOrder = idxTableCell++;
-                    tableCell.SetParent(tableRow.Uuid);
+                    tableCell.SetParent(tableRow);
                     tableCell.alignment = (int)BDConstants.TableCellAlignment.LeftJustified;
 
                     BDTableCell.Save(dataContext, tableCell);
@@ -1471,7 +1507,7 @@ namespace BDEditor.Classes
 
                     BDTableCell cell2 = BDTableCell.CreateBDTableCell(dataContext);
                     cell2.displayOrder = idxTableCell++;
-                    cell2.SetParent(tableRow.Uuid);
+                    cell2.SetParent(tableRow);
                     cell2.alignment = (int)BDConstants.TableCellAlignment.LeftJustified;
                     BDTableCell.Save(dataContext, cell2);
 
@@ -1483,7 +1519,7 @@ namespace BDEditor.Classes
 
                     BDTableCell cell3 = BDTableCell.CreateBDTableCell(dataContext);
                     cell3.displayOrder = idxTableCell++;
-                    cell3.SetParent(tableRow.Uuid);
+                    cell3.SetParent(tableRow);
                     cell3.alignment = (int)BDConstants.TableCellAlignment.LeftJustified;
                     BDTableCell.Save(dataContext, cell3);
 
@@ -1642,7 +1678,7 @@ namespace BDEditor.Classes
 
                     tableHeaderCell = BDTableCell.CreateBDTableCell(dataContext, Guid.Parse(uuidData));
                     tableHeaderCell.displayOrder = idxTableHeaderCell++;
-                    tableHeaderCell.SetParent(tableHeaderRow.Uuid);
+                    tableHeaderCell.SetParent(tableHeaderRow);
                     tableHeaderCell.alignment = (int)BDConstants.TableCellAlignment.Centred;
 
                     BDTableCell.Save(dataContext, tableHeaderCell);
@@ -1811,7 +1847,7 @@ namespace BDEditor.Classes
 
                     tableHeaderCell = BDTableCell.CreateBDTableCell(dataContext, Guid.Parse(uuidData));
                     tableHeaderCell.displayOrder = idxTableHeaderCell++;
-                    tableHeaderCell.SetParent(tableHeaderRow.Uuid);
+                    tableHeaderCell.SetParent(tableHeaderRow);
                     tableHeaderCell.alignment = (int)BDConstants.TableCellAlignment.Centred;
 
                     BDTableCell.Save(dataContext, tableHeaderCell);
@@ -2086,7 +2122,7 @@ namespace BDEditor.Classes
 
                     tableHeaderCell = BDTableCell.CreateBDTableCell(dataContext, Guid.Parse(uuidData));
                     tableHeaderCell.displayOrder = idxTableHeaderCell++;
-                    tableHeaderCell.SetParent(tableHeaderRow.Uuid);
+                    tableHeaderCell.SetParent(tableHeaderRow);
                     tableHeaderCell.alignment = (int)BDConstants.TableCellAlignment.Centred;
 
                     BDTableCell.Save(dataContext, tableHeaderCell);
@@ -2148,7 +2184,7 @@ namespace BDEditor.Classes
                     }
                     tableCell = BDTableCell.CreateBDTableCell(dataContext, Guid.Parse(uuidData));
                     tableCell.displayOrder = idxTableCell++;
-                    tableCell.SetParent(tableRow.Uuid);
+                    tableCell.SetParent(tableRow);
                     tableCell.alignment = (int)BDConstants.TableCellAlignment.LeftJustified;
 
                     BDTableCell.Save(dataContext, tableCell);
@@ -2161,7 +2197,7 @@ namespace BDEditor.Classes
 
                     BDTableCell cell2 = BDTableCell.CreateBDTableCell(dataContext);
                     cell2.displayOrder = idxTableCell++;
-                    cell2.SetParent(tableRow.Uuid);
+                    cell2.SetParent(tableRow);
                     cell2.alignment = (int)BDConstants.TableCellAlignment.LeftJustified;
                     BDTableCell.Save(dataContext, cell2);
 
@@ -2173,7 +2209,7 @@ namespace BDEditor.Classes
 
                     BDTableCell cell3 = BDTableCell.CreateBDTableCell(dataContext);
                     cell3.displayOrder = idxTableCell++;
-                    cell3.SetParent(tableRow.Uuid);
+                    cell3.SetParent(tableRow);
                     cell3.alignment = (int)BDConstants.TableCellAlignment.LeftJustified;
                     BDTableCell.Save(dataContext, cell3);
 
@@ -2187,5 +2223,231 @@ namespace BDEditor.Classes
                 tableCell = null;
             }
         }
+
+        private void ProcessChapter4aInputLine(string pInputLine)
+        {
+            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
+
+            //Expectation that a row contains only one element with data
+
+            uuidData = string.Empty;
+            chapterData = string.Empty;
+            sectionData = string.Empty;
+            tableData = string.Empty;
+            tableHeaderRowData = string.Empty;
+            tableHeaderCellData = string.Empty;
+            tableSectionData = string.Empty;
+
+            if (elements.Length > 0) uuidData = elements[0];
+            if (elements.Length > 1) chapterData = elements[1];
+            if (elements.Length > 2) sectionData = elements[2];
+            if (elements.Length > 3) tableData = elements[3];
+            if (elements.Length > 4) tableHeaderRowData = elements[4];
+            if (elements.Length > 5) tableHeaderCellData = elements[5];
+            if (elements.Length > 6) tableSectionData = elements[6];
+
+            if ((null != chapterData && chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
+            {
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, chapter1Uuid);
+                if (null == tmpNode)
+                {
+                    chapter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
+                    chapter.name = chapterData;
+                    chapter.displayOrder = idxChapter++;
+                    chapter.LayoutVariant = BDConstants.LayoutVariantType.Dental_Prophylaxis;
+                    chapter.SetParent(null);
+                    BDNode.Save(dataContext, chapter);
+
+                    idxSection = 0;
+                    idxTable = 0;
+                    idxTableChildren = 0;
+                    idxTableHeaderCell = 0;
+                }
+                else
+                {
+                    chapter = tmpNode;
+                    idxChapter++;
+                }
+                section = null;
+                table = null;
+                tableHeaderRow = null;
+                tableHeaderCell = null;
+                tableSection = null;
+            }
+
+            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+            {
+                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == sectionNode)
+                {
+                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+                    section.name = sectionData;
+                    section.SetParent(chapter);
+                    section.displayOrder = idxSection++;
+                    section.LayoutVariant = BDConstants.LayoutVariantType.Dental_Prophylaxis;
+                    BDNode.Save(dataContext, section);
+
+                    idxTable = 0;
+                    idxTableChildren = 0;
+                    idxTableHeaderCell = 0;
+                }
+                else
+                {
+                    section = sectionNode; 
+                    idxSection++;
+                }
+                table = null;
+                tableHeaderRow = null;
+                tableHeaderCell = null;
+                tableSection = null;
+            }
+            if ((null != tableData && tableData != string.Empty) && ((null == table) || (table.name != tableData)))
+            {
+                BDNode tableNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == tableNode)
+                {
+                    table = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTable, Guid.Parse(uuidData));
+                    table.name = (tableData == @"<blank>") ? string.Empty : tableData;
+                    table.SetParent(section);
+                    table.displayOrder = idxTable++;
+                    table.LayoutVariant = BDConstants.LayoutVariantType.Dental_Prophylaxis;
+                    BDNode.Save(dataContext, table);
+
+                    idxTableChildren = 0;
+                    idxTableHeaderCell = 0;
+                }
+                else
+                {
+                    table = tableNode;
+                    idxTable++;
+                }
+
+                tableHeaderRow = null;
+                tableHeaderCell = null;
+                tableSection = null;
+            }
+
+            if ((null != tableHeaderRowData && tableHeaderRowData != string.Empty) && ((null == tableHeaderRow) || (tableHeaderRow.name != tableHeaderRowData)))
+            {
+                BDTableRow tmpRow = BDTableRow.RetrieveTableRowWithId(dataContext, Guid.Parse(uuidData));
+                if (null == tmpRow)
+                {
+                    tableHeaderRow = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow, Guid.Parse(uuidData));
+
+                    tableHeaderRow.name = (tableHeaderRowData == @"(Header)") ? string.Empty : tableHeaderRowData;
+                    tableHeaderRow.SetParent(table);
+                    tableHeaderRow.displayOrder = idxTableChildren++;
+                    tableHeaderRow.LayoutVariant = BDConstants.LayoutVariantType.Dental_Prophylaxis_HeaderRow;
+                    BDTableRow.Save(dataContext, tableHeaderRow);
+
+                    idxTableHeaderCell = 0;
+                }
+                else
+                {
+                    tableHeaderRow = tmpRow;
+                    idxTableChildren++;
+                }
+                tableHeaderCell = null;
+                tableSection = null;
+            }
+
+            if ((null != tableHeaderCellData && tableHeaderCellData != string.Empty) && ((null == tableHeaderCell) || tableHeaderCell.Uuid.ToString() != uuidData))
+            {
+                BDTableCell tmpCell = BDTableCell.RetrieveWithId(dataContext, Guid.Parse(uuidData));
+                if (null == tmpCell)
+                {
+                    if (null == tableHeaderRow)
+                    {
+                        tableHeaderRow = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow);
+                        tableHeaderRow.LayoutVariant = BDConstants.LayoutVariantType.Dental_Prophylaxis_HeaderRow;
+                        tableHeaderRow.SetParent(table);
+                        tableHeaderRow.displayOrder = idxTableChildren++;
+                        BDTableRow.Save(dataContext, tableHeaderRow);
+
+                        idxTableCell = 0;
+                    }
+
+                    tableHeaderCell = BDTableCell.CreateBDTableCell(dataContext, Guid.Parse(uuidData));
+                    tableHeaderCell.displayOrder = idxTableHeaderCell++;
+                    tableHeaderCell.SetParent(tableHeaderRow);
+                    tableHeaderCell.alignment = (int)BDConstants.TableCellAlignment.Centred;
+
+                    BDTableCell.Save(dataContext, tableHeaderCell);
+
+                    BDString cellValue = BDString.CreateBDString(dataContext);
+                    cellValue.displayOrder = 0;
+                    cellValue.SetParent(tableHeaderCell.Uuid);
+                    cellValue.value = tableHeaderCellData;
+                    BDString.Save(dataContext, cellValue);
+                }
+                else
+                {
+                    tableHeaderCell = tmpCell;
+                    idxTableHeaderCell++;
+                }
+                tableSection = null;
+            }
+            if ((null != tableSectionData && tableSectionData != string.Empty) && ((null == tableSection) || (tableSection.name != tableSectionData)))
+            {
+                BDNode tmpRow = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(uuidData));
+                if (null == tmpRow)
+                {
+                    tableSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTableSection, Guid.Parse(uuidData));
+
+                    tableSection.name = (tableSectionData == @"<blank>") ? string.Empty : tableSectionData;
+                    tableSection.SetParent(table);
+                    tableSection.displayOrder = idxTableChildren++;
+                    tableSection.LayoutVariant = BDConstants.LayoutVariantType.Dental_Prophylaxis;
+                    BDNode.Save(dataContext, tableSection);
+
+                    // do not reset table row counter - otherwise child rows will not sort correctly with header row
+                    idxTableCell = 0;
+                }
+                else
+                {
+                    tableSection = tmpRow;
+                    idxTableChildren++;
+                }
+
+                tableRow = null;
+                tableCell = null;
+            }
+        }
+
+        private void ProcessChapter4bInputLine(string pInputLine)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ProcessChapter4cInputLine(string pInputLine)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ProcessChapter4dInputLine(string pInputLine)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ProcessChapter4eInputLine(string pInputLine)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ProcessChapter4fInputLine(string pInputLine)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ProcessChapter4gInputLine(string pInputLine)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ProcessChapter4hInputLine(string pInputLine)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

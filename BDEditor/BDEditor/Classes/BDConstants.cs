@@ -166,18 +166,44 @@ namespace BDEditor.Classes
             Dental = 400,
             [Description("Dental Prophylaxis")]
             Dental_Prophylaxis = 401,
+            [Description("Dental Prophylaxis Header Row")]
+            Dental_Prophylaxis_HeaderRow = 4011,
+            [Description("Dental Prophylaxis Content Row")]
+            Dental_Prophylaxis_ContentRow = 4012,
             [Description("Dental Prophylaxis Endocarditis")]
             Dental_Prophylaxis_Endocarditis = 402,
+            [Description("Dental Prophylaxis Endocarditis Header Row")]
+            Dental_Prophylaxis_Endocarditis_HeaderRow = 4021,
+            [Description("Dental Prophylaxis Endocarditis Content Row")]
+            Dental_Prophylaxis_Endocarditis_ContentRow = 4022,
             [Description("Dental Prophylaxis Endocarditis Antibiotic Regimen")]
             Dental_Prophylaxis_Endocarditis_AntibioticRegimen = 403,
+            [Description("Dental Prophylaxis Endocarditis Antibiotic Regimen Header Row")]
+            Dental_Prophylaxis_Endocarditis_AntibioticRegimen_HeaderRow = 4031,
+            [Description("Dental Prophylaxis Endocarditis Antibiotic Regimen Content Row")]
+            Dental_Prophylaxis_Endocarditis_AntibioticRegimen_ContentRow = 4032,
             [Description("Dental Prophylaxis Prosthetics")]
             Dental_Prophylaxis_Prosthetics = 404,
+            [Description("Dental Prophylaxis Prosthetics Header Row")]
+            Dental_Prophylaxis_Prosthetics_HeaderRow = 4041,
+            [Description("Dental Prophylaxis Prosthetics Content Row")]
+            Dental_Prophylaxis_Prosthetics_ContentRow = 4042,
             [Description("Dental Prophylaxis DrugRegimens")]
             Dental_Prophylaxis_DrugRegimens = 405,
+            [Description("Dental Prophylaxis DrugRegimens Header Row")]
+            Dental_Prophylaxis_DrugRegimens_HeaderRow = 4051,
+            [Description("Dental Prophylaxis DrugRegimens Content Row")]
+            Dental_Prophylaxis_DrugRegimens_ContentRow = 4052,
             [Description("Dental Recommended Therapy Antimicrobial Activity")]
             Dental_RecommendedTherapy_AntimicrobialActivity = 406,
+            [Description("Dental Recommended Therapy Antimicrobial Activity Header Row")]
+            Dental_RecommendedTherapy_AntimicrobialActivity_HeaderRow = 4061,
+            [Description("Dental Recommended Therapy Antimicrobial Activity Content Row")]
+            Dental_RecommendedTherapy_AntimicrobialActivity_ContentRow = 4062,
             [Description("Dental Recommended Therapy Microorganisms")]
             Dental_RecommendedTherapy_Microorganisms = 407,
+            [Description("Dental Recommended Therapy Microorganisms Content Row")]
+            Dental_RecommendedTherapy_Microorganisms_ContentRow = 4071,
             [Description("Dental Recommended Therapy")]
             Dental_RecommendedTherapy = 408,
 

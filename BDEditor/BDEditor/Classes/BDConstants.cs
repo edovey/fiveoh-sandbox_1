@@ -159,6 +159,22 @@ namespace BDEditor.Classes
 
             [Description("Dental")]
             Dental = 400,
+            [Description("Dental Prophylaxis")]
+            Dental_Prophylaxis = 401,
+            [Description("Dental Prophylaxis Endocarditis")]
+            Dental_Prophylaxis_Endocarditis = 402,
+            [Description("Dental Prophylaxis Endocarditis Antibiotic Regimen")]
+            Dental_Prophylaxis_Endocarditis_AntibioticRegimen = 403,
+            [Description("Dental Prophylaxis Prosthetics")]
+            Dental_Prophylaxis_Prosthetics = 404,
+            [Description("Dental Prophylaxis DrugRegimens")]
+            Dental_Prophylaxis_DrugRegimens = 405,
+            [Description("Dental Recommended Therapy Antimicrobial Activity")]
+            Dental_RecommendedTherapy_AntimicrobialActivity = 406,
+            [Description("Dental Recommended Therapy Microorganisms")]
+            Dental_RecommendedTherapy_Microorganisms = 407,
+            [Description("Dental Recommended Therapy")]
+            Dental_RecommendedTherapy = 408,
 
             [Description(" Pregnancy / Lactation")]
             PregancyLactation = 500,

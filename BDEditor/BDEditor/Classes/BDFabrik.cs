@@ -1090,6 +1090,7 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
+                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
                                 nodeControl = new BDNodeOverviewControl();
                             break;
                         default:
@@ -1108,6 +1109,13 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Table_3_Column:
                         case BDConstants.LayoutVariantType.Table_4_Column:
                         case BDConstants.LayoutVariantType.Table_5_Column:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
+                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
+                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
                             nodeControl = new BDNodeControl();
                             BDNodeControl newControl = nodeControl as BDNodeControl;
                             newControl.ShowAsChild = false;
@@ -1131,6 +1139,20 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Table_4_Column_HeaderRow:
                         case BDConstants.LayoutVariantType.Table_5_Column_ContentRow:
                         case BDConstants.LayoutVariantType.Table_5_Column_HeaderRow:
+
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_HeaderRow:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_ContentRow:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_HeaderRow:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_ContentRow:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen_HeaderRow:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen_ContentRow:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics_HeaderRow:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics_ContentRow:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens_HeaderRow:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens_ContentRow:
+                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity_HeaderRow:
+                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity_ContentRow:
+                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms_ContentRow:
                             nodeControl = new BDTableRowControl();
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
@@ -1268,19 +1290,19 @@ namespace BDEditor.Classes
                 case BDConstants.LayoutVariantType.Table_2_Column:
                 case BDConstants.LayoutVariantType.Table_2_Column_HeaderRow:
                 case BDConstants.LayoutVariantType.Table_2_Column_ContentRow:
+                case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis:
+                case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
                     maxColumns = 2;
                     break;
                 case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
                 case BDConstants.LayoutVariantType.Table_3_Column:
                 case BDConstants.LayoutVariantType.Table_3_Column_HeaderRow:
                 case BDConstants.LayoutVariantType.Table_3_Column_ContentRow:
+                case BDConstants.LayoutVariantType.Dental_Prophylaxis:
+                case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
                     maxColumns = 3;
                     break;
-                case BDConstants.LayoutVariantType.Table_5_Column:
-                case BDConstants.LayoutVariantType.Table_5_Column_HeaderRow:
-                case BDConstants.LayoutVariantType.Table_5_Column_ContentRow:
-                    maxColumns = 5;
-                    break;
+
                 case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass_HeaderRow:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass_ContentRow:
@@ -1290,6 +1312,18 @@ namespace BDEditor.Classes
                 case BDConstants.LayoutVariantType.Table_4_Column:
                 case BDConstants.LayoutVariantType.Table_4_Column_HeaderRow:
                 case BDConstants.LayoutVariantType.Table_4_Column_ContentRow:
+                case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
+                case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
+                    maxColumns = 4;
+                    break;
+                case BDConstants.LayoutVariantType.Table_5_Column:
+                case BDConstants.LayoutVariantType.Table_5_Column_HeaderRow:
+                case BDConstants.LayoutVariantType.Table_5_Column_ContentRow:
+                    maxColumns = 5;
+                    break;
+                case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
+                    maxColumns = 8;
+                    break;
                 default:
                     maxColumns = 4;
                     break;

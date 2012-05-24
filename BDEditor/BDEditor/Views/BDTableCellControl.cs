@@ -75,6 +75,12 @@ namespace BDEditor.Views
             set { currentNode = value; }
         }
 
+        public IBDNode CurrentNode
+        {
+            get { return currentNode; }
+            set { currentNode = value; }
+        }
+
         public BDTableCellControl()
         {
             InitializeComponent();
@@ -275,7 +281,6 @@ namespace BDEditor.Views
                 if (null != currentNode)
                 {
                     BDTableCell currentTableCell  = currentNode as BDTableCell;
-                    currentTableCell.alignment = (int)TableCellAlignment;
                     BDTableCell.Save(dataContext, currentTableCell);
                     result = true;
                 }
@@ -372,15 +377,9 @@ namespace BDEditor.Views
         }
 
         public BDConstants.BDNodeType DefaultNodeType { get; set; }
-        public BDConstants.TableCellAlignment TableCellAlignment { get; set; }
+        //public BDConstants.TableCellAlignment TableCellAlignment { get; set; }
 
         BDConstants.LayoutVariantType IBDControl.DefaultLayoutVariantType { get; set; }
-
-        public IBDNode CurrentNode
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
 
         public bool ShowAsChild { get; set; }
 

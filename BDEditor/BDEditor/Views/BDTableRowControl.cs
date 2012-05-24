@@ -116,18 +116,31 @@ namespace BDEditor.Views
                 BDTableRow row = currentNode as BDTableRow;
                 List<BDTableCell> list = BDTableCell.RetrieveTableCellsForParentId(dataContext, currentNode.Uuid);
 
-                switch (currentNode.LayoutVariant)
+                for (int i = 0; i < maxColumns; i++)
                 {
-                    case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
-                        for (int i = 0; i < maxColumns; i++)
-                            pnlControls.Controls.Add(addChildCellControl(list[i]));
-                        break;
-                    default:
-                        for (int i = 0; i < maxColumns; i++)
-                            pnlControls.Controls.Add(addChildCellControl(list[i]));
-                        break;
+                    IBDControl newControl = BDFabrik.CreateControlForNode(dataContext, list[i]);
+                    if (null != newControl)
+                    {
+                        BDTableCell cell = list[i];
+                        ((System.Windows.Forms.UserControl)newControl).Dock = DockStyle.Top;
+                        ((System.Windows.Forms.UserControl)newControl).TabIndex = cell.displayOrder.Value;
+                        newControl.DisplayOrder = cell.displayOrder;
+                        newControl.AssignParentInfo(currentNode.Uuid, currentNode.NodeType);
+                        newControl.AssignDataContext(dataContext);
+                        newControl.AssignScopeId(scopeId);
+                        newControl.CurrentNode = list[i];
+                        newControl.DefaultLayoutVariantType = cell.LayoutVariant;
+                        newControl.DefaultNodeType = cell.NodeType;
+
+                        pnlControls.Controls.Add((System.Windows.Forms.UserControl)newControl);
+                        ((System.Windows.Forms.UserControl)newControl).BringToFront();
+                        newControl.CurrentNode = cell;
+
+                        cellControlList.Add(newControl);
+                        newControl.RefreshLayout();
+                    }
                 }
-            }
+           }
         }
 
         private BDTableCellControl addChildCellControl(BDTableCell cell)
@@ -142,7 +155,6 @@ namespace BDEditor.Views
             cellControl.ShowAsChild = true;
 
             cellControl.CurrentTableCell = cell;
-            cellControl.TableCellAlignment = (BDConstants.TableCellAlignment)cell.alignment;
             cellControl.RefreshLayout();
 
             cellControlList.Add(cellControl);

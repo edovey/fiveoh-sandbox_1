@@ -1134,6 +1134,22 @@ namespace BDEditor.Classes
                             break;
                     }
                     break;
+                case BDConstants.BDNodeType.BDTableCell:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms_ContentRow:
+                            nodeControl = new BDNodeOverviewControl();
+                            BDNodeOverviewControl newOverviewControl = nodeControl as BDNodeOverviewControl;
+                            newOverviewControl.ShowAsChild = true;
+                            newOverviewControl.ShowSiblingAdd = true;
+                            break;
+                        default:
+                            nodeControl = new BDTableCellControl();
+                            BDTableCellControl cellControl = nodeControl as BDTableCellControl;
+
+                            break;
+                    }
+                    break;
                 case BDConstants.BDNodeType.BDTableRow:
                     switch (pNode.LayoutVariant)
                     {

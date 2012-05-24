@@ -100,10 +100,18 @@ namespace BDEditor.Views
                     case BDConstants.LayoutVariantType.Antibiotics:
                         node = BDAntibioticsTree.BuildBranch(dataContext, pNode);
                         break;
+                    case BDConstants.LayoutVariantType.Dental:
+                        node = BDDentalTree.BuildBranch(dataContext, pNode);
+                        break;
+                    default:
+                        throw new NotImplementedException();
                 }
-                TreeNode[] nodeList = new TreeNode[node.Nodes.Count];
-                node.Nodes.CopyTo(nodeList, 0);
-                chapterTree.Nodes.AddRange(nodeList);
+                if (null != node)
+                {
+                    TreeNode[] nodeList = new TreeNode[node.Nodes.Count];
+                    node.Nodes.CopyTo(nodeList, 0);
+                    chapterTree.Nodes.AddRange(nodeList);
+                }
             }
 
             this.Cursor = _cursor;
@@ -386,7 +394,26 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
                         case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
                         case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
+
                             childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
+                            if (!pInterrogateOnly)
+                            {
+                                graftTreeNode(selectedNode, childTreeNode);
+                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = false;
+                            }
+                            break;
+
+                        case BDConstants.LayoutVariantType.Dental:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
+                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
+                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
+                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
+                            childTreeNode = BDDentalTree.BuildBranch(dataContext, node);
                             if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
@@ -425,7 +452,6 @@ namespace BDEditor.Views
                             if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
-
                                 control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = false;
                             }
@@ -436,7 +462,6 @@ namespace BDEditor.Views
                             if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
-
                                 control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = false;
                             }
@@ -444,6 +469,17 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
                             if (!pInterrogateOnly)
                             {
+                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = true;
+                            }
+                            break;
+
+                        case BDConstants.LayoutVariantType.Dental:
+                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
+                            childTreeNode = BDDentalTree.BuildBranch(dataContext, node);
+                            if (!pInterrogateOnly)
+                            {
+                                graftTreeNode(selectedNode, childTreeNode);
                                 control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = true;
                             }
@@ -460,7 +496,16 @@ namespace BDEditor.Views
                             if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
-
+                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = false;
+                            }
+                            break;
+                        case BDConstants.LayoutVariantType.Dental:
+                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
+                            childTreeNode = BDDentalTree.BuildBranch(dataContext, node);
+                            if (!pInterrogateOnly)
+                            {
+                                graftTreeNode(selectedNode, childTreeNode);
                                 control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = false;
                             }
@@ -497,6 +542,8 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
+                        case BDConstants.LayoutVariantType.Dental:
+                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
                             if (!pInterrogateOnly)
                             {
                                 control_tr01 = new BDNodeOverviewControl(dataContext, node);
@@ -524,6 +571,13 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.Table_3_Column:
                         case BDConstants.LayoutVariantType.Table_4_Column:
                         case BDConstants.LayoutVariantType.Table_5_Column:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
+                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
+                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
                             if (!pInterrogateOnly)
                             {
                                 control_tr01 = new BDNodeControl(dataContext, node);
@@ -644,6 +698,15 @@ namespace BDEditor.Views
             dataLoader.ImportData(dataContext, @"Resources\Chapter_1h.txt", BDDataLoader.baseDataDefinitionType.chapter1h);
             dataLoader.ImportData(dataContext, @"Resources\Chapter_1i.txt", BDDataLoader.baseDataDefinitionType.chapter1i);
             dataLoader.ImportData(dataContext, @"Resources\Chapter_1j.txt", BDDataLoader.baseDataDefinitionType.chapter1j);
+
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_4a.txt", BDDataLoader.baseDataDefinitionType.chapter4a);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_4b.txt", BDDataLoader.baseDataDefinitionType.chapter4b);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_4c.txt", BDDataLoader.baseDataDefinitionType.chapter4c);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_4d.txt", BDDataLoader.baseDataDefinitionType.chapter4d);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_4e.txt", BDDataLoader.baseDataDefinitionType.chapter4e);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_4f.txt", BDDataLoader.baseDataDefinitionType.chapter4f);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_4g.txt", BDDataLoader.baseDataDefinitionType.chapter4g);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_4h.txt", BDDataLoader.baseDataDefinitionType.chapter4h);
 
             LoadChapterDropDown();
             BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);

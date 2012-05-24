@@ -77,6 +77,7 @@ namespace BDEditor.DataModel
             cell.schemaVersion = ENTITY_SCHEMAVERSION;
             cell.displayOrder = -1;
             cell.alignment = -1;
+            cell.nodeType = (int)BDConstants.BDNodeType.BDTableCell;
 
             pContext.AddObject(ENTITYNAME, cell);
             Save(pContext, cell);
@@ -389,6 +390,10 @@ namespace BDEditor.DataModel
             {
                 BDConstants.BDNodeType result = BDConstants.BDNodeType.None;
 
+                if (null == nodeType)
+                {
+                    nodeType = (int)BDConstants.BDNodeType.BDTableCell;
+                }
                 if (Enum.IsDefined(typeof(BDConstants.BDNodeType), nodeType))
                 {
                     result = (BDConstants.BDNodeType)nodeType;
@@ -403,6 +408,18 @@ namespace BDEditor.DataModel
             {
                 BDConstants.LayoutVariantType result = BDConstants.LayoutVariantType.Undefined;
 
+                if (null == layoutVariant)
+                {
+                    if ((null != parentId) && (null != parentType))
+                    {
+                        BDEditor.DataModel.Entities dataContext = new BDEditor.DataModel.Entities();
+                        IBDNode parentNode = BDFabrik.RetrieveNode(dataContext, ParentType, parentId);
+                        if (null != parentNode)
+                        {
+                            layoutVariant = (int)parentNode.LayoutVariant;
+                        }
+                    }
+                }
                 if (Enum.IsDefined(typeof(BDConstants.LayoutVariantType), layoutVariant))
                 {
                     result = (BDConstants.LayoutVariantType)layoutVariant;
@@ -442,7 +459,11 @@ namespace BDEditor.DataModel
             if (null == pParent)
                 SetParent(BDConstants.BDNodeType.None, null);
             else
+            {
+                if (null == nodeType) nodeType = (int)BDConstants.BDNodeType.BDTableCell;
+                layoutVariant = (int)pParent.LayoutVariant;
                 SetParent(pParent.NodeType, pParent.Uuid);
+            }
         }
 
         public void SetParent(BDConstants.BDNodeType pParentType, Guid? pParentId)
@@ -450,6 +471,19 @@ namespace BDEditor.DataModel
             parentId = pParentId;
             parentType = (int)pParentType;
             parentKeyName = pParentType.ToString();
+
+            if (null == layoutVariant)
+            {
+                if ((null != parentId) && (null != parentType))
+                {
+                    BDEditor.DataModel.Entities dataContext = new BDEditor.DataModel.Entities();
+                    IBDNode parentNode = BDFabrik.RetrieveNode(dataContext, ParentType, parentId);
+                    if (null != parentNode)
+                    {
+                        layoutVariant = (int)parentNode.LayoutVariant;
+                    }
+                }
+            }
         }
 
         #endregion

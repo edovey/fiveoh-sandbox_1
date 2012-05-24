@@ -2314,7 +2314,7 @@ namespace BDEditor.Classes
                 if (null == tableNode)
                 {
                     table = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTable, Guid.Parse(uuidData));
-                    table.name = (tableData == @"<blank>") ? string.Empty : tableData;
+                    table.name = (tableData == @"(blank)") ? string.Empty : tableData;
                     table.SetParent(section);
                     table.displayOrder = idxTable++;
                     table.LayoutVariant = tableLayoutVariant;
@@ -2894,7 +2894,7 @@ namespace BDEditor.Classes
 
                         BDString idxCellValue = BDString.CreateBDString(dataContext);
                         idxCellValue.displayOrder = 0;
-                        idxCellValue.SetParent(idxCellValue.Uuid);
+                        idxCellValue.SetParent(idxCell.Uuid);
                         idxCellValue.value = string.Empty;
                         BDString.Save(dataContext, idxCellValue);
                     }                  
@@ -3519,7 +3519,7 @@ namespace BDEditor.Classes
 
                         BDString idxCellValue = BDString.CreateBDString(dataContext);
                         idxCellValue.displayOrder = 0;
-                        idxCellValue.SetParent(idxCellValue.Uuid);
+                        idxCellValue.SetParent(idxCell.Uuid);
                         idxCellValue.value = string.Empty;
                         BDString.Save(dataContext, idxCellValue);
                     }                  
@@ -3670,7 +3670,7 @@ namespace BDEditor.Classes
 
                         BDString idxCellValue = BDString.CreateBDString(dataContext);
                         idxCellValue.displayOrder = 0;
-                        idxCellValue.SetParent(idxCellValue.Uuid);
+                        idxCellValue.SetParent(idxCell.Uuid);
                         idxCellValue.value = string.Empty;
                         BDString.Save(dataContext, idxCellValue);
                     }

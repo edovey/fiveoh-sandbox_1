@@ -122,7 +122,7 @@ namespace BDEditor.Views
                     if (null != newControl)
                     {
                         BDTableCell cell = list[i];
-                        ((System.Windows.Forms.UserControl)newControl).Dock = DockStyle.Top;
+                        ((System.Windows.Forms.UserControl)newControl).Dock = DockStyle.Left;
                         ((System.Windows.Forms.UserControl)newControl).TabIndex = cell.displayOrder.Value;
                         newControl.DisplayOrder = cell.displayOrder;
                         newControl.AssignParentInfo(currentNode.Uuid, currentNode.NodeType);
@@ -131,6 +131,7 @@ namespace BDEditor.Views
                         newControl.CurrentNode = list[i];
                         newControl.DefaultLayoutVariantType = cell.LayoutVariant;
                         newControl.DefaultNodeType = cell.NodeType;
+                        newControl.ShowAsChild = true;
 
                         pnlControls.Controls.Add((System.Windows.Forms.UserControl)newControl);
                         ((System.Windows.Forms.UserControl)newControl).BringToFront();

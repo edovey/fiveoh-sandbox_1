@@ -125,6 +125,14 @@ namespace BDEditor.DataModel
                         BDTherapyGroup therapyGroupChild = child as BDTherapyGroup;
                         BDTherapyGroup.Delete(pContext, therapyGroupChild, pCreateDeletion);
                         break;
+                    case BDConstants.BDNodeType.BDTableRow:
+                        break;
+                    case BDConstants.BDNodeType.BDDosage:
+                        break;
+                    case BDConstants.BDNodeType.BDPrecaution:
+                        break;
+                    case BDConstants.BDNodeType.BDAttachment:
+                        break;
                     default:
                         BDNode.Delete(pContext, child, pCreateDeletion);
                         break;

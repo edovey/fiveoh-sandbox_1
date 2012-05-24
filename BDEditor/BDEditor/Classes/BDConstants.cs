@@ -71,6 +71,9 @@ namespace BDEditor.Classes
             BDTableCell = 23,
             [Description("Table Group")]
             BDTableGroup = 24,
+            // BDAttachment class
+            [Description("Attachment")]
+            BDAttachment = 25,
         }
 
         public enum LayoutVariantType

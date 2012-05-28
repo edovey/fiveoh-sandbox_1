@@ -74,6 +74,12 @@ namespace BDEditor.Classes
             // BDAttachment class
             [Description("Attachment")]
             BDAttachment = 25,
+            [Description("Surgery Group")]
+            BDSurgeryGroup = 26,
+            [Description("Surgery")]
+            BDSurgery = 27,
+            [Description("Surgery Classification")]
+            BDSurgeryClassification = 28,
         }
 
         public enum LayoutVariantType
@@ -214,10 +220,22 @@ namespace BDEditor.Classes
             PregancyLactation = 500,
             [Description("Antimicrobials in Pregancy")]
             PregnancyLactation_Antimicrobials_Pregnancy = 501,
+            [Description("Antimicrobials in Pregancy Header Row")]
+            PregnancyLactation_Antimicrobials_Pregnancy_HeaderRow = 5011,
+            [Description("Antimicrobials in Pregancy Content Row")]
+            PregnancyLactation_Antimicrobials_Pregnancy_ContentRow = 5012,
             [Description("Antimicrobials in Lactation")]
             PregnancyLactation_Antimicrobials_Lactation = 502,
+            [Description("Antimicrobials in Lactation Header Row")]
+            PregnancyLactation_Antimicrobials_Lactation_HeaderRow = 5021,
+            [Description("Antimicrobials in Lactation Content Row")]
+            PregnancyLactation_Antimicrobials_Lactation_ContentRow = 5022,
             [Description("Exposure to Communicable Diseases during Pregnancy")]
             PregnancyLactation_Exposure_CommunicableDiseases = 503,
+            [Description("Exposure to Communicable Diseases during Pregnancy Header Row")]
+            PregnancyLactation_Exposure_CommunicableDiseases_HeaderRow = 5031,
+            [Description("Exposure to Communicable Diseases during Pregnancy Content Row")]
+            PregnancyLactation_Exposure_CommunicableDiseases_ContentRow = 5032,
             [Description("Prevention of Perinatal Infection")]
             PregnancyLactation_Prevention_PerinatalInfection = 504,
 
@@ -225,9 +243,18 @@ namespace BDEditor.Classes
             Organisms = 600,
             [Description("Gram Stain Interpretation")]
             Organisms_GramStainInterpretation = 601,
+            [Description("Gram Stain Interpretation Header Row")]
+            Organisms_GramStainInterpretation_HeaderRow = 6011,
+            [Description("Gram Stain Interpretation Content Row")]
+            Organisms_GramStainInterpretation_ContentRow = 6012,
             [Description("Organisms for Specific Body Sites")]
             Organisms_CommensalAndPathogenic = 602,
+            [Description("Organisms for Specific Body Sites Header Row")]
+            Organisms_CommensalAndPathogenic_HeaderRow = 6021,
+            [Description("Organisms for Specific Body Sites Content Row")]
+            Organisms_CommensalAndPathogenic_ContentRow = 6022,
             [Description("Empiric Therapy of Specific Organisms")]
+
             Organisms_EmpiricTherapy = 603,
             [Description("Antibiogram")]
             Organisms_Antibiogram = 604,

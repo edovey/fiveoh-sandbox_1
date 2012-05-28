@@ -136,6 +136,8 @@
     <Compile Include="Classes\BDUtilities.cs" />
     <Compile Include="Classes\ControlHelper.cs" />
     <Compile Include="Classes\Navigation\BDAntibioticsTree.cs" />
+    <Compile Include="Classes\Navigation\BDDentalTree.cs" />
+    <Compile Include="Classes\Navigation\BDPregnancyLactationTree.cs" />
     <Compile Include="Classes\Navigation\BDProphylaxisTree.cs" />
     <Compile Include="Classes\Navigation\TreatmentRecommendationTree.cs" />
     <Compile Include="Classes\NodeEventArgs.cs" />

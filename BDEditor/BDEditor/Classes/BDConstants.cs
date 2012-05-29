@@ -254,8 +254,11 @@ namespace BDEditor.Classes
             [Description("Organisms for Specific Body Sites Content Row")]
             Organisms_CommensalAndPathogenic_ContentRow = 6022,
             [Description("Empiric Therapy of Specific Organisms")]
-
             Organisms_EmpiricTherapy = 603,
+            [Description("Empiric Therapy of Specific Organisms Header Row")]
+            Organisms_EmpiricTherapy_HeaderRow = 6031,
+            [Description("Empiric Therapy of Specific Organisms Content Row")]
+            Organisms_EmpiricTherapy_ContentRow = 6032,
             [Description("Antibiogram")]
             Organisms_Antibiogram = 604,
 

@@ -320,6 +320,17 @@ namespace BDEditor.Views
                     case BDConstants.LayoutVariantType.Table_3_Column_HeaderRow:
                     case BDConstants.LayoutVariantType.Table_4_Column_HeaderRow:
                     case BDConstants.LayoutVariantType.Table_5_Column_HeaderRow:
+                    case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic_HeaderRow:
+                    case BDConstants.LayoutVariantType.Organisms_EmpiricTherapy_HeaderRow:
+                    case BDConstants.LayoutVariantType.Organisms_GramStainInterpretation_HeaderRow:
+                    case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation_HeaderRow:
+                    case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy_HeaderRow:
+                    case BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases_HeaderRow:
+                    case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens_HeaderRow:
+                    case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen_HeaderRow:
+                    case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_HeaderRow:
+                    case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics_HeaderRow:
+                    case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity_HeaderRow:
                         this.BackColor = SystemColors.ControlDark;
                         break;
                     default:

@@ -103,6 +103,12 @@ namespace BDEditor.Views
                     case BDConstants.LayoutVariantType.Dental:
                         node = BDDentalTree.BuildBranch(dataContext, pNode);
                         break;
+                    case BDConstants.LayoutVariantType.PregancyLactation:
+                        node = BDPregnancyLactationTree.BuildBranch(dataContext, pNode);
+                        break;
+                    case BDConstants.LayoutVariantType.Organisms:
+                        node = BDOrganismsTree.BuildBranch(dataContext, pNode);
+                        break;
                     default:
                         throw new NotImplementedException();
                 }

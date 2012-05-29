@@ -189,6 +189,9 @@ namespace BDEditor.Classes
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDisease, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         //
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
                         default:
                             break;
                     }
@@ -222,6 +225,9 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
+                        case BDConstants.LayoutVariantType.PregancyLactation:
+                        case BDConstants.LayoutVariantType.Organisms:
+
                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         default:
@@ -324,6 +330,8 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
+                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDCategory, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
@@ -358,10 +366,19 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
+                        case BDConstants.LayoutVariantType.PregancyLactation:
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases:
+                        case BDConstants.LayoutVariantType.Organisms:
+                        case BDConstants.LayoutVariantType.Organisms_GramStainInterpretation:
+                        case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic:
+                        case BDConstants.LayoutVariantType.Organisms_EmpiricTherapy:
+                        
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                            break;
-                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDCategory, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;                        
+                        case BDConstants.LayoutVariantType.Organisms_Antibiogram:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAttachment, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         default:
                             break;
@@ -461,6 +478,32 @@ namespace BDEditor.Classes
                             break;
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
                             break;
+                        //case BDConstants.LayoutVariantType.PregancyLactation:
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy_HeaderRow }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation_HeaderRow }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases_HeaderRow }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        //case BDConstants.LayoutVariantType.Organisms:
+                        case BDConstants.LayoutVariantType.Organisms_GramStainInterpretation:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Organisms_GramStainInterpretation_HeaderRow }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic_HeaderRow }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        case BDConstants.LayoutVariantType.Organisms_EmpiricTherapy:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Organisms_EmpiricTherapy_HeaderRow }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
                         //
                         default:
                             throw new NotSupportedException();
@@ -515,6 +558,11 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
                             break;
+                        case BDConstants.LayoutVariantType.PregancyLactation:
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSubsection, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
                         //
                         default:
                             // child types are explicitly defined for each layout variant
@@ -526,6 +574,24 @@ namespace BDEditor.Classes
                     {
                         case BDConstants.LayoutVariantType.Table_3_Column:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Table_3_Column_ContentRow }));
+                            break;
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy_ContentRow }));
+                            break;
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+
+                        default:
+                            // child types are explicitly defined for each layout variant
+                            throw new NotSupportedException();
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDTableGroup:
+                    switch (layoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation_ContentRow }));
                             break;
                         default:
                             // child types are explicitly defined for each layout variant
@@ -543,6 +609,7 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapy, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         default:
@@ -1216,6 +1283,17 @@ namespace BDEditor.Classes
                             break;
                     }
                     break;
+                case BDConstants.BDNodeType.BDTableGroup:
+                    switch (pNode.LayoutVariant)
+                    {
+                        default:
+                            nodeControl = new BDNodeControl();
+                            BDNodeControl newControl = nodeControl as BDNodeControl;
+                            newControl.ShowAsChild = true;
+                            newControl.ShowSiblingAdd = true;
+                            break;
+                    }
+                    break;
                 case BDConstants.BDNodeType.BDTableSubsection:
                     switch(pNode.LayoutVariant)
                     {
@@ -1322,6 +1400,12 @@ namespace BDEditor.Classes
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_ContentRow:
                 case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
                 case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms_ContentRow:
+                case BDConstants.LayoutVariantType.Organisms_GramStainInterpretation:
+                case BDConstants.LayoutVariantType.Organisms_GramStainInterpretation_HeaderRow:
+                case BDConstants.LayoutVariantType.Organisms_GramStainInterpretation_ContentRow:
+                case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic:
+                case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic_HeaderRow:
+                case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic_ContentRow:
                     maxColumns = 2;
                     break;
                 case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
@@ -1334,6 +1418,12 @@ namespace BDEditor.Classes
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics_HeaderRow:
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics_ContentRow:
+                case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
+                case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy_HeaderRow:
+                case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy_ContentRow:
+                case BDConstants.LayoutVariantType.Organisms_EmpiricTherapy:
+                case BDConstants.LayoutVariantType.Organisms_EmpiricTherapy_HeaderRow:
+                case BDConstants.LayoutVariantType.Organisms_EmpiricTherapy_ContentRow:
                     maxColumns = 3;
                     break;
 
@@ -1352,11 +1442,17 @@ namespace BDEditor.Classes
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens_HeaderRow:
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens_ContentRow:
+                case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
+                case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation_HeaderRow:
+                case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation_ContentRow:
                     maxColumns = 4;
                     break;
                 case BDConstants.LayoutVariantType.Table_5_Column:
                 case BDConstants.LayoutVariantType.Table_5_Column_HeaderRow:
                 case BDConstants.LayoutVariantType.Table_5_Column_ContentRow:
+                case BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases:
+                case BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases_HeaderRow:
+                case BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases_ContentRow:
                     maxColumns = 5;
                     break;
                 case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:

@@ -1054,17 +1054,6 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDAntimicrobial:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
-                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
-                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
-                            {
-                                nodeControl = new BDNodeControl();
-                                BDNodeControl newControl = nodeControl as BDNodeControl;
-                                newControl.AssignTypeaheadSource(BDTypeahead.Antimicrobials, BDNode.PROPERTYNAME_NAME);
-                                newControl.ShowAsChild = true;
-                                newControl.ShowSiblingAdd = true;
-                            }
-                            break;
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
                             {
                                 nodeControl = new BDNodeOverviewControl();
@@ -1073,13 +1062,21 @@ namespace BDEditor.Classes
                                 newOverviewControl.ShowSiblingAdd = true;
                             }
                             break;
+                        default:
+                            {
+                                nodeControl = new BDNodeControl();
+                                BDNodeControl newControl = nodeControl as BDNodeControl;
+                                newControl.AssignTypeaheadSource(BDTypeahead.Antimicrobials, BDNode.PROPERTYNAME_NAME);
+                                newControl.ShowAsChild = true;
+                                newControl.ShowSiblingAdd = true;
+                            }
+                            break;
                     }
                     break;
                 case BDConstants.BDNodeType.BDDosage:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
-                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
+                        default:
                             {
                                 nodeControl = new BDDosageAndCostControl();
                             }
@@ -1089,8 +1086,7 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDDosageGroup:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
-                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
+                        default:
                             {
                                 nodeControl = new BDNodeControl();
                                 BDNodeControl newControl = nodeControl as BDNodeControl;
@@ -1104,11 +1100,15 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDPathogen:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
+                        
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
+                            nodeControl = new BDNodeOverviewControl();
+                            BDNodeOverviewControl newOverviewControl = nodeControl as BDNodeOverviewControl;
+                            newOverviewControl.ShowAsChild = true;
+                            newOverviewControl.ShowSiblingAdd = true;
+                            break;
+                        default:
                             {
                                 nodeControl = new BDNodeControl();
                                 BDNodeControl newControl = nodeControl as BDNodeControl;
@@ -1117,25 +1117,12 @@ namespace BDEditor.Classes
                                 newControl.ShowSiblingAdd = true;
                             }
                             break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
-                            nodeControl = new BDNodeOverviewControl();
-                            BDNodeOverviewControl newOverviewControl = nodeControl as BDNodeOverviewControl;
-                            newOverviewControl.ShowAsChild = true;
-                            newOverviewControl.ShowSiblingAdd = true;
-                            break;
                     }
                     break;
                 case BDConstants.BDNodeType.BDPathogenGroup:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
+                        default:
                             {
                                 nodeControl = new BDNodeControl();
                                 BDNodeControl newControl = nodeControl as BDNodeControl;
@@ -1144,56 +1131,31 @@ namespace BDEditor.Classes
                                 newControl.ShowSiblingAdd = true;
                             }
                             break;
-                        default:
-                            throw new NotSupportedException();
                     }
                     break;
                 case BDConstants.BDNodeType.BDPathogenResistance:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                        default:
                             nodeControl = new BDNodeControl();
                             BDNodeControl newControl = nodeControl as BDNodeControl;
                             newControl.ShowAsChild = true;
                             newControl.ShowSiblingAdd = true;
                             break;
-                        default:
-                            throw new NotSupportedException();
                     }
                     break;
                 case BDConstants.BDNodeType.BDPresentation:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
-                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
-                                nodeControl = new BDNodeOverviewControl();
-                            break;
                         default:
-                            throw new NotSupportedException();
+                            nodeControl = new BDNodeOverviewControl();
+                            break;
                     }
                     break;
                 case BDConstants.BDNodeType.BDTable:
                     switch (pNode.LayoutVariant)
                     { 
-                        case BDConstants.LayoutVariantType.Antibiotics_NameListing:
-                        case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
-                        case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
-                        case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
-                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
-                        case BDConstants.LayoutVariantType.Table_2_Column:
-                        case BDConstants.LayoutVariantType.Table_3_Column:
-                        case BDConstants.LayoutVariantType.Table_4_Column:
-                        case BDConstants.LayoutVariantType.Table_5_Column:
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis:
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis:
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
-                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
-                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
+                        default:
                             nodeControl = new BDNodeControl();
                             BDNodeControl newControl = nodeControl as BDNodeControl;
                             newControl.ShowAsChild = false;
@@ -1220,41 +1182,14 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDTableRow:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass_ContentRow:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass_HeaderRow:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I_ContentRow:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_ContentRow:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_HeaderRow:
-                        case BDConstants.LayoutVariantType.Table_2_Column_ContentRow:
-                        case BDConstants.LayoutVariantType.Table_2_Column_HeaderRow:
-                        case BDConstants.LayoutVariantType.Table_3_Column_ContentRow:
-                        case BDConstants.LayoutVariantType.Table_3_Column_HeaderRow:
-                        case BDConstants.LayoutVariantType.Table_4_Column_ContentRow:
-                        case BDConstants.LayoutVariantType.Table_4_Column_HeaderRow:
-                        case BDConstants.LayoutVariantType.Table_5_Column_ContentRow:
-                        case BDConstants.LayoutVariantType.Table_5_Column_HeaderRow:
-
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_HeaderRow:
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_ContentRow:
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_HeaderRow:
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_ContentRow:
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen_HeaderRow:
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen_ContentRow:
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics_HeaderRow:
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics_ContentRow:
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens_HeaderRow:
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens_ContentRow:
-                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity_HeaderRow:
-                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity_ContentRow:
-                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms_ContentRow:
-                            nodeControl = new BDTableRowControl();
-                            break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
-                        default:
                             nodeControl = new BDNodeOverviewControl();
                             BDNodeOverviewControl newOverviewControl = nodeControl as BDNodeOverviewControl;
                             newOverviewControl.ShowAsChild = true;
                             newOverviewControl.ShowSiblingAdd = true;
+                            break;
+                        default:
+                            nodeControl = new BDTableRowControl();
                             break;
                     }
                     break;
@@ -1267,14 +1202,6 @@ namespace BDEditor.Classes
                             newOverviewControl.ShowAsChild = true;
                             newOverviewControl.ShowSiblingAdd = true;
                             break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
-                        case BDConstants.LayoutVariantType.Antibiotics_NameListing:
-                        case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
-                        case BDConstants.LayoutVariantType.Table_2_Column:
-                        case BDConstants.LayoutVariantType.Table_3_Column:
-                        case BDConstants.LayoutVariantType.Table_4_Column:
-                        case BDConstants.LayoutVariantType.Table_5_Column:
                         default:
                             nodeControl = new BDNodeControl();
                             BDNodeControl newControl = nodeControl as BDNodeControl;
@@ -1297,7 +1224,7 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDTableSubsection:
                     switch(pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.Antibiotics_NameListing:
+                        default:
                             nodeControl = new BDNodeControl();
                             BDNodeControl newControl = nodeControl as BDNodeControl;
                             newControl.ShowAsChild = true;
@@ -1308,14 +1235,7 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDTherapy:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
+                        default:
                             {
                                 nodeControl = new BDTherapyControl();
                                 BDTherapyControl therapyControl = nodeControl as BDTherapyControl;
@@ -1329,21 +1249,12 @@ namespace BDEditor.Classes
 
                             }
                             break;
-                        default:
-                            throw new NotSupportedException();
                     }
                     break;
                 case BDConstants.BDNodeType.BDTherapyGroup:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
+                        default:
                             {
                                 nodeControl = new BDTherapyGroupControl();
                                 BDTherapyGroupControl newControl = nodeControl as BDTherapyGroupControl;
@@ -1355,9 +1266,7 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDTopic:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
-                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
-                        case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
+                        default:
                             {
                                 nodeControl = new BDNodeOverviewControl();
                                 BDNodeOverviewControl newOverviewControl = nodeControl as BDNodeOverviewControl;
@@ -1365,8 +1274,6 @@ namespace BDEditor.Classes
                                 newOverviewControl.ShowSiblingAdd = true;
                             }
                             break;
-                        default:
-                            throw new NotSupportedException();
                     }
                     break;
 

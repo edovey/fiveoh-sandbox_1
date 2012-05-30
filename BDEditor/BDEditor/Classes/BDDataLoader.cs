@@ -587,15 +587,12 @@ namespace BDEditor.Classes
             antimicrobialData = string.Empty;
             topicData = string.Empty;
 
-            idxTopic = 0;
-            idxAntimicrobial = 0;
-            idxSection = 0;
-
             if (elements.Length > 0) uuidData = elements[0];
             if (elements.Length > 1) chapterData = elements[1];
             if (elements.Length > 2) sectionData = elements[2];
             if (elements.Length > 3) antimicrobialData = elements[3];
             if (elements.Length > 4) topicData = elements[4];
+            if (elements.Length > 5) pathogenGroupData = elements[5];
 
             if ((null != chapterData && chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
             {
@@ -613,12 +610,14 @@ namespace BDEditor.Classes
                 else
                 {
                     chapter = tmpNode;
-                    //idxSection = (short)BDFabrik.GetChildrenForParent(dataContext, tmpNode).Count;
-                    idxSection = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
                 }
                 section = null;
                 antimicrobial = null;
                 topic = null;
+
+                idxSection = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
+                idxAntimicrobial = 0;
+                idxTopic = 0;
             }
 
             if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
@@ -632,13 +631,18 @@ namespace BDEditor.Classes
                     section.displayOrder = idxSection++;
                     section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines;
                     BDNode.Save(dataContext, section);
+
                 }
                 else
-                    section = sectionNode; 
+                {
+                    section = sectionNode;
+                    idxSection++;
+                }
 
                 antimicrobial = null;
                 topic = null;
-
+                    idxAntimicrobial = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+                    idxTopic = 0;
             }
             if ((null != antimicrobialData && antimicrobialData != string.Empty) && ((null == antimicrobial) || (antimicrobial.name != antimicrobialData)))
             {
@@ -653,9 +657,12 @@ namespace BDEditor.Classes
                     BDNode.Save(dataContext, antimicrobial);
                 }
                 else
+                {
                     antimicrobial = tmpNode;
-
+                    idxAntimicrobial++;
+                }
                 topic = null;
+                idxTopic = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobial);
             }
 
             if ((null != topicData && topicData != string.Empty) && ((null == topic) || (topic.name != topicData)))
@@ -669,6 +676,19 @@ namespace BDEditor.Classes
                     topic.displayOrder = idxTopic++;
                     topic.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines;
                     BDNode.Save(dataContext, topic);
+                }
+            }
+            if ((null != pathogenGroupData && pathogenGroupData != string.Empty) && ((null == pathogenGroup) || (pathogenGroup.name != pathogenGroupData)))
+            {
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == tmpNode)
+                {
+                    pathogenGroup = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDPathogen, Guid.Parse(uuidData));
+                    pathogenGroup.name = pathogenGroupData;
+                    pathogenGroup.SetParent(antimicrobial);
+                    pathogenGroup.displayOrder = idxTopic++; // share display order indexing with Topic as they have the same parent
+                    pathogenGroup.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines;
+                    BDNode.Save(dataContext, pathogenGroup);
                 }
             }
         }

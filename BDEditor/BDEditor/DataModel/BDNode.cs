@@ -261,7 +261,7 @@ namespace BDEditor.DataModel
         public static int? RetrieveMaximumDisplayOrderForChildren(Entities pContext, BDNode pParent)
         {
             var maxDisplayorder = pContext.BDNodes.Where(x => (x.parentId == pParent.Uuid)).Select(node => node.displayOrder).Max();
-            return maxDisplayorder;
+            return (null == maxDisplayorder)? 0 : maxDisplayorder;
         }
 
         protected override void OnPropertyChanged(string property)

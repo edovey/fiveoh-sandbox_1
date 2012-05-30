@@ -683,7 +683,7 @@ namespace BDEditor.Classes
                 BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
                 if (null == tmpNode)
                 {
-                    pathogenGroup = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDPathogen, Guid.Parse(uuidData));
+                    pathogenGroup = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDPathogenGroup, Guid.Parse(uuidData));
                     pathogenGroup.name = pathogenGroupData;
                     pathogenGroup.SetParent(antimicrobial);
                     pathogenGroup.displayOrder = idxTopic++; // share display order indexing with Topic as they have the same parent

@@ -427,6 +427,34 @@ namespace BDEditor.Views
                                 showChildControls = false;
                             }
                             break;
+
+                        case BDConstants.LayoutVariantType.PregancyLactation:
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases:
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
+                            childTreeNode = BDPregnancyLactationTree.BuildBranch(dataContext, node);
+                            if (!pInterrogateOnly)
+                            {
+                                graftTreeNode(selectedNode, childTreeNode);
+                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = false;
+                            }
+                            break;
+
+                        case BDConstants.LayoutVariantType.Organisms:
+                        case BDConstants.LayoutVariantType.Organisms_GramStainInterpretation:
+                        case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic:
+                        case BDConstants.LayoutVariantType.Organisms_EmpiricTherapy:
+                        case BDConstants.LayoutVariantType.Organisms_Antibiogram:
+                            childTreeNode = BDOrganismsTree.BuildBranch(dataContext, node);
+                            if (!pInterrogateOnly)
+                            {
+                                graftTreeNode(selectedNode, childTreeNode);
+                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = false;
+                            }
+                            break;
                     }
                     break;
                 case BDConstants.BDNodeType.BDAntimicrobial:
@@ -490,6 +518,15 @@ namespace BDEditor.Views
                                 showChildControls = true;
                             }
                             break;
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
+                            childTreeNode = BDPregnancyLactationTree.BuildBranch(dataContext, node);
+                            if (!pInterrogateOnly)
+                            {
+                                graftTreeNode(selectedNode, childTreeNode);
+                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = false;
+                            }
+                            break;
                     }
                     break;
                 case BDConstants.BDNodeType.BDDisease:
@@ -545,11 +582,14 @@ namespace BDEditor.Views
                 case BDConstants.BDNodeType.BDPresentation:
                     switch (node.LayoutVariant)
                     {
+                            /*
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                         case BDConstants.LayoutVariantType.Dental:
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
+                             */ 
+                        default:
                             if (!pInterrogateOnly)
                             {
                                 control_tr01 = new BDNodeOverviewControl(dataContext, node);
@@ -561,6 +601,7 @@ namespace BDEditor.Views
                 case BDConstants.BDNodeType.BDTable:
                     switch (node.LayoutVariant)
                     {
+                            /*
                         case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
@@ -584,6 +625,8 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
+                             */
+                        default:
                             if (!pInterrogateOnly)
                             {
                                 control_tr01 = new BDNodeControl(dataContext, node);
@@ -626,6 +669,16 @@ namespace BDEditor.Views
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
                             childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
+                            if (!pInterrogateOnly)
+                            {
+                                graftTreeNode(selectedNode, childTreeNode);
+                                control_tr01 = new BDNodeControl(dataContext, node);
+                                showChildControls = false;
+                            }
+                            break;
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
+
+                            childTreeNode = BDPregnancyLactationTree.BuildBranch(dataContext, node);
                             if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);

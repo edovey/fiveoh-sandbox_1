@@ -137,6 +137,7 @@
     <Compile Include="Classes\ControlHelper.cs" />
     <Compile Include="Classes\Navigation\BDAntibioticsTree.cs" />
     <Compile Include="Classes\Navigation\BDDentalTree.cs" />
+    <Compile Include="Classes\Navigation\BDOrganismsTree.cs" />
     <Compile Include="Classes\Navigation\BDPregnancyLactationTree.cs" />
     <Compile Include="Classes\Navigation\BDProphylaxisTree.cs" />
     <Compile Include="Classes\Navigation\TreatmentRecommendationTree.cs" />
@@ -510,7 +511,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
+      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

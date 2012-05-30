@@ -850,8 +850,6 @@ namespace BDEditor.Classes
             sectionData = string.Empty;
             categoryData = string.Empty;
             subcategoryData = string.Empty;
-            diseaseData = string.Empty;
-            presentationData = string.Empty;
 
             if (elements.Length > 0) uuidData = elements[0];
             if (elements.Length > 1) chapterData = elements[1];
@@ -859,53 +857,93 @@ namespace BDEditor.Classes
             if (elements.Length > 3) categoryData = elements[3];
             if(elements.Length > 4) subcategoryData = elements[4];
 
-            if ((chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
+            if ((null != chapterData && chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
             {
-                chapter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
-                chapter.name = chapterData;
-                chapter.displayOrder = idxChapter++;
-                chapter.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics;
-                chapter.SetParent(null);
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, chapter1Uuid);
 
-                BDNode.Save(dataContext, chapter);
-
+                if (null == tmpNode)
+                {
+                    chapter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
+                    chapter.name = chapterData;
+                    chapter.displayOrder = idxChapter++;
+                    chapter.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics;
+                    chapter.SetParent(null);
+                    BDNode.Save(dataContext, chapter);
+                }
+                else
+                {
+                    chapter = tmpNode;
+                }
                 section = null;
                 category = null;
                 subcategory = null;
+
+                idxSection = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
+                idxCategory = 0;
+                idxSubcategory = 0;
             }
 
             if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
             {
-                section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-                section.name = sectionData;
-                section.SetParent(chapter);
-                section.displayOrder = idxSection++;
-                section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts;
-                BDNode.Save(dataContext, section);
+                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == sectionNode)
+                {
+                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+                    section.name = sectionData;
+                    section.SetParent(chapter);
+                    section.displayOrder = idxSection++;
+                    section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts;
+                    BDNode.Save(dataContext, section);
 
+                }
+                else
+                {
+                    section = sectionNode;
+                    idxSection++;
+                }
                 category = null;
                 subcategory = null;
 
+                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+                idxSubcategory = 0;
             }
             if ((categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
             {
-                category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
-                category.name = categoryData;
-                category.SetParent(section);
-                category.displayOrder = idxCategory++;
-                category.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts;
-                BDNode.Save(dataContext, category);
-
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == tmpNode)
+                {
+                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
+                        category.name = categoryData;
+                    category.SetParent(section);
+                    category.displayOrder = idxCategory++;
+                    category.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts;
+                    BDNode.Save(dataContext, category);
+                }
+                else
+                {
+                    category = tmpNode;
+                    idxCategory++;
+                }
                 subcategory = null;
+                idxSubcategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, category);
             }
             if ((subcategoryData != string.Empty) && ((null == subcategory) || (subcategory.name != subcategoryData)))
             {
-                subcategory = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSubcategory, Guid.Parse(uuidData));
-                subcategory.name = subcategoryData;
-                subcategory.SetParent(category);
-                subcategory.displayOrder = idxSubcategory++;
-                subcategory.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts;
-                BDNode.Save(dataContext, subcategory);
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == tmpNode)
+                {
+                    subcategory = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSubcategory, Guid.Parse(uuidData));
+                    subcategory.name = subcategoryData;
+                    subcategory.SetParent(category);
+                    subcategory.displayOrder = idxSubcategory++;
+                    subcategory.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts;
+                    BDNode.Save(dataContext, subcategory);
+                }
+                else
+                {
+                    subcategory = tmpNode;
+                    idxSubcategory++;
+                }
             }
         }
 

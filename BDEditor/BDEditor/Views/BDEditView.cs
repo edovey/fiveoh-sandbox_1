@@ -446,12 +446,18 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.Organisms_GramStainInterpretation:
                         case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic:
                         case BDConstants.LayoutVariantType.Organisms_EmpiricTherapy:
-                        case BDConstants.LayoutVariantType.Organisms_Antibiogram:
                             childTreeNode = BDOrganismsTree.BuildBranch(dataContext, node);
                             if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
                                 control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = false;
+                            }
+                            break;
+                        case BDConstants.LayoutVariantType.Organisms_Antibiogram:
+                            if (!pInterrogateOnly)
+                            {
+                                control_tr01 = new BDAttachmentControl(dataContext, node);
                                 showChildControls = false;
                             }
                             break;
@@ -507,7 +513,6 @@ namespace BDEditor.Views
                                 showChildControls = true;
                             }
                             break;
-
                         case BDConstants.LayoutVariantType.Dental:
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
                             childTreeNode = BDDentalTree.BuildBranch(dataContext, node);
@@ -676,16 +681,6 @@ namespace BDEditor.Views
                                 showChildControls = false;
                             }
                             break;
-                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
-
-                            childTreeNode = BDPregnancyLactationTree.BuildBranch(dataContext, node);
-                            if (!pInterrogateOnly)
-                            {
-                                graftTreeNode(selectedNode, childTreeNode);
-                                control_tr01 = new BDNodeControl(dataContext, node);
-                                showChildControls = false;
-                            }
-                            break;
                     }
                     break;
                 case BDConstants.BDNodeType.BDTopic:
@@ -766,6 +761,17 @@ namespace BDEditor.Views
             dataLoader.ImportData(dataContext, @"Resources\Chapter_4f.txt", BDDataLoader.baseDataDefinitionType.chapter4f);
             dataLoader.ImportData(dataContext, @"Resources\Chapter_4g.txt", BDDataLoader.baseDataDefinitionType.chapter4g);
             dataLoader.ImportData(dataContext, @"Resources\Chapter_4h.txt", BDDataLoader.baseDataDefinitionType.chapter4h);
+
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_5a.txt", BDDataLoader.baseDataDefinitionType.chapter5a);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_5b.txt", BDDataLoader.baseDataDefinitionType.chapter5b);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_5c.txt", BDDataLoader.baseDataDefinitionType.chapter5c);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_5d.txt", BDDataLoader.baseDataDefinitionType.chapter5d);
+
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_6a.txt", BDDataLoader.baseDataDefinitionType.chapter6a);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_6b.txt", BDDataLoader.baseDataDefinitionType.chapter6b);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_6c.txt", BDDataLoader.baseDataDefinitionType.chapter6c);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_6d.txt", BDDataLoader.baseDataDefinitionType.chapter6d);
+
 
             LoadChapterDropDown();
             BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);

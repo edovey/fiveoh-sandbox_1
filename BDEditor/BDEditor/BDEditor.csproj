@@ -171,6 +171,12 @@
     <Compile Include="DataModel\BDTableRow.cs" />
     <Compile Include="DataModel\IBDNode.cs" />
     <Compile Include="DataModel\IBDObject.cs" />
+    <Compile Include="Views\BDAttachmentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDAttachmentControl.Designer.cs">
+      <DependentUpon>BDAttachmentControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\BDDosageAndCostControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

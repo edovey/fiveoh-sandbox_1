@@ -507,10 +507,20 @@ namespace BDEditor.Views
                             }
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis:
                             if (!pInterrogateOnly)
                             {
                                 control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = true;
+                            }
+                            break;
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis:
+                            childTreeNode = BDDentalTree.BuildBranch(dataContext, node);
+                            if (!pInterrogateOnly)
+                            {
+                                graftTreeNode(selectedNode, childTreeNode);
+                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = false;
                             }
                             break;
                         case BDConstants.LayoutVariantType.Dental:
@@ -521,6 +531,15 @@ namespace BDEditor.Views
                                 graftTreeNode(selectedNode, childTreeNode);
                                 control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = true;
+                            }
+                            break;
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
+                                                        childTreeNode = BDDentalTree.BuildBranch(dataContext, node);
+                            if (!pInterrogateOnly)
+                            {
+                                graftTreeNode(selectedNode, childTreeNode);
+                                control_tr01 = new BDNodeControl(dataContext, node);
+                                showChildControls = false;
                             }
                             break;
                         case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
@@ -574,6 +593,13 @@ namespace BDEditor.Views
                             }
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
+                           if (!pInterrogateOnly)
+                            {
+                                control_tr01 = new BDNodeControl(dataContext, node);
+                                showChildControls = true;
+                            }
+                            break;
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
                             if (!pInterrogateOnly)
@@ -691,6 +717,13 @@ namespace BDEditor.Views
                             if (!pInterrogateOnly)
                             {
                                 control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = true;
+                            }
+                            break;
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis:
+                            if (!pInterrogateOnly)
+                            {
+                                control_tr01 = new BDNodeControl(dataContext, node);
                                 showChildControls = true;
                             }
                             break;

@@ -308,7 +308,7 @@ namespace BDEditor.DataModel
                 {
                     case BDConstants.BDNodeType.BDTherapy:
                         {
-                            BDTherapy therapy = BDTherapy.GetTherapyWithId(pDataContext, pParentId.Value);
+                            BDTherapy therapy = BDTherapy.RetrieveTherapyWithId(pDataContext, pParentId.Value);
                             if (null != therapy)
                             {
                                 result = string.Format("{0} [{1}]", therapy.DescriptionForLinkedNote, pParentEntityPropertyName);

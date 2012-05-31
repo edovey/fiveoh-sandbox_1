@@ -383,8 +383,6 @@ namespace BDEditor.Views
                             if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
-
-                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = false;
                             }
                             break;
@@ -405,7 +403,6 @@ namespace BDEditor.Views
                             if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
-                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = false;
                             }
                             break;
@@ -423,7 +420,6 @@ namespace BDEditor.Views
                             if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
-                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = false;
                             }
                             break;
@@ -437,7 +433,6 @@ namespace BDEditor.Views
                             if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
-                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = false;
                             }
                             break;
@@ -450,14 +445,12 @@ namespace BDEditor.Views
                             if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
-                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = false;
                             }
                             break;
                         case BDConstants.LayoutVariantType.Organisms_Antibiogram:
                             if (!pInterrogateOnly)
                             {
-                                control_tr01 = new BDAttachmentControl(dataContext, node);
                                 showChildControls = false;
                             }
                             break;
@@ -469,14 +462,12 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                             if (!pInterrogateOnly)
                             {
-                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = true;
                             }
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                             if (!pInterrogateOnly)
                             {
-                                control_tr01 = new BDNodeControl(dataContext, node);
                                 showChildControls = true;
                             }
                             break;
@@ -492,7 +483,6 @@ namespace BDEditor.Views
                             if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
-                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = false;
                             }
                             break;
@@ -502,43 +492,26 @@ namespace BDEditor.Views
                             if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
-                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = false;
                             }
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
                             if (!pInterrogateOnly)
                             {
-                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = true;
                             }
                             break;
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis:
-                            childTreeNode = BDDentalTree.BuildBranch(dataContext, node);
-                            if (!pInterrogateOnly)
-                            {
-                                graftTreeNode(selectedNode, childTreeNode);
-                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
-                                showChildControls = false;
-                            }
-                            break;
                         case BDConstants.LayoutVariantType.Dental:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
                             childTreeNode = BDDentalTree.BuildBranch(dataContext, node);
                             if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
-                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
-                                showChildControls = true;
-                            }
-                            break;
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
-                                                        childTreeNode = BDDentalTree.BuildBranch(dataContext, node);
-                            if (!pInterrogateOnly)
-                            {
-                                graftTreeNode(selectedNode, childTreeNode);
-                                control_tr01 = new BDNodeControl(dataContext, node);
                                 showChildControls = false;
                             }
                             break;
@@ -547,7 +520,6 @@ namespace BDEditor.Views
                             if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
-                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = false;
                             }
                             break;
@@ -563,7 +535,6 @@ namespace BDEditor.Views
                             if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
-                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = false;
                             }
                             break;
@@ -573,110 +544,6 @@ namespace BDEditor.Views
                             if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
-                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
-                                showChildControls = false;
-                            }
-                            break;
-                    }
-                    break;
-                case BDConstants.BDNodeType.BDSubcategory:
-                    switch (node.LayoutVariant)
-                    {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                            childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
-                            if (!pInterrogateOnly)
-                            {
-                                graftTreeNode(selectedNode, childTreeNode);
-
-                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
-                                showChildControls = false;
-                            }
-                            break;
-                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
-                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
-                           if (!pInterrogateOnly)
-                            {
-                                control_tr01 = new BDNodeControl(dataContext, node);
-                                showChildControls = true;
-                            }
-                            break;
-                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
-                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
-                            if (!pInterrogateOnly)
-                            {
-                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
-                                showChildControls = true;
-                            }
-                            break;
-                    }
-                    break;
-                case BDConstants.BDNodeType.BDPresentation:
-                    switch (node.LayoutVariant)
-                    {
-                            /*
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
-                        case BDConstants.LayoutVariantType.Dental:
-                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
-                             */ 
-                        default:
-                            if (!pInterrogateOnly)
-                            {
-                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
-                                showChildControls = true;
-                            }
-                            break;
-                    }
-                    break;
-                case BDConstants.BDNodeType.BDTable:
-                    switch (node.LayoutVariant)
-                    {
-                            /*
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
-                        case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
-                        case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
-                        case BDConstants.LayoutVariantType.Antibiotics_NameListing:
-                        case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
-                        case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
-                        case BDConstants.LayoutVariantType.Table_2_Column:
-                        case BDConstants.LayoutVariantType.Table_3_Column:
-                        case BDConstants.LayoutVariantType.Table_4_Column:
-                        case BDConstants.LayoutVariantType.Table_5_Column:
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis:
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis:
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
-                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
-                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
-                             */
-                        default:
-                            if (!pInterrogateOnly)
-                            {
-                                control_tr01 = new BDNodeControl(dataContext, node);
-                                showChildControls = true;
-                            }
-                            break;
-
-                    }
-                    break;
-                case BDConstants.BDNodeType.BDPathogenGroup:
-                    switch (node.LayoutVariant)
-                    {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
-                            childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
-                            if (!pInterrogateOnly)
-                            {
-                                graftTreeNode(selectedNode, childTreeNode);
-
-                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
                                 showChildControls = false;
                             }
                             break;
@@ -689,7 +556,61 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                             if (!pInterrogateOnly)
                             {
-                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
+                                showChildControls = true;
+                            }
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDPathogenGroup:
+                    switch (node.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
+                            childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
+                            if (!pInterrogateOnly)
+                            {
+                                graftTreeNode(selectedNode, childTreeNode);
+                                showChildControls = false;
+                            }
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDPresentation:
+                    switch (node.LayoutVariant)
+                    {      
+                        default:
+                            if (!pInterrogateOnly)
+                            {
+                                showChildControls = true;
+                            }
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDSubcategory:
+                    switch (node.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                            childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
+                            if (!pInterrogateOnly)
+                            {
+                                graftTreeNode(selectedNode, childTreeNode);
+                                showChildControls = false;
+                            }
+                            break;
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
+                            childTreeNode = BDDentalTree.BuildBranch(dataContext, node);
+                            if (!pInterrogateOnly)
+                            {
+                                graftTreeNode(selectedNode, childTreeNode);
+                                showChildControls = false;
+                            }
+                            break;
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
+                            if (!pInterrogateOnly)
+                            {
                                 showChildControls = true;
                             }
                             break;
@@ -703,10 +624,32 @@ namespace BDEditor.Views
                             if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
-                                control_tr01 = new BDNodeControl(dataContext, node);
                                 showChildControls = false;
                             }
                             break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDSurgery:
+                    switch (node.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
+                            if (!pInterrogateOnly)
+                            {
+                                showChildControls = true;
+                            }
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDTable:
+                    switch (node.LayoutVariant)
+                    {
+                        default:
+                            if (!pInterrogateOnly)
+                            {
+                                showChildControls = true;
+                            }
+                            break;
+
                     }
                     break;
                 case BDConstants.BDNodeType.BDTopic:
@@ -714,16 +657,9 @@ namespace BDEditor.Views
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
                         case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
-                            if (!pInterrogateOnly)
-                            {
-                                control_tr01 = new BDNodeOverviewControl(dataContext, node);
-                                showChildControls = true;
-                            }
-                            break;
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis:
                             if (!pInterrogateOnly)
                             {
-                                control_tr01 = new BDNodeControl(dataContext, node);
                                 showChildControls = true;
                             }
                             break;
@@ -732,6 +668,7 @@ namespace BDEditor.Views
             }
             if (!pInterrogateOnly)
             {
+                control_tr01 = BDFabrik.CreateControlForNode(dataContext, node);
                 if (null != control_tr01)
                 {
                     control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);

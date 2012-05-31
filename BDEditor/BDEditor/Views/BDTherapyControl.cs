@@ -653,6 +653,11 @@ namespace BDEditor.Views
                 case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
+                case BDConstants.LayoutVariantType.Dental_Prophylaxis:
+                case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
+                case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
+                case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
+                case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
                     // remove dosage1, dosage2, duration1, duration2
                     pnlMain.Controls.Remove(tbDosage1);
                     pnlMain.Controls.Remove(chkPreviousDose1);

@@ -123,7 +123,7 @@ namespace BDEditor.Views
 
                 if (pShowChildren)
                 {
-                    List<BDTherapy> list = BDTherapy.GetTherapiesForTherapyParentId(dataContext, currentTherapyGroup.uuid);
+                    List<BDTherapy> list = BDTherapy.RetrieveTherapiesForParentId(dataContext, currentTherapyGroup.uuid);
                     for (int idx = 0; idx < list.Count; idx++)
                     {
                         BDTherapy entry = list[idx];

@@ -89,6 +89,16 @@ namespace BDEditor.Views
             btnCostLink.Tag = BDDosage.PROPERTYNAME_COST;
         }
 
+        public BDDosageAndCostControl(Entities pDataContext, IBDNode pNode)
+        {
+            dataContext = pDataContext;
+            currentDosage = pNode as BDDosage;
+            parentId = pNode.ParentId;
+            DefaultNodeType = pNode.NodeType;
+            DefaultLayoutVariantType = pNode.LayoutVariant;
+            InitializeComponent();
+        }
+
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentDosage) ? this.currentDosage.uuid : Guid.Empty);

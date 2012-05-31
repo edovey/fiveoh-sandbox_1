@@ -76,6 +76,8 @@ namespace BDEditor.Classes
         BDNode topic;
         BDNode subtopic;
         BDTherapyGroup therapyGroup;
+        BDTherapy therapy;
+        BDNode surgery;
 
         string uuidData = null;
         string chapterData = null;
@@ -100,6 +102,8 @@ namespace BDEditor.Classes
         string topicData = null;
         string subtopicData = null;
         string therapyGroupData = null;
+        string therapyData = null;
+        string surgeryData = null;
 
         short idxChapter = 0;
         short idxSection = 0;
@@ -121,6 +125,8 @@ namespace BDEditor.Classes
         short idxTopic = 0;
         short idxSubtopic = 0;
         short idxTherapyGroup = 0;
+        short idxTherapy = 0;
+        short idxSurgery = 0;
 
         public void ImportData(Entities pDataContext, string pFilename, baseDataDefinitionType pDefinitionType)
         {
@@ -2611,13 +2617,13 @@ namespace BDEditor.Classes
                     idxChapter++;
                 }
                 section = null;
-                table = null;
-                tableHeaderRow = null;
-                tableHeaderCell = null;
-                tableSection = null;
+                category = null;
+                subcategory = null;
+                therapyGroup = null;
 
                 idxSection = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
                 idxCategory = 0;
+                idxSubcategory = 0;
                 idxTherapyGroup = 0;
             }
 
@@ -2638,11 +2644,11 @@ namespace BDEditor.Classes
                     section = sectionNode;
                     idxSection++;
                 }
-                table = null;
-                tableHeaderRow = null;
-                tableHeaderCell = null;
-                tableSection = null;
-                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
+                category = null;
+                subcategory = null;
+                therapyGroup = null;
+                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+                idxSubcategory = 0;
                 idxTherapyGroup = 0;
             }
             if ((null != categoryData && categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
@@ -2687,7 +2693,7 @@ namespace BDEditor.Classes
                 }
 
                 therapyGroup = null;
-                idxTherapyGroup = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, category);
+                idxTherapyGroup = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, subcategory);
             }
 
             if ((null != therapyGroupData && therapyGroupData != string.Empty) && ((null == therapyGroup) || (therapyGroup.name != therapyGroupData)))
@@ -2710,6 +2716,10 @@ namespace BDEditor.Classes
             }
         }
 
+        /// <summary>
+        /// dental prophylaxis - Prosthetics
+        /// </summary>
+        /// <param name="pInputLine"></param>
         private void ProcessChapter4dInputLine(string pInputLine)
         {
             string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
@@ -2718,25 +2728,26 @@ namespace BDEditor.Classes
 
             BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Dental;
             BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics;
-            BDConstants.LayoutVariantType tableLayoutVariant = sectionLayoutVariant; //BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics
-            BDConstants.LayoutVariantType headerRowLayoutVariant = BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics_HeaderRow;
-            BDConstants.LayoutVariantType tableSectionLayoutVariant;
-            BDConstants.LayoutVariantType contentRowLayoutVariant;
+            BDConstants.LayoutVariantType categoryLayoutVariant = sectionLayoutVariant; 
+            BDConstants.LayoutVariantType subcategoryLayoutVariant = sectionLayoutVariant;
+            BDConstants.LayoutVariantType therapyGroupLayoutVariant = sectionLayoutVariant;
+            BDConstants.LayoutVariantType therapyLayoutVariant = sectionLayoutVariant;
 
             uuidData = string.Empty;
             chapterData = string.Empty;
             sectionData = string.Empty;
-            tableData = string.Empty;
-            tableHeaderRowData = string.Empty;
-            tableHeaderCellData = string.Empty;
-            tableSectionData = string.Empty;
+            categoryData = string.Empty;
+            subcategoryData = string.Empty;
+            therapyGroupData = string.Empty;
+            therapyData = string.Empty;
 
             if (elements.Length > 0) uuidData = elements[0];
             if (elements.Length > 1) chapterData = elements[1];
             if (elements.Length > 2) sectionData = elements[2];
-            if (elements.Length > 3) tableData = elements[3];
-            if (elements.Length > 4) tableHeaderRowData = elements[4];
-            if (elements.Length > 5) tableHeaderCellData = elements[5];
+            if (elements.Length > 3) categoryData = elements[3];
+            if (elements.Length > 4) subcategoryData = elements[4];
+            if (elements.Length > 5) therapyGroupData = elements[5];
+            if (elements.Length > 6) therapyData = elements[6];
 
             if ((null != chapterData && chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
             {
@@ -2749,11 +2760,6 @@ namespace BDEditor.Classes
                     chapter.LayoutVariant = chapterLayoutVariant;
                     chapter.SetParent(null);
                     BDNode.Save(dataContext, chapter);
-
-                    idxSection = 0;
-                    idxTable = 0;
-                    idxTableChildren = 0;
-                    idxTableHeaderCell = 0;
                 }
                 else
                 {
@@ -2761,10 +2767,16 @@ namespace BDEditor.Classes
                     idxChapter++;
                 }
                 section = null;
-                table = null;
-                tableHeaderRow = null;
-                tableHeaderCell = null;
-                tableSection = null;
+                category = null;
+                subcategory = null;
+                therapyGroup = null;
+                therapy = null;
+
+                idxSection = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
+                idxCategory = 0;
+                idxSubcategory = 0;
+                idxTherapyGroup = 0;
+                idxTherapy = 0;
             }
 
             if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
@@ -2778,109 +2790,114 @@ namespace BDEditor.Classes
                     section.displayOrder = idxSection++;
                     section.LayoutVariant = sectionLayoutVariant;
                     BDNode.Save(dataContext, section);
-
-                    idxTable = 0;
-                    idxTableChildren = 0;
-                    idxTableHeaderCell = 0;
                 }
                 else
                 {
                     section = sectionNode;
                     idxSection++;
                 }
-                table = null;
-                tableHeaderRow = null;
-                tableHeaderCell = null;
-                tableSection = null;
+                category = null;
+                subcategory = null;
+                therapyGroup = null;
+                therapy = null;
+                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+                idxSubcategory = 0;
+                idxTherapyGroup = 0;
+                idxTherapy = 0;
             }
-            if ((null != tableData && tableData != string.Empty) && ((null == table) || (table.name != tableData)))
+            if ((null != categoryData && categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
             {
-                BDNode tableNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
-                if (null == tableNode)
+                BDNode catNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == catNode)
                 {
-                    table = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTable, Guid.Parse(uuidData));
-                    table.name = (tableData == @"<blank>") ? string.Empty : tableData;
-                    table.SetParent(section);
-                    table.displayOrder = idxTable++;
-                    table.LayoutVariant = tableLayoutVariant;
-                    BDNode.Save(dataContext, table);
-
-                    idxTableChildren = 0;
-                    idxTableHeaderCell = 0;
+                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
+                    category.name = (categoryData == @"<blank>") ? string.Empty : categoryData;
+                    category.SetParent(section);
+                    category.displayOrder = idxCategory++;
+                    category.LayoutVariant = categoryLayoutVariant;
+                    BDNode.Save(dataContext, category);
                 }
                 else
                 {
-                    table = tableNode;
-                    idxTable++;
+                    category = catNode;
+                    idxCategory++;
                 }
-
-                tableHeaderRow = null;
-                tableHeaderCell = null;
-                tableSection = null;
+                subcategory = null;
+                therapyGroup = null;
+                therapy = null;
+                idxSubcategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, category);
+                idxTherapyGroup = 0;
+                idxTherapy = 0;
             }
 
-            if ((null != tableHeaderRowData && tableHeaderRowData != string.Empty) && ((null == tableHeaderRow) || (tableHeaderRow.name != tableHeaderRowData)))
+            if ((null != subcategoryData && subcategoryData != string.Empty) && ((null == subcategory) || (subcategory.name != subcategoryData)))
             {
-                BDTableRow tmpRow = BDTableRow.RetrieveTableRowWithId(dataContext, Guid.Parse(uuidData));
-                if (null == tmpRow)
+                BDNode catNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == catNode)
                 {
-                    tableHeaderRow = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow, Guid.Parse(uuidData));
-
-                    tableHeaderRow.name = (tableHeaderRowData == @"(Header)") ? string.Empty : tableHeaderRowData;
-                    tableHeaderRow.SetParent(table);
-                    tableHeaderRow.displayOrder = idxTableChildren++;
-                    tableHeaderRow.LayoutVariant = headerRowLayoutVariant;
-                    BDTableRow.Save(dataContext, tableHeaderRow);
-
-                    idxTableHeaderCell = 0;
+                    subcategory = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSubcategory, Guid.Parse(uuidData));
+                    subcategory.name = (subcategoryData == @"<blank>") ? string.Empty : subcategoryData;
+                    subcategory.SetParent(category);
+                    subcategory.displayOrder = idxSubcategory++;
+                    subcategory.LayoutVariant = subcategoryLayoutVariant;
+                    BDNode.Save(dataContext, subcategory);
                 }
                 else
                 {
-                    tableHeaderRow = tmpRow;
-                    idxTableChildren++;
+                    subcategory = catNode;
+                    idxSubcategory++;
                 }
-                tableHeaderCell = null;
-                tableSection = null;
+
+                therapyGroup = null;
+                therapy = null;
+                idxTherapyGroup = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, subcategory);
+                idxTherapy = 0;
             }
 
-            if ((null != tableHeaderCellData && tableHeaderCellData != string.Empty) && ((null == tableHeaderCell) || tableHeaderCell.Uuid.ToString() != uuidData))
+            if ((null != therapyGroupData && therapyGroupData != string.Empty) && ((null == therapyGroup) || (therapyGroup.name != therapyGroupData)))
             {
-                BDTableCell tmpCell = BDTableCell.RetrieveWithId(dataContext, Guid.Parse(uuidData));
-                if (null == tmpCell)
+                BDTherapyGroup tmpNode = BDTherapyGroup.RetrieveTherapyGroupWithId(dataContext, Guid.Parse(uuidData));
+                if (null == tmpNode)
                 {
-                    if (null == tableHeaderRow)
-                    {
-                        tableHeaderRow = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow);
-                        tableHeaderRow.LayoutVariant = headerRowLayoutVariant;
-                        tableHeaderRow.SetParent(table);
-                        tableHeaderRow.displayOrder = idxTableChildren++;
-                        BDTableRow.Save(dataContext, tableHeaderRow);
-
-                        idxTableCell = 0;
-                    }
-
-                    tableHeaderCell = BDTableCell.CreateBDTableCell(dataContext, Guid.Parse(uuidData));
-                    tableHeaderCell.displayOrder = idxTableHeaderCell++;
-                    tableHeaderCell.SetParent(tableHeaderRow);
-                    tableHeaderCell.alignment = (int)BDConstants.TableCellAlignment.Centred;
-
-                    BDTableCell.Save(dataContext, tableHeaderCell);
-
-                    BDString cellValue = BDString.CreateBDString(dataContext);
-                    cellValue.displayOrder = 0;
-                    cellValue.SetParent(tableHeaderCell.Uuid);
-                    cellValue.value = tableHeaderCellData;
-                    BDString.Save(dataContext, cellValue);
+                    therapyGroup = BDTherapyGroup.CreateBDTherapyGroup(dataContext, Guid.Parse(uuidData));
+                    therapyGroup.name = therapyGroupData;
+                    therapyGroup.SetParent(subcategory);
+                    therapyGroup.displayOrder = idxTherapyGroup++;
+                    therapyGroup.LayoutVariant = therapyGroupLayoutVariant;
+                    BDTherapyGroup.Save(dataContext, therapyGroup);
                 }
                 else
                 {
-                    tableHeaderCell = tmpCell;
-                    idxTableHeaderCell++;
+                    therapyGroup = tmpNode;
+                    idxTherapyGroup++;
                 }
-                tableSection = null;
+                therapy = null;
+                idxTherapy = (short)BDTherapyGroup.RetrieveMaximumDisplayOrderForChildren(dataContext, therapyGroup);
+            }
+            if ((null != therapyData && therapyData != string.Empty) && ((null == therapy) || (therapy.name != therapyData)))
+            {
+                BDTherapy tmpNode = BDTherapy.RetrieveTherapyWithId(dataContext, Guid.Parse(uuidData));
+                if (null == tmpNode)
+                {
+                    therapy = BDTherapy.CreateBDTherapy(dataContext, Guid.Parse(uuidData));
+                    therapy.name = therapyData;
+                    therapy.SetParent(therapyGroup);
+                    therapy.displayOrder = idxTherapy++;
+                    therapy.LayoutVariant = therapyLayoutVariant;
+                    BDTherapy.Save(dataContext, therapy);
+                }
+                else
+                {
+                    therapy = tmpNode;
+                    idxTherapy++;
+                }
             }
         }
 
+        /// <summary>
+        /// Dental Prophylaxis - Drug Regimens
+        /// </summary>
+        /// <param name="pInputLine"></param>
         private void ProcessChapter4eInputLine(string pInputLine)
         {
             string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
@@ -2889,26 +2906,24 @@ namespace BDEditor.Classes
 
             BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Dental;
             BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens;
-            BDConstants.LayoutVariantType tableLayoutVariant = sectionLayoutVariant; 
-            BDConstants.LayoutVariantType headerRowLayoutVariant = BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens_HeaderRow;
-            BDConstants.LayoutVariantType tableSectionLayoutVariant = sectionLayoutVariant;
-            BDConstants.LayoutVariantType contentRowLayoutVariant;
+            BDConstants.LayoutVariantType categoryLayoutVariant = sectionLayoutVariant;
+            BDConstants.LayoutVariantType subcategoryLayoutVariant = sectionLayoutVariant;
+            BDConstants.LayoutVariantType surgeryLayoutVariant = sectionLayoutVariant;
+            //BDConstants.LayoutVariantType therapyGroupLayoutVariant = sectionLayoutVariant;
 
             uuidData = string.Empty;
             chapterData = string.Empty;
             sectionData = string.Empty;
-            tableData = string.Empty;
-            tableHeaderRowData = string.Empty;
-            tableHeaderCellData = string.Empty;
-            tableSectionData = string.Empty;
+            categoryData = string.Empty;
+            subcategoryData = string.Empty;
+            surgeryData = string.Empty;
 
             if (elements.Length > 0) uuidData = elements[0];
             if (elements.Length > 1) chapterData = elements[1];
             if (elements.Length > 2) sectionData = elements[2];
-            if (elements.Length > 3) tableData = elements[3];
-            if (elements.Length > 4) tableHeaderRowData = elements[4];
-            if (elements.Length > 5) tableHeaderCellData = elements[5];
-            if (elements.Length > 6) tableSectionData = elements[6];
+            if (elements.Length > 3) categoryData = elements[3];
+            if (elements.Length > 4) subcategoryData = elements[4];
+            if (elements.Length > 5) surgeryData = elements[5];
 
             if ((null != chapterData && chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
             {
@@ -2921,11 +2936,6 @@ namespace BDEditor.Classes
                     chapter.LayoutVariant = chapterLayoutVariant;
                     chapter.SetParent(null);
                     BDNode.Save(dataContext, chapter);
-
-                    idxSection = 0;
-                    idxTable = 0;
-                    idxTableChildren = 0;
-                    idxTableHeaderCell = 0;
                 }
                 else
                 {
@@ -2933,10 +2943,14 @@ namespace BDEditor.Classes
                     idxChapter++;
                 }
                 section = null;
-                table = null;
-                tableHeaderRow = null;
-                tableHeaderCell = null;
-                tableSection = null;
+                category = null;
+                subcategory = null;
+                surgery = null;
+
+                idxSection = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
+                idxCategory = 0;
+                idxSubcategory = 0;
+                idxSurgery = 0;
             }
 
             if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
@@ -2950,130 +2964,81 @@ namespace BDEditor.Classes
                     section.displayOrder = idxSection++;
                     section.LayoutVariant = sectionLayoutVariant;
                     BDNode.Save(dataContext, section);
-
-                    idxTable = 0;
-                    idxTableChildren = 0;
-                    idxTableHeaderCell = 0;
                 }
                 else
                 {
                     section = sectionNode;
                     idxSection++;
                 }
-                table = null;
-                tableHeaderRow = null;
-                tableHeaderCell = null;
-                tableSection = null;
+                category = null;
+                subcategory = null;
+                surgery = null;
+                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+                idxSubcategory = 0;
+                idxSurgery = 0;
             }
-            if ((null != tableData && tableData != string.Empty) && ((null == table) || (table.name != tableData)))
+            if ((null != categoryData && categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
             {
-                BDNode tableNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
-                if (null == tableNode)
+                BDNode catNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == catNode)
                 {
-                    table = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTable, Guid.Parse(uuidData));
-                    table.name = (tableData == @"<blank>") ? string.Empty : tableData;
-                    table.SetParent(section);
-                    table.displayOrder = idxTable++;
-                    table.LayoutVariant = tableLayoutVariant;
-                    BDNode.Save(dataContext, table);
-
-                    idxTableChildren = 0;
-                    idxTableHeaderCell = 0;
+                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
+                    category.name = (categoryData == @"<blank>") ? string.Empty : categoryData;
+                    category.SetParent(section);
+                    category.displayOrder = idxCategory++;
+                    category.LayoutVariant = categoryLayoutVariant;
+                    BDNode.Save(dataContext, category);
                 }
                 else
                 {
-                    table = tableNode;
-                    idxTable++;
+                    category = catNode;
+                    idxCategory++;
                 }
-
-                tableHeaderRow = null;
-                tableHeaderCell = null;
-                tableSection = null;
+                subcategory = null;
+                surgery = null;
+                idxSubcategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, category);
+                idxSurgery = 0;
             }
 
-            if ((null != tableHeaderRowData && tableHeaderRowData != string.Empty) && ((null == tableHeaderRow) || (tableHeaderRow.name != tableHeaderRowData)))
+            if ((null != subcategoryData && subcategoryData != string.Empty) && ((null == subcategory) || (subcategory.name != subcategoryData)))
             {
-                BDTableRow tmpRow = BDTableRow.RetrieveTableRowWithId(dataContext, Guid.Parse(uuidData));
-                if (null == tmpRow)
+                BDNode catNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == catNode)
                 {
-                    tableHeaderRow = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow, Guid.Parse(uuidData));
-
-                    tableHeaderRow.name = (tableHeaderRowData == @"(Header)") ? string.Empty : tableHeaderRowData;
-                    tableHeaderRow.SetParent(table);
-                    tableHeaderRow.displayOrder = idxTableChildren++;
-                    tableHeaderRow.LayoutVariant = headerRowLayoutVariant;
-                    BDTableRow.Save(dataContext, tableHeaderRow);
-
-                    idxTableHeaderCell = 0;
+                    subcategory = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSubcategory, Guid.Parse(uuidData));
+                    subcategory.name = (subcategoryData == @"<blank>") ? string.Empty : subcategoryData;
+                    subcategory.SetParent(category);
+                    subcategory.displayOrder = idxSubcategory++;
+                    subcategory.LayoutVariant = subcategoryLayoutVariant;
+                    BDNode.Save(dataContext, subcategory);
                 }
                 else
                 {
-                    tableHeaderRow = tmpRow;
-                    idxTableChildren++;
+                    subcategory = catNode;
+                    idxSubcategory++;
                 }
-                tableHeaderCell = null;
-                tableSection = null;
+
+                surgery = null;
+                idxSurgery = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, subcategory);
             }
 
-            if ((null != tableHeaderCellData && tableHeaderCellData != string.Empty) && ((null == tableHeaderCell) || tableHeaderCell.Uuid.ToString() != uuidData))
+            if ((null != surgeryData && surgeryData != string.Empty) && ((null == surgery) || (surgery.name != surgeryData)))
             {
-                BDTableCell tmpCell = BDTableCell.RetrieveWithId(dataContext, Guid.Parse(uuidData));
-                if (null == tmpCell)
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == tmpNode)
                 {
-                    if (null == tableHeaderRow)
-                    {
-                        tableHeaderRow = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow);
-                        tableHeaderRow.LayoutVariant = headerRowLayoutVariant;
-                        tableHeaderRow.SetParent(table);
-                        tableHeaderRow.displayOrder = idxTableChildren++;
-                        BDTableRow.Save(dataContext, tableHeaderRow);
-
-                        idxTableCell = 0;
-                    }
-
-                    tableHeaderCell = BDTableCell.CreateBDTableCell(dataContext, Guid.Parse(uuidData));
-                    tableHeaderCell.displayOrder = idxTableHeaderCell++;
-                    tableHeaderCell.SetParent(tableHeaderRow);
-                    tableHeaderCell.alignment = (int)BDConstants.TableCellAlignment.Centred;
-
-                    BDTableCell.Save(dataContext, tableHeaderCell);
-
-                    BDString cellValue = BDString.CreateBDString(dataContext);
-                    cellValue.displayOrder = 0;
-                    cellValue.SetParent(tableHeaderCell.Uuid);
-                    cellValue.value = tableHeaderCellData;
-                    BDString.Save(dataContext, cellValue);
+                    surgery = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSurgery, Guid.Parse(uuidData));
+                    surgery.name = (surgeryData == @"<blank>") ? string.Empty : surgeryData;
+                    surgery.SetParent(subcategory);
+                    surgery.displayOrder = idxSurgery++;
+                    surgery.LayoutVariant = surgeryLayoutVariant;
+                    BDNode.Save(dataContext, surgery);
                 }
                 else
                 {
-                    tableHeaderCell = tmpCell;
-                    idxTableHeaderCell++;
+                    surgery = tmpNode;
+                    idxSurgery++;
                 }
-                tableSection = null;
-            }
-            if ((null != tableSectionData && tableSectionData != string.Empty) && ((null == tableSection) || (tableSection.name != tableSectionData)))
-            {
-                BDNode tmpRow = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(uuidData));
-                if (null == tmpRow)
-                {
-                    tableSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTableSection, Guid.Parse(uuidData));
-
-                    tableSection.name = (tableSectionData == @"<blank>") ? string.Empty : tableSectionData;
-                    tableSection.SetParent(table);
-                    tableSection.displayOrder = idxTableChildren++;
-                    tableSection.LayoutVariant = tableSectionLayoutVariant;
-                    BDNode.Save(dataContext, tableSection);
-
-                    // do not reset table row counter - otherwise child rows will not sort correctly with header row
-                    idxTableCell = 0;
-                }
-                else
-                {
-                    tableSection = tmpRow;
-                    idxTableChildren++;
-                }
-                tableRow = null;
-                tableCell = null;
             }
         }
 

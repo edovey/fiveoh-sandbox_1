@@ -172,13 +172,13 @@ namespace BDEditor.DataModel
         /// <param name="pCreateDeletion"create entry in deletion table (bool)</param>
         public static void Delete(Entities pContext, Guid pUuid, bool pCreateDeletion)
         {
-            BDTherapy entity = BDTherapy.GetTherapyWithId(pContext, pUuid);
+            BDTherapy entity = BDTherapy.RetrieveTherapyWithId(pContext, pUuid);
             BDTherapy.Delete(pContext, entity, pCreateDeletion);
         }
 
         public static void DeleteForParentId(Entities pContext, Guid pUuid, bool pCreateDeletion)
         {
-            List<BDTherapy> children = BDTherapy.GetTherapiesForTherapyParentId(pContext, pUuid);
+            List<BDTherapy> children = BDTherapy.RetrieveTherapiesForParentId(pContext, pUuid);
             foreach (BDTherapy child in children)
             {
                 BDTherapy.Delete(pContext, child, pCreateDeletion);
@@ -194,7 +194,7 @@ namespace BDEditor.DataModel
         {
             if (null != pUuid)
             {
-                BDTherapy entry = BDTherapy.GetTherapyWithId(pContext, pUuid.Value);
+                BDTherapy entry = BDTherapy.RetrieveTherapyWithId(pContext, pUuid.Value);
                 if (null != entry)
                 {
                     pContext.DeleteObject(entry);
@@ -207,7 +207,7 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pParentId"></param>
         /// <returns>List of Therapies</returns>
-        public static List<BDTherapy> GetTherapiesForTherapyParentId(Entities pContext, Guid pParentId)
+        public static List<BDTherapy> RetrieveTherapiesForParentId(Entities pContext, Guid pParentId)
         {
             List<BDTherapy> therapyList = new List<BDTherapy>();
 
@@ -222,7 +222,7 @@ namespace BDEditor.DataModel
             return therapyList;
         }
 
-        public static BDTherapy GetTherapyWithId(Entities pContext, Guid pTherapyId)
+        public static BDTherapy RetrieveTherapyWithId(Entities pContext, Guid pTherapyId)
         {
             BDTherapy therapy = null;
 
@@ -242,7 +242,7 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext"></param>
         /// <returns></returns>
-        public static string[] GetTherapyNames(Entities pContext)
+        public static string[] RetrieveTherapyNames(Entities pContext)
         {
             var therapyNames = pContext.BDTherapies.Where(x => (!string.IsNullOrEmpty(x.name))).Select(pg => pg.name).Distinct();
 
@@ -254,7 +254,7 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext"></param>
         /// <returns></returns>
-        public static string[] GetTherapyDosages(Entities pContext)
+        public static string[] RetrieveTherapyDosages(Entities pContext)
         {
             var dosages = pContext.BDTherapies.Where(x => (!string.IsNullOrEmpty(x.dosage))).Select(pg => pg.dosage).Distinct();
             var dosage1 = pContext.BDTherapies.Where(x => (!string.IsNullOrEmpty(x.dosage1))).Select(pg => pg.dosage1).Distinct();
@@ -270,7 +270,7 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext"></param>
         /// <returns></returns>
-        public static string[] GetTherapyDurations(Entities pContext)
+        public static string[] RetrieveTherapyDurations(Entities pContext)
         {
             //TODO:  refactor for multiple duration properties
             var durations = pContext.BDTherapies.Where(x => (!string.IsNullOrEmpty(x.duration))).Select(pg => pg.duration).Distinct();
@@ -320,6 +320,18 @@ namespace BDEditor.DataModel
                 returnList = entries.ToList<BDTherapy>();
             }
             return returnList;
+        }
+
+        /// <summary>
+        /// Return the maximum value of the display order found in the children of the specified parent
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pParent"></param>
+        /// <returns></returns>
+        public static int? RetrieveMaximumDisplayOrderForChildren(Entities pContext, BDTherapy pParent)
+        {
+            var maxDisplayorder = pContext.BDTherapies.Where(x => (x.parentId == pParent.Uuid)).Select(node => node.displayOrder).Max();
+            return (null == maxDisplayorder) ? 0 : maxDisplayorder;
         }
 
         public void SetParent(IBDNode pParent)
@@ -484,7 +496,7 @@ namespace BDEditor.DataModel
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
             bool deprecated = bool.Parse(pAttributeDictionary[DEPRECATED]);
-            BDTherapy entry = BDTherapy.GetTherapyWithId(pDataContext, uuid);
+            BDTherapy entry = BDTherapy.RetrieveTherapyWithId(pDataContext, uuid);
             if (null == entry)
             {
                 entry = BDTherapy.CreateBDTherapy(uuid, deprecated);

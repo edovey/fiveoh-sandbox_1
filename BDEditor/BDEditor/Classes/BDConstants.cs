@@ -80,6 +80,8 @@ namespace BDEditor.Classes
             BDSurgery = 27,
             [Description("Surgery Classification")]
             BDSurgeryClassification = 28,
+            [Description("Subtopic")]
+            BDSubtopic = 29,
         }
 
         public enum LayoutVariantType

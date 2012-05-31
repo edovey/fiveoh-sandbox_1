@@ -698,6 +698,7 @@ namespace BDEditor.Views
                     break;
                 case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
+                    // remove dosage2, duration2
                     pnlMain.Controls.Remove(tbDosage2);
                     pnlMain.Controls.Remove(chkPreviousDose2);
                     pnlMain.Controls.Remove(btnDosage2Link);

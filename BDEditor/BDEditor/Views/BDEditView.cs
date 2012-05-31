@@ -508,6 +508,7 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
+                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
                             childTreeNode = BDDentalTree.BuildBranch(dataContext, node);
                             if (!pInterrogateOnly)
                             {
@@ -609,6 +610,7 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
+                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
                             if (!pInterrogateOnly)
                             {
                                 showChildControls = true;

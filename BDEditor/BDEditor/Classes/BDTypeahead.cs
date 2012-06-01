@@ -67,7 +67,7 @@ namespace BDEditor.Classes
                 if (null == therapyNames)
                 {
                     therapyNames = new AutoCompleteStringCollection();
-                    string[] names = BDTherapy.GetTherapyNames(new BDEditor.DataModel.Entities());
+                    string[] names = BDTherapy.RetrieveTherapyNames(new BDEditor.DataModel.Entities());
                     therapyNames.AddRange(names);
                 }
                 return therapyNames;
@@ -81,7 +81,7 @@ namespace BDEditor.Classes
                 if (null == therapyDosages)
                 {
                     therapyDosages = new AutoCompleteStringCollection();
-                    string[] names = BDTherapy.GetTherapyDosages(new BDEditor.DataModel.Entities());
+                    string[] names = BDTherapy.RetrieveTherapyDosages(new BDEditor.DataModel.Entities());
                     therapyDosages.AddRange(names);
                 }
                 return therapyDosages;
@@ -95,7 +95,7 @@ namespace BDEditor.Classes
                 if (null == therapyDurations)
                 {
                     therapyDurations = new AutoCompleteStringCollection();
-                    string[] names = BDTherapy.GetTherapyDurations(new BDEditor.DataModel.Entities());
+                    string[] names = BDTherapy.RetrieveTherapyDurations(new BDEditor.DataModel.Entities());
                     therapyDurations.AddRange(names);
                 }
                 return therapyDurations;

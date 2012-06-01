@@ -142,7 +142,7 @@ namespace BDEditor.Views
                 {
                     // open BDTherapyEditView
                     BDTherapyEditView therapyEditView = new BDTherapyEditView();
-                    therapyEditView.CurrentTherapy = BDTherapy.GetTherapyWithId(dataContext,nodeId);
+                    therapyEditView.CurrentTherapy = BDTherapy.RetrieveTherapyWithId(dataContext,nodeId);
                     therapyEditView.AssignDataContext(dataContext);
                     therapyEditView.ShowDialog(this);
 

@@ -151,7 +151,7 @@ namespace BDEditor.Classes
                         // therapy group header
                         // therapy group linked allNotes:  inline, marked, unmarked
                         // add footnote and endnote to footer
-                        List<BDTherapy> therapies = BDTherapy.GetTherapiesForTherapyParentId(pContext, group.Uuid);
+                        List<BDTherapy> therapies = BDTherapy.RetrieveTherapiesForParentId(pContext, group.Uuid);
                         if (therapies.Count > 0)
                         {
                             bodyHTML.Append(buildTherapyGroupHtml(pContext, group));

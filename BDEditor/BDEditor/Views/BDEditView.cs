@@ -717,7 +717,7 @@ namespace BDEditor.Views
             this.Cursor = Cursors.WaitCursor;
             BDDataLoader dataLoader = new BDDataLoader();
 
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_1a.txt", BDDataLoader.baseDataDefinitionType.chapter1a);
+            /*dataLoader.ImportData(dataContext, @"Resources\Chapter_1a.txt", BDDataLoader.baseDataDefinitionType.chapter1a);
             dataLoader.ImportData(dataContext, @"Resources\Chapter_1b.txt", BDDataLoader.baseDataDefinitionType.chapter1b);
             dataLoader.ImportData(dataContext, @"Resources\Chapter_1c.txt", BDDataLoader.baseDataDefinitionType.chapter1c);
             dataLoader.ImportData(dataContext, @"Resources\Chapter_1d.txt", BDDataLoader.baseDataDefinitionType.chapter1d);
@@ -736,7 +736,7 @@ namespace BDEditor.Views
             dataLoader.ImportData(dataContext, @"Resources\Chapter_4f.txt", BDDataLoader.baseDataDefinitionType.chapter4f);
             dataLoader.ImportData(dataContext, @"Resources\Chapter_4g.txt", BDDataLoader.baseDataDefinitionType.chapter4g);
             dataLoader.ImportData(dataContext, @"Resources\Chapter_4h.txt", BDDataLoader.baseDataDefinitionType.chapter4h);
-
+            */
             dataLoader.ImportData(dataContext, @"Resources\Chapter_5a.txt", BDDataLoader.baseDataDefinitionType.chapter5a);
             dataLoader.ImportData(dataContext, @"Resources\Chapter_5b.txt", BDDataLoader.baseDataDefinitionType.chapter5b);
             dataLoader.ImportData(dataContext, @"Resources\Chapter_5c.txt", BDDataLoader.baseDataDefinitionType.chapter5c);
@@ -826,7 +826,7 @@ namespace BDEditor.Views
             this.Text = string.Format("{0} - {1}" , "Bugs & Drugs Editor", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
             // Loading Seed Data:  set the following variables
-            isSeedDataLoadAvailable = true;
+            isSeedDataLoadAvailable = false;
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
             this.btnImportFromProduction.Visible = true;

@@ -12,12 +12,12 @@ using BDEditor.Classes;
 namespace BDEditor.DataModel
 {
     /// <summary>
-    /// Extension of generated BDNode
+    /// Extension of generated BDAntimicrobialRisk
     /// </summary>
-    public partial class BDNode: IBDNode
+   public partial class BDAntimicrobialRisk : IBDNode
     {
-        public const string AWS_PROD_DOMAIN = @"bd_2_nodes";
-        public const string AWS_DEV_DOMAIN = @"bd_dev_2_nodes";
+        public const string AWS_PROD_DOMAIN = @"bd_2_antimicrobialrisks";
+        public const string AWS_DEV_DOMAIN = @"bd_dev_2_antimicrobialrisks";
 
 #if DEBUG
         public const string AWS_DOMAIN = AWS_DEV_DOMAIN;
@@ -25,57 +25,59 @@ namespace BDEditor.DataModel
         public const string AWS_DOMAIN = AWS_PROD_DOMAIN;
 #endif
 
-        public const string ENTITYNAME = @"BDNodes";
-        public const string ENTITYNAME_FRIENDLY = @"Node";
-        public const string KEY_NAME = @"BDNode";
+        public const string ENTITYNAME = @"BDAntimicrobialRisks";
+        public const string ENTITYNAME_FRIENDLY = @"AntimicrobialRisk";
+        public const string KEY_NAME = @"BDAntimicrobialRisk";
         public const string PROPERTYNAME_NAME = @"Name";
-        public const string VIRTUALPROPERTYNAME_OVERVIEW = @"Overview";
 
         public const int ENTITY_SCHEMAVERSION = 0;
 
-        private const string UUID = @"no_uuid";
-        private const string SCHEMAVERSION = @"no_schemaVersion";
-        private const string CREATEDBY = @"no_createdBy";
-        private const string CREATEDDATE = @"no_createdDate";
-        private const string MODIFIEDBY = @"nosn_modifiedBy";
-        private const string MODIFIEDDATE = @"no_modifiedDate";
-        private const string NAME = @"no_name";
-        private const string DISPLAYORDER = @"no_displayOrder";
-        private const string LAYOUTVARIANT = @"no_layoutVariant";
+        private const string UUID = @"ar_uuid";
+        private const string SCHEMAVERSION = @"ar_schemaVersion";
+        private const string MODIFIEDDATE = @"ar_modifiedDate";
+        private const string NAME = @"ar_name";
+        private const string DISPLAYORDER = @"ar_displayOrder";
+        private const string LAYOUTVARIANT = @"ar_layoutVariant";
 
-        private const string PARENTID = @"no_parentId";
-        private const string PARENTTYPE = @"no_parentType";
-        private const string PARENTKEYNAME = @"no_parentKeyName";
+        private const string PARENTID = @"ar_parentId";
+        private const string PARENTTYPE = @"ar_parentType";
+        private const string PARENTKEYNAME = @"ar_parentKeyName";
 
-        private const string NODETYPE = @"no_nodeType";
-        private const string NODEKEYNAME = @"no_nodeKeyName";
+        private const string NODETYPE = @"ar_nodeType";
+        private const string NODEKEYNAME = @"ar_nodeKeyName";
 
-        private const string INUSEBY = @"no_inUseBy";
-
+        private const string RISKFACTOR = @"ar_riskFactor";
+        private const string AAPRATING = @"ar_aapRating";
+        private const string RELATIVEINFANTDOSE = @"ar_relativeInfantDose";
 
         /// <summary>
         /// Extended Create method that sets the created date and the schema version
         /// </summary>
         /// <returns></returns>
-        public static BDNode CreateBDNode(Entities pContext, BDConstants.BDNodeType pNodeType)
+        public static BDAntimicrobialRisk CreateBDAntimicrobialRisk(Entities pContext, BDConstants.BDNodeType pNodeType)
         {
-            return CreateBDNode(pContext, pNodeType, Guid.NewGuid());
+            return CreateBDAntimicrobialRisk(pContext, pNodeType, Guid.NewGuid());
         }
 
         /// <summary>
-        /// Extended Create method that sets the created date and the schema version
+        /// Extended Create method that sets default values and schema version
         /// </summary>
         /// <returns></returns>
-        public static BDNode CreateBDNode(Entities pContext, BDConstants.BDNodeType pNodeType, Guid pUuid)
+        public static BDAntimicrobialRisk CreateBDAntimicrobialRisk(Entities pContext, BDConstants.BDNodeType pNodeType, Guid pUuid)
         {
-            BDNode node = CreateBDNode(pUuid);
+            BDAntimicrobialRisk node = CreateBDAntimicrobialRisk(pUuid);
             node.nodeType = (int)pNodeType;
             node.nodeKeyName = pNodeType.ToString();
-            node.createdBy = Guid.Empty;
-            node.createdDate = DateTime.Now;
             node.schemaVersion = ENTITY_SCHEMAVERSION;
             node.displayOrder = -1;
             node.name = string.Empty;
+            node.parentType = -1;
+            node.parentKeyName = string.Empty;
+            node.nodeKeyName = string.Empty;
+            node.layoutVariant = -1;
+            node.riskFactor = string.Empty;
+            node.aapRating = string.Empty;
+            node.relativeInfantDose = string.Empty;
 
             pContext.AddObject(ENTITYNAME, node);
 
@@ -95,7 +97,7 @@ namespace BDEditor.DataModel
                     if (pNode.schemaVersion != ENTITY_SCHEMAVERSION)
                         pNode.schemaVersion = ENTITY_SCHEMAVERSION;
 
-                    System.Diagnostics.Debug.WriteLine(@"Node Save");
+                    System.Diagnostics.Debug.WriteLine(@"AntimicrobialRisk Save");
                     pContext.SaveChanges();
                 }
             }
@@ -145,10 +147,6 @@ namespace BDEditor.DataModel
                         BDAttachment attachment = child as BDAttachment;
                         BDAttachment.Delete(pContext, attachment, pCreateDeletion);
                         break;
-                    case BDConstants.BDNodeType.BDAntimicrobialRisk:
-                        BDAntimicrobialRisk risk = child as BDAntimicrobialRisk;
-                        BDAntimicrobialRisk.Delete(pContext, risk, pCreateDeletion);
-                        break;
                     default:
                         BDNode.Delete(pContext, child, pCreateDeletion);
                         break;
@@ -157,7 +155,7 @@ namespace BDEditor.DataModel
 
             BDMetadata.DeleteForItemId(pContext, pNode.Uuid, pCreateDeletion);
             // create BDDeletion record for the object to be deleted
-            if(pCreateDeletion)
+            if (pCreateDeletion)
                 BDDeletion.CreateBDDeletion(pContext, KEY_NAME, pNode.Uuid);
             // delete record from local data store
             pContext.DeleteObject(pNode);
@@ -185,7 +183,7 @@ namespace BDEditor.DataModel
         {
             if (null != pUuid)
             {
-                BDNode entry = BDNode.RetrieveNodeWithId(pContext, pUuid.Value);
+                BDAntimicrobialRisk entry = BDAntimicrobialRisk.RetrieveAntimicrobialRiskWithId(pContext, pUuid.Value);
                 if (null != entry)
                 {
                     pContext.DeleteObject(entry);
@@ -194,78 +192,23 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Retrieve Node with the specified ID
+        /// Retrieve BDAntimicrobialRisk with the specified ID
         /// </summary>
         /// <param name="pParentId"></param>
-        /// <returns>BDNode object.</returns>
-        public static BDNode RetrieveNodeWithId(Entities pContext, Guid pUuid)
+        /// <returns>BDAntimicrobialRisk object.</returns>
+        public static BDAntimicrobialRisk RetrieveAntimicrobialRiskWithId(Entities pContext, Guid pUuid)
         {
-            BDNode entry = null;
+            BDAntimicrobialRisk entry = null;
 
             if (null != pUuid)
             {
-                IQueryable<BDNode> entries = (from bdNodes in pContext.BDNodes
-                                                  where bdNodes.uuid == pUuid
-                                                  select bdNodes);
-                if (entries.Count<BDNode>() > 0)
-                    entry = entries.AsQueryable().First<BDNode>();
+                IQueryable<BDAntimicrobialRisk> entries = (from risk in pContext.BDAntimicrobialRisks
+                                              where risk.uuid == pUuid
+                                              select risk);
+                if (entries.Count<BDAntimicrobialRisk>() > 0)
+                    entry = entries.AsQueryable().First<BDAntimicrobialRisk>();
             }
             return entry;
-        }
-
-        /// <summary>
-        /// Retrieve a string array of distinct names for all  nodes of the specified BDNodeType
-        /// </summary>
-        /// <param name="pContext"></param>
-        /// <param name="pNodeType"></param>
-        /// <returns></returns>
-        public static string[] RetrieveNodeNamesForType(Entities pContext, BDConstants.BDNodeType pNodeType)
-        {
-            var nodeNames = pContext.BDNodes.Where(x => (!string.IsNullOrEmpty(x.name) && x.nodeType == (int)pNodeType)).Select(node => node.name).Distinct();
-            return nodeNames.ToArray();
-        }
-
-        /// <summary>
-        /// Retrieve all nodes of a specified type in display order
-        /// </summary>
-        /// <param name="pContext"></param>
-        /// <param name="pNodeType"></param>
-        /// <returns></returns>
-        public static List<BDNode> RetrieveNodesForType(Entities pContext, BDConstants.BDNodeType pNodeType)
-        {
-            List<BDNode> entryList = new List<BDNode>();
-            IQueryable<BDNode> entries = (from entry in pContext.BDNodes
-                                          where entry.nodeType == (int)pNodeType
-                                          orderby entry.displayOrder
-                                          select entry);
-            if (entries.Count() > 0)
-                entryList = entries.ToList<BDNode>();
-            return entryList;
-        }
-
-        public static List<BDNode> RetrieveNodesNameWithTextForType(Entities pContext, string pText, BDConstants.BDNodeType pNodeType)
-        {
-            List<BDNode> returnList = new List<BDNode>();
-            if (null != pText && pText.Length > 0)
-            {
-                IQueryable<BDNode> entries = (from entry in pContext.BDNodes
-                                                 where (entry.name.Contains(pText) && entry.nodeType == (int)pNodeType)
-                                                 select entry);
-                returnList = entries.ToList<BDNode>();
-            }
-            return returnList;
-        }
-
-        /// <summary>
-        /// Return the maximum value of the display order found in the children of the specified parent
-        /// </summary>
-        /// <param name="pContext"></param>
-        /// <param name="pParent"></param>
-        /// <returns></returns>
-        public static int? RetrieveMaximumDisplayOrderForChildren(Entities pContext, BDNode pParent)
-        {
-            var maxDisplayorder = pContext.BDNodes.Where(x => (x.parentId == pParent.Uuid)).Select(node => node.displayOrder).Max();
-            return (null == maxDisplayorder)? 0 : maxDisplayorder;
         }
 
         protected override void OnPropertyChanged(string property)
@@ -273,14 +216,10 @@ namespace BDEditor.DataModel
             if (!BDCommon.Settings.IsSyncLoad)
                 switch (property)
                 {
-                    case "createdBy":
-                    case "createdDate":
-                    case "modifiedBy":
                     case "modifiedDate":
                         break;
                     default:
                         {
-                            modifiedBy = Guid.Empty;
                             modifiedDate = DateTime.Now;
                         }
                         break;
@@ -300,22 +239,22 @@ namespace BDEditor.DataModel
         public static List<IBDObject> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
         {
             List<IBDObject> entryList = new List<IBDObject>();
-            IQueryable<BDNode> entries;
+            IQueryable<BDAntimicrobialRisk> entries;
 
             if (null == pUpdateDateTime)
             {
-                entries = (from entry in pContext.BDNodes
+                entries = (from entry in pContext.BDAntimicrobialRisks
                            select entry);
             }
             else
             {
-                entries = (from entry in pContext.BDNodes
+                entries = (from entry in pContext.BDAntimicrobialRisks
                            where entry.modifiedDate > pUpdateDateTime.Value
                            select entry);
             }
 
             if (entries.Count() > 0)
-                entryList = new List<IBDObject>(entries.ToList<BDNode>());
+                entryList = new List<IBDObject>(entries.ToList<BDAntimicrobialRisk>());
 
             return entryList;
         }
@@ -323,13 +262,13 @@ namespace BDEditor.DataModel
         public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime? pCurrentSyncDate)
         {
             SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
-            syncInfo.PushList = BDNode.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+            syncInfo.PushList = BDAntimicrobialRisk.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
             syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
             if (null != pCurrentSyncDate)
             {
                 for (int idx = 0; idx < syncInfo.PushList.Count; idx++)
                 {
-                    ((BDNode)syncInfo.PushList[idx]).modifiedDate = pCurrentSyncDate;
+                    ((BDAntimicrobialRisk)syncInfo.PushList[idx]).modifiedDate = pCurrentSyncDate;
                 }
                 if (syncInfo.PushList.Count > 0) { pDataContext.SaveChanges(); }
             }
@@ -337,7 +276,7 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Create or update an existing BDSection from attributes in a dictionary. Saves the entry.
+        /// Create or update an existing BDAntimicrobialRisk from attributes in a dictionary. Saves the entry.
         /// </summary>
         /// <param name="pDataContext"></param>
         /// <param name="pAttributeDictionary"></param>
@@ -345,7 +284,7 @@ namespace BDEditor.DataModel
         public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
         {
             Guid dataUuid = Guid.Parse(pAttributeDictionary[UUID]);
-            BDNode entry = BDNode.RetrieveNodeWithId(pDataContext, dataUuid);
+            BDAntimicrobialRisk entry = BDAntimicrobialRisk.RetrieveAntimicrobialRiskWithId(pDataContext, dataUuid);
 
             if (null == entry)
             {
@@ -357,7 +296,7 @@ namespace BDEditor.DataModel
                     nodeType = (BDConstants.BDNodeType)nt;
                 }
 
-                entry = BDNode.CreateBDNode(dataUuid);
+                entry = BDAntimicrobialRisk.CreateBDAntimicrobialRisk(dataUuid);
                 entry.nodeType = nt;
 
                 pDataContext.AddObject(ENTITYNAME, entry);
@@ -365,20 +304,21 @@ namespace BDEditor.DataModel
 
             entry.nodeType = (null == pAttributeDictionary[NODETYPE]) ? (short)-1 : short.Parse(pAttributeDictionary[NODETYPE]);
             entry.schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
-            entry.displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]); 
-            entry.createdBy = Guid.Parse(pAttributeDictionary[CREATEDBY]);
-            entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
-            entry.modifiedBy = Guid.Parse(pAttributeDictionary[MODIFIEDBY]);
+            entry.displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]);
             entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
             entry.name = pAttributeDictionary[NAME];
 
             entry.parentId = Guid.Parse(pAttributeDictionary[PARENTID]);
             entry.parentType = (null == pAttributeDictionary[PARENTTYPE]) ? (short)-1 : short.Parse(pAttributeDictionary[PARENTTYPE]);
             entry.parentKeyName = pAttributeDictionary[PARENTKEYNAME];
-  
+
             entry.nodeKeyName = pAttributeDictionary[NODEKEYNAME];
 
             entry.layoutVariant = short.Parse(pAttributeDictionary[LAYOUTVARIANT]);
+
+            entry.riskFactor = pAttributeDictionary[RISKFACTOR];
+            entry.aapRating = pAttributeDictionary[AAPRATING];
+            entry.relativeInfantDose = pAttributeDictionary[RELATIVEINFANTDOSE];
 
             if (pSaveChanges)
                 pDataContext.SaveChanges();
@@ -390,26 +330,25 @@ namespace BDEditor.DataModel
         {
             PutAttributesRequest putAttributeRequest = new PutAttributesRequest().WithDomainName(AWS_DOMAIN).WithItemName(this.uuid.ToString().ToUpper());
             List<ReplaceableAttribute> attributeList = putAttributeRequest.Attribute;
-            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.UUID).WithValue(uuid.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.DISPLAYORDER).WithValue(string.Format(@"{0}", displayOrder)).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.CREATEDBY).WithValue((null == createdBy) ? Guid.Empty.ToString() : createdBy.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(BDConstants.DATETIMEFORMAT)).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.MODIFIEDBY).WithValue((null == modifiedBy) ? Guid.Empty.ToString() : modifiedBy.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(BDConstants.DATETIMEFORMAT)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDAntimicrobialRisk.UUID).WithValue(uuid.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDAntimicrobialRisk.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDAntimicrobialRisk.DISPLAYORDER).WithValue(string.Format(@"{0}", displayOrder)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDAntimicrobialRisk.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(BDConstants.DATETIMEFORMAT)).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDAntimicrobialRisk.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.PARENTTYPE).WithValue(string.Format(@"{0}", parentType)).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDAntimicrobialRisk.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDAntimicrobialRisk.PARENTTYPE).WithValue(string.Format(@"{0}", parentType)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDAntimicrobialRisk.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.NODETYPE).WithValue(string.Format(@"{0}", nodeType)).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.NODEKEYNAME).WithValue((null == nodeKeyName) ? string.Empty : nodeKeyName).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDAntimicrobialRisk.NODETYPE).WithValue(string.Format(@"{0}", nodeType)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDAntimicrobialRisk.NODEKEYNAME).WithValue((null == nodeKeyName) ? string.Empty : nodeKeyName).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDNode.LAYOUTVARIANT).WithValue(string.Format(@"{0}", layoutVariant)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDAntimicrobialRisk.LAYOUTVARIANT).WithValue(string.Format(@"{0}", layoutVariant)).WithReplace(true));
 
-            //attributeList.Add(new ReplaceableAttribute().WithName(BDNode.INUSEBY).WithValue(inUseBy.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDAntimicrobialRisk.RISKFACTOR).WithValue((null == riskFactor) ? string.Empty : riskFactor).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDAntimicrobialRisk.AAPRATING).WithValue((null == aapRating) ? string.Empty : aapRating).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDAntimicrobialRisk.RELATIVEINFANTDOSE).WithValue((null == relativeInfantDose) ? string.Empty : relativeInfantDose).WithReplace(true));
 
             return putAttributeRequest;
         }
@@ -518,4 +457,3 @@ namespace BDEditor.DataModel
         }
     }
 }
-

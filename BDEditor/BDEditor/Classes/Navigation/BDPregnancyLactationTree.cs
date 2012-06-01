@@ -26,6 +26,7 @@ namespace BDEditor.Classes.Navigation
                 case BDConstants.BDNodeType.BDChapter:
                 case BDConstants.BDNodeType.BDSection:
                 case BDConstants.BDNodeType.BDCategory:
+                case BDConstants.BDNodeType.BDSubcategory:
                 case BDConstants.BDNodeType.BDTable:
                     switch (pNode.LayoutVariant)
                     {
@@ -34,6 +35,7 @@ namespace BDEditor.Classes.Navigation
                         case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
                         case BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases:
                         case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Perinatal_HIVProtocol:
                             foreach (IBDNode childNode in childList)
                             {
                                 string name = childNode.Name;

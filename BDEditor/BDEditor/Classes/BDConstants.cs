@@ -82,6 +82,15 @@ namespace BDEditor.Classes
             BDSurgeryClassification = 28,
             [Description("Subtopic")]
             BDSubtopic = 29,
+            [Description("Antimicrobial Group")]
+            BDAntimicrobialGroup = 30,
+            [Description("Microorganism")]
+            BDMicroorganism = 31,
+            [Description("Microorganism Group")]
+            BDMicroorganismGroup = 32,
+            // BDAntimicribialRisk Class
+            [Description("Antimicrobial Risk")]
+            BDAntimicrobialRisk = 33,
         }
 
         public enum LayoutVariantType
@@ -202,16 +211,8 @@ namespace BDEditor.Classes
             PregancyLactation = 500,
             [Description("Antimicrobials in Pregancy")]
             PregnancyLactation_Antimicrobials_Pregnancy = 501,
-            [Description("Antimicrobials in Pregancy Header Row")]
-            PregnancyLactation_Antimicrobials_Pregnancy_HeaderRow = 5011,
-            [Description("Antimicrobials in Pregancy Content Row")]
-            PregnancyLactation_Antimicrobials_Pregnancy_ContentRow = 5012,
             [Description("Antimicrobials in Lactation")]
             PregnancyLactation_Antimicrobials_Lactation = 502,
-            [Description("Antimicrobials in Lactation Header Row")]
-            PregnancyLactation_Antimicrobials_Lactation_HeaderRow = 5021,
-            [Description("Antimicrobials in Lactation Content Row")]
-            PregnancyLactation_Antimicrobials_Lactation_ContentRow = 5022,
             [Description("Exposure to Communicable Diseases during Pregnancy")]
             PregnancyLactation_Exposure_CommunicableDiseases = 503,
             [Description("Exposure to Communicable Diseases during Pregnancy Header Row")]
@@ -220,6 +221,8 @@ namespace BDEditor.Classes
             PregnancyLactation_Exposure_CommunicableDiseases_ContentRow = 5032,
             [Description("Prevention of Perinatal Infection")]
             PregnancyLactation_Prevention_PerinatalInfection = 504,
+            [Description("Perinatal HIV Protocol")]
+            PregnancyLactation_Perinatal_HIVProtocol = 505,
 
             [Description("Organisms")]
             Organisms = 600,
@@ -231,16 +234,8 @@ namespace BDEditor.Classes
             Organisms_GramStainInterpretation_ContentRow = 6012,
             [Description("Organisms for Specific Body Sites")]
             Organisms_CommensalAndPathogenic = 602,
-            [Description("Organisms for Specific Body Sites Header Row")]
-            Organisms_CommensalAndPathogenic_HeaderRow = 6021,
-            [Description("Organisms for Specific Body Sites Content Row")]
-            Organisms_CommensalAndPathogenic_ContentRow = 6022,
             [Description("Empiric Therapy of Specific Organisms")]
             Organisms_EmpiricTherapy = 603,
-            [Description("Empiric Therapy of Specific Organisms Header Row")]
-            Organisms_EmpiricTherapy_HeaderRow = 6031,
-            [Description("Empiric Therapy of Specific Organisms Content Row")]
-            Organisms_EmpiricTherapy_ContentRow = 6032,
             [Description("Antibiogram")]
             Organisms_Antibiogram = 604,
 

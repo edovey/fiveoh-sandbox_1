@@ -436,6 +436,10 @@ namespace BDEditor.Views
                                 showChildControls = false;
                             }
                             break;
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Perinatal_HIVProtocol:
+                            if (!pInterrogateOnly)
+                                showChildControls = true;
+                            break;
 
                         case BDConstants.LayoutVariantType.Organisms:
                         case BDConstants.LayoutVariantType.Organisms_GramStainInterpretation:
@@ -460,11 +464,6 @@ namespace BDEditor.Views
                     switch (node.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
-                            if (!pInterrogateOnly)
-                            {
-                                showChildControls = true;
-                            }
-                            break;
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                             if (!pInterrogateOnly)
                             {
@@ -516,6 +515,8 @@ namespace BDEditor.Views
                                 showChildControls = false;
                             }
                             break;
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
                         case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
                             childTreeNode = BDPregnancyLactationTree.BuildBranch(dataContext, node);
                             if (!pInterrogateOnly)
@@ -611,6 +612,8 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
                             if (!pInterrogateOnly)
                             {
                                 showChildControls = true;

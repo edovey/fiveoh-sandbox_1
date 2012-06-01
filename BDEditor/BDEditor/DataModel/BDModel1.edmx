@@ -6,6 +6,7 @@
     <edmx:StorageModels>
     <Schema Namespace="BDDataModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.3.5" ProviderManifestToken="3.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="BDDataModelStoreContainer">
+          <EntitySet Name="BDAntimicrobialRisks" EntityType="BDDataModel.Store.BDAntimicrobialRisks" store:Type="Tables" />
           <EntitySet Name="BDAttachments" EntityType="BDDataModel.Store.BDAttachments" store:Type="Tables" />
           <EntitySet Name="BDDeletions" EntityType="BDDataModel.Store.BDDeletions" store:Type="Tables" />
           <EntitySet Name="BDDosages" EntityType="BDDataModel.Store.BDDosages" store:Type="Tables" />
@@ -25,6 +26,25 @@
           <EntitySet Name="BDTherapies" EntityType="BDDataModel.Store.BDTherapies" store:Type="Tables" />
           <EntitySet Name="BDTherapyGroups" EntityType="BDDataModel.Store.BDTherapyGroups" store:Type="Tables" />
         </EntityContainer>
+        <EntityType Name="BDAntimicrobialRisks">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="parentType" Type="int" />
+          <Property Name="parentKeyName" Type="nvarchar" MaxLength="100" />
+          <Property Name="nodeType" Type="int" />
+          <Property Name="nodeKeyName" Type="nvarchar" MaxLength="100" />
+          <Property Name="modifiedDate" Type="datetime" />
+          <Property Name="layoutVariant" Type="int" />
+          <Property Name="schemaVersion" Type="int" />
+          <Property Name="riskFactor" Type="nvarchar" MaxLength="100" />
+          <Property Name="aapRating" Type="nvarchar" MaxLength="100" />
+          <Property Name="relativeInfantDose" Type="nvarchar" MaxLength="100" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="parentId" Type="uniqueidentifier" />
+          <Property Name="displayOrder" Type="int" />
+        </EntityType>
         <EntityType Name="BDAttachments">
           <Key>
             <PropertyRef Name="uuid" />
@@ -364,6 +384,7 @@
           <EntitySet Name="BDDosages" EntityType="BDDataModel.BDDosage" />
           <EntitySet Name="BDPrecautions" EntityType="BDDataModel.BDPrecaution" />
           <EntitySet Name="BDAttachments" EntityType="BDDataModel.BDAttachment" />
+          <EntitySet Name="BDAntimicrobialRisks" EntityType="BDDataModel.BDAntimicrobialRisk" />
         </EntityContainer>
         <EntityType Name="BDDeletion">
           <Key>
@@ -680,6 +701,25 @@
           <Property Type="Int32" Name="displayOrder" />
           <Property Type="String" Name="nodeKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="parentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="BDAntimicrobialRisk">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Type="Guid" Name="uuid" Nullable="false" />
+          <Property Type="Int32" Name="parentType" />
+          <Property Type="String" Name="parentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="nodeType" />
+          <Property Type="String" Name="nodeKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="modifiedDate" />
+          <Property Type="Int32" Name="layoutVariant" />
+          <Property Type="Int32" Name="schemaVersion" />
+          <Property Type="String" Name="riskFactor" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="aapRating" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="relativeInfantDose" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="name" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="parentId" />
+          <Property Type="Int32" Name="displayOrder" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1021,6 +1061,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BDAntimicrobialRisks">
+            <EntityTypeMapping TypeName="BDDataModel.BDAntimicrobialRisk">
+              <MappingFragment StoreEntitySet="BDAntimicrobialRisks">
+                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="relativeInfantDose" ColumnName="relativeInfantDose" />
+                <ScalarProperty Name="aapRating" ColumnName="aapRating" />
+                <ScalarProperty Name="riskFactor" ColumnName="riskFactor" />
+                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
+                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
+                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
+                <ScalarProperty Name="nodeKeyName" ColumnName="nodeKeyName" />
+                <ScalarProperty Name="nodeType" ColumnName="nodeType" />
+                <ScalarProperty Name="parentKeyName" ColumnName="parentKeyName" />
+                <ScalarProperty Name="parentType" ColumnName="parentType" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -1059,6 +1119,7 @@
         <EntityTypeShape EntityType="BDDataModel.BDDosage" Width="1.5" PointX="0.75" PointY="10.75" Height="3.3263964843750031" />
         <EntityTypeShape EntityType="BDDataModel.BDPrecaution" Width="1.5" PointX="3.375" PointY="12.75" Height="5.0571093750000031" />
         <EntityTypeShape EntityType="BDDataModel.BDAttachment" Width="1.5" PointX="5.375" PointY="12.75" Height="2.5571907552083388" />
+        <EntityTypeShape EntityType="BDDataModel.BDAntimicrobialRisk" Width="1.5" PointX="7.375" PointY="12.75" Height="3.7109993489583317" />
       </Diagram>
     </Diagrams>
   </Designer>

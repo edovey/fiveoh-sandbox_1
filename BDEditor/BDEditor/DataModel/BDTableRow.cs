@@ -284,7 +284,7 @@ namespace BDEditor.DataModel
 
                pDataContext.AddObject(ENTITYNAME, entry);
            }
-
+           
            entry.nodeType = (null == pAttributeDictionary[NODETYPE]) ? (short)-1 : short.Parse(pAttributeDictionary[NODETYPE]);
            entry.schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
            entry.displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]);
@@ -301,7 +301,7 @@ namespace BDEditor.DataModel
            entry.nodeKeyName = pAttributeDictionary[NODEKEYNAME];
 
            entry.layoutVariant = short.Parse(pAttributeDictionary[LAYOUTVARIANT]);
-           entry.rowType = short.Parse(pAttributeDictionary[ROWTYPE]);
+           entry.rowType = -1;
 
            if (pSaveChanges)
                pDataContext.SaveChanges();

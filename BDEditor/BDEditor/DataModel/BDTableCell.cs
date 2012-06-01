@@ -276,9 +276,19 @@ namespace BDEditor.DataModel
             entry.alignment = (null == pAttributeDictionary[ALIGNMENT]) ? (short)-1 : short.Parse(pAttributeDictionary[ALIGNMENT]);
             if (schemaVersion == 1)
             {
-                entry.nodeType = short.Parse(pAttributeDictionary[NODETYPE]);
-                entry.layoutVariant = short.Parse(pAttributeDictionary[LAYOUTVARIANT]);
-                entry.parentType = short.Parse(pAttributeDictionary[PARENTTYPE]);
+                if (entry.parentId.HasValue)
+                {
+                    BDTableRow parent = (entry.parentId.HasValue) ? BDTableRow.RetrieveTableRowWithId(pDataContext, entry.parentId.Value) : null;
+                    entry.nodeType = parent.nodeType;
+                    entry.layoutVariant = parent.layoutVariant;
+                    entry.parentType = parent.nodeType;
+                }
+                else
+                {
+                    entry.nodeType = -1;
+                    entry.layoutVariant = -1;
+                    entry.parentType = -1;
+                }
             }
             if (pSaveChanges)
                 pDataContext.SaveChanges();

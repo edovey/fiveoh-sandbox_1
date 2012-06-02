@@ -1101,14 +1101,17 @@ namespace BDEditor.Views
             //BDNode node = BDNode.RetrieveNodeWithId(dataContext, new Guid("f80d2660-66c0-4640-9d35-c4f90a369a97"));
             //BDUtilities.MoveNode(dataContext, node, "Gastroenteritis - Severe");
              */
+            
+            //BDNode node = BDNode.RetrieveNodeWithId(dataContext, new Guid("10dce9db-6b5a-4249-b156-c86b18635852"));
+            //node.parentId = new Guid("5ce93aff-137f-487b-8f8a-1e9076acc8cb");
+            //node.parentKeyName = "BDDisease";
+            //node.nodeKeyName = "BDPresentation";
+            //node.nodeType = (int)BDConstants.BDNodeType.BDPresentation;
 
-            BDNode node = BDNode.RetrieveNodeWithId(dataContext, new Guid("10dce9db-6b5a-4249-b156-c86b18635852"));
-            node.parentId = new Guid("5ce93aff-137f-487b-8f8a-1e9076acc8cb");
-            node.parentKeyName = "BDDisease";
-            node.nodeKeyName = "BDPresentation";
-            node.nodeType = (int)BDConstants.BDNodeType.BDPresentation;
+            //BDNode.Save(dataContext, node);
 
-            BDNode.Save(dataContext, node);
+            // reset node type for all table cells
+            BDUtilities.SetTableCellNodeType(dataContext);
         }
     }
 }

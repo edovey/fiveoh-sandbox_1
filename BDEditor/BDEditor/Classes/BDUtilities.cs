@@ -101,5 +101,29 @@ namespace BDEditor.Classes
                     MoveNode(pContext, n.Uuid, pNewParentId);
             }
         }
+
+        /// <summary>
+        /// Reset the node type for BDTableCell which was set incorrectly by LoadFromAttributes
+        /// </summary>
+        /// <param name="pNodeType"></param>
+        /// <param name="?"></param>
+        public static void SetTableCellNodeType(Entities pContext)
+        {
+            List<IBDObject> entryList = new List<IBDObject>();
+            IQueryable<BDTableCell> entries;
+
+            // get ALL entries
+            entries = (from entry in pContext.BDTableCells
+                       select entry);
+
+            //if (entries.Count() > 0)
+            //    entryList = new List<IBDObject>(entries.ToList<BDTableCell>());
+
+            foreach (BDTableCell cell in entries)
+            {
+                cell.nodeType = (int)BDConstants.BDNodeType.BDTableCell;
+                BDTableCell.Save(pContext, cell);
+            }
+        }
     }
 }

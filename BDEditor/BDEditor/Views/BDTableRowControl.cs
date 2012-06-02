@@ -113,7 +113,6 @@ namespace BDEditor.Views
             if (null != currentNode)
             {
                 int maxColumns = BDFabrik.GetTableColumnCount(currentNode.LayoutVariant);
-                BDTableRow row = currentNode as BDTableRow;
                 List<BDTableCell> list = BDTableCell.RetrieveTableCellsForParentId(dataContext, currentNode.Uuid);
 
                 for (int i = 0; i < maxColumns; i++)
@@ -306,10 +305,9 @@ namespace BDEditor.Views
 
         private void BDTableRowControl_Load(object sender, EventArgs e)
         {
-            BDTableRow row = CurrentNode as BDTableRow;
             if (null != CurrentNode)
             {
-                switch (row.LayoutVariant)
+                switch (CurrentNode.LayoutVariant)
                 {
                     case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass_HeaderRow:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_HeaderRow:

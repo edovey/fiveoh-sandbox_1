@@ -172,6 +172,12 @@
     <Compile Include="DataModel\BDTableRow.cs" />
     <Compile Include="DataModel\IBDNode.cs" />
     <Compile Include="DataModel\IBDObject.cs" />
+    <Compile Include="Views\BDAntimicrobialRiskContol.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDAntimicrobialRiskContol.Designer.cs">
+      <DependentUpon>BDAntimicrobialRiskContol.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\BDAttachmentControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -275,6 +281,9 @@
     </Compile>
     <EmbeddedResource Include="Properties\licenses.licx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDAntimicrobialRiskContol.resx">
+      <DependentUpon>BDAntimicrobialRiskContol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDDosageAndCostControl.resx">
       <DependentUpon>BDDosageAndCostControl.cs</DependentUpon>
@@ -408,6 +417,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Chapter_5d.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Chapter_5e.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Chapter_6a.txt">

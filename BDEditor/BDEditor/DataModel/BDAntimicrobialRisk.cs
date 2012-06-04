@@ -88,7 +88,7 @@ namespace BDEditor.DataModel
         /// Extended Save method 
         /// </summary>
         /// <param name="pNode"></param>
-        public static void Save(Entities pContext, BDNode pNode)
+        public static void Save(Entities pContext, BDAntimicrobialRisk pNode)
         {
             if (null != pNode)
             {

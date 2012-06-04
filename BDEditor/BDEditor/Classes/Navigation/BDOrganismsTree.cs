@@ -25,6 +25,7 @@ namespace BDEditor.Classes.Navigation
                 case BDConstants.BDNodeType.BDChapter:
                 case BDConstants.BDNodeType.BDSection:
                 case BDConstants.BDNodeType.BDCategory:
+                case BDConstants.BDNodeType.BDSubcategory:
                 case BDConstants.BDNodeType.BDTable:
                     switch (pNode.LayoutVariant)
                     {

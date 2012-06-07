@@ -1111,6 +1111,23 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         default:
+                            {
+                                nodeControl = new BDAntimicrobialRiskControl(pContext, pNode);
+                                nodeControl.ShowAsChild = true;
+                            }
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDAntimicrobialGroup:
+                    switch (pNode.LayoutVariant)
+                    {
+                        default:
+                            {
+                                nodeControl = new BDNodeControl(pContext, pNode);
+                                BDNodeControl newControl = nodeControl as BDNodeControl;
+                                newControl.ShowAsChild = true;
+                                newControl.ShowSiblingAdd = true;
+                            }
                             break;
                     }
                     break;

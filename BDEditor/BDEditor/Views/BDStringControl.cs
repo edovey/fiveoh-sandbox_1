@@ -19,6 +19,12 @@ namespace BDEditor.Views
         private Guid? parentId;
         private Guid? scopeId;
 
+        public string RichText
+        {
+            get { return rtbValue.Text; }
+            set { rtbValue.Text = value; }
+        }
+
         public int? DisplayOrder { get; set; }
         public BDConstants.LayoutVariantType DefaultLayoutVariantType;
 
@@ -195,23 +201,11 @@ namespace BDEditor.Views
             ControlHelper.ResumeDrawing(this);
         }
 
-        public BDConstants.BDNodeType DefaultNodeType
-        {
-            get { return BDConstants.BDNodeType.None; }
-            set { throw new NotImplementedException(); }
-        }
+        public BDConstants.BDNodeType DefaultNodeType {get; set; }
 
-        public IBDNode CurrentNode
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
+        public IBDNode CurrentNode {get; set; }
 
-        public bool ShowAsChild
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
+        public bool ShowAsChild {get; set; }
 
         private void btnLinkedNote_Click(object sender, EventArgs e)
         {
@@ -300,6 +294,11 @@ namespace BDEditor.Views
             cutToolStripMenuItem.Enabled = (rtbValue.SelectionLength > 0);
             copyToolStripMenuItem.Enabled = (rtbValue.SelectionLength > 0);
             deleteToolStripMenuItem.Enabled = (rtbValue.SelectionLength > 0);
+        }
+
+        private void BDStringControl_Load(object sender, EventArgs e)
+        {
+            rtbValue.Width = pnlRtb.Width;
         }
     }
 }

@@ -44,6 +44,7 @@
           <Property Name="name" Type="nvarchar" MaxLength="100" />
           <Property Name="parentId" Type="uniqueidentifier" />
           <Property Name="displayOrder" Type="int" />
+          <Property Name="recommendations" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <EntityType Name="BDAttachments">
           <Key>
@@ -720,6 +721,7 @@
           <Property Type="String" Name="name" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Guid" Name="parentId" />
           <Property Type="Int32" Name="displayOrder" />
+          <Property Type="String" Name="recommendations" MaxLength="256" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1064,6 +1066,7 @@
           <EntitySetMapping Name="BDAntimicrobialRisks">
             <EntityTypeMapping TypeName="BDDataModel.BDAntimicrobialRisk">
               <MappingFragment StoreEntitySet="BDAntimicrobialRisks">
+                <ScalarProperty Name="recommendations" ColumnName="recommendations" />
                 <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
                 <ScalarProperty Name="parentId" ColumnName="parentId" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1119,7 +1122,7 @@
         <EntityTypeShape EntityType="BDDataModel.BDDosage" Width="1.5" PointX="0.75" PointY="10.75" Height="3.3263964843750031" />
         <EntityTypeShape EntityType="BDDataModel.BDPrecaution" Width="1.5" PointX="3.375" PointY="12.75" Height="5.0571093750000031" />
         <EntityTypeShape EntityType="BDDataModel.BDAttachment" Width="1.5" PointX="5.375" PointY="12.75" Height="2.5571907552083388" />
-        <EntityTypeShape EntityType="BDDataModel.BDAntimicrobialRisk" Width="1.5" PointX="7.375" PointY="12.75" Height="3.7109993489583317" />
+        <EntityTypeShape EntityType="BDDataModel.BDAntimicrobialRisk" Width="1.5" PointX="7.375" PointY="12.75" Height="3.9033007812500031" />
       </Diagram>
     </Diagrams>
   </Designer>

@@ -29,6 +29,11 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME_FRIENDLY = @"AntimicrobialRisk";
         public const string KEY_NAME = @"BDAntimicrobialRisk";
         public const string PROPERTYNAME_NAME = @"Name";
+        public const string PROPERTYNAME_PREGNANCYRISK = @"Risk Factor";
+        public const string PROPERTYNAME_LACTATIONRISK = @"Risk Factor";
+        public const string PROPERTYNAME_RECOMMENDATION = @"Recommendation";
+        public const string PROPERTYNAME_APPRATING = @"AAP Rating";
+        public const string PROPERTYNAME_RELATIVEDOSE = @"Relative Infant Dose";
 
         public const int ENTITY_SCHEMAVERSION = 0;
 
@@ -47,6 +52,7 @@ namespace BDEditor.DataModel
         private const string NODEKEYNAME = @"ar_nodeKeyName";
 
         private const string RISKFACTOR = @"ar_riskFactor";
+        private const string RECOMMENDATIONS = @"ar_recommendations";
         private const string AAPRATING = @"ar_aapRating";
         private const string RELATIVEINFANTDOSE = @"ar_relativeInfantDose";
 
@@ -76,6 +82,7 @@ namespace BDEditor.DataModel
             node.nodeKeyName = string.Empty;
             node.layoutVariant = -1;
             node.riskFactor = string.Empty;
+            node.recommendations = string.Empty;
             node.aapRating = string.Empty;
             node.relativeInfantDose = string.Empty;
 
@@ -317,6 +324,7 @@ namespace BDEditor.DataModel
             entry.layoutVariant = short.Parse(pAttributeDictionary[LAYOUTVARIANT]);
 
             entry.riskFactor = pAttributeDictionary[RISKFACTOR];
+            entry.recommendations = pAttributeDictionary[RECOMMENDATIONS];
             entry.aapRating = pAttributeDictionary[AAPRATING];
             entry.relativeInfantDose = pAttributeDictionary[RELATIVEINFANTDOSE];
 
@@ -347,6 +355,7 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDAntimicrobialRisk.LAYOUTVARIANT).WithValue(string.Format(@"{0}", layoutVariant)).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDAntimicrobialRisk.RISKFACTOR).WithValue((null == riskFactor) ? string.Empty : riskFactor).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDAntimicrobialRisk.RECOMMENDATIONS).WithValue((null == recommendations) ? string.Empty : recommendations).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDAntimicrobialRisk.AAPRATING).WithValue((null == aapRating) ? string.Empty : aapRating).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDAntimicrobialRisk.RELATIVEINFANTDOSE).WithValue((null == relativeInfantDose) ? string.Empty : relativeInfantDose).WithReplace(true));
 

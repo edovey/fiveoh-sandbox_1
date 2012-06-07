@@ -3707,8 +3707,8 @@ namespace BDEditor.Classes
 
             //Expectation that a row contains only one element with data
 
-            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Dental;
-            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics;
+            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.PregancyLactation;
+            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation;
             BDConstants.LayoutVariantType categoryLayoutVariant = sectionLayoutVariant;
             BDConstants.LayoutVariantType subcategoryLayoutVariant = sectionLayoutVariant;
             BDConstants.LayoutVariantType antimicrobialGroupLayoutVariant = sectionLayoutVariant;

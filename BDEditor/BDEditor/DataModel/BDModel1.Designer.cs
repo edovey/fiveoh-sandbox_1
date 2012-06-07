@@ -894,6 +894,30 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Int32> _displayOrder;
         partial void OndisplayOrderChanging(Nullable<global::System.Int32> value);
         partial void OndisplayOrderChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String recommendations
+        {
+            get
+            {
+                return _recommendations;
+            }
+            set
+            {
+                OnrecommendationsChanging(value);
+                ReportPropertyChanging("recommendations");
+                _recommendations = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("recommendations");
+                OnrecommendationsChanged();
+            }
+        }
+        private global::System.String _recommendations;
+        partial void OnrecommendationsChanging(global::System.String value);
+        partial void OnrecommendationsChanged();
 
         #endregion
     

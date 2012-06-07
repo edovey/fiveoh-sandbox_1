@@ -412,10 +412,10 @@ namespace BDEditor.Views
             insertTextFromMenu(newText);
         }
 
-        private void copyrightToolStripMenuItem_Click(object sender, EventArgs e)
+        private void trademarkToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string newText = "©";
-                insertTextFromMenu(newText);
+            string newText = "®";
+            insertTextFromMenu(newText);
         }
 
         private void BDStringControl_Leave(object sender, EventArgs e)

@@ -106,8 +106,8 @@ namespace BDEditor.Views
                     case BDConstants.LayoutVariantType.PregancyLactation:
                         node = BDPregnancyLactationTree.BuildBranch(dataContext, pNode);
                         break;
-                    case BDConstants.LayoutVariantType.Organisms:
-                        node = BDOrganismsTree.BuildBranch(dataContext, pNode);
+                    case BDConstants.LayoutVariantType.Microbiology:
+                        node = BDMicrobiologyTree.BuildBranch(dataContext, pNode);
                         break;
                     default:
                         throw new NotImplementedException();
@@ -441,18 +441,18 @@ namespace BDEditor.Views
                                 showChildControls = true;
                             break;
 
-                        case BDConstants.LayoutVariantType.Organisms:
-                        case BDConstants.LayoutVariantType.Organisms_GramStainInterpretation:
-                        case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic:
-                        case BDConstants.LayoutVariantType.Organisms_EmpiricTherapy:
-                            childTreeNode = BDOrganismsTree.BuildBranch(dataContext, node);
+                        case BDConstants.LayoutVariantType.Microbiology:
+                        case BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation:
+                        case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
+                        case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
+                            childTreeNode = BDMicrobiologyTree.BuildBranch(dataContext, node);
                             if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
                                 showChildControls = false;
                             }
                             break;
-                        case BDConstants.LayoutVariantType.Organisms_Antibiogram:
+                        case BDConstants.LayoutVariantType.Microbiology_Antibiogram:
                             if (!pInterrogateOnly)
                             {
                                 showChildControls = false;
@@ -489,6 +489,7 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
                             childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
                             if (!pInterrogateOnly)
                             {
@@ -506,8 +507,10 @@ namespace BDEditor.Views
                             }
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
+                        case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis:
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
+                        case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
                             if (!pInterrogateOnly)
                             {
                                 showChildControls = true;
@@ -528,7 +531,6 @@ namespace BDEditor.Views
                             break;
                         case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
                         case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
-                        case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
                             childTreeNode = BDPregnancyLactationTree.BuildBranch(dataContext, node);
                             if (!pInterrogateOnly)
                             {
@@ -536,9 +538,14 @@ namespace BDEditor.Views
                                 showChildControls = false;
                             }
                             break;
-                        case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic:
-                        case BDConstants.LayoutVariantType.Organisms_EmpiricTherapy:
-                            childTreeNode = BDOrganismsTree.BuildBranch(dataContext, node);
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
+                            if (!pInterrogateOnly)
+                            {
+                                showChildControls = true;
+                            }
+                            break;
+                        case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
+                            childTreeNode = BDMicrobiologyTree.BuildBranch(dataContext, node);
                             if (!pInterrogateOnly)
                             {
                                 graftTreeNode(selectedNode, childTreeNode);
@@ -553,6 +560,7 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
                             childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
                             if (!pInterrogateOnly)
                             {
@@ -626,14 +634,6 @@ namespace BDEditor.Views
                                 showChildControls = false;
                             }
                             break;
-                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
-                            childTreeNode = BDPregnancyLactationTree.BuildBranch(dataContext, node);
-                            if (!pInterrogateOnly)
-                            {
-                                graftTreeNode(selectedNode, childTreeNode);
-                                showChildControls = false;
-                            }
-                            break;
 
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
@@ -642,8 +642,8 @@ namespace BDEditor.Views
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
                         case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
-                        case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic:
-                        case BDConstants.LayoutVariantType.Organisms_EmpiricTherapy:
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
+                        case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
                             if (!pInterrogateOnly)
                             {
                                 showChildControls = true;
@@ -698,6 +698,14 @@ namespace BDEditor.Views
                                 showChildControls = true;
                             }
                             break;
+                        case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
+                            childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
+                            if (!pInterrogateOnly)
+                            {
+                                graftTreeNode(selectedNode, childTreeNode);
+                                showChildControls = false;
+                            }
+                            break;
                     }
                     break;
             }
@@ -747,36 +755,36 @@ namespace BDEditor.Views
             this.Cursor = Cursors.WaitCursor;
             BDDataLoader dataLoader = new BDDataLoader();
 
-            /*dataLoader.ImportData(dataContext, @"Resources\Chapter_1a.txt", BDDataLoader.baseDataDefinitionType.chapter1a);
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_1b.txt", BDDataLoader.baseDataDefinitionType.chapter1b);
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_1c.txt", BDDataLoader.baseDataDefinitionType.chapter1c);
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_1d.txt", BDDataLoader.baseDataDefinitionType.chapter1d);
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_1e.txt", BDDataLoader.baseDataDefinitionType.chapter1e);
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_1f.txt", BDDataLoader.baseDataDefinitionType.chapter1f);
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_1g.txt", BDDataLoader.baseDataDefinitionType.chapter1g);
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_1h.txt", BDDataLoader.baseDataDefinitionType.chapter1h);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_1a.txt", BDDataLoader.baseDataDefinitionType.chapter1a);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_1b.txt", BDDataLoader.baseDataDefinitionType.chapter1b);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_1c.txt", BDDataLoader.baseDataDefinitionType.chapter1c);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_1d.txt", BDDataLoader.baseDataDefinitionType.chapter1d);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_1e.txt", BDDataLoader.baseDataDefinitionType.chapter1e);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_1f.txt", BDDataLoader.baseDataDefinitionType.chapter1f);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_1g.txt", BDDataLoader.baseDataDefinitionType.chapter1g);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_1h.txt", BDDataLoader.baseDataDefinitionType.chapter1h);
             dataLoader.ImportData(dataContext, @"Resources\Chapter_1i.txt", BDDataLoader.baseDataDefinitionType.chapter1i);
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_1j.txt", BDDataLoader.baseDataDefinitionType.chapter1j);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_1j.txt", BDDataLoader.baseDataDefinitionType.chapter1j);
 
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_4a.txt", BDDataLoader.baseDataDefinitionType.chapter4a);
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_4b.txt", BDDataLoader.baseDataDefinitionType.chapter4b);
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_4c.txt", BDDataLoader.baseDataDefinitionType.chapter4c);
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_4d.txt", BDDataLoader.baseDataDefinitionType.chapter4d);
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_4e.txt", BDDataLoader.baseDataDefinitionType.chapter4e);
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_4f.txt", BDDataLoader.baseDataDefinitionType.chapter4f);
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_4g.txt", BDDataLoader.baseDataDefinitionType.chapter4g);
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_4h.txt", BDDataLoader.baseDataDefinitionType.chapter4h);
-            */
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_4a.txt", BDDataLoader.baseDataDefinitionType.chapter4a);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_4b.txt", BDDataLoader.baseDataDefinitionType.chapter4b);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_4c.txt", BDDataLoader.baseDataDefinitionType.chapter4c);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_4d.txt", BDDataLoader.baseDataDefinitionType.chapter4d);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_4e.txt", BDDataLoader.baseDataDefinitionType.chapter4e);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_4f.txt", BDDataLoader.baseDataDefinitionType.chapter4f);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_4g.txt", BDDataLoader.baseDataDefinitionType.chapter4g);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_4h.txt", BDDataLoader.baseDataDefinitionType.chapter4h);
+            
             dataLoader.ImportData(dataContext, @"Resources\Chapter_5a.txt", BDDataLoader.baseDataDefinitionType.chapter5a);
             dataLoader.ImportData(dataContext, @"Resources\Chapter_5b.txt", BDDataLoader.baseDataDefinitionType.chapter5b);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_5c.txt", BDDataLoader.baseDataDefinitionType.chapter5c);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_5d.txt", BDDataLoader.baseDataDefinitionType.chapter5d);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_5e.txt", BDDataLoader.baseDataDefinitionType.chapter5e);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_5c.txt", BDDataLoader.baseDataDefinitionType.chapter5c);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_5d.txt", BDDataLoader.baseDataDefinitionType.chapter5d);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_5e.txt", BDDataLoader.baseDataDefinitionType.chapter5e);
 
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_6a.txt", BDDataLoader.baseDataDefinitionType.chapter6a);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_6b.txt", BDDataLoader.baseDataDefinitionType.chapter6b);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_6c.txt", BDDataLoader.baseDataDefinitionType.chapter6c);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_6d.txt", BDDataLoader.baseDataDefinitionType.chapter6d);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_6a.txt", BDDataLoader.baseDataDefinitionType.chapter6a);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_6b.txt", BDDataLoader.baseDataDefinitionType.chapter6b);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_6c.txt", BDDataLoader.baseDataDefinitionType.chapter6c);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_6d.txt", BDDataLoader.baseDataDefinitionType.chapter6d);
 
 
             LoadChapterDropDown();

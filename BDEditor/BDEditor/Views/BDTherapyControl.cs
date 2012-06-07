@@ -557,6 +557,13 @@ namespace BDEditor.Views
             insertTextFromMenu(newText);
         }
 
+        private void trademarkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "®";
+            insertTextFromMenu(newText);
+
+        }
+
         private void btnAdd_Click(object sender, EventArgs e)
         {
             OnItemAddRequested(new NodeEventArgs(dataContext, BDConstants.BDNodeType.BDTherapy, DefaultLayoutVariantType));
@@ -653,6 +660,8 @@ namespace BDEditor.Views
                 case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis:
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
@@ -696,16 +705,6 @@ namespace BDEditor.Views
                     pnlMain.Controls.Remove(chkPreviousDuration2);
                     pnlMain.Controls.Remove(btnDuration2Link);
                     break;
-                case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
-                    // remove dosage2, duration2
-                    pnlMain.Controls.Remove(tbDosage2);
-                    pnlMain.Controls.Remove(chkPreviousDose2);
-                    pnlMain.Controls.Remove(btnDosage2Link);
-                    pnlMain.Controls.Remove(tbDuration2);
-                    pnlMain.Controls.Remove(chkPreviousDuration2);
-                    pnlMain.Controls.Remove(btnDuration2Link);
-                    break;
                 case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
@@ -716,5 +715,6 @@ namespace BDEditor.Views
             }
             pnlMain.Refresh();
         }
+
     }
 }

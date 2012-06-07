@@ -50,6 +50,7 @@
             this.toolStripButton10 = new System.Windows.Forms.ToolStripButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.toolStripButton11 = new System.Windows.Forms.ToolStripButton();
             this.panel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -171,6 +172,7 @@
             this.toolStripButton4,
             this.toolStripButton5,
             this.toolStripButton9,
+            this.toolStripButton11,
             this.toolStripSeparator1,
             this.toolStripButton6,
             this.toolStripButton7,
@@ -180,7 +182,7 @@
             this.toolStripButton10});
             this.toolStrip1.Location = new System.Drawing.Point(122, 2);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(360, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(414, 25);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -320,6 +322,17 @@
             this.panel3.Size = new System.Drawing.Size(10, 198);
             this.panel3.TabIndex = 16;
             // 
+            // toolStripButton11
+            // 
+            this.toolStripButton11.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton11.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton11.Image")));
+            this.toolStripButton11.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton11.Name = "toolStripButton11";
+            this.toolStripButton11.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton11.Text = "®";
+            this.toolStripButton11.ToolTipText = "Insert ®";
+            this.toolStripButton11.Click += new System.EventHandler(this.toolStripButton11_Click);
+            // 
             // BDLinkedNoteControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -365,6 +378,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButton9;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton toolStripButton10;
+        private System.Windows.Forms.ToolStripButton toolStripButton11;
 
     }
 }

@@ -562,6 +562,11 @@ namespace BDEditor.Views
             textControl.Selection.Text = "µ";
         }
 
+        private void toolStripButton11_Click(object sender, EventArgs e)
+        {
+            textControl.Selection.Text = "®";
+        }
+
         private void toolStripButton10_Click(object sender, EventArgs e)
         {
             if (textControl.Selection.Length > 0)
@@ -620,5 +625,6 @@ namespace BDEditor.Views
         public int? DisplayOrder { get; set; }
 
         public bool ShowAsChild { get; set; }
+
     }
 }

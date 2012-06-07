@@ -9,9 +9,9 @@ using BDEditor.DataModel;
 
 namespace BDEditor.Classes.Navigation
 {
-    public class BDOrganismsTree
+    public class BDMicrobiologyTree
     {
-        private BDOrganismsTree() { }
+        private BDMicrobiologyTree() { }
 
         public static TreeNode BuildBranch(Entities pDataContext, IBDNode pNode)
         {
@@ -29,11 +29,11 @@ namespace BDEditor.Classes.Navigation
                 case BDConstants.BDNodeType.BDTable:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.Organisms:
-                        case BDConstants.LayoutVariantType.Organisms_GramStainInterpretation:
-                        case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic:
-                        case BDConstants.LayoutVariantType.Organisms_EmpiricTherapy:
-                        case BDConstants.LayoutVariantType.Organisms_Antibiogram:
+                        case BDConstants.LayoutVariantType.Microbiology:
+                        case BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation:
+                        case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
+                        case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
+                        case BDConstants.LayoutVariantType.Microbiology_Antibiogram:
                             foreach (IBDNode childNode in childList)
                             {
                                 string name = childNode.Name;

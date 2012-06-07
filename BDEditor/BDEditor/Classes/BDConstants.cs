@@ -155,6 +155,9 @@ namespace BDEditor.Classes
             [Description("Treatment of Enteric Parasitic Infections II")]
             TreatmentRecommendation09_Parasitic_II = 112,
 
+            [Description("Genital Ulcers")]
+            TreatmentRecommendation11_GenitalUlcers = 113,
+
             [Description("Antibiotics")]
             Antibiotics = 200, 
             [Description("Clinical Antibiotic Guidelines")]
@@ -224,20 +227,20 @@ namespace BDEditor.Classes
             [Description("Perinatal HIV Protocol")]
             PregnancyLactation_Perinatal_HIVProtocol = 505,
 
-            [Description("Organisms")]
-            Organisms = 600,
+            [Description("Microbiology")]
+            Microbiology = 600,
             [Description("Gram Stain Interpretation")]
-            Organisms_GramStainInterpretation = 601,
+            Microbiology_GramStainInterpretation = 601,
             [Description("Gram Stain Interpretation Header Row")]
-            Organisms_GramStainInterpretation_HeaderRow = 6011,
+            Microbiology_GramStainInterpretation_HeaderRow = 6011,
             [Description("Gram Stain Interpretation Content Row")]
-            Organisms_GramStainInterpretation_ContentRow = 6012,
-            [Description("Organisms for Specific Body Sites")]
-            Organisms_CommensalAndPathogenic = 602,
-            [Description("Empiric Therapy of Specific Organisms")]
-            Organisms_EmpiricTherapy = 603,
+            Microbiology_GramStainInterpretation_ContentRow = 6012,
+            [Description("Microbiology for Specific Body Sites")]
+            Microbiology_CommensalAndPathogenicOrganisms = 602,
+            [Description("Empiric Therapy of Specific Microbiology")]
+            Microbiology_EmpiricTherapy = 603,
             [Description("Antibiogram")]
-            Organisms_Antibiogram = 604,
+            Microbiology_Antibiogram = 604,
 
             [Description("2-column Table")]
             Table_2_Column = 900,

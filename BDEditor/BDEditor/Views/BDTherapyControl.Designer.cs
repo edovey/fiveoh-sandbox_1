@@ -77,6 +77,7 @@
             this.btnDosage2Link = new System.Windows.Forms.Button();
             this.tbDuration2 = new System.Windows.Forms.TextBox();
             this.tbDosage2 = new System.Windows.Forms.TextBox();
+            this.trademarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
             this.pnlRadioButtons.SuspendLayout();
@@ -103,10 +104,11 @@
             this.plusMinusToolStripMenuItem,
             this.degreeToolStripMenuItem,
             this.µToolStripMenuItem,
-            this.sOneToolStripMenuItem});
+            this.sOneToolStripMenuItem,
+            this.trademarkToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.ShowImageMargin = false;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(128, 180);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 180);
             this.contextMenuStrip1.Text = "Insert Symbol";
             // 
             // bToolStripMenuItem
@@ -577,6 +579,14 @@
             this.tbDosage2.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             this.tbDosage2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDosage2_MouseDown);
             // 
+            // trademarkToolStripMenuItem
+            // 
+            this.trademarkToolStripMenuItem.Name = "trademarkToolStripMenuItem";
+            this.trademarkToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.trademarkToolStripMenuItem.Text = "®";
+            this.trademarkToolStripMenuItem.ToolTipText = "Insert ®";
+            this.trademarkToolStripMenuItem.Click += new System.EventHandler(this.trademarkToolStripMenuItem_Click);
+            // 
             // BDTherapyControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -653,5 +663,6 @@
         private System.Windows.Forms.Button btnDosage2Link;
         private System.Windows.Forms.TextBox tbDuration2;
         private System.Windows.Forms.TextBox tbDosage2;
+        private System.Windows.Forms.ToolStripMenuItem trademarkToolStripMenuItem;
     }
 }

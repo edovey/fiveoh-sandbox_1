@@ -103,7 +103,8 @@ namespace BDEditor.Views
 
         public bool Save()
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
+            return true;
         }
 
         public void Delete()

@@ -219,14 +219,22 @@ namespace BDEditor.DataModel
         public static List<IBDObject> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
         {
             List<IBDObject> entryList = new List<IBDObject>();
-            IQueryable<BDTableCell> entries;
+            IQueryable<BDNode> entries;
 
-            // get ALL entries - this is a full refresh.
-            entries = (from entry in pContext.BDTableCells
-                       select entry);
+            if (null == pUpdateDateTime)
+            {
+                entries = (from entry in pContext.BDNodes
+                           select entry);
+            }
+            else
+            {
+                entries = (from entry in pContext.BDNodes
+                           where entry.modifiedDate > pUpdateDateTime.Value
+                           select entry);
+            }
 
             if (entries.Count() > 0)
-                entryList = new List<IBDObject>(entries.ToList<BDTableCell>());
+                entryList = new List<IBDObject>(entries.ToList<BDNode>());
 
             return entryList;
         }

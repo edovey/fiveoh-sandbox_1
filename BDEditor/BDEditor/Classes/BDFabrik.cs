@@ -1158,12 +1158,6 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDDisease:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
-                            nodeControl = new BDNodeControl(pContext, pNode);
-                            BDNodeControl newControl = nodeControl as BDNodeControl;
-                            newControl.ShowAsChild = false;
-                            newControl.ShowSiblingAdd = true;
-                            break;
                         default:
                             nodeControl = new BDNodeOverviewControl(pContext, pNode);
                             break;
@@ -1503,6 +1497,12 @@ namespace BDEditor.Classes
                             BDNodeControl newControl = nodeControl as BDNodeControl;
                             newControl.ShowAsChild = true;
                             newControl.ShowSiblingAdd = true;
+                            break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
+                            nodeControl = new BDNodeControl(pContext, pNode);
+                            BDNodeControl tmpControl = nodeControl as BDNodeControl;
+                            tmpControl.ShowAsChild = false;
+                            tmpControl.ShowSiblingAdd = true;
                             break;
                         default:
                             {

@@ -35,6 +35,7 @@ namespace BDEditor.Classes.Navigation
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
                             foreach (IBDNode childNode in childList)
                             {
                                 string name = childNode.Name;

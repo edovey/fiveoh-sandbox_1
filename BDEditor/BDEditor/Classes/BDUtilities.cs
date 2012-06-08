@@ -125,5 +125,12 @@ namespace BDEditor.Classes
                 BDTableCell.Save(pContext, cell);
             }
         }
+
+        public static void SetDiseaseLayoutVariant(Entities pContext)
+        {
+            BDNode disease = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("96cbc7d0-c4ba-4593-a1d9-0e7908deeffd"));
+            disease.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers;
+            BDNode.Save(pContext, disease);
+        }
     }
 }

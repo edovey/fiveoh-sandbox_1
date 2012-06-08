@@ -1,5 +1,19 @@
-	ANTIBIOTICS						Chapter	Section	Topic	Category	Subcategory	Antimicrobial45e13826-aedb-48d0-baf6-2f06ff45017f	Antibiotics					8b3b4918-82db-43ce-8dd2-1175f7c78b7b		CSF Penetration of Antimicrobials				a004111d-389d-4fd1-a0c3-e2a9aee286a8			Antimicrobial Penetration in Cerebrospinal Fluid (CSF)			7a03d7b2-5c6e-4241-8e19-78a24a92bd99				Antibiotics		4eb9d510-b59c-4b31-9345-12d62f2c5935					Excellent Penetration	ae01b3a0-4eed-4bfd-b6eb-2cfad8c8b4fd						TMP/SMX73e30636-f375-4f4c-996a-c6b11ebca73e						Chloramphenicolc2916eb4-db46-4532-91ab-e580547e86fd					Good Penetration	a8851c04-c126-434e-83da-c86aebd9096d					Poor Penetration	37ffbded-a87c-483f-80b0-2422da1b1be5				Antivirals851d87d4-1d08-44b5-acad-8b90ab4806f9					Excellent Penetration	1121a0b2-5424-403d-a9a2-0f741f8eea2f					Good Penetration	294b0186-2303-4d19-95c3-35e602ad77f3					Poor Penetration	5b31bf43-1324-4773-aca6-ea2b61789750				Antifungalsa30efaa0-3592-445d-8524-6e6dba74b939					Excellent Penetration	1d1664b6-fed0-4d85-aa6c-b20aa3c76a88					Good Penetration	5a62cecb-e0de-4247-967d-4040b951fe43					Poor Penetration	
-
-
-
-
+	ANTIBIOTICS					
+	Chapter	Section	Topic	Category	Subcategory	Antimicrobial
+45e13826-aedb-48d0-baf6-2f06ff45017f	Antibiotics					
+7491f7e2-b67d-4a88-8d13-8f74c8996a88		CSF Penetration of Antimicrobials				
+e30e45a9-462f-4fe1-a8a8-9954977533ce			Antimicrobial Penetration in Cerebrospinal Fluid (CSF)			
+20fac322-dd41-4799-84ab-62b3d2169dc9				Antibiotics		
+6c6d4c40-084d-4f8b-b68a-99f3bc4d9e9d					Excellent Penetration	
+877d6506-cab9-4cec-87c5-1955b2469230						TMP/SMX
+0153b056-6d97-4778-a4f8-28785692deb5						Chloramphenicol
+d60ede0c-c3b2-4703-90fb-ae54fa86d6d5					Good Penetration	
+6cf99659-5f1b-44d2-a1d6-98607056bcf4					Poor Penetration	
+6eb52d03-1c28-4423-9968-a17aa078ee1b				Antivirals
+c307a536-76c1-49e0-a8e1-5d28aaa1f8d2					Excellent Penetration	
+18c970d2-287d-4d52-986a-b31599cebf78					Good Penetration	
+3f8cf669-9192-47f3-a071-579089df5e1d					Poor Penetration	
+156d54f7-da72-4666-8ce7-6e63dbb48eea				Antifungals
+ef4f9aff-5f5c-4151-91e5-b4cf633313e3					Excellent Penetration	
+57fa1a19-3409-40d6-8dbb-7b893c202a7f					Good Penetration	
+c1a8558f-971b-469f-93f9-9f56adf2cb45					Poor Penetration

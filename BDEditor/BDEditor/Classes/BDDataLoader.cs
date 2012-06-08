@@ -1865,10 +1865,12 @@ namespace BDEditor.Classes
                 }
                 section = null;
                 category = null;
+                topic = null;
                 subcategory = null;
                 antimicrobial = null;
 
                 idxSection = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
+                idxTopic = 0;
                 idxCategory = 0;
                 idxSubcategory = 0;
                 idxAntimicrobial = 0;

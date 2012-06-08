@@ -785,7 +785,7 @@ namespace BDEditor.Views
             dataLoader.ImportData(dataContext, @"Resources\Chapter_6b.txt", BDDataLoader.baseDataDefinitionType.chapter6b);
             dataLoader.ImportData(dataContext, @"Resources\Chapter_6c.txt", BDDataLoader.baseDataDefinitionType.chapter6c);
             dataLoader.ImportData(dataContext, @"Resources\Chapter_6d.txt", BDDataLoader.baseDataDefinitionType.chapter6d);
-
+            BDUtilities.SetDiseaseLayoutVariant(dataContext);
 
             LoadChapterDropDown();
             BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);

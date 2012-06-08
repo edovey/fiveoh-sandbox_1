@@ -179,7 +179,10 @@ namespace BDEditor.Classes
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDisease, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt, BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass,
                             BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I,BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II,BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis,BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis,
-                            BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis, BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers }));
+                            BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis}));
+                            break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDisease, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogenGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -263,8 +266,10 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPresentation, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         //Dental
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
@@ -365,9 +370,6 @@ namespace BDEditor.Classes
                             break;
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                            break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         default:
                             break;
@@ -648,6 +650,7 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                             childDefinitionList = null;
                             break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubtopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;

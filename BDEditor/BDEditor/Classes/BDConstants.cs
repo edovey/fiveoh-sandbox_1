@@ -157,6 +157,8 @@ namespace BDEditor.Classes
 
             [Description("Genital Ulcers")]
             TreatmentRecommendation11_GenitalUlcers = 113,
+            [Description("Blood Culture Negative Endocarditis")]
+            TreatmentRecommendation12_Endocarditis_BCNE = 114,
 
             [Description("Antibiotics")]
             Antibiotics = 200, 

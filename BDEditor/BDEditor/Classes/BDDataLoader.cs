@@ -27,6 +27,7 @@ namespace BDEditor.Classes
             chapter2c,
             chapter2d,
             chapter2e,
+            chapter2f,
 
             chapter4a, //Dental
             chapter4b,
@@ -207,6 +208,9 @@ namespace BDEditor.Classes
                                 break;
                             case baseDataDefinitionType.chapter2e:
                                 ProcessChapter2eInputLine(input);
+                                break;
+                            case baseDataDefinitionType.chapter2f:
+                                ProcessChapter2fInputLine(input);
                                 break;
 
                                 //dental
@@ -631,6 +635,180 @@ namespace BDEditor.Classes
                 pathogen.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II;
                 BDNode.Save(dataContext, pathogen);
 
+            }
+        }
+
+        private void ProcessChapter2fInputLine(string pInputLine)
+        {
+            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
+
+            //Expectation that a row contains only one element with data
+
+            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation01;
+            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation01;
+            BDConstants.LayoutVariantType categoryLayoutVariant = sectionLayoutVariant;
+            BDConstants.LayoutVariantType diseaseLayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE;
+            BDConstants.LayoutVariantType pathogenLayoutVariant = diseaseLayoutVariant;
+            BDConstants.LayoutVariantType topicLayoutVariant = diseaseLayoutVariant;
+
+            uuidData = string.Empty;
+            chapterData = string.Empty;
+            sectionData = string.Empty;
+            categoryData = string.Empty;
+            diseaseData = string.Empty;
+            pathogenData = string.Empty;
+            topicData = string.Empty;
+
+            if (elements.Length > 0) uuidData = elements[0];
+            if (elements.Length > 1) chapterData = elements[1];
+            if (elements.Length > 2) sectionData = elements[2];
+            if (elements.Length > 3) categoryData = elements[3];
+            if (elements.Length > 4) diseaseData = elements[4];
+            if (elements.Length > 5) pathogenData = elements[5];
+            if (elements.Length > 6) topicData = elements[6];
+
+            if ((null != chapterData && chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
+            {
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(uuidData));
+                if (null == tmpNode)
+                {
+                    chapter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
+                    chapter.name = chapterData;
+                    chapter.displayOrder = idxChapter++;
+                    chapter.LayoutVariant = chapterLayoutVariant;
+                    chapter.SetParent(null);
+                    BDNode.Save(dataContext, chapter);
+                }
+                else
+                {
+                    chapter = tmpNode;
+                    idxChapter++;
+                }
+                section = null;
+                category = null;
+                disease = null;
+                pathogen = null;
+                topic = null;
+
+                idxSection = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
+                idxCategory = 0;
+                idxDisease = 0;
+                idxPathogen = 0;
+                idxTopic = 0;
+            }
+
+            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+            {
+                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == sectionNode)
+                {
+                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+                    section.name = sectionData;
+                    section.SetParent(chapter);
+                    section.displayOrder = idxSection++;
+                    section.LayoutVariant = sectionLayoutVariant;
+                    BDNode.Save(dataContext, section);
+                }
+                else
+                {
+                    section = sectionNode;
+                    idxSection++;
+                }
+                category = null;
+                    disease = null;
+                    pathogen = null;
+                    topic = null;
+                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+                idxDisease = 0;
+                idxPathogen = 0;
+                idxTopic = 0;
+            }
+            if ((null != categoryData && categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
+            {
+                BDNode catNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == catNode)
+                {
+                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
+                    category.name = (categoryData == @"<blank>") ? string.Empty : categoryData;
+                    category.SetParent(section);
+                    category.displayOrder = idxCategory++;
+                    category.LayoutVariant = categoryLayoutVariant;
+                    BDNode.Save(dataContext, category);
+                }
+                else
+                {
+                    category = catNode;
+                    idxCategory++;
+                }
+                disease = null;
+                pathogen = null;
+                topic = null;
+
+                idxDisease = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, category);
+                idxPathogen = 0;
+                idxTopic = 0;
+            }
+            if ((null != diseaseData && diseaseData != string.Empty) && ((null == disease) || (disease.name != diseaseData)))
+            {
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == tmpNode)
+                {
+                    disease = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDDisease, Guid.Parse(uuidData));
+                    disease.name = (diseaseData == @"<blank>") ? string.Empty : diseaseData;
+                    disease.SetParent(category);
+                    disease.displayOrder = idxDisease++;
+                    disease.LayoutVariant = diseaseLayoutVariant;
+                    BDNode.Save(dataContext, disease);
+                }
+                else
+                {
+                    disease = tmpNode;
+                    idxDisease++;
+                }
+                pathogen = null;
+                topic = null;
+
+                idxPathogen = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, disease);
+                idxTopic = 0;
+            }
+            if ((null != pathogenData && pathogenData != string.Empty) && ((null == pathogen) || (pathogen.name != pathogenData)))
+            {
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == tmpNode)
+                {
+                    pathogen = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDPathogen, Guid.Parse(uuidData));
+                    pathogen.name = (pathogenData == @"<blank>") ? string.Empty : pathogenData;
+                    pathogen.SetParent(disease);
+                    pathogen.displayOrder = idxPathogen++;
+                    pathogen.LayoutVariant = pathogenLayoutVariant;
+                    BDNode.Save(dataContext, pathogen);
+                }
+                else
+                {
+                    pathogen = tmpNode;
+                    idxPathogen++;
+                }
+                topic = null;
+
+                idxTopic = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, disease);
+            }
+            if ((null != topicData && topicData != string.Empty) && ((null == topic) || (topic.name != topicData)))
+            {
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == tmpNode)
+                {
+                    topic = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
+                    topic.name = (topicData == @"<blank>") ? string.Empty : topicData;
+                    topic.SetParent(pathogen);
+                    topic.displayOrder = idxTopic++;
+                    topic.LayoutVariant = pathogenLayoutVariant;
+                    BDNode.Save(dataContext, topic);
+                }
+                else
+                {
+                    topic = tmpNode;
+                    idxTopic++;
+                }
             }
         }
 

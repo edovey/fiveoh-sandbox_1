@@ -9,9 +9,9 @@ using BDEditor.DataModel;
 
 namespace BDEditor.Classes.Navigation
 {
-    public class TreatmentRecommendationTree
+    public class BDTreatmentRecommendationTree
     {
-        private TreatmentRecommendationTree() { }
+        private BDTreatmentRecommendationTree() { }
 
         public static TreeNode BuildBranch(Entities pDataContext, IBDNode pNode)
         {
@@ -36,6 +36,7 @@ namespace BDEditor.Classes.Navigation
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
                             foreach (IBDNode childNode in childList)
                             {
                                 string name = childNode.Name;

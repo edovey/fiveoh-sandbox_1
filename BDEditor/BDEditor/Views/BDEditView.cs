@@ -95,7 +95,7 @@ namespace BDEditor.Views
                 switch (pNode.LayoutVariant)
                 {
                     case BDConstants.LayoutVariantType.TreatmentRecommendation00:
-                        node = TreatmentRecommendationTree.BuildBranch(dataContext, pNode);
+                        node = BDTreatmentRecommendationTree.BuildBranch(dataContext, pNode);
                         break;
                     case BDConstants.LayoutVariantType.Antibiotics:
                         node = BDAntibioticsTree.BuildBranch(dataContext, pNode);
@@ -395,7 +395,8 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
-                                childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
+                                childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
                                     graftTreeNode(selectedNode, childTreeNode);
@@ -506,7 +507,8 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
-                                childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
+                                childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
                                     graftTreeNode(selectedNode, childTreeNode);
@@ -577,7 +579,8 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
-                                childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
+                                childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
                                     graftTreeNode(selectedNode, childTreeNode);
@@ -600,6 +603,7 @@ namespace BDEditor.Views
                         {
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
                                 if (!pInterrogateOnly)
                                 {
                                     showChildControls = true;
@@ -611,7 +615,7 @@ namespace BDEditor.Views
                         switch (node.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
-                                childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
+                                childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
                                     graftTreeNode(selectedNode, childTreeNode);
@@ -635,7 +639,7 @@ namespace BDEditor.Views
                         switch (node.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                                childTreeNode = TreatmentRecommendationTree.BuildBranch(dataContext, node);
+                                childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
                                     graftTreeNode(selectedNode, childTreeNode);
@@ -803,6 +807,8 @@ namespace BDEditor.Views
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_6c.txt", BDDataLoader.baseDataDefinitionType.chapter6c);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_6d.txt", BDDataLoader.baseDataDefinitionType.chapter6d);
 
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_2f.txt", BDDataLoader.baseDataDefinitionType.chapter2f);
+            
             LoadChapterDropDown();
             BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
@@ -881,7 +887,7 @@ namespace BDEditor.Views
             this.Text = string.Format("{0} - {1}" , "Bugs & Drugs Editor", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
             // Loading Seed Data:  set the following variables
-            isSeedDataLoadAvailable = false;
+            isSeedDataLoadAvailable = true;
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
             this.btnImportFromProduction.Visible = true;

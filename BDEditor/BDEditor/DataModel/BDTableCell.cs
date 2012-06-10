@@ -219,36 +219,36 @@ namespace BDEditor.DataModel
         public static List<IBDObject> GetEntriesUpdatedSince(Entities pContext, DateTime? pUpdateDateTime)
         {
             List<IBDObject> entryList = new List<IBDObject>();
-            IQueryable<BDNode> entries;
+            IQueryable<BDTableCell> entries;
 
             if (null == pUpdateDateTime)
             {
-                entries = (from entry in pContext.BDNodes
+                entries = (from entry in pContext.BDTableCells
                            select entry);
             }
             else
             {
-                entries = (from entry in pContext.BDNodes
+                entries = (from entry in pContext.BDTableCells
                            where entry.modifiedDate > pUpdateDateTime.Value
                            select entry);
             }
 
             if (entries.Count() > 0)
-                entryList = new List<IBDObject>(entries.ToList<BDNode>());
+                entryList = new List<IBDObject>(entries.ToList<BDTableCell>());
 
             return entryList;
         }
 
         public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime? pCurrentSyncDate)
         {
-            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, CREATEDDATE, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
+            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
             syncInfo.PushList = BDTableCell.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
             syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
             if (null != pCurrentSyncDate)
             {
                 for (int idx = 0; idx < syncInfo.PushList.Count; idx++)
                 {
-                    ((BDTableCell)syncInfo.PushList[idx]).createdDate = pCurrentSyncDate;
+                    ((BDTableCell)syncInfo.PushList[idx]).modifiedDate = pCurrentSyncDate;
                 }
                 if (syncInfo.PushList.Count > 0) { pDataContext.SaveChanges(); }
             }

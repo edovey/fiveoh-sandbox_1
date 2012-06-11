@@ -855,7 +855,7 @@ namespace BDEditor.Classes
                 DateTime date = DateTime.Now;
                 string keyname = fi.Name.Replace(fi.Extension, "");
 
-                string context = string.Empty;
+                string context = "prod";
 #if DEBUG
                 context = "DEBUG";
 #endif
@@ -881,7 +881,7 @@ namespace BDEditor.Classes
                         PutObjectRequest putObjectRequest = new PutObjectRequest();
                         putObjectRequest
                             .WithBucketName("bdArchive")
-                            .WithKey(filename)
+                            .WithKey(keyname)
                             .WithInputStream(memoryStream);
 
                         S3Response s3Response = S3.PutObject(putObjectRequest);

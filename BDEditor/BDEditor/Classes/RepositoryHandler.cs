@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.IO.Compression;
 using System.Net;
 using Amazon;
 using Amazon.SimpleDB;
@@ -134,6 +135,11 @@ namespace BDEditor.Classes
         /// <returns></returns>
         public SyncInfoDictionary Sync(Entities pDataContext, DateTime? pLastSyncDate, BDConstants.SyncType pSyncType)
         {
+            if (BDCommon.Settings.SyncPushEnabled)
+            {
+                ArchiveLocalDatabase();
+            }
+
             DateTime? currentSyncDate = DateTime.Now;
             #region Initialize Sync
 
@@ -832,6 +838,55 @@ namespace BDEditor.Classes
                     Console.WriteLine(
                      "Error occurred. Message:'{0}' when listing objects",
                      amazonS3Exception.Message);
+                }
+            }
+        }
+
+        public void ArchiveLocalDatabase()
+        {
+            Uri uri = new Uri(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase));
+
+            string filename = "BDDataStore.sdf";
+
+            DirectoryInfo di = new DirectoryInfo(uri.AbsolutePath);
+            FileInfo fi = new FileInfo(Path.Combine(uri.AbsolutePath, filename));
+            if (fi.Exists)
+            {
+                DateTime date = DateTime.Now;
+                string keyname = fi.Name.Replace(fi.Extension, "");
+
+                string context = string.Empty;
+#if DEBUG
+                context = "DEBUG";
+#endif
+                keyname = string.Format("{0}.{1}.{2}{3}.gz", keyname, context, date.ToString("yyyMMdd-HHmmss"), fi.Extension);
+
+                using (FileStream inFile = fi.OpenRead())
+                {
+                    // Create the compressed file.
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        using (GZipStream Compress = new GZipStream(memoryStream, CompressionMode.Compress, true))
+                        {
+                            // Copy the source file into the compression stream.
+                            byte[] buffer = new byte[4096];
+                            int numRead;
+                            while ((numRead = inFile.Read(buffer, 0, buffer.Length)) != 0)
+                            {
+                                Compress.Write(buffer, 0, numRead);
+                            }
+                            //Console.WriteLine("Compressed {0} from {1} to {2} bytes.", fi.Name, fi.Length.ToString(), outFile.Length.ToString());
+                        }
+
+                        PutObjectRequest putObjectRequest = new PutObjectRequest();
+                        putObjectRequest
+                            .WithBucketName("bdArchive")
+                            .WithKey(filename)
+                            .WithInputStream(memoryStream);
+
+                        S3Response s3Response = S3.PutObject(putObjectRequest);
+                        s3Response.Dispose();
+                    }
                 }
             }
         }

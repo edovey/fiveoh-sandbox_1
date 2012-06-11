@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Bugs & Drugs Editor")]
-[assembly: AssemblyDescription("Content Editor for Bugs & Drugs Publication")]
+[assembly: AssemblyTitle("Bugs & Drugs Data Archiver")]
+[assembly: AssemblyDescription("Archiving Tool for Bugs & Drugs Content Editor")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Saint Street")]
-[assembly: AssemblyProduct("BDEditor")]
-[assembly: AssemblyCopyright("Copyright ©  2011")]
+[assembly: AssemblyCompany("Electric Typewriter Corporation")]
+[assembly: AssemblyProduct("BDDataArchiver")]
+[assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("a86d33b6-8c5d-4cdb-b0a0-e03289f44c1b")]
+[assembly: Guid("970357d1-4d9a-4189-ad5f-0e21e8dfa01c")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -31,6 +31,6 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.5.7.00000")]
-//[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.5.7.00000")]
+// [assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

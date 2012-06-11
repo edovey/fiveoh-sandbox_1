@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BDEditor", "BDEditor\BDEdit
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "BDEditorSetup", "BDEditorSetup\BDEditorSetup.vdproj", "{2941355A-9AF4-42E2-B4A7-474EA11914FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BDDataArchiver", "BDDataArchiver\BDDataArchiver.csproj", "{0C43CF9C-FDDD-4068-A978-40BCA435C317}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "BDDataArchiverSetup", "BDDataArchiverSetup\BDDataArchiverSetup.vdproj", "{F4E93AB8-CE48-426B-AFBC-1D56902EAD2C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,17 +48,35 @@ Global
 		{2941355A-9AF4-42E2-B4A7-474EA11914FA}.Release|x64.Build.0 = Release
 		{2941355A-9AF4-42E2-B4A7-474EA11914FA}.Release|x86.ActiveCfg = Release
 		{2941355A-9AF4-42E2-B4A7-474EA11914FA}.Release|x86.Build.0 = Release
+		{0C43CF9C-FDDD-4068-A978-40BCA435C317}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{0C43CF9C-FDDD-4068-A978-40BCA435C317}.Debug|Itanium.ActiveCfg = Debug|x86
+		{0C43CF9C-FDDD-4068-A978-40BCA435C317}.Debug|x64.ActiveCfg = Debug|x86
+		{0C43CF9C-FDDD-4068-A978-40BCA435C317}.Debug|x86.ActiveCfg = Debug|x86
+		{0C43CF9C-FDDD-4068-A978-40BCA435C317}.Debug|x86.Build.0 = Debug|x86
+		{0C43CF9C-FDDD-4068-A978-40BCA435C317}.Release|Any CPU.ActiveCfg = Release|x86
+		{0C43CF9C-FDDD-4068-A978-40BCA435C317}.Release|Itanium.ActiveCfg = Release|x86
+		{0C43CF9C-FDDD-4068-A978-40BCA435C317}.Release|x64.ActiveCfg = Release|x86
+		{0C43CF9C-FDDD-4068-A978-40BCA435C317}.Release|x86.ActiveCfg = Release|x86
+		{0C43CF9C-FDDD-4068-A978-40BCA435C317}.Release|x86.Build.0 = Release|x86
+		{F4E93AB8-CE48-426B-AFBC-1D56902EAD2C}.Debug|Any CPU.ActiveCfg = Debug
+		{F4E93AB8-CE48-426B-AFBC-1D56902EAD2C}.Debug|Itanium.ActiveCfg = Debug
+		{F4E93AB8-CE48-426B-AFBC-1D56902EAD2C}.Debug|x64.ActiveCfg = Debug
+		{F4E93AB8-CE48-426B-AFBC-1D56902EAD2C}.Debug|x86.ActiveCfg = Debug
+		{F4E93AB8-CE48-426B-AFBC-1D56902EAD2C}.Release|Any CPU.ActiveCfg = Release
+		{F4E93AB8-CE48-426B-AFBC-1D56902EAD2C}.Release|Itanium.ActiveCfg = Release
+		{F4E93AB8-CE48-426B-AFBC-1D56902EAD2C}.Release|x64.ActiveCfg = Release
+		{F4E93AB8-CE48-426B-AFBC-1D56902EAD2C}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_BuildAction = Build
-		BuildVersion_UseGlobalSettings = False
-		BuildVersion_UpdateAssemblyVersion = False
-		BuildVersion_UpdateFileVersion = False
-		BuildVersion_AssemblyInfoFilename = BDEditor\Properties\AssemblyInfo.cs
-		BuildVersion_ConfigurationName = Release
 		BuildVersion_BuildVersioningStyle = None.Increment.Increment.YearDayOfYear
+		BuildVersion_ConfigurationName = Release
+		BuildVersion_AssemblyInfoFilename = BDEditor\Properties\AssemblyInfo.cs
+		BuildVersion_UpdateFileVersion = False
+		BuildVersion_UpdateAssemblyVersion = False
+		BuildVersion_UseGlobalSettings = False
+		BuildVersion_BuildAction = Build
 	EndGlobalSection
 EndGlobal

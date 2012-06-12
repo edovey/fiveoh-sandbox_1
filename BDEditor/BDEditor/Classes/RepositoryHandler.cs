@@ -10,7 +10,7 @@ using Amazon.SimpleDB;
 using Amazon.SimpleDB.Model;
 using Amazon.S3;
 using Amazon.S3.Model;
-
+using System.Windows.Forms;
 using BDEditor.DataModel;
 
 namespace BDEditor.Classes
@@ -864,7 +864,10 @@ namespace BDEditor.Classes
             string filename = "BDDataStore.sdf";
 
             DirectoryInfo di = new DirectoryInfo(uri.AbsolutePath);
-            FileInfo fiSrc = new FileInfo(Path.Combine(uri.AbsolutePath, filename));
+            string path = uri.AbsolutePath.Replace("%20", " ");
+            FileInfo fiSrc = new FileInfo(Path.Combine(path, filename));
+
+            //MessageBox.Show(fiSrc.FullName);
             if (fiSrc.Exists)
             {
                 DateTime date = DateTime.Now;

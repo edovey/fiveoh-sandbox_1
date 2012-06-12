@@ -210,7 +210,7 @@ namespace BDEditor.DataModel
             SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, CREATEDDATE, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
             syncInfo.PushList = BDHtmlPage.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
             syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
-            if (null != pCurrentSyncDate)
+            if ((null != pCurrentSyncDate) && (!BDCommon.Settings.RepositoryOverwriteEnabled))
             {
                 for (int idx = 0; idx < syncInfo.PushList.Count; idx++)
                 {

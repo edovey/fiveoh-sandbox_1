@@ -915,6 +915,11 @@ namespace BDEditor.Views
                 btnSync.Text = "Pull Only";
                 this.Text = string.Format("{0} < CLOUD DATA IS READ ONLY >", this.Text);
             }
+            if (BDCommon.Settings.RepositoryOverwriteEnabled)
+            {
+                btnSync.Text = "Overwrite";
+                this.Text = string.Format("{0} < OVERWRITE REPOSITORY >", this.Text);
+            }
             btnPublish.Enabled = BDCommon.Settings.SyncPushEnabled;
             btnImportFromProduction.Enabled = BDCommon.Settings.SyncPushEnabled;
         }

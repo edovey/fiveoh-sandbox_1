@@ -118,6 +118,21 @@ namespace BDEditor.Classes
                         {
                             syncInfoEntry.Exception = ex;
                             System.Diagnostics.Debug.WriteLine(string.Format("Failed to created domain for {0}", syncInfoEntry.RemoteEntityName));
+
+                            // Try a second time
+                            try
+                            {
+                                CreateDomainRequest createDomainRequest = (new CreateDomainRequest()).WithDomainName(syncInfoEntry.RemoteEntityName);
+                                CreateDomainResponse createResponse = simpleDb.CreateDomain(createDomainRequest);
+                                syncInfoEntry.ExistsOnRemote = true;
+                                System.Diagnostics.Debug.WriteLine(string.Format("Created domain for {0}", syncInfoEntry.RemoteEntityName));
+                            }
+                            catch (AmazonSimpleDBException ex2)
+                            {
+                                syncInfoEntry.Exception = ex2;
+                                System.Diagnostics.Debug.WriteLine(string.Format("Failed (2nd) to created domain for {0}", syncInfoEntry.RemoteEntityName));
+                            }
+
                         }
                     }
                 }
@@ -162,7 +177,7 @@ namespace BDEditor.Classes
 
             if (BDCommon.Settings.SyncPushEnabled)
             {
-                if (null != pLastSyncDate)
+                if ((null != pLastSyncDate) || (BDCommon.Settings.RepositoryOverwriteEnabled))
                 {
                     #region Push
 
@@ -849,17 +864,25 @@ namespace BDEditor.Classes
             string filename = "BDDataStore.sdf";
 
             DirectoryInfo di = new DirectoryInfo(uri.AbsolutePath);
-            FileInfo fi = new FileInfo(Path.Combine(uri.AbsolutePath, filename));
-            if (fi.Exists)
+            FileInfo fiSrc = new FileInfo(Path.Combine(uri.AbsolutePath, filename));
+            if (fiSrc.Exists)
             {
                 DateTime date = DateTime.Now;
-                string keyname = fi.Name.Replace(fi.Extension, "");
+
+                string tempPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                string tempName = string.Format("{0}-{1}{2}", Guid.NewGuid().ToString(), date.ToString("yyyMMdd-HHmmss"), fiSrc.Extension);
+                string tempFilename = Path.Combine(tempPath, tempName);
+
+                fiSrc.CopyTo(tempFilename, true);
+                FileInfo fi = new FileInfo(tempFilename);
+
+                string keyname = fiSrc.Name.Replace(fiSrc.Extension, "");
 
                 string context = "prod";
 #if DEBUG
                 context = "DEBUG";
 #endif
-                keyname = string.Format("{0}.{1}.{2}{3}.gz", keyname, context, date.ToString("yyyMMdd-HHmmss"), fi.Extension);
+                keyname = string.Format("{0}.{1}.{2}{3}.gz", keyname, context, date.ToString("yyyMMdd-HHmmss"), fiSrc.Extension);
 
                 using (FileStream inFile = fi.OpenRead())
                 {
@@ -888,6 +911,8 @@ namespace BDEditor.Classes
                         s3Response.Dispose();
                     }
                 }
+
+                fi.Delete();
             }
         }
     }

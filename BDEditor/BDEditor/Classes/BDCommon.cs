@@ -12,9 +12,11 @@ namespace BDEditor.Classes
         private static object syncRoot = new object();
 
         private const string MAJICPHRASE = "dontbugme";
+        private const string EXTRAMAJIKPHRASE = "xyzzy";
 
         private Boolean isSyncLoad = false;
         private Boolean syncPushEnabled = false;
+        private Boolean repositoryOverwriteEnabled = false;
         private int suspendDrawingCounter = 0;
 
         private BDCommon() { }
@@ -49,18 +51,24 @@ namespace BDEditor.Classes
 
         public Boolean Validate(string pMajicPhrase)
         {
-            return (pMajicPhrase == MAJICPHRASE);
+            return (pMajicPhrase == MAJICPHRASE) || (pMajicPhrase == EXTRAMAJIKPHRASE);
         }
 
         public Boolean Authenticate(string pMajicPhrase)
         {
-            syncPushEnabled = (pMajicPhrase == MAJICPHRASE);
+            syncPushEnabled = (pMajicPhrase == MAJICPHRASE) || (pMajicPhrase == EXTRAMAJIKPHRASE);
+            repositoryOverwriteEnabled = (pMajicPhrase == EXTRAMAJIKPHRASE);
             return syncPushEnabled;
         }
 
         public Boolean SyncPushEnabled
         {
             get { return syncPushEnabled; }
+        }
+
+        public Boolean RepositoryOverwriteEnabled
+        {
+            get { return repositoryOverwriteEnabled; }
         }
 
         public int SuspendDrawingCounter

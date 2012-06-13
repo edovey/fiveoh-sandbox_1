@@ -39,6 +39,7 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.txtComment = new System.Windows.Forms.TextBox();
             this.listBoxArchives = new System.Windows.Forms.ListBox();
+            this.btnRestore = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnChooseFile
@@ -62,7 +63,7 @@
             this.lblSource.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblSource.Location = new System.Drawing.Point(89, 85);
             this.lblSource.Name = "lblSource";
-            this.lblSource.Size = new System.Drawing.Size(510, 23);
+            this.lblSource.Size = new System.Drawing.Size(428, 23);
             this.lblSource.TabIndex = 1;
             // 
             // lblOutput
@@ -72,7 +73,7 @@
             this.lblOutput.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblOutput.Location = new System.Drawing.Point(89, 114);
             this.lblOutput.Name = "lblOutput";
-            this.lblOutput.Size = new System.Drawing.Size(510, 23);
+            this.lblOutput.Size = new System.Drawing.Size(428, 23);
             this.lblOutput.TabIndex = 2;
             // 
             // btnArchive
@@ -118,7 +119,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtName.Location = new System.Drawing.Point(89, 21);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(510, 20);
+            this.txtName.Size = new System.Drawing.Size(428, 20);
             this.txtName.TabIndex = 7;
             // 
             // txtComment
@@ -127,7 +128,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtComment.Location = new System.Drawing.Point(89, 46);
             this.txtComment.Name = "txtComment";
-            this.txtComment.Size = new System.Drawing.Size(510, 20);
+            this.txtComment.Size = new System.Drawing.Size(428, 20);
             this.txtComment.TabIndex = 8;
             // 
             // listBoxArchives
@@ -135,17 +136,32 @@
             this.listBoxArchives.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.listBoxArchives.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBoxArchives.FormattingEnabled = true;
+            this.listBoxArchives.ItemHeight = 16;
             this.listBoxArchives.Location = new System.Drawing.Point(89, 164);
             this.listBoxArchives.Name = "listBoxArchives";
-            this.listBoxArchives.Size = new System.Drawing.Size(510, 108);
+            this.listBoxArchives.Size = new System.Drawing.Size(428, 116);
             this.listBoxArchives.TabIndex = 9;
+            this.listBoxArchives.Click += new System.EventHandler(this.listBoxArchives_Click);
+            // 
+            // btnRestore
+            // 
+            this.btnRestore.Enabled = false;
+            this.btnRestore.Location = new System.Drawing.Point(11, 249);
+            this.btnRestore.Name = "btnRestore";
+            this.btnRestore.Size = new System.Drawing.Size(72, 23);
+            this.btnRestore.TabIndex = 10;
+            this.btnRestore.Text = "Restore";
+            this.btnRestore.UseVisualStyleBackColor = true;
+            this.btnRestore.Click += new System.EventHandler(this.btnRestore_Click);
             // 
             // BDDataArchiverView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(611, 289);
+            this.ClientSize = new System.Drawing.Size(529, 291);
+            this.Controls.Add(this.btnRestore);
             this.Controls.Add(this.listBoxArchives);
             this.Controls.Add(this.txtComment);
             this.Controls.Add(this.txtName);
@@ -157,6 +173,7 @@
             this.Controls.Add(this.lblSource);
             this.Controls.Add(this.btnChooseFile);
             this.MaximizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(430, 325);
             this.Name = "BDDataArchiverView";
             this.Text = "BD Data Archiver";
             this.Load += new System.EventHandler(this.BDDataArchiverView_Load);
@@ -178,6 +195,7 @@
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.TextBox txtComment;
         private System.Windows.Forms.ListBox listBoxArchives;
+        private System.Windows.Forms.Button btnRestore;
     }
 }
 

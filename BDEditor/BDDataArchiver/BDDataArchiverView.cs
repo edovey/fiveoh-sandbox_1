@@ -248,7 +248,50 @@ namespace BDDataArchiver
                      amazonS3Exception.Message);
                 }
             }
+        }
 
+        private void btnRestore_Click(object sender, EventArgs e)
+        {
+            if (listBoxArchives.SelectedIndex >= 0)
+            {
+                BDArchiveRecord archiveRecord = listBoxArchives.SelectedItem as BDArchiveRecord;
+                if (null != archiveRecord)
+                {
+                    if (MessageBox.Show(string.Format("Overwrite local data with file dated {0} from the repository?", archiveRecord.CreateDate.ToString("u")), "Restore Database", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.OK)
+                    {
+                        FileInfo targetFi = new FileInfo(lblSource.Text);
+
+                        GetObjectRequest getObjectRequest = new GetObjectRequest().WithBucketName(AWS_ARCHIVE).WithKey(archiveRecord.Key);
+
+                        using (GetObjectResponse response = S3.GetObject(getObjectRequest))
+                        {
+                            //response.WriteResponseStreamToFile(targetFi.FullName);
+                            using (Stream s = response.ResponseStream)
+                            {
+                                //Create the decompressed file.
+                                using (FileStream outFile = File.Create(targetFi.FullName))
+                                {
+                                    using (GZipStream Decompress = new GZipStream(s, CompressionMode.Decompress))
+                                    {
+                                        // Copy the decompression stream 
+                                        // into the output file.
+                                        Decompress.CopyTo(outFile);
+
+                                        Console.WriteLine("Decompressed: {0}", targetFi.FullName);
+                                    }
+                                }
+                            }
+                        }
+
+                        MessageBox.Show("Restore complete", "Overwrite from Repository");
+                    }
+                }
+            }
+        }
+
+        private void listBoxArchives_Click(object sender, EventArgs e)
+        {
+            btnRestore.Enabled = ((listBoxArchives.SelectedIndex >= 0) && (lblSource.Text.Trim() != string.Empty));
         }   
 
     }

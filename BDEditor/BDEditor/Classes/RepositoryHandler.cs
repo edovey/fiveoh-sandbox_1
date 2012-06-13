@@ -651,7 +651,7 @@ namespace BDEditor.Classes
             #region Push to dev
 
             // reload the push lists
-            syncDictionary = InitializeSyncDictionary(pDataContext, null, null, false, BDConstants.SyncType.Default);
+            syncDictionary = InitializeSyncDictionary(pDataContext, null, null, true, BDConstants.SyncType.Default);
             
             BDCommon.Settings.IsSyncLoad = true;
             foreach (SyncInfo syncInfoEntry in syncDictionary.Values)

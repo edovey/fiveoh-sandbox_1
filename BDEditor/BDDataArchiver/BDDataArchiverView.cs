@@ -254,6 +254,7 @@ namespace BDDataArchiver
         {
             if (listBoxArchives.SelectedIndex >= 0)
             {
+                Boolean error = false;
                 BDArchiveRecord archiveRecord = listBoxArchives.SelectedItem as BDArchiveRecord;
                 if (null != archiveRecord)
                 {
@@ -269,21 +270,29 @@ namespace BDDataArchiver
                             using (Stream s = response.ResponseStream)
                             {
                                 //Create the decompressed file.
-                                using (FileStream outFile = File.Create(targetFi.FullName))
+                                try
                                 {
-                                    using (GZipStream Decompress = new GZipStream(s, CompressionMode.Decompress))
+                                    using (FileStream outFile = File.Create(targetFi.FullName))
                                     {
-                                        // Copy the decompression stream 
-                                        // into the output file.
-                                        Decompress.CopyTo(outFile);
+                                        using (GZipStream Decompress = new GZipStream(s, CompressionMode.Decompress))
+                                        {
+                                            // Copy the decompression stream 
+                                            // into the output file.
+                                            Decompress.CopyTo(outFile);
 
-                                        Console.WriteLine("Decompressed: {0}", targetFi.FullName);
+                                            Console.WriteLine("Decompressed: {0}", targetFi.FullName);
+                                        }
                                     }
+                                }
+                                catch (IOException ioex)
+                                {
+                                    error = true;
+                                    MessageBox.Show("Destination file is in use.\nPlease close the content editor and try again", "Restore Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                                 }
                             }
                         }
-
-                        MessageBox.Show("Restore complete", "Overwrite from Repository");
+                        if(!error)
+                            MessageBox.Show("Restore complete", "Overwrite from Repository");
                     }
                 }
             }

@@ -145,13 +145,13 @@ namespace BDEditor.DataModel
         /// <param name="pCreateDeletion"create entry in deletion table (bool)</param>
         public static void Delete(Entities pContext, Guid pUuid, bool pCreateDeletion)
         {
-            BDPrecaution entity = BDPrecaution.GetPrecautionWithId(pContext, pUuid);
+            BDPrecaution entity = BDPrecaution.RetrievePrecautionWithId(pContext, pUuid);
             BDPrecaution.Delete(pContext, entity, pCreateDeletion);
         }
 
         public static void DeleteForParent(Entities pContext, Guid pUuid, bool pCreateDeletion)
         {
-            List<BDPrecaution> children = BDPrecaution.GetPrecautionsForParentId(pContext, pUuid);
+            List<BDPrecaution> children = BDPrecaution.RetrievePrecautionsForParentId(pContext, pUuid);
             foreach (BDPrecaution child in children)
             {
                 BDPrecaution.Delete(pContext, child, pCreateDeletion);
@@ -167,7 +167,7 @@ namespace BDEditor.DataModel
         {
             if (null != pUuid)
             {
-                BDPrecaution entry = BDPrecaution.GetPrecautionWithId(pContext, pUuid.Value);
+                BDPrecaution entry = BDPrecaution.RetrievePrecautionWithId(pContext, pUuid.Value);
                 if (null != entry)
                 {
                     pContext.DeleteObject(entry);
@@ -180,18 +180,18 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pParentId"></param>
         /// <returns>List of Precautions</returns>
-        public static List<BDPrecaution> GetPrecautionsForParentId(Entities pContext, Guid pParentId)
+        public static List<BDPrecaution> RetrievePrecautionsForParentId(Entities pContext, Guid pParentId)
         {
             List<BDPrecaution> entryList = new List<BDPrecaution>();
 
             IQueryable<BDPrecaution> entries = (from entry in pContext.BDPrecautions
                                                where entry.parentId == pParentId
-                                               orderby entry.displayOrder
+                                               orderby entry.displayOrder ascending
                                                select entry);
             return entries.ToList<BDPrecaution>();
         }
 
-        public static BDPrecaution GetPrecautionWithId(Entities pContext, Guid pEntityId)
+        public static BDPrecaution RetrievePrecautionWithId(Entities pContext, Guid pEntityId)
         {
             BDPrecaution entity = null;
 
@@ -359,7 +359,7 @@ namespace BDEditor.DataModel
         public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
-            BDPrecaution entry = BDPrecaution.GetPrecautionWithId(pDataContext, uuid);
+            BDPrecaution entry = BDPrecaution.RetrievePrecautionWithId(pDataContext, uuid);
             if (null == entry)
             {
                 entry = BDPrecaution.CreateBDPrecaution(uuid);

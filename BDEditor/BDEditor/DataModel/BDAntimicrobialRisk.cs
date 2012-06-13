@@ -218,6 +218,15 @@ namespace BDEditor.DataModel
             return entry;
         }
 
+        public static List<BDAntimicrobialRisk> RetrieveAntimicrobialRiskForParentId(Entities pContext, Guid pParentId)
+        {
+            IQueryable<BDAntimicrobialRisk> entries = (from entry in pContext.BDAntimicrobialRisks
+                                                         where entry.parentId == pParentId
+                                                         orderby entry.displayOrder ascending
+                                                         select entry);
+            return entries.ToList<BDAntimicrobialRisk>();
+        }
+
         protected override void OnPropertyChanged(string property)
         {
             if (!BDCommon.Settings.IsSyncLoad)

@@ -168,6 +168,7 @@ namespace BDEditor.DataModel
         {
             IQueryable<BDAttachment> entries = (from entry in pContext.BDAttachments
                                               where entry.parentId == pParentId
+                                                orderby entry.displayOrder
                                               select entry);
 
             return entries.ToList<BDAttachment>();

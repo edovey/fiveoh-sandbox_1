@@ -159,7 +159,7 @@ namespace BDEditor.DataModel
         /// <param name="pCreateDeletion">create entry in deletion table (bool)</param>
         public static void Delete(Entities pContext, Guid pUuid, bool pCreateDeletion)
         {
-            BDSearchEntryAssociation entity = BDSearchEntryAssociation.GetSearchEntryAssociationWithId(pContext, pUuid);
+            BDSearchEntryAssociation entity = BDSearchEntryAssociation.RetrieveSearchEntryAssociationWithId(pContext, pUuid);
             BDSearchEntryAssociation.Delete(pContext, entity, pCreateDeletion);
         }
 
@@ -172,7 +172,7 @@ namespace BDEditor.DataModel
         {
             if (null != pUuid)
             {
-                BDSearchEntryAssociation entry = BDSearchEntryAssociation.GetSearchEntryAssociationWithId(pContext, pUuid.Value);
+                BDSearchEntryAssociation entry = BDSearchEntryAssociation.RetrieveSearchEntryAssociationWithId(pContext, pUuid.Value);
                 if (null != entry)
                 {
                     pContext.DeleteObject(entry);
@@ -188,20 +188,21 @@ namespace BDEditor.DataModel
 
         public static void DeleteForSearchEntryId(Entities pContext, Guid pUuid, bool pCreateDeletion)
         {
-            List<BDSearchEntryAssociation> children = BDSearchEntryAssociation.GetSearchEntryAssociationsForSearchEntryId(pContext, pUuid);
+            List<BDSearchEntryAssociation> children = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryId(pContext, pUuid);
             foreach (BDSearchEntryAssociation t in children)
             {
                 BDSearchEntryAssociation.Delete(pContext, t, pCreateDeletion);
             }
         }
 
-        public static List<BDSearchEntryAssociation> GetSearchEntryAssociationsForDisplayParentId(Entities pContext, Guid? pDisplayParentId)
+        public static List<BDSearchEntryAssociation> RetrieveSearchEntryAssociationsForDisplayParentId(Entities pContext, Guid? pDisplayParentId)
         {
             List<BDSearchEntryAssociation> resultList = new List<BDSearchEntryAssociation>();
             if (pDisplayParentId != null)
             {
                 IQueryable<BDSearchEntryAssociation> associations = (from entries in pContext.BDSearchEntryAssociations
                                                                               where entries.displayParentId == pDisplayParentId
+                                                                              orderby entries.displayOrder
                                                                               select entries);
 
                 resultList = associations.ToList<BDSearchEntryAssociation>();
@@ -215,7 +216,7 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pLinkedNoteId"></param>
         /// <returns></returns>
-        public static List<BDSearchEntryAssociation> GetSearchEntryAssociationsForSearchEntryId(Entities pContext, Guid pSearchEntryId)
+        public static List<BDSearchEntryAssociation> RetrieveSearchEntryAssociationsForSearchEntryId(Entities pContext, Guid pSearchEntryId)
         {
             IQueryable<BDSearchEntryAssociation> entries = (from entities in pContext.BDSearchEntryAssociations
                                                             where entities.searchEntryId == pSearchEntryId
@@ -231,7 +232,7 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pLinkedNoteId"></param>
         /// <returns></returns>
-        public static BDSearchEntryAssociation GetSearchEntryAssociationWithId(Entities pContext, Guid? pSearchEntryAssociationId)
+        public static BDSearchEntryAssociation RetrieveSearchEntryAssociationWithId(Entities pContext, Guid? pSearchEntryAssociationId)
         {
             BDSearchEntryAssociation result = null;
 
@@ -239,6 +240,7 @@ namespace BDEditor.DataModel
             {
                 IQueryable<BDSearchEntryAssociation> entries = (from entities in pContext.BDSearchEntryAssociations
                                                                where entities.uuid == pSearchEntryAssociationId
+                                                               orderby entities.displayOrder
                                                                select entities);
                 if (entries.Count<BDSearchEntryAssociation>() > 0)
                     result = entries.AsQueryable().First<BDSearchEntryAssociation>();
@@ -295,7 +297,7 @@ namespace BDEditor.DataModel
         public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
-            BDSearchEntryAssociation entry = BDSearchEntryAssociation.GetSearchEntryAssociationWithId(pDataContext, uuid);
+            BDSearchEntryAssociation entry = BDSearchEntryAssociation.RetrieveSearchEntryAssociationWithId(pDataContext, uuid);
             if (null == entry)
             {
                 entry = BDSearchEntryAssociation.CreateBDSearchEntryAssociation(uuid);

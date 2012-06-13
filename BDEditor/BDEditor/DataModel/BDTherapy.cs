@@ -209,17 +209,11 @@ namespace BDEditor.DataModel
         /// <returns>List of Therapies</returns>
         public static List<BDTherapy> RetrieveTherapiesForParentId(Entities pContext, Guid pParentId)
         {
-            List<BDTherapy> therapyList = new List<BDTherapy>();
-
             IQueryable<BDTherapy> therapies = (from entry in pContext.BDTherapies
                                                 where entry.parentId == pParentId
-                                                orderby entry.displayOrder
+                                                orderby entry.displayOrder ascending
                                                 select entry);
-            foreach (BDTherapy therapy in therapies)
-            {
-                therapyList.Add(therapy);
-            }
-            return therapyList;
+            return therapies.ToList<BDTherapy>();
         }
 
         public static BDTherapy RetrieveTherapyWithId(Entities pContext, Guid pTherapyId)

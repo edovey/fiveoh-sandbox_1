@@ -228,6 +228,7 @@ namespace BDEditor.DataModel
         {
             IQueryable<BDLinkedNoteAssociation> linkedNoteAssociations = (from bdLinkedNoteAssociations in pContext.BDLinkedNoteAssociations
                                                                           where bdLinkedNoteAssociations.parentId == pParentId && bdLinkedNoteAssociations.parentKeyPropertyName == pContextPropertyName
+                                                                          orderby bdLinkedNoteAssociations.displayOrder
                                                                           select bdLinkedNoteAssociations);
 
             BDLinkedNoteAssociation result = null;
@@ -245,6 +246,7 @@ namespace BDEditor.DataModel
             {
                 IQueryable<BDLinkedNoteAssociation> linkedNoteAssociations = (from bdLinkedNoteAssociations in pContext.BDLinkedNoteAssociations
                                                                               where bdLinkedNoteAssociations.parentId == pParentId
+                                                                              orderby bdLinkedNoteAssociations.displayOrder
                                                                               select bdLinkedNoteAssociations);
 
                 resultList = linkedNoteAssociations.ToList<BDLinkedNoteAssociation>();

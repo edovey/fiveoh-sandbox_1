@@ -167,16 +167,11 @@ namespace BDEditor.DataModel
         /// <returns>List of BDTherapyGroups</returns>
         public static List<BDTherapyGroup> RetrieveTherapyGroupsForParentId(Entities pContext, Guid pParentId)
         {
-            List<BDTherapyGroup> therapyGroupList = new List<BDTherapyGroup>();
                 IQueryable<BDTherapyGroup> therapyGroups = (from entry in pContext.BDTherapyGroups
                                                             where entry.parentId == pParentId
-                                                            orderby entry.displayOrder
+                                                            orderby entry.displayOrder ascending
                                                             select entry);
-                foreach (BDTherapyGroup therapyGroup in therapyGroups)
-                {
-                    therapyGroupList.Add(therapyGroup);
-                }
-            return therapyGroupList;
+                return therapyGroups.ToList<BDTherapyGroup>();
         }
 
         public static BDTherapyGroup RetrieveTherapyGroupWithId(Entities pContext, Guid pUuid)

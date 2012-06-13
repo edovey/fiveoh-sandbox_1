@@ -182,6 +182,7 @@ namespace BDEditor.DataModel
         {
             IQueryable<BDTableCell> entries = (from entry in pContext.BDTableCells
                                                where entry.parentId == pParentId
+                                               orderby entry.displayOrder ascending
                                                select entry);
             List<BDTableCell> resultList = entries.ToList<BDTableCell>();
             return resultList;

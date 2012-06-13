@@ -190,6 +190,20 @@ namespace BDEditor.DataModel
            return entry;
        }
 
+       /// <summary>
+       /// Gets all Table Rows in the model with the specified parent ID
+       /// </summary>
+       /// <param name="pParentId"></param>
+       /// <returns>List of BDTableRows</returns>
+       public static List<BDTableRow> RetrieveTableRowsForParentId(Entities pContext, Guid pParentId)
+       {
+           IQueryable<BDTableRow> rows = (from entry in pContext.BDTableRows
+                                                       where entry.parentId == pParentId
+                                                       orderby entry.displayOrder ascending
+                                                       select entry);
+           return rows.ToList<BDTableRow>();
+       }
+
        protected override void OnPropertyChanged(string property)
         {
             if (!BDCommon.Settings.IsSyncLoad)

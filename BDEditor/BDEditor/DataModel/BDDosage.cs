@@ -180,7 +180,7 @@ namespace BDEditor.DataModel
         {
             IQueryable<BDDosage> entries = (from entry in pContext.BDDosages
                                                 where entry.parentId == pParentId
-                                                orderby entry.displayOrder
+                                                orderby entry.displayOrder ascending
                                                 select entry);
             return entries.ToList<BDDosage>();
         }

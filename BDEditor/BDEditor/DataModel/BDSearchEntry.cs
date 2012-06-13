@@ -112,7 +112,7 @@ namespace BDEditor.DataModel
         /// <param name="pCreateDeletion">create entry in deletion table (bool)</param>
         public static void Delete(Entities pContext, Guid pUuid, bool pCreateDeletion)
         {
-            BDSearchEntry entity = BDSearchEntry.GetSearchEntryWithId(pContext, pUuid);
+            BDSearchEntry entity = BDSearchEntry.RetrieveSearchEntryWithId(pContext, pUuid);
             BDSearchEntry.Delete(pContext, entity, pCreateDeletion);
         }
 
@@ -131,7 +131,7 @@ namespace BDEditor.DataModel
         {
             if (null != pUuid)
             {
-                BDSearchEntry entry = BDSearchEntry.GetSearchEntryWithId(pContext, pUuid.Value);
+                BDSearchEntry entry = BDSearchEntry.RetrieveSearchEntryWithId(pContext, pUuid.Value);
                 if (null != entry)
                 {
                     pContext.DeleteObject(entry);
@@ -145,7 +145,7 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pLinkedNoteId"></param>
         /// <returns></returns>
-        public static BDSearchEntry GetSearchEntryWithId(Entities pContext, Guid? pEntityId)
+        public static BDSearchEntry RetrieveSearchEntryWithId(Entities pContext, Guid? pEntityId)
         {
             BDSearchEntry result = null;
 
@@ -211,7 +211,7 @@ namespace BDEditor.DataModel
         public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
-            BDSearchEntry entry = BDSearchEntry.GetSearchEntryWithId(pDataContext, uuid);
+            BDSearchEntry entry = BDSearchEntry.RetrieveSearchEntryWithId(pDataContext, uuid);
             if (null == entry)
             {
                 entry = BDSearchEntry.CreateBDSearchEntry(uuid);

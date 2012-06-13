@@ -213,6 +213,15 @@ namespace BDEditor.DataModel
             return entry;
         }
 
+        public static List<BDNode> RetrieveNodesForParentIdAndChildNodeType(Entities pContext, Guid pParentId, BDConstants.BDNodeType pChildNodeType)
+        {
+            IQueryable<BDNode> nodeEntries = (from entry in pContext.BDNodes
+                                              where (entry.parentId == pParentId) && (entry.nodeType == (int)pChildNodeType)
+                                              orderby entry.displayOrder ascending
+                                              select entry);
+            return nodeEntries.ToList<BDNode>();
+        }
+
         /// <summary>
         /// Retrieve a string array of distinct names for all  nodes of the specified BDNodeType
         /// </summary>

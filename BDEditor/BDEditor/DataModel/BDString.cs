@@ -74,6 +74,7 @@ namespace BDEditor.DataModel
         {
             IQueryable<BDString> entries = (from entry in pContext.BDStrings
                                                where entry.parentId == pParentId
+                                               orderby entry.displayOrder
                                                select entry);
             List<BDString> resultList = entries.ToList<BDString>();
             return resultList;

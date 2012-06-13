@@ -765,98 +765,36 @@ namespace BDEditor.Classes
                 switch (childNodeType)
                 {
                     case BDConstants.BDNodeType.BDTherapyGroup:
-                        IQueryable<BDTherapyGroup> tgEntries = (from entry in pContext.BDTherapyGroups
-                                                                where entry.parentId == pParentId
-                                                                orderby entry.displayOrder ascending
-                                                                select entry);
-                        if (tgEntries.Count() > 0)
-                        {
-                            List<IBDNode> workingList = new List<IBDNode>(tgEntries.ToList<BDTherapyGroup>());
-                            entryList.AddRange(workingList);
-                        }
+                        entryList.AddRange(new List<IBDNode>(BDTherapyGroup.RetrieveTherapyGroupsForParentId(pContext, pParentId)));
                         break;
 
                     case BDConstants.BDNodeType.BDTherapy:
-                        IQueryable<BDTherapy> tEntries = (from entry in pContext.BDTherapies
-                                                          where entry.parentId == pParentId
-                                                          orderby entry.displayOrder ascending
-                                                          select entry);
-                        if (tEntries.Count() > 0)
-                        {
-                            List<IBDNode> workingList = new List<IBDNode>(tEntries.ToList<BDTherapy>());
-                            entryList.AddRange(workingList);
-                        }
+                            entryList.AddRange(new List<IBDNode>(BDTherapy.RetrieveTherapiesForParentId(pContext, pParentId)));
                         break;
                     
                     case BDConstants.BDNodeType.BDTableRow:
-                        IQueryable<BDTableRow> trEntries = (from entry in pContext.BDTableRows
-                                                            where entry.parentId == pParentId
-                                                            orderby entry.displayOrder ascending
-                                                            select entry);
-                        if (trEntries.Count() > 0)
-                        {
-                            List<IBDNode> workingList = new List<IBDNode>(trEntries.ToList<BDTableRow>());
-                            entryList.AddRange(workingList);
-                        }
+                            entryList.AddRange(new List<IBDNode>(BDTableRow.RetrieveTableRowsForParentId(pContext, pParentId)));
                         break;
+
                     case BDConstants.BDNodeType.BDTableCell:
-                        IQueryable<BDTableCell> tcEntries = (from entry in pContext.BDTableCells
-                                                            where entry.parentId == pParentId
-                                                            orderby entry.displayOrder ascending
-                                                            select entry);
-                        if (tcEntries.Count() > 0)
-                        {
-                            List<IBDNode> workingList = new List<IBDNode>(tcEntries.ToList<BDTableCell>());
-                            entryList.AddRange(workingList);
-                        }
+                            entryList.AddRange(new List<IBDNode>(BDTableCell.RetrieveTableCellsForParentId(pContext, pParentId)));
                         break;
+
                     case BDConstants.BDNodeType.BDDosage:
-                        IQueryable<BDDosage> doEntries = (from entry in pContext.BDDosages
-                                                            where entry.parentId == pParentId
-                                                            orderby entry.displayOrder ascending
-                                                            select entry);
-                        if (doEntries.Count() > 0)
-                        {
-                            List<IBDNode> workingList = new List<IBDNode>(doEntries.ToList<BDDosage>());
-                            entryList.AddRange(workingList);
-                        }
+                            entryList.AddRange(new List<IBDNode>(BDDosage.RetrieveDosagesForParentId(pContext, pParentId)));
                         break;
 
                     case BDConstants.BDNodeType.BDPrecaution:
-                        IQueryable<BDPrecaution> prEntries = (from entry in pContext.BDPrecautions
-                                                            where entry.parentId == pParentId
-                                                            orderby entry.displayOrder ascending
-                                                            select entry);
-                        if (prEntries.Count() > 0)
-                        {
-                            List<IBDNode> workingList = new List<IBDNode>(prEntries.ToList<BDPrecaution>());
-                            entryList.AddRange(workingList);
-                        }
+                            entryList.AddRange(new List<IBDNode>(BDPrecaution.RetrievePrecautionsForParentId(pContext, pParentId)));
                         break;
 
                     case BDConstants.BDNodeType.BDAntimicrobialRisk:
-                        IQueryable<BDAntimicrobialRisk> arEntries = (from entry in pContext.BDAntimicrobialRisks
-                                                            where entry.parentId == pParentId
-                                                            orderby entry.displayOrder ascending
-                                                            select entry);
-                        if (arEntries.Count() > 0)
-                        {
-                            List<IBDNode> workingList = new List<IBDNode>(arEntries.ToList<BDAntimicrobialRisk>());
-                            entryList.AddRange(workingList);
-                        }
+                            entryList.AddRange(new List<IBDNode>(BDAntimicrobialRisk.RetrieveAntimicrobialRiskForParentId(pContext, pParentId)));
                         break;
 
                     default:
-                        IQueryable<BDNode> nodeEntries = (from entry in pContext.BDNodes
-                                                          where (entry.parentId == pParentId) && (entry.nodeType == (int)pChildNodeType)
-                                                          orderby entry.displayOrder ascending
-                                                          select entry);
-
-                        if (nodeEntries.Count() > 0)
-                        {
-                            List<IBDNode> workingList = new List<IBDNode>(nodeEntries.ToList<BDNode>());
+                            List<IBDNode> workingList = new List<IBDNode>(BDNode.RetrieveNodesForParentIdAndChildNodeType(pContext, pParentId, pChildNodeType));
                             entryList.AddRange(workingList);
-                        }
                         break;
                 }
             }

@@ -571,7 +571,10 @@ namespace BDEditor.Views
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            OnItemDeleteRequested(new NodeEventArgs(dataContext, currentTherapy.Uuid));
+            Guid? uuid = null;
+            if (null != this.currentTherapy) uuid = this.currentTherapy.Uuid;
+
+            OnItemDeleteRequested(new NodeEventArgs(dataContext, uuid));
         }
 
         public override string ToString()

@@ -1055,6 +1055,14 @@ namespace BDEditor.Classes
                                 newOverviewControl.ShowSiblingAdd = true;
                             }
                             break;
+                        case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
+                            {
+                                nodeControl = new BDNodeOverviewControl(pContext, pNode);
+                                BDNodeOverviewControl newOverviewControl = nodeControl as BDNodeOverviewControl;
+                                newOverviewControl.ShowAsChild = false;
+                                newOverviewControl.ShowSiblingAdd = true;
+                            }
+                            break;
                         default:
                             {
                                 nodeControl = new BDNodeControl(pContext, pNode);

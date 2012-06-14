@@ -383,7 +383,10 @@ namespace BDEditor.Views
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            OnItemDeleteRequested(new NodeEventArgs(dataContext, currentDosage.Uuid));
+            Guid? uuid = null;
+            if (null != this.currentDosage) uuid = this.currentDosage.Uuid;
+
+            OnItemDeleteRequested(new NodeEventArgs(dataContext, uuid));
         }
 
         public override string ToString()

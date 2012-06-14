@@ -29,7 +29,7 @@ namespace BDEditor.Classes
 
         public override string ToString()
         {
-            return string.Format("[{0}] {1}", CreateDate.ToString("ddd yyy MMM dd, HH:mm:ss"), Comment);
+            return string.Format("[{0}][{1}] {2}", CreateDate.ToString("ddd yyy MMM dd, HH:mm:ss"), Username, Comment);
         }
     }
 }

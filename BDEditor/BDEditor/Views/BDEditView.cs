@@ -889,6 +889,10 @@ namespace BDEditor.Views
 
             // Loading Seed Data:  set the following variables
             isSeedDataLoadAvailable = false;
+
+            btnSyncWithReplaceLocal.Enabled = false;
+            btnSyncWithReplaceLocal.Visible = false;
+
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
             this.btnImportFromProduction.Visible = true;

@@ -341,7 +341,10 @@ namespace BDEditor.Views
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            OnItemDeleteRequested(new NodeEventArgs(dataContext, currentNode.Uuid));
+            Guid? uuid = null;
+            if (null != this.currentNode) uuid = this.currentNode.Uuid;
+
+            OnItemDeleteRequested(new NodeEventArgs(dataContext, uuid));
         }
 
         private void btnReorderToPrevious_Click(object sender, EventArgs e)

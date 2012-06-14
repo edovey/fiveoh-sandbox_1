@@ -44,7 +44,7 @@
             // 
             // btnChooseFile
             // 
-            this.btnChooseFile.Location = new System.Drawing.Point(11, 85);
+            this.btnChooseFile.Location = new System.Drawing.Point(11, 12);
             this.btnChooseFile.Name = "btnChooseFile";
             this.btnChooseFile.Size = new System.Drawing.Size(72, 23);
             this.btnChooseFile.TabIndex = 0;
@@ -61,10 +61,11 @@
             this.lblSource.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSource.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblSource.Location = new System.Drawing.Point(89, 85);
+            this.lblSource.Location = new System.Drawing.Point(89, 12);
             this.lblSource.Name = "lblSource";
             this.lblSource.Size = new System.Drawing.Size(428, 23);
             this.lblSource.TabIndex = 1;
+            this.lblSource.Click += new System.EventHandler(this.lblSource_Click);
             // 
             // lblOutput
             // 
@@ -99,7 +100,7 @@
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(12, 21);
+            this.label1.Location = new System.Drawing.Point(12, 53);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(75, 18);
             this.label1.TabIndex = 5;
@@ -107,7 +108,7 @@
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(12, 49);
+            this.label2.Location = new System.Drawing.Point(12, 81);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(75, 18);
             this.label2.TabIndex = 6;
@@ -117,7 +118,7 @@
             // 
             this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtName.Location = new System.Drawing.Point(89, 21);
+            this.txtName.Location = new System.Drawing.Point(89, 53);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(428, 20);
             this.txtName.TabIndex = 7;
@@ -126,7 +127,7 @@
             // 
             this.txtComment.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtComment.Location = new System.Drawing.Point(89, 46);
+            this.txtComment.Location = new System.Drawing.Point(89, 78);
             this.txtComment.Name = "txtComment";
             this.txtComment.Size = new System.Drawing.Size(428, 20);
             this.txtComment.TabIndex = 8;

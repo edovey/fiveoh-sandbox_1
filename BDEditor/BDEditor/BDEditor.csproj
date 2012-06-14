@@ -125,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\AttributeDictionary.cs" />
+    <Compile Include="Classes\BDArchiveRecord.cs" />
     <Compile Include="Classes\BDDataLoader.cs" />
     <Compile Include="Classes\BDException.cs" />
     <Compile Include="Classes\BDFabrik.cs" />
@@ -178,6 +179,12 @@
     <Compile Include="Views\BDAntimicrobialRiskContol.Designer.cs">
       <DependentUpon>BDAntimicrobialRiskContol.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\BDArchiveDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\BDArchiveDialog.Designer.cs">
+      <DependentUpon>BDArchiveDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\BDAttachmentControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -227,6 +234,12 @@
     </Compile>
     <Compile Include="Views\BDNodeOverviewControl.Designer.cs">
       <DependentUpon>BDNodeOverviewControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BDRestoreDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\BDRestoreDialog.Designer.cs">
+      <DependentUpon>BDRestoreDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\BDSearchView.cs">
       <SubType>Form</SubType>
@@ -285,6 +298,9 @@
     <EmbeddedResource Include="Views\BDAntimicrobialRiskContol.resx">
       <DependentUpon>BDAntimicrobialRiskContol.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDArchiveDialog.resx">
+      <DependentUpon>BDArchiveDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\BDDosageAndCostControl.resx">
       <DependentUpon>BDDosageAndCostControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -302,6 +318,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDNodeEditView.resx">
       <DependentUpon>BDNodeEditView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDRestoreDialog.resx">
+      <DependentUpon>BDRestoreDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDSearchView.resx">
       <DependentUpon>BDSearchView.cs</DependentUpon>
@@ -479,7 +498,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
+      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

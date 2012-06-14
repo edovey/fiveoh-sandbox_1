@@ -843,7 +843,7 @@ namespace BDEditor.Views
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
             if (null == lastSyncDate)
             {
-                lbLastSyncDateTime.Text = @"<Never Sync'd>";
+                lbLastSyncDateTime.Text = @"<Never Archived>";
             }
             else
             {
@@ -851,6 +851,7 @@ namespace BDEditor.Views
             }
         }
 
+        [Obsolete("Use Archive/Restore instead", false)]
         private void SyncData()
         {
             this.Cursor = Cursors.WaitCursor;
@@ -912,7 +913,8 @@ namespace BDEditor.Views
 
             if (!BDCommon.Settings.SyncPushEnabled)
             {
-                btnSync.Text = "Pull Only";
+                //btnSync.Text = "Pull Only";
+                btnSync.Enabled = false;
                 this.Text = string.Format("{0} < CLOUD DATA IS READ ONLY >", this.Text);
             }
             if (BDCommon.Settings.RepositoryOverwriteEnabled)
@@ -926,7 +928,40 @@ namespace BDEditor.Views
 
         private void btnSync_Click(object sender, EventArgs e)
         {
-            SyncData();
+            //SyncData();
+            this.Cursor = Cursors.WaitCursor;
+            BDArchiveDialog archiveDialog = new BDArchiveDialog();
+            if (archiveDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                this.Cursor = Cursors.WaitCursor;
+                Application.DoEvents();
+                RepositoryHandler.Aws.Archive(dataContext, archiveDialog.Username, archiveDialog.Comment);
+                MessageBox.Show("Archive complete", "Achive to Repository", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                UpdateSyncLabel();
+            }
+            this.Cursor = Cursors.Default;
+        }
+
+        private void btnRestore_Click(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.WaitCursor;
+            List<BDArchiveRecord> archiveList = RepositoryHandler.Aws.ListArchives();
+            BDRestoreDialog restoreDialog = new BDRestoreDialog();
+            restoreDialog.ArchiveRecordList = archiveList;
+            if (restoreDialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+            {
+                BDArchiveRecord archiveRecord = restoreDialog.SelectedArchiveRecord;
+                if (null != archiveRecord)
+                {
+                    this.Cursor = Cursors.WaitCursor;
+                    Application.DoEvents();
+                    RepositoryHandler.Aws.Restore(dataContext, archiveRecord);
+                    UpdateSyncLabel();
+                    LoadChapterDropDown();
+                }
+            }
+            this.Cursor = Cursors.Default;
+
         }
 
         private void btnSyncWithReplaceLocal_Click(object sender, EventArgs e)
@@ -1184,5 +1219,7 @@ namespace BDEditor.Views
             //BDUtilities.SetDiseaseLayoutVariant(dataContext);
 
         }
+
+
     }
 }

@@ -301,6 +301,11 @@ namespace BDDataArchiver
         private void listBoxArchives_Click(object sender, EventArgs e)
         {
             btnRestore.Enabled = ((listBoxArchives.SelectedIndex >= 0) && (lblSource.Text.Trim() != string.Empty));
+        }
+
+        private void lblSource_Click(object sender, EventArgs e)
+        {
+
         }   
 
     }

@@ -9,6 +9,8 @@ namespace BDEditor.Classes
 {
     public class BDConstants
     {
+        public const string DB_FILENAME = "BDDataStore.sdf";
+
         public enum BDNodeType
         {
             [Description("Undefined")]

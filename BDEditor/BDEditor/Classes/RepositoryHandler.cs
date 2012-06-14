@@ -905,6 +905,8 @@ namespace BDEditor.Classes
                 if (pIsBackup) context = string.Format("{0}.backup", context);
 
                 filename = string.Format("{0}.{1}.{2}{3}.gz", filename, context, archiveDateTime.ToString("yyyMMdd-HHmmss"), sourceFi.Extension);
+                
+                pDataContext.Connection.Close();
 
                 using (FileStream inFile = sourceFi.OpenRead())
                 {
@@ -949,18 +951,21 @@ namespace BDEditor.Classes
                             S3Response s3Response = S3.PutObject(putObjectRequest);
                             s3Response.Dispose();
                         }
-                        if (!pIsBackup)
-                        {
-                            BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(pDataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
-                            systemSetting.settingDateTimeValue = archiveDateTime;
-                            pDataContext.SaveChanges();
-                        }
+                        
                     }
                     else
                     {
                         MessageBox.Show("Cannot archive previously archived files");
                     }
-                } 
+                }
+                pDataContext.Connection.Open();
+                if (!pIsBackup)
+                {
+                    BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(pDataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+                    systemSetting.settingDateTimeValue = archiveDateTime;
+                    pDataContext.SaveChanges();
+                }
+                
             }
         }
 

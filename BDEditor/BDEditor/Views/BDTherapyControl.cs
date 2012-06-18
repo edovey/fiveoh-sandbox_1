@@ -670,6 +670,7 @@ namespace BDEditor.Views
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
                 case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
+                case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
                     // remove dosage1, dosage2, duration1, duration2
                     pnlMain.Controls.Remove(tbDosage1);
                     pnlMain.Controls.Remove(chkPreviousDose1);

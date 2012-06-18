@@ -235,10 +235,6 @@ namespace BDEditor.Classes
             Microbiology = 600,
             [Description("Gram Stain Interpretation")]
             Microbiology_GramStainInterpretation = 601,
-            [Description("Gram Stain Interpretation Header Row")]
-            Microbiology_GramStainInterpretation_HeaderRow = 6011,
-            [Description("Gram Stain Interpretation Content Row")]
-            Microbiology_GramStainInterpretation_ContentRow = 6012,
             [Description("Microbiology for Specific Body Sites")]
             Microbiology_CommensalAndPathogenicOrganisms = 602,
             [Description("Empiric Therapy of Specific Microbiology")]

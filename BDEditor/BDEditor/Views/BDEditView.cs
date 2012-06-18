@@ -563,6 +563,7 @@ namespace BDEditor.Views
                                 }
                                 break;
                             case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
+                            case BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation:
                                 childTreeNode = BDMicrobiologyTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
@@ -663,6 +664,7 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
                             case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
                             case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
+                            case BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation:
                             case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
                                 if (!pInterrogateOnly)
                                 {
@@ -785,7 +787,7 @@ namespace BDEditor.Views
             BDDataLoader dataLoader = new BDDataLoader();
 
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_1a.txt", BDDataLoader.baseDataDefinitionType.chapter1a);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_1b.txt", BDDataLoader.baseDataDefinitionType.chapter1b);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_1b.txt", BDDataLoader.baseDataDefinitionType.chapter1b);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_1c.txt", BDDataLoader.baseDataDefinitionType.chapter1c);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_1d.txt", BDDataLoader.baseDataDefinitionType.chapter1d);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_1e.txt", BDDataLoader.baseDataDefinitionType.chapter1e);
@@ -810,7 +812,7 @@ namespace BDEditor.Views
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_5d.txt", BDDataLoader.baseDataDefinitionType.chapter5d);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_5e.txt", BDDataLoader.baseDataDefinitionType.chapter5e);
 
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_6a.txt", BDDataLoader.baseDataDefinitionType.chapter6a);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_6a.txt", BDDataLoader.baseDataDefinitionType.chapter6a);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_6b.txt", BDDataLoader.baseDataDefinitionType.chapter6b);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_6c.txt", BDDataLoader.baseDataDefinitionType.chapter6c);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_6d.txt", BDDataLoader.baseDataDefinitionType.chapter6d);
@@ -896,7 +898,7 @@ namespace BDEditor.Views
             this.Text = string.Format("{0} - {1}" , "Bugs & Drugs Editor", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
             // Loading Seed Data:  set the following variables
-            isSeedDataLoadAvailable = false;
+            isSeedDataLoadAvailable = true;
 
             btnSyncWithReplaceLocal.Enabled = false;
             btnSyncWithReplaceLocal.Visible = false;
@@ -1152,9 +1154,13 @@ namespace BDEditor.Views
                     BDFabrik.SaveNode(this.DataContext, siblingList[idx]);
                 }
 
-                parentTreeNode.Nodes.Remove(sourceTreeNode);
-                parentTreeNode.Nodes.Insert(targetIdx, sourceTreeNode);
-                Debug.WriteLine("---");
+                // what if parent is null?
+                if (null != parentTreeNode)
+                {
+                    parentTreeNode.Nodes.Remove(sourceTreeNode);
+                    parentTreeNode.Nodes.Insert(targetIdx, sourceTreeNode);
+                    Debug.WriteLine("---");
+                }
             }
         }
 

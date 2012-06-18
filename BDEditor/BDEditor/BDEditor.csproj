@@ -388,9 +388,7 @@
     <None Include="Resources\add_16x16.png" />
     <None Include="Resources\add_record_16.png" />
     <None Include="Resources\apps_16.png" />
-    <Content Include="Resources\BDEditorStructure.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Resources\BDEditorStructure.txt" />
     <None Include="Resources\link_16.png" />
     <None Include="Resources\del_16x16.png" />
     <None Include="Resources\delete_record_16.png" />
@@ -417,7 +415,9 @@
     <None Include="Resources\Flag-Green1.PNG" />
     <Content Include="Resources\Chapter_2d.txt" />
     <Content Include="Resources\Chapter_2e.txt" />
-    <Content Include="Resources\Chapter_1b.txt" />
+    <Content Include="Resources\Chapter_1b.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Chapter_2f.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -434,7 +434,9 @@
     <Content Include="Resources\Chapter_5c.txt" />
     <Content Include="Resources\Chapter_5d.txt" />
     <Content Include="Resources\Chapter_5e.txt" />
-    <Content Include="Resources\Chapter_6a.txt" />
+    <Content Include="Resources\Chapter_6a.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Chapter_6b.txt" />
     <Content Include="Resources\Chapter_6c.txt" />
     <Content Include="Resources\Chapter_6d.txt" />
@@ -498,7 +500,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
+      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

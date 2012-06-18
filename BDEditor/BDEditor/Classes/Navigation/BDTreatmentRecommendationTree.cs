@@ -27,6 +27,7 @@ namespace BDEditor.Classes.Navigation
                 case BDConstants.BDNodeType.BDCategory:
                 case BDConstants.BDNodeType.BDSubcategory:
                 case BDConstants.BDNodeType.BDDisease:
+                case BDConstants.BDNodeType.BDTable:
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation00:

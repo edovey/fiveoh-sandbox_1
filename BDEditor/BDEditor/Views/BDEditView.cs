@@ -698,6 +698,14 @@ namespace BDEditor.Views
                     case BDConstants.BDNodeType.BDTable:
                         switch (node.LayoutVariant)
                         {
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
+                                childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
+                                if (!pInterrogateOnly)
+                                {
+                                    graftTreeNode(selectedNode, childTreeNode);
+                                    showChildControls = false;
+                                }
+                                break;
                             default:
                                 if (!pInterrogateOnly)
                                 {
@@ -1221,6 +1229,9 @@ namespace BDEditor.Views
 
             // reset layout variant for TreatmentRecommendation>Adult>Genital>GenitalUlcers
             //BDUtilities.SetDiseaseLayoutVariant(dataContext);
+
+            // repair hierarchy for Genital Ulcers/ lesions in Treatment Recommendations > Adult > Genital...
+            BDUtilities.InjectNodeIntoHierarhy(dataContext);
 
         }
 

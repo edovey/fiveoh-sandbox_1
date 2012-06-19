@@ -898,7 +898,7 @@ namespace BDEditor.Views
             this.Text = string.Format("{0} - {1}" , "Bugs & Drugs Editor", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
             // Loading Seed Data:  set the following variables
-            isSeedDataLoadAvailable = true;
+            isSeedDataLoadAvailable = false;
 
             btnSyncWithReplaceLocal.Enabled = false;
             btnSyncWithReplaceLocal.Visible = false;
@@ -913,8 +913,8 @@ namespace BDEditor.Views
             this.btnImportFromProduction.Visible = false;
             this.btnPublish.Visible = false;
 
-            this.btnMove.Visible = true;
-            this.btnMove.Enabled = true;
+            this.btnMove.Visible = false;
+            this.btnMove.Enabled = false;
 #endif
 
             BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);

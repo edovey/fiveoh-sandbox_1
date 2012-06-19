@@ -913,8 +913,8 @@ namespace BDEditor.Views
             this.btnImportFromProduction.Visible = false;
             this.btnPublish.Visible = false;
 
-            this.btnMove.Visible = false;
-            this.btnMove.Enabled = false;
+            this.btnMove.Visible = true;
+            this.btnMove.Enabled = true;
 #endif
 
             BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);

@@ -942,19 +942,19 @@ namespace BDEditor.Classes
             BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Antibiotics;
             BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics;
             BDConstants.LayoutVariantType categoryLayoutVariant = sectionLayoutVariant;
-            BDConstants.LayoutVariantType antimicrobialLayoutVariant = sectionLayoutVariant;
+            BDConstants.LayoutVariantType antimicrobialGroupLayoutVariant = sectionLayoutVariant;
 
             uuidData = string.Empty;
             chapterData = string.Empty;
             sectionData = string.Empty;
             categoryData = string.Empty;
-            antimicrobialData = string.Empty;
+            antimicrobialGroupData = string.Empty;
 
             if (elements.Length > 0) uuidData = elements[0];
             if (elements.Length > 1) chapterData = elements[1];
             if (elements.Length > 2) sectionData = elements[2];
             if (elements.Length > 3) categoryData = elements[3];
-            if (elements.Length > 4) antimicrobialData = elements[4];
+            if (elements.Length > 4) antimicrobialGroupData = elements[4];
 
             if ((null != chapterData && chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
             {
@@ -975,11 +975,11 @@ namespace BDEditor.Classes
                 }
                 section = null;
                 category = null;
-                antimicrobial = null;
+                antimicrobialGroup = null;
 
                 idxSection = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
                 idxCategory = 0;
-                idxAntimicrobial = 0;
+                idxAntimicrobialGroup = 0;
             }
 
             if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
@@ -1000,9 +1000,9 @@ namespace BDEditor.Classes
                     idxSection++;
                 }
                 category = null;
-                antimicrobial = null;
+                antimicrobialGroup = null;
                 idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
-                idxAntimicrobial = 0;
+                idxAntimicrobialGroup = 0;
             }
             if ((null != categoryData && categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
             {
@@ -1021,27 +1021,27 @@ namespace BDEditor.Classes
                     category = catNode;
                     idxCategory++;
                 }
-                antimicrobial = null;
+                antimicrobialGroup = null;
 
-                idxAntimicrobial = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, category);
+                idxAntimicrobialGroup = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, category);
             }
 
-            if ((null != antimicrobialData && antimicrobialData != string.Empty) && ((null == antimicrobial) || (antimicrobial.name != antimicrobialData)))
+            if ((null != antimicrobialGroupData && antimicrobialGroupData != string.Empty) && ((null == antimicrobialGroup) || (antimicrobialGroup.name != antimicrobialGroupData)))
             {
                 BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(uuidData));
                 if (null == tmpNode)
                 {
-                    antimicrobial = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDAntimicrobial, Guid.Parse(uuidData));
-                    antimicrobial.name = antimicrobialData;
-                    antimicrobial.SetParent(category);
-                    antimicrobial.displayOrder = idxAntimicrobial++;
-                    antimicrobial.LayoutVariant = antimicrobialLayoutVariant;
-                    BDNode.Save(dataContext, antimicrobial);
+                    antimicrobialGroup = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDAntimicrobialGroup, Guid.Parse(uuidData));
+                    antimicrobialGroup.name = antimicrobialGroupData;
+                    antimicrobialGroup.SetParent(category);
+                    antimicrobialGroup.displayOrder = idxAntimicrobialGroup++;
+                    antimicrobialGroup.LayoutVariant = antimicrobialGroupLayoutVariant;
+                    BDNode.Save(dataContext, antimicrobialGroup);
                 }
                 else
                 {
-                    antimicrobial = tmpNode;
-                    idxAntimicrobial++;
+                    antimicrobialGroup = tmpNode;
+                    idxAntimicrobialGroup++;
                 }
             }
         }        

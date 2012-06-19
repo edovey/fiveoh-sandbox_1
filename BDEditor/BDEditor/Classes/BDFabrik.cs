@@ -167,6 +167,9 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDAntimicrobialGroup:
                     switch (layoutVariant)
                     {
+                        case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
+                            // no children for this variant
+                            break;
                         default:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAntimicrobial, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
@@ -207,6 +210,8 @@ namespace BDEditor.Classes
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDMicroorganismGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAntimicrobialGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAntimicrobial, new BDConstants.LayoutVariantType[] { layoutVariant }));

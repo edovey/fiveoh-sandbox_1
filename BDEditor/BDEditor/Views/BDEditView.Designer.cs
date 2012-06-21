@@ -31,11 +31,11 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDEditView));
             this.headerPanel = new System.Windows.Forms.Panel();
+            this.btnRestore = new System.Windows.Forms.Button();
             this.btnMove = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnImportFromProduction = new System.Windows.Forms.Button();
             this.btnPublish = new System.Windows.Forms.Button();
-            this.btnSyncWithReplaceLocal = new System.Windows.Forms.Button();
             this.lbLastSyncDateTime = new System.Windows.Forms.Label();
             this.btnSync = new System.Windows.Forms.Button();
             this.loadSeedDataButton = new System.Windows.Forms.Button();
@@ -43,12 +43,11 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.chapterTree = new System.Windows.Forms.TreeView();
             this.navTreeContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnRestore = new System.Windows.Forms.Button();
             this.reorderPreviousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reorderNextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.addChildNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.entitiesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.entitiesBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
@@ -68,7 +67,6 @@
             this.headerPanel.Controls.Add(this.btnSearch);
             this.headerPanel.Controls.Add(this.btnImportFromProduction);
             this.headerPanel.Controls.Add(this.btnPublish);
-            this.headerPanel.Controls.Add(this.btnSyncWithReplaceLocal);
             this.headerPanel.Controls.Add(this.lbLastSyncDateTime);
             this.headerPanel.Controls.Add(this.btnSync);
             this.headerPanel.Controls.Add(this.loadSeedDataButton);
@@ -79,9 +77,19 @@
             this.headerPanel.Size = new System.Drawing.Size(1192, 39);
             this.headerPanel.TabIndex = 0;
             // 
+            // btnRestore
+            // 
+            this.btnRestore.Location = new System.Drawing.Point(516, 10);
+            this.btnRestore.Name = "btnRestore";
+            this.btnRestore.Size = new System.Drawing.Size(75, 23);
+            this.btnRestore.TabIndex = 9;
+            this.btnRestore.Text = "Restore";
+            this.btnRestore.UseVisualStyleBackColor = true;
+            this.btnRestore.Click += new System.EventHandler(this.btnRestore_Click);
+            // 
             // btnMove
             // 
-            this.btnMove.Location = new System.Drawing.Point(810, 10);
+            this.btnMove.Location = new System.Drawing.Point(903, 10);
             this.btnMove.Name = "btnMove";
             this.btnMove.Size = new System.Drawing.Size(75, 23);
             this.btnMove.TabIndex = 8;
@@ -113,24 +121,13 @@
             // 
             // btnPublish
             // 
-            this.btnPublish.Location = new System.Drawing.Point(728, 10);
+            this.btnPublish.Location = new System.Drawing.Point(822, 10);
             this.btnPublish.Name = "btnPublish";
             this.btnPublish.Size = new System.Drawing.Size(75, 23);
             this.btnPublish.TabIndex = 5;
             this.btnPublish.Text = "Publish";
             this.btnPublish.UseVisualStyleBackColor = true;
             this.btnPublish.Click += new System.EventHandler(this.btnPublish_Click);
-            // 
-            // btnSyncWithReplaceLocal
-            // 
-            this.btnSyncWithReplaceLocal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSyncWithReplaceLocal.Location = new System.Drawing.Point(919, 10);
-            this.btnSyncWithReplaceLocal.Name = "btnSyncWithReplaceLocal";
-            this.btnSyncWithReplaceLocal.Size = new System.Drawing.Size(168, 23);
-            this.btnSyncWithReplaceLocal.TabIndex = 4;
-            this.btnSyncWithReplaceLocal.Text = "Replace Local from Repository";
-            this.btnSyncWithReplaceLocal.UseVisualStyleBackColor = true;
-            this.btnSyncWithReplaceLocal.Click += new System.EventHandler(this.btnSyncWithReplaceLocal_Click);
             // 
             // lbLastSyncDateTime
             // 
@@ -154,7 +151,7 @@
             // loadSeedDataButton
             // 
             this.loadSeedDataButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.loadSeedDataButton.Location = new System.Drawing.Point(809, 10);
+            this.loadSeedDataButton.Location = new System.Drawing.Point(984, 10);
             this.loadSeedDataButton.Name = "loadSeedDataButton";
             this.loadSeedDataButton.Size = new System.Drawing.Size(104, 23);
             this.loadSeedDataButton.TabIndex = 1;
@@ -225,26 +222,6 @@
             this.navTreeContextMenuStrip.Name = "contextMenuStripEvents";
             this.navTreeContextMenuStrip.Size = new System.Drawing.Size(180, 104);
             // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(176, 6);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(176, 6);
-            // 
-            // btnRestore
-            // 
-            this.btnRestore.Location = new System.Drawing.Point(516, 10);
-            this.btnRestore.Name = "btnRestore";
-            this.btnRestore.Size = new System.Drawing.Size(75, 23);
-            this.btnRestore.TabIndex = 9;
-            this.btnRestore.Text = "Restore";
-            this.btnRestore.UseVisualStyleBackColor = true;
-            this.btnRestore.Click += new System.EventHandler(this.btnRestore_Click);
-            // 
             // reorderPreviousToolStripMenuItem
             // 
             this.reorderPreviousToolStripMenuItem.Image = global::BDEditor.Properties.Resources.reorder_previous;
@@ -261,6 +238,11 @@
             this.reorderNextToolStripMenuItem.Text = "Move &Next";
             this.reorderNextToolStripMenuItem.Click += new System.EventHandler(this.reorderNodeToNext_Click);
             // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(176, 6);
+            // 
             // addChildNodeToolStripMenuItem
             // 
             this.addChildNodeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_16x16;
@@ -268,6 +250,11 @@
             this.addChildNodeToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.addChildNodeToolStripMenuItem.Text = "&Add Therapy Group";
             this.addChildNodeToolStripMenuItem.Click += new System.EventHandler(this.addChildNode_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(176, 6);
             // 
             // deleteToolStripMenuItem
             // 
@@ -322,7 +309,6 @@
         private System.Windows.Forms.Button loadSeedDataButton;
         private System.Windows.Forms.Label lbLastSyncDateTime;
         private System.Windows.Forms.Button btnSync;
-        private System.Windows.Forms.Button btnSyncWithReplaceLocal;
         private System.Windows.Forms.Button btnPublish;
         private System.Windows.Forms.Button btnImportFromProduction;
         private System.Windows.Forms.ContextMenuStrip navTreeContextMenuStrip;

@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server Compact Edition
 -- --------------------------------------------------
--- Date Created: 06/14/2012 11:07:19
--- Generated from EDMX file: C:\Data\Source\git\fiveoh-sandbox\BDEditor\BDEditor\DataModel\BDModel1.edmx
+-- Date Created: 06/20/2012 15:20:30
+-- Generated from EDMX file: C:\Users\Liz Dovey\Documents\Git-SS\fiveoh-sandbox_1\BDEditor\BDEditor\DataModel\BDModel1.edmx
 -- --------------------------------------------------
 
 
@@ -18,13 +18,7 @@
 -- NOTE: if the table does not exist, an ignorable error will be reported.
 -- --------------------------------------------------
 
-    DROP TABLE [BDAntimicrobialRisks];
-GO
-    DROP TABLE [BDAttachments];
-GO
     DROP TABLE [BDDeletions];
-GO
-    DROP TABLE [BDDosages];
 GO
     DROP TABLE [BDHtmlPages];
 GO
@@ -32,29 +26,35 @@ GO
 GO
     DROP TABLE [BDLinkedNotes];
 GO
-    DROP TABLE [BDMetadata];
+    DROP TABLE [BDMetadatas];
 GO
     DROP TABLE [BDNodeAssociations];
 GO
     DROP TABLE [BDNodes];
 GO
-    DROP TABLE [BDPrecautions];
-GO
     DROP TABLE [BDSearchEntries];
 GO
     DROP TABLE [BDSearchEntryAssociations];
 GO
-    DROP TABLE [BDStrings];
-GO
     DROP TABLE [BDSystemSettings];
+GO
+    DROP TABLE [BDTherapies];
+GO
+    DROP TABLE [BDTherapyGroups];
 GO
     DROP TABLE [BDTableCells];
 GO
     DROP TABLE [BDTableRows];
 GO
-    DROP TABLE [BDTherapies];
+    DROP TABLE [BDStrings];
 GO
-    DROP TABLE [BDTherapyGroups];
+    DROP TABLE [BDDosages];
+GO
+    DROP TABLE [BDPrecautions];
+GO
+    DROP TABLE [BDAttachments];
+GO
+    DROP TABLE [BDAntimicrobialRisks];
 GO
 
 -- --------------------------------------------------
@@ -322,15 +322,18 @@ CREATE TABLE [BDDosages] (
     [uuid] uniqueidentifier  NOT NULL,
     [displayOrder] int  NULL,
     [modifiedDate] datetime  NULL,
-    [cost] nvarchar(100)  NULL,
-    [dosage] nvarchar(100)  NULL,
+    [cost] nvarchar(750)  NULL,
+    [dosage] nvarchar(750)  NULL,
     [name] nvarchar(750)  NULL,
     [joinType] int  NULL,
     [parentId] uniqueidentifier  NULL,
     [parentType] int  NULL,
     [layoutVariant] int  NULL,
     [schemaVersion] int  NULL,
-    [parentKeyName] nvarchar(100)  NULL
+    [parentKeyName] nvarchar(100)  NULL,
+    [dosage2] nvarchar(4000)  NULL,
+    [dosage3] nvarchar(4000)  NULL,
+    [dosage4] nvarchar(4000)  NULL
 );
 GO
 

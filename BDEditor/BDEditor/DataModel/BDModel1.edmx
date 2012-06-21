@@ -289,8 +289,8 @@
     <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
     <Property Name="displayOrder" Type="int" Nullable="true" />
     <Property Name="modifiedDate" Type="datetime" Nullable="true" />
-    <Property Name="cost" Type="nvarchar" Nullable="true" MaxLength="100" />
-    <Property Name="dosage" Type="nvarchar" Nullable="true" MaxLength="100" />
+    <Property Name="cost" Type="nvarchar" Nullable="true" MaxLength="750" />
+    <Property Name="dosage" Type="nvarchar" Nullable="true" MaxLength="750" />
     <Property Name="name" Type="nvarchar" Nullable="true" MaxLength="750" />
     <Property Name="joinType" Type="int" Nullable="true" />
     <Property Name="parentId" Type="uniqueidentifier" Nullable="true" />
@@ -298,6 +298,9 @@
     <Property Name="layoutVariant" Type="int" Nullable="true" />
     <Property Name="schemaVersion" Type="int" Nullable="true" />
     <Property Name="parentKeyName" Type="nvarchar" Nullable="true" MaxLength="100" />
+    <Property Name="dosage2" Type="nvarchar" Nullable="true" MaxLength="Max" />
+    <Property Name="dosage3" Type="nvarchar" Nullable="true" />
+    <Property Name="dosage4" Type="nvarchar" Nullable="true" />
   </EntityType>
   <EntityType Name="BDPrecautions">
     <Key>
@@ -659,6 +662,9 @@
           <Property Type="Int32" Name="layoutVariant" />
           <Property Type="Int32" Name="schemaVersion" />
           <Property Type="String" Name="parentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="dosage2" MaxLength="Max" />
+          <Property Type="String" Name="dosage3" />
+          <Property Type="String" Name="dosage4" />
         </EntityType>
         <EntityType Name="BDPrecaution">
           <Key>
@@ -1015,6 +1021,9 @@
           <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
           <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
           <ScalarProperty Name="parentKeyName" ColumnName="parentKeyName" />
+          <ScalarProperty Name="dosage2" ColumnName="dosage2" />
+          <ScalarProperty Name="dosage3" ColumnName="dosage3" />
+          <ScalarProperty Name="dosage4" ColumnName="dosage4" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1119,7 +1128,7 @@
         <EntityTypeShape EntityType="BDDataModel.BDTableCell" Width="1.5" PointX="12.375" PointY="1.125" Height="2.9417936197916674" />
         <EntityTypeShape EntityType="BDDataModel.BDTableRow" Width="1.5" PointX="10.625" PointY="0.875" Height="3.5186979166666656" />
         <EntityTypeShape EntityType="BDDataModel.BDString" Width="1.5" PointX="5.375" PointY="9.75" Height="1.9802864583333388" />
-        <EntityTypeShape EntityType="BDDataModel.BDDosage" Width="1.5" PointX="0.75" PointY="10.75" Height="3.3263964843750031" />
+        <EntityTypeShape EntityType="BDDataModel.BDDosage" Width="1.5" PointX="0.75" PointY="10.75" Height="3.9033007812499996" />
         <EntityTypeShape EntityType="BDDataModel.BDPrecaution" Width="2.25" PointX="2.75" PointY="12.75" Height="4.3862109375000031" />
         <EntityTypeShape EntityType="BDDataModel.BDAttachment" Width="1.5" PointX="5.375" PointY="12.75" Height="2.5571907552083388" />
         <EntityTypeShape EntityType="BDDataModel.BDAntimicrobialRisk" Width="2.875" PointX="7.375" PointY="12.75" Height="3.4001269531250031" />

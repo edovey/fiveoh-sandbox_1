@@ -209,8 +209,6 @@ namespace BDEditor.Classes
             Dental_RecommendedTherapy_AntimicrobialActivity_ContentRow = 4062,
             [Description("Dental Recommended Therapy Microorganisms")]
             Dental_RecommendedTherapy_Microorganisms = 407,
-            [Description("Dental Recommended Therapy Microorganisms Content Row")]
-            Dental_RecommendedTherapy_Microorganisms_ContentRow = 4071,
             [Description("Dental Recommended Therapy")]
             Dental_RecommendedTherapy = 408,
 
@@ -222,10 +220,6 @@ namespace BDEditor.Classes
             PregnancyLactation_Antimicrobials_Lactation = 502,
             [Description("Exposure to Communicable Diseases during Pregnancy")]
             PregnancyLactation_Exposure_CommunicableDiseases = 503,
-            [Description("Exposure to Communicable Diseases during Pregnancy Header Row")]
-            PregnancyLactation_Exposure_CommunicableDiseases_HeaderRow = 5031,
-            [Description("Exposure to Communicable Diseases during Pregnancy Content Row")]
-            PregnancyLactation_Exposure_CommunicableDiseases_ContentRow = 5032,
             [Description("Prevention of Perinatal Infection")]
             PregnancyLactation_Prevention_PerinatalInfection = 504,
             [Description("Perinatal HIV Protocol")]

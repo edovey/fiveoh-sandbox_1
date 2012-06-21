@@ -1803,6 +1803,78 @@ namespace BDEditor.DataModel
         private global::System.String _parentKeyName;
         partial void OnparentKeyNameChanging(global::System.String value);
         partial void OnparentKeyNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String dosage2
+        {
+            get
+            {
+                return _dosage2;
+            }
+            set
+            {
+                Ondosage2Changing(value);
+                ReportPropertyChanging("dosage2");
+                _dosage2 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("dosage2");
+                Ondosage2Changed();
+            }
+        }
+        private global::System.String _dosage2;
+        partial void Ondosage2Changing(global::System.String value);
+        partial void Ondosage2Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String dosage3
+        {
+            get
+            {
+                return _dosage3;
+            }
+            set
+            {
+                Ondosage3Changing(value);
+                ReportPropertyChanging("dosage3");
+                _dosage3 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("dosage3");
+                Ondosage3Changed();
+            }
+        }
+        private global::System.String _dosage3;
+        partial void Ondosage3Changing(global::System.String value);
+        partial void Ondosage3Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String dosage4
+        {
+            get
+            {
+                return _dosage4;
+            }
+            set
+            {
+                Ondosage4Changing(value);
+                ReportPropertyChanging("dosage4");
+                _dosage4 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("dosage4");
+                Ondosage4Changed();
+            }
+        }
+        private global::System.String _dosage4;
+        partial void Ondosage4Changing(global::System.String value);
+        partial void Ondosage4Changed();
 
         #endregion
     

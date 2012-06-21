@@ -28,6 +28,7 @@ namespace BDEditor.Classes.Navigation
                 case BDConstants.BDNodeType.BDCategory:
                 case BDConstants.BDNodeType.BDSubcategory:
                 case BDConstants.BDNodeType.BDTable:
+                case BDConstants.BDNodeType.BDPathogen:
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.PregancyLactation:

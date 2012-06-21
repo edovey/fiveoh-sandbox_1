@@ -41,6 +41,9 @@ namespace BDEditor.DataModel
         public const string PROPERTYNAME_DOSAGE = @"Dosage";
         public const string PROPERTYNAME_COST = @"Cost";
         public const string PROPERTYNAME_NAME = @"Name";
+        public const string PROPERTYNAME_DOSAGE2 = @"Dosage 2";
+        public const string PROPERTYNAME_DOSAGE3 = @"Dosage 3";
+        public const string PROPERTYNAME_DOSAGE4 = @"Dosage 4";
 
        private const string UUID = @"do_uuid";
         private const string SCHEMAVERSION = @"do_schemaVersion";
@@ -86,6 +89,9 @@ namespace BDEditor.DataModel
             entity.displayOrder = -1;
             entity.name = string.Empty;
             entity.dosage = string.Empty;
+            entity.dosage2 = string.Empty;
+            entity.dosage3 = string.Empty;
+            entity.dosage4 = string.Empty;
             entity.cost = string.Empty;
             entity.joinType = 0;
             entity.layoutVariant = -1;

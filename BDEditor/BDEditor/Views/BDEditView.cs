@@ -900,7 +900,7 @@ namespace BDEditor.Views
             this.Text = string.Format("{0} - {1}" , "Bugs & Drugs Editor", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
             // Loading Seed Data:  set the following variables
-            isSeedDataLoadAvailable = true;
+            isSeedDataLoadAvailable = false;
 
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";

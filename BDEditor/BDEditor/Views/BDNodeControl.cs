@@ -117,6 +117,10 @@ namespace BDEditor.Views
         {
             btnLinkedNote.Tag = BDNode.PROPERTYNAME_NAME;
             setFormLayoutState();
+            lblInfo.Visible = false;
+#if DEBUG
+            lblInfo.Visible = true;
+#endif
             if (null != currentNode)
             {
                 if (tbName.Text != currentNode.Name) tbName.Text = currentNode.Name;
@@ -172,9 +176,11 @@ namespace BDEditor.Views
             if (currentNode == null)
             {
                 tbName.Text = @"";
+                lblInfo.Text = "na";
             }
             else
             {
+                lblInfo.Text = currentNode.DisplayOrder.ToString();
                 tbName.Text = currentNode.Name;
                 if (pShowChildren)
                 {

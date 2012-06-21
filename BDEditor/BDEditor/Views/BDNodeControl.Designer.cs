@@ -64,6 +64,7 @@
             this.pnlDetail = new System.Windows.Forms.Panel();
             this.pnlOverview = new System.Windows.Forms.Panel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.lblInfo = new System.Windows.Forms.Label();
             this.panelHeader.SuspendLayout();
             this.contextMenuStripTextBox.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
@@ -83,6 +84,7 @@
             // panelHeader
             // 
             this.panelHeader.BackColor = System.Drawing.SystemColors.Control;
+            this.panelHeader.Controls.Add(this.lblInfo);
             this.panelHeader.Controls.Add(this.lblNode);
             this.panelHeader.Controls.Add(this.btnMenuRight);
             this.panelHeader.Controls.Add(this.lblNodeAsChild);
@@ -364,6 +366,17 @@
             this.pnlOverview.Size = new System.Drawing.Size(870, 2);
             this.pnlOverview.TabIndex = 10;
             // 
+            // lblInfo
+            // 
+            this.lblInfo.AutoSize = true;
+            this.lblInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInfo.Location = new System.Drawing.Point(826, 10);
+            this.lblInfo.Name = "lblInfo";
+            this.lblInfo.Size = new System.Drawing.Size(32, 13);
+            this.lblInfo.TabIndex = 34;
+            this.lblInfo.Text = "INFO";
+            this.lblInfo.Visible = false;
+            // 
             // BDNodeControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -425,5 +438,6 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem1;
+        private System.Windows.Forms.Label lblInfo;
     }
 }

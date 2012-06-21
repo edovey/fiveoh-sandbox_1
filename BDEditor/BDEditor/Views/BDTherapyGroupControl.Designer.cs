@@ -64,6 +64,7 @@
             this.addTherapyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblInfo = new System.Windows.Forms.Label();
             this.contextMenuStrip1.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
@@ -306,6 +307,7 @@
             // panelHeader
             // 
             this.panelHeader.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panelHeader.Controls.Add(this.lblInfo);
             this.panelHeader.Controls.Add(this.btnMenu);
             this.panelHeader.Controls.Add(this.therapyGroupName);
             this.panelHeader.Controls.Add(this.tbName);
@@ -395,6 +397,17 @@
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.TherapyGroup_RequestItemDelete);
             // 
+            // lblInfo
+            // 
+            this.lblInfo.AutoSize = true;
+            this.lblInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInfo.Location = new System.Drawing.Point(3, 57);
+            this.lblInfo.Name = "lblInfo";
+            this.lblInfo.Size = new System.Drawing.Size(32, 13);
+            this.lblInfo.TabIndex = 26;
+            this.lblInfo.Text = "INFO";
+            this.lblInfo.Visible = false;
+            // 
             // BDTherapyGroupControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -410,6 +423,7 @@
             this.MinimumSize = new System.Drawing.Size(860, 100);
             this.Name = "BDTherapyGroupControl";
             this.Size = new System.Drawing.Size(856, 96);
+            this.Load += new System.EventHandler(this.BDTherapyGroupControl_Load);
             this.Leave += new System.EventHandler(this.BDTherapyGroupControl_Leave);
             this.contextMenuStrip1.ResumeLayout(false);
             this.panelHeader.ResumeLayout(false);
@@ -457,5 +471,6 @@
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem sOneToolStripMenuItem;
+        private System.Windows.Forms.Label lblInfo;
     }
 }

@@ -101,9 +101,11 @@ namespace BDEditor.Views
             {
                 tbName.Text = @"";
                 noneRadioButton.Checked = true;
+                lblInfo.Text = "na";
             }
             else
             {
+                lblInfo.Text = currentTherapyGroup.DisplayOrder.ToString();
                 tbName.Text = currentTherapyGroup.name;
                 switch ((BDTherapyGroup.TherapyGroupJoinType)currentTherapyGroup.therapyGroupJoinType)
                 {
@@ -577,5 +579,13 @@ namespace BDEditor.Views
         }
 
         public bool ShowAsChild { get; set; }
+
+        private void BDTherapyGroupControl_Load(object sender, EventArgs e)
+        {
+            lblInfo.Visible = false;
+#if DEBUG
+            lblInfo.Visible = true;
+#endif
+        }
     }
 }

@@ -746,19 +746,35 @@ childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVari
                         entryList.AddRange(GetChildrenForParentIdAndChildType(pContext, pParent.Uuid, childTypeInfo.Item1));
                     }
                 }
+
+
+                bool performPostSort = true;
+
+                switch (pParent.NodeType)
+                {
+                    case BDConstants.BDNodeType.BDPathogenGroup:
+                        performPostSort = false;
+                        break;
+                    default:
+                        performPostSort = true;
+                        break;
+                }
+
+                if (performPostSort)
+                {
+                    entryList.Sort(delegate(IBDNode n1, IBDNode n2)
+                    {
+                        if (n1.DisplayOrder == null && n2.DisplayOrder == null) return 0;
+
+                        else if (n1.DisplayOrder != null && n2.DisplayOrder == null) return -1;
+
+                        else if (n1.DisplayOrder == null && n2.DisplayOrder != null) return 1;
+
+                        else
+                            return (n1.DisplayOrder as IComparable).CompareTo(n2.DisplayOrder as IComparable);
+                    });
+                }
             }
-
-            entryList.Sort(delegate(IBDNode n1, IBDNode n2) 
-            {
-                if (n1.DisplayOrder == null && n2.DisplayOrder == null) return 0;
-
-                else if (n1.DisplayOrder != null && n2.DisplayOrder == null) return -1;
-
-                else if (n1.DisplayOrder == null && n2.DisplayOrder != null) return 1;
-                
-                else
-                    return (n1.DisplayOrder as IComparable).CompareTo(n2.DisplayOrder as IComparable);
-            });
 
             return entryList;
         }

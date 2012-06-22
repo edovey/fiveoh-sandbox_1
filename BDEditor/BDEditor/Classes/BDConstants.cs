@@ -188,6 +188,46 @@ namespace BDEditor.Classes
             
             [Description("Prophylaxis Recommendations")]
             Prophylaxis = 300, 
+            [Description("Pre-Op Antibiotic Administration")]
+            Prophylaxis_PreOp = 301,
+            [Description("Pre-Op Antibiotic Administration")]
+            Prophylaxis_PreOp_HeaderRow = 3011,
+            [Description("Pre-Op Antibiotic Administration")]
+            Prophylaxis_PreOp_ContentRow = 3012,
+
+            [Description("Surgical Prophylaxis")]
+            Prophylaxis_Surgical = 302,
+            [Description("Prophylaxis of Infective Endocarditis")]
+            Prophylaxis_IERecommendation = 303,
+            [Description("Infective Endocarditis Antibiotic Regimen")]
+            Prophylaxis_IEDrugAndDosage = 304,
+            [Description("Blood/Body Fluid Exposure")]
+            Prophylaxis_FluidExposure = 305,
+            [Description("Sexual Assault")]
+            Prophylaxis_SexualAssault = 306,
+
+            [Description("Routine Immunization Programs")]
+            Prophylaxis_Immunization_Routine = 307,
+            [Description("Routine Immunization Programs")]
+            Prophylaxis_Immunization_Routine_HeaderRow = 3071,
+            [Description("Routine Immunization Programs")]
+            Prophylaxis_Immunization_Routine_ContentRow = 3072,
+
+            [Description("Vaccines for High Risk")]
+            Prophylaxis_Immunization_HighRisk = 308,
+            [Description("Vaccines for High Risk")]
+            Prophylaxis_Immunization_HighRisk_HeaderRow = 3081,
+            [Description("Vaccines for High Risk")]
+            Prophylaxis_Immunization_HighRisk_ContentRow = 3082,
+
+            [Description("Vaccine Details")]
+            Prophylaxis_Immunization_VaccineDetail = 309,
+            [Description("Prophylaxis Communicable Diseases")]
+            Prophylaxis_Communicable_Invasive = 310,
+            [Description("Prophylaxis Influenza")]
+            Prophylaxis_Communicable_Influenza = 311,
+            [Description("Infection Precautions")]
+            Prophylaxis_InfectionPrecautions = 312,
 
             [Description("Dental")]
             Dental = 400,

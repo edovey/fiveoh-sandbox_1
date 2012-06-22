@@ -1606,6 +1606,8 @@ namespace BDEditor.Classes
                 case BDConstants.LayoutVariantType.Table_3_Column:
                 case BDConstants.LayoutVariantType.Table_3_Column_HeaderRow:
                 case BDConstants.LayoutVariantType.Table_3_Column_ContentRow:
+                case BDConstants.LayoutVariantType.Prophylaxis_PreOp_HeaderRow:
+                case BDConstants.LayoutVariantType.Prophylaxis_PreOp_ContentRow:
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis:
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
                 case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
@@ -1635,7 +1637,13 @@ namespace BDEditor.Classes
                 case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
                 case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity_ContentRow:
                 case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity_HeaderRow:
+                case BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk_HeaderRow:
+                case BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk_ContentRow:
                     maxColumns = 8;
+                    break;
+                case BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine_HeaderRow:
+                case BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine_ContentRow:
+                    maxColumns = 10;
                     break;
                 default:
                     maxColumns = 4;

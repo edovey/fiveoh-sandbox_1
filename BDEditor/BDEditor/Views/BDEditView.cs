@@ -100,6 +100,9 @@ namespace BDEditor.Views
                     case BDConstants.LayoutVariantType.Antibiotics:
                         node = BDAntibioticsTree.BuildBranch(dataContext, pNode);
                         break;
+                    case BDConstants.LayoutVariantType.Prophylaxis:
+                        node = BDProphylaxisTree.BuildBranch(dataContext, pNode);
+                        break;
                     case BDConstants.LayoutVariantType.Dental:
                         node = BDDentalTree.BuildBranch(dataContext, pNode);
                         break;
@@ -812,7 +815,7 @@ namespace BDEditor.Views
             
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_5a.txt", BDDataLoader.baseDataDefinitionType.chapter5a);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_5b.txt", BDDataLoader.baseDataDefinitionType.chapter5b);
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_5c.txt", BDDataLoader.baseDataDefinitionType.chapter5c);
+           // dataLoader.ImportData(dataContext, @"Resources\Chapter_5c.txt", BDDataLoader.baseDataDefinitionType.chapter5c);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_5d.txt", BDDataLoader.baseDataDefinitionType.chapter5d);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_5e.txt", BDDataLoader.baseDataDefinitionType.chapter5e);
 
@@ -822,7 +825,19 @@ namespace BDEditor.Views
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_6d.txt", BDDataLoader.baseDataDefinitionType.chapter6d);
 
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_2f.txt", BDDataLoader.baseDataDefinitionType.chapter2f);
-            
+
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3a.txt", BDDataLoader.baseDataDefinitionType.chapter3a);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3b.txt", BDDataLoader.baseDataDefinitionType.chapter3b);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3c.txt", BDDataLoader.baseDataDefinitionType.chapter3c);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3d.txt", BDDataLoader.baseDataDefinitionType.chapter3d);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3e.txt", BDDataLoader.baseDataDefinitionType.chapter3e);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3f.txt", BDDataLoader.baseDataDefinitionType.chapter3f);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3g.txt", BDDataLoader.baseDataDefinitionType.chapter3g);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3h.txt", BDDataLoader.baseDataDefinitionType.chapter3h);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3i.txt", BDDataLoader.baseDataDefinitionType.chapter3i);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3j.txt", BDDataLoader.baseDataDefinitionType.chapter3j);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3k.txt", BDDataLoader.baseDataDefinitionType.chapter3k);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3l.txt", BDDataLoader.baseDataDefinitionType.chapter3l);
             LoadChapterDropDown();
             BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;

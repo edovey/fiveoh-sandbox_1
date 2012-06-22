@@ -139,7 +139,9 @@ namespace BDEditor.Views
                 entry.Click -= new System.EventHandler(this.addChildNode_Click);
             }
             addNodeToolStripMenuItemList.Clear();
+            addChildNodeToolStripMenuItem.Visible = false;
             addChildNodeToolStripMenuItem.DropDownItems.Clear();
+            toolStripMenuItem1.Visible = false;
 
             reorderNextToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, pTreeNode);
             reorderPreviousToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, pTreeNode);
@@ -154,6 +156,9 @@ namespace BDEditor.Views
             {
                 if (childTypeInfoList.Count == 1)
                 {
+                    addChildNodeToolStripMenuItem.Visible = true;
+                    toolStripMenuItem1.Visible = true;
+
                     string childNodeTypeName = BDUtilities.GetEnumDescription(childTypeInfoList[0].Item1);
                     addChildNodeToolStripMenuItem.Text = string.Format("Add {0}", childNodeTypeName);
 
@@ -179,6 +184,8 @@ namespace BDEditor.Views
                 }
                 else if (childTypeInfoList.Count > 1)
                 {
+                    toolStripMenuItem1.Visible = true;
+                    addChildNodeToolStripMenuItem.Visible = true;
                     addChildNodeToolStripMenuItem.Text = string.Format("Add");
 
                     for (int idx = 0; idx < childTypeInfoList.Count; idx++)
@@ -462,16 +469,11 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation:
                             case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
                             case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
+                            case BDConstants.LayoutVariantType.Microbiology_Antibiogram:
                                 childTreeNode = BDMicrobiologyTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
                                     graftTreeNode(selectedNode, childTreeNode);
-                                    showChildControls = false;
-                                }
-                                break;
-                            case BDConstants.LayoutVariantType.Microbiology_Antibiogram:
-                                if (!pInterrogateOnly)
-                                {
                                     showChildControls = false;
                                 }
                                 break;

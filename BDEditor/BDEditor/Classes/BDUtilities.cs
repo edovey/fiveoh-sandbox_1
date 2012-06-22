@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 using System.Reflection;
 using System.ComponentModel;
 using BDEditor.DataModel;
 using BDEditor.Classes;
 
+using System.Security.Permissions;
+using Microsoft.Win32;
 
 namespace BDEditor.Classes
 {
@@ -162,6 +165,114 @@ namespace BDEditor.Classes
             BDNode gTopic7 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("f9b33cc4-122b-4f27-bc8e-8dd20d31e94f"));
             gTopic7.SetParent(newTable);
             BDNode.Save(pContext, gTopic7);
+        }
+
+        public static byte[] ReadFileAsByteArray(string fullFilenameAndPath)
+        {
+            if (!File.Exists(fullFilenameAndPath))
+                throw new IOException("File does not exist. File: " + fullFilenameAndPath);
+            FileInfo file = new FileInfo(fullFilenameAndPath);
+
+            if (file.IsReadOnly) return null;
+
+            byte[] fileAsByteArray;
+
+            try
+            {
+                using (FileStream fs = new FileStream(file.FullName, FileMode.Open))
+                {
+                    using (BinaryReader br = new BinaryReader(fs))
+                    {
+                        fileAsByteArray = br.ReadBytes((int)fs.Length);
+                        //br.Close();
+                        //fs.Close();
+                    }
+                }
+            }
+            catch (IOException ex)
+            {
+                throw new Exception("Error while accessing. File: " + fullFilenameAndPath, ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("File Error: " + fullFilenameAndPath, ex);
+            }
+            return fileAsByteArray;
+        }
+
+        public static void WriteByteArrayAsFile(string fullFilenameAndPath, byte[] fileAsByteArray)
+        {
+            try
+            {
+                FileInfo file = new FileInfo(fullFilenameAndPath);
+                using (FileStream fs = new FileStream(file.FullName, FileMode.Create))
+                {
+                    using (BinaryWriter bw = new BinaryWriter(fs))
+                    {
+                        bw.Write(fileAsByteArray);
+                        //bw.Close();
+                        //fs.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error while writing file: " + fullFilenameAndPath, ex);
+            }
+        }
+
+        public static string GetMIMEType(FileInfo fi)
+        {
+            new RegistryPermission(RegistryPermissionAccess.Read, "\\\\HKEY_CLASSES_ROOT");
+
+            RegistryKey classesRoot = Registry.ClassesRoot;
+
+            string dotExt = fi.Extension;
+
+            RegistryKey typeKey = classesRoot.OpenSubKey("MIME\\Database\\Content Type");
+
+
+            foreach (string keyname in typeKey.GetSubKeyNames())
+            {
+                RegistryKey curKey = classesRoot.OpenSubKey("MIME\\Database\\Content Type\\" + keyname);
+
+
+                if (curKey != null && curKey.GetValue("Extension") != null &&
+                    curKey.GetValue("Extension").ToString().ToLower() == dotExt)
+                {
+                    return keyname;
+                }
+            }
+            return string.Empty;
+        }
+
+        public static string FilterFilenameForInvalidChars(string input)
+        {
+            foreach (char invalidChar in System.IO.Path.GetInvalidFileNameChars())
+            {
+                int invalidCharIndex = input.IndexOf(invalidChar);
+
+                while (invalidCharIndex > -1)
+                {
+                    input = input.Remove(invalidCharIndex, 1);
+
+                    invalidCharIndex = input.IndexOf(invalidChar);
+                }
+            }
+
+            foreach (char invalidChar in System.IO.Path.GetInvalidPathChars())
+            {
+                int invalidCharIndex = input.IndexOf(invalidChar);
+
+                while (invalidCharIndex > -1)
+                {
+                    input = input.Remove(invalidCharIndex, 1);
+
+                    invalidCharIndex = input.IndexOf(invalidChar);
+                }
+            }
+
+            return input;
         }
     }
 }

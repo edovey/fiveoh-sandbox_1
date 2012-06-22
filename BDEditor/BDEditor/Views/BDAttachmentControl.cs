@@ -6,148 +6,200 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
+
 using BDEditor.DataModel;
 using BDEditor.Classes;
 
 namespace BDEditor.Views
 {
-    public partial class BDAttachmentControl : UserControl, IBDControl
+    public partial class BDAttachmentControl : BDNodeControl
     {
+        //private System.Windows.Forms.PictureBox attachmentPictureBox;
+
         public BDAttachmentControl()
         {
             InitializeComponent();
+            LayoutControls();
         }
 
-        protected IBDNode currentNode;
-        protected Entities dataContext;
-        protected Guid? scopeId;
-        protected Guid? parentId;
-        protected BDConstants.BDNodeType parentType = BDConstants.BDNodeType.None;
-        protected bool showAsChild = false;
-        protected bool showSiblingAdd = false;
-
-        public BDAttachmentControl(Entities pDataContext, IBDNode pNode)
+        public BDAttachmentControl(Entities pDataContext, IBDNode pNode): base(pDataContext, pNode)
         {
-            dataContext = pDataContext;
-            currentNode = pNode;
-            parentId = pNode.ParentId;
-            DefaultNodeType = pNode.NodeType;
-            DefaultLayoutVariantType = pNode.LayoutVariant;
             InitializeComponent();
+            LayoutControls();
+        }
+        private void LayoutControls()
+        {
+            //this.attachmentPictureBox = new System.Windows.Forms.PictureBox();
+            //this.attachmentPictureBox.Image = global::BDEditor.Properties.Resources.bdy_090s;
+            //this.attachmentPictureBox.Location = new System.Drawing.Point(7, 69);
+            //this.attachmentPictureBox.Name = "attachemtnPictureBox";
+            //this.attachmentPictureBox.Size = new System.Drawing.Size(863, 77);
+            //this.attachmentPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            //this.attachmentPictureBox.TabIndex = 4;
+            //this.attachmentPictureBox.TabStop = false;
+            //this.attachmentPictureBox.Padding = new System.Windows.Forms.Padding(3);
+            //this.attachmentPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            //this.attachmentPictureBox.MouseDown += new MouseEventHandler(attachmentSurface_MouseDown);
+
+            //base.pnlOverview.Size = new System.Drawing.Size(870, 225);
+            //base.pnlOverview.Controls.Add(this.attachmentPictureBox);
+            //base.pnlOverview.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
         }
 
-        public event EventHandler<Classes.NodeEventArgs> RequestItemAdd;
-
-        public event EventHandler<Classes.NodeEventArgs> RequestItemDelete;
-
-        public event EventHandler<Classes.NodeEventArgs> ReorderToPrevious;
-
-        public event EventHandler<Classes.NodeEventArgs> ReorderToNext;
-
-        public event EventHandler<Classes.NodeEventArgs> NotesChanged;
-
-        public event EventHandler<Classes.NodeEventArgs> NameChanged;
-
-        protected virtual void OnNameChanged(NodeEventArgs e)
+        public override void RefreshLayout(bool pShowChildren)
         {
-            EventHandler<NodeEventArgs> handler = NameChanged;
-            if (null != handler) { handler(this, e); }
-        }
-
-        protected virtual void OnNotesChanged(NodeEventArgs e)
-        {
-            EventHandler<NodeEventArgs> handler = NotesChanged;
-            if (null != handler) { handler(this, e); }
-        }
-
-        protected virtual void OnItemAddRequested(NodeEventArgs e)
-        {
-            EventHandler<NodeEventArgs> handler = RequestItemAdd;
-            if (null != handler) { handler(this, e); }
-        }
-
-        protected virtual void OnItemDeleteRequested(NodeEventArgs e)
-        {
-            EventHandler<NodeEventArgs> handler = RequestItemDelete;
-            if (null != handler) { handler(this, e); }
-        }
-
-        protected virtual void OnReorderToPrevious(NodeEventArgs e)
-        {
-            EventHandler<NodeEventArgs> handler = ReorderToPrevious;
-            if (null != handler) { handler(this, e); }
-        }
-
-        protected virtual void OnReorderToNext(NodeEventArgs e)
-        {
-            EventHandler<NodeEventArgs> handler = ReorderToNext;
-            if (null != handler) { handler(this, e); }
-        }
-
-        public void AssignParentInfo(Guid? pParentId, Classes.BDConstants.BDNodeType pParentType)
-        {
-            parentId = pParentId;
-            parentType = pParentType;
-            this.Enabled = (null != parentId);
-        }
-
-        public void AssignDataContext(DataModel.Entities pDataContext)
-        {
-            dataContext = pDataContext;
-        }
-
-        public void AssignScopeId(Guid? pScopeId)
-        {
-            scopeId = pScopeId;
-        }
-
-        public bool Save()
-        {
-            // throw new NotImplementedException();
-            return true;
-        }
-
-        public void Delete()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool CreateCurrentObject()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RefreshLayout()
-        {
-            RefreshLayout(true);
-        }
-
-        public void RefreshLayout(bool pShowChildren)
-        {
+            base.RefreshLayout(pShowChildren);
             ControlHelper.SuspendDrawing(this);
 
+            if (null != this.currentNode)
+            {
+                BDAttachment attachment = this.currentNode as BDAttachment;
+                if (null != attachment)
+                {
+                    lblFilename.Text = attachment.filename;
+
+                    if (null == attachment.attachmentData)
+                    {
+                        attachmentPictureBox.Image = null;
+                    }
+                    else
+                    {
+                        BDConstants.BDAttachmentMimeType mimeType = BDConstants.BDAttachmentMimeType.unsupported;
+                        if(null != attachment.attachmentMimeType)
+                        {
+                            mimeType = (BDConstants.BDAttachmentMimeType)Enum.Parse(typeof(BDConstants.BDAttachmentMimeType), attachment.attachmentMimeType.ToString(), true);
+                        }
+                        switch (mimeType)
+                        {
+                            case BDConstants.BDAttachmentMimeType.unsupported:
+                            case BDConstants.BDAttachmentMimeType.unknown:
+                                break;
+                            case BDConstants.BDAttachmentMimeType.pdf:
+                                attachmentPictureBox.Image = global::BDEditor.Properties.Resources.document;
+                                break;
+                            default:
+                                Image attachmentImage = System.Drawing.Image.FromStream(new System.IO.MemoryStream(attachment.attachmentData));
+                                attachmentPictureBox.Image = attachmentImage;
+                                break;
+                        }
+
+                    }
+                }
+            }
             ControlHelper.ResumeDrawing(this);
         }
 
-        public void ShowLinksInUse(bool pPropagateToChildren)
+        private void attachmentSurface_MouseDown(object sender, MouseEventArgs e)
         {
-            throw new NotImplementedException();
+            if (e.Button == MouseButtons.Right)
+            {
+                this.attachmentSurfaceContextMenuStrip.Show(attachmentPictureBox, e.Location);
+            }
         }
 
-        public BDConstants.BDNodeType DefaultNodeType { get; set; }
-        public BDConstants.LayoutVariantType DefaultLayoutVariantType { get; set; }
-        public int? DisplayOrder { get; set; }
-
-        public DataModel.IBDNode CurrentNode
+        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            get { return currentNode; }
-            set { currentNode = value; }
+            if (null != this.currentNode)
+            {
+                BDAttachment attachment = this.currentNode as BDAttachment;
+                if (null != attachment)
+                {
+                    attachment.attachmentMimeType = null;
+                    attachment.filename = null;
+                    attachment.attachmentData = null;
+                    attachment.filesize = 0;
+                    Console.WriteLine("filesize = {0}", attachment.filesize);
+                    BDAttachment.Save(dataContext, attachment);
+
+                    lblFilename.Text = string.Empty;
+                    attachmentPictureBox.Image = null;
+                }
+            }
         }
 
-        public bool ShowAsChild
+        private void browseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            get { return showAsChild; }
-            set { showAsChild = value; }
+            openFileDialog1.InitialDirectory = "c:\\";
+            openFileDialog1.Filter = "Portable Network Graphics (*.png)|*.png|JPEG (*.jpg)|*.jpg|Portable Document Format (*.pdf)|*.pdf|All Files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.RestoreDirectory = true;
+            openFileDialog1.Multiselect = false;
+            openFileDialog1.FileName = string.Empty;
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                FileInfo fi = new FileInfo(openFileDialog1.FileName);
+                if (null != this.currentNode)
+                {
+                    BDAttachment attachment = this.currentNode as BDAttachment;
+                    if (null != attachment)
+                    {
+                        string mimeType = BDUtilities.GetMIMEType(fi);
+                        Console.WriteLine("Mime Type = {0}", mimeType);
+                        
+                        BDConstants.BDAttachmentMimeType attachmentMimeType = BDConstants.BDAttachmentMimeType.unsupported;
+
+                        var values = Enum.GetValues(typeof(BDConstants.BDAttachmentMimeType));
+                        foreach (var value in values)
+                        {
+                            BDConstants.BDAttachmentMimeType entry = (BDConstants.BDAttachmentMimeType)Enum.ToObject(typeof(BDConstants.BDAttachmentMimeType), value);
+                            if (BDUtilities.GetEnumDescription(entry) == mimeType)
+                            {
+                                attachmentMimeType = entry;
+                                break;
+                            }
+                        }
+
+                        if ((attachmentMimeType != BDConstants.BDAttachmentMimeType.unsupported) && (attachmentMimeType != BDConstants.BDAttachmentMimeType.unknown))
+                        {
+                            attachment.attachmentMimeType = (int)attachmentMimeType;
+                            attachment.filename = fi.Name;
+                            lblFilename.Text = fi.Name;
+
+                            byte[] attachmentData = BDUtilities.ReadFileAsByteArray(fi.FullName);
+                            attachment.attachmentData = attachmentData;
+                            attachment.filesize = attachmentData.Length;
+                            Console.WriteLine("filesize = {0}", attachment.filesize);
+                            BDAttachment.Save(dataContext, attachment);
+
+                            if (attachmentMimeType == BDConstants.BDAttachmentMimeType.pdf)
+                            {
+                                attachmentPictureBox.Image = global::BDEditor.Properties.Resources.document;
+                            }
+                            else
+                            {
+                                Image attachmentImage = System.Drawing.Image.FromStream(new System.IO.MemoryStream(attachment.attachmentData));
+
+                                attachmentPictureBox.Image = attachmentImage;
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Unable to attach", "Invalid file type", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (null != this.currentNode)
+            {
+                BDAttachment attachment = this.currentNode as BDAttachment;
+                if ((null != attachment) && (null != attachment.attachmentData))
+                {
+                    saveFileDialog1.FileName = attachment.filename;
+                    saveFileDialog1.OverwritePrompt = true;
+                    if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                    {
+                        byte[] attachmentData = attachment.attachmentData;
+                        string filename = saveFileDialog1.FileName;
+                        BDUtilities.WriteByteArrayAsFile(filename, attachmentData);
+                    }
+                }
+            }
         }
     }
 }

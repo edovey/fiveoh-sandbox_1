@@ -298,6 +298,26 @@ namespace BDEditor.Classes
             RightJustified = 2
         }
 
+        public enum BDAttachmentMimeType
+        {
+            [Description("Unknown")]
+            unknown = -1,
+            [Description("Unsupported")]
+            unsupported = 0,
+            [Description("image/bmp")]
+            bmp = 1,
+            [Description("image/gif")]
+            gif = 2,
+            [Description("image/jpeg")]
+            jpeg = 3,
+            [Description("image/png")]
+            png = 4,
+            [Description("image/tiff")]
+            tiff = 5,
+            [Description("application/pdf")]
+            pdf = 6
+        }
+
         public const string DATETIMEFORMAT = @"yyyy-MM-dd'T'HH:mm:ss";
         public static readonly Color ACTIVELINK_COLOR = Color.LightSteelBlue;
         public static readonly Color INACTIVELINK_COLOR = SystemColors.Control;

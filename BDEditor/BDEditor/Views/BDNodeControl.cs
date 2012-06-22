@@ -704,6 +704,7 @@ namespace BDEditor.Views
             if (null == childTypeInfoList || childTypeInfoList.Count == 0)
             {
                 addChildNodeToolStripMenuItem.Visible = false;
+                //toolStripSeparator2.Visible = ShowSiblingAdd;
             }
             else
             {

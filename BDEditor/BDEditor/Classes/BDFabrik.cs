@@ -41,6 +41,10 @@ namespace BDEditor.Classes
             {
                 switch (pNode.NodeType)
                 {
+                    case BDConstants.BDNodeType.BDAttachment:
+                        BDAttachment attachment = pNode as BDAttachment;
+                        BDAttachment.Save(pDataContext, attachment);
+                        break;
                     case BDConstants.BDNodeType.BDTherapy:
                         BDTherapy therapy = pNode as BDTherapy;
                         BDTherapy.Save(pDataContext, therapy);
@@ -403,7 +407,7 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
-                         case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
+                        case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
@@ -436,7 +440,7 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubsection, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
-                       case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
+                        case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
@@ -445,10 +449,11 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDCategory, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                            break;                        
+                            break;
                         case BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { layoutVariant }));
-childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogen, new BDConstants.LayoutVariantType[] { layoutVariant }));                            break;                        
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogen, new BDConstants.LayoutVariantType[] { layoutVariant })); 
+                            break;
                         case BDConstants.LayoutVariantType.Microbiology_Antibiogram:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAttachment, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
@@ -679,6 +684,13 @@ childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVari
                             break;
                     }
                     break;
+                case BDConstants.BDNodeType.BDAttachment:
+                    switch (layoutVariant)
+                    {
+                        default:
+                            break;
+                    }
+                    break;
                 default:
                     break;
             }
@@ -694,6 +706,16 @@ childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVari
             {
                 case BDConstants.BDNodeType.None:
                     // do nothing
+                    break;
+                case BDConstants.BDNodeType.BDAttachment:
+                    IQueryable<BDAttachment> taEntries = (from entry in pDataContext.BDAttachments
+                                                      orderby entry.displayOrder
+                                                      select entry);
+                    if (taEntries.Count() > 0)
+                    {
+                        List<IBDNode> workingList = new List<IBDNode>(taEntries.ToList<BDAttachment>());
+                        entryList.AddRange(workingList);
+                    }
                     break;
                 case BDConstants.BDNodeType.BDTherapy:
                     IQueryable<BDTherapy> tEntries = (from entry in pDataContext.BDTherapies
@@ -746,19 +768,35 @@ childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVari
                         entryList.AddRange(GetChildrenForParentIdAndChildType(pContext, pParent.Uuid, childTypeInfo.Item1));
                     }
                 }
+
+
+                bool performPostSort = true;
+
+                switch (pParent.NodeType)
+                {
+                    case BDConstants.BDNodeType.BDPathogenGroup:
+                        performPostSort = false;
+                        break;
+                    default:
+                        performPostSort = true;
+                        break;
+                }
+
+                if (performPostSort)
+                {
+                    entryList.Sort(delegate(IBDNode n1, IBDNode n2)
+                    {
+                        if (n1.DisplayOrder == null && n2.DisplayOrder == null) return 0;
+
+                        else if (n1.DisplayOrder != null && n2.DisplayOrder == null) return -1;
+
+                        else if (n1.DisplayOrder == null && n2.DisplayOrder != null) return 1;
+
+                        else
+                            return (n1.DisplayOrder as IComparable).CompareTo(n2.DisplayOrder as IComparable);
+                    });
+                }
             }
-
-            entryList.Sort(delegate(IBDNode n1, IBDNode n2) 
-            {
-                if (n1.DisplayOrder == null && n2.DisplayOrder == null) return 0;
-
-                else if (n1.DisplayOrder != null && n2.DisplayOrder == null) return -1;
-
-                else if (n1.DisplayOrder == null && n2.DisplayOrder != null) return 1;
-                
-                else
-                    return (n1.DisplayOrder as IComparable).CompareTo(n2.DisplayOrder as IComparable);
-            });
 
             return entryList;
         }
@@ -773,6 +811,10 @@ childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVari
 
                 switch (childNodeType)
                 {
+                    case BDConstants.BDNodeType.BDAttachment:
+                        entryList.AddRange(new List<IBDNode>(BDAttachment.RetrieveAttachmentForParentId(pContext, pParentId)));
+                        break;
+
                     case BDConstants.BDNodeType.BDTherapyGroup:
                         entryList.AddRange(new List<IBDNode>(BDTherapyGroup.RetrieveTherapyGroupsForParentId(pContext, pParentId)));
                         break;
@@ -865,11 +907,19 @@ childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVari
             {
                 case BDConstants.BDNodeType.BDAntimicrobialRisk:
                     BDAntimicrobialRisk risk = BDAntimicrobialRisk.CreateBDAntimicrobialRisk(pContext, pChildType);
-                    risk.displayOrder = siblingList.Count;
+                    risk.DisplayOrder = siblingList.Count;
                     risk.SetParent(pParentNode);
                     risk.LayoutVariant = pLayoutVariant;
                     BDAntimicrobialRisk.Save(pContext, risk);
                     result = risk;
+                    break;
+                case BDConstants.BDNodeType.BDAttachment:
+                    BDAttachment attachment = BDAttachment.CreateBDAttachment(pContext);
+                    attachment.DisplayOrder = siblingList.Count;
+                    attachment.SetParent(pParentNode);
+                    attachment.LayoutVariant = pLayoutVariant;
+                    BDAttachment.Save(pContext, attachment);
+                    result = attachment;
                     break;
                 case BDConstants.BDNodeType.BDDosage:
                     BDDosage dosage = BDDosage.CreateBDDosage(pContext, pParentNode.Uuid);
@@ -961,6 +1011,11 @@ childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVari
 
             switch (nodeType)
             {
+                case BDConstants.BDNodeType.BDAttachment:
+                    BDAttachment attachment = pNode as BDAttachment;
+                    BDAttachment.Delete(pContext, attachment, pCreateDeletionRecord);
+                    break;
+
                 case BDConstants.BDNodeType.BDTherapyGroup:
                     BDTherapyGroup therapyGroup = pNode as BDTherapyGroup;
                     BDTherapyGroup.Delete(pContext, therapyGroup, pCreateDeletionRecord);
@@ -1033,6 +1088,9 @@ childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVari
                     break;
                 case BDConstants.BDNodeType.BDTableRow:
                     entry = BDTableRow.CreateBDTableRow(pContext, pParentNodeType, pParentUuid.Value);
+                    break;
+                case BDConstants.BDNodeType.BDAttachment:
+                    entry = BDAttachment.CreateBDAttachment(pContext);
                     break;
                 default:
                     entry = BDNode.CreateBDNode(pContext, pNodeType);
@@ -1280,7 +1338,7 @@ childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVari
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Microbiology_Antibiogram:
-                            nodeControl = new BDAttachmentControl(pContext, pNode);
+                            nodeControl = new BDNodeControl(pContext, pNode);
                             break;
                         default:
                             nodeControl = new BDNodeOverviewControl(pContext, pNode);
@@ -1505,7 +1563,17 @@ childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVari
                             break;
                     }
                     break;
-
+                case BDConstants.BDNodeType.BDAttachment:
+                    switch (pNode.LayoutVariant)
+                    {
+                        default:
+                            nodeControl = new BDAttachmentControl(pContext, pNode);
+                            BDAttachmentControl attachmentControl = nodeControl as BDAttachmentControl;
+                            attachmentControl.ShowAsChild = true;
+                            attachmentControl.ShowSiblingAdd = false;
+                            break;
+                    }
+                    break;
                 default:
                     // Require explicit handling for given child types
                     // i.e. disease does not currently display children within this control

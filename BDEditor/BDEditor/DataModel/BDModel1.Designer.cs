@@ -68,6 +68,38 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<BDAntimicrobialRisk> BDAntimicrobialRisks
+        {
+            get
+            {
+                if ((_BDAntimicrobialRisks == null))
+                {
+                    _BDAntimicrobialRisks = base.CreateObjectSet<BDAntimicrobialRisk>("BDAntimicrobialRisks");
+                }
+                return _BDAntimicrobialRisks;
+            }
+        }
+        private ObjectSet<BDAntimicrobialRisk> _BDAntimicrobialRisks;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDAttachment> BDAttachments
+        {
+            get
+            {
+                if ((_BDAttachments == null))
+                {
+                    _BDAttachments = base.CreateObjectSet<BDAttachment>("BDAttachments");
+                }
+                return _BDAttachments;
+            }
+        }
+        private ObjectSet<BDAttachment> _BDAttachments;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<BDDeletion> BDDeletions
         {
             get
@@ -80,6 +112,22 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDDeletion> _BDDeletions;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDDosage> BDDosages
+        {
+            get
+            {
+                if ((_BDDosages == null))
+                {
+                    _BDDosages = base.CreateObjectSet<BDDosage>("BDDosages");
+                }
+                return _BDDosages;
+            }
+        }
+        private ObjectSet<BDDosage> _BDDosages;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -180,6 +228,22 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<BDPrecaution> BDPrecautions
+        {
+            get
+            {
+                if ((_BDPrecautions == null))
+                {
+                    _BDPrecautions = base.CreateObjectSet<BDPrecaution>("BDPrecautions");
+                }
+                return _BDPrecautions;
+            }
+        }
+        private ObjectSet<BDPrecaution> _BDPrecautions;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<BDSearchEntry> BDSearchEntries
         {
             get
@@ -212,6 +276,22 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<BDString> BDStrings
+        {
+            get
+            {
+                if ((_BDStrings == null))
+                {
+                    _BDStrings = base.CreateObjectSet<BDString>("BDStrings");
+                }
+                return _BDStrings;
+            }
+        }
+        private ObjectSet<BDString> _BDStrings;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<BDSystemSetting> BDSystemSettings
         {
             get
@@ -224,38 +304,6 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDSystemSetting> _BDSystemSettings;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<BDTherapy> BDTherapies
-        {
-            get
-            {
-                if ((_BDTherapies == null))
-                {
-                    _BDTherapies = base.CreateObjectSet<BDTherapy>("BDTherapies");
-                }
-                return _BDTherapies;
-            }
-        }
-        private ObjectSet<BDTherapy> _BDTherapies;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<BDTherapyGroup> BDTherapyGroups
-        {
-            get
-            {
-                if ((_BDTherapyGroups == null))
-                {
-                    _BDTherapyGroups = base.CreateObjectSet<BDTherapyGroup>("BDTherapyGroups");
-                }
-                return _BDTherapyGroups;
-            }
-        }
-        private ObjectSet<BDTherapyGroup> _BDTherapyGroups;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -292,85 +340,53 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<BDString> BDStrings
+        public ObjectSet<BDTherapy> BDTherapies
         {
             get
             {
-                if ((_BDStrings == null))
+                if ((_BDTherapies == null))
                 {
-                    _BDStrings = base.CreateObjectSet<BDString>("BDStrings");
+                    _BDTherapies = base.CreateObjectSet<BDTherapy>("BDTherapies");
                 }
-                return _BDStrings;
+                return _BDTherapies;
             }
         }
-        private ObjectSet<BDString> _BDStrings;
+        private ObjectSet<BDTherapy> _BDTherapies;
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<BDDosage> BDDosages
+        public ObjectSet<BDTherapyGroup> BDTherapyGroups
         {
             get
             {
-                if ((_BDDosages == null))
+                if ((_BDTherapyGroups == null))
                 {
-                    _BDDosages = base.CreateObjectSet<BDDosage>("BDDosages");
+                    _BDTherapyGroups = base.CreateObjectSet<BDTherapyGroup>("BDTherapyGroups");
                 }
-                return _BDDosages;
+                return _BDTherapyGroups;
             }
         }
-        private ObjectSet<BDDosage> _BDDosages;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<BDPrecaution> BDPrecautions
-        {
-            get
-            {
-                if ((_BDPrecautions == null))
-                {
-                    _BDPrecautions = base.CreateObjectSet<BDPrecaution>("BDPrecautions");
-                }
-                return _BDPrecautions;
-            }
-        }
-        private ObjectSet<BDPrecaution> _BDPrecautions;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<BDAttachment> BDAttachments
-        {
-            get
-            {
-                if ((_BDAttachments == null))
-                {
-                    _BDAttachments = base.CreateObjectSet<BDAttachment>("BDAttachments");
-                }
-                return _BDAttachments;
-            }
-        }
-        private ObjectSet<BDAttachment> _BDAttachments;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<BDAntimicrobialRisk> BDAntimicrobialRisks
-        {
-            get
-            {
-                if ((_BDAntimicrobialRisks == null))
-                {
-                    _BDAntimicrobialRisks = base.CreateObjectSet<BDAntimicrobialRisk>("BDAntimicrobialRisks");
-                }
-                return _BDAntimicrobialRisks;
-            }
-        }
-        private ObjectSet<BDAntimicrobialRisk> _BDAntimicrobialRisks;
+        private ObjectSet<BDTherapyGroup> _BDTherapyGroups;
 
         #endregion
         #region AddTo Methods
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDAntimicrobialRisks EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDAntimicrobialRisks(BDAntimicrobialRisk bDAntimicrobialRisk)
+        {
+            base.AddObject("BDAntimicrobialRisks", bDAntimicrobialRisk);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDAttachments EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDAttachments(BDAttachment bDAttachment)
+        {
+            base.AddObject("BDAttachments", bDAttachment);
+        }
     
         /// <summary>
         /// Deprecated Method for adding a new object to the BDDeletions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
@@ -378,6 +394,14 @@ namespace BDEditor.DataModel
         public void AddToBDDeletions(BDDeletion bDDeletion)
         {
             base.AddObject("BDDeletions", bDDeletion);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDDosages EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDDosages(BDDosage bDDosage)
+        {
+            base.AddObject("BDDosages", bDDosage);
         }
     
         /// <summary>
@@ -429,6 +453,14 @@ namespace BDEditor.DataModel
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the BDPrecautions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDPrecautions(BDPrecaution bDPrecaution)
+        {
+            base.AddObject("BDPrecautions", bDPrecaution);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the BDSearchEntries EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToBDSearchEntries(BDSearchEntry bDSearchEntry)
@@ -445,27 +477,19 @@ namespace BDEditor.DataModel
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the BDStrings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDStrings(BDString bDString)
+        {
+            base.AddObject("BDStrings", bDString);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the BDSystemSettings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToBDSystemSettings(BDSystemSetting bDSystemSetting)
         {
             base.AddObject("BDSystemSettings", bDSystemSetting);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDTherapies EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDTherapies(BDTherapy bDTherapy)
-        {
-            base.AddObject("BDTherapies", bDTherapy);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDTherapyGroups EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDTherapyGroups(BDTherapyGroup bDTherapyGroup)
-        {
-            base.AddObject("BDTherapyGroups", bDTherapyGroup);
         }
     
         /// <summary>
@@ -485,43 +509,19 @@ namespace BDEditor.DataModel
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the BDStrings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the BDTherapies EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToBDStrings(BDString bDString)
+        public void AddToBDTherapies(BDTherapy bDTherapy)
         {
-            base.AddObject("BDStrings", bDString);
+            base.AddObject("BDTherapies", bDTherapy);
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the BDDosages EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the BDTherapyGroups EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToBDDosages(BDDosage bDDosage)
+        public void AddToBDTherapyGroups(BDTherapyGroup bDTherapyGroup)
         {
-            base.AddObject("BDDosages", bDDosage);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDPrecautions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDPrecautions(BDPrecaution bDPrecaution)
-        {
-            base.AddObject("BDPrecautions", bDPrecaution);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDAttachments EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDAttachments(BDAttachment bDAttachment)
-        {
-            base.AddObject("BDAttachments", bDAttachment);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDAntimicrobialRisks EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDAntimicrobialRisks(BDAntimicrobialRisk bDAntimicrobialRisk)
-        {
-            base.AddObject("BDAntimicrobialRisks", bDAntimicrobialRisk);
+            base.AddObject("BDTherapyGroups", bDTherapyGroup);
         }
 
         #endregion
@@ -1237,6 +1237,78 @@ namespace BDEditor.DataModel
         private global::System.String _parentKeyName;
         partial void OnparentKeyNameChanging(global::System.String value);
         partial void OnparentKeyNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.Byte[] attachmentData
+        {
+            get
+            {
+                return StructuralObject.GetValidValue(_attachmentData);
+            }
+            set
+            {
+                OnattachmentDataChanging(value);
+                ReportPropertyChanging("attachmentData");
+                _attachmentData = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("attachmentData");
+                OnattachmentDataChanged();
+            }
+        }
+        private global::System.Byte[] _attachmentData;
+        partial void OnattachmentDataChanging(global::System.Byte[] value);
+        partial void OnattachmentDataChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String filename
+        {
+            get
+            {
+                return _filename;
+            }
+            set
+            {
+                OnfilenameChanging(value);
+                ReportPropertyChanging("filename");
+                _filename = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("filename");
+                OnfilenameChanged();
+            }
+        }
+        private global::System.String _filename;
+        partial void OnfilenameChanging(global::System.String value);
+        partial void OnfilenameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> filesize
+        {
+            get
+            {
+                return _filesize;
+            }
+            set
+            {
+                OnfilesizeChanging(value);
+                ReportPropertyChanging("filesize");
+                _filesize = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("filesize");
+                OnfilesizeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _filesize;
+        partial void OnfilesizeChanging(Nullable<global::System.Int32> value);
+        partial void OnfilesizeChanged();
 
         #endregion
     

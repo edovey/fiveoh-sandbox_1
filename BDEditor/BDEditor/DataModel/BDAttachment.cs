@@ -52,6 +52,8 @@ namespace BDEditor.DataModel
         private const string NAME = @"at_name";
         private const string DISPLAYORDER = @"at_displayOrder";
 
+        //TODO: attachmentData, filename, filesize
+
         public Guid? tempProductionUuid { get; set; }
 
         /// <summary>

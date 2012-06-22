@@ -307,6 +307,9 @@
     <EmbeddedResource Include="Views\BDArchiveDialog.resx">
       <DependentUpon>BDArchiveDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDAttachmentControl.resx">
+      <DependentUpon>BDAttachmentControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\BDDosageAndCostControl.resx">
       <DependentUpon>BDDosageAndCostControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -445,6 +448,8 @@
     <Content Include="Resources\Chapter_6b.txt" />
     <Content Include="Resources\Chapter_6c.txt" />
     <Content Include="Resources\Chapter_6d.txt" />
+    <Content Include="Resources\document.bmp" />
+    <Content Include="Resources\document.png" />
     <Content Include="Resources\Flag-Red.png" />
     <Content Include="Resources\Ok2.png" />
     <Content Include="Resources\pen.ico" />

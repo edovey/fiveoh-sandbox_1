@@ -26,6 +26,7 @@ namespace BDEditor.Classes.Navigation
                 case BDConstants.BDNodeType.BDSection:
                 case BDConstants.BDNodeType.BDCategory:
                 case BDConstants.BDNodeType.BDSubcategory:
+                case BDConstants.BDNodeType.BDAttachment:
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Microbiology:

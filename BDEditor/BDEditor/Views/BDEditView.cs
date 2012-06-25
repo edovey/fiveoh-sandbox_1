@@ -433,7 +433,21 @@ namespace BDEditor.Views
                                     showChildControls = false;
                                 }
                                 break;
-
+                            case BDConstants.LayoutVariantType.Prophylaxis:
+                            case BDConstants.LayoutVariantType.Prophylaxis_PreOp:
+                            case BDConstants.LayoutVariantType.Prophylaxis_IERecommendation:
+                            case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
+                            case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure:
+                            case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Immunization_VaccineDetail:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
+                                childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
+                                if (!pInterrogateOnly)
+                                {
+                                    graftTreeNode(selectedNode, childTreeNode);
+                                    showChildControls = false;
+                                }
+                                break;
                             case BDConstants.LayoutVariantType.Dental:
                             case BDConstants.LayoutVariantType.Dental_Prophylaxis:
                             case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
@@ -508,6 +522,18 @@ namespace BDEditor.Views
                     case BDConstants.BDNodeType.BDCategory:
                         switch (node.LayoutVariant)
                         {
+                            case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
+                            case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
+                            case BDConstants.LayoutVariantType.Dental_Prophylaxis:
+                            case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
+                            case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
+                            case BDConstants.LayoutVariantType.Prophylaxis_IERecommendation:
+                            case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
+                                if (!pInterrogateOnly)
+                                {
+                                    showChildControls = true;
+                                }
+                                break;
                             case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
@@ -529,14 +555,12 @@ namespace BDEditor.Views
                                     showChildControls = false;
                                 }
                                 break;
-                            case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
-                            case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
-                            case BDConstants.LayoutVariantType.Dental_Prophylaxis:
-                            case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
-                            case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
+                                childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
-                                    showChildControls = true;
+                                    graftTreeNode(selectedNode, childTreeNode);
+                                    showChildControls = false;
                                 }
                                 break;
                             case BDConstants.LayoutVariantType.Dental:
@@ -560,12 +584,6 @@ namespace BDEditor.Views
                                 {
                                     graftTreeNode(selectedNode, childTreeNode);
                                     showChildControls = false;
-                                }
-                                break;
-                            case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
-                                if (!pInterrogateOnly)
-                                {
-                                    showChildControls = true;
                                 }
                                 break;
                             case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
@@ -594,6 +612,15 @@ namespace BDEditor.Views
                                     showChildControls = false;
                                 }
                                 break;
+                            case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
+                            case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
+                                childTreeNode = BDDentalTree.BuildBranch(dataContext, node);
+                                if (!pInterrogateOnly)
+                                {
+                                    graftTreeNode(selectedNode, childTreeNode);
+                                    showChildControls = false;
+                                }
+                                break;
                             case BDConstants.LayoutVariantType.Dental:
                             case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
                                 childTreeNode = BDDentalTree.BuildBranch(dataContext, node);
@@ -601,6 +628,12 @@ namespace BDEditor.Views
                                 {
                                     graftTreeNode(selectedNode, childTreeNode);
                                     showChildControls = false;
+                                }
+                                break;
+                            case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
+                                if (!pInterrogateOnly)
+                                {
+                                    showChildControls = true;
                                 }
                                 break;
                         }
@@ -724,11 +757,23 @@ namespace BDEditor.Views
 
                         }
                         break;
+                    case BDConstants.BDNodeType.BDTherapyGroup:
+                        switch (node.LayoutVariant)
+                        {
+                            default:
+                                if (!pInterrogateOnly)
+                                {
+                                    showChildControls = true;
+                                }
+                                break;
+                        }
+                        break;
                     case BDConstants.BDNodeType.BDTopic:
                         switch (node.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
                             case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Immunization_VaccineDetail:
                             case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis:
                                 if (!pInterrogateOnly)
                                 {
@@ -741,6 +786,15 @@ namespace BDEditor.Views
                                 {
                                     graftTreeNode(selectedNode, childTreeNode);
                                     showChildControls = false;
+                                }
+                                break;
+                            case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
+                            case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
+                                childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
+                                if (!pInterrogateOnly)
+                                {
+                                    graftTreeNode(selectedNode, childTreeNode);
+                                    showChildControls = true;
                                 }
                                 break;
                         }
@@ -826,9 +880,9 @@ namespace BDEditor.Views
 
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_2f.txt", BDDataLoader.baseDataDefinitionType.chapter2f);
 
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3a.txt", BDDataLoader.baseDataDefinitionType.chapter3a);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_3a.txt", BDDataLoader.baseDataDefinitionType.chapter3a);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_3b.txt", BDDataLoader.baseDataDefinitionType.chapter3b);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3c.txt", BDDataLoader.baseDataDefinitionType.chapter3c);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_3c.txt", BDDataLoader.baseDataDefinitionType.chapter3c);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_3d.txt", BDDataLoader.baseDataDefinitionType.chapter3d);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_3e.txt", BDDataLoader.baseDataDefinitionType.chapter3e);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_3f.txt", BDDataLoader.baseDataDefinitionType.chapter3f);
@@ -917,7 +971,7 @@ namespace BDEditor.Views
             this.Text = string.Format("{0} - {1}" , "Bugs & Drugs Editor", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
             // Loading Seed Data:  set the following variables
-            isSeedDataLoadAvailable = false;
+            isSeedDataLoadAvailable = true;
 
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";

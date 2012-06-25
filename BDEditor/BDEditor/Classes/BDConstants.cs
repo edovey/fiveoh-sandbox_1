@@ -205,29 +205,31 @@ namespace BDEditor.Classes
             Prophylaxis_FluidExposure = 305,
             [Description("Sexual Assault")]
             Prophylaxis_SexualAssault = 306,
+            [Description("Sexual Assault - Prophyylaxis")]
+            Prophylaxis_SexualAssault_Prophylaxis = 307,
 
             [Description("Routine Immunization Programs")]
-            Prophylaxis_Immunization_Routine = 307,
+            Prophylaxis_Immunization_Routine = 308,
             [Description("Routine Immunization Programs")]
-            Prophylaxis_Immunization_Routine_HeaderRow = 3071,
+            Prophylaxis_Immunization_Routine_HeaderRow = 3081,
             [Description("Routine Immunization Programs")]
-            Prophylaxis_Immunization_Routine_ContentRow = 3072,
+            Prophylaxis_Immunization_Routine_ContentRow = 3082,
 
             [Description("Vaccines for High Risk")]
-            Prophylaxis_Immunization_HighRisk = 308,
+            Prophylaxis_Immunization_HighRisk = 309,
             [Description("Vaccines for High Risk")]
-            Prophylaxis_Immunization_HighRisk_HeaderRow = 3081,
+            Prophylaxis_Immunization_HighRisk_HeaderRow = 3091,
             [Description("Vaccines for High Risk")]
-            Prophylaxis_Immunization_HighRisk_ContentRow = 3082,
+            Prophylaxis_Immunization_HighRisk_ContentRow = 3092,
 
             [Description("Vaccine Details")]
-            Prophylaxis_Immunization_VaccineDetail = 309,
+            Prophylaxis_Immunization_VaccineDetail = 310,
             [Description("Prophylaxis Communicable Diseases")]
-            Prophylaxis_Communicable_Invasive = 310,
+            Prophylaxis_Communicable_Invasive = 311,
             [Description("Prophylaxis Influenza")]
-            Prophylaxis_Communicable_Influenza = 311,
+            Prophylaxis_Communicable_Influenza = 312,
             [Description("Infection Precautions")]
-            Prophylaxis_InfectionPrecautions = 312,
+            Prophylaxis_InfectionPrecautions = 313,
 
             [Description("Dental")]
             Dental = 400,

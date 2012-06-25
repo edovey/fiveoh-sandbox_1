@@ -60,20 +60,20 @@ namespace BDEditor.DataModel
         /// Extended Create method that sets the created date and the schema version
         /// </summary>
         /// <returns></returns>
-        public static BDAntimicrobialRisk CreateBDAntimicrobialRisk(Entities pContext, BDConstants.BDNodeType pNodeType)
+        public static BDAntimicrobialRisk CreateBDAntimicrobialRisk(Entities pContext)
         {
-            return CreateBDAntimicrobialRisk(pContext, pNodeType, Guid.NewGuid());
+            return CreateBDAntimicrobialRisk(pContext, Guid.NewGuid());
         }
 
         /// <summary>
         /// Extended Create method that sets default values and schema version
         /// </summary>
         /// <returns></returns>
-        public static BDAntimicrobialRisk CreateBDAntimicrobialRisk(Entities pContext, BDConstants.BDNodeType pNodeType, Guid pUuid)
+        public static BDAntimicrobialRisk CreateBDAntimicrobialRisk(Entities pContext, Guid pUuid)
         {
             BDAntimicrobialRisk node = CreateBDAntimicrobialRisk(pUuid);
-            node.nodeType = (int)pNodeType;
-            node.nodeKeyName = pNodeType.ToString();
+            node.nodeType = (int)BDConstants.BDNodeType.BDAntimicrobialRisk;
+            node.nodeKeyName = node.nodeType.ToString();
             node.schemaVersion = ENTITY_SCHEMAVERSION;
             node.displayOrder = -1;
             node.name = string.Empty;

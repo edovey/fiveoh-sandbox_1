@@ -714,8 +714,9 @@ namespace BDEditor.Views
                 case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II:
+                case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
                 default:
-                    // no changes - this control is not displayed
+                    // no changes - all controls are displayed
                     break;
             }
             pnlMain.Refresh();

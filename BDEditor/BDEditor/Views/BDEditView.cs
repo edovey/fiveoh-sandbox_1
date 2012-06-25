@@ -612,15 +612,6 @@ namespace BDEditor.Views
                                     showChildControls = false;
                                 }
                                 break;
-                            case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
-                            case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
-                                childTreeNode = BDDentalTree.BuildBranch(dataContext, node);
-                                if (!pInterrogateOnly)
-                                {
-                                    graftTreeNode(selectedNode, childTreeNode);
-                                    showChildControls = false;
-                                }
-                                break;
                             case BDConstants.LayoutVariantType.Dental:
                             case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
                                 childTreeNode = BDDentalTree.BuildBranch(dataContext, node);
@@ -630,6 +621,7 @@ namespace BDEditor.Views
                                     showChildControls = false;
                                 }
                                 break;
+                            case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
                                 if (!pInterrogateOnly)
                                 {
@@ -773,6 +765,7 @@ namespace BDEditor.Views
                         {
                             case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
                             case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
+                            case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
                             case BDConstants.LayoutVariantType.Prophylaxis_Immunization_VaccineDetail:
                             case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis:
                                 if (!pInterrogateOnly)
@@ -788,13 +781,12 @@ namespace BDEditor.Views
                                     showChildControls = false;
                                 }
                                 break;
-                            case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
                             case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
                                 childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
                                     graftTreeNode(selectedNode, childTreeNode);
-                                    showChildControls = true;
+                                    showChildControls = false;
                                 }
                                 break;
                         }
@@ -883,12 +875,12 @@ namespace BDEditor.Views
             dataLoader.ImportData(dataContext, @"Resources\Chapter_3a.txt", BDDataLoader.baseDataDefinitionType.chapter3a);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_3b.txt", BDDataLoader.baseDataDefinitionType.chapter3b);
             dataLoader.ImportData(dataContext, @"Resources\Chapter_3c.txt", BDDataLoader.baseDataDefinitionType.chapter3c);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3d.txt", BDDataLoader.baseDataDefinitionType.chapter3d);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3e.txt", BDDataLoader.baseDataDefinitionType.chapter3e);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3f.txt", BDDataLoader.baseDataDefinitionType.chapter3f);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3g.txt", BDDataLoader.baseDataDefinitionType.chapter3g);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_3d.txt", BDDataLoader.baseDataDefinitionType.chapter3d);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_3e.txt", BDDataLoader.baseDataDefinitionType.chapter3e);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_3f.txt", BDDataLoader.baseDataDefinitionType.chapter3f);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_3g.txt", BDDataLoader.baseDataDefinitionType.chapter3g);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_3h.txt", BDDataLoader.baseDataDefinitionType.chapter3h);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3i.txt", BDDataLoader.baseDataDefinitionType.chapter3i);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_3i.txt", BDDataLoader.baseDataDefinitionType.chapter3i);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_3j.txt", BDDataLoader.baseDataDefinitionType.chapter3j);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_3k.txt", BDDataLoader.baseDataDefinitionType.chapter3k);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_3l.txt", BDDataLoader.baseDataDefinitionType.chapter3l);

@@ -4990,51 +4990,21 @@ namespace BDEditor.Classes
                 idxTableHeaderCell = 0;
             }
 
-           /* if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
-            {
-                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
-                if (null == sectionNode)
-                {
-                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-                    section.name = sectionData;
-                    section.SetParent(chapter);
-                    section.displayOrder = idxSection++;
-                    section.LayoutVariant = sectionLayoutVariant;
-                    BDNode.Save(dataContext, section);
-                }
-                else
-                {
-                    section = sectionNode;
-                    idxSection++;
-                }
-                table = null;
-                tableHeaderRow = null;
-                tableHeaderCell = null;
-                tableSection = null;
-                tableRow = null;
-                tableCell = null;
-
-                idxTable = 0;
-                idxTableChildren = 0;
-                idxTableHeaderCell = 0;
-            } */
-
             if ((null != tableData && tableData != string.Empty) && ((null == table) || (table.name != tableData)))
             {
-                // this seed data was created without the section layer of the hierarchy
-                if (null == section)
+                BDNode tableNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == tableNode)
                 {
+                    // this seed data was created without the section layer of the hierarchy
+                    if (null == section)
+                    {
                         section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.NewGuid());
                         section.name = tableData;
                         section.SetParent(chapter);
                         section.displayOrder = idxSection++;
                         section.LayoutVariant = sectionLayoutVariant;
                         BDNode.Save(dataContext, section);
-                }
-
-                BDNode tableNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
-                if (null == tableNode)
-                {
+                    }
                     table = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTable, Guid.Parse(uuidData));
                     table.name = (tableData == @"<blank>") ? string.Empty : tableData;
                     table.SetParent(section);
@@ -5231,9 +5201,9 @@ namespace BDEditor.Classes
             //Expectation that a row contains only one element with data
 
             BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
-            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_IERecommendation;
-            BDConstants.LayoutVariantType categoryLayoutVariant = sectionLayoutVariant;
-            BDConstants.LayoutVariantType subcategoryLayoutVariant = sectionLayoutVariant;
+            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
+            BDConstants.LayoutVariantType categoryLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_IERecommendation;
+            BDConstants.LayoutVariantType subcategoryLayoutVariant = categoryLayoutVariant;
 
             uuidData = string.Empty;
             chapterData = string.Empty;
@@ -5347,14 +5317,17 @@ namespace BDEditor.Classes
 
             BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
             BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage;
-            BDConstants.LayoutVariantType therapyGroupLayoutVariant = sectionLayoutVariant;
-            BDConstants.LayoutVariantType therapyLayoutVariant = sectionLayoutVariant;
+            BDConstants.LayoutVariantType therapyGroupLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage;
+            BDConstants.LayoutVariantType therapyLayoutVariant = therapyGroupLayoutVariant;
 
             uuidData = string.Empty;
             chapterData = string.Empty;
             sectionData = string.Empty;
             categoryData = string.Empty;
             therapyGroupData = string.Empty;
+            therapyData = string.Empty;
+
+            bool firstTherapyGroup = true;
 
             if (elements.Length > 0) uuidData = elements[0];
             if (elements.Length > 1) chapterData = elements[1];
@@ -5407,17 +5380,22 @@ namespace BDEditor.Classes
                 }
                 therapyGroup = null;
                 therapy = null;
-                idxTherapyGroup = 0;
                 idxTherapy = 0;
+                firstTherapyGroup = true;
             }
             if ((null != therapyGroupData && therapyGroupData != string.Empty) && ((null == therapyGroup) || (therapyGroup.name != therapyGroupData)))
             {
+                if (therapyGroupData == "Standard")
+                {
+                    idxTherapyGroup = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+                    idxTherapyGroup++;
+                }
                 BDTherapyGroup tmpNode = BDTherapyGroup.RetrieveTherapyGroupWithId(dataContext, Guid.Parse(uuidData));
                 if (null == tmpNode)
                 {
                     therapyGroup = BDTherapyGroup.CreateBDTherapyGroup(dataContext, Guid.Parse(uuidData));
                     therapyGroup.name = therapyGroupData;
-                    therapyGroup.SetParent(category);
+                    therapyGroup.SetParent(section);
                     therapyGroup.displayOrder = idxTherapyGroup++;
                     therapyGroup.LayoutVariant = therapyGroupLayoutVariant;
                     BDTherapyGroup.Save(dataContext, therapyGroup);
@@ -5427,6 +5405,7 @@ namespace BDEditor.Classes
                     therapyGroup = tmpNode;
                     idxTherapyGroup++;
                 }
+                firstTherapyGroup = false;
                 therapy = null;
                 idxTherapy = 0;
             }
@@ -5437,7 +5416,7 @@ namespace BDEditor.Classes
                 {
                     therapy = BDTherapy.CreateBDTherapy(dataContext, Guid.Parse(uuidData));
                     therapy.name = (therapyData == @"<blank>") ? string.Empty : therapyData;
-                    therapy.SetParent(section);
+                    therapy.SetParent(therapyGroup);
                     therapy.displayOrder = idxTherapy++;
                     therapy.LayoutVariant = therapyLayoutVariant;
                     BDTherapy.Save(dataContext, therapy);
@@ -5462,8 +5441,8 @@ namespace BDEditor.Classes
 
             BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
             BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_FluidExposure;
-            BDConstants.LayoutVariantType tableLayoutVariant = BDConstants.LayoutVariantType.Table_3_Column;
-            BDConstants.LayoutVariantType headerRowLayoutVariant = BDConstants.LayoutVariantType.Table_3_Column_HeaderRow;
+            BDConstants.LayoutVariantType tableLayoutVariant = BDConstants.LayoutVariantType.Undefined;
+            BDConstants.LayoutVariantType headerRowLayoutVariant = BDConstants.LayoutVariantType.Undefined;
 
             uuidData = string.Empty;
             chapterData = string.Empty;
@@ -5482,7 +5461,25 @@ namespace BDEditor.Classes
             if (elements.Length > 4) tableHeaderRowData = elements[4];
             if (elements.Length > 5) tableHeaderCellData = elements[5];
             if (elements.Length > 6) tableSectionData = elements[6];
-            if (elements.Length > 7) tableRowData = elements[7];
+
+            if (tableData != null && tableData != string.Empty)
+            {
+                if (uuidData == "2d36bf1c-a4d8-4d00-916e-cb9a29013361" || uuidData == "a2e97873-bdb0-430b-a379-c9f136b8f968")
+                {
+                    tableLayoutVariant = BDConstants.LayoutVariantType.Table_3_Column;
+                    headerRowLayoutVariant = BDConstants.LayoutVariantType.Table_3_Column_HeaderRow;
+                }
+                if (uuidData == "7c06671f-9ec7-4d20-8a2e-2804001f2156" || uuidData == "4cab3c94-09e0-440d-a39f-71ceb08c1b04")
+                {
+                    tableLayoutVariant = BDConstants.LayoutVariantType.Table_2_Column;
+                    headerRowLayoutVariant = BDConstants.LayoutVariantType.Table_2_Column_HeaderRow;
+                }
+                if (uuidData == "4017bc6d-05fd-45d9-9119-3ab9062a71a5")
+                {
+                    tableLayoutVariant = BDConstants.LayoutVariantType.Table_5_Column;
+                    headerRowLayoutVariant = BDConstants.LayoutVariantType.Table_5_Column_HeaderRow;
+                }
+            }
 
             if ((null != chapterData && chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
             {
@@ -5506,8 +5503,6 @@ namespace BDEditor.Classes
                 tableHeaderRow = null;
                 tableHeaderCell = null;
                 tableSection = null;
-                tableRow = null;
-                tableCell = null;
 
                 idxSection = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
                 idxTable = 0;
@@ -5544,12 +5539,6 @@ namespace BDEditor.Classes
             if ((null != tableData && tableData != string.Empty) && ((null == table) || (table.name != tableData)))
             {
 
-                if (uuidData == "2d36bf1c-a4d8-4d00-916e-cb9a29013361" || uuidData == "a2e97873-bdb0-430b-a379-c9f136b8f968")
-                    tableLayoutVariant = BDConstants.LayoutVariantType.Table_3_Column;
-                if (uuidData == "7c06671f-9ec7-4d20-8a2e-2804001f2156" || uuidData == "4cab3c94-09e0-440d-a39f-71ceb08c1b04")
-                    tableLayoutVariant = BDConstants.LayoutVariantType.Table_2_Column;
-                if (uuidData == "4017bc6d-05fd-45d9-9119-3ab9062a71a5")
-                    tableLayoutVariant = BDConstants.LayoutVariantType.Table_5_Column;
 
                 BDNode tableNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
                 if (null == tableNode)
@@ -5572,9 +5561,6 @@ namespace BDEditor.Classes
 
                 tableHeaderRow = null;
                 tableHeaderCell = null;
-                tableSection = null;
-                tableRow = null;
-                tableCell = null;
 
                 idxTableChildren = 0;
                 idxTableHeaderCell = 0;
@@ -5582,18 +5568,12 @@ namespace BDEditor.Classes
 
             if ((null != tableHeaderRowData && tableHeaderRowData != string.Empty) && ((null == tableHeaderRow) || (tableHeaderRow.name != tableHeaderRowData)))
             {
-                if (tableLayoutVariant == BDConstants.LayoutVariantType.Table_3_Column)
-                {
+                if (table.LayoutVariant == BDConstants.LayoutVariantType.Table_3_Column)
                     headerRowLayoutVariant = BDConstants.LayoutVariantType.Table_3_Column_HeaderRow;
-                }
-                if (tableLayoutVariant == BDConstants.LayoutVariantType.Table_2_Column)
-                {
+                else if (table.LayoutVariant == BDConstants.LayoutVariantType.Table_2_Column)
                     headerRowLayoutVariant = BDConstants.LayoutVariantType.Table_2_Column_HeaderRow;
-                }
-                if (tableLayoutVariant == BDConstants.LayoutVariantType.Table_5_Column)
-                {
+                else if (table.LayoutVariant == BDConstants.LayoutVariantType.Table_5_Column)
                     headerRowLayoutVariant = BDConstants.LayoutVariantType.Table_5_Column_HeaderRow;
-                }
 
                 BDTableRow tmpRow = BDTableRow.RetrieveTableRowWithId(dataContext, Guid.Parse(uuidData));
                 if (null == tmpRow)
@@ -5612,9 +5592,6 @@ namespace BDEditor.Classes
                     idxTableChildren++;
                 }
                 tableHeaderCell = null;
-                tableSection = null;
-                tableRow = null;
-                tableCell = null;
 
                 idxTableHeaderCell = 0;
             }
@@ -5626,6 +5603,13 @@ namespace BDEditor.Classes
                 {
                     if (null == tableHeaderRow)
                     {
+                        if (table.LayoutVariant == BDConstants.LayoutVariantType.Table_3_Column)
+                            headerRowLayoutVariant = BDConstants.LayoutVariantType.Table_3_Column_HeaderRow;
+                        else if (table.LayoutVariant == BDConstants.LayoutVariantType.Table_2_Column)
+                            headerRowLayoutVariant = BDConstants.LayoutVariantType.Table_2_Column_HeaderRow;
+                        else if (table.LayoutVariant == BDConstants.LayoutVariantType.Table_5_Column)
+                            headerRowLayoutVariant = BDConstants.LayoutVariantType.Table_5_Column_HeaderRow;
+
                         tableHeaderRow = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow);
                         tableHeaderRow.LayoutVariant = headerRowLayoutVariant;
                         tableHeaderRow.SetParent(table);
@@ -5645,7 +5629,7 @@ namespace BDEditor.Classes
                     BDString cellValue = BDString.CreateBDString(dataContext);
                     cellValue.displayOrder = 0;
                     cellValue.SetParent(tableHeaderCell.Uuid);
-                    cellValue.value = tableHeaderCellData;
+                    cellValue.value = tableHeaderCellData == "<blank>" ? string.Empty : tableHeaderCellData;
                     BDString.Save(dataContext, cellValue);
                 }
                 else
@@ -5653,9 +5637,6 @@ namespace BDEditor.Classes
                     tableHeaderCell = tmpCell;
                     idxTableHeaderCell++;
                 }
-                tableSection = null;
-                tableRow = null;
-                tableCell = null;
             }
         }
 
@@ -5670,8 +5651,8 @@ namespace BDEditor.Classes
 
             BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
             BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_SexualAssault;
-            BDConstants.LayoutVariantType tableLayoutVariant = BDConstants.LayoutVariantType.Table_3_Column;
             BDConstants.LayoutVariantType topicLayoutVariant = sectionLayoutVariant;
+            BDConstants.LayoutVariantType tableLayoutVariant = BDConstants.LayoutVariantType.Table_3_Column;
             BDConstants.LayoutVariantType headerRowLayoutVariant = BDConstants.LayoutVariantType.Table_3_Column_HeaderRow;
             BDConstants.LayoutVariantType diseaseLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis;
 
@@ -5692,6 +5673,14 @@ namespace BDEditor.Classes
             if (elements.Length > 5) tableHeaderRowData = elements[5];
             if (elements.Length > 6) tableHeaderCellData = elements[6];
             if (elements.Length > 7) diseaseData = elements[7];
+
+            if (topicData != null && topicData != string.Empty)
+            {
+                if (uuidData == "edbd26cc-5224-490c-b12d-41676d1e8fb4")
+                    topicLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_SexualAssault;
+                else if (uuidData == "79f3014b-faf2-442d-9e2b-9afddfcb4e36")
+                    topicLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis;
+            }
 
             if ((null != chapterData && chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
             {
@@ -5893,11 +5882,11 @@ namespace BDEditor.Classes
                 BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
                 if (null == tmpNode)
                 {
-                    disease = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
+                    disease = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDDisease, Guid.Parse(uuidData));
                     disease.name = diseaseData;
                     disease.SetParent(topic);
                     disease.displayOrder = idxDisease++;
-                    disease.LayoutVariant = diseaseLayoutVariant;
+                    disease.LayoutVariant = topic.LayoutVariant;
                     BDNode.Save(dataContext, disease);
                 }
                 else
@@ -5930,7 +5919,7 @@ namespace BDEditor.Classes
             //Expectation that a row contains only one element with data
 
             BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
-            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
+            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Immunization_VaccineDetail;
             BDConstants.LayoutVariantType topicLayoutVariant = sectionLayoutVariant;
 
             uuidData = string.Empty;

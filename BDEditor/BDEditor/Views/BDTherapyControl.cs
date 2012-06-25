@@ -665,6 +665,8 @@ namespace BDEditor.Views
                 case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
+                case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
+                case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis:
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:

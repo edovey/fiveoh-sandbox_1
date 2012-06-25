@@ -27,11 +27,13 @@ namespace BDEditor.Classes.Navigation
                 case BDConstants.BDNodeType.BDCategory:
                 case BDConstants.BDNodeType.BDSubcategory:
                 case BDConstants.BDNodeType.BDDisease:
+                case BDConstants.BDNodeType.BDTopic:
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Prophylaxis:
                         case BDConstants.LayoutVariantType.Prophylaxis_PreOp:
                         case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
+                        case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                         case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza:
                         case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:

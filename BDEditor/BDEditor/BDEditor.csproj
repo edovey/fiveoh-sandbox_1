@@ -400,6 +400,12 @@
     <None Include="Resources\add_16x16.png" />
     <None Include="Resources\add_record_16.png" />
     <None Include="Resources\apps_16.png" />
+    <Content Include="Resources\Chapter_3g.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Chapter_3h.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\BDEditorStructure.txt" />
     <None Include="Resources\link_16.png" />
     <None Include="Resources\del_16x16.png" />
@@ -515,7 +521,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
+      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

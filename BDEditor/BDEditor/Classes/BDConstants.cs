@@ -190,9 +190,9 @@ namespace BDEditor.Classes
             Prophylaxis = 300, 
             [Description("Pre-Op Antibiotic Administration")]
             Prophylaxis_PreOp = 301,
-            [Description("Pre-Op Antibiotic Administration")]
+            [Description("Pre-Op Antibiotic Administration Header Row")]
             Prophylaxis_PreOp_HeaderRow = 3011,
-            [Description("Pre-Op Antibiotic Administration")]
+            [Description("Pre-Op Antibiotic Administration Content Row")]
             Prophylaxis_PreOp_ContentRow = 3012,
 
             [Description("Surgical Prophylaxis")]
@@ -205,21 +205,24 @@ namespace BDEditor.Classes
             Prophylaxis_FluidExposure = 305,
             [Description("Sexual Assault")]
             Prophylaxis_SexualAssault = 306,
-            [Description("Sexual Assault - Prophyylaxis")]
+            [Description("Sexual Assault - Prophylaxis")]
             Prophylaxis_SexualAssault_Prophylaxis = 307,
+
+            [Description("Immunization Recommendations")]
+            Prophylaxis_Immunization = 314,
 
             [Description("Routine Immunization Programs")]
             Prophylaxis_Immunization_Routine = 308,
-            [Description("Routine Immunization Programs")]
+            [Description("Routine Immunization Programs Header Row")]
             Prophylaxis_Immunization_Routine_HeaderRow = 3081,
-            [Description("Routine Immunization Programs")]
+            [Description("Routine Immunization Programs Content Row")]
             Prophylaxis_Immunization_Routine_ContentRow = 3082,
 
             [Description("Vaccines for High Risk")]
             Prophylaxis_Immunization_HighRisk = 309,
-            [Description("Vaccines for High Risk")]
+            [Description("Vaccines for High Risk Header Row")]
             Prophylaxis_Immunization_HighRisk_HeaderRow = 3091,
-            [Description("Vaccines for High Risk")]
+            [Description("Vaccines for High Risk Content Row")]
             Prophylaxis_Immunization_HighRisk_ContentRow = 3092,
 
             [Description("Vaccine Details")]

@@ -439,6 +439,9 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
                             case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure:
                             case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Immunization:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk:
                             case BDConstants.LayoutVariantType.Prophylaxis_Immunization_VaccineDetail:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
                                 childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
@@ -782,6 +785,8 @@ namespace BDEditor.Views
                                 }
                                 break;
                             case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk:
                                 childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
@@ -878,8 +883,8 @@ namespace BDEditor.Views
            // dataLoader.ImportData(dataContext, @"Resources\Chapter_3d.txt", BDDataLoader.baseDataDefinitionType.chapter3d);
            // dataLoader.ImportData(dataContext, @"Resources\Chapter_3e.txt", BDDataLoader.baseDataDefinitionType.chapter3e);
            // dataLoader.ImportData(dataContext, @"Resources\Chapter_3f.txt", BDDataLoader.baseDataDefinitionType.chapter3f);
-           // dataLoader.ImportData(dataContext, @"Resources\Chapter_3g.txt", BDDataLoader.baseDataDefinitionType.chapter3g);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3h.txt", BDDataLoader.baseDataDefinitionType.chapter3h);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_3g.txt", BDDataLoader.baseDataDefinitionType.chapter3g);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_3h.txt", BDDataLoader.baseDataDefinitionType.chapter3h);
            // dataLoader.ImportData(dataContext, @"Resources\Chapter_3i.txt", BDDataLoader.baseDataDefinitionType.chapter3i);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_3j.txt", BDDataLoader.baseDataDefinitionType.chapter3j);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_3k.txt", BDDataLoader.baseDataDefinitionType.chapter3k);
@@ -963,7 +968,7 @@ namespace BDEditor.Views
             this.Text = string.Format("{0} - {1}" , "Bugs & Drugs Editor", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
             // Loading Seed Data:  set the following variables
-            isSeedDataLoadAvailable = false;
+            isSeedDataLoadAvailable = true;
 
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";

@@ -40,6 +40,7 @@ namespace BDEditor.Classes.Navigation
                         case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure:
                         case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
                         case BDConstants.LayoutVariantType.Prophylaxis_IERecommendation:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Immunization:
                         case BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk:
                         case BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine:
                         case BDConstants.LayoutVariantType.Prophylaxis_Immunization_VaccineDetail:

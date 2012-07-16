@@ -390,7 +390,8 @@ namespace BDEditor.Views
         }
 
         /// <summary>
-        /// Strip the text of the formatting tags that may exist (usually from a Word document) also strip out the HTML inserted by the TXTextControl that we don't want to keep in the data.
+        /// Strip the text of the formatting tags that may exist (usually from a Word document) 
+        ///  Also strip out the HTML inserted by the TXTextControl that we don't want to keep in the data.
         /// </summary>
         /// <param name="pText">String to search and clean</param>
         /// <returns></returns>
@@ -408,7 +409,31 @@ namespace BDEditor.Views
             stringToClean = CleanTagFromText(stringToClean, "<table", ">", true);
             stringToClean = stringToClean.Replace("</table>", "");
 
-            // remove span tags
+            // replace span tags for bold and underline
+            string spanEnd = "</span>";
+            string spanUnderlineTag = "<span style=\"text-decoration:underline ;\">";
+            string spanBoldTag = "<span style=\"font-weight:bold;\">";
+            while (stringToClean.Contains(spanUnderlineTag))
+            {
+                int uStartIndex = stringToClean.IndexOf(spanUnderlineTag);
+                stringToClean = stringToClean.Remove(uStartIndex,spanUnderlineTag.Length);
+                stringToClean = stringToClean.Insert(uStartIndex, @"<u>");
+                int uEndIndex = stringToClean.IndexOf(spanEnd, uStartIndex);
+                stringToClean = stringToClean.Remove(uEndIndex, spanEnd.Length);
+                stringToClean = stringToClean.Insert(uEndIndex, @"</u>");
+            }
+
+            while (stringToClean.Contains(spanBoldTag))
+            {
+                int bStartIndex = stringToClean.IndexOf(spanBoldTag);
+                stringToClean = stringToClean.Remove(bStartIndex,spanBoldTag.Length);
+                stringToClean = stringToClean.Insert(bStartIndex, @"<b>");
+                int bEndIndex = stringToClean.IndexOf(spanEnd, bStartIndex);
+                stringToClean = stringToClean.Remove(bEndIndex, spanEnd.Length);
+                stringToClean = stringToClean.Insert(bEndIndex, @"</b>");
+            }
+
+            // remove remaining span tags
             stringToClean = CleanTagFromText(stringToClean, "<span", ">", true);
             stringToClean = stringToClean.Replace("</span>", "");
 

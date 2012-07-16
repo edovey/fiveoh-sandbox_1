@@ -401,10 +401,15 @@ namespace BDEditor.Views
 
         private void Therapy_RequestItemAdd(object sender, EventArgs e)
         {
-            BDTherapyControl control = addTherapyControl(null, therapyControlList.Count);
-            if (null != control)
+            if (CreateCurrentObject())
             {
-                control.Focus();
+                IBDNode node = BDFabrik.CreateChildNode(dataContext, this.currentTherapyGroup, BDConstants.BDNodeType.BDTherapy, this.currentTherapyGroup.LayoutVariant);
+                BDTherapy therapy = node as BDTherapy;
+                BDTherapyControl control = addTherapyControl(therapy, therapyControlList.Count);
+                if (null != control)
+                {
+                    control.Focus();
+                }
             }
         }
 

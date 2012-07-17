@@ -93,6 +93,12 @@ namespace BDEditor.Classes
             // BDAntimicribialRisk Class
             [Description("Antimicrobial Risk")]
             BDAntimicrobialRisk = 33,
+            [Description("Condition")]
+            BDCondition = 34,
+            [Description("Immune Response")]
+            BDResponse = 35,
+            [Description("Infection Frequency")]
+            BDFrequency = 36,
         }
 
         public enum LayoutVariantType
@@ -103,6 +109,7 @@ namespace BDEditor.Classes
             TreatmentRecommendation00 = 100, // Chapter
             [Description("Treatment Recommendation")]
             TreatmentRecommendation01 = 101, // default layout chapter 2, selected infections
+
             [Description("Wound Management")]
             TreatmentRecommendation02_WoundMgmt = 102, // table 1 - wound management
             [Description("Wound Content Row")]
@@ -161,6 +168,10 @@ namespace BDEditor.Classes
             TreatmentRecommendation11_GenitalUlcers = 113,
             [Description("Blood Culture Negative Endocarditis")]
             TreatmentRecommendation12_Endocarditis_BCNE = 114,
+            [Description("Vesicular Lesions")]
+            TreatmentRecommendation13_VesicularLesions = 115,
+            [Description("Treatment of Cellulitis - Extremities")]
+            TreatmentRecommendation14_CellulitisExtremities = 116,
 
             [Description("Antibiotics")]
             Antibiotics = 200, 

@@ -1304,7 +1304,7 @@ namespace BDEditor.Views
             //BDUtilities.SetDiseaseLayoutVariant(dataContext);
 
             // repair hierarchy for Genital Ulcers/ lesions in Treatment Recommendations > Adult > Genital...
-            BDUtilities.InjectNodeIntoHierarhy(dataContext);
+            // BDUtilities.InjectNodeIntoHierarhy(dataContext);
 
         }
 

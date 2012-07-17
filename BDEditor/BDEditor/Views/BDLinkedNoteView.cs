@@ -20,8 +20,9 @@ namespace BDEditor.Views
         private Guid? scopeId;
         private bool isRendering = false;
         private bool hasNewLink = false;
-        private BDLinkedNoteAssociation existingAssociation;
-        private List<BDLinkedNoteAssociation> existingLinksList;
+        private List<BDLinkedNoteAssociation> parentPropertyNoteAssociationList;
+        private BDLinkedNoteAssociation currentNoteAssociation;
+        private List<BDLinkedNoteAssociation> currentNoteAssociationsList;
         private List<BDLinkedNote> existingNotesInScopeList;
 
         public event EventHandler<NodeEventArgs> NotesChanged;
@@ -37,7 +38,6 @@ namespace BDEditor.Views
             get { return hasNewLink; }
             set { }
         }
-
 
         public BDLinkedNoteView()
         {
@@ -76,16 +76,16 @@ namespace BDEditor.Views
 
             chListLinks.Items.Clear();
 
-            if (null != existingAssociation)
+            if (null != currentNoteAssociation)
             {
-                existingLinksList = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForLinkedNoteId(dataContext, existingAssociation.linkedNoteId.Value);
+                currentNoteAssociationsList = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForLinkedNoteId(dataContext, currentNoteAssociation.linkedNoteId.Value);
 
-                if (existingLinksList.Count > 0)
+                if (currentNoteAssociationsList.Count > 0)
                 {
-                    for (int i = 0; i < existingLinksList.Count; i++)
+                    for (int i = 0; i < currentNoteAssociationsList.Count; i++)
                     {
-                        bool isCurrent = (existingLinksList[i].uuid == existingAssociation.uuid);
-                        string description = existingLinksList[i].GetDescription(dataContext);
+                        bool isCurrent = (currentNoteAssociationsList[i].uuid == currentNoteAssociation.uuid);
+                        string description = currentNoteAssociationsList[i].GetDescription(dataContext);
                         chListLinks.Items.Add(description, isCurrent);
                     }
                 }
@@ -133,11 +133,19 @@ namespace BDEditor.Views
             if (null == pAssociation)
             {
                 bdLinkedNoteControl1.CurrentLinkedNote = null;
+                btnPrevious.Enabled = false;
+                btnNext.Enabled = false;
+                lblNoteCounter.Text = string.Empty;
             }
             else
             {
                 BDLinkedNote linkedNote = BDLinkedNote.GetLinkedNoteWithId(dataContext, pAssociation.linkedNoteId);
                 bdLinkedNoteControl1.CurrentLinkedNote = linkedNote;
+
+                int idx = this.parentPropertyNoteAssociationList.IndexOf(pAssociation);
+                btnPrevious.Enabled = (idx > 0);
+                btnNext.Enabled = (idx < this.parentPropertyNoteAssociationList.Count - 1);
+                lblNoteCounter.Text = pAssociation.displayOrder.ToString();
             }
 
             if (withRefresh)
@@ -148,15 +156,17 @@ namespace BDEditor.Views
         {
             hasNewLink = false;
 
-            if (bdLinkedNoteControl1.Save())
+            if (bdLinkedNoteControl1.Save())  // BDLinkedNoteControl will create the association as required
             {
-                if (null == existingAssociation)
-                    existingAssociation = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, parentId, contextPropertyName);
+                // If the currentNoteAssociation is null, the note *should* also have been null and the note control should have created a new note + association
+                if (null == currentNoteAssociation)
+                    currentNoteAssociation = bdLinkedNoteControl1.CreatedLinkedNoteAssociation();
 
-                if (null != existingAssociation)
+                if (null != currentNoteAssociation)
                 {
-                    existingAssociation.linkedNoteType = (int)Enum.Parse(typeof(BDConstants.LinkedNoteType), this.linkedNoteTypeCombo.GetItemText(this.linkedNoteTypeCombo.SelectedItem));
+                    currentNoteAssociation.linkedNoteType = (int)Enum.Parse(typeof(BDConstants.LinkedNoteType), this.linkedNoteTypeCombo.GetItemText(this.linkedNoteTypeCombo.SelectedItem));
                     dataContext.SaveChanges();
+                    lblNoteCounter.Text = currentNoteAssociation.displayOrder.ToString();
                 }
                 hasNewLink = true;
             }
@@ -213,20 +223,20 @@ namespace BDEditor.Views
             {
                 BDLinkedNote selectedNote = existingNotesInScopeList[chListNotes.SelectedIndex];
 
-                if (null == this.existingAssociation)
+                if (null == this.currentNoteAssociation)
                 {
-                    this.existingAssociation = BDLinkedNoteAssociation.CreateBDLinkedNoteAssociation(dataContext);
-                    this.existingAssociation.parentType = (int)parentType;
-                    this.existingAssociation.parentKeyName = parentType.ToString();
-                    this.existingAssociation.parentKeyPropertyName = contextPropertyName;
-                    this.existingAssociation.parentId = parentId;
+                    this.currentNoteAssociation = BDLinkedNoteAssociation.CreateBDLinkedNoteAssociation(dataContext);
+                    this.currentNoteAssociation.parentType = (int)parentType;
+                    this.currentNoteAssociation.parentKeyName = parentType.ToString();
+                    this.currentNoteAssociation.parentKeyPropertyName = contextPropertyName;
+                    this.currentNoteAssociation.parentId = parentId;
                 }
 
-                this.existingAssociation.linkedNoteId = selectedNote.uuid;
+                this.currentNoteAssociation.linkedNoteId = selectedNote.uuid;
 
-                BDLinkedNoteAssociation.Save(dataContext, this.existingAssociation);
+                BDLinkedNoteAssociation.Save(dataContext, this.currentNoteAssociation);
 
-                DisplayLinkedNote(this.existingAssociation, true);
+                DisplayLinkedNote(this.currentNoteAssociation, true);
 
                 tabControl1.SelectedIndex = 0;
             }
@@ -236,10 +246,10 @@ namespace BDEditor.Views
         {
             bool enabled = true;
             btnAssignNote.Text = @"Assign";
-            if ((null != existingAssociation) && ((chListNotes.SelectedIndex >= 0) && chListNotes.SelectedIndex < existingNotesInScopeList.Count()))
+            if ((null != currentNoteAssociation) && ((chListNotes.SelectedIndex >= 0) && chListNotes.SelectedIndex < existingNotesInScopeList.Count()))
             {
                 BDLinkedNote selectedNote = existingNotesInScopeList[chListNotes.SelectedIndex];
-                enabled = (selectedNote.uuid != existingAssociation.linkedNoteId);
+                enabled = (selectedNote.uuid != currentNoteAssociation.linkedNoteId);
                 if (enabled)
                 {
                     btnAssignNote.Text = @"Reassign";
@@ -264,10 +274,10 @@ namespace BDEditor.Views
 
         private void RemoveCurrentAssociation_Action(object sender, EventArgs e)
         {
-            if (null != existingAssociation)
+            if (null != currentNoteAssociation)
             {
-                BDLinkedNoteAssociation.Delete(dataContext, existingAssociation);
-                this.existingAssociation = null;
+                BDLinkedNoteAssociation.Delete(dataContext, currentNoteAssociation);
+                this.currentNoteAssociation = null;
                 DisplayLinkedNote(null, true);
                 RefreshSelectedTab();
             }
@@ -275,13 +285,13 @@ namespace BDEditor.Views
 
         private void DeleteCurrentNote_Action(object sender, EventArgs e)
         {
-            if (null != existingAssociation)
+            if (null != currentNoteAssociation)
             {
                 if (MessageBox.Show("This will also delete all linked associations.", "Delete Note", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.OK)
                 {
-                    BDLinkedNote.Delete(dataContext, existingAssociation.linkedNoteId.Value, true);
+                    BDLinkedNote.Delete(dataContext, currentNoteAssociation.linkedNoteId.Value, true);
 
-                    this.existingAssociation = null;
+                    this.currentNoteAssociation = null;
                     DisplayLinkedNote(null, true);
                     RefreshSelectedTab();
                     OnNotesChanged(new NodeEventArgs());
@@ -291,8 +301,8 @@ namespace BDEditor.Views
 
         private void linkedNoteType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (null != existingAssociation)
-                existingAssociation.linkedNoteType = (int)Enum.Parse(typeof(BDConstants.LinkedNoteType), this.linkedNoteTypeCombo.GetItemText(this.linkedNoteTypeCombo.SelectedItem));
+            if (null != currentNoteAssociation)
+                currentNoteAssociation.linkedNoteType = (int)Enum.Parse(typeof(BDConstants.LinkedNoteType), this.linkedNoteTypeCombo.GetItemText(this.linkedNoteTypeCombo.SelectedItem));
         }
 
         private void BDLinkedNoteView_Load(object sender, EventArgs e)
@@ -302,15 +312,59 @@ namespace BDEditor.Views
 
             bdLinkedNoteControl1.CurrentLinkedNote = null;
 
-            this.existingAssociation = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, parentId, contextPropertyName);
-            rtfContextInfo.Text = BDLinkedNoteAssociation.GetDescription(dataContext, parentId, parentType, contextPropertyName);
-            if (null != this.existingAssociation)
-                this.linkedNoteTypeCombo.SelectedIndex = this.existingAssociation.linkedNoteType.Value;
-            else
-                this.linkedNoteTypeCombo.SelectedIndex = (int)BDConstants.LinkedNoteType.MarkedComment;
+            this.parentPropertyNoteAssociationList = BDLinkedNoteAssociation.GetLinkedNoteAssociationListForParentIdAndProperty(dataContext, parentId, contextPropertyName);
+            // Since this is the form load, populate with the first (if exists) entry
 
+            this.currentNoteAssociation = null;
+            if ((null != this.parentPropertyNoteAssociationList) && (this.parentPropertyNoteAssociationList.Count > 0))
+            {
+                this.currentNoteAssociation = this.parentPropertyNoteAssociationList[0];
+                if ( (null != this.currentNoteAssociation) && (this.currentNoteAssociation.displayOrder < 0) )
+                {
+                    int displayOrder = 1;
+                    for (int idx = 0; idx < parentPropertyNoteAssociationList.Count; idx++)
+                    {
+                        BDLinkedNoteAssociation entry = parentPropertyNoteAssociationList[idx];
+                        entry.displayOrder = displayOrder++;
+                        BDLinkedNoteAssociation.Save(dataContext, entry);
+                    }
+                    this.currentNoteAssociation = this.parentPropertyNoteAssociationList[0];
+                }
+
+                rtfContextInfo.Text = BDLinkedNoteAssociation.GetDescription(dataContext, parentId, parentType, contextPropertyName);
+                if (null != this.currentNoteAssociation)
+                    this.linkedNoteTypeCombo.SelectedIndex = this.currentNoteAssociation.linkedNoteType.Value;
+                else
+                    this.linkedNoteTypeCombo.SelectedIndex = (int)BDConstants.LinkedNoteType.MarkedComment;
+            }
+            
             RefreshListOfAssociatedLinks();
-            DisplayLinkedNote(this.existingAssociation, true);
+            DisplayLinkedNote(this.currentNoteAssociation, true);
+        }
+
+        private void addAnotherNoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void movePreviousToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void moveNextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

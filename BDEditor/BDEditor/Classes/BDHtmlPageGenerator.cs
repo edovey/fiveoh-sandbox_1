@@ -208,12 +208,20 @@ namespace BDEditor.Classes
             }
         }
 
+        /// <summary>
+        /// Refactor to return text for a provided note instead of parentId/propertyName
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pParentId"></param>
+        /// <param name="pPropertyName"></param>
+        /// <returns></returns>
+        [Obsolete("LinkedNoteAssociation method refactored returning different data", false)]  
         private string retrieveNoteTextForParentAndProperty(Entities pContext, Guid pParentId, string pPropertyName)
         {
             StringBuilder linkedNoteHtml = new StringBuilder();
             if (null != pPropertyName && pPropertyName.Length > 0)
             {
-                List<BDLinkedNoteAssociation> list = BDLinkedNoteAssociation.GetLinkedNoteAssociationsFromParentIdAndProperty(pContext, pParentId, pPropertyName);
+                List<BDLinkedNoteAssociation> list = BDLinkedNoteAssociation.GetLinkedNoteAssociationListForParentIdAndProperty(pContext, pParentId, pPropertyName);
                 foreach (BDLinkedNoteAssociation assn in list)
                 {
                     BDLinkedNote linkedNote = BDLinkedNote.GetLinkedNoteWithId(pContext, assn.linkedNoteId);
@@ -229,7 +237,7 @@ namespace BDEditor.Classes
             List<BDLinkedNote> noteList = new List<BDLinkedNote>();
             if (null != pPropertyName && pPropertyName.Length > 0)
             {
-                List<BDLinkedNoteAssociation> list = BDLinkedNoteAssociation.GetLinkedNoteAssociationsFromParentIdAndProperty(pContext, pParentId, pPropertyName);
+                List<BDLinkedNoteAssociation> list = BDLinkedNoteAssociation.GetLinkedNoteAssociationListForParentIdAndProperty(pContext, pParentId, pPropertyName);
                 foreach (BDLinkedNoteAssociation assn in list)
                 {
                     if (assn.linkedNoteType == (int)pNoteType)

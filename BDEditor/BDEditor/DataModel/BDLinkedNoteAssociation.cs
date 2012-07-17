@@ -95,6 +95,16 @@ namespace BDEditor.DataModel
                                                                             Guid pParentId, 
                                                                             string pParentPropertyName)
         {
+            // LinkedNoteAssociation displayOrder is ordered based on sibling membership for parentId and propertyName
+            List<BDLinkedNoteAssociation> existingList = GetLinkedNoteAssociationListForParentIdAndProperty(pContext, pParentId, pParentPropertyName);
+            int displayOrder = 1;
+            for (int idx = 0; idx < existingList.Count; idx++)
+            {
+                BDLinkedNoteAssociation entry = existingList[idx];
+                entry.displayOrder = displayOrder++;
+                Save(pContext, entry);
+            }
+
             BDLinkedNoteAssociation linkedNoteAssociation = CreateBDLinkedNoteAssociation(Guid.NewGuid(), false);
             linkedNoteAssociation.createdBy = Guid.Empty;
             linkedNoteAssociation.schemaVersion = 0;
@@ -104,6 +114,7 @@ namespace BDEditor.DataModel
             linkedNoteAssociation.parentType = (int)pParentType;
             linkedNoteAssociation.parentKeyName = pParentType.ToString();
             linkedNoteAssociation.parentKeyPropertyName = pParentPropertyName;
+            linkedNoteAssociation.displayOrder = displayOrder;
 
             pContext.AddObject(ENTITYNAME, linkedNoteAssociation);
 
@@ -211,19 +222,21 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pParentId"></param>
         /// <returns></returns>
-        public static List<BDLinkedNoteAssociation> GetLinkedNoteAssociationsFromParentIdAndProperty(Entities pContext, Guid? pParentId, string pContextPropertyName)
+        public static List<BDLinkedNoteAssociation> GetLinkedNoteAssociationListForParentIdAndProperty(Entities pContext, Guid? pParentId, string pContextPropertyName)
         {
             List<BDLinkedNoteAssociation> resultList = new List<BDLinkedNoteAssociation>();
 
-            BDLinkedNoteAssociation existingAssociation = GetLinkedNoteAssociationForParentIdAndProperty(pContext, pParentId, pContextPropertyName);
-            if (null != existingAssociation)
-            {
-                resultList = GetLinkedNoteAssociationsForLinkedNoteId(pContext, existingAssociation.linkedNoteId.Value);
-            }
+            IQueryable<BDLinkedNoteAssociation> linkedNoteAssociations = (from bdLinkedNoteAssociations in pContext.BDLinkedNoteAssociations
+                                                                          where bdLinkedNoteAssociations.parentId == pParentId && bdLinkedNoteAssociations.parentKeyPropertyName == pContextPropertyName
+                                                                          orderby bdLinkedNoteAssociations.displayOrder
+                                                                          select bdLinkedNoteAssociations);
+
+            resultList = linkedNoteAssociations.ToList<BDLinkedNoteAssociation>();
 
             return resultList;
         }
 
+        [Obsolete("No longer a valid method in a multi-note environment", true)]
         public static BDLinkedNoteAssociation GetLinkedNoteAssociationForParentIdAndProperty(Entities pContext, Guid? pParentId, string pContextPropertyName)
         {
             IQueryable<BDLinkedNoteAssociation> linkedNoteAssociations = (from bdLinkedNoteAssociations in pContext.BDLinkedNoteAssociations

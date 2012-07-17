@@ -46,6 +46,13 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addAnotherNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.movePreviousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveNextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblNoteCounter = new System.Windows.Forms.Label();
+            this.btnPrevious = new System.Windows.Forms.Button();
+            this.btnNext = new System.Windows.Forms.Button();
             this.bdLinkedNoteControl1 = new BDEditor.Views.BDLinkedNoteControl();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -159,6 +166,9 @@
             // 
             // headerPanel
             // 
+            this.headerPanel.Controls.Add(this.btnNext);
+            this.headerPanel.Controls.Add(this.btnPrevious);
+            this.headerPanel.Controls.Add(this.lblNoteCounter);
             this.headerPanel.Controls.Add(this.noteTypeLabel);
             this.headerPanel.Controls.Add(this.linkedNoteTypeCombo);
             this.headerPanel.Controls.Add(this.rtfContextInfo);
@@ -189,11 +199,12 @@
             // 
             // rtfContextInfo
             // 
-            this.rtfContextInfo.Dock = System.Windows.Forms.DockStyle.Right;
+            this.rtfContextInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rtfContextInfo.Location = new System.Drawing.Point(150, 5);
             this.rtfContextInfo.Name = "rtfContextInfo";
             this.rtfContextInfo.ReadOnly = true;
-            this.rtfContextInfo.Size = new System.Drawing.Size(655, 43);
+            this.rtfContextInfo.Size = new System.Drawing.Size(559, 43);
             this.rtfContextInfo.TabIndex = 0;
             this.rtfContextInfo.TabStop = false;
             this.rtfContextInfo.Text = "";
@@ -203,35 +214,106 @@
             this.contextMenuStripEvents.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.deleteToolStripMenuItem,
             this.toolStripMenuItem1,
-            this.deleteNoteToolStripMenuItem});
+            this.addAnotherNoteToolStripMenuItem,
+            this.deleteNoteToolStripMenuItem,
+            this.toolStripMenuItem2,
+            this.movePreviousToolStripMenuItem,
+            this.moveNextToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(172, 54);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(174, 126);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Image = global::BDEditor.Properties.Resources.delete_record_16;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.deleteToolStripMenuItem.Text = "Delete Association";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.RemoveCurrentAssociation_Action);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(168, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(170, 6);
             // 
             // deleteNoteToolStripMenuItem
             // 
             this.deleteNoteToolStripMenuItem.Image = global::BDEditor.Properties.Resources.remove;
             this.deleteNoteToolStripMenuItem.Name = "deleteNoteToolStripMenuItem";
-            this.deleteNoteToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.deleteNoteToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.deleteNoteToolStripMenuItem.Text = "Delete Note";
             this.deleteNoteToolStripMenuItem.Click += new System.EventHandler(this.DeleteCurrentNote_Action);
+            // 
+            // addAnotherNoteToolStripMenuItem
+            // 
+            this.addAnotherNoteToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_16x16;
+            this.addAnotherNoteToolStripMenuItem.Name = "addAnotherNoteToolStripMenuItem";
+            this.addAnotherNoteToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.addAnotherNoteToolStripMenuItem.Text = "Add Another Note";
+            this.addAnotherNoteToolStripMenuItem.Click += new System.EventHandler(this.addAnotherNoteToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(170, 6);
+            // 
+            // movePreviousToolStripMenuItem
+            // 
+            this.movePreviousToolStripMenuItem.Image = global::BDEditor.Properties.Resources.previous_16;
+            this.movePreviousToolStripMenuItem.Name = "movePreviousToolStripMenuItem";
+            this.movePreviousToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.movePreviousToolStripMenuItem.Text = "Move Previous";
+            this.movePreviousToolStripMenuItem.Click += new System.EventHandler(this.movePreviousToolStripMenuItem_Click);
+            // 
+            // moveNextToolStripMenuItem
+            // 
+            this.moveNextToolStripMenuItem.Image = global::BDEditor.Properties.Resources.next_16;
+            this.moveNextToolStripMenuItem.Name = "moveNextToolStripMenuItem";
+            this.moveNextToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.moveNextToolStripMenuItem.Text = "Move Next";
+            this.moveNextToolStripMenuItem.Click += new System.EventHandler(this.moveNextToolStripMenuItem_Click);
+            // 
+            // lblNoteCounter
+            // 
+            this.lblNoteCounter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblNoteCounter.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNoteCounter.Location = new System.Drawing.Point(738, 9);
+            this.lblNoteCounter.Name = "lblNoteCounter";
+            this.lblNoteCounter.Size = new System.Drawing.Size(46, 36);
+            this.lblNoteCounter.TabIndex = 3;
+            this.lblNoteCounter.Text = "88";
+            this.lblNoteCounter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnPrevious
+            // 
+            this.btnPrevious.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPrevious.Enabled = false;
+            this.btnPrevious.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPrevious.Location = new System.Drawing.Point(716, 8);
+            this.btnPrevious.Name = "btnPrevious";
+            this.btnPrevious.Size = new System.Drawing.Size(20, 37);
+            this.btnPrevious.TabIndex = 4;
+            this.btnPrevious.Text = "<";
+            this.btnPrevious.UseVisualStyleBackColor = true;
+            this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
+            // 
+            // btnNext
+            // 
+            this.btnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNext.Enabled = false;
+            this.btnNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNext.Location = new System.Drawing.Point(786, 9);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(20, 37);
+            this.btnNext.TabIndex = 5;
+            this.btnNext.Text = ">";
+            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // bdLinkedNoteControl1
             // 
             this.bdLinkedNoteControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.bdLinkedNoteControl1.CurrentLinkedNote = null;
+            this.bdLinkedNoteControl1.DefaultLayoutVariantType = BDEditor.Classes.BDConstants.LayoutVariantType.Undefined;
             this.bdLinkedNoteControl1.DefaultNodeType = BDEditor.Classes.BDConstants.BDNodeType.None;
             this.bdLinkedNoteControl1.DisplayOrder = null;
             this.bdLinkedNoteControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -287,6 +369,13 @@
         private System.Windows.Forms.ToolStripMenuItem deleteNoteToolStripMenuItem;
         private System.Windows.Forms.ComboBox linkedNoteTypeCombo;
         private System.Windows.Forms.Label noteTypeLabel;
+        private System.Windows.Forms.ToolStripMenuItem addAnotherNoteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem movePreviousToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem moveNextToolStripMenuItem;
+        private System.Windows.Forms.Label lblNoteCounter;
+        private System.Windows.Forms.Button btnNext;
+        private System.Windows.Forms.Button btnPrevious;
 
     }
 }

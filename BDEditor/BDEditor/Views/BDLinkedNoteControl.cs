@@ -23,6 +23,9 @@ namespace BDEditor.Views
         private string linkValue = string.Empty;
         private BDLinkedNote currentLinkedNote;
         private BDLinkedNoteView linkView;
+
+        private BDLinkedNoteAssociation currentAssociation;
+
         //private bool newLinkSaved = false;
 
         public event EventHandler SaveAttemptWithoutParent;
@@ -144,8 +147,9 @@ namespace BDEditor.Views
                 HypertextLink h = textControl.HypertextLinks.GetItem(i);
                 if (null != h)
                 {
-                    BDLinkedNoteAssociation na = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, currentLinkedNote.Uuid, h.Target);
-                    if (null == na)
+                    List<BDLinkedNoteAssociation> associationList = BDLinkedNoteAssociation.GetLinkedNoteAssociationListForParentIdAndProperty(dataContext, currentLinkedNote.Uuid, h.Target);
+                    //BDLinkedNoteAssociation na = BDLinkedNoteAssociation.GetLinkedNoteAssociationForParentIdAndProperty(dataContext, currentLinkedNote.Uuid, h.Target);
+                    if ((null == associationList) || (associationList.Count == 0) )
                     {
                         textControl.Select(h.Start - 1, h.Length);
                         textControl.Selection.ForeColor = Color.Black;
@@ -166,6 +170,15 @@ namespace BDEditor.Views
         private void BDLinkedNoteControl_Load(object sender, EventArgs e)
         {
             RefreshLayout();
+        }
+
+        /// <summary>
+        /// The LinkedNoteAssociation created by a save operation. 
+        /// </summary>
+        /// <returns>An association only if newly created. Null otherwise.</returns>
+        public BDLinkedNoteAssociation CreatedLinkedNoteAssociation()
+        {
+            return currentAssociation; 
         }
 
         #region IBDControl implementation
@@ -244,15 +257,11 @@ namespace BDEditor.Views
                 else
                 {
                     currentLinkedNote = BDLinkedNote.CreateBDLinkedNote(dataContext);
-                    BDLinkedNoteAssociation association = BDLinkedNoteAssociation.CreateBDLinkedNoteAssociation(dataContext);
-                    association.linkedNoteId = currentLinkedNote.uuid;
-                    association.parentId = parentId;
-                    association.parentType = (int)parentType;
-                    association.parentKeyPropertyName = contextPropertyName;
-                    association.linkedNoteType =(int) BDConstants.LinkedNoteType.MarkedComment;
+                    currentAssociation = BDLinkedNoteAssociation.CreateBDLinkedNoteAssociation(dataContext, BDConstants.LinkedNoteType.MarkedComment, currentLinkedNote.Uuid, parentType, parentId.Value, contextPropertyName);
+                    
                     currentLinkedNote.scopeId = scopeId;
                     BDLinkedNote.Save(dataContext, currentLinkedNote);
-                    BDLinkedNoteAssociation.Save(dataContext, association);
+                    BDLinkedNoteAssociation.Save(dataContext, currentAssociation);
                 }
             }
 
@@ -643,7 +652,10 @@ namespace BDEditor.Views
             set
             {
                 // on purpose
-                throw new NotSupportedException();
+                if (null != value)
+                {
+                    throw new NotSupportedException();
+                }
             }
         }
 

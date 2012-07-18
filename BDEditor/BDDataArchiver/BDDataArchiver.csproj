@@ -66,6 +66,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BDArchiveDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BDArchiveDialog.designer.cs">
+      <DependentUpon>BDArchiveDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="BDDataArchiverView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,6 +80,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="BDArchiveDialog.resx">
+      <DependentUpon>BDArchiveDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BDDataArchiverView.resx">
       <DependentUpon>BDDataArchiverView.cs</DependentUpon>
     </EmbeddedResource>

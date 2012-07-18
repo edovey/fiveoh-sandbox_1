@@ -122,6 +122,7 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(428, 20);
             this.txtName.TabIndex = 7;
+            this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // txtComment
             // 
@@ -131,6 +132,7 @@
             this.txtComment.Name = "txtComment";
             this.txtComment.Size = new System.Drawing.Size(428, 20);
             this.txtComment.TabIndex = 8;
+            this.txtComment.TextChanged += new System.EventHandler(this.txtComment_TextChanged);
             // 
             // listBoxArchives
             // 

@@ -15,6 +15,7 @@ using Amazon.SimpleDB;
 using Amazon.SimpleDB.Model;
 using Amazon.S3;
 using Amazon.S3.Model;
+using BDEditor.Views;
 
 namespace BDDataArchiver
 {
@@ -35,6 +36,7 @@ namespace BDDataArchiver
         public const string COMMENT_METADATA = @"x-amz-meta-comment";
         public const string TAG_METADATA = @"x-amz-meta-tag";
         public const string CREATEDATE_METADATA = @"x-amz-meta-createdate";
+        public const string APPVERSION_METADATA = @"x-amz-meta-appversion";
 
         private const string BD_ACCESS_KEY = @"AKIAJ6SRLQLH2ALT7ZBQ";
         private const string BD_SECRET_KEY = @"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";
@@ -91,69 +93,89 @@ namespace BDDataArchiver
             if (lblSource.Text.Trim() != string.Empty)
             {
                 this.Cursor = Cursors.WaitCursor;
-                FileInfo fi = new FileInfo(lblSource.Text);
-                if (fi.Exists)
-                {
-                    DateTime date = DateTime.Now;
-                    string filename = fi.Name.Replace(fi.Extension, "");
-                    string context = "A";
+                // BDArchiveDialog archiveDialog = new BDArchiveDialog();
+                //if (archiveDialog.ShowDialog(this) == DialogResult.OK)
+                //{
+                //    this.Cursor = Cursors.WaitCursor;
+                //    Application.DoEvents();
+                    Archive(lblSource.Text, AWS_ARCHIVE, txtName.Text, txtComment.Text, false);
+                    MessageBox.Show("Archive complete", "Achive to Repository", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //}
+
+                this.Cursor = Cursors.Default;
+            }
+        }
+
+        public void Archive(string pFilename, string pBucketName, string pUserName, string pComment, Boolean pIsBackup)
+        {
+            DateTime archiveDateTime = DateTime.Now;
+
+            Uri uri = new Uri(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase));
+            DirectoryInfo di = new DirectoryInfo(uri.AbsolutePath);
+            string path = uri.AbsolutePath.Replace("%20", " ");
+            FileInfo sourceFi = new FileInfo(pFilename);
+
+            if (sourceFi.Exists)
+            {
+                string filename = sourceFi.Name.Replace(sourceFi.Extension, "");
+                string context = "A.prod";
 #if DEBUG
                 context = "A.DEBUG";
 #endif
-                    filename = string.Format("{0}.{1}.{2}{3}.gz", filename, context, date.ToString("yyyMMdd-HHmmss"), fi.Extension);
-                    lblOutput.Text = filename;
+                if (pIsBackup) context = string.Format("{0}.backup", context);
 
-                    using (FileStream inFile = fi.OpenRead())
+                filename = string.Format("{0}.{1}.{2}{3}.gz", filename, context, archiveDateTime.ToString("yyyMMdd-HHmmss"), sourceFi.Extension);
+
+                using (FileStream inFile = sourceFi.OpenRead())
+                {
+                    // Prevent compressing hidden and already compressed files.
+                    if ((File.GetAttributes(sourceFi.FullName) & FileAttributes.Hidden)
+                            != FileAttributes.Hidden & sourceFi.Extension != ".gz")
                     {
-                        // Prevent compressing hidden and already compressed files.
-                        if ((File.GetAttributes(fi.FullName) & FileAttributes.Hidden)
-                                != FileAttributes.Hidden & fi.Extension != ".gz")
-                        {
-                            // Create the compressed file.
+                        // Create the compressed file.
 
-                            using (var memoryStream = new MemoryStream())
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            using (GZipStream Compress = new GZipStream(memoryStream, CompressionMode.Compress, true))
                             {
-                                using (GZipStream Compress = new GZipStream(memoryStream, CompressionMode.Compress, true))
+                                // Copy the source file into the compression stream.
+                                byte[] buffer = new byte[4096];
+                                int numRead;
+                                while ((numRead = inFile.Read(buffer, 0, buffer.Length)) != 0)
                                 {
-                                    // Copy the source file into the compression stream.
-                                    byte[] buffer = new byte[4096];
-                                    int numRead;
-                                    while ((numRead = inFile.Read(buffer, 0, buffer.Length)) != 0)
-                                    {
-                                        Compress.Write(buffer, 0, numRead);
-                                    }
-                                    //Console.WriteLine("Compressed {0} from {1} to {2} bytes.", fi.Name, fi.Length.ToString(), outFile.Length.ToString());
+                                    Compress.Write(buffer, 0, numRead);
                                 }
-
-                                NameValueCollection metadata = new NameValueCollection();
-                                metadata.Add(SOURCE_METADATA, AWS_ARCHIVE);
-                                metadata.Add(MACHINENAME_METADATA, Environment.MachineName);
-                                metadata.Add(FILENAME_METADATA, fi.Name);
-                                metadata.Add(PATH_METADATA, fi.DirectoryName);
-                                metadata.Add(USER_METADATA, txtName.Text);
-                                metadata.Add(COMMENT_METADATA, txtComment.Text);
-                                metadata.Add(TAG_METADATA, @"");
-                                metadata.Add(CREATEDATE_METADATA, DateTime.Now.ToString("o"));
-
-                                PutObjectRequest putObjectRequest = new PutObjectRequest();
-                                putObjectRequest
-                                    .WithBucketName(AWS_ARCHIVE)
-                                    .WithKey(filename)
-                                    .WithInputStream(memoryStream)
-                                    .AddHeaders(metadata);
-
-                                S3Response s3Response = S3.PutObject(putObjectRequest);
-                                s3Response.Dispose();
+                                //Console.WriteLine("Compressed {0} from {1} to {2} bytes.", fi.Name, fi.Length.ToString(), outFile.Length.ToString());
                             }
+
+                            NameValueCollection metadata = new NameValueCollection();
+                            metadata.Add(SOURCE_METADATA, pBucketName);
+                            metadata.Add(MACHINENAME_METADATA, Environment.MachineName);
+                            metadata.Add(FILENAME_METADATA, sourceFi.Name);
+                            metadata.Add(PATH_METADATA, sourceFi.DirectoryName);
+                            metadata.Add(USER_METADATA, pUserName);
+                            metadata.Add(COMMENT_METADATA, pComment);
+                            metadata.Add(TAG_METADATA, @"Standalone Archiver");
+                            metadata.Add(CREATEDATE_METADATA, archiveDateTime.ToString("s"));
+                            metadata.Add(APPVERSION_METADATA, System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+
+                            PutObjectRequest putObjectRequest = new PutObjectRequest();
+                            putObjectRequest
+                                .WithBucketName(pBucketName)
+                                .WithKey(filename)
+                                .WithInputStream(memoryStream)
+                                .AddHeaders(metadata);
+
+                            S3Response s3Response = S3.PutObject(putObjectRequest);
+                            s3Response.Dispose();
                         }
-                        else
-                        {
-                            MessageBox.Show("Cannot archive previously archived files");
-                        }
+
                     }
-                    MessageBox.Show("Complete", "Archive to Repository");
+                    else
+                    {
+                        MessageBox.Show("Cannot archive previously archived files");
+                    }
                 }
-                this.Cursor = Cursors.Default;
             }
         }
 
@@ -306,6 +328,16 @@ namespace BDDataArchiver
         private void lblSource_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void txtName_TextChanged(object sender, EventArgs e)
+        {
+            btnArchive.Enabled = (lblSource.Text.Trim().Length > 0) && (txtName.Text.Trim().Length > 0) && (txtComment.Text.Trim().Length > 0);
+        }
+
+        private void txtComment_TextChanged(object sender, EventArgs e)
+        {
+            btnArchive.Enabled = (lblSource.Text.Trim().Length > 0) && (txtName.Text.Trim().Length > 0) && (txtComment.Text.Trim().Length > 0);
         }   
 
     }

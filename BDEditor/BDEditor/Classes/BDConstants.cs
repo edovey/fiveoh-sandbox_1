@@ -136,25 +136,10 @@ namespace BDEditor.Classes
 
             [Description("Treatment of Culture-Proven Peritonitis")]
             TreatmentRecommendation05_Peritonitis = 106,  // table 4
-            [Description("Peritonitis Header Row")]
-            TreatmentRecommendation05_Peritonitis_HeaderRow = 1061,  // table 4 header row
-            [Description("Peritonitis Content Row")]
-            TreatmentRecommendation05_Peritonitis_ContentRow = 1062,  // table 4 content row
-
             [Description("Treatment of Culture-Proven Meningitis")]
             TreatmentRecommendation06_Meningitis = 107,  // table 5
-            [Description("Meningitis Header Row")]
-            TreatmentRecommendation06_Meningitis_HeaderRow = 1071,  // table 5 header row
-            [Description("Meningitis Content Row")]
-            TreatmentRecommendation06_Meningitis_ContentRow = 1072,  // table 5 content row
-
             [Description("Treatment of Culture-Proven Endocarditis")]
             TreatmentRecommendation07_Endocarditis = 108, // table 6
-            [Description("Endocarditis Header Row")]
-            TreatmentRecommendation07_Endocarditis_HeaderRow = 1081, // table 6
-            [Description("Endocarditis Content Row")]
-            TreatmentRecommendation07_Endocarditis_ContentRow = 1082, // table 6
-
             [Description("Treatment of Opthalmic Infections")]
             TreatmentRecommendation08_Opthalmic = 109,
             [Description("Treatment of Enteric Parasitic Infections I")]
@@ -172,6 +157,8 @@ namespace BDEditor.Classes
             TreatmentRecommendation13_VesicularLesions = 115,
             [Description("Treatment of Cellulitis - Extremities")]
             TreatmentRecommendation14_CellulitisExtremities = 116,
+            [Description("Treatment of Culture-Proven Pneumonia")]
+            TreatmentRecommendation15_Pneumonia = 117,  // table xx 
 
             [Description("Antibiotics")]
             Antibiotics = 200, 

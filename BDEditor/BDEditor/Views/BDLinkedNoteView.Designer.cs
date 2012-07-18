@@ -39,20 +39,20 @@
             this.chListNotes = new System.Windows.Forms.CheckedListBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.headerPanel = new System.Windows.Forms.Panel();
+            this.btnNext = new System.Windows.Forms.Button();
+            this.btnPrevious = new System.Windows.Forms.Button();
+            this.lblNoteCounter = new System.Windows.Forms.Label();
             this.noteTypeLabel = new System.Windows.Forms.Label();
             this.linkedNoteTypeCombo = new System.Windows.Forms.ComboBox();
             this.rtfContextInfo = new System.Windows.Forms.RichTextBox();
             this.contextMenuStripEvents = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.deleteNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addAnotherNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.movePreviousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveNextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lblNoteCounter = new System.Windows.Forms.Label();
-            this.btnPrevious = new System.Windows.Forms.Button();
-            this.btnNext = new System.Windows.Forms.Button();
             this.bdLinkedNoteControl1 = new BDEditor.Views.BDLinkedNoteControl();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -179,6 +179,43 @@
             this.headerPanel.Size = new System.Drawing.Size(810, 53);
             this.headerPanel.TabIndex = 3;
             // 
+            // btnNext
+            // 
+            this.btnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNext.Enabled = false;
+            this.btnNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNext.Location = new System.Drawing.Point(786, 9);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(20, 37);
+            this.btnNext.TabIndex = 5;
+            this.btnNext.Text = ">";
+            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+            // 
+            // btnPrevious
+            // 
+            this.btnPrevious.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPrevious.Enabled = false;
+            this.btnPrevious.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPrevious.Location = new System.Drawing.Point(716, 8);
+            this.btnPrevious.Name = "btnPrevious";
+            this.btnPrevious.Size = new System.Drawing.Size(20, 37);
+            this.btnPrevious.TabIndex = 4;
+            this.btnPrevious.Text = "<";
+            this.btnPrevious.UseVisualStyleBackColor = true;
+            this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
+            // 
+            // lblNoteCounter
+            // 
+            this.lblNoteCounter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblNoteCounter.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNoteCounter.Location = new System.Drawing.Point(738, 9);
+            this.lblNoteCounter.Name = "lblNoteCounter";
+            this.lblNoteCounter.Size = new System.Drawing.Size(46, 36);
+            this.lblNoteCounter.TabIndex = 3;
+            this.lblNoteCounter.Text = "88";
+            this.lblNoteCounter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // noteTypeLabel
             // 
             this.noteTypeLabel.AutoSize = true;
@@ -220,7 +257,7 @@
             this.movePreviousToolStripMenuItem,
             this.moveNextToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(174, 126);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(174, 148);
             // 
             // deleteToolStripMenuItem
             // 
@@ -235,14 +272,6 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(170, 6);
             // 
-            // deleteNoteToolStripMenuItem
-            // 
-            this.deleteNoteToolStripMenuItem.Image = global::BDEditor.Properties.Resources.remove;
-            this.deleteNoteToolStripMenuItem.Name = "deleteNoteToolStripMenuItem";
-            this.deleteNoteToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.deleteNoteToolStripMenuItem.Text = "Delete Note";
-            this.deleteNoteToolStripMenuItem.Click += new System.EventHandler(this.DeleteCurrentNote_Action);
-            // 
             // addAnotherNoteToolStripMenuItem
             // 
             this.addAnotherNoteToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_16x16;
@@ -251,10 +280,19 @@
             this.addAnotherNoteToolStripMenuItem.Text = "Add Another Note";
             this.addAnotherNoteToolStripMenuItem.Click += new System.EventHandler(this.addAnotherNoteToolStripMenuItem_Click);
             // 
+            // deleteNoteToolStripMenuItem
+            // 
+            this.deleteNoteToolStripMenuItem.Image = global::BDEditor.Properties.Resources.remove;
+            this.deleteNoteToolStripMenuItem.Name = "deleteNoteToolStripMenuItem";
+            this.deleteNoteToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.deleteNoteToolStripMenuItem.Text = "Delete Note";
+            this.deleteNoteToolStripMenuItem.Click += new System.EventHandler(this.DeleteCurrentNote_Action);
+            // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(170, 6);
+            this.toolStripMenuItem2.Visible = false;
             // 
             // movePreviousToolStripMenuItem
             // 
@@ -262,6 +300,7 @@
             this.movePreviousToolStripMenuItem.Name = "movePreviousToolStripMenuItem";
             this.movePreviousToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.movePreviousToolStripMenuItem.Text = "Move Previous";
+            this.movePreviousToolStripMenuItem.Visible = false;
             this.movePreviousToolStripMenuItem.Click += new System.EventHandler(this.movePreviousToolStripMenuItem_Click);
             // 
             // moveNextToolStripMenuItem
@@ -270,44 +309,8 @@
             this.moveNextToolStripMenuItem.Name = "moveNextToolStripMenuItem";
             this.moveNextToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.moveNextToolStripMenuItem.Text = "Move Next";
+            this.moveNextToolStripMenuItem.Visible = false;
             this.moveNextToolStripMenuItem.Click += new System.EventHandler(this.moveNextToolStripMenuItem_Click);
-            // 
-            // lblNoteCounter
-            // 
-            this.lblNoteCounter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblNoteCounter.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNoteCounter.Location = new System.Drawing.Point(738, 9);
-            this.lblNoteCounter.Name = "lblNoteCounter";
-            this.lblNoteCounter.Size = new System.Drawing.Size(46, 36);
-            this.lblNoteCounter.TabIndex = 3;
-            this.lblNoteCounter.Text = "88";
-            this.lblNoteCounter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // btnPrevious
-            // 
-            this.btnPrevious.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPrevious.Enabled = false;
-            this.btnPrevious.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPrevious.Location = new System.Drawing.Point(716, 8);
-            this.btnPrevious.Name = "btnPrevious";
-            this.btnPrevious.Size = new System.Drawing.Size(20, 37);
-            this.btnPrevious.TabIndex = 4;
-            this.btnPrevious.Text = "<";
-            this.btnPrevious.UseVisualStyleBackColor = true;
-            this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
-            // 
-            // btnNext
-            // 
-            this.btnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNext.Enabled = false;
-            this.btnNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNext.Location = new System.Drawing.Point(786, 9);
-            this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(20, 37);
-            this.btnNext.TabIndex = 5;
-            this.btnNext.Text = ">";
-            this.btnNext.UseVisualStyleBackColor = true;
-            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // bdLinkedNoteControl1
             // 

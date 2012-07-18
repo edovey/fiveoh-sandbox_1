@@ -85,7 +85,7 @@ namespace BDEditor.Views
                     for (int i = 0; i < currentNoteAssociationsList.Count; i++)
                     {
                         bool isCurrent = (currentNoteAssociationsList[i].uuid == currentNoteAssociation.uuid);
-                        string description = currentNoteAssociationsList[i].GetDescription(dataContext);
+                        string description = string.Format("{0} #{1}", currentNoteAssociationsList[i].GetDescription(dataContext), currentNoteAssociationsList[i].displayOrder.ToString());
                         chListLinks.Items.Add(description, isCurrent);
                     }
                 }
@@ -132,13 +132,17 @@ namespace BDEditor.Views
         {
             if (null == pAssociation)
             {
+                this.linkedNoteTypeCombo.SelectedIndex = (int)BDConstants.LinkedNoteType.MarkedComment;
+
                 bdLinkedNoteControl1.CurrentLinkedNote = null;
-                btnPrevious.Enabled = false;
+                btnPrevious.Enabled = (this.parentPropertyNoteAssociationList.Count > 0);
                 btnNext.Enabled = false;
                 lblNoteCounter.Text = string.Empty;
             }
             else
             {
+                this.linkedNoteTypeCombo.SelectedIndex = pAssociation.linkedNoteType.Value;
+
                 BDLinkedNote linkedNote = BDLinkedNote.GetLinkedNoteWithId(dataContext, pAssociation.linkedNoteId);
                 bdLinkedNoteControl1.CurrentLinkedNote = linkedNote;
 
@@ -148,11 +152,14 @@ namespace BDEditor.Views
                 lblNoteCounter.Text = pAssociation.displayOrder.ToString();
             }
 
+            //RefreshListOfAssociatedLinks();
+            RefreshSelectedTab();
+
             if (withRefresh)
                 bdLinkedNoteControl1.RefreshLayout();
         }
 
-        private void btnOK_Click(object sender, EventArgs e)
+        private void SaveCurrentNote()
         {
             hasNewLink = false;
 
@@ -181,7 +188,11 @@ namespace BDEditor.Views
             }
 
             OnNotesChanged(new NodeEventArgs());
+        }
 
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+           SaveCurrentNote();
            this.Close();
         }
 
@@ -226,10 +237,9 @@ namespace BDEditor.Views
                 if (null == this.currentNoteAssociation)
                 {
                     this.currentNoteAssociation = BDLinkedNoteAssociation.CreateBDLinkedNoteAssociation(dataContext);
-                    this.currentNoteAssociation.parentType = (int)parentType;
-                    this.currentNoteAssociation.parentKeyName = parentType.ToString();
-                    this.currentNoteAssociation.parentKeyPropertyName = contextPropertyName;
-                    this.currentNoteAssociation.parentId = parentId;
+
+                    BDConstants.LinkedNoteType noteType = (BDConstants.LinkedNoteType)Enum.Parse(typeof(BDConstants.LinkedNoteType), this.linkedNoteTypeCombo.GetItemText(this.linkedNoteTypeCombo.SelectedItem));
+                    this.currentNoteAssociation = BDLinkedNoteAssociation.CreateBDLinkedNoteAssociation(dataContext, noteType, selectedNote.uuid, parentType, parentId.Value, contextPropertyName);
                 }
 
                 this.currentNoteAssociation.linkedNoteId = selectedNote.uuid;
@@ -332,39 +342,58 @@ namespace BDEditor.Views
                 }
 
                 rtfContextInfo.Text = BDLinkedNoteAssociation.GetDescription(dataContext, parentId, parentType, contextPropertyName);
-                if (null != this.currentNoteAssociation)
-                    this.linkedNoteTypeCombo.SelectedIndex = this.currentNoteAssociation.linkedNoteType.Value;
-                else
-                    this.linkedNoteTypeCombo.SelectedIndex = (int)BDConstants.LinkedNoteType.MarkedComment;
+                //if (null != this.currentNoteAssociation)
+                //    this.linkedNoteTypeCombo.SelectedIndex = this.currentNoteAssociation.linkedNoteType.Value;
+                //else
+                //    this.linkedNoteTypeCombo.SelectedIndex = (int)BDConstants.LinkedNoteType.MarkedComment;
             }
             
-            RefreshListOfAssociatedLinks();
+            //RefreshListOfAssociatedLinks();
             DisplayLinkedNote(this.currentNoteAssociation, true);
         }
 
         private void addAnotherNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            SaveCurrentNote();
+            this.parentPropertyNoteAssociationList = BDLinkedNoteAssociation.GetLinkedNoteAssociationListForParentIdAndProperty(dataContext, parentId, contextPropertyName);
+            currentNoteAssociation = null;
+            DisplayLinkedNote(this.currentNoteAssociation, true);
         }
 
         private void movePreviousToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void moveNextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
         {
+            SaveCurrentNote();
+            this.parentPropertyNoteAssociationList = BDLinkedNoteAssociation.GetLinkedNoteAssociationListForParentIdAndProperty(dataContext, parentId, contextPropertyName);
 
+            int idx = this.parentPropertyNoteAssociationList.IndexOf(currentNoteAssociation);
+            if (idx > 0)
+            {
+                currentNoteAssociation = this.parentPropertyNoteAssociationList[idx - 1];
+            }
+            DisplayLinkedNote(this.currentNoteAssociation, true);
         }
 
         private void btnNext_Click(object sender, EventArgs e)
         {
+            SaveCurrentNote();
+            this.parentPropertyNoteAssociationList = BDLinkedNoteAssociation.GetLinkedNoteAssociationListForParentIdAndProperty(dataContext, parentId, contextPropertyName);
 
+            int idx = this.parentPropertyNoteAssociationList.IndexOf(currentNoteAssociation);
+            if (idx < this.parentPropertyNoteAssociationList.Count - 1)
+            {
+                currentNoteAssociation = this.parentPropertyNoteAssociationList[idx + 1];
+            }
+            DisplayLinkedNote(this.currentNoteAssociation, true);
         }
     }
 }

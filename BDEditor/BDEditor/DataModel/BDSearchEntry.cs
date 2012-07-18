@@ -96,9 +96,7 @@ namespace BDEditor.DataModel
 
             // delete the associations
             BDSearchEntryAssociation.DeleteForSearchEntryId(pContext, pEntity.Uuid, pCreateDeletion);
-            // create BDDeletion record for the object to be deleted
-            if(pCreateDeletion)
-                BDDeletion.CreateBDDeletion(pContext, KEY_NAME, pEntity.uuid);
+            // by design, no deletion record is kept
             // delete record from local data store
             pContext.DeleteObject(pEntity);
             pContext.SaveChanges();

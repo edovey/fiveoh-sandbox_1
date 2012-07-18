@@ -144,7 +144,7 @@ namespace BDEditor.DataModel
             if (pCreateDeletion)
             {
                 // create BDDeletion record for the object to be deleted
-                BDDeletion.CreateBDDeletion(pContext, KEY_NAME, pEntity.uuid);
+                BDDeletion.CreateBDDeletion(pContext, KEY_NAME, pEntity);
             }
             // delete record from local data store
             pContext.DeleteObject(pEntity);

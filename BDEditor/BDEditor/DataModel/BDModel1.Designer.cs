@@ -1556,6 +1556,30 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Int32> _targetType;
         partial void OntargetTypeChanging(Nullable<global::System.Int32> value);
         partial void OntargetTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> targetLayoutVariant
+        {
+            get
+            {
+                return _targetLayoutVariant;
+            }
+            set
+            {
+                OntargetLayoutVariantChanging(value);
+                ReportPropertyChanging("targetLayoutVariant");
+                _targetLayoutVariant = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("targetLayoutVariant");
+                OntargetLayoutVariantChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _targetLayoutVariant;
+        partial void OntargetLayoutVariantChanging(Nullable<global::System.Int32> value);
+        partial void OntargetLayoutVariantChanged();
 
         #endregion
     

@@ -40,21 +40,34 @@ namespace BDEditor.DataModel
         private const string TARGETID = @"de_targetId";
         private const string TARGETNAME = @"de_targetName";
 
-        public static void CreateBDDeletion(Entities pContext, string pTargetName, Guid pTargetId)
+        public static void CreateBDDeletion(Entities pContext, string pTargetName, IBDNode pTargetNode)
         {
-            CreateBDDeletion(pContext, pTargetName, pTargetId, Guid.NewGuid());
-        }
-
-        public static void CreateBDDeletion(Entities pContext, string pTargetName, Guid pTargetId, Guid pUuid)
-        {
-            BDDeletion deletion = CreateBDDeletion(pUuid);
+            BDDeletion deletion = CreateBDDeletion(Guid.NewGuid());
             deletion.createdBy = Guid.Empty;
             deletion.createdDate = DateTime.Now;
             deletion.modifiedBy = Guid.Empty;
             deletion.modifiedDate = DateTime.Now;
             deletion.schemaVersion = ENTITY_SCHEMAVERSION;
             deletion.targetName = pTargetName;
-            deletion.targetId = pTargetId;
+            deletion.targetId = pTargetNode.Uuid;
+            deletion.targetType = (int)pTargetNode.NodeType;
+            deletion.targetLayoutVariant = (int)pTargetNode.LayoutVariant;
+
+            pContext.AddObject(ENTITYNAME, deletion);
+        }
+
+        public static void CreateBDDeletion(Entities pContext, string pTargetName, IBDObject pTargetObject)
+        {
+            BDDeletion deletion = CreateBDDeletion(Guid.NewGuid());
+            deletion.createdBy = Guid.Empty;
+            deletion.createdDate = DateTime.Now;
+            deletion.modifiedBy = Guid.Empty;
+            deletion.modifiedDate = DateTime.Now;
+            deletion.schemaVersion = ENTITY_SCHEMAVERSION;
+            deletion.targetName = pTargetName;
+            deletion.targetId = pTargetObject.Uuid;
+            deletion.targetType = -1;
+            deletion.targetLayoutVariant = -1;
 
             pContext.AddObject(ENTITYNAME, deletion);
         }

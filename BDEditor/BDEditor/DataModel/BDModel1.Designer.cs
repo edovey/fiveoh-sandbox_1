@@ -84,22 +84,6 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<BDAttachment> BDAttachments
-        {
-            get
-            {
-                if ((_BDAttachments == null))
-                {
-                    _BDAttachments = base.CreateObjectSet<BDAttachment>("BDAttachments");
-                }
-                return _BDAttachments;
-            }
-        }
-        private ObjectSet<BDAttachment> _BDAttachments;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<BDDeletion> BDDeletions
         {
             get
@@ -144,6 +128,38 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDHtmlPage> _BDHtmlPages;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDLayoutMetadata> BDLayoutMetadatas
+        {
+            get
+            {
+                if ((_BDLayoutMetadatas == null))
+                {
+                    _BDLayoutMetadatas = base.CreateObjectSet<BDLayoutMetadata>("BDLayoutMetadatas");
+                }
+                return _BDLayoutMetadatas;
+            }
+        }
+        private ObjectSet<BDLayoutMetadata> _BDLayoutMetadatas;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDLayoutMetadataColumnNodeType> BDLayoutMetadataColumnNodeTypes
+        {
+            get
+            {
+                if ((_BDLayoutMetadataColumnNodeTypes == null))
+                {
+                    _BDLayoutMetadataColumnNodeTypes = base.CreateObjectSet<BDLayoutMetadataColumnNodeType>("BDLayoutMetadataColumnNodeTypes");
+                }
+                return _BDLayoutMetadataColumnNodeTypes;
+            }
+        }
+        private ObjectSet<BDLayoutMetadataColumnNodeType> _BDLayoutMetadataColumnNodeTypes;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -368,6 +384,38 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDTherapyGroup> _BDTherapyGroups;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDAttachment> BDAttachments
+        {
+            get
+            {
+                if ((_BDAttachments == null))
+                {
+                    _BDAttachments = base.CreateObjectSet<BDAttachment>("BDAttachments");
+                }
+                return _BDAttachments;
+            }
+        }
+        private ObjectSet<BDAttachment> _BDAttachments;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDLayoutMetadataColumn> BDLayoutMetadataColumns
+        {
+            get
+            {
+                if ((_BDLayoutMetadataColumns == null))
+                {
+                    _BDLayoutMetadataColumns = base.CreateObjectSet<BDLayoutMetadataColumn>("BDLayoutMetadataColumns");
+                }
+                return _BDLayoutMetadataColumns;
+            }
+        }
+        private ObjectSet<BDLayoutMetadataColumn> _BDLayoutMetadataColumns;
 
         #endregion
         #region AddTo Methods
@@ -378,14 +426,6 @@ namespace BDEditor.DataModel
         public void AddToBDAntimicrobialRisks(BDAntimicrobialRisk bDAntimicrobialRisk)
         {
             base.AddObject("BDAntimicrobialRisks", bDAntimicrobialRisk);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDAttachments EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDAttachments(BDAttachment bDAttachment)
-        {
-            base.AddObject("BDAttachments", bDAttachment);
         }
     
         /// <summary>
@@ -410,6 +450,22 @@ namespace BDEditor.DataModel
         public void AddToBDHtmlPages(BDHtmlPage bDHtmlPage)
         {
             base.AddObject("BDHtmlPages", bDHtmlPage);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDLayoutMetadatas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDLayoutMetadatas(BDLayoutMetadata bDLayoutMetadata)
+        {
+            base.AddObject("BDLayoutMetadatas", bDLayoutMetadata);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDLayoutMetadataColumnNodeTypes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDLayoutMetadataColumnNodeTypes(BDLayoutMetadataColumnNodeType bDLayoutMetadataColumnNodeType)
+        {
+            base.AddObject("BDLayoutMetadataColumnNodeTypes", bDLayoutMetadataColumnNodeType);
         }
     
         /// <summary>
@@ -522,6 +578,22 @@ namespace BDEditor.DataModel
         public void AddToBDTherapyGroups(BDTherapyGroup bDTherapyGroup)
         {
             base.AddObject("BDTherapyGroups", bDTherapyGroup);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDAttachments EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDAttachments(BDAttachment bDAttachment)
+        {
+            base.AddObject("BDAttachments", bDAttachment);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDLayoutMetadataColumns EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDLayoutMetadataColumns(BDLayoutMetadataColumn bDLayoutMetadataColumn)
+        {
+            base.AddObject("BDLayoutMetadataColumns", bDLayoutMetadataColumn);
         }
 
         #endregion
@@ -2194,6 +2266,425 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Guid> _displayParentId;
         partial void OndisplayParentIdChanging(Nullable<global::System.Guid> value);
         partial void OndisplayParentIdChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="BDDataModel", Name="BDLayoutMetadata")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class BDLayoutMetadata : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new BDLayoutMetadata object.
+        /// </summary>
+        /// <param name="layoutVariant">Initial value of the layoutVariant property.</param>
+        /// <param name="included">Initial value of the included property.</param>
+        /// <param name="displayOrder">Initial value of the displayOrder property.</param>
+        public static BDLayoutMetadata CreateBDLayoutMetadata(global::System.Int32 layoutVariant, global::System.Boolean included, global::System.Int32 displayOrder)
+        {
+            BDLayoutMetadata bDLayoutMetadata = new BDLayoutMetadata();
+            bDLayoutMetadata.layoutVariant = layoutVariant;
+            bDLayoutMetadata.included = included;
+            bDLayoutMetadata.displayOrder = displayOrder;
+            return bDLayoutMetadata;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 layoutVariant
+        {
+            get
+            {
+                return _layoutVariant;
+            }
+            set
+            {
+                if (_layoutVariant != value)
+                {
+                    OnlayoutVariantChanging(value);
+                    ReportPropertyChanging("layoutVariant");
+                    _layoutVariant = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("layoutVariant");
+                    OnlayoutVariantChanged();
+                }
+            }
+        }
+        private global::System.Int32 _layoutVariant;
+        partial void OnlayoutVariantChanging(global::System.Int32 value);
+        partial void OnlayoutVariantChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean included
+        {
+            get
+            {
+                return _included;
+            }
+            set
+            {
+                OnincludedChanging(value);
+                ReportPropertyChanging("included");
+                _included = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("included");
+                OnincludedChanged();
+            }
+        }
+        private global::System.Boolean _included;
+        partial void OnincludedChanging(global::System.Boolean value);
+        partial void OnincludedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String descrip
+        {
+            get
+            {
+                return _descrip;
+            }
+            set
+            {
+                OndescripChanging(value);
+                ReportPropertyChanging("descrip");
+                _descrip = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("descrip");
+                OndescripChanged();
+            }
+        }
+        private global::System.String _descrip;
+        partial void OndescripChanging(global::System.String value);
+        partial void OndescripChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 displayOrder
+        {
+            get
+            {
+                return _displayOrder;
+            }
+            set
+            {
+                OndisplayOrderChanging(value);
+                ReportPropertyChanging("displayOrder");
+                _displayOrder = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("displayOrder");
+                OndisplayOrderChanged();
+            }
+        }
+        private global::System.Int32 _displayOrder;
+        partial void OndisplayOrderChanging(global::System.Int32 value);
+        partial void OndisplayOrderChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="BDDataModel", Name="BDLayoutMetadataColumn")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class BDLayoutMetadataColumn : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new BDLayoutMetadataColumn object.
+        /// </summary>
+        /// <param name="uuid">Initial value of the uuid property.</param>
+        /// <param name="layoutVariant">Initial value of the layoutVariant property.</param>
+        /// <param name="displayOrder">Initial value of the displayOrder property.</param>
+        public static BDLayoutMetadataColumn CreateBDLayoutMetadataColumn(global::System.Guid uuid, global::System.Int32 layoutVariant, global::System.Int32 displayOrder)
+        {
+            BDLayoutMetadataColumn bDLayoutMetadataColumn = new BDLayoutMetadataColumn();
+            bDLayoutMetadataColumn.uuid = uuid;
+            bDLayoutMetadataColumn.layoutVariant = layoutVariant;
+            bDLayoutMetadataColumn.displayOrder = displayOrder;
+            return bDLayoutMetadataColumn;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid uuid
+        {
+            get
+            {
+                return _uuid;
+            }
+            set
+            {
+                if (_uuid != value)
+                {
+                    OnuuidChanging(value);
+                    ReportPropertyChanging("uuid");
+                    _uuid = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("uuid");
+                    OnuuidChanged();
+                }
+            }
+        }
+        private global::System.Guid _uuid;
+        partial void OnuuidChanging(global::System.Guid value);
+        partial void OnuuidChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 layoutVariant
+        {
+            get
+            {
+                return _layoutVariant;
+            }
+            set
+            {
+                OnlayoutVariantChanging(value);
+                ReportPropertyChanging("layoutVariant");
+                _layoutVariant = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("layoutVariant");
+                OnlayoutVariantChanged();
+            }
+        }
+        private global::System.Int32 _layoutVariant;
+        partial void OnlayoutVariantChanging(global::System.Int32 value);
+        partial void OnlayoutVariantChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 displayOrder
+        {
+            get
+            {
+                return _displayOrder;
+            }
+            set
+            {
+                OndisplayOrderChanging(value);
+                ReportPropertyChanging("displayOrder");
+                _displayOrder = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("displayOrder");
+                OndisplayOrderChanged();
+            }
+        }
+        private global::System.Int32 _displayOrder;
+        partial void OndisplayOrderChanging(global::System.Int32 value);
+        partial void OndisplayOrderChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String label
+        {
+            get
+            {
+                return _label;
+            }
+            set
+            {
+                OnlabelChanging(value);
+                ReportPropertyChanging("label");
+                _label = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("label");
+                OnlabelChanged();
+            }
+        }
+        private global::System.String _label;
+        partial void OnlabelChanging(global::System.String value);
+        partial void OnlabelChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="BDDataModel", Name="BDLayoutMetadataColumnNodeType")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class BDLayoutMetadataColumnNodeType : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new BDLayoutMetadataColumnNodeType object.
+        /// </summary>
+        /// <param name="layoutVariant">Initial value of the layoutVariant property.</param>
+        /// <param name="columnId">Initial value of the columnId property.</param>
+        /// <param name="nodeType">Initial value of the nodeType property.</param>
+        /// <param name="uuid">Initial value of the uuid property.</param>
+        public static BDLayoutMetadataColumnNodeType CreateBDLayoutMetadataColumnNodeType(global::System.Int32 layoutVariant, global::System.Guid columnId, global::System.Int32 nodeType, global::System.Guid uuid)
+        {
+            BDLayoutMetadataColumnNodeType bDLayoutMetadataColumnNodeType = new BDLayoutMetadataColumnNodeType();
+            bDLayoutMetadataColumnNodeType.layoutVariant = layoutVariant;
+            bDLayoutMetadataColumnNodeType.columnId = columnId;
+            bDLayoutMetadataColumnNodeType.nodeType = nodeType;
+            bDLayoutMetadataColumnNodeType.uuid = uuid;
+            return bDLayoutMetadataColumnNodeType;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 layoutVariant
+        {
+            get
+            {
+                return _layoutVariant;
+            }
+            set
+            {
+                OnlayoutVariantChanging(value);
+                ReportPropertyChanging("layoutVariant");
+                _layoutVariant = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("layoutVariant");
+                OnlayoutVariantChanged();
+            }
+        }
+        private global::System.Int32 _layoutVariant;
+        partial void OnlayoutVariantChanging(global::System.Int32 value);
+        partial void OnlayoutVariantChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid columnId
+        {
+            get
+            {
+                return _columnId;
+            }
+            set
+            {
+                OncolumnIdChanging(value);
+                ReportPropertyChanging("columnId");
+                _columnId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("columnId");
+                OncolumnIdChanged();
+            }
+        }
+        private global::System.Guid _columnId;
+        partial void OncolumnIdChanging(global::System.Guid value);
+        partial void OncolumnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 nodeType
+        {
+            get
+            {
+                return _nodeType;
+            }
+            set
+            {
+                OnnodeTypeChanging(value);
+                ReportPropertyChanging("nodeType");
+                _nodeType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("nodeType");
+                OnnodeTypeChanged();
+            }
+        }
+        private global::System.Int32 _nodeType;
+        partial void OnnodeTypeChanging(global::System.Int32 value);
+        partial void OnnodeTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String propertyName
+        {
+            get
+            {
+                return _propertyName;
+            }
+            set
+            {
+                OnpropertyNameChanging(value);
+                ReportPropertyChanging("propertyName");
+                _propertyName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("propertyName");
+                OnpropertyNameChanged();
+            }
+        }
+        private global::System.String _propertyName;
+        partial void OnpropertyNameChanging(global::System.String value);
+        partial void OnpropertyNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid uuid
+        {
+            get
+            {
+                return _uuid;
+            }
+            set
+            {
+                if (_uuid != value)
+                {
+                    OnuuidChanging(value);
+                    ReportPropertyChanging("uuid");
+                    _uuid = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("uuid");
+                    OnuuidChanged();
+                }
+            }
+        }
+        private global::System.Guid _uuid;
+        partial void OnuuidChanging(global::System.Guid value);
+        partial void OnuuidChanged();
 
         #endregion
     

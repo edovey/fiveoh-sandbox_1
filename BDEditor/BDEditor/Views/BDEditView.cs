@@ -1327,6 +1327,14 @@ namespace BDEditor.Views
 
         }
 
+        private void btnShowLayoutEditor_Click(object sender, EventArgs e)
+        {
+            BDLayoutMetadataEditor editor = new BDLayoutMetadataEditor(DataContext);
+            Application.DoEvents();
+            editor.ShowDialog();
+
+        }
+
 
     }
 }

@@ -7,5 +7,9 @@ namespace BDEditor.DataModel
 {
     public partial class BDLayoutMetadataColumn
     {
+        public const string ENTITYNAME = @"BDLayoutMetadataColumns";
+        public const string ENTITYNAME_FRIENDLY = @"Layout Metadata Column";
+        public const string KEY_NAME = @"BDLayoutMetadataColumn";
+
     }
 }

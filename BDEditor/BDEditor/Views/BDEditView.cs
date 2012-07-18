@@ -663,6 +663,25 @@ namespace BDEditor.Views
                     case BDConstants.BDNodeType.BDPresentation:
                         switch (node.LayoutVariant)
                         {
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
+                                childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
+                                if (!pInterrogateOnly)
+                                {
+                                    graftTreeNode(selectedNode, childTreeNode);
+                                    showChildControls = false;
+                                }
+                                break;
+                            default:
+                                if (!pInterrogateOnly)
+                                {
+                                    showChildControls = true;
+                                }
+                                break;
+                        }
+                        break;
+                    case BDConstants.BDNodeType.BDResponse:
+                        switch (node.LayoutVariant)
+                        {
                             default:
                                 if (!pInterrogateOnly)
                                 {

@@ -28,6 +28,8 @@ namespace BDEditor.Classes.Navigation
                 case BDConstants.BDNodeType.BDSubcategory:
                 case BDConstants.BDNodeType.BDDisease:
                 case BDConstants.BDNodeType.BDTable:
+                case BDConstants.BDNodeType.BDResponse:
+                case BDConstants.BDNodeType.BDPresentation:
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation00:
@@ -38,6 +40,7 @@ namespace BDEditor.Classes.Navigation
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
                             foreach (IBDNode childNode in childList)
                             {
                                 string name = childNode.Name;

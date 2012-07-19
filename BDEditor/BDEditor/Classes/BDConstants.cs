@@ -99,6 +99,8 @@ namespace BDEditor.Classes
             BDResponse = 35,
             [Description("Infection Frequency")]
             BDFrequency = 36,
+            [Description("Layout Column")]
+            BDLayoutColumn = 999,
         }
 
         public enum LayoutVariantType
@@ -112,26 +114,26 @@ namespace BDEditor.Classes
 
             [Description("Wound Management")]
             TreatmentRecommendation02_WoundMgmt = 102, // table 1 - wound management
-            [Description("Wound Content Row")]
+            [Description("Wound Management Content Row")]
             TreatmentRecommendation02_WoundMgmt_ContentRow = 1021, // table 1 - wound management
 
             [Description("Wound Classification")]
             TreatmentRecommendation03_WoundClass = 103, // table 2 - wound classification
-            [Description("Wound Header Row")]
+            [Description("Wound Classification Header Row")]
             TreatmentRecommendation03_WoundClass_HeaderRow = 1031, // table 2 - wound classification header row
-            [Description("Wound Content Row")]
+            [Description("Wound Classification Content Row")]
             TreatmentRecommendation03_WoundClass_ContentRow = 1032, // table 2 - wound classification content row
 
             [Description("Pneumonia Patient Characteristic")]
             TreatmentRecommendation04_Pneumonia_I = 104,  //  table 3 - top section
-            [Description("Pneumonia Content Row")]
+            [Description("Pneumonia Patient Characteristic Content Row")]
             TreatmentRecommendation04_Pneumonia_I_ContentRow = 1041,  //  table 3 - top section
 
             [Description("Pneumonia Risk and Recommendation")]
             TreatmentRecommendation04_Pneumonia_II = 105,  // table 3 - bottom section
-            [Description("Pneumonia Header Row")]
+            [Description("Pneumonia Risk and Recommendation Header Row")]
             TreatmentRecommendation04_Pneumonia_II_HeaderRow = 1051,  // table 3 - bottom section header row
-            [Description("Pneumonia Content Row")]
+            [Description("Pneumonia Risk and Recommendation Content Row")]
             TreatmentRecommendation04_Pneumonia_II_ContentRow = 1052,  // table 3 - bottom section content row
 
             [Description("Treatment of Culture-Proven Peritonitis")]
@@ -293,7 +295,7 @@ namespace BDEditor.Classes
             [Description("3-column Table Content Row")]
             Table_3_Column_ContentRow = 9012,
             
-            [Description("4 column Table")]
+            [Description("4-column Table")]
             Table_4_Column = 902,
             [Description("4-column Table Header Row")]
             Table_4_Column_HeaderRow = 9021,

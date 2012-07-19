@@ -12,12 +12,12 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME_FRIENDLY = @"Layout Metadata";
         public const string KEY_NAME = @"BDLayoutMetadata";
 
-        static public void Rebuild(Entities pContext)
+        static public void Rebuild(Entities pDataContext)
         {
 
             List<BDLayoutMetadata> existingEntryList = new List<BDLayoutMetadata>();
 
-            IQueryable<BDLayoutMetadata> existingEntries = (from dbEntry in pContext.BDLayoutMetadatas
+            IQueryable<BDLayoutMetadata> existingEntries = (from dbEntry in pDataContext.BDLayoutMetadatas
                                                             orderby dbEntry.layoutVariant
                                                             select dbEntry);
 
@@ -27,23 +27,22 @@ namespace BDEditor.DataModel
             {
                 BDLayoutMetadata entry = null;
 
-                //if (existingEntries.Count<BDLayoutMetadata>() > 0)
-                //{
-                    entry = existingEntries.FirstOrDefault<BDLayoutMetadata>(x => x.layoutVariant == (int)layoutVariant);
-                //}
+                entry = existingEntries.FirstOrDefault<BDLayoutMetadata>(x => x.layoutVariant == (int)layoutVariant);
 
-                if (null == entry)
+                if (null != entry)
+                {
+                    entry.descrip = BDUtilities.GetEnumDescription(layoutVariant);
+                }
+                else
                 {
                     System.Diagnostics.Debug.WriteLine("empty");
                     entry = BDLayoutMetadata.CreateBDLayoutMetadata((int)layoutVariant, false, order++);
                     entry.descrip = BDUtilities.GetEnumDescription(layoutVariant);
-                    pContext.AddObject(ENTITYNAME, entry);
+                    pDataContext.AddObject(ENTITYNAME, entry);
                 }
             }
 
-            pContext.SaveChanges();
-
-            //existingEntryList = existingEntries.ToList<BDLayoutMetadata>();
+            pDataContext.SaveChanges();
         }
 
         static public List<BDLayoutMetadata> RetrieveAll(Entities pDataContext, Boolean? pIncluded)
@@ -69,6 +68,16 @@ namespace BDEditor.DataModel
 
             existingEntryList = existingEntries.ToList<BDLayoutMetadata>();
             return existingEntryList;
+        }
+
+        static public BDLayoutMetadata Retrieve(Entities pDataContext, BDConstants.LayoutVariantType pLayoutVariant)
+        {
+            IQueryable<BDLayoutMetadata> existingEntries = (from dbEntry in pDataContext.BDLayoutMetadatas
+                                                            where (dbEntry.layoutVariant == (int)pLayoutVariant)
+                                                            select dbEntry);
+
+            BDLayoutMetadata entry = existingEntries.FirstOrDefault<BDLayoutMetadata>();
+            return entry;
         }
 
         public override string ToString()

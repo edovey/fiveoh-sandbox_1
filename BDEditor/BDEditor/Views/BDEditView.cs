@@ -902,8 +902,8 @@ namespace BDEditor.Views
            // dataLoader.ImportData(dataContext, @"Resources\Chapter_3d.txt", BDDataLoader.baseDataDefinitionType.chapter3d);
            // dataLoader.ImportData(dataContext, @"Resources\Chapter_3e.txt", BDDataLoader.baseDataDefinitionType.chapter3e);
            // dataLoader.ImportData(dataContext, @"Resources\Chapter_3f.txt", BDDataLoader.baseDataDefinitionType.chapter3f);
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_3g.txt", BDDataLoader.baseDataDefinitionType.chapter3g);
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_3h.txt", BDDataLoader.baseDataDefinitionType.chapter3h);
+           // dataLoader.ImportData(dataContext, @"Resources\Chapter_3g.txt", BDDataLoader.baseDataDefinitionType.chapter3g);
+            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3h.txt", BDDataLoader.baseDataDefinitionType.chapter3h);
            // dataLoader.ImportData(dataContext, @"Resources\Chapter_3i.txt", BDDataLoader.baseDataDefinitionType.chapter3i);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_3j.txt", BDDataLoader.baseDataDefinitionType.chapter3j);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_3k.txt", BDDataLoader.baseDataDefinitionType.chapter3k);
@@ -987,14 +987,14 @@ namespace BDEditor.Views
             this.Text = string.Format("{0} - {1}" , "Bugs & Drugs Editor", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
             // Loading Seed Data:  set the following variables
-            isSeedDataLoadAvailable = true;
+            isSeedDataLoadAvailable = false;
 
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
             this.btnImportFromProduction.Visible = true;
             this.btnPublish.Visible = true;
-            this.btnMove.Visible = !isSeedDataLoadAvailable;
-            this.btnMove.Enabled = !isSeedDataLoadAvailable;
+            this.btnMove.Visible = !isSeedDataLoadAvailable && false;
+            this.btnMove.Enabled = !isSeedDataLoadAvailable && false;
 #else
             this.btnImportFromProduction.Visible = false;
             this.btnPublish.Visible = false;
@@ -1325,6 +1325,17 @@ namespace BDEditor.Views
             // repair hierarchy for Genital Ulcers/ lesions in Treatment Recommendations > Adult > Genital...
             // BDUtilities.InjectNodeIntoHierarhy(dataContext);
 
+            // reset all layoutVariants for children of Adults > SSTI > Vesicular Lesions
+            // IBDNode startNode = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("5ce93aff-137f-487b-8f8a-1e9076acc8cb"));
+            // BDUtilities.ResetLayoutVariantWithChildren(dataContext, startNode,BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions, false);
+
+            // reset all layoutVariants for children of Peds > SSTI > Vesicular Lesions
+            // IBDNode startNode2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("a088c4d8-46d6-4b9f-a31b-bbf8a64f22e9"));
+            // BDUtilities.ResetLayoutVariantWithChildren(dataContext, startNode2, BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions, false);
+
+            // reset layoutVariant for Adults > Respiratory > Table xx Treatment of culture-proven pneumonia and all children 
+            //IBDNode startNode = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("391bd1a4-daca-44e8-8fda-863f22128f1f"));
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, startNode, BDConstants.LayoutVariantType.TreatmentRecommendation15_Pneumonia, true);
         }
 
         private void btnShowLayoutEditor_Click(object sender, EventArgs e)

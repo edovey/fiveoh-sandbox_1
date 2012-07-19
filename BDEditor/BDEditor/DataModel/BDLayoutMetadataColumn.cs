@@ -7,7 +7,7 @@ using BDEditor.Classes;
 
 namespace BDEditor.DataModel
 {
-    public partial class BDLayoutMetadataColumn
+    public partial class BDLayoutMetadataColumn: IBDObject
     {
         public const string ENTITYNAME = @"BDLayoutMetadataColumns";
         public const string ENTITYNAME_FRIENDLY = @"Layout Metadata Column";
@@ -21,6 +21,17 @@ namespace BDEditor.DataModel
             pDataContext.AddObject(ENTITYNAME, entry);
             pDataContext.SaveChanges();
             return entry;
+        }
+
+        public static void Delete(Entities pContext, BDLayoutMetadataColumn pEntry)
+        {
+            if (null == pEntry) return;
+
+            BDLinkedNoteAssociation.DeleteForParentId(pContext, pEntry.Uuid, false);
+            
+            // delete record from local data store
+            pContext.DeleteObject(pEntry);
+            pContext.SaveChanges();
         }
 
         static public List<BDLayoutMetadataColumn> RetrieveForLayout(Entities pDataContext, BDLayoutMetadata pLayout)
@@ -48,6 +59,22 @@ namespace BDEditor.DataModel
         public Guid Uuid
         {
             get { return this.uuid; }
+        }
+
+
+        public string Description
+        {
+            get { return this.label; }
+        }
+
+        public string DescriptionForLinkedNote
+        {
+            get { return this.label; }
+        }
+
+        public Amazon.SimpleDB.Model.PutAttributesRequest PutAttributes()
+        {
+            return null;
         }
     }
 }

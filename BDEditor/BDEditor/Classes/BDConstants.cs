@@ -101,6 +101,8 @@ namespace BDEditor.Classes
             BDFrequency = 36,
             [Description("Regimen")]
             BDRegimen = 37,
+            [Description("Configured Entry")]
+            BDConfiguredEntry = 38,
             [Description("Layout Column")]
             BDLayoutColumn = 999,
         }

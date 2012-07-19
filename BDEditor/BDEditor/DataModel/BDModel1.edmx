@@ -8,6 +8,7 @@
         <EntityContainer Name="BDDataModelStoreContainer">
           <EntitySet Name="BDAntimicrobialRisks" EntityType="BDDataModel.Store.BDAntimicrobialRisks" store:Type="Tables" />
           <EntitySet Name="BDAttachments" EntityType="BDDataModel.Store.BDAttachments" store:Type="Tables" />
+          <EntitySet Name="BDConfiguredEntry" EntityType="BDDataModel.Store.BDConfiguredEntry" store:Type="Tables" />
           <EntitySet Name="BDDeletions" EntityType="BDDataModel.Store.BDDeletions" store:Type="Tables" />
           <EntitySet Name="BDDosages" EntityType="BDDataModel.Store.BDDosages" store:Type="Tables" />
           <EntitySet Name="BDHtmlPages" EntityType="BDDataModel.Store.BDHtmlPages" store:Type="Tables" />
@@ -68,6 +69,37 @@
           <Property Name="attachmentData" Type="image" />
           <Property Name="filename" Type="nvarchar" MaxLength="750" />
           <Property Name="filesize" Type="int" />
+        </EntityType>
+        <EntityType Name="BDConfiguredEntry">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="750" />
+          <Property Name="parentId" Type="uniqueidentifier" />
+          <Property Name="parentKeyName" Type="nvarchar" MaxLength="100" />
+          <Property Name="nodeType" Type="int" />
+          <Property Name="layoutVariant" Type="int" />
+          <Property Name="displayOrder" Type="int" />
+          <Property Name="schemaVersion" Type="int" />
+          <Property Name="createdDate" Type="datetime" />
+          <Property Name="modifiedDate" Type="datetime" />
+          <Property Name="field01" Type="nvarchar" MaxLength="750" />
+          <Property Name="field02" Type="nvarchar" MaxLength="750" />
+          <Property Name="field03" Type="nvarchar" MaxLength="750" />
+          <Property Name="field04" Type="nvarchar" MaxLength="750" />
+          <Property Name="field05" Type="nvarchar" MaxLength="750" />
+          <Property Name="field06" Type="nvarchar" MaxLength="750" />
+          <Property Name="field07" Type="nvarchar" MaxLength="750" />
+          <Property Name="field08" Type="nvarchar" MaxLength="750" />
+          <Property Name="field09" Type="nvarchar" MaxLength="750" />
+          <Property Name="field10" Type="nvarchar" MaxLength="750" />
+          <Property Name="field11" Type="nvarchar" MaxLength="750" />
+          <Property Name="field12" Type="nvarchar" MaxLength="750" />
+          <Property Name="field13" Type="nvarchar" MaxLength="750" />
+          <Property Name="field14" Type="nvarchar" MaxLength="750" />
+          <Property Name="field15" Type="nvarchar" MaxLength="750" />
+          <Property Name="parentType" Type="int" />
         </EntityType>
         <EntityType Name="BDDeletions">
           <Key>
@@ -144,6 +176,7 @@
           <Property Name="nodeType" Type="int" Nullable="false" />
           <Property Name="propertyName" Type="nvarchar" MaxLength="255" />
           <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="orderOfPrecedence" Type="int" />
         </EntityType>
         <EntityType Name="BDLinkedNoteAssociations">
           <Key>
@@ -410,7 +443,6 @@
           <EntitySet Name="BDDosages" EntityType="BDDataModel.BDDosage" />
           <EntitySet Name="BDHtmlPages" EntityType="BDDataModel.BDHtmlPage" />
           <EntitySet Name="BDLayoutMetadatas" EntityType="BDDataModel.BDLayoutMetadata" />
-          <EntitySet Name="BDLayoutMetadataColumnNodeTypes" EntityType="BDDataModel.BDLayoutMetadataColumnNodeType" />
           <EntitySet Name="BDLinkedNoteAssociations" EntityType="BDDataModel.BDLinkedNoteAssociation" />
           <EntitySet Name="BDLinkedNotes" EntityType="BDDataModel.BDLinkedNote" />
           <EntitySet Name="BDMetadatas" EntityType="BDDataModel.BDMetadata" />
@@ -427,6 +459,8 @@
           <EntitySet Name="BDTherapyGroups" EntityType="BDDataModel.BDTherapyGroup" />
           <EntitySet Name="BDAttachments" EntityType="BDDataModel.BDAttachment" />
           <EntitySet Name="BDLayoutMetadataColumns" EntityType="BDDataModel.BDLayoutMetadataColumn" />
+          <EntitySet Name="BDLayoutMetadataColumnNodeTypes" EntityType="BDDataModel.BDLayoutMetadataColumnNodeType" />
+          <EntitySet Name="BDConfiguredEntries" EntityType="BDDataModel.BDConfiguredEntry" />
         </EntityContainer>
         <EntityType Name="BDAntimicrobialRisk">
           <Key>
@@ -504,16 +538,6 @@
           <Property Type="Boolean" Name="included" Nullable="false" />
           <Property Type="String" Name="descrip" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="displayOrder" Nullable="false" />
-        </EntityType>
-        <EntityType Name="BDLayoutMetadataColumnNodeType">
-          <Key>
-            <PropertyRef Name="uuid" />
-          </Key>
-          <Property Type="Int32" Name="layoutVariant" Nullable="false" />
-          <Property Type="Guid" Name="columnId" Nullable="false" />
-          <Property Type="Int32" Name="nodeType" Nullable="false" />
-          <Property Type="String" Name="propertyName" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="Guid" Name="uuid" Nullable="false" />
         </EntityType>
         <EntityType Name="BDLinkedNoteAssociation">
           <Key>
@@ -799,6 +823,48 @@
           <Property Type="Int32" Name="displayOrder" Nullable="false" />
           <Property Type="String" Name="label" MaxLength="750" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="BDLayoutMetadataColumnNodeType">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Type="Int32" Name="layoutVariant" Nullable="false" />
+          <Property Type="Guid" Name="columnId" Nullable="false" />
+          <Property Type="Int32" Name="nodeType" Nullable="false" />
+          <Property Type="String" Name="propertyName" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="uuid" Nullable="false" />
+          <Property Type="Int32" Name="orderOfPrecedence" />
+        </EntityType>
+        <EntityType Name="BDConfiguredEntry">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Type="Guid" Name="uuid" Nullable="false" />
+          <Property Type="String" Name="name" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="parentId" />
+          <Property Type="String" Name="parentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="nodeType" />
+          <Property Type="Int32" Name="layoutVariant" />
+          <Property Type="Int32" Name="displayOrder" />
+          <Property Type="Int32" Name="schemaVersion" />
+          <Property Type="DateTime" Name="createdDate" />
+          <Property Type="DateTime" Name="modifiedDate" />
+          <Property Type="String" Name="field01" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="field02" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="field03" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="field04" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="field05" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="field06" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="field07" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="field08" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="field09" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="field10" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="field11" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="field12" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="field13" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="field14" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="field15" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="parentType" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -883,17 +949,6 @@
                 <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
                 <ScalarProperty Name="descrip" ColumnName="descrip" />
                 <ScalarProperty Name="included" ColumnName="included" />
-                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BDLayoutMetadataColumnNodeTypes">
-            <EntityTypeMapping TypeName="BDDataModel.BDLayoutMetadataColumnNodeType">
-              <MappingFragment StoreEntitySet="BDLayoutMetadataColumnNodeType">
-                <ScalarProperty Name="uuid" ColumnName="uuid" />
-                <ScalarProperty Name="propertyName" ColumnName="propertyName" />
-                <ScalarProperty Name="nodeType" ColumnName="nodeType" />
-                <ScalarProperty Name="columnId" ColumnName="columnId" />
                 <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1198,6 +1253,50 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BDLayoutMetadataColumnNodeTypes">
+            <EntityTypeMapping TypeName="BDDataModel.BDLayoutMetadataColumnNodeType">
+              <MappingFragment StoreEntitySet="BDLayoutMetadataColumnNodeType">
+                <ScalarProperty Name="orderOfPrecedence" ColumnName="orderOfPrecedence" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+                <ScalarProperty Name="propertyName" ColumnName="propertyName" />
+                <ScalarProperty Name="nodeType" ColumnName="nodeType" />
+                <ScalarProperty Name="columnId" ColumnName="columnId" />
+                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BDConfiguredEntries">
+            <EntityTypeMapping TypeName="BDDataModel.BDConfiguredEntry">
+              <MappingFragment StoreEntitySet="BDConfiguredEntry">
+                <ScalarProperty Name="parentType" ColumnName="parentType" />
+                <ScalarProperty Name="field15" ColumnName="field15" />
+                <ScalarProperty Name="field14" ColumnName="field14" />
+                <ScalarProperty Name="field13" ColumnName="field13" />
+                <ScalarProperty Name="field12" ColumnName="field12" />
+                <ScalarProperty Name="field11" ColumnName="field11" />
+                <ScalarProperty Name="field10" ColumnName="field10" />
+                <ScalarProperty Name="field09" ColumnName="field09" />
+                <ScalarProperty Name="field08" ColumnName="field08" />
+                <ScalarProperty Name="field07" ColumnName="field07" />
+                <ScalarProperty Name="field06" ColumnName="field06" />
+                <ScalarProperty Name="field05" ColumnName="field05" />
+                <ScalarProperty Name="field04" ColumnName="field04" />
+                <ScalarProperty Name="field03" ColumnName="field03" />
+                <ScalarProperty Name="field02" ColumnName="field02" />
+                <ScalarProperty Name="field01" ColumnName="field01" />
+                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
+                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
+                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
+                <ScalarProperty Name="nodeType" ColumnName="nodeType" />
+                <ScalarProperty Name="parentKeyName" ColumnName="parentKeyName" />
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -1223,7 +1322,6 @@
         <EntityTypeShape EntityType="BDDataModel.BDDosage" Width="1.5" PointX="2.75" PointY="4.75" Height="3.4001269531249818" />
         <EntityTypeShape EntityType="BDDataModel.BDHtmlPage" Width="1.5" PointX="4.75" PointY="4.75" Height="2.249695638020853" />
         <EntityTypeShape EntityType="BDDataModel.BDLayoutMetadata" Width="3" PointX="14.75" PointY="3.875" Height="1.5923063151041674" />
-        <EntityTypeShape EntityType="BDDataModel.BDLayoutMetadataColumnNodeType" Width="3" PointX="14.75" PointY="7.625" Height="1.756653645833353" />
         <EntityTypeShape EntityType="BDDataModel.BDLinkedNoteAssociation" Width="1.5" PointX="8.75" PointY="0.75" Height="3.235779622395853" />
         <EntityTypeShape EntityType="BDDataModel.BDLinkedNote" Width="1.5" PointX="8.75" PointY="4.75" Height="3.235779622395853" />
         <EntityTypeShape EntityType="BDDataModel.BDMetadata" Width="1.5" PointX="8.75" PointY="8.75" Height="3.0714322916666674" />
@@ -1240,6 +1338,8 @@
         <EntityTypeShape EntityType="BDDataModel.BDTherapyGroup" Width="1.5" PointX="12.75" PointY="9.75" Height="3.4001269531249818" />
         <EntityTypeShape EntityType="BDDataModel.BDAttachment" Width="1.875" PointX="15.625" PointY="12.875" Height="3.4001269531250031" />
         <EntityTypeShape EntityType="BDDataModel.BDLayoutMetadataColumn" Width="3" PointX="14.75" PointY="5.75" Height="1.5923063151041674" />
+        <EntityTypeShape EntityType="BDDataModel.BDLayoutMetadataColumnNodeType" Width="1.5" PointX="14.75" PointY="7.875" Height="1.9210009765625102" />
+        <EntityTypeShape EntityType="BDDataModel.BDConfiguredEntry" Width="1.875" PointX="9.375" PointY="13.75" Height="5.2079475911458246" />
       </Diagram>
     </Diagrams>
   </Designer>

@@ -13,10 +13,11 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME_FRIENDLY = @"Layout Metadata Column NodeType";
         public const string KEY_NAME = @"BDLayoutMetadataColumnNodeType";
 
-        static public BDLayoutMetadataColumnNodeType Create(Entities pDataContext, int pLayoutVariant, Guid pLayoutColumnId, BDConstants.BDNodeType pNodeType, string pPropertyName)
+        static public BDLayoutMetadataColumnNodeType Create(Entities pDataContext, int pLayoutVariant, Guid pLayoutColumnId, BDConstants.BDNodeType pNodeType, string pPropertyName, int pOrderOfPrecedence)
         {
             BDLayoutMetadataColumnNodeType entry = BDLayoutMetadataColumnNodeType.CreateBDLayoutMetadataColumnNodeType(pLayoutVariant, pLayoutColumnId, (int)pNodeType, Guid.NewGuid());
             entry.propertyName = pPropertyName;
+            entry.orderOfPrecedence = pOrderOfPrecedence;
             pDataContext.AddObject(ENTITYNAME, entry);
             pDataContext.SaveChanges();
             return entry;
@@ -29,6 +30,7 @@ namespace BDEditor.DataModel
 
             existingEntries = (from dbEntry in pDataContext.BDLayoutMetadataColumnNodeTypes
                                 where (dbEntry.columnId == pColumnId)
+                                orderby dbEntry.orderOfPrecedence
                                 select dbEntry);
             existingEntryList = existingEntries.ToList<BDLayoutMetadataColumnNodeType>();
 

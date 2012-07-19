@@ -211,7 +211,14 @@ namespace BDEditor.Views
 
         private void btnColumnNoteTypeSetup_Click(object sender, EventArgs e)
         {
-
+            if (null != this.currentColumn)
+            {
+                BDLayoutColumnNodeTypeEditor editor = new BDLayoutColumnNodeTypeEditor(DataContext, this.currentColumn);
+                editor.ShowDialog();
+                List<BDLayoutMetadataColumnNodeType> list = BDLayoutMetadataColumnNodeType.RetrieveForLayoutColumn(DataContext, this.currentColumn.Uuid);
+                listBoxColumnNodeTypes.Items.Clear();
+                listBoxColumnNodeTypes.Items.AddRange(list.ToArray());
+            }
         }
 
         private void btnMoveColumnPrevious_Click(object sender, EventArgs e)

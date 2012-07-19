@@ -422,6 +422,14 @@
     <None Include="Resources\add_16x16.png" />
     <None Include="Resources\add_record_16.png" />
     <None Include="Resources\apps_16.png" />
+    <None Include="Resources\arrow.png" />
+    <None Include="Resources\arrow-180.png" />
+    <None Include="Resources\arrow-090.png" />
+    <None Include="Resources\arrow-270.png" />
+    <None Include="Resources\arrow-join.png" />
+    <None Include="Resources\arrow-join-180.png" />
+    <None Include="Resources\arrow-split.png" />
+    <None Include="Resources\arrow-split-180.png" />
     <Content Include="Resources\Chapter_3g.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -481,11 +489,14 @@
     <Content Include="Resources\Chapter_6b.txt" />
     <Content Include="Resources\Chapter_6c.txt" />
     <Content Include="Resources\Chapter_6d.txt" />
+    <None Include="Resources\document-code.png" />
     <Content Include="Resources\document.bmp" />
     <Content Include="Resources\document.png" />
     <Content Include="Resources\Flag-Red.png" />
+    <None Include="Resources\minus.png" />
     <Content Include="Resources\Ok2.png" />
     <Content Include="Resources\pen.ico" />
+    <None Include="Resources\plus.png" />
     <Content Include="Resources\search.ico" />
     <Content Include="sqlceca35.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

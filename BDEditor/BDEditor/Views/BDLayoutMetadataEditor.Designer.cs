@@ -37,14 +37,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtColumnLabel = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.btnLinkedNote = new System.Windows.Forms.Button();
-            this.btnMoveColumnPrevious = new System.Windows.Forms.Button();
-            this.btnMoveColumnNext = new System.Windows.Forms.Button();
-            this.btnAddColumn = new System.Windows.Forms.Button();
-            this.btnRemoveColumn = new System.Windows.Forms.Button();
             this.listBoxColumnNodeTypes = new System.Windows.Forms.ListBox();
-            this.btnColumnNoteTypeSetup = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.btnColumnNoteTypeSetup = new System.Windows.Forms.Button();
+            this.btnLinkedNote = new System.Windows.Forms.Button();
+            this.btnMoveColumnNext = new System.Windows.Forms.Button();
+            this.btnMoveColumnPrevious = new System.Windows.Forms.Button();
+            this.btnRemoveColumn = new System.Windows.Forms.Button();
+            this.btnAddColumn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBoxLayoutVariants
@@ -59,10 +59,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(13, 8);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(95, 13);
+            this.label1.Size = new System.Drawing.Size(80, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "Layout Variants";
             // 
@@ -78,6 +78,7 @@
             // lblSelectedLayout
             // 
             this.lblSelectedLayout.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblSelectedLayout.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSelectedLayout.Location = new System.Drawing.Point(347, 28);
             this.lblSelectedLayout.Name = "lblSelectedLayout";
             this.lblSelectedLayout.Size = new System.Drawing.Size(319, 24);
@@ -98,10 +99,10 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(344, 85);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(54, 13);
+            this.label2.Size = new System.Drawing.Size(47, 13);
             this.label2.TabIndex = 6;
             this.label2.Text = "Columns";
             // 
@@ -116,12 +117,41 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(344, 282);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(83, 13);
+            this.label3.Size = new System.Drawing.Size(71, 13);
             this.label3.TabIndex = 8;
             this.label3.Text = "Column Label";
+            // 
+            // listBoxColumnNodeTypes
+            // 
+            this.listBoxColumnNodeTypes.FormattingEnabled = true;
+            this.listBoxColumnNodeTypes.Location = new System.Drawing.Point(347, 347);
+            this.listBoxColumnNodeTypes.Name = "listBoxColumnNodeTypes";
+            this.listBoxColumnNodeTypes.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.listBoxColumnNodeTypes.Size = new System.Drawing.Size(319, 69);
+            this.listBoxColumnNodeTypes.TabIndex = 35;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(344, 331);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(78, 13);
+            this.label4.TabIndex = 37;
+            this.label4.Text = "NodeType Info";
+            // 
+            // btnColumnNoteTypeSetup
+            // 
+            this.btnColumnNoteTypeSetup.Image = global::BDEditor.Properties.Resources.document_code;
+            this.btnColumnNoteTypeSetup.Location = new System.Drawing.Point(347, 423);
+            this.btnColumnNoteTypeSetup.Name = "btnColumnNoteTypeSetup";
+            this.btnColumnNoteTypeSetup.Size = new System.Drawing.Size(24, 24);
+            this.btnColumnNoteTypeSetup.TabIndex = 36;
+            this.btnColumnNoteTypeSetup.UseVisualStyleBackColor = true;
+            this.btnColumnNoteTypeSetup.Click += new System.EventHandler(this.btnColumnNoteTypeSetup_Click);
             // 
             // btnLinkedNote
             // 
@@ -133,16 +163,6 @@
             this.btnLinkedNote.UseVisualStyleBackColor = true;
             this.btnLinkedNote.Click += new System.EventHandler(this.btnLinkedNote_Click);
             // 
-            // btnMoveColumnPrevious
-            // 
-            this.btnMoveColumnPrevious.Image = global::BDEditor.Properties.Resources.previous_16;
-            this.btnMoveColumnPrevious.Location = new System.Drawing.Point(347, 241);
-            this.btnMoveColumnPrevious.Name = "btnMoveColumnPrevious";
-            this.btnMoveColumnPrevious.Size = new System.Drawing.Size(24, 24);
-            this.btnMoveColumnPrevious.TabIndex = 31;
-            this.btnMoveColumnPrevious.UseVisualStyleBackColor = true;
-            this.btnMoveColumnPrevious.Click += new System.EventHandler(this.btnMoveColumnPrevious_Click);
-            // 
             // btnMoveColumnNext
             // 
             this.btnMoveColumnNext.Image = global::BDEditor.Properties.Resources.next_16;
@@ -153,19 +173,19 @@
             this.btnMoveColumnNext.UseVisualStyleBackColor = true;
             this.btnMoveColumnNext.Click += new System.EventHandler(this.btnMoveColumnNext_Click);
             // 
-            // btnAddColumn
+            // btnMoveColumnPrevious
             // 
-            this.btnAddColumn.Image = global::BDEditor.Properties.Resources.add_16x16;
-            this.btnAddColumn.Location = new System.Drawing.Point(642, 241);
-            this.btnAddColumn.Name = "btnAddColumn";
-            this.btnAddColumn.Size = new System.Drawing.Size(24, 24);
-            this.btnAddColumn.TabIndex = 33;
-            this.btnAddColumn.UseVisualStyleBackColor = true;
-            this.btnAddColumn.Click += new System.EventHandler(this.btnAddColumn_Click);
+            this.btnMoveColumnPrevious.Image = global::BDEditor.Properties.Resources.previous_16;
+            this.btnMoveColumnPrevious.Location = new System.Drawing.Point(347, 241);
+            this.btnMoveColumnPrevious.Name = "btnMoveColumnPrevious";
+            this.btnMoveColumnPrevious.Size = new System.Drawing.Size(24, 24);
+            this.btnMoveColumnPrevious.TabIndex = 31;
+            this.btnMoveColumnPrevious.UseVisualStyleBackColor = true;
+            this.btnMoveColumnPrevious.Click += new System.EventHandler(this.btnMoveColumnPrevious_Click);
             // 
             // btnRemoveColumn
             // 
-            this.btnRemoveColumn.Image = global::BDEditor.Properties.Resources.del_16x16;
+            this.btnRemoveColumn.Image = global::BDEditor.Properties.Resources.minus;
             this.btnRemoveColumn.Location = new System.Drawing.Point(612, 241);
             this.btnRemoveColumn.Name = "btnRemoveColumn";
             this.btnRemoveColumn.Size = new System.Drawing.Size(24, 24);
@@ -173,34 +193,15 @@
             this.btnRemoveColumn.UseVisualStyleBackColor = true;
             this.btnRemoveColumn.Click += new System.EventHandler(this.btnRemoveColumn_Click);
             // 
-            // listBoxColumnNodeTypes
+            // btnAddColumn
             // 
-            this.listBoxColumnNodeTypes.FormattingEnabled = true;
-            this.listBoxColumnNodeTypes.Location = new System.Drawing.Point(347, 347);
-            this.listBoxColumnNodeTypes.Name = "listBoxColumnNodeTypes";
-            this.listBoxColumnNodeTypes.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.listBoxColumnNodeTypes.Size = new System.Drawing.Size(319, 69);
-            this.listBoxColumnNodeTypes.TabIndex = 35;
-            // 
-            // btnColumnNoteTypeSetup
-            // 
-            this.btnColumnNoteTypeSetup.Image = global::BDEditor.Properties.Resources.apps_16;
-            this.btnColumnNoteTypeSetup.Location = new System.Drawing.Point(347, 423);
-            this.btnColumnNoteTypeSetup.Name = "btnColumnNoteTypeSetup";
-            this.btnColumnNoteTypeSetup.Size = new System.Drawing.Size(24, 24);
-            this.btnColumnNoteTypeSetup.TabIndex = 36;
-            this.btnColumnNoteTypeSetup.UseVisualStyleBackColor = true;
-            this.btnColumnNoteTypeSetup.Click += new System.EventHandler(this.btnColumnNoteTypeSetup_Click);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(344, 331);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(91, 13);
-            this.label4.TabIndex = 37;
-            this.label4.Text = "NodeType Info";
+            this.btnAddColumn.Image = global::BDEditor.Properties.Resources.plus;
+            this.btnAddColumn.Location = new System.Drawing.Point(642, 241);
+            this.btnAddColumn.Name = "btnAddColumn";
+            this.btnAddColumn.Size = new System.Drawing.Size(24, 24);
+            this.btnAddColumn.TabIndex = 33;
+            this.btnAddColumn.UseVisualStyleBackColor = true;
+            this.btnAddColumn.Click += new System.EventHandler(this.btnAddColumn_Click);
             // 
             // BDLayoutMetadataEditor
             // 

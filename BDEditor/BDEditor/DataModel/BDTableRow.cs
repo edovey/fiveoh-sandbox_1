@@ -38,6 +38,8 @@ namespace BDEditor.DataModel
 
        public const int ENTITY_SCHEMAVERSION = 0;
 
+       public const string PROPERTYNAME_CONTENTS = @"Contents";
+
        private const string UUID = @"tr_uuid";
        private const string SCHEMAVERSION = @"tr_schemaVersion";
        private const string CREATEDBY = @"tr_createdBy";

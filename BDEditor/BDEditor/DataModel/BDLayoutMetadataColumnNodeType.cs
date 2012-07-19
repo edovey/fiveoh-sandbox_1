@@ -16,6 +16,7 @@ namespace BDEditor.DataModel
         static public BDLayoutMetadataColumnNodeType Create(Entities pDataContext, int pLayoutVariant, Guid pLayoutColumnId, BDConstants.BDNodeType pNodeType, string pPropertyName)
         {
             BDLayoutMetadataColumnNodeType entry = BDLayoutMetadataColumnNodeType.CreateBDLayoutMetadataColumnNodeType(pLayoutVariant, pLayoutColumnId, (int)pNodeType, Guid.NewGuid());
+            entry.propertyName = pPropertyName;
             pDataContext.AddObject(ENTITYNAME, entry);
             pDataContext.SaveChanges();
             return entry;
@@ -34,6 +35,19 @@ namespace BDEditor.DataModel
             return existingEntryList;
         }
 
+        static public bool ExistsForLayoutColumn(Entities pDataContext, Guid pColumnId, BDConstants.BDNodeType pNodeType, string pPropertyName)
+        {
+            bool exists = false;
+
+            IQueryable<BDLayoutMetadataColumnNodeType> existingEntries = (from dbEntry in pDataContext.BDLayoutMetadataColumnNodeTypes
+                                                                           where (dbEntry.columnId == pColumnId) 
+                                                                           && (dbEntry.nodeType == (int)pNodeType) 
+                                                                           && (dbEntry.propertyName == pPropertyName)
+                                                                           select dbEntry);
+            exists = (existingEntries.Count() > 0);
+            return exists;
+        }
+
         public Guid Uuid
         {
             get { return this.uuid; }
@@ -43,7 +57,7 @@ namespace BDEditor.DataModel
         {
             BDConstants.BDNodeType theNodeType = (BDConstants.BDNodeType)this.nodeType;
             string description = BDUtilities.GetEnumDescription(theNodeType);
-            return string.Format("{0} {1}", description, this.propertyName);
+            return string.Format("{0} [{1}]", description, this.propertyName);
         }
     }
 }

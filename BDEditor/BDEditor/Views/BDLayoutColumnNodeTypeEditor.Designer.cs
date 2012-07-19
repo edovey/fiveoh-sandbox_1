@@ -46,7 +46,7 @@
             this.listBoxColumnNodeTypes.FormattingEnabled = true;
             this.listBoxColumnNodeTypes.Location = new System.Drawing.Point(22, 94);
             this.listBoxColumnNodeTypes.Name = "listBoxColumnNodeTypes";
-            this.listBoxColumnNodeTypes.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.listBoxColumnNodeTypes.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.listBoxColumnNodeTypes.Size = new System.Drawing.Size(319, 108);
             this.listBoxColumnNodeTypes.TabIndex = 36;
             // 
@@ -87,6 +87,7 @@
             this.listBoxNodetypes.Name = "listBoxNodetypes";
             this.listBoxNodetypes.Size = new System.Drawing.Size(316, 121);
             this.listBoxNodetypes.TabIndex = 41;
+            this.listBoxNodetypes.SelectedIndexChanged += new System.EventHandler(this.listBoxNodetypes_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -103,6 +104,7 @@
             this.listBoxNodetypeProperties.FormattingEnabled = true;
             this.listBoxNodetypeProperties.Location = new System.Drawing.Point(399, 251);
             this.listBoxNodetypeProperties.Name = "listBoxNodetypeProperties";
+            this.listBoxNodetypeProperties.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.listBoxNodetypeProperties.Size = new System.Drawing.Size(316, 173);
             this.listBoxNodetypeProperties.TabIndex = 44;
             // 
@@ -124,6 +126,7 @@
             this.btnRemove.Size = new System.Drawing.Size(24, 24);
             this.btnRemove.TabIndex = 46;
             this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // btnAssignNodeType
             // 
@@ -133,6 +136,7 @@
             this.btnAssignNodeType.Size = new System.Drawing.Size(24, 24);
             this.btnAssignNodeType.TabIndex = 42;
             this.btnAssignNodeType.UseVisualStyleBackColor = true;
+            this.btnAssignNodeType.Click += new System.EventHandler(this.btnAssignNodeType_Click);
             // 
             // BDLayoutColumnNodeTypeEditor
             // 

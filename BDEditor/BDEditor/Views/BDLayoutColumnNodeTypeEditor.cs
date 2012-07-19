@@ -16,6 +16,7 @@ namespace BDEditor.Views
     {
         private Entities dataContext;
         private BDLayoutMetadataColumn layoutColumn;
+        private bool isDisplaying = false;
 
         public BDLayoutColumnNodeTypeEditor()
         {
@@ -34,22 +35,27 @@ namespace BDEditor.Views
         private void BDLayoutColumnNodeTypeEditor_Load(object sender, EventArgs e)
         {
             lblColumnLabel.Text = "";
+            listBoxColumnNodeTypes.Items.Clear();
+
             if (null != this.layoutColumn)
             {
                 lblColumnLabel.Text = this.layoutColumn.label;
+                List<BDLayoutMetadataColumnNodeType> columnNodeList = BDLayoutMetadataColumnNodeType.RetrieveForLayoutColumn(dataContext, layoutColumn.Uuid);
+                listBoxColumnNodeTypes.Items.AddRange(columnNodeList.ToArray());
             }
 
             listBoxNodetypes.Items.Clear();
-            List<BDNodeTypeWrapper> list = new List<BDNodeTypeWrapper>();
+            List<BDNodeTypeWrapper> nodeTypelist = new List<BDNodeTypeWrapper>();
 
             foreach (BDConstants.BDNodeType nodeType in Enum.GetValues(typeof(BDConstants.BDNodeType)))
             {
                 BDNodeTypeWrapper entry = new BDNodeTypeWrapper(nodeType);
-                list.Add(entry);
+                nodeTypelist.Add(entry);
             }
 
-            list.Sort();
-            listBoxNodetypes.Items.AddRange(list.ToArray());
+            nodeTypelist.Sort();
+            listBoxNodetypes.Items.AddRange(nodeTypelist.ToArray());
+
         }
 
         private void DisplayColumn(BDLayoutMetadataColumn pLayoutColumn)
@@ -65,7 +71,65 @@ namespace BDEditor.Views
 
         private void DisplayPropertiesForNodeType(BDConstants.BDNodeType pNodeType)
         {
+            listBoxNodetypeProperties.Items.Clear();
+            List<String> propertyList = BDFabrik.GetPropertyNamesForNodeType(pNodeType);
+            listBoxNodetypeProperties.Items.AddRange(propertyList.ToArray());
+        }
 
+        private void listBoxNodetypes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!this.isDisplaying)
+            {
+                listBoxNodetypeProperties.Items.Clear();
+                if (listBoxNodetypes.SelectedIndex >= 0)
+                {
+                    BDNodeTypeWrapper entry = listBoxNodetypes.SelectedItem as BDNodeTypeWrapper;
+                    if (null != entry)
+                    {
+                        DisplayPropertiesForNodeType(entry.NodeType);
+                    }
+                }
+            }
+        }
+
+        private void btnAssignNodeType_Click(object sender, EventArgs e)
+        {
+            if (null == this.layoutColumn) return;
+
+            if ((listBoxNodetypes.SelectedIndex >= 0) && (listBoxNodetypeProperties.SelectedIndices.Count > 0))
+            {
+                BDNodeTypeWrapper nodeWrapper = listBoxNodetypes.SelectedItem as BDNodeTypeWrapper;
+
+                foreach (Object obj in listBoxNodetypeProperties.SelectedItems)
+                {
+                    string propertyName = obj as string;
+                    if (!BDLayoutMetadataColumnNodeType.ExistsForLayoutColumn(dataContext, this.layoutColumn.Uuid, nodeWrapper.NodeType, propertyName))
+                    {
+                        BDLayoutMetadataColumnNodeType entry = BDLayoutMetadataColumnNodeType.Create(this.dataContext, this.layoutColumn.layoutVariant, this.layoutColumn.Uuid, nodeWrapper.NodeType, propertyName);
+                        listBoxColumnNodeTypes.Items.Add(entry);
+                    }
+                }
+            }
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            if (listBoxColumnNodeTypes.SelectedItems.Count > 0)
+            {
+                //for (int idx = 0; idx < listBoxColumnNodeTypes.SelectedItems.Count; idx++)
+                Object[] list = new Object[listBoxColumnNodeTypes.SelectedItems.Count];
+                listBoxColumnNodeTypes.SelectedItems.CopyTo(list, 0);
+                foreach (Object obj in list)
+                {
+                    BDLayoutMetadataColumnNodeType entry = /*listBoxColumnNodeTypes.SelectedItems[idx] */ obj as BDLayoutMetadataColumnNodeType;
+                    if (null != entry)
+                    {
+                        listBoxColumnNodeTypes.Items.Remove(entry);
+                        dataContext.DeleteObject(entry);
+                    }
+                }
+                dataContext.SaveChanges();
+            }
         }
     }
 

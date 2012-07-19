@@ -38,6 +38,20 @@ namespace BDEditor.DataModel
 
         public const int ENTITY_SCHEMAVERSION = 0;
 
+        public const string PROPERTYNAME_ORGANISM_1 = @"Organism1";
+        public const string PROPERTYNAME_ORGANISM_2 = @"Organism2";
+        public const string PROPERTYNAME_INFECTIVEMATERIAL = @"InfectiveMaterial";
+        public const string PROPERTYNAME_MODEOFTRANSMISSION = @"ModeOfTransmission";
+        public const string PROPERTYNAME_SINGLEROOMACUTE = @"SingleRoomAcute";
+        public const string PROPERTYNAME_SINGLEROOMLONGTERM = @"SingleRoomLongTerm";
+        public const string PROPERTYNAME_GLOVESACUTE = @"GlovesAcute";
+        public const string PROPERTYNAME_GLOVESLONGTERM = @"GlovesLongTerm";
+        public const string PROPERTYNAME_GOWNSACUTE = @"GownsAcute";
+        public const string PROPERTYNAME_GOWNSLONGTERM = @"GownsLongTerm";
+        public const string PROPERTYNAME_MASKACUTE = @"MaskAcute";
+        public const string PROPERTYNAME_MASKLONGTERM = @"MaskLongTerm";
+        public const string PROPERTYNAME_DURATION = @"Duration";
+
         private const string UUID = @"pr_uuid";
         private const string SCHEMAVERSION = @"pr_schemaVersion";
         private const string MODIFIEDDATE = @"pr_modifiedDate";
@@ -59,6 +73,8 @@ namespace BDEditor.DataModel
         private const string MASKACUTE = @"pr_maskAcute";
         private const string MASKLONGTERM = @"pr_maskLongTerm";
         private const string DURATION = @"pr_duration";
+
+
 
         public Guid? tempProductionUuid { get; set; }
 

@@ -41,6 +41,8 @@ namespace BDEditor.DataModel
 
         public const int ENTITY_SCHEMAVERSION = 1;
 
+        public const string PROPERTYNAME_CONTENTS = @"Contents";
+
         private const string UUID = @"tc_uuid";
         private const string SCHEMAVERSION = @"tc_schemaVersion";
         private const string DISPLAYORDER = @"tc_displayOrder";

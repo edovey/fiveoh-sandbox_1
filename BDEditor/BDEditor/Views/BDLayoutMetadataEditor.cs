@@ -128,6 +128,8 @@ namespace BDEditor.Views
 
                 int index = listBoxLayoutColumns.Items.Add(column);
                 listBoxLayoutColumns.SelectedIndex = index;
+                txtColumnLabel.Focus();
+                txtColumnLabel.SelectAll();
             }
         }
 

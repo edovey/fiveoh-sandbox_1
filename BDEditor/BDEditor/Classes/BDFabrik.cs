@@ -1831,5 +1831,70 @@ namespace BDEditor.Classes
             }
             return maxColumns;
         }
+
+        static public List<String> GetPropertyNamesForNodeType(BDConstants.BDNodeType pNodeType)
+        {
+            List<String> propertyList = new List<string>();
+            switch (pNodeType)
+            {
+                case BDConstants.BDNodeType.BDAntimicrobialRisk:
+                    propertyList.Add(BDAntimicrobialRisk.PROPERTYNAME_APPRATING);
+                    propertyList.Add(BDAntimicrobialRisk.PROPERTYNAME_LACTATIONRISK);
+                    propertyList.Add(BDAntimicrobialRisk.PROPERTYNAME_NAME);
+                    propertyList.Add(BDAntimicrobialRisk.PROPERTYNAME_PREGNANCYRISK);
+                    propertyList.Add(BDAntimicrobialRisk.PROPERTYNAME_RECOMMENDATION);
+                    propertyList.Add(BDAntimicrobialRisk.PROPERTYNAME_RELATIVEDOSE);
+                    break;
+                case BDConstants.BDNodeType.BDAttachment:
+                    propertyList.Add(BDAttachment.PROPERTYNAME_DATA);
+                    break;
+                case BDConstants.BDNodeType.BDDosage:
+                    propertyList.Add(BDDosage.PROPERTYNAME_COST);
+                    propertyList.Add(BDDosage.PROPERTYNAME_DOSAGE);
+                    propertyList.Add(BDDosage.PROPERTYNAME_DOSAGE2);
+                    propertyList.Add(BDDosage.PROPERTYNAME_DOSAGE3);
+                    propertyList.Add(BDDosage.PROPERTYNAME_DOSAGE4);
+                    propertyList.Add(BDDosage.PROPERTYNAME_NAME);
+                    break;
+                case BDConstants.BDNodeType.BDPrecaution:
+                    propertyList.Add(BDPrecaution.PROPERTYNAME_DURATION);
+                    propertyList.Add(BDPrecaution.PROPERTYNAME_GLOVESACUTE);
+                    propertyList.Add(BDPrecaution.PROPERTYNAME_GLOVESLONGTERM);
+                    propertyList.Add(BDPrecaution.PROPERTYNAME_GOWNSACUTE);
+                    propertyList.Add(BDPrecaution.PROPERTYNAME_GOWNSLONGTERM);
+                    propertyList.Add(BDPrecaution.PROPERTYNAME_INFECTIVEMATERIAL);
+                    propertyList.Add(BDPrecaution.PROPERTYNAME_MASKACUTE);
+                    propertyList.Add(BDPrecaution.PROPERTYNAME_MASKLONGTERM);
+                    propertyList.Add(BDPrecaution.PROPERTYNAME_MODEOFTRANSMISSION);
+                    propertyList.Add(BDPrecaution.PROPERTYNAME_ORGANISM_1);
+                    propertyList.Add(BDPrecaution.PROPERTYNAME_ORGANISM_2);
+                    propertyList.Add(BDPrecaution.PROPERTYNAME_SINGLEROOMACUTE);
+                    propertyList.Add(BDPrecaution.PROPERTYNAME_SINGLEROOMLONGTERM);
+                    break;       
+                case BDConstants.BDNodeType.BDTableCell:
+                    propertyList.Add(BDTableCell.PROPERTYNAME_CONTENTS);
+                    break;
+                case BDConstants.BDNodeType.BDTableRow:
+                    propertyList.Add(BDTableRow.PROPERTYNAME_CONTENTS);
+                    break;
+                case BDConstants.BDNodeType.BDTherapy:
+                    propertyList.Add(BDTherapy.PROPERTYNAME_DOSAGE);
+                    propertyList.Add(BDTherapy.PROPERTYNAME_DOSAGE_1);
+                    propertyList.Add(BDTherapy.PROPERTYNAME_DOSAGE_2);
+                    propertyList.Add(BDTherapy.PROPERTYNAME_DURATION);
+                    propertyList.Add(BDTherapy.PROPERTYNAME_DURATION_1);
+                    propertyList.Add(BDTherapy.PROPERTYNAME_DURATION_2);
+                    propertyList.Add(BDTherapy.PROPERTYNAME_THERAPY);
+                    break;
+                case BDConstants.BDNodeType.BDTherapyGroup:
+                    propertyList.Add(BDTherapyGroup.PROPERTYNAME_NAME);
+                    break;
+                default:
+                    propertyList.Add(BDNode.PROPERTYNAME_NAME);
+                    break;
+            }
+
+            return propertyList;
+        }
     }
 }

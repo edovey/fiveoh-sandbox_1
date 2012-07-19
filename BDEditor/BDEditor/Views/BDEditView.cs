@@ -918,7 +918,7 @@ namespace BDEditor.Views
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_2f.txt", BDDataLoader.baseDataDefinitionType.chapter2f);
 
            // dataLoader.ImportData(dataContext, @"Resources\Chapter_3a.txt", BDDataLoader.baseDataDefinitionType.chapter3a);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3b.txt", BDDataLoader.baseDataDefinitionType.chapter3b);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_3b.txt", BDDataLoader.baseDataDefinitionType.chapter3b);
            // dataLoader.ImportData(dataContext, @"Resources\Chapter_3c.txt", BDDataLoader.baseDataDefinitionType.chapter3c);
            // dataLoader.ImportData(dataContext, @"Resources\Chapter_3d.txt", BDDataLoader.baseDataDefinitionType.chapter3d);
            // dataLoader.ImportData(dataContext, @"Resources\Chapter_3e.txt", BDDataLoader.baseDataDefinitionType.chapter3e);

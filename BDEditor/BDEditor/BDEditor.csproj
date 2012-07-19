@@ -200,6 +200,12 @@
     <Compile Include="Views\BDDosageAndCostControl.Designer.cs">
       <DependentUpon>BDDosageAndCostControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\BDLayoutColumnNodeTypeEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\BDLayoutColumnNodeTypeEditor.Designer.cs">
+      <DependentUpon>BDLayoutColumnNodeTypeEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\BDLayoutMetadataEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -321,6 +327,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDDosageAndCostControl.resx">
       <DependentUpon>BDDosageAndCostControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDLayoutColumnNodeTypeEditor.resx">
+      <DependentUpon>BDLayoutColumnNodeTypeEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDLayoutMetadataEditor.resx">
       <DependentUpon>BDLayoutMetadataEditor.cs</DependentUpon>

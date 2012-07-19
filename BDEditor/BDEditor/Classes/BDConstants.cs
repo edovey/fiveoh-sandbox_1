@@ -99,6 +99,8 @@ namespace BDEditor.Classes
             BDResponse = 35,
             [Description("Infection Frequency")]
             BDFrequency = 36,
+            [Description("Regimen")]
+            BDRegimen = 37,
             [Description("Layout Column")]
             BDLayoutColumn = 999,
         }

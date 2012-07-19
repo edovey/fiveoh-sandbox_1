@@ -435,6 +435,7 @@ namespace BDEditor.Views
                                 break;
                             case BDConstants.LayoutVariantType.Prophylaxis:
                             case BDConstants.LayoutVariantType.Prophylaxis_PreOp:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                             case BDConstants.LayoutVariantType.Prophylaxis_IERecommendation:
                             case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
                             case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure:
@@ -558,6 +559,7 @@ namespace BDEditor.Views
                                     showChildControls = false;
                                 }
                                 break;
+                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
                                 childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
@@ -701,6 +703,14 @@ namespace BDEditor.Views
                                     showChildControls = false;
                                 }
                                 break;
+                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
+                                childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
+                                if (!pInterrogateOnly)
+                                {
+                                    graftTreeNode(selectedNode, childTreeNode);
+                                    showChildControls = false;
+                                }
+                                break;
                             case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
                                 childTreeNode = BDDentalTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
@@ -744,6 +754,17 @@ namespace BDEditor.Views
                         switch (node.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
+                                if (!pInterrogateOnly)
+                                {
+                                    showChildControls = true;
+                                }
+                                break;
+                        }
+                        break;
+                    case BDConstants.BDNodeType.BDSurgeryGroup:
+                        switch (node.LayoutVariant)
+                        {
+                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                                 if (!pInterrogateOnly)
                                 {
                                     showChildControls = true;

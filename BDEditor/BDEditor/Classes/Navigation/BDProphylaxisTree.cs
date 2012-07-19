@@ -28,6 +28,7 @@ namespace BDEditor.Classes.Navigation
                 case BDConstants.BDNodeType.BDSubcategory:
                 case BDConstants.BDNodeType.BDDisease:
                 case BDConstants.BDNodeType.BDTopic:
+                case BDConstants.BDNodeType.BDSurgeryGroup:
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Prophylaxis:

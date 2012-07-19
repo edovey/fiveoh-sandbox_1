@@ -106,12 +106,15 @@ namespace BDEditor.Views
 
         private void listBoxLayoutColumns_SelectedIndexChanged(object sender, EventArgs e)
         {
-            BDLayoutMetadataColumn selectedColumn = null;
-            if (listBoxLayoutColumns.SelectedIndex >= 0)
+            if (!isDisplaying)
             {
-                selectedColumn = listBoxLayoutColumns.SelectedItem as BDLayoutMetadataColumn;
+                BDLayoutMetadataColumn selectedColumn = null;
+                if (listBoxLayoutColumns.SelectedIndex >= 0)
+                {
+                    selectedColumn = listBoxLayoutColumns.SelectedItem as BDLayoutMetadataColumn;
+                }
+                DisplayLayoutColumn(selectedColumn);
             }
-            DisplayLayoutColumn(selectedColumn);
         }
 
         private void btnAddColumn_Click(object sender, EventArgs e)
@@ -167,6 +170,9 @@ namespace BDEditor.Views
             {
                 this.selectedLayout.included = chkLayoutIncluded.Checked;
                 DataContext.SaveChanges();
+
+                int index = listBoxLayoutVariants.Items.IndexOf(this.selectedLayout);
+                listBoxLayoutVariants.Items[index] = this.selectedLayout;
             }
         }
 
@@ -201,6 +207,55 @@ namespace BDEditor.Views
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(DataContext, (null != this.currentColumn) ? this.currentColumn.Uuid : Guid.Empty);
             btnLinkedNote.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnLinkedNote.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
 
+        }
+
+        private void btnColumnNoteTypeSetup_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnMoveColumnPrevious_Click(object sender, EventArgs e)
+        {
+            if (null != this.currentColumn)
+            {
+                this.isDisplaying = true;
+                int index = listBoxLayoutColumns.Items.IndexOf(this.currentColumn);
+                if (index > 0) 
+                {
+                    listBoxLayoutColumns.Items.Remove(this.currentColumn);
+                    listBoxLayoutColumns.Items.Insert(index - 1, this.currentColumn);
+                    for (int idx = 0; idx < listBoxLayoutColumns.Items.Count; idx++)
+                    {
+                        BDLayoutMetadataColumn entry = listBoxLayoutColumns.Items[idx] as BDLayoutMetadataColumn;
+                        entry.displayOrder = idx + 1;
+                    }
+                    DataContext.SaveChanges();
+                    listBoxLayoutColumns.SelectedItem = this.currentColumn;
+                }
+                this.isDisplaying = false;
+            }
+        }
+
+        private void btnMoveColumnNext_Click(object sender, EventArgs e)
+        {
+            if (null != this.currentColumn)
+            {
+                this.isDisplaying = true;
+                int index = listBoxLayoutColumns.Items.IndexOf(this.currentColumn);
+                if (index < listBoxLayoutColumns.Items.Count - 1)
+                {
+                    listBoxLayoutColumns.Items.Remove(this.currentColumn);
+                    listBoxLayoutColumns.Items.Insert(index + 1, this.currentColumn);
+                    for (int idx = 0; idx < listBoxLayoutColumns.Items.Count; idx++)
+                    {
+                        BDLayoutMetadataColumn entry = listBoxLayoutColumns.Items[idx] as BDLayoutMetadataColumn;
+                        entry.displayOrder = idx + 1;
+                    }
+                    DataContext.SaveChanges();
+                    listBoxLayoutColumns.SelectedItem = this.currentColumn;
+                }
+                this.isDisplaying = false;
+            }
         }
     }
 }

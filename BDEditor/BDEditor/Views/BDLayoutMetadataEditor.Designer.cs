@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDLayoutMetadataEditor));
             this.listBoxLayoutVariants = new System.Windows.Forms.ListBox();
-            this.btnComplete = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.listBoxLayoutColumns = new System.Windows.Forms.ListBox();
             this.lblSelectedLayout = new System.Windows.Forms.Label();
@@ -38,14 +37,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtColumnLabel = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnLinkedNote = new System.Windows.Forms.Button();
             this.btnMoveColumnPrevious = new System.Windows.Forms.Button();
             this.btnMoveColumnNext = new System.Windows.Forms.Button();
             this.btnAddColumn = new System.Windows.Forms.Button();
             this.btnRemoveColumn = new System.Windows.Forms.Button();
             this.listBoxColumnNodeTypes = new System.Windows.Forms.ListBox();
-            this.groupBox1.SuspendLayout();
+            this.btnColumnNoteTypeSetup = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listBoxLayoutVariants
@@ -53,21 +52,9 @@
             this.listBoxLayoutVariants.FormattingEnabled = true;
             this.listBoxLayoutVariants.Location = new System.Drawing.Point(12, 27);
             this.listBoxLayoutVariants.Name = "listBoxLayoutVariants";
-            this.listBoxLayoutVariants.Size = new System.Drawing.Size(316, 225);
+            this.listBoxLayoutVariants.Size = new System.Drawing.Size(316, 420);
             this.listBoxLayoutVariants.TabIndex = 0;
             this.listBoxLayoutVariants.SelectedIndexChanged += new System.EventHandler(this.listBoxLayoutVariants_SelectedIndexChanged);
-            // 
-            // btnComplete
-            // 
-            this.btnComplete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnComplete.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnComplete.Location = new System.Drawing.Point(635, 522);
-            this.btnComplete.Name = "btnComplete";
-            this.btnComplete.Size = new System.Drawing.Size(75, 23);
-            this.btnComplete.TabIndex = 1;
-            this.btnComplete.Text = "Finished";
-            this.btnComplete.UseVisualStyleBackColor = true;
-            this.btnComplete.Click += new System.EventHandler(this.btnComplete_Click);
             // 
             // label1
             // 
@@ -82,7 +69,7 @@
             // listBoxLayoutColumns
             // 
             this.listBoxLayoutColumns.FormattingEnabled = true;
-            this.listBoxLayoutColumns.Location = new System.Drawing.Point(9, 340);
+            this.listBoxLayoutColumns.Location = new System.Drawing.Point(347, 101);
             this.listBoxLayoutColumns.Name = "listBoxLayoutColumns";
             this.listBoxLayoutColumns.Size = new System.Drawing.Size(319, 134);
             this.listBoxLayoutColumns.TabIndex = 3;
@@ -91,7 +78,7 @@
             // lblSelectedLayout
             // 
             this.lblSelectedLayout.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblSelectedLayout.Location = new System.Drawing.Point(9, 267);
+            this.lblSelectedLayout.Location = new System.Drawing.Point(347, 28);
             this.lblSelectedLayout.Name = "lblSelectedLayout";
             this.lblSelectedLayout.Size = new System.Drawing.Size(319, 24);
             this.lblSelectedLayout.TabIndex = 4;
@@ -100,7 +87,7 @@
             // chkLayoutIncluded
             // 
             this.chkLayoutIncluded.AutoSize = true;
-            this.chkLayoutIncluded.Location = new System.Drawing.Point(9, 295);
+            this.chkLayoutIncluded.Location = new System.Drawing.Point(347, 56);
             this.chkLayoutIncluded.Name = "chkLayoutIncluded";
             this.chkLayoutIncluded.Size = new System.Drawing.Size(67, 17);
             this.chkLayoutIncluded.TabIndex = 5;
@@ -112,7 +99,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(6, 324);
+            this.label2.Location = new System.Drawing.Point(344, 85);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(54, 13);
             this.label2.TabIndex = 6;
@@ -120,9 +107,9 @@
             // 
             // txtColumnLabel
             // 
-            this.txtColumnLabel.Location = new System.Drawing.Point(12, 35);
+            this.txtColumnLabel.Location = new System.Drawing.Point(347, 298);
             this.txtColumnLabel.Name = "txtColumnLabel";
-            this.txtColumnLabel.Size = new System.Drawing.Size(300, 20);
+            this.txtColumnLabel.Size = new System.Drawing.Size(319, 20);
             this.txtColumnLabel.TabIndex = 7;
             this.txtColumnLabel.Leave += new System.EventHandler(this.txtColumnLabel_Leave);
             // 
@@ -130,30 +117,16 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(9, 19);
+            this.label3.Location = new System.Drawing.Point(344, 282);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(38, 13);
+            this.label3.Size = new System.Drawing.Size(83, 13);
             this.label3.TabIndex = 8;
-            this.label3.Text = "Label";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.listBoxColumnNodeTypes);
-            this.groupBox1.Controls.Add(this.btnLinkedNote);
-            this.groupBox1.Controls.Add(this.txtColumnLabel);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Location = new System.Drawing.Point(349, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(357, 492);
-            this.groupBox1.TabIndex = 9;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Column";
+            this.label3.Text = "Column Label";
             // 
             // btnLinkedNote
             // 
-            this.btnLinkedNote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLinkedNote.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkedNote.Image")));
-            this.btnLinkedNote.Location = new System.Drawing.Point(321, 30);
+            this.btnLinkedNote.Location = new System.Drawing.Point(671, 293);
             this.btnLinkedNote.Name = "btnLinkedNote";
             this.btnLinkedNote.Size = new System.Drawing.Size(28, 28);
             this.btnLinkedNote.TabIndex = 30;
@@ -163,25 +136,27 @@
             // btnMoveColumnPrevious
             // 
             this.btnMoveColumnPrevious.Image = global::BDEditor.Properties.Resources.previous_16;
-            this.btnMoveColumnPrevious.Location = new System.Drawing.Point(6, 480);
+            this.btnMoveColumnPrevious.Location = new System.Drawing.Point(347, 241);
             this.btnMoveColumnPrevious.Name = "btnMoveColumnPrevious";
             this.btnMoveColumnPrevious.Size = new System.Drawing.Size(24, 24);
             this.btnMoveColumnPrevious.TabIndex = 31;
             this.btnMoveColumnPrevious.UseVisualStyleBackColor = true;
+            this.btnMoveColumnPrevious.Click += new System.EventHandler(this.btnMoveColumnPrevious_Click);
             // 
             // btnMoveColumnNext
             // 
             this.btnMoveColumnNext.Image = global::BDEditor.Properties.Resources.next_16;
-            this.btnMoveColumnNext.Location = new System.Drawing.Point(36, 480);
+            this.btnMoveColumnNext.Location = new System.Drawing.Point(377, 241);
             this.btnMoveColumnNext.Name = "btnMoveColumnNext";
             this.btnMoveColumnNext.Size = new System.Drawing.Size(24, 24);
             this.btnMoveColumnNext.TabIndex = 32;
             this.btnMoveColumnNext.UseVisualStyleBackColor = true;
+            this.btnMoveColumnNext.Click += new System.EventHandler(this.btnMoveColumnNext_Click);
             // 
             // btnAddColumn
             // 
             this.btnAddColumn.Image = global::BDEditor.Properties.Resources.add_16x16;
-            this.btnAddColumn.Location = new System.Drawing.Point(304, 480);
+            this.btnAddColumn.Location = new System.Drawing.Point(642, 241);
             this.btnAddColumn.Name = "btnAddColumn";
             this.btnAddColumn.Size = new System.Drawing.Size(24, 24);
             this.btnAddColumn.TabIndex = 33;
@@ -191,7 +166,7 @@
             // btnRemoveColumn
             // 
             this.btnRemoveColumn.Image = global::BDEditor.Properties.Resources.del_16x16;
-            this.btnRemoveColumn.Location = new System.Drawing.Point(274, 480);
+            this.btnRemoveColumn.Location = new System.Drawing.Point(612, 241);
             this.btnRemoveColumn.Name = "btnRemoveColumn";
             this.btnRemoveColumn.Size = new System.Drawing.Size(24, 24);
             this.btnRemoveColumn.TabIndex = 34;
@@ -201,17 +176,43 @@
             // listBoxColumnNodeTypes
             // 
             this.listBoxColumnNodeTypes.FormattingEnabled = true;
-            this.listBoxColumnNodeTypes.Location = new System.Drawing.Point(12, 72);
+            this.listBoxColumnNodeTypes.Location = new System.Drawing.Point(347, 347);
             this.listBoxColumnNodeTypes.Name = "listBoxColumnNodeTypes";
-            this.listBoxColumnNodeTypes.Size = new System.Drawing.Size(300, 121);
+            this.listBoxColumnNodeTypes.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.listBoxColumnNodeTypes.Size = new System.Drawing.Size(319, 69);
             this.listBoxColumnNodeTypes.TabIndex = 35;
+            // 
+            // btnColumnNoteTypeSetup
+            // 
+            this.btnColumnNoteTypeSetup.Image = global::BDEditor.Properties.Resources.apps_16;
+            this.btnColumnNoteTypeSetup.Location = new System.Drawing.Point(347, 423);
+            this.btnColumnNoteTypeSetup.Name = "btnColumnNoteTypeSetup";
+            this.btnColumnNoteTypeSetup.Size = new System.Drawing.Size(24, 24);
+            this.btnColumnNoteTypeSetup.TabIndex = 36;
+            this.btnColumnNoteTypeSetup.UseVisualStyleBackColor = true;
+            this.btnColumnNoteTypeSetup.Click += new System.EventHandler(this.btnColumnNoteTypeSetup_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(344, 331);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(91, 13);
+            this.label4.TabIndex = 37;
+            this.label4.Text = "NodeType Info";
             // 
             // BDLayoutMetadataEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(722, 554);
-            this.Controls.Add(this.groupBox1);
+            this.ClientSize = new System.Drawing.Size(707, 465);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.btnColumnNoteTypeSetup);
+            this.Controls.Add(this.btnLinkedNote);
+            this.Controls.Add(this.listBoxColumnNodeTypes);
+            this.Controls.Add(this.txtColumnLabel);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.btnMoveColumnNext);
             this.Controls.Add(this.btnMoveColumnPrevious);
             this.Controls.Add(this.btnRemoveColumn);
@@ -221,13 +222,13 @@
             this.Controls.Add(this.lblSelectedLayout);
             this.Controls.Add(this.listBoxLayoutColumns);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnComplete);
             this.Controls.Add(this.listBoxLayoutVariants);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "BDLayoutMetadataEditor";
             this.Text = "Layout Virtual Column Editor";
             this.Load += new System.EventHandler(this.BDLayoutMetadataEditor_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -236,7 +237,6 @@
         #endregion
 
         private System.Windows.Forms.ListBox listBoxLayoutVariants;
-        private System.Windows.Forms.Button btnComplete;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox listBoxLayoutColumns;
         private System.Windows.Forms.Label lblSelectedLayout;
@@ -244,12 +244,13 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtColumnLabel;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnLinkedNote;
         private System.Windows.Forms.Button btnMoveColumnNext;
         private System.Windows.Forms.Button btnMoveColumnPrevious;
         private System.Windows.Forms.Button btnRemoveColumn;
         private System.Windows.Forms.Button btnAddColumn;
         private System.Windows.Forms.ListBox listBoxColumnNodeTypes;
+        private System.Windows.Forms.Button btnColumnNoteTypeSetup;
+        private System.Windows.Forms.Label label4;
     }
 }

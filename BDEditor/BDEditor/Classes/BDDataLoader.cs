@@ -98,6 +98,8 @@ namespace BDEditor.Classes
         BDNode microorganismGroup;
         BDNode antimicrobialGroup;
         BDPrecaution precaution;
+        BDNode surgeryClassification;
+        BDNode surgeryGroup;
 
         string uuidData = null;
         string chapterData = null;
@@ -128,6 +130,8 @@ namespace BDEditor.Classes
         string microorganismGroupData = null;
         string antimicrobialGroupData = null;
         string precautionData = null;
+        string surgeryClassificationData = null;
+        string surgeryGroupData = null;
 
         short idxChapter = 0;
         short idxSection = 0;
@@ -154,6 +158,8 @@ namespace BDEditor.Classes
         short idxMicroorganismGroup = 0;
         short idxAntimicrobialGroup = 0;
         short idxPrecaution = 0;
+        short idxSurgeryClassification = 0;
+        short idxSurgeryGroup = 0;
 
         public void ImportData(Entities pDataContext, string pFilename, baseDataDefinitionType pDefinitionType)
         {
@@ -5189,7 +5195,176 @@ namespace BDEditor.Classes
         /// surgical prophylaxis
         /// </summary>
         /// <param name="pInputLine"></param>
-        private void ProcessChapter3bInputLine(string pInputLine) { }
+        private void ProcessChapter3bInputLine(string pInputLine) {
+            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
+
+            //Expectation that a row contains only one element with data
+
+            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
+            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
+            BDConstants.LayoutVariantType categoryLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical;
+            BDConstants.LayoutVariantType surgeryClassificationLayout = categoryLayoutVariant;
+            BDConstants.LayoutVariantType surgeryGroupLayout = categoryLayoutVariant;
+            BDConstants.LayoutVariantType surgeryLayout = categoryLayoutVariant;
+
+            uuidData = string.Empty;
+            chapterData = string.Empty;
+            sectionData = string.Empty;
+            categoryData = string.Empty;
+            surgeryClassificationData = string.Empty;
+            surgeryGroupData = string.Empty;
+            surgeryData = string.Empty;
+
+            if (elements.Length > 0) uuidData = elements[0];
+            if (elements.Length > 1) chapterData = elements[1];
+            if (elements.Length > 2) sectionData = elements[2];
+            if (elements.Length > 3) categoryData = elements[3];
+            if (elements.Length > 4) surgeryClassificationData = elements[4];
+            if (elements.Length > 5) surgeryGroupData = elements[5];
+            if (elements.Length > 6) surgeryData = elements[6];
+
+            if ((null != chapterData && chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
+            {
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(uuidData));
+                if (null == tmpNode)
+                {
+                    chapter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.Parse(uuidData));
+                    chapter.name = chapterData;
+                    chapter.displayOrder = idxChapter++;
+                    chapter.LayoutVariant = chapterLayoutVariant;
+                    chapter.SetParent(null);
+                    BDNode.Save(dataContext, chapter);
+                }
+                else
+                {
+                    chapter = tmpNode;
+                    idxChapter++;
+                }
+                section = null;
+                category = null;
+                surgeryClassification = null;
+                surgeryGroup = null;
+                surgery = null;
+
+                idxSection = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
+                idxCategory = 0;
+                idxSurgeryClassification = 0;
+                idxSurgeryGroup = 0;
+                idxSurgery = 0;
+            }
+
+            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+            {
+                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == sectionNode)
+                {
+                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+                    section.name = sectionData;
+                    section.SetParent(chapter);
+                    section.displayOrder = idxSection++;
+                    section.LayoutVariant = sectionLayoutVariant;
+                    BDNode.Save(dataContext, section);
+                }
+                else
+                {
+                    section = sectionNode;
+                    idxSection++;
+                }
+                category = null;
+                surgeryClassification = null;
+                surgeryGroup = null;
+                surgery = null;
+                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+                idxSurgeryClassification = 0;
+                idxSurgeryGroup = 0;
+                idxSurgery = 0;
+            }
+            if ((null != categoryData && categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
+            {
+                BDNode catNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == catNode)
+                {
+                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
+                    category.name = (categoryData == @"<blank>") ? string.Empty : categoryData;
+                    category.SetParent(section);
+                    category.displayOrder = idxCategory++;
+                    category.LayoutVariant = categoryLayoutVariant;
+                    BDNode.Save(dataContext, category);
+                }
+                else
+                {
+                    category = catNode;
+                    idxCategory++;
+                }
+                surgeryClassification = null;
+                surgeryGroup = null;
+                surgery = null;
+                idxSurgeryClassification = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, category);
+                idxSurgeryGroup = 0;
+                idxSurgery = 0;
+            }
+
+            if ((null != surgeryClassificationData && surgeryClassificationData != string.Empty) && ((null == surgeryClassification) || (surgeryClassification.name != surgeryClassificationData)))
+            {
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == tmpNode)
+                {
+                    surgeryClassification = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSurgeryClassification, Guid.Parse(uuidData));
+                    surgeryClassification.name = (surgeryClassificationData == @"<blank>") ? string.Empty : surgeryClassificationData;
+                    surgeryClassification.SetParent(category);
+                    surgeryClassification.displayOrder = idxSurgeryClassification++;
+                    surgeryClassification.LayoutVariant = surgeryClassificationLayout;
+                    BDNode.Save(dataContext, surgeryClassification);
+                }
+                else
+                {
+                    surgeryClassification = tmpNode;
+                    idxSurgeryClassification++;
+                }
+                surgeryGroup = null;
+                surgery = null;
+                idxSurgeryGroup = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, surgeryClassification);
+                idxSurgery = 0;
+            }
+            if ((null != surgeryGroupData && surgeryGroupData != string.Empty) && ((null == surgeryGroup) || (surgeryGroup.name != surgeryGroupData)))
+            {
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == tmpNode)
+                {
+                    surgeryGroup = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSurgeryGroup, Guid.Parse(uuidData));
+                    surgeryGroup.name = (surgeryGroupData == @"<blank>") ? string.Empty : surgeryGroupData;
+                    surgeryGroup.SetParent(surgeryClassification);
+                    surgeryGroup.displayOrder = idxSurgeryGroup++;
+                    surgeryGroup.LayoutVariant = surgeryGroupLayout;
+                    BDNode.Save(dataContext, surgeryGroup);
+                }
+                else
+                {
+                    surgeryGroup = tmpNode;
+                    idxSurgeryGroup++;
+                }
+                surgery = null;
+                idxSurgery = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, surgeryGroup);
+            }
+            if ((null != surgeryData && surgeryData != string.Empty) && ((null == surgery) || (surgery.name != surgeryData)))
+            {
+                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
+                if (null == tmpNode)
+                {
+                    surgery = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSurgery, Guid.Parse(uuidData));
+                    surgery.name = (surgeryData == @"<blank>") ? string.Empty : surgeryData;
+                    surgery.SetParent(surgeryGroup);
+                    surgery.displayOrder = idxSurgery++;
+                    surgery.LayoutVariant = surgeryLayout;
+                    BDNode.Save(dataContext, surgery);
+                }
+                else
+                {
+                    surgery = tmpNode;
+                    idxSurgery++;
+                }
+            }
+        }
 
         /// <summary>
         /// Prophyaxis Infective Endocarditis

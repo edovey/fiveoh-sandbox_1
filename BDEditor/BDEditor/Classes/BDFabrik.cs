@@ -49,6 +49,10 @@ namespace BDEditor.Classes
                         BDAttachment attachment = pNode as BDAttachment;
                         BDAttachment.Save(pDataContext, attachment);
                         break;
+                    case BDConstants.BDNodeType.BDConfiguredEntry:
+                        BDConfiguredEntry configuredEntry = pNode as BDConfiguredEntry;
+                        BDConfiguredEntry.Save(pDataContext, configuredEntry);
+                        break;
                     case BDConstants.BDNodeType.BDDosage:
                         BDDosage dosage = pNode as BDDosage;
                         BDDosage.Save(pDataContext, dosage);
@@ -852,6 +856,16 @@ namespace BDEditor.Classes
                         entryList.AddRange(workingList);
                     }
                     break;
+                case BDConstants.BDNodeType.BDConfiguredEntry:
+                    IQueryable<BDConfiguredEntry> cEntries = (from entry in pDataContext.BDConfiguredEntries
+                                                                  orderby entry.displayOrder
+                                                                  select entry);
+                    if (cEntries.Count() > 0)
+                    {
+                        List<BDConfiguredEntry> workingList = new List<BDConfiguredEntry>(cEntries.ToList<BDConfiguredEntry>());
+                        entryList.AddRange(workingList);
+                    }
+                    break;
                 case BDConstants.BDNodeType.BDTherapy:
                     IQueryable<BDTherapy> tEntries = (from entry in pDataContext.BDTherapies
                                                                   orderby entry.displayOrder
@@ -1233,6 +1247,9 @@ namespace BDEditor.Classes
             {
                 case BDConstants.BDNodeType.None:
                     break;
+                case BDConstants.BDNodeType.BDConfiguredEntry:
+                    entry = BDConfiguredEntry.Create(pContext, BDConstants.LayoutVariantType.Undefined, pParentUuid.Value, pParentNodeType, null);
+                    break;
                 case BDConstants.BDNodeType.BDTherapy:
                     entry = BDTherapy.CreateBDTherapy(pContext, pParentUuid.Value);
                     break;
@@ -1355,6 +1372,15 @@ namespace BDEditor.Classes
                     {
                         default:
                             nodeControl = new BDNodeControl(pContext, pNode);
+                            break;
+                    }
+                    break;
+
+                case BDConstants.BDNodeType.BDConfiguredEntry:
+                    switch (pNode.LayoutVariant)
+                    {
+                        default:
+                            //TODO: Create control for BDConfiguredEntry
                             break;
                     }
                     break;
@@ -1904,6 +1930,24 @@ namespace BDEditor.Classes
                     break;
                 case BDConstants.BDNodeType.BDAttachment:
                     propertyList.Add(BDAttachment.PROPERTYNAME_DATA);
+                    break;
+                case BDConstants.BDNodeType.BDConfiguredEntry:
+                    propertyList.Add(BDConfiguredEntry.PROPERTYNAME_NAME);
+                    propertyList.Add(BDConfiguredEntry.PROPERTYNAME_FIELD01);
+                    propertyList.Add(BDConfiguredEntry.PROPERTYNAME_FIELD02);
+                    propertyList.Add(BDConfiguredEntry.PROPERTYNAME_FIELD03);
+                    propertyList.Add(BDConfiguredEntry.PROPERTYNAME_FIELD04);
+                    propertyList.Add(BDConfiguredEntry.PROPERTYNAME_FIELD05);
+                    propertyList.Add(BDConfiguredEntry.PROPERTYNAME_FIELD06);
+                    propertyList.Add(BDConfiguredEntry.PROPERTYNAME_FIELD07);
+                    propertyList.Add(BDConfiguredEntry.PROPERTYNAME_FIELD08);
+                    propertyList.Add(BDConfiguredEntry.PROPERTYNAME_FIELD09);
+                    propertyList.Add(BDConfiguredEntry.PROPERTYNAME_FIELD10);
+                    propertyList.Add(BDConfiguredEntry.PROPERTYNAME_FIELD11);
+                    propertyList.Add(BDConfiguredEntry.PROPERTYNAME_FIELD12);
+                    propertyList.Add(BDConfiguredEntry.PROPERTYNAME_FIELD13);
+                    propertyList.Add(BDConfiguredEntry.PROPERTYNAME_FIELD14);
+                    propertyList.Add(BDConfiguredEntry.PROPERTYNAME_FIELD15);
                     break;
                 case BDConstants.BDNodeType.BDDosage:
                     propertyList.Add(BDDosage.PROPERTYNAME_COST);

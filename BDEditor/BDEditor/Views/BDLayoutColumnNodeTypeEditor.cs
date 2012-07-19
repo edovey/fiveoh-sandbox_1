@@ -105,7 +105,13 @@ namespace BDEditor.Views
                     string propertyName = obj as string;
                     if (!BDLayoutMetadataColumnNodeType.ExistsForLayoutColumn(dataContext, this.layoutColumn.Uuid, nodeWrapper.NodeType, propertyName))
                     {
-                        BDLayoutMetadataColumnNodeType entry = BDLayoutMetadataColumnNodeType.Create(this.dataContext, this.layoutColumn.layoutVariant, this.layoutColumn.Uuid, nodeWrapper.NodeType, propertyName);
+                        int orderOfPrecedence = listBoxColumnNodeTypes.Items.Count;
+                        BDLayoutMetadataColumnNodeType entry = BDLayoutMetadataColumnNodeType.Create(this.dataContext, 
+                                                                                                        this.layoutColumn.layoutVariant, 
+                                                                                                        this.layoutColumn.Uuid, 
+                                                                                                        nodeWrapper.NodeType, 
+                                                                                                        propertyName, 
+                                                                                                        orderOfPrecedence);
                         listBoxColumnNodeTypes.Items.Add(entry);
                     }
                 }

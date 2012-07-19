@@ -143,7 +143,7 @@ namespace BDEditor.Views
                 if (null != column)
                 {
                     listBoxLayoutColumns.Items.Remove(column);
-                    DataContext.DeleteObject(column);
+                    BDLayoutMetadataColumn.Delete(DataContext, column);
                     DisplayLayoutColumn(null);
                     for (int idx = 0; idx < listBoxLayoutColumns.Items.Count; idx++)
                     {

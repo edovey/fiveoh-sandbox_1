@@ -100,6 +100,8 @@ namespace BDEditor.Views
             {
                 BDNodeTypeWrapper nodeWrapper = listBoxNodetypes.SelectedItem as BDNodeTypeWrapper;
 
+                bool hasChanged = false;
+
                 foreach (Object obj in listBoxNodetypeProperties.SelectedItems)
                 {
                     string propertyName = obj as string;
@@ -113,7 +115,18 @@ namespace BDEditor.Views
                                                                                                         propertyName, 
                                                                                                         orderOfPrecedence);
                         listBoxColumnNodeTypes.Items.Add(entry);
+                        hasChanged = true;
                     }
+                }
+
+                if (hasChanged)
+                {
+                    for (int idx = 0; idx < listBoxColumnNodeTypes.Items.Count; idx++)
+                    {
+                        BDLayoutMetadataColumnNodeType entry = listBoxColumnNodeTypes.Items[idx] as BDLayoutMetadataColumnNodeType;
+                        entry.orderOfPrecedence = idx + 1;
+                    }
+                    dataContext.SaveChanges();
                 }
             }
         }

@@ -51,6 +51,17 @@ namespace BDEditor.DataModel
             return existingEntryList;
         }
 
+        static public List<BDLayoutMetadataColumn> RetrieveListForLayout(Entities pDataContext, BDConstants.LayoutVariantType pLayoutVariant)
+        {
+            IQueryable<BDLayoutMetadataColumn> existingEntries = (from dbEntry in pDataContext.BDLayoutMetadataColumns
+                                                                    where (dbEntry.layoutVariant == (int)pLayoutVariant)
+                                                                    orderby dbEntry.displayOrder
+                                                                    select dbEntry);
+            List<BDLayoutMetadataColumn> existingEntryList = existingEntries.ToList<BDLayoutMetadataColumn>();
+
+            return existingEntryList;
+        }
+
         static public BDLayoutMetadataColumn Retrieve(Entities pDataContext, Guid pUuid)
         {
             IQueryable<BDLayoutMetadataColumn> existingEntries = (from dbEntry in pDataContext.BDLayoutMetadataColumns

@@ -346,6 +346,9 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDMicroorganism:
                     switch (layoutVariant)
                     {
+                        case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPrecaution, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
                         case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
@@ -357,6 +360,7 @@ namespace BDEditor.Classes
                     switch (layoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
+                        case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
                         case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
                         case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDMicroorganism, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -527,6 +531,9 @@ namespace BDEditor.Classes
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Table_2_Column, BDConstants.LayoutVariantType.Table_3_Column, BDConstants.LayoutVariantType.Table_4_Column, BDConstants.LayoutVariantType.Table_5_Column }));
+                            break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDMicroorganismGroup, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage }));
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDCategory, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Prophylaxis_IERecommendation }));
@@ -1541,6 +1548,14 @@ namespace BDEditor.Classes
                             break;
                         default:
                             nodeControl = new BDNodeOverviewControl(pContext, pNode);
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDPrecaution:
+                    switch (pNode.LayoutVariant)
+                    {
+                        default:
+                            // create new BDPrecautionControl
                             break;
                     }
                     break;

@@ -435,6 +435,7 @@ namespace BDEditor.Views
                                 break;
                             case BDConstants.LayoutVariantType.Prophylaxis:
                             case BDConstants.LayoutVariantType.Prophylaxis_PreOp:
+                            case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
                             case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                             case BDConstants.LayoutVariantType.Prophylaxis_IERecommendation:
                             case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
@@ -632,6 +633,19 @@ namespace BDEditor.Views
                                 {
                                     showChildControls = true;
                                 }
+                                break;
+                        }
+                        break;
+                    case BDConstants.BDNodeType.BDMicroorganismGroup:
+                        switch (node.LayoutVariant)
+                        {
+                            case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
+                                if (!pInterrogateOnly)
+                                {
+                                    showChildControls = true;
+                                }
+                                break;
+                            default:
                                 break;
                         }
                         break;

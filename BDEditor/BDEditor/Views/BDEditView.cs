@@ -775,6 +775,19 @@ namespace BDEditor.Views
                                 break;
                         }
                         break;
+                    case BDConstants.BDNodeType.BDSurgeryClassification:
+                        switch (node.LayoutVariant)
+                        {
+                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
+                                childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
+                                if (!pInterrogateOnly)
+                                {
+                                    graftTreeNode(selectedNode, childTreeNode);
+                                    showChildControls = true;
+                                }
+                                break;
+                        }
+                        break;
                     case BDConstants.BDNodeType.BDSurgeryGroup:
                         switch (node.LayoutVariant)
                         {

@@ -19,6 +19,8 @@ namespace BDEditor.Views
         private string fieldName;
         private Guid scopeId;
 
+        public int DisplayOrder { get; set; }
+
         public BDConfiguredEntryFieldControl()
         {
             InitializeComponent();
@@ -34,10 +36,17 @@ namespace BDEditor.Views
         }
 
         public event EventHandler<NodeEventArgs> NotesChanged;
+        public event EventHandler<NodeEventArgs> NameChanged;
 
         protected virtual void OnNotesChanged(NodeEventArgs e)
         {
             EventHandler<NodeEventArgs> handler = NotesChanged;
+            if (null != handler) { handler(this, e); }
+        }
+
+        protected virtual void OnNameChanged(NodeEventArgs e)
+        {
+            EventHandler<NodeEventArgs> handler = NameChanged;
             if (null != handler) { handler(this, e); }
         }
 
@@ -88,11 +97,23 @@ namespace BDEditor.Views
                 if (null != columnInfo)
                 {
                     lblFieldLabel.Text = columnInfo.label;
+
+                    if (BDConfiguredEntry.PROPERTYNAME_NAME == fieldName)
+                    {
+                        lblFieldLabel.Font = new Font(lblFieldLabel.Font.FontFamily, 10);
+                        lblFieldLabel.Font = new Font(lblFieldLabel.Font, FontStyle.Bold);
+                        
+                    }
                 }
             }
         }
 
         public void Populate()
+        {
+            txtFieldData.Text = valueFromField();
+        }
+
+        private string valueFromField()
         {
             string value = null;
             switch (fieldName)
@@ -146,12 +167,16 @@ namespace BDEditor.Views
                     value = configuredEntry.name;
                     break;
             }
-            txtFieldData.Text = value;
+
+            return value;
         }
 
-        public void Save()
+        public bool Save()
         {
+            bool result = true; // always true because this is only saving a specific field within the instance
             string value = txtFieldData.Text;
+            string orignalValue = valueFromField();
+
             switch (fieldName)
             {
                 case BDConfiguredEntry.PROPERTYNAME_FIELD01:
@@ -204,6 +229,12 @@ namespace BDEditor.Views
                     break;
             }
             dataContext.SaveChanges();
+
+            if (value != orignalValue)
+            {
+                OnNameChanged(new NodeEventArgs(dataContext, configuredEntry.Uuid, value, fieldName));
+            }
+            return result;
         }
 
         private void txtFieldData_Leave(object sender, EventArgs e)

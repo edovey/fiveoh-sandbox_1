@@ -37,12 +37,13 @@ namespace BDEditor.DataModel
         {
             BDConfiguredEntry entry = BDConfiguredEntry.CreateBDConfiguredEntry(Guid.NewGuid());
 
+            entry.nodeType = (int)BDConstants.BDNodeType.BDConfiguredEntry;
             entry.LayoutVariant = pLayoutVariant;
             entry.SetParent(pParentNodeType, pParentUuid);
             entry.createdDate = DateTime.Now;
             entry.schemaVersion = ENTITY_SCHEMAVERSION;
             entry.name = pName;
-
+       
             pDataContext.AddObject(ENTITYNAME, entry);
             pDataContext.SaveChanges();
 
@@ -85,7 +86,7 @@ namespace BDEditor.DataModel
                                           where entry.parentId == pParentId
                                           orderby entry.displayOrder
                                           select entry);
-            if (entries.Count() > 0)
+            if (entries.Count<BDConfiguredEntry>() > 0)
                 entryList = entries.ToList<BDConfiguredEntry>();
 
             return entryList;
@@ -124,13 +125,7 @@ namespace BDEditor.DataModel
         {
             get
             {
-                BDConstants.BDNodeType result = BDConstants.BDNodeType.None;
-
-                if (Enum.IsDefined(typeof(BDConstants.BDNodeType), nodeType))
-                {
-                    result = (BDConstants.BDNodeType)nodeType;
-                }
-                return result;
+                return BDConstants.BDNodeType.BDConfiguredEntry;
             }
         }
 

@@ -66,6 +66,21 @@ namespace BDEditor.DataModel
             return entry;
         }
 
+        static public BDLayoutMetadataColumnNodeType Retrieve(Entities pDataContext, BDConstants.LayoutVariantType pLayoutVariant, BDConstants.BDNodeType pNodeType, Guid pColumnId)
+        {
+            BDLayoutMetadataColumnNodeType entry = null;
+
+            IQueryable<BDLayoutMetadataColumnNodeType> existingEntries = null;
+
+            existingEntries = (from dbEntry in pDataContext.BDLayoutMetadataColumnNodeTypes
+                               where (dbEntry.layoutVariant == (int)pLayoutVariant) && (dbEntry.nodeType == (int)pNodeType) && (dbEntry.columnId == pColumnId)
+                               orderby dbEntry.orderOfPrecedence
+                               select dbEntry);
+
+            entry = existingEntries.FirstOrDefault<BDLayoutMetadataColumnNodeType>();
+            return entry;
+        }
+
         static public bool ExistsForLayoutColumn(Entities pDataContext, Guid pColumnId, BDConstants.BDNodeType pNodeType, string pPropertyName)
         {
             bool exists = false;

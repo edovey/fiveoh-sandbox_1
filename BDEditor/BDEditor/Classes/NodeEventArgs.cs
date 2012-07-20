@@ -11,6 +11,7 @@ namespace BDEditor.Classes
         public Entities DataContext { get; set; }
         public Guid? Uuid { get; set; }
         public string Text { get; set; }
+        public string ContextInfo { get; set; }
 
         public BDConstants.BDNodeType NodeType { get; set; }
         public BDConstants.LayoutVariantType LayoutVariant { get; set; }
@@ -28,6 +29,14 @@ namespace BDEditor.Classes
             DataContext = pDataContext;
             Uuid = pUuid;
             Text = pText;
+        }
+
+        public NodeEventArgs(Entities pDataContext, Guid? pUuid, String pText, string pContextInfo)
+        {
+            DataContext = pDataContext;
+            Uuid = pUuid;
+            Text = pText;
+            ContextInfo = pContextInfo;
         }
 
         public NodeEventArgs(Entities pDataContext, BDConstants.BDNodeType pNodeType, BDConstants.LayoutVariantType pLayoutVariant)

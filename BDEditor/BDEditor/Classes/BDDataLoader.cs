@@ -6472,8 +6472,8 @@ namespace BDEditor.Classes
             //Expectation that a row contains only one element with data
 
             BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
-            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Immunization_VaccineDetail;
-            BDConstants.LayoutVariantType topicLayoutVariant = sectionLayoutVariant;
+            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Immunization;
+            BDConstants.LayoutVariantType topicLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Immunization_VaccineDetail;
 
             uuidData = string.Empty;
             chapterData = string.Empty;

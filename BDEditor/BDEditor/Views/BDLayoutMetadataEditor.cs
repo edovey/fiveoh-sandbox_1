@@ -76,7 +76,7 @@ namespace BDEditor.Views
             {
                 lblSelectedLayout.Text = this.selectedLayout.descrip;
                 chkLayoutIncluded.Checked = this.selectedLayout.included;
-                List<BDLayoutMetadataColumn> columnList = BDLayoutMetadataColumn.RetrieveForLayout(DataContext, pLayout);
+                List<BDLayoutMetadataColumn> columnList = BDLayoutMetadataColumn.RetrieveListForLayout(DataContext, pLayout);
                 listBoxLayoutColumns.Items.AddRange(columnList.ToArray());
                 listBoxLayoutColumns.SelectedIndex = -1;
             }
@@ -97,7 +97,7 @@ namespace BDEditor.Views
             else
             {
                 txtColumnLabel.Text = this.currentColumn.label;
-                List<BDLayoutMetadataColumnNodeType> columnNodetypeList = BDLayoutMetadataColumnNodeType.RetrieveForLayoutColumn(DataContext, this.currentColumn.uuid);
+                List<BDLayoutMetadataColumnNodeType> columnNodetypeList = BDLayoutMetadataColumnNodeType.RetrieveListForLayoutColumn(DataContext, this.currentColumn.uuid);
                 listBoxColumnNodeTypes.Items.AddRange(columnNodetypeList.ToArray());
             }
 
@@ -217,7 +217,7 @@ namespace BDEditor.Views
             {
                 BDLayoutColumnNodeTypeEditor editor = new BDLayoutColumnNodeTypeEditor(DataContext, this.currentColumn);
                 editor.ShowDialog();
-                List<BDLayoutMetadataColumnNodeType> list = BDLayoutMetadataColumnNodeType.RetrieveForLayoutColumn(DataContext, this.currentColumn.Uuid);
+                List<BDLayoutMetadataColumnNodeType> list = BDLayoutMetadataColumnNodeType.RetrieveListForLayoutColumn(DataContext, this.currentColumn.Uuid);
                 listBoxColumnNodeTypes.Items.Clear();
                 listBoxColumnNodeTypes.Items.AddRange(list.ToArray());
             }

@@ -34,7 +34,7 @@ namespace BDEditor.DataModel
             pContext.SaveChanges();
         }
 
-        static public List<BDLayoutMetadataColumn> RetrieveForLayout(Entities pDataContext, BDLayoutMetadata pLayout)
+        static public List<BDLayoutMetadataColumn> RetrieveListForLayout(Entities pDataContext, BDLayoutMetadata pLayout)
         {
             List<BDLayoutMetadataColumn> existingEntryList = new List<BDLayoutMetadataColumn>();
             IQueryable<BDLayoutMetadataColumn> existingEntries = null;
@@ -49,6 +49,28 @@ namespace BDEditor.DataModel
             }
 
             return existingEntryList;
+        }
+
+        static public BDLayoutMetadataColumn Retrieve(Entities pDataContext, Guid pUuid)
+        {
+            IQueryable<BDLayoutMetadataColumn> existingEntries = (from dbEntry in pDataContext.BDLayoutMetadataColumns
+                                                                   where (dbEntry.uuid == pUuid)
+                                                                   select dbEntry);
+
+            BDLayoutMetadataColumn entry = existingEntries.FirstOrDefault<BDLayoutMetadataColumn>();
+            return entry;
+        }
+
+        static public BDLayoutMetadataColumn Retrieve(Entities pDataContext, BDConstants.LayoutVariantType pLayoutVariant, BDConstants.BDNodeType pNodeType, string pPropertyName)
+        {
+            BDLayoutMetadataColumn entry = null;
+
+            BDLayoutMetadataColumnNodeType nodeInfo = BDLayoutMetadataColumnNodeType.Retrieve(pDataContext, pLayoutVariant, pNodeType, pPropertyName);
+            if (null != nodeInfo)
+            {
+                entry = Retrieve(pDataContext, nodeInfo.columnId);
+            }
+            return entry;
         }
 
         public override string ToString()

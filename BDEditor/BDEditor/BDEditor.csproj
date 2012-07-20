@@ -195,6 +195,18 @@
     <Compile Include="Views\BDAttachmentControl.Designer.cs">
       <DependentUpon>BDAttachmentControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\BDConfiguredEntryControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDConfiguredEntryControl.Designer.cs">
+      <DependentUpon>BDConfiguredEntryControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BDConfiguredEntryFieldControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDConfiguredEntryFieldControl.Designer.cs">
+      <DependentUpon>BDConfiguredEntryFieldControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\BDDosageAndCostControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -325,6 +337,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDAttachmentControl.resx">
       <DependentUpon>BDAttachmentControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDConfiguredEntryControl.resx">
+      <DependentUpon>BDConfiguredEntryControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDConfiguredEntryFieldControl.resx">
+      <DependentUpon>BDConfiguredEntryFieldControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDDosageAndCostControl.resx">
       <DependentUpon>BDDosageAndCostControl.cs</DependentUpon>

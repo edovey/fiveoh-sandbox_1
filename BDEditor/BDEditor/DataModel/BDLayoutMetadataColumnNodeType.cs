@@ -23,7 +23,7 @@ namespace BDEditor.DataModel
             return entry;
         }
 
-        static public List<BDLayoutMetadataColumnNodeType> RetrieveForLayoutColumn(Entities pDataContext, Guid pColumnId)
+        static public List<BDLayoutMetadataColumnNodeType> RetrieveListForLayoutColumn(Entities pDataContext, Guid pColumnId)
         {
             List<BDLayoutMetadataColumnNodeType> existingEntryList = new List<BDLayoutMetadataColumnNodeType>();
             IQueryable<BDLayoutMetadataColumnNodeType> existingEntries = null;
@@ -35,6 +35,35 @@ namespace BDEditor.DataModel
             existingEntryList = existingEntries.ToList<BDLayoutMetadataColumnNodeType>();
 
             return existingEntryList;
+        }
+
+        static public List<BDLayoutMetadataColumnNodeType> RetrieveListForLayoutColumn(Entities pDataContext, Guid pColumnId, BDConstants.BDNodeType pNodeType)
+        {
+            List<BDLayoutMetadataColumnNodeType> existingEntryList = new List<BDLayoutMetadataColumnNodeType>();
+            IQueryable<BDLayoutMetadataColumnNodeType> existingEntries = null;
+
+            existingEntries = (from dbEntry in pDataContext.BDLayoutMetadataColumnNodeTypes
+                               where (dbEntry.columnId == pColumnId) && (dbEntry.nodeType == (int)pNodeType)
+                               orderby dbEntry.orderOfPrecedence
+                               select dbEntry);
+            existingEntryList = existingEntries.ToList<BDLayoutMetadataColumnNodeType>();
+
+            return existingEntryList;
+        }
+
+        static public BDLayoutMetadataColumnNodeType Retrieve(Entities pDataContext, BDConstants.LayoutVariantType pLayoutVariant, BDConstants.BDNodeType pNodeType, string pPropertyName)
+        {
+            BDLayoutMetadataColumnNodeType entry = null;
+
+            IQueryable<BDLayoutMetadataColumnNodeType> existingEntries = null;
+
+            existingEntries = (from dbEntry in pDataContext.BDLayoutMetadataColumnNodeTypes
+                               where (dbEntry.layoutVariant == (int)pLayoutVariant) && (dbEntry.nodeType == (int)pNodeType) && (dbEntry.propertyName == pPropertyName)
+                               orderby dbEntry.orderOfPrecedence
+                               select dbEntry);
+
+            entry = existingEntries.FirstOrDefault<BDLayoutMetadataColumnNodeType>();
+            return entry;
         }
 
         static public bool ExistsForLayoutColumn(Entities pDataContext, Guid pColumnId, BDConstants.BDNodeType pNodeType, string pPropertyName)

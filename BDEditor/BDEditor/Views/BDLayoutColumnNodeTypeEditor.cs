@@ -40,7 +40,7 @@ namespace BDEditor.Views
             if (null != this.layoutColumn)
             {
                 lblColumnLabel.Text = this.layoutColumn.label;
-                List<BDLayoutMetadataColumnNodeType> columnNodeList = BDLayoutMetadataColumnNodeType.RetrieveForLayoutColumn(dataContext, layoutColumn.Uuid);
+                List<BDLayoutMetadataColumnNodeType> columnNodeList = BDLayoutMetadataColumnNodeType.RetrieveListForLayoutColumn(dataContext, layoutColumn.Uuid);
                 listBoxColumnNodeTypes.Items.AddRange(columnNodeList.ToArray());
             }
 
@@ -64,7 +64,7 @@ namespace BDEditor.Views
 
             if (null != pLayoutColumn)
             {
-                List<BDLayoutMetadataColumnNodeType> list = BDLayoutMetadataColumnNodeType.RetrieveForLayoutColumn(dataContext, pLayoutColumn.Uuid);    
+                List<BDLayoutMetadataColumnNodeType> list = BDLayoutMetadataColumnNodeType.RetrieveListForLayoutColumn(dataContext, pLayoutColumn.Uuid);    
                 listBoxColumnNodeTypes.Items.AddRange(list.ToArray());
             }
         }

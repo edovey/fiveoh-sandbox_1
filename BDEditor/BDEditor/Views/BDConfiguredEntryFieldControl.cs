@@ -49,7 +49,7 @@ namespace BDEditor.Views
         private void BDConfiguredEntryFieldControl_Load(object sender, EventArgs e)
         {
             configureLabel();
-            populate();
+            Populate();
         }
 
         private void createLink(string pProperty)
@@ -71,6 +71,11 @@ namespace BDEditor.Views
             btnLinkedNote.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnLinkedNote.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
         }
 
+        public void RefreshLayout()
+        {
+            Populate();
+        }
+
         private void btnLinkedNote_Click(object sender, EventArgs e)
         {
             createLink(fieldName);
@@ -87,7 +92,7 @@ namespace BDEditor.Views
             }
         }
 
-        private void populate()
+        public void Populate()
         {
             string value = null;
             switch (fieldName)

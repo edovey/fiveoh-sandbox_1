@@ -29,20 +29,21 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDConfiguredEntryControl));
             this.contextMenuStripEvents = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnMenuLeft = new System.Windows.Forms.Button();
             this.reorderPreviousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reorderNextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.addSiblingNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addChildNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnMenuLeft = new System.Windows.Forms.Button();
-            this.txtName = new System.Windows.Forms.TextBox();
-            this.btnNameLink = new System.Windows.Forms.Button();
-            this.lblName = new System.Windows.Forms.Label();
+            this.bdConfiguredEntryFieldControl1 = new BDEditor.Views.BDConfiguredEntryFieldControl();
+            this.panelFields = new System.Windows.Forms.Panel();
+            this.panelSideBar = new System.Windows.Forms.Panel();
             this.contextMenuStripEvents.SuspendLayout();
+            this.panelFields.SuspendLayout();
+            this.panelSideBar.SuspendLayout();
             this.SuspendLayout();
             // 
             // contextMenuStripEvents
@@ -58,6 +59,27 @@
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
             this.contextMenuStripEvents.Size = new System.Drawing.Size(156, 126);
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(152, 6);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(152, 6);
+            // 
+            // btnMenuLeft
+            // 
+            this.btnMenuLeft.Enabled = false;
+            this.btnMenuLeft.Image = global::BDEditor.Properties.Resources.apps_16;
+            this.btnMenuLeft.Location = new System.Drawing.Point(5, 4);
+            this.btnMenuLeft.Name = "btnMenuLeft";
+            this.btnMenuLeft.Size = new System.Drawing.Size(28, 28);
+            this.btnMenuLeft.TabIndex = 31;
+            this.btnMenuLeft.UseVisualStyleBackColor = true;
+            this.btnMenuLeft.Visible = false;
+            // 
             // reorderPreviousToolStripMenuItem
             // 
             this.reorderPreviousToolStripMenuItem.Image = global::BDEditor.Properties.Resources.previous_16;
@@ -71,11 +93,6 @@
             this.reorderNextToolStripMenuItem.Name = "reorderNextToolStripMenuItem";
             this.reorderNextToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.reorderNextToolStripMenuItem.Text = "Move &Next";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(152, 6);
             // 
             // addSiblingNodeToolStripMenuItem
             // 
@@ -91,11 +108,6 @@
             this.addChildNodeToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.addChildNodeToolStripMenuItem.Text = "Add Child";
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(152, 6);
-            // 
             // deleteNodeToolStripMenuItem
             // 
             this.deleteNodeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.remove;
@@ -103,57 +115,44 @@
             this.deleteNodeToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.deleteNodeToolStripMenuItem.Text = "Delete";
             // 
-            // btnMenuLeft
+            // bdConfiguredEntryFieldControl1
             // 
-            this.btnMenuLeft.Enabled = false;
-            this.btnMenuLeft.Image = global::BDEditor.Properties.Resources.apps_16;
-            this.btnMenuLeft.Location = new System.Drawing.Point(653, 8);
-            this.btnMenuLeft.Name = "btnMenuLeft";
-            this.btnMenuLeft.Size = new System.Drawing.Size(28, 28);
-            this.btnMenuLeft.TabIndex = 31;
-            this.btnMenuLeft.UseVisualStyleBackColor = true;
-            this.btnMenuLeft.Visible = false;
+            this.bdConfiguredEntryFieldControl1.Location = new System.Drawing.Point(3, 3);
+            this.bdConfiguredEntryFieldControl1.Name = "bdConfiguredEntryFieldControl1";
+            this.bdConfiguredEntryFieldControl1.Padding = new System.Windows.Forms.Padding(1);
+            this.bdConfiguredEntryFieldControl1.Size = new System.Drawing.Size(349, 51);
+            this.bdConfiguredEntryFieldControl1.TabIndex = 32;
             // 
-            // txtName
+            // panelFields
             // 
-            this.txtName.Location = new System.Drawing.Point(17, 49);
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(211, 20);
-            this.txtName.TabIndex = 32;
-            this.txtName.Tag = "";
+            this.panelFields.Controls.Add(this.bdConfiguredEntryFieldControl1);
+            this.panelFields.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelFields.Location = new System.Drawing.Point(0, 0);
+            this.panelFields.Name = "panelFields";
+            this.panelFields.Size = new System.Drawing.Size(362, 403);
+            this.panelFields.TabIndex = 33;
             // 
-            // btnNameLink
+            // panelSideBar
             // 
-            this.btnNameLink.Enabled = false;
-            this.btnNameLink.Image = ((System.Drawing.Image)(resources.GetObject("btnNameLink.Image")));
-            this.btnNameLink.Location = new System.Drawing.Point(234, 45);
-            this.btnNameLink.Name = "btnNameLink";
-            this.btnNameLink.Size = new System.Drawing.Size(28, 28);
-            this.btnNameLink.TabIndex = 33;
-            this.btnNameLink.UseVisualStyleBackColor = true;
-            // 
-            // lblName
-            // 
-            this.lblName.Location = new System.Drawing.Point(14, 23);
-            this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(214, 23);
-            this.lblName.TabIndex = 34;
-            this.lblName.Text = "label1";
-            this.lblName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.panelSideBar.Controls.Add(this.btnMenuLeft);
+            this.panelSideBar.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelSideBar.Location = new System.Drawing.Point(362, 0);
+            this.panelSideBar.Name = "panelSideBar";
+            this.panelSideBar.Size = new System.Drawing.Size(39, 403);
+            this.panelSideBar.TabIndex = 34;
             // 
             // BDConfiguredEntryControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.lblName);
-            this.Controls.Add(this.txtName);
-            this.Controls.Add(this.btnNameLink);
-            this.Controls.Add(this.btnMenuLeft);
+            this.Controls.Add(this.panelFields);
+            this.Controls.Add(this.panelSideBar);
             this.Name = "BDConfiguredEntryControl";
-            this.Size = new System.Drawing.Size(688, 291);
+            this.Size = new System.Drawing.Size(401, 403);
             this.contextMenuStripEvents.ResumeLayout(false);
+            this.panelFields.ResumeLayout(false);
+            this.panelSideBar.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -168,8 +167,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem deleteNodeToolStripMenuItem;
         private System.Windows.Forms.Button btnMenuLeft;
-        private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.Button btnNameLink;
-        private System.Windows.Forms.Label lblName;
+        private BDConfiguredEntryFieldControl bdConfiguredEntryFieldControl1;
+        private System.Windows.Forms.Panel panelFields;
+        private System.Windows.Forms.Panel panelSideBar;
     }
 }

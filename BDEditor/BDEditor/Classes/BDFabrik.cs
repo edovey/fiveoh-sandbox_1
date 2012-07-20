@@ -228,8 +228,10 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation:
                         case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
                         case BDConstants.LayoutVariantType.Prophylaxis_IERecommendation:
-                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubcategory, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSurgeryClassification, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDMicroorganismGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -1440,6 +1442,14 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDMicroorganism:
                     switch (pNode.LayoutVariant)
                     {
+                        case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
+                            {
+                                nodeControl = new BDNodeControl(pContext, pNode);
+                                BDNodeControl newControl = nodeControl as BDNodeControl;
+                                newControl.ShowAsChild = false;
+                                newControl.ShowSiblingAdd = false;
+                            }
+                            break;
                         default:
                             {
                                 nodeControl = new BDNodeControl(pContext, pNode);

@@ -97,7 +97,6 @@ namespace BDEditor.Classes
         BDNode microorganism;
         BDNode microorganismGroup;
         BDNode antimicrobialGroup;
-        BDPrecaution precaution;
         BDNode surgeryClassification;
         BDNode surgeryGroup;
 
@@ -129,7 +128,6 @@ namespace BDEditor.Classes
         string microorganismData = null;
         string microorganismGroupData = null;
         string antimicrobialGroupData = null;
-        string precautionData = null;
         string surgeryClassificationData = null;
         string surgeryGroupData = null;
 
@@ -157,7 +155,6 @@ namespace BDEditor.Classes
         short idxMicroorganism = 0;
         short idxMicroorganismGroup = 0;
         short idxAntimicrobialGroup = 0;
-        short idxPrecaution = 0;
         short idxSurgeryClassification = 0;
         short idxSurgeryGroup = 0;
 
@@ -6716,20 +6713,17 @@ namespace BDEditor.Classes
             string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
             BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
-            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Dental_RecommendedTherapy;
+            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions;
             BDConstants.LayoutVariantType microorganismGroupLayoutVariant = sectionLayoutVariant;
             BDConstants.LayoutVariantType microorganismLayoutVariant = sectionLayoutVariant;
-            BDConstants.LayoutVariantType precautionLayoutVariant = sectionLayoutVariant;
-
-            //Expectation that a row contains only one element with data
 
             uuidData = string.Empty;
             chapterData = string.Empty;
             sectionData = string.Empty;
             microorganismGroupData = string.Empty;
             microorganismData = string.Empty;
-            precautionData = string.Empty;
 
+            //Expectation that a row contains only one element with data
             if (elements.Length > 0) uuidData = elements[0];
             if (elements.Length > 1) chapterData = elements[1];
             if (elements.Length > 2) sectionData = elements[2];
@@ -6758,7 +6752,7 @@ namespace BDEditor.Classes
                 section = null;
                 microorganismGroup = null;
                 microorganism = null;
-                idxSection = 0;
+                idxSection = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
                 idxMicroorganismGroup = 0;
                 idxMicroorganism = 0;
             }
@@ -6782,11 +6776,11 @@ namespace BDEditor.Classes
                 }
                 microorganismGroup = null;
                 microorganism = null;
-                idxMicroorganismGroup = 0;
+                idxMicroorganismGroup = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
                 idxMicroorganism = 0;
             }
 
-            if ((microorganismGroupData != string.Empty) && ((null == microorganismGroup) || (microorganismGroup.name != microorganismGroupData)))
+            if ((microorganismGroupData != string.Empty) && ((null == microorganismGroup) || (microorganismGroup.uuid != Guid.Parse(uuidData))))
             {
                 BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
                 if (null == tmpNode)
@@ -6804,7 +6798,8 @@ namespace BDEditor.Classes
                     idxMicroorganismGroup++;
                 }
                 microorganism = null;
-                idxMicroorganism = 0;
+                idxMicroorganism = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, microorganismGroup);
+
             }
 
             if ((microorganismData != string.Empty) && ((null == microorganism) || (microorganism.name != microorganismData)))

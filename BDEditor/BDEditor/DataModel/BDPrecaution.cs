@@ -52,6 +52,8 @@ namespace BDEditor.DataModel
         public const string PROPERTYNAME_MASKLONGTERM = @"MaskLongTerm";
         public const string PROPERTYNAME_DURATION = @"Duration";
 
+        public const string VIRTUALPROPERTYNAME_PRECAUTIONS = @"Precautions";
+
         private const string UUID = @"pr_uuid";
         private const string SCHEMAVERSION = @"pr_schemaVersion";
         private const string MODIFIEDDATE = @"pr_modifiedDate";

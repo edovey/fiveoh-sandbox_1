@@ -1656,10 +1656,10 @@ namespace BDEditor.Classes
                     {
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                             {
-                                nodeControl = new BDNodeControl(pContext, pNode);
-                                BDNodeControl newControl = nodeControl as BDNodeControl;
-                                newControl.ShowAsChild = false;
-                                newControl.ShowSiblingAdd = false;
+                                nodeControl = new BDNodeOverviewControl(pContext, pNode);
+                                BDNodeOverviewControl newOverviewControl = nodeControl as BDNodeOverviewControl;
+                                newOverviewControl.ShowAsChild = false;
+                                newOverviewControl.ShowSiblingAdd = false;
                             }
                             break;
 
@@ -1674,7 +1674,6 @@ namespace BDEditor.Classes
                     }
                     break;
                 case BDConstants.BDNodeType.BDSurgery:
-                case BDConstants.BDNodeType.BDSurgeryClassification:
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
@@ -1686,10 +1685,21 @@ namespace BDEditor.Classes
                             }
                             break;
                         default:
-                                nodeControl = new BDNodeControl(pContext, pNode);
-                                BDNodeControl newControl = nodeControl as BDNodeControl;
-                                newControl.ShowAsChild = false;
-                                newControl.ShowSiblingAdd = false;
+                            nodeControl = new BDNodeControl(pContext, pNode);
+                            BDNodeControl newControl = nodeControl as BDNodeControl;
+                            newControl.ShowAsChild = false;
+                            newControl.ShowSiblingAdd = false;
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDSurgeryClassification:
+                    switch (pNode.LayoutVariant)
+                    {
+                        default:
+                            nodeControl = new BDNodeControl(pContext, pNode);
+                            BDNodeControl newControl = nodeControl as BDNodeControl;
+                            newControl.ShowAsChild = false;
+                            newControl.ShowSiblingAdd = false;
                             break;
                     }
                     break;

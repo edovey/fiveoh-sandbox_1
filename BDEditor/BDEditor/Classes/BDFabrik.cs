@@ -1574,7 +1574,7 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         default:
-                            // create new BDPrecautionControl
+                            nodeControl = new BDPrecautionControl(pContext, pNode);
                             break;
                     }
                     break;

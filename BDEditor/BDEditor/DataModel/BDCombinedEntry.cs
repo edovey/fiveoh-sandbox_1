@@ -19,13 +19,13 @@ namespace BDEditor.DataModel
         public const string PROPERTYNAME_NAME = @"Name";
         public const string PROPERTYNAME_GROUPTITLE = @"GroupTitle";
         public const string PROPERTYNAME_ENTRYTITLE01 = @"EntryTitle01";
-        public const string PROPERTYNAME_ENTRYDETAIL01 = @"EntryDetail01";
+        public const string PROPERTYNAME_ENTRY01 = @"EntryDetail01";
         public const string PROPERTYNAME_ENTRYTITLE02 = @"EntryTitle02";
-        public const string PROPERTYNAME_ENTRYDETAIL02 = @"EntryDetail02";
+        public const string PROPERTYNAME_ENTRY02 = @"EntryDetail02";
         public const string PROPERTYNAME_ENTRYTITLE03 = @"EntryTitle03";
-        public const string PROPERTYNAME_ENTRYDETAIL03 = @"EntryDetail03";
+        public const string PROPERTYNAME_ENTRY03 = @"EntryDetail03";
         public const string PROPERTYNAME_ENTRYTITLE04 = @"EntryTitle04";
-        public const string PROPERTYNAME_ENTRYDETAIL04 = @"EntryDetail04";
+        public const string PROPERTYNAME_ENTRY04 = @"EntryDetail04";
 
         static public BDCombinedEntry Create(Entities pDataContext, BDConstants.LayoutVariantType pLayoutVariant, Guid pParentUuid, BDConstants.BDNodeType pParentNodeType, string pName)
         {

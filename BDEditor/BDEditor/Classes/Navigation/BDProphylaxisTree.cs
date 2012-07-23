@@ -37,8 +37,6 @@ namespace BDEditor.Classes.Navigation
                         case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
                         case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
-                        case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza:
-                        case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
                         case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure:
                         case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
                         case BDConstants.LayoutVariantType.Prophylaxis_IERecommendation:
@@ -47,6 +45,10 @@ namespace BDEditor.Classes.Navigation
                         case BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine:
                         case BDConstants.LayoutVariantType.Prophylaxis_Immunization_VaccineDetail:
                         case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Pertussis:
                             foreach (IBDNode childNode in childList)
                             {
                                 string name = childNode.Name;

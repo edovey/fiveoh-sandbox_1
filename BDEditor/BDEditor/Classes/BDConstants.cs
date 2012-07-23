@@ -226,11 +226,11 @@ namespace BDEditor.Classes
             [Description("Prophylaxis Communicable Diseases")]
             Prophylaxis_Communicable_Invasive = 311,
             [Description("Prophylaxis - Heamophilia influenaze")]
-            Prophylaxis_Communicable_HaemophiliusInfluenzae = 314,
+            Prophylaxis_Communicable_HaemophiliusInfluenzae = 315,
             [Description("Prophylaxis Influenza")]
             Prophylaxis_Communicable_Influenza = 312,
             [Description("Prophylaxis - Pertussis")]
-            Prophylaxis_Communicable_Pertussis = 315,
+            Prophylaxis_Communicable_Pertussis = 316,
             [Description("Infection Precautions")]
             Prophylaxis_InfectionPrecautions = 313,
 

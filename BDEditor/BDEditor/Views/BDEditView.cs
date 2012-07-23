@@ -446,6 +446,9 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk:
                             case BDConstants.LayoutVariantType.Prophylaxis_Immunization_VaccineDetail:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Pertussis:
                                 childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
@@ -562,6 +565,7 @@ namespace BDEditor.Views
                                 break;
                             case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:
                                 childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
@@ -627,8 +631,18 @@ namespace BDEditor.Views
                                     showChildControls = false;
                                 }
                                 break;
-                            case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Pertussis:
+                                childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
+                                if (!pInterrogateOnly)
+                                {
+                                    graftTreeNode(selectedNode, childTreeNode);
+                                    showChildControls = false;
+                                }
+                                break;
+                            case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
                                 if (!pInterrogateOnly)
                                 {
                                     showChildControls = true;

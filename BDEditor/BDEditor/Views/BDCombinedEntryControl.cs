@@ -20,6 +20,8 @@ namespace BDEditor.Views
         protected Guid parentId;
         protected BDConstants.BDNodeType parentType = BDConstants.BDNodeType.None;
 
+        protected List<BDCombinedEntryFieldControl> fieldControlList = new List<BDCombinedEntryFieldControl>();
+
         private BDConstants.BDNodeType defaultNodeType;
         private BDConstants.LayoutVariantType defaultLayoutVariantType;
         private int? displayOrder;
@@ -92,6 +94,45 @@ namespace BDEditor.Views
             return result;
         }
 
+        private BDCombinedEntryFieldControl addFieldEntryControl(BDCombinedEntry pConfiguredEntry, string pPropertyName, int pTabIndex)
+        {
+            BDCombinedEntryFieldControl control = new BDCombinedEntryFieldControl(dataContext, pConfiguredEntry, pPropertyName, scopeId.Value);
+
+            //if (null != control)
+            //{
+            //    ((System.Windows.Forms.UserControl)control).Dock = DockStyle.Top;
+            //    ((System.Windows.Forms.UserControl)control).TabIndex = pTabIndex;
+            //    control.DisplayOrder = pTabIndex;
+
+            //    control.NotesChanged += new EventHandler<NodeEventArgs>(fieldControl_NotesChanged);
+            //    control.NameChanged += new EventHandler<NodeEventArgs>(fieldControl_NameChanged);
+
+            //    fieldControlList.Add(control);
+
+            //    panelFields.Controls.Add(((System.Windows.Forms.UserControl)control));
+
+            //    ((System.Windows.Forms.UserControl)control).BringToFront();
+            //    control.RefreshLayout();
+            //}
+
+            return control;
+        }
+
+        private void removeFieldEntryControl(BDCombinedEntryFieldControl pFieldEntryControl)
+        {
+            ControlHelper.SuspendDrawing(this);
+            //panelFields.Controls.Remove(((System.Windows.Forms.UserControl)pFieldEntryControl));
+
+            //pFieldEntryControl.NameChanged -= new EventHandler<NodeEventArgs>(fieldControl_NameChanged);
+            //pFieldEntryControl.NotesChanged -= new EventHandler<NodeEventArgs>(fieldControl_NotesChanged);
+
+            //fieldControlList.Remove(pFieldEntryControl);
+
+            //((System.Windows.Forms.UserControl)pFieldEntryControl).Dispose();
+            //pFieldEntryControl = null;
+            ControlHelper.ResumeDrawing(this);
+        }
+
         #region IBDControl
 
         public event EventHandler<NodeEventArgs> RequestItemAdd;
@@ -152,7 +193,7 @@ namespace BDEditor.Views
 
             for (int idx = 0; idx < fieldControlList.Count; idx++)
             {
-                BDConfiguredEntryFieldControl control = fieldControlList[idx];
+                BDCombinedEntryFieldControl control = fieldControlList[idx];
                 removeFieldEntryControl(control);
             }
             fieldControlList.Clear();

@@ -263,6 +263,12 @@
     <Compile Include="Views\BDCombinedEntryControl.Designer.cs">
       <DependentUpon>BDCombinedEntryControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\BDCombinedEntryFieldControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDCombinedEntryFieldControl.Designer.cs">
+      <DependentUpon>BDCombinedEntryFieldControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\BDConfiguredEntryControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -414,6 +420,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDCombinedEntryControl.resx">
       <DependentUpon>BDCombinedEntryControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDCombinedEntryFieldControl.resx">
+      <DependentUpon>BDCombinedEntryFieldControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDConfiguredEntryControl.resx">
       <DependentUpon>BDConfiguredEntryControl.cs</DependentUpon>

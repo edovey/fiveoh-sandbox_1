@@ -224,62 +224,32 @@ namespace BDEditor.Views
 
         public BDConstants.BDNodeType DefaultNodeType
         {
-            get
-            {
-                return defaultNodeType;
-            }
-            set
-            {
-                defaultNodeType = value;
-            }
+            get {  return defaultNodeType; }
+            set { defaultNodeType = value; }
         }
 
         public BDConstants.LayoutVariantType DefaultLayoutVariantType
         {
-            get
-            {
-                return defaultLayoutVariantType;
-            }
-            set
-            {
-                defaultLayoutVariantType = value;
-            }
+            get { return defaultLayoutVariantType;  }
+            set { defaultLayoutVariantType = value; }
         }
 
         public IBDNode CurrentNode
         {
-            get
-            {
-                return currentEntry;
-            }
-            set
-            {
-                currentEntry = value as BDConfiguredEntry;
-            }
+            get { return currentEntry; }
+            set {  currentEntry = value as BDConfiguredEntry; }
         }
 
         public int? DisplayOrder
         {
-            get
-            {
-                return displayOrder;
-            }
-            set
-            {
-                displayOrder = value;
-            }
+            get { return displayOrder; }
+            set { displayOrder = value; }
         }
 
         public bool ShowAsChild
         {
-            get
-            {
-                return showAsChild;
-            }
-            set
-            {
-                showAsChild = value;
-            }
+            get { return showAsChild; }
+            set { showAsChild = value; }
         }
 
         #endregion

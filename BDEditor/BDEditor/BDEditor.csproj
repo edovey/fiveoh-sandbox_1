@@ -213,6 +213,7 @@
     <Compile Include="Classes\BDTypeahead.cs" />
     <Compile Include="DataModel\BDAntimicrobialRisk.cs" />
     <Compile Include="DataModel\BDAttachment.cs" />
+    <Compile Include="DataModel\BDCombinedEntry.cs" />
     <Compile Include="DataModel\BDConfiguredEntry.cs" />
     <Compile Include="DataModel\BDDeletion.cs" />
     <Compile Include="DataModel\BDDosage.cs" />
@@ -255,6 +256,12 @@
     </Compile>
     <Compile Include="Views\BDAttachmentControl.Designer.cs">
       <DependentUpon>BDAttachmentControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BDCombinedEntryControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDCombinedEntryControl.Designer.cs">
+      <DependentUpon>BDCombinedEntryControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\BDConfiguredEntryControl.cs">
       <SubType>UserControl</SubType>
@@ -404,6 +411,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDAttachmentControl.resx">
       <DependentUpon>BDAttachmentControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDCombinedEntryControl.resx">
+      <DependentUpon>BDCombinedEntryControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDConfiguredEntryControl.resx">
       <DependentUpon>BDConfiguredEntryControl.cs</DependentUpon>
@@ -649,7 +659,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
+      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

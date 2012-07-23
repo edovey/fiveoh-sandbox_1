@@ -8,6 +8,7 @@
         <EntityContainer Name="BDDataModelStoreContainer">
           <EntitySet Name="BDAntimicrobialRisks" EntityType="BDDataModel.Store.BDAntimicrobialRisks" store:Type="Tables" />
           <EntitySet Name="BDAttachments" EntityType="BDDataModel.Store.BDAttachments" store:Type="Tables" />
+          <EntitySet Name="BDCombinedEntry" EntityType="BDDataModel.Store.BDCombinedEntry" store:Type="Tables" />
           <EntitySet Name="BDConfiguredEntry" EntityType="BDDataModel.Store.BDConfiguredEntry" store:Type="Tables" />
           <EntitySet Name="BDDeletions" EntityType="BDDataModel.Store.BDDeletions" store:Type="Tables" />
           <EntitySet Name="BDDosages" EntityType="BDDataModel.Store.BDDosages" store:Type="Tables" />
@@ -69,6 +70,36 @@
           <Property Name="attachmentData" Type="image" />
           <Property Name="filename" Type="nvarchar" MaxLength="750" />
           <Property Name="filesize" Type="int" />
+        </EntityType>
+        <EntityType Name="BDCombinedEntry">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="nodeType" Type="int" />
+          <Property Name="layoutVariant" Type="int" />
+          <Property Name="parentId" Type="uniqueidentifier" />
+          <Property Name="parentType" Type="int" />
+          <Property Name="parentKeyName" Type="nvarchar" MaxLength="100" />
+          <Property Name="displayOrder" Type="int" />
+          <Property Name="createdDate" Type="datetime" />
+          <Property Name="modifiedDate" Type="datetime" />
+          <Property Name="schemaVersion" Type="int" />
+          <Property Name="groupTitle" Type="nvarchar" MaxLength="750" />
+          <Property Name="name" Type="nvarchar" MaxLength="750" />
+          <Property Name="groupJoinType" Type="int" />
+          <Property Name="entryTitle01" Type="nvarchar" MaxLength="750" />
+          <Property Name="entryDetail01" Type="nvarchar" MaxLength="750" />
+          <Property Name="entryJoinType01" Type="int" />
+          <Property Name="entryTitle02" Type="nvarchar" MaxLength="750" />
+          <Property Name="entryDetail02" Type="nvarchar" MaxLength="750" />
+          <Property Name="entryJoinType02" Type="int" />
+          <Property Name="entryTitle03" Type="nvarchar" MaxLength="750" />
+          <Property Name="entryDetail03" Type="nvarchar" MaxLength="750" />
+          <Property Name="entryJoinType03" Type="int" />
+          <Property Name="entryTitle04" Type="nvarchar" MaxLength="750" />
+          <Property Name="entryDetail04" Type="nvarchar" MaxLength="750" />
+          <Property Name="entryJoinType04" Type="int" />
         </EntityType>
         <EntityType Name="BDConfiguredEntry">
           <Key>
@@ -461,6 +492,7 @@
           <EntitySet Name="BDLayoutMetadataColumns" EntityType="BDDataModel.BDLayoutMetadataColumn" />
           <EntitySet Name="BDLayoutMetadataColumnNodeTypes" EntityType="BDDataModel.BDLayoutMetadataColumnNodeType" />
           <EntitySet Name="BDConfiguredEntries" EntityType="BDDataModel.BDConfiguredEntry" />
+          <EntitySet Name="BDCombinedEntries" EntityType="BDDataModel.BDCombinedEntry" />
         </EntityContainer>
         <EntityType Name="BDAntimicrobialRisk">
           <Key>
@@ -864,6 +896,36 @@
           <Property Type="String" Name="field14" MaxLength="750" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="field15" MaxLength="750" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="parentType" />
+        </EntityType>
+        <EntityType Name="BDCombinedEntry">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Type="Guid" Name="uuid" Nullable="false" />
+          <Property Type="Int32" Name="nodeType" />
+          <Property Type="Int32" Name="layoutVariant" />
+          <Property Type="Guid" Name="parentId" />
+          <Property Type="Int32" Name="parentType" />
+          <Property Type="String" Name="parentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="displayOrder" />
+          <Property Type="DateTime" Name="createdDate" />
+          <Property Type="DateTime" Name="modifiedDate" />
+          <Property Type="Int32" Name="schemaVersion" />
+          <Property Type="String" Name="groupTitle" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="name" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="groupJoinType" />
+          <Property Type="String" Name="entryTitle01" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="entryDetail01" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="entryJoinType01" />
+          <Property Type="String" Name="entryTitle02" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="entryDetail02" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="entryJoinType02" />
+          <Property Type="String" Name="entryTitle03" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="entryDetail03" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="entryJoinType03" />
+          <Property Type="String" Name="entryTitle04" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="entryDetail04" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="entryJoinType04" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1297,6 +1359,37 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BDCombinedEntries">
+            <EntityTypeMapping TypeName="BDDataModel.BDCombinedEntry">
+              <MappingFragment StoreEntitySet="BDCombinedEntry">
+                <ScalarProperty Name="entryJoinType04" ColumnName="entryJoinType04" />
+                <ScalarProperty Name="entryDetail04" ColumnName="entryDetail04" />
+                <ScalarProperty Name="entryTitle04" ColumnName="entryTitle04" />
+                <ScalarProperty Name="entryJoinType03" ColumnName="entryJoinType03" />
+                <ScalarProperty Name="entryDetail03" ColumnName="entryDetail03" />
+                <ScalarProperty Name="entryTitle03" ColumnName="entryTitle03" />
+                <ScalarProperty Name="entryJoinType02" ColumnName="entryJoinType02" />
+                <ScalarProperty Name="entryDetail02" ColumnName="entryDetail02" />
+                <ScalarProperty Name="entryTitle02" ColumnName="entryTitle02" />
+                <ScalarProperty Name="entryJoinType01" ColumnName="entryJoinType01" />
+                <ScalarProperty Name="entryDetail01" ColumnName="entryDetail01" />
+                <ScalarProperty Name="entryTitle01" ColumnName="entryTitle01" />
+                <ScalarProperty Name="groupJoinType" ColumnName="groupJoinType" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="groupTitle" ColumnName="groupTitle" />
+                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
+                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
+                <ScalarProperty Name="parentKeyName" ColumnName="parentKeyName" />
+                <ScalarProperty Name="parentType" ColumnName="parentType" />
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
+                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
+                <ScalarProperty Name="nodeType" ColumnName="nodeType" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -1340,6 +1433,7 @@
         <EntityTypeShape EntityType="BDDataModel.BDLayoutMetadataColumn" Width="3" PointX="14.75" PointY="5.75" Height="1.5923063151041674" />
         <EntityTypeShape EntityType="BDDataModel.BDLayoutMetadataColumnNodeType" Width="1.5" PointX="14.75" PointY="7.875" Height="1.9210009765625102" />
         <EntityTypeShape EntityType="BDDataModel.BDConfiguredEntry" Width="1.875" PointX="9.375" PointY="13.75" Height="5.2079475911458246" />
+        <EntityTypeShape EntityType="BDDataModel.BDCombinedEntry" Width="2.625" PointX="0.625" PointY="13.875" Height="5.0436002604166674" />
       </Diagram>
     </Diagrams>
   </Designer>

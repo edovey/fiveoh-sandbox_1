@@ -8,49 +8,44 @@ using BDEditor.Classes;
 
 namespace BDEditor.DataModel
 {
-    public partial class BDConfiguredEntry: IBDNode
+    public partial class BDCombinedEntry: IBDNode
     {
-        public const string ENTITYNAME = @"BDConfiguredEntries";
-        public const string ENTITYNAME_FRIENDLY = @"Configured Entry";
-        public const string KEY_NAME = @"BDConfiguredEntry";
+        public const string ENTITYNAME = @"BDCombinedEntries";
+        public const string ENTITYNAME_FRIENDLY = @"Combined Entry";
+        public const string KEY_NAME = @"BDCombinedEntry";
 
         public const int ENTITY_SCHEMAVERSION = 0;
 
         public const string PROPERTYNAME_NAME = @"Name";
-        public const string PROPERTYNAME_FIELD01 = @"Field01";
-        public const string PROPERTYNAME_FIELD02 = @"Field02";
-        public const string PROPERTYNAME_FIELD03 = @"Field03";
-        public const string PROPERTYNAME_FIELD04 = @"Field04";
-        public const string PROPERTYNAME_FIELD05 = @"Field05";
-        public const string PROPERTYNAME_FIELD06 = @"Field06";
-        public const string PROPERTYNAME_FIELD07 = @"Field07";
-        public const string PROPERTYNAME_FIELD08 = @"Field08";
-        public const string PROPERTYNAME_FIELD09 = @"Field09";
-        public const string PROPERTYNAME_FIELD10 = @"Field10";
-        public const string PROPERTYNAME_FIELD11 = @"Field11";
-        public const string PROPERTYNAME_FIELD12 = @"Field12";
-        public const string PROPERTYNAME_FIELD13 = @"Field13";
-        public const string PROPERTYNAME_FIELD14 = @"Field14";
-        public const string PROPERTYNAME_FIELD15 = @"Field15";
+        public const string PROPERTYNAME_GROUPTITLE = @"GroupTitle";
+        public const string PROPERTYNAME_NAME = @"Name";
+        public const string PROPERTYNAME_ENTRYTITLE01 = @"EntryTitle01";
+        public const string PROPERTYNAME_ENTRYDETAIL01 = @"EntryDetail01";
+        public const string PROPERTYNAME_ENTRYTITLE02 = @"EntryTitle02";
+        public const string PROPERTYNAME_ENTRYDETAIL02 = @"EntryDetail02";
+        public const string PROPERTYNAME_ENTRYTITLE03 = @"EntryTitle03";
+        public const string PROPERTYNAME_ENTRYDETAIL03 = @"EntryDetail03";
+        public const string PROPERTYNAME_ENTRYTITLE04 = @"EntryTitle04";
+        public const string PROPERTYNAME_ENTRYDETAIL04 = @"EntryDetail04";
 
-        static public BDConfiguredEntry Create(Entities pDataContext, BDConstants.LayoutVariantType pLayoutVariant, Guid pParentUuid, BDConstants.BDNodeType pParentNodeType, string pName)
+        static public BDCombinedEntry Create(Entities pDataContext, BDConstants.LayoutVariantType pLayoutVariant, Guid pParentUuid, BDConstants.BDNodeType pParentNodeType, string pName)
         {
-            BDConfiguredEntry entry = BDConfiguredEntry.CreateBDConfiguredEntry(Guid.NewGuid());
+            BDCombinedEntry entry = BDCombinedEntry.CreateBDCombinedEntry(Guid.NewGuid());
 
-            entry.nodeType = (int)BDConstants.BDNodeType.BDConfiguredEntry;
+            entry.nodeType = (int)BDConstants.BDNodeType.BDCombinedEntry;
             entry.LayoutVariant = pLayoutVariant;
             entry.SetParent(pParentNodeType, pParentUuid);
             entry.createdDate = DateTime.Now;
             entry.schemaVersion = ENTITY_SCHEMAVERSION;
             entry.name = pName;
-       
+
             pDataContext.AddObject(ENTITYNAME, entry);
             pDataContext.SaveChanges();
 
             return entry;
         }
 
-        static public void Save(Entities pDataContext, BDConfiguredEntry pEntry)
+        static public void Save(Entities pDataContext, BDCombinedEntry pEntry)
         {
             if (null != pEntry)
             {
@@ -64,7 +59,7 @@ namespace BDEditor.DataModel
             }
         }
 
-        static public void Delete(Entities pContext, BDConfiguredEntry pEntry, bool pCreateDeletion)
+        static public void Delete(Entities pContext, BDCombinedEntry pEntry, bool pCreateDeletion)
         {
             if (null == pEntry) return;
 
@@ -79,15 +74,15 @@ namespace BDEditor.DataModel
             pContext.SaveChanges();
         }
 
-        static public List<BDConfiguredEntry> RetrieveListForParentId(Entities pDataContext, Guid pParentId)
+        static public List<BDCombinedEntry> RetrieveListForParentId(Entities pDataContext, Guid pParentId)
         {
-            List<BDConfiguredEntry> entryList = new List<BDConfiguredEntry>();
-            IQueryable<BDConfiguredEntry> entries = (from entry in pDataContext.BDConfiguredEntries
-                                          where entry.parentId == pParentId
-                                          orderby entry.displayOrder
-                                          select entry);
-            if (entries.Count<BDConfiguredEntry>() > 0)
-                entryList = entries.ToList<BDConfiguredEntry>();
+            List<BDCombinedEntry> entryList = new List<BDCombinedEntry>();
+            IQueryable<BDCombinedEntry> entries = (from entry in pDataContext.BDCombinedEntries
+                                                     where entry.parentId == pParentId
+                                                     orderby entry.displayOrder
+                                                     select entry);
+            if (entries.Count<BDCombinedEntry>() > 0)
+                entryList = entries.ToList<BDCombinedEntry>();
 
             return entryList;
         }
@@ -117,19 +112,16 @@ namespace BDEditor.DataModel
 
         public string Name
         {
-            get { return this.name; }
-            set { this.name = value; }
+            get { return name; }
+            set { name = value; }
         }
 
-        public BDConstants.BDNodeType NodeType
+        public Classes.BDConstants.BDNodeType NodeType
         {
-            get
-            {
-                return BDConstants.BDNodeType.BDConfiguredEntry;
-            }
+            get { return BDConstants.BDNodeType.BDCombinedEntry; }
         }
 
-        public BDConstants.LayoutVariantType LayoutVariant
+        public Classes.BDConstants.LayoutVariantType LayoutVariant
         {
             get
             {

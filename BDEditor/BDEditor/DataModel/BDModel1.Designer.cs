@@ -432,6 +432,22 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDConfiguredEntry> _BDConfiguredEntries;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDCombinedEntry> BDCombinedEntries
+        {
+            get
+            {
+                if ((_BDCombinedEntries == null))
+                {
+                    _BDCombinedEntries = base.CreateObjectSet<BDCombinedEntry>("BDCombinedEntries");
+                }
+                return _BDCombinedEntries;
+            }
+        }
+        private ObjectSet<BDCombinedEntry> _BDCombinedEntries;
 
         #endregion
         #region AddTo Methods
@@ -618,6 +634,14 @@ namespace BDEditor.DataModel
         public void AddToBDConfiguredEntries(BDConfiguredEntry bDConfiguredEntry)
         {
             base.AddObject("BDConfiguredEntries", bDConfiguredEntry);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDCombinedEntries EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDCombinedEntries(BDCombinedEntry bDCombinedEntry)
+        {
+            base.AddObject("BDCombinedEntries", bDCombinedEntry);
         }
 
         #endregion
@@ -1405,6 +1429,637 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Int32> _filesize;
         partial void OnfilesizeChanging(Nullable<global::System.Int32> value);
         partial void OnfilesizeChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="BDDataModel", Name="BDCombinedEntry")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class BDCombinedEntry : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new BDCombinedEntry object.
+        /// </summary>
+        /// <param name="uuid">Initial value of the uuid property.</param>
+        public static BDCombinedEntry CreateBDCombinedEntry(global::System.Guid uuid)
+        {
+            BDCombinedEntry bDCombinedEntry = new BDCombinedEntry();
+            bDCombinedEntry.uuid = uuid;
+            return bDCombinedEntry;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid uuid
+        {
+            get
+            {
+                return _uuid;
+            }
+            set
+            {
+                if (_uuid != value)
+                {
+                    OnuuidChanging(value);
+                    ReportPropertyChanging("uuid");
+                    _uuid = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("uuid");
+                    OnuuidChanged();
+                }
+            }
+        }
+        private global::System.Guid _uuid;
+        partial void OnuuidChanging(global::System.Guid value);
+        partial void OnuuidChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> nodeType
+        {
+            get
+            {
+                return _nodeType;
+            }
+            set
+            {
+                OnnodeTypeChanging(value);
+                ReportPropertyChanging("nodeType");
+                _nodeType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("nodeType");
+                OnnodeTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _nodeType;
+        partial void OnnodeTypeChanging(Nullable<global::System.Int32> value);
+        partial void OnnodeTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> layoutVariant
+        {
+            get
+            {
+                return _layoutVariant;
+            }
+            set
+            {
+                OnlayoutVariantChanging(value);
+                ReportPropertyChanging("layoutVariant");
+                _layoutVariant = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("layoutVariant");
+                OnlayoutVariantChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _layoutVariant;
+        partial void OnlayoutVariantChanging(Nullable<global::System.Int32> value);
+        partial void OnlayoutVariantChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Guid> parentId
+        {
+            get
+            {
+                return _parentId;
+            }
+            set
+            {
+                OnparentIdChanging(value);
+                ReportPropertyChanging("parentId");
+                _parentId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("parentId");
+                OnparentIdChanged();
+            }
+        }
+        private Nullable<global::System.Guid> _parentId;
+        partial void OnparentIdChanging(Nullable<global::System.Guid> value);
+        partial void OnparentIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> parentType
+        {
+            get
+            {
+                return _parentType;
+            }
+            set
+            {
+                OnparentTypeChanging(value);
+                ReportPropertyChanging("parentType");
+                _parentType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("parentType");
+                OnparentTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _parentType;
+        partial void OnparentTypeChanging(Nullable<global::System.Int32> value);
+        partial void OnparentTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String parentKeyName
+        {
+            get
+            {
+                return _parentKeyName;
+            }
+            set
+            {
+                OnparentKeyNameChanging(value);
+                ReportPropertyChanging("parentKeyName");
+                _parentKeyName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("parentKeyName");
+                OnparentKeyNameChanged();
+            }
+        }
+        private global::System.String _parentKeyName;
+        partial void OnparentKeyNameChanging(global::System.String value);
+        partial void OnparentKeyNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> displayOrder
+        {
+            get
+            {
+                return _displayOrder;
+            }
+            set
+            {
+                OndisplayOrderChanging(value);
+                ReportPropertyChanging("displayOrder");
+                _displayOrder = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("displayOrder");
+                OndisplayOrderChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _displayOrder;
+        partial void OndisplayOrderChanging(Nullable<global::System.Int32> value);
+        partial void OndisplayOrderChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> createdDate
+        {
+            get
+            {
+                return _createdDate;
+            }
+            set
+            {
+                OncreatedDateChanging(value);
+                ReportPropertyChanging("createdDate");
+                _createdDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("createdDate");
+                OncreatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _createdDate;
+        partial void OncreatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OncreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> modifiedDate
+        {
+            get
+            {
+                return _modifiedDate;
+            }
+            set
+            {
+                OnmodifiedDateChanging(value);
+                ReportPropertyChanging("modifiedDate");
+                _modifiedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("modifiedDate");
+                OnmodifiedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _modifiedDate;
+        partial void OnmodifiedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnmodifiedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> schemaVersion
+        {
+            get
+            {
+                return _schemaVersion;
+            }
+            set
+            {
+                OnschemaVersionChanging(value);
+                ReportPropertyChanging("schemaVersion");
+                _schemaVersion = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("schemaVersion");
+                OnschemaVersionChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _schemaVersion;
+        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
+        partial void OnschemaVersionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String groupTitle
+        {
+            get
+            {
+                return _groupTitle;
+            }
+            set
+            {
+                OngroupTitleChanging(value);
+                ReportPropertyChanging("groupTitle");
+                _groupTitle = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("groupTitle");
+                OngroupTitleChanged();
+            }
+        }
+        private global::System.String _groupTitle;
+        partial void OngroupTitleChanging(global::System.String value);
+        partial void OngroupTitleChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                OnnameChanging(value);
+                ReportPropertyChanging("name");
+                _name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("name");
+                OnnameChanged();
+            }
+        }
+        private global::System.String _name;
+        partial void OnnameChanging(global::System.String value);
+        partial void OnnameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> groupJoinType
+        {
+            get
+            {
+                return _groupJoinType;
+            }
+            set
+            {
+                OngroupJoinTypeChanging(value);
+                ReportPropertyChanging("groupJoinType");
+                _groupJoinType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("groupJoinType");
+                OngroupJoinTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _groupJoinType;
+        partial void OngroupJoinTypeChanging(Nullable<global::System.Int32> value);
+        partial void OngroupJoinTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String entryTitle01
+        {
+            get
+            {
+                return _entryTitle01;
+            }
+            set
+            {
+                OnentryTitle01Changing(value);
+                ReportPropertyChanging("entryTitle01");
+                _entryTitle01 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("entryTitle01");
+                OnentryTitle01Changed();
+            }
+        }
+        private global::System.String _entryTitle01;
+        partial void OnentryTitle01Changing(global::System.String value);
+        partial void OnentryTitle01Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String entryDetail01
+        {
+            get
+            {
+                return _entryDetail01;
+            }
+            set
+            {
+                OnentryDetail01Changing(value);
+                ReportPropertyChanging("entryDetail01");
+                _entryDetail01 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("entryDetail01");
+                OnentryDetail01Changed();
+            }
+        }
+        private global::System.String _entryDetail01;
+        partial void OnentryDetail01Changing(global::System.String value);
+        partial void OnentryDetail01Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> entryJoinType01
+        {
+            get
+            {
+                return _entryJoinType01;
+            }
+            set
+            {
+                OnentryJoinType01Changing(value);
+                ReportPropertyChanging("entryJoinType01");
+                _entryJoinType01 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("entryJoinType01");
+                OnentryJoinType01Changed();
+            }
+        }
+        private Nullable<global::System.Int32> _entryJoinType01;
+        partial void OnentryJoinType01Changing(Nullable<global::System.Int32> value);
+        partial void OnentryJoinType01Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String entryTitle02
+        {
+            get
+            {
+                return _entryTitle02;
+            }
+            set
+            {
+                OnentryTitle02Changing(value);
+                ReportPropertyChanging("entryTitle02");
+                _entryTitle02 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("entryTitle02");
+                OnentryTitle02Changed();
+            }
+        }
+        private global::System.String _entryTitle02;
+        partial void OnentryTitle02Changing(global::System.String value);
+        partial void OnentryTitle02Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String entryDetail02
+        {
+            get
+            {
+                return _entryDetail02;
+            }
+            set
+            {
+                OnentryDetail02Changing(value);
+                ReportPropertyChanging("entryDetail02");
+                _entryDetail02 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("entryDetail02");
+                OnentryDetail02Changed();
+            }
+        }
+        private global::System.String _entryDetail02;
+        partial void OnentryDetail02Changing(global::System.String value);
+        partial void OnentryDetail02Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> entryJoinType02
+        {
+            get
+            {
+                return _entryJoinType02;
+            }
+            set
+            {
+                OnentryJoinType02Changing(value);
+                ReportPropertyChanging("entryJoinType02");
+                _entryJoinType02 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("entryJoinType02");
+                OnentryJoinType02Changed();
+            }
+        }
+        private Nullable<global::System.Int32> _entryJoinType02;
+        partial void OnentryJoinType02Changing(Nullable<global::System.Int32> value);
+        partial void OnentryJoinType02Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String entryTitle03
+        {
+            get
+            {
+                return _entryTitle03;
+            }
+            set
+            {
+                OnentryTitle03Changing(value);
+                ReportPropertyChanging("entryTitle03");
+                _entryTitle03 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("entryTitle03");
+                OnentryTitle03Changed();
+            }
+        }
+        private global::System.String _entryTitle03;
+        partial void OnentryTitle03Changing(global::System.String value);
+        partial void OnentryTitle03Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String entryDetail03
+        {
+            get
+            {
+                return _entryDetail03;
+            }
+            set
+            {
+                OnentryDetail03Changing(value);
+                ReportPropertyChanging("entryDetail03");
+                _entryDetail03 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("entryDetail03");
+                OnentryDetail03Changed();
+            }
+        }
+        private global::System.String _entryDetail03;
+        partial void OnentryDetail03Changing(global::System.String value);
+        partial void OnentryDetail03Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> entryJoinType03
+        {
+            get
+            {
+                return _entryJoinType03;
+            }
+            set
+            {
+                OnentryJoinType03Changing(value);
+                ReportPropertyChanging("entryJoinType03");
+                _entryJoinType03 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("entryJoinType03");
+                OnentryJoinType03Changed();
+            }
+        }
+        private Nullable<global::System.Int32> _entryJoinType03;
+        partial void OnentryJoinType03Changing(Nullable<global::System.Int32> value);
+        partial void OnentryJoinType03Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String entryTitle04
+        {
+            get
+            {
+                return _entryTitle04;
+            }
+            set
+            {
+                OnentryTitle04Changing(value);
+                ReportPropertyChanging("entryTitle04");
+                _entryTitle04 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("entryTitle04");
+                OnentryTitle04Changed();
+            }
+        }
+        private global::System.String _entryTitle04;
+        partial void OnentryTitle04Changing(global::System.String value);
+        partial void OnentryTitle04Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String entryDetail04
+        {
+            get
+            {
+                return _entryDetail04;
+            }
+            set
+            {
+                OnentryDetail04Changing(value);
+                ReportPropertyChanging("entryDetail04");
+                _entryDetail04 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("entryDetail04");
+                OnentryDetail04Changed();
+            }
+        }
+        private global::System.String _entryDetail04;
+        partial void OnentryDetail04Changing(global::System.String value);
+        partial void OnentryDetail04Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> entryJoinType04
+        {
+            get
+            {
+                return _entryJoinType04;
+            }
+            set
+            {
+                OnentryJoinType04Changing(value);
+                ReportPropertyChanging("entryJoinType04");
+                _entryJoinType04 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("entryJoinType04");
+                OnentryJoinType04Changed();
+            }
+        }
+        private Nullable<global::System.Int32> _entryJoinType04;
+        partial void OnentryJoinType04Changing(Nullable<global::System.Int32> value);
+        partial void OnentryJoinType04Changed();
 
         #endregion
     

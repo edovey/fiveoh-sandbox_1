@@ -103,6 +103,8 @@ namespace BDEditor.Classes
             BDRegimen = 37,
             [Description("Configured Entry")]
             BDConfiguredEntry = 38,
+            [Description("Combined Entry")]
+            BDCombinedEntry = 39,
             [Description("Layout Column")]
             BDLayoutColumn = 999,
         }

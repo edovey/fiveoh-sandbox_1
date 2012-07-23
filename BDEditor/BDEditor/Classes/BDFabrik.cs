@@ -995,7 +995,7 @@ namespace BDEditor.Classes
                         entryList.AddRange(new List<IBDNode>(BDAntimicrobialRisk.RetrieveAntimicrobialRiskForParentId(pContext, pParentId)));
                         break;
                     case BDConstants.BDNodeType.BDConfiguredEntry:
-                        entryList.AddRange(new List<IBDNode>(BDConfiguredEntry.RetrieveForParentId(pContext, pParentId)));
+                        entryList.AddRange(new List<IBDNode>(BDConfiguredEntry.RetrieveListForParentId(pContext, pParentId)));
                         break;
                     default:
                         List<IBDNode> workingList = new List<IBDNode>(BDNode.RetrieveNodesForParentIdAndChildNodeType(pContext, pParentId, pChildNodeType));

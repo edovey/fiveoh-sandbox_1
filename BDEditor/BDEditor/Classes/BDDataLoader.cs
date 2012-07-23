@@ -6082,7 +6082,7 @@ namespace BDEditor.Classes
             BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
             BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine;
             BDConstants.LayoutVariantType tableLayoutVariant = sectionLayoutVariant;
-            BDConstants.LayoutVariantType headerRowLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine_HeaderRow;
+            BDConstants.LayoutVariantType headerRowLayoutVariant = sectionLayoutVariant;
 
             uuidData = string.Empty;
             chapterData = string.Empty;
@@ -6272,7 +6272,7 @@ namespace BDEditor.Classes
             BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
             BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Immunization;
             BDConstants.LayoutVariantType tableLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk;
-            BDConstants.LayoutVariantType headerRowLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk_HeaderRow;
+            BDConstants.LayoutVariantType headerRowLayoutVariant = tableLayoutVariant;
 
             uuidData = string.Empty;
             chapterData = string.Empty;

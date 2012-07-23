@@ -18,7 +18,6 @@ namespace BDEditor.DataModel
 
         public const string PROPERTYNAME_NAME = @"Name";
         public const string PROPERTYNAME_GROUPTITLE = @"GroupTitle";
-        public const string PROPERTYNAME_NAME = @"Name";
         public const string PROPERTYNAME_ENTRYTITLE01 = @"EntryTitle01";
         public const string PROPERTYNAME_ENTRYDETAIL01 = @"EntryDetail01";
         public const string PROPERTYNAME_ENTRYTITLE02 = @"EntryTitle02";

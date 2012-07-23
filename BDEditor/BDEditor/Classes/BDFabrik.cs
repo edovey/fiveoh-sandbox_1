@@ -717,12 +717,6 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Prophylaxis_PreOp:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Prophylaxis_PreOp_ContentRow }));
                             break;
-                        case BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine_ContentRow }));
-                            break;
-                        case BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk_ContentRow }));
-                            break;
                         case BDConstants.LayoutVariantType.Table_2_Column:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Table_2_Column_ContentRow }));
                             break;
@@ -1939,13 +1933,7 @@ namespace BDEditor.Classes
                 case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
                 case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity_ContentRow:
                 case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity_HeaderRow:
-                case BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk_HeaderRow:
-                case BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk_ContentRow:
                     maxColumns = 8;
-                    break;
-                case BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine_HeaderRow:
-                case BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine_ContentRow:
-                    maxColumns = 10;
                     break;
                 default:
                     maxColumns = 4;

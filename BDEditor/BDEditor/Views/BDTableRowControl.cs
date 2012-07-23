@@ -314,13 +314,10 @@ namespace BDEditor.Views
                 {
                     case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass_HeaderRow:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_HeaderRow:
-                    //case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis_HeaderRow:
                     case BDConstants.LayoutVariantType.Table_2_Column_HeaderRow:
                     case BDConstants.LayoutVariantType.Table_3_Column_HeaderRow:
                     case BDConstants.LayoutVariantType.Table_4_Column_HeaderRow:
                     case BDConstants.LayoutVariantType.Table_5_Column_HeaderRow:
-                    case BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk_HeaderRow:
-                    case BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine_HeaderRow:
                     case BDConstants.LayoutVariantType.Prophylaxis_PreOp_HeaderRow:
                     case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity_HeaderRow:
                         this.BackColor = SystemColors.ControlDark;

@@ -219,24 +219,18 @@ namespace BDEditor.Classes
 
             [Description("Routine Immunization Programs")]
             Prophylaxis_Immunization_Routine = 308,
-            [Description("Routine Immunization Programs Header Row")]
-            Prophylaxis_Immunization_Routine_HeaderRow = 3081,
-            [Description("Routine Immunization Programs Content Row")]
-            Prophylaxis_Immunization_Routine_ContentRow = 3082,
-
             [Description("Vaccines for High Risk")]
             Prophylaxis_Immunization_HighRisk = 309,
-            [Description("Vaccines for High Risk Header Row")]
-            Prophylaxis_Immunization_HighRisk_HeaderRow = 3091,
-            [Description("Vaccines for High Risk Content Row")]
-            Prophylaxis_Immunization_HighRisk_ContentRow = 3092,
-
             [Description("Vaccine Details")]
             Prophylaxis_Immunization_VaccineDetail = 310,
             [Description("Prophylaxis Communicable Diseases")]
             Prophylaxis_Communicable_Invasive = 311,
+            [Description("Prophylaxis - Heamophilia influenaze")]
+            Prophylaxis_Communicable_HaemophiliusInfluenzae = 314,
             [Description("Prophylaxis Influenza")]
             Prophylaxis_Communicable_Influenza = 312,
+            [Description("Prophylaxis - Pertussis")]
+            Prophylaxis_Communicable_Pertussis = 315,
             [Description("Infection Precautions")]
             Prophylaxis_InfectionPrecautions = 313,
 

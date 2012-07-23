@@ -363,6 +363,15 @@ namespace BDEditor.Classes
             pdf = 6
         }
 
+        public enum BDJoinType
+        {
+            None = 0,
+            AndWithNext = 1,
+            OrWithNext = 2,
+            ThenWithNext = 3,
+            WithOrWithoutWithNext = 4,
+        }
+
         public const string DATETIMEFORMAT = @"yyyy-MM-dd'T'HH:mm:ss";
         public static readonly Color ACTIVELINK_COLOR = Color.LightSteelBlue;
         public static readonly Color INACTIVELINK_COLOR = SystemColors.Control;

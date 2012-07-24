@@ -239,6 +239,33 @@ namespace BDEditor.Views
             return joinType;
         }
 
+        private void createLink(string pProperty)
+        {
+            Save();
+
+            BDLinkedNoteView view = new BDLinkedNoteView();
+            view.AssignDataContext(dataContext);
+            view.AssignContextPropertyName(pProperty);
+            view.AssignParentInfo(currentEntry.Uuid, currentEntry.NodeType);
+            view.AssignScopeId(scopeId);
+            view.NotesChanged += new EventHandler<NodeEventArgs>(notesChanged_Action);
+            view.ShowDialog(this);
+            view.NotesChanged -= new EventHandler<NodeEventArgs>(notesChanged_Action);
+            ShowLinksInUse(false);
+
+        }
+        public void ShowLinksInUse()
+        {
+            ShowLinksInUse(true);
+        }
+
+        public void ShowLinksInUse(bool pPropagateToChildren)
+        {
+            List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentEntry) ? this.currentEntry.uuid : Guid.Empty);
+            btnLinkedNoteDetail.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnLinkedNoteDetail.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
+            btnLinkedNoteTitle.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnLinkedNoteTitle.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
+        }     
+
         private void txtField_Leave(object sender, EventArgs e)
         {
             if(!isUpdating) Save();
@@ -247,6 +274,16 @@ namespace BDEditor.Views
         private void radioButton_CheckedChanged(object sender, EventArgs e)
         {
             if (!isUpdating) Save();
+        }
+
+        private void btnLink_Click(object sender, EventArgs e)
+        {
+            Button control = sender as Button;
+            if (null != control)
+            {
+                string tag = control.Tag as string;
+                createLink(tag);
+            }
         }
     }
 }

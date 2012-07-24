@@ -42,15 +42,15 @@
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(512, 63);
+            this.panelTop.Size = new System.Drawing.Size(512, 57);
             this.panelTop.TabIndex = 1;
             // 
             // panelFields
             // 
             this.panelFields.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelFields.Location = new System.Drawing.Point(0, 63);
+            this.panelFields.Location = new System.Drawing.Point(0, 57);
             this.panelFields.Name = "panelFields";
-            this.panelFields.Size = new System.Drawing.Size(512, 185);
+            this.panelFields.Size = new System.Drawing.Size(512, 191);
             this.panelFields.TabIndex = 2;
             // 
             // txtTitle

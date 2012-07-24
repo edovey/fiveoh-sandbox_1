@@ -13,6 +13,8 @@ namespace BDEditor.Views
 {
     public partial class BDNodeControl : UserControl, IBDControl
     {
+        private bool isUpdating = false;
+
         protected IBDNode currentNode;
         protected Entities dataContext;
         protected Guid? scopeId;
@@ -115,6 +117,8 @@ namespace BDEditor.Views
 
         private void BDNodeControl_Load(object sender, EventArgs e)
         {
+            isUpdating = true;
+
             btnLinkedNote.Tag = BDNode.PROPERTYNAME_NAME;
             setFormLayoutState();
             lblInfo.Visible = false;
@@ -126,6 +130,8 @@ namespace BDEditor.Views
                 if (tbName.Text != currentNode.Name) tbName.Text = currentNode.Name;
                 tbName.Select();
             }
+
+            isUpdating = false;
         }
 
         private void BDNodeControl_Leave(object sender, EventArgs e)
@@ -164,6 +170,7 @@ namespace BDEditor.Views
         public virtual void RefreshLayout(bool pShowChildren)
         {
             ControlHelper.SuspendDrawing(this);
+            isUpdating = true;
 
             for (int idx = 0; idx < childNodeControlList.Count; idx++)
             {
@@ -202,6 +209,7 @@ namespace BDEditor.Views
             parentId = pParentId;
             parentType = pParentType;
             this.Enabled = (null != parentId);
+            isUpdating = false;
         }
 
         public bool Save()
@@ -604,7 +612,8 @@ namespace BDEditor.Views
 
         private void tbName_Leave(object sender, EventArgs e)
         {
-            Save();
+            if(!isUpdating)
+                Save();
         }
 
         void addChildControl(Entities pDataContext, IBDNode pParentNode, BDConstants.BDNodeType pChildNodeType, BDConstants.LayoutVariantType pChildLayoutVariant )

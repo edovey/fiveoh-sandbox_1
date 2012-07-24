@@ -217,16 +217,16 @@ namespace BDEditor.Views
             switch (FieldName)
             {
                 case BDCombinedEntry.PROPERTYNAME_ENTRY01:
-                    joinType = CurrentEntry.JoinType01;
+                    joinType = pEntry.JoinType01;
                     break;
                 case BDCombinedEntry.PROPERTYNAME_ENTRY02:
-                    joinType = CurrentEntry.JoinType02;
+                    joinType = pEntry.JoinType02;
                     break;
                 case BDCombinedEntry.PROPERTYNAME_ENTRY03:
-                    joinType = CurrentEntry.JoinType03;
+                    joinType = pEntry.JoinType03;
                     break;
                 case BDCombinedEntry.PROPERTYNAME_ENTRY04:
-                    joinType = CurrentEntry.JoinType04;
+                    joinType = pEntry.JoinType04;
                     break;
             }
             return joinType;

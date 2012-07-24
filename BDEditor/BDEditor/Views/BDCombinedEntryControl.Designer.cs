@@ -65,7 +65,7 @@
             this.panelTop.Controls.Add(this.txtName);
             this.panelTop.Controls.Add(this.txtTitle);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelTop.Location = new System.Drawing.Point(0, 0);
+            this.panelTop.Location = new System.Drawing.Point(3, 3);
             this.panelTop.Name = "panelTop";
             this.panelTop.Size = new System.Drawing.Size(500, 83);
             this.panelTop.TabIndex = 1;
@@ -94,6 +94,7 @@
             this.andOrRadioButton.TabStop = true;
             this.andOrRadioButton.Text = "+/-  (with next)";
             this.andOrRadioButton.UseVisualStyleBackColor = true;
+            this.andOrRadioButton.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
             // 
             // noneRadioButton
             // 
@@ -105,6 +106,7 @@
             this.noneRadioButton.TabStop = true;
             this.noneRadioButton.Text = "Next";
             this.noneRadioButton.UseVisualStyleBackColor = true;
+            this.noneRadioButton.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
             // 
             // andRadioButton
             // 
@@ -116,6 +118,7 @@
             this.andRadioButton.TabStop = true;
             this.andRadioButton.Text = "And (with next)";
             this.andRadioButton.UseVisualStyleBackColor = true;
+            this.andRadioButton.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
             // 
             // orRadioButton
             // 
@@ -127,6 +130,7 @@
             this.orRadioButton.TabStop = true;
             this.orRadioButton.Text = "Or (with next)";
             this.orRadioButton.UseVisualStyleBackColor = true;
+            this.orRadioButton.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
             // 
             // thenRadioButton
             // 
@@ -138,25 +142,28 @@
             this.thenRadioButton.TabStop = true;
             this.thenRadioButton.Text = "Then (with next)";
             this.thenRadioButton.UseVisualStyleBackColor = true;
+            this.thenRadioButton.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
             // 
             // txtName
             // 
             this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.txtName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtName.Location = new System.Drawing.Point(54, 30);
+            this.txtName.Location = new System.Drawing.Point(62, 30);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(407, 20);
+            this.txtName.Size = new System.Drawing.Size(399, 20);
             this.txtName.TabIndex = 1;
             this.toolTip1.SetToolTip(this.txtName, "Therapy Name");
+            this.txtName.Leave += new System.EventHandler(this.txtField_Leave);
             // 
             // txtTitle
             // 
             this.txtTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTitle.Location = new System.Drawing.Point(54, 3);
+            this.txtTitle.Location = new System.Drawing.Point(62, 3);
             this.txtTitle.Name = "txtTitle";
-            this.txtTitle.Size = new System.Drawing.Size(407, 20);
+            this.txtTitle.Size = new System.Drawing.Size(399, 20);
             this.txtTitle.TabIndex = 0;
             this.toolTip1.SetToolTip(this.txtTitle, "Group Title");
+            this.txtTitle.Leave += new System.EventHandler(this.txtField_Leave);
             // 
             // panelFields
             // 
@@ -164,10 +171,10 @@
             this.panelFields.Controls.Add(this.panel2);
             this.panelFields.Controls.Add(this.panel1);
             this.panelFields.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelFields.Location = new System.Drawing.Point(0, 83);
+            this.panelFields.Location = new System.Drawing.Point(3, 86);
             this.panelFields.MinimumSize = new System.Drawing.Size(500, 447);
             this.panelFields.Name = "panelFields";
-            this.panelFields.Size = new System.Drawing.Size(500, 454);
+            this.panelFields.Size = new System.Drawing.Size(500, 447);
             this.panelFields.TabIndex = 2;
             // 
             // panel2
@@ -225,9 +232,10 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(3, 33);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(46, 13);
+            this.label2.Size = new System.Drawing.Size(53, 13);
             this.label2.TabIndex = 42;
             this.label2.Text = "Therapy";
             // 
@@ -269,12 +277,15 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.Control;
+            this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Controls.Add(this.panelFields);
             this.Controls.Add(this.panelTop);
             this.MinimumSize = new System.Drawing.Size(500, 530);
             this.Name = "BDCombinedEntryControl";
-            this.Size = new System.Drawing.Size(500, 537);
+            this.Padding = new System.Windows.Forms.Padding(3);
+            this.Size = new System.Drawing.Size(506, 536);
             this.Load += new System.EventHandler(this.BDCombinedEntryControl_Load);
+            this.Leave += new System.EventHandler(this.BDCombinedEntryControl_Leave);
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
             this.pnlRadioButtons.ResumeLayout(false);

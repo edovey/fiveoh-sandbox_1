@@ -19,6 +19,7 @@ namespace BDEditor.Views
         protected Guid? scopeId;
         protected Guid parentId;
         protected BDConstants.BDNodeType parentType = BDConstants.BDNodeType.None;
+        private bool isUpdating = false;
 
         protected List<BDCombinedEntryFieldControl> fieldControlList = new List<BDCombinedEntryFieldControl>();
 
@@ -89,9 +90,45 @@ namespace BDEditor.Views
 
             if (null != pEntry)
             {
+                pEntry.name = txtName.Text;
+                pEntry.groupTitle = txtTitle.Text;
+                pEntry.groupJoinType = (int)gatherJoinType();
+
+                //bdCombinedEntryFieldControl1.CurrentEntry = pEntry;
+                //bdCombinedEntryFieldControl2.CurrentEntry = pEntry;
+                //bdCombinedEntryFieldControl3.CurrentEntry = pEntry;
+                //bdCombinedEntryFieldControl4.CurrentEntry = pEntry;
+
+                //bdCombinedEntryFieldControl1.Save();
+                //bdCombinedEntryFieldControl2.Save();
+                //bdCombinedEntryFieldControl3.Save();
+                //bdCombinedEntryFieldControl4.Save();
+
                 result = true;
             }
             return result;
+        }
+
+        private BDConstants.BDJoinType gatherJoinType()
+        {
+            BDConstants.BDJoinType joinType = BDConstants.BDJoinType.None;
+
+            if (andRadioButton.Checked) joinType = BDConstants.BDJoinType.AndWithNext;
+            else if (orRadioButton.Checked) joinType = BDConstants.BDJoinType.OrWithNext;
+            else if (thenRadioButton.Checked) joinType = BDConstants.BDJoinType.ThenWithNext;
+            else if (andOrRadioButton.Checked) joinType = BDConstants.BDJoinType.WithOrWithoutWithNext;
+
+            return joinType;
+        }
+
+        private void txtField_Leave(object sender, EventArgs e)
+        {
+            if (!isUpdating) Save();
+        }
+
+        private void radioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!isUpdating) Save();
         }
 
         #region IBDControl
@@ -150,7 +187,12 @@ namespace BDEditor.Views
 
         public void RefreshLayout(bool pShowChildren)
         {
+            isUpdating = true;
+
             ControlHelper.SuspendDrawing(this);
+
+            txtTitle.Text = currentEntry.groupTitle;
+            txtName.Text = currentEntry.Name;
 
             List<BDLayoutMetadataColumn> metaDataColumnList = BDLayoutMetadataColumn.RetrieveListForLayout(dataContext, currentEntry.LayoutVariant);
 
@@ -172,6 +214,28 @@ namespace BDEditor.Views
                 columnNumber++;
             }
 
+            switch (currentEntry.GroupJoinType)
+            {
+                case BDConstants.BDJoinType.None:
+                    noneRadioButton.Checked = true;
+                    break;
+                case BDConstants.BDJoinType.AndWithNext:
+                    andRadioButton.Checked = true;
+                    break;
+                case BDConstants.BDJoinType.OrWithNext:
+                    orRadioButton.Checked = true;
+                    break;
+                case BDConstants.BDJoinType.ThenWithNext:
+                    thenRadioButton.Checked = true;
+                    break;
+                case BDConstants.BDJoinType.WithOrWithoutWithNext:
+                    andOrRadioButton.Checked = true;
+                    break;
+                default:
+                    noneRadioButton.Checked = true;
+                    break;
+            }
+
             bdCombinedEntryFieldControl1.Initialize(dataContext, currentEntry, BDCombinedEntry.PROPERTYNAME_ENTRY01, scopeId);
             bdCombinedEntryFieldControl2.Initialize(dataContext, currentEntry, BDCombinedEntry.PROPERTYNAME_ENTRY02, scopeId);
             bdCombinedEntryFieldControl3.Initialize(dataContext, currentEntry, BDCombinedEntry.PROPERTYNAME_ENTRY03, scopeId);
@@ -183,6 +247,7 @@ namespace BDEditor.Views
             ShowLinksInUse(false);
 
             ControlHelper.ResumeDrawing(this);
+            isUpdating = false;
         }
 
         public void ShowLinksInUse(bool pPropagateToChildren)
@@ -228,6 +293,11 @@ namespace BDEditor.Views
         private void BDCombinedEntryControl_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void BDCombinedEntryControl_Leave(object sender, EventArgs e)
+        {
+            Save();
         }
     }
 }

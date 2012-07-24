@@ -107,6 +107,15 @@ namespace BDEditor.DataModel
             base.OnPropertyChanged(property);
         }
 
+        public BDConstants.BDJoinType GroupJoinType
+        {
+            get
+            {
+                BDConstants.BDJoinType value = BDConstants.BDJoinType.None;
+                if (null != groupJoinType) value = (BDConstants.BDJoinType)groupJoinType;
+                return value;
+            }
+        }
         public BDConstants.BDJoinType JoinType01
         {
             get

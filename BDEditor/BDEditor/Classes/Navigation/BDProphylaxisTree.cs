@@ -45,6 +45,7 @@ namespace BDEditor.Classes.Navigation
                         case BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine:
                         case BDConstants.LayoutVariantType.Prophylaxis_Immunization_VaccineDetail:
                         case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Communicable:
                         case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
                         case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:
                         case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza:

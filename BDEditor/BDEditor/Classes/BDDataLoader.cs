@@ -6649,28 +6649,47 @@ namespace BDEditor.Classes
 
             if ((diseaseData != string.Empty) && ((null == disease) || (disease.name != diseaseData)))
             {
+                bool hasCategory = false;
                 if (diseaseData == "Neisseria meningidigitis")
+                {
                     diseaseLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive;
+                    hasCategory = true;
+                }
                 else if (diseaseData == "Haemophilus influenzae")
+                {
                     diseaseLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae;
+                    hasCategory = true;
+                }
                 else if (diseaseData == "Group A Streptococcal (GAS) Disease")
+                {
                     diseaseLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive;
+                    hasCategory = true;
+                }
                 else if (diseaseData == "PERTUSSIS (Whooping Cough)")
+                {
                     diseaseLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Communicable_Pertussis;
+                    hasCategory = false;
+                }
                 else if (diseaseData == "VARICELLA ZOSTER")
+                {
                     diseaseLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Communicable_Pertussis;
+                    hasCategory = false;
+                }
                 else if (diseaseData == "INFLUENZA")
+                {
                     diseaseLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza;
+                    hasCategory = false;
+                }
 
                 BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
                 if (null == tmpNode)
                 {
                     disease = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDDisease, Guid.Parse(uuidData));
                     disease.name = diseaseData;
-                    if (category == null)
-                        disease.SetParent(section);
-                    else
+                    if (hasCategory)
                         disease.SetParent(category);
+                    else
+                        disease.SetParent(section);
                     disease.displayOrder = idxDisease++;
                     disease.LayoutVariant = diseaseLayoutVariant;
                     BDNode.Save(dataContext, disease);

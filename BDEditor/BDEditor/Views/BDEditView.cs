@@ -445,6 +445,7 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine:
                             case BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk:
                             case BDConstants.LayoutVariantType.Prophylaxis_Immunization_VaccineDetail:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Communicable:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza:
@@ -978,7 +979,7 @@ namespace BDEditor.Views
            // dataLoader.ImportData(dataContext, @"Resources\Chapter_3g.txt", BDDataLoader.baseDataDefinitionType.chapter3g);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_3h.txt", BDDataLoader.baseDataDefinitionType.chapter3h);
            // dataLoader.ImportData(dataContext, @"Resources\Chapter_3i.txt", BDDataLoader.baseDataDefinitionType.chapter3i);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3j.txt", BDDataLoader.baseDataDefinitionType.chapter3j);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_3j.txt", BDDataLoader.baseDataDefinitionType.chapter3j);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_3k.txt", BDDataLoader.baseDataDefinitionType.chapter3k);
            // dataLoader.ImportData(dataContext, @"Resources\Chapter_3l.txt", BDDataLoader.baseDataDefinitionType.chapter3l);
             LoadChapterDropDown();
@@ -1060,7 +1061,7 @@ namespace BDEditor.Views
             this.Text = string.Format("{0} - {1}" , "Bugs & Drugs Editor", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
             // Loading Seed Data:  set the following variables
-            isSeedDataLoadAvailable = false;
+            isSeedDataLoadAvailable = true;
 
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";

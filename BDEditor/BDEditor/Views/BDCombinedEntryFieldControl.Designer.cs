@@ -58,7 +58,6 @@
             // btnLinkedNoteTitle
             // 
             this.btnLinkedNoteTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLinkedNoteTitle.Enabled = false;
             this.btnLinkedNoteTitle.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkedNoteTitle.Image")));
             this.btnLinkedNoteTitle.Location = new System.Drawing.Point(458, 7);
             this.btnLinkedNoteTitle.Name = "btnLinkedNoteTitle";
@@ -66,11 +65,11 @@
             this.btnLinkedNoteTitle.TabIndex = 37;
             this.toolTip1.SetToolTip(this.btnLinkedNoteTitle, "Entry Title Note");
             this.btnLinkedNoteTitle.UseVisualStyleBackColor = true;
+            this.btnLinkedNoteTitle.Click += new System.EventHandler(this.btnLink_Click);
             // 
             // btnLinkedNoteDetail
             // 
             this.btnLinkedNoteDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLinkedNoteDetail.Enabled = false;
             this.btnLinkedNoteDetail.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkedNoteDetail.Image")));
             this.btnLinkedNoteDetail.Location = new System.Drawing.Point(458, 38);
             this.btnLinkedNoteDetail.Name = "btnLinkedNoteDetail";
@@ -78,6 +77,7 @@
             this.btnLinkedNoteDetail.TabIndex = 39;
             this.toolTip1.SetToolTip(this.btnLinkedNoteDetail, "Entry Detail Note");
             this.btnLinkedNoteDetail.UseVisualStyleBackColor = true;
+            this.btnLinkedNoteDetail.Click += new System.EventHandler(this.btnLink_Click);
             // 
             // txtEntryDetail
             // 

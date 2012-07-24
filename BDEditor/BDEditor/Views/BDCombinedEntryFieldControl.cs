@@ -14,10 +14,10 @@ namespace BDEditor.Views
 {
     public partial class BDCombinedEntryFieldControl : UserControl
     {
-        protected Entities dataContext;
-        protected BDCombinedEntry currentEntry;
-        private string fieldName;
-        protected Guid? scopeId;
+        public Entities DataContext;
+        public BDCombinedEntry CurrentEntry;
+        public string FieldName;
+        public Guid? ScopeId;
         protected Guid parentId;
         protected BDConstants.BDNodeType parentType = BDConstants.BDNodeType.None;
 
@@ -33,38 +33,23 @@ namespace BDEditor.Views
         {
             InitializeComponent();
 
+            Initialize(pDataContext, pCombinedEntry, pPropertyName, pScopeId);
+        }
+
+        public void Initialize(Entities pDataContext, BDCombinedEntry pCombinedEntry, string pPropertyName, Guid? pScopeId)
+        {
             if (null == pCombinedEntry) throw new NotSupportedException("May not create a CombinedEntryField control without an existing entry");
             if (null == pCombinedEntry.ParentId) throw new NotSupportedException("May not create a CombinedEntryField control without a supplied parent");
 
-            dataContext = pDataContext;
-            currentEntry = pCombinedEntry;
-            parentId = currentEntry.ParentId.Value;
-            fieldName = pPropertyName;
-            scopeId = pScopeId;
+            DataContext = pDataContext;
+            CurrentEntry = pCombinedEntry;
+            parentId = CurrentEntry.ParentId.Value;
+            FieldName = pPropertyName;
+            ScopeId = pScopeId;
         }
 
         private void BDCombinedEntryFieldControl_Load(object sender, EventArgs e)
         {
-            switch (fieldName)
-            {
-                case BDCombinedEntry.PROPERTYNAME_ENTRY01:
-                    btnLinkedNoteTitle.Tag = BDCombinedEntry.PROPERTYNAME_ENTRYTITLE01;
-                    btnLinkedNoteDetail.Tag = BDCombinedEntry.PROPERTYNAME_ENTRY01; 
-                    break;
-                case BDCombinedEntry.PROPERTYNAME_ENTRY02:
-                    btnLinkedNoteTitle.Tag = BDCombinedEntry.PROPERTYNAME_ENTRYTITLE02;
-                    btnLinkedNoteDetail.Tag = BDCombinedEntry.PROPERTYNAME_ENTRY02;
-                    break;
-                case BDCombinedEntry.PROPERTYNAME_ENTRY03:
-                    btnLinkedNoteTitle.Tag = BDCombinedEntry.PROPERTYNAME_ENTRYTITLE03;
-                    btnLinkedNoteDetail.Tag = BDCombinedEntry.PROPERTYNAME_ENTRY03;
-                    break;
-                case BDCombinedEntry.PROPERTYNAME_ENTRY04:
-                    btnLinkedNoteTitle.Tag = BDCombinedEntry.PROPERTYNAME_ENTRYTITLE04;
-                    btnLinkedNoteDetail.Tag = BDCombinedEntry.PROPERTYNAME_ENTRY04;
-                    break;
-            }
-
             Populate();
         }
 
@@ -92,41 +77,41 @@ namespace BDEditor.Views
         {
             bool result = true;
 
-            string originalDetailValue = detailValueFromField(currentEntry);
-            string originalTitleValue = titleValueFromField(currentEntry);
-            BDConstants.BDJoinType originalJoinType = joinValueFromField(currentEntry);
+            string originalDetailValue = detailValueFromField(CurrentEntry);
+            string originalTitleValue = titleValueFromField(CurrentEntry);
+            BDConstants.BDJoinType originalJoinType = joinValueFromField(CurrentEntry);
 
             string detailValue = txtEntryDetail.Text;
             string titleValue = txtEntryTitle.Text;
             BDConstants.BDJoinType joinType = gatherJoinType();
 
-            switch (fieldName)
+            switch (FieldName)
             {
                 case BDCombinedEntry.PROPERTYNAME_ENTRY01:
-                    currentEntry.entryDetail01 = detailValue;
-                    currentEntry.entryTitle01 = titleValue;
-                    currentEntry.entryJoinType01 = (int)joinType;
+                    CurrentEntry.entryDetail01 = detailValue;
+                    CurrentEntry.entryTitle01 = titleValue;
+                    CurrentEntry.entryJoinType01 = (int)joinType;
                     break;
                 case BDCombinedEntry.PROPERTYNAME_ENTRY02:
-                    currentEntry.entryDetail02 = detailValue;
-                    currentEntry.entryTitle02 = titleValue;
-                    currentEntry.entryJoinType02 = (int)joinType;
+                    CurrentEntry.entryDetail02 = detailValue;
+                    CurrentEntry.entryTitle02 = titleValue;
+                    CurrentEntry.entryJoinType02 = (int)joinType;
                     break;
                 case BDCombinedEntry.PROPERTYNAME_ENTRY03:
-                    currentEntry.entryDetail03 = detailValue;
-                    currentEntry.entryTitle03 = titleValue;
-                    currentEntry.entryJoinType03 = (int)joinType;
+                    CurrentEntry.entryDetail03 = detailValue;
+                    CurrentEntry.entryTitle03 = titleValue;
+                    CurrentEntry.entryJoinType03 = (int)joinType;
                     break;
                 case BDCombinedEntry.PROPERTYNAME_ENTRY04:
-                    currentEntry.entryDetail04 = detailValue;
-                    currentEntry.entryTitle04 = titleValue;
-                    currentEntry.entryJoinType04 = (int)joinType;
+                    CurrentEntry.entryDetail04 = detailValue;
+                    CurrentEntry.entryTitle04 = titleValue;
+                    CurrentEntry.entryJoinType04 = (int)joinType;
                     break;
             }
 
-            dataContext.SaveChanges();
+            DataContext.SaveChanges();
 
-            if (detailValue != originalDetailValue) OnNameChanged(new NodeEventArgs(dataContext, currentEntry.Uuid, detailValue, fieldName));
+            if (detailValue != originalDetailValue) OnNameChanged(new NodeEventArgs(DataContext, CurrentEntry.Uuid, detailValue, FieldName));
 
             return result;
         }
@@ -135,9 +120,29 @@ namespace BDEditor.Views
         {
             isUpdating = true;
 
-            txtEntryTitle.Text = titleValueFromField(currentEntry);
-            txtEntryDetail.Text = detailValueFromField(currentEntry);
-            switch (joinValueFromField(currentEntry))
+            switch (FieldName)
+            {
+                case BDCombinedEntry.PROPERTYNAME_ENTRY01:
+                    btnLinkedNoteTitle.Tag = BDCombinedEntry.PROPERTYNAME_ENTRYTITLE01;
+                    btnLinkedNoteDetail.Tag = BDCombinedEntry.PROPERTYNAME_ENTRY01;
+                    break;
+                case BDCombinedEntry.PROPERTYNAME_ENTRY02:
+                    btnLinkedNoteTitle.Tag = BDCombinedEntry.PROPERTYNAME_ENTRYTITLE02;
+                    btnLinkedNoteDetail.Tag = BDCombinedEntry.PROPERTYNAME_ENTRY02;
+                    break;
+                case BDCombinedEntry.PROPERTYNAME_ENTRY03:
+                    btnLinkedNoteTitle.Tag = BDCombinedEntry.PROPERTYNAME_ENTRYTITLE03;
+                    btnLinkedNoteDetail.Tag = BDCombinedEntry.PROPERTYNAME_ENTRY03;
+                    break;
+                case BDCombinedEntry.PROPERTYNAME_ENTRY04:
+                    btnLinkedNoteTitle.Tag = BDCombinedEntry.PROPERTYNAME_ENTRYTITLE04;
+                    btnLinkedNoteDetail.Tag = BDCombinedEntry.PROPERTYNAME_ENTRY04;
+                    break;
+            }
+
+            txtEntryTitle.Text = titleValueFromField(CurrentEntry);
+            txtEntryDetail.Text = detailValueFromField(CurrentEntry);
+            switch (joinValueFromField(CurrentEntry))
             {
                 case BDConstants.BDJoinType.None:
                     noneRadioButton.Checked = true;
@@ -165,19 +170,19 @@ namespace BDEditor.Views
         private string detailValueFromField(BDCombinedEntry pEntry)
         {
             string value = null;
-            switch (fieldName)
+            switch (FieldName)
             {
                 case BDCombinedEntry.PROPERTYNAME_ENTRY01:
-                    value = currentEntry.entryDetail01;
+                    value = CurrentEntry.entryDetail01;
                     break;
                 case BDCombinedEntry.PROPERTYNAME_ENTRY02:
-                    value = currentEntry.entryDetail02;
+                    value = CurrentEntry.entryDetail02;
                     break;
                 case BDCombinedEntry.PROPERTYNAME_ENTRY03:
-                    value = currentEntry.entryDetail03;
+                    value = CurrentEntry.entryDetail03;
                     break;
                 case BDCombinedEntry.PROPERTYNAME_ENTRY04:
-                    value = currentEntry.entryDetail04;
+                    value = CurrentEntry.entryDetail04;
                     break;
             }
             return value;
@@ -187,19 +192,19 @@ namespace BDEditor.Views
         {
             string value = null;
 
-            switch (fieldName)
+            switch (FieldName)
             {
                 case BDCombinedEntry.PROPERTYNAME_ENTRY01:
-                    value = currentEntry.entryTitle01;
+                    value = CurrentEntry.entryTitle01;
                     break;
                 case BDCombinedEntry.PROPERTYNAME_ENTRY02:
-                    value = currentEntry.entryTitle02;
+                    value = CurrentEntry.entryTitle02;
                     break;
                 case BDCombinedEntry.PROPERTYNAME_ENTRY03:
-                    value = currentEntry.entryTitle03;
+                    value = CurrentEntry.entryTitle03;
                     break;
                 case BDCombinedEntry.PROPERTYNAME_ENTRY04:
-                    value = currentEntry.entryTitle04;
+                    value = CurrentEntry.entryTitle04;
                     break;
             }
             return value;
@@ -209,19 +214,19 @@ namespace BDEditor.Views
         {
             BDConstants.BDJoinType joinType = BDConstants.BDJoinType.None;
 
-            switch (fieldName)
+            switch (FieldName)
             {
                 case BDCombinedEntry.PROPERTYNAME_ENTRY01:
-                    joinType = (BDConstants.BDJoinType)currentEntry.entryJoinType01;
+                    joinType = CurrentEntry.JoinType01;
                     break;
                 case BDCombinedEntry.PROPERTYNAME_ENTRY02:
-                    joinType = (BDConstants.BDJoinType)currentEntry.entryJoinType02;
+                    joinType = CurrentEntry.JoinType02;
                     break;
                 case BDCombinedEntry.PROPERTYNAME_ENTRY03:
-                    joinType = (BDConstants.BDJoinType)currentEntry.entryJoinType03;
+                    joinType = CurrentEntry.JoinType03;
                     break;
                 case BDCombinedEntry.PROPERTYNAME_ENTRY04:
-                    joinType = (BDConstants.BDJoinType)currentEntry.entryJoinType04;
+                    joinType = CurrentEntry.JoinType04;
                     break;
             }
             return joinType;
@@ -244,10 +249,10 @@ namespace BDEditor.Views
             Save();
 
             BDLinkedNoteView view = new BDLinkedNoteView();
-            view.AssignDataContext(dataContext);
+            view.AssignDataContext(DataContext);
             view.AssignContextPropertyName(pProperty);
-            view.AssignParentInfo(currentEntry.Uuid, currentEntry.NodeType);
-            view.AssignScopeId(scopeId);
+            view.AssignParentInfo(CurrentEntry.Uuid, CurrentEntry.NodeType);
+            view.AssignScopeId(ScopeId);
             view.NotesChanged += new EventHandler<NodeEventArgs>(notesChanged_Action);
             view.ShowDialog(this);
             view.NotesChanged -= new EventHandler<NodeEventArgs>(notesChanged_Action);
@@ -261,7 +266,7 @@ namespace BDEditor.Views
 
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
-            List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentEntry) ? this.currentEntry.uuid : Guid.Empty);
+            List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(DataContext, (null != this.CurrentEntry) ? this.CurrentEntry.uuid : Guid.Empty);
             btnLinkedNoteDetail.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnLinkedNoteDetail.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
             btnLinkedNoteTitle.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnLinkedNoteTitle.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
         }     

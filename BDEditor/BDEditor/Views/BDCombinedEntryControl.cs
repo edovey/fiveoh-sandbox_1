@@ -94,45 +94,6 @@ namespace BDEditor.Views
             return result;
         }
 
-        private BDCombinedEntryFieldControl addFieldEntryControl(BDCombinedEntry pConfiguredEntry, string pPropertyName, int pTabIndex)
-        {
-            BDCombinedEntryFieldControl control = new BDCombinedEntryFieldControl(dataContext, pConfiguredEntry, pPropertyName, scopeId.Value);
-
-            //if (null != control)
-            //{
-            //    ((System.Windows.Forms.UserControl)control).Dock = DockStyle.Top;
-            //    ((System.Windows.Forms.UserControl)control).TabIndex = pTabIndex;
-            //    control.DisplayOrder = pTabIndex;
-
-            //    control.NotesChanged += new EventHandler<NodeEventArgs>(fieldControl_NotesChanged);
-            //    control.NameChanged += new EventHandler<NodeEventArgs>(fieldControl_NameChanged);
-
-            //    fieldControlList.Add(control);
-
-            //    panelFields.Controls.Add(((System.Windows.Forms.UserControl)control));
-
-            //    ((System.Windows.Forms.UserControl)control).BringToFront();
-            //    control.RefreshLayout();
-            //}
-
-            return control;
-        }
-
-        private void removeFieldEntryControl(BDCombinedEntryFieldControl pFieldEntryControl)
-        {
-            ControlHelper.SuspendDrawing(this);
-            //panelFields.Controls.Remove(((System.Windows.Forms.UserControl)pFieldEntryControl));
-
-            //pFieldEntryControl.NameChanged -= new EventHandler<NodeEventArgs>(fieldControl_NameChanged);
-            //pFieldEntryControl.NotesChanged -= new EventHandler<NodeEventArgs>(fieldControl_NotesChanged);
-
-            //fieldControlList.Remove(pFieldEntryControl);
-
-            //((System.Windows.Forms.UserControl)pFieldEntryControl).Dispose();
-            //pFieldEntryControl = null;
-            ControlHelper.ResumeDrawing(this);
-        }
-
         #region IBDControl
 
         public event EventHandler<NodeEventArgs> RequestItemAdd;
@@ -191,31 +152,45 @@ namespace BDEditor.Views
         {
             ControlHelper.SuspendDrawing(this);
 
-            for (int idx = 0; idx < fieldControlList.Count; idx++)
-            {
-                BDCombinedEntryFieldControl control = fieldControlList[idx];
-                removeFieldEntryControl(control);
-            }
-            fieldControlList.Clear();
-            panelFields.Controls.Clear();
-
             List<BDLayoutMetadataColumn> metaDataColumnList = BDLayoutMetadataColumn.RetrieveListForLayout(dataContext, currentEntry.LayoutVariant);
-            int tabIndex = 0;
+
+            lblVirtualColumnOne.Text = "";
+            lblVirtualColumnTwo.Text = "";
+
+            int columnNumber = 0;
             foreach (BDLayoutMetadataColumn columnDef in metaDataColumnList)
             {
-                BDLayoutMetadataColumnNodeType propertyInfo = BDLayoutMetadataColumnNodeType.Retrieve(dataContext, currentEntry.LayoutVariant, currentEntry.NodeType, columnDef.Uuid);
-                if (null != propertyInfo)
+                switch (columnNumber)
                 {
-                    addFieldEntryControl(currentEntry, propertyInfo.propertyName, tabIndex++);
+                    case 0:
+                        lblVirtualColumnOne.Text = columnDef.label;
+                        break;
+                    case 1:
+                        lblVirtualColumnTwo.Text = columnDef.label;
+                        break;
                 }
+                columnNumber++;
             }
+
+            bdCombinedEntryFieldControl1.Initialize(dataContext, currentEntry, BDCombinedEntry.PROPERTYNAME_ENTRY01, scopeId);
+            bdCombinedEntryFieldControl2.Initialize(dataContext, currentEntry, BDCombinedEntry.PROPERTYNAME_ENTRY02, scopeId);
+            bdCombinedEntryFieldControl3.Initialize(dataContext, currentEntry, BDCombinedEntry.PROPERTYNAME_ENTRY03, scopeId);
+            bdCombinedEntryFieldControl4.Initialize(dataContext, currentEntry, BDCombinedEntry.PROPERTYNAME_ENTRY04, scopeId);
+            bdCombinedEntryFieldControl1.Populate();
+            bdCombinedEntryFieldControl2.Populate();
+            bdCombinedEntryFieldControl3.Populate();
+            bdCombinedEntryFieldControl4.Populate();
+            ShowLinksInUse(false);
 
             ControlHelper.ResumeDrawing(this);
         }
 
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
-            
+            bdCombinedEntryFieldControl1.ShowLinksInUse(pPropagateToChildren);
+            bdCombinedEntryFieldControl2.ShowLinksInUse(pPropagateToChildren);
+            bdCombinedEntryFieldControl3.ShowLinksInUse(pPropagateToChildren);
+            bdCombinedEntryFieldControl4.ShowLinksInUse(pPropagateToChildren);
         }
 
         public BDConstants.BDNodeType DefaultNodeType
@@ -249,5 +224,10 @@ namespace BDEditor.Views
         }
 
         #endregion
+
+        private void BDCombinedEntryControl_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

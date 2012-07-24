@@ -107,6 +107,43 @@ namespace BDEditor.DataModel
             base.OnPropertyChanged(property);
         }
 
+        public BDConstants.BDJoinType JoinType01
+        {
+            get
+            {
+                BDConstants.BDJoinType value = BDConstants.BDJoinType.None;
+                if (null != entryJoinType01) value = (BDConstants.BDJoinType)entryJoinType01;
+                return value;
+            }
+        }
+        public BDConstants.BDJoinType JoinType02
+        {
+            get
+            {
+                BDConstants.BDJoinType value = BDConstants.BDJoinType.None;
+                if (null != entryJoinType02) value = (BDConstants.BDJoinType)entryJoinType02;
+                return value;
+            }
+        }
+        public BDConstants.BDJoinType JoinType03
+        {
+            get
+            {
+                BDConstants.BDJoinType value = BDConstants.BDJoinType.None;
+                if (null != entryJoinType03) value = (BDConstants.BDJoinType)entryJoinType03;
+                return value;
+            }
+        }
+        public BDConstants.BDJoinType JoinType04
+        {
+            get
+            {
+                BDConstants.BDJoinType value = BDConstants.BDJoinType.None;
+                if (null != entryJoinType04) value = (BDConstants.BDJoinType)entryJoinType04;
+                return value;
+            }
+        }
+
         #region IBDNode
 
         public string Name

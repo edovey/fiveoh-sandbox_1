@@ -223,7 +223,10 @@ namespace BDEditor.Classes
             Prophylaxis_Immunization_HighRisk = 309,
             [Description("Vaccine Details")]
             Prophylaxis_Immunization_VaccineDetail = 310,
-            [Description("Prophylaxis Communicable Diseases")]
+
+            [Description("Prophylaxis - Communicable Diseases")]
+            Prophylaxis_Communicable = 317,
+            [Description("Prophylaxis - Invasive Diseases")]
             Prophylaxis_Communicable_Invasive = 311,
             [Description("Prophylaxis - Heamophilia influenaze")]
             Prophylaxis_Communicable_HaemophiliusInfluenzae = 315,

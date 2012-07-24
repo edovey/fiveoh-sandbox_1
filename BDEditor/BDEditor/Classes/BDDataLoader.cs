@@ -6559,10 +6559,8 @@ namespace BDEditor.Classes
             string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
             BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
-            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Dental_RecommendedTherapy;
-            BDConstants.LayoutVariantType categoryLayoutVariant = sectionLayoutVariant;
-            BDConstants.LayoutVariantType diseaseLayoutVariant = sectionLayoutVariant;
-            BDConstants.LayoutVariantType therapyGroupLayoutVariant = sectionLayoutVariant;
+            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Communicable;
+            BDConstants.LayoutVariantType diseaseLayoutVariant = BDConstants.LayoutVariantType.Undefined;
 
             //Expectation that a row contains only one element with data
 
@@ -6571,14 +6569,12 @@ namespace BDEditor.Classes
             sectionData = string.Empty;
             categoryData = string.Empty;
             diseaseData = string.Empty;
-            therapyGroupData = string.Empty;
 
             if (elements.Length > 0) uuidData = elements[0];
             if (elements.Length > 1) chapterData = elements[1];
             if (elements.Length > 2) sectionData = elements[2];
             if (elements.Length > 3) categoryData = elements[3];
             if (elements.Length > 4) diseaseData = elements[4];
-            if (elements.Length > 5) therapyGroupData = elements[5];
 
             if ((null != chapterData && chapterData != string.Empty) && ((null == chapter) || (chapter.name != chapterData)))
             {
@@ -6602,11 +6598,9 @@ namespace BDEditor.Classes
                 section = null;
                 category = null;
                 disease = null;
-                therapyGroup = null;
                 idxSection = 0;
                 idxCategory = 0;
                 idxDisease = 0;
-                idxTherapyGroup = 0;
             }
 
             if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
@@ -6628,10 +6622,8 @@ namespace BDEditor.Classes
                 }
                 category = null;
                 disease = null;
-                therapyGroup = null;
                 idxCategory = 0;
                 idxDisease = 0;
-                idxTherapyGroup = 0;
             }
 
             if ((categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
@@ -6643,7 +6635,7 @@ namespace BDEditor.Classes
                     category.name = categoryData;
                     category.SetParent(section);
                     category.displayOrder = idxCategory++;
-                    category.LayoutVariant = categoryLayoutVariant;
+                    category.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive;
                     BDNode.Save(dataContext, category);
                 }
                 else
@@ -6652,19 +6644,33 @@ namespace BDEditor.Classes
                     idxCategory++;
                 }
                 disease = null;
-                therapyGroup = null;
                 idxDisease = 0;
-                idxTherapyGroup = 0;
             }
 
             if ((diseaseData != string.Empty) && ((null == disease) || (disease.name != diseaseData)))
             {
+                if (diseaseData == "Neisseria meningidigitis")
+                    diseaseLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive;
+                else if (diseaseData == "Haemophilus influenzae")
+                    diseaseLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae;
+                else if (diseaseData == "Group A Streptococcal (GAS) Disease")
+                    diseaseLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive;
+                else if (diseaseData == "PERTUSSIS (Whooping Cough)")
+                    diseaseLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Communicable_Pertussis;
+                else if (diseaseData == "VARICELLA ZOSTER")
+                    diseaseLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Communicable_Pertussis;
+                else if (diseaseData == "INFLUENZA")
+                    diseaseLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza;
+
                 BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
                 if (null == tmpNode)
                 {
                     disease = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDDisease, Guid.Parse(uuidData));
                     disease.name = diseaseData;
-                    disease.SetParent(category);
+                    if (category == null)
+                        disease.SetParent(section);
+                    else
+                        disease.SetParent(category);
                     disease.displayOrder = idxDisease++;
                     disease.LayoutVariant = diseaseLayoutVariant;
                     BDNode.Save(dataContext, disease);
@@ -6673,27 +6679,6 @@ namespace BDEditor.Classes
                 {
                     disease = tmpNode;
                     idxDisease++;
-                }
-                therapyGroup = null;
-                idxTherapyGroup = 0;
-            }
-
-            if ((therapyGroupData != string.Empty) && ((null == therapyGroup) || (therapyGroup.name != therapyGroupData)))
-            {
-                BDTherapyGroup tmpNode = BDTherapyGroup.RetrieveTherapyGroupWithId(dataContext, new Guid(uuidData));
-                if (null == tmpNode)
-                {
-                    therapyGroup = BDTherapyGroup.CreateBDTherapyGroup(dataContext, Guid.Parse(uuidData));
-                    therapyGroup.name = therapyGroupData;
-                    therapyGroup.SetParent(disease);
-                    therapyGroup.displayOrder = idxTherapyGroup++;
-                    therapyGroup.LayoutVariant = therapyGroupLayoutVariant;
-                    BDTherapyGroup.Save(dataContext, therapyGroup);
-                }
-                else
-                {
-                    therapyGroup = tmpNode;
-                    idxTherapyGroup++;
                 }
             }
 

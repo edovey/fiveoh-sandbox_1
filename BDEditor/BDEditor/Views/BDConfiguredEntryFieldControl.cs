@@ -19,7 +19,7 @@ namespace BDEditor.Views
         private string fieldName;
         private Guid scopeId;
 
-        public int DisplayOrder { get; set; }
+        public int DisplayOrder { get; set; } 
 
         public BDConfiguredEntryFieldControl()
         {
@@ -240,6 +240,61 @@ namespace BDEditor.Views
         private void txtFieldData_Leave(object sender, EventArgs e)
         {
             Save();
+        }
+
+        private void insertTextFromMenu(string textToInsert)
+        {
+            int position = txtFieldData.SelectionStart;
+            txtFieldData.Text = txtFieldData.Text.Insert(txtFieldData.SelectionStart, textToInsert);
+            txtFieldData.SelectionStart = textToInsert.Length + position;
+        }
+
+        private void bToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "ß";
+            insertTextFromMenu(newText);
+        }
+
+        private void degreeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "°";
+            insertTextFromMenu(newText);
+        }
+
+        private void µToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "µ";
+            insertTextFromMenu(newText);
+        }
+
+        private void geToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "≥";
+            insertTextFromMenu(newText);
+        }
+
+        private void leToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "≤";
+            insertTextFromMenu(newText);
+        }
+
+        private void plusMinusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "±";
+            insertTextFromMenu(newText);
+        }
+
+        private void sOneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "¹";
+            insertTextFromMenu(newText);
+        }
+
+        private void trademarkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "®";
+            insertTextFromMenu(newText);
         }
     }
 }

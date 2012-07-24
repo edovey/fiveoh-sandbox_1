@@ -50,11 +50,21 @@
             this.bdCombinedEntryFieldControl3 = new BDEditor.Views.BDCombinedEntryFieldControl();
             this.bdCombinedEntryFieldControl2 = new BDEditor.Views.BDCombinedEntryFieldControl();
             this.bdCombinedEntryFieldControl1 = new BDEditor.Views.BDCombinedEntryFieldControl();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.bToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.geToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.leToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.plusMinusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.degreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.µToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sOneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.trademarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelTop.SuspendLayout();
             this.pnlRadioButtons.SuspendLayout();
             this.panelFields.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelTop
@@ -147,6 +157,7 @@
             // txtName
             // 
             this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtName.ContextMenuStrip = this.contextMenuStrip1;
             this.txtName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtName.Location = new System.Drawing.Point(62, 30);
             this.txtName.Name = "txtName";
@@ -154,16 +165,19 @@
             this.txtName.TabIndex = 1;
             this.toolTip1.SetToolTip(this.txtName, "Therapy Name");
             this.txtName.Leave += new System.EventHandler(this.txtField_Leave);
+            this.txtName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbName_MouseDown);
             // 
             // txtTitle
             // 
             this.txtTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTitle.ContextMenuStrip = this.contextMenuStrip1;
             this.txtTitle.Location = new System.Drawing.Point(62, 3);
             this.txtTitle.Name = "txtTitle";
             this.txtTitle.Size = new System.Drawing.Size(399, 20);
             this.txtTitle.TabIndex = 0;
             this.toolTip1.SetToolTip(this.txtTitle, "Group Title");
             this.txtTitle.Leave += new System.EventHandler(this.txtField_Leave);
+            this.txtTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbTitle_MouseDown);
             // 
             // panelFields
             // 
@@ -271,6 +285,85 @@
             this.bdCombinedEntryFieldControl1.Size = new System.Drawing.Size(494, 91);
             this.bdCombinedEntryFieldControl1.TabIndex = 1;
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bToolStripMenuItem,
+            this.geToolStripMenuItem,
+            this.leToolStripMenuItem,
+            this.plusMinusToolStripMenuItem,
+            this.degreeToolStripMenuItem,
+            this.µToolStripMenuItem,
+            this.sOneToolStripMenuItem,
+            this.trademarkToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.ShowImageMargin = false;
+            this.contextMenuStrip1.Size = new System.Drawing.Size(128, 202);
+            this.contextMenuStrip1.Text = "Insert Symbol";
+            // 
+            // bToolStripMenuItem
+            // 
+            this.bToolStripMenuItem.Name = "bToolStripMenuItem";
+            this.bToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.bToolStripMenuItem.Text = "ß";
+            this.bToolStripMenuItem.ToolTipText = "Insert ß";
+            this.bToolStripMenuItem.Click += new System.EventHandler(this.bToolStripMenuItem_Click);
+            // 
+            // geToolStripMenuItem
+            // 
+            this.geToolStripMenuItem.Name = "geToolStripMenuItem";
+            this.geToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.geToolStripMenuItem.Text = "≥";
+            this.geToolStripMenuItem.ToolTipText = "Insert ≥";
+            this.geToolStripMenuItem.Click += new System.EventHandler(this.geToolStripMenuItem_Click);
+            // 
+            // leToolStripMenuItem
+            // 
+            this.leToolStripMenuItem.Name = "leToolStripMenuItem";
+            this.leToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.leToolStripMenuItem.Text = "≤";
+            this.leToolStripMenuItem.ToolTipText = "Insert ≤";
+            this.leToolStripMenuItem.Click += new System.EventHandler(this.leToolStripMenuItem_Click);
+            // 
+            // plusMinusToolStripMenuItem
+            // 
+            this.plusMinusToolStripMenuItem.Name = "plusMinusToolStripMenuItem";
+            this.plusMinusToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.plusMinusToolStripMenuItem.Text = "±";
+            this.plusMinusToolStripMenuItem.ToolTipText = "Insert ±";
+            this.plusMinusToolStripMenuItem.Click += new System.EventHandler(this.plusMinusToolStripMenuItem_Click);
+            // 
+            // degreeToolStripMenuItem
+            // 
+            this.degreeToolStripMenuItem.Name = "degreeToolStripMenuItem";
+            this.degreeToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.degreeToolStripMenuItem.Text = "°";
+            this.degreeToolStripMenuItem.ToolTipText = "Insert °";
+            this.degreeToolStripMenuItem.Click += new System.EventHandler(this.degreeToolStripMenuItem_Click);
+            // 
+            // µToolStripMenuItem
+            // 
+            this.µToolStripMenuItem.Name = "µToolStripMenuItem";
+            this.µToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.µToolStripMenuItem.Text = "µ";
+            this.µToolStripMenuItem.Click += new System.EventHandler(this.µToolStripMenuItem_Click);
+            // 
+            // sOneToolStripMenuItem
+            // 
+            this.sOneToolStripMenuItem.Name = "sOneToolStripMenuItem";
+            this.sOneToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.sOneToolStripMenuItem.Text = "¹";
+            this.sOneToolStripMenuItem.ToolTipText = "Insert ¹";
+            this.sOneToolStripMenuItem.Click += new System.EventHandler(this.sOneToolStripMenuItem_Click);
+            // 
+            // trademarkToolStripMenuItem
+            // 
+            this.trademarkToolStripMenuItem.Name = "trademarkToolStripMenuItem";
+            this.trademarkToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.trademarkToolStripMenuItem.Text = "®";
+            this.trademarkToolStripMenuItem.ToolTipText = "Insert ®";
+            this.trademarkToolStripMenuItem.Click += new System.EventHandler(this.trademarkToolStripMenuItem_Click);
+            // 
             // BDCombinedEntryControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -293,6 +386,7 @@
             this.panelFields.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -321,6 +415,15 @@
         private System.Windows.Forms.RadioButton thenRadioButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem bToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem geToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem leToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem plusMinusToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem degreeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem µToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sOneToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem trademarkToolStripMenuItem;
 
     }
 }

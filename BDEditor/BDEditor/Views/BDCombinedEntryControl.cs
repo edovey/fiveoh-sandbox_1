@@ -28,6 +28,11 @@ namespace BDEditor.Views
         private int? displayOrder;
         private bool showAsChild = false;
 
+        private string currentControlName;
+
+        private const string TEXTFIELD_TITLE = "titleField";
+        private const string TEXTFIELD_NAME = "nameField";
+
         public BDCombinedEntryControl()
         {
             InitializeComponent();
@@ -298,6 +303,80 @@ namespace BDEditor.Views
         private void BDCombinedEntryControl_Leave(object sender, EventArgs e)
         {
             Save();
+        }
+
+        private void tbName_MouseDown(object sender, MouseEventArgs e)
+        {
+            currentControlName = TEXTFIELD_NAME;
+        }
+
+        private void tbTitle_MouseDown(object sender, MouseEventArgs e)
+        {
+            currentControlName = TEXTFIELD_TITLE;
+        }
+
+        private void insertTextFromMenu(string textToInsert)
+        {
+            if (currentControlName == TEXTFIELD_NAME)
+            {
+                int position = txtName.SelectionStart;
+                txtName.Text = txtName.Text.Insert(txtName.SelectionStart, textToInsert);
+                txtName.SelectionStart = textToInsert.Length + position;
+            }
+            else if (currentControlName == TEXTFIELD_TITLE)
+            {
+                int position = txtTitle.SelectionStart;
+                txtTitle.Text = txtTitle.Text.Insert(txtTitle.SelectionStart, textToInsert);
+                txtTitle.SelectionStart = textToInsert.Length + position;
+            }
+        }
+
+        private void bToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "ß";
+            insertTextFromMenu(newText);
+        }
+
+        private void degreeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "°";
+            insertTextFromMenu(newText);
+        }
+
+        private void µToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "µ";
+            insertTextFromMenu(newText);
+        }
+
+        private void geToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "≥";
+            insertTextFromMenu(newText);
+        }
+
+        private void leToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "≤";
+            insertTextFromMenu(newText);
+        }
+
+        private void plusMinusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "±";
+            insertTextFromMenu(newText);
+        }
+
+        private void sOneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "¹";
+            insertTextFromMenu(newText);
+        }
+
+        private void trademarkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "®";
+            insertTextFromMenu(newText);
         }
     }
 }

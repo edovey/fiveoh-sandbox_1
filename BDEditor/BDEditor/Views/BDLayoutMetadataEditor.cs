@@ -17,7 +17,7 @@ namespace BDEditor.Views
         private BDLayoutMetadata selectedLayout = null;
         private BDLayoutMetadataColumn currentColumn = null;
         private bool isDisplaying = false;
-
+        private string currentControlName;
         
         public Entities DataContext;
 
@@ -265,6 +265,67 @@ namespace BDEditor.Views
                 }
                 this.isDisplaying = false;
             }
+        }
+
+        private void tbName_MouseDown(object sender, MouseEventArgs e)
+        {
+            currentControlName = "COLUMNLABEL";
+        }
+
+        private void insertTextFromMenu(string textToInsert)
+        {
+
+                int position = txtColumnLabel.SelectionStart;
+                txtColumnLabel.Text = txtColumnLabel.Text.Insert(txtColumnLabel.SelectionStart, textToInsert);
+                txtColumnLabel.SelectionStart = textToInsert.Length + position;
+        }
+
+        private void bToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "ß";
+            insertTextFromMenu(newText);
+        }
+
+        private void degreeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "°";
+            insertTextFromMenu(newText);
+        }
+
+        private void µToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "µ";
+            insertTextFromMenu(newText);
+        }
+
+        private void geToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "≥";
+            insertTextFromMenu(newText);
+        }
+
+        private void leToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "≤";
+            insertTextFromMenu(newText);
+        }
+
+        private void plusMinusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "±";
+            insertTextFromMenu(newText);
+        }
+
+        private void sOneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "¹";
+            insertTextFromMenu(newText);
+        }
+
+        private void trademarkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "®";
+            insertTextFromMenu(newText);
         }
     }
 }

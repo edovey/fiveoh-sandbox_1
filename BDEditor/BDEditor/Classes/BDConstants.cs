@@ -232,12 +232,16 @@ namespace BDEditor.Classes
             Prophylaxis_Communicable_HaemophiliusInfluenzae = 315,
             [Description("Prophylaxis - Influenza")]
             Prophylaxis_Communicable_Influenza = 312,
-            [Description("Prophylaxis - Influenza (Amantadine, No Renal Impairment))")]
+            [Description("Prophylaxis - Influenza (Amantadine, No Renal Impairment)")]
             Prophylaxis_Communicable_Influenza_Amantadine_NoRenal = 3121,
-            [Description("Prophylaxis - Influenza (Amantadine, Renal Impairment))")]
+            [Description("Prophylaxis - Influenza (Amantadine, Renal Impairment)")]
             Prophylaxis_Communicable_Influenza_Amantadine_Renal = 3122,
-            [Description("Prophylaxis - Influenza (Oseltamivir))")]
+            [Description("Prophylaxis - Influenza (Oseltamivir)")]
             Prophylaxis_Communicable_Influenza_Oseltamivir = 3123,
+            [Description("Prophylaxis - Influenza (Oseltamivir, Creatinine Clearance)")]
+            Prophylaxis_Communicable_Influenza_Oseltamivir_Creatinine = 3124,
+            [Description("Prophylaxis - Influenza (Oseltamivir, Weight)")]
+            Prophylaxis_Communicable_Influenza_Oseltamivir_Weight = 3125,
             [Description("Prophylaxis - Pertussis")]
             Prophylaxis_Communicable_Pertussis = 316,
             [Description("Infection Precautions")]

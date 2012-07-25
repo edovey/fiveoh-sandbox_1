@@ -327,10 +327,15 @@ namespace BDEditor.Classes
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
                         case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:
-                        case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza:
                         case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Pertussis:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
+
+                        case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Oseltamivir }));
+                            break;
+
                         default:
                             break;
                     }
@@ -709,10 +714,13 @@ break;
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDConfiguredEntry, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
-                        case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:
-                        case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:      
                         case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Pertussis:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDCombinedEntry, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDCombinedEntry, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Amantadine_NoRenal }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Amantadine_Renal }));
                             break;
                         default:
                             break;
@@ -834,6 +842,12 @@ break;
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDCategory, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Amantadine_Renal:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDConfiguredEntry, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Amantadine_Renal }));
+                            break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Oseltamivir:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDCombinedEntry, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Oseltamivir_Creatinine, BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Oseltamivir_Weight }));
                             break;
                         default:
                             break;
@@ -1885,6 +1899,13 @@ break;
                             tmpControl.ShowAsChild = false;
                             tmpControl.ShowSiblingAdd = true;
                             break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Amantadine_Renal:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Oseltamivir:
+                            nodeControl = new BDNodeControl(pContext, pNode);
+                            BDNodeControl tControl = nodeControl as BDNodeControl;
+                            tControl.ShowAsChild = true;
+                            tControl.ShowSiblingAdd = false;
+                            break;
                         default:
                             {
                                 nodeControl = new BDNodeOverviewControl(pContext, pNode);
@@ -2011,6 +2032,12 @@ break;
                     propertyList.Add(BDConfiguredEntry.PROPERTYNAME_FIELD13);
                     propertyList.Add(BDConfiguredEntry.PROPERTYNAME_FIELD14);
                     propertyList.Add(BDConfiguredEntry.PROPERTYNAME_FIELD15);
+                    break;
+                case BDConstants.BDNodeType.BDCombinedEntry:
+                    propertyList.Add(BDCombinedEntry.PROPERTYNAME_NAME);
+                    propertyList.Add(BDCombinedEntry.PROPERTYNAME_GROUPTITLE);
+                    propertyList.Add(BDCombinedEntry.VIRTUALPROPERTYNAME_ENTRYTITLE);
+                    propertyList.Add(BDCombinedEntry.VIRTUALPROPERTYNAME_ENTRYDETAIL);
                     break;
                 case BDConstants.BDNodeType.BDDosage:
                     propertyList.Add(BDDosage.PROPERTYNAME_COST);

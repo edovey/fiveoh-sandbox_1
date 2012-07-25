@@ -30,6 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panelTop = new System.Windows.Forms.Panel();
+            this.lblName = new System.Windows.Forms.Label();
+            this.lblGroup = new System.Windows.Forms.Label();
             this.pnlRadioButtons = new System.Windows.Forms.Panel();
             this.andOrRadioButton = new System.Windows.Forms.RadioButton();
             this.noneRadioButton = new System.Windows.Forms.RadioButton();
@@ -37,19 +39,6 @@
             this.orRadioButton = new System.Windows.Forms.RadioButton();
             this.thenRadioButton = new System.Windows.Forms.RadioButton();
             this.txtName = new System.Windows.Forms.TextBox();
-            this.txtTitle = new System.Windows.Forms.TextBox();
-            this.panelFields = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.lblVirtualColumnTwo = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.lblVirtualColumnOne = new System.Windows.Forms.Label();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.bdCombinedEntryFieldControl4 = new BDEditor.Views.BDCombinedEntryFieldControl();
-            this.bdCombinedEntryFieldControl3 = new BDEditor.Views.BDCombinedEntryFieldControl();
-            this.bdCombinedEntryFieldControl2 = new BDEditor.Views.BDCombinedEntryFieldControl();
-            this.bdCombinedEntryFieldControl1 = new BDEditor.Views.BDCombinedEntryFieldControl();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.bToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,26 +48,56 @@
             this.µToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sOneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trademarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtTitle = new System.Windows.Forms.TextBox();
+            this.panelFields = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.lblVirtualColumnTwo = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.lblVirtualColumnOne = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.bdCombinedEntryFieldControl4 = new BDEditor.Views.BDCombinedEntryFieldControl();
+            this.bdCombinedEntryFieldControl3 = new BDEditor.Views.BDCombinedEntryFieldControl();
+            this.bdCombinedEntryFieldControl2 = new BDEditor.Views.BDCombinedEntryFieldControl();
+            this.bdCombinedEntryFieldControl1 = new BDEditor.Views.BDCombinedEntryFieldControl();
             this.panelTop.SuspendLayout();
             this.pnlRadioButtons.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.panelFields.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelTop
             // 
-            this.panelTop.Controls.Add(this.label2);
-            this.panelTop.Controls.Add(this.label1);
+            this.panelTop.Controls.Add(this.lblName);
+            this.panelTop.Controls.Add(this.lblGroup);
             this.panelTop.Controls.Add(this.pnlRadioButtons);
             this.panelTop.Controls.Add(this.txtName);
             this.panelTop.Controls.Add(this.txtTitle);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(3, 3);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(500, 83);
+            this.panelTop.Size = new System.Drawing.Size(517, 83);
             this.panelTop.TabIndex = 1;
+            // 
+            // lblName
+            // 
+            this.lblName.AutoSize = true;
+            this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblName.Location = new System.Drawing.Point(3, 33);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(53, 13);
+            this.lblName.TabIndex = 42;
+            this.lblName.Text = "Therapy";
+            // 
+            // lblGroup
+            // 
+            this.lblGroup.AutoSize = true;
+            this.lblGroup.Location = new System.Drawing.Point(3, 6);
+            this.lblGroup.Name = "lblGroup";
+            this.lblGroup.Size = new System.Drawing.Size(36, 13);
+            this.lblGroup.TabIndex = 2;
+            this.lblGroup.Text = "Group";
             // 
             // pnlRadioButtons
             // 
@@ -91,7 +110,7 @@
             this.pnlRadioButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlRadioButtons.Location = new System.Drawing.Point(0, 60);
             this.pnlRadioButtons.Name = "pnlRadioButtons";
-            this.pnlRadioButtons.Size = new System.Drawing.Size(500, 23);
+            this.pnlRadioButtons.Size = new System.Drawing.Size(517, 23);
             this.pnlRadioButtons.TabIndex = 41;
             // 
             // andOrRadioButton
@@ -161,129 +180,11 @@
             this.txtName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtName.Location = new System.Drawing.Point(62, 30);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(399, 20);
+            this.txtName.Size = new System.Drawing.Size(416, 20);
             this.txtName.TabIndex = 1;
             this.toolTip1.SetToolTip(this.txtName, "Therapy Name");
             this.txtName.Leave += new System.EventHandler(this.txtField_Leave);
             this.txtName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbName_MouseDown);
-            // 
-            // txtTitle
-            // 
-            this.txtTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTitle.ContextMenuStrip = this.contextMenuStrip1;
-            this.txtTitle.Location = new System.Drawing.Point(62, 3);
-            this.txtTitle.Name = "txtTitle";
-            this.txtTitle.Size = new System.Drawing.Size(399, 20);
-            this.txtTitle.TabIndex = 0;
-            this.toolTip1.SetToolTip(this.txtTitle, "Group Title");
-            this.txtTitle.Leave += new System.EventHandler(this.txtField_Leave);
-            this.txtTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbTitle_MouseDown);
-            // 
-            // panelFields
-            // 
-            this.panelFields.AutoSize = true;
-            this.panelFields.Controls.Add(this.panel2);
-            this.panelFields.Controls.Add(this.panel1);
-            this.panelFields.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelFields.Location = new System.Drawing.Point(3, 86);
-            this.panelFields.MinimumSize = new System.Drawing.Size(500, 447);
-            this.panelFields.Name = "panelFields";
-            this.panelFields.Size = new System.Drawing.Size(500, 447);
-            this.panelFields.TabIndex = 2;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.bdCombinedEntryFieldControl4);
-            this.panel2.Controls.Add(this.bdCombinedEntryFieldControl3);
-            this.panel2.Controls.Add(this.lblVirtualColumnTwo);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 214);
-            this.panel2.Name = "panel2";
-            this.panel2.Padding = new System.Windows.Forms.Padding(3);
-            this.panel2.Size = new System.Drawing.Size(500, 214);
-            this.panel2.TabIndex = 1;
-            // 
-            // lblVirtualColumnTwo
-            // 
-            this.lblVirtualColumnTwo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblVirtualColumnTwo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVirtualColumnTwo.Location = new System.Drawing.Point(3, 3);
-            this.lblVirtualColumnTwo.Name = "lblVirtualColumnTwo";
-            this.lblVirtualColumnTwo.Size = new System.Drawing.Size(494, 22);
-            this.lblVirtualColumnTwo.TabIndex = 0;
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.SystemColors.Control;
-            this.panel1.Controls.Add(this.bdCombinedEntryFieldControl2);
-            this.panel1.Controls.Add(this.bdCombinedEntryFieldControl1);
-            this.panel1.Controls.Add(this.lblVirtualColumnOne);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(3);
-            this.panel1.Size = new System.Drawing.Size(500, 214);
-            this.panel1.TabIndex = 0;
-            // 
-            // lblVirtualColumnOne
-            // 
-            this.lblVirtualColumnOne.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblVirtualColumnOne.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVirtualColumnOne.Location = new System.Drawing.Point(3, 3);
-            this.lblVirtualColumnOne.Name = "lblVirtualColumnOne";
-            this.lblVirtualColumnOne.Size = new System.Drawing.Size(494, 22);
-            this.lblVirtualColumnOne.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 6);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(36, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Group";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(3, 33);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 13);
-            this.label2.TabIndex = 42;
-            this.label2.Text = "Therapy";
-            // 
-            // bdCombinedEntryFieldControl4
-            // 
-            this.bdCombinedEntryFieldControl4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.bdCombinedEntryFieldControl4.Location = new System.Drawing.Point(3, 116);
-            this.bdCombinedEntryFieldControl4.Name = "bdCombinedEntryFieldControl4";
-            this.bdCombinedEntryFieldControl4.Size = new System.Drawing.Size(494, 91);
-            this.bdCombinedEntryFieldControl4.TabIndex = 1;
-            // 
-            // bdCombinedEntryFieldControl3
-            // 
-            this.bdCombinedEntryFieldControl3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.bdCombinedEntryFieldControl3.Location = new System.Drawing.Point(3, 25);
-            this.bdCombinedEntryFieldControl3.Name = "bdCombinedEntryFieldControl3";
-            this.bdCombinedEntryFieldControl3.Size = new System.Drawing.Size(494, 91);
-            this.bdCombinedEntryFieldControl3.TabIndex = 2;
-            // 
-            // bdCombinedEntryFieldControl2
-            // 
-            this.bdCombinedEntryFieldControl2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.bdCombinedEntryFieldControl2.Location = new System.Drawing.Point(3, 116);
-            this.bdCombinedEntryFieldControl2.Name = "bdCombinedEntryFieldControl2";
-            this.bdCombinedEntryFieldControl2.Size = new System.Drawing.Size(494, 91);
-            this.bdCombinedEntryFieldControl2.TabIndex = 2;
-            // 
-            // bdCombinedEntryFieldControl1
-            // 
-            this.bdCombinedEntryFieldControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.bdCombinedEntryFieldControl1.Location = new System.Drawing.Point(3, 25);
-            this.bdCombinedEntryFieldControl1.Name = "bdCombinedEntryFieldControl1";
-            this.bdCombinedEntryFieldControl1.Size = new System.Drawing.Size(494, 91);
-            this.bdCombinedEntryFieldControl1.TabIndex = 1;
             // 
             // contextMenuStrip1
             // 
@@ -298,13 +199,13 @@
             this.trademarkToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.ShowImageMargin = false;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(128, 202);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(71, 180);
             this.contextMenuStrip1.Text = "Insert Symbol";
             // 
             // bToolStripMenuItem
             // 
             this.bToolStripMenuItem.Name = "bToolStripMenuItem";
-            this.bToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.bToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
             this.bToolStripMenuItem.Text = "ß";
             this.bToolStripMenuItem.ToolTipText = "Insert ß";
             this.bToolStripMenuItem.Click += new System.EventHandler(this.bToolStripMenuItem_Click);
@@ -312,7 +213,7 @@
             // geToolStripMenuItem
             // 
             this.geToolStripMenuItem.Name = "geToolStripMenuItem";
-            this.geToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.geToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
             this.geToolStripMenuItem.Text = "≥";
             this.geToolStripMenuItem.ToolTipText = "Insert ≥";
             this.geToolStripMenuItem.Click += new System.EventHandler(this.geToolStripMenuItem_Click);
@@ -320,7 +221,7 @@
             // leToolStripMenuItem
             // 
             this.leToolStripMenuItem.Name = "leToolStripMenuItem";
-            this.leToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.leToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
             this.leToolStripMenuItem.Text = "≤";
             this.leToolStripMenuItem.ToolTipText = "Insert ≤";
             this.leToolStripMenuItem.Click += new System.EventHandler(this.leToolStripMenuItem_Click);
@@ -328,7 +229,7 @@
             // plusMinusToolStripMenuItem
             // 
             this.plusMinusToolStripMenuItem.Name = "plusMinusToolStripMenuItem";
-            this.plusMinusToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.plusMinusToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
             this.plusMinusToolStripMenuItem.Text = "±";
             this.plusMinusToolStripMenuItem.ToolTipText = "Insert ±";
             this.plusMinusToolStripMenuItem.Click += new System.EventHandler(this.plusMinusToolStripMenuItem_Click);
@@ -336,7 +237,7 @@
             // degreeToolStripMenuItem
             // 
             this.degreeToolStripMenuItem.Name = "degreeToolStripMenuItem";
-            this.degreeToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.degreeToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
             this.degreeToolStripMenuItem.Text = "°";
             this.degreeToolStripMenuItem.ToolTipText = "Insert °";
             this.degreeToolStripMenuItem.Click += new System.EventHandler(this.degreeToolStripMenuItem_Click);
@@ -344,14 +245,14 @@
             // µToolStripMenuItem
             // 
             this.µToolStripMenuItem.Name = "µToolStripMenuItem";
-            this.µToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.µToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
             this.µToolStripMenuItem.Text = "µ";
             this.µToolStripMenuItem.Click += new System.EventHandler(this.µToolStripMenuItem_Click);
             // 
             // sOneToolStripMenuItem
             // 
             this.sOneToolStripMenuItem.Name = "sOneToolStripMenuItem";
-            this.sOneToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.sOneToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
             this.sOneToolStripMenuItem.Text = "¹";
             this.sOneToolStripMenuItem.ToolTipText = "Insert ¹";
             this.sOneToolStripMenuItem.Click += new System.EventHandler(this.sOneToolStripMenuItem_Click);
@@ -359,10 +260,109 @@
             // trademarkToolStripMenuItem
             // 
             this.trademarkToolStripMenuItem.Name = "trademarkToolStripMenuItem";
-            this.trademarkToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.trademarkToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
             this.trademarkToolStripMenuItem.Text = "®";
             this.trademarkToolStripMenuItem.ToolTipText = "Insert ®";
             this.trademarkToolStripMenuItem.Click += new System.EventHandler(this.trademarkToolStripMenuItem_Click);
+            // 
+            // txtTitle
+            // 
+            this.txtTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTitle.ContextMenuStrip = this.contextMenuStrip1;
+            this.txtTitle.Location = new System.Drawing.Point(62, 3);
+            this.txtTitle.Name = "txtTitle";
+            this.txtTitle.Size = new System.Drawing.Size(416, 20);
+            this.txtTitle.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.txtTitle, "Group Title");
+            this.txtTitle.Leave += new System.EventHandler(this.txtField_Leave);
+            this.txtTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbTitle_MouseDown);
+            // 
+            // panelFields
+            // 
+            this.panelFields.AutoSize = true;
+            this.panelFields.Controls.Add(this.panel2);
+            this.panelFields.Controls.Add(this.panel1);
+            this.panelFields.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelFields.Location = new System.Drawing.Point(3, 86);
+            this.panelFields.MinimumSize = new System.Drawing.Size(500, 447);
+            this.panelFields.Name = "panelFields";
+            this.panelFields.Size = new System.Drawing.Size(517, 447);
+            this.panelFields.TabIndex = 2;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.bdCombinedEntryFieldControl4);
+            this.panel2.Controls.Add(this.bdCombinedEntryFieldControl3);
+            this.panel2.Controls.Add(this.lblVirtualColumnTwo);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 214);
+            this.panel2.Name = "panel2";
+            this.panel2.Padding = new System.Windows.Forms.Padding(3);
+            this.panel2.Size = new System.Drawing.Size(517, 214);
+            this.panel2.TabIndex = 1;
+            // 
+            // lblVirtualColumnTwo
+            // 
+            this.lblVirtualColumnTwo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblVirtualColumnTwo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVirtualColumnTwo.Location = new System.Drawing.Point(3, 3);
+            this.lblVirtualColumnTwo.Name = "lblVirtualColumnTwo";
+            this.lblVirtualColumnTwo.Size = new System.Drawing.Size(511, 22);
+            this.lblVirtualColumnTwo.TabIndex = 0;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.panel1.Controls.Add(this.bdCombinedEntryFieldControl2);
+            this.panel1.Controls.Add(this.bdCombinedEntryFieldControl1);
+            this.panel1.Controls.Add(this.lblVirtualColumnOne);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(3);
+            this.panel1.Size = new System.Drawing.Size(517, 214);
+            this.panel1.TabIndex = 0;
+            // 
+            // lblVirtualColumnOne
+            // 
+            this.lblVirtualColumnOne.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblVirtualColumnOne.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVirtualColumnOne.Location = new System.Drawing.Point(3, 3);
+            this.lblVirtualColumnOne.Name = "lblVirtualColumnOne";
+            this.lblVirtualColumnOne.Size = new System.Drawing.Size(511, 22);
+            this.lblVirtualColumnOne.TabIndex = 0;
+            // 
+            // bdCombinedEntryFieldControl4
+            // 
+            this.bdCombinedEntryFieldControl4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.bdCombinedEntryFieldControl4.Location = new System.Drawing.Point(3, 116);
+            this.bdCombinedEntryFieldControl4.Name = "bdCombinedEntryFieldControl4";
+            this.bdCombinedEntryFieldControl4.Size = new System.Drawing.Size(511, 91);
+            this.bdCombinedEntryFieldControl4.TabIndex = 2;
+            // 
+            // bdCombinedEntryFieldControl3
+            // 
+            this.bdCombinedEntryFieldControl3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.bdCombinedEntryFieldControl3.Location = new System.Drawing.Point(3, 25);
+            this.bdCombinedEntryFieldControl3.Name = "bdCombinedEntryFieldControl3";
+            this.bdCombinedEntryFieldControl3.Size = new System.Drawing.Size(511, 91);
+            this.bdCombinedEntryFieldControl3.TabIndex = 1;
+            // 
+            // bdCombinedEntryFieldControl2
+            // 
+            this.bdCombinedEntryFieldControl2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.bdCombinedEntryFieldControl2.Location = new System.Drawing.Point(3, 116);
+            this.bdCombinedEntryFieldControl2.Name = "bdCombinedEntryFieldControl2";
+            this.bdCombinedEntryFieldControl2.Size = new System.Drawing.Size(511, 91);
+            this.bdCombinedEntryFieldControl2.TabIndex = 2;
+            // 
+            // bdCombinedEntryFieldControl1
+            // 
+            this.bdCombinedEntryFieldControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.bdCombinedEntryFieldControl1.Location = new System.Drawing.Point(3, 25);
+            this.bdCombinedEntryFieldControl1.Name = "bdCombinedEntryFieldControl1";
+            this.bdCombinedEntryFieldControl1.Size = new System.Drawing.Size(511, 91);
+            this.bdCombinedEntryFieldControl1.TabIndex = 1;
             // 
             // BDCombinedEntryControl
             // 
@@ -376,17 +376,17 @@
             this.MinimumSize = new System.Drawing.Size(500, 530);
             this.Name = "BDCombinedEntryControl";
             this.Padding = new System.Windows.Forms.Padding(3);
-            this.Size = new System.Drawing.Size(506, 536);
+            this.Size = new System.Drawing.Size(523, 536);
             this.Load += new System.EventHandler(this.BDCombinedEntryControl_Load);
             this.Leave += new System.EventHandler(this.BDCombinedEntryControl_Leave);
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
             this.pnlRadioButtons.ResumeLayout(false);
             this.pnlRadioButtons.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.panelFields.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -413,8 +413,8 @@
         private System.Windows.Forms.RadioButton andRadioButton;
         private System.Windows.Forms.RadioButton orRadioButton;
         private System.Windows.Forms.RadioButton thenRadioButton;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblGroup;
+        private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem bToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem geToolStripMenuItem;

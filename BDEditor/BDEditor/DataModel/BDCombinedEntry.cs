@@ -16,6 +16,9 @@ namespace BDEditor.DataModel
 
         public const int ENTITY_SCHEMAVERSION = 0;
 
+        public const string VIRTUALPROPERTYNAME_ENTRYDETAIL = @"Detail";
+        public const string VIRTUALPROPERTYNAME_ENTRYTITLE = @"Title";
+
         public const string PROPERTYNAME_NAME = @"Name";
         public const string PROPERTYNAME_GROUPTITLE = @"GroupTitle";
         public const string PROPERTYNAME_ENTRYTITLE01 = @"EntryTitle01";

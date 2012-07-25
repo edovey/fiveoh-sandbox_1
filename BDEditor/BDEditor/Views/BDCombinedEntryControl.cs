@@ -99,16 +99,6 @@ namespace BDEditor.Views
                 pEntry.groupTitle = txtTitle.Text;
                 pEntry.groupJoinType = (int)gatherJoinType();
 
-                //bdCombinedEntryFieldControl1.CurrentEntry = pEntry;
-                //bdCombinedEntryFieldControl2.CurrentEntry = pEntry;
-                //bdCombinedEntryFieldControl3.CurrentEntry = pEntry;
-                //bdCombinedEntryFieldControl4.CurrentEntry = pEntry;
-
-                //bdCombinedEntryFieldControl1.Save();
-                //bdCombinedEntryFieldControl2.Save();
-                //bdCombinedEntryFieldControl3.Save();
-                //bdCombinedEntryFieldControl4.Save();
-
                 result = true;
             }
             return result;
@@ -199,24 +189,35 @@ namespace BDEditor.Views
             txtTitle.Text = currentEntry.groupTitle;
             txtName.Text = currentEntry.Name;
 
-            List<BDLayoutMetadataColumn> metaDataColumnList = BDLayoutMetadataColumn.RetrieveListForLayout(dataContext, currentEntry.LayoutVariant);
-
             lblVirtualColumnOne.Text = "";
             lblVirtualColumnTwo.Text = "";
 
-            int columnNumber = 0;
-            foreach (BDLayoutMetadataColumn columnDef in metaDataColumnList)
+            switch (currentEntry.LayoutVariant)
             {
-                switch (columnNumber)
-                {
-                    case 0:
-                        lblVirtualColumnOne.Text = columnDef.label;
-                        break;
-                    case 1:
-                        lblVirtualColumnTwo.Text = columnDef.label;
-                        break;
-                }
-                columnNumber++;
+                case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Amantadine_NoRenal:
+                    lblName.Text = "Name";
+                    break;
+                case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Oseltamivir_Creatinine:
+                case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Oseltamivir_Weight:
+                    lblName.Text = "Age";
+                    break;
+                default:
+                    List<BDLayoutMetadataColumn> metaDataColumnList = BDLayoutMetadataColumn.RetrieveListForLayout(dataContext, currentEntry.LayoutVariant);
+                    int columnNumber = 0;
+                    foreach (BDLayoutMetadataColumn columnDef in metaDataColumnList)
+                    {
+                        switch (columnNumber)
+                        {
+                            case 0:
+                                lblVirtualColumnOne.Text = columnDef.label;
+                                break;
+                            case 1:
+                                lblVirtualColumnTwo.Text = columnDef.label;
+                                break;
+                        }
+                        columnNumber++;
+                    }
+                    break;
             }
 
             switch (currentEntry.GroupJoinType)
@@ -297,7 +298,6 @@ namespace BDEditor.Views
 
         private void BDCombinedEntryControl_Load(object sender, EventArgs e)
         {
-
         }
 
         private void BDCombinedEntryControl_Leave(object sender, EventArgs e)

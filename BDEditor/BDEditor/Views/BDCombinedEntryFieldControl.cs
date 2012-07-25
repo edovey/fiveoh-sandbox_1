@@ -55,7 +55,7 @@ namespace BDEditor.Views
 
         private void BDCombinedEntryFieldControl_Load(object sender, EventArgs e)
         {
-            Populate();
+            //Populate();
         }
 
         public event EventHandler<NodeEventArgs> NotesChanged;
@@ -143,6 +143,17 @@ namespace BDEditor.Views
                     btnLinkedNoteTitle.Tag = BDCombinedEntry.PROPERTYNAME_ENTRYTITLE04;
                     btnLinkedNoteDetail.Tag = BDCombinedEntry.PROPERTYNAME_ENTRY04;
                     break;
+            }
+
+            BDLayoutMetadataColumn columnInfo = BDLayoutMetadataColumn.Retrieve(DataContext, CurrentEntry.LayoutVariant, CurrentEntry.NodeType, BDCombinedEntry.VIRTUALPROPERTYNAME_ENTRYTITLE);
+            if (null != columnInfo)
+            {
+                lblTitle.Text = columnInfo.label;
+            }
+            columnInfo = BDLayoutMetadataColumn.Retrieve(DataContext, CurrentEntry.LayoutVariant, CurrentEntry.NodeType, BDCombinedEntry.VIRTUALPROPERTYNAME_ENTRYDETAIL);
+            if (null != columnInfo)
+            {
+                lblDetail.Text = columnInfo.label;
             }
 
             txtEntryTitle.Text = titleValueFromField(CurrentEntry);

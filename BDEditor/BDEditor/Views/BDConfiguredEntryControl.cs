@@ -211,6 +211,10 @@ namespace BDEditor.Views
                 }
             }
 
+            if (fieldControlList.Count <= 0)
+            {
+                panelFields.Visible = false;
+            }
             ControlHelper.ResumeDrawing(this);
         }
 

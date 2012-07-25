@@ -323,6 +323,11 @@ namespace BDEditor.Views
             insertTextFromMenu(newText);
         }
 
+        private void sTwoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "²";
+            insertTextFromMenu(newText);
+        }
         private void trademarkToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string newText = "®";

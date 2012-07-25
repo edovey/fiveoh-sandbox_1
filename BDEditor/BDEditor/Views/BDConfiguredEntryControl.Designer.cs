@@ -50,6 +50,7 @@
             this.µToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sOneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trademarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
             this.contextMenuStripEvents.SuspendLayout();
             this.panelFields.SuspendLayout();
             this.panelSideBar.SuspendLayout();
@@ -139,6 +140,7 @@
             // 
             // bdConfiguredEntryFieldControl1
             // 
+            this.bdConfiguredEntryFieldControl1.AutoSize = true;
             this.bdConfiguredEntryFieldControl1.BackColor = System.Drawing.SystemColors.Control;
             this.bdConfiguredEntryFieldControl1.DisplayOrder = 0;
             this.bdConfiguredEntryFieldControl1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -146,7 +148,7 @@
             this.bdConfiguredEntryFieldControl1.MinimumSize = new System.Drawing.Size(370, 50);
             this.bdConfiguredEntryFieldControl1.Name = "bdConfiguredEntryFieldControl1";
             this.bdConfiguredEntryFieldControl1.Padding = new System.Windows.Forms.Padding(1);
-            this.bdConfiguredEntryFieldControl1.Size = new System.Drawing.Size(370, 50);
+            this.bdConfiguredEntryFieldControl1.Size = new System.Drawing.Size(370, 51);
             this.bdConfiguredEntryFieldControl1.TabIndex = 32;
             // 
             // panelSideBar
@@ -229,18 +231,30 @@
             this.trademarkToolStripMenuItem.Text = "®";
             this.trademarkToolStripMenuItem.ToolTipText = "Insert ®";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(15, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(333, 18);
+            this.label1.TabIndex = 35;
+            this.label1.Text = "This LayoutVariant has not been configured";
+            // 
             // BDConfiguredEntryControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.Controls.Add(this.panelFields);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.panelSideBar);
             this.Name = "BDConfiguredEntryControl";
             this.Padding = new System.Windows.Forms.Padding(1);
             this.Size = new System.Drawing.Size(417, 59);
             this.contextMenuStripEvents.ResumeLayout(false);
             this.panelFields.ResumeLayout(false);
+            this.panelFields.PerformLayout();
             this.panelSideBar.ResumeLayout(false);
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -271,5 +285,6 @@
         private System.Windows.Forms.ToolStripMenuItem µToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sOneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem trademarkToolStripMenuItem;
+        private System.Windows.Forms.Label label1;
     }
 }

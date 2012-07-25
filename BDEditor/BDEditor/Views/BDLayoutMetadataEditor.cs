@@ -18,6 +18,7 @@ namespace BDEditor.Views
         private BDLayoutMetadataColumn currentColumn = null;
         private bool isDisplaying = false;
         private string currentControlName;
+        private Guid scopeId = Guid.Empty;
         
         public Entities DataContext;
 
@@ -196,7 +197,7 @@ namespace BDEditor.Views
                 view.AssignDataContext(DataContext);
                 view.AssignContextPropertyName(BDLayoutMetadataColumn.PROPERTYNAME_LABEL);
                 view.AssignParentInfo(this.currentColumn.Uuid, BDConstants.BDNodeType.BDLayoutColumn);
-                view.AssignScopeId(null);
+                view.AssignScopeId(scopeId);
                 //view.NotesChanged += new EventHandler<NodeEventArgs>(notesChanged_Action);
                 view.ShowDialog(this);
                 //view.NotesChanged -= new EventHandler<NodeEventArgs>(notesChanged_Action);

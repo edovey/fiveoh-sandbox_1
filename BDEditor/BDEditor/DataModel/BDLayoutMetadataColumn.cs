@@ -94,7 +94,23 @@ namespace BDEditor.DataModel
             get { return this.uuid; }
         }
 
+        public BDConstants.LayoutVariantType LayoutVariant
+        {
+            get
+            {
+                BDConstants.LayoutVariantType result = BDConstants.LayoutVariantType.Undefined;
 
+                if (Enum.IsDefined(typeof(BDConstants.LayoutVariantType), layoutVariant))
+                {
+                    result = (BDConstants.LayoutVariantType)layoutVariant;
+                }
+                return result;
+            }
+            set
+            {
+                layoutVariant = (int)value;
+            }
+        }
         public string Description
         {
             get { return this.label; }
@@ -102,7 +118,11 @@ namespace BDEditor.DataModel
 
         public string DescriptionForLinkedNote
         {
-            get { return this.label; }
+            get 
+            {
+                string layoutDescription = BDUtilities.GetEnumDescription(LayoutVariant);
+                return string.Format("{0} [{1}]", this.label, layoutDescription); 
+            }
         }
 
         public Amazon.SimpleDB.Model.PutAttributesRequest PutAttributes()

@@ -321,6 +321,15 @@ namespace BDEditor.DataModel
             {
                 switch (pParentNodeType)
                 {
+                    case BDConstants.BDNodeType.BDLayoutColumn:
+                        {
+                            BDLayoutMetadataColumn column = BDLayoutMetadataColumn.Retrieve(pDataContext, pParentId.Value);
+                            if (null != column)
+                            {
+                                result = string.Format("{0}", column.DescriptionForLinkedNote);
+                            }
+                        }
+                        break;
                     case BDConstants.BDNodeType.BDTherapy:
                         {
                             BDTherapy therapy = BDTherapy.RetrieveTherapyWithId(pDataContext, pParentId.Value);

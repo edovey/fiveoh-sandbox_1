@@ -32,7 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDConfiguredEntryFieldControl));
             this.lblFieldLabel = new System.Windows.Forms.Label();
             this.txtFieldData = new System.Windows.Forms.TextBox();
-            this.btnLinkedNote = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.bToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,6 +41,7 @@
             this.µToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sOneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trademarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnLinkedNote = new System.Windows.Forms.Button();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,18 +66,6 @@
             this.txtFieldData.TabIndex = 35;
             this.txtFieldData.Tag = "";
             this.txtFieldData.Leave += new System.EventHandler(this.txtFieldData_Leave);
-            // 
-            // btnLinkedNote
-            // 
-            this.btnLinkedNote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLinkedNote.Enabled = false;
-            this.btnLinkedNote.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkedNote.Image")));
-            this.btnLinkedNote.Location = new System.Drawing.Point(315, 18);
-            this.btnLinkedNote.Name = "btnLinkedNote";
-            this.btnLinkedNote.Size = new System.Drawing.Size(28, 28);
-            this.btnLinkedNote.TabIndex = 36;
-            this.btnLinkedNote.UseVisualStyleBackColor = true;
-            this.btnLinkedNote.Click += new System.EventHandler(this.btnLinkedNote_Click);
             // 
             // contextMenuStrip1
             // 
@@ -157,6 +145,17 @@
             this.trademarkToolStripMenuItem.Text = "®";
             this.trademarkToolStripMenuItem.ToolTipText = "Insert ®";
             this.trademarkToolStripMenuItem.Click += new System.EventHandler(this.trademarkToolStripMenuItem_Click);
+            // 
+            // btnLinkedNote
+            // 
+            this.btnLinkedNote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLinkedNote.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkedNote.Image")));
+            this.btnLinkedNote.Location = new System.Drawing.Point(315, 18);
+            this.btnLinkedNote.Name = "btnLinkedNote";
+            this.btnLinkedNote.Size = new System.Drawing.Size(28, 28);
+            this.btnLinkedNote.TabIndex = 36;
+            this.btnLinkedNote.UseVisualStyleBackColor = true;
+            this.btnLinkedNote.Click += new System.EventHandler(this.btnLinkedNote_Click);
             // 
             // BDConfiguredEntryFieldControl
             // 

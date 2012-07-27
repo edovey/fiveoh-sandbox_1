@@ -1918,7 +1918,7 @@ break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Oseltamivir:
                             nodeControl = new BDNodeControl(pContext, pNode);
                             BDNodeControl tControl = nodeControl as BDNodeControl;
-                            tControl.ShowAsChild = true;
+                            tControl.ShowAsChild = false;
                             tControl.ShowSiblingAdd = false;
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:

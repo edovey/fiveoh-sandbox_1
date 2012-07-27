@@ -666,7 +666,8 @@ namespace BDEditor.Views
                 entry.Click -= new System.EventHandler(this.addChildNode_Click);
             }
             addChildNodeToolStripMenuItemList.Clear();
-            addSiblingNodeToolStripMenuItem.Click -= new EventHandler(addChildNode_Click);
+            //TODO: Bug fix?? was addChildNode_Click but corrected to addSiblingNode_Click
+            //addSiblingNodeToolStripMenuItem.Click -= new EventHandler(addSiblingNode_Click);
 
             foreach (ToolStripMenuItem entry in addSiblingNodeToolStripMenuItemList)
             {

@@ -172,7 +172,8 @@ namespace BDEditor.Views
 
         public bool CreateCurrentObject()
         {
-            throw new NotImplementedException();
+            // do nothing
+            return true;
         }
 
         public void RefreshLayout()
@@ -378,5 +379,78 @@ namespace BDEditor.Views
             string newText = "®";
             insertTextFromMenu(newText);
         }
+
+        #region Context Menu handlers
+
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+            BDFormsUtilties.buildNavContextMenuStrip(CurrentNode, addChildNodeToolStripMenuItem, addSiblingNodeToolStripMenuItem, deleteNodeToolStripMenuItem, reorderPreviousToolStripMenuItem, reorderNextToolStripMenuItem, new EventHandler<NodeEventArgs>(RequestItemDelete), new EventHandler(addChildNode_Click), true);
+
+            this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
+        }
+
+        void addChildNode_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        void addSiblingNode_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
+            if (null != menuItem)
+            {
+                BDNodeWrapper nodeWrapper = menuItem.Tag as BDNodeWrapper;
+                if (null != nodeWrapper)
+                {
+                    OnItemAddRequested(new NodeEventArgs(dataContext, nodeWrapper.TargetNodeType, nodeWrapper.TargetLayoutVariant));
+                }
+            }
+        }
+
+        private void btnReorderToPrevious_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
+            if (null != menuItem)
+            {
+                BDNodeWrapper nodeWrapper = menuItem.Tag as BDNodeWrapper;
+                if (null != nodeWrapper)
+                {
+                    OnReorderToPrevious(new NodeEventArgs(dataContext, nodeWrapper.Node.Uuid));
+                }
+            }
+        }
+
+        private void btnReorderToNext_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
+            if (null != menuItem)
+            {
+                BDNodeWrapper nodeWrapper = menuItem.Tag as BDNodeWrapper;
+                if (null != nodeWrapper)
+                {
+                    OnReorderToNext(new NodeEventArgs(dataContext, nodeWrapper.Node.Uuid));
+                }
+            }
+        }
+
+        private void btnDeleteNode_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
+            if (null != menuItem)
+            {
+                BDNodeWrapper nodeWrapper = menuItem.Tag as BDNodeWrapper;
+                if (null != nodeWrapper)
+                {
+                    string message = string.Format("Delete {0}?", BDUtilities.GetEnumDescription(nodeWrapper.TargetNodeType));
+                    if (MessageBox.Show(message, "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                    {
+                        OnItemDeleteRequested(new NodeEventArgs(dataContext, nodeWrapper.Node.Uuid));
+                    }
+                }
+            }
+        }
+
+        #endregion
+
     }
 }

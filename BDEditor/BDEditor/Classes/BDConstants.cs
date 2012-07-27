@@ -117,6 +117,10 @@ namespace BDEditor.Classes
             TreatmentRecommendation00 = 100, // Chapter
             [Description("Treatment Recommendation")]
             TreatmentRecommendation01 = 101, // default layout chapter 2, selected infections
+            [Description("Treatment Recommendation Gastroenteritis")]
+            TreatmentRecommendation01_Gastroenteritis = 10141,
+            [Description("Treatment Recommendation Gastroenteritis Culture Directed")]
+            TreatmentRecommendation01_Gastroenteritis_CultureDirected = 101412,
 
             [Description("Wound Management")]
             TreatmentRecommendation02_WoundMgmt = 102, // table 1 - wound management

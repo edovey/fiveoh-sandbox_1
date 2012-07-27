@@ -171,6 +171,8 @@ namespace BDEditor.Views
         {
             ControlHelper.SuspendDrawing(this);
             isUpdating = true;
+            
+            if(null != CurrentNode) toolTip1.SetToolTip(lblInfo, BDUtilities.GetEnumDescription(CurrentNode.LayoutVariant));
 
             for (int idx = 0; idx < childNodeControlList.Count; idx++)
             {

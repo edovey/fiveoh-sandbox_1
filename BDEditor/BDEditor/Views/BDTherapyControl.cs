@@ -660,6 +660,8 @@ namespace BDEditor.Views
             switch (DefaultLayoutVariantType)
             {
                 case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:

@@ -41,6 +41,8 @@ namespace BDEditor.Classes.Navigation
                         case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
                             foreach (IBDNode childNode in childList)
                             {
                                 string name = childNode.Name;

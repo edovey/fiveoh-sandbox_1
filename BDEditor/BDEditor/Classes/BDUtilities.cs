@@ -252,6 +252,27 @@ namespace BDEditor.Classes
         }
 
         /// <summary>
+        /// Move all children from one parent node to another - parent nodes should be siblings
+        /// Does not change the node type
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pCurrentParentId"></param>
+        /// <param name="pNewParentId"></param>
+        public static void MoveAllChildrenExcept(Entities pContext, Guid pCurrentParentId, Guid pNewParentId, List<Guid>pExceptionList)
+        {
+            // check that parents are siblings
+            BDNode currentParent = BDNode.RetrieveNodeWithId(pContext, pCurrentParentId);
+            BDNode newParent = BDNode.RetrieveNodeWithId(pContext, pNewParentId);
+
+            List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, currentParent);
+            foreach (BDNode n in children)
+            {
+                if(!pExceptionList.Contains(n.Uuid))
+                    MoveNode(pContext, n.Uuid, pNewParentId);
+            }
+        }
+
+        /// <summary>
         /// Reset the node type for BDTableCell which was set incorrectly by LoadFromAttributes
         /// </summary>
         /// <param name="pNodeType"></param>
@@ -283,18 +304,19 @@ namespace BDEditor.Classes
         /// <param name="pNewLayoutVariant"></param>
         public static void ResetLayoutVariantWithChildren(Entities pContext, IBDNode pStartNode, BDConstants.LayoutVariantType pNewLayoutVariant, bool pResetParent)
         {
+            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pStartNode);
+
+            if (childNodes.Count > 0)
+            foreach (IBDNode child in childNodes)
+            {
+                ResetLayoutVariantWithChildren(pContext, child, pNewLayoutVariant, true);
+            }
+
             if (pResetParent)
             {
                 pStartNode.LayoutVariant = pNewLayoutVariant;
                 BDFabrik.SaveNode(pContext, pStartNode);
             }
-
-            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pStartNode);
-            if (childNodes.Count > 0)
-                foreach (IBDNode child in childNodes)
-                {
-                    ResetLayoutVariantWithChildren(pContext, child, pNewLayoutVariant, true);
-                }
         }
     }
 }

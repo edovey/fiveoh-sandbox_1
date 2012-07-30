@@ -267,7 +267,7 @@ namespace BDEditor.Classes
             List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, currentParent);
             foreach (BDNode n in children)
             {
-                if(!pExceptionList.Contains(n.Uuid))
+                if(!pExceptionList.Contains(n.Uuid)) 
                     MoveNode(pContext, n.Uuid, pNewParentId);
             }
         }

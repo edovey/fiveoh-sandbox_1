@@ -294,6 +294,18 @@
     <Compile Include="Views\BDDosageAndCostControl.Designer.cs">
       <DependentUpon>BDDosageAndCostControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\BDInternalLinkChooserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDInternalLinkChooserControl.Designer.cs">
+      <DependentUpon>BDInternalLinkChooserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BDInternalLinkChooserDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\BDInternalLinkChooserDialog.Designer.cs">
+      <DependentUpon>BDInternalLinkChooserDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\BDLayoutColumnNodeTypeEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -448,6 +460,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDDosageAndCostControl.resx">
       <DependentUpon>BDDosageAndCostControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDInternalLinkChooserControl.resx">
+      <DependentUpon>BDInternalLinkChooserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDInternalLinkChooserDialog.resx">
+      <DependentUpon>BDInternalLinkChooserDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDLayoutColumnNodeTypeEditor.resx">
       <DependentUpon>BDLayoutColumnNodeTypeEditor.cs</DependentUpon>

@@ -227,6 +227,8 @@
           <Property Name="parentKeyName" Type="nvarchar" MaxLength="100" />
           <Property Name="parentKeyPropertyName" Type="nvarchar" MaxLength="100" />
           <Property Name="parentType" Type="int" />
+          <Property Name="internalLinkNodeId" Type="uniqueidentifier" />
+          <Property Name="internalLinkNodeType" Type="int" />
         </EntityType>
         <EntityType Name="BDLinkedNotes">
           <Key>
@@ -474,7 +476,6 @@
           <EntitySet Name="BDDosages" EntityType="BDDataModel.BDDosage" />
           <EntitySet Name="BDHtmlPages" EntityType="BDDataModel.BDHtmlPage" />
           <EntitySet Name="BDLayoutMetadatas" EntityType="BDDataModel.BDLayoutMetadata" />
-          <EntitySet Name="BDLinkedNoteAssociations" EntityType="BDDataModel.BDLinkedNoteAssociation" />
           <EntitySet Name="BDLinkedNotes" EntityType="BDDataModel.BDLinkedNote" />
           <EntitySet Name="BDMetadatas" EntityType="BDDataModel.BDMetadata" />
           <EntitySet Name="BDNodeAssociations" EntityType="BDDataModel.BDNodeAssociation" />
@@ -493,6 +494,7 @@
           <EntitySet Name="BDLayoutMetadataColumnNodeTypes" EntityType="BDDataModel.BDLayoutMetadataColumnNodeType" />
           <EntitySet Name="BDConfiguredEntries" EntityType="BDDataModel.BDConfiguredEntry" />
           <EntitySet Name="BDCombinedEntries" EntityType="BDDataModel.BDCombinedEntry" />
+          <EntitySet Name="BDLinkedNoteAssociations" EntityType="BDDataModel.BDLinkedNoteAssociation" />
         </EntityContainer>
         <EntityType Name="BDAntimicrobialRisk">
           <Key>
@@ -570,25 +572,6 @@
           <Property Type="Boolean" Name="included" Nullable="false" />
           <Property Type="String" Name="descrip" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="displayOrder" Nullable="false" />
-        </EntityType>
-        <EntityType Name="BDLinkedNoteAssociation">
-          <Key>
-            <PropertyRef Name="uuid" />
-          </Key>
-          <Property Type="Guid" Name="linkedNoteId" />
-          <Property Type="Guid" Name="parentId" />
-          <Property Type="Guid" Name="uuid" Nullable="false" />
-          <Property Type="Int32" Name="schemaVersion" />
-          <Property Type="Guid" Name="createdBy" />
-          <Property Type="DateTime" Name="createdDate" />
-          <Property Type="Guid" Name="modifiedBy" />
-          <Property Type="DateTime" Name="modifiedDate" />
-          <Property Type="Int32" Name="displayOrder" />
-          <Property Type="Int32" Name="linkedNoteType" />
-          <Property Type="Boolean" Name="deprecated" Nullable="false" />
-          <Property Type="String" Name="parentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="parentKeyPropertyName" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="parentType" />
         </EntityType>
         <EntityType Name="BDLinkedNote">
           <Key>
@@ -927,6 +910,27 @@
           <Property Type="String" Name="entryDetail04" MaxLength="750" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="entryJoinType04" />
         </EntityType>
+        <EntityType Name="BDLinkedNoteAssociation">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Type="Guid" Name="linkedNoteId" />
+          <Property Type="Guid" Name="parentId" />
+          <Property Type="Guid" Name="uuid" Nullable="false" />
+          <Property Type="Int32" Name="schemaVersion" />
+          <Property Type="Guid" Name="createdBy" />
+          <Property Type="DateTime" Name="createdDate" />
+          <Property Type="Guid" Name="modifiedBy" />
+          <Property Type="DateTime" Name="modifiedDate" />
+          <Property Type="Int32" Name="displayOrder" />
+          <Property Type="Int32" Name="linkedNoteType" />
+          <Property Type="Boolean" Name="deprecated" Nullable="false" />
+          <Property Type="String" Name="parentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="parentKeyPropertyName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="parentType" />
+          <Property Type="Guid" Name="internalLinkNodeId" />
+          <Property Type="Int32" Name="internalLinkNodeType" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1012,26 +1016,6 @@
                 <ScalarProperty Name="descrip" ColumnName="descrip" />
                 <ScalarProperty Name="included" ColumnName="included" />
                 <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BDLinkedNoteAssociations">
-            <EntityTypeMapping TypeName="BDDataModel.BDLinkedNoteAssociation">
-              <MappingFragment StoreEntitySet="BDLinkedNoteAssociations">
-                <ScalarProperty Name="parentType" ColumnName="parentType" />
-                <ScalarProperty Name="parentKeyPropertyName" ColumnName="parentKeyPropertyName" />
-                <ScalarProperty Name="parentKeyName" ColumnName="parentKeyName" />
-                <ScalarProperty Name="deprecated" ColumnName="deprecated" />
-                <ScalarProperty Name="linkedNoteType" ColumnName="linkedNoteType" />
-                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
-                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
-                <ScalarProperty Name="modifiedBy" ColumnName="modifiedBy" />
-                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
-                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
-                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
-                <ScalarProperty Name="uuid" ColumnName="uuid" />
-                <ScalarProperty Name="parentId" ColumnName="parentId" />
-                <ScalarProperty Name="linkedNoteId" ColumnName="linkedNoteId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1390,6 +1374,28 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BDLinkedNoteAssociations">
+            <EntityTypeMapping TypeName="BDDataModel.BDLinkedNoteAssociation">
+              <MappingFragment StoreEntitySet="BDLinkedNoteAssociations">
+                <ScalarProperty Name="internalLinkNodeType" ColumnName="internalLinkNodeType" />
+                <ScalarProperty Name="internalLinkNodeId" ColumnName="internalLinkNodeId" />
+                <ScalarProperty Name="parentType" ColumnName="parentType" />
+                <ScalarProperty Name="parentKeyPropertyName" ColumnName="parentKeyPropertyName" />
+                <ScalarProperty Name="parentKeyName" ColumnName="parentKeyName" />
+                <ScalarProperty Name="deprecated" ColumnName="deprecated" />
+                <ScalarProperty Name="linkedNoteType" ColumnName="linkedNoteType" />
+                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
+                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
+                <ScalarProperty Name="modifiedBy" ColumnName="modifiedBy" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
+                <ScalarProperty Name="linkedNoteId" ColumnName="linkedNoteId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -1415,7 +1421,6 @@
         <EntityTypeShape EntityType="BDDataModel.BDDosage" Width="1.5" PointX="2.75" PointY="4.75" Height="3.4001269531249818" />
         <EntityTypeShape EntityType="BDDataModel.BDHtmlPage" Width="1.5" PointX="4.75" PointY="4.75" Height="2.249695638020853" />
         <EntityTypeShape EntityType="BDDataModel.BDLayoutMetadata" Width="3" PointX="14.75" PointY="3.875" Height="1.5923063151041674" />
-        <EntityTypeShape EntityType="BDDataModel.BDLinkedNoteAssociation" Width="1.5" PointX="8.75" PointY="0.75" Height="3.235779622395853" />
         <EntityTypeShape EntityType="BDDataModel.BDLinkedNote" Width="1.5" PointX="8.75" PointY="4.75" Height="3.235779622395853" />
         <EntityTypeShape EntityType="BDDataModel.BDMetadata" Width="1.5" PointX="8.75" PointY="8.75" Height="3.0714322916666674" />
         <EntityTypeShape EntityType="BDDataModel.BDNodeAssociation" Width="1.5" PointX="0.75" PointY="9.75" Height="2.249695638020853" />
@@ -1434,6 +1439,7 @@
         <EntityTypeShape EntityType="BDDataModel.BDLayoutMetadataColumnNodeType" Width="1.5" PointX="14.75" PointY="7.875" Height="1.9210009765625102" />
         <EntityTypeShape EntityType="BDDataModel.BDConfiguredEntry" Width="1.875" PointX="9.375" PointY="13.75" Height="5.2079475911458246" />
         <EntityTypeShape EntityType="BDDataModel.BDCombinedEntry" Width="2.625" PointX="0.625" PointY="13.875" Height="5.0436002604166674" />
+        <EntityTypeShape EntityType="BDDataModel.BDLinkedNoteAssociation" Width="2.625" PointX="12.375" PointY="14.75" Height="3.5644742838541674" />
       </Diagram>
     </Diagrams>
   </Designer>

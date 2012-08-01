@@ -53,6 +53,9 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.movePreviousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveNextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panelInternalLink = new System.Windows.Forms.Panel();
+            this.btnInternalLink = new System.Windows.Forms.Button();
+            this.lblInternalLinkDescription = new System.Windows.Forms.Label();
             this.bdLinkedNoteControl1 = new BDEditor.Views.BDLinkedNoteControl();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -60,6 +63,7 @@
             this.tabPageNotes.SuspendLayout();
             this.headerPanel.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
+            this.panelInternalLink.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -257,7 +261,7 @@
             this.movePreviousToolStripMenuItem,
             this.moveNextToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(174, 148);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(174, 126);
             // 
             // deleteToolStripMenuItem
             // 
@@ -312,6 +316,37 @@
             this.moveNextToolStripMenuItem.Visible = false;
             this.moveNextToolStripMenuItem.Click += new System.EventHandler(this.moveNextToolStripMenuItem_Click);
             // 
+            // panelInternalLink
+            // 
+            this.panelInternalLink.Controls.Add(this.lblInternalLinkDescription);
+            this.panelInternalLink.Controls.Add(this.btnInternalLink);
+            this.panelInternalLink.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelInternalLink.Location = new System.Drawing.Point(0, 274);
+            this.panelInternalLink.Name = "panelInternalLink";
+            this.panelInternalLink.Padding = new System.Windows.Forms.Padding(4);
+            this.panelInternalLink.Size = new System.Drawing.Size(810, 35);
+            this.panelInternalLink.TabIndex = 4;
+            // 
+            // btnInternalLink
+            // 
+            this.btnInternalLink.Location = new System.Drawing.Point(4, 6);
+            this.btnInternalLink.Name = "btnInternalLink";
+            this.btnInternalLink.Size = new System.Drawing.Size(62, 23);
+            this.btnInternalLink.TabIndex = 0;
+            this.btnInternalLink.Text = "Link";
+            this.btnInternalLink.UseVisualStyleBackColor = true;
+            this.btnInternalLink.Click += new System.EventHandler(this.btnInternalLink_Click);
+            // 
+            // lblInternalLinkDescription
+            // 
+            this.lblInternalLinkDescription.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblInternalLinkDescription.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblInternalLinkDescription.Location = new System.Drawing.Point(68, 4);
+            this.lblInternalLinkDescription.Name = "lblInternalLinkDescription";
+            this.lblInternalLinkDescription.Size = new System.Drawing.Size(738, 27);
+            this.lblInternalLinkDescription.TabIndex = 1;
+            this.lblInternalLinkDescription.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // bdLinkedNoteControl1
             // 
             this.bdLinkedNoteControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -325,7 +360,7 @@
             this.bdLinkedNoteControl1.Padding = new System.Windows.Forms.Padding(3);
             this.bdLinkedNoteControl1.SaveOnLeave = false;
             this.bdLinkedNoteControl1.ShowAsChild = false;
-            this.bdLinkedNoteControl1.Size = new System.Drawing.Size(810, 256);
+            this.bdLinkedNoteControl1.Size = new System.Drawing.Size(810, 221);
             this.bdLinkedNoteControl1.TabIndex = 1;
             // 
             // BDLinkedNoteView
@@ -334,6 +369,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(810, 484);
             this.Controls.Add(this.bdLinkedNoteControl1);
+            this.Controls.Add(this.panelInternalLink);
             this.Controls.Add(this.headerPanel);
             this.Controls.Add(this.panel1);
             this.DoubleBuffered = true;
@@ -348,6 +384,7 @@
             this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();
             this.contextMenuStripEvents.ResumeLayout(false);
+            this.panelInternalLink.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -379,6 +416,9 @@
         private System.Windows.Forms.Label lblNoteCounter;
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Button btnPrevious;
+        private System.Windows.Forms.Panel panelInternalLink;
+        private System.Windows.Forms.Label lblInternalLinkDescription;
+        private System.Windows.Forms.Button btnInternalLink;
 
     }
 }

@@ -348,6 +348,8 @@ namespace BDEditor.Classes
             Footnote = 4,
             [Description("Reference")]
             Reference = 5,
+            [Description("Internal Link")]
+            InternalLink = 6
         }
 
         public enum TableCellAlignment

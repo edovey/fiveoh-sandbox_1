@@ -530,6 +530,26 @@ namespace BDEditor.DataModel
                 return result;
             }
         }
+
+        public BDConstants.BDNodeType InternalLinkNodeType
+        {
+            get
+            {
+                BDConstants.BDNodeType result = BDConstants.BDNodeType.None;
+                if (null != internalLinkNodeType)
+                {
+                    if (Enum.IsDefined(typeof(BDConstants.BDNodeType), internalLinkNodeType))
+                    {
+                        result = (BDConstants.BDNodeType)internalLinkNodeType;
+                    }
+                }
+                return result;
+            }
+            set
+            {
+                internalLinkNodeType = (int)value;
+            }
+        }
     }
 
 }

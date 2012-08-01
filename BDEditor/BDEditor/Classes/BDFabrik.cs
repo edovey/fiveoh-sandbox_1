@@ -887,6 +887,8 @@ break;
         {
             List<IBDNode> entryList = new List<IBDNode>();
 
+            if (null == pDataContext) return entryList;
+
             switch (pNodeType)
             {
                 case BDConstants.BDNodeType.None:

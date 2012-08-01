@@ -398,14 +398,27 @@ namespace BDEditor.Views
             pTextControl.Append(cleanText, TXTextControl.StringStreamType.HTMLFormat, TXTextControl.AppendSettings.None);
         }
 
+        /// <summary>
+        /// For bold, italics and underline:  replace generated span tags with simple html tags
+        /// </summary>
+        /// <param name="pStringToClean"></param>
+        /// <returns></returns>
         private string resetSelectedTags(string pStringToClean)
         {
-
-            //*** NEED TO ADD All combinations here.
             string spanEnd = "</span>";
             string spanUnderlineTag = "<span style=\"text-decoration:underline ;\">";
             string spanBoldTag = "<span style=\"font-weight:bold;\">";
             string spanItalicsTag = "<span style=\"font-style:italic;\">";
+            
+            //  Not all combinations of the tags are coded specifically:  no matter what order the buttons are pressed,
+            // the tags are always generated to the same span tag sequence.  For example pressing Underline then Bold
+            // generates the same span tag as pressing Bold then Underline.
+
+            string spanUnderlineBoldTag = "<span style=\"font-weight:bold;text-decoration:underline ;\">";
+            string spanUnderlineItalicsTag = "<span style=\"font-style:italic;text-decoration:underline ;\">";
+            string spanBoldItalicsTag = "<span style=\"font-weight:bold;font-style:italic;\">";
+            string spanUnderlineBoldItalicsTag = "<span style=\"font-weight:bold;font-style:italic;text-decoration:underline ;\">";
+
             while (pStringToClean.Contains(spanUnderlineTag))
             {
                 int uStartIndex = pStringToClean.IndexOf(spanUnderlineTag);
@@ -436,6 +449,46 @@ namespace BDEditor.Views
                 pStringToClean = pStringToClean.Insert(iEndIndex, @"</i>");
             }
 
+            while (pStringToClean.Contains(spanUnderlineBoldTag))
+            {
+                int tStartIndex = pStringToClean.IndexOf(spanUnderlineBoldTag);
+                pStringToClean = pStringToClean.Remove(tStartIndex, spanUnderlineBoldTag.Length);
+                pStringToClean = pStringToClean.Insert(tStartIndex, @"<u><b>");
+                int tEndIndex = pStringToClean.IndexOf(spanEnd, tStartIndex);
+                pStringToClean = pStringToClean.Remove(tEndIndex, spanEnd.Length);
+                pStringToClean = pStringToClean.Insert(tEndIndex, @"</b></u>");
+            }
+
+            while (pStringToClean.Contains(spanUnderlineItalicsTag))
+            {
+                int tStartIndex = pStringToClean.IndexOf(spanUnderlineItalicsTag);
+                pStringToClean = pStringToClean.Remove(tStartIndex, spanUnderlineItalicsTag.Length);
+                pStringToClean = pStringToClean.Insert(tStartIndex, @"<u><i>");
+                int tEndIndex = pStringToClean.IndexOf(spanEnd, tStartIndex);
+                pStringToClean = pStringToClean.Remove(tEndIndex, spanEnd.Length);
+                pStringToClean = pStringToClean.Insert(tEndIndex, @"</i></u>");
+            }
+
+            while (pStringToClean.Contains(spanBoldItalicsTag))
+            {
+                int tStartIndex = pStringToClean.IndexOf(spanBoldItalicsTag);
+                pStringToClean = pStringToClean.Remove(tStartIndex, spanBoldItalicsTag.Length);
+                pStringToClean = pStringToClean.Insert(tStartIndex, @"<b><i>");
+                int tEndIndex = pStringToClean.IndexOf(spanEnd, tStartIndex);
+                pStringToClean = pStringToClean.Remove(tEndIndex, spanEnd.Length);
+                pStringToClean = pStringToClean.Insert(tEndIndex, @"</i></b>");
+            }
+
+            while (pStringToClean.Contains(spanUnderlineBoldItalicsTag))
+            {
+                int tStartIndex = pStringToClean.IndexOf(spanUnderlineBoldItalicsTag);
+                pStringToClean = pStringToClean.Remove(tStartIndex, spanUnderlineBoldItalicsTag.Length);
+                pStringToClean = pStringToClean.Insert(tStartIndex, @"<u><b><i>");
+                int tEndIndex = pStringToClean.IndexOf(spanEnd, tStartIndex);
+                pStringToClean = pStringToClean.Remove(tEndIndex, spanEnd.Length);
+                pStringToClean = pStringToClean.Insert(tEndIndex, @"</i></b></u>");
+            }
+
             return pStringToClean;
         }
 
@@ -460,7 +513,7 @@ namespace BDEditor.Views
             stringToClean = stringToClean.Replace("</table>", "");
 
             // replace span tags for bold and underline and italics
-            resetSelectedTags(stringToClean);
+            stringToClean = resetSelectedTags(stringToClean);
 
             // remove remaining span tags
             stringToClean = CleanTagFromText(stringToClean, "<span", ">", true);

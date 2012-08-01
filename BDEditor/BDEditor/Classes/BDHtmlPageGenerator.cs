@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,9 +25,7 @@ namespace BDEditor.Classes
 
         public void Generate()
         {
-            // Clear the data from the remote store.
             Entities dataContext = new Entities();
-            RepositoryHandler.Aws.DeleteRemotePages(dataContext);
 
             // Clear the data from the local store.
             BDHtmlPage.DeleteAll();
@@ -40,6 +39,251 @@ namespace BDEditor.Classes
                 processTextForInternalLinks (dataContext, page, htmlPageIds);
         }
 
+        private void generateOverviewAndChildrenForNode( Entities pContext, IBDNode pNode)
+        {
+            List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
+            foreach (IBDNode child in children)
+            {
+                List<BDLinkedNote> chIldOverviewNotes = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, pNode.Uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW, BDConstants.LinkedNoteType.Inline);
+                if (chIldOverviewNotes.Count > 0)
+                    generatePageForOverview(pContext, pNode.Uuid, pNode.NodeType, chIldOverviewNotes[0]);
+
+                generatePageForNode(pContext, pNode);
+                // where to stop in recursion??
+                generateOverviewAndChildrenForNode(pContext, child);
+            }
+        }
+
+        /// <summary>
+        /// Check the node type and the layout variant to determine which page needs to be built.
+        /// Closely resembles switch in EditView > showNavSelection.
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pNode"></param>
+        private void generatePageForNode(Entities pContext, IBDNode pNode)
+        {
+            switch (pNode.NodeType)
+            {
+                case BDConstants.BDNodeType.BDSection:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis:
+                            break;
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Perinatal_HIVProtocol:
+                            break;
+                        case BDConstants.LayoutVariantType.Microbiology_Antibiogram:
+                            break;
+                        default:
+                            // no htmlpage created for section.
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDAntimicrobial:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
+                            // build html page
+                            break;
+                        case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
+                           // build html page
+                            break;
+                        default:
+                            // no independent page
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDAntimicrobialGroup:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
+                            // check if we need a page here.
+                            break;
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
+                            break;
+                        default:
+                            // no independent page
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDCategory:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
+                            break;
+                        case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
+                            break;
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
+                            break;
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
+                            break;
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
+                            break;
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
+                            break;
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
+                            break;
+                        case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
+                            break;
+                        default:
+                            // no independent page
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDDisease:
+                    {
+                        switch (pNode.LayoutVariant)
+                        {
+                            case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
+                                // create page
+                                break;
+                            default:
+                                // no independent page
+                                break;
+                        }
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDMicroorganismGroup:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDPathogen:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases:
+                            break;
+                        default:
+                            // no independent page
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDPresentation:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation14_CellulitisExtremities:
+                            // need to check the rest of the layout variants
+                            GeneratePresentationPagesForTreatmentRecommendation01(pContext, pNode as BDNode);
+                            break;
+                        default:
+                           // no independent page
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDSubcategory:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
+                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
+                        case BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation:
+                        case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
+                            // generate page
+                        break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDSurgery:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
+                            // generate page
+                            break;
+                        default:
+                            // no independent page
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDSurgeryClassification:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
+                            // generate page
+                            break;
+                        default:
+                            // no independent page
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDSurgeryGroup:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
+                            // generate page
+                            break;
+                        default:
+                            // no independent page
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDTable:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Prophylaxis_PreOp:
+                            // generate a page
+                            break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure:
+                            break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine:
+                            break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk:
+                            break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
+                            break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:
+                            break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza:
+                            break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Pertussis:
+                            break;
+                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
+                            break;
+                        default:
+                            // no independent page
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDTopic:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
+                        case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
+                        case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Immunization_VaccineDetail:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis:
+                            // create page
+                            break;
+                        default:
+                        // no independent page
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDMicroorganism:
+                case BDConstants.BDNodeType.BDPathogenGroup:
+                 case BDConstants.BDNodeType.BDResponse:
+                case BDConstants.BDNodeType.BDSubsection:
+                case BDConstants.BDNodeType.BDTherapyGroup:
+               default:
+                    // no independent page - contained in parent's page.
+                    break;
+            }
+
+        }
+        
+        
         private void generatePages()
         {
             Entities dataContext = new Entities();
@@ -47,54 +291,7 @@ namespace BDEditor.Classes
 
             foreach (BDNode chapter in chapters)
             {
-                switch (chapter.LayoutVariant)
-                {
-                    case BDConstants.LayoutVariantType.TreatmentRecommendation00:
-                        {
-                            List<IBDNode> sections = BDFabrik.GetChildrenForParent(dataContext, chapter);
-                            foreach (IBDNode section in sections)
-                            {
-                                switch (section.LayoutVariant)
-                                {
-                                    case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                                        {
-                                            List<BDLinkedNote> sectionOverviewNotes = retrieveNotesForParentAndPropertyForLinkedNoteType(dataContext, section.Uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW, BDConstants.LinkedNoteType.Inline);
-                                            if(sectionOverviewNotes.Count > 0)
-                                                generatePageForOverview(dataContext, section.Uuid, BDConstants.BDNodeType.BDSection, sectionOverviewNotes[0]);
-                                            List<IBDNode> categories = BDFabrik.GetChildrenForParent(dataContext, section);
-                                            foreach (IBDNode category in categories)
-                                            {
-                                                List<BDLinkedNote> categoryOverviewNotes = retrieveNotesForParentAndPropertyForLinkedNoteType(dataContext, category.Uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW, BDConstants.LinkedNoteType.Inline);
-                                                if(categoryOverviewNotes.Count > 0)
-                                                    generatePageForOverview(dataContext, category.Uuid, BDConstants.BDNodeType.BDCategory, categoryOverviewNotes[0]);
-                                                List<IBDNode> diseases = BDFabrik.GetChildrenForParent(dataContext, category);
-                                                foreach (IBDNode disease in diseases)
-                                                {
-                                                    List<BDLinkedNote> diseaseOverviewNotes = retrieveNotesForParentAndPropertyForLinkedNoteType(dataContext, disease.Uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW, BDConstants.LinkedNoteType.Inline);
-                                                    if (diseaseOverviewNotes.Count > 0)
-                                                        generatePageForOverview(dataContext, disease.Uuid, BDConstants.BDNodeType.BDDisease, diseaseOverviewNotes[0]);
-                                                    List<IBDNode> presentations = BDFabrik.GetChildrenForParent(dataContext, disease);
-                                                    foreach (IBDNode presentation in presentations)
-                                                    {
-                                                        BDNode node = presentation as BDNode;
-                                                        if (null != node && node.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation01 && node.NodeType == BDConstants.BDNodeType.BDPresentation)
-                                                        {
-                                                            GeneratePresentationPagesForTreatmentRecommendation01(dataContext, node);
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                        }
-                        break;
-                    default:
-                        break;
-                }
+                generateOverviewAndChildrenForNode(dataContext, chapter);
             }
 
             // generate html pages for all linkedNotes that have at least one linkedAssociation where the parent type is 11
@@ -129,7 +326,7 @@ namespace BDEditor.Classes
             StringBuilder footerHTML = new StringBuilder();
 
             // insert overview text from linked iNote
-            string presentationOverviewHtml = retrieveNoteTextForParentAndProperty(pContext, pNode.Uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW);
+            string presentationOverviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
             if (presentationOverviewHtml.Length > EMPTY_PARAGRAPH)
                 bodyHTML.Append(presentationOverviewHtml);
 
@@ -143,6 +340,7 @@ namespace BDEditor.Classes
                 List<BDTherapyGroup> therapyGroups = BDTherapyGroup.RetrieveTherapyGroupsForParentId(pContext, pathogenGroup.Uuid);
                 if (therapyGroups.Count > 0)
                     bodyHTML.Append(@"<h2>Recommended Empiric Therapy</h2>");
+
                 foreach (BDTherapyGroup tGroup in therapyGroups)
                 {
                     BDTherapyGroup group = tGroup as BDTherapyGroup;
@@ -209,25 +407,22 @@ namespace BDEditor.Classes
         }
 
         /// <summary>
-        /// Refactor to return text for a provided note instead of parentId/propertyName
+        /// Retrieve linked note text for Overview of a node
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pParentId"></param>
         /// <param name="pPropertyName"></param>
         /// <returns></returns>
-        [Obsolete("LinkedNoteAssociation method refactored returning different data", false)]  
-        private string retrieveNoteTextForParentAndProperty(Entities pContext, Guid pParentId, string pPropertyName)
+        private string retrieveNoteTextForOverview(Entities pContext, Guid pParentId)
         {
+            string propertyName = BDNode.VIRTUALPROPERTYNAME_OVERVIEW;
             StringBuilder linkedNoteHtml = new StringBuilder();
-            if (null != pPropertyName && pPropertyName.Length > 0)
-            {
-                List<BDLinkedNoteAssociation> list = BDLinkedNoteAssociation.GetLinkedNoteAssociationListForParentIdAndProperty(pContext, pParentId, pPropertyName);
+                List<BDLinkedNoteAssociation> list = BDLinkedNoteAssociation.GetLinkedNoteAssociationListForParentIdAndProperty(pContext, pParentId, propertyName);
                 foreach (BDLinkedNoteAssociation assn in list)
                 {
                     BDLinkedNote linkedNote = BDLinkedNote.GetLinkedNoteWithId(pContext, assn.linkedNoteId);
                     if (null != linkedNote)
                         linkedNoteHtml.Append(linkedNote.documentText);
-                }
             }
             return linkedNoteHtml.ToString();
         }
@@ -265,7 +460,7 @@ namespace BDEditor.Classes
             if (null != pNode && pNode.NodeType == BDConstants.BDNodeType.BDPathogenGroup)
             {
                 // Get overview for Pathogen Group
-                pathogenGroupHtml.Append(retrieveNoteTextForParentAndProperty(pContext, pathogenGroup.Uuid, BDNode.VIRTUALPROPERTYNAME_OVERVIEW));
+                pathogenGroupHtml.Append(retrieveNoteTextForOverview(pContext, pathogenGroup.Uuid));
 
                 List<BDLinkedNote> inlineNotes = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, pathogenGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Inline);
                 List<BDLinkedNote> markedNotes = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, pathogenGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.MarkedComment);

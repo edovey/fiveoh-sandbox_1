@@ -1109,7 +1109,7 @@ namespace BDEditor.Views
                 btnSync.Text = "Overwrite";
                 this.Text = string.Format("{0} < OVERWRITE REPOSITORY >", this.Text);
             }
-            btnPublish.Enabled = BDCommon.Settings.SyncPushEnabled;
+            //btnPublish.Enabled = BDCommon.Settings.SyncPushEnabled;
             btnImportFromProduction.Enabled = BDCommon.Settings.SyncPushEnabled;
         }
 

@@ -418,10 +418,12 @@ namespace BDEditor.Views
             stringToClean = CleanTagFromText(stringToClean, "<table", ">", true);
             stringToClean = stringToClean.Replace("</table>", "");
 
-            // replace span tags for bold and underline
+            // replace span tags for bold and underline and italics
+            //*** NEED TO ADD All combinations here.
             string spanEnd = "</span>";
             string spanUnderlineTag = "<span style=\"text-decoration:underline ;\">";
             string spanBoldTag = "<span style=\"font-weight:bold;\">";
+            string spanItalicsTag = "<span style=\"font-style:italic;\">";
             while (stringToClean.Contains(spanUnderlineTag))
             {
                 int uStartIndex = stringToClean.IndexOf(spanUnderlineTag);
@@ -440,6 +442,16 @@ namespace BDEditor.Views
                 int bEndIndex = stringToClean.IndexOf(spanEnd, bStartIndex);
                 stringToClean = stringToClean.Remove(bEndIndex, spanEnd.Length);
                 stringToClean = stringToClean.Insert(bEndIndex, @"</b>");
+            }
+
+            while (stringToClean.Contains(spanItalicsTag))
+            {
+                int iStartIndex = stringToClean.IndexOf(spanItalicsTag);
+                stringToClean = stringToClean.Remove(iStartIndex, spanItalicsTag.Length);
+                stringToClean = stringToClean.Insert(iStartIndex, @"<i>");
+                int iEndIndex = stringToClean.IndexOf(spanEnd, iStartIndex);
+                stringToClean = stringToClean.Remove(iEndIndex, spanEnd.Length);
+                stringToClean = stringToClean.Insert(iEndIndex, @"</i>");
             }
 
             // remove remaining span tags

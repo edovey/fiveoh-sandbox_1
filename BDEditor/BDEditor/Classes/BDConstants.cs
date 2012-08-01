@@ -345,7 +345,9 @@ namespace BDEditor.Classes
             [Description("Endnote")]
             Endnote = 3,
             [Description("Footnote")]
-            Footnote = 4
+            Footnote = 4,
+            [Description("Reference")]
+            Reference = 5,
         }
 
         public enum TableCellAlignment

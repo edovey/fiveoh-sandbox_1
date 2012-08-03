@@ -544,6 +544,5 @@ namespace BDEditor.Views
         {
             currentControlName = MASK_LONG_TERM_RTB;
         }
-
     }
 }

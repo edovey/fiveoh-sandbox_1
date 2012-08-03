@@ -1482,7 +1482,5 @@ namespace BDEditor.Views
             editor.ShowDialog();
 
         }
-
-
     }
 }

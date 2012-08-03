@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDEditView));
             this.headerPanel = new System.Windows.Forms.Panel();
+            this.btnShowLayoutEditor = new System.Windows.Forms.Button();
             this.btnRestore = new System.Windows.Forms.Button();
             this.btnMove = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
@@ -51,7 +52,6 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.entitiesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.entitiesBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.btnShowLayoutEditor = new System.Windows.Forms.Button();
             this.headerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -78,6 +78,16 @@
             this.headerPanel.Name = "headerPanel";
             this.headerPanel.Size = new System.Drawing.Size(1192, 39);
             this.headerPanel.TabIndex = 0;
+            // 
+            // btnShowLayoutEditor
+            // 
+            this.btnShowLayoutEditor.Location = new System.Drawing.Point(741, 10);
+            this.btnShowLayoutEditor.Name = "btnShowLayoutEditor";
+            this.btnShowLayoutEditor.Size = new System.Drawing.Size(75, 23);
+            this.btnShowLayoutEditor.TabIndex = 10;
+            this.btnShowLayoutEditor.Text = "Layout";
+            this.btnShowLayoutEditor.UseVisualStyleBackColor = true;
+            this.btnShowLayoutEditor.Click += new System.EventHandler(this.btnShowLayoutEditor_Click);
             // 
             // btnRestore
             // 
@@ -273,16 +283,6 @@
             // entitiesBindingSource1
             // 
             this.entitiesBindingSource1.DataSource = typeof(BDEditor.DataModel.Entities);
-            // 
-            // btnShowLayoutEditor
-            // 
-            this.btnShowLayoutEditor.Location = new System.Drawing.Point(741, 10);
-            this.btnShowLayoutEditor.Name = "btnShowLayoutEditor";
-            this.btnShowLayoutEditor.Size = new System.Drawing.Size(75, 23);
-            this.btnShowLayoutEditor.TabIndex = 10;
-            this.btnShowLayoutEditor.Text = "Layout";
-            this.btnShowLayoutEditor.UseVisualStyleBackColor = true;
-            this.btnShowLayoutEditor.Click += new System.EventHandler(this.btnShowLayoutEditor_Click);
             // 
             // BDEditView
             // 

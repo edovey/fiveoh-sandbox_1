@@ -145,7 +145,7 @@
         false,
         false,
         false};
-            this.buttonBar.Location = new System.Drawing.Point(15, 2);
+            this.buttonBar.Location = new System.Drawing.Point(15, 0);
             this.buttonBar.Name = "buttonBar";
             this.buttonBar.Size = new System.Drawing.Size(130, 28);
             this.buttonBar.TabIndex = 4;
@@ -182,7 +182,7 @@
             this.toolStripButton10});
             this.toolStrip1.Location = new System.Drawing.Point(148, 2);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(383, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(372, 25);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -269,7 +269,7 @@
             this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton6.Name = "toolStripButton6";
-            this.toolStripButton6.Size = new System.Drawing.Size(70, 22);
+            this.toolStripButton6.Size = new System.Drawing.Size(65, 22);
             this.toolStripButton6.Text = "Superscript";
             this.toolStripButton6.ToolTipText = "Superscript selected text";
             this.toolStripButton6.Click += new System.EventHandler(this.toolStripButton6_Click);
@@ -279,7 +279,7 @@
             this.toolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton7.Name = "toolStripButton7";
-            this.toolStripButton7.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton7.Size = new System.Drawing.Size(55, 22);
             this.toolStripButton7.Text = "Subscript";
             this.toolStripButton7.ToolTipText = "Subscript selected text";
             this.toolStripButton7.Click += new System.EventHandler(this.toolStripButton7_Click);
@@ -294,7 +294,7 @@
             this.toolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton8.Name = "toolStripButton8";
-            this.toolStripButton8.Size = new System.Drawing.Size(39, 22);
+            this.toolStripButton8.Size = new System.Drawing.Size(38, 22);
             this.toolStripButton8.Text = "Paste";
             this.toolStripButton8.ToolTipText = "Paste Clipboard contents";
             this.toolStripButton8.Click += new System.EventHandler(this.toolStripButton8_Click);

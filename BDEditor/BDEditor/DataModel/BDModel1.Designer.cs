@@ -148,22 +148,6 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<BDLinkedNoteAssociation> BDLinkedNoteAssociations
-        {
-            get
-            {
-                if ((_BDLinkedNoteAssociations == null))
-                {
-                    _BDLinkedNoteAssociations = base.CreateObjectSet<BDLinkedNoteAssociation>("BDLinkedNoteAssociations");
-                }
-                return _BDLinkedNoteAssociations;
-            }
-        }
-        private ObjectSet<BDLinkedNoteAssociation> _BDLinkedNoteAssociations;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<BDLinkedNote> BDLinkedNotes
         {
             get
@@ -448,6 +432,22 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDCombinedEntry> _BDCombinedEntries;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDLinkedNoteAssociation> BDLinkedNoteAssociations
+        {
+            get
+            {
+                if ((_BDLinkedNoteAssociations == null))
+                {
+                    _BDLinkedNoteAssociations = base.CreateObjectSet<BDLinkedNoteAssociation>("BDLinkedNoteAssociations");
+                }
+                return _BDLinkedNoteAssociations;
+            }
+        }
+        private ObjectSet<BDLinkedNoteAssociation> _BDLinkedNoteAssociations;
 
         #endregion
         #region AddTo Methods
@@ -490,14 +490,6 @@ namespace BDEditor.DataModel
         public void AddToBDLayoutMetadatas(BDLayoutMetadata bDLayoutMetadata)
         {
             base.AddObject("BDLayoutMetadatas", bDLayoutMetadata);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDLinkedNoteAssociations EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDLinkedNoteAssociations(BDLinkedNoteAssociation bDLinkedNoteAssociation)
-        {
-            base.AddObject("BDLinkedNoteAssociations", bDLinkedNoteAssociation);
         }
     
         /// <summary>
@@ -642,6 +634,14 @@ namespace BDEditor.DataModel
         public void AddToBDCombinedEntries(BDCombinedEntry bDCombinedEntry)
         {
             base.AddObject("BDCombinedEntries", bDCombinedEntry);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDLinkedNoteAssociations EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDLinkedNoteAssociations(BDLinkedNoteAssociation bDLinkedNoteAssociation)
+        {
+            base.AddObject("BDLinkedNoteAssociations", bDLinkedNoteAssociation);
         }
 
         #endregion
@@ -4781,6 +4781,54 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Int32> _parentType;
         partial void OnparentTypeChanging(Nullable<global::System.Int32> value);
         partial void OnparentTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Guid> internalLinkNodeId
+        {
+            get
+            {
+                return _internalLinkNodeId;
+            }
+            set
+            {
+                OninternalLinkNodeIdChanging(value);
+                ReportPropertyChanging("internalLinkNodeId");
+                _internalLinkNodeId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("internalLinkNodeId");
+                OninternalLinkNodeIdChanged();
+            }
+        }
+        private Nullable<global::System.Guid> _internalLinkNodeId;
+        partial void OninternalLinkNodeIdChanging(Nullable<global::System.Guid> value);
+        partial void OninternalLinkNodeIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> internalLinkNodeType
+        {
+            get
+            {
+                return _internalLinkNodeType;
+            }
+            set
+            {
+                OninternalLinkNodeTypeChanging(value);
+                ReportPropertyChanging("internalLinkNodeType");
+                _internalLinkNodeType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("internalLinkNodeType");
+                OninternalLinkNodeTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _internalLinkNodeType;
+        partial void OninternalLinkNodeTypeChanging(Nullable<global::System.Int32> value);
+        partial void OninternalLinkNodeTypeChanged();
 
         #endregion
     

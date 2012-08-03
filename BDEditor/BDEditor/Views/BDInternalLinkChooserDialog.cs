@@ -6,14 +6,49 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using BDEditor.Classes;
+using BDEditor.DataModel;
 
 namespace BDEditor.Views
 {
     public partial class BDInternalLinkChooserDialog : Form
     {
-        public BDInternalLinkChooserDialog()
+        public Entities DataContext;
+        public BDConstants.BDNodeType SelectedNodeType = BDConstants.BDNodeType.None;
+        public Guid? SelectedUuid = null;
+
+        public BDInternalLinkChooserDialog(Entities pDataContext)
         {
             InitializeComponent();
+            DataContext = pDataContext;
+        }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            IBDNode selectedNode = bdInternalLinkChooserControl1.SelectedIBDNode;
+            if (null != selectedNode)
+            {
+                SelectedNodeType = selectedNode.NodeType;
+                SelectedUuid = selectedNode.Uuid;
+            }
+            else
+            {
+                SelectedNodeType = BDConstants.BDNodeType.None;
+                SelectedUuid = null;
+            }
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+
+        private void BDInternalLinkChooserDialog_Load(object sender, EventArgs e)
+        {
+            bdInternalLinkChooserControl1.Setup(DataContext, null);
         }
     }
 }

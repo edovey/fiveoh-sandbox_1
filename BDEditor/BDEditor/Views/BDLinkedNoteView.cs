@@ -25,6 +25,9 @@ namespace BDEditor.Views
         private List<BDLinkedNoteAssociation> currentNoteAssociationsList;
         private List<BDLinkedNote> existingNotesInScopeList;
 
+        private BDConstants.BDNodeType internalLinkNodeType = BDConstants.BDNodeType.None;
+        private Guid? internalLinkNodeId = null;
+
         public event EventHandler<NodeEventArgs> NotesChanged;
 
         protected virtual void OnNotesChanged(NodeEventArgs e)
@@ -141,6 +144,9 @@ namespace BDEditor.Views
             }
             else
             {
+                this.internalLinkNodeId = pAssociation.internalLinkNodeId;
+                this.internalLinkNodeType = pAssociation.InternalLinkNodeType;
+
                 this.linkedNoteTypeCombo.SelectedIndex = pAssociation.linkedNoteType.Value;
 
                 BDLinkedNote linkedNote = BDLinkedNote.GetLinkedNoteWithId(dataContext, pAssociation.linkedNoteId);
@@ -172,8 +178,13 @@ namespace BDEditor.Views
                 if (null != currentNoteAssociation)
                 {
                     currentNoteAssociation.linkedNoteType = (int)Enum.Parse(typeof(BDConstants.LinkedNoteType), this.linkedNoteTypeCombo.GetItemText(this.linkedNoteTypeCombo.SelectedItem));
+                    currentNoteAssociation.internalLinkNodeId = internalLinkNodeId;
+                    currentNoteAssociation.internalLinkNodeType = (int)internalLinkNodeType;
+
                     dataContext.SaveChanges();
                     lblNoteCounter.Text = currentNoteAssociation.displayOrder.ToString();
+
+
                 }
                 hasNewLink = true;
             }
@@ -311,8 +322,19 @@ namespace BDEditor.Views
 
         private void linkedNoteType_SelectedIndexChanged(object sender, EventArgs e)
         {
+            BDConstants.LinkedNoteType linkedNoteType = (BDConstants.LinkedNoteType)Enum.Parse(typeof(BDConstants.LinkedNoteType), this.linkedNoteTypeCombo.GetItemText(this.linkedNoteTypeCombo.SelectedItem));
             if (null != currentNoteAssociation)
-                currentNoteAssociation.linkedNoteType = (int)Enum.Parse(typeof(BDConstants.LinkedNoteType), this.linkedNoteTypeCombo.GetItemText(this.linkedNoteTypeCombo.SelectedItem));
+                currentNoteAssociation.linkedNoteType = (int)linkedNoteType;
+
+            if (linkedNoteType == BDConstants.LinkedNoteType.InternalLink)
+            {
+                showInternalLinkInfo();
+                panelInternalLink.Visible = true;
+            }
+            else
+            {
+                panelInternalLink.Visible = false;
+            }
         }
 
         private void BDLinkedNoteView_Load(object sender, EventArgs e)
@@ -394,6 +416,27 @@ namespace BDEditor.Views
                 currentNoteAssociation = this.parentPropertyNoteAssociationList[idx + 1];
             }
             DisplayLinkedNote(this.currentNoteAssociation, true);
+        }
+
+        private void btnInternalLink_Click(object sender, EventArgs e)
+        {
+            BDInternalLinkChooserDialog dialog = new BDInternalLinkChooserDialog(dataContext);
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                internalLinkNodeType = dialog.SelectedNodeType;
+                internalLinkNodeId = dialog.SelectedUuid;
+
+                showInternalLinkInfo();
+            }
+        }
+
+        private void showInternalLinkInfo()
+        {
+            if (null != internalLinkNodeId)
+            {
+                IBDNode node = BDFabrik.RetrieveNode(dataContext, internalLinkNodeType, internalLinkNodeId);
+                lblInternalLinkDescription.Text = node.ToString();
+            }
         }
     }
 }

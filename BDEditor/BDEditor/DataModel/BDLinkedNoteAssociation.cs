@@ -531,6 +531,26 @@ namespace BDEditor.DataModel
             }
         }
 
+        public BDConstants.LinkedNoteType LinkedNoteType
+        {
+            get
+            {
+                BDConstants.LinkedNoteType result = BDConstants.LinkedNoteType.MarkedComment;
+                if (null != linkedNoteType)
+                {
+                    if (Enum.IsDefined(typeof(BDConstants.BDNodeType), linkedNoteType))
+                    {
+                        result = (BDConstants.LinkedNoteType)linkedNoteType;
+                    }
+                }
+                return result;
+            }
+            set
+            {
+                linkedNoteType = (int)value;
+            }
+        }
+
         public BDConstants.BDNodeType InternalLinkNodeType
         {
             get

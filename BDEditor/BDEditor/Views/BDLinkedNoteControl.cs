@@ -23,7 +23,7 @@ namespace BDEditor.Views
         private string linkValue = string.Empty;
         private BDLinkedNote currentLinkedNote;
         private BDLinkedNoteView linkView;
-
+      
         private BDLinkedNoteAssociation currentAssociation;
 
         //private bool newLinkSaved = false;
@@ -196,6 +196,11 @@ namespace BDEditor.Views
 
         public bool Save()
         {
+            return Save(null);
+        }
+
+        public bool Save(BDConstants.LinkedNoteType? pLinkedNoteType)
+        {
             bool result = false;
 
             if (null == parentId)
@@ -205,12 +210,17 @@ namespace BDEditor.Views
             }
             else
             {
-                if ((null == currentLinkedNote) && !string.IsNullOrEmpty(textControl.Text))
+                bool isValidInternalLink = ( (null != pLinkedNoteType) && (pLinkedNoteType.Value == BDConstants.LinkedNoteType.InternalLink) );
+                bool hasText = !string.IsNullOrEmpty(textControl.Text);
+
+                if ((null == currentLinkedNote) && (isValidInternalLink || hasText) )
                 {
-                    CreateCurrentObject();
+                    CreateCurrentObject(pLinkedNoteType);
                 }
-                if (null != currentLinkedNote && !string.IsNullOrEmpty(textControl.Text))
-                {
+                
+
+                if (null != currentLinkedNote)
+                { 
                     TXTextControl.SaveSettings ss = new TXTextControl.SaveSettings();
 
                     string plainText;
@@ -246,6 +256,11 @@ namespace BDEditor.Views
 
         public bool CreateCurrentObject()
         {
+            return CreateCurrentObject(null);
+        }
+
+        public bool CreateCurrentObject(BDConstants.LinkedNoteType? pLinkedNoteType)
+        {
             bool result = true;
 
             if (null == currentLinkedNote)
@@ -257,7 +272,12 @@ namespace BDEditor.Views
                 else
                 {
                     currentLinkedNote = BDLinkedNote.CreateBDLinkedNote(dataContext);
-                    currentAssociation = BDLinkedNoteAssociation.CreateBDLinkedNoteAssociation(dataContext, BDConstants.LinkedNoteType.MarkedComment, currentLinkedNote.Uuid, parentType, parentId.Value, contextPropertyName);
+                    BDConstants.LinkedNoteType linkedNoteType = BDConstants.LinkedNoteType.MarkedComment;
+                    if (null != pLinkedNoteType)
+                    {
+                        linkedNoteType = pLinkedNoteType.Value;
+                    }
+                    currentAssociation = BDLinkedNoteAssociation.CreateBDLinkedNoteAssociation(dataContext, linkedNoteType, currentLinkedNote.Uuid, parentType, parentId.Value, contextPropertyName);
                     
                     currentLinkedNote.scopeId = scopeId;
                     BDLinkedNote.Save(dataContext, currentLinkedNote);

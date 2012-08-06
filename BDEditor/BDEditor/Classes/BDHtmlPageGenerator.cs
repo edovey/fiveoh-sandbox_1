@@ -48,9 +48,10 @@ namespace BDEditor.Classes
                 if (chIldOverviewNotes.Count > 0)
                     generatePageForOverview(pContext, pNode.Uuid, pNode.NodeType, chIldOverviewNotes[0]);
 
-                generatePageForNode(pContext, pNode);
-                // where to stop in recursion??
+                if(!beginDetailPage(pContext, pNode))
                 generateOverviewAndChildrenForNode(pContext, child);
+                //generatePageForNode(pContext, pNode);
+                // where to stop in recursion??
             }
         }
 
@@ -60,21 +61,27 @@ namespace BDEditor.Classes
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pNode"></param>
-        private void generatePageForNode(Entities pContext, IBDNode pNode)
+        private bool beginDetailPage(Entities pContext, IBDNode pNode)
         {
+            bool isPageGenerated = false;
             switch (pNode.NodeType)
             {
                 case BDConstants.BDNodeType.BDSection:
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis:
+                            // build page
+                            isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.PregnancyLactation_Perinatal_HIVProtocol:
+                            // build page
+                            isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Microbiology_Antibiogram:
+                            isPageGenerated = true;
                             break;
                         default:
-                            // no htmlpage created for section.
+                            isPageGenerated = false;
                             break;
                     }
                     break;
@@ -83,12 +90,14 @@ namespace BDEditor.Classes
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                             // build html page
+                            isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                            // build html page
+                           isPageGenerated = true;
                             break;
                         default:
-                            // no independent page
+                            isPageGenerated = false;
                             break;
                     }
                     break;
@@ -97,11 +106,13 @@ namespace BDEditor.Classes
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
                             // check if we need a page here.
+                            isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
+                            isPageGenerated = true;
                             break;
                         default:
-                            // no independent page
+                           isPageGenerated = false;
                             break;
                     }
                     break;
@@ -109,23 +120,31 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
+                            isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
+                            isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
+                           isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
+                            isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
+                            isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
+                            isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
+                            isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
+                            isPageGenerated = true;
                             break;
                         default:
-                            // no independent page
+                            isPageGenerated = false;
                             break;
                     }
                     break;
@@ -135,10 +154,11 @@ namespace BDEditor.Classes
                         {
                             case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
                                 // create page
-                                break;
+                                isPageGenerated = true;
+                            break;
                             default:
-                                // no independent page
-                                break;
+                                isPageGenerated = false;
+                            break;
                         }
                     }
                     break;
@@ -146,8 +166,10 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
+                            isPageGenerated = true;
                             break;
                         default:
+                            isPageGenerated = false;
                             break;
                     }
                     break;
@@ -158,9 +180,10 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
                         case BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases:
+                            isPageGenerated = true;
                             break;
                         default:
-                            // no independent page
+                            isPageGenerated = false;
                             break;
                     }
                     break;
@@ -173,9 +196,10 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation14_CellulitisExtremities:
                             // need to check the rest of the layout variants
                             GeneratePresentationPagesForTreatmentRecommendation01(pContext, pNode as BDNode);
+                            isPageGenerated = true;
                             break;
                         default:
-                           // no independent page
+                            isPageGenerated = false;
                             break;
                     }
                     break;
@@ -193,7 +217,11 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation:
                         case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
                             // generate page
-                        break;
+                            isPageGenerated = true;
+                            break;
+                        default:
+                        isPageGenerated = false;
+                            break;
                     }
                     break;
                 case BDConstants.BDNodeType.BDSurgery:
@@ -201,9 +229,10 @@ namespace BDEditor.Classes
                     {
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
                             // generate page
+                            isPageGenerated = true;
                             break;
                         default:
-                            // no independent page
+                            isPageGenerated = false;
                             break;
                     }
                     break;
@@ -212,9 +241,10 @@ namespace BDEditor.Classes
                     {
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                             // generate page
+                            isPageGenerated = true;
                             break;
                         default:
-                            // no independent page
+                            isPageGenerated = false;
                             break;
                     }
                     break;
@@ -223,9 +253,10 @@ namespace BDEditor.Classes
                     {
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                             // generate page
+                            isPageGenerated = true;
                             break;
                         default:
-                            // no independent page
+                           isPageGenerated = false;
                             break;
                     }
                     break;
@@ -234,25 +265,34 @@ namespace BDEditor.Classes
                     {
                         case BDConstants.LayoutVariantType.Prophylaxis_PreOp:
                             // generate a page
+                           isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure:
+                            isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine:
+                            isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk:
+                            isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
+                            isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:
+                            isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza:
+                            isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Pertussis:
+                            isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
+                            isPageGenerated = true;
                             break;
                         default:
-                            // no independent page
+                            isPageGenerated = false;
                             break;
                     }
                     break;
@@ -265,9 +305,10 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Prophylaxis_Immunization_VaccineDetail:
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis:
                             // create page
+                            isPageGenerated = true;
                             break;
                         default:
-                        // no independent page
+                            isPageGenerated = false;
                             break;
                     }
                     break;
@@ -277,10 +318,10 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDSubsection:
                 case BDConstants.BDNodeType.BDTherapyGroup:
                default:
-                    // no independent page - contained in parent's page.
-                    break;
+                    isPageGenerated = false;
+                            break;
             }
-
+            return isPageGenerated;
         }
         
         

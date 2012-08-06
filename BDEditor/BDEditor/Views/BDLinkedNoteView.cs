@@ -169,7 +169,9 @@ namespace BDEditor.Views
         {
             hasNewLink = false;
 
-            if (bdLinkedNoteControl1.Save())  // BDLinkedNoteControl will create the association as required
+            BDConstants.LinkedNoteType linkedNoteType = (BDConstants.LinkedNoteType)Enum.Parse(typeof(BDConstants.LinkedNoteType), this.linkedNoteTypeCombo.GetItemText(this.linkedNoteTypeCombo.SelectedItem));
+
+            if (bdLinkedNoteControl1.Save(linkedNoteType))  // BDLinkedNoteControl will create the association as required
             {
                 // If the currentNoteAssociation is null, the note *should* also have been null and the note control should have created a new note + association
                 if (null == currentNoteAssociation)
@@ -324,7 +326,7 @@ namespace BDEditor.Views
         {
             BDConstants.LinkedNoteType linkedNoteType = (BDConstants.LinkedNoteType)Enum.Parse(typeof(BDConstants.LinkedNoteType), this.linkedNoteTypeCombo.GetItemText(this.linkedNoteTypeCombo.SelectedItem));
             if (null != currentNoteAssociation)
-                currentNoteAssociation.linkedNoteType = (int)linkedNoteType;
+                currentNoteAssociation.LinkedNoteType = linkedNoteType;
 
             if (linkedNoteType == BDConstants.LinkedNoteType.InternalLink)
             {

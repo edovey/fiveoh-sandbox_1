@@ -50,9 +50,7 @@ namespace BDEditor.Classes
 
                 if(!beginDetailPage(pContext, pNode))
                 generateOverviewAndChildrenForNode(pContext, child);
-                //generatePageForNode(pContext, pNode);
-                // where to stop in recursion??
-            }
+               }
         }
 
         /// <summary>
@@ -195,7 +193,7 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation14_CellulitisExtremities:
                             // need to check the rest of the layout variants
-                            GeneratePresentationPagesForTreatmentRecommendation01(pContext, pNode as BDNode);
+//                            GeneratePresentationPagesForTreatmentRecommendation01(pContext, pNode as BDNode);
                             isPageGenerated = true;
                             break;
                         default:
@@ -312,6 +310,7 @@ namespace BDEditor.Classes
                             break;
                     }
                     break;
+                case BDConstants.BDNodeType.BDChapter:
                 case BDConstants.BDNodeType.BDMicroorganism:
                 case BDConstants.BDNodeType.BDPathogenGroup:
                  case BDConstants.BDNodeType.BDResponse:

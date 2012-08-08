@@ -37,7 +37,7 @@ namespace BDEditor.DataModel
         private const string SCHEMAVERSION = @"no_schemaVersion";
         private const string CREATEDBY = @"no_createdBy";
         private const string CREATEDDATE = @"no_createdDate";
-        private const string MODIFIEDBY = @"nosn_modifiedBy";
+        private const string MODIFIEDBY = @"no_modifiedBy";
         private const string MODIFIEDDATE = @"no_modifiedDate";
         private const string NAME = @"no_name";
         private const string DISPLAYORDER = @"no_displayOrder";

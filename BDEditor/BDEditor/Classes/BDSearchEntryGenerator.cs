@@ -22,10 +22,7 @@ namespace BDEditor.Classes
         /// </summary>
         public static void Generate()
         {
-            // Clear the data from the remote store
-            RepositoryHandler.Aws.DeleteRemoteSearch();
-
-            // clear the data from the databse
+            // clear the data from the database
             BDSearchEntry.DeleteAll();
             BDSearchEntryAssociation.DeleteAll();
 

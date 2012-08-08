@@ -35,7 +35,6 @@
             this.btnRestore = new System.Windows.Forms.Button();
             this.btnMove = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
-            this.btnImportFromProduction = new System.Windows.Forms.Button();
             this.btnPublish = new System.Windows.Forms.Button();
             this.lbLastSyncDateTime = new System.Windows.Forms.Label();
             this.btnSync = new System.Windows.Forms.Button();
@@ -67,7 +66,6 @@
             this.headerPanel.Controls.Add(this.btnRestore);
             this.headerPanel.Controls.Add(this.btnMove);
             this.headerPanel.Controls.Add(this.btnSearch);
-            this.headerPanel.Controls.Add(this.btnImportFromProduction);
             this.headerPanel.Controls.Add(this.btnPublish);
             this.headerPanel.Controls.Add(this.lbLastSyncDateTime);
             this.headerPanel.Controls.Add(this.btnSync);
@@ -119,17 +117,6 @@
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-            // 
-            // btnImportFromProduction
-            // 
-            this.btnImportFromProduction.Location = new System.Drawing.Point(619, 10);
-            this.btnImportFromProduction.Name = "btnImportFromProduction";
-            this.btnImportFromProduction.Size = new System.Drawing.Size(103, 23);
-            this.btnImportFromProduction.TabIndex = 6;
-            this.btnImportFromProduction.Text = "AWS Prod Import";
-            this.btnImportFromProduction.UseVisualStyleBackColor = true;
-            this.btnImportFromProduction.Visible = false;
-            this.btnImportFromProduction.Click += new System.EventHandler(this.btnImportFromProduction_Click);
             // 
             // btnPublish
             // 
@@ -322,7 +309,6 @@
         private System.Windows.Forms.Label lbLastSyncDateTime;
         private System.Windows.Forms.Button btnSync;
         private System.Windows.Forms.Button btnPublish;
-        private System.Windows.Forms.Button btnImportFromProduction;
         private System.Windows.Forms.ContextMenuStrip navTreeContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem reorderPreviousToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reorderNextToolStripMenuItem;

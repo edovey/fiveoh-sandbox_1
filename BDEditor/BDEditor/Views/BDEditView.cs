@@ -1036,38 +1036,6 @@ namespace BDEditor.Views
             }
         }
 
-        [Obsolete("Use Archive/Restore instead", false)]
-        private void SyncData()
-        {
-            this.Cursor = Cursors.WaitCursor;
-            BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
-            DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
-
-            SyncInfoDictionary syncResultList = RepositoryHandler.Aws.Sync(DataContext, lastSyncDate, BDConstants.SyncType.Default);
-
-            string resultMessage = string.Empty;
-
-            foreach (SyncInfo syncInfo in syncResultList.Values)
-            {
-                System.Diagnostics.Debug.WriteLine(syncInfo.FriendlyName);
-                if( (syncInfo.RowsPulled > 0) || (syncInfo.RowsPushed > 0) )
-                    resultMessage = string.Format("{0}{1}{4}: Pulled {2}, Pushed {3}", resultMessage, (string.IsNullOrEmpty(resultMessage)? "": "\n"), syncInfo.RowsPulled, syncInfo.RowsPushed, syncInfo.FriendlyName);
-            }
-
-            if (string.IsNullOrEmpty(resultMessage)) resultMessage = "No changes";
-
-            MessageBox.Show(resultMessage, "Synchronization");
-
-            UpdateSyncLabel();
-            LoadChapterDropDown();
-
-            systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
-            lastSyncDate = systemSetting.settingDateTimeValue;
-            loadSeedDataButton.Visible = isSeedDataLoadAvailable;
-
-            this.Cursor = Cursors.Default;
-        }
-
         private void BDEditView_Load(object sender, EventArgs e)
         {
             this.Text = string.Format("{0} - {1}" , "Bugs & Drugs Editor", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
@@ -1078,7 +1046,6 @@ namespace BDEditor.Views
 
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
-            this.btnImportFromProduction.Visible = true;
             this.btnPublish.Visible = true;
             this.btnMove.Visible = !isSeedDataLoadAvailable && moveButtonState;
             this.btnMove.Enabled = !isSeedDataLoadAvailable && moveButtonState;
@@ -1109,8 +1076,6 @@ namespace BDEditor.Views
                 btnSync.Text = "Overwrite";
                 this.Text = string.Format("{0} < OVERWRITE REPOSITORY >", this.Text);
             }
-            //btnPublish.Enabled = BDCommon.Settings.SyncPushEnabled;
-            btnImportFromProduction.Enabled = BDCommon.Settings.SyncPushEnabled;
         }
 
         private void btnSync_Click(object sender, EventArgs e)
@@ -1151,29 +1116,6 @@ namespace BDEditor.Views
 
         }
 
-        private void btnSyncWithReplaceLocal_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("This will DELETE all local data and replace it from the repository?", "Replace Local Data", MessageBoxButtons.YesNo, MessageBoxIcon.Stop) == DialogResult.Yes)
-            {
-                this.Cursor = Cursors.WaitCursor;
-
-                chapterDropDown.Items.Clear();
-                chapterDropDown.SelectedIndex = -1;
-
-                RepositoryHandler.Aws.DeleteLocalData(dataContext);
-                
-                dataContext = null;
-                dataContext = new Entities();
-
-                BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
-                systemSetting.settingDateTimeValue = null;
-                dataContext.SaveChanges();
-                this.Cursor = Cursors.Default;
-
-                SyncData();          
-            }
-        }
-
         private void splitContainer1_Leave(object sender, EventArgs e)
         {
             save();
@@ -1208,7 +1150,7 @@ namespace BDEditor.Views
             BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
 
-            SyncInfoDictionary syncResultList = RepositoryHandler.Aws.Sync(DataContext, lastSyncDate, BDConstants.SyncType.Publish);
+            SyncInfoDictionary syncResultList = RepositoryHandler.Aws.Sync(DataContext, null, BDConstants.SyncType.Publish);
 
             string resultMessage = string.Empty;
 
@@ -1223,45 +1165,6 @@ namespace BDEditor.Views
 
             MessageBox.Show(resultMessage, "Synchronization");
             this.Cursor = Cursors.Default;
-        }
-
-        private void btnImportFromProduction_Click(object sender, EventArgs e)
-        {
-
-#if DEBUG
-            if (MessageBox.Show("Have the development respository domains (bd_dev_2*) and bdDevStore bucket been cleared?", "Import from Production", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
-            {
-                this.Cursor = Cursors.WaitCursor;
-                BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
-                DateTime? lastSyncDate = null;
-
-                SyncInfoDictionary syncResultList = RepositoryHandler.Aws.ImportFromProduction(dataContext, null);
-
-                string resultMessage = string.Empty;
-
-                foreach (SyncInfo syncInfo in syncResultList.Values)
-                {
-                    System.Diagnostics.Debug.WriteLine(syncInfo.FriendlyName);
-                    if ((syncInfo.RowsPulled > 0) || (syncInfo.RowsPushed > 0))
-                        resultMessage = string.Format("Production Import {0}{1}{4}: Pulled {2}, Pushed {3}", resultMessage, (string.IsNullOrEmpty(resultMessage) ? "" : "\n"), syncInfo.RowsPulled, syncInfo.RowsPushed, syncInfo.FriendlyName);
-                }
-
-                if (string.IsNullOrEmpty(resultMessage)) resultMessage = "No changes";
-
-                MessageBox.Show(resultMessage, "Synchronization");
-
-                UpdateSyncLabel();
-                LoadChapterDropDown();
-
-                systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
-                lastSyncDate = systemSetting.settingDateTimeValue;
-                loadSeedDataButton.Visible = isSeedDataLoadAvailable;
-
-                this.Cursor = Cursors.Default;
-            }
-#else
-            MessageBox.Show(@"May not import in this environment" , "Import");
-#endif
         }
 
         private void btnSearch_Click(object sender, EventArgs e)

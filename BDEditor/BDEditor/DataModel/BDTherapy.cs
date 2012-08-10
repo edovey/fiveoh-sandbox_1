@@ -290,7 +290,7 @@ namespace BDEditor.DataModel
 
         public static List<BDTherapy> RetrieveTherapiesDosageWithText(Entities pContext, string pText)
         {
-            //TODO:  refactor for multiple dosage properties
+            //TODO:  refactor for multiple dosageNode properties
             List<BDTherapy> returnList = new List<BDTherapy>();
             if (null != pText && pText.Length > 0)
             {

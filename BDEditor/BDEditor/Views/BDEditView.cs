@@ -1140,12 +1140,19 @@ namespace BDEditor.Views
 
         private void btnPublish_Click(object sender, EventArgs e)
         {
+            BDNode generateNode;
+            if (MessageBox.Show("Generate All?", "Publish", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                generateNode = null;
+            else
+                generateNode = (chapterDropDown.SelectedItem as BDNode);
             this.Cursor = Cursors.WaitCursor;
+            
             BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
-            generator.Generate();
+            generator.Generate(generateNode);
             System.Diagnostics.Debug.WriteLine("HTML page generation complete.");
-            BDSearchEntryGenerator.Generate();
-            System.Diagnostics.Debug.WriteLine("Search entry generation complete.");
+
+            //BDSearchEntryGenerator.Generate();
+            //System.Diagnostics.Debug.WriteLine("Search entry generation complete.");
 
             BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;

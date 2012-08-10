@@ -1088,7 +1088,7 @@ namespace BDEditor.Views
                 this.Cursor = Cursors.WaitCursor;
                 Application.DoEvents();
                 RepositoryHandler.Aws.Archive(dataContext, archiveDialog.Username, archiveDialog.Comment);
-                MessageBox.Show("Archive complete", "Achive to Repository", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Archive complete", "Archive to Repository", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 UpdateSyncLabel();
             }
             this.Cursor = Cursors.Default;
@@ -1154,23 +1154,28 @@ namespace BDEditor.Views
             //BDSearchEntryGenerator.Generate();
             //System.Diagnostics.Debug.WriteLine("Search entry generation complete.");
 
-            BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
-            DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
-
-            SyncInfoDictionary syncResultList = RepositoryHandler.Aws.Sync(DataContext, null, BDConstants.SyncType.Publish);
-
-            string resultMessage = string.Empty;
-
-            foreach (SyncInfo syncInfo in syncResultList.Values)
+            if (BDCommon.Settings.SyncPushEnabled)
             {
-                System.Diagnostics.Debug.WriteLine(syncInfo.FriendlyName);
-                if ((syncInfo.RowsPulled > 0) || (syncInfo.RowsPushed > 0))
-                    resultMessage = string.Format("{0}{1}{4}: Pulled {2}, Pushed {3}", resultMessage, (string.IsNullOrEmpty(resultMessage) ? "" : "\n"), syncInfo.RowsPulled, syncInfo.RowsPushed, syncInfo.FriendlyName);
+                BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+                DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
+
+                SyncInfoDictionary syncResultList = RepositoryHandler.Aws.Sync(DataContext, null, BDConstants.SyncType.Publish);
+
+                string resultMessage = string.Empty;
+
+                foreach (SyncInfo syncInfo in syncResultList.Values)
+                {
+                    System.Diagnostics.Debug.WriteLine(syncInfo.FriendlyName);
+                    if ((syncInfo.RowsPulled > 0) || (syncInfo.RowsPushed > 0))
+                        resultMessage = string.Format("{0}{1}{4}: Pulled {2}, Pushed {3}", resultMessage, (string.IsNullOrEmpty(resultMessage) ? "" : "\n"), syncInfo.RowsPulled, syncInfo.RowsPushed, syncInfo.FriendlyName);
+                }
+
+                if (string.IsNullOrEmpty(resultMessage)) resultMessage = "No changes";
+
+                MessageBox.Show(resultMessage, "Synchronization");
             }
+            else MessageBox.Show("Synchronization Disabled", "Synchronization");
 
-            if (string.IsNullOrEmpty(resultMessage)) resultMessage = "No changes";
-
-            MessageBox.Show(resultMessage, "Synchronization");
             this.Cursor = Cursors.Default;
         }
 

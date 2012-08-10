@@ -193,14 +193,12 @@ namespace BDEditor.Classes
 
                     System.Diagnostics.Debug.WriteLine("Pushed {0} Records for {1}", syncInfoEntry.RowsPushed, syncInfoEntry.RemoteEntityName);
                 }
+                pLastSyncDate = currentSyncDate;
 
+                BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(pDataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+                systemSetting.settingDateTimeValue = currentSyncDate;
+                pDataContext.SaveChanges();
             }
-
-            pLastSyncDate = currentSyncDate;
-
-            BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(pDataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
-            systemSetting.settingDateTimeValue = currentSyncDate;
-            pDataContext.SaveChanges();
 
             return syncDictionary;
         }
@@ -232,6 +230,7 @@ namespace BDEditor.Classes
 
                 CreateDomainRequest createDomainRequest = (new CreateDomainRequest()).WithDomainName(BDNode.AWS_DOMAIN);
                 CreateDomainResponse createResponse = simpleDb.CreateDomain(createDomainRequest);
+                System.Diagnostics.Debug.WriteLine("Remote Nodes Deleted");
             }
             catch (AmazonS3Exception amazonS3Exception)
             {
@@ -267,6 +266,7 @@ namespace BDEditor.Classes
                 CreateDomainRequest createDomainRequest2 = (new CreateDomainRequest()).WithDomainName(BDSearchEntryAssociation.AWS_DOMAIN);
                 CreateDomainResponse createResponse1 = simpleDb.CreateDomain(createDomainRequest1);
                 CreateDomainResponse createResponse2 = simpleDb.CreateDomain(createDomainRequest2);
+                System.Diagnostics.Debug.WriteLine("Remote Search Deleted");
             }
             catch (AmazonS3Exception amazonS3Exception)
             {
@@ -336,6 +336,7 @@ namespace BDEditor.Classes
                         request = null;
                     }
                 } while (request != null);
+                System.Diagnostics.Debug.WriteLine("Remote HTML Deleted");
             }
 
             catch (AmazonS3Exception amazonS3Exception)

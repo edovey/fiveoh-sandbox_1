@@ -477,14 +477,14 @@ namespace BDEditor.Classes
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
             if (childNodes.Count > 0)
             {
-                bodyHTML.Append(@"<tr><th><b>Normal Adult Dose</b></th>");
+                bodyHTML.Append(@"<table><tr><th><b>Normal Adult Dose</b></th>");
                 bodyHTML.Append(@"<th colspan=""3""><b>Dose and Interval Adjustment for Renal Impairment</b></th></tr>");
                 bodyHTML.Append(@"<tr><th></th><th>&gt50</th><th>10 - 50</th><th>&lt10(Anuric)</th></tr>");
                 
                 foreach (IBDNode node in childNodes)
                 {
                     if (node.NodeType == BDConstants.BDNodeType.BDDosage)
-                        bodyHTML.Append(buildDosageHTML(pContext, pNode));
+                        bodyHTML.Append(buildDosageHTML(pContext, node));
                 }
                     bodyHTML.Append(@"</table>");
             
@@ -918,9 +918,9 @@ namespace BDEditor.Classes
             if (d1NotePageGuid != Guid.Empty)
             {
                 if (dosageNode.dosage.Length > 0)
-                    dosageHTML.AppendFormat(@"<a href=""{0}"">{1}</a>", d1NotePageGuid, dosageNode.dosage);
+                    dosageHTML.AppendFormat(@"<td><a href=""{0}"">{1}</a>", d1NotePageGuid, dosageNode.dosage);
                 else
-                    dosageHTML.AppendFormat(@"<a href=""{0}"">See Notes.</a>", d1NotePageGuid);
+                    dosageHTML.AppendFormat(@"<td><a href=""{0}"">See Notes.</a>", d1NotePageGuid);
             }
             else
                 dosageHTML.Append(dosageNode.dosage);
@@ -936,12 +936,12 @@ namespace BDEditor.Classes
             if (d2NotePageGuid != Guid.Empty)
             {
                 if (dosageNode.dosage2.Length > 0)
-                    dosageHTML.AppendFormat(@"<a href=""{0}"">{1}</a>", d2NotePageGuid, dosageNode.dosage2);
+                    dosageHTML.AppendFormat(@"<td><a href=""{0}"">{1}</a>", d2NotePageGuid, dosageNode.dosage2);
                 else
-                    dosageHTML.AppendFormat(@"<a href=""{0}"">See Notes.</a>", d2NotePageGuid);
+                    dosageHTML.AppendFormat(@"<td><a href=""{0}"">See Notes.</a>", d2NotePageGuid);
             }
             else
-                dosageHTML.Append(dosageNode.dosage2);
+                dosageHTML.AppendFormat(@"<td>{0}",dosageNode.dosage2);
 
             dosageHTML.Append(@"</td>");
 
@@ -954,12 +954,12 @@ namespace BDEditor.Classes
             if (d3NotePageGuid != Guid.Empty)
             {
                 if (dosageNode.dosage3.Length > 0)
-                    dosageHTML.AppendFormat(@"<a href=""{0}"">{1}</a>", d3NotePageGuid, dosageNode.dosage3);
+                    dosageHTML.AppendFormat(@"<td><a href=""{0}"">{1}</a>", d3NotePageGuid, dosageNode.dosage3);
                 else
-                    dosageHTML.AppendFormat(@"<a href=""{0}"">See Notes.</a>", d3NotePageGuid);
+                    dosageHTML.AppendFormat(@"<td><a href=""{0}"">See Notes.</a>", d3NotePageGuid);
             }
             else
-                dosageHTML.Append(dosageNode.dosage3);
+                dosageHTML.AppendFormat(@"<td>{0}", dosageNode.dosage3);
 
             dosageHTML.Append(@"</td>");
 
@@ -972,12 +972,12 @@ namespace BDEditor.Classes
             if (d4NotePageGuid != Guid.Empty)
             {
                 if (dosageNode.dosage4.Length > 0)
-                    dosageHTML.AppendFormat(@"<a href=""{0}"">{1}</a>", d4NotePageGuid, dosageNode.dosage4);
+                    dosageHTML.AppendFormat(@"<td><a href=""{0}"">{1}</a>", d4NotePageGuid, dosageNode.dosage4);
                 else
-                    dosageHTML.AppendFormat(@"<a href=""{0}"">See Notes.</a>", d4NotePageGuid);
+                    dosageHTML.AppendFormat(@"<td><a href=""{0}"">See Notes.</a>", d4NotePageGuid);
             }
             else
-                dosageHTML.Append(dosageNode.dosage4);
+                dosageHTML.AppendFormat(@"<td>{0}", dosageNode.dosage4);
 
             dosageHTML.Append(@"</td>");
 

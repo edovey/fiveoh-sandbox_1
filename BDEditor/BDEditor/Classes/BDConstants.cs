@@ -246,6 +246,8 @@ namespace BDEditor.Classes
             Prophylaxis_Communicable_Influenza_Oseltamivir_Creatinine = 3124,
             [Description("Prophylaxis - Influenza (Oseltamivir, Weight)")]
             Prophylaxis_Communicable_Influenza_Oseltamivir_Weight = 3125,
+            [Description("Prophylaxis - Influenza (Zanamivir)")]
+            Prophylaxis_Communicable_Influenza_Zanamivir = 3126,
             [Description("Prophylaxis - Pertussis")]
             Prophylaxis_Communicable_Pertussis = 316,
             [Description("Infection Precautions")]

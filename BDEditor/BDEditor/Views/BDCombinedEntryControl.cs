@@ -202,6 +202,9 @@ namespace BDEditor.Views
                 case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Oseltamivir_Weight:
                     lblName.Text = "Age";
                     break;
+                case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Zanamivir:
+                    lblName.Text = "";
+                    break;
                 default:
                     List<BDLayoutMetadataColumn> metaDataColumnList = BDLayoutMetadataColumn.RetrieveListForLayout(dataContext, currentEntry.LayoutVariant);
                     int columnNumber = 0;

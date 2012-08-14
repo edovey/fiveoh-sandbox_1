@@ -1045,13 +1045,13 @@ namespace BDEditor.Views
 
             // Loading Seed Data:  set the following variables
             isSeedDataLoadAvailable = false;
-            bool moveButtonVisible = false;
+            bool moveButtonVisible = true;
 
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
             this.btnPublish.Visible = true;
-            this.btnMove.Visible = !isSeedDataLoadAvailable && moveButtonState;
-            this.btnMove.Enabled = !isSeedDataLoadAvailable && moveButtonState;
+            this.btnMove.Visible = !isSeedDataLoadAvailable && moveButtonVisible;
+            this.btnMove.Enabled = !isSeedDataLoadAvailable && moveButtonVisible;
 #else
             this.btnPublish.Visible = false;
 

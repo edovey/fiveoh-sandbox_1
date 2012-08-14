@@ -690,6 +690,7 @@ namespace BDEditor.Views
                     case BDConstants.BDNodeType.BDPathogen:
                         switch (node.LayoutVariant)
                         {
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
@@ -705,6 +706,7 @@ namespace BDEditor.Views
                         switch (node.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
                                 childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
@@ -841,6 +843,7 @@ namespace BDEditor.Views
                         switch (node.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
                                 childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
@@ -1042,7 +1045,7 @@ namespace BDEditor.Views
 
             // Loading Seed Data:  set the following variables
             isSeedDataLoadAvailable = false;
-            bool moveButtonState = false;
+            bool moveButtonVisible = false;
 
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
@@ -1050,11 +1053,10 @@ namespace BDEditor.Views
             this.btnMove.Visible = !isSeedDataLoadAvailable && moveButtonState;
             this.btnMove.Enabled = !isSeedDataLoadAvailable && moveButtonState;
 #else
-            this.btnImportFromProduction.Visible = false;
             this.btnPublish.Visible = false;
 
-            this.btnMove.Visible = moveButtonState;
-            this.btnMove.Enabled = moveButtonState;
+            this.btnMove.Visible = moveButtonVisible;
+            this.btnMove.Enabled = moveButtonVisible;
 #endif
 
             BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
@@ -1351,7 +1353,7 @@ namespace BDEditor.Views
             //// severe #1 e83a8e3f-10b4-4677-aa73-197aa8ce5c8c , target & exception: 879a8931-648f-4e16-9704-2d30ab0d76f9 exception: 14be53d4-a30a-4037-98a1-077445d78202
             //// severe #2 f80d2660-66c0-4640-9d35-c4f90a369a97 , target & exception: 874a2a14-c7c2-41dd-8799-80c13392441b exception: 62c6cfcc-cf6d-4640-9335-4327e937d415
 
-            List<Guid> exceptionList1 = new List<Guid>();
+            //List<Guid> exceptionList1 = new List<Guid>();
             //List<Guid> exceptionList2 = new List<Guid>();
 
             //exceptionList1.Add(Guid.Parse("879a8931-648f-4e16-9704-2d30ab0d76f9"));
@@ -1387,6 +1389,9 @@ namespace BDEditor.Views
            // // Manually change parent info from (3 - BDCategory) to (5 - BDDisease)
            ////  9e322d09-ae3d-41a2-b7c9-c6ef706bc986	Synergistic necrotizing cellulitis, Fournier's gangrene	
            ////  e10f7eb9-66d5-4225-b01e-06a0acefe34c	Gas gangrene
+
+            // delete orphan table
+            BDNode.DeleteLocal(dataContext, Guid.Parse(@"5c75848a-bf64-45e5-93fe-670e8790a13c"));
 
         }
 

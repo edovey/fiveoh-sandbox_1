@@ -34,6 +34,7 @@ namespace BDEditor.Classes.Navigation
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation00:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
@@ -68,6 +69,20 @@ namespace BDEditor.Classes.Navigation
                                 if ((null == name) || (name.Length == 0))
                                 {
                                     name = childNode.Uuid.ToString();
+                                }
+                                TreeNode childTreeNode = new TreeNode(name);
+                                childTreeNode.Tag = childNode;
+                                branchTreeNode.Nodes.Add(childTreeNode);
+                            }
+                            break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                            foreach (IBDNode childNode in childList)
+                            {
+                                string name = childNode.Name;
+                                if ((null == name) || (name.Length == 0))
+                                {
+                                    //name = childNode.Uuid.ToString();
+                                    name = @"< intentionally blank >";
                                 }
                                 TreeNode childTreeNode = new TreeNode(name);
                                 childTreeNode.Tag = childNode;

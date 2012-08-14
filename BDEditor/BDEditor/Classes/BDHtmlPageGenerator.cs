@@ -89,10 +89,6 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDAntimicrobialGroup:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
-                            isPageGenerated = true;
-                            generatePageForAntibioticsDosingAndDailyCosts(pContext, pNode as BDNode);
-                            break;
                         case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
                             isPageGenerated = true;
                             break;
@@ -221,6 +217,7 @@ namespace BDEditor.Classes
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
                             isPageGenerated = true;
+                            generatePageForAntibioticsDosingAndDailyCosts(pContext, pNode as BDNode);
                             break;
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
                             isPageGenerated = true;

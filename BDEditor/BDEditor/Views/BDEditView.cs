@@ -714,6 +714,10 @@ namespace BDEditor.Views
                                     showChildControls = false;
                                 }
                                 break;
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
+                                if (!pInterrogateOnly)
+                                    showChildControls = true;
+                                break;
                         }
                         break;
                     case BDConstants.BDNodeType.BDPresentation:
@@ -842,6 +846,7 @@ namespace BDEditor.Views
                     case BDConstants.BDNodeType.BDTable:
                         switch (node.LayoutVariant)
                         {
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
                                 childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);

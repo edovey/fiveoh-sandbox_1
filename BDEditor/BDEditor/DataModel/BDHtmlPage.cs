@@ -179,7 +179,10 @@ namespace BDEditor.DataModel
                                      on lna.linkedNoteId equals p.displayParentId 
                                      where lna.parentKeyPropertyName == pAnchorIdAsText
                                      select p.uuid;
-            return query.ToList<Guid>()[0];
+            if (query.ToList<Guid>().Count > 0)
+                return query.ToList<Guid>()[0];
+            else
+                return Guid.Empty;
         }
 
         #region Repository

@@ -496,7 +496,7 @@ namespace BDEditor.Classes
         private void generatePageForAntibioticsDosingAndDailyCosts(Entities pContext, BDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
-            if (pNode.NodeType != BDConstants.BDNodeType.BDAntimicrobialGroup)
+            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
             {
 #if DEBUG
                 throw new InvalidOperationException();
@@ -518,18 +518,42 @@ namespace BDEditor.Classes
 
             // show child nodes in a table
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
-            foreach (IBDNode node in childNodes)
+            if (childNodes.Count > 0)
             {
-                if (node.NodeType == BDConstants.BDNodeType.BDAntimicrobial)
-                {
-                    Guid footnoteGuid = buildFootnotePageForParentAndProperty(pContext, BDNode.PROPERTYNAME_NAME, node as BDNode);
-                    if (footnoteGuid == Guid.Empty)
-                        bodyHTML.AppendFormat(@"{0}<br>", node.Name);
-                    else
-                        bodyHTML.AppendFormat(@"<a href=""{0}""><b>{1}</b></a><br>", footnoteGuid, node.Name);
-                }
-            }
+                bodyHTML.Append(@"<table><tr><th>Antimicrobial</th><th>Recommended Adult Dose</th><th>Cost ($)/Day</th></tr>");
 
+                foreach (IBDNode node in childNodes)
+                {
+                    if (node.NodeType == BDConstants.BDNodeType.BDDosageGroup)
+                    {
+                        Guid footnoteGuid = buildFootnotePageForParentAndProperty(pContext, BDNode.PROPERTYNAME_NAME, node);
+                        if (footnoteGuid == Guid.Empty)
+                            bodyHTML.AppendFormat(@"<tr><td>{0}</td><td /><td /></tr>", node.Name);
+                        else
+                            bodyHTML.AppendFormat(@"<tr><td><a href=""{0}""><b>{1}</b></a></td><td /><td /><tr>", footnoteGuid, node.Name);
+
+                        List<IBDNode> dosages = BDFabrik.GetChildrenForParent(pContext, node);
+                        foreach (IBDNode dosage in childNodes)
+                            if (node.NodeType == BDConstants.BDNodeType.BDDosage)
+                                bodyHTML.Append(buildDosageWithCostHTML(pContext, dosage));
+                    }
+                    else if(node.NodeType == BDConstants.BDNodeType.BDAntimicrobial)
+                    {
+                        Guid footnoteGuid = buildFootnotePageForParentAndProperty(pContext, BDDosage.PROPERTYNAME_DOSAGE, node);
+                        if (footnoteGuid == Guid.Empty)
+                            bodyHTML.AppendFormat(@"<tr><td>{0}</td><td /><td /></tr>", node.Name);
+                        else
+                            bodyHTML.AppendFormat(@"<tr><td><a href=""{0}""><b>{1}</b></a></td><td /><td /><tr>", footnoteGuid, node.Name);
+
+                        List<IBDNode> dosages = BDFabrik.GetChildrenForParent(pContext, node);
+                        foreach (IBDNode dosage in dosages)
+                            if (dosage.NodeType == BDConstants.BDNodeType.BDDosage)
+                                bodyHTML.Append(buildDosageWithCostHTML(pContext, dosage));
+                    }
+                }
+                bodyHTML.Append(@"</table>");
+            }
+            
             // inject Html into page html & save as a page to the database.
             string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
             BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
@@ -763,7 +787,7 @@ namespace BDEditor.Classes
             return Guid.Empty;
         }
 
-        private Guid buildFootnotePageForParentAndProperty(Entities pContext, string pPropertyName, BDNode pNode)
+        private Guid buildFootnotePageForParentAndProperty(Entities pContext, string pPropertyName, IBDNode pNode)
         {
             StringBuilder nodeHTML = new StringBuilder();
             List<BDLinkedNote> footnotes = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, pNode.Uuid, pPropertyName, BDConstants.LinkedNoteType.Footnote);
@@ -1004,6 +1028,34 @@ namespace BDEditor.Classes
             return therapyHtml.ToString();
         }
 
+        private string buildDosageWithCostHTML(Entities pContext, IBDNode pNode)
+        {
+            BDDosage dosageNode = pNode as BDDosage;
+            StringBuilder dosageHTML = new StringBuilder();
+            string styleString = string.Empty;
+
+            dosageHTML.Append(@"<tr><td>");
+            // dosageNode 1
+            List<BDLinkedNote> d1Inline = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, dosageNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.Inline);
+            List<BDLinkedNote> d1Marked = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, dosageNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.MarkedComment);
+            List<BDLinkedNote> d1Unmarked = retrieveNotesForParentAndPropertyForLinkedNoteType(pContext, dosageNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.UnmarkedComment);
+
+            Guid d1NotePageGuid = generatePageForLinkedNotes(pContext, dosageNode.Uuid, BDConstants.BDNodeType.BDDosage, d1Inline, d1Marked, d1Unmarked);
+            if (d1NotePageGuid != Guid.Empty)
+            {
+                if (dosageNode.dosage.Length > 0)
+                    dosageHTML.AppendFormat(@"<td><a href=""{0}"">{1}</a></td>", d1NotePageGuid, dosageNode.dosage);
+                else
+                    dosageHTML.AppendFormat(@"<td><a href=""{0}"">See Notes.</a></td>", d1NotePageGuid);
+            }
+            else
+                dosageHTML.AppendFormat("<td>{0}</td>",dosageNode.dosage);
+
+            dosageHTML.AppendFormat(@"<td>{0}</td>",dosageNode.cost);
+
+            return dosageHTML.ToString();
+        }
+
         private string buildDosageHTML(Entities pContext, IBDNode pNode)
         {
             BDDosage dosageNode = pNode as BDDosage;
@@ -1214,8 +1266,11 @@ namespace BDEditor.Classes
                             {
                                 // otherwise...   look up the guid as the property name in the linked note association table
                                 Guid linkGuid = BDHtmlPage.RetrievePageIdForAnchorId(pContext, guidString);
-                                string newText = pPage.documentText.Replace(anchorGuid.ToString(), linkGuid.ToString());
-                                pPage.documentText = newText;
+                                if (linkGuid != Guid.Empty)
+                                {
+                                    string newText = pPage.documentText.Replace(anchorGuid.ToString(), linkGuid.ToString());
+                                    pPage.documentText = newText;
+                                }
                                 BDHtmlPage.Save(pContext, pPage);
                             }
                         }

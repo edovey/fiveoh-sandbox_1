@@ -706,7 +706,7 @@ namespace BDEditor.Views
                         switch (node.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis: 
                                 childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
@@ -1148,7 +1148,7 @@ namespace BDEditor.Views
         private void btnPublish_Click(object sender, EventArgs e)
         {
             BDNode generateNode;
-            if (MessageBox.Show("Generate All?", "Publish", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            if (MessageBox.Show("Generate All Chapters?", "Publish", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
                 generateNode = null;
             else
                 generateNode = (chapterDropDown.SelectedItem as BDNode);

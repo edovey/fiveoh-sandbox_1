@@ -1273,6 +1273,16 @@ namespace BDEditor.Classes
                                 }
                                 BDHtmlPage.Save(pContext, pPage);
                             }
+                            else
+                            {
+                                List<BDHtmlPage> pagesForNode = BDHtmlPage.RetrieveHtmlPageForDisplayParentId(pContext, pPage.Uuid);
+                                if (pagesForNode.Count > 0)
+                                {
+                                    string newText = pPage.documentText.Replace(anchorGuid.ToString(), pagesForNode[0].Uuid.ToString());
+                                    pPage.documentText = newText;
+                                }
+                                BDHtmlPage.Save(pContext, pPage);
+                            }
                         }
                         startPosition = guidStart;
                     }

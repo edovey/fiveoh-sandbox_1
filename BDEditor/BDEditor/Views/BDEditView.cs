@@ -1050,7 +1050,7 @@ namespace BDEditor.Views
 
             // Loading Seed Data:  set the following variables
             isSeedDataLoadAvailable = false;
-            bool moveButtonVisible = true;
+            bool moveButtonVisible = false;
 
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";

@@ -121,7 +121,6 @@ namespace BDEditor.Classes
             TreatmentRecommendation01_Gastroenteritis = 10141,
             [Description("Treatment Recommendation Gastroenteritis Culture Directed")]
             TreatmentRecommendation01_Gastroenteritis_CultureDirected = 101412,
-
             [Description("Wound Management")]
             TreatmentRecommendation02_WoundMgmt = 102, // table 1 - wound management
             [Description("Wound Management Content Row")]
@@ -351,7 +350,9 @@ namespace BDEditor.Classes
             [Description("Reference")]
             Reference = 5,
             [Description("Internal Link")]
-            InternalLink = 6
+            InternalLink = 6,
+            [Description("Reference Endnote")]
+            ReferenceEndnote = 7,
         }
 
         public enum TableCellAlignment

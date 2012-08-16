@@ -567,6 +567,7 @@ namespace BDEditor.Views
                                 }
                                 break;
                             case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                            case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
                             case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                                 childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
@@ -1050,7 +1051,7 @@ namespace BDEditor.Views
 
             // Loading Seed Data:  set the following variables
             isSeedDataLoadAvailable = false;
-            bool moveButtonVisible = true;
+            bool moveButtonVisible = false;
 
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
@@ -1396,8 +1397,41 @@ namespace BDEditor.Views
            ////  e10f7eb9-66d5-4225-b01e-06a0acefe34c	Gas gangrene
 
             // delete orphan table
-            BDNode.DeleteLocal(dataContext, Guid.Parse(@"5c75848a-bf64-45e5-93fe-670e8790a13c"));
+            //BDNode.DeleteLocal(dataContext, Guid.Parse(@"5c75848a-bf64-45e5-93fe-670e8790a13c"));
 
+            //// create new section for 'Vancomycin Dosing And Monitoring...'
+            //BDNode chapter = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(@"45e13826-aedb-48d0-baf6-2f06ff45017f"));
+            //BDNode section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection);
+            //section.name = @"Vancomycin Dosing and Monitoring Guidelines";
+            //section.SetParent(chapter);
+            //section.displayOrder = 0;
+            //section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring;
+            //BDNode.Save(dataContext, section);
+
+            //// retrieve Vancomycin Dosing - adjust type and make a child of the new section 
+            //BDNode vd = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(@"2dd4578a-a856-49e4-852a-e18eb43fb1b2"));
+            //List<IBDNode> vdChildren = BDFabrik.GetChildrenForParent(dataContext, vd);
+            //vd.SetParent(section);
+            //vd.nodeType = (int)BDConstants.BDNodeType.BDCategory;
+            //vd.nodeKeyName = vd.nodeType.ToString();
+            //BDNode.Save(dataContext, vd);
+            //foreach (IBDNode vdChild in vdChildren)
+            //{   // reset parentType and parentKeyName or lookups will break
+            //    vdChild.SetParent(vd);
+            //    BDNode.Save(dataContext, vdChild as BDNode);
+            //}
+            //// retrieve Vancomycin Monitoring
+            //BDNode vm = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(@"10a23f72-58ea-49c2-ad3f-d8d97d1846c6"));
+            //List<IBDNode> vmChildren = BDFabrik.GetChildrenForParent(dataContext, vm);
+            //vm.SetParent(section);
+            //vm.nodeType = (int)BDConstants.BDNodeType.BDCategory;
+            //vm.nodeKeyName = vm.nodeType.ToString();
+            //BDNode.Save(dataContext, vm);
+            //foreach (IBDNode vmChild in vmChildren)
+            //{
+            //    vmChild.SetParent(vm);
+            //    BDNode.Save(dataContext, vmChild as BDNode);
+            //}
         }
 
         private void btnShowLayoutEditor_Click(object sender, EventArgs e)

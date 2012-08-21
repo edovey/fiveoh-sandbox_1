@@ -1196,10 +1196,10 @@ namespace BDEditor.Classes
                         tableCell.alignment = 0;
                         BDTableCell.Save(pContext, tableCell);
 
-                        BDString cellValue = BDString.CreateBDString(pContext);
-                        cellValue.displayOrder = i;
-                        cellValue.SetParent(tableCell.Uuid);
-                        BDString.Save(pContext, cellValue);
+                        //BDString cellValue = BDString.CreateBDString(pContext);
+                        //cellValue.displayOrder = i;
+                        //cellValue.SetParent(tableCell.Uuid);
+                        //BDString.Save(pContext, cellValue);
                     }
                     
                     break;

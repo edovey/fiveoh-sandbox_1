@@ -20,7 +20,12 @@ namespace BDEditor.Views
         private Guid? scopeId;
         private BDConstants.BDNodeType parentType;
         private BDConstants.TableCellAlignment alignment;
-        private List<BDStringControl> stringControlList = new List<BDStringControl>();
+
+        public string RichText
+        {
+            get { return rtbValue.Text; }
+            set { rtbValue.Text = value; }
+        }
 
         public int? DisplayOrder { get; set; }
         public BDConstants.LayoutVariantType DefaultLayoutVariantType;
@@ -96,15 +101,7 @@ namespace BDEditor.Views
         }
 
         public void ShowLinksInUse(bool pPropagateToChildren)
-        {
-            if (pPropagateToChildren)
-            {
-                for (int idx = 0; idx < stringControlList.Count; idx++)
-                {
-                    stringControlList[idx].ShowLinksInUse(true);
-                }
-            }
-        }     
+        {        }     
         
         public void AssignScopeId(Guid? pScopeId)
         {
@@ -122,19 +119,19 @@ namespace BDEditor.Views
         {
             ControlHelper.SuspendDrawing(this);
 
-            for (int i = 0; i < stringControlList.Count; i++)
-            {
-                BDStringControl control = stringControlList[i];
-                removeStringControl(control, false);
-            }
+            //for (int i = 0; i < stringControlList.Count; i++)
+            //{
+            //    BDStringControl control = stringControlList[i];
+            //    removeStringControl(control, false);
+            //}
 
-            if (currentNode != null && pShowChildren)
-            {
-                List<BDString> list = BDString.RetrieveStringsForParentId(dataContext, currentNode.Uuid);
-                int iDetail = 0;
-                foreach (BDString entry in list)
-                    addStringControl(entry, iDetail++);
-            }
+            //if (currentNode != null && pShowChildren)
+            //{
+            //    List<BDString> list = BDString.RetrieveStringsForParentId(dataContext, currentNode.Uuid);
+            //    int iDetail = 0;
+            //    foreach (BDString entry in list)
+            //        addStringControl(entry, iDetail++);
+            //}
 
             ShowLinksInUse(false);
             ControlHelper.ResumeDrawing(this);
@@ -167,120 +164,17 @@ namespace BDEditor.Views
             return result;
         }
 
-        private BDStringControl addStringControl(BDString pString, int pTabIndex)
-        {
-            BDStringControl stringControl = null;
-
-            if (CreateCurrentObject())
-            {
-                stringControl = new BDStringControl();
-
-                stringControl.Dock = DockStyle.Top;
-                stringControl.TabIndex = pTabIndex;
-                stringControl.DisplayOrder = pTabIndex;
-                stringControl.AssignParentInfo(currentNode.Uuid, BDConstants.BDNodeType.None);
-                stringControl.AssignDataContext(dataContext);
-                stringControl.AssignScopeId(scopeId);
-                stringControl.CurrentString = pString;
-                stringControl.DefaultLayoutVariantType = this.DefaultLayoutVariantType;
-                stringControl.RequestItemAdd += new EventHandler<NodeEventArgs>(String_RequestItemAdd);
-                stringControl.RequestItemDelete += new EventHandler<NodeEventArgs>(String_RequestItemDelete);
-                stringControl.ReorderToNext += new EventHandler<NodeEventArgs>(String_ReorderToNext);
-                stringControl.ReorderToPrevious += new EventHandler<NodeEventArgs>(String_ReorderToPrevious);
-                stringControl.NotesChanged += new EventHandler<NodeEventArgs>(notesChanged_Action);
-
-                stringControlList.Add(stringControl);
-
-                pnlControls.Controls.Add(stringControl);
-                stringControl.BringToFront();
-
-                stringControl.RefreshLayout();
-            }
-
-            return stringControl;
-        }
-
-        /// <summary>
-        /// Remove control from panel & from controls list.  Deregister event handlers.  Create delete record for entry if requested.
-        /// </summary>
-        /// <param name="pControl"></param>
-        /// <param name="pDeleteRecord"></param>
-        private void removeStringControl(BDStringControl pControl, bool pDeleteRecord)
-        {
-            pnlControls.Controls.Remove(pControl);
-
-            pControl.RequestItemAdd -= new EventHandler<NodeEventArgs>(String_RequestItemAdd);
-            pControl.RequestItemDelete -= new EventHandler<NodeEventArgs>(String_RequestItemDelete);
-            pControl.ReorderToNext -= new EventHandler<NodeEventArgs>(String_ReorderToNext);
-            pControl.ReorderToPrevious -= new EventHandler<NodeEventArgs>(String_ReorderToPrevious);
-            pControl.NotesChanged -= new EventHandler<NodeEventArgs>(notesChanged_Action);
-
-            stringControlList.Remove(pControl);
-
-            if (pDeleteRecord)
-            {
-                BDString entry = pControl.CurrentString;
-                if (null != entry)
-                {
-                    BDString.Delete(dataContext, entry, pDeleteRecord);
-                    for (int idx = 0; idx < stringControlList.Count; idx++)
-                    {
-                        stringControlList[idx].DisplayOrder = idx;
-                    }
-                }
-            }
-
-            pControl.Dispose();
-            pControl = null;
-        }
-
-        private void reorderStringControl(BDStringControl pControl, int pOffset)
-        {
-            int currentPosition = stringControlList.FindIndex(t => t == pControl);
-            if (currentPosition >= 0)
-            {
-                int requestedPosition = currentPosition + pOffset;
-                if ((requestedPosition >= 0) && (requestedPosition < stringControlList.Count))
-                {
-                    stringControlList[requestedPosition].CreateCurrentObject();
-                    stringControlList[requestedPosition].DisplayOrder = currentPosition;
-
-                    stringControlList[requestedPosition].CurrentString.displayOrder = currentPosition;
-                    BDString.Save(dataContext, stringControlList[requestedPosition].CurrentString);
-
-
-                    stringControlList[currentPosition].CreateCurrentObject();
-                    stringControlList[currentPosition].DisplayOrder = requestedPosition;
-
-                    stringControlList[currentPosition].CurrentString.displayOrder = requestedPosition;
-                    BDString.Save(dataContext, stringControlList[currentPosition].CurrentString);
-
-                    BDStringControl temp = stringControlList[requestedPosition];
-                    stringControlList[requestedPosition] = stringControlList[currentPosition];
-                    stringControlList[currentPosition] = temp;
-
-                    int zOrder = pnlControls.Controls.GetChildIndex(pControl);
-                    zOrder = zOrder + (pOffset * -1);
-                    pnlControls.Controls.SetChildIndex(pControl, zOrder);
-                }
-            }
-        }
-        
         public bool Save()
         {
             bool result = false;
             if (null != parentId)
             {
-                foreach (BDStringControl control in stringControlList)
-                {
-                    result = control.Save() || result;
-                }
-
                 if (result && (null == currentNode))
                     CreateCurrentObject();
                 if (null != currentNode)
                 {
                     BDTableCell currentTableCell  = currentNode as BDTableCell;
+                    currentTableCell.value = rtbValue.Text;
                     BDTableCell.Save(dataContext, currentTableCell);
                     result = true;
                 }
@@ -302,49 +196,6 @@ namespace BDEditor.Views
         }
 
         #endregion
-
-
-        private void BDTherapyControl_Leave(object sender, EventArgs e)
-        {
-            Save();
-        }
-
-        private void String_RequestItemAdd(object sender, EventArgs e)
-        {
-            BDStringControl control = addStringControl(null, stringControlList.Count);
-            if (null != control)
-            {
-                control.Focus();
-            }
-        }
-
-        private void String_RequestItemDelete(object sender, EventArgs e)
-        {
-            BDStringControl control = sender as BDStringControl;
-            if (null != control)
-            {
-                if (MessageBox.Show("Delete Text?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
-                    removeStringControl(control, true);
-            }
-        }
-
-        private void String_ReorderToNext(object sender, NodeEventArgs e)
-        {
-            BDStringControl control = sender as BDStringControl;
-            if (null != control)
-            {
-                reorderStringControl(control, 1);
-            }
-        }
-
-        private void String_ReorderToPrevious(object sender, NodeEventArgs e)
-        {
-            BDStringControl control = sender as BDStringControl;
-            if (null != control)
-            {
-                reorderStringControl(control, -1);
-            }
-        }
 
         private void btnReorderToPrevious_Click(object sender, EventArgs e)
         {
@@ -380,7 +231,6 @@ namespace BDEditor.Views
         }
 
         public BDConstants.BDNodeType DefaultNodeType { get; set; }
-        //public BDConstants.TableCellAlignment TableCellAlignment { get; set; }
 
         BDConstants.LayoutVariantType IBDControl.DefaultLayoutVariantType { get; set; }
 
@@ -389,6 +239,122 @@ namespace BDEditor.Views
         private void BDTableCellControl_Leave(object sender, EventArgs e)
         {
             Save();
+        }
+
+        private void btnLinkedNote_Click(object sender, EventArgs e)
+        {
+            Button control = sender as Button;
+            if (null != control)
+            {
+                string tag = control.Tag as string;
+                createLink(tag);
+            }
+        }
+
+        private void bToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(rtbValue, "ß");
+        }
+
+        private void degreeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(rtbValue, "°");
+        }
+
+        private void µToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(rtbValue, "µ");
+        }
+
+        private void geToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(rtbValue, "≥");
+        }
+
+        private void leToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(rtbValue, "≤");
+        }
+
+        private void plusMinusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(rtbValue, "±");
+        }
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtbValue.Undo();
+        }
+
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtbValue.Cut();
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtbValue.Copy();
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtbValue.Paste();
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int i = rtbValue.SelectionStart;
+            rtbValue.Text = rtbValue.Text.Substring(0, i) + rtbValue.Text.Substring(i + rtbValue.SelectionLength);
+            rtbValue.SelectionStart = i;
+            rtbValue.SelectionLength = 0;
+        }
+
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtbValue.SelectionStart = 0;
+            rtbValue.SelectionLength = rtbValue.Text.Length;
+            rtbValue.Focus();
+        }
+
+        private void contextMenuStripTextBox_Opening(object sender, CancelEventArgs e)
+        {
+            undoToolStripMenuItem.Enabled = rtbValue.CanUndo;
+            pasteToolStripMenuItem.Enabled = (Clipboard.ContainsText());
+            cutToolStripMenuItem.Enabled = (rtbValue.SelectionLength > 0);
+            copyToolStripMenuItem.Enabled = (rtbValue.SelectionLength > 0);
+            deleteToolStripMenuItem.Enabled = (rtbValue.SelectionLength > 0);
+        }
+
+        private void BDTableCellControl_Load(object sender, EventArgs e)
+        {
+            BDTableCell cell = currentNode as BDTableCell;
+            if (cell != null)
+                rtbValue.Text = cell.value;
+        }
+
+        private void insertText(RichTextBox pTextBox, string pText)
+        {
+            int x = pTextBox.SelectionStart;
+            pTextBox.Text = pTextBox.Text.Insert(pTextBox.SelectionStart, pText);
+            pTextBox.SelectionStart = x + 1;
+        }
+
+        private void createLink(string pProperty)
+        {
+            if (CreateCurrentObject())
+            {
+                Save();
+
+                BDLinkedNoteView view = new BDLinkedNoteView();
+                view.AssignDataContext(dataContext);
+                view.AssignContextPropertyName(pProperty);
+                view.AssignParentInfo(currentNode.Uuid, BDConstants.BDNodeType.None);
+                view.AssignScopeId(scopeId);
+                view.NotesChanged += new EventHandler<NodeEventArgs>(notesChanged_Action);
+                view.ShowDialog(this);
+                view.NotesChanged -= new EventHandler<NodeEventArgs>(notesChanged_Action);
+                ShowLinksInUse(false);
+            }
         }
     }
 }

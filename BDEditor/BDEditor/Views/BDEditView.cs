@@ -1000,7 +1000,7 @@ namespace BDEditor.Views
            // dataLoader.ImportData(dataContext, @"Resources\Chapter_3g.txt", BDDataLoader.baseDataDefinitionType.chapter3g);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_3h.txt", BDDataLoader.baseDataDefinitionType.chapter3h);
            // dataLoader.ImportData(dataContext, @"Resources\Chapter_3i.txt", BDDataLoader.baseDataDefinitionType.chapter3i);
-            dataLoader.ImportData(dataContext, @"Resources\Chapter_3j.txt", BDDataLoader.baseDataDefinitionType.chapter3j);
+           // dataLoader.ImportData(dataContext, @"Resources\Chapter_3j.txt", BDDataLoader.baseDataDefinitionType.chapter3j);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_3k.txt", BDDataLoader.baseDataDefinitionType.chapter3k);
            // dataLoader.ImportData(dataContext, @"Resources\Chapter_3l.txt", BDDataLoader.baseDataDefinitionType.chapter3l);
             LoadChapterDropDown();
@@ -1051,7 +1051,7 @@ namespace BDEditor.Views
 
             // Loading Seed Data:  set the following variables
             isSeedDataLoadAvailable = false;
-            bool moveButtonVisible = false;
+            bool moveButtonVisible = true;
 
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
@@ -1432,6 +1432,17 @@ namespace BDEditor.Views
             //    vmChild.SetParent(vm);
             //    BDNode.Save(dataContext, vmChild as BDNode);
             //}
+            List<BDTableCell> cells = BDTableCell.RetrieveAll(dataContext);
+            foreach (BDTableCell cell in cells)
+            {
+                StringBuilder cellString = new StringBuilder();
+                List<BDString> strings = BDString.RetrieveStringsForParentId(dataContext, cell.Uuid);
+                foreach (BDString stringValue in strings)
+                    cellString.Append(stringValue.value);
+
+                cell.value = cellString.ToString();
+                BDTableCell.Save(dataContext, cell);
+            }
         }
 
         private void btnShowLayoutEditor_Click(object sender, EventArgs e)

@@ -48,7 +48,7 @@
             this.pnlControls.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlControls.Location = new System.Drawing.Point(0, 0);
             this.pnlControls.Name = "pnlControls";
-            this.pnlControls.Size = new System.Drawing.Size(772, 58);
+            this.pnlControls.Size = new System.Drawing.Size(772, 75);
             this.pnlControls.TabIndex = 0;
             // 
             // btnMenu
@@ -122,7 +122,7 @@
             this.pnlButton.Dock = System.Windows.Forms.DockStyle.Right;
             this.pnlButton.Location = new System.Drawing.Point(772, 0);
             this.pnlButton.Name = "pnlButton";
-            this.pnlButton.Size = new System.Drawing.Size(39, 58);
+            this.pnlButton.Size = new System.Drawing.Size(39, 75);
             this.pnlButton.TabIndex = 16;
             // 
             // BDTableRowControl
@@ -135,7 +135,7 @@
             this.Controls.Add(this.pnlButton);
             this.DoubleBuffered = true;
             this.Name = "BDTableRowControl";
-            this.Size = new System.Drawing.Size(811, 58);
+            this.Size = new System.Drawing.Size(811, 75);
             this.Load += new System.EventHandler(this.BDTableRowControl_Load);
             this.contextMenuStripEvents.ResumeLayout(false);
             this.pnlButton.ResumeLayout(false);

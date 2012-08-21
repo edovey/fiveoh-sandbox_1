@@ -61,8 +61,8 @@ namespace BDEditor.DataModel
             if (null != pUuid)
             {
                 IQueryable<BDString> entryList = (from entry in pContext.BDStrings
-                                                        where entry.uuid == pUuid
-                                                        select entry);
+                                                  where entry.uuid == pUuid
+                                                  select entry);
 
                 if (entryList.Count<BDString>() > 0)
                     str = entryList.AsQueryable().First<BDString>();
@@ -73,9 +73,9 @@ namespace BDEditor.DataModel
         public static List<BDString> RetrieveStringsForParentId(Entities pContext, Guid? pParentId)
         {
             IQueryable<BDString> entries = (from entry in pContext.BDStrings
-                                               where entry.parentId == pParentId
-                                               orderby entry.displayOrder
-                                               select entry);
+                                            where entry.parentId == pParentId
+                                            orderby entry.displayOrder
+                                            select entry);
             List<BDString> resultList = entries.ToList<BDString>();
             return resultList;
         }

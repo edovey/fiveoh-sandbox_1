@@ -190,6 +190,15 @@ namespace BDEditor.DataModel
             return resultList;
         }
 
+        public static List<BDTableCell> RetrieveAll(Entities pContext)
+        {
+            IQueryable<BDTableCell> entries = (from entry in pContext.BDTableCells
+                                               orderby entry.displayOrder ascending
+                                               select entry);
+            List<BDTableCell> resultList = entries.ToList<BDTableCell>();
+            return resultList;
+        }
+
         protected override void OnPropertyChanged(string property)
         {
             if (!BDCommon.Settings.IsSyncLoad)

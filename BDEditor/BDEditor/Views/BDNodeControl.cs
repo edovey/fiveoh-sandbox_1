@@ -461,7 +461,6 @@ namespace BDEditor.Views
             ControlHelper.ResumeDrawing(this);
         }
 
-
         private void reorderChildNodeControl(Guid pChildNodeUuid, int pOffset)
         {
             int position = childNodeControlList.FindIndex(t => t.CurrentNode.Uuid == pChildNodeUuid);

@@ -312,6 +312,8 @@ namespace BDEditor.Views
             {
                 switch (CurrentNode.LayoutVariant)
                 {
+                    case BDConstants.LayoutVariantType.Antibiotics_NameListing_HeaderRow:
+                    case BDConstants.LayoutVariantType.Antibiotics_Stepdown_HeaderRow:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass_HeaderRow:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_HeaderRow:
                     case BDConstants.LayoutVariantType.Table_2_Column_HeaderRow:

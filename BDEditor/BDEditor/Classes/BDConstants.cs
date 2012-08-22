@@ -196,6 +196,11 @@ namespace BDEditor.Classes
 
             [Description("Antibiotics Stepdown Recommendations")]
             Antibiotics_Stepdown = 208,
+            [Description("Antibiotics Stepdown Header Row")]
+            Antibiotics_Stepdown_HeaderRow = 2081,
+            [Description("Antibiotics Stepdown Content Row")]
+            Antibiotics_Stepdown_ContentRow = 2082,
+
             [Description("Antibiotics CSF Penetration")]
             Antibiotics_CSFPenetration = 209,
             [Description("Antibiotics B Lactam Allergy")]

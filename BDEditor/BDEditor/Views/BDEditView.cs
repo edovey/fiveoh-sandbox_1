@@ -1051,7 +1051,7 @@ namespace BDEditor.Views
 
             // Loading Seed Data:  set the following variables
             isSeedDataLoadAvailable = false;
-            bool moveButtonVisible = true;
+            bool moveButtonVisible = false;
 
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
@@ -1432,45 +1432,71 @@ namespace BDEditor.Views
             //    vmChild.SetParent(vm);
             //    BDNode.Save(dataContext, vmChild as BDNode);
             //}
-            List<BDTableCell> cells = BDTableCell.RetrieveAll(dataContext);
-            foreach (BDTableCell cell in cells)
-            {
-                StringBuilder cellString = new StringBuilder();
-                List<BDString> strings = BDString.RetrieveStringsForParentId(dataContext, cell.Uuid);
-                foreach (BDString stringValue in strings)
-                    cellString.Append(stringValue.value);
 
-                cell.value = cellString.ToString();
-                BDTableCell.Save(dataContext, cell);
-            }
+            // move values from BDString object up to table cell as 'value'
+            //List<BDTableCell> cells = BDTableCell.RetrieveAll(dataContext);
+            //foreach (BDTableCell cell in cells)
+            //{
+            //    StringBuilder cellString = new StringBuilder();
+            //    List<BDString> strings = BDString.RetrieveStringsForParentId(dataContext, cell.Uuid);
+            //    foreach (BDString stringValue in strings)
+            //        cellString.Append(stringValue.value);
 
-            // fetch the antimicrobial name listing table
-            BDNode nameTable = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(@"13acf8a8-6f81-4ba1-a5ca-620dc978596b"));
-            if (nameTable.name == "Antimicrobial Formulary and Generic / Trade Name Listing")
-            {
-                List<BDNode> nameTableSections = BDNode.RetrieveNodesForParentIdAndChildNodeType(dataContext, nameTable.Uuid, BDConstants.BDNodeType.BDSection);
-                foreach (BDNode tableSection in nameTableSections)
-                {
-                    List<BDNode> subsections = BDNode.RetrieveNodesForParentIdAndChildNodeType(dataContext, tableSection.Uuid, BDConstants.BDNodeType.BDSubsection);
-                    BDUtilities.ResetLayoutVariantInTable3RowsForParent(dataContext, tableSection, BDConstants.LayoutVariantType.Antibiotics_NameListing);
-                    tableSection.LayoutVariant = nameTable.LayoutVariant;
-                    BDNode.Save(dataContext, tableSection);
-                    foreach (BDNode subsection in subsections)
-                    {
-                        BDUtilities.ResetLayoutVariantInTable3RowsForParent(dataContext, subsection, BDConstants.LayoutVariantType.Antibiotics_NameListing);
-                        subsection.LayoutVariant = nameTable.LayoutVariant;
-                        BDNode.Save(dataContext, subsection);
-                    }
-                }
-                // reset header rows
-                BDUtilities.ResetLayoutVariantInTable3RowsForParent(dataContext, nameTable, BDConstants.LayoutVariantType.Antibiotics_NameListing);
-            }
+            //    cell.value = cellString.ToString();
+            //    BDTableCell.Save(dataContext, cell);
+            //}
 
-            // move Adults > SSTI > Fournier's Gangrene to presentation level of Rapidly progressive SSTI
-            BDUtilities.MoveNodeToParentSibling(dataContext, Guid.Parse(@"9e322d09-ae3d-41a2-b7c9-c6ef706bc986"), Guid.Parse(@"6e4c8849-ad12-4b5f-b5fc-5fc53288cfad"), "SINGLE PRESENTATION", BDConstants.BDNodeType.BDPresentation);
+            //// fetch the antimicrobial name listing table
+            //BDNode nameTable = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(@"13acf8a8-6f81-4ba1-a5ca-620dc978596b"));
+            //if (nameTable.name == "Antimicrobial Formulary and Generic / Trade Name Listing")
+            //{
+            //    List<BDNode> nameTableSections = BDNode.RetrieveNodesForParentIdAndChildNodeType(dataContext, nameTable.Uuid, BDConstants.BDNodeType.BDSection);
+            //    // Adjust layout variant for children
+            //    foreach (BDNode tableSection in nameTableSections)
+            //    {
+            //        List<BDNode> subsections = BDNode.RetrieveNodesForParentIdAndChildNodeType(dataContext, tableSection.Uuid, BDConstants.BDNodeType.BDSubsection);
+            //        BDUtilities.ResetLayoutVariantInTable3RowsForParent(dataContext, tableSection, BDConstants.LayoutVariantType.Antibiotics_NameListing);
+            //        tableSection.LayoutVariant = nameTable.LayoutVariant;
+            //        BDNode.Save(dataContext, tableSection);
+            //        foreach (BDNode subsection in subsections)
+            //        {
+            //            BDUtilities.ResetLayoutVariantInTable3RowsForParent(dataContext, subsection, BDConstants.LayoutVariantType.Antibiotics_NameListing);
+            //            subsection.LayoutVariant = nameTable.LayoutVariant;
+            //            BDNode.Save(dataContext, subsection);
+            //        }
+            //    }
+            //    // reset header rows
+            //    BDUtilities.ResetLayoutVariantInTable3RowsForParent(dataContext, nameTable, BDConstants.LayoutVariantType.Antibiotics_NameListing);
+            //}
 
-            // move Adults > SSTI > Gas Gangrene to presentation level of Rapidly progressive SSTI
-            BDUtilities.MoveNodeToParentSibling(dataContext, Guid.Parse(@"e10f7eb9-66d5-4225-b01e-06a0acefe34c"), Guid.Parse(@"6e4c8849-ad12-4b5f-b5fc-5fc53288cfad"), "SINGLE PRESENTATION", BDConstants.BDNodeType.BDPresentation);
+            //// move Adults > SSTI > Fournier's Gangrene to presentation level of Rapidly progressive SSTI
+            //BDUtilities.MoveNodeToParentSibling(dataContext, Guid.Parse(@"9e322d09-ae3d-41a2-b7c9-c6ef706bc986"), Guid.Parse(@"6e4c8849-ad12-4b5f-b5fc-5fc53288cfad"), "SINGLE PRESENTATION", BDConstants.BDNodeType.BDPresentation);
+
+            //// move Adults > SSTI > Gas Gangrene to presentation level of Rapidly progressive SSTI
+            //BDUtilities.MoveNodeToParentSibling(dataContext, Guid.Parse(@"e10f7eb9-66d5-4225-b01e-06a0acefe34c"), Guid.Parse(@"6e4c8849-ad12-4b5f-b5fc-5fc53288cfad"), "SINGLE PRESENTATION", BDConstants.BDNodeType.BDPresentation);
+
+            // fetch the antimicrobial stepdown table
+            //BDNode nameTable = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(@"45301fa9-55ac-4c8f-95f0-1008016635c4"));
+            //if (nameTable.name == "Stepdown Recommendations")
+            //{
+            //    List<BDNode> nameTableSections = BDNode.RetrieveNodesForParentIdAndChildNodeType(dataContext, nameTable.Uuid, BDConstants.BDNodeType.BDTableSection);
+            //    // Adjust layout variant for children
+            //    foreach (BDNode tableSection in nameTableSections)
+            //    {
+            //        List<BDNode> subsections = BDNode.RetrieveNodesForParentIdAndChildNodeType(dataContext, tableSection.Uuid, BDConstants.BDNodeType.BDSubsection);
+            //        BDUtilities.ResetLayoutVariantInTable5RowsForParent(dataContext, tableSection, BDConstants.LayoutVariantType.Antibiotics_Stepdown);
+            //        tableSection.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Stepdown;
+            //        BDNode.Save(dataContext, tableSection);
+            //        foreach (BDNode subsection in subsections)
+            //        {
+            //            BDUtilities.ResetLayoutVariantInTable5RowsForParent(dataContext, subsection, BDConstants.LayoutVariantType.Antibiotics_Stepdown);
+            //            subsection.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Stepdown;
+            //            BDNode.Save(dataContext, subsection);
+            //        }
+            //    }
+            //    // reset header rows
+            //    BDUtilities.ResetLayoutVariantInTable5RowsForParent(dataContext, nameTable, BDConstants.LayoutVariantType.Antibiotics_Stepdown);
+            //}
         }
 
         private void btnShowLayoutEditor_Click(object sender, EventArgs e)

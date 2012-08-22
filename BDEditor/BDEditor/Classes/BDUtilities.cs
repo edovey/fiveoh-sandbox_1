@@ -338,6 +338,25 @@ namespace BDEditor.Classes
             }
         }
 
+        public static void ResetLayoutVariantInTable5RowsForParent(Entities pContext, BDNode pParentNode, BDConstants.LayoutVariantType pNewLayoutVariant)
+        {
+            List<BDTableRow> tableRows = BDTableRow.RetrieveTableRowsForParentId(pContext, pParentNode.Uuid);
+            pParentNode.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Stepdown;
+            BDNode.Save(pContext, pParentNode);
+            foreach (BDTableRow row in tableRows)
+            {
+                List<BDTableCell> nameTableCells = BDTableCell.RetrieveTableCellsForParentId(pContext, row.Uuid);
+                row.Name = string.Empty;
+                row.LayoutVariant = (row.LayoutVariant == BDConstants.LayoutVariantType.Table_5_Column_ContentRow ? BDConstants.LayoutVariantType.Antibiotics_Stepdown_ContentRow : BDConstants.LayoutVariantType.Antibiotics_Stepdown_HeaderRow);
+                BDTableRow.Save(pContext, row);
+                foreach (BDTableCell nameTableCell in nameTableCells)
+                {
+                    nameTableCell.LayoutVariant = row.LayoutVariant;
+                    BDTableCell.Save(pContext, nameTableCell);
+                }
+            }
+        }
+
         public static void MoveNodeToParentSibling(Entities pContext, Guid pNodeToMove, Guid pParentSibling, string nodeNameForRename, BDConstants.BDNodeType nodeTypeOfChildren)
         {
             BDNode parentSiblingNode = BDNode.RetrieveNodeWithId(pContext, pParentSibling);

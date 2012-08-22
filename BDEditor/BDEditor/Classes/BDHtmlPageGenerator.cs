@@ -290,8 +290,12 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_NameListing:
-                        case BDConstants.LayoutVariantType.Table_3_Column:
                             generatePageForAntibioticsNameListing(pContext, pNode as BDNode);
+                            isPageGenerated = true;
+                            break;
+                        case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
+                        case BDConstants.LayoutVariantType.Table_5_Column:
+                            generatePageForAntibioticsStepdown(pContext, pNode as BDNode);
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_PreOp:
@@ -857,6 +861,90 @@ private void generateShell(Entities pContext, BDNode pNode) {
                     }
                 }
                             bodyHTML.Append(@"</table>");
+            }
+
+            // inject Html into page html & save as a page to the database.
+            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
+            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
+            newPage.displayParentType = (int)pNode.NodeType;
+            newPage.displayParentId = pNode.Uuid;
+            newPage.documentText = pageHtml;
+            BDHtmlPage.Save(pContext, newPage);
+        }
+
+        private void generatePageForAntibioticsStepdown(Entities pContext, BDNode pNode)
+        {
+            // in the case where this method is called from the wrong node type 
+            if (pNode.NodeType != BDConstants.BDNodeType.BDTable)
+            {
+#if DEBUG
+                throw new InvalidOperationException();
+#else
+                return;
+#endif
+            }
+
+            StringBuilder bodyHTML = new StringBuilder();
+            StringBuilder footerHTML = new StringBuilder();
+
+            if (pNode.Name.Length > 0)
+                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
+
+            // insert overview text
+            string nodeOverviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
+            if (nodeOverviewHtml.Length > EMPTY_PARAGRAPH)
+                bodyHTML.Append(nodeOverviewHtml);
+
+            // show child nodes in a table
+            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
+            if (childNodes.Count > 0)
+            {
+                bodyHTML.Append(@"<table>");
+                foreach (IBDNode node in childNodes)
+                {
+                    if (node.NodeType == BDConstants.BDNodeType.BDTableRow)
+                    {
+                        BDTableRow row = node as BDTableRow;
+                        if (row != null)
+                            bodyHTML.Append(buildTableRowHtml(pContext, row));
+                    }
+                    else if (node.NodeType == BDConstants.BDNodeType.BDTableSection)
+                    {
+                        if (node.Name.Length > 0)
+                            bodyHTML.AppendFormat(@"<tr><td colspan = 5>{0}<td></tr>", node.Name);
+                        List<IBDNode> sectionChildren = BDFabrik.GetChildrenForParent(pContext, node);
+                        if (sectionChildren.Count > 0)
+                        {
+                            foreach (IBDNode sectionChild in sectionChildren)
+                            {
+                                if (sectionChild.NodeType == BDConstants.BDNodeType.BDTableSubsection)
+                                {
+                                    if (sectionChild.Name.Length > 0)
+                                    {
+                                        bodyHTML.AppendFormat(@"<tr><td colspan = 5>{0}<td></tr>", sectionChild.Name);
+                                        List<BDTableRow> rows = BDTableRow.RetrieveTableRowsForParentId(pContext, sectionChild.Uuid);
+                                        foreach (BDTableRow row in rows)
+                                            bodyHTML.Append(buildTableRowHtml(pContext, row));
+                                    }
+                                }
+                                else if (sectionChild.NodeType == BDConstants.BDNodeType.BDTableRow)
+                                {
+                                    BDTableRow row = sectionChild as BDTableRow;
+                                    if (row != null)
+                                        bodyHTML.Append(buildTableRowHtml(pContext, row));
+                                }
+                            }
+                        }
+
+                    }
+                    else if (node.NodeType == BDConstants.BDNodeType.BDTableSubsection)
+                    {
+                        //TODO:  Make fontsize smaller than section name
+                        if (node.Name.Length > 0)
+                            bodyHTML.AppendFormat(@"<tr><td colspan = 5>{0}<td></tr>", node.Name);
+                    }
+                }
+                bodyHTML.Append(@"</table>");
             }
 
             // inject Html into page html & save as a page to the database.
@@ -1575,6 +1663,7 @@ private void generateShell(Entities pContext, BDNode pNode) {
             {
                 switch (row.LayoutVariant)
                 {
+                    case BDConstants.LayoutVariantType.Antibiotics_NameListing_HeaderRow:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass_HeaderRow:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_HeaderRow:
                     case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity_HeaderRow:

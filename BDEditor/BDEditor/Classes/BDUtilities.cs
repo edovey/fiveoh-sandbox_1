@@ -318,5 +318,48 @@ namespace BDEditor.Classes
                 BDFabrik.SaveNode(pContext, pStartNode);
             }
         }
+
+        public static void ResetLayoutVariantInTable3RowsForParent(Entities pContext, BDNode pParentNode, BDConstants.LayoutVariantType pNewLayoutVariant)
+        {
+            List<BDTableRow> tableRows = BDTableRow.RetrieveTableRowsForParentId(pContext, pParentNode.Uuid);
+            pParentNode.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_NameListing;
+            BDNode.Save(pContext, pParentNode);
+            foreach (BDTableRow row in tableRows)
+            {
+                List<BDTableCell> nameTableCells = BDTableCell.RetrieveTableCellsForParentId(pContext, row.Uuid);
+                row.Name = string.Empty;
+                row.LayoutVariant = (row.LayoutVariant == BDConstants.LayoutVariantType.Table_3_Column_ContentRow ? BDConstants.LayoutVariantType.Antibiotics_NameListing_ContentRow : BDConstants.LayoutVariantType.Antibiotics_NameListing_HeaderRow);
+                BDTableRow.Save(pContext, row);
+                foreach (BDTableCell nameTableCell in nameTableCells)
+                {
+                    nameTableCell.LayoutVariant = row.LayoutVariant;
+                    BDTableCell.Save(pContext, nameTableCell);
+                }
+            }
+        }
+
+        public static void MoveNodeToParentSibling(Entities pContext, Guid pNodeToMove, Guid pParentSibling, string nodeNameForRename, BDConstants.BDNodeType nodeTypeOfChildren)
+        {
+            BDNode parentSiblingNode = BDNode.RetrieveNodeWithId(pContext, pParentSibling);
+
+            // move Adults > SSTI > Fournier's Gangrene to presentation level of Rapidly progressive SSTI
+            BDNode nodeToMove = BDNode.RetrieveNodeWithId(pContext, pNodeToMove);
+            //  find 'SINBLE PRESENTATION' and rename it with name of parent
+            List<BDNode> childrenToMove = BDNode.RetrieveNodesForParentIdAndChildNodeType(pContext, nodeToMove.Uuid, nodeTypeOfChildren);
+            foreach (BDNode childToMove in childrenToMove)
+            {
+                if (childToMove.Name == nodeNameForRename)
+                {
+                    {
+                        childToMove.name = nodeToMove.name;
+                        // change parent to parent's sibling
+                        childToMove.SetParent(parentSiblingNode);
+                        BDNode.Save(pContext, childToMove);
+                    }
+                }
+            }
+            // delete parent
+            BDNode.Delete(pContext, nodeToMove, false);
+        }
     }
 }

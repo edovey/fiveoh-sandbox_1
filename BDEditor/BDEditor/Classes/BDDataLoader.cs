@@ -1765,7 +1765,7 @@ namespace BDEditor.Classes
 //                    tableSection.LayoutVariant = BDConstants.LayoutVariantType.Table_3_Column;
 //                    BDNode.Save(dataContext, tableSection);
 
-//                    // do not reset table row counter - otherwise child rows will not sort correctly with header row
+//                    // do not reset table row counter - otherwise child tableRows will not sort correctly with header row
 //                    idxTableCell = 0;
 //                }
 //                else
@@ -1790,7 +1790,7 @@ namespace BDEditor.Classes
 //                    tableSubsection.LayoutVariant = BDConstants.LayoutVariantType.Table_3_Column;
 //                    BDNode.Save(dataContext, tableSubsection);
 
-//                    // do not reset table row counter - otherwise child rows will not sort correctly with header row
+//                    // do not reset table row counter - otherwise child tableRows will not sort correctly with header row
 //                    idxTableCell = 0;
 //                }
 //                else
@@ -2464,7 +2464,7 @@ namespace BDEditor.Classes
 //                    tableSection.LayoutVariant = BDConstants.LayoutVariantType.Table_3_Column;
 //                    BDNode.Save(dataContext, tableSection);
 
-//                    // do not reset table row counter - otherwise child rows will not sort correctly with header row
+//                    // do not reset table row counter - otherwise child tableRows will not sort correctly with header row
 //                    idxTableCell = 0;
 //                }
 //                else
@@ -5108,7 +5108,7 @@ namespace BDEditor.Classes
 //                    tableSection.LayoutVariant = tableSectionLayoutVariant;
 //                    BDNode.Save(dataContext, tableSection);
 
-//                    // do not reset table row counter - otherwise child rows will not sort correctly with header row
+//                    // do not reset table row counter - otherwise child tableRows will not sort correctly with header row
 //                    idxTableCell = 0;
 //                }
 //                else

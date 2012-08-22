@@ -1303,7 +1303,7 @@ namespace BDEditor.Views
         private void btnMove_Click(object sender, EventArgs e)
         {
             // These operations are CUSTOM, ** BY REQUEST ONLY **
-           
+
             // the following are complete, but left as samples.
             /*
             // move Pharyngitis to Respiratory
@@ -1317,7 +1317,7 @@ namespace BDEditor.Views
             //BDNode node = BDNode.RetrieveNodeWithId(dataContext, new Guid("f80d2660-66c0-4640-9d35-c4f90a369a97"));
             //BDUtilities.MoveNode(dataContext, node, "Gastroenteritis - Severe");
              */
-            
+
             //BDNode node = BDNode.RetrieveNodeWithId(dataContext, new Guid("10dce9db-6b5a-4249-b156-c86b18635852"));
             //node.parentId = new Guid("5ce93aff-137f-487b-8f8a-1e9076acc8cb");
             //node.parentKeyName = "BDDisease";
@@ -1374,27 +1374,27 @@ namespace BDEditor.Views
             //IBDNode startNode = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("879a8931-648f-4e16-9704-2d30ab0d76f9"));
             //BDUtilities.ResetLayoutVariantWithChildren(dataContext, startNode, BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected, true);
 
-           // //IBDNode startNode2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("874a2a14-c7c2-41dd-8799-80c13392441b"));
-           // //BDUtilities.ResetLayoutVariantWithChildren(dataContext, startNode2, BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected, true);
-           // exceptionList1 = new List<Guid>();
-           // //Move the "single presentation" children to the parent of the presentation
-           // BDUtilities.MoveAllChildrenExcept(dataContext, Guid.Parse("2af20800-f237-4e7c-b270-a91ea35f3d13"), Guid.Parse("9e322d09-ae3d-41a2-b7c9-c6ef706bc986"), exceptionList1);
-           // BDUtilities.MoveAllChildrenExcept(dataContext, Guid.Parse("77637ddd-81a6-4d9a-a92f-f7811c6e9446"), Guid.Parse("e10f7eb9-66d5-4225-b01e-06a0acefe34c"), exceptionList1);
+            // //IBDNode startNode2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("874a2a14-c7c2-41dd-8799-80c13392441b"));
+            // //BDUtilities.ResetLayoutVariantWithChildren(dataContext, startNode2, BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected, true);
+            // exceptionList1 = new List<Guid>();
+            // //Move the "single presentation" children to the parent of the presentation
+            // BDUtilities.MoveAllChildrenExcept(dataContext, Guid.Parse("2af20800-f237-4e7c-b270-a91ea35f3d13"), Guid.Parse("9e322d09-ae3d-41a2-b7c9-c6ef706bc986"), exceptionList1);
+            // BDUtilities.MoveAllChildrenExcept(dataContext, Guid.Parse("77637ddd-81a6-4d9a-a92f-f7811c6e9446"), Guid.Parse("e10f7eb9-66d5-4225-b01e-06a0acefe34c"), exceptionList1);
 
-           // //Move the children of (Adult) Necrotizing fasciitis/myositis down into the manually created topic
-           // exceptionList1 = new List<Guid>();
-           // exceptionList1.Add(Guid.Parse("1323d38a-2cd4-4f38-a976-09ce67dae5ec"));
-           // BDUtilities.MoveAllChildrenExcept(dataContext, Guid.Parse("9e2409c4-1ef0-49a9-ab20-887954f25ca0"), Guid.Parse("1323d38a-2cd4-4f38-a976-09ce67dae5ec"), exceptionList1);
+            // //Move the children of (Adult) Necrotizing fasciitis/myositis down into the manually created topic
+            // exceptionList1 = new List<Guid>();
+            // exceptionList1.Add(Guid.Parse("1323d38a-2cd4-4f38-a976-09ce67dae5ec"));
+            // BDUtilities.MoveAllChildrenExcept(dataContext, Guid.Parse("9e2409c4-1ef0-49a9-ab20-887954f25ca0"), Guid.Parse("1323d38a-2cd4-4f38-a976-09ce67dae5ec"), exceptionList1);
 
-           // //Move the children of (Child) Necrotizing fasciitis/myositis down into the manually created topic
-           // exceptionList1 = new List<Guid>();
-           // exceptionList1.Add(Guid.Parse("91da8752-752a-43de-a315-159e3baeb838"));
-           // BDUtilities.MoveAllChildrenExcept(dataContext, Guid.Parse("44e9114b-d3d5-4fa6-a56f-ce3eb346d6eb"), Guid.Parse("91da8752-752a-43de-a315-159e3baeb838"), exceptionList1);
+            // //Move the children of (Child) Necrotizing fasciitis/myositis down into the manually created topic
+            // exceptionList1 = new List<Guid>();
+            // exceptionList1.Add(Guid.Parse("91da8752-752a-43de-a315-159e3baeb838"));
+            // BDUtilities.MoveAllChildrenExcept(dataContext, Guid.Parse("44e9114b-d3d5-4fa6-a56f-ce3eb346d6eb"), Guid.Parse("91da8752-752a-43de-a315-159e3baeb838"), exceptionList1);
 
-           // // Manually change the nodeType and NodeKeyName from disease to presentation (5 - BDDisease) (6 - BDPresentation)
-           // // Manually change parent info from (3 - BDCategory) to (5 - BDDisease)
-           ////  9e322d09-ae3d-41a2-b7c9-c6ef706bc986	Synergistic necrotizing cellulitis, Fournier's gangrene	
-           ////  e10f7eb9-66d5-4225-b01e-06a0acefe34c	Gas gangrene
+            // // Manually change the nodeType and NodeKeyName from disease to presentation (5 - BDDisease) (6 - BDPresentation)
+            // // Manually change parent info from (3 - BDCategory) to (5 - BDDisease)
+            ////  9e322d09-ae3d-41a2-b7c9-c6ef706bc986	Synergistic necrotizing cellulitis, Fournier's gangrene	
+            ////  e10f7eb9-66d5-4225-b01e-06a0acefe34c	Gas gangrene
 
             // delete orphan table
             //BDNode.DeleteLocal(dataContext, Guid.Parse(@"5c75848a-bf64-45e5-93fe-670e8790a13c"));
@@ -1443,6 +1443,34 @@ namespace BDEditor.Views
                 cell.value = cellString.ToString();
                 BDTableCell.Save(dataContext, cell);
             }
+
+            // fetch the antimicrobial name listing table
+            BDNode nameTable = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(@"13acf8a8-6f81-4ba1-a5ca-620dc978596b"));
+            if (nameTable.name == "Antimicrobial Formulary and Generic / Trade Name Listing")
+            {
+                List<BDNode> nameTableSections = BDNode.RetrieveNodesForParentIdAndChildNodeType(dataContext, nameTable.Uuid, BDConstants.BDNodeType.BDSection);
+                foreach (BDNode tableSection in nameTableSections)
+                {
+                    List<BDNode> subsections = BDNode.RetrieveNodesForParentIdAndChildNodeType(dataContext, tableSection.Uuid, BDConstants.BDNodeType.BDSubsection);
+                    BDUtilities.ResetLayoutVariantInTable3RowsForParent(dataContext, tableSection, BDConstants.LayoutVariantType.Antibiotics_NameListing);
+                    tableSection.LayoutVariant = nameTable.LayoutVariant;
+                    BDNode.Save(dataContext, tableSection);
+                    foreach (BDNode subsection in subsections)
+                    {
+                        BDUtilities.ResetLayoutVariantInTable3RowsForParent(dataContext, subsection, BDConstants.LayoutVariantType.Antibiotics_NameListing);
+                        subsection.LayoutVariant = nameTable.LayoutVariant;
+                        BDNode.Save(dataContext, subsection);
+                    }
+                }
+                // reset header rows
+                BDUtilities.ResetLayoutVariantInTable3RowsForParent(dataContext, nameTable, BDConstants.LayoutVariantType.Antibiotics_NameListing);
+            }
+
+            // move Adults > SSTI > Fournier's Gangrene to presentation level of Rapidly progressive SSTI
+            BDUtilities.MoveNodeToParentSibling(dataContext, Guid.Parse(@"9e322d09-ae3d-41a2-b7c9-c6ef706bc986"), Guid.Parse(@"6e4c8849-ad12-4b5f-b5fc-5fc53288cfad"), "SINGLE PRESENTATION", BDConstants.BDNodeType.BDPresentation);
+
+            // move Adults > SSTI > Gas Gangrene to presentation level of Rapidly progressive SSTI
+            BDUtilities.MoveNodeToParentSibling(dataContext, Guid.Parse(@"e10f7eb9-66d5-4225-b01e-06a0acefe34c"), Guid.Parse(@"6e4c8849-ad12-4b5f-b5fc-5fc53288cfad"), "SINGLE PRESENTATION", BDConstants.BDNodeType.BDPresentation);
         }
 
         private void btnShowLayoutEditor_Click(object sender, EventArgs e)

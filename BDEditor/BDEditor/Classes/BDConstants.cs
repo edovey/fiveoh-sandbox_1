@@ -186,8 +186,14 @@ namespace BDEditor.Classes
             Antibiotics_Dosing_RenalImpairment = 205,
             [Description("Antibiotics Dosing in Hepatic Impairment")]
             Antibiotics_Dosing_HepaticImpairment = 206,
+
             [Description("Antibiotics Name Listing")]
             Antibiotics_NameListing = 207,
+            [Description("Antibiotics Name Listing Header Row")]
+            Antibiotics_NameListing_HeaderRow = 2071,
+            [Description("Antibiotics Name Listing Content Row")]
+            Antibiotics_NameListing_ContentRow = 2072,
+
             [Description("Antibiotics Stepdown Recommendations")]
             Antibiotics_Stepdown = 208,
             [Description("Antibiotics CSF Penetration")]

@@ -670,7 +670,6 @@ namespace BDEditor.Views
                 case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation15_Pneumonia:
                 case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
-                case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
                 case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis:
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
@@ -692,6 +691,23 @@ namespace BDEditor.Views
                     pnlMain.Controls.Remove(tbDuration2);
                     pnlMain.Controls.Remove(chkPreviousDuration2);
                     pnlMain.Controls.Remove(btnDuration2Link);
+                    break;
+                case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
+                    // remove dosage2, duration1, duration2
+                    pnlMain.Controls.Remove(tbDuration);
+                    pnlMain.Controls.Remove(chkPreviousDuration);
+                    pnlMain.Controls.Remove(btnDurationLink);
+                    pnlMain.Controls.Remove(tbDosage2);
+                    pnlMain.Controls.Remove(chkPreviousDose2);
+                    pnlMain.Controls.Remove(btnDosage2Link);
+                    pnlMain.Controls.Remove(tbDuration1);
+                    pnlMain.Controls.Remove(chkPreviousDuration1);
+                    pnlMain.Controls.Remove(btnDuration1Link);
+                    pnlMain.Controls.Remove(chkPreviousDuration2);
+                    pnlMain.Controls.Remove(btnDuration2Link);
+                    pnlMain.Controls.Remove(tbDuration2);
+                    toolTip1.SetToolTip(tbDosage, "Adult");
+                    toolTip1.SetToolTip(tbDosage1, "Paediatric");
                     break;
                 case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
                     // remove dosage2, duration1, duration2

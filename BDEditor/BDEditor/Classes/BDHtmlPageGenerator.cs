@@ -911,7 +911,7 @@ private void generateShell(Entities pContext, BDNode pNode) {
                     else if (node.NodeType == BDConstants.BDNodeType.BDTableSection)
                     {
                         if (node.Name.Length > 0)
-                            bodyHTML.AppendFormat(@"<tr><td colspan = 5>{0}<td></tr>", node.Name);
+                            bodyHTML.AppendFormat(@"<tr><td colspan = 5><i>{0}</i><td></tr>", node.Name);
                         List<IBDNode> sectionChildren = BDFabrik.GetChildrenForParent(pContext, node);
                         if (sectionChildren.Count > 0)
                         {

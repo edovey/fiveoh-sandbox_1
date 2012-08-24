@@ -36,6 +36,7 @@ namespace BDEditor.Classes.Navigation
                         case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
                         case BDConstants.LayoutVariantType.Antibiotics_NameListing:

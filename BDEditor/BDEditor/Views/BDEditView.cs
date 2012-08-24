@@ -432,6 +432,7 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                             case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
                             case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
+                            case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin:
                             case BDConstants.LayoutVariantType.Antibiotics_NameListing:
                             case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
                             case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
@@ -567,7 +568,7 @@ namespace BDEditor.Views
                                 }
                                 break;
                             case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
-                            case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
+                            case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin:
                             case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                                 childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
@@ -881,6 +882,7 @@ namespace BDEditor.Views
                         switch (node.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
+                            case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin:
                             case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
                             case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
                             case BDConstants.LayoutVariantType.Prophylaxis_Immunization_VaccineDetail:
@@ -1051,7 +1053,7 @@ namespace BDEditor.Views
 
             // Loading Seed Data:  set the following variables
             isSeedDataLoadAvailable = false;
-            bool moveButtonVisible = false;
+            bool moveButtonVisible = true;
 
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
@@ -1465,7 +1467,7 @@ namespace BDEditor.Views
             //            BDNode.Save(dataContext, subsection);
             //        }
             //    }
-            //    // reset header rows
+            //    // reset header tableChildren
             //    BDUtilities.ResetLayoutVariantInTable3RowsForParent(dataContext, nameTable, BDConstants.LayoutVariantType.Antibiotics_NameListing);
             //}
 
@@ -1494,9 +1496,12 @@ namespace BDEditor.Views
             //            BDNode.Save(dataContext, subsection);
             //        }
             //    }
-            //    // reset header rows
+            //    // reset header tableChildren
             //    BDUtilities.ResetLayoutVariantInTable5RowsForParent(dataContext, nameTable, BDConstants.LayoutVariantType.Antibiotics_Stepdown);
             //}
+
+            BDNode vancomycin = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(@"c42a29c2-f5a1-48a4-b140-3e4dae56b445"));
+            BDUtilities.ResetLayoutVariantWithChildren(dataContext, vancomycin, BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin, true);
         }
 
         private void btnShowLayoutEditor_Click(object sender, EventArgs e)

@@ -182,6 +182,8 @@ namespace BDEditor.Classes
             Antibiotics_DosingAndCosts = 203,
             [Description("Antibiotics Dosing and Monitoring")]
             Antibiotics_DosingAndMonitoring = 204,
+            [Description("Antibiotics Vancomycin Dosing and Monitoring")]
+            Antibiotics_DosingAndMonitoring_Vancomycin = 211,
             [Description("Antibiotics Dosing in Renal Impairment")]
             Antibiotics_Dosing_RenalImpairment = 205,
             [Description("Antibiotics Dosing in Hepatic Impairment")]

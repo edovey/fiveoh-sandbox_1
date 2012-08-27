@@ -195,6 +195,20 @@ namespace BDEditor.DataModel
             }
         }
 
+        /// <summary>
+        /// Retrieve all Search Entry Association Nodes
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <returns>List of BDSearchEntryAssociation objects.</returns>
+        public static List<IBDObject> RetrieveAll(Entities pContext)
+        {
+            List<IBDObject> entryList;
+            IQueryable<BDSearchEntryAssociation> entries = (from bdNodes in pContext.BDSearchEntryAssociations
+                                                    select bdNodes);
+            entryList = new List<IBDObject>(entries.ToList<BDSearchEntryAssociation>());
+            return entryList;
+        }
+
         public static List<BDSearchEntryAssociation> RetrieveSearchEntryAssociationsForDisplayParentId(Entities pContext, Guid? pDisplayParentId)
         {
             List<BDSearchEntryAssociation> resultList = new List<BDSearchEntryAssociation>();
@@ -272,19 +286,11 @@ namespace BDEditor.DataModel
             return entryList;
         }
 
-        public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime? pCurrentSyncDate)
+        public static SyncInfo SyncInfo(Entities pDataContext)
         {
-            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, CREATEDDATE, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
-            syncInfo.PushList = BDSearchEntryAssociation.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN,  AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
+            syncInfo.PushList = BDSearchEntryAssociation.RetrieveAll(pDataContext);
             syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
-            if ((null != pCurrentSyncDate) && (!BDCommon.Settings.RepositoryOverwriteEnabled))
-            {
-                for (int idx = 0; idx < syncInfo.PushList.Count; idx++)
-                {
-                    ((BDSearchEntryAssociation)syncInfo.PushList[idx]).createdDate = pCurrentSyncDate;
-                }
-                if (syncInfo.PushList.Count > 0) { pDataContext.SaveChanges(); }
-            }
             return syncInfo;
         }
 

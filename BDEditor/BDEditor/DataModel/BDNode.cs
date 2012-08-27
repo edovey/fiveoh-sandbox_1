@@ -193,6 +193,21 @@ namespace BDEditor.DataModel
             }
         }
 
+        public static bool HasHtmlPage(Entities pContext, BDNode pNode)
+        {
+            Guid parentPageId = Guid.Empty;
+            if (pNode != null)
+                parentPageId = pNode.uuid;
+            bool returnValue = false;
+            IQueryable<BDHtmlPage> entries = (from entry in pContext.BDHtmlPages
+                                          where entry.displayParentId == parentPageId
+                                          select entry);
+            if (entries.Count<BDHtmlPage>() > 0)
+                returnValue = true;
+            return returnValue;
+
+        }
+
         /// <summary>
         /// Retrieve Node with the specified ID
         /// </summary>

@@ -178,11 +178,11 @@ namespace BDEditor.DataModel
             return entries.ToList<BDAttachment>();
         }
 
-        public static List<BDAttachment> RetrieveAll(Entities pContext)
+        public static List<IBDObject> RetrieveAll(Entities pContext)
         {
             IQueryable<BDAttachment> entries = (from entry in pContext.BDAttachments
                        select entry);
-            return entries.ToList<BDAttachment>();
+            return entries.ToList<BDAttachment>().ToList<IBDObject>();
         }
 
         protected override void OnPropertyChanged(string property)
@@ -244,6 +244,14 @@ namespace BDEditor.DataModel
                 }
                 if (syncInfo.PushList.Count > 0) { pDataContext.SaveChanges(); }
             }
+            return syncInfo;
+        }
+
+        public static SyncInfo SyncInfo(Entities pDataContext)
+        {
+            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, MODIFIEDDATE, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
+            syncInfo.PushList = BDAttachment.RetrieveAll(pDataContext);
+            syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
             return syncInfo;
         }
 

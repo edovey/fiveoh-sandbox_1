@@ -75,16 +75,17 @@ namespace BDEditor.Classes
             }
         }
 
-        private SyncInfoDictionary InitializeSyncDictionary(Entities pDataContext, DateTime? pLastSyncDate, DateTime? pCurrentSyncDate, Boolean pCreateMissing, BDConstants.SyncType pSyncType)
+        private SyncInfoDictionary InitializeSyncDictionary(Entities pDataContext, Boolean pCreateMissing, BDConstants.SyncType pSyncType)
         {
             SyncInfoDictionary syncDictionary = new SyncInfoDictionary();
 
             if (pSyncType == BDConstants.SyncType.Publish)
             {
-                syncDictionary.Add(BDNode.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
-                syncDictionary.Add(BDHtmlPage.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
-//                syncDictionary.Add(BDSearchEntry.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
-//                syncDictionary.Add(BDSearchEntryAssociation.SyncInfo(pDataContext, pLastSyncDate, pCurrentSyncDate));
+                syncDictionary.Add(BDNavigationNode.SyncInfo(pDataContext));
+                syncDictionary.Add(BDHtmlPage.SyncInfo(pDataContext));
+//                syncDictionary.Add(BDSearchEntry.SyncInfo(pDataContext));
+//                syncDictionary.Add(BDSearchEntryAssociation.SyncInfo(pDataContext));
+                syncDictionary.Add(BDAttachment.SyncInfo(pDataContext));
             }
 
             // List the remote domains
@@ -136,7 +137,6 @@ namespace BDEditor.Classes
                                 syncInfoEntry.Exception = ex2;
                                 System.Diagnostics.Debug.WriteLine(string.Format("Failed (2nd) to created domain for {0}", syncInfoEntry.RemoteEntityName));
                             }
-
                         }
                     }
                 }
@@ -157,7 +157,7 @@ namespace BDEditor.Classes
             DateTime? currentSyncDate = DateTime.Now;
 
             // Create the SyncInfo instance and update the modified date of all the changed records to be the currentSyncDate
-            SyncInfoDictionary syncDictionary = InitializeSyncDictionary(pDataContext, pLastSyncDate, currentSyncDate, true, pSyncType);
+            SyncInfoDictionary syncDictionary = InitializeSyncDictionary(pDataContext,true, pSyncType);
 
             if (BDCommon.Settings.SyncPushEnabled)
             {
@@ -166,7 +166,7 @@ namespace BDEditor.Classes
                 // clear the remote tables / entities; clear all pages from S3
                 DeleteRemoteHTMLPages(pDataContext);
                 DeleteRemoteSearch();
-                DeleteRemoteNodes();
+                DeleteRemoteNavigationNodes();
                 #endregion
 
                 foreach (SyncInfo syncInfoEntry in syncDictionary.Values)
@@ -221,16 +221,16 @@ namespace BDEditor.Classes
         }
         #endregion
 
-        public void DeleteRemoteNodes()
+        public void DeleteRemoteNavigationNodes()
         {
             try
             {
-                DeleteDomainRequest saRequest = new DeleteDomainRequest().WithDomainName(BDNode.AWS_DOMAIN);
+                DeleteDomainRequest saRequest = new DeleteDomainRequest().WithDomainName(BDNavigationNode.AWS_DOMAIN);
                 SimpleDb.DeleteDomain(saRequest);
 
-                CreateDomainRequest createDomainRequest = (new CreateDomainRequest()).WithDomainName(BDNode.AWS_DOMAIN);
+                CreateDomainRequest createDomainRequest = (new CreateDomainRequest()).WithDomainName(BDNavigationNode.AWS_DOMAIN);
                 CreateDomainResponse createResponse = simpleDb.CreateDomain(createDomainRequest);
-                System.Diagnostics.Debug.WriteLine("Remote Nodes Deleted");
+                System.Diagnostics.Debug.WriteLine("Remote Navigation Nodes Deleted");
             }
             catch (AmazonS3Exception amazonS3Exception)
             {

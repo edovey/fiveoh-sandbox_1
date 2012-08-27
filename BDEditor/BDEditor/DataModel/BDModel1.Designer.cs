@@ -448,6 +448,22 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDLinkedNoteAssociation> _BDLinkedNoteAssociations;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDNavigationNode> BDNavigationNodes
+        {
+            get
+            {
+                if ((_BDNavigationNodes == null))
+                {
+                    _BDNavigationNodes = base.CreateObjectSet<BDNavigationNode>("BDNavigationNodes");
+                }
+                return _BDNavigationNodes;
+            }
+        }
+        private ObjectSet<BDNavigationNode> _BDNavigationNodes;
 
         #endregion
         #region AddTo Methods
@@ -642,6 +658,14 @@ namespace BDEditor.DataModel
         public void AddToBDLinkedNoteAssociations(BDLinkedNoteAssociation bDLinkedNoteAssociation)
         {
             base.AddObject("BDLinkedNoteAssociations", bDLinkedNoteAssociation);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDNavigationNodes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDNavigationNodes(BDNavigationNode bDNavigationNode)
+        {
+            base.AddObject("BDNavigationNodes", bDNavigationNode);
         }
 
         #endregion
@@ -5172,6 +5196,277 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Int32> _itemType;
         partial void OnitemTypeChanging(Nullable<global::System.Int32> value);
         partial void OnitemTypeChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="BDDataModel", Name="BDNavigationNode")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class BDNavigationNode : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new BDNavigationNode object.
+        /// </summary>
+        /// <param name="uuid">Initial value of the uuid property.</param>
+        public static BDNavigationNode CreateBDNavigationNode(global::System.Guid uuid)
+        {
+            BDNavigationNode bDNavigationNode = new BDNavigationNode();
+            bDNavigationNode.uuid = uuid;
+            return bDNavigationNode;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid uuid
+        {
+            get
+            {
+                return _uuid;
+            }
+            set
+            {
+                if (_uuid != value)
+                {
+                    OnuuidChanging(value);
+                    ReportPropertyChanging("uuid");
+                    _uuid = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("uuid");
+                    OnuuidChanged();
+                }
+            }
+        }
+        private global::System.Guid _uuid;
+        partial void OnuuidChanging(global::System.Guid value);
+        partial void OnuuidChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> displayOrder
+        {
+            get
+            {
+                return _displayOrder;
+            }
+            set
+            {
+                OndisplayOrderChanging(value);
+                ReportPropertyChanging("displayOrder");
+                _displayOrder = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("displayOrder");
+                OndisplayOrderChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _displayOrder;
+        partial void OndisplayOrderChanging(Nullable<global::System.Int32> value);
+        partial void OndisplayOrderChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                OnnameChanging(value);
+                ReportPropertyChanging("name");
+                _name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("name");
+                OnnameChanged();
+            }
+        }
+        private global::System.String _name;
+        partial void OnnameChanging(global::System.String value);
+        partial void OnnameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String nodeKeyName
+        {
+            get
+            {
+                return _nodeKeyName;
+            }
+            set
+            {
+                OnnodeKeyNameChanging(value);
+                ReportPropertyChanging("nodeKeyName");
+                _nodeKeyName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("nodeKeyName");
+                OnnodeKeyNameChanged();
+            }
+        }
+        private global::System.String _nodeKeyName;
+        partial void OnnodeKeyNameChanging(global::System.String value);
+        partial void OnnodeKeyNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> nodeType
+        {
+            get
+            {
+                return _nodeType;
+            }
+            set
+            {
+                OnnodeTypeChanging(value);
+                ReportPropertyChanging("nodeType");
+                _nodeType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("nodeType");
+                OnnodeTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _nodeType;
+        partial void OnnodeTypeChanging(Nullable<global::System.Int32> value);
+        partial void OnnodeTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> schemaVersion
+        {
+            get
+            {
+                return _schemaVersion;
+            }
+            set
+            {
+                OnschemaVersionChanging(value);
+                ReportPropertyChanging("schemaVersion");
+                _schemaVersion = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("schemaVersion");
+                OnschemaVersionChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _schemaVersion;
+        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
+        partial void OnschemaVersionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> parentType
+        {
+            get
+            {
+                return _parentType;
+            }
+            set
+            {
+                OnparentTypeChanging(value);
+                ReportPropertyChanging("parentType");
+                _parentType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("parentType");
+                OnparentTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _parentType;
+        partial void OnparentTypeChanging(Nullable<global::System.Int32> value);
+        partial void OnparentTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String parentKeyName
+        {
+            get
+            {
+                return _parentKeyName;
+            }
+            set
+            {
+                OnparentKeyNameChanging(value);
+                ReportPropertyChanging("parentKeyName");
+                _parentKeyName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("parentKeyName");
+                OnparentKeyNameChanged();
+            }
+        }
+        private global::System.String _parentKeyName;
+        partial void OnparentKeyNameChanging(global::System.String value);
+        partial void OnparentKeyNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> layoutVariant
+        {
+            get
+            {
+                return _layoutVariant;
+            }
+            set
+            {
+                OnlayoutVariantChanging(value);
+                ReportPropertyChanging("layoutVariant");
+                _layoutVariant = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("layoutVariant");
+                OnlayoutVariantChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _layoutVariant;
+        partial void OnlayoutVariantChanging(Nullable<global::System.Int32> value);
+        partial void OnlayoutVariantChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Guid> parentId
+        {
+            get
+            {
+                return _parentId;
+            }
+            set
+            {
+                OnparentIdChanging(value);
+                ReportPropertyChanging("parentId");
+                _parentId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("parentId");
+                OnparentIdChanged();
+            }
+        }
+        private Nullable<global::System.Guid> _parentId;
+        partial void OnparentIdChanging(Nullable<global::System.Guid> value);
+        partial void OnparentIdChanged();
 
         #endregion
     

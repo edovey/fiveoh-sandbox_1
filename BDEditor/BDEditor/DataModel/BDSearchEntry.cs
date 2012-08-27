@@ -138,6 +138,21 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
+        /// Retrieve all SearchEntry Nodes
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <returns>List of BDNavigationNode objects.</returns>
+        public static List<IBDObject> RetrieveAll(Entities pContext)
+        {
+            List<IBDObject> entryList;
+            IQueryable<BDSearchEntry> entries = (from bdNodes in pContext.BDSearchEntries
+                                                    select bdNodes);
+            entryList = new List<IBDObject>(entries.ToList<BDSearchEntry>());
+            return entryList;
+        }
+
+
+        /// <summary>
         /// Return the LinkedNote for the uuid. Returns null if not found.
         /// </summary>
         /// <param name="pContext"></param>
@@ -184,19 +199,11 @@ namespace BDEditor.DataModel
             return entryList;
         }
 
-        public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime? pCurrentSyncDate)
+        public static SyncInfo SyncInfo(Entities pDataContext)
         {
-            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, CREATEDDATE, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
-            syncInfo.PushList = BDSearchEntry.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+            SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
+            syncInfo.PushList = BDSearchEntry.RetrieveAll(pDataContext);
             syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
-            if ((null != pCurrentSyncDate) && (!BDCommon.Settings.RepositoryOverwriteEnabled))
-            {
-                for (int idx = 0; idx < syncInfo.PushList.Count; idx++)
-                {
-                    ((BDSearchEntry)syncInfo.PushList[idx]).createdDate = pCurrentSyncDate;
-                }
-                if (syncInfo.PushList.Count > 0) { pDataContext.SaveChanges(); }
-            }
             return syncInfo;
         }
 

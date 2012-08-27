@@ -165,6 +165,13 @@ namespace BDEditor.DataModel
             return entryList;
         }
 
+
+        public static List<IBDObject> RetrieveAllAsIBDObject(Entities pContext)
+        {
+            return RetrieveAll(pContext).ToList<IBDObject>();
+
+        }
+
         public static List<Guid> RetrieveAllIDs(Entities pContext)
         {
             IQueryable<Guid> pages = (from entry in pContext.BDHtmlPages
@@ -208,19 +215,11 @@ namespace BDEditor.DataModel
             return entryList;
         }
 
-        public static SyncInfo SyncInfo(Entities pDataContext, DateTime? pLastSyncDate, DateTime? pCurrentSyncDate)
+        public static SyncInfo SyncInfo(Entities pDataContext)
         {
             SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, CREATEDDATE, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
-            syncInfo.PushList = BDHtmlPage.GetEntriesUpdatedSince(pDataContext, pLastSyncDate);
+            syncInfo.PushList = BDHtmlPage.RetrieveAllAsIBDObject(pDataContext);
             syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
-            if ((null != pCurrentSyncDate) && (!BDCommon.Settings.RepositoryOverwriteEnabled))
-            {
-                for (int idx = 0; idx < syncInfo.PushList.Count; idx++)
-                {
-                    ((BDHtmlPage)syncInfo.PushList[idx]).createdDate = pCurrentSyncDate;
-                }
-                if (syncInfo.PushList.Count > 0) { pDataContext.SaveChanges(); }
-            }
             return syncInfo;
         }
 

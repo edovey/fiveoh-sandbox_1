@@ -49,26 +49,20 @@ namespace BDEditor.Classes
             PushList = new List<DataModel.IBDObject>();
         }
 
-        public string GetLatestRemoteSelectString(DateTime? pLastSyncDate)
+        public SyncInfo(string pRemoteEntityName, string pRemoteProductionEntityName, string pRemoteDevelopmentPropertyName)
         {
-            return GetLatestRemoteSelectString(pLastSyncDate, RemoteEntityName);
+            FriendlyName = pRemoteEntityName;
+            RemoteEntityName = pRemoteEntityName;
+            RemoteProductionEntityName = pRemoteProductionEntityName;
+            RemoteDevelopmentEntityName = pRemoteDevelopmentPropertyName;
+            RowsPulled = 0;
+            RowsPushed = 0;
+            ExistsOnRemoteProduction = false;
+            ExistsOnRemoteDevelopment = false;
+            ExistsOnRemote = false;
+            SyncConflictList = new List<AttributeDictionary>();
+            Exception = null;
+            PushList = new List<DataModel.IBDObject>();
         }
-
-        public string GetLatestRemoteSelectString(DateTime? pLastSyncDate, string pRemoteEntityName)
-        {
-            string selectStatement = string.Empty; ;
-
-            if (null == pLastSyncDate)
-            {
-                selectStatement = string.Format(@"Select * from {0}", pRemoteEntityName);
-            }
-            else
-            {
-                selectStatement = string.Format(@"Select * from {0} where {1} > '{2}'", pRemoteEntityName, ModifiedDatePropertyName, pLastSyncDate.Value.ToString(BDConstants.DATETIMEFORMAT));
-            }
-
-            return selectStatement;
-        }
-
     }
 }

@@ -101,7 +101,10 @@ namespace BDEditor.Views
         }
 
         public void ShowLinksInUse(bool pPropagateToChildren)
-        {        }     
+        {
+            List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentNode) ? this.currentNode.Uuid : Guid.Empty);
+            btnLinkedNote.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnLinkedNote.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
+        }     
         
         public void AssignScopeId(Guid? pScopeId)
         {
@@ -327,6 +330,8 @@ namespace BDEditor.Views
 
         private void BDTableCellControl_Load(object sender, EventArgs e)
         {
+            btnLinkedNote.Tag = BDTableCell.PROPERTYNAME_CONTENTS;
+
             BDTableCell cell = currentNode as BDTableCell;
             if (cell != null)
                 rtbValue.Text = cell.value;

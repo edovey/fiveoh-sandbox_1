@@ -1383,12 +1383,12 @@ namespace BDEditor.Views
             // BDUtilities.MoveAllChildrenExcept(dataContext, Guid.Parse("2af20800-f237-4e7c-b270-a91ea35f3d13"), Guid.Parse("9e322d09-ae3d-41a2-b7c9-c6ef706bc986"), exceptionList1);
             // BDUtilities.MoveAllChildrenExcept(dataContext, Guid.Parse("77637ddd-81a6-4d9a-a92f-f7811c6e9446"), Guid.Parse("e10f7eb9-66d5-4225-b01e-06a0acefe34c"), exceptionList1);
 
-            // //Move the children of (Adult) Necrotizing fasciitis/myositis down into the manually created topic
+            // //Move the children of (Adult) Necrotizing fasciitis/myositis down into the manually created subsection
             // exceptionList1 = new List<Guid>();
             // exceptionList1.Add(Guid.Parse("1323d38a-2cd4-4f38-a976-09ce67dae5ec"));
             // BDUtilities.MoveAllChildrenExcept(dataContext, Guid.Parse("9e2409c4-1ef0-49a9-ab20-887954f25ca0"), Guid.Parse("1323d38a-2cd4-4f38-a976-09ce67dae5ec"), exceptionList1);
 
-            // //Move the children of (Child) Necrotizing fasciitis/myositis down into the manually created topic
+            // //Move the children of (Child) Necrotizing fasciitis/myositis down into the manually created subsection
             // exceptionList1 = new List<Guid>();
             // exceptionList1.Add(Guid.Parse("91da8752-752a-43de-a315-159e3baeb838"));
             // BDUtilities.MoveAllChildrenExcept(dataContext, Guid.Parse("44e9114b-d3d5-4fa6-a56f-ce3eb346d6eb"), Guid.Parse("91da8752-752a-43de-a315-159e3baeb838"), exceptionList1);

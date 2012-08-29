@@ -702,6 +702,26 @@ namespace BDEditor.Views
                 MessageBox.Show("Please select the text to be linked.", "No Text Selected");
         }
 
+        private void toolStripButton12_Click(object sender, EventArgs e)
+        {
+            textControl.Selection.Text = "↑";
+        }
+
+        private void toolStripButton13_Click(object sender, EventArgs e)
+        {
+            textControl.Selection.Text = "↓";
+        }
+
+        private void toolStripButton14_Click(object sender, EventArgs e)
+        {
+            textControl.Selection.Text = "→";
+        }
+
+        private void toolStripButton15_Click(object sender, EventArgs e)
+        {
+            textControl.Selection.Text = "←";
+        }
+
         private void textControl_HypertextLinkClicked(object sender, TXTextControl.HypertextLinkEventArgs e)
         {
             TXTextControl.HypertextLink link = textControl.HypertextLinks.GetItem();

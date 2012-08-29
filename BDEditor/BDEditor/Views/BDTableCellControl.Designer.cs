@@ -214,6 +214,7 @@
             this.btnLinkedNote.Size = new System.Drawing.Size(28, 28);
             this.btnLinkedNote.TabIndex = 0;
             this.btnLinkedNote.UseVisualStyleBackColor = true;
+            this.btnLinkedNote.Click += new System.EventHandler(this.btnLinkedNote_Click);
             // 
             // pnlButton
             // 

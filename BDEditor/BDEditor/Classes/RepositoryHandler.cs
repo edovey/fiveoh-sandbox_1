@@ -85,7 +85,7 @@ namespace BDEditor.Classes
                 syncDictionary.Add(BDHtmlPage.SyncInfo(pDataContext));
 //                syncDictionary.Add(BDSearchEntry.SyncInfo(pDataContext));
 //                syncDictionary.Add(BDSearchEntryAssociation.SyncInfo(pDataContext));
-                syncDictionary.Add(BDAttachment.SyncInfo(pDataContext));
+//                syncDictionary.Add(BDAttachment.SyncInfo(pDataContext));
             }
 
             // List the remote domains
@@ -164,9 +164,10 @@ namespace BDEditor.Classes
                 #region Purge Remote
 
                 // clear the remote tables / entities; clear all pages from S3
-                DeleteRemoteHTMLPages(pDataContext);
-                DeleteRemoteSearch();
+                DeleteRemoteHTMLPages();
+                //DeleteRemoteSearch();
                 DeleteRemoteNavigationNodes();
+                //DeleteRemoteAttachments();
                 #endregion
 
                 foreach (SyncInfo syncInfoEntry in syncDictionary.Values)
@@ -289,7 +290,7 @@ namespace BDEditor.Classes
 
         }
 
-        public void DeleteRemoteHTMLPages(Entities pContext)
+        public void DeleteRemoteHTMLPages()
         {
             try
             {
@@ -361,6 +362,100 @@ namespace BDEditor.Classes
             try
             {
                 CreateDomainRequest createDomainRequest = (new CreateDomainRequest()).WithDomainName(BDHtmlPage.AWS_DOMAIN);
+                CreateDomainResponse createResponse = simpleDb.CreateDomain(createDomainRequest);
+            }
+            catch (AmazonS3Exception amazonS3Exception)
+            {
+                if (amazonS3Exception.ErrorCode != null &&
+                                    (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId")
+                                    ||
+                                    amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
+                {
+                    Console.WriteLine("Check the provided AWS Credentials.");
+                    Console.WriteLine(
+                    "To sign up for service, go to http://aws.amazon.com/s3");
+                }
+                else
+                {
+                    Console.WriteLine(
+                     "Error occurred. Message:'{0}' when listing objects",
+                     amazonS3Exception.Message);
+                }
+            }
+        }
+
+        public void DeleteRemoteAttachments()
+        {
+            try
+            {
+                DeleteObjectsRequest s3DeleteAttachments = new DeleteObjectsRequest()
+                    .WithBucketName(BDAttachment.AWS_BUCKET);
+                ListObjectsRequest request = new ListObjectsRequest().WithBucketName(BDAttachment.AWS_BUCKET).WithPrefix(@"bd~");
+
+                do
+                {
+                    ListObjectsResponse response = S3.ListObjects(request);
+
+                    foreach (S3Object entry in response.S3Objects)
+                    {
+                        s3DeleteAttachments.AddKey(entry.Key);
+                    }
+
+                    if (s3DeleteAttachments.Keys.Count > 0)
+                    {
+                        try
+                        {
+                            S3.DeleteObjects(s3DeleteAttachments);
+                        }
+                        catch (DeleteObjectsException e)
+                        {
+                            var errorResponse = e.ErrorResponse;
+                            Console.WriteLine("No. of objects successfully deleted = {0}", errorResponse.DeletedObjects.Count);
+                            Console.WriteLine("No. of objects failed to delete = {0}", errorResponse.DeleteErrors.Count);
+                            Console.WriteLine("Printing error data...");
+                            foreach (DeleteError deleteError in errorResponse.DeleteErrors)
+                            {
+                                Console.WriteLine("Object Key: {0}\t{1}\t{2}", deleteError.Key, deleteError.Code, deleteError.Message);
+                            }
+                        }
+                    }
+                    DeleteDomainRequest htDomain = new DeleteDomainRequest().WithDomainName(BDAttachment.AWS_DOMAIN);
+                    SimpleDb.DeleteDomain(htDomain);
+
+                    if (response.IsTruncated)
+                    {
+                        request.Marker = response.NextMarker;
+                    }
+                    else
+                    {
+                        request = null;
+                    }
+                } while (request != null);
+                System.Diagnostics.Debug.WriteLine("Remote Attachments Deleted");
+            }
+
+            catch (AmazonS3Exception amazonS3Exception)
+            {
+                if (amazonS3Exception.ErrorCode != null &&
+                                    (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId")
+                                    ||
+                                    amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
+                {
+                    Console.WriteLine("Check the provided AWS Credentials.");
+                    Console.WriteLine(
+                    "To sign up for service, go to http://aws.amazon.com/s3");
+                }
+                else
+                {
+                    Console.WriteLine(
+                     "Error occurred. Message:'{0}' when listing objects",
+                     amazonS3Exception.Message);
+                }
+            }
+
+            try
+            {
+                CreateDomainRequest createDomainRequest = (new CreateDomainRequest()).WithDomainName(BDAttachment.AWS_DOMAIN);
                 CreateDomainResponse createResponse = simpleDb.CreateDomain(createDomainRequest);
             }
             catch (AmazonS3Exception amazonS3Exception)

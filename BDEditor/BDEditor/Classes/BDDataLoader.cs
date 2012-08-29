@@ -89,7 +89,7 @@ namespace BDEditor.Classes
 //        BDNode dosageGroup;
 //        BDDosage dosage;
 //        BDNode subsection;
-//        BDNode topic;
+//        BDNode subsection;
 //        BDNode subtopic;
 //        BDTherapyGroup therapyGroup;
 //        BDTherapy therapy;
@@ -748,7 +748,7 @@ namespace BDEditor.Classes
 //                category = null;
 //                disease = null;
 //                pathogen = null;
-//                topic = null;
+//                subsection = null;
 
 //                idxSection = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
 //                idxCategory = 0;
@@ -777,7 +777,7 @@ namespace BDEditor.Classes
 //                category = null;
 //                    disease = null;
 //                    pathogen = null;
-//                    topic = null;
+//                    subsection = null;
 //                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
 //                idxDisease = 0;
 //                idxPathogen = 0;
@@ -802,7 +802,7 @@ namespace BDEditor.Classes
 //                }
 //                disease = null;
 //                pathogen = null;
-//                topic = null;
+//                subsection = null;
 
 //                idxDisease = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, category);
 //                idxPathogen = 0;
@@ -826,7 +826,7 @@ namespace BDEditor.Classes
 //                    idxDisease++;
 //                }
 //                pathogen = null;
-//                topic = null;
+//                subsection = null;
 
 //                idxPathogen = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, disease);
 //                idxTopic = 0;
@@ -848,25 +848,25 @@ namespace BDEditor.Classes
 //                    pathogen = tmpNode;
 //                    idxPathogen++;
 //                }
-//                topic = null;
+//                subsection = null;
 
 //                idxTopic = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, disease);
 //            }
-//            if ((null != topicData && topicData != string.Empty) && ((null == topic) || (topic.name != topicData)))
+//            if ((null != topicData && topicData != string.Empty) && ((null == subsection) || (subsection.name != topicData)))
 //            {
 //                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == tmpNode)
 //                {
-//                    topic = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
-//                    topic.name = (topicData == @"<blank>") ? string.Empty : topicData;
-//                    topic.SetParent(pathogen);
-//                    topic.displayOrder = idxTopic++;
-//                    topic.LayoutVariant = pathogenLayoutVariant;
-//                    BDNode.Save(dataContext, topic);
+//                    subsection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
+//                    subsection.name = (topicData == @"<blank>") ? string.Empty : topicData;
+//                    subsection.SetParent(pathogen);
+//                    subsection.displayOrder = idxTopic++;
+//                    subsection.LayoutVariant = pathogenLayoutVariant;
+//                    BDNode.Save(dataContext, subsection);
 //                }
 //                else
 //                {
-//                    topic = tmpNode;
+//                    subsection = tmpNode;
 //                    idxTopic++;
 //                }
 //            }
@@ -910,7 +910,7 @@ namespace BDEditor.Classes
 //                }
 //                section = null;
 //                antimicrobial = null;
-//                topic = null;
+//                subsection = null;
 
 //                idxSection = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
 //                idxAntimicrobial = 0;
@@ -937,7 +937,7 @@ namespace BDEditor.Classes
 //                }
 
 //                antimicrobial = null;
-//                topic = null;
+//                subsection = null;
 //                    idxAntimicrobial = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
 //                    idxTopic = 0;
 //            }
@@ -958,21 +958,21 @@ namespace BDEditor.Classes
 //                    antimicrobial = tmpNode;
 //                    idxAntimicrobial++;
 //                }
-//                topic = null;
+//                subsection = null;
 //                idxTopic = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobial);
 //            }
 
-//            if ((null != topicData && topicData != string.Empty) && ((null == topic) || (topic.name != topicData)))
+//            if ((null != topicData && topicData != string.Empty) && ((null == subsection) || (subsection.name != topicData)))
 //            {
 //                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == tmpNode)
 //                {
-//                    topic = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
-//                    topic.name = topicData;
-//                    topic.SetParent(antimicrobial);
-//                    topic.displayOrder = idxTopic++;
-//                    topic.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines;
-//                    BDNode.Save(dataContext, topic);
+//                    subsection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
+//                    subsection.name = topicData;
+//                    subsection.SetParent(antimicrobial);
+//                    subsection.displayOrder = idxTopic++;
+//                    subsection.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines;
+//                    BDNode.Save(dataContext, subsection);
 //                }
 //            }
 //            if ((null != pathogenGroupData && pathogenGroupData != string.Empty) && ((null == pathogenGroup) || (pathogenGroup.name != pathogenGroupData)))
@@ -1260,7 +1260,7 @@ namespace BDEditor.Classes
 //                    idxChapter++;
 //                }
 //                section = null;
-//                topic = null;
+//                subsection = null;
 //            }
 
 //            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
@@ -1282,24 +1282,24 @@ namespace BDEditor.Classes
 //                    section = sectionNode; // assign Parasitic section
 //                    idxSection++;
 //                }
-//                topic = null;
+//                subsection = null;
 //            }
             
-//            if ((topicData != string.Empty) && ((null == topic) || (topic.name != topicData)))
+//            if ((topicData != string.Empty) && ((null == subsection) || (subsection.name != topicData)))
 //            {
 //                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == tmpNode)
 //                {
-//                    topic = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
-//                    topic.name = topicData;
-//                    topic.SetParent(section);
-//                    topic.displayOrder = idxTopic++;
-//                    topic.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring;
-//                    BDNode.Save(dataContext, topic);
+//                    subsection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
+//                    subsection.name = topicData;
+//                    subsection.SetParent(section);
+//                    subsection.displayOrder = idxTopic++;
+//                    subsection.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring;
+//                    BDNode.Save(dataContext, subsection);
 //                }
 //                else
 //                {
-//                    topic = tmpNode;
+//                    subsection = tmpNode;
 //                    idxTopic++;
 //                }
 //            }
@@ -2075,7 +2075,7 @@ namespace BDEditor.Classes
 //                }
 //                section = null;
 //                category = null;
-//                topic = null;
+//                subsection = null;
 //                subcategory = null;
 //                antimicrobial = null;
 
@@ -2103,7 +2103,7 @@ namespace BDEditor.Classes
 //                    section = sectionNode;
 //                    idxSection++;
 //                }
-//                topic = null;
+//                subsection = null;
 //                category = null;
 //                subcategory = null;
 //                antimicrobial = null;
@@ -2112,27 +2112,27 @@ namespace BDEditor.Classes
 //                idxSubcategory = 0;
 //                idxAntimicrobial = 0;
 //            }
-//            if ((null != topicData && topicData != string.Empty) && ((null == topic) || (topic.name != topicData)))
+//            if ((null != topicData && topicData != string.Empty) && ((null == subsection) || (subsection.name != topicData)))
 //            {
 //                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == tmpNode)
 //                {
-//                    topic = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
-//                    topic.name = (topicData == @"<blank>") ? string.Empty : topicData;
-//                    topic.SetParent(section);
-//                    topic.displayOrder = idxTopic++;
-//                    topic.LayoutVariant = topicLayoutVariant;
-//                    BDNode.Save(dataContext, topic);
+//                    subsection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
+//                    subsection.name = (topicData == @"<blank>") ? string.Empty : topicData;
+//                    subsection.SetParent(section);
+//                    subsection.displayOrder = idxTopic++;
+//                    subsection.LayoutVariant = topicLayoutVariant;
+//                    BDNode.Save(dataContext, subsection);
 //                }
 //                else
 //                {
-//                    topic = tmpNode;
+//                    subsection = tmpNode;
 //                    idxTopic++;
 //                }
 //                category = null;
 //                subcategory = null;
 //                antimicrobial = null;
-//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, topic);
+//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, subsection);
 //                idxSubcategory = 0;
 //                idxAntimicrobial = 0;
 //            }
@@ -2143,7 +2143,7 @@ namespace BDEditor.Classes
 //                {
 //                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                    category.name = (categoryData == @"<blank>") ? string.Empty : categoryData;
-//                    category.SetParent(topic);
+//                    category.SetParent(subsection);
 //                    category.displayOrder = idxCategory++;
 //                    category.LayoutVariant = categoryLayoutVariant;
 //                    BDNode.Save(dataContext, category);
@@ -2318,7 +2318,7 @@ namespace BDEditor.Classes
 //                    subsection = tmpNode; // assign Parasitic section
 //                    idxSubsection++;
 //                }
-//                topic = null;
+//                subsection = null;
 //                table = null;
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
@@ -2326,17 +2326,17 @@ namespace BDEditor.Classes
 //                tableRow = null;
 //                tableCell = null;
 //            }
-//            if ((topicData != string.Empty) && ((null == topic) || (topic.name != topicData)))
+//            if ((topicData != string.Empty) && ((null == subsection) || (subsection.name != topicData)))
 //            {
 //                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == tmpNode)
 //                {
-//                    topic = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
-//                    topic.name = topicData;
-//                    topic.SetParent(subsection);
-//                    topic.displayOrder = idxTopic++;
-//                    topic.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy;
-//                    BDNode.Save(dataContext, topic);
+//                    subsection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
+//                    subsection.name = topicData;
+//                    subsection.SetParent(subsection);
+//                    subsection.displayOrder = idxTopic++;
+//                    subsection.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy;
+//                    BDNode.Save(dataContext, subsection);
 
 //                    idxTable = 0;
 //                    idxTableChildren = 0;
@@ -2345,7 +2345,7 @@ namespace BDEditor.Classes
 //                }
 //                else
 //                {
-//                    topic = tmpNode;
+//                    subsection = tmpNode;
 //                    idxTopic++;
 //                }
 //                table = null;
@@ -2362,7 +2362,7 @@ namespace BDEditor.Classes
 //                {
 //                    table = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTable, Guid.Parse(uuidData));
 //                    table.name = (tableData == @"<blank>") ? string.Empty : tableData;
-//                    table.SetParent(topic);
+//                    table.SetParent(subsection);
 //                    table.displayOrder = idxTable++;
 //                    table.LayoutVariant = BDConstants.LayoutVariantType.Table_3_Column;
 //                    BDNode.Save(dataContext, table);
@@ -2759,21 +2759,21 @@ namespace BDEditor.Classes
 //                idxTopic = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
 //                idxSubtopic = 0;
 //            }
-//            if ((null != topicData && topicData != string.Empty) && ((null == topic) || (topic.name != topicData)))
+//            if ((null != topicData && topicData != string.Empty) && ((null == subsection) || (subsection.name != topicData)))
 //            {
 //                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(uuidData));
 //                if (null == tmpNode)
 //                {
-//                    topic = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
-//                    topic.name = topicData;
-//                    topic.SetParent(category);
-//                    topic.displayOrder = idxTopic++;
-//                    topic.LayoutVariant = topicLayoutVariant;
-//                    BDNode.Save(dataContext, topic);
+//                    subsection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
+//                    subsection.name = topicData;
+//                    subsection.SetParent(category);
+//                    subsection.displayOrder = idxTopic++;
+//                    subsection.LayoutVariant = topicLayoutVariant;
+//                    BDNode.Save(dataContext, subsection);
 //                }
 //                else
 //                {
-//                    topic = tmpNode;
+//                    subsection = tmpNode;
 //                    idxTopic++;
 //                }
 //            }
@@ -2785,7 +2785,7 @@ namespace BDEditor.Classes
 //                {
 //                    subtopic = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSubtopic, Guid.Parse(uuidData));
 //                    subtopic.name = subtopicData;
-//                    subtopic.SetParent(topic);
+//                    subtopic.SetParent(subsection);
 //                    subtopic.displayOrder = idxSubtopic++;
 //                    subtopic.LayoutVariant = subtopicLayoutVariant;
 //                    BDNode.Save(dataContext, subtopic);
@@ -4164,7 +4164,7 @@ namespace BDEditor.Classes
 //                }
 //                section = null;
 //                pathogen = null;
-//                topic = null;
+//                subsection = null;
 
 //                idxSection = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
 //                idxPathogen = 0;
@@ -4189,7 +4189,7 @@ namespace BDEditor.Classes
 //                    idxSection++;
 //                }
 //                pathogen = null;
-//                topic = null;
+//                subsection = null;
 
 //                idxPathogen = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
 //                    idxTopic = 0;
@@ -4212,21 +4212,21 @@ namespace BDEditor.Classes
 //                    idxPathogen++;
 //                }
 //            }
-//            if ((null != topicData && topicData != string.Empty) && ((null == topic) || (topic.name != topicData)))
+//            if ((null != topicData && topicData != string.Empty) && ((null == subsection) || (subsection.name != topicData)))
 //            {
 //                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == tmpNode)
 //                {
-//                    topic = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
-//                    topic.name = (topicData == @"<blank>") ? string.Empty : topicData;
-//                    topic.SetParent(pathogen);
-//                    topic.displayOrder = idxTopic++;
-//                    topic.LayoutVariant = topicLayoutVariant;
-//                    BDNode.Save(dataContext, topic);
+//                    subsection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
+//                    subsection.name = (topicData == @"<blank>") ? string.Empty : topicData;
+//                    subsection.SetParent(pathogen);
+//                    subsection.displayOrder = idxTopic++;
+//                    subsection.LayoutVariant = topicLayoutVariant;
+//                    BDNode.Save(dataContext, subsection);
 //                }
 //                else
 //                {
-//                    topic = tmpNode;
+//                    subsection = tmpNode;
 //                    idxTopic++;
 //                }
 //            }
@@ -5872,7 +5872,7 @@ namespace BDEditor.Classes
 //                    idxChapter++;
 //                }
 //                section = null;
-//                topic = null;
+//                subsection = null;
 //                table = null;
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
@@ -5902,7 +5902,7 @@ namespace BDEditor.Classes
 //                    section = sectionNode;
 //                    idxSection++;
 //                }
-//                topic = null;
+//                subsection = null;
 //                table = null;
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
@@ -5913,21 +5913,21 @@ namespace BDEditor.Classes
 //                idxTableHeaderCell = 0;
 //            }
 
-//            if ((topicData != string.Empty) && ((null == topic) || (topic.name != topicData)))
+//            if ((topicData != string.Empty) && ((null == subsection) || (subsection.name != topicData)))
 //            {
 //                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == tmpNode)
 //                {
-//                    topic = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
-//                    topic.name = topicData;
-//                    topic.SetParent(section);
-//                    topic.displayOrder = idxTopic++;
-//                    topic.LayoutVariant = topicLayoutVariant;
-//                    BDNode.Save(dataContext, topic);
+//                    subsection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
+//                    subsection.name = topicData;
+//                    subsection.SetParent(section);
+//                    subsection.displayOrder = idxTopic++;
+//                    subsection.LayoutVariant = topicLayoutVariant;
+//                    BDNode.Save(dataContext, subsection);
 //                }
 //                else
 //                {
-//                    topic = tmpNode;
+//                    subsection = tmpNode;
 //                    idxTopic++;
 //                }
 //                table = null;
@@ -5946,7 +5946,7 @@ namespace BDEditor.Classes
 //                {
 //                    table = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTable, Guid.Parse(uuidData));
 //                    table.name = (tableData == @"<blank>") ? string.Empty : tableData;
-//                    table.SetParent(topic);
+//                    table.SetParent(subsection);
 //                    table.displayOrder = idxTable++;
 //                    table.LayoutVariant = tableLayoutVariant;
 //                    BDNode.Save(dataContext, table);
@@ -6056,9 +6056,9 @@ namespace BDEditor.Classes
 //                {
 //                    disease = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDDisease, Guid.Parse(uuidData));
 //                    disease.name = diseaseData;
-//                    disease.SetParent(topic);
+//                    disease.SetParent(subsection);
 //                    disease.displayOrder = idxDisease++;
-//                    disease.LayoutVariant = topic.LayoutVariant;
+//                    disease.LayoutVariant = subsection.LayoutVariant;
 //                    BDNode.Save(dataContext, disease);
 //                }
 //                else
@@ -6146,7 +6146,7 @@ namespace BDEditor.Classes
 //                    section = sectionNode;
 //                    idxSection++;
 //                }
-//                topic = null;
+//                subsection = null;
 //                table = null;
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
@@ -6156,28 +6156,28 @@ namespace BDEditor.Classes
 //                idxTableHeaderCell = 0;
 //            }
 
-//            if ((topicData != string.Empty) && ((null == topic) || (topic.name != topicData)))
+//            if ((topicData != string.Empty) && ((null == subsection) || (subsection.name != topicData)))
 //            {
 //                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == tmpNode)
 //                {
-//                    topic = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
-//                    topic.name = topicData;
-//                    topic.SetParent(section);
-//                    topic.displayOrder = idxTopic++;
-//                    topic.LayoutVariant = tableLayoutVariant;
-//                    BDNode.Save(dataContext, topic);
+//                    subsection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
+//                    subsection.name = topicData;
+//                    subsection.SetParent(section);
+//                    subsection.displayOrder = idxTopic++;
+//                    subsection.LayoutVariant = tableLayoutVariant;
+//                    BDNode.Save(dataContext, subsection);
 //                }
 //                else
 //                {
-//                    topic = tmpNode;
+//                    subsection = tmpNode;
 //                    idxTopic++;
 //                }
 //                table = null;
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
 
-//                idxTable = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, topic);
+//                idxTable = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, subsection);
 //                idxTableChildren = 0;
 //                idxTableHeaderCell = 0;
 //            }
@@ -6189,7 +6189,7 @@ namespace BDEditor.Classes
 //                {
 //                    table = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTable, Guid.Parse(uuidData));
 //                    table.name = (tableData == @"<blank>") ? string.Empty : tableData;
-//                    table.SetParent(topic);
+//                    table.SetParent(subsection);
 //                    table.displayOrder = idxTable++;
 //                    table.LayoutVariant = tableLayoutVariant;
 //                    BDNode.Save(dataContext, table);
@@ -6336,7 +6336,7 @@ namespace BDEditor.Classes
 //                    section = sectionNode;
 //                    idxSection++;
 //                }
-//                topic = null;
+//                subsection = null;
 //                table = null;
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
@@ -6346,28 +6346,28 @@ namespace BDEditor.Classes
 //                idxTableHeaderCell = 0;
 //            }
 
-//            if ((topicData != string.Empty) && ((null == topic) || (topic.name != topicData)))
+//            if ((topicData != string.Empty) && ((null == subsection) || (subsection.name != topicData)))
 //            {
 //                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == tmpNode)
 //                {
-//                    topic = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
-//                    topic.name = topicData;
-//                    topic.SetParent(section);
-//                    topic.displayOrder = idxTopic++;
-//                    topic.LayoutVariant = tableLayoutVariant;
-//                    BDNode.Save(dataContext, topic);
+//                    subsection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
+//                    subsection.name = topicData;
+//                    subsection.SetParent(section);
+//                    subsection.displayOrder = idxTopic++;
+//                    subsection.LayoutVariant = tableLayoutVariant;
+//                    BDNode.Save(dataContext, subsection);
 //                }
 //                else
 //                {
-//                    topic = tmpNode;
+//                    subsection = tmpNode;
 //                    idxTopic++;
 //                }
 //                table = null;
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
 
-//                idxTable = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, topic);
+//                idxTable = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, subsection);
 //                idxTableChildren = 0;
 //                idxTableHeaderCell = 0;
 //            }
@@ -6381,7 +6381,7 @@ namespace BDEditor.Classes
 //                {
 //                    table = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTable, Guid.Parse(uuidData));
 //                    table.name = (tableData == @"<blank>") ? string.Empty : tableData;
-//                    table.SetParent(topic);
+//                    table.SetParent(subsection);
 //                    table.displayOrder = idxTable++;
 //                    table.LayoutVariant = tableLayoutVariant;
 //                    BDNode.Save(dataContext, table);
@@ -6503,7 +6503,7 @@ namespace BDEditor.Classes
 //                    idxChapter++;
 //                }
 //                section = null;
-//                topic = null;
+//                subsection = null;
 
 //                idxSection = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
 //                idxTopic = 0;
@@ -6526,26 +6526,26 @@ namespace BDEditor.Classes
 //                    section = sectionNode;
 //                    idxSection++;
 //                }
-//                topic = null;
+//                subsection = null;
 
 //                idxTopic = 0;
 //            }
 
-//            if ((topicData != string.Empty) && ((null == topic) || (topic.name != topicData)))
+//            if ((topicData != string.Empty) && ((null == subsection) || (subsection.name != topicData)))
 //            {
 //                BDNode tmpNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == tmpNode)
 //                {
-//                    topic = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
-//                    topic.name = topicData;
-//                    topic.SetParent(section);
-//                    topic.displayOrder = idxTopic++;
-//                    topic.LayoutVariant = topicLayoutVariant;
-//                    BDNode.Save(dataContext, topic);
+//                    subsection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
+//                    subsection.name = topicData;
+//                    subsection.SetParent(section);
+//                    subsection.displayOrder = idxTopic++;
+//                    subsection.LayoutVariant = topicLayoutVariant;
+//                    BDNode.Save(dataContext, subsection);
 //                }
 //                else
 //                {
-//                    topic = tmpNode;
+//                    subsection = tmpNode;
 //                    idxTopic++;
 //                }
 //            }

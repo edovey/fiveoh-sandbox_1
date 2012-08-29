@@ -1053,7 +1053,7 @@ namespace BDEditor.Views
 
             // Loading Seed Data:  set the following variables
             isSeedDataLoadAvailable = false;
-            bool moveButtonVisible = true;
+            bool moveButtonVisible = false;
 
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
@@ -1476,7 +1476,8 @@ namespace BDEditor.Views
 
             //// move Adults > SSTI > Gas Gangrene to presentation level of Rapidly progressive SSTI
             //BDUtilities.MoveNodeToParentSibling(dataContext, Guid.Parse(@"e10f7eb9-66d5-4225-b01e-06a0acefe34c"), Guid.Parse(@"6e4c8849-ad12-4b5f-b5fc-5fc53288cfad"), "SINGLE PRESENTATION", BDConstants.BDNodeType.BDPresentation);
-
+            
+            // for v.1.6.12
             // fetch the antimicrobial stepdown table
             //BDNode nameTable = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(@"45301fa9-55ac-4c8f-95f0-1008016635c4"));
             //if (nameTable.name == "Stepdown Recommendations")
@@ -1500,8 +1501,8 @@ namespace BDEditor.Views
             //    BDUtilities.ResetLayoutVariantInTable5RowsForParent(dataContext, nameTable, BDConstants.LayoutVariantType.Antibiotics_Stepdown);
             //}
 
-            BDNode vancomycin = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(@"c42a29c2-f5a1-48a4-b140-3e4dae56b445"));
-            BDUtilities.ResetLayoutVariantWithChildren(dataContext, vancomycin, BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin, true);
+            //BDNode vancomycin = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(@"c42a29c2-f5a1-48a4-b140-3e4dae56b445"));
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vancomycin, BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin, true);
         }
 
         private void btnShowLayoutEditor_Click(object sender, EventArgs e)

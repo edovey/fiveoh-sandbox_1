@@ -274,7 +274,7 @@
           </Key>
           <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
           <Property Name="displayOrder" Type="int" />
-          <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="name" Type="nvarchar" MaxLength="750" />
           <Property Name="nodeKeyName" Type="nvarchar" MaxLength="100" />
           <Property Name="nodeType" Type="int" />
           <Property Name="schemaVersion" Type="int" />
@@ -954,7 +954,7 @@
           </Key>
           <Property Type="Guid" Name="uuid" Nullable="false" />
           <Property Type="Int32" Name="displayOrder" />
-          <Property Type="String" Name="name" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="name" MaxLength="750" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="nodeKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="nodeType" />
           <Property Type="Int32" Name="schemaVersion" />

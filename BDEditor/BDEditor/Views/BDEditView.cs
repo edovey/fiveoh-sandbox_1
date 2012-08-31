@@ -1151,10 +1151,14 @@ namespace BDEditor.Views
         private void btnPublish_Click(object sender, EventArgs e)
         {
             BDNode generateNode;
-            if (MessageBox.Show("Generate All Chapters?", "Publish", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            DialogResult result = MessageBox.Show("Generate All Chapters?", "Publish", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+            if (result == DialogResult.Yes)
                 generateNode = null;
-            else
+            else if (result == DialogResult.No)
                 generateNode = (chapterDropDown.SelectedItem as BDNode);
+            else
+                return;
+
             this.Cursor = Cursors.WaitCursor;
             
             BDHtmlPageGenerator generator = new BDHtmlPageGenerator();

@@ -292,6 +292,12 @@ namespace BDEditor.DataModel
             return (null == maxDisplayorder)? 0 : maxDisplayorder;
         }
 
+        public static int? RetrieveChildCountForNode(Entities pContext, BDNode pParent)
+        {
+            var count = pContext.BDNodes.Where(x => (x.parentId == pParent.Uuid)).Count();
+            return (null == count) ? 0 : count;
+        }
+
         protected override void OnPropertyChanged(string property)
         {
             if (!BDCommon.Settings.IsSyncLoad)

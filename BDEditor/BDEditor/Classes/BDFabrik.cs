@@ -179,7 +179,6 @@ namespace BDEditor.Classes
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogenGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
                         case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
@@ -246,6 +245,10 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAntimicrobialGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
+                        case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines_Spectrum:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAntimicrobial, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -515,7 +518,7 @@ namespace BDEditor.Classes
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAttachment, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAntimicrobial, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDCategory, new BDConstants.LayoutVariantType[] { layoutVariant, BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines_Spectrum }));
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_NameListing:
                         case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
@@ -854,14 +857,12 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
                              childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDisease, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis }));
                            break;
-                        case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
-                            childDefinitionList = null;
-                            break;
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubtopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Table_2_Column, BDConstants.LayoutVariantType.Table_3_Column, BDConstants.LayoutVariantType.Table_4_Column, BDConstants.LayoutVariantType.Table_5_Column }));
                             break;
+                        case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines_Spectrum:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubtopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -1383,14 +1384,6 @@ namespace BDEditor.Classes
                                 newOverviewControl.ShowSiblingAdd = true;
                             }
                             break;
-                        case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
-                            {
-                                nodeControl = new BDNodeOverviewControl(pContext, pNode);
-                                BDNodeOverviewControl newOverviewControl = nodeControl as BDNodeOverviewControl;
-                                newOverviewControl.ShowAsChild = false;
-                                newOverviewControl.ShowSiblingAdd = false;
-                            }
-                            break;
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                             {
                                 nodeControl = new BDNodeControl(pContext, pNode);
@@ -1729,6 +1722,12 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDSubtopic:
                     switch (pNode.LayoutVariant)
                     {
+                        case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines_Spectrum:
+                            nodeControl = new BDNodeOverviewControl(pContext, pNode);
+                            BDNodeOverviewControl overviewControl = nodeControl as BDNodeOverviewControl;
+                            overviewControl.ShowAsChild = false;
+                            overviewControl.ShowSiblingAdd = false;
+                            break;
                         default:
                             {
                                 nodeControl = new BDNodeOverviewControl(pContext, pNode);
@@ -1915,6 +1914,8 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                        case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
+                        case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines_Spectrum:
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
                         case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
                         case BDConstants.LayoutVariantType.Prophylaxis_Immunization_VaccineDetail:
@@ -1937,18 +1938,13 @@ namespace BDEditor.Classes
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Amantadine_Renal:
                         case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Oseltamivir:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
                             nodeControl = new BDNodeControl(pContext, pNode);
                             BDNodeControl tControl = nodeControl as BDNodeControl;
                             tControl.ShowAsChild = false;
                             tControl.ShowSiblingAdd = false;
                             break;
                         
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
-                            nodeControl = new BDNodeControl(pContext, pNode);
-                            BDNodeControl t2Control = nodeControl as BDNodeControl;
-                            t2Control.ShowAsChild = false;
-                            t2Control.ShowSiblingAdd = false;
-                            break;
                         default:
                             {
                                 nodeControl = new BDNodeOverviewControl(pContext, pNode);

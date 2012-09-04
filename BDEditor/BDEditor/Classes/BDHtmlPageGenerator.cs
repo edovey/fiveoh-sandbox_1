@@ -537,7 +537,7 @@ namespace BDEditor.Classes
             StringBuilder footerHTML = new StringBuilder();
             List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
-            // begins at section OR category
+            // begins at antimicrobialSection OR category
             if (pNode.Name.Length > 0)
                 bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
 
@@ -875,7 +875,7 @@ namespace BDEditor.Classes
                     }
                     else if (node.NodeType == BDConstants.BDNodeType.BDTableSubsection)
                     {
-                        //TODO:  Make fontsize smaller than section name
+                        //TODO:  Make fontsize smaller than antimicrobialSection name
                         if (node.Name.Length > 0)
                             bodyHTML.AppendFormat(@"<tr><td colspan = 3>{0}<td></tr>", node.Name);
                     }
@@ -976,7 +976,7 @@ namespace BDEditor.Classes
                         }
                         else if (node.NodeType == BDConstants.BDNodeType.BDTableSubsection)
                         {
-                            //TODO:  Make fontsize smaller than section name
+                            //TODO:  Make fontsize smaller than antimicrobialSection name
                             if (node.Name.Length > 0)
                                 bodyHTML.AppendFormat(@"<tr><td colspan = 5>{0}<td></tr>", node.Name);
                             List<IBDNode> subsectionChildren = BDFabrik.GetChildrenForParent(pContext, node);

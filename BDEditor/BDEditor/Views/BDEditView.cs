@@ -525,8 +525,15 @@ namespace BDEditor.Views
                     case BDConstants.BDNodeType.BDAntimicrobial:
                         switch (node.LayoutVariant)
                         {
-                            case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                             case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
+                                childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
+                                if (!pInterrogateOnly)
+                                {
+                                    graftTreeNode(selectedNode, childTreeNode);
+                                    showChildControls = false;
+                                }
+                                break;
+                            case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                                 if (!pInterrogateOnly)
                                 {
                                     showChildControls = true;
@@ -572,6 +579,8 @@ namespace BDEditor.Views
                                     showChildControls = false;
                                 }
                                 break;
+                            case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
+                            case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines_Spectrum:
                             case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
                             case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin:
                             case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
@@ -787,16 +796,7 @@ namespace BDEditor.Views
                                 }
                                 break;
 
-                            case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
-                            case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
-                            case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
-                            case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
-                            case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
-                            case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
-                            case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
-                            case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
-                            case BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation:
-                            case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
+                            default:
                                 if (!pInterrogateOnly)
                                 {
                                     showChildControls = true;
@@ -813,6 +813,17 @@ namespace BDEditor.Views
                                 {
                                     graftTreeNode(selectedNode, childTreeNode);
                                     showChildControls = false;
+                                }
+                                break;
+                        }
+                        break;
+                    case BDConstants.BDNodeType.BDSubtopic:
+                        switch (node.LayoutVariant)
+                        {
+                            default:
+                                if (!pInterrogateOnly)
+                                {
+                                    showChildControls = true;
                                 }
                                 break;
                         }
@@ -890,17 +901,7 @@ namespace BDEditor.Views
                     case BDConstants.BDNodeType.BDTopic:
                         switch (node.LayoutVariant)
                         {
-                            case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
-                            case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin:
-                            case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
-                            case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
-                            case BDConstants.LayoutVariantType.Prophylaxis_Immunization_VaccineDetail:
-                            case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis:
-                                if (!pInterrogateOnly)
-                                {
-                                    showChildControls = true;
-                                }
-                                break;
+                            case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines_Spectrum:
                             case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
                                 childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
@@ -917,6 +918,12 @@ namespace BDEditor.Views
                                 {
                                     graftTreeNode(selectedNode, childTreeNode);
                                     showChildControls = false;
+                                }
+                                break;
+                            default:
+                                if (!pInterrogateOnly)
+                                {
+                                    showChildControls = true;
                                 }
                                 break;
                         }
@@ -1429,19 +1436,19 @@ namespace BDEditor.Views
             // delete orphan table
             //BDNode.DeleteLocal(dataContext, Guid.Parse(@"5c75848a-bf64-45e5-93fe-670e8790a13c"));
 
-            //// create new section for 'Vancomycin Dosing And Monitoring...'
+            //// create new antimicrobialSection for 'Vancomycin Dosing And Monitoring...'
             //BDNode chapter = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(@"45e13826-aedb-48d0-baf6-2f06ff45017f"));
-            //BDNode section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection);
-            //section.name = @"Vancomycin Dosing and Monitoring Guidelines";
-            //section.SetParent(chapter);
-            //section.displayOrder = 0;
-            //section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring;
-            //BDNode.Save(dataContext, section);
+            //BDNode antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection);
+            //antimicrobialSection.name = @"Vancomycin Dosing and Monitoring Guidelines";
+            //antimicrobialSection.SetParent(chapter);
+            //antimicrobialSection.displayOrder = 0;
+            //antimicrobialSection.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring;
+            //BDNode.Save(dataContext, antimicrobialSection);
 
-            //// retrieve Vancomycin Dosing - adjust type and make a child of the new section 
+            //// retrieve Vancomycin Dosing - adjust type and make a child of the new antimicrobialSection 
             //BDNode vd = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(@"2dd4578a-a856-49e4-852a-e18eb43fb1b2"));
             //List<IBDNode> vdChildren = BDFabrik.GetChildrenForParent(dataContext, vd);
-            //vd.SetParent(section);
+            //vd.SetParent(antimicrobialSection);
             //vd.nodeType = (int)BDConstants.BDNodeType.BDCategory;
             //vd.nodeKeyName = vd.nodeType.ToString();
             //BDNode.Save(dataContext, vd);
@@ -1453,7 +1460,7 @@ namespace BDEditor.Views
             //// retrieve Vancomycin Monitoring
             //BDNode vm = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(@"10a23f72-58ea-49c2-ad3f-d8d97d1846c6"));
             //List<IBDNode> vmChildren = BDFabrik.GetChildrenForParent(dataContext, vm);
-            //vm.SetParent(section);
+            //vm.SetParent(antimicrobialSection);
             //vm.nodeType = (int)BDConstants.BDNodeType.BDCategory;
             //vm.nodeKeyName = vm.nodeType.ToString();
             //BDNode.Save(dataContext, vm);
@@ -1534,8 +1541,8 @@ namespace BDEditor.Views
 
             #endregion
             #region v.1.6.13
-            // move selected tables out of Treatment Recommendations > Adults into new section Treatment recommendations > Culture Directed Infections in Adults
-            // create new section in TreatmentRecoomendations chapter
+            // move selected tables out of Treatment Recommendations > Adults into new antimicrobialSection Treatment recommendations > Culture Directed Infections in Adults
+            // create new antimicrobialSection in TreatmentRecoomendations chapter
             BDNode chapter = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("f92fec3a-379d-41ef-a981-5ddf9c9a9f0e"));
             BDNode newSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection);
             newSection.SetParent(chapter);
@@ -1543,22 +1550,161 @@ namespace BDEditor.Views
             newSection.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation16_CultureDirected;
             BDNode.Save(dataContext, newSection);
 
-            // move related tables to new section & assign new layout variant
+            // move related tables to new antimicrobialSection & assign new layout variant
             // get culture-proven pneumonia table
             BDNode table1 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("391bd1a4-daca-44e8-8fda-863f22128f1f"));
             table1.SetParent(newSection);
+            table1.DisplayOrder = 0;
+            BDNode.Save(dataContext, table1);
+
             // get culture-proven PD Peritonitis table
             BDNode table2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("5b8548c8-0e54-4cb5-910e-2f55a41f9ecc"));
             table2.SetParent(newSection);
+            table2.DisplayOrder = 1;
+            BDNode.Save(dataContext, table2);
+
             // get culture-proven meningitis table
             BDNode table3 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("fc25fee8-8ded-4d41-895d-b415bab02eb7"));
             table3.SetParent(newSection);
+            table3.DisplayOrder = 2;
+            BDNode.Save(dataContext, table3);
+
             // get culture-proven endocarditis table
             BDNode table4 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("8741d365-16ef-4de8-8d08-dabc574c010a"));
             table4.SetParent(newSection);
+            table4.DisplayOrder = 3;
+            BDNode.Save(dataContext, table4);
+
             // get culture-proven BCNE table
             BDNode table5 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("b38a1c03-2f74-4b08-b104-0da7f054c529"));
             table5.SetParent(newSection);
+            table5.DisplayOrder = 4;
+            BDNode.Save(dataContext, table5);
+
+            // change pathogen groups in Antimicrobial_ClinicalGuidelines  to topics
+            List<BDNode> pathogenGroups = BDNode.RetrieveNodesForType(dataContext, BDConstants.BDNodeType.BDPathogenGroup);
+            foreach(BDNode pathogenGroup in pathogenGroups)
+            {
+                if (pathogenGroup.LayoutVariant == BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines)
+                {
+                    if (pathogenGroup.Name == "Predictable Activity" || pathogenGroup.Name == "Unpredictable Activity" || pathogenGroup.Name == "No/insufficient Activity")
+                    {
+                        pathogenGroup.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+                        pathogenGroup.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+                        BDNode.Save(dataContext, pathogenGroup);
+                    }
+                }
+            }
+
+            // add categories into Antimicrobial_ClinicalGuidelines, move child nodes of the antimicrobialSection into the categories.
+            BDNode antimicrobialSection = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("01933c56-dedf-4c1a-9191-d541819000d8"));
+            BDNode c1 = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory);
+            c1.SetParent(antimicrobialSection);
+            c1.name = "ANTIMICROBIAL SPECTRUM";
+            c1.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines_Spectrum;
+            c1.DisplayOrder = 0;
+            BDNode.Save(dataContext, c1);
+
+            BDNode c2 = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory);
+            c2.SetParent(antimicrobialSection);
+            c2.Name = "ANTIMICROBIAL AGENTS";
+            c2.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines;
+            c2.DisplayOrder = 1;
+            BDNode.Save(dataContext, c2);
+
+            BDNode c3 = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory);
+            c3.SetParent(antimicrobialSection);
+            c3.Name = "ANTIFUNGALS";
+            c3.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines;
+            c3.DisplayOrder = 2;
+            BDNode.Save(dataContext, c3);
+
+            // move selected Antimicrobials to new category for Antifungals
+            BDNode af1 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("bf1d8db1-7243-4139-90b9-60f10c2e4953"));
+            af1.SetParent(c3);
+            BDNode.Save(dataContext, af1);
+
+            BDNode af2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("7a0fd527-3afd-4f57-9419-1d56eaf17110"));
+            af2.SetParent(c3);
+            BDNode.Save(dataContext, af2);
+
+            BDNode af3 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("afe6f889-4289-4255-9dd4-be193568bbbf"));
+            af3.SetParent(c3);
+            BDNode.Save(dataContext, af3);
+
+            BDNode af4 = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDAntimicrobial);
+            af4.SetParent(c3);
+            af4.Name = "ITRACONAZOLE";
+            af4.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines;
+            BDNode.Save(dataContext, af4);
+
+            BDNode af5 = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDAntimicrobial);
+            af5.SetParent(c3);
+            af5.Name = "MICAFUNGIN IV";
+            af5.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines;
+            BDNode.Save(dataContext, af5);
+
+            BDNode af6 = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDAntimicrobial);
+            af6.SetParent(c3);
+            af6.Name = "POSACONAZOLE PO";
+            af6.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines;
+            BDNode.Save(dataContext, af6);
+
+            BDNode af7 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("ff32e382-13b6-4b36-8b6e-f40734bdcc1e"));
+            af7.SetParent(c3);
+            BDNode.Save(dataContext, af7);
+
+            // get remaining children of original section, change all to children of new category for antimicrobial agents (c2)
+            List<BDNode> antimicrobials = BDNode.RetrieveNodesForParentIdAndChildNodeType(dataContext, antimicrobialSection.Uuid, BDConstants.BDNodeType.BDAntimicrobial);
+            foreach (BDNode am in antimicrobials)
+            {
+                am.SetParent(c2);
+                BDNode.Save(dataContext, am);
+            }
+
+            // create new topic in c1 for 'Organism Groups'
+            BDNode o1 = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic);
+            o1.SetParent(c1);
+            o1.Name = "Organism Groups";
+            o1.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines_Spectrum;
+            BDNode.Save(dataContext, o1);
+
+            // create new subtopics for 'Organism Groups'
+            BDNode st1 = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSubtopic);
+            st1.SetParent(o1);
+            st1.Name = "Viridans Group Streptococci";
+            st1.LayoutVariant = o1.LayoutVariant;
+            BDNode.Save(dataContext, st1);
+
+            BDNode st2 = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSubtopic);
+            st2.SetParent(o1);
+            st2.Name = "Enterobacteriaceae";
+            st2.LayoutVariant = o1.LayoutVariant;
+            BDNode.Save(dataContext, st2);
+
+            BDNode st3 = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSubtopic);
+            st3.SetParent(o1);
+            st3.Name = "Coryneform bacteria";
+            st3.LayoutVariant = o1.LayoutVariant;
+            BDNode.Save(dataContext, st3);
+
+            BDNode st4 = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSubtopic);
+            st4.SetParent(o1);
+            st4.Name = "Enterobacteriaceae that produce inducible cephalosporinase";
+            st4.LayoutVariant = o1.LayoutVariant;
+            BDNode.Save(dataContext, st4);
+
+            BDNode st5 = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSubtopic);
+            st5.SetParent(o1);
+            st5.Name = "Staphylococci spp";
+            st5.LayoutVariant = o1.LayoutVariant;
+            BDNode.Save(dataContext, st5);
+
+            BDNode st6 = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSubtopic);
+            st6.SetParent(o1);
+            st6.Name = "Streptococcus pneumoniae";
+            st6.LayoutVariant = o1.LayoutVariant;
+            BDNode.Save(dataContext, st6); 
             #endregion
         }
     }

@@ -134,16 +134,16 @@ namespace BDEditor.Classes
             TreatmentRecommendation03_WoundClass_ContentRow = 1032, // table 2 - wound classification content row
 
             [Description("Pneumonia Patient Characteristic")]
-            TreatmentRecommendation04_Pneumonia_I = 104,  //  table 3 - top section
+            TreatmentRecommendation04_Pneumonia_I = 104,  //  table 3 - top antimicrobialSection
             [Description("Pneumonia Patient Characteristic Content Row")]
-            TreatmentRecommendation04_Pneumonia_I_ContentRow = 1041,  //  table 3 - top section
+            TreatmentRecommendation04_Pneumonia_I_ContentRow = 1041,  //  table 3 - top antimicrobialSection
 
             [Description("Pneumonia Risk and Recommendation")]
-            TreatmentRecommendation04_Pneumonia_II = 105,  // table 3 - bottom section
+            TreatmentRecommendation04_Pneumonia_II = 105,  // table 3 - bottom antimicrobialSection
             [Description("Pneumonia Risk and Recommendation Header Row")]
-            TreatmentRecommendation04_Pneumonia_II_HeaderRow = 1051,  // table 3 - bottom section header row
+            TreatmentRecommendation04_Pneumonia_II_HeaderRow = 1051,  // table 3 - bottom antimicrobialSection header row
             [Description("Pneumonia Risk and Recommendation Content Row")]
-            TreatmentRecommendation04_Pneumonia_II_ContentRow = 1052,  // table 3 - bottom section content row
+            TreatmentRecommendation04_Pneumonia_II_ContentRow = 1052,  // table 3 - bottom antimicrobialSection content row
 
             [Description("Treatment of Culture-Proven Peritonitis")]
             TreatmentRecommendation05_Peritonitis = 106,  // table 4
@@ -177,6 +177,8 @@ namespace BDEditor.Classes
             Antibiotics = 200, 
             [Description("Clinical Antibiotic Guidelines")]
             Antibiotics_ClinicalGuidelines = 201,
+            [Description("Antimicrobial Spectrum")]
+            Antibiotics_ClinicalGuidelines_Spectrum = 212,
 
             [Description("Pharmacodynamics")]
             Antibiotics_Pharmacodynamics = 202,

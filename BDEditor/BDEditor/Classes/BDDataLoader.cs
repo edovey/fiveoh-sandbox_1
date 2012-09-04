@@ -71,7 +71,7 @@ namespace BDEditor.Classes
 //        private Guid chapter1Uuid = new Guid("45e13826-aedb-48d0-baf6-2f06ff45017f");
 
 //        BDNode chapter;
-//        BDNode section;
+//        BDNode antimicrobialSection;
 //        BDNode category;
 //        BDNode subcategory;
 //        BDNode disease;
@@ -366,20 +366,20 @@ namespace BDEditor.Classes
 
 //                BDNode.Save(dataContext, chapter);
 
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 //                disease = null;
 //                presentation = null;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
-//                section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                section.name = sectionData;
-//                section.SetParent(chapter);
-//                section.displayOrder = idxSection++;
-//                section.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation01;
-//                BDNode.Save(dataContext, section);
+//                antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                antimicrobialSection.name = sectionData;
+//                antimicrobialSection.SetParent(chapter);
+//                antimicrobialSection.displayOrder = idxSection++;
+//                antimicrobialSection.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation01;
+//                BDNode.Save(dataContext, antimicrobialSection);
 
 //                category = null;
 //                disease = null;
@@ -390,7 +390,7 @@ namespace BDEditor.Classes
 //            {
 //                category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                category.name = categoryData;
-//                category.SetParent(section);
+//                category.SetParent(antimicrobialSection);
 //                category.displayOrder = idxCategory++;
 //                category.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation01;
 //                BDNode.Save(dataContext, category);
@@ -463,27 +463,27 @@ namespace BDEditor.Classes
 
 //                BDNode.Save(dataContext, chapter);
 
-//                section = null;
+//                antimicrobialSection = null;
 //                disease = null;
 //                presentation = null;
 //            }
 //            else
 //                chapter = BDNode.RetrieveNodeWithId(dataContext, new Guid(@"f92fec3a-379d-41ef-a981-5ddf9c9a9f0e"));
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = layoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = layoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                disease = null;
 //                presentation = null;
 
@@ -493,7 +493,7 @@ namespace BDEditor.Classes
 //            {
 //                disease = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDDisease, Guid.Parse(uuidData));
 //                disease.name = diseaseData;
-//                disease.SetParent(section);
+//                disease.SetParent(antimicrobialSection);
 //                disease.displayOrder = idxDisease++;
 //                disease.LayoutVariant = layoutVariant;
 //                BDNode.Save(dataContext, disease);
@@ -547,7 +547,7 @@ namespace BDEditor.Classes
 
 //                BDNode.Save(dataContext, chapter);
 
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 //                subcategory = null;
 //                disease = null;
@@ -557,20 +557,20 @@ namespace BDEditor.Classes
 //                // retrieve chapter 2
 //                chapter = BDNode.RetrieveNodeWithId(dataContext, new Guid(@"f92fec3a-379d-41ef-a981-5ddf9c9a9f0e"));
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I; ;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I; ;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                disease = null;
 //                presentation = null;
 
@@ -580,7 +580,7 @@ namespace BDEditor.Classes
 //            {
 //                category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                category.name = categoryData;
-//                category.SetParent(section);
+//                category.SetParent(antimicrobialSection);
 //                category.displayOrder = idxCategory++;
 //                category.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I;
 //                BDNode.Save(dataContext, category);
@@ -641,7 +641,7 @@ namespace BDEditor.Classes
 
 //                BDNode.Save(dataContext, chapter);
 
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 //                subcategory = null;
 //                disease = null;
@@ -651,20 +651,20 @@ namespace BDEditor.Classes
 //                // retrieve chapter 2
 //                chapter = BDNode.RetrieveNodeWithId(dataContext, new Guid(@"f92fec3a-379d-41ef-a981-5ddf9c9a9f0e"));
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II; ;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II; ;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
-//                    section = sectionNode; // assign Parasitic section
+//                    antimicrobialSection = sectionNode; // assign Parasitic antimicrobialSection
 //                category = null;
 //                pathogen = null;
 
@@ -676,7 +676,7 @@ namespace BDEditor.Classes
 //                {
 //                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                    category.name = categoryData;
-//                    category.SetParent(section);
+//                    category.SetParent(antimicrobialSection);
 //                    category.displayOrder = idxCategory++;
 //                    category.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II;
 //                    BDNode.Save(dataContext, category);
@@ -744,7 +744,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 //                disease = null;
 //                pathogen = null;
@@ -757,28 +757,28 @@ namespace BDEditor.Classes
 //                idxTopic = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                category = null;
 //                    disease = null;
 //                    pathogen = null;
 //                    subsection = null;
-//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobialSection);
 //                idxDisease = 0;
 //                idxPathogen = 0;
 //                idxTopic = 0;
@@ -790,7 +790,7 @@ namespace BDEditor.Classes
 //                {
 //                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                    category.name = (categoryData == @"<blank>") ? string.Empty : categoryData;
-//                    category.SetParent(section);
+//                    category.SetParent(antimicrobialSection);
 //                    category.displayOrder = idxCategory++;
 //                    category.LayoutVariant = categoryLayoutVariant;
 //                    BDNode.Save(dataContext, category);
@@ -908,7 +908,7 @@ namespace BDEditor.Classes
 //                {
 //                    chapter = tmpNode;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                antimicrobial = null;
 //                subsection = null;
 
@@ -917,28 +917,28 @@ namespace BDEditor.Classes
 //                idxTopic = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 
 //                antimicrobial = null;
 //                subsection = null;
-//                    idxAntimicrobial = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+//                    idxAntimicrobial = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobialSection);
 //                    idxTopic = 0;
 //            }
 //            if ((null != antimicrobialData && antimicrobialData != string.Empty) && ((null == antimicrobial) || (antimicrobial.name != antimicrobialData)))
@@ -948,7 +948,7 @@ namespace BDEditor.Classes
 //                {
 //                    antimicrobial = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDAntimicrobial, Guid.Parse(uuidData));
 //                    antimicrobial.name = antimicrobialData;
-//                    antimicrobial.SetParent(section);
+//                    antimicrobial.SetParent(antimicrobialSection);
 //                    antimicrobial.displayOrder = idxAntimicrobial++;
 //                    antimicrobial.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines;
 //                    BDNode.Save(dataContext, antimicrobial);
@@ -1033,7 +1033,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 //                antimicrobialGroup = null;
 
@@ -1042,26 +1042,26 @@ namespace BDEditor.Classes
 //                idxAntimicrobialGroup = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                category = null;
 //                antimicrobialGroup = null;
-//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobialSection);
 //                idxAntimicrobialGroup = 0;
 //            }
 //            if ((null != categoryData && categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
@@ -1071,7 +1071,7 @@ namespace BDEditor.Classes
 //                {
 //                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                    category.name = (categoryData == @"<blank>") ? string.Empty : categoryData;
-//                    category.SetParent(section);
+//                    category.SetParent(antimicrobialSection);
 //                    category.displayOrder = idxCategory++;
 //                    category.LayoutVariant = categoryLayoutVariant;
 //                    BDNode.Save(dataContext, category);
@@ -1145,7 +1145,7 @@ namespace BDEditor.Classes
 //                {
 //                    chapter = tmpNode;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 //                subcategory = null;
 
@@ -1154,28 +1154,28 @@ namespace BDEditor.Classes
 //                idxSubcategory = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                category = null;
 //                subcategory = null;
 
-//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobialSection);
 //                idxSubcategory = 0;
 //            }
 //            if ((categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
@@ -1185,7 +1185,7 @@ namespace BDEditor.Classes
 //                {
 //                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                        category.name = categoryData;
-//                    category.SetParent(section);
+//                    category.SetParent(antimicrobialSection);
 //                    category.displayOrder = idxCategory++;
 //                    category.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts;
 //                    BDNode.Save(dataContext, category);
@@ -1259,27 +1259,27 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                subsection = null;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 
 //                    idxTopic = 0;
 //                }
 //                else
 //                {
-//                    section = sectionNode; // assign Parasitic section
+//                    antimicrobialSection = sectionNode; // assign Parasitic antimicrobialSection
 //                    idxSection++;
 //                }
 //                subsection = null;
@@ -1292,7 +1292,7 @@ namespace BDEditor.Classes
 //                {
 //                    subsection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
 //                    subsection.name = topicData;
-//                    subsection.SetParent(section);
+//                    subsection.SetParent(antimicrobialSection);
 //                    subsection.displayOrder = idxTopic++;
 //                    subsection.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring;
 //                    BDNode.Save(dataContext, subsection);
@@ -1347,26 +1347,26 @@ namespace BDEditor.Classes
 //                    idxChapter++;
 //                }
 
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 //                subcategory = null;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
                 
@@ -1383,7 +1383,7 @@ namespace BDEditor.Classes
 //                {
 //                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                    category.name = categoryData;
-//                    category.SetParent(section);
+//                    category.SetParent(antimicrobialSection);
 //                    category.displayOrder = idxCategory++;
 //                    category.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment;
 //                    BDNode.Save(dataContext, category);
@@ -1497,26 +1497,26 @@ namespace BDEditor.Classes
 //                    idxChapter++;
 //                }
 
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 //                antimicrobial = null;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sNode = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(uuidData));
 //                if (null == sNode)
 //                {
-//                section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                section.name = sectionData;
-//                section.SetParent(chapter);
-//                section.displayOrder = idxSection++;
-//                section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment;
-//                BDNode.Save(dataContext, section);
+//                antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                antimicrobialSection.name = sectionData;
+//                antimicrobialSection.SetParent(chapter);
+//                antimicrobialSection.displayOrder = idxSection++;
+//                antimicrobialSection.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment;
+//                BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                                    {
-//                    section = sNode;
+//                    antimicrobialSection = sNode;
 //                    idxSection++;
 //                }
 
@@ -1531,7 +1531,7 @@ namespace BDEditor.Classes
 //                {
 //                category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                category.name = categoryData;
-//                category.SetParent(section);
+//                category.SetParent(antimicrobialSection);
 //                category.displayOrder = idxCategory++;
 //                category.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment;
 //                BDNode.Save(dataContext, category);
@@ -1618,7 +1618,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                table = null;
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
@@ -1627,17 +1627,17 @@ namespace BDEditor.Classes
 //                tableCell = null;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_NameListing;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_NameListing;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 
 //                    idxTable = 0;
 //                    idxTableChildren = 0;
@@ -1646,7 +1646,7 @@ namespace BDEditor.Classes
 //                }
 //                else
 //                {
-//                    section = sectionNode; // assign Parasitic section
+//                    antimicrobialSection = sectionNode; // assign Parasitic antimicrobialSection
 //                    idxSection++;
 //                }
 //                table = null;
@@ -1663,7 +1663,7 @@ namespace BDEditor.Classes
 //                {
 //                    table = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTable, Guid.Parse(uuidData));
 //                    table.name = (tableData == @"<blank>") ? string.Empty : tableData;
-//                    table.SetParent(section);
+//                    table.SetParent(antimicrobialSection);
 //                    table.displayOrder = idxTable++;
 //                    table.LayoutVariant = BDConstants.LayoutVariantType.Table_3_Column;
 //                    BDNode.Save(dataContext, table);
@@ -1907,23 +1907,23 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                table = null;
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Stepdown;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Stepdown;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 
 //                    idxTable = 0;
 //                    idxTableChildren = 0;
@@ -1931,7 +1931,7 @@ namespace BDEditor.Classes
 //                }
 //                else
 //                {
-//                    section = sectionNode; // assign Parasitic section
+//                    antimicrobialSection = sectionNode; // assign Parasitic antimicrobialSection
 //                    idxSection++;
 //                }
 //                table = null;
@@ -1945,7 +1945,7 @@ namespace BDEditor.Classes
 //                {
 //                    table = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTable, Guid.Parse(uuidData));
 //                    table.name = (tableData == @"<blank>") ? string.Empty : tableData;
-//                    table.SetParent(section);
+//                    table.SetParent(antimicrobialSection);
 //                    table.displayOrder = idxTable++;
 //                    table.LayoutVariant = BDConstants.LayoutVariantType.Table_5_Column;
 //                    BDNode.Save(dataContext, table);
@@ -2073,7 +2073,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 //                subsection = null;
 //                subcategory = null;
@@ -2086,28 +2086,28 @@ namespace BDEditor.Classes
 //                idxAntimicrobial = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                subsection = null;
 //                category = null;
 //                subcategory = null;
 //                antimicrobial = null;
-//                idxTopic = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+//                idxTopic = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobialSection);
 //                idxCategory = 0;
 //                idxSubcategory = 0;
 //                idxAntimicrobial = 0;
@@ -2119,7 +2119,7 @@ namespace BDEditor.Classes
 //                {
 //                    subsection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
 //                    subsection.name = (topicData == @"<blank>") ? string.Empty : topicData;
-//                    subsection.SetParent(section);
+//                    subsection.SetParent(antimicrobialSection);
 //                    subsection.displayOrder = idxTopic++;
 //                    subsection.LayoutVariant = topicLayoutVariant;
 //                    BDNode.Save(dataContext, subsection);
@@ -2257,7 +2257,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                table = null;
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
@@ -2266,17 +2266,17 @@ namespace BDEditor.Classes
 //                tableCell = null;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 
 //                    idxTable = 0;
 //                    idxTableChildren = 0;
@@ -2285,7 +2285,7 @@ namespace BDEditor.Classes
 //                }
 //                else
 //                {
-//                    section = sectionNode; // assign Parasitic section
+//                    antimicrobialSection = sectionNode; // assign Parasitic antimicrobialSection
 //                    idxSection++;
 //                }
 //                table = null;
@@ -2302,7 +2302,7 @@ namespace BDEditor.Classes
 //                {
 //                    subsection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSubsection, Guid.Parse(uuidData));
 //                    subsection.name = subsectionData;
-//                    subsection.SetParent(section);
+//                    subsection.SetParent(antimicrobialSection);
 //                    subsection.displayOrder = idxSubsection++;
 //                    subsection.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy;
 //                    BDNode.Save(dataContext, subsection);
@@ -2315,7 +2315,7 @@ namespace BDEditor.Classes
 //                }
 //                else
 //                {
-//                    subsection = tmpNode; // assign Parasitic section
+//                    subsection = tmpNode; // assign Parasitic antimicrobialSection
 //                    idxSubsection++;
 //                }
 //                subsection = null;
@@ -2576,7 +2576,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                table = null;
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
@@ -2587,21 +2587,21 @@ namespace BDEditor.Classes
 //                idxTherapyGroup = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode; 
+//                    antimicrobialSection = sectionNode; 
 //                    idxSection++;
 //                }
 //                table = null;
@@ -2618,7 +2618,7 @@ namespace BDEditor.Classes
 //                {
 //                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                    category.name = (categoryData == @"<blank>") ? string.Empty : categoryData;
-//                    category.SetParent(section);
+//                    category.SetParent(antimicrobialSection);
 //                    category.displayOrder = idxCategory++;
 //                    category.LayoutVariant = categoryLayoutVariant;
 //                    BDNode.Save(dataContext, category);
@@ -2700,7 +2700,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                table = null;
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
@@ -2712,21 +2712,21 @@ namespace BDEditor.Classes
 //                idxSubtopic = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                table = null;
@@ -2745,7 +2745,7 @@ namespace BDEditor.Classes
 //                {
 //                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                    category.name = (categoryData == @"<blank>") ? string.Empty : categoryData;
-//                    category.SetParent(section);
+//                    category.SetParent(antimicrobialSection);
 //                    category.displayOrder = idxCategory++;
 //                    category.LayoutVariant = categoryLayoutVariant;
 //                    BDNode.Save(dataContext, category);
@@ -2845,7 +2845,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 //                subcategory = null;
 //                therapyGroup = null;
@@ -2856,27 +2856,27 @@ namespace BDEditor.Classes
 //                idxTherapyGroup = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                category = null;
 //                subcategory = null;
 //                therapyGroup = null;
-//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobialSection);
 //                idxSubcategory = 0;
 //                idxTherapyGroup = 0;
 //            }
@@ -2887,7 +2887,7 @@ namespace BDEditor.Classes
 //                {
 //                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                    category.name = (categoryData == @"<blank>") ? string.Empty : categoryData;
-//                    category.SetParent(section);
+//                    category.SetParent(antimicrobialSection);
 //                    category.displayOrder = idxCategory++;
 //                    category.LayoutVariant = categoryLayoutVariant;
 //                    BDNode.Save(dataContext, category);
@@ -2995,7 +2995,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 //                subcategory = null;
 //                therapyGroup = null;
@@ -3008,28 +3008,28 @@ namespace BDEditor.Classes
 //                idxTherapy = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                category = null;
 //                subcategory = null;
 //                therapyGroup = null;
 //                therapy = null;
-//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobialSection);
 //                idxSubcategory = 0;
 //                idxTherapyGroup = 0;
 //                idxTherapy = 0;
@@ -3041,7 +3041,7 @@ namespace BDEditor.Classes
 //                {
 //                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                    category.name = (categoryData == @"<blank>") ? string.Empty : categoryData;
-//                    category.SetParent(section);
+//                    category.SetParent(antimicrobialSection);
 //                    category.displayOrder = idxCategory++;
 //                    category.LayoutVariant = categoryLayoutVariant;
 //                    BDNode.Save(dataContext, category);
@@ -3171,7 +3171,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 //                subcategory = null;
 //                surgery = null;
@@ -3182,27 +3182,27 @@ namespace BDEditor.Classes
 //                idxSurgery = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                category = null;
 //                subcategory = null;
 //                surgery = null;
-//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobialSection);
 //                idxSubcategory = 0;
 //                idxSurgery = 0;
 //            }
@@ -3213,7 +3213,7 @@ namespace BDEditor.Classes
 //                {
 //                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                    category.name = (categoryData == @"<blank>") ? string.Empty : categoryData;
-//                    category.SetParent(section);
+//                    category.SetParent(antimicrobialSection);
 //                    category.displayOrder = idxCategory++;
 //                    category.LayoutVariant = categoryLayoutVariant;
 //                    BDNode.Save(dataContext, category);
@@ -3328,7 +3328,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                table = null;
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
@@ -3337,17 +3337,17 @@ namespace BDEditor.Classes
 //                tableCell = null;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 
 //                    idxTable = 0;
 //                    idxTableChildren = 0;
@@ -3355,7 +3355,7 @@ namespace BDEditor.Classes
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                table = null;
@@ -3372,7 +3372,7 @@ namespace BDEditor.Classes
 //                {
 //                    table = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTable, Guid.Parse(uuidData));
 //                    table.name = (tableData == @"<blank>") ? string.Empty : tableData;
-//                    table.SetParent(section);
+//                    table.SetParent(antimicrobialSection);
 //                    table.displayOrder = idxTable++;
 //                    table.LayoutVariant = tableLayoutVariant;
 //                    BDNode.Save(dataContext, table);
@@ -3576,7 +3576,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 //                subcategory = null;
 
@@ -3585,26 +3585,26 @@ namespace BDEditor.Classes
 //                idxSubcategory = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                category = null;
 //                subcategory = null;
-//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobialSection);
 //                idxSubcategory = 0;
 //            }
 //            if ((null != categoryData && categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
@@ -3614,7 +3614,7 @@ namespace BDEditor.Classes
 //                {
 //                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                    category.name = (categoryData == @"<blank>") ? string.Empty : categoryData;
-//                    category.SetParent(section);
+//                    category.SetParent(antimicrobialSection);
 //                    category.displayOrder = idxCategory++;
 //                    category.LayoutVariant = categoryLayoutVariant;
 //                    BDNode.Save(dataContext, category);
@@ -3697,20 +3697,20 @@ namespace BDEditor.Classes
 //                    idxChapter++;
 //                }
 
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 //                disease = null;
 //                presentation = null;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
-//                section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                section.name = sectionData;
-//                section.SetParent(chapter);
-//                section.displayOrder = idxSection++;
-//                section.LayoutVariant = sectionLayoutVariant;
-//                BDNode.Save(dataContext, section);
+//                antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                antimicrobialSection.name = sectionData;
+//                antimicrobialSection.SetParent(chapter);
+//                antimicrobialSection.displayOrder = idxSection++;
+//                antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                BDNode.Save(dataContext, antimicrobialSection);
 
 //                category = null;
 //                disease = null;
@@ -3721,7 +3721,7 @@ namespace BDEditor.Classes
 //            {
 //                category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                category.name = categoryData;
-//                category.SetParent(section);
+//                category.SetParent(antimicrobialSection);
 //                category.displayOrder = idxCategory++;
 //                category.LayoutVariant = categoryLayoutVariant;
 //                BDNode.Save(dataContext, category);
@@ -3800,7 +3800,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 //                subcategory = null;
 //                antimicrobial = null;
@@ -3811,27 +3811,27 @@ namespace BDEditor.Classes
 //                idxAntimicrobial = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                category = null;
 //                subcategory = null;
 //                antimicrobial = null;
-//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobialSection);
 //                idxSubcategory = 0;
 //                idxAntimicrobial = 0;
 //            }
@@ -3842,7 +3842,7 @@ namespace BDEditor.Classes
 //                {
 //                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                    category.name = (categoryData == @"<blank>") ? string.Empty : categoryData;
-//                    category.SetParent(section);
+//                    category.SetParent(antimicrobialSection);
 //                    category.displayOrder = idxCategory++;
 //                    category.LayoutVariant = categoryLayoutVariant;
 //                    BDNode.Save(dataContext, category);
@@ -3961,7 +3961,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 //                subcategory = null;
 //                antimicrobialGroup = null;
@@ -3974,28 +3974,28 @@ namespace BDEditor.Classes
 //                idxAntimicrobial = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                category = null;
 //                subcategory = null;
 //                antimicrobialGroup = null;
 //                antimicrobial = null;
-//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobialSection);
 //                idxSubcategory = 0;
 //                idxAntimicrobialGroup = 0;
 //                idxAntimicrobial = 0;
@@ -4007,7 +4007,7 @@ namespace BDEditor.Classes
 //                {
 //                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                    category.name = (categoryData == @"<blank>") ? string.Empty : categoryData;
-//                    category.SetParent(section);
+//                    category.SetParent(antimicrobialSection);
 //                    category.displayOrder = idxCategory++;
 //                    category.LayoutVariant = categoryLayoutVariant;
 //                    BDNode.Save(dataContext, category);
@@ -4162,7 +4162,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                pathogen = null;
 //                subsection = null;
 
@@ -4171,27 +4171,27 @@ namespace BDEditor.Classes
 //                    idxTopic = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                pathogen = null;
 //                subsection = null;
 
-//                idxPathogen = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+//                idxPathogen = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobialSection);
 //                    idxTopic = 0;
 //            }
 //            if ((null != pathogenData && pathogenData != string.Empty) && ((null == pathogen) || (pathogen.name != pathogenData)))
@@ -4201,7 +4201,7 @@ namespace BDEditor.Classes
 //                {
 //                    pathogen = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDPathogen, Guid.Parse(uuidData));
 //                    pathogen.name = (pathogenData == @"<blank>") ? string.Empty : pathogenData;
-//                    pathogen.SetParent(section);
+//                    pathogen.SetParent(antimicrobialSection);
 //                    pathogen.displayOrder = idxPathogen++;
 //                    pathogen.LayoutVariant = pathogenLayoutVariant;
 //                    BDNode.Save(dataContext, pathogen);
@@ -4273,32 +4273,32 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 
 //                idxSection = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
 //                idxCategory = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                category = null;
-//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobialSection);
 //            }
 //            if ((null != categoryData && categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
 //            {
@@ -4307,7 +4307,7 @@ namespace BDEditor.Classes
 //                {
 //                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                    category.name = (categoryData == @"<blank>") ? string.Empty : categoryData;
-//                    category.SetParent(section);
+//                    category.SetParent(antimicrobialSection);
 //                    category.displayOrder = idxCategory++;
 //                    category.LayoutVariant = categoryLayoutVariant;
 //                    BDNode.Save(dataContext, category);
@@ -4358,26 +4358,26 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 
 //                idxSection = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //            }
@@ -4430,7 +4430,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 //                subcategory = null;
 //                microorganism = null;
@@ -4441,27 +4441,27 @@ namespace BDEditor.Classes
 //                idxMicroorganism = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                category = null;
 //                subcategory = null;
 //                microorganism = null;
-//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobialSection);
 //                idxSubcategory = 0;
 //                idxMicroorganism = 0;
 //            }
@@ -4472,7 +4472,7 @@ namespace BDEditor.Classes
 //                {
 //                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                    category.name = (categoryData == @"<blank>") ? string.Empty : categoryData;
-//                    category.SetParent(section);
+//                    category.SetParent(antimicrobialSection);
 //                    category.displayOrder = idxCategory++;
 //                    category.LayoutVariant = categoryLayoutVariant;
 //                    BDNode.Save(dataContext, category);
@@ -4580,7 +4580,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 //                subcategory = null;
 //                microorganismGroup = null;
@@ -4593,21 +4593,21 @@ namespace BDEditor.Classes
 //                idxMicroorganism = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                category = null;
@@ -4615,7 +4615,7 @@ namespace BDEditor.Classes
 //                microorganismGroup = null;
 //                microorganism = null;
 
-//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobialSection);
 //                idxSubcategory = 0;
 //                idxMicroorganismGroup = 0;
 //                idxMicroorganism = 0;
@@ -4627,7 +4627,7 @@ namespace BDEditor.Classes
 //                {
 //                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                    category.name = (categoryData == @"<blank>") ? string.Empty : categoryData;
-//                    category.SetParent(section);
+//                    category.SetParent(antimicrobialSection);
 //                    category.displayOrder = idxCategory++;
 //                    category.LayoutVariant = categoryLayoutVariant;
 //                    BDNode.Save(dataContext, category);
@@ -4765,7 +4765,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 //                microorganismGroup = null;
 //                microorganism = null;
@@ -4776,27 +4776,27 @@ namespace BDEditor.Classes
 //                idxMicroorganism = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                category = null;
 //                microorganismGroup = null;
 //                microorganism = null;
-//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobialSection);
 //                idxMicroorganismGroup = 0;
 //                idxMicroorganism = 0;
 //            }
@@ -4807,7 +4807,7 @@ namespace BDEditor.Classes
 //                {
 //                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                    category.name = (categoryData == @"<blank>") ? string.Empty : categoryData;
-//                    category.SetParent(section);
+//                    category.SetParent(antimicrobialSection);
 //                    category.displayOrder = idxCategory++;
 //                    category.LayoutVariant = categoryLayoutVariant;
 //                    BDNode.Save(dataContext, category);
@@ -4903,26 +4903,26 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 
 //                idxSection = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //            }
@@ -4979,7 +4979,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                table = null;
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
@@ -4998,19 +4998,19 @@ namespace BDEditor.Classes
 //                BDNode tableNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == tableNode)
 //                {
-//                    // this seed data was created without the section layer of the hierarchy
-//                    if (null == section)
+//                    // this seed data was created without the antimicrobialSection layer of the hierarchy
+//                    if (null == antimicrobialSection)
 //                    {
-//                        section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.NewGuid());
-//                        section.name = tableData;
-//                        section.SetParent(chapter);
-//                        section.displayOrder = idxSection++;
-//                        section.LayoutVariant = sectionLayoutVariant;
-//                        BDNode.Save(dataContext, section);
+//                        antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.NewGuid());
+//                        antimicrobialSection.name = tableData;
+//                        antimicrobialSection.SetParent(chapter);
+//                        antimicrobialSection.displayOrder = idxSection++;
+//                        antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                        BDNode.Save(dataContext, antimicrobialSection);
 //                    }
 //                    table = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTable, Guid.Parse(uuidData));
 //                    table.name = (tableData == @"<blank>") ? string.Empty : tableData;
-//                    table.SetParent(section);
+//                    table.SetParent(antimicrobialSection);
 //                    table.displayOrder = idxTable++;
 //                    table.LayoutVariant = tableLayoutVariant;
 //                    BDNode.Save(dataContext, table);
@@ -5237,7 +5237,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 //                surgeryClassification = null;
 //                surgeryGroup = null;
@@ -5250,28 +5250,28 @@ namespace BDEditor.Classes
 //                idxSurgery = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                category = null;
 //                surgeryClassification = null;
 //                surgeryGroup = null;
 //                surgery = null;
-//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobialSection);
 //                idxSurgeryClassification = 0;
 //                idxSurgeryGroup = 0;
 //                idxSurgery = 0;
@@ -5283,7 +5283,7 @@ namespace BDEditor.Classes
 //                {
 //                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                    category.name = (categoryData == @"<blank>") ? string.Empty : categoryData;
-//                    category.SetParent(section);
+//                    category.SetParent(antimicrobialSection);
 //                    category.displayOrder = idxCategory++;
 //                    category.LayoutVariant = categoryLayoutVariant;
 //                    BDNode.Save(dataContext, category);
@@ -5406,7 +5406,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 //                subcategory = null;
 
@@ -5415,26 +5415,26 @@ namespace BDEditor.Classes
 //                idxSubcategory = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                category = null;
 //                subcategory = null;
-//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+//                idxCategory = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobialSection);
 //                idxSubcategory = 0;
 //            }
 //            if ((null != categoryData && categoryData != string.Empty) && ((null == category) || (category.name != categoryData)))
@@ -5444,7 +5444,7 @@ namespace BDEditor.Classes
 //                {
 //                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                    category.name = (categoryData == @"<blank>") ? string.Empty : categoryData;
-//                    category.SetParent(section);
+//                    category.SetParent(antimicrobialSection);
 //                    category.displayOrder = idxCategory++;
 //                    category.LayoutVariant = categoryLayoutVariant;
 //                    BDNode.Save(dataContext, category);
@@ -5524,7 +5524,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                therapyGroup = null;
 //                therapy = null;
 
@@ -5533,21 +5533,21 @@ namespace BDEditor.Classes
 //                idxTherapy = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                therapyGroup = null;
@@ -5559,7 +5559,7 @@ namespace BDEditor.Classes
 //            {
 //                if (therapyGroupData == "Standard")
 //                {
-//                    idxTherapyGroup = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+//                    idxTherapyGroup = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobialSection);
 //                    idxTherapyGroup++;
 //                }
 //                BDTherapyGroup tmpNode = BDTherapyGroup.RetrieveTherapyGroupWithId(dataContext, Guid.Parse(uuidData));
@@ -5567,7 +5567,7 @@ namespace BDEditor.Classes
 //                {
 //                    therapyGroup = BDTherapyGroup.CreateBDTherapyGroup(dataContext, Guid.Parse(uuidData));
 //                    therapyGroup.name = therapyGroupData;
-//                    therapyGroup.SetParent(section);
+//                    therapyGroup.SetParent(antimicrobialSection);
 //                    therapyGroup.displayOrder = idxTherapyGroup++;
 //                    therapyGroup.LayoutVariant = therapyGroupLayoutVariant;
 //                    BDTherapyGroup.Save(dataContext, therapyGroup);
@@ -5670,7 +5670,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                table = null;
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
@@ -5682,21 +5682,21 @@ namespace BDEditor.Classes
 //                idxTableHeaderCell = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                table = null;
@@ -5717,7 +5717,7 @@ namespace BDEditor.Classes
 //                {
 //                    table = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTable, Guid.Parse(uuidData));
 //                    table.name = (tableData == @"<blank>") ? string.Empty : tableData;
-//                    table.SetParent(section);
+//                    table.SetParent(antimicrobialSection);
 //                    table.displayOrder = idxTable++;
 //                    table.LayoutVariant = tableLayoutVariant;
 //                    BDNode.Save(dataContext, table);
@@ -5871,7 +5871,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                subsection = null;
 //                table = null;
 //                tableHeaderRow = null;
@@ -5885,21 +5885,21 @@ namespace BDEditor.Classes
 //                idxTableHeaderCell = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                subsection = null;
@@ -5920,7 +5920,7 @@ namespace BDEditor.Classes
 //                {
 //                    subsection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
 //                    subsection.name = topicData;
-//                    subsection.SetParent(section);
+//                    subsection.SetParent(antimicrobialSection);
 //                    subsection.displayOrder = idxTopic++;
 //                    subsection.LayoutVariant = topicLayoutVariant;
 //                    BDNode.Save(dataContext, subsection);
@@ -5970,7 +5970,7 @@ namespace BDEditor.Classes
 //                {
 //                    table = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTable, Guid.Parse(uuidData));
 //                    table.name = (tableData == @"<blank>") ? string.Empty : tableData;
-//                    table.SetParent(section);
+//                    table.SetParent(antimicrobialSection);
 //                    table.displayOrder = idxTable++;
 //                    table.LayoutVariant = tableLayoutVariant;
 //                    BDNode.Save(dataContext, table);
@@ -6117,7 +6117,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                table = null;
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
@@ -6129,28 +6129,28 @@ namespace BDEditor.Classes
 //                idxTableHeaderCell = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                subsection = null;
 //                table = null;
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
-//                idxTopic = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+//                idxTopic = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobialSection);
 //                idxTable = 0;
 //                idxTableChildren = 0;
 //                idxTableHeaderCell = 0;
@@ -6163,7 +6163,7 @@ namespace BDEditor.Classes
 //                {
 //                    subsection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
 //                    subsection.name = topicData;
-//                    subsection.SetParent(section);
+//                    subsection.SetParent(antimicrobialSection);
 //                    subsection.displayOrder = idxTopic++;
 //                    subsection.LayoutVariant = tableLayoutVariant;
 //                    BDNode.Save(dataContext, subsection);
@@ -6307,7 +6307,7 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                table = null;
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
@@ -6319,28 +6319,28 @@ namespace BDEditor.Classes
 //                idxTableHeaderCell = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                subsection = null;
 //                table = null;
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
-//                idxTopic = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+//                idxTopic = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobialSection);
 //                idxTable = 0;
 //                idxTableChildren = 0;
 //                idxTableHeaderCell = 0;
@@ -6353,7 +6353,7 @@ namespace BDEditor.Classes
 //                {
 //                    subsection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
 //                    subsection.name = topicData;
-//                    subsection.SetParent(section);
+//                    subsection.SetParent(antimicrobialSection);
 //                    subsection.displayOrder = idxTopic++;
 //                    subsection.LayoutVariant = tableLayoutVariant;
 //                    BDNode.Save(dataContext, subsection);
@@ -6502,28 +6502,28 @@ namespace BDEditor.Classes
 //                    chapter = tmpNode;
 //                    idxChapter++;
 //                }
-//                section = null;
+//                antimicrobialSection = null;
 //                subsection = null;
 
 //                idxSection = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
 //                idxTopic = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                subsection = null;
@@ -6538,7 +6538,7 @@ namespace BDEditor.Classes
 //                {
 //                    subsection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.Parse(uuidData));
 //                    subsection.name = topicData;
-//                    subsection.SetParent(section);
+//                    subsection.SetParent(antimicrobialSection);
 //                    subsection.displayOrder = idxTopic++;
 //                    subsection.LayoutVariant = topicLayoutVariant;
 //                    BDNode.Save(dataContext, subsection);
@@ -6595,7 +6595,7 @@ namespace BDEditor.Classes
 //                    idxChapter++;
 //                }
 
-//                section = null;
+//                antimicrobialSection = null;
 //                category = null;
 //                disease = null;
 //                idxSection = 0;
@@ -6603,21 +6603,21 @@ namespace BDEditor.Classes
 //                idxDisease = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                category = null;
@@ -6633,7 +6633,7 @@ namespace BDEditor.Classes
 //                {
 //                    category = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.Parse(uuidData));
 //                    category.name = categoryData;
-//                    category.SetParent(section);
+//                    category.SetParent(antimicrobialSection);
 //                    category.displayOrder = idxCategory++;
 //                    category.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive;
 //                    BDNode.Save(dataContext, category);
@@ -6689,7 +6689,7 @@ namespace BDEditor.Classes
 //                    if (hasCategory)
 //                        disease.SetParent(category);
 //                    else
-//                        disease.SetParent(section);
+//                        disease.SetParent(antimicrobialSection);
 //                    disease.displayOrder = idxDisease++;
 //                    disease.LayoutVariant = diseaseLayoutVariant;
 //                    BDNode.Save(dataContext, disease);
@@ -6753,7 +6753,7 @@ namespace BDEditor.Classes
 //                    idxChapter++;
 //                }
 
-//                section = null;
+//                antimicrobialSection = null;
 //                microorganismGroup = null;
 //                microorganism = null;
 //                idxSection = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, chapter);
@@ -6761,26 +6761,26 @@ namespace BDEditor.Classes
 //                idxMicroorganism = 0;
 //            }
 
-//            if ((sectionData != string.Empty) && ((null == section) || (section.name != sectionData)))
+//            if ((sectionData != string.Empty) && ((null == antimicrobialSection) || (antimicrobialSection.name != sectionData)))
 //            {
 //                BDNode sectionNode = BDNode.RetrieveNodeWithId(dataContext, new Guid(uuidData));
 //                if (null == sectionNode)
 //                {
-//                    section = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
-//                    section.name = sectionData;
-//                    section.SetParent(chapter);
-//                    section.displayOrder = idxSection++;
-//                    section.LayoutVariant = sectionLayoutVariant;
-//                    BDNode.Save(dataContext, section);
+//                    antimicrobialSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.Parse(uuidData));
+//                    antimicrobialSection.name = sectionData;
+//                    antimicrobialSection.SetParent(chapter);
+//                    antimicrobialSection.displayOrder = idxSection++;
+//                    antimicrobialSection.LayoutVariant = sectionLayoutVariant;
+//                    BDNode.Save(dataContext, antimicrobialSection);
 //                }
 //                else
 //                {
-//                    section = sectionNode;
+//                    antimicrobialSection = sectionNode;
 //                    idxSection++;
 //                }
 //                microorganismGroup = null;
 //                microorganism = null;
-//                idxMicroorganismGroup = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, section);
+//                idxMicroorganismGroup = (short)BDNode.RetrieveMaximumDisplayOrderForChildren(dataContext, antimicrobialSection);
 //                idxMicroorganism = 0;
 //            }
 
@@ -6791,7 +6791,7 @@ namespace BDEditor.Classes
 //                {
 //                    microorganismGroup = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDMicroorganismGroup, Guid.Parse(uuidData));
 //                    microorganismGroup.name = microorganismGroupData;
-//                    microorganismGroup.SetParent(section);
+//                    microorganismGroup.SetParent(antimicrobialSection);
 //                    microorganismGroup.displayOrder = idxMicroorganismGroup++;
 //                    microorganismGroup.LayoutVariant = microorganismGroupLayoutVariant;
 //                    BDNode.Save(dataContext, microorganismGroup);

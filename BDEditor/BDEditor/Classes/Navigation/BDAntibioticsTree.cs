@@ -29,10 +29,12 @@ namespace BDEditor.Classes.Navigation
                 case BDConstants.BDNodeType.BDCategory:
                 case BDConstants.BDNodeType.BDSubcategory:
                 case BDConstants.BDNodeType.BDDisease:
+                case BDConstants.BDNodeType.BDAntimicrobial:
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Antibiotics:
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
+                        case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines_Spectrum:
                         case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
@@ -43,24 +45,6 @@ namespace BDEditor.Classes.Navigation
                         case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
                         case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
                         case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
-                            foreach (IBDNode childNode in childList)
-                            {
-                                string name = childNode.Name;
-                                if ((null == name) || (name.Length == 0))
-                                {
-                                    name = @"< intentionally blank >";
-                                }
-                                TreeNode childTreeNode = new TreeNode(name);
-                                childTreeNode.Tag = childNode;
-                                branchTreeNode.Nodes.Add(childTreeNode);
-                            }
-                            break;
-                    }
-                    break;
-                case BDConstants.BDNodeType.BDAntimicrobial:
-                    switch (pNode.LayoutVariant)
-                    {
-                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                             foreach (IBDNode childNode in childList)
                             {
                                 string name = childNode.Name;

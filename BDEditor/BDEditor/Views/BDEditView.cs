@@ -23,7 +23,7 @@ namespace BDEditor.Views
         // reset the following on BDEditView_Load when adding seed data
         private bool isSeedDataLoadAvailable = false;
         private string seedDataFileName = string.Empty;
-        private BDDataLoader.baseDataDefinitionType seedDataType = BDDataLoader.baseDataDefinitionType.none;
+        private bool moveButtonVisible = true;
 
         public BDEditView()
         {
@@ -393,13 +393,17 @@ namespace BDEditor.Views
                     splitContainer1.Panel2.SuspendLayout();
                     ControlHelper.SuspendDrawing(splitContainer1.Panel2);
 
-                    foreach (Control ctrl in splitContainer1.Panel2.Controls)
+                    for (int idx = 0; idx < splitContainer1.Panel2.Controls.Count; idx++)
                     {
-                        IBDControl nodeCtrl = ctrl as IBDControl;
-                        if (null != nodeCtrl)
                         {
-                            nodeCtrl.NameChanged -= new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
-                            nodeCtrl.RequestItemAdd -= new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
+                            Control ctrl = splitContainer1.Panel2.Controls[idx];
+                            IBDControl nodeCtrl = ctrl as IBDControl;
+                            if (null != nodeCtrl)
+                            {
+                                nodeCtrl.NameChanged -= new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                                nodeCtrl.RequestItemAdd -= new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
+                                ctrl.Dispose();
+                            }
                         }
                     }
 
@@ -417,6 +421,7 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation16_CultureDirected:
                                 childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
@@ -692,7 +697,10 @@ namespace BDEditor.Views
                     case BDConstants.BDNodeType.BDPathogen:
                         switch (node.LayoutVariant)
                         {
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation15_Pneumonia:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
@@ -707,18 +715,17 @@ namespace BDEditor.Views
                     case BDConstants.BDNodeType.BDPathogenGroup:
                         switch (node.LayoutVariant)
                         {
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation15_Pneumonia:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis: 
                                 childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
                                     graftTreeNode(selectedNode, childTreeNode);
                                     showChildControls = false;
                                 }
-                                break;
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
-                                if (!pInterrogateOnly)
-                                    showChildControls = true;
                                 break;
                         }
                         break;
@@ -851,6 +858,8 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation15_Pneumonia:
                                 childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
@@ -1053,7 +1062,6 @@ namespace BDEditor.Views
 
             // Loading Seed Data:  set the following variables
             isSeedDataLoadAvailable = false;
-            bool moveButtonVisible = false;
 
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
@@ -1245,6 +1253,7 @@ namespace BDEditor.Views
             {
                 IBDNode parentNode = BDFabrik.RetrieveNode(this.DataContext, sourceNode.ParentType, sourceNode.ParentId);
                 List<IBDNode> siblingList = BDFabrik.GetChildrenForParent(this.DataContext, parentNode);
+                Debug.WriteLine("sibling count is: {0}",siblingList.Count());
 
                 siblingList.Remove(sourceNode);
                 int targetIdx = (targetNode.Uuid == sourceNode.ParentId) ? 0 : siblingList.IndexOf(targetNode) + 1;
@@ -1256,14 +1265,21 @@ namespace BDEditor.Views
                     BDFabrik.SaveNode(this.DataContext, siblingList[idx]);
                 }
 
-                // what if parent is null?
                 if (null != parentTreeNode)
                 {
                     parentTreeNode.Nodes.Remove(sourceTreeNode);
                     parentTreeNode.Nodes.Insert(targetIdx, sourceTreeNode);
                     Debug.WriteLine("---");
                 }
+                else
+                {
+                    IBDNode listEntry = chapterDropDown.SelectedItem as IBDNode;
+                    displayChapter(listEntry);
+                }
             }
+            else
+                Debug.WriteLine("drop target is not valid");
+
         }
 
         private void chapterTree_DragEnter(object sender, DragEventArgs e)
@@ -1304,6 +1320,14 @@ namespace BDEditor.Views
         private void chapterTree_ItemDrag(object sender, ItemDragEventArgs e)
         {
             DoDragDrop(e.Item, DragDropEffects.Move);
+        }
+
+        private void btnShowLayoutEditor_Click(object sender, EventArgs e)
+        {
+            BDLayoutMetadataEditor editor = new BDLayoutMetadataEditor(DataContext);
+            Application.DoEvents();
+            editor.ShowDialog();
+
         }
 
         private void btnMove_Click(object sender, EventArgs e)
@@ -1480,8 +1504,8 @@ namespace BDEditor.Views
 
             //// move Adults > SSTI > Gas Gangrene to presentation level of Rapidly progressive SSTI
             //BDUtilities.MoveNodeToParentSibling(dataContext, Guid.Parse(@"e10f7eb9-66d5-4225-b01e-06a0acefe34c"), Guid.Parse(@"6e4c8849-ad12-4b5f-b5fc-5fc53288cfad"), "SINGLE PRESENTATION", BDConstants.BDNodeType.BDPresentation);
-            
-            // for v.1.6.12
+
+            #region v.1.6.12
             // fetch the antimicrobial stepdown table
             //BDNode nameTable = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(@"45301fa9-55ac-4c8f-95f0-1008016635c4"));
             //if (nameTable.name == "Stepdown Recommendations")
@@ -1507,14 +1531,35 @@ namespace BDEditor.Views
 
             //BDNode vancomycin = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(@"c42a29c2-f5a1-48a4-b140-3e4dae56b445"));
             //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vancomycin, BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin, true);
-        }
 
-        private void btnShowLayoutEditor_Click(object sender, EventArgs e)
-        {
-            BDLayoutMetadataEditor editor = new BDLayoutMetadataEditor(DataContext);
-            Application.DoEvents();
-            editor.ShowDialog();
+            #endregion
+            #region v.1.6.13
+            // move selected tables out of Treatment Recommendations > Adults into new section Treatment recommendations > Culture Directed Infections in Adults
+            // create new section in TreatmentRecoomendations chapter
+            BDNode chapter = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("f92fec3a-379d-41ef-a981-5ddf9c9a9f0e"));
+            BDNode newSection = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection);
+            newSection.SetParent(chapter);
+            newSection.name = "Recommended Empiric Therapy of Culture-Directed Infections in Adult Patients";
+            newSection.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation16_CultureDirected;
+            BDNode.Save(dataContext, newSection);
 
+            // move related tables to new section & assign new layout variant
+            // get culture-proven pneumonia table
+            BDNode table1 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("391bd1a4-daca-44e8-8fda-863f22128f1f"));
+            table1.SetParent(newSection);
+            // get culture-proven PD Peritonitis table
+            BDNode table2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("5b8548c8-0e54-4cb5-910e-2f55a41f9ecc"));
+            table2.SetParent(newSection);
+            // get culture-proven meningitis table
+            BDNode table3 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("fc25fee8-8ded-4d41-895d-b415bab02eb7"));
+            table3.SetParent(newSection);
+            // get culture-proven endocarditis table
+            BDNode table4 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("8741d365-16ef-4de8-8d08-dabc574c010a"));
+            table4.SetParent(newSection);
+            // get culture-proven BCNE table
+            BDNode table5 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("b38a1c03-2f74-4b08-b104-0da7f054c529"));
+            table5.SetParent(newSection);
+            #endregion
         }
     }
 }

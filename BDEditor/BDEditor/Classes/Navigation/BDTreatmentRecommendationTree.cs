@@ -29,12 +29,16 @@ namespace BDEditor.Classes.Navigation
                 case BDConstants.BDNodeType.BDDisease:
                 case BDConstants.BDNodeType.BDTable:
                 case BDConstants.BDNodeType.BDResponse:
+                case BDConstants.BDNodeType.BDPathogenGroup:
                 case BDConstants.BDNodeType.BDPresentation:
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation00:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
@@ -43,40 +47,8 @@ namespace BDEditor.Classes.Navigation
                         case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
-                            foreach (IBDNode childNode in childList)
-                            {
-                                string name = childNode.Name;
-                                if ((null == name) || (name.Length == 0))
-                                {
-                                    //name = childNode.Uuid.ToString();
-                                    name = @"< intentionally blank >";
-                                }
-                                TreeNode childTreeNode = new TreeNode(name);
-                                childTreeNode.Tag = childNode;
-                                branchTreeNode.Nodes.Add(childTreeNode);
-                            }
-                            break;
-                    }
-                    break;
-                case BDConstants.BDNodeType.BDPathogenGroup:
-                    switch (pNode.LayoutVariant)
-                    {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
-                            foreach (IBDNode childNode in childList)
-                            {
-                                string name = childNode.Name;
-                                if ((null == name) || (name.Length == 0))
-                                {
-                                    name = childNode.Uuid.ToString();
-                                }
-                                TreeNode childTreeNode = new TreeNode(name);
-                                childTreeNode.Tag = childNode;
-                                branchTreeNode.Nodes.Add(childTreeNode);
-                            }
-                            break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation15_Pneumonia:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation16_CultureDirected:
                             foreach (IBDNode childNode in childList)
                             {
                                 string name = childNode.Name;

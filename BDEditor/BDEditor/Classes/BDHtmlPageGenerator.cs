@@ -94,6 +94,15 @@ namespace BDEditor.Classes
                             break;
                     }
                     break;
+                case BDConstants.BDNodeType.BDAttachment:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
+                            isPageGenerated = true;
+                            // TODO:  build HTML wrapper around image tag?
+                            break;
+                    }
+                    break;
                 case BDConstants.BDNodeType.BDCategory:
                     switch (pNode.LayoutVariant)
                     {
@@ -107,6 +116,11 @@ namespace BDEditor.Classes
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
                             generatePageForAntibioticDosingInHepaticImpairment(pContext, pNode as BDNode);
+                            isPageGenerated = true;
+                            break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
+                            generatePageForEmpiricTherapyOfParasitic(pContext, pNode as BDNode);
                             isPageGenerated = true;
                             break;
                         default:
@@ -132,6 +146,22 @@ namespace BDEditor.Classes
                                 }
                                 else
                                     isPageGenerated = false;
+                                break;
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
+                                generatepageForEmpiricTherapyOfGenitalUlcers(pContext, pNode as BDNode);
+                                isPageGenerated = true;
+                                break;
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
+                                generatePageForEmpiricTherapyOfEndocarditis(pContext, pNode as BDNode);
+                                isPageGenerated = true;
+                                break;
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
+                                generatePageForEmpiricTherapyOfVesicularLesions(pContext, pNode as BDNode);
+                                isPageGenerated = true;
+                                break;
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation14_CellulitisExtremities:
+                                generatePageForEmpiricTherapyOfCellulitisInExtremities(pContext, pNode as BDNode);
+                                isPageGenerated = true;
                                 break;
                             default:
                                 isPageGenerated = false;
@@ -242,6 +272,18 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
                         case BDConstants.LayoutVariantType.Table_5_Column:
                             generatePageForAntibioticsStepdown(pContext, pNode as BDNode);
+                            isPageGenerated = true;
+                            break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II:
+                            generatePageForEmpiricTherapyOfPneumonia(pContext, pNode as BDNode);
+                            isPageGenerated = true;
+                            break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation15_Pneumonia:
+                            generatePageForEmpiricTherapyOfCultureDirected(pContext, pNode as BDNode);
                             isPageGenerated = true;
                             break;
                         default:
@@ -635,9 +677,9 @@ namespace BDEditor.Classes
                 bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
 
             // insert overview text
-            string antimicrobialOverviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
-            if (antimicrobialOverviewHtml.Length > EMPTY_PARAGRAPH)
-                bodyHTML.Append(antimicrobialOverviewHtml);
+            string overviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
+            if (overviewHtml.Length > EMPTY_PARAGRAPH)
+                bodyHTML.Append(overviewHtml);
 
             // show child nodes in a table
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
@@ -1241,6 +1283,279 @@ namespace BDEditor.Classes
             string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
             BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
             newPage.displayParentType = (int)BDConstants.BDNodeType.BDPresentation;
+            newPage.displayParentId = pNode.Uuid;
+            newPage.documentText = pageHtml;
+            BDHtmlPage.Save(pContext, newPage);
+        }
+
+        private void generatePageForEmpiricTherapyOfCellulitisInExtremities(Entities pContext, BDNode pNode)
+        {
+            // in the case where this method is called from the wrong node type 
+            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
+            {
+#if DEBUG
+                throw new InvalidOperationException();
+#else
+                return;
+#endif
+            }
+
+            StringBuilder bodyHTML = new StringBuilder();
+            StringBuilder footerHTML = new StringBuilder();
+
+            if (pNode.Name.Length > 0)
+                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
+
+            // insert overview text
+            string overviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
+            if (overviewHtml.Length > EMPTY_PARAGRAPH)
+                bodyHTML.Append(overviewHtml);
+
+            // show child nodes in a table
+            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
+            if (childNodes.Count > 0)
+            {
+                //Append HTML for child layout
+            }
+
+            // inject Html into page html & save as a page to the database.
+            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
+            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
+            newPage.displayParentType = (int)pNode.NodeType;
+            newPage.displayParentId = pNode.Uuid;
+            newPage.documentText = pageHtml;
+            BDHtmlPage.Save(pContext, newPage);
+        }
+
+        private void generatePageForEmpiricTherapyOfVesicularLesions(Entities pContext, BDNode pNode)
+        {
+            // in the case where this method is called from the wrong node type 
+            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
+            {
+#if DEBUG
+                throw new InvalidOperationException();
+#else
+                return;
+#endif
+            }
+
+            StringBuilder bodyHTML = new StringBuilder();
+            StringBuilder footerHTML = new StringBuilder();
+
+            if (pNode.Name.Length > 0)
+                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
+
+            // insert overview text
+            string overviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
+            if (overviewHtml.Length > EMPTY_PARAGRAPH)
+                bodyHTML.Append(overviewHtml);
+
+            // show child nodes in a table
+            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
+            if (childNodes.Count > 0)
+            {
+                //Append HTML for child layout
+            }
+
+            // inject Html into page html & save as a page to the database.
+            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
+            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
+            newPage.displayParentType = (int)pNode.NodeType;
+            newPage.displayParentId = pNode.Uuid;
+            newPage.documentText = pageHtml;
+            BDHtmlPage.Save(pContext, newPage);
+        }
+
+        private void generatePageForEmpiricTherapyOfEndocarditis(Entities pContext, BDNode pNode)
+        {
+            // in the case where this method is called from the wrong node type 
+            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
+            {
+#if DEBUG
+                throw new InvalidOperationException();
+#else
+                return;
+#endif
+            }
+
+            StringBuilder bodyHTML = new StringBuilder();
+            StringBuilder footerHTML = new StringBuilder();
+
+            if (pNode.Name.Length > 0)
+                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
+
+            // insert overview text
+            string overviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
+            if (overviewHtml.Length > EMPTY_PARAGRAPH)
+                bodyHTML.Append(overviewHtml);
+
+            // show child nodes in a table
+            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
+            if (childNodes.Count > 0)
+            {
+                //Append HTML for child layout
+            }
+
+            // inject Html into page html & save as a page to the database.
+            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
+            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
+            newPage.displayParentType = (int)pNode.NodeType;
+            newPage.displayParentId = pNode.Uuid;
+            newPage.documentText = pageHtml;
+            BDHtmlPage.Save(pContext, newPage);
+        }
+
+        private void generatepageForEmpiricTherapyOfGenitalUlcers(Entities pContext, BDNode pNode)
+        {
+            // in the case where this method is called from the wrong node type 
+            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
+            {
+#if DEBUG
+                throw new InvalidOperationException();
+#else
+                return;
+#endif
+            }
+
+            StringBuilder bodyHTML = new StringBuilder();
+            StringBuilder footerHTML = new StringBuilder();
+
+            if (pNode.Name.Length > 0)
+                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
+
+            // insert overview text
+            string overviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
+            if (overviewHtml.Length > EMPTY_PARAGRAPH)
+                bodyHTML.Append(overviewHtml);
+
+            // show child nodes in a table
+            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
+            if (childNodes.Count > 0)
+            {
+                //Append HTML for child layout
+            }
+
+            // inject Html into page html & save as a page to the database.
+            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
+            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
+            newPage.displayParentType = (int)pNode.NodeType;
+            newPage.displayParentId = pNode.Uuid;
+            newPage.documentText = pageHtml;
+            BDHtmlPage.Save(pContext, newPage);
+        }
+
+        private void generatePageForEmpiricTherapyOfParasitic(Entities pContext, BDNode pNode)
+        {
+            // in the case where this method is called from the wrong node type 
+            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
+            {
+#if DEBUG
+                throw new InvalidOperationException();
+#else
+                return;
+#endif
+            }
+
+            StringBuilder bodyHTML = new StringBuilder();
+            StringBuilder footerHTML = new StringBuilder();
+
+            if (pNode.Name.Length > 0)
+                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
+
+            // insert overview text
+            string overviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
+            if (overviewHtml.Length > EMPTY_PARAGRAPH)
+                bodyHTML.Append(overviewHtml);
+
+            // show child nodes in a table
+            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
+            if (childNodes.Count > 0)
+            {
+                //Append HTML for child layout
+            }
+
+            // inject Html into page html & save as a page to the database.
+            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
+            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
+            newPage.displayParentType = (int)pNode.NodeType;
+            newPage.displayParentId = pNode.Uuid;
+            newPage.documentText = pageHtml;
+            BDHtmlPage.Save(pContext, newPage);
+        }
+
+        private void generatePageForEmpiricTherapyOfPneumonia(Entities pContext, BDNode pNode)
+        {
+            // in the case where this method is called from the wrong node type 
+            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
+            {
+#if DEBUG
+                throw new InvalidOperationException();
+#else
+                return;
+#endif
+            }
+
+            StringBuilder bodyHTML = new StringBuilder();
+            StringBuilder footerHTML = new StringBuilder();
+
+            if (pNode.Name.Length > 0)
+                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
+
+            // insert overview text
+            string overviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
+            if (overviewHtml.Length > EMPTY_PARAGRAPH)
+                bodyHTML.Append(overviewHtml);
+
+            // show child nodes in a table
+            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
+            if (childNodes.Count > 0)
+            {
+                //Append HTML for child layout
+            }
+
+            // inject Html into page html & save as a page to the database.
+            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
+            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
+            newPage.displayParentType = (int)pNode.NodeType;
+            newPage.displayParentId = pNode.Uuid;
+            newPage.documentText = pageHtml;
+            BDHtmlPage.Save(pContext, newPage);
+        }
+
+        private void generatePageForEmpiricTherapyOfCultureDirected(Entities pContext, BDNode pNode)
+        {
+            // in the case where this method is called from the wrong node type 
+            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
+            {
+#if DEBUG
+                throw new InvalidOperationException();
+#else
+                return;
+#endif
+            }
+
+            StringBuilder bodyHTML = new StringBuilder();
+            StringBuilder footerHTML = new StringBuilder();
+
+            if (pNode.Name.Length > 0)
+                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
+
+            // insert overview text
+            string overviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
+            if (overviewHtml.Length > EMPTY_PARAGRAPH)
+                bodyHTML.Append(overviewHtml);
+
+            // show child nodes in a table
+            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
+            if (childNodes.Count > 0)
+            {
+                //Append HTML for child layout
+            }
+
+            // inject Html into page html & save as a page to the database.
+            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
+            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
+            newPage.displayParentType = (int)pNode.NodeType;
             newPage.displayParentId = pNode.Uuid;
             newPage.documentText = pageHtml;
             BDHtmlPage.Save(pContext, newPage);

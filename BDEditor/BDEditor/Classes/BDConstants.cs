@@ -170,6 +170,8 @@ namespace BDEditor.Classes
             TreatmentRecommendation14_CellulitisExtremities = 116,
             [Description("Treatment of Culture-Proven Pneumonia")]
             TreatmentRecommendation15_Pneumonia = 117,  // table xx 
+            [Description("Treamtent of Culture-Directed Infections")]
+            TreatmentRecommendation16_CultureDirected = 118,
 
             [Description("Antibiotics")]
             Antibiotics = 200, 

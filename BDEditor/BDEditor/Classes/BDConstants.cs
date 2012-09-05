@@ -413,6 +413,19 @@ namespace BDEditor.Classes
             WithOrWithoutWithNext = 4,
         }
 
+        /// <summary>
+        /// Type of content in HTML page.  Allows for lookups for same display parent ID
+        /// </summary>
+        public enum BDHtmlPageType
+        {
+            Undefined = -1,
+            Data = 0,
+            Overview = 1,
+            Comments = 2,
+            Footnote = 3,
+            Reference = 4,
+        }
+
         public const string DATETIMEFORMAT = @"yyyy-MM-dd'T'HH:mm:ss";
         public static readonly Color ACTIVELINK_COLOR = Color.LightSteelBlue;
         public static readonly Color INACTIVELINK_COLOR = SystemColors.Control;

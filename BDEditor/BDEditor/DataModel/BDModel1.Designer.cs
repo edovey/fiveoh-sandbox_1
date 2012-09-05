@@ -116,22 +116,6 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<BDHtmlPage> BDHtmlPages
-        {
-            get
-            {
-                if ((_BDHtmlPages == null))
-                {
-                    _BDHtmlPages = base.CreateObjectSet<BDHtmlPage>("BDHtmlPages");
-                }
-                return _BDHtmlPages;
-            }
-        }
-        private ObjectSet<BDHtmlPage> _BDHtmlPages;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<BDLayoutMetadata> BDLayoutMetadatas
         {
             get
@@ -464,6 +448,22 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDNavigationNode> _BDNavigationNodes;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDHtmlPage> BDHtmlPages
+        {
+            get
+            {
+                if ((_BDHtmlPages == null))
+                {
+                    _BDHtmlPages = base.CreateObjectSet<BDHtmlPage>("BDHtmlPages");
+                }
+                return _BDHtmlPages;
+            }
+        }
+        private ObjectSet<BDHtmlPage> _BDHtmlPages;
 
         #endregion
         #region AddTo Methods
@@ -490,14 +490,6 @@ namespace BDEditor.DataModel
         public void AddToBDDosages(BDDosage bDDosage)
         {
             base.AddObject("BDDosages", bDDosage);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDHtmlPages EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDHtmlPages(BDHtmlPage bDHtmlPage)
-        {
-            base.AddObject("BDHtmlPages", bDHtmlPage);
         }
     
         /// <summary>
@@ -666,6 +658,14 @@ namespace BDEditor.DataModel
         public void AddToBDNavigationNodes(BDNavigationNode bDNavigationNode)
         {
             base.AddObject("BDNavigationNodes", bDNavigationNode);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDHtmlPages EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDHtmlPages(BDHtmlPage bDHtmlPage)
+        {
+            base.AddObject("BDHtmlPages", bDHtmlPage);
         }
 
         #endregion
@@ -3624,6 +3624,30 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Guid> _displayParentId;
         partial void OndisplayParentIdChanging(Nullable<global::System.Guid> value);
         partial void OndisplayParentIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> htmlPageType
+        {
+            get
+            {
+                return _htmlPageType;
+            }
+            set
+            {
+                OnhtmlPageTypeChanging(value);
+                ReportPropertyChanging("htmlPageType");
+                _htmlPageType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("htmlPageType");
+                OnhtmlPageTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _htmlPageType;
+        partial void OnhtmlPageTypeChanging(Nullable<global::System.Int32> value);
+        partial void OnhtmlPageTypeChanged();
 
         #endregion
     

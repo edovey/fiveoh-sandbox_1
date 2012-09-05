@@ -49,6 +49,7 @@ namespace BDEditor.DataModel
         private const string DISPLAYPARENTTYPE = @"ht_displayParentType";
         private const string STORAGEKEY = @"ht_storageKey";
         private const string DOCUMENTTEXT = @"ht_documentText";
+        private const string HTMLPAGETYPE = @"ht_htmlPageType";
 
         public Guid? tempProductionUuid { get; set; }
 
@@ -71,6 +72,7 @@ namespace BDEditor.DataModel
             page.schemaVersion = ENTITY_SCHEMAVERSION;
             page.documentText = string.Empty;
             page.storageKey = GenerateStorageKey(page);
+            page.htmlPageType = (int)BDConstants.BDHtmlPageType.Undefined;
 
             pContext.AddObject(ENTITYNAME, page);
             Save(pContext, page);
@@ -247,6 +249,7 @@ namespace BDEditor.DataModel
             short displayParentType = short.Parse(pAttributeDictionary[DISPLAYPARENTTYPE]);
             entry.displayParentType = displayParentType;
             entry.storageKey = pAttributeDictionary[STORAGEKEY];
+            entry.htmlPageType = short.Parse(pAttributeDictionary[HTMLPAGETYPE]);
             //entry.documentText is loaded from S3 storage
 
             if (pSaveChanges)
@@ -276,6 +279,7 @@ namespace BDEditor.DataModel
             entry.displayParentId = Guid.Parse(pAttributeDictionary[DISPLAYPARENTID]);
             short displayParentType = short.Parse(pAttributeDictionary[DISPLAYPARENTTYPE]);
             entry.displayParentType = displayParentType;
+            entry.htmlPageType = short.Parse(pAttributeDictionary[HTMLPAGETYPE]);
             entry.storageKey = pAttributeDictionary[STORAGEKEY]; // This is the storage key from the imported data: It will need to be rebuilt after the document text has been loaded.
             //entry.documentText is loaded from S3 storage
 
@@ -311,7 +315,7 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDHtmlPage.DISPLAYPARENTID).WithValue((null == displayParentId) ? Guid.Empty.ToString() : displayParentId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDHtmlPage.STORAGEKEY).WithValue((null == storageKey) ? string.Empty : storageKey).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDHtmlPage.DISPLAYPARENTTYPE).WithValue(string.Format(@"{0}", displayParentType)).WithReplace(true));
-
+            attributeList.Add(new ReplaceableAttribute().WithName(BDHtmlPage.HTMLPAGETYPE).WithValue(string.Format(@"{0}", htmlPageType)).WithReplace(true));
             return putAttributeRequest;
         }
 
@@ -334,6 +338,20 @@ namespace BDEditor.DataModel
         public override string ToString()
         {
             return this.uuid.ToString();
+        }
+
+        public BDConstants.BDHtmlPageType HtmlPageType
+        {
+            get
+            {
+                BDConstants.BDHtmlPageType result = BDConstants.BDHtmlPageType.Undefined;
+
+                if (Enum.IsDefined(typeof(BDConstants.BDHtmlPageType), htmlPageType))
+                {
+                    result = (BDConstants.BDHtmlPageType)htmlPageType;
+                }
+                return result;
+            }
         }
     }
 }

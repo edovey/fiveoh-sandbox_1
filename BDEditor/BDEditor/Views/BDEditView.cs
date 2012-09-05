@@ -23,6 +23,7 @@ namespace BDEditor.Views
         // reset the following on BDEditView_Load when adding seed data
         private bool isSeedDataLoadAvailable = false;
         private string seedDataFileName = string.Empty;
+        // enable & show move button when data move is required
         private bool moveButtonVisible = false;
 
         public BDEditView()

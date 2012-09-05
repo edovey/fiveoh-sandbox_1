@@ -67,6 +67,17 @@ namespace BDEditor.Classes
         /// <returns>Boolean to indicate that page is generated and thus to stop recursing through the node tree</returns>
         private bool beginDetailPage(Entities pContext, IBDNode pNode)
         {
+            // create a navigationNode for each node that executes this method when it is a BDNode class
+            // once the recursive calls have stopped, we are into an HTML page so we dont need the nav node
+            // Non-BDNode classes are not navigation nodes (and should not execute this in any case)
+            if (pNode.GetType() == typeof(BDNode))
+            {
+                BDNavigationNode.CreateNavigationNodeFromBDNode(pContext, pNode as BDNode);
+
+                // create HTML page for References attached to this node
+                generatePageForParentAndPropertyReferences(pContext, BDNode.PROPERTYNAME_NAME, pNode);
+            }
+
             bool isPageGenerated = false;
             switch (pNode.NodeType)
             {
@@ -313,14 +324,6 @@ namespace BDEditor.Classes
                     break;
             }
 
-            // create a navigationNode for each node that executes this method when it is a BDNode class
-            // once the recursive calls have stopped, we are into an HTML page so we dont need the nav node
-            // Non-BDNode classes are not navigation nodes (and should not execute this in any case)
-            if (pNode.GetType() == typeof(BDNode))
-            {
-                BDNavigationNode.CreateNavigationNodeFromBDNode(pContext, pNode as BDNode);
-                generatePageForParentAndPropertyReferences(pContext, BDNode.PROPERTYNAME_NAME, pNode);
-            }
             return isPageGenerated;
         }
 
@@ -1221,6 +1224,11 @@ namespace BDEditor.Classes
             BDHtmlPage.Save(pContext, newPage);
         }
 
+        /// <summary>
+        /// Build HTML page at Disease level when only one Presentation is defined
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pNode"></param>
         private void generatePageForEmpiricTherapyDisease(Entities pContext, BDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
@@ -1238,6 +1246,11 @@ namespace BDEditor.Classes
 
             if (pNode.Name.Length > 0)
                 bodyHtml.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
+
+            //List<BDHtmlPage> referencePages = BDHtmlPage.RetrieveHtmlPageForDisplayParentId(pContext, pNode.Uuid);
+            //foreach(BDHtmlPage refPage in referencePages)
+            //    if(refPage.
+
             // insert overview text from linkedNote
             string overviewHTML = retrieveNoteTextForOverview(pContext, pNode.Uuid);
             if (overviewHTML.Length > EMPTY_PARAGRAPH)
@@ -1264,6 +1277,11 @@ namespace BDEditor.Classes
             }
         }
 
+        /// <summary>
+        /// Build HTML page to show Presentation and all it's children on one page
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pNode"></param>
         private void generatePageForEmpiricTherapyPresentation(Entities pContext, BDNode pNode)
         {
             // in the case where this method is called from the wrong node type 

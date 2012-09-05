@@ -23,7 +23,7 @@ namespace BDEditor.Views
         // reset the following on BDEditView_Load when adding seed data
         private bool isSeedDataLoadAvailable = false;
         private string seedDataFileName = string.Empty;
-        private bool moveButtonVisible = true;
+        private bool moveButtonVisible = false;
 
         public BDEditView()
         {
@@ -1541,6 +1541,7 @@ namespace BDEditor.Views
 
             #endregion
             #region v.1.6.13
+            /*
             // move selected tables out of Treatment Recommendations > Adults into new antimicrobialSection Treatment recommendations > Culture Directed Infections in Adults
             // create new antimicrobialSection in TreatmentRecoomendations chapter
             BDNode chapter = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("f92fec3a-379d-41ef-a981-5ddf9c9a9f0e"));
@@ -1704,7 +1705,7 @@ namespace BDEditor.Views
             st6.SetParent(o1);
             st6.Name = "Streptococcus pneumoniae";
             st6.LayoutVariant = o1.LayoutVariant;
-            BDNode.Save(dataContext, st6); 
+            BDNode.Save(dataContext, st6);   */
             #endregion
         }
     }

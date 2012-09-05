@@ -317,8 +317,10 @@ namespace BDEditor.Classes
             // once the recursive calls have stopped, we are into an HTML page so we dont need the nav node
             // Non-BDNode classes are not navigation nodes (and should not execute this in any case)
             if (pNode.GetType() == typeof(BDNode))
+            {
                 BDNavigationNode.CreateNavigationNodeFromBDNode(pContext, pNode as BDNode);
-
+                generatePageForParentAndPropertyReferences(pContext, BDNode.PROPERTYNAME_NAME, pNode);
+            }
             return isPageGenerated;
         }
 
@@ -1651,24 +1653,40 @@ namespace BDEditor.Classes
         /// <returns>Buid of HTML page.</returns>
         private Guid generatePageForParentAndPropertyFootnote(Entities pContext, string pPropertyName, IBDNode pNode)
         {
-            string footnoteText = buildTextForParentAndPropertyFootnote(pContext, pPropertyName, pNode);
+            string footnoteText = buildTextForParentAndPropertyFromLinkedNotes(pContext, pPropertyName, pNode, BDConstants.LinkedNoteType.Footnote);
             Guid footnoteId = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.ParentType, footnoteText);
             return footnoteId;
         }
 
         /// <summary>
-        /// Build HTML for footnotes attached to property in node, to inject into HTML page.
+        /// Create an HTML page for the references attached to a node & property
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pPropertyName"></param>
         /// <param name="pNode"></param>
-        /// <returns>Text of footnote HTML</returns>
-        private string buildTextForParentAndPropertyFootnote(Entities pContext, string pPropertyName, IBDNode pNode)
+        /// <returns>Guid of HTML page.</returns>
+        /// 
+        private Guid generatePageForParentAndPropertyReferences(Entities pContext, string pPropertyName, IBDNode pNode)
         {
-            StringBuilder footerHTML = new StringBuilder();
-            List<BDLinkedNote> footnotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, pPropertyName, BDConstants.LinkedNoteType.Footnote);
-            footerHTML.Append(buildTextFromNotes(footnotes));
-            return footerHTML.ToString();
+            string referenceText = buildTextForParentAndPropertyFromLinkedNotes(pContext, pPropertyName, pNode, BDConstants.LinkedNoteType.Reference);
+            Guid footnoteId = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.ParentType, referenceText);
+            return footnoteId;
+        }
+
+        /// <summary>
+        /// Build HTML for linkedNotes attached to property in node, to inject into HTML page.
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pPropertyName"></param>
+        /// <param name="pNode"></param>
+        /// <param name="pNoteType"></param>
+        /// <returns>Text of linked note as HTML</returns>
+        private string buildTextForParentAndPropertyFromLinkedNotes(Entities pContext, string pPropertyName, IBDNode pNode, BDConstants.LinkedNoteType pNoteType)
+        {
+            StringBuilder notesHTML = new StringBuilder();
+            List<BDLinkedNote> footnotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, pPropertyName, pNoteType);
+            notesHTML.Append(buildTextFromNotes(footnotes));
+            return notesHTML.ToString();
         }
 
         private StringBuilder buildEmpiricTherapyHTML(Entities pContext, BDNode pNode, List<BDLinkedNote> pFooterList)

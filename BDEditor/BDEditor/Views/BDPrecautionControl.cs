@@ -22,6 +22,7 @@ namespace BDEditor.Views
         private string currentControlName;
         private BDLinkedNote precautionLinkedNote;
         private BDLinkedNoteControl bdLinkedNoteControl1;
+        private bool isUpdating = false;
 
         private const string INFECTIVE_MATERIAL_RTB = "Infective Material";
         private const string MODE_OF_TRANSMISSION_RTB = "Mode of Transmission";
@@ -35,6 +36,13 @@ namespace BDEditor.Views
         private const string MASK_LONG_TERM_RTB = "Mask Long Term";
 
         public int? DisplayOrder { get; set; }
+
+        private bool showChildren = true;
+        public bool ShowChildren
+        {
+            get { return showChildren; }
+            set { showChildren = value; }
+        }
 
         public event EventHandler<NodeEventArgs> RequestItemAdd;
         public event EventHandler<NodeEventArgs> RequestItemDelete;
@@ -139,11 +147,12 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
-            RefreshLayout(true);
+            RefreshLayout(ShowChildren);
         }
 
         public void RefreshLayout(bool pShowChildren)
         {
+            isUpdating = true;
             ControlHelper.SuspendDrawing(this);
             if (currentPrecaution == null)
             {
@@ -200,6 +209,8 @@ namespace BDEditor.Views
 
             ShowLinksInUse(false);
             ControlHelper.ResumeDrawing(this);
+            isUpdating = false;
+
         }
 
         public void AssignDataContext(Entities pDataContext)
@@ -404,12 +415,14 @@ namespace BDEditor.Views
 
         private void BDDosageControl_Leave(object sender, EventArgs e)
         {
-            Save();
+            if (!isUpdating) { Save(); }
         }
 
         private void BDDosageControl_Load(object sender, EventArgs e)
         {
+            isUpdating = true;
             rtbInfectiveMaterial.SelectAll();
+            isUpdating = false;
         }
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)

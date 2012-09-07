@@ -13,7 +13,7 @@ namespace BDEditor.Views
 {
     public partial class BDNodeControl : UserControl, IBDControl
     {
-        private bool isUpdating = false;
+        protected bool isUpdating = false;
 
         protected IBDNode currentNode;
         protected Entities dataContext;
@@ -22,6 +22,7 @@ namespace BDEditor.Views
         protected BDConstants.BDNodeType parentType = BDConstants.BDNodeType.None;
         protected bool showAsChild = false;
         protected bool showSiblingAdd = false;
+        protected bool showChildren = true;
 
         public BDConstants.BDNodeType DefaultNodeType { get; set; }
         public BDConstants.LayoutVariantType DefaultLayoutVariantType { get; set; }
@@ -95,6 +96,12 @@ namespace BDEditor.Views
             set { showSiblingAdd = value; }
         }
 
+        public bool ShowChildren
+        {
+            get { return showChildren; }
+            set { showChildren = value; }
+        }
+
         public BDNodeControl()
         {
             InitializeComponent();
@@ -136,7 +143,10 @@ namespace BDEditor.Views
 
         private void BDNodeControl_Leave(object sender, EventArgs e)
         {
-            Save();
+            if (!isUpdating)
+            {
+                Save();
+            }
         }
 
         public void AssignScopeId(Guid? pScopeId)
@@ -162,9 +172,9 @@ namespace BDEditor.Views
 
         #region IBDControl
 
-        public void RefreshLayout()
+        public virtual void RefreshLayout()
         {
-            RefreshLayout(true);
+            RefreshLayout(ShowChildren);
         }
 
         public virtual void RefreshLayout(bool pShowChildren)
@@ -619,13 +629,16 @@ namespace BDEditor.Views
 
         void addChildControl(Entities pDataContext, IBDNode pParentNode, BDConstants.BDNodeType pChildNodeType, BDConstants.LayoutVariantType pChildLayoutVariant )
         {
-            ControlHelper.SuspendDrawing(this);
             IBDNode node = BDFabrik.CreateChildNode(dataContext, pParentNode, pChildNodeType, pChildLayoutVariant);
-            IBDControl control = addChildNodeControl(node, childNodeControlList.Count);
             BDNotification.SendNotification(new BDNotificationEventArgs(BDNotificationEventArgs.BDNotificationType.Addition, pDataContext, node.NodeType, node.LayoutVariant, node.Uuid));
-            ControlHelper.ResumeDrawing(this);
-            if (null != control)
-                ((System.Windows.Forms.UserControl)control).Focus();
+            if (ShowChildren)
+            {
+                ControlHelper.SuspendDrawing(this);
+                IBDControl control = addChildNodeControl(node, childNodeControlList.Count);
+                ControlHelper.ResumeDrawing(this);
+                if (null != control)
+                    ((System.Windows.Forms.UserControl)control).Focus();
+            }
         }
 
         void addChildNode_Click(object sender, EventArgs e)

@@ -144,12 +144,23 @@ namespace BDEditor.DataModel
             return result;
         }
 
+        /// <summary>
+        /// Returns the HTML pages for the display parent where the type is 'Data'
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pDisplayParentId"></param>
+        /// <returns></returns>
         public static List<BDHtmlPage> RetrieveHtmlPageForDisplayParentId(Entities pContext, Guid? pDisplayParentId)
         {
-            IQueryable<BDHtmlPage> entries = (from entry in pContext.BDHtmlPages
-                                                    where entry.displayParentId == pDisplayParentId
-                                                    select entry);
+            return RetrieveHtmlPageForDisplayParentIdOfPageType(pContext, pDisplayParentId, BDConstants.BDHtmlPageType.Data);
+        }
 
+        public static List<BDHtmlPage> RetrieveHtmlPageForDisplayParentIdOfPageType(Entities pContext, Guid? pDisplayParentId, BDConstants.BDHtmlPageType pPageType)
+        {
+            IQueryable<BDHtmlPage> entries = (from entry in pContext.BDHtmlPages
+                                              where entry.displayParentId == pDisplayParentId
+                                                    && entry.htmlPageType == (int)pPageType
+                                              select entry);
             List<BDHtmlPage> resultList = entries.ToList<BDHtmlPage>();
             return resultList;
         }
@@ -166,7 +177,6 @@ namespace BDEditor.DataModel
 
             return entryList;
         }
-
 
         public static List<IBDObject> RetrieveAllAsIBDObject(Entities pContext)
         {

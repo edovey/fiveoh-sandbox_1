@@ -46,8 +46,6 @@ namespace BDEditor.Classes
 
         private void generateOverviewAndChildrenForNode(Entities pContext, IBDNode pNode)
         {
-            generatePageForOverview(pContext, pNode);
-
             if (!beginDetailPage(pContext, pNode))
             {
                 List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
@@ -63,22 +61,29 @@ namespace BDEditor.Classes
         /// Closely resembles switch in EditView > showNavSelection.
         /// </summary>
         /// <param name="pContext"></param>
-        /// <param name="pNode"></param>
+        /// <param name="pDisplayParentNode"></param>
         /// <returns>Boolean to indicate that page is generated and thus to stop recursing through the node tree</returns>
         private bool beginDetailPage(Entities pContext, IBDNode pNode)
         {
-            // create a navigationNode for each node that executes this method when it is a BDNode class
-            // once the recursive calls have stopped, we are into an HTML page so we dont need the nav node
-            // Non-BDNode classes are not navigation nodes (and should not execute this in any case)
-            if (pNode.GetType() == typeof(BDNode))
-            {
-                BDNavigationNode.CreateNavigationNodeFromBDNode(pContext, pNode as BDNode);
+            bool isPageGenerated = false;
 
-                // create HTML page for References attached to this node
+            // if page was generated, the overview will be embedded in the page.  
+            // otherwise we need a standalone page for the top of the list view
+            // References similarly will be shown in their own page for navigation nodes
+            if (!isPageGenerated)
+            {
+                generatePageForOverview(pContext, pNode);
                 generatePageForParentAndPropertyReferences(pContext, BDNode.PROPERTYNAME_NAME, pNode);
+
+                // create a navigationNode for each node that executes this method when it is a BDNode class
+                // once the recursive calls have generated an HTML page we dont need the nav node
+                // Non-BDNode classes are not navigation nodes (and should not execute this in any case)
+                if (pNode.GetType() == typeof(BDNode))
+                {
+                    BDNavigationNode.CreateNavigationNodeFromBDNode(pContext, pNode as BDNode);
+                }
             }
 
-            bool isPageGenerated = false;
             switch (pNode.NodeType)
             {
                 case BDConstants.BDNodeType.BDAntimicrobial:
@@ -89,7 +94,7 @@ namespace BDEditor.Classes
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
-                            generatePageForAntibioticsGuidelines(pContext, pNode as BDNode);
+                            generatePageForAntibioticsClinicalGuidelines(pContext, pNode as BDNode);
                             isPageGenerated = true;
                             break;
                         default:
@@ -170,10 +175,6 @@ namespace BDEditor.Classes
                                 generatePageForEmpiricTherapyOfVesicularLesions(pContext, pNode as BDNode);
                                 isPageGenerated = true;
                                 break;
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation14_CellulitisExtremities:
-                                generatePageForEmpiricTherapyOfCellulitisInExtremities(pContext, pNode as BDNode);
-                                isPageGenerated = true;
-                                break;
                             default:
                                 isPageGenerated = false;
                                 break;
@@ -206,6 +207,10 @@ namespace BDEditor.Classes
                             // if the processing comes through here, then the Disease only has one Presentation > each Presentation has a page
                             isPageGenerated = true;
                             generatePageForEmpiricTherapyPresentation(pContext, pNode as BDNode);
+                            break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation14_CellulitisExtremities:
+                            generatePageForEmpiricTherapyOfCellulitisInExtremities(pContext, pNode as BDNode);
+                            isPageGenerated = true;
                             break;
                         default:
                             isPageGenerated = false;
@@ -305,6 +310,10 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDTopic:
                     switch (pNode.LayoutVariant)
                     {
+                        case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines_Spectrum:
+                            generatePageForAntibioticsClinicalGuidelinesSpectrum(pContext, pNode as BDNode);
+                            isPageGenerated = true;
+                            break;
                         default:
                             isPageGenerated = false;
                             break;
@@ -323,7 +332,6 @@ namespace BDEditor.Classes
                     isPageGenerated = false;
                     break;
             }
-
             return isPageGenerated;
         }
 
@@ -354,14 +362,50 @@ namespace BDEditor.Classes
                 {
                     if (a.parentType == (int)BDConstants.BDNodeType.BDLinkedNote)
                     {
-                        Guid pageGuid = generatePageForLinkedNotes(dataContext, a.linkedNoteId.Value, BDConstants.BDNodeType.BDLinkedNote, n.documentText);
-                        break;
+                        BDConstants.BDHtmlPageType pageType = BDConstants.BDHtmlPageType.Undefined;
+                        if (a.LinkedNoteType == BDConstants.LinkedNoteType.MarkedComment || a.LinkedNoteType == BDConstants.LinkedNoteType.UnmarkedComment || a.LinkedNoteType == BDConstants.LinkedNoteType.Inline)
+                            pageType = BDConstants.BDHtmlPageType.Comments;
+                        else if (a.LinkedNoteType == BDConstants.LinkedNoteType.Footnote)
+                            pageType = BDConstants.BDHtmlPageType.Footnote;
+                        else if (a.LinkedNoteType == BDConstants.LinkedNoteType.Reference)
+                            pageType = BDConstants.BDHtmlPageType.Reference;
+                        else
+                            pageType = BDConstants.BDHtmlPageType.Data;
+
+                        generatePageForLinkedNotes(dataContext, a.linkedNoteId.Value, BDConstants.BDNodeType.BDLinkedNote, n.documentText, pageType);
                     }
                 }
             }
         }
 
-        private void generatePageForAntibioticsGuidelines(Entities pContext, BDNode pNode)
+        private void generateStub(Entities pContext, BDNode pNode)
+        {
+            // in the case where this method is called from the wrong node type 
+            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
+            {
+#if DEBUG
+                throw new InvalidOperationException();
+#else
+                return;
+#endif
+            }
+
+            StringBuilder bodyHTML = new StringBuilder();
+            StringBuilder footerHTML = new StringBuilder();
+            List<BDLinkedNote> footerList = new List<BDLinkedNote>();
+
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
+            
+            // show child nodes in a table
+            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
+            if (childNodes.Count > 0)
+            {
+                //Append HTML for child layout
+            }
+            writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
+        }
+
+        private void generatePageForAntibioticsClinicalGuidelines(Entities pContext, BDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
             if (pNode.NodeType != BDConstants.BDNodeType.BDAntimicrobial)
@@ -375,22 +419,15 @@ namespace BDEditor.Classes
 
             StringBuilder bodyHTML = new StringBuilder();
             StringBuilder footerHTML = new StringBuilder();
+            List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
-            if (pNode.Name.Length > 0)
-                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
-
-            // insert overview text
-            string antimicrobialOverviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
-            if (antimicrobialOverviewHtml.Length > EMPTY_PARAGRAPH)
-                bodyHTML.Append(antimicrobialOverviewHtml);
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
 
             // child nodes can either be pathogen groups or topics (node with overview)
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
             foreach (IBDNode node in childNodes)
             {
-                if (node.NodeType == BDConstants.BDNodeType.BDPathogenGroup)
-                    bodyHTML.Append(buildPathogenGroupHtml(pContext, node));
-                else if (node.NodeType == BDConstants.BDNodeType.BDTopic)
+                if (node.NodeType == BDConstants.BDNodeType.BDTopic)
                 {
                     if (node.Name.Length > 0)
                         bodyHTML.AppendFormat("<h2>{0}</h2>", node.Name);
@@ -401,15 +438,35 @@ namespace BDEditor.Classes
                     }
                 }
             }
-
-            // inject Html into page html & save as a page to the database.
-            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
-            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
-            newPage.displayParentType = (int)BDConstants.BDNodeType.BDAntimicrobial;
-            newPage.displayParentId = pNode.Uuid;
-            newPage.documentText = pageHtml;
-            BDHtmlPage.Save(pContext, newPage);
+            writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
         }
+
+        private void generatePageForAntibioticsClinicalGuidelinesSpectrum(Entities pContext, BDNode pNode)
+{
+            // in the case where this method is called from the wrong node type 
+            if (pNode.NodeType != BDConstants.BDNodeType.BDTopic)
+            {
+#if DEBUG
+                throw new InvalidOperationException();
+#else
+                return;
+#endif
+            }
+
+            StringBuilder bodyHTML = new StringBuilder();
+            StringBuilder footerHTML = new StringBuilder();
+            List<BDLinkedNote> footerList = new List<BDLinkedNote>();
+
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h2"));
+
+            // show child nodes in a table
+            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
+            foreach (IBDNode child in childNodes)
+            {
+                bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child as BDNode, "h3"));
+            }
+            writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
+}
 
         private void generatePageForAntibioticsPharmacodynamics(Entities pContext, BDNode pNode)
         {
@@ -425,14 +482,9 @@ namespace BDEditor.Classes
 
             StringBuilder bodyHTML = new StringBuilder();
             StringBuilder footerHTML = new StringBuilder();
+            List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
-            if (pNode.Name.Length > 0)
-                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
-
-            // insert overview text
-            string antimicrobialOverviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
-            if (antimicrobialOverviewHtml.Length > EMPTY_PARAGRAPH)
-                bodyHTML.Append(antimicrobialOverviewHtml);
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
 
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
             foreach (IBDNode node in childNodes)
@@ -446,14 +498,7 @@ namespace BDEditor.Classes
                         bodyHTML.AppendFormat(@"<a href=""{0}""><b>{1}</b></a><br>", footnoteGuid, node.Name);
                 }
             }
-
-            // inject Html into page html & save as a page to the database.
-            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
-            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
-            newPage.displayParentType = (int)pNode.NodeType;
-            newPage.displayParentId = pNode.Uuid;
-            newPage.documentText = pageHtml;
-            BDHtmlPage.Save(pContext, newPage);
+            writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
         }
 
         private void generatePageForAntibioticsDosingAndDailyCosts(Entities pContext, BDNode pNode)
@@ -470,14 +515,9 @@ namespace BDEditor.Classes
 
             StringBuilder bodyHTML = new StringBuilder();
             StringBuilder footerHTML = new StringBuilder();
+            List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
-            if (pNode.Name.Length > 0)
-                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
-
-            // insert overview text
-            string antimicrobialOverviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
-            if (antimicrobialOverviewHtml.Length > EMPTY_PARAGRAPH)
-                bodyHTML.Append(antimicrobialOverviewHtml);
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
 
             // show child nodes in a table
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
@@ -516,14 +556,7 @@ namespace BDEditor.Classes
                 }
                 bodyHTML.Append(@"</table>");
             }
-
-            // inject Html into page html & save as a page to the database.
-            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
-            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
-            newPage.displayParentType = (int)pNode.NodeType;
-            newPage.displayParentId = pNode.Uuid;
-            newPage.documentText = pageHtml;
-            BDHtmlPage.Save(pContext, newPage);
+            writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
         }
 
         private void generatePageForAntibioticsDosingAndMonitoring(Entities pContext, BDNode pNode)
@@ -542,14 +575,7 @@ namespace BDEditor.Classes
             StringBuilder footerHTML = new StringBuilder();
             List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
-            // begins at antimicrobialSection OR category
-            if (pNode.Name.Length > 0)
-                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
-
-            // insert overview text
-            string overviewHTML = retrieveNoteTextForOverview(pContext, pNode.Uuid);
-            if (overviewHTML.Length > EMPTY_PARAGRAPH)
-                bodyHTML.Append(overviewHTML);
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
 
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
             if (childNodes.Count > 0)
@@ -641,65 +667,19 @@ namespace BDEditor.Classes
                 }
             }
             // insert footer text
-            if (footerList.Count > 0)
-            {
-                footerHTML.Append(@"<h4>Footnotes</h4>");
-                footerHTML.Append(@"<ol>");
+            // (footerList.Count > 0)
+            //{
+            //    footerHTML.Append(@"<h4>Footnotes</h4>");
+            //    footerHTML.Append(@"<ol>");
 
-                foreach (BDLinkedNote note in footerList)
-                {
-                    footerHTML.AppendFormat(@"<li>{0}</li>", note.documentText);
-                }
-                footerHTML.Append(@"</ol>");
-                bodyHTML.Append(footerHTML);
-            }
-
-            // inject Html into page html & save as a page to the database.
-            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
-            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
-            newPage.displayParentType = (int)pNode.NodeType;
-            newPage.displayParentId = pNode.Uuid;
-            newPage.documentText = pageHtml;
-            BDHtmlPage.Save(pContext, newPage);
-        }
-
-        private void generateShell(Entities pContext, BDNode pNode)
-        {
-            // in the case where this method is called from the wrong node type 
-            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
-            {
-#if DEBUG
-                throw new InvalidOperationException();
-#else
-                return;
-#endif
-            }
-
-            StringBuilder bodyHTML = new StringBuilder();
-            StringBuilder footerHTML = new StringBuilder();
-
-            if (pNode.Name.Length > 0)
-                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
-
-            // insert overview text
-            string overviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
-            if (overviewHtml.Length > EMPTY_PARAGRAPH)
-                bodyHTML.Append(overviewHtml);
-
-            // show child nodes in a table
-            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
-            if (childNodes.Count > 0)
-            {
-                //Append HTML for child layout
-            }
-
-            // inject Html into page html & save as a page to the database.
-            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
-            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
-            newPage.displayParentType = (int)pNode.NodeType;
-            newPage.displayParentId = pNode.Uuid;
-            newPage.documentText = pageHtml;
-            BDHtmlPage.Save(pContext, newPage);
+            //    foreach (BDLinkedNote note in footerList)
+            //    {
+            //        footerHTML.AppendFormat(@"<li>{0}</li>", note.documentText);
+            //    }
+            //    footerHTML.Append(@"</ol>");
+            //    bodyHTML.Append(footerHTML);
+            //}
+            writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
         }
 
         private void generatePageForAntibioticsDosingInRenalImpairment(Entities pContext, BDNode pNode)
@@ -716,15 +696,10 @@ namespace BDEditor.Classes
 
             StringBuilder bodyHTML = new StringBuilder();
             StringBuilder footerHTML = new StringBuilder();
+            List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
-            if (pNode.Name.Length > 0)
-                bodyHTML.AppendFormat(@"<h2>{0}</h2>", pNode.Name);
-
-            // insert overview text
-            string antimicrobialOverviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
-            if (antimicrobialOverviewHtml.Length > EMPTY_PARAGRAPH)
-                bodyHTML.Append(antimicrobialOverviewHtml);
-
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h2"));
+            
             // child nodes are BDDosage 
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
             if (childNodes.Count > 0)
@@ -756,13 +731,7 @@ namespace BDEditor.Classes
                 }
                 bodyHTML.Append(@"</table>");
 
-                // inject Html into page html & save as a page to the database.
-                string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
-                BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
-                newPage.displayParentType = (int)BDConstants.BDNodeType.BDAntimicrobial;
-                newPage.displayParentId = pNode.Uuid;
-                newPage.documentText = pageHtml;
-                BDHtmlPage.Save(pContext, newPage);
+                writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
             }
         }
 
@@ -779,15 +748,9 @@ namespace BDEditor.Classes
 
             StringBuilder bodyHTML = new StringBuilder();
             StringBuilder footerHTML = new StringBuilder();
+            List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
-            if (pNode.Name.Length > 0)
-                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
-
-            // insert overview text
-            string nodeOverviewHTML = retrieveNoteTextForOverview(pContext, pNode.Uuid);
-            if (nodeOverviewHTML.Length > EMPTY_PARAGRAPH)
-                bodyHTML.Append(nodeOverviewHTML);
-
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
             // show child nodes in a table
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
             if (childNodes.Count > 0)
@@ -803,14 +766,7 @@ namespace BDEditor.Classes
                 }
                 bodyHTML.Append(@"</table>");
             }
-
-            // inject Html into page html & save as a page to the database.
-            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
-            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
-            newPage.displayParentType = (int)pNode.NodeType;
-            newPage.displayParentId = pNode.Uuid;
-            newPage.documentText = pageHtml;
-            BDHtmlPage.Save(pContext, newPage);
+            writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
         }
 
         private void generatePageForAntibioticsNameListing(Entities pContext, BDNode pNode)
@@ -829,13 +785,7 @@ namespace BDEditor.Classes
             StringBuilder footerHTML = new StringBuilder();
             List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
-            if (pNode.Name.Length > 0)
-                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
-
-            // insert overview text
-            string nodeOverviewHTML = retrieveNoteTextForOverview(pContext, pNode.Uuid);
-            if (nodeOverviewHTML.Length > EMPTY_PARAGRAPH)
-                bodyHTML.Append(nodeOverviewHTML);
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
 
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
             if (childNodes.Count > 0)
@@ -900,14 +850,7 @@ namespace BDEditor.Classes
                 footerHTML.Append(@"</ol>");
                 bodyHTML.Append(footerHTML);
             }
-
-            // inject Html into page html & save as a page to the database.
-            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
-            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
-            newPage.displayParentType = (int)pNode.NodeType;
-            newPage.displayParentId = pNode.Uuid;
-            newPage.documentText = pageHtml;
-            BDHtmlPage.Save(pContext, newPage);
+            writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
         }
 
         private void generatePageForAntibioticsStepdown(Entities pContext, BDNode pNode)
@@ -926,13 +869,7 @@ namespace BDEditor.Classes
             StringBuilder footerHTML = new StringBuilder();
             List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
-            if (pNode.Name.Length > 0)
-                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
-
-            // insert overview text
-            string nodeOverviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
-            if (nodeOverviewHtml.Length > EMPTY_PARAGRAPH)
-                bodyHTML.Append(nodeOverviewHtml);
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
 
             // show child nodes in a table
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
@@ -1025,14 +962,7 @@ namespace BDEditor.Classes
                 footerHTML.Append(@"</ol>");
                 bodyHTML.Append(footerHTML);
             }
-
-            // inject Html into page html & save as a page to the database.
-            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
-            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
-            newPage.displayParentType = (int)pNode.NodeType;
-            newPage.displayParentId = pNode.Uuid;
-            newPage.documentText = pageHtml;
-            BDHtmlPage.Save(pContext, newPage);
+            writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
         }
 
         private void generatePageForAntibioticsCSFPenetration(Entities pContext, BDNode pNode)
@@ -1054,13 +984,7 @@ namespace BDEditor.Classes
             StringBuilder footerHTML = new StringBuilder();
             List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
-            if (pNode.Name.Length > 0)
-                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
-
-            // insert overview text
-            string overviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
-            if (overviewHtml.Length > EMPTY_PARAGRAPH)
-                bodyHTML.Append(overviewHtml);
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
 
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
             if (childNodes.Count > 0)
@@ -1132,15 +1056,7 @@ namespace BDEditor.Classes
                 footerHTML.Append(@"</ol>");
                 bodyHTML.Append(footerHTML);
             }
-
-
-            // inject Html into page html & save as a page to the database.
-            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
-            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
-            newPage.displayParentType = (int)pNode.NodeType;
-            newPage.displayParentId = pNode.Uuid;
-            newPage.documentText = pageHtml;
-            BDHtmlPage.Save(pContext, newPage);
+            writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
         }
 
         private void generatePageforAntibioticsBLactam(Entities pContext, BDNode pNode)
@@ -1159,28 +1075,18 @@ namespace BDEditor.Classes
             StringBuilder footerHTML = new StringBuilder();
             List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
-            if (pNode.Name.Length > 0)
-                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
-
-            // insert overview text
-            string overviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
-            if (overviewHtml.Length > EMPTY_PARAGRAPH)
-                bodyHTML.Append(overviewHtml);
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
 
             // show child nodes in a table
             List<IBDNode> subsections = BDFabrik.GetChildrenForParent(pContext, pNode);
             foreach (IBDNode subsection in subsections)
             {
-                if (subsection.Name.Length > 0)
-                    bodyHTML.AppendFormat(@"<h3>{0}</h3>", subsection.Name);
+                bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, subsection as BDNode, "h3")); 
                 List<IBDNode> topics = BDFabrik.GetChildrenForParent(pContext, subsection);
                 foreach (IBDNode topic in topics)
                 {
-                    if (topic.Name.Length > 0)
-                        bodyHTML.AppendFormat(@"<h4>{0}</h4>", topic.Name);
-                    string topicOverview = retrieveNoteTextForOverview(pContext, topic.Uuid);
-                    if (topicOverview.Length > EMPTY_PARAGRAPH)
-                        bodyHTML.Append(topicOverview);
+                    bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, topic as BDNode, "h4"));
+                    
                     List<IBDNode> tables = BDFabrik.GetChildrenForParent(pContext, topic);
                     foreach (IBDNode table in tables)
                     {
@@ -1214,21 +1120,14 @@ namespace BDEditor.Classes
                 footerHTML.Append(@"</ol>");
                 bodyHTML.Append(footerHTML);
             }
-
-            // inject Html into page html & save as a page to the database.
-            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
-            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
-            newPage.displayParentType = (int)pNode.NodeType;
-            newPage.displayParentId = pNode.Uuid;
-            newPage.documentText = pageHtml;
-            BDHtmlPage.Save(pContext, newPage);
+            writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
         }
 
         /// <summary>
         /// Build HTML page at Disease level when only one Presentation is defined
         /// </summary>
         /// <param name="pContext"></param>
-        /// <param name="pNode"></param>
+        /// <param name="pDisplayParentNode"></param>
         private void generatePageForEmpiricTherapyDisease(Entities pContext, BDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
@@ -1241,22 +1140,12 @@ namespace BDEditor.Classes
 #endif
             }
 
-            StringBuilder bodyHtml = new StringBuilder();
+            StringBuilder bodyHTML = new StringBuilder();
+            StringBuilder footerHTML = new StringBuilder();
             List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
-            if (pNode.Name.Length > 0)
-                bodyHtml.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
 
-            //List<BDHtmlPage> referencePages = BDHtmlPage.RetrieveHtmlPageForDisplayParentId(pContext, pNode.Uuid);
-            //foreach(BDHtmlPage refPage in referencePages)
-            //    if(refPage.
-
-            // insert overview text from linkedNote
-            string overviewHTML = retrieveNoteTextForOverview(pContext, pNode.Uuid);
-            if (overviewHTML.Length > EMPTY_PARAGRAPH)
-                bodyHtml.Append(overviewHTML);
-
-            // process pathogen groups (and pathogens)
             List<IBDNode> presentations = BDFabrik.GetChildrenForParent(pContext, pNode);
 
 #if DEBUG
@@ -1265,15 +1154,12 @@ namespace BDEditor.Classes
 #endif
             foreach (IBDNode presentation in presentations)
             {
-                bodyHtml.Append(buildEmpiricTherapyHTML(pContext, presentation as BDNode, footerList));
+                bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h2"));
+                List<IBDNode> pathogenGroups = BDFabrik.GetChildrenForParent(pContext, presentation);
+                foreach(IBDNode pathogenGroup in pathogenGroups)
+                    bodyHTML.Append(buildEmpiricTherapyHTML(pContext, presentation as BDNode, footerList));
 
-                // inject Html into page html & save as a page to the database.
-                string pageHtml = topHtml + bodyHtml.ToString() + bottomHtml;
-                BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
-                newPage.displayParentType = (int)BDConstants.BDNodeType.BDDisease;
-                newPage.displayParentId = pNode.Uuid;
-                newPage.documentText = pageHtml;
-                BDHtmlPage.Save(pContext, newPage);
+                writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
             }
         }
 
@@ -1281,7 +1167,7 @@ namespace BDEditor.Classes
         /// Build HTML page to show Presentation and all it's children on one page
         /// </summary>
         /// <param name="pContext"></param>
-        /// <param name="pNode"></param>
+        /// <param name="pDisplayParentNode"></param>
         private void generatePageForEmpiricTherapyPresentation(Entities pContext, BDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
@@ -1297,21 +1183,18 @@ namespace BDEditor.Classes
             StringBuilder bodyHTML = new StringBuilder();
             List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
-            bodyHTML.Append(buildEmpiricTherapyHTML(pContext, pNode, footerList));
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h2"));
+            List<IBDNode> pathogenGroups = BDFabrik.GetChildrenForParent(pContext, pNode);
+            foreach (IBDNode pathogenGroup in pathogenGroups)
+                bodyHTML.Append(buildEmpiricTherapyHTML(pContext, pNode as BDNode, footerList));
 
-            // inject Html into page html & save as a page to the database.
-            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
-            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
-            newPage.displayParentType = (int)BDConstants.BDNodeType.BDPresentation;
-            newPage.displayParentId = pNode.Uuid;
-            newPage.documentText = pageHtml;
-            BDHtmlPage.Save(pContext, newPage);
+            writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
         }
 
         private void generatePageForEmpiricTherapyOfCellulitisInExtremities(Entities pContext, BDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
-            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
+            if (pNode.NodeType != BDConstants.BDNodeType.BDPresentation)
             {
 #if DEBUG
                 throw new InvalidOperationException();
@@ -1322,29 +1205,38 @@ namespace BDEditor.Classes
 
             StringBuilder bodyHTML = new StringBuilder();
             StringBuilder footerHTML = new StringBuilder();
+            List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
-            if (pNode.Name.Length > 0)
-                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
-
-            // insert overview text
-            string overviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
-            if (overviewHtml.Length > EMPTY_PARAGRAPH)
-                bodyHTML.Append(overviewHtml);
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
 
             // show child nodes in a table
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
-            if (childNodes.Count > 0)
+            foreach(IBDNode child in childNodes)
             {
-                //Append HTML for child layout
+                if(child.NodeType == BDConstants.BDNodeType.BDPathogenGroup)
+                    bodyHTML.Append(buildEmpiricTherapyHTML(pContext, pNode as BDNode, footerList));
+                else if (child.NodeType == BDConstants.BDNodeType.BDTable)
+                {
+                    // table
+                    bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode as BDNode, "h2"));
+                    List<IBDNode> conditions = BDFabrik.GetChildrenForParent(pContext, pNode);
+                    if (conditions.Count > 0)
+                    {
+                        bodyHTML.Append("<table><tr><th>Condition</th><th>Other Potential Pathogens</th></tr>");
+                        foreach (IBDNode condition in conditions)
+                        {
+                            bodyHTML.AppendFormat(@"<tr><td>{0}</td><td>", condition.Name);
+                            List<IBDNode> pathogens = BDFabrik.GetChildrenForParent(pContext, condition);
+                            foreach (IBDNode node in pathogens)
+                            {
+                                bodyHTML.AppendFormat("{0}<br>", node.Name);
+                            }
+                        }
+                        bodyHTML.Append("</td></tr></table>");
+                    }
+                }
             }
-
-            // inject Html into page html & save as a page to the database.
-            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
-            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
-            newPage.displayParentType = (int)pNode.NodeType;
-            newPage.displayParentId = pNode.Uuid;
-            newPage.documentText = pageHtml;
-            BDHtmlPage.Save(pContext, newPage);
+            writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
         }
 
         private void generatePageForEmpiricTherapyOfVesicularLesions(Entities pContext, BDNode pNode)
@@ -1361,14 +1253,9 @@ namespace BDEditor.Classes
 
             StringBuilder bodyHTML = new StringBuilder();
             StringBuilder footerHTML = new StringBuilder();
+            List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
-            if (pNode.Name.Length > 0)
-                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
-
-            // insert overview text
-            string overviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
-            if (overviewHtml.Length > EMPTY_PARAGRAPH)
-                bodyHTML.Append(overviewHtml);
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
 
             // show child nodes in a table
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
@@ -1377,19 +1264,13 @@ namespace BDEditor.Classes
                 //Append HTML for child layout
             }
 
-            // inject Html into page html & save as a page to the database.
-            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
-            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
-            newPage.displayParentType = (int)pNode.NodeType;
-            newPage.displayParentId = pNode.Uuid;
-            newPage.documentText = pageHtml;
-            BDHtmlPage.Save(pContext, newPage);
+            writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
         }
 
         private void generatePageForEmpiricTherapyOfEndocarditis(Entities pContext, BDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
-            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
+            if (pNode.NodeType != BDConstants.BDNodeType.BDDisease)
             {
 #if DEBUG
                 throw new InvalidOperationException();
@@ -1400,14 +1281,9 @@ namespace BDEditor.Classes
 
             StringBuilder bodyHTML = new StringBuilder();
             StringBuilder footerHTML = new StringBuilder();
+            List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
-            if (pNode.Name.Length > 0)
-                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
-
-            // insert overview text
-            string overviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
-            if (overviewHtml.Length > EMPTY_PARAGRAPH)
-                bodyHTML.Append(overviewHtml);
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
 
             // show child nodes in a table
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
@@ -1416,19 +1292,13 @@ namespace BDEditor.Classes
                 //Append HTML for child layout
             }
 
-            // inject Html into page html & save as a page to the database.
-            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
-            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
-            newPage.displayParentType = (int)pNode.NodeType;
-            newPage.displayParentId = pNode.Uuid;
-            newPage.documentText = pageHtml;
-            BDHtmlPage.Save(pContext, newPage);
+            writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
         }
 
         private void generatepageForEmpiricTherapyOfGenitalUlcers(Entities pContext, BDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
-            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
+            if (pNode.NodeType != BDConstants.BDNodeType.BDDisease)
             {
 #if DEBUG
                 throw new InvalidOperationException();
@@ -1439,14 +1309,9 @@ namespace BDEditor.Classes
 
             StringBuilder bodyHTML = new StringBuilder();
             StringBuilder footerHTML = new StringBuilder();
+            List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
-            if (pNode.Name.Length > 0)
-                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
-
-            // insert overview text
-            string overviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
-            if (overviewHtml.Length > EMPTY_PARAGRAPH)
-                bodyHTML.Append(overviewHtml);
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
 
             // show child nodes in a table
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
@@ -1455,19 +1320,13 @@ namespace BDEditor.Classes
                 //Append HTML for child layout
             }
 
-            // inject Html into page html & save as a page to the database.
-            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
-            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
-            newPage.displayParentType = (int)pNode.NodeType;
-            newPage.displayParentId = pNode.Uuid;
-            newPage.documentText = pageHtml;
-            BDHtmlPage.Save(pContext, newPage);
+            writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
         }
 
         private void generatePageForEmpiricTherapyOfParasitic(Entities pContext, BDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
-            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
+            if (pNode.NodeType != BDConstants.BDNodeType.BDCategory)
             {
 #if DEBUG
                 throw new InvalidOperationException();
@@ -1478,14 +1337,9 @@ namespace BDEditor.Classes
 
             StringBuilder bodyHTML = new StringBuilder();
             StringBuilder footerHTML = new StringBuilder();
+            List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
-            if (pNode.Name.Length > 0)
-                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
-
-            // insert overview text
-            string overviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
-            if (overviewHtml.Length > EMPTY_PARAGRAPH)
-                bodyHTML.Append(overviewHtml);
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
 
             // show child nodes in a table
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
@@ -1493,20 +1347,13 @@ namespace BDEditor.Classes
             {
                 //Append HTML for child layout
             }
-
-            // inject Html into page html & save as a page to the database.
-            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
-            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
-            newPage.displayParentType = (int)pNode.NodeType;
-            newPage.displayParentId = pNode.Uuid;
-            newPage.documentText = pageHtml;
-            BDHtmlPage.Save(pContext, newPage);
+            writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
         }
 
         private void generatePageForEmpiricTherapyOfPneumonia(Entities pContext, BDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
-            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
+            if (pNode.NodeType != BDConstants.BDNodeType.BDTable)
             {
 #if DEBUG
                 throw new InvalidOperationException();
@@ -1517,14 +1364,9 @@ namespace BDEditor.Classes
 
             StringBuilder bodyHTML = new StringBuilder();
             StringBuilder footerHTML = new StringBuilder();
+            List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
-            if (pNode.Name.Length > 0)
-                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
-
-            // insert overview text
-            string overviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
-            if (overviewHtml.Length > EMPTY_PARAGRAPH)
-                bodyHTML.Append(overviewHtml);
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
 
             // show child nodes in a table
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
@@ -1532,20 +1374,13 @@ namespace BDEditor.Classes
             {
                 //Append HTML for child layout
             }
-
-            // inject Html into page html & save as a page to the database.
-            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
-            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
-            newPage.displayParentType = (int)pNode.NodeType;
-            newPage.displayParentId = pNode.Uuid;
-            newPage.documentText = pageHtml;
-            BDHtmlPage.Save(pContext, newPage);
+            writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
         }
 
         private void generatePageForEmpiricTherapyOfCultureDirected(Entities pContext, BDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
-            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
+            if (pNode.NodeType != BDConstants.BDNodeType.BDTable)
             {
 #if DEBUG
                 throw new InvalidOperationException();
@@ -1556,14 +1391,9 @@ namespace BDEditor.Classes
 
             StringBuilder bodyHTML = new StringBuilder();
             StringBuilder footerHTML = new StringBuilder();
+            List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
-            if (pNode.Name.Length > 0)
-                bodyHTML.AppendFormat(@"<h1>{0}</h1>", pNode.Name);
-
-            // insert overview text
-            string overviewHtml = retrieveNoteTextForOverview(pContext, pNode.Uuid);
-            if (overviewHtml.Length > EMPTY_PARAGRAPH)
-                bodyHTML.Append(overviewHtml);
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
 
             // show child nodes in a table
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
@@ -1571,32 +1401,18 @@ namespace BDEditor.Classes
             {
                 //Append HTML for child layout
             }
-
-            // inject Html into page html & save as a page to the database.
-            string pageHtml = topHtml + bodyHTML.ToString() + bottomHtml;
-            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
-            newPage.displayParentType = (int)pNode.NodeType;
-            newPage.displayParentId = pNode.Uuid;
-            newPage.documentText = pageHtml;
-            BDHtmlPage.Save(pContext, newPage);
+            writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
         }
 
         private Guid generatePageForOverview(Entities pContext, IBDNode pNode)
         {
-            Guid returnGuid = Guid.Empty;
+            BDNode parentNode = pNode as BDNode;
             string noteText = retrieveNoteTextForOverview(pContext, pNode.Uuid);
-            if (noteText.Length > EMPTY_PARAGRAPH)
+            if (null != parentNode && noteText.Length > EMPTY_PARAGRAPH)
             {
-                BDHtmlPage notePage = BDHtmlPage.CreateBDHtmlPage(pContext);
-                notePage.displayParentId = pNode.ParentId;
-                notePage.displayParentType = (int)pNode.ParentType;
-                notePage.documentText = topHtml + noteText + bottomHtml;
-
-                BDHtmlPage.Save(pContext, notePage);
-
-                returnGuid = notePage.Uuid;
+                return writeBDHtmlPage(pContext, parentNode, noteText, BDConstants.BDHtmlPageType.Overview, new List<BDLinkedNote>());
             }
-            return returnGuid;
+            return Guid.Empty;
         }
 
         private Guid generatePageForLinkedNotes(Entities pContext, Guid pParentId, BDConstants.BDNodeType pParentType, List<BDLinkedNote> pInlineNotes, List<BDLinkedNote> pMarkedNotes, List<BDLinkedNote> pUnmarkedNotes)
@@ -1642,24 +1458,16 @@ namespace BDEditor.Classes
                 }
             }
 
-            Guid returnGuid = generatePageForLinkedNotes(pContext, pParentId, pParentType, noteHtml.ToString());
+            Guid returnGuid = generatePageForLinkedNotes(pContext, pParentId, pParentType, noteHtml.ToString(), BDConstants.BDHtmlPageType.Comments);
             return returnGuid;
         }
 
-        private Guid generatePageForLinkedNotes(Entities pContext, Guid pParentId, BDConstants.BDNodeType pParentType, string pPageHtml)
+        private Guid generatePageForLinkedNotes(Entities pContext, Guid pDisplayParentId, BDConstants.BDNodeType pDisplayParentType, string pPageHtml, BDConstants.BDHtmlPageType pPageType)
         {
             if (pPageHtml.Length > EMPTY_PARAGRAPH)
-            {
-                BDHtmlPage notePage = BDHtmlPage.CreateBDHtmlPage(pContext);
-                notePage.displayParentId = pParentId;
-                notePage.displayParentType = (int)pParentType;
-                notePage.documentText = topHtml + pPageHtml + bottomHtml;
-
-                BDHtmlPage.Save(pContext, notePage);
-
-                return notePage.Uuid;
-            }
-            return Guid.Empty;
+                return writeBDHtmlPage(pContext, pDisplayParentId, pDisplayParentType, pPageHtml, pPageType, new List<BDLinkedNote>());
+            else
+                return Guid.Empty;
         }
 
         /// <summary>
@@ -1667,12 +1475,12 @@ namespace BDEditor.Classes
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pPropertyName"></param>
-        /// <param name="pNode"></param>
+        /// <param name="pDisplayParentNode"></param>
         /// <returns>Buid of HTML page.</returns>
         private Guid generatePageForParentAndPropertyFootnote(Entities pContext, string pPropertyName, IBDNode pNode)
         {
             string footnoteText = buildTextForParentAndPropertyFromLinkedNotes(pContext, pPropertyName, pNode, BDConstants.LinkedNoteType.Footnote);
-            Guid footnoteId = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.ParentType, footnoteText);
+            Guid footnoteId = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.ParentType, footnoteText, BDConstants.BDHtmlPageType.Footnote);
             return footnoteId;
         }
 
@@ -1681,14 +1489,22 @@ namespace BDEditor.Classes
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pPropertyName"></param>
-        /// <param name="pNode"></param>
+        /// <param name="pDisplayParentNode"></param>
         /// <returns>Guid of HTML page.</returns>
         /// 
         private Guid generatePageForParentAndPropertyReferences(Entities pContext, string pPropertyName, IBDNode pNode)
         {
-            string referenceText = buildTextForParentAndPropertyFromLinkedNotes(pContext, pPropertyName, pNode, BDConstants.LinkedNoteType.Reference);
-            Guid footnoteId = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.ParentType, referenceText);
-            return footnoteId;
+            string reference = buildTextForParentAndPropertyFromLinkedNotes(pContext, pPropertyName, pNode, BDConstants.LinkedNoteType.Reference);
+            if (reference.Length > EMPTY_PARAGRAPH)
+            {
+                StringBuilder referenceText = new StringBuilder();
+                referenceText.AppendFormat(@"<h2>{0} References</h2>", pNode.Name);
+                referenceText.Append(reference);
+                Guid footnoteId = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.ParentType, referenceText.ToString(), BDConstants.BDHtmlPageType.Reference);
+                return footnoteId;
+            }
+            else
+                return Guid.Empty;
         }
 
         /// <summary>
@@ -1696,7 +1512,7 @@ namespace BDEditor.Classes
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pPropertyName"></param>
-        /// <param name="pNode"></param>
+        /// <param name="pDisplayParentNode"></param>
         /// <param name="pNoteType"></param>
         /// <returns>Text of linked note as HTML</returns>
         private string buildTextForParentAndPropertyFromLinkedNotes(Entities pContext, string pPropertyName, IBDNode pNode, BDConstants.LinkedNoteType pNoteType)
@@ -1710,24 +1526,10 @@ namespace BDEditor.Classes
         private StringBuilder buildEmpiricTherapyHTML(Entities pContext, BDNode pNode, List<BDLinkedNote> pFooterList)
         {
              StringBuilder bodyHtml = new StringBuilder();
-             if (pNode.Name.Length > 0 && pNode.Name != @"SINGLE PRESENTATION")
-                 bodyHtml.AppendFormat(@"<h2>{0}</h2>", pNode.Name);
-
-            // insert overview text from linkedNote
-            string overviewHTML = retrieveNoteTextForOverview(pContext, pNode.Uuid);
-            if (overviewHTML.Length > EMPTY_PARAGRAPH)
-                bodyHtml.Append(overviewHTML);
-
-            // process pathogen groups (and pathogens)
-            List<IBDNode> pathogenGroups = BDFabrik.GetChildrenForParent(pContext, pNode);
-            foreach (IBDNode pathogenGroup in pathogenGroups)
-            {
-                bodyHtml.Append(buildPathogenGroupHtml(pContext, pathogenGroup));
+                bodyHtml.Append(buildPathogenGroupHtml(pContext, pNode));
 
                 // process therapy groups
-                List<BDTherapyGroup> therapyGroups = BDTherapyGroup.RetrieveTherapyGroupsForParentId(pContext, pathogenGroup.Uuid);
-                //if (therapyGroups.Count > 0)
-                //    bodyHtml.Append(@"<h3>Recommended Empiric Therapy</h3>");
+                List<BDTherapyGroup> therapyGroups = BDTherapyGroup.RetrieveTherapyGroupsForParentId(pContext, pNode.Uuid);
 
                 foreach (BDTherapyGroup tGroup in therapyGroups)
                 {
@@ -1765,8 +1567,10 @@ namespace BDEditor.Classes
                                     therapiesHaveDuration = true;
                                 }
                             }
-
-                            bodyHtml.Append(@"<tr><th>Recommended<br>Empiric<br>Therapy</th>");
+                            if(!therapiesHaveDosage && !therapiesHaveDuration)
+                                bodyHtml.Append(@"<tr><th>Recommended Empiric Therapy</th>");
+                            else
+                                bodyHtml.Append(@"<tr><th>Recommended<br>Empiric<br>Therapy</th>");
                             if (therapiesHaveDosage)
                                 bodyHtml.Append(@"<th>Recommended<br>Dose</th>");
                             else
@@ -1780,7 +1584,6 @@ namespace BDEditor.Classes
 
                             bodyHtml.Append(therapyHTML);
                             bodyHtml.Append(@"</table>");
-                        }
                     }
                 }
             }
@@ -1791,7 +1594,7 @@ namespace BDEditor.Classes
         /// Generate HTML for Pathogen Group and Pathogen
         /// </summary>
         /// <param name="pContext"></param>
-        /// <param name="pNode"></param>
+        /// <param name="pDisplayParentNode"></param>
         /// <returns></returns>
         private string buildPathogenGroupHtml(Entities pContext, IBDNode pNode)
         {
@@ -1865,10 +1668,10 @@ namespace BDEditor.Classes
             // MAY NEED THIS if we decide to generate a page for the allNotes rather than putting them in-line.
             //if (notesListHasContent(pContext, pNotes))
             //{
-            //    Guid noteGuid = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.NodeType, pNotes, new List<BDLinkedNote>(), new List<BDLinkedNote>());
+            //    Guid noteGuid = generatePageForLinkedNotes(pContext, pDisplayParentNode.Uuid, pDisplayParentNode.NodeType, pNotes, new List<BDLinkedNote>(), new List<BDLinkedNote>());
             //    therapyGroupHtml.AppendFormat(@"<h4><a href""{0}"">{1}</a></h4>", noteGuid, tgName);
             //}
-            // else if (pNode.Name.Length > 0)
+            // else if (pDisplayParentNode.Name.Length > 0)
 
             if (pTherapyGroup.Name.Length > 0)
                 therapyGroupHtml.AppendFormat(@"<h4>{0}</h4>", pTherapyGroup.Name);
@@ -2117,6 +1920,22 @@ namespace BDEditor.Classes
             return dosageHTML.ToString();
         }
 
+        private string buildNodeWithReferenceAndOverviewHTML(Entities pContext, BDNode pNode, string pHeaderTagLevel)
+        {
+            StringBuilder nodeHTML = new StringBuilder();
+            if (pNode.Name.Length > 0 && !pNode.Name.Contains(@"New ") && pNode.Name != "SINGLE PRESENTATION")
+                nodeHTML.AppendFormat(@"<{0}>{1}</{2}>",pHeaderTagLevel, pNode.Name,pHeaderTagLevel);
+
+            nodeHTML.Append(buildReferenceHtml(pContext, pNode));
+
+            // overview
+            string overviewHTML = retrieveNoteTextForOverview(pContext, pNode.Uuid);
+            if (overviewHTML.Length > EMPTY_PARAGRAPH)
+                nodeHTML.Append(overviewHTML);
+
+            return nodeHTML.ToString();
+        }
+
         private string buildTextFromNotes(List<BDLinkedNote> pNotes)
         {
             StringBuilder noteString = new StringBuilder();
@@ -2176,6 +1995,20 @@ namespace BDEditor.Classes
             }
 
             return tableRowHTML.ToString();
+        }
+
+        private string buildReferenceHtml(Entities pContext, BDNode pNode)
+        {
+            StringBuilder refHTML = new StringBuilder();
+
+            List<BDHtmlPage> referencePages = BDHtmlPage.RetrieveHtmlPageForDisplayParentIdOfPageType(pContext, pNode.Uuid, BDConstants.BDHtmlPageType.Reference);
+            foreach (BDHtmlPage refPage in referencePages)
+            {
+                if (refPage.documentText.Length > EMPTY_PARAGRAPH)
+                    refHTML.AppendFormat(@"<br><a href=""{0}"">References</a>", refPage.Uuid);
+            }
+
+            return refHTML.ToString();
         }
 
         /// <summary>
@@ -2354,6 +2187,45 @@ namespace BDEditor.Classes
                 }
             }
             return isHeader;
+        }
+
+        private static Guid writeBDHtmlPage(Entities pContext, BDNode pDisplayParentNode, StringBuilder pBodyHTML, BDConstants.BDHtmlPageType pPageType, List<BDLinkedNote> pFooterList)
+        {
+            return writeBDHtmlPage(pContext, pDisplayParentNode, pBodyHTML.ToString(), pPageType, pFooterList);
+        }
+
+        private static Guid writeBDHtmlPage(Entities pContext, BDNode pDisplayParentNode, string pBodyHTML, BDConstants.BDHtmlPageType pPageType, List<BDLinkedNote> pFooterList)
+        {
+            return writeBDHtmlPage(pContext, pDisplayParentNode.uuid, pDisplayParentNode.NodeType, pBodyHTML, pPageType, pFooterList);
+        }
+
+        private static Guid writeBDHtmlPage(Entities pContext, Guid pDisplayParentId, BDConstants.BDNodeType pDisplayParentType, string pBodyHTML, BDConstants.BDHtmlPageType pPageType, List<BDLinkedNote> pFooterList)
+        {
+            StringBuilder footerHTML = new StringBuilder();
+            // insert footer text
+            if (pFooterList.Count > 0)
+            {
+                footerHTML.Append(@"<h4>Footnotes</h4>");
+                footerHTML.Append(@"<ol>");
+
+                foreach (BDLinkedNote note in pFooterList)
+                {
+                    footerHTML.AppendFormat(@"<li>{0}</li>", note.documentText);
+                }
+                footerHTML.Append(@"</ol>");
+                pBodyHTML = pBodyHTML + footerHTML.ToString();
+            }
+
+            // inject Html into page html & save as a page to the database.
+            string pageHtml = topHtml + pBodyHTML + bottomHtml;
+            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
+            newPage.displayParentType = (int)pDisplayParentType;
+            newPage.displayParentId = pDisplayParentId;
+            newPage.documentText = pageHtml;
+            newPage.htmlPageType = (int)pPageType;
+            BDHtmlPage.Save(pContext, newPage);
+
+            return newPage.Uuid;
         }
     }
 }

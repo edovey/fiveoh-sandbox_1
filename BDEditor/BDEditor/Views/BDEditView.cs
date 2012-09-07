@@ -365,6 +365,7 @@ namespace BDEditor.Views
 
         private TreeNode showNavSelection(TreeNode pSelectedNode, Boolean pInterrogateOnly)
         {
+            Debug.WriteLine("InterrogateOnly = {0}", pInterrogateOnly);
             TreeNode childTreeNode = null;
 
             IBDControl control_tr01 = null;
@@ -684,7 +685,7 @@ namespace BDEditor.Views
                         switch(node.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
-                                if(!pInterrogateOnly)
+                                if (!pInterrogateOnly)
                                     showChildControls = true;
                                 break;
                         }           
@@ -935,6 +936,7 @@ namespace BDEditor.Views
                     control_tr01 = BDFabrik.CreateControlForNode(dataContext, node);
                     if (null != control_tr01)
                     {
+                        control_tr01.ShowChildren = showChildControls;
                         control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);
                         control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
                         ((System.Windows.Forms.UserControl)control_tr01).Dock = DockStyle.Fill;

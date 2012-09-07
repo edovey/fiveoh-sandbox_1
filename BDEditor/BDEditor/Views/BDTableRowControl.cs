@@ -21,8 +21,16 @@ namespace BDEditor.Views
         private Guid? scopeId;
         private List<IBDControl> cellControlList = new List<IBDControl>();
         private TextBox textControl;
+        private bool isUpdating = false;
 
         public int? DisplayOrder { get; set; }
+
+        private bool showChildren = true;
+        public bool ShowChildren
+        {
+            get { return showChildren; }
+            set { showChildren = value; }
+        }
 
         public event EventHandler<NodeEventArgs> RequestItemAdd;
         public event EventHandler<NodeEventArgs> RequestItemDelete;
@@ -94,11 +102,13 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
-            RefreshLayout(true);
+            RefreshLayout(ShowChildren);
         }
 
         public void RefreshLayout(bool pShowChildren)
         {
+            isUpdating = true;
+
             ControlHelper.SuspendDrawing(this);
 
             pnlControls.Controls.Clear();
@@ -106,6 +116,8 @@ namespace BDEditor.Views
 
             ShowLinksInUse(false);
             ControlHelper.ResumeDrawing(this);
+
+            isUpdating = false;
         }
 
         private void addTableRowControls()
@@ -248,7 +260,7 @@ namespace BDEditor.Views
 
         private void BDTherapyControl_Leave(object sender, EventArgs e)
         {
-            Save();
+            if (!isUpdating) { Save(); }
         }
 
         public override string ToString()

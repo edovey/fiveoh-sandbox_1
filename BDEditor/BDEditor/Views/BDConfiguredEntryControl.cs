@@ -26,6 +26,14 @@ namespace BDEditor.Views
         private BDConstants.LayoutVariantType defaultLayoutVariantType;
         private int? displayOrder;
         private bool showAsChild = false;
+        private bool isUpdating = false;
+
+        private bool showChildren = true;
+        public bool ShowChildren
+        {
+            get { return showChildren; }
+            set { showChildren = value; }
+        }
 
         public BDConfiguredEntryControl()
         {
@@ -186,11 +194,13 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
-            RefreshLayout(true);
+            RefreshLayout(ShowChildren);
         }
 
         public void RefreshLayout(bool pShowChildren)
         {
+            isUpdating = true;
+
             ControlHelper.SuspendDrawing(this);
 
             for (int idx = 0; idx < fieldControlList.Count; idx++)
@@ -217,6 +227,8 @@ namespace BDEditor.Views
                 panelFields.Visible = false;
             }
             ControlHelper.ResumeDrawing(this);
+
+            isUpdating = false;
         }
 
         public void ShowLinksInUse(bool pPropagateToChildren)

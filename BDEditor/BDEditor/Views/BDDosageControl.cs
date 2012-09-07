@@ -20,6 +20,7 @@ namespace BDEditor.Views
         private BDConstants.BDNodeType parentType;
         private Guid? scopeId;
         private string currentControlName;
+        private bool isUpdating = false;
 
         private const string ADULT_TEXTBOX = "Adult";
         private const string DOSAGE2_TEXTBOX = "< 50";
@@ -27,6 +28,13 @@ namespace BDEditor.Views
         private const string DOSAGE4_TEXTBOX = "< 10 (Anuric)";
 
         public int? DisplayOrder { get; set; }
+
+        private bool showChildren = true;
+        public bool ShowChildren
+        {
+            get { return showChildren; }
+            set { showChildren = value; }
+        }
 
         public event EventHandler<NodeEventArgs> RequestItemAdd;
         public event EventHandler<NodeEventArgs> RequestItemDelete;
@@ -125,11 +133,12 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
-            RefreshLayout(true);
+            RefreshLayout(ShowChildren);
         }
 
         public void RefreshLayout(bool pShowChildren)
         {
+            isUpdating = true;
             ControlHelper.SuspendDrawing(this);
             if (currentDosage == null)
             {
@@ -151,6 +160,7 @@ namespace BDEditor.Views
 
             ShowLinksInUse(false);
             ControlHelper.ResumeDrawing(this);
+            isUpdating = false;
         }
 
         public void AssignDataContext(Entities pDataContext)
@@ -415,12 +425,14 @@ namespace BDEditor.Views
 
         private void BDDosageControl_Leave(object sender, EventArgs e)
         {
-            Save();
+            if (!isUpdating) { Save(); }
         }
 
         private void BDDosageControl_Load(object sender, EventArgs e)
         {
+            isUpdating = true;
             rtbAdultDosage.SelectAll();
+            isUpdating = false;
         }
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)

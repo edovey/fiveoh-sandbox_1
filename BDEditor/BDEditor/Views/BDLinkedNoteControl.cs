@@ -26,6 +26,13 @@ namespace BDEditor.Views
       
         private BDLinkedNoteAssociation currentAssociation;
 
+        private bool showChildren = true;
+        public bool ShowChildren
+        {
+            get { return showChildren; }
+            set { showChildren = value; }
+        }
+
         //private bool newLinkSaved = false;
 
         public event EventHandler SaveAttemptWithoutParent;
@@ -290,7 +297,7 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
-            RefreshLayout(true);
+            RefreshLayout(ShowChildren);
         }
 
         public void RefreshLayout(bool pShowChildren)

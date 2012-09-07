@@ -32,5 +32,6 @@ namespace BDEditor.Views
         IBDNode CurrentNode { get; set; }
         int? DisplayOrder { get; set; }
         bool ShowAsChild { get; set; }
+        bool ShowChildren { get; set; }
     }
 }

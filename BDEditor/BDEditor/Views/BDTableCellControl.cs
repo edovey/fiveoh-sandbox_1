@@ -20,6 +20,7 @@ namespace BDEditor.Views
         private Guid? scopeId;
         private BDConstants.BDNodeType parentType;
         private BDConstants.TableCellAlignment alignment;
+        private bool isUpdating = false;
 
         public string RichText
         {
@@ -28,6 +29,14 @@ namespace BDEditor.Views
         }
 
         public int? DisplayOrder { get; set; }
+
+        private bool showChildren = true;
+        public bool ShowChildren
+        {
+            get { return showChildren; }
+            set { showChildren = value; }
+        }
+
         public BDConstants.LayoutVariantType DefaultLayoutVariantType;
 
         public event EventHandler<NodeEventArgs> RequestItemAdd;
@@ -115,11 +124,12 @@ namespace BDEditor.Views
         #region IBDControl
         public void RefreshLayout()
         {
-            RefreshLayout(true);
+            RefreshLayout(ShowChildren);
         }
 
         public void RefreshLayout(bool pShowChildren)
         {
+            isUpdating = true;
             ControlHelper.SuspendDrawing(this);
 
             //for (int i = 0; i < stringControlList.Count; i++)
@@ -138,6 +148,7 @@ namespace BDEditor.Views
 
             ShowLinksInUse(false);
             ControlHelper.ResumeDrawing(this);
+            isUpdating = false;
         }
 
         public void AssignDataContext(Entities pDataContext)
@@ -241,7 +252,7 @@ namespace BDEditor.Views
 
         private void BDTableCellControl_Leave(object sender, EventArgs e)
         {
-            Save();
+            if (!isUpdating) { Save(); }
         }
 
         private void btnLinkedNote_Click(object sender, EventArgs e)

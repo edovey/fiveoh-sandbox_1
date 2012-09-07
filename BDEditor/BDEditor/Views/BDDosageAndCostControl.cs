@@ -26,6 +26,13 @@ namespace BDEditor.Views
 
         public int? DisplayOrder { get; set; }
 
+        private bool showChildren = true;
+        public bool ShowChildren
+        {
+            get { return showChildren; }
+            set { showChildren = value; }
+        }
+
         public event EventHandler<NodeEventArgs> RequestItemAdd;
         public event EventHandler<NodeEventArgs> RequestItemDelete;
 
@@ -118,7 +125,7 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
-            RefreshLayout(true);
+            RefreshLayout(ShowChildren);
         }
 
         public void RefreshLayout(bool pShowChildren)

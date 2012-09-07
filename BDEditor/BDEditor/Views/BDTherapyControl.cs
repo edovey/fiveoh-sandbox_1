@@ -22,6 +22,7 @@ namespace BDEditor.Views
         private bool displayLeftBracket;
         private bool displayRightBracket;
         private string currentControlName;
+        private bool isUpdating = false;
 
         private const string NAME_TEXTBOX = "Name";
         private const string DOSAGE_TEXTBOX = "Dosage";
@@ -32,6 +33,13 @@ namespace BDEditor.Views
         private const string DURATION_2_TEXTBOX = "Duration2";
 
         public int? DisplayOrder { get; set; }
+
+        private bool showChildren = true;
+        public bool ShowChildren
+        {
+            get { return showChildren; }
+            set { showChildren = value; }
+        }
 
         public event EventHandler<NodeEventArgs> RequestItemAdd;
         public event EventHandler<NodeEventArgs> RequestItemDelete;
@@ -185,11 +193,13 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
-            RefreshLayout(true);
+            RefreshLayout(ShowChildren);
         }
 
         public void RefreshLayout(bool pShowChildren)
         {
+            isUpdating = true;
+
             ControlHelper.SuspendDrawing(this);
             if (currentTherapy == null)
             {
@@ -255,6 +265,7 @@ namespace BDEditor.Views
             }
             ShowLinksInUse(false);
             ControlHelper.ResumeDrawing(this);
+            isUpdating = false;
         }
 
         public void AssignDataContext(Entities pDataContext)
@@ -489,7 +500,10 @@ namespace BDEditor.Views
 
         private void BDTherapyControl_Leave(object sender, EventArgs e)
         {
-            Save();
+            if (!isUpdating)
+            {
+                Save();
+            }
         }
 
         private void btnLink_Click(object sender, EventArgs e)
@@ -657,6 +671,8 @@ namespace BDEditor.Views
 
         private void BDTherapyControl_Load(object sender, EventArgs e)
         {
+            isUpdating = true;
+
             switch (DefaultLayoutVariantType)
             {
                 case BDConstants.LayoutVariantType.TreatmentRecommendation01:
@@ -744,6 +760,7 @@ namespace BDEditor.Views
                     break;
             }
             pnlMain.Refresh();
+            isUpdating = false;
         }
 
     }

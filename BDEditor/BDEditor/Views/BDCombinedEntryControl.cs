@@ -33,6 +33,13 @@ namespace BDEditor.Views
         private const string TEXTFIELD_TITLE = "titleField";
         private const string TEXTFIELD_NAME = "nameField";
 
+        private bool showChildren = true;
+        public bool ShowChildren
+        {
+            get { return showChildren; }
+            set { showChildren = value; }
+        }
+
         public BDCombinedEntryControl()
         {
             InitializeComponent();
@@ -178,7 +185,7 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
-            RefreshLayout(true);
+            RefreshLayout(ShowChildren);
         }
 
         public void RefreshLayout(bool pShowChildren)
@@ -306,7 +313,7 @@ namespace BDEditor.Views
 
         private void BDCombinedEntryControl_Leave(object sender, EventArgs e)
         {
-            Save();
+            if (!isUpdating) { Save(); }
         }
 
         private void tbName_MouseDown(object sender, MouseEventArgs e)

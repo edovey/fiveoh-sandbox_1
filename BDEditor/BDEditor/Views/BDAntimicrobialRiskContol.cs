@@ -28,7 +28,15 @@ namespace BDEditor.Views
         private const string AAPRATING_RTB = "AAP Rating";
         private const string RELATIVEDOSE_RTB = "Relative Dose";
 
+        private bool showChildren = true;
+        public bool ShowChildren 
+        { 
+            get { return showChildren; } 
+            set { showChildren = value; } 
+        }
+
         public int? DisplayOrder { get; set; }
+        
 
         public event EventHandler<NodeEventArgs> RequestItemAdd;
         public event EventHandler<NodeEventArgs> RequestItemDelete;
@@ -115,7 +123,7 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
-            RefreshLayout(true);
+            RefreshLayout(ShowChildren);
         }
 
         public void RefreshLayout(bool pShowChildren)

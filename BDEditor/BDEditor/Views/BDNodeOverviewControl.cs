@@ -47,9 +47,15 @@ namespace BDEditor.Views
             base.pnlOverview.Controls.Add(this.bdLinkedNoteControl1);
         }
 
+        public override void RefreshLayout()
+        {
+            RefreshLayout(ShowChildren);
+        }
         public override void RefreshLayout(bool pShowChildren)
         {
             base.RefreshLayout(pShowChildren);
+
+            isUpdating = true;
 
             ControlHelper.SuspendDrawing(this);
             bdLinkedNoteControl1.AssignDataContext(dataContext);
@@ -89,6 +95,7 @@ namespace BDEditor.Views
             bdLinkedNoteControl1.RefreshLayout();
 
             ControlHelper.ResumeDrawing(this);
+            isUpdating = false;
         }
     }
 }

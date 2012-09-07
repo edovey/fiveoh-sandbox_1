@@ -18,6 +18,7 @@ namespace BDEditor.Views
         private BDConfiguredEntry configuredEntry;
         private string fieldName;
         private Guid scopeId;
+        private bool isUpdating = false;
 
         public int DisplayOrder { get; set; } 
 
@@ -57,8 +58,10 @@ namespace BDEditor.Views
 
         private void BDConfiguredEntryFieldControl_Load(object sender, EventArgs e)
         {
+            isUpdating = true;
             configureLabel();
             Populate();
+            isUpdating = false;
         }
 
         private void createLink(string pProperty)
@@ -82,7 +85,9 @@ namespace BDEditor.Views
 
         public void RefreshLayout()
         {
+            isUpdating = true;
             Populate();
+            isUpdating = false;
         }
 
         private void btnLinkedNote_Click(object sender, EventArgs e)
@@ -239,7 +244,7 @@ namespace BDEditor.Views
 
         private void txtFieldData_Leave(object sender, EventArgs e)
         {
-            Save();
+            if (!isUpdating) { Save(); }
         }
 
         private void insertTextFromMenu(string textToInsert)

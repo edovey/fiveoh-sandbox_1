@@ -53,6 +53,7 @@ namespace BDEditor.DataModel
         private const string ATTACHMENTMIMETYPE = @"at_mimeType";
         private const string NAME = @"at_name";
         private const string DISPLAYORDER = @"at_displayOrder";
+        private const string FILENAME = @"at_filename";
 
         //TODO: attachmentData, filename, filesize
 
@@ -336,6 +337,7 @@ namespace BDEditor.DataModel
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDAttachment.ATTACHMENTMIMETYPE).WithValue(string.Format(@"{0}", MimeType())).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDAttachment.STORAGEKEY).WithValue((null == storageKey) ? Guid.Empty.ToString() : storageKey.ToString().ToUpper()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDAttachment.FILENAME).WithValue((null == filename) ? string.Empty : filename).WithReplace(true));
 
             return putAttributeRequest;
         }

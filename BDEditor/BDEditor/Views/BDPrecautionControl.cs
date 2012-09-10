@@ -20,7 +20,7 @@ namespace BDEditor.Views
         private BDConstants.BDNodeType parentType;
         private Guid? scopeId;
         private string currentControlName;
-        private BDLinkedNote precautionLinkedNote;
+        private BDLinkedNote durationLinkedNote;
         private BDLinkedNoteControl bdLinkedNoteControl1;
         private bool isUpdating = false;
 
@@ -167,7 +167,7 @@ namespace BDEditor.Views
                 rtbMaskAcute.Text = @"";
                 rtbMaskLongTerm.Text = @"";
 
-                precautionLinkedNote = null;
+                durationLinkedNote = null;
 
                 bdLinkedNoteControl1.CurrentLinkedNote = null;
                 bdLinkedNoteControl1.AssignParentInfo(null, DefaultNodeType);
@@ -197,12 +197,12 @@ namespace BDEditor.Views
                 bdLinkedNoteControl1.AssignScopeId(scopeId);
                 bdLinkedNoteControl1.AssignContextPropertyName(BDPrecaution.VIRTUALPROPERTYNAME_PRECAUTIONS);
 
-                List<BDLinkedNoteAssociation> associationList = BDLinkedNoteAssociation.GetLinkedNoteAssociationListForParentIdAndProperty(dataContext, currentPrecaution.Uuid, BDPrecaution.VIRTUALPROPERTYNAME_PRECAUTIONS); ;
+                List<BDLinkedNoteAssociation> associationList = BDLinkedNoteAssociation.GetLinkedNoteAssociationListForParentIdAndProperty(dataContext, currentPrecaution.Uuid, BDPrecaution.PROPERTYNAME_DURATION); ;
                 if ((null != associationList) && (associationList.Count > 0))
                 {
                     BDLinkedNoteAssociation association = associationList[0];
-                    precautionLinkedNote = BDLinkedNote.GetLinkedNoteWithId(dataContext, association.linkedNoteId);
-                    bdLinkedNoteControl1.CurrentLinkedNote = precautionLinkedNote;
+                    durationLinkedNote = BDLinkedNote.GetLinkedNoteWithId(dataContext, association.linkedNoteId);
+                    bdLinkedNoteControl1.CurrentLinkedNote = durationLinkedNote;
                 }
                 bdLinkedNoteControl1.RefreshLayout();
             }

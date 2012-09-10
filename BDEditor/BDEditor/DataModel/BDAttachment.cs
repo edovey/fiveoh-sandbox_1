@@ -334,7 +334,7 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDAttachment.NODETYPE).WithValue(string.Format(@"{0}", nodeType)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDAttachment.NODEKEYNAME).WithValue((null == nodeKeyName) ? string.Empty : nodeKeyName).WithReplace(true));
 
-            attributeList.Add(new ReplaceableAttribute().WithName(BDAttachment.ATTACHMENTMIMETYPE).WithValue(string.Format(@"{0}", attachmentMimeType)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDAttachment.ATTACHMENTMIMETYPE).WithValue(string.Format(@"{0}", MimeType())).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDAttachment.STORAGEKEY).WithValue((null == storageKey) ? Guid.Empty.ToString() : storageKey.ToString().ToUpper()).WithReplace(true));
 
             return putAttributeRequest;

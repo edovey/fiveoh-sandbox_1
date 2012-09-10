@@ -30,7 +30,7 @@ namespace BDEditor.DataModel
 #endif
 
         public const string AWS_S3_PREFIX = @"bdat~";
-        public const string AWS_S3_FILEEXTENSION = @".html";
+        public const string AWS_S3_FILEEXTENSION = @".data";
 
         public const string ENTITYNAME = @"BDAttachments";
         public const string ENTITYNAME_FRIENDLY = @"Attachments";
@@ -94,6 +94,7 @@ namespace BDEditor.DataModel
         {
             if (pAttachment.EntityState != EntityState.Unchanged)
             {
+                pAttachment.storageKey = GenerateStorageKey(pAttachment);
                 if (pAttachment.schemaVersion != ENTITY_SCHEMAVERSION)
                     pAttachment.schemaVersion = ENTITY_SCHEMAVERSION;
                 pContext.SaveChanges();
@@ -304,13 +305,14 @@ namespace BDEditor.DataModel
 
         public static string GenerateStorageKey(BDAttachment pEntity)
         {
-            string result = GenerateStorageKey(pEntity.Uuid);
+            string extension = pEntity.MimeFileExtension();
+            string result = GenerateStorageKey(pEntity.Uuid, extension);
             return result;
         }
 
-        public static string GenerateStorageKey(Guid pUuid)
+        public static string GenerateStorageKey(Guid pUuid, string pExtension)
         {
-            string result = string.Format("{0}{1}{2}", AWS_S3_PREFIX, pUuid.ToString().ToUpper(), AWS_S3_FILEEXTENSION);
+            string result = string.Format("{0}{1}{2}", AWS_S3_PREFIX, pUuid.ToString().ToUpper(), pExtension);
             return result;
         }
 
@@ -424,6 +426,50 @@ namespace BDEditor.DataModel
         {
             get { return displayOrder; }
             set { displayOrder = value; }
+        }
+
+        public string MimeType()
+        {
+            BDConstants.BDAttachmentMimeType mt = BDConstants.BDAttachmentMimeType.unknown;
+            if( (null != attachmentMimeType) && attachmentMimeType.HasValue)
+                mt = (BDConstants.BDAttachmentMimeType)attachmentMimeType.Value;
+
+            return BDUtilities.GetEnumDescription(mt);
+        }
+
+        public string MimeFileExtension()
+        {
+            string extension = ".data";
+
+            if (attachmentMimeType.HasValue)
+            {
+                switch (attachmentMimeType.Value)
+                {
+                    case (int)BDConstants.BDAttachmentMimeType.bmp:
+                        extension = ".bmp";
+                        break;
+                    case (int)BDConstants.BDAttachmentMimeType.gif:
+                        extension = ".gif";
+                        break;
+                    case (int)BDConstants.BDAttachmentMimeType.jpeg:
+                        extension = ".jpg";
+                        break;
+                    case (int)BDConstants.BDAttachmentMimeType.pdf:
+                        extension = ".pdf";
+                        break;
+                    case (int)BDConstants.BDAttachmentMimeType.png:
+                        extension = ".png";
+                        break;
+                    case (int)BDConstants.BDAttachmentMimeType.tiff:
+                        extension = ".tif";
+                        break;
+                    default:
+                        extension = ".data";
+                        break;
+                }
+            }
+
+            return extension;
         }
     }
 }

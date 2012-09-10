@@ -39,6 +39,7 @@ namespace BDEditor.Classes
         public const string TAG_METADATA = @"x-amz-meta-tag";
         public const string CREATEDATE_METADATA = @"x-amz-meta-createdate";
         public const string APPVERSION_METADATA = @"x-amz-meta-appversion";
+        public const string MIMETYPE_METADATA = @"x-amz-meta-mimetype";
 
         private const string BD_ACCESS_KEY = @"AKIAJ6SRLQLH2ALT7ZBQ";
         private const string BD_SECRET_KEY = @"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";
@@ -85,7 +86,7 @@ namespace BDEditor.Classes
                 syncDictionary.Add(BDHtmlPage.SyncInfo(pDataContext));
 //                syncDictionary.Add(BDSearchEntry.SyncInfo(pDataContext));
 //                syncDictionary.Add(BDSearchEntryAssociation.SyncInfo(pDataContext));
-//                syncDictionary.Add(BDAttachment.SyncInfo(pDataContext));
+                syncDictionary.Add(BDAttachment.SyncInfo(pDataContext));
             }
 
             // List the remote domains
@@ -189,6 +190,37 @@ namespace BDEditor.Classes
 
                             S3Response s3Response = S3.PutObject(putObjectRequest);
                             s3Response.Dispose();
+                        }
+                        else if (changeEntry is BDAttachment)
+                        {
+                            BDAttachment attachmentEntry = (changeEntry as BDAttachment);
+                            if (null != attachmentEntry.attachmentData)
+                            {
+                                byte[] attachmentData = attachmentEntry.attachmentData;
+                                MemoryStream ms = new MemoryStream(attachmentData);
+                                using (var memoryStream = new MemoryStream(attachmentData))
+                                {
+                                    NameValueCollection metadata = new NameValueCollection();
+                                    metadata.Add(SOURCE_METADATA, BDAttachment.AWS_BUCKET);
+                                    metadata.Add(MACHINENAME_METADATA, Environment.MachineName);
+                                    metadata.Add(FILENAME_METADATA, attachmentEntry.filename);
+                                    metadata.Add(MIMETYPE_METADATA, attachmentEntry.MimeType());
+                                    metadata.Add(COMMENT_METADATA, (null != attachmentEntry.name) ? attachmentEntry.name : "" );
+                                    metadata.Add(TAG_METADATA, @"");
+                                    metadata.Add(CREATEDATE_METADATA, attachmentEntry.modifiedDate.Value.ToString("s"));
+                                    metadata.Add(APPVERSION_METADATA, System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+
+                                    PutObjectRequest putObjectRequest = new PutObjectRequest();
+                                    putObjectRequest
+                                        .WithBucketName(BDAttachment.AWS_BUCKET)
+                                        .WithKey(attachmentEntry.storageKey)
+                                        .WithInputStream(memoryStream)
+                                        .AddHeaders(metadata);
+
+                                    S3Response s3Response = S3.PutObject(putObjectRequest);
+                                    s3Response.Dispose();
+                                }
+                            }
                         }
                     }
 

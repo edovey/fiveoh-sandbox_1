@@ -214,6 +214,7 @@ namespace BDEditor.Views
             ShowLinksInUse(false);
             setFormLayoutState();
             ControlHelper.ResumeDrawing(this);
+            isUpdating = false;
         }
 
         public void AssignParentInfo(Guid? pParentId, BDConstants.BDNodeType pParentType)

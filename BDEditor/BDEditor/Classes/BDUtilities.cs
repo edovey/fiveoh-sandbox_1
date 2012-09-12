@@ -310,6 +310,7 @@ namespace BDEditor.Classes
             foreach (IBDNode child in childNodes)
             {
                 ResetLayoutVariantWithChildren(pContext, child, pNewLayoutVariant, true);
+                BDFabrik.SaveNode(pContext, child);
             }
 
             if (pResetParent)

@@ -1716,7 +1716,9 @@ namespace BDEditor.Views
             BDLinkedNoteAssociation lna = BDLinkedNoteAssociation.GetLinkedNoteAssociationWithId(dataContext, Guid.Parse("7cbbf37c-f7bd-4d75-b4a3-abe70a206c8f"));
             lna.parentKeyPropertyName = "Duration";
             BDLinkedNoteAssociation.Save(dataContext, lna);
-
+            // Reset layout variant for Genital Ulcers nodes and children
+            IBDNode startNode2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("96cbc7d0-c4ba-4593-a1d9-0e7908deeffd"));
+            BDUtilities.ResetLayoutVariantWithChildren(dataContext, startNode2, BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers, true);
             #endregion
         }
     }

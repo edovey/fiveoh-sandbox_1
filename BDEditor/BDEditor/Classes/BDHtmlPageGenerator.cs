@@ -1195,7 +1195,7 @@ namespace BDEditor.Classes
             bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h2"));
             List<IBDNode> pathogenGroups = BDFabrik.GetChildrenForParent(pContext, pNode);
             foreach (IBDNode pathogenGroup in pathogenGroups)
-                bodyHTML.Append(buildEmpiricTherapyHTML(pContext, pNode as BDNode, footerList));
+                bodyHTML.Append(buildEmpiricTherapyHTML(pContext, pathogenGroup as BDNode, footerList));
 
             writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
         }
@@ -1271,19 +1271,14 @@ namespace BDEditor.Classes
                 bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child as BDNode, "h2"));
                 if (child.NodeType == BDConstants.BDNodeType.BDResponse)
                 {
-                    List<IBDNode> responses = BDFabrik.GetChildrenForParent(pContext, child);
-                    foreach (IBDNode response in responses)
+                    List<IBDNode> frequencies = BDFabrik.GetChildrenForParent(pContext, child);
+                    foreach (IBDNode frequency in frequencies)
                     {
-                        bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, response as BDNode, "h3"));
-                        List<IBDNode> therapyGroups = BDFabrik.GetChildrenForParent(pContext, response);
-                        foreach (IBDNode therapyGroup in therapyGroups)
+                        bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, frequency as BDNode, "h4"));
+                        List<IBDNode> pathogenGroups = BDFabrik.GetChildrenForParent(pContext, frequency);
+                        foreach (IBDNode pathogenGroup in pathogenGroups)
                         {
-                            BDTherapyGroup group = therapyGroup as BDTherapyGroup;
-                            if (null != group)
-                            {
-                                bodyHTML.Append(buildTherapyGroupWithLinkedNotesHtml(pContext, group));
-                                bodyHTML.Append(buildTherapyGroupHTML(pContext, group));
-                            }
+                            bodyHTML.Append(buildEmpiricTherapyHTML(pContext, pathogenGroup as BDNode, footerList));
                         }
                     }
                 }
@@ -1368,7 +1363,7 @@ namespace BDEditor.Classes
                     foreach (IBDNode subtopic in subtopics)
                         bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, subtopic as BDNode, "h4"));
                 }
-            writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
+                writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
             }
             else if (pNode.NodeType == BDConstants.BDNodeType.BDPresentation)
             {
@@ -1582,7 +1577,7 @@ namespace BDEditor.Classes
         }
 
         /// <summary>
-        /// Build HTML for Empiric Therapy beginning at pathogen pTherapyGroup level
+        /// Build HTML for Empiric Therapy beginning at pathogenGroup level
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pNode"></param>
@@ -1591,7 +1586,7 @@ namespace BDEditor.Classes
         private StringBuilder buildEmpiricTherapyHTML(Entities pContext, BDNode pNode, List<BDLinkedNote> pFooterList)
         {
              StringBuilder bodyHtml = new StringBuilder();
-                bodyHtml.Append(buildPathogenGroupHtml(pContext, pNode));
+                bodyHtml.Append(buildPathogenGroupHtml(pContext, pNode, pFooterList));
 
                 // process therapy groups
                 List<BDTherapyGroup> therapyGroups = BDTherapyGroup.RetrieveTherapyGroupsForParentId(pContext, pNode.Uuid);
@@ -1668,7 +1663,7 @@ namespace BDEditor.Classes
         /// <param name="pContext"></param>
         /// <param name="pDisplayParentNode"></param>
         /// <returns></returns>
-        private string buildPathogenGroupHtml(Entities pContext, IBDNode pNode)
+        private string buildPathogenGroupHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFooterList)
         {
             StringBuilder pathogenGroupHtml = new StringBuilder();
 
@@ -1682,7 +1677,7 @@ namespace BDEditor.Classes
                 List<BDLinkedNote> markedNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pathogenGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.MarkedComment);
                 List<BDLinkedNote> unmarkedNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pathogenGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.UnmarkedComment);
 
-                // TODO:  DEAL WITH FOOTNOTES & ENDNOTES - will need to tag the pathogen pTherapyGroup name, manage symbols?
+                pFooterList.AddRange(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pathogenGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Footnote));
 
                 if (pNode.Name != null && pNode.Name.Length > 0)
                     pathogenGroupHtml.AppendFormat(@"<h2>{0}</h2>", pNode.Name);
@@ -1702,7 +1697,10 @@ namespace BDEditor.Classes
                     {
                         BDNode node = item as BDNode;
                         if (null != node)
+                        {
                             pathogenGroupHtml.Append(buildPathogenHtml(pContext, node));
+                            pFooterList.AddRange(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pathogenGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Footnote));
+                        }
                     }
                 }
             }
@@ -1996,7 +1994,10 @@ namespace BDEditor.Classes
         {
             StringBuilder nodeHTML = new StringBuilder();
             if (pNode.Name.Length > 0 && !pNode.Name.Contains(@"New ") && pNode.Name != "SINGLE PRESENTATION")
-                nodeHTML.AppendFormat(@"<{0}>{1}</{2}>",pHeaderTagLevel, pNode.Name,pHeaderTagLevel);
+                if(pHeaderTagLevel.Length > 0)
+                    nodeHTML.AppendFormat(@"<{0}>{1}</{2}>",pHeaderTagLevel, pNode.Name,pHeaderTagLevel);
+                else
+                    nodeHTML.Append(pNode.Name);
 
             nodeHTML.Append(buildReferenceHtml(pContext, pNode));
 

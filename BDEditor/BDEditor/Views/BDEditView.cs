@@ -1586,16 +1586,16 @@ namespace BDEditor.Views
             BDNode.Save(dataContext, table5);
 
             // change pathogen groups in Antimicrobial_ClinicalGuidelines  to topics
-            List<BDNode> pathogenGroups = BDNode.RetrieveNodesForType(dataContext, BDConstants.BDNodeType.BDPathogenGroup);
-            foreach(BDNode pathogenGroup in pathogenGroups)
+            List<BDNode> therapyGroups = BDNode.RetrieveNodesForType(dataContext, BDConstants.BDNodeType.BDPathogenGroup);
+            foreach(BDNode therapyGroup in therapyGroups)
             {
-                if (pathogenGroup.LayoutVariant == BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines)
+                if (therapyGroup.LayoutVariant == BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines)
                 {
-                    if (pathogenGroup.Name == "Predictable Activity" || pathogenGroup.Name == "Unpredictable Activity" || pathogenGroup.Name == "No/insufficient Activity")
+                    if (therapyGroup.Name == "Predictable Activity" || therapyGroup.Name == "Unpredictable Activity" || therapyGroup.Name == "No/insufficient Activity")
                     {
-                        pathogenGroup.nodeType = (int)BDConstants.BDNodeType.BDTopic;
-                        pathogenGroup.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
-                        BDNode.Save(dataContext, pathogenGroup);
+                        therapyGroup.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+                        therapyGroup.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+                        BDNode.Save(dataContext, therapyGroup);
                     }
                 }
             }
@@ -1709,6 +1709,14 @@ namespace BDEditor.Views
             st6.Name = "Streptococcus pneumoniae";
             st6.LayoutVariant = o1.LayoutVariant;
             BDNode.Save(dataContext, st6);   */
+            #endregion
+
+            #region v.1.6.14
+            // fix incorrect assignment of property 
+            BDLinkedNoteAssociation lna = BDLinkedNoteAssociation.GetLinkedNoteAssociationWithId(dataContext, Guid.Parse("7cbbf37c-f7bd-4d75-b4a3-abe70a206c8f"));
+            lna.parentKeyPropertyName = "Duration";
+            BDLinkedNoteAssociation.Save(dataContext, lna);
+
             #endregion
         }
     }

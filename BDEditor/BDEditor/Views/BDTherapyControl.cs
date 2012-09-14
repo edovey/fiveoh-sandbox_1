@@ -678,14 +678,14 @@ namespace BDEditor.Views
                 case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation15_Pneumonia:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia:
                 case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                 case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis:
@@ -726,7 +726,7 @@ namespace BDEditor.Views
                     toolTip1.SetToolTip(tbDosage, "Adult");
                     toolTip1.SetToolTip(tbDosage1, "Paediatric");
                     break;
-                case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation05_CultureProvenPeritonitis:
                     // remove dosage2, duration1, duration2
                     pnlMain.Controls.Remove(tbDosage2);
                     pnlMain.Controls.Remove(chkPreviousDose2);
@@ -738,7 +738,7 @@ namespace BDEditor.Views
                     pnlMain.Controls.Remove(btnDuration2Link);
                     pnlMain.Controls.Remove(tbDuration2);
                     break;
-                case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
                     // remove dosage1, dosage2, duration2
                     pnlMain.Controls.Remove(tbDosage1);
                     pnlMain.Controls.Remove(chkPreviousDose1);

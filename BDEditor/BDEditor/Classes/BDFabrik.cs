@@ -207,8 +207,9 @@ namespace BDEditor.Classes
                             //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDisease, new BDConstants.LayoutVariantType[] { layoutVariant, BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDisease, new BDConstants.LayoutVariantType[] { layoutVariant, BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis, BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt, BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass,
-                            BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I,BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II,BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis,BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis,
-                            BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis, BDConstants.LayoutVariantType.TreatmentRecommendation15_Pneumonia}));
+                            BDConstants.LayoutVariantType.TreatmentRecommendation05_CultureProvenPeritonitis,BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis,
+                            BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis, BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia}));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubcategory, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation17_Pneumonia }));
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
                         case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
@@ -373,9 +374,9 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDPathogen:
                     switch (layoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation15_Pneumonia:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogenResistance, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
@@ -407,12 +408,12 @@ namespace BDEditor.Classes
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogen, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation05_CultureProvenPeritonitis:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation15_Pneumonia:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogen, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -424,9 +425,9 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDPathogenResistance:
                     switch (layoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation15_Pneumonia:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         default:
@@ -527,7 +528,7 @@ namespace BDEditor.Classes
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation16_CultureDirected:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation15_Pneumonia, BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis, BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis, BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia, BDConstants.LayoutVariantType.TreatmentRecommendation05_CultureProvenPeritonitis, BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis, BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDisease, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE }));
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
@@ -585,6 +586,9 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
                         case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAntimicrobial, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation17_Pneumonia:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I, BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II }));
                             break;
                         case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAntimicrobial, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -693,10 +697,12 @@ namespace BDEditor.Classes
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_HeaderRow }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation15_Pneumonia:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogen, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation05_CultureProvenPeritonitis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogenGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
@@ -818,10 +824,10 @@ namespace BDEditor.Classes
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation15_Pneumonia:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation05_CultureProvenPeritonitis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:

@@ -18,7 +18,9 @@ namespace BDEditor.Classes
         // create variables to hold data for 'same as previous' settings on Therapy
         string previousTherapyName = string.Empty;
         string previousTherapyDosage = string.Empty;
+        string previousTherapyDosage1 = string.Empty;
         string previousTherapyDuration = string.Empty;
+        string previousTherapyDuration1 = string.Empty;
         Guid previousTherapyId = Guid.Empty;
         bool therapiesHaveDosage = false;
         bool therapiesHaveDuration = false;
@@ -125,11 +127,6 @@ namespace BDEditor.Classes
                             generatePageForAntibioticDosingInHepaticImpairment(pContext, pNode as BDNode);
                             isPageGenerated = true;
                             break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
-                            generatePageForEmpiricTherapyOfParasitic(pContext, pNode as BDNode);
-                            isPageGenerated = true;
-                            break;
                         default:
                             isPageGenerated = false;
                             break;
@@ -175,6 +172,32 @@ namespace BDEditor.Classes
                             generatePageForEmpiricTherapyOfBCNE(pContext, pNode as BDNode);
                             isPageGenerated = true;
                             break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
+                            generatePageForEmpiricTherapyOfParasitic(pContext, pNode as BDNode);
+                            isPageGenerated = true;
+                            break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:
+                            generatePageForEmpiricTherapyOfCultureDirected(pContext, pNode as BDNode);
+                            isPageGenerated = true;
+                            break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
+                            generatePageForEmpiricTherapyOfCultureDirectedEndocarditis(pContext, pNode as BDNode);
+                            isPageGenerated = true;
+                                break;
+                        default:
+                            isPageGenerated = false;
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDPathogenGroup:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation05_CultureProvenPeritonitis:
+                            generatePageForEmpiricTherapyOfCultureDirectedPeritonitis(pContext, pNode as BDNode);
+                            isPageGenerated = true;
+                            break;
                         default:
                             isPageGenerated = false;
                             break;
@@ -187,7 +210,8 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
-                            // if the processing comes through here, then the Disease only has one Presentation > each Presentation has a page
+                            // if the processing comes through here, then the Disease only has one Presentation 
+                            // -> Disease and Presentation will be shown on the same HTML page
                             isPageGenerated = true;
                             generatePageForEmpiricTherapyPresentation(pContext, pNode as BDNode);
                             break;
@@ -293,16 +317,8 @@ namespace BDEditor.Classes
                             generatePageForAntibioticsStepdown(pContext, pNode as BDNode);
                             isPageGenerated = true;
                             break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation17_Pneumonia:
                             generatePageForEmpiricTherapyOfPneumonia(pContext, pNode as BDNode);
-                            isPageGenerated = true;
-                            break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation15_Pneumonia:
-                            generatePageForEmpiricTherapyOfCultureDirected(pContext, pNode as BDNode);
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
@@ -329,7 +345,6 @@ namespace BDEditor.Classes
 
                 case BDConstants.BDNodeType.BDChapter:
                 case BDConstants.BDNodeType.BDMicroorganism:
-                case BDConstants.BDNodeType.BDPathogenGroup:
                 case BDConstants.BDNodeType.BDSubsection:
                 case BDConstants.BDNodeType.BDTableCell:
                 case BDConstants.BDNodeType.BDTableRow:
@@ -611,7 +626,7 @@ namespace BDEditor.Classes
                                     {
                                         BDTableRow row = child as BDTableRow;
                                         if (row != null)
-                                            bodyHTML.Append(buildTableRowHtml(pContext, row, footerList, true));
+                                            bodyHTML.Append(buildTableRowHtml(pContext, row, false, footerList, true));
                                     }
                                     bodyHTML.Append(@"</table>");
                                 }
@@ -643,7 +658,7 @@ namespace BDEditor.Classes
                                                 {
                                                     BDTableRow row = child as BDTableRow;
                                                     if (row != null)
-                                                        bodyHTML.Append(buildTableRowHtml(pContext, row, footerList, true));
+                                                        bodyHTML.Append(buildTableRowHtml(pContext, row, false, footerList, true));
                                                 }
                                                 else
                                                 {
@@ -655,7 +670,7 @@ namespace BDEditor.Classes
                                                         if (sectionRow.NodeType == BDConstants.BDNodeType.BDTableRow)
                                                         {
                                                             BDTableRow row = sectionRow as BDTableRow;
-                                                            bodyHTML.Append(buildTableRowHtml(pContext, row, footerList, true));
+                                                            bodyHTML.Append(buildTableRowHtml(pContext, row, false, footerList, true));
                                                         }
                                                     }
                                                 }
@@ -804,7 +819,7 @@ namespace BDEditor.Classes
                     {
                         BDTableRow row = node as BDTableRow;
                         if (row != null)
-                            bodyHTML.Append(buildTableRowHtml(pContext, row, footerList, true));
+                            bodyHTML.Append(buildTableRowHtml(pContext, row, false, footerList, true));
                     }
                     else if (node.NodeType == BDConstants.BDNodeType.BDTableSection)
                     {
@@ -822,14 +837,14 @@ namespace BDEditor.Classes
                                         bodyHTML.AppendFormat(@"<tr><td colspan = 3><nbsp><nbsp>{0}<td></tr>", sectionChild.Name);
                                         List<BDTableRow> rows = BDTableRow.RetrieveTableRowsForParentId(pContext, sectionChild.Uuid);
                                         foreach (BDTableRow row in rows)
-                                            bodyHTML.Append(buildTableRowHtml(pContext, row, footerList, true));
+                                            bodyHTML.Append(buildTableRowHtml(pContext, row, false, footerList, true));
                                     }
                                 }
                                 else if (sectionChild.NodeType == BDConstants.BDNodeType.BDTableRow)
                                 {
                                     BDTableRow row = sectionChild as BDTableRow;
                                     if (row != null)
-                                        bodyHTML.Append(buildTableRowHtml(pContext, row, footerList, true));
+                                        bodyHTML.Append(buildTableRowHtml(pContext, row, false, footerList, true));
                                 }
                             }
                         }
@@ -892,7 +907,7 @@ namespace BDEditor.Classes
                         {
                             BDTableRow row = node as BDTableRow;
                             if (row != null)
-                                bodyHTML.Append(buildTableRowHtml(pContext, row, footerList, true));
+                                bodyHTML.Append(buildTableRowHtml(pContext, row, false, footerList, true));
                         }
                         else if (node.NodeType == BDConstants.BDNodeType.BDTableSection)
                         {
@@ -910,14 +925,14 @@ namespace BDEditor.Classes
                                             bodyHTML.AppendFormat(@"<tr><td colspan = 5>{0}<td></tr>", sectionChild.Name);
                                             List<BDTableRow> rows = BDTableRow.RetrieveTableRowsForParentId(pContext, sectionChild.Uuid);
                                             foreach (BDTableRow row in rows)
-                                                bodyHTML.Append(buildTableRowHtml(pContext, row, footerList, true));
+                                                bodyHTML.Append(buildTableRowHtml(pContext, row, false, footerList, true));
                                         }
                                     }
                                     else if (sectionChild.NodeType == BDConstants.BDNodeType.BDTableRow)
                                     {
                                         BDTableRow row = sectionChild as BDTableRow;
                                         if (row != null)
-                                            bodyHTML.Append(buildTableRowHtml(pContext, row, footerList, false));
+                                            bodyHTML.Append(buildTableRowHtml(pContext, row, false, footerList, false));
                                     }
                                 }
                             }
@@ -940,14 +955,14 @@ namespace BDEditor.Classes
                                             bodyHTML.AppendFormat(@"<tr><td colspan = 5>{0}<td></tr>", subsectionChild.Name);
                                             List<BDTableRow> rows = BDTableRow.RetrieveTableRowsForParentId(pContext, subsectionChild.Uuid);
                                             foreach (BDTableRow row in rows)
-                                                bodyHTML.Append(buildTableRowHtml(pContext, row, footerList, true));
+                                                bodyHTML.Append(buildTableRowHtml(pContext, row, false, footerList, true));
                                         }
                                     }
                                     else if (subsectionChild.NodeType == BDConstants.BDNodeType.BDTableRow)
                                     {
                                         BDTableRow row = subsectionChild as BDTableRow;
                                         if (row != null)
-                                            bodyHTML.Append(buildTableRowHtml(pContext, row, footerList, false));
+                                            bodyHTML.Append(buildTableRowHtml(pContext, row, false, footerList, false));
                                     }
                                 }
                             }
@@ -1107,7 +1122,7 @@ namespace BDEditor.Classes
                             {
                                 BDTableRow tableRow = row as BDTableRow;
                                 if (row != null)
-                                    bodyHTML.Append(buildTableRowHtml(pContext, tableRow, footerList, true));
+                                    bodyHTML.Append(buildTableRowHtml(pContext, tableRow, false, footerList, true));
                             }
                             bodyHTML.Append(@"</table>");
                         }
@@ -1374,7 +1389,7 @@ namespace BDEditor.Classes
         private void generatePageForEmpiricTherapyOfParasitic(Entities pContext, BDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
-            if (pNode.NodeType != BDConstants.BDNodeType.BDCategory)
+            if (pNode.NodeType != BDConstants.BDNodeType.BDPathogen)
             {
 #if DEBUG
                 throw new InvalidOperationException();
@@ -1387,17 +1402,39 @@ namespace BDEditor.Classes
             StringBuilder footerHTML = new StringBuilder();
             List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
-            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
+            if (pNode.Name.Length > 0 && !pNode.Name.Contains(@"New ") )
+                bodyHTML.AppendFormat(@"<{0}>{1}</{2}>", "h1", pNode.Name, "h1");
+                
+            bodyHTML.Append(buildReferenceHtml(pContext, pNode));
 
-            // show child nodes in a table
+            // overview
+            string symptomsOverview = retrieveNoteTextForOverview(pContext, pNode.Uuid);
+            if (symptomsOverview.Length > EMPTY_PARAGRAPH)
+                bodyHTML.AppendFormat(@"<u><b>Symptoms</b></u><br>{0}",symptomsOverview);
+
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
-            if (childNodes.Count > 0)
+            foreach (IBDNode childNode in childNodes) 
             {
-                //Append HTML for child layout
-            }
+                if (childNode.NodeType == BDConstants.BDNodeType.BDTherapyGroup)
+                {
+                        bodyHTML.Append(buildTherapyGroupWithLinkedNotesHtml(pContext, childNode as BDTherapyGroup));
+                        bodyHTML.Append(buildTherapyGroupHTML(pContext, childNode as BDTherapyGroup));
+                }
+                else 
+                {
+                    string presentationOverview = retrieveNoteTextForOverview(pContext, childNode.Uuid);
+                    if (presentationOverview.Length > EMPTY_PARAGRAPH)
+                        bodyHTML.AppendFormat(@"<u><b>Comments</b></u><br>{0}", presentationOverview);
+                }
+            } 
             writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
         }
 
+        /// <summary>
+        /// Build page for CURB-65 - Pneumonia Severity of Illness Scoring System
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pNode"></param>
         private void generatePageForEmpiricTherapyOfPneumonia(Entities pContext, BDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
@@ -1415,20 +1452,42 @@ namespace BDEditor.Classes
             List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
             bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
+            bodyHTML.Append(@"<table>");
 
-            // show child nodes in a table
-            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
-            if (childNodes.Count > 0)
+            List<IBDNode> tables = BDFabrik.GetChildrenForParent(pContext, pNode);
+            foreach (IBDNode tbl in tables)
             {
-                //Append HTML for child layout
+                if (tbl.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I)
+                {
+                    List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, tbl);
+                    if (childNodes.Count > 0)
+                    {
+                        bodyHTML.Append(buildTableRowHtml(pContext, childNodes[0] as BDTableRow, true, footerList, false));
+                        for (int i = 1; i < childNodes.Count; i++)
+                            bodyHTML.Append(buildTableRowHtml(pContext, childNodes[i] as BDTableRow, false, footerList, false));
+                    }
+                }
+                else if (tbl.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II)
+                {
+                    List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
+                    foreach (IBDNode row in childNodes)
+                        bodyHTML.Append(buildTableRowHtml(pContext, row as BDTableRow, false, footerList, false));
+                }
             }
+            bodyHTML.Append(@"</table>");
+
             writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
         }
 
+        /// <summary>
+        /// For culture-proven pneumonia & meningitis
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pNode"></param>
         private void generatePageForEmpiricTherapyOfCultureDirected(Entities pContext, BDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
-            if (pNode.NodeType != BDConstants.BDNodeType.BDTable)
+            if (pNode.NodeType != BDConstants.BDNodeType.BDPathogen)
             {
 #if DEBUG
                 throw new InvalidOperationException();
@@ -1444,15 +1503,185 @@ namespace BDEditor.Classes
             bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
 
             // show child nodes in a table
-            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
-            if (childNodes.Count > 0)
+            List<IBDNode> resistances = BDFabrik.GetChildrenForParent(pContext, pNode);
+            foreach (IBDNode resistance in resistances)
             {
-                //Append HTML for child layout
+                bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, resistance as BDNode, "h2"));
+                List<IBDNode> therapyGroups = BDFabrik.GetChildrenForParent(pContext, resistance);
+                foreach(IBDNode therapyGroup in therapyGroups) 
+                {
+                    bodyHTML.Append(buildTherapyGroupWithLinkedNotesHtml(pContext, therapyGroup as BDTherapyGroup));
+                    bodyHTML.Append(buildTherapyGroupHTML(pContext, therapyGroup as BDTherapyGroup));
+                }
             }
             writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
         }
 
-#endregion
+        /// <summary>
+        /// Build page at PathogenGroup downward
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pNode"></param>
+        private void generatePageForEmpiricTherapyOfCultureDirectedPeritonitis(Entities pContext, BDNode pNode)
+        {
+            // in the case where this method is called from the wrong node type 
+            if (pNode.NodeType != BDConstants.BDNodeType.BDPathogenGroup)
+            {
+#if DEBUG
+                throw new InvalidOperationException();
+#else
+                return;
+#endif
+            }
+
+            StringBuilder bodyHTML = new StringBuilder();
+            StringBuilder footerHTML = new StringBuilder();
+            List<BDLinkedNote> footerList = new List<BDLinkedNote>();
+
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
+
+            List<IBDNode> therapyGroups = BDFabrik.GetChildrenForParent(pContext, pNode);
+            foreach (IBDNode therapyGroup in therapyGroups)
+            {
+                bodyHTML.Append(buildTherapyGroupWithLinkedNotesHtml(pContext, therapyGroup as BDTherapyGroup));
+                // custom-built - Therapy Group has 2 dosages and a custom header
+
+                List<BDTherapy> therapies = BDTherapy.RetrieveTherapiesForParentId(pContext, therapyGroup.Uuid);
+                if (therapies.Count > 0)
+                {
+                    bodyHTML.Append(@"<table>");
+
+                    therapiesHaveDosage = false;
+                    therapiesHaveDuration = false;
+                    StringBuilder therapyHTML = new StringBuilder();
+                    foreach (BDTherapy therapy in therapies)
+                    {
+                        therapyHTML.Append(buildTherapyWithTwoDosagesHtml(pContext, therapy));
+
+                        if (!string.IsNullOrEmpty(therapy.Name) && therapy.nameSameAsPrevious == false)
+                            previousTherapyName = therapy.Name;
+                        if (!string.IsNullOrEmpty(therapy.dosage))
+                        {
+                            if (therapy.dosageSameAsPrevious == false)
+                                previousTherapyDosage = therapy.dosage;
+                            therapiesHaveDosage = true;
+                        }
+                        if (!string.IsNullOrEmpty(therapy.duration))
+                        {
+                            if (therapy.dosageSameAsPrevious == false)
+                                previousTherapyDosage = therapy.dosage;
+                            therapiesHaveDuration = true;
+                        }
+                    }
+                    if (!therapiesHaveDosage && !therapiesHaveDuration)
+                        bodyHTML.Append(@"<tr><th>Recommended Empiric Therapy</th>");
+                    else
+                        bodyHTML.Append(@"<tr><th>Recommended<br>Empiric<br>Therapy</th>");
+                    if (therapiesHaveDosage)
+                    {
+                        bodyHTML.Append(@"<th>Intermittent Dosing<br>Dwell time at least 6h</th>");
+                        bodyHTML.Append(@"<th>Continuous dosing<br>(per L bag)</th>");
+                    }
+                    else
+                        bodyHTML.Append(@"<th></th>");
+                    if (therapiesHaveDuration)
+                        bodyHTML.Append(@"<th>Recommended<br>Duration</th>");
+                    else
+                        bodyHTML.Append(@"<th></th>");
+
+                    bodyHTML.Append(@"</tr>");
+
+                    bodyHTML.Append(therapyHTML);
+                    bodyHTML.Append(@"</table>");
+                }
+
+                
+            }
+            writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
+        }
+
+        private void generatePageForEmpiricTherapyOfCultureDirectedEndocarditis(Entities pContext, BDNode pNode)
+        {
+            // in the case where this method is called from the wrong node type 
+            if (pNode.NodeType != BDConstants.BDNodeType.BDPathogen)
+            {
+#if DEBUG
+                throw new InvalidOperationException();
+#else
+                return;
+#endif
+            }
+
+            StringBuilder bodyHTML = new StringBuilder();
+            StringBuilder footerHTML = new StringBuilder();
+            List<BDLinkedNote> footerList = new List<BDLinkedNote>();
+
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
+            List<IBDNode> resistances = BDFabrik.GetChildrenForParent(pContext, pNode);
+            foreach(IBDNode resistance in resistances)
+            {
+                bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, resistance as BDNode, "h2"));
+                List<IBDNode> therapyGroups = BDFabrik.GetChildrenForParent(pContext, resistance);
+                foreach (IBDNode therapyGroup in therapyGroups)
+                {
+                    bodyHTML.Append(buildTherapyGroupWithLinkedNotesHtml(pContext, therapyGroup as BDTherapyGroup));
+                    // custom-built - Therapy Group has 2 dosages and a custom header
+
+                    List<BDTherapy> therapies = BDTherapy.RetrieveTherapiesForParentId(pContext, therapyGroup.Uuid);
+                    if (therapies.Count > 0)
+                    {
+                        bodyHTML.Append(@"<table>");
+
+                        therapiesHaveDosage = false;
+                        therapiesHaveDuration = false;
+                        StringBuilder therapyHTML = new StringBuilder();
+                        foreach (BDTherapy therapy in therapies)
+                        {
+                            therapyHTML.Append(buildTherapyWithTwoDurationsHtml(pContext, therapy));
+
+                            if (!string.IsNullOrEmpty(therapy.Name) && therapy.nameSameAsPrevious == false)
+                                previousTherapyName = therapy.Name;
+                            if (!string.IsNullOrEmpty(therapy.dosage))
+                            {
+                                if (therapy.dosageSameAsPrevious == false)
+                                    previousTherapyDosage = therapy.dosage;
+                                therapiesHaveDosage = true;
+                            }
+                            if (!string.IsNullOrEmpty(therapy.duration))
+                            {
+                                if (therapy.dosageSameAsPrevious == false)
+                                    previousTherapyDosage = therapy.dosage;
+                                therapiesHaveDuration = true;
+                            }
+                        }
+                        if (!therapiesHaveDosage && !therapiesHaveDuration)
+                            bodyHTML.Append(@"<tr><th>Recommended Empiric Therapy</th>");
+                        else
+                            bodyHTML.Append(@"<tr><th>Recommended<br>Empiric<br>Therapy</th>");
+                        if (therapiesHaveDosage)
+                        {
+                            bodyHTML.Append(@"<th>Recommended<br>Dose</th>");
+                        }
+                        else
+                            bodyHTML.Append(@"<th></th>");
+                        if (therapiesHaveDuration)
+                            bodyHTML.Append(@"<th colspan=2>Recommended<br>Duration</th>");
+                        else
+                            bodyHTML.Append(@"<th></th>");
+
+                        bodyHTML.Append(@"</tr>");
+                        bodyHTML.Append(@"<tr><th /><th /><th>Native</th><th>Prosthetic</th></tr>");
+
+                        bodyHTML.Append(therapyHTML);
+                        bodyHTML.Append(@"</table>");
+                    }
+
+                }
+            }
+            writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footerList);
+        }
+
+        #endregion
 
         #region Standalone HTML pages
         private Guid generatePageForOverview(Entities pContext, IBDNode pNode)
@@ -1871,16 +2100,345 @@ namespace BDEditor.Classes
             switch (pTherapy.therapyJoinType)
             {
                 case (int)BDTherapy.TherapyJoinType.AndWithNext:
-                    therapyHtml.Append(@"<tr><td> + </td><td/><td></tr>");
+                    therapyHtml.Append(@"<tr><td> + </td><td /><td /></tr>");
                     break;
                 case (int)BDTherapy.TherapyJoinType.OrWithNext:
-                    therapyHtml.Append(@"<tr><td> or</td><td/><td></tr>");
+                    therapyHtml.Append(@"<tr><td> or</td><td /><td /></tr>");
                     break;
                 case (int)BDTherapy.TherapyJoinType.ThenWithNext:
-                    therapyHtml.Append(@"<tr><td> then</td><td/><td></tr>");
+                    therapyHtml.Append(@"<tr><td> then</td><td /><td /></tr>");
                     break;
                 case (int)BDTherapy.TherapyJoinType.WithOrWithoutWithNext:
-                    therapyHtml.Append(@"<tr><td> +/-</td><td/><td></tr>");
+                    therapyHtml.Append(@"<tr><td> +/-</td><td /><td /></tr>");
+                    break;
+                default:
+                    break;
+            }
+            return therapyHtml.ToString();
+        }
+
+        private string buildTherapyWithTwoDosagesHtml(Entities pContext, BDTherapy pTherapy)
+        {
+            StringBuilder therapyHtml = new StringBuilder();
+            string styleString = string.Empty;
+
+            // check join type - if none, then don't draw the bottom border on the table row
+            if (pTherapy.therapyJoinType == (int)BDTherapy.TherapyJoinType.None)
+                styleString = @"class=""d0""";
+            else
+                styleString = @"class=""d1""";
+
+            therapyHtml.AppendFormat(@"<tr {0}>", styleString);
+
+            if (pTherapy.leftBracket.Value == true)
+                therapyHtml.Append(@"&#91");
+
+            Guid nameNoteParentId = Guid.Empty;
+            string tName = string.Empty;
+
+            if (pTherapy.nameSameAsPrevious.Value == true)
+            {
+                nameNoteParentId = previousTherapyId;
+                tName = previousTherapyName;
+            }
+            else
+            {
+                nameNoteParentId = pTherapy.Uuid;
+                tName = pTherapy.Name;
+            }
+
+           List<BDLinkedNote> inlineName = ( retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.Inline));
+            List<BDLinkedNote> notesForName = new List<BDLinkedNote>();
+            notesForName.AddRange(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.MarkedComment));
+            notesForName.AddRange(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.UnmarkedComment));
+
+            therapyHtml.AppendFormat(@"<b>{0}</b>", tName);
+            foreach (BDLinkedNote note in inlineName)
+            {
+                if (note.documentText.Length > EMPTY_PARAGRAPH)
+                    therapyHtml.AppendFormat(@"<br>{0}", note.documentText);
+            }
+
+            if (pTherapy.rightBracket.Value == true)
+                therapyHtml.Append(@"&#93");
+
+            therapyHtml.Append(@"</td>");
+
+            // Dosage 1
+            Guid dosageNoteParentId = Guid.Empty;
+            string tDosage = string.Empty;
+
+            if (pTherapy.dosageSameAsPrevious.Value == true)
+            {
+                dosageNoteParentId = previousTherapyId;
+                tDosage = previousTherapyDosage;
+            }
+            else
+            {
+                dosageNoteParentId = pTherapy.Uuid;
+                tDosage = pTherapy.dosage;
+            }
+
+            List<BDLinkedNote> tDosageInline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.Inline);
+            List<BDLinkedNote> tDosageMarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.MarkedComment);
+            List<BDLinkedNote> tDosageUnmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.UnmarkedComment);
+
+            Guid tDosageNotePageGuid = generatePageForLinkedNotes(pContext, pTherapy.Uuid, BDConstants.BDNodeType.BDTherapy, tDosageInline, tDosageMarked, tDosageUnmarked);
+
+            if (tDosageNotePageGuid != Guid.Empty)
+            {
+                if (pTherapy.dosage.Length > 0)
+                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">{1}</a></td>", tDosageNotePageGuid, tDosage.Trim());
+                else
+                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See Comments.</a></td>", tDosageNotePageGuid);
+            }
+            else
+                therapyHtml.AppendFormat(@"<td>{0}</td>", tDosage.Trim());
+
+            // Dosage 2
+            Guid dosage2NoteParentId = Guid.Empty;
+            string tDosage1 = string.Empty;
+
+            if (pTherapy.dosage1SameAsPrevious.Value == true)
+            {
+                dosage2NoteParentId = previousTherapyId;
+                tDosage1 = previousTherapyDosage1;
+            }
+            else
+            {
+                dosage2NoteParentId = pTherapy.Uuid;
+                tDosage1 = pTherapy.dosage1;
+            }
+
+            List<BDLinkedNote> tDosage1Inline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE_1, BDConstants.LinkedNoteType.Inline);
+            List<BDLinkedNote> tDosage1Marked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE_1, BDConstants.LinkedNoteType.MarkedComment);
+            List<BDLinkedNote> tDosage1Unmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE_1, BDConstants.LinkedNoteType.UnmarkedComment);
+
+            Guid tDosage1NotePageGuid = generatePageForLinkedNotes(pContext, pTherapy.Uuid, BDConstants.BDNodeType.BDTherapy, tDosage1Inline, tDosage1Marked, tDosage1Unmarked);
+
+            if (tDosage1NotePageGuid != Guid.Empty)
+            {
+                if (pTherapy.dosage1.Length > 0)
+                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">{1}</a></td>", tDosage1NotePageGuid, tDosage1.Trim());
+                else
+                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See Comments.</a></td>", tDosage1NotePageGuid);
+            }
+            else
+                therapyHtml.AppendFormat(@"<td>{0}</td>", tDosage1.Trim());
+
+            // Duration
+            Guid durationNoteParentId = Guid.Empty;
+            string tDuration = string.Empty;
+
+            if (pTherapy.durationSameAsPrevious.Value == true)
+            {
+                durationNoteParentId = previousTherapyId;
+                tDuration = previousTherapyDuration;
+            }
+            else
+            {
+                durationNoteParentId = pTherapy.Uuid;
+                tDuration = pTherapy.duration;
+            }
+
+            List<BDLinkedNote> tDurationInline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pTherapy.Uuid, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.Inline);
+            List<BDLinkedNote> tDurationMarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pTherapy.Uuid, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.MarkedComment);
+            List<BDLinkedNote> tDurationUnmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pTherapy.Uuid, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.UnmarkedComment);
+
+            Guid tDurationNotePageGuid = generatePageForLinkedNotes(pContext, pTherapy.Uuid, BDConstants.BDNodeType.BDTherapy, tDurationInline, tDurationMarked, tDurationUnmarked);
+
+            if (tDurationNotePageGuid != Guid.Empty)
+            {
+                if (pTherapy.duration.Length > 0)
+                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">{1}</a></td>", tDurationNotePageGuid, tDuration.Trim());
+                else
+                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See Notes.</a></td>", tDurationNotePageGuid);
+            }
+            else
+                therapyHtml.AppendFormat(@"<td>{0}</td>", tDuration.Trim());
+
+            therapyHtml.Append(@"</tr>");
+
+            // check for conjunctions and add a row for any that are found
+            switch (pTherapy.therapyJoinType)
+            {
+                case (int)BDTherapy.TherapyJoinType.AndWithNext:
+                    therapyHtml.Append(@"<tr><td> + </td><td /><td /><td /></tr>");
+                    break;
+                case (int)BDTherapy.TherapyJoinType.OrWithNext:
+                    therapyHtml.Append(@"<tr><td> or</td><td /><td /><td /></tr>");
+                    break;
+                case (int)BDTherapy.TherapyJoinType.ThenWithNext:
+                    therapyHtml.Append(@"<tr><td> then</td><td /><td /><td /></tr>");
+                    break;
+                case (int)BDTherapy.TherapyJoinType.WithOrWithoutWithNext:
+                    therapyHtml.Append(@"<tr><td> +/-</td><td /><td /><td /></tr>");
+                    break;
+                default:
+                    break;
+            }
+            return therapyHtml.ToString();
+        }
+
+        private string buildTherapyWithTwoDurationsHtml(Entities pContext, BDTherapy pTherapy)
+        {
+            StringBuilder therapyHtml = new StringBuilder();
+            string styleString = string.Empty;
+
+            // check join type - if none, then don't draw the bottom border on the table row
+            if (pTherapy.therapyJoinType == (int)BDTherapy.TherapyJoinType.None)
+                styleString = @"class=""d0""";
+            else
+                styleString = @"class=""d1""";
+
+            therapyHtml.AppendFormat(@"<tr {0}><td>", styleString);
+
+            if (pTherapy.leftBracket.Value == true)
+                therapyHtml.Append(@"&#91");
+
+            Guid nameNoteParentId = Guid.Empty;
+            string tName = string.Empty;
+
+            if (pTherapy.nameSameAsPrevious.Value == true)
+            {
+                nameNoteParentId = previousTherapyId;
+                tName = previousTherapyName;
+            }
+            else
+            {
+                nameNoteParentId = pTherapy.Uuid;
+                tName = pTherapy.Name;
+            }
+
+            List<BDLinkedNote> tNameInline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.Inline);
+            List<BDLinkedNote> tNameMarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.MarkedComment);
+            List<BDLinkedNote> tNameUnmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.UnmarkedComment);
+
+            Guid tNameNotePageGuid = generatePageForLinkedNotes(pContext, pTherapy.Uuid, BDConstants.BDNodeType.BDTherapy, tNameInline, tNameMarked, tNameUnmarked);
+            if (tNameNotePageGuid != Guid.Empty)
+            {
+                if (tName.Length > 0)
+                    therapyHtml.AppendFormat(@"<a href=""{0}""><b>{1}</b></a>", tNameNotePageGuid, tName);
+                else
+                    therapyHtml.AppendFormat(@"<a href=""{0}""><b>See Notes.</b></a>", tNameNotePageGuid);
+            }
+            else
+                therapyHtml.AppendFormat(@"<b>{0}</b>", tName);
+
+            if (pTherapy.rightBracket.Value == true)
+                therapyHtml.Append(@"&#93");
+
+            therapyHtml.Append(@"</td>");
+
+            // Dosage
+            Guid dosageNoteParentId = Guid.Empty;
+            string tDosage = string.Empty;
+
+            if (pTherapy.dosageSameAsPrevious.Value == true)
+            {
+                dosageNoteParentId = previousTherapyId;
+                tDosage = previousTherapyDosage;
+            }
+            else
+            {
+                dosageNoteParentId = pTherapy.Uuid;
+                tDosage = pTherapy.dosage;
+            }
+
+            List<BDLinkedNote> tDosageInline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.Inline);
+            List<BDLinkedNote> tDosageMarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.MarkedComment);
+            List<BDLinkedNote> tDosageUnmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.UnmarkedComment);
+
+            Guid tDosageNotePageGuid = generatePageForLinkedNotes(pContext, pTherapy.Uuid, BDConstants.BDNodeType.BDTherapy, tDosageInline, tDosageMarked, tDosageUnmarked);
+
+            if (tDosageNotePageGuid != Guid.Empty)
+            {
+                if (pTherapy.dosage.Length > 0)
+                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">{1}</a></td>", tDosageNotePageGuid, tDosage.Trim());
+                else
+                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See Comments.</a></td>", tDosageNotePageGuid);
+            }
+            else
+                therapyHtml.AppendFormat(@"<td>{0}</td>", tDosage.Trim());
+
+            // Duration
+            Guid durationNoteParentId = Guid.Empty;
+            string tDuration = string.Empty;
+
+            if (pTherapy.durationSameAsPrevious.Value == true)
+            {
+                durationNoteParentId = previousTherapyId;
+                tDuration = previousTherapyDuration;
+            }
+            else
+            {
+                durationNoteParentId = pTherapy.Uuid;
+                tDuration = pTherapy.duration;
+            }
+
+            List<BDLinkedNote> tDurationInline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pTherapy.Uuid, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.Inline);
+            List<BDLinkedNote> tDurationMarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pTherapy.Uuid, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.MarkedComment);
+            List<BDLinkedNote> tDurationUnmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pTherapy.Uuid, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.UnmarkedComment);
+
+            Guid tDurationNotePageGuid = generatePageForLinkedNotes(pContext, pTherapy.Uuid, BDConstants.BDNodeType.BDTherapy, tDurationInline, tDurationMarked, tDurationUnmarked);
+
+            if (tDurationNotePageGuid != Guid.Empty)
+            {
+                if (pTherapy.duration.Length > 0)
+                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">{1}</a></td>", tDurationNotePageGuid, tDuration.Trim());
+                else
+                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See Notes.</a></td>", tDurationNotePageGuid);
+            }
+            else
+                therapyHtml.AppendFormat(@"<td>{0}</td>", tDuration.Trim());
+
+            // Duration
+            Guid duration1NoteParentId = Guid.Empty;
+            string tDuration1 = string.Empty;
+
+            if (pTherapy.duration1SameAsPrevious.Value == true)
+            {
+                duration1NoteParentId = previousTherapyId;
+                tDuration1 = previousTherapyDuration1;
+            }
+            else
+            {
+                duration1NoteParentId = pTherapy.Uuid;
+                tDuration1 = pTherapy.duration1;
+            }
+
+            List<BDLinkedNote> tDuration1Inline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pTherapy.Uuid, BDTherapy.PROPERTYNAME_DURATION_1, BDConstants.LinkedNoteType.Inline);
+            List<BDLinkedNote> tDuration1Marked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pTherapy.Uuid, BDTherapy.PROPERTYNAME_DURATION_1, BDConstants.LinkedNoteType.MarkedComment);
+            List<BDLinkedNote> tDuration1Unmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pTherapy.Uuid, BDTherapy.PROPERTYNAME_DURATION_1, BDConstants.LinkedNoteType.UnmarkedComment);
+
+            Guid tDuration1NotePageGuid = generatePageForLinkedNotes(pContext, pTherapy.Uuid, BDConstants.BDNodeType.BDTherapy, tDuration1Inline, tDuration1Marked, tDuration1Unmarked);
+
+            if (tDuration1NotePageGuid != Guid.Empty)
+            {
+                if (pTherapy.duration1.Length > 0)
+                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">{1}</a></td>", tDuration1NotePageGuid, tDuration1.Trim());
+                else
+                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See Notes.</a></td>", tDuration1NotePageGuid);
+            }
+            else
+                therapyHtml.AppendFormat(@"<td>{0}</td>", tDuration1.Trim());
+
+            therapyHtml.Append(@"</tr>");
+
+            // check for conjunctions and add a row for any that are found
+            switch (pTherapy.therapyJoinType)
+            {
+                case (int)BDTherapy.TherapyJoinType.AndWithNext:
+                    therapyHtml.Append(@"<tr><td> + </td><td /><td /><td /></tr>");
+                    break;
+                case (int)BDTherapy.TherapyJoinType.OrWithNext:
+                    therapyHtml.Append(@"<tr><td> or</td><td /><td /><td /></tr>");
+                    break;
+                case (int)BDTherapy.TherapyJoinType.ThenWithNext:
+                    therapyHtml.Append(@"<tr><td> then</td><td /><td /><td /></tr>");
+                    break;
+                case (int)BDTherapy.TherapyJoinType.WithOrWithoutWithNext:
+                    therapyHtml.Append(@"<tr><td> +/-</td><td /><td /><td /></tr>");
                     break;
                 default:
                     break;
@@ -2020,7 +2578,7 @@ namespace BDEditor.Classes
             return noteString.ToString();
         }
 
-        private string buildTableRowHtml(Entities pContext, BDTableRow pRow, List<BDLinkedNote> pFooterList, bool markFooterAtEnd)
+        private string buildTableRowHtml(Entities pContext, BDTableRow pRow, bool forceHeaderRow, List<BDLinkedNote> pFooterList, bool markFooterAtEnd)
         {
             StringBuilder tableRowHTML = new StringBuilder();
             string startCellTag = @"<td>";
@@ -2028,7 +2586,7 @@ namespace BDEditor.Classes
 
             if (pRow != null)
             {
-                if (rowIsHeaderRow(pRow))
+                if (rowIsHeaderRow(pRow) || forceHeaderRow)
                 {
                     startCellTag = @"<th>";
                     endCellTag = @"</th>";

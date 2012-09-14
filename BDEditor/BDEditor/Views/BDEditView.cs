@@ -24,7 +24,7 @@ namespace BDEditor.Views
         private bool isSeedDataLoadAvailable = false;
         private string seedDataFileName = string.Empty;
         // enable & show move button when data move is required
-        private bool moveButtonVisible = false;
+        private bool moveButtonVisible = true;
 
         public BDEditView()
         {
@@ -708,10 +708,10 @@ namespace BDEditor.Views
                     case BDConstants.BDNodeType.BDPathogen:
                         switch (node.LayoutVariant)
                         {
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation15_Pneumonia:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation05_CultureProvenPeritonitis:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
@@ -726,10 +726,8 @@ namespace BDEditor.Views
                     case BDConstants.BDNodeType.BDPathogenGroup:
                         switch (node.LayoutVariant)
                         {
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation15_Pneumonia:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation05_CultureProvenPeritonitis:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                                 childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
@@ -774,6 +772,7 @@ namespace BDEditor.Views
                         switch (node.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation17_Pneumonia:
                                 childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
@@ -868,11 +867,11 @@ namespace BDEditor.Views
                     case BDConstants.BDNodeType.BDTable:
                         switch (node.LayoutVariant)
                         {
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation05_Peritonitis:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation05_CultureProvenPeritonitis:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation07_Endocarditis:
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation06_Meningitis:
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation15_Pneumonia:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia:
                                 childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
@@ -1345,6 +1344,8 @@ namespace BDEditor.Views
             // These operations are CUSTOM, ** BY REQUEST ONLY **
 
             // the following are complete, but left as samples.
+
+            #region earlier
             /*
             // move Pharyngitis to Respiratory
             BDNode node = BDNode.RetrieveNodeWithId(dataContext, new Guid("a55e8e97-16cf-4074-ae98-26627bb25143"));
@@ -1385,7 +1386,7 @@ namespace BDEditor.Views
 
             // reset layoutVariant for Adults > Respiratory > Table xx Treatment of culture-proven pneumonia and all children 
             //IBDNode startNode = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("391bd1a4-daca-44e8-8fda-863f22128f1f"));
-            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, startNode, BDConstants.LayoutVariantType.TreatmentRecommendation15_Pneumonia, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, startNode, BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia, true);
 
             ////Gastroenteritis node: 8bb5b60e-68fd-4df2-bb77-f8f6e2f17c48 adult  d1c0f6ca-a501-4635-9241-aaeded1877be paediatric
             //// Change layoutVariant from TreatmentRecommendation01 (101) to TreatmentRecommendation01_Gastroenteritis (10141)
@@ -1514,6 +1515,7 @@ namespace BDEditor.Views
 
             //// move Adults > SSTI > Gas Gangrene to presentation level of Rapidly progressive SSTI
             //BDUtilities.MoveNodeToParentSibling(dataContext, Guid.Parse(@"e10f7eb9-66d5-4225-b01e-06a0acefe34c"), Guid.Parse(@"6e4c8849-ad12-4b5f-b5fc-5fc53288cfad"), "SINGLE PRESENTATION", BDConstants.BDNodeType.BDPresentation);
+            #endregion
 
             #region v.1.6.12
             // fetch the antimicrobial stepdown table
@@ -1716,9 +1718,62 @@ namespace BDEditor.Views
             BDLinkedNoteAssociation lna = BDLinkedNoteAssociation.GetLinkedNoteAssociationWithId(dataContext, Guid.Parse("7cbbf37c-f7bd-4d75-b4a3-abe70a206c8f"));
             lna.parentKeyPropertyName = "Duration";
             BDLinkedNoteAssociation.Save(dataContext, lna);
+
+            // Reset layout variant on Adults > SSTI > Cellulitis > Extremities
+            BDNode ext = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("d8e71b5c-2456-40b9-8886-d202d436f314"));
+            ext.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation14_CellulitisExtremities;
+            BDNode.Save(dataContext, ext);
+
             // Reset layout variant for Genital Ulcers nodes and children
             IBDNode startNode2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("96cbc7d0-c4ba-4593-a1d9-0e7908deeffd"));
             BDUtilities.ResetLayoutVariantWithChildren(dataContext, startNode2, BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers, true);
+
+            // create new layer under Treatment Recommendations for Pneumonia CURB table sections
+            BDNode respiratoryCategory = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("0b65f9e2-7436-4c22-9785-93be2b7e4f5a"));
+            BDNode curbSubcategory = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSubcategory);
+            curbSubcategory.SetParent(respiratoryCategory);
+            curbSubcategory.Name = "Table 3.  CURB-65 - Pneumonia Severity of Illness Scoring System";
+            curbSubcategory.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation17_Pneumonia;
+            BDNode partOne = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("9f5604d2-7c8c-4216-aba2-6a12fa3c58bd"));
+            curbSubcategory.DisplayOrder = partOne.DisplayOrder;
+            BDNode.Save(dataContext, curbSubcategory);
+
+            partOne.SetParent(curbSubcategory);
+            BDNode.Save(dataContext, partOne);
+
+            BDNode partTwo = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("22437404-f46a-46c3-badb-dfe50aa6afd3"));
+            partTwo.SetParent(curbSubcategory);
+            BDNode.Save(dataContext, partTwo);
+
+            // remove layer from hierarchy in CP Meningitis
+            BDNode mTable = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("fc25fee8-8ded-4d41-895d-b415bab02eb7"));
+            BDNode pGroup = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("d677df95-937a-41d9-b879-ef01af8ca99b"));
+            List<IBDNode> pathogens = BDFabrik.GetChildrenForParent(dataContext, pGroup);
+            foreach (IBDNode pathogen in pathogens)
+            {
+                BDNode node = pathogen as BDNode;
+                if (node != null)
+                {
+                    node.SetParent(mTable);
+                    BDNode.Save(dataContext, node);
+                }
+            }
+            BDNode.Delete(dataContext, pGroup, false);
+
+            // remove layer from CP Pneumonia
+            BDNode pTable = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("391bd1a4-daca-44e8-8fda-863f22128f1f"));
+            BDNode pGroup2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("a39027d0-758f-45db-bc5f-97f73b6081d0"));
+            List<IBDNode> nodes = BDFabrik.GetChildrenForParent(dataContext, pGroup2);
+            foreach (IBDNode pathogen in nodes)
+            {
+                BDNode node = pathogen as BDNode;
+                if (node != null)
+                {
+                    node.SetParent(pTable);
+                    BDNode.Save(dataContext, node);
+                }
+            }
+            BDNode.Delete(dataContext, pGroup2, false);
             #endregion
         }
     }

@@ -276,6 +276,10 @@ namespace BDEditor.Classes
                             isPageGenerated = true;
                             generatePageForAntibioticsDosingAndDailyCosts(pContext, pNode as BDNode);
                             break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation17_Pneumonia:
+                            generatePageForEmpiricTherapyOfPneumonia(pContext, pNode as BDNode);
+                            isPageGenerated = true;
+                            break;
                         default:
                             isPageGenerated = false;
                             break;
@@ -315,10 +319,6 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
                         case BDConstants.LayoutVariantType.Table_5_Column:
                             generatePageForAntibioticsStepdown(pContext, pNode as BDNode);
-                            isPageGenerated = true;
-                            break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation17_Pneumonia:
-                            generatePageForEmpiricTherapyOfPneumonia(pContext, pNode as BDNode);
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:

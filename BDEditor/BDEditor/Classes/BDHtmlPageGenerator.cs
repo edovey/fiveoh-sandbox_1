@@ -325,6 +325,10 @@ namespace BDEditor.Classes
                             generatepageForEmpiricTherapyOfGenitalUlcers(pContext, pNode as BDNode);
                             isPageGenerated = true;
                             break;
+                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
+                            // generate HTML
+                            isPageGenerated = true;
+                            break;
                         default:
                             isPageGenerated = false;
                             break;
@@ -2809,7 +2813,6 @@ namespace BDEditor.Classes
                     case BDConstants.LayoutVariantType.Antibiotics_Stepdown_HeaderRow:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass_HeaderRow:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_HeaderRow:
-                    case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity_HeaderRow:
                     case BDConstants.LayoutVariantType.Prophylaxis_PreOp_HeaderRow:
                     case BDConstants.LayoutVariantType.Table_2_Column_HeaderRow:
                     case BDConstants.LayoutVariantType.Table_3_Column_HeaderRow:

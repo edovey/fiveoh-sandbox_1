@@ -732,8 +732,6 @@ namespace BDEditor.Classes
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity_HeaderRow, BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity_ContentRow }));
-                            break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine:
                         case BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDConfiguredEntry, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -2039,11 +2037,6 @@ namespace BDEditor.Classes
                 case BDConstants.LayoutVariantType.Table_5_Column_ContentRow:
                 case BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases:
                     maxColumns = 5;
-                    break;
-                case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
-                case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity_ContentRow:
-                case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity_HeaderRow:
-                    maxColumns = 8;
                     break;
                 default:
                     maxColumns = 4;

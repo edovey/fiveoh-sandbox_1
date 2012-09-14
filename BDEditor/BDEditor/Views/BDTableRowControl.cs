@@ -333,7 +333,6 @@ namespace BDEditor.Views
                     case BDConstants.LayoutVariantType.Table_4_Column_HeaderRow:
                     case BDConstants.LayoutVariantType.Table_5_Column_HeaderRow:
                     case BDConstants.LayoutVariantType.Prophylaxis_PreOp_HeaderRow:
-                    case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity_HeaderRow:
                         this.BackColor = SystemColors.ControlDark;
                         break;
                     default:

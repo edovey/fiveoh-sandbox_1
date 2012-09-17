@@ -14,11 +14,11 @@ namespace BDEditor.Views
 {
     public partial class BDConfiguredEntryFieldControl : UserControl
     {
-        private Entities dataContext;
-        private BDConfiguredEntry configuredEntry;
-        private string fieldName;
-        private Guid scopeId;
-        private bool isUpdating = false;
+        protected Entities dataContext;
+        protected BDConfiguredEntry configuredEntry;
+        protected string fieldName;
+        protected Guid scopeId;
+        protected bool isUpdating = false;
 
         public int DisplayOrder { get; set; } 
 
@@ -83,7 +83,7 @@ namespace BDEditor.Views
             btnLinkedNote.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnLinkedNote.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
         }
 
-        public void RefreshLayout()
+        public virtual void RefreshLayout()
         {
             isUpdating = true;
             Populate();
@@ -113,7 +113,7 @@ namespace BDEditor.Views
             }
         }
 
-        public void Populate()
+        public virtual void Populate()
         {
             txtFieldData.Text = valueFromField();
         }
@@ -176,7 +176,7 @@ namespace BDEditor.Views
             return value;
         }
 
-        public bool Save()
+        public virtual bool Save()
         {
             bool result = true; // always true because this is only saving a specific field within the instance
             string value = txtFieldData.Text;

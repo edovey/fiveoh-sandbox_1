@@ -20,6 +20,8 @@ namespace BDEditor.Views
         protected Guid parentId;
         protected BDConstants.BDNodeType parentType = BDConstants.BDNodeType.None;
 
+        public Boolean showOverview { get; set; }
+
         protected List<BDConfiguredEntryFieldControl> fieldControlList = new List<BDConfiguredEntryFieldControl>();
 
         private BDConstants.BDNodeType defaultNodeType;
@@ -106,7 +108,15 @@ namespace BDEditor.Views
 
         private BDConfiguredEntryFieldControl addFieldEntryControl(BDConfiguredEntry pConfiguredEntry, string pPropertyName, int pTabIndex)
         {
-            BDConfiguredEntryFieldControl control = new BDConfiguredEntryFieldControl(dataContext, pConfiguredEntry, pPropertyName, scopeId.Value);
+            BDConfiguredEntryFieldControl control = null;
+            if (showOverview)
+            {
+                control = new BDConfiguredEntryFieldOverviewControl(dataContext, pConfiguredEntry, pPropertyName, scopeId.Value);
+            }
+            else
+            {
+                control = new BDConfiguredEntryFieldControl(dataContext, pConfiguredEntry, pPropertyName, scopeId.Value);
+            }
 
             if (null != control)
             {

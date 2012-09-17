@@ -148,7 +148,7 @@
             // 
             // btnLinkedNote
             // 
-            this.btnLinkedNote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLinkedNote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLinkedNote.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkedNote.Image")));
             this.btnLinkedNote.Location = new System.Drawing.Point(315, 18);
             this.btnLinkedNote.Name = "btnLinkedNote";
@@ -176,9 +176,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lblFieldLabel;
-        private System.Windows.Forms.TextBox txtFieldData;
-        private System.Windows.Forms.Button btnLinkedNote;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem bToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem geToolStripMenuItem;
@@ -188,5 +185,8 @@
         private System.Windows.Forms.ToolStripMenuItem µToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sOneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem trademarkToolStripMenuItem;
+        protected System.Windows.Forms.TextBox txtFieldData;
+        protected System.Windows.Forms.Label lblFieldLabel;
+        protected System.Windows.Forms.Button btnLinkedNote;
     }
 }

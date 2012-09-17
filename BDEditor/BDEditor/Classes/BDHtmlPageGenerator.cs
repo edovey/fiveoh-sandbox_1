@@ -316,11 +316,11 @@ namespace BDEditor.Classes
                             generatePageForAntibioticsNameListing(pContext, pNode as BDNode);
                             isPageGenerated = true;
                             break;
-                        case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
-                        case BDConstants.LayoutVariantType.Table_5_Column:
-                            generatePageForAntibioticsStepdown(pContext, pNode as BDNode);
-                            isPageGenerated = true;
-                            break;
+                        //case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
+                        //case BDConstants.LayoutVariantType.Table_5_Column:
+                        //    generatePageForAntibioticsStepdown(pContext, pNode as BDNode);
+                        //    isPageGenerated = true;
+                        //    break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
                             generatepageForEmpiricTherapyOfGenitalUlcers(pContext, pNode as BDNode);
                             isPageGenerated = true;
@@ -1442,7 +1442,7 @@ namespace BDEditor.Classes
         private void generatePageForEmpiricTherapyOfPneumonia(Entities pContext, BDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
-            if (pNode.NodeType != BDConstants.BDNodeType.BDTable)
+            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
             {
 #if DEBUG
                 throw new InvalidOperationException();
@@ -1463,19 +1463,33 @@ namespace BDEditor.Classes
             {
                 if (tbl.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I)
                 {
-                    List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, tbl);
-                    if (childNodes.Count > 0)
+                    List<IBDNode> tableSections = BDFabrik.GetChildrenForParent(pContext, tbl);
+                    foreach (IBDNode section in tableSections)
                     {
-                        bodyHTML.Append(buildTableRowHtml(pContext, childNodes[0] as BDTableRow, true, footerList, false));
-                        for (int i = 1; i < childNodes.Count; i++)
-                            bodyHTML.Append(buildTableRowHtml(pContext, childNodes[i] as BDTableRow, false, footerList, false));
+                        List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, section);
+                        if (childNodes.Count > 0)
+                        {
+                            bodyHTML.Append(buildTableRowHtml(pContext, childNodes[0] as BDTableRow, true, footerList, false));
+                            for (int i = 1; i < childNodes.Count; i++)
+                                bodyHTML.Append(buildTableRowHtml(pContext, childNodes[i] as BDTableRow, false, footerList, false));
+                        }
                     }
                 }
                 else if (tbl.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II)
                 {
+                    // table row OR table section here
                     List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
                     foreach (IBDNode row in childNodes)
-                        bodyHTML.Append(buildTableRowHtml(pContext, row as BDTableRow, false, footerList, false));
+                    {
+                        if (row.NodeType == BDConstants.BDNodeType.BDTableRow)
+                            bodyHTML.Append(buildTableRowHtml(pContext, row as BDTableRow, false, footerList, false));
+                        else
+                        {
+                            List<IBDNode> sectionRows = BDFabrik.GetChildrenForParent(pContext, row);
+                            foreach(IBDNode sectionRow in sectionRows)
+                                bodyHTML.Append(buildTableRowHtml(pContext, row as BDTableRow, false, footerList, false));
+                        }
+                    }
                 }
             }
             bodyHTML.Append(@"</table>");

@@ -231,6 +231,13 @@ namespace BDEditor.Classes
             Prophylaxis_IEDrugAndDosage = 304,
             [Description("Blood/Body Fluid Exposure")]
             Prophylaxis_FluidExposure = 305,
+            [Description("Blood/Body Fluid Exposure - Risk of Infection")]
+            Prophylaxis_FluidExposure_Risk = 3051,
+            [Description("Blood/Body Fluid Exposure - Followup Protocol I")]
+            Prophylaxis_FluidExposure_Followup_I = 3052,
+            [Description("Blood/Body Fluid Exposure - Followup Protocol II")]
+            Prophylaxis_FluidExposure_Followup_II = 3053,
+
             [Description("Sexual Assault")]
             Prophylaxis_SexualAssault = 306,
             [Description("Sexual Assault - Prophylaxis")]
@@ -285,10 +292,6 @@ namespace BDEditor.Classes
             Dental_Prophylaxis_DrugRegimens = 405,
             [Description("Dental Recommended Therapy Antimicrobial Activity")]
             Dental_RecommendedTherapy_AntimicrobialActivity = 406,
-            //[Description("Dental Recommended Therapy Antimicrobial Activity Header Row")]
-            //Dental_RecommendedTherapy_AntimicrobialActivity_HeaderRow = 4061,
-            //[Description("Dental Recommended Therapy Antimicrobial Activity Content Row")]
-            //Dental_RecommendedTherapy_AntimicrobialActivity_ContentRow = 4062,
             [Description("Dental Recommended Therapy Microorganisms")]
             Dental_RecommendedTherapy_Microorganisms = 407,
             [Description("Dental Recommended Therapy")]

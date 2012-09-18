@@ -139,6 +139,7 @@ namespace BDEditor.Views
             this.bdLinkedNoteControl1.Size = new System.Drawing.Size(870, 467);
             this.bdLinkedNoteControl1.TabIndex = 4;
             this.bdLinkedNoteControl1.AssignDataContext(dataContext);
+            this.bdLinkedNoteControl1.AssignContextPropertyName(BDPrecaution.PROPERTYNAME_DURATION);
 
             this.pnlLinkedNote.Controls.Add(this.bdLinkedNoteControl1);
         }
@@ -195,7 +196,7 @@ namespace BDEditor.Views
 
                 bdLinkedNoteControl1.AssignParentInfo(currentPrecaution.Uuid, currentPrecaution.NodeType);
                 bdLinkedNoteControl1.AssignScopeId(scopeId);
-                bdLinkedNoteControl1.AssignContextPropertyName(BDPrecaution.VIRTUALPROPERTYNAME_PRECAUTIONS);
+                bdLinkedNoteControl1.AssignContextPropertyName(BDPrecaution.PROPERTYNAME_DURATION);
 
                 List<BDLinkedNoteAssociation> associationList = BDLinkedNoteAssociation.GetLinkedNoteAssociationListForParentIdAndProperty(dataContext, currentPrecaution.Uuid, BDPrecaution.PROPERTYNAME_DURATION); ;
                 if ((null != associationList) && (associationList.Count > 0))

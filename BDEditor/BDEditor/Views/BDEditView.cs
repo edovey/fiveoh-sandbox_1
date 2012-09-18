@@ -1769,6 +1769,41 @@ namespace BDEditor.Views
             }
             BDNode.Delete(dataContext, pGroup2, false); */
             #endregion
+
+            #region v.1.6.16
+            BDNode xxtable = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("c77ee0f1-e2f8-4e18-82c5-b4ab0bc917cc"));
+            List<IBDNode> pgroups = BDFabrik.GetChildrenForParent(dataContext, xxtable);
+            foreach (IBDNode pathogenGroup in pgroups)
+            {
+                List<IBDNode> pathogens = BDFabrik.GetChildrenForParent(dataContext, pathogenGroup);
+                foreach (IBDNode pathogen in pathogens)
+                {
+                    List<IBDNode> pathogenResistances = BDFabrik.GetChildrenForParent(dataContext, pathogen);
+                    foreach(IBDNode pathogenResistance in pathogenResistances)
+                     {
+                        List<IBDNode> therapyGroups = BDFabrik.GetChildrenForParent(dataContext, pathogenResistance);
+                        foreach (IBDNode therapyGroup in therapyGroups)
+                        {
+                            List<IBDNode> therapies = BDFabrik.GetChildrenForParent(dataContext, therapyGroup);
+                            foreach (IBDNode therapy in therapies)
+                            {
+                                therapy.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics;
+                                BDFabrik.SaveNode(dataContext, therapy);
+                            }
+                            therapyGroup.Name = string.Empty;
+                            therapyGroup.SetParent(xxtable);
+                            therapyGroup.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics;
+                            BDFabrik.SaveNode(dataContext, therapyGroup);
+                        }
+                        BDFabrik.DeleteNode(dataContext, pathogenResistance);
+                    }
+                    BDFabrik.DeleteNode(dataContext, pathogen);
+                }
+                BDFabrik.DeleteNode(dataContext, pathogenGroup);
+            }
+            xxtable.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics;
+            BDFabrik.SaveNode(dataContext, xxtable);
+            #endregion
         }
     }
 }

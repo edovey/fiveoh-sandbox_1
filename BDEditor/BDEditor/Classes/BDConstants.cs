@@ -151,6 +151,8 @@ namespace BDEditor.Classes
             TreatmentRecommendation06_CultureProvenMeningitis = 107,  // table 5
             [Description("Treatment of Culture-Proven Endocarditis")]
             TreatmentRecommendation07_CultureProvenEndocarditis = 108, // table 6
+            [Description("Treatment of Culture-Proven Endocarditis:  Paediatric Doses")]
+            TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics = 120,
             [Description("Treatment of Opthalmic Infections")]
             TreatmentRecommendation08_Opthalmic = 109,
             [Description("Treatment of Enteric Parasitic Infections I")]

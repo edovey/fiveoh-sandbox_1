@@ -718,8 +718,26 @@ namespace BDEditor.Views
                     toolTip1.SetToolTip(tbDuration, "Adult Route/Duration");
                     toolTip1.SetToolTip(tbDuration1, "Paediatric Route/Duration");
                     break;
+                case BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics:
+                    // remove dosage1, dosage2, duration, duration1, duration2
+                    pnlMain.Controls.Remove(tbDosage1);
+                    pnlMain.Controls.Remove(chkPreviousDose1);
+                    pnlMain.Controls.Remove(btnDosage1Link);
+                    pnlMain.Controls.Remove(tbDosage2);
+                    pnlMain.Controls.Remove(chkPreviousDose2);
+                    pnlMain.Controls.Remove(btnDosage2Link);
+                    pnlMain.Controls.Remove(tbDuration);
+                    pnlMain.Controls.Remove(chkPreviousDuration);
+                    pnlMain.Controls.Remove(btnDurationLink);
+                    pnlMain.Controls.Remove(tbDuration1);
+                    pnlMain.Controls.Remove(chkPreviousDuration1);
+                    pnlMain.Controls.Remove(btnDuration1Link);
+                    pnlMain.Controls.Remove(chkPreviousDuration2);
+                    pnlMain.Controls.Remove(btnDuration2Link);
+                    pnlMain.Controls.Remove(tbDuration2);
+                    break;
                 case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
-                    // remove dosage2, duration1, duration2
+                    // remove dosage2, duration, duration1, duration2
                     pnlMain.Controls.Remove(tbDuration);
                     pnlMain.Controls.Remove(chkPreviousDuration);
                     pnlMain.Controls.Remove(btnDurationLink);

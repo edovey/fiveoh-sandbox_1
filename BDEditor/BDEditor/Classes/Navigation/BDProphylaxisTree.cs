@@ -30,6 +30,7 @@ namespace BDEditor.Classes.Navigation
                 case BDConstants.BDNodeType.BDTopic:
                 case BDConstants.BDNodeType.BDSurgeryGroup:
                 case BDConstants.BDNodeType.BDMicroorganismGroup:
+                case BDConstants.BDNodeType.BDTable:
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Prophylaxis:
@@ -38,6 +39,8 @@ namespace BDEditor.Classes.Navigation
                         case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                         case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure:
+                        case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure_Followup_I:
+                        case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure_Followup_II:
                         case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
                         case BDConstants.LayoutVariantType.Prophylaxis_IERecommendation:
                         case BDConstants.LayoutVariantType.Prophylaxis_Immunization:
@@ -65,24 +68,6 @@ namespace BDEditor.Classes.Navigation
                             break;
                     }
                     break;
-                    /*                case BDConstants.BDNodeType.BDPathogenGroup:
-                                        switch (pNode.LayoutVariant)
-                                        {
-                                            case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
-                                                foreach (IBDNode childNode in childList)
-                                                {
-                                                    string name = childNode.Name;
-                                                    if ((null == name) || (name.Length == 0))
-                                                    {
-                                                        name = childNode.Uuid.ToString();
-                                                    }
-                                                    TreeNode childTreeNode = new TreeNode(name);
-                                                    childTreeNode.Tag = childNode;
-                                                    branchTreeNode.Nodes.Add(childTreeNode);
-                                                }
-                                                break; 
-                                        }
-                    break;*/
             }
 
             return branchTreeNode;

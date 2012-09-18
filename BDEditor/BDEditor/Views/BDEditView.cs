@@ -24,7 +24,7 @@ namespace BDEditor.Views
         private bool isSeedDataLoadAvailable = false;
         private string seedDataFileName = string.Empty;
         // enable & show move button when data move is required
-        private bool moveButtonVisible = true;
+        private bool moveButtonVisible = false;
 
         public BDEditView()
         {
@@ -479,9 +479,6 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Dental:
                             case BDConstants.LayoutVariantType.Dental_Prophylaxis:
                             case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
-                            case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis:
-                            case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
-                            case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
                             case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
                             case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
                             case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
@@ -560,7 +557,6 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
                             case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
                             case BDConstants.LayoutVariantType.Dental_Prophylaxis:
-                            case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
                             case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
                             case BDConstants.LayoutVariantType.Prophylaxis_IERecommendation:
                             case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
@@ -604,8 +600,6 @@ namespace BDEditor.Views
                                 }
                                 break;
                             case BDConstants.LayoutVariantType.Dental:
-                            case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis:
-                            case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
                             case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
                             case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
                             case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
@@ -1712,8 +1706,8 @@ namespace BDEditor.Views
             st6.LayoutVariant = o1.LayoutVariant;
             BDNode.Save(dataContext, st6);   */
             #endregion
-
             #region v.1.6.14
+            /*
             // fix incorrect assignment of property 
             BDLinkedNoteAssociation lna = BDLinkedNoteAssociation.GetLinkedNoteAssociationWithId(dataContext, Guid.Parse("7cbbf37c-f7bd-4d75-b4a3-abe70a206c8f"));
             lna.parentKeyPropertyName = "Duration";
@@ -1773,7 +1767,7 @@ namespace BDEditor.Views
                     BDNode.Save(dataContext, node);
                 }
             }
-            BDNode.Delete(dataContext, pGroup2, false);
+            BDNode.Delete(dataContext, pGroup2, false); */
             #endregion
         }
     }

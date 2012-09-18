@@ -198,7 +198,6 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
                             case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
                             case BDConstants.LayoutVariantType.Dental_Prophylaxis:
-                            case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
                             case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
                             case BDConstants.LayoutVariantType.Prophylaxis_IERecommendation:
                             case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
@@ -322,10 +321,8 @@ namespace BDEditor.Views
                                 break;
 
                             case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
-                            case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
                             case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                             case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
-                            case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
                             case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
                             case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
                             case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
@@ -418,7 +415,6 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
                             case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
                             case BDConstants.LayoutVariantType.Prophylaxis_Immunization_VaccineDetail:
-                            case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis:
                                 if (!pInterrogateOnly)
                                 {
                                     showChildControls = true;

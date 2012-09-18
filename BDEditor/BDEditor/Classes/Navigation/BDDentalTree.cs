@@ -33,9 +33,6 @@ namespace BDEditor.Classes.Navigation
                          case BDConstants.LayoutVariantType.Dental:
                          case BDConstants.LayoutVariantType.Dental_Prophylaxis:
                          case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
-                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis:
-                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
-                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
                          case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
                          case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
                          case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:

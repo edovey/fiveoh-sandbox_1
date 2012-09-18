@@ -688,11 +688,7 @@ namespace BDEditor.Views
                 case BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia:
                 case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                 case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
-                case BDConstants.LayoutVariantType.Dental_Prophylaxis:
-                case BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen:
-                case BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics:
                 case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
-                case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
                 case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
                 case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
                     // remove dosage1, dosage2, duration1, duration2
@@ -708,6 +704,19 @@ namespace BDEditor.Views
                     pnlMain.Controls.Remove(tbDuration2);
                     pnlMain.Controls.Remove(chkPreviousDuration2);
                     pnlMain.Controls.Remove(btnDuration2Link);
+                    break;
+                case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
+                    // remove dosage2, duration2
+                    pnlMain.Controls.Remove(tbDosage2);
+                    pnlMain.Controls.Remove(chkPreviousDose2);
+                    pnlMain.Controls.Remove(btnDosage2Link);
+                    pnlMain.Controls.Remove(tbDuration2);
+                    pnlMain.Controls.Remove(chkPreviousDuration2);
+                    pnlMain.Controls.Remove(btnDuration1Link);
+                    toolTip1.SetToolTip(tbDosage, "Adult Dose");
+                    toolTip1.SetToolTip(tbDosage1, "Paediatric Dose");
+                    toolTip1.SetToolTip(tbDuration, "Adult Route/Duration");
+                    toolTip1.SetToolTip(tbDuration1, "Paediatric Route/Duration");
                     break;
                 case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
                     // remove dosage2, duration1, duration2
@@ -749,6 +758,23 @@ namespace BDEditor.Views
                     pnlMain.Controls.Remove(tbDuration2);
                     pnlMain.Controls.Remove(chkPreviousDuration2);
                     pnlMain.Controls.Remove(btnDuration2Link);
+                    break;
+                case BDConstants.LayoutVariantType.Dental_Prophylaxis:
+                    // remove dosage2, duration, duration1, duration2
+                    pnlMain.Controls.Remove(tbDosage2);
+                    pnlMain.Controls.Remove(chkPreviousDose2);
+                    pnlMain.Controls.Remove(btnDosage2Link);
+                    pnlMain.Controls.Remove(tbDuration);
+                    pnlMain.Controls.Remove(chkPreviousDuration);
+                    pnlMain.Controls.Remove(btnDurationLink);
+                    pnlMain.Controls.Remove(tbDuration1);
+                    pnlMain.Controls.Remove(chkPreviousDuration1);
+                    pnlMain.Controls.Remove(btnDuration1Link);
+                    pnlMain.Controls.Remove(tbDuration2);
+                    pnlMain.Controls.Remove(chkPreviousDuration2);
+                    pnlMain.Controls.Remove(btnDuration2Link);
+                    toolTip1.SetToolTip(tbDosage, "Adult Dose");
+                    toolTip1.SetToolTip(tbDosage1, "Paediatric Dose");
                     break;
                 case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:

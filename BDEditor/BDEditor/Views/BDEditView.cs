@@ -24,7 +24,7 @@ namespace BDEditor.Views
         private bool isSeedDataLoadAvailable = false;
         private string seedDataFileName = string.Empty;
         // enable & show move button when data move is required
-        private bool moveButtonVisible = true;
+        private bool moveButtonVisible = false;
 
         public BDEditView()
         {
@@ -1771,6 +1771,7 @@ namespace BDEditor.Views
             #endregion
 
             #region v.1.6.16
+            /*
             // Set new layoutvariant in table TR > Paediatrics > Repiratory
             BDNode xxtable = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("c77ee0f1-e2f8-4e18-82c5-b4ab0bc917cc"));
             List<IBDNode> pgroups = BDFabrik.GetChildrenForParent(dataContext, xxtable);
@@ -1833,7 +1834,7 @@ namespace BDEditor.Views
             }
             BDTableCell cell3 = BDTableCell.RetrieveWithId(dataContext, Guid.Parse("d829e699-13a2-49e9-a2a8-3701c0784920"));
             BDTableCell.Delete(dataContext, cell3, false);
-
+            */
 
             #endregion
         }

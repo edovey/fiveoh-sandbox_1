@@ -705,6 +705,24 @@ namespace BDEditor.Views
                     pnlMain.Controls.Remove(chkPreviousDuration2);
                     pnlMain.Controls.Remove(btnDuration2Link);
                     break;
+                case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Adult:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Paediatric:
+                    // remove dosage2, duration, duration1, duration2
+                    pnlMain.Controls.Remove(tbDosage2);
+                    pnlMain.Controls.Remove(chkPreviousDose2);
+                    pnlMain.Controls.Remove(btnDosage2Link);
+                    pnlMain.Controls.Remove(tbDuration);
+                    pnlMain.Controls.Remove(chkPreviousDuration);
+                    pnlMain.Controls.Remove(btnDurationLink);
+                    pnlMain.Controls.Remove(tbDuration1);
+                    pnlMain.Controls.Remove(chkPreviousDuration1);
+                    pnlMain.Controls.Remove(btnDuration1Link);
+                    pnlMain.Controls.Remove(chkPreviousDuration2);
+                    pnlMain.Controls.Remove(btnDuration2Link);
+                    pnlMain.Controls.Remove(tbDuration2);
+                    toolTip1.SetToolTip(tbDosage, "Intermittent Dose");
+                    toolTip1.SetToolTip(tbDosage1, "Continuous Dose (per L bag)");
+                    break;
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
                     // remove dosage2, duration2
                     pnlMain.Controls.Remove(tbDosage2);

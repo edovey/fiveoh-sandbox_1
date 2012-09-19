@@ -24,7 +24,7 @@ namespace BDEditor.Views
         private bool isSeedDataLoadAvailable = false;
         private string seedDataFileName = string.Empty;
         // enable & show move button when data move is required
-        private bool moveButtonVisible = false;
+        private bool moveButtonVisible = true;
 
         public BDEditView()
         {
@@ -1771,6 +1771,7 @@ namespace BDEditor.Views
             #endregion
 
             #region v.1.6.16
+            // Set new layoutvariant in table TR > Paediatrics > Repiratory
             BDNode xxtable = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("c77ee0f1-e2f8-4e18-82c5-b4ab0bc917cc"));
             List<IBDNode> pgroups = BDFabrik.GetChildrenForParent(dataContext, xxtable);
             foreach (IBDNode pathogenGroup in pgroups)
@@ -1803,6 +1804,37 @@ namespace BDEditor.Views
             }
             xxtable.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics;
             BDFabrik.SaveNode(dataContext, xxtable);
+
+            // Delete the 'indicated' and 'not indicated' topics from Antibiotic Guidelines > Antimicrobials 
+            BDNode category = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("1997c207-d754-4907-8e32-6722f7578641"));
+            List<IBDNode> antimicrobials = BDFabrik.GetChildrenForParent(dataContext, category);
+            foreach (IBDNode antimicrobial in antimicrobials)
+            {
+                List<IBDNode> topics = BDFabrik.GetChildrenForParent(dataContext, antimicrobial);
+                foreach (IBDNode topic in topics)
+                {
+                    if (topic.Name == "Indicated" || topic.Name == "Not Indicated")
+                        BDFabrik.DeleteNode(dataContext, topic);
+                }
+            }
+
+            BDNode pdAdults = BDNode.RetrieveNodeWithId(dataContext,Guid.Parse("7366ae8d-03e9-4e3e-bf7d-8037e544deb4"));
+            BDNode pdPeds = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("267febcb-f1da-431c-94df-1c612a6e7d3e"));
+            BDUtilities.ResetLayoutVariantWithChildren(dataContext, pdAdults, BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Adult, true);
+            BDUtilities.ResetLayoutVariantWithChildren(dataContext, pdPeds, BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Paediatric, true);
+
+            // Reset layout variants for Antimicrobial generic/trade name listing
+            BDNode table = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("13acf8a8-6f81-4ba1-a5ca-620dc978596b"));
+            List<BDNode> tableSections = BDNode.RetrieveNodesForParentIdAndChildNodeType(dataContext, table.Uuid, BDConstants.BDNodeType.BDTableSection);
+            foreach (BDNode section in tableSections)
+            {
+                section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_NameListing;
+                BDFabrik.SaveNode(dataContext, section);
+            }
+            BDTableCell cell3 = BDTableCell.RetrieveWithId(dataContext, Guid.Parse("d829e699-13a2-49e9-a2a8-3701c0784920"));
+            BDTableCell.Delete(dataContext, cell3, false);
+
+
             #endregion
         }
     }

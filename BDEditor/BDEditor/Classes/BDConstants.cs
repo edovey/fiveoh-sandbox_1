@@ -176,6 +176,10 @@ namespace BDEditor.Classes
             TreatmentRecommendation16_CultureDirected = 118,
             [Description("Severity of Illness - Pneumonia")]
             TreatmentRecommendation17_Pneumonia = 119,
+            [Description("Treatment of PD Peritonitis - Adult")]
+            TreatmentRecommendation19_Peritonitis_PD_Adult = 121,
+            [Description("Treatment of PD Peritonitis - Paediatric")]
+            TreatmentRecommendation19_Peritonitis_PD_Paediatric = 122,
 
             [Description("Antibiotics")]
             Antibiotics = 200, 

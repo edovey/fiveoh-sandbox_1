@@ -99,6 +99,8 @@ namespace BDEditor.DataModel
                     pContext.SaveChanges();
                 }
             }
+            //if (pNode.Name == string.Empty)
+            //    throw new NotSupportedException();
         }
 
         /// <summary>

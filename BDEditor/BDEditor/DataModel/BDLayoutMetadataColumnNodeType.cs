@@ -51,17 +51,38 @@ namespace BDEditor.DataModel
             return existingEntryList;
         }
 
-        static public BDLayoutMetadataColumnNodeType Retrieve(Entities pDataContext, BDConstants.LayoutVariantType pLayoutVariant, BDConstants.BDNodeType pNodeType, string pPropertyName)
+        /// <summary>
+        /// Retrieve list of entries
+        /// </summary>
+        /// <param name="pDataContext"></param>
+        /// <param name="pLayoutVariant"></param>
+        /// <param name="pNodeType"></param>
+        /// <param name="pPropertyName"></param>
+        /// <returns></returns>
+        static public List<BDLayoutMetadataColumnNodeType> RetrieveList(Entities pDataContext, BDConstants.LayoutVariantType pLayoutVariant, BDConstants.BDNodeType pNodeType, string pPropertyName)
         {
-            BDLayoutMetadataColumnNodeType entry = null;
-
             IQueryable<BDLayoutMetadataColumnNodeType> existingEntries = null;
 
             existingEntries = (from dbEntry in pDataContext.BDLayoutMetadataColumnNodeTypes
                                where (dbEntry.layoutVariant == (int)pLayoutVariant) && (dbEntry.nodeType == (int)pNodeType) && (dbEntry.propertyName == pPropertyName)
                                orderby dbEntry.orderOfPrecedence
                                select dbEntry);
+            return existingEntries.ToList<BDLayoutMetadataColumnNodeType>(); ;
+        }
 
+        /// <summary>
+        /// Retrieve single entry 
+        /// </summary>
+        /// <param name="pDataContext"></param>
+        /// <param name="pLayoutVariant"></param>
+        /// <param name="pNodeType"></param>
+        /// <param name="pPropertyName"></param>
+        /// <returns></returns>
+        static public BDLayoutMetadataColumnNodeType Retrieve(Entities pDataContext, BDConstants.LayoutVariantType pLayoutVariant, BDConstants.BDNodeType pNodeType, string pPropertyName)
+        {
+            BDLayoutMetadataColumnNodeType entry = null;
+
+            List<BDLayoutMetadataColumnNodeType> existingEntries = RetrieveList(pDataContext, pLayoutVariant, pNodeType, pPropertyName);
             entry = existingEntries.FirstOrDefault<BDLayoutMetadataColumnNodeType>();
             return entry;
         }

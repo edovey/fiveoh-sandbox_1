@@ -24,7 +24,7 @@ namespace BDEditor.Views
         private bool isSeedDataLoadAvailable = false;
         private string seedDataFileName = string.Empty;
         // enable & show move button when data move is required
-        private bool moveButtonVisible = true;
+        private bool moveButtonVisible = false;
 
         public BDEditView()
         {
@@ -1841,7 +1841,7 @@ namespace BDEditor.Views
             #endregion
 
             #region v.1.6.18
-            
+            /*
             // add layout variants for subset of Antibiotics Dosing Guide and Daily costs:  split to peds and adults
             // needed for unique titles in output
             BDNode adultSubcategory = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("66a8dd87-98a7-4886-8d91-ab0d1e5457d8"));
@@ -1869,7 +1869,6 @@ namespace BDEditor.Views
             
             // create footnote for Blood/Body Fluid Exposure
             BDUtilities.CreateFootnoteForLayoutColumn(dataContext, BDConstants.LayoutVariantType.Prophylaxis_FluidExposure_Followup_II, 3, "A non-responder is a person with inadequate response to vaccination (i.e anti-HBsAg <10IU/L)");
-             
 
             // create layout for Antibiotics Dosing guide & daily costs - Peds
             BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Paediatric, 0, "Antimicrobial",
@@ -1880,9 +1879,7 @@ namespace BDEditor.Views
             BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Paediatric, 2, "Cost ($)/Day",
                 BDConstants.BDNodeType.BDDosage, BDDosage.PROPERTYNAME_COST, 0, "Based on a 20kg child.");
             BDUtilities.CreateFootnoteForLayoutColumn(dataContext, BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Paediatric, 2, "Based on Alberta Health Drug Benefit List price, January 2006, or manufacturer's list price if drug not on AH DBL.  Prices in the hospital setting may be significantly different due to contract pricing.  Check with pharmacy for actual prices.  Does not include preparation, administration, supplies or serum level costs.");
-            
-            // create layout for Antibiotics Dosing guide & daily costs - Adults
-
+            */
             #endregion
         }
     }

@@ -42,6 +42,7 @@
             this.degreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.µToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sOneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.trademarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
@@ -67,7 +68,7 @@
             this.rtbAapRating = new System.Windows.Forms.RichTextBox();
             this.rtbRelativeDose = new System.Windows.Forms.RichTextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.trademarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkmarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlButton.SuspendLayout();
             this.pnlRtbP.SuspendLayout();
             this.contextMenuStripTextBox.SuspendLayout();
@@ -127,6 +128,7 @@
             this.µToolStripMenuItem,
             this.sOneToolStripMenuItem,
             this.trademarkToolStripMenuItem,
+            this.checkmarkToolStripMenuItem,
             this.toolStripMenuItem3,
             this.undoToolStripMenuItem,
             this.toolStripMenuItem4,
@@ -138,7 +140,7 @@
             this.selectAllToolStripMenuItem});
             this.contextMenuStripTextBox.Name = "contextMenuStrip1";
             this.contextMenuStripTextBox.ShowImageMargin = false;
-            this.contextMenuStripTextBox.Size = new System.Drawing.Size(128, 352);
+            this.contextMenuStripTextBox.Size = new System.Drawing.Size(128, 374);
             this.contextMenuStripTextBox.Text = "Insert Symbol";
             // 
             // bToolStripMenuItem
@@ -195,6 +197,14 @@
             this.sOneToolStripMenuItem.Text = "¹";
             this.sOneToolStripMenuItem.ToolTipText = "Insert ¹";
             this.sOneToolStripMenuItem.Click += new System.EventHandler(this.sOneToolStripMenuItem_Click);
+            // 
+            // trademarkToolStripMenuItem
+            // 
+            this.trademarkToolStripMenuItem.Name = "trademarkToolStripMenuItem";
+            this.trademarkToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.trademarkToolStripMenuItem.Text = "®";
+            this.trademarkToolStripMenuItem.ToolTipText = "Insert ®";
+            this.trademarkToolStripMenuItem.Click += new System.EventHandler(this.trademarkToolStripMenuItem_Click);
             // 
             // toolStripMenuItem3
             // 
@@ -391,13 +401,13 @@
             this.rtbRelativeDose.Text = "";
             this.rtbRelativeDose.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rtbRelativeDose_MouseDown);
             // 
-            // trademarkToolStripMenuItem
+            // checkmarkToolStripMenuItem
             // 
-            this.trademarkToolStripMenuItem.Name = "trademarkToolStripMenuItem";
-            this.trademarkToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
-            this.trademarkToolStripMenuItem.Text = "®";
-            this.trademarkToolStripMenuItem.ToolTipText = "Insert ®";
-            this.trademarkToolStripMenuItem.Click += new System.EventHandler(this.trademarkToolStripMenuItem_Click);
+            this.checkmarkToolStripMenuItem.Name = "checkmarkToolStripMenuItem";
+            this.checkmarkToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.checkmarkToolStripMenuItem.Text = "√";
+            this.checkmarkToolStripMenuItem.ToolTipText = "Insert √";
+            this.checkmarkToolStripMenuItem.Click += new System.EventHandler(this.checkmarkToolStripMenuItem_Click);
             // 
             // BDAntimicrobialRiskControl
             // 
@@ -461,5 +471,6 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ToolStripMenuItem sOneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem trademarkToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem checkmarkToolStripMenuItem;
     }
 }

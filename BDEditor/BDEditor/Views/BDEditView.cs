@@ -24,7 +24,7 @@ namespace BDEditor.Views
         private bool isSeedDataLoadAvailable = false;
         private string seedDataFileName = string.Empty;
         // enable & show move button when data move is required
-        private bool moveButtonVisible = false;
+        private bool moveButtonVisible = true;
 
         public BDEditView()
         {
@@ -580,6 +580,8 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                             case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines_Spectrum:
                             case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                            case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Adult:
+                            case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Paediatric:
                             case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin:
                             case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                                 childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
@@ -1835,6 +1837,17 @@ namespace BDEditor.Views
             BDTableCell cell3 = BDTableCell.RetrieveWithId(dataContext, Guid.Parse("d829e699-13a2-49e9-a2a8-3701c0784920"));
             BDTableCell.Delete(dataContext, cell3, false);
             */
+
+            #endregion
+
+            #region v.1.6.18
+
+            // add layout variants for subset of Antibiotics Dosing Guide and Daily costs:  split to peds and adults
+            // needed for unique titles in output
+            BDNode adultSubcategory = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("66a8dd87-98a7-4886-8d91-ab0d1e5457d8"));
+            BDUtilities.ResetLayoutVariantWithChildren(dataContext, adultSubcategory, BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Adult, true);
+            BDNode pedsSubcategory = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("a99f114d-4bce-4389-922c-4396d1894c14"));
+            BDUtilities.ResetLayoutVariantWithChildren(dataContext, pedsSubcategory, BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Paediatric, true);
 
             #endregion
         }

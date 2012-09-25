@@ -80,13 +80,14 @@ namespace BDEditor.Views
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != configuredEntry) ? configuredEntry.Uuid : Guid.Empty);
-            btnLinkedNote.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnLinkedNote.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
+            btnLinkedNote.BackColor = links.Exists(x => x.parentKeyPropertyName == fieldName) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
         }
 
         public virtual void RefreshLayout()
         {
             isUpdating = true;
             Populate();
+            ShowLinksInUse(false);
             isUpdating = false;
         }
 
@@ -94,6 +95,7 @@ namespace BDEditor.Views
         {
             createLink(fieldName);
         }
+
         private void configureLabel()
         {
             if (null != configuredEntry)

@@ -50,6 +50,7 @@
             this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnLinkedNote = new System.Windows.Forms.Button();
             this.pnlButton = new System.Windows.Forms.Panel();
+            this.checkmarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlRtb.SuspendLayout();
             this.contextMenuStripTextBox.SuspendLayout();
             this.pnlButton.SuspendLayout();
@@ -94,6 +95,7 @@
             this.plusMinusToolStripMenuItem,
             this.degreeToolStripMenuItem,
             this.µToolStripMenuItem,
+            this.checkmarkToolStripMenuItem,
             this.toolStripMenuItem3,
             this.undoToolStripMenuItem,
             this.toolStripMenuItem4,
@@ -105,7 +107,7 @@
             this.selectAllToolStripMenuItem});
             this.contextMenuStripTextBox.Name = "contextMenuStrip1";
             this.contextMenuStripTextBox.ShowImageMargin = false;
-            this.contextMenuStripTextBox.Size = new System.Drawing.Size(128, 308);
+            this.contextMenuStripTextBox.Size = new System.Drawing.Size(128, 330);
             this.contextMenuStripTextBox.Text = "Insert Symbol";
             // 
             // bToolStripMenuItem
@@ -225,6 +227,13 @@
             this.pnlButton.Size = new System.Drawing.Size(33, 75);
             this.pnlButton.TabIndex = 1;
             // 
+            // checkmarkToolStripMenuItem
+            // 
+            this.checkmarkToolStripMenuItem.Name = "checkmarkToolStripMenuItem";
+            this.checkmarkToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.checkmarkToolStripMenuItem.Text = "√";
+            this.checkmarkToolStripMenuItem.Click += new System.EventHandler(this.checkmarkToolStripMenuItem_Click);
+            // 
             // BDTableCellControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -268,6 +277,7 @@
         private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
         private System.Windows.Forms.Button btnLinkedNote;
         private System.Windows.Forms.Panel pnlButton;
+        private System.Windows.Forms.ToolStripMenuItem checkmarkToolStripMenuItem;
 
     }
 }

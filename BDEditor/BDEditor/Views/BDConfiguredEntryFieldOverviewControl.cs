@@ -69,5 +69,6 @@ namespace BDEditor.Views
             ControlHelper.ResumeDrawing(this);
             isUpdating = false;
         }
+
     }
 }

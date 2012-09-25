@@ -729,6 +729,11 @@ namespace BDEditor.Views
             textControl.Selection.Text = "←";
         }
 
+        private void toolStripButton16_Click(object sender, EventArgs e)
+        {
+            textControl.Selection.Text = "√";
+        }
+
         private void textControl_HypertextLinkClicked(object sender, TXTextControl.HypertextLinkEventArgs e)
         {
             TXTextControl.HypertextLink link = textControl.HypertextLinks.GetItem();

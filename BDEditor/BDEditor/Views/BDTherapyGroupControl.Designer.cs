@@ -264,12 +264,12 @@
             this.panelTherapies.Size = new System.Drawing.Size(856, 5);
             this.panelTherapies.TabIndex = 15;
             // 
-            // label1
+            // c1Label
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(38, 57);
-            this.label1.Name = "label1";
+            this.label1.Name = "c1Label";
             this.label1.Size = new System.Drawing.Size(68, 18);
             this.label1.TabIndex = 16;
             this.label1.Text = "Therapy";

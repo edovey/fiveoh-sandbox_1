@@ -295,6 +295,11 @@ namespace BDEditor.Views
             insertText(rtbValue, "±");
         }
 
+        private void checkmarkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insertText(rtbValue, "√");
+        }
+
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             rtbValue.Undo();

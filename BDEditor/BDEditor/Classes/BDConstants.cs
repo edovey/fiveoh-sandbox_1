@@ -190,8 +190,14 @@ namespace BDEditor.Classes
 
             [Description("Pharmacodynamics")]
             Antibiotics_Pharmacodynamics = 202,
+            
             [Description("Antibiotics Dosing and Costs")]
             Antibiotics_DosingAndCosts = 203,
+            [Description("Antibiotics Dosing and Costs: Adult")]
+            Antibiotics_DosingAndCosts_Adult = 2031,
+            [Description("Antibiotics Dosing and Costs: Paediatric")]
+            Antibiotics_DosingAndCosts_Paediatric = 2032,
+
             [Description("Antibiotics Dosing and Monitoring")]
             Antibiotics_DosingAndMonitoring = 204,
             [Description("Antibiotics Vancomycin Dosing and Monitoring")]

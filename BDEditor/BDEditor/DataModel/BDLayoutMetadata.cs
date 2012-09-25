@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.EntityClient;
+using System.Data.Objects;
 using System.Linq;
 using System.Text;
 using BDEditor.Classes;
@@ -78,6 +81,17 @@ namespace BDEditor.DataModel
 
             BDLayoutMetadata entry = existingEntries.FirstOrDefault<BDLayoutMetadata>();
             return entry;
+        }
+
+        public static void Save(Entities pContext, BDLayoutMetadata pLayoutMetadata)
+        {
+            if (null != pLayoutMetadata)
+            {
+                if (pLayoutMetadata.EntityState != EntityState.Unchanged)
+                {
+                    pContext.SaveChanges();
+                }
+            }
         }
 
         public override string ToString()

@@ -381,5 +381,35 @@ namespace BDEditor.Classes
             // delete parent
             BDNode.Delete(pContext, nodeToMove, false);
         }
+
+        public static void ConfigureLayoutMetadata(Entities pContext, BDConstants.LayoutVariantType pLayoutVariant, int pColumnDisplayOrder, string pColumnLabel, BDConstants.BDNodeType pNodeType, string pPropertyName, int pPropertyDisplayOrder, string pLinkedNoteText)
+        {
+            BDLayoutMetadata.Rebuild(pContext);
+            // turn on the Layout metadata:  find the entry, set included to True
+            BDLayoutMetadata layout = BDLayoutMetadata.Retrieve(pContext, pLayoutVariant);
+            layout.included = true;
+            BDLayoutMetadata.Save(pContext, layout);
+            
+            // check if columns exist
+            // create columns for the layout
+            BDLayoutMetadataColumn layoutC1 = BDLayoutMetadataColumn.Retrieve(pContext, pLayoutVariant, pNodeType, pPropertyName);
+            if (layoutC1 == null)
+                layoutC1 = BDLayoutMetadataColumn.Create(pContext, layout, pColumnDisplayOrder,pColumnLabel);
+            
+            // create linked note for column
+            //TODO:  adjust this to deal with > 1 
+            if (pLinkedNoteText.Length > 0)
+            {
+                BDLinkedNote note = BDLinkedNote.CreateBDLinkedNote(pContext, Guid.NewGuid());
+                note.documentText = pLinkedNoteText;
+                BDLinkedNoteAssociation lna = BDLinkedNoteAssociation.CreateBDLinkedNoteAssociation(pContext, BDConstants.LinkedNoteType.Footnote, note.Uuid, BDConstants.BDNodeType.BDLayoutColumn, layoutC1.Uuid, BDLayoutMetadataColumn.PROPERTYNAME_LABEL);
+            }
+
+            // associate properties with the column
+            BDLayoutMetadataColumnNodeType layoutC1T1 = BDLayoutMetadataColumnNodeType.Retrieve(pContext, pLayoutVariant, pNodeType, layoutC1.Uuid);
+            if(layoutC1T1 == null)
+                layoutC1T1 = BDLayoutMetadataColumnNodeType.Create(pContext, layoutC1,pNodeType, pPropertyName, pPropertyDisplayOrder);
+
+        }
     }
 }

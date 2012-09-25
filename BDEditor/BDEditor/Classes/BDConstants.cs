@@ -121,6 +121,7 @@ namespace BDEditor.Classes
             TreatmentRecommendation01_Gastroenteritis = 10141,
             [Description("Treatment Recommendation Gastroenteritis Culture Directed")]
             TreatmentRecommendation01_Gastroenteritis_CultureDirected = 101412,
+
             [Description("Wound Management")]
             TreatmentRecommendation02_WoundMgmt = 102, // table 1 - wound management
             [Description("Wound Management Content Row")]
@@ -204,8 +205,11 @@ namespace BDEditor.Classes
             Antibiotics_DosingAndMonitoring_Vancomycin = 211,
             [Description("Antibiotics Dosing in Renal Impairment")]
             Antibiotics_Dosing_RenalImpairment = 205,
+
             [Description("Antibiotics Dosing in Hepatic Impairment")]
             Antibiotics_Dosing_HepaticImpairment = 206,
+            [Description("Child-Pugh Grading of Chronic Liver Disease")]
+            Antibiotics_HepaticImapirment_Grading = 2061,
 
             [Description("Antibiotics Name Listing")]
             Antibiotics_NameListing = 207,
@@ -223,8 +227,15 @@ namespace BDEditor.Classes
 
             [Description("Antibiotics CSF Penetration")]
             Antibiotics_CSFPenetration = 209,
+            [Description("Antibiotics CSF Penetration - Intrathecal and/or Intraventricular Doses")]
+            Antibiotics_CSFPenetration_Dosages = 2091,
+
             [Description("Antibiotics B Lactam Allergy")]
             Antibiotics_BLactamAllergy = 210,
+            [Description("Antibiotics - BLactam Allergy Cross Reactivity")]
+            Antibiotics_BLactamAllergy_CrossReactivity = 2101,
+            [Description("Antibiotics - BLactam Allergy Cross Reactivity Content Row")]
+            Antibiotics_BLactamAllergy_CrossReactivity_ContentRow = 21011,
             
             [Description("Prophylaxis Recommendations")]
             Prophylaxis = 300, 

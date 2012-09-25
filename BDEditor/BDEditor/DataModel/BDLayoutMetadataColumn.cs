@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.EntityClient;
+using System.Data.Objects;
 using System.Linq;
 using System.Text;
-
 using BDEditor.Classes;
 
 namespace BDEditor.DataModel
@@ -21,6 +23,25 @@ namespace BDEditor.DataModel
             pDataContext.AddObject(ENTITYNAME, entry);
             pDataContext.SaveChanges();
             return entry;
+        }
+
+        static public BDLayoutMetadataColumn Create(Entities pDataContext, BDLayoutMetadata pLayoutMetadata, int pDisplayOrder, string pLabel)
+        {
+            BDLayoutMetadataColumn entry = BDLayoutMetadataColumn.Create(pDataContext, pLayoutMetadata, pDisplayOrder);
+            entry.label = pLabel;
+            pDataContext.SaveChanges();
+            return entry;
+        }
+
+        public static void Save(Entities pContext, BDLayoutMetadataColumn pLayoutMetadataColumn)
+        {
+            if (null != pLayoutMetadataColumn)
+            {
+                if (pLayoutMetadataColumn.EntityState != EntityState.Unchanged)
+                {
+                    pContext.SaveChanges();
+                }
+            }
         }
 
         public static void Delete(Entities pContext, BDLayoutMetadataColumn pEntry)
@@ -111,6 +132,7 @@ namespace BDEditor.DataModel
                 layoutVariant = (int)value;
             }
         }
+
         public string Description
         {
             get { return this.label; }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.EntityClient;
+using System.Data.Objects;
 using System.Linq;
 using System.Text;
-
 using BDEditor.Classes;
 
 namespace BDEditor.DataModel
@@ -21,6 +23,23 @@ namespace BDEditor.DataModel
             pDataContext.AddObject(ENTITYNAME, entry);
             pDataContext.SaveChanges();
             return entry;
+        }
+
+        static public BDLayoutMetadataColumnNodeType Create(Entities pDataContext, BDLayoutMetadataColumn pColumn, BDConstants.BDNodeType pNodeType, string pPropertyName, int pOrderOfPrecedence)
+        {
+            BDLayoutMetadataColumnNodeType entry = BDLayoutMetadataColumnNodeType.Create(pDataContext, pColumn.layoutVariant, pColumn.Uuid, pNodeType, pPropertyName, pOrderOfPrecedence);
+            return entry;
+        }
+
+        public static void Save(Entities pContext, BDLayoutMetadataColumnNodeType pLayoutColumnNodeType)
+        {
+            if (null != pLayoutColumnNodeType)
+            {
+                if (pLayoutColumnNodeType.EntityState != EntityState.Unchanged)
+                {
+                    pContext.SaveChanges();
+                }
+            }
         }
 
         static public List<BDLayoutMetadataColumnNodeType> RetrieveListForLayoutColumn(Entities pDataContext, Guid pColumnId)

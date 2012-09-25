@@ -400,9 +400,12 @@ namespace BDEditor.Classes
             //TODO:  adjust this to deal with > 1 
             if (pLinkedNoteText.Length > 0)
             {
+                StringBuilder noteText = new StringBuilder();
+                noteText.AppendFormat(@"<p>{0}</p>", pLinkedNoteText);
                 BDLinkedNote note = BDLinkedNote.CreateBDLinkedNote(pContext, Guid.NewGuid());
-                note.documentText = pLinkedNoteText;
+                note.documentText = noteText.ToString();
                 BDLinkedNoteAssociation lna = BDLinkedNoteAssociation.CreateBDLinkedNoteAssociation(pContext, BDConstants.LinkedNoteType.Footnote, note.Uuid, BDConstants.BDNodeType.BDLayoutColumn, layoutC1.Uuid, BDLayoutMetadataColumn.PROPERTYNAME_LABEL);
+                pContext.SaveChanges();
             }
 
             // associate properties with the column
@@ -410,6 +413,28 @@ namespace BDEditor.Classes
             if(layoutC1T1 == null)
                 layoutC1T1 = BDLayoutMetadataColumnNodeType.Create(pContext, layoutC1,pNodeType, pPropertyName, pPropertyDisplayOrder);
 
+        }
+
+        public static void CreateFootnoteForLayoutColumn(Entities pContext, BDConstants.LayoutVariantType pLayoutVariant, int pColumnDisplayOrder, string pFootnoteText)
+        {
+            BDLayoutMetadata.Rebuild(pContext);
+            BDLayoutMetadata layout = BDLayoutMetadata.Retrieve(pContext, pLayoutVariant);
+            if (layout != null)
+            {
+                List<BDLayoutMetadataColumn> columns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, layout);
+                foreach (BDLayoutMetadataColumn col in columns)
+                {
+                    if (col.displayOrder == pColumnDisplayOrder)
+                    {
+                        StringBuilder noteText = new StringBuilder();
+                        noteText.AppendFormat(@"<p>{0}</p>", pFootnoteText);
+                        BDLinkedNote note = BDLinkedNote.CreateBDLinkedNote(pContext, Guid.NewGuid());
+                        note.documentText = noteText.ToString();
+                        BDLinkedNoteAssociation lna = BDLinkedNoteAssociation.CreateBDLinkedNoteAssociation(pContext, BDConstants.LinkedNoteType.Footnote, note.Uuid, BDConstants.BDNodeType.BDLayoutColumn, col.Uuid, BDLayoutMetadataColumn.PROPERTYNAME_LABEL);
+                        pContext.SaveChanges();
+                    }
+                }
+            }
         }
     }
 }

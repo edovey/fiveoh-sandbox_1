@@ -189,7 +189,7 @@ namespace BDEditor.Classes
             [Description("Antimicrobial Spectrum")]
             Antibiotics_ClinicalGuidelines_Spectrum = 212,
 
-            [Description("Pharmacodynamics")]
+            [Description("Antibiotics - Pharmacodynamics")]
             Antibiotics_Pharmacodynamics = 202,
             
             [Description("Antibiotics Dosing and Costs")]
@@ -446,6 +446,7 @@ namespace BDEditor.Classes
             Comments = 2,
             Footnote = 3,
             Reference = 4,
+            Navigation = 5,
         }
 
         public const string DATETIMEFORMAT = @"yyyy-MM-dd'T'HH:mm:ss";

@@ -2007,6 +2007,33 @@ namespace BDEditor.Classes
 
         }
 
+        public static bool RowIsHeaderRow(IBDNode pNode)
+        {
+            bool isHeader = false;
+            BDTableRow row = pNode as BDTableRow;
+            if (row != null)
+            {
+                switch (row.LayoutVariant)
+                {
+                    case BDConstants.LayoutVariantType.Antibiotics_NameListing_HeaderRow:
+                    case BDConstants.LayoutVariantType.Antibiotics_Stepdown_HeaderRow:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass_HeaderRow:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_HeaderRow:
+                    case BDConstants.LayoutVariantType.Prophylaxis_PreOp_HeaderRow:
+                    case BDConstants.LayoutVariantType.Table_2_Column_HeaderRow:
+                    case BDConstants.LayoutVariantType.Table_3_Column_HeaderRow:
+                    case BDConstants.LayoutVariantType.Table_4_Column_HeaderRow:
+                    case BDConstants.LayoutVariantType.Table_5_Column_HeaderRow:
+                        isHeader = true;
+                        break;
+                    default:
+                        isHeader = false;
+                        break;
+                }
+            }
+            return isHeader;
+        }
+
         public static int GetTableColumnCount(BDConstants.LayoutVariantType pLayoutVariant)
         {
             int maxColumns = 0;

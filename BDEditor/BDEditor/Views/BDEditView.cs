@@ -1893,6 +1893,12 @@ namespace BDEditor.Views
             BDUtilities.CreateFootnoteForLayoutColumn(dataContext, BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Paediatric, 2, "Based on Alberta Health Drug Benefit List price, January 2006, or manufacturer's list price if drug not on AH DBL.  Prices in the hospital setting may be significantly different due to contract pricing.  Check with pharmacy for actual prices.  Does not include preparation, administration, supplies or serum level costs.");
             */
             #endregion
+            #region v.1.6.20
+            // adjust layout variant for Dosing Guide and Daily Costs - Paediatric
+            BDNode category = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("a99f114d-4bce-4389-922c-4396d1894c14"));
+            BDUtilities.ResetLayoutVariantWithChildren(dataContext, category, BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Paediatric, true);
+
+            #endregion
         }
     }
 }

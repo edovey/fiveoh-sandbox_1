@@ -19,6 +19,9 @@ namespace BDEditor.Classes
         private Boolean repositoryOverwriteEnabled = false;
         private int suspendDrawingCounter = 0;
 
+        private Boolean isUpdating = false;
+        private Boolean waitingForEvent = false;  // waiting for validated 
+
         private BDCommon() { }
 
         #region Singleton
@@ -42,6 +45,18 @@ namespace BDEditor.Classes
         }
 
         #endregion
+
+        public Boolean IsUpdating
+        {
+            get { return isUpdating; }
+            set { isUpdating = value; }
+        }
+
+        public Boolean WaitingForEvent
+        {
+            get { return waitingForEvent; }
+            set { waitingForEvent = value; }
+        }
 
         public Boolean IsSyncLoad
         {

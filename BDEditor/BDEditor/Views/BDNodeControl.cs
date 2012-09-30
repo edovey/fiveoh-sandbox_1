@@ -13,7 +13,7 @@ namespace BDEditor.Views
 {
     public partial class BDNodeControl : UserControl, IBDControl
     {
-        protected bool isUpdating = false;
+        //protected bool isUpdating = false;
 
         protected IBDNode currentNode;
         protected Entities dataContext;
@@ -124,7 +124,7 @@ namespace BDEditor.Views
 
         private void BDNodeControl_Load(object sender, EventArgs e)
         {
-            isUpdating = true;
+            bool origState = BDCommon.Settings.IsUpdating;
 
             btnLinkedNote.Tag = BDNode.PROPERTYNAME_NAME;
             setFormLayoutState();
@@ -138,15 +138,12 @@ namespace BDEditor.Views
                 tbName.Select();
             }
 
-            isUpdating = false;
+            BDCommon.Settings.IsUpdating = origState;
         }
 
         private void BDNodeControl_Leave(object sender, EventArgs e)
         {
-            if (!isUpdating)
-            {
-                Save();
-            }
+            Save();
         }
 
         public void AssignScopeId(Guid? pScopeId)
@@ -166,7 +163,6 @@ namespace BDEditor.Views
                 tbName.AutoCompleteCustomSource = pSource;
                 tbName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
                 tbName.AutoCompleteSource = AutoCompleteSource.CustomSource;
-
             }
         }
 
@@ -179,8 +175,10 @@ namespace BDEditor.Views
 
         public virtual void RefreshLayout(bool pShowChildren)
         {
+            bool origState = BDCommon.Settings.IsUpdating;
+            BDCommon.Settings.IsUpdating = true;
+
             ControlHelper.SuspendDrawing(this);
-            isUpdating = true;
             
             if(null != CurrentNode) toolTip1.SetToolTip(lblInfo, BDUtilities.GetEnumDescription(CurrentNode.LayoutVariant));
 
@@ -214,7 +212,8 @@ namespace BDEditor.Views
             ShowLinksInUse(false);
             setFormLayoutState();
             ControlHelper.ResumeDrawing(this);
-            isUpdating = false;
+
+            BDCommon.Settings.IsUpdating = origState;
         }
 
         public void AssignParentInfo(Guid? pParentId, BDConstants.BDNodeType pParentType)
@@ -222,11 +221,12 @@ namespace BDEditor.Views
             parentId = pParentId;
             parentType = pParentType;
             this.Enabled = (null != parentId);
-            isUpdating = false;
         }
 
         public bool Save()
         {
+            if (BDCommon.Settings.IsUpdating) return false;
+
             System.Diagnostics.Debug.WriteLine(@"Node Control Save");
 
             bool result = false;
@@ -624,7 +624,7 @@ namespace BDEditor.Views
 
         private void tbName_Leave(object sender, EventArgs e)
         {
-            if(!isUpdating)
+            if(tbName.Text != currentNode.Name)
                 Save();
         }
 

@@ -128,27 +128,51 @@ namespace BDEditor.Views
 
         public void RefreshLayout(bool pShowChildren)
         {
+            bool origState = BDCommon.Settings.IsUpdating;
+            BDCommon.Settings.IsUpdating = true;
+
             ControlHelper.SuspendDrawing(this);
+            BDAntimicrobialRisk currentRisk = currentNode as BDAntimicrobialRisk;
 
             if (null != CurrentNode)
             {
+                
                 switch (CurrentNode.LayoutVariant)
                 {
                     case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
                         this.Controls.Remove(pnlRtbL);
+
+                        rtbRiskPregnancy.Text = currentRisk.riskFactor;
+                        rtbRecommendations.Text = currentRisk.recommendations;
+
                         break;
 
                     case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
                         this.Controls.Remove(pnlRtbP);
                         pnlRtbL.Dock = DockStyle.Top;
+
+                        rtbRiskLactation.Text = currentRisk.riskFactor;
+                        rtbAapRating.Text = currentRisk.aapRating;
+                        rtbRelativeDose.Text = currentRisk.relativeInfantDose;
+
                         break;
                     default:
                         break;
                 }
             }
+            else
+            {
+                rtbRiskPregnancy.Text = "";
+                rtbRecommendations.Text = "";
+                rtbRiskLactation.Text = "";
+                rtbAapRating.Text = "";
+                rtbRelativeDose.Text = "";
+            }
 
             ShowLinksInUse(false);
             ControlHelper.ResumeDrawing(this);
+
+            BDCommon.Settings.IsUpdating = origState;
         }
 
         public void AssignDataContext(Entities pDataContext)
@@ -180,14 +204,18 @@ namespace BDEditor.Views
 
         public bool Save()
         {
+            if (BDCommon.Settings.IsUpdating) return false;
+
             bool result = false;
             if (null != parentId)
             {
                 BDAntimicrobialRisk currentRisk = currentNode as BDAntimicrobialRisk;
 
-                if (result && (null == currentRisk))
+                if (null == currentRisk)
+                {
                     CreateCurrentObject();
-                if (null != currentRisk)
+                }
+                else
                 {
                     switch (currentRisk.LayoutVariant)
                     {
@@ -234,6 +262,9 @@ namespace BDEditor.Views
 
         private void BDAntimicrobialRiskControl_Load(object sender, EventArgs e)
         {
+            bool origState = BDCommon.Settings.IsUpdating;
+            BDCommon.Settings.IsUpdating = true;
+
             rtbRiskPregnancy.Tag = btnRiskPregnancy;
             rtbRecommendations.Tag = btnRecommendation;
             rtbRiskLactation.Tag = btnRiskLactation;
@@ -245,6 +276,8 @@ namespace BDEditor.Views
             btnRiskLactation.Tag = BDAntimicrobialRisk.PROPERTYNAME_LACTATIONRISK;
             btnAapRating.Tag = BDAntimicrobialRisk.PROPERTYNAME_APPRATING;
             btnRelativeDose.Tag = BDAntimicrobialRisk.PROPERTYNAME_RELATIVEDOSE;
+
+            BDCommon.Settings.IsUpdating = origState;
         }
 
         private void BDAntimicrobialRiskControl_Leave(object sender, EventArgs e)

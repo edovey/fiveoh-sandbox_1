@@ -404,6 +404,7 @@ namespace BDEditor.Views
                             {
                                 nodeCtrl.NameChanged -= new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
                                 nodeCtrl.RequestItemAdd -= new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
+                                ((System.Windows.Forms.UserControl)nodeCtrl).Validated -= new EventHandler(BDEditView_Validated);
                                 ctrl.Dispose();
                             }
                         }
@@ -928,9 +929,12 @@ namespace BDEditor.Views
                 }
                 if (!pInterrogateOnly)
                 {
+                    BDCommon.Settings.WaitingForEvent = true;
+                    BDCommon.Settings.IsUpdating = true;
                     control_tr01 = BDFabrik.CreateControlForNode(dataContext, node);
                     if (null != control_tr01)
                     {
+                        ((System.Windows.Forms.UserControl)control_tr01).Validated += new EventHandler(BDEditView_Validated);
                         control_tr01.ShowChildren = showChildControls;
                         control_tr01.AssignScopeId((null != node) ? node.Uuid : Guid.Empty);
                         control_tr01.AssignParentInfo(node.ParentId, node.ParentType);
@@ -939,6 +943,7 @@ namespace BDEditor.Views
                         control_tr01.RequestItemAdd += new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
                         splitContainer1.Panel2.Controls.Add((System.Windows.Forms.UserControl)control_tr01);
                         control_tr01.RefreshLayout(showChildControls);
+
                     }
 
                     ControlHelper.ResumeDrawing(splitContainer1.Panel2);
@@ -947,6 +952,13 @@ namespace BDEditor.Views
                 this.Cursor = Cursors.Default;
             }
             return childTreeNode;
+        }
+
+        void BDEditView_Validated(object sender, EventArgs e)
+        {
+            if (BDCommon.Settings.WaitingForEvent)
+                BDCommon.Settings.IsUpdating = false;
+            Debug.WriteLine("Validated");
         }
 
         void nodeControl_NameChanged(object sender, NodeEventArgs e)

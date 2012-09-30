@@ -208,6 +208,8 @@ namespace BDEditor.Views
 
         public bool Save(BDConstants.LinkedNoteType? pLinkedNoteType)
         {
+            if (BDCommon.Settings.IsUpdating) return false;
+
             bool result = false;
 
             if (null == parentId)
@@ -225,7 +227,6 @@ namespace BDEditor.Views
                     CreateCurrentObject(pLinkedNoteType);
                 }
                 
-
                 if (null != currentLinkedNote)
                 { 
                     TXTextControl.SaveSettings ss = new TXTextControl.SaveSettings();
@@ -302,6 +303,9 @@ namespace BDEditor.Views
 
         public void RefreshLayout(bool pShowChildren)
         {
+            Boolean origState = BDCommon.Settings.IsUpdating;
+            BDCommon.Settings.IsUpdating = true;
+
             ControlHelper.SuspendDrawing(this);
             if (textControl.Visible)
             {
@@ -320,6 +324,7 @@ namespace BDEditor.Views
                 }
             }
             ControlHelper.ResumeDrawing(this);
+            BDCommon.Settings.IsUpdating = origState;
         }
 
         #endregion

@@ -409,11 +409,12 @@ namespace BDEditor.Classes
         {
             Entities dataContext = new Entities();
             List<BDNode> chapters = BDNode.RetrieveNodesForType(dataContext, BDConstants.BDNodeType.BDChapter);
-            List<BDHtmlPage> childDetailPages = new List<BDHtmlPage>();
-            List<BDHtmlPage> childNavPages = new List<BDHtmlPage>();
             List<BDHtmlPage> chapterPages = new List<BDHtmlPage>();
             if (pNode == null)
             {
+                List<BDHtmlPage> childDetailPages = new List<BDHtmlPage>();
+
+                List<BDHtmlPage> childNavPages = new List<BDHtmlPage>();
                 foreach (BDNode chapter in chapters)
                 {
                     generateOverviewAndChildrenForNode(dataContext, chapter, childDetailPages, childNavPages);
@@ -426,6 +427,8 @@ namespace BDEditor.Classes
             }
             else
             {
+                List<BDHtmlPage> childDetailPages = new List<BDHtmlPage>();
+                List<BDHtmlPage> childNavPages = new List<BDHtmlPage>();
                 if (pNode.NodeType == BDConstants.BDNodeType.BDChapter)
                 {
                     generateOverviewAndChildrenForNode(dataContext, pNode, childDetailPages, childNavPages);

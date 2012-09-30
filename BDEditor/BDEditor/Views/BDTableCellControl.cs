@@ -132,19 +132,7 @@ namespace BDEditor.Views
             isUpdating = true;
             ControlHelper.SuspendDrawing(this);
 
-            //for (int i = 0; i < stringControlList.Count; i++)
-            //{
-            //    BDStringControl control = stringControlList[i];
-            //    removeStringControl(control, false);
-            //}
-
-            //if (currentNode != null && pShowChildren)
-            //{
-            //    List<BDString> list = BDString.RetrieveStringsForParentId(dataContext, currentNode.Uuid);
-            //    int iDetail = 0;
-            //    foreach (BDString entry in list)
-            //        addStringControl(entry, iDetail++);
-            //}
+            rtbValue.Text = CurrentTableCell.value;
 
             ShowLinksInUse(false);
             ControlHelper.ResumeDrawing(this);

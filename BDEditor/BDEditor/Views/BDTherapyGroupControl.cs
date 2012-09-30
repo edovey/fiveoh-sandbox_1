@@ -15,7 +15,6 @@ namespace BDEditor.Views
         private BDTherapyGroup currentTherapyGroup;
         private IBDControl parentControl;
         private Guid? scopeId;
-        private bool isUpdating = false;
 
         public int? DisplayOrder { get; set; }
 
@@ -93,7 +92,9 @@ namespace BDEditor.Views
 
         public void RefreshLayout(bool pShowChildren)
         {
-            isUpdating = true;
+            bool origState = BDCommon.Settings.IsUpdating;
+            BDCommon.Settings.IsUpdating = true;
+
             ControlHelper.SuspendDrawing(this);
 
             // This is generic for Constants.LayoutVariantType.TreatmentRecommendation01
@@ -147,7 +148,8 @@ namespace BDEditor.Views
             ShowLinksInUse(false);
 
             ControlHelper.ResumeDrawing(this);
-            isUpdating = false;
+
+            BDCommon.Settings.IsUpdating = origState;
         }
 
         public void AssignScopeId(Guid? pScopeId)
@@ -192,6 +194,8 @@ namespace BDEditor.Views
 
         public bool Save()
         {
+            if (BDCommon.Settings.IsUpdating) return false;
+
             bool result = false;
             if (null != parentId)
             {
@@ -574,7 +578,7 @@ namespace BDEditor.Views
 
         private void BDTherapyGroupControl_Leave(object sender, EventArgs e)
         {
-            if (!isUpdating)  { Save(); }
+            Save();
         }
 
 

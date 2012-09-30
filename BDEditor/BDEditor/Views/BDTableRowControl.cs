@@ -21,7 +21,6 @@ namespace BDEditor.Views
         private Guid? scopeId;
         private List<IBDControl> cellControlList = new List<IBDControl>();
         private TextBox textControl;
-        private bool isUpdating = false;
 
         public int? DisplayOrder { get; set; }
 
@@ -107,7 +106,8 @@ namespace BDEditor.Views
 
         public void RefreshLayout(bool pShowChildren)
         {
-            isUpdating = true;
+            bool origState = BDCommon.Settings.IsUpdating;
+            BDCommon.Settings.IsUpdating = true;
 
             ControlHelper.SuspendDrawing(this);
 
@@ -117,7 +117,7 @@ namespace BDEditor.Views
             ShowLinksInUse(false);
             ControlHelper.ResumeDrawing(this);
 
-            isUpdating = false;
+            BDCommon.Settings.IsUpdating = origState;
         }
 
         private void addTableRowControls()
@@ -220,6 +220,8 @@ namespace BDEditor.Views
 
         public bool Save()
         {
+            if (BDCommon.Settings.IsUpdating) return false;
+
             bool result = false;
             if (null != parentId)
             {
@@ -260,7 +262,7 @@ namespace BDEditor.Views
 
         private void BDTherapyControl_Leave(object sender, EventArgs e)
         {
-            if (!isUpdating) { Save(); }
+            Save();
         }
 
         public override string ToString()

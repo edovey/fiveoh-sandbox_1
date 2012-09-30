@@ -130,6 +130,9 @@ namespace BDEditor.Views
 
         public void RefreshLayout(bool pShowChildren)
         {
+            Boolean origState = BDCommon.Settings.IsUpdating;
+            BDCommon.Settings.IsUpdating = true;
+
             ControlHelper.SuspendDrawing(this);
             if (currentDosage == null)
             {
@@ -169,6 +172,7 @@ namespace BDEditor.Views
             }
             ShowLinksInUse(false);
             ControlHelper.ResumeDrawing(this);
+            BDCommon.Settings.IsUpdating = origState;
         }
 
         public void AssignDataContext(Entities pDataContext)
@@ -200,6 +204,8 @@ namespace BDEditor.Views
 
         public bool Save()
         {
+            if (BDCommon.Settings.IsUpdating) return false;
+
             bool result = false;
             if (null != parentId)
             {

@@ -18,7 +18,6 @@ namespace BDEditor.Views
         protected BDConfiguredEntry configuredEntry;
         protected string fieldName;
         protected Guid scopeId;
-        protected bool isUpdating = false;
 
         public int DisplayOrder { get; set; } 
 
@@ -58,10 +57,13 @@ namespace BDEditor.Views
 
         private void BDConfiguredEntryFieldControl_Load(object sender, EventArgs e)
         {
-            isUpdating = true;
+            Boolean origState = BDCommon.Settings.IsUpdating;
+            BDCommon.Settings.IsUpdating = true;
+
             configureLabel();
             Populate();
-            isUpdating = false;
+
+            BDCommon.Settings.IsUpdating = origState;
         }
 
         private void createLink(string pProperty)
@@ -85,10 +87,13 @@ namespace BDEditor.Views
 
         public virtual void RefreshLayout()
         {
-            isUpdating = true;
+            Boolean origState = BDCommon.Settings.IsUpdating;
+            BDCommon.Settings.IsUpdating = true;
+
             Populate();
             ShowLinksInUse(false);
-            isUpdating = false;
+
+            BDCommon.Settings.IsUpdating = origState;
         }
 
         private void btnLinkedNote_Click(object sender, EventArgs e)
@@ -180,6 +185,8 @@ namespace BDEditor.Views
 
         public virtual bool Save()
         {
+            if (BDCommon.Settings.IsUpdating) return false;
+
             bool result = true; // always true because this is only saving a specific field within the instance
             string value = txtFieldData.Text;
             string orignalValue = valueFromField();
@@ -246,7 +253,7 @@ namespace BDEditor.Views
 
         private void txtFieldData_Leave(object sender, EventArgs e)
         {
-            if (!isUpdating) { Save(); }
+            Save();
         }
 
         private void insertTextFromMenu(string textToInsert)

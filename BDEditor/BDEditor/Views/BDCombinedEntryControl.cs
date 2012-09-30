@@ -19,7 +19,6 @@ namespace BDEditor.Views
         protected Guid? scopeId;
         protected Guid parentId;
         protected BDConstants.BDNodeType parentType = BDConstants.BDNodeType.None;
-        private bool isUpdating = false;
 
         protected List<BDCombinedEntryFieldControl> fieldControlList = new List<BDCombinedEntryFieldControl>();
 
@@ -125,12 +124,12 @@ namespace BDEditor.Views
 
         private void txtField_Leave(object sender, EventArgs e)
         {
-            if (!isUpdating) Save();
+            Save();
         }
 
         private void radioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (!isUpdating) Save();
+            Save();
         }
 
         #region IBDControl
@@ -161,6 +160,8 @@ namespace BDEditor.Views
 
         public bool Save()
         {
+            if (BDCommon.Settings.IsUpdating) return false;
+
             bool result = false;
 
             if (Gather(currentEntry))
@@ -190,7 +191,8 @@ namespace BDEditor.Views
 
         public void RefreshLayout(bool pShowChildren)
         {
-            isUpdating = true;
+            Boolean origState = BDCommon.Settings.IsUpdating;
+            BDCommon.Settings.IsUpdating = true;
 
             ControlHelper.SuspendDrawing(this);
 
@@ -264,7 +266,8 @@ namespace BDEditor.Views
             ShowLinksInUse(false);
 
             ControlHelper.ResumeDrawing(this);
-            isUpdating = false;
+
+            BDCommon.Settings.IsUpdating = origState;
         }
 
         public void ShowLinksInUse(bool pPropagateToChildren)
@@ -313,7 +316,7 @@ namespace BDEditor.Views
 
         private void BDCombinedEntryControl_Leave(object sender, EventArgs e)
         {
-            if (!isUpdating) { Save(); }
+            Save();
         }
 
         private void tbName_MouseDown(object sender, MouseEventArgs e)

@@ -31,7 +31,8 @@ namespace BDEditor.Views
 
             string fieldNoteContextPropertyName = string.Format("{0}_fieldNote", fieldName);
 
-            isUpdating = true;
+            Boolean origState = BDCommon.Settings.IsUpdating;
+            BDCommon.Settings.IsUpdating = true;
 
             ControlHelper.SuspendDrawing(this);
             bdLinkedNoteControl1.AssignDataContext(dataContext);
@@ -67,7 +68,8 @@ namespace BDEditor.Views
             bdLinkedNoteControl1.RefreshLayout();
 
             ControlHelper.ResumeDrawing(this);
-            isUpdating = false;
+
+            BDCommon.Settings.IsUpdating = origState;
         }
 
     }

@@ -20,7 +20,6 @@ namespace BDEditor.Views
         private Guid? scopeId;
         private BDConstants.BDNodeType parentType;
         private BDConstants.TableCellAlignment alignment;
-        private bool isUpdating = false;
 
         public string RichText
         {
@@ -129,14 +128,17 @@ namespace BDEditor.Views
 
         public void RefreshLayout(bool pShowChildren)
         {
-            isUpdating = true;
+            Boolean origState = BDCommon.Settings.IsUpdating;
+            BDCommon.Settings.IsUpdating = true;
+
             ControlHelper.SuspendDrawing(this);
 
             rtbValue.Text = CurrentTableCell.value;
 
             ShowLinksInUse(false);
             ControlHelper.ResumeDrawing(this);
-            isUpdating = false;
+
+            BDCommon.Settings.IsUpdating = origState;
         }
 
         public void AssignDataContext(Entities pDataContext)
@@ -168,6 +170,8 @@ namespace BDEditor.Views
 
         public bool Save()
         {
+            if (BDCommon.Settings.IsUpdating) return false;
+
             bool result = false;
             if (null != parentId)
             {
@@ -240,7 +244,7 @@ namespace BDEditor.Views
 
         private void BDTableCellControl_Leave(object sender, EventArgs e)
         {
-            if (!isUpdating) { Save(); }
+            Save(); 
         }
 
         private void btnLinkedNote_Click(object sender, EventArgs e)

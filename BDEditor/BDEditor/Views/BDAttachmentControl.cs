@@ -16,7 +16,6 @@ namespace BDEditor.Views
     public partial class BDAttachmentControl : BDNodeControl
     {
         //private System.Windows.Forms.PictureBox attachmentPictureBox;
-        private bool isUpdating = false;
 
         public BDAttachmentControl()
         {
@@ -50,7 +49,8 @@ namespace BDEditor.Views
 
         public override void RefreshLayout(bool pShowChildren)
         {
-            isUpdating = true;
+            Boolean origState = BDCommon.Settings.IsUpdating;
+            BDCommon.Settings.IsUpdating = true;
 
             base.RefreshLayout(pShowChildren);
             ControlHelper.SuspendDrawing(this);
@@ -91,7 +91,7 @@ namespace BDEditor.Views
                 }
             }
             ControlHelper.ResumeDrawing(this);
-            isUpdating = false;
+            BDCommon.Settings.IsUpdating = origState;
         }
 
         private void attachmentSurface_MouseDown(object sender, MouseEventArgs e)

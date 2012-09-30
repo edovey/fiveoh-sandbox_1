@@ -28,7 +28,6 @@ namespace BDEditor.Views
         private BDConstants.LayoutVariantType defaultLayoutVariantType;
         private int? displayOrder;
         private bool showAsChild = false;
-        private bool isUpdating = false;
 
         private bool showChildren = true;
         public bool ShowChildren
@@ -181,6 +180,8 @@ namespace BDEditor.Views
 
         public bool Save()
         {
+            if (BDCommon.Settings.IsUpdating) return false;
+
             bool result = false;
 
             foreach (BDConfiguredEntryFieldControl fieldControl in fieldControlList)
@@ -209,7 +210,8 @@ namespace BDEditor.Views
 
         public void RefreshLayout(bool pShowChildren)
         {
-            isUpdating = true;
+            Boolean origState = BDCommon.Settings.IsUpdating;
+            BDCommon.Settings.IsUpdating = true;
 
             ControlHelper.SuspendDrawing(this);
 
@@ -238,7 +240,7 @@ namespace BDEditor.Views
             }
             ControlHelper.ResumeDrawing(this);
 
-            isUpdating = false;
+            BDCommon.Settings.IsUpdating = origState;
         }
 
         public void ShowLinksInUse(bool pPropagateToChildren)

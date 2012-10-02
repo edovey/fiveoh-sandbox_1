@@ -393,12 +393,6 @@
     <Compile Include="Views\BDTableRowControl.Designer.cs">
       <DependentUpon>BDTableRowControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\BDTextControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\BDTextControl.Designer.cs">
-      <DependentUpon>BDTextControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\BDTherapyControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -506,9 +500,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDTableRowControl.resx">
       <DependentUpon>BDTableRowControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\BDTextControl.resx">
-      <DependentUpon>BDTextControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDTherapyControl.resx">
       <DependentUpon>BDTherapyControl.cs</DependentUpon>
@@ -708,7 +699,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
+      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

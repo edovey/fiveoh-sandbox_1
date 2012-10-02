@@ -179,9 +179,11 @@ namespace BDEditor.Views
             BDCommon.Settings.IsUpdating = true;
 
             ControlHelper.SuspendDrawing(this);
-            
-            if(null != CurrentNode) toolTip1.SetToolTip(lblInfo, BDUtilities.GetEnumDescription(CurrentNode.LayoutVariant));
-
+            if(null != CurrentNode)
+            {
+                string lblString = string.Format(@"{0} : {1}", CurrentNode.Uuid, BDUtilities.GetEnumDescription(CurrentNode.LayoutVariant));
+                toolTip1.SetToolTip(lblInfo, lblString);
+            }
             for (int idx = 0; idx < childNodeControlList.Count; idx++)
             {
                 IBDControl control = childNodeControlList[idx];

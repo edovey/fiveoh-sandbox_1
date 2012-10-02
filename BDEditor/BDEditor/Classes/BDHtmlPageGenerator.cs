@@ -100,7 +100,7 @@ namespace BDEditor.Classes
                     BDNode childNode = BDNode.RetrieveNodeWithId(pContext, page.displayParentId.Value);
                     if (childNode != null)
                     {
-                        pageHTML.AppendFormat(@"<a href=""{0}""><b>{1}</b></a><br>", childNode.Uuid, childNode.Name);
+                        pageHTML.AppendFormat(@"<p><a href=""{0}""><b>{1}</b></a></p>", childNode.Uuid, childNode.Name);
                     }
                 }
             }
@@ -228,6 +228,7 @@ namespace BDEditor.Classes
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics:
                             nodeChildPages.Add(generatePageForEmpiricTherapyOfCultureDirectedEndocarditis(pContext, pNode as BDNode));
                             isPageGenerated = true;
                                 break;
@@ -252,11 +253,12 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                        case BDConstants.LayoutVariantType.Dental_Prophylaxis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Adult:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Paediatric:
+                        case BDConstants.LayoutVariantType.Dental_Prophylaxis:
                             // if the processing comes through here, then the Disease has > 1 Presentation 
                             isPageGenerated = true;
                             nodeChildPages.Add(generatePageForEmpiricTherapyPresentation(pContext, pNode as BDNode));
@@ -386,6 +388,9 @@ namespace BDEditor.Classes
                             nodeChildPages.Add(generatePageForAntibioticsClinicalGuidelinesSpectrum(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
+                        case BDConstants.LayoutVariantType.Antibiotics_HepaticImpairment_Grading:
+                            //TODO: generate pages
+                            break;
                         default:
                             isPageGenerated = false;
                             break;
@@ -418,11 +423,10 @@ namespace BDEditor.Classes
                 foreach (BDNode chapter in chapters)
                 {
                     generateOverviewAndChildrenForNode(dataContext, chapter, childDetailPages, childNavPages);
-                    Debug.WriteLine("Creating chapter page {0} with returned list", chapter.Name);
                     if(childDetailPages.Count > 0)
-                        chapterPages.Add(generateNavigationPage(dataContext, chapter, childDetailPages));
+                        chapterPages.AddRange(childDetailPages);
                     if (childNavPages.Count > 0)
-                        chapterPages.Add(generateNavigationPage(dataContext, chapter, childNavPages));
+                        chapterPages.AddRange(childNavPages);
                 }
             }
             else
@@ -432,13 +436,11 @@ namespace BDEditor.Classes
                 if (pNode.NodeType == BDConstants.BDNodeType.BDChapter)
                 {
                     generateOverviewAndChildrenForNode(dataContext, pNode, childDetailPages, childNavPages);
-                    Debug.WriteLine("Create chapter page with returned list");
-                    if (childDetailPages.Count > 0)
-                        chapterPages.Add(generateNavigationPage(dataContext, pNode, childDetailPages));
-                    if (childNavPages.Count > 0)
-                        chapterPages.Add(generateNavigationPage(dataContext, pNode, childNavPages));
+                    chapterPages.AddRange(childDetailPages);
+                    chapterPages.AddRange(childNavPages);
                 }
             }
+            Debug.WriteLine("Creating chapter page with returned list");
             if (chapterPages.Count > 0)
                 generateNavigationPage(dataContext, null, chapterPages);
             
@@ -518,13 +520,13 @@ namespace BDEditor.Classes
 
             // child nodes can either be pathogen groups or topics (node with overview)
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
-            foreach (IBDNode node in childNodes)
+            foreach (IBDNode childNode in childNodes)
             {
-                if (node.NodeType == BDConstants.BDNodeType.BDTopic)
+                if (childNode.NodeType == BDConstants.BDNodeType.BDTopic)
                 {
-                    if (node.Name.Length > 0)
-                        bodyHTML.AppendFormat("<h2>{0}</h2>", node.Name);
-                    string nodeOverviewHTML = retrieveNoteTextForOverview(pContext, pNode.Uuid);
+                    if (childNode.Name.Length > 0)
+                        bodyHTML.AppendFormat("<h2>{0}</h2>", childNode.Name);
+                    string nodeOverviewHTML = retrieveNoteTextForOverview(pContext, childNode.Uuid);
                     if (nodeOverviewHTML.Length > EMPTY_PARAGRAPH)
                     {
                         bodyHTML.Append(nodeOverviewHTML);
@@ -638,51 +640,74 @@ namespace BDEditor.Classes
                     bodyHTML.AppendFormat(@"<tr><td>{0}{1}</td>", antimicrobial.Name, amFooterMarker);
 
                     StringBuilder dosageHTML = new StringBuilder();
+                    dosageHTML.Append("<td>");
                     StringBuilder costHTML = new StringBuilder();
+                    costHTML.Append("<td>");
 
                     List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, antimicrobial);
                     foreach (IBDNode child in childNodes)
                     {
                         if (child.NodeType == BDConstants.BDNodeType.BDTherapyGroup)
                         {
-                            dosageHTML.AppendFormat("<td><b><u>{0}</u></b><br>",buildCellHTML(pContext, child, BDNode.PROPERTYNAME_NAME, child.Name, false));
-                            costHTML.Append("<td><br>");
+                            dosageHTML.AppendFormat("<b><u>{0}</u></b><br>", buildCellHTML(pContext, child, BDNode.PROPERTYNAME_NAME, child.Name, false));
+                            costHTML.Append("<br>");
                             List<IBDNode> lvl1Children = BDFabrik.GetChildrenForParent(pContext, child);
                             foreach (IBDNode lvl1Child in lvl1Children)
                             {
                                 // BDDosageGroup
-                                dosageHTML.AppendFormat("<td><u>{0}</u>:", buildCellHTML(pContext, lvl1Child, BDNode.PROPERTYNAME_NAME, lvl1Child.Name, false));
-                                costHTML.Append("<td><br>");
+                                dosageHTML.AppendFormat("<u>{0}</u>:", buildCellHTML(pContext, lvl1Child, BDNode.PROPERTYNAME_NAME, lvl1Child.Name, false));
+                                costHTML.Append("<br>");
 
                                 List<IBDNode> lvl2Children = BDFabrik.GetChildrenForParent(pContext, lvl1Child);
+                                string cellLineTag = (lvl2Children.Count > 0) ? "<br>" : "";
                                 foreach (IBDNode lvl2Child in lvl2Children)
                                 {
                                     // BDDosage
-                                    dosageHTML.AppendFormat("{0}</td>", buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_DOSAGE, lvl2Child.Name, false));
-                                    costHTML.AppendFormat("{0}</td>", buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_COST, (lvl2Child as BDDosage).cost, false));
+                                    BDDosage dosage = lvl2Child as BDDosage;
+                                    dosageHTML.AppendFormat("{0}{1}", buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_DOSAGE, dosage.dosage, false), cellLineTag);
+                                    costHTML.Append(buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_COST, dosage.cost, false));
+                                    if (dosage.cost2.Length > 0)
+                                        costHTML.AppendFormat("-{0}{1}", buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_COST2, dosage.cost2,false), cellLineTag);
+                                    else
+                                        costHTML.Append(cellLineTag);
                                 }
                             }
                         }
                         else if (child.NodeType == BDConstants.BDNodeType.BDDosageGroup)
                         {
-                            dosageHTML.AppendFormat("<td><u>{0}</u>:", buildCellHTML(pContext, child, BDNode.PROPERTYNAME_NAME, child.Name, false));
-                            costHTML.Append("<td><br>");
+                            dosageHTML.AppendFormat("<u>{0}</u>:", buildCellHTML(pContext, child, BDNode.PROPERTYNAME_NAME, child.Name, false));
+                            costHTML.Append("<br>");
 
                             List<IBDNode> lvl2Children = BDFabrik.GetChildrenForParent(pContext, child);
+                            string cellLineTag = (lvl2Children.Count > 0) ? "<br>" : "";
                             foreach (IBDNode lvl2Child in lvl2Children)
                             {
                                 // BDDosage
-                                dosageHTML.AppendFormat("{0}</td>", buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_DOSAGE, lvl2Child.Name, false));
-                                costHTML.AppendFormat("{0}</td>", buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_COST, (lvl2Child as BDDosage).cost, false));
+                                BDDosage dosage = lvl2Child as BDDosage;
+                                dosageHTML.AppendFormat("{0}{1}", buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_DOSAGE, dosage.dosage, false), cellLineTag);
+                                costHTML.Append(buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_COST, dosage.cost, false));
+                                if (dosage.cost2.Length > 0)
+                                    costHTML.AppendFormat("-{0}{1}", buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_COST2, dosage.cost2, false), cellLineTag);
+                                else
+                                    costHTML.Append(cellLineTag);
                             }
                         }
                         else if (child.NodeType == BDConstants.BDNodeType.BDDosage)
                         {
-                            dosageHTML.AppendFormat("<td>{0}</td>", buildCellHTML(pContext, child, BDDosage.PROPERTYNAME_DOSAGE, (child as BDDosage).dosage, false));
-                            costHTML.AppendFormat("<td>{0}</td>", buildCellHTML(pContext, child, BDDosage.PROPERTYNAME_COST, (child as BDDosage).cost, false));
+                            string cellLineTag = (childNodes.Count > 0) ? "<br>" : "";
+
+                            BDDosage dosage = child as BDDosage;
+                            dosageHTML.AppendFormat("{0}{1}", buildCellHTML(pContext, child, BDDosage.PROPERTYNAME_DOSAGE, dosage.dosage, false), cellLineTag);
+                            costHTML.Append(buildCellHTML(pContext, child, BDDosage.PROPERTYNAME_COST, dosage.cost, false));
+                            if (dosage.cost2.Length > 0)
+                                costHTML.AppendFormat("-{0}{1}", buildCellHTML(pContext, child, BDDosage.PROPERTYNAME_COST2, dosage.cost2, false), cellLineTag);
+                            else
+                                costHTML.Append(cellLineTag);
                         }
                     }
-                    bodyHTML.AppendFormat(@"{0}{1}</tr>",dosageHTML,costHTML);
+                    dosageHTML.Append("</td>");
+                    costHTML.Append("</td>");
+                    bodyHTML.AppendFormat(@"{0}{1}</tr>", dosageHTML, costHTML);
                 }
                 bodyHTML.Append(@"</table>");
             }
@@ -961,6 +986,9 @@ namespace BDEditor.Classes
                 }
                     bodyHTML.Append(@"</table>");
             }
+
+            //TODO:  implement cross-reactivity table
+
             // insert footer text
             if (footerList.Count > 0)
             {
@@ -1313,10 +1341,25 @@ namespace BDEditor.Classes
             List<BDLinkedNote> footerList = new List<BDLinkedNote>();
 
             bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h2"));
-            List<IBDNode> pathogenGroups = BDFabrik.GetChildrenForParent(pContext, pNode);
-            foreach (IBDNode pathogenGroup in pathogenGroups)
-                bodyHTML.Append(buildEmpiricTherapyHTML(pContext, pathogenGroup as BDNode));
 
+            // gastroenteritis:  get Topic as child of Presentation, then Pathogen Group
+            if (pNode.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis || pNode.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected)
+            {
+                List<IBDNode> topics = BDFabrik.GetChildrenForParent(pContext, pNode);
+                foreach (IBDNode topic in topics)
+                {
+                    bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h3"));
+                    List<IBDNode> pathogenGroups = BDFabrik.GetChildrenForParent(pContext, pNode);
+                    foreach (IBDNode pathogenGroup in pathogenGroups)
+                        bodyHTML.Append(buildEmpiricTherapyHTML(pContext, pathogenGroup as BDNode));
+                }
+            }
+            else
+            {
+                List<IBDNode> pathogenGroups = BDFabrik.GetChildrenForParent(pContext, pNode);
+                foreach (IBDNode pathogenGroup in pathogenGroups)
+                    bodyHTML.Append(buildEmpiricTherapyHTML(pContext, pathogenGroup as BDNode));
+            }
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data);
         }
 
@@ -2936,8 +2979,13 @@ namespace BDEditor.Classes
 
                     footerMarker.AppendFormat(@"{0},", pItemFooterList.IndexOf(footer) + 1);
                 }
+                // trim last comma
+                if(footerMarker.Length > 5)
+                    footerMarker.Remove(footerMarker.Length - 1, 1);
+                footerMarker.Append("</sup>");
+                return footerMarker.ToString();
             }
-            return footerMarker.ToString();
+            return string.Empty;
         }
         #endregion
 

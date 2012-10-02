@@ -1524,7 +1524,6 @@ namespace BDEditor.Views
             //// move Adults > SSTI > Gas Gangrene to presentation level of Rapidly progressive SSTI
             //BDUtilities.MoveNodeToParentSibling(dataContext, Guid.Parse(@"e10f7eb9-66d5-4225-b01e-06a0acefe34c"), Guid.Parse(@"6e4c8849-ad12-4b5f-b5fc-5fc53288cfad"), "SINGLE PRESENTATION", BDConstants.BDNodeType.BDPresentation);
             #endregion
-
             #region v.1.6.12
             // fetch the antimicrobial stepdown table
             //BDNode nameTable = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse(@"45301fa9-55ac-4c8f-95f0-1008016635c4"));
@@ -1783,7 +1782,6 @@ namespace BDEditor.Views
             }
             BDNode.Delete(dataContext, pGroup2, false); */
             #endregion
-
             #region v.1.6.16
             /*
             // Set new layoutvariant in table TR > Paediatrics > Repiratory
@@ -1851,7 +1849,6 @@ namespace BDEditor.Views
             */
 
             #endregion
-
             #region v.1.6.18
             /*
             // add layout variants for subset of Antibiotics Dosing Guide and Daily costs:  split to peds and adults
@@ -1862,13 +1859,13 @@ namespace BDEditor.Views
             BDUtilities.ResetLayoutVariantWithChildren(dataContext, pedsSubcategory, BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Paediatric, true);
 
             // create new layouts : Hepatic Impairment Grading table
-            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Antibiotics_HepaticImapirment_Grading, 0, "Score",
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Antibiotics_HepaticImpairment_Grading, 0, "Score",
                 BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_NAME, 0, "");
-            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Antibiotics_HepaticImapirment_Grading, 1, "1",
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Antibiotics_HepaticImpairment_Grading, 1, "1",
                 BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD01, 0,"");
-            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Antibiotics_HepaticImapirment_Grading, 2, "2",
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Antibiotics_HepaticImpairment_Grading, 2, "2",
                 BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD02, 0, "");
-            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Antibiotics_HepaticImapirment_Grading, 3, "3",
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Antibiotics_HepaticImpairment_Grading, 3, "3",
                 BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD03, 0, "");
 
             // create layout for CSF Penetration / Intrathecal and/or Intraventricular
@@ -1898,6 +1895,26 @@ namespace BDEditor.Views
             BDNode category = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("a99f114d-4bce-4389-922c-4396d1894c14"));
             BDUtilities.ResetLayoutVariantWithChildren(dataContext, category, BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Paediatric, true);
 
+            #endregion
+
+            #region v.1.6.22
+            /*
+            // adjust layout variant for Dosing Guide and Daily Costs - Adult
+            BDNode aCategory = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("66a8dd87-98a7-4886-8d91-ab0d1e5457d8"));
+            BDUtilities.ResetLayoutVariantWithChildren(dataContext, aCategory, BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Adult, true);
+
+            // set value to 'Dosage'
+            IQueryable<BDLinkedNoteAssociation> linkedNoteAssociations = (from bdLinkedNoteAssociations in dataContext.BDLinkedNoteAssociations
+                                                                          where bdLinkedNoteAssociations.parentType == 18
+                                                                          orderby bdLinkedNoteAssociations.displayOrder
+                                                                          select bdLinkedNoteAssociations);
+
+            List<BDLinkedNoteAssociation> resultList = linkedNoteAssociations.ToList<BDLinkedNoteAssociation>();
+            foreach (BDLinkedNoteAssociation assn in resultList)
+                assn.parentKeyPropertyName = BDDosage.PROPERTYNAME_DOSAGE;
+
+            dataContext.SaveChanges();
+            */
             #endregion
         }
     }

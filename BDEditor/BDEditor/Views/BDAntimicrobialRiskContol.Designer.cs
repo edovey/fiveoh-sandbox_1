@@ -43,6 +43,7 @@
             this.µToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sOneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trademarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkmarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
@@ -68,7 +69,6 @@
             this.rtbAapRating = new System.Windows.Forms.RichTextBox();
             this.rtbRelativeDose = new System.Windows.Forms.RichTextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.checkmarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlButton.SuspendLayout();
             this.pnlRtbP.SuspendLayout();
             this.contextMenuStripTextBox.SuspendLayout();
@@ -206,6 +206,14 @@
             this.trademarkToolStripMenuItem.ToolTipText = "Insert ®";
             this.trademarkToolStripMenuItem.Click += new System.EventHandler(this.trademarkToolStripMenuItem_Click);
             // 
+            // checkmarkToolStripMenuItem
+            // 
+            this.checkmarkToolStripMenuItem.Name = "checkmarkToolStripMenuItem";
+            this.checkmarkToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.checkmarkToolStripMenuItem.Text = "√";
+            this.checkmarkToolStripMenuItem.ToolTipText = "Insert √";
+            this.checkmarkToolStripMenuItem.Click += new System.EventHandler(this.checkmarkToolStripMenuItem_Click);
+            // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
@@ -282,6 +290,7 @@
             this.btnRiskPregnancy.Size = new System.Drawing.Size(28, 28);
             this.btnRiskPregnancy.TabIndex = 1;
             this.btnRiskPregnancy.UseVisualStyleBackColor = true;
+            this.btnRiskPregnancy.Click += new System.EventHandler(this.btnLinkedNote_Click);
             // 
             // btnRecommendation
             // 
@@ -291,6 +300,7 @@
             this.btnRecommendation.Size = new System.Drawing.Size(28, 28);
             this.btnRecommendation.TabIndex = 3;
             this.btnRecommendation.UseVisualStyleBackColor = true;
+            this.btnRecommendation.Click += new System.EventHandler(this.btnLinkedNote_Click);
             // 
             // contextMenuStripEvents
             // 
@@ -352,6 +362,7 @@
             this.btnRelativeDose.Size = new System.Drawing.Size(28, 28);
             this.btnRelativeDose.TabIndex = 5;
             this.btnRelativeDose.UseVisualStyleBackColor = true;
+            this.btnRelativeDose.Click += new System.EventHandler(this.btnLinkedNote_Click);
             // 
             // btnAapRating
             // 
@@ -361,6 +372,7 @@
             this.btnAapRating.Size = new System.Drawing.Size(28, 28);
             this.btnAapRating.TabIndex = 3;
             this.btnAapRating.UseVisualStyleBackColor = true;
+            this.btnAapRating.Click += new System.EventHandler(this.btnLinkedNote_Click);
             // 
             // btnRiskLactation
             // 
@@ -370,6 +382,7 @@
             this.btnRiskLactation.Size = new System.Drawing.Size(28, 28);
             this.btnRiskLactation.TabIndex = 1;
             this.btnRiskLactation.UseVisualStyleBackColor = true;
+            this.btnRiskLactation.Click += new System.EventHandler(this.btnLinkedNote_Click);
             // 
             // rtbRiskLactation
             // 
@@ -400,14 +413,6 @@
             this.rtbRelativeDose.TabIndex = 4;
             this.rtbRelativeDose.Text = "";
             this.rtbRelativeDose.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rtbRelativeDose_MouseDown);
-            // 
-            // checkmarkToolStripMenuItem
-            // 
-            this.checkmarkToolStripMenuItem.Name = "checkmarkToolStripMenuItem";
-            this.checkmarkToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
-            this.checkmarkToolStripMenuItem.Text = "√";
-            this.checkmarkToolStripMenuItem.ToolTipText = "Insert √";
-            this.checkmarkToolStripMenuItem.Click += new System.EventHandler(this.checkmarkToolStripMenuItem_Click);
             // 
             // BDAntimicrobialRiskControl
             // 

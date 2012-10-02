@@ -89,12 +89,12 @@ namespace BDEditor.Views
 
         public BDAntimicrobialRiskControl(Entities pDataContext, IBDNode pNode)
         {
+            InitializeComponent();
             dataContext = pDataContext;
             currentNode = pNode;
             parentId = pNode.ParentId;
             DefaultNodeType = pNode.NodeType;
             DefaultLayoutVariantType = pNode.LayoutVariant;
-            InitializeComponent();
         }
 
         public void ShowLinksInUse(bool pPropagateToChildren)
@@ -559,6 +559,5 @@ namespace BDEditor.Views
         {
             currentControlName = RELATIVEDOSE_RTB;
         }
-
     }
 }

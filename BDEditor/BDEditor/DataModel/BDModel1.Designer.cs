@@ -100,22 +100,6 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<BDDosage> BDDosages
-        {
-            get
-            {
-                if ((_BDDosages == null))
-                {
-                    _BDDosages = base.CreateObjectSet<BDDosage>("BDDosages");
-                }
-                return _BDDosages;
-            }
-        }
-        private ObjectSet<BDDosage> _BDDosages;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<BDLayoutMetadata> BDLayoutMetadatas
         {
             get
@@ -464,6 +448,22 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDHtmlPage> _BDHtmlPages;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDDosage> BDDosages
+        {
+            get
+            {
+                if ((_BDDosages == null))
+                {
+                    _BDDosages = base.CreateObjectSet<BDDosage>("BDDosages");
+                }
+                return _BDDosages;
+            }
+        }
+        private ObjectSet<BDDosage> _BDDosages;
 
         #endregion
         #region AddTo Methods
@@ -482,14 +482,6 @@ namespace BDEditor.DataModel
         public void AddToBDDeletions(BDDeletion bDDeletion)
         {
             base.AddObject("BDDeletions", bDDeletion);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDDosages EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDDosages(BDDosage bDDosage)
-        {
-            base.AddObject("BDDosages", bDDosage);
         }
     
         /// <summary>
@@ -666,6 +658,14 @@ namespace BDEditor.DataModel
         public void AddToBDHtmlPages(BDHtmlPage bDHtmlPage)
         {
             base.AddObject("BDHtmlPages", bDHtmlPage);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDDosages EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDDosages(BDDosage bDDosage)
+        {
+            base.AddObject("BDDosages", bDDosage);
         }
 
         #endregion
@@ -3401,6 +3401,30 @@ namespace BDEditor.DataModel
         private global::System.String _dosage4;
         partial void Ondosage4Changing(global::System.String value);
         partial void Ondosage4Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String cost2
+        {
+            get
+            {
+                return _cost2;
+            }
+            set
+            {
+                Oncost2Changing(value);
+                ReportPropertyChanging("cost2");
+                _cost2 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("cost2");
+                Oncost2Changed();
+            }
+        }
+        private global::System.String _cost2;
+        partial void Oncost2Changing(global::System.String value);
+        partial void Oncost2Changed();
 
         #endregion
     

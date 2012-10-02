@@ -23,6 +23,7 @@ namespace BDEditor.Views
 
         private const string COST_TEXTBOX = "Cost";
         private const string DOSAGE_TEXTBOX = "Dosage";
+        private const string COST2_TEXTBOX = "Cost 2";
 
         public int? DisplayOrder { get; set; }
 
@@ -87,21 +88,25 @@ namespace BDEditor.Views
         public BDDosageAndCostControl()
         {
             InitializeComponent();
-            rtbDosage.Tag = btnDosageLink;
-            rtbCost.Tag = btnCostLink;
-
-            btnDosageLink.Tag = BDDosage.PROPERTYNAME_DOSAGE;
-            btnCostLink.Tag = BDDosage.PROPERTYNAME_COST;
         }
 
         public BDDosageAndCostControl(Entities pDataContext, IBDNode pNode)
         {
+            InitializeComponent();
             dataContext = pDataContext;
             currentDosage = pNode as BDDosage;
             parentId = pNode.ParentId;
             DefaultNodeType = pNode.NodeType;
             DefaultLayoutVariantType = pNode.LayoutVariant;
-            InitializeComponent();
+
+            rtbDosage.Tag = btnDosageLink;
+            rtbCost.Tag = btnCostLink;
+            rtbCost2.Tag = btnCost2Link;
+
+            btnDosageLink.Tag = BDDosage.PROPERTYNAME_DOSAGE;
+            btnCostLink.Tag = BDDosage.PROPERTYNAME_COST;
+            btnCost2Link.Tag = BDDosage.PROPERTYNAME_COST2;
+
         }
 
         public void ShowLinksInUse(bool pPropagateToChildren)
@@ -109,6 +114,7 @@ namespace BDEditor.Views
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentDosage) ? this.currentDosage.uuid : Guid.Empty);
             btnDosageLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnDosageLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
             btnCostLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnCostLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
+            btnCost2Link.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnCost2Link.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
         }
 
         public void AssignScopeId(Guid? pScopeId)
@@ -138,6 +144,7 @@ namespace BDEditor.Views
             {
                 rtbDosage.Text = @"";
                 rtbCost.Text = @"";
+                rtbCost2.Text = @"";
                 noneRadioButton.Checked = true;
             }
             else
@@ -146,6 +153,7 @@ namespace BDEditor.Views
 
                 rtbDosage.Text = currentDosage.dosage;
                 rtbCost.Text = currentDosage.cost;
+                rtbCost2.Text = currentDosage.cost2;
                 DisplayOrder = currentDosage.displayOrder;
 
                 switch ((BDDosage.DosageJoinType)currentDosage.joinType)
@@ -211,7 +219,8 @@ namespace BDEditor.Views
             {
                 if ((null == currentDosage) &&
                     (rtbDosage.Text != string.Empty) ||
-                    (rtbCost.Text != string.Empty))
+                    (rtbCost.Text != string.Empty) ||
+                    (rtbCost2.Text != string.Empty))
                 {
                     CreateCurrentObject();
                 }
@@ -220,6 +229,7 @@ namespace BDEditor.Views
                 {
                     if (currentDosage.dosage != rtbDosage.Text) currentDosage.dosage = rtbDosage.Text;
                     if (currentDosage.cost != rtbCost.Text) currentDosage.cost = rtbCost.Text;
+                    if (currentDosage.cost2 != rtbCost2.Text) currentDosage.cost2 = rtbCost2.Text;
                     if (currentDosage.displayOrder != DisplayOrder) currentDosage.displayOrder = DisplayOrder;
 
                     if (andRadioButton.Checked)
@@ -302,14 +312,21 @@ namespace BDEditor.Views
                 rtbDosage.Text = rtbDosage.Text.Insert(rtbDosage.SelectionStart, textToInsert);
                 rtbDosage.SelectionStart = textToInsert.Length + position;
             }
+            else if (currentControlName == COST2_TEXTBOX)
+            {
+                int position = rtbCost2.SelectionStart;
+                rtbCost2.Text = rtbCost2.Text.Insert(rtbCost2.SelectionStart, textToInsert);
+                rtbCost2.SelectionStart = textToInsert.Length + position;
+            }
         }
 
         private void toggleLinkButtonEnablement()
         {
-            bool enabled = ( (rtbDosage.Text.Length > 0) || (rtbCost.Text.Length > 0) );
+            bool enabled = ( (rtbDosage.Text.Length > 0) || (rtbCost.Text.Length > 0)  || (rtbCost2.Text.Length > 0));
 
             btnDosageLink.Enabled = enabled;
             btnCostLink.Enabled = enabled;
+            btnCost2Link.Enabled = enabled;
         }
 
         private void textBox_TextChanged(object sender, EventArgs e)
@@ -423,6 +440,11 @@ namespace BDEditor.Views
             currentControlName = COST_TEXTBOX;
         }
 
+        private void rtbCost2_MouseDown(object sender, MouseEventArgs e)
+        {
+            currentControlName = COST2_TEXTBOX;
+        }
+
         public BDConstants.BDNodeType DefaultNodeType { get; set; }
 
         public BDConstants.LayoutVariantType DefaultLayoutVariantType { get; set; }
@@ -457,6 +479,8 @@ namespace BDEditor.Views
                 rtbDosage.Undo();
             else if (currentControlName == COST_TEXTBOX)
                 rtbCost.Undo();
+            else if (currentControlName == COST2_TEXTBOX)
+                rtbCost2.Undo();
         }
 
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -465,6 +489,8 @@ namespace BDEditor.Views
                 rtbDosage.Cut();
             else if (currentControlName == COST_TEXTBOX)
                 rtbCost.Cut();
+            else if (currentControlName == COST2_TEXTBOX)
+                rtbCost2.Cut();
         }
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
@@ -473,6 +499,8 @@ namespace BDEditor.Views
                 rtbDosage.Copy();
             else if (currentControlName == COST_TEXTBOX)
                 rtbCost.Copy();
+            else if (currentControlName == COST2_TEXTBOX)
+                rtbCost2.Copy();
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -481,6 +509,8 @@ namespace BDEditor.Views
                 rtbDosage.Paste();
             else if (currentControlName == COST_TEXTBOX)
                 rtbCost.Paste();
+            else if (currentControlName == COST2_TEXTBOX)
+                rtbCost2.Paste();
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -490,6 +520,8 @@ namespace BDEditor.Views
                 rtb = rtbDosage;
             else if (currentControlName == COST_TEXTBOX)
                 rtb = rtbCost;
+            else if (currentControlName == COST2_TEXTBOX)
+                rtb = rtbCost2;
             if (rtb != null)
             {
                 int i = rtb.SelectionStart;
@@ -505,6 +537,8 @@ namespace BDEditor.Views
                 rtbDosage.SelectAll();
             else if (currentControlName == COST_TEXTBOX)
                 rtbCost.SelectAll();
+            else if (currentControlName == COST2_TEXTBOX)
+                rtbCost2.SelectAll();
         }
 
         private void contextMenuStripTextBox_Opening(object sender, CancelEventArgs e)
@@ -514,6 +548,8 @@ namespace BDEditor.Views
                 rtb = rtbDosage;
             else if (currentControlName == COST_TEXTBOX)
                 rtb = rtbCost;
+            else if (currentControlName == COST2_TEXTBOX)
+                rtb = rtbCost2;
             if (rtb != null)
             {
                 undoToolStripMenuItem.Enabled = rtb.CanUndo;

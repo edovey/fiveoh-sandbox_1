@@ -209,7 +209,7 @@ namespace BDEditor.Classes
             [Description("Antibiotics Dosing in Hepatic Impairment")]
             Antibiotics_Dosing_HepaticImpairment = 206,
             [Description("Child-Pugh Grading of Chronic Liver Disease")]
-            Antibiotics_HepaticImapirment_Grading = 2061,
+            Antibiotics_HepaticImpairment_Grading = 2061,
 
             [Description("Antibiotics Name Listing")]
             Antibiotics_NameListing = 207,

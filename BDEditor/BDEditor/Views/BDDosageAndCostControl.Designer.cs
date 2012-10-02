@@ -66,6 +66,8 @@
             this.orRadioButton = new System.Windows.Forms.RadioButton();
             this.thenRadioButton = new System.Windows.Forms.RadioButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.rtbCost2 = new System.Windows.Forms.RichTextBox();
+            this.btnCost2Link = new System.Windows.Forms.Button();
             this.contextMenuStripTextBox.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
@@ -77,11 +79,11 @@
             this.rtbCost.ContextMenuStrip = this.contextMenuStripTextBox;
             this.rtbCost.DetectUrls = false;
             this.rtbCost.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbCost.Location = new System.Drawing.Point(601, 2);
+            this.rtbCost.Location = new System.Drawing.Point(528, 2);
             this.rtbCost.Name = "rtbCost";
             this.rtbCost.ShortcutsEnabled = false;
-            this.rtbCost.Size = new System.Drawing.Size(178, 50);
-            this.rtbCost.TabIndex = 4;
+            this.rtbCost.Size = new System.Drawing.Size(112, 50);
+            this.rtbCost.TabIndex = 2;
             this.rtbCost.Text = "";
             this.toolTip1.SetToolTip(this.rtbCost, "Cost");
             this.rtbCost.TextChanged += new System.EventHandler(this.textBox_TextChanged);
@@ -215,7 +217,7 @@
             this.andOrRadioButton.Location = new System.Drawing.Point(426, 3);
             this.andOrRadioButton.Name = "andOrRadioButton";
             this.andOrRadioButton.Size = new System.Drawing.Size(93, 17);
-            this.andOrRadioButton.TabIndex = 13;
+            this.andOrRadioButton.TabIndex = 4;
             this.andOrRadioButton.TabStop = true;
             this.andOrRadioButton.Text = "+/-  (with next)";
             this.andOrRadioButton.UseVisualStyleBackColor = true;
@@ -225,6 +227,8 @@
             this.pnlMain.AutoSize = true;
             this.pnlMain.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pnlMain.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlMain.Controls.Add(this.rtbCost2);
+            this.pnlMain.Controls.Add(this.btnCost2Link);
             this.pnlMain.Controls.Add(this.rtbDosage);
             this.pnlMain.Controls.Add(this.rtbCost);
             this.pnlMain.Controls.Add(this.btnDosageLink);
@@ -234,19 +238,19 @@
             this.pnlMain.Location = new System.Drawing.Point(0, 0);
             this.pnlMain.MinimumSize = new System.Drawing.Size(866, 10);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(868, 56);
-            this.pnlMain.TabIndex = 32;
+            this.pnlMain.Size = new System.Drawing.Size(868, 55);
+            this.pnlMain.TabIndex = 0;
             // 
             // rtbDosage
             // 
             this.rtbDosage.ContextMenuStrip = this.contextMenuStripTextBox;
             this.rtbDosage.DetectUrls = false;
             this.rtbDosage.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbDosage.Location = new System.Drawing.Point(258, 3);
+            this.rtbDosage.Location = new System.Drawing.Point(185, 2);
             this.rtbDosage.Name = "rtbDosage";
             this.rtbDosage.ShortcutsEnabled = false;
             this.rtbDosage.Size = new System.Drawing.Size(303, 50);
-            this.rtbDosage.TabIndex = 2;
+            this.rtbDosage.TabIndex = 0;
             this.rtbDosage.Text = "";
             this.toolTip1.SetToolTip(this.rtbDosage, "Dosage");
             this.rtbDosage.TextChanged += new System.EventHandler(this.textBox_TextChanged);
@@ -256,10 +260,10 @@
             // 
             this.btnDosageLink.Enabled = false;
             this.btnDosageLink.Image = ((System.Drawing.Image)(resources.GetObject("btnDosageLink.Image")));
-            this.btnDosageLink.Location = new System.Drawing.Point(567, 2);
+            this.btnDosageLink.Location = new System.Drawing.Point(494, 2);
             this.btnDosageLink.Name = "btnDosageLink";
             this.btnDosageLink.Size = new System.Drawing.Size(28, 28);
-            this.btnDosageLink.TabIndex = 3;
+            this.btnDosageLink.TabIndex = 1;
             this.btnDosageLink.UseVisualStyleBackColor = true;
             this.btnDosageLink.Click += new System.EventHandler(this.btnLink_Click);
             // 
@@ -267,10 +271,10 @@
             // 
             this.btnCostLink.Enabled = false;
             this.btnCostLink.Image = ((System.Drawing.Image)(resources.GetObject("btnCostLink.Image")));
-            this.btnCostLink.Location = new System.Drawing.Point(785, 1);
+            this.btnCostLink.Location = new System.Drawing.Point(646, 2);
             this.btnCostLink.Name = "btnCostLink";
             this.btnCostLink.Size = new System.Drawing.Size(28, 28);
-            this.btnCostLink.TabIndex = 5;
+            this.btnCostLink.TabIndex = 3;
             this.btnCostLink.UseVisualStyleBackColor = true;
             this.btnCostLink.Click += new System.EventHandler(this.btnLink_Click);
             // 
@@ -278,7 +282,7 @@
             // 
             this.btnMenu.ContextMenuStrip = this.contextMenuStripEvents;
             this.btnMenu.Image = global::BDEditor.Properties.Resources.apps_16;
-            this.btnMenu.Location = new System.Drawing.Point(837, 0);
+            this.btnMenu.Location = new System.Drawing.Point(832, 2);
             this.btnMenu.Name = "btnMenu";
             this.btnMenu.Size = new System.Drawing.Size(28, 28);
             this.btnMenu.TabIndex = 6;
@@ -352,7 +356,7 @@
             this.pnlRadioButtons.Location = new System.Drawing.Point(0, 80);
             this.pnlRadioButtons.Name = "pnlRadioButtons";
             this.pnlRadioButtons.Size = new System.Drawing.Size(868, 23);
-            this.pnlRadioButtons.TabIndex = 31;
+            this.pnlRadioButtons.TabIndex = 1;
             // 
             // noneRadioButton
             // 
@@ -360,7 +364,7 @@
             this.noneRadioButton.Location = new System.Drawing.Point(28, 3);
             this.noneRadioButton.Name = "noneRadioButton";
             this.noneRadioButton.Size = new System.Drawing.Size(87, 17);
-            this.noneRadioButton.TabIndex = 9;
+            this.noneRadioButton.TabIndex = 0;
             this.noneRadioButton.TabStop = true;
             this.noneRadioButton.Text = "Next Dosage";
             this.noneRadioButton.UseVisualStyleBackColor = true;
@@ -371,7 +375,7 @@
             this.andRadioButton.Location = new System.Drawing.Point(123, 3);
             this.andRadioButton.Name = "andRadioButton";
             this.andRadioButton.Size = new System.Drawing.Size(95, 17);
-            this.andRadioButton.TabIndex = 10;
+            this.andRadioButton.TabIndex = 1;
             this.andRadioButton.TabStop = true;
             this.andRadioButton.Text = "And (with next)";
             this.andRadioButton.UseVisualStyleBackColor = true;
@@ -382,7 +386,7 @@
             this.orRadioButton.Location = new System.Drawing.Point(224, 3);
             this.orRadioButton.Name = "orRadioButton";
             this.orRadioButton.Size = new System.Drawing.Size(87, 17);
-            this.orRadioButton.TabIndex = 11;
+            this.orRadioButton.TabIndex = 2;
             this.orRadioButton.TabStop = true;
             this.orRadioButton.Text = "Or (with next)";
             this.orRadioButton.UseVisualStyleBackColor = true;
@@ -393,10 +397,36 @@
             this.thenRadioButton.Location = new System.Drawing.Point(318, 3);
             this.thenRadioButton.Name = "thenRadioButton";
             this.thenRadioButton.Size = new System.Drawing.Size(101, 17);
-            this.thenRadioButton.TabIndex = 12;
+            this.thenRadioButton.TabIndex = 3;
             this.thenRadioButton.TabStop = true;
             this.thenRadioButton.Text = "Then (with next)";
             this.thenRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // rtbCost2
+            // 
+            this.rtbCost2.ContextMenuStrip = this.contextMenuStripTextBox;
+            this.rtbCost2.DetectUrls = false;
+            this.rtbCost2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbCost2.Location = new System.Drawing.Point(680, 2);
+            this.rtbCost2.Name = "rtbCost2";
+            this.rtbCost2.ShortcutsEnabled = false;
+            this.rtbCost2.Size = new System.Drawing.Size(112, 50);
+            this.rtbCost2.TabIndex = 4;
+            this.rtbCost2.Text = "";
+            this.toolTip1.SetToolTip(this.rtbCost2, "Cost");
+            this.rtbCost2.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.rtbCost2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rtbCost2_MouseDown);
+            // 
+            // btnCost2Link
+            // 
+            this.btnCost2Link.Enabled = false;
+            this.btnCost2Link.Image = ((System.Drawing.Image)(resources.GetObject("btnCost2Link.Image")));
+            this.btnCost2Link.Location = new System.Drawing.Point(798, 2);
+            this.btnCost2Link.Name = "btnCost2Link";
+            this.btnCost2Link.Size = new System.Drawing.Size(28, 28);
+            this.btnCost2Link.TabIndex = 5;
+            this.btnCost2Link.UseVisualStyleBackColor = true;
+            this.btnCost2Link.Click += new System.EventHandler(this.btnLink_Click);
             // 
             // BDDosageAndCostControl
             // 
@@ -457,5 +487,7 @@
         private System.Windows.Forms.ToolStripMenuItem delDosagetoolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem selectAlloolStripMenuItem;
+        private System.Windows.Forms.RichTextBox rtbCost2;
+        private System.Windows.Forms.Button btnCost2Link;
     }
 }

@@ -218,7 +218,7 @@ namespace BDEditor.Classes
             [Description("Antibiotics Name Listing Content Row")]
             Antibiotics_NameListing_ContentRow = 2072,
 
-            [Description("Antibiotics Stepdown Recommendations")]
+            [Description("Antibiotics IV to PO SWITCH Recommendations")]
             Antibiotics_Stepdown = 208,
             [Description("Antibiotics Stepdown Header Row")]
             Antibiotics_Stepdown_HeaderRow = 2081,

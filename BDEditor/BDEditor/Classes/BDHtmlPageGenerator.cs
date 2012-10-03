@@ -14,6 +14,8 @@ namespace BDEditor.Classes
         private const string topHtml = @"<html><head><meta http-equiv=""Content-type"" content=""text/html;charset=UTF-8\""/><link rel=""stylesheet"" type=""text/css"" href=""bdviewer.css"" /> </head><body>";
         private const string bottomHtml = @"</body></html>";
         private const int EMPTY_PARAGRAPH = 8;  // <p> </p>
+        private const string imgFileTag = "<img src=\"{0}{1}\" alt=\"\" width=\"100\" height=\"100\" />";
+        private const string imgFileFolder = "\\images";  //note double slash in path (for ios viewer)
 
         private List<BDLayoutMetadataColumn> metadataLayoutColumns = new List<BDLayoutMetadataColumn>();
         private List<BDLinkedNote> pageFooterList = new List<BDLinkedNote>();
@@ -46,6 +48,66 @@ namespace BDEditor.Classes
                 processTextForInternalLinks(dataContext, page, htmlPageIds);
                 processTextForSubscriptAndSuperscriptMarkup(dataContext, page);
                 processTextForCarriageReturn(dataContext, page);
+            }
+        }
+
+        private void generatePages(BDNode pNode)
+        {
+            Entities dataContext = new Entities();
+            List<BDNode> chapters = BDNode.RetrieveNodesForType(dataContext, BDConstants.BDNodeType.BDChapter);
+            List<BDHtmlPage> chapterPages = new List<BDHtmlPage>();
+            if (pNode == null)
+            {
+                List<BDHtmlPage> childDetailPages = new List<BDHtmlPage>();
+
+                List<BDHtmlPage> childNavPages = new List<BDHtmlPage>();
+                foreach (BDNode chapter in chapters)
+                {
+                    generateOverviewAndChildrenForNode(dataContext, chapter, childDetailPages, childNavPages);
+                    if(childDetailPages.Count > 0)
+                        chapterPages.AddRange(childDetailPages);
+                    if (childNavPages.Count > 0)
+                        chapterPages.AddRange(childNavPages);
+                }
+            }
+            else
+            {
+                List<BDHtmlPage> childDetailPages = new List<BDHtmlPage>();
+                List<BDHtmlPage> childNavPages = new List<BDHtmlPage>();
+                if (pNode.NodeType == BDConstants.BDNodeType.BDChapter)
+                {
+                    generateOverviewAndChildrenForNode(dataContext, pNode, childDetailPages, childNavPages);
+                    chapterPages.AddRange(childDetailPages);
+                    chapterPages.AddRange(childNavPages);
+                }
+            }
+            Debug.WriteLine("Creating chapter page with returned list");
+            if (chapterPages.Count > 0)
+                generateNavigationPage(dataContext, null, chapterPages);
+            
+
+            // generate html pages for all linkedNotes that have at least one linkedAssociation where the parent type is 11
+            List<BDLinkedNote> notesWithinNotes = BDLinkedNote.RetrieveLinkedNotesWithLinkedNoteParentType(dataContext);
+            foreach (BDLinkedNote n in notesWithinNotes)
+            {
+                List<BDLinkedNoteAssociation> assns = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForLinkedNoteId(dataContext, n.uuid);
+                foreach (BDLinkedNoteAssociation a in assns)
+                {
+                    if (a.parentType == (int)BDConstants.BDNodeType.BDLinkedNote)
+                    {
+                        BDConstants.BDHtmlPageType pageType = BDConstants.BDHtmlPageType.Undefined;
+                        if (a.LinkedNoteType == BDConstants.LinkedNoteType.MarkedComment || a.LinkedNoteType == BDConstants.LinkedNoteType.UnmarkedComment || a.LinkedNoteType == BDConstants.LinkedNoteType.Inline)
+                            pageType = BDConstants.BDHtmlPageType.Comments;
+                        else if (a.LinkedNoteType == BDConstants.LinkedNoteType.Footnote)
+                            pageType = BDConstants.BDHtmlPageType.Footnote;
+                        else if (a.LinkedNoteType == BDConstants.LinkedNoteType.Reference)
+                            pageType = BDConstants.BDHtmlPageType.Reference;
+                        else
+                            pageType = BDConstants.BDHtmlPageType.Data;
+
+                        generatePageForLinkedNotes(dataContext, a.linkedNoteId.Value, BDConstants.BDNodeType.BDLinkedNote, n.documentText, pageType);
+                    }
+                }
             }
         }
 
@@ -148,13 +210,8 @@ namespace BDEditor.Classes
                     }
                     break;
                 case BDConstants.BDNodeType.BDAttachment:
-                    switch (pNode.LayoutVariant)
-                    {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                             isPageGenerated = true;
-                            // TODO:  build HTML wrapper around image tag?
-                            break;
-                    }
+                            buildAttachmentHTML(pContext, pNode);
                     break;
                 case BDConstants.BDNodeType.BDCategory:
                     switch (pNode.LayoutVariant)
@@ -410,66 +467,6 @@ namespace BDEditor.Classes
             return isPageGenerated;
         }
 
-        private void generatePages(BDNode pNode)
-        {
-            Entities dataContext = new Entities();
-            List<BDNode> chapters = BDNode.RetrieveNodesForType(dataContext, BDConstants.BDNodeType.BDChapter);
-            List<BDHtmlPage> chapterPages = new List<BDHtmlPage>();
-            if (pNode == null)
-            {
-                List<BDHtmlPage> childDetailPages = new List<BDHtmlPage>();
-
-                List<BDHtmlPage> childNavPages = new List<BDHtmlPage>();
-                foreach (BDNode chapter in chapters)
-                {
-                    generateOverviewAndChildrenForNode(dataContext, chapter, childDetailPages, childNavPages);
-                    if(childDetailPages.Count > 0)
-                        chapterPages.AddRange(childDetailPages);
-                    if (childNavPages.Count > 0)
-                        chapterPages.AddRange(childNavPages);
-                }
-            }
-            else
-            {
-                List<BDHtmlPage> childDetailPages = new List<BDHtmlPage>();
-                List<BDHtmlPage> childNavPages = new List<BDHtmlPage>();
-                if (pNode.NodeType == BDConstants.BDNodeType.BDChapter)
-                {
-                    generateOverviewAndChildrenForNode(dataContext, pNode, childDetailPages, childNavPages);
-                    chapterPages.AddRange(childDetailPages);
-                    chapterPages.AddRange(childNavPages);
-                }
-            }
-            Debug.WriteLine("Creating chapter page with returned list");
-            if (chapterPages.Count > 0)
-                generateNavigationPage(dataContext, null, chapterPages);
-            
-
-            // generate html pages for all linkedNotes that have at least one linkedAssociation where the parent type is 11
-            List<BDLinkedNote> notesWithinNotes = BDLinkedNote.RetrieveLinkedNotesWithLinkedNoteParentType(dataContext);
-            foreach (BDLinkedNote n in notesWithinNotes)
-            {
-                List<BDLinkedNoteAssociation> assns = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForLinkedNoteId(dataContext, n.uuid);
-                foreach (BDLinkedNoteAssociation a in assns)
-                {
-                    if (a.parentType == (int)BDConstants.BDNodeType.BDLinkedNote)
-                    {
-                        BDConstants.BDHtmlPageType pageType = BDConstants.BDHtmlPageType.Undefined;
-                        if (a.LinkedNoteType == BDConstants.LinkedNoteType.MarkedComment || a.LinkedNoteType == BDConstants.LinkedNoteType.UnmarkedComment || a.LinkedNoteType == BDConstants.LinkedNoteType.Inline)
-                            pageType = BDConstants.BDHtmlPageType.Comments;
-                        else if (a.LinkedNoteType == BDConstants.LinkedNoteType.Footnote)
-                            pageType = BDConstants.BDHtmlPageType.Footnote;
-                        else if (a.LinkedNoteType == BDConstants.LinkedNoteType.Reference)
-                            pageType = BDConstants.BDHtmlPageType.Reference;
-                        else
-                            pageType = BDConstants.BDHtmlPageType.Data;
-
-                        generatePageForLinkedNotes(dataContext, a.linkedNoteId.Value, BDConstants.BDNodeType.BDLinkedNote, n.documentText, pageType);
-                    }
-                }
-            }
-        }
-
         private BDHtmlPage generateStub(Entities pContext, BDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
@@ -489,7 +486,6 @@ namespace BDEditor.Classes
 
             bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
             
-            // show child nodes in a table
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
             if (childNodes.Count > 0)
             {
@@ -816,7 +812,7 @@ namespace BDEditor.Classes
                             }
                             else if (topicChild.NodeType == BDConstants.BDNodeType.BDAttachment)
                             {
-                                // TODO how to build html, how to access picture from html
+                                bodyHTML.Append(buildAttachmentHTML(pContext, pNode));
                             }
                         }
                     }
@@ -1922,6 +1918,30 @@ namespace BDEditor.Classes
         }
         #endregion
 
+        private BDHtmlPage generatePageForAttachment(Entities pContext, IBDNode pNode)
+        {
+            // in the case where this method is called from the wrong node type 
+            if (pNode.NodeType != BDConstants.BDNodeType.BDAttachment)
+            {
+#if DEBUG
+                throw new InvalidOperationException();
+#else
+                return null;
+#endif
+            }
+
+            metadataLayoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, pNode.LayoutVariant);
+            StringBuilder bodyHTML = new StringBuilder();
+            StringBuilder footerHTML = new StringBuilder();
+            List<BDLinkedNote> footerList = new List<BDLinkedNote>();
+
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
+
+            bodyHTML.Append(buildAttachmentHTML(pContext, pNode));
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data);
+        }
+
+
         #region Standalone HTML pages
         private BDHtmlPage generatePageForOverview(Entities pContext, IBDNode pNode)
         {
@@ -2869,7 +2889,7 @@ namespace BDEditor.Classes
             return dosageHTML.ToString();
         }
 
-        private string buildNodeWithReferenceAndOverviewHTML(Entities pContext, BDNode pNode, string pHeaderTagLevel)
+        private string buildNodeWithReferenceAndOverviewHTML(Entities pContext, IBDNode pNode, string pHeaderTagLevel)
         {
             // footnotes
             List<BDLinkedNote> itemFooters = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Footnote);
@@ -2952,7 +2972,7 @@ namespace BDEditor.Classes
             return tableRowHTML.ToString();
         }
 
-        private string buildReferenceHtml(Entities pContext, BDNode pNode)
+        private string buildReferenceHtml(Entities pContext, IBDNode pNode)
         {
             StringBuilder refHTML = new StringBuilder();
 
@@ -2987,6 +3007,19 @@ namespace BDEditor.Classes
             }
             return string.Empty;
         }
+
+        private string buildAttachmentHTML(Entities pContext, IBDNode pNode)
+        {
+            StringBuilder attHtml = new StringBuilder();
+            attHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1"));
+
+            BDAttachment attachmentNode = pNode as BDAttachment;
+
+            attHtml.AppendFormat(imgFileTag, attachmentNode.filename, imgFileFolder);
+
+            return attHtml.ToString();
+        }
+
         #endregion
 
         #region Utility methods
@@ -3174,17 +3207,17 @@ namespace BDEditor.Classes
             return notes;
         }
 
-        private BDHtmlPage writeBDHtmlPage(Entities pContext, BDNode pDisplayParentNode, StringBuilder pBodyHTML, BDConstants.BDHtmlPageType pPageType)
+        private BDHtmlPage writeBDHtmlPage(Entities pContext, IBDNode pDisplayParentNode, StringBuilder pBodyHTML, BDConstants.BDHtmlPageType pPageType)
         {
             return writeBDHtmlPage(pContext, pDisplayParentNode, pBodyHTML.ToString(), pPageType);
         }
 
-        private BDHtmlPage writeBDHtmlPage(Entities pContext, BDNode pDisplayParentNode, string pBodyHTML, BDConstants.BDHtmlPageType pPageType)
+        private BDHtmlPage writeBDHtmlPage(Entities pContext, IBDNode pDisplayParentNode, string pBodyHTML, BDConstants.BDHtmlPageType pPageType)
         {
             if(pDisplayParentNode == null)
                 return writeBDHtmlPage(pContext, Guid.Empty, BDConstants.BDNodeType.Undefined, pBodyHTML, pPageType);
             else
-                return writeBDHtmlPage(pContext, pDisplayParentNode.uuid, pDisplayParentNode.NodeType, pBodyHTML, pPageType);
+                return writeBDHtmlPage(pContext, pDisplayParentNode.Uuid, pDisplayParentNode.NodeType, pBodyHTML, pPageType);
         }
 
         /// <summary>

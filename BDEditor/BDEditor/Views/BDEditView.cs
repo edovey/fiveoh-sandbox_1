@@ -1175,19 +1175,22 @@ namespace BDEditor.Views
 
         private void btnPublish_Click(object sender, EventArgs e)
         {
-            BDNode generateNode;
+            IBDNode chapterNode;
             DialogResult result = MessageBox.Show("Generate All Chapters?", "Publish", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
             if (result == DialogResult.Yes)
-                generateNode = null;
+                chapterNode = null;
             else if (result == DialogResult.No)
-                generateNode = (chapterDropDown.SelectedItem as BDNode);
+                chapterNode = (chapterDropDown.SelectedItem as BDNode);
             else
                 return;
+
+            if (chapterTree.SelectedNode != null)
+                chapterNode = chapterTree.SelectedNode.Tag as IBDNode;
 
             this.Cursor = Cursors.WaitCursor;
             
             BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
-            generator.Generate(generateNode);
+            generator.Generate(chapterNode);
             System.Diagnostics.Debug.WriteLine("HTML page generation complete.");
 
             //BDSearchEntryGenerator.Generate();
@@ -1891,12 +1894,12 @@ namespace BDEditor.Views
             */
             #endregion
             #region v.1.6.20
+            /*
             // adjust layout variant for Dosing Guide and Daily Costs - Paediatric
             BDNode category = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("a99f114d-4bce-4389-922c-4396d1894c14"));
             BDUtilities.ResetLayoutVariantWithChildren(dataContext, category, BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Paediatric, true);
-
+            */
             #endregion
-
             #region v.1.6.22
             /*
             // adjust layout variant for Dosing Guide and Daily Costs - Adult
@@ -1918,7 +1921,15 @@ namespace BDEditor.Views
             #endregion
 
             #region v.1.6.23
-            // 
+            /*
+            // create layout for Antibiotics Dosing guide & daily costs - Adults
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Adult, 0, "Antimicrobial",
+                BDConstants.BDNodeType.BDAntimicrobial, BDNode.PROPERTYNAME_NAME, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Adult, 1, "Normal Adult Dose",
+                BDConstants.BDNodeType.BDDosage, BDDosage.PROPERTYNAME_DOSAGE, 0, @"Based on a 70kg adult with normal renal and hepatic function.  For disease-specific dosing, see also Recommended Empiric Therapy in Adult Patients and/or Recommended Therapy of Culture-Directed Infections in Adult Patients.");
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Adult, 2, "Cost ($)/Day",
+                BDConstants.BDNodeType.BDDosage, BDDosage.PROPERTYNAME_COST, 0, "Based on Alberta Health Drug Benefit List (AH DBL) price, September 2012, or manufacturer's list price or wholesale price if drug not on AH DBL.  Prices in the hospital setting may be significantly different due to contract pricing.  Check with pharmacy for actual prices.  Does not include administration, supplies, or serum level costs.");
+            */
             #endregion
         }
     }

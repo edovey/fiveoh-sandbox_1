@@ -1931,6 +1931,18 @@ namespace BDEditor.Views
                 BDConstants.BDNodeType.BDDosage, BDDosage.PROPERTYNAME_COST, 0, "Based on Alberta Health Drug Benefit List (AH DBL) price, September 2012, or manufacturer's list price or wholesale price if drug not on AH DBL.  Prices in the hospital setting may be significantly different due to contract pricing.  Check with pharmacy for actual prices.  Does not include administration, supplies, or serum level costs.");
             */
             #endregion
+
+            #region post - v.1.6.23
+            // fix child layout variants for vancomycin section
+            BDNode vancSection = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("c42a29c2-f5a1-48a4-b140-3e4dae56b445"));
+            BDUtilities.ResetLayoutVariantWithChildren(dataContext, vancSection, BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin, true);
+
+            // create layout metadata for Dental Prophylaxis
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Dental_Prophylaxis, 0, "Antimicrobial", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_THERAPY, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Dental_Prophylaxis, 1, "Adult Dose", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Dental_Prophylaxis, 2, "Paediatric Dose", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE_1, 0, "");
+
+            #endregion
         }
     }
 }

@@ -106,18 +106,6 @@ namespace BDEditor.Views
         public BDTherapyControl()
         {
             InitializeComponent();
-
-            tbName.Tag = btnTherapyLink;
-            tbDosage.Tag = btnDosageLink;
-            tbDuration.Tag = btnDurationLink;
-
-            chkPreviousName.Tag = btnTherapyLink;
-            chkPreviousDose.Tag = btnDosageLink;
-            chkPreviousDuration.Tag = btnDurationLink;
-
-            btnTherapyLink.Tag = BDTherapy.PROPERTYNAME_THERAPY;
-            btnDosageLink.Tag = BDTherapy.PROPERTYNAME_DOSAGE;
-            btnDurationLink.Tag = BDTherapy.PROPERTYNAME_DURATION;
         }
 
         public void ShowLinksInUse(bool pPropagateToChildren)
@@ -674,6 +662,31 @@ namespace BDEditor.Views
             bool origState = BDCommon.Settings.IsUpdating;
             BDCommon.Settings.IsUpdating = true;
 
+
+            tbName.Tag = btnTherapyLink;
+            tbDosage.Tag = btnDosageLink;
+            tbDuration.Tag = btnDurationLink;
+            tbDosage1.Tag = btnDosage1Link;
+            tbDosage2.Tag = btnDosage2Link;
+            tbDuration1.Tag = btnDuration1Link;
+            tbDuration2.Tag = btnDuration2Link;
+
+            chkPreviousName.Tag = btnTherapyLink;
+            chkPreviousDose.Tag = btnDosageLink;
+            chkPreviousDuration.Tag = btnDurationLink;
+            chkPreviousDose1.Tag = btnDosage1Link;
+            chkPreviousDose2.Tag = btnDosage2Link;
+            chkPreviousDuration1.Tag = btnDuration1Link;
+            chkPreviousDuration2.Tag = btnDuration2Link;
+
+            btnTherapyLink.Tag = BDTherapy.PROPERTYNAME_THERAPY;
+            btnDosageLink.Tag = BDTherapy.PROPERTYNAME_DOSAGE;
+            btnDurationLink.Tag = BDTherapy.PROPERTYNAME_DURATION;
+            btnDosage1Link.Tag = BDTherapy.PROPERTYNAME_DOSAGE_1;
+            btnDosage2Link.Tag = BDTherapy.PROPERTYNAME_DOSAGE_2;
+            btnDuration1Link.Tag = BDTherapy.PROPERTYNAME_DURATION_1;
+            btnDuration2Link.Tag = BDTherapy.PROPERTYNAME_DURATION_2;
+
             switch (DefaultLayoutVariantType)
             {
                 case BDConstants.LayoutVariantType.TreatmentRecommendation01:
@@ -731,7 +744,7 @@ namespace BDEditor.Views
                     pnlMain.Controls.Remove(btnDosage2Link);
                     pnlMain.Controls.Remove(tbDuration2);
                     pnlMain.Controls.Remove(chkPreviousDuration2);
-                    pnlMain.Controls.Remove(btnDuration1Link);
+                    pnlMain.Controls.Remove(btnDuration2Link);
                     toolTip1.SetToolTip(tbDosage, "Adult Dose");
                     toolTip1.SetToolTip(tbDosage1, "Paediatric Dose");
                     toolTip1.SetToolTip(tbDuration, "Adult Route/Duration");

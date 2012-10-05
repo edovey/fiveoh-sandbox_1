@@ -121,6 +121,7 @@
             this.bToolStripMenuItem.Size = new System.Drawing.Size(97, 22);
             this.bToolStripMenuItem.Text = "ß";
             this.bToolStripMenuItem.ToolTipText = "Insert ß";
+            this.bToolStripMenuItem.Click += new System.EventHandler(this.bToolStripMenuItem_Click);
             // 
             // geToolStripMenuItem
             // 
@@ -128,6 +129,7 @@
             this.geToolStripMenuItem.Size = new System.Drawing.Size(97, 22);
             this.geToolStripMenuItem.Text = "≥";
             this.geToolStripMenuItem.ToolTipText = "Insert ≥";
+            this.geToolStripMenuItem.Click += new System.EventHandler(this.geToolStripMenuItem_Click);
             // 
             // leToolStripMenuItem
             // 
@@ -135,6 +137,7 @@
             this.leToolStripMenuItem.Size = new System.Drawing.Size(97, 22);
             this.leToolStripMenuItem.Text = "≤";
             this.leToolStripMenuItem.ToolTipText = "Insert ≤";
+            this.leToolStripMenuItem.Click += new System.EventHandler(this.leToolStripMenuItem_Click);
             // 
             // plusMinusToolStripMenuItem
             // 
@@ -142,6 +145,7 @@
             this.plusMinusToolStripMenuItem.Size = new System.Drawing.Size(97, 22);
             this.plusMinusToolStripMenuItem.Text = "±";
             this.plusMinusToolStripMenuItem.ToolTipText = "Insert ±";
+            this.plusMinusToolStripMenuItem.Click += new System.EventHandler(this.plusMinusToolStripMenuItem_Click);
             // 
             // degreeToolStripMenuItem
             // 
@@ -149,12 +153,14 @@
             this.degreeToolStripMenuItem.Size = new System.Drawing.Size(97, 22);
             this.degreeToolStripMenuItem.Text = "°";
             this.degreeToolStripMenuItem.ToolTipText = "Insert °";
+            this.degreeToolStripMenuItem.Click += new System.EventHandler(this.degreeToolStripMenuItem_Click);
             // 
             // µToolStripMenuItem
             // 
             this.µToolStripMenuItem.Name = "µToolStripMenuItem";
             this.µToolStripMenuItem.Size = new System.Drawing.Size(97, 22);
             this.µToolStripMenuItem.Text = "µ";
+            this.µToolStripMenuItem.Click += new System.EventHandler(this.µToolStripMenuItem_Click);
             // 
             // toolStripMenuItem3
             // 

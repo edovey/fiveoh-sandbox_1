@@ -1919,7 +1919,6 @@ namespace BDEditor.Views
             dataContext.SaveChanges();
             */
             #endregion
-
             #region v.1.6.23
             /*
             // create layout for Antibiotics Dosing guide & daily costs - Adults
@@ -1932,7 +1931,8 @@ namespace BDEditor.Views
             */
             #endregion
 
-            #region post - v.1.6.23
+            #region v.1.6.24
+            /*
             // fix child layout variants for vancomycin section
             BDNode vancSection = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("c42a29c2-f5a1-48a4-b140-3e4dae56b445"));
             BDUtilities.ResetLayoutVariantWithChildren(dataContext, vancSection, BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin, true);
@@ -1941,7 +1941,7 @@ namespace BDEditor.Views
             BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Dental_Prophylaxis, 0, "Antimicrobial", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_THERAPY, 0, "");
             BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Dental_Prophylaxis, 1, "Adult Dose", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, 0, "");
             BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Dental_Prophylaxis, 2, "Paediatric Dose", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE_1, 0, "");
-
+            */
             #endregion
         }
     }

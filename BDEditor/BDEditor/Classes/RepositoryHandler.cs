@@ -532,65 +532,100 @@ namespace BDEditor.Classes
                 if (pIsBackup) context = string.Format("{0}.backup", context);
 
                 filename = string.Format("{0}.{1}.{2}{3}.gz", filename, context, archiveDateTime.ToString("yyyMMdd-HHmmss"), sourceFi.Extension);
-                
+                pDataContext.SaveChanges();
                 pDataContext.Connection.Close();
 
-                using (FileStream inFile = sourceFi.OpenRead())
+                try
                 {
-                    // Prevent compressing hidden and already compressed files.
-                    if ((File.GetAttributes(sourceFi.FullName) & FileAttributes.Hidden)
-                            != FileAttributes.Hidden & sourceFi.Extension != ".gz")
+                    using (FileStream inFile = sourceFi.OpenRead())
                     {
-                        // Create the compressed file.
-
-                        using (var memoryStream = new MemoryStream())
+                        // Prevent compressing hidden and already compressed files.
+                        if ((File.GetAttributes(sourceFi.FullName) & FileAttributes.Hidden)
+                                != FileAttributes.Hidden & sourceFi.Extension != ".gz")
                         {
-                            using (GZipStream Compress = new GZipStream(memoryStream, CompressionMode.Compress, true))
+                            // Create the compressed file.
+
+                            using (var memoryStream = new MemoryStream())
                             {
-                                // Copy the source file into the compression stream.
-                                byte[] buffer = new byte[4096];
-                                int numRead;
-                                while ((numRead = inFile.Read(buffer, 0, buffer.Length)) != 0)
+                                using (GZipStream Compress = new GZipStream(memoryStream, CompressionMode.Compress, true))
                                 {
-                                    Compress.Write(buffer, 0, numRead);
+                                    // Copy the source file into the compression stream.
+                                    byte[] buffer = new byte[4096];
+                                    int numRead;
+                                    while ((numRead = inFile.Read(buffer, 0, buffer.Length)) != 0)
+                                    {
+                                        Compress.Write(buffer, 0, numRead);
+                                    }
+                                    //Console.WriteLine("Compressed {0} from {1} to {2} bytes.", fi.Name, fi.Length.ToString(), outFile.Length.ToString());
                                 }
-                                //Console.WriteLine("Compressed {0} from {1} to {2} bytes.", fi.Name, fi.Length.ToString(), outFile.Length.ToString());
+
+                                NameValueCollection metadata = new NameValueCollection();
+                                metadata.Add(SOURCE_METADATA, pBucketName);
+                                metadata.Add(MACHINENAME_METADATA, Environment.MachineName);
+                                metadata.Add(FILENAME_METADATA, sourceFi.Name);
+                                metadata.Add(PATH_METADATA, sourceFi.DirectoryName);
+                                metadata.Add(USER_METADATA, pUserName);
+                                metadata.Add(COMMENT_METADATA, pComment);
+                                metadata.Add(TAG_METADATA, @"");
+                                metadata.Add(CREATEDATE_METADATA, archiveDateTime.ToString("s"));
+                                metadata.Add(APPVERSION_METADATA, System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+
+                                try
+                                {
+                                    PutObjectRequest putObjectRequest = new PutObjectRequest();
+                                    putObjectRequest
+                                        .WithBucketName(pBucketName)
+                                        .WithKey(filename)
+                                        .WithInputStream(memoryStream)
+                                        .AddHeaders(metadata);
+
+                                    S3Response s3Response = S3.PutObject(putObjectRequest);
+                                    s3Response.Dispose();
+                                }
+                                catch (AmazonS3Exception amazonS3Exception)             
+                                {                 
+                                    if (amazonS3Exception.ErrorCode != null && (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId") || amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))                 
+                                    {
+                                        string errorMessage = string.Format("Please check the provided AWS Credentials.");
+                                        MessageBox.Show(errorMessage);
+                                    }                
+                                    else                 
+                                    {                 
+                                        string errorMessage = string.Format("AWS message '{0}' when writing an object", amazonS3Exception.Message);
+                                        MessageBox.Show(errorMessage);
+                                    }             
+                                } 
                             }
 
-                            NameValueCollection metadata = new NameValueCollection();
-                            metadata.Add(SOURCE_METADATA, pBucketName);
-                            metadata.Add(MACHINENAME_METADATA, Environment.MachineName);
-                            metadata.Add(FILENAME_METADATA, sourceFi.Name);
-                            metadata.Add(PATH_METADATA, sourceFi.DirectoryName);
-                            metadata.Add(USER_METADATA, pUserName);
-                            metadata.Add(COMMENT_METADATA, pComment);
-                            metadata.Add(TAG_METADATA, @"");
-                            metadata.Add(CREATEDATE_METADATA, archiveDateTime.ToString("s"));
-                            metadata.Add(APPVERSION_METADATA, System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
-
-                            PutObjectRequest putObjectRequest = new PutObjectRequest();
-                            putObjectRequest
-                                .WithBucketName(pBucketName)
-                                .WithKey(filename)
-                                .WithInputStream(memoryStream)
-                                .AddHeaders(metadata);
-
-                            S3Response s3Response = S3.PutObject(putObjectRequest);
-                            s3Response.Dispose();
                         }
-                        
-                    }
-                    else
-                    {
-                        MessageBox.Show("Cannot archive previously archived files");
+                        else
+                        {
+                            MessageBox.Show("Cannot archive previously archived files");
+                        }
                     }
                 }
-                pDataContext.Connection.Open();
+                catch (Exception ex)
+                {
+                    string errorMessage = string.Format("General Message:{0}", ex.Message);
+                    MessageBox.Show(errorMessage);
+                }
+                finally
+                {
+                    pDataContext.Connection.Open();
+                }
+                
                 if (!pIsBackup)
                 {
-                    BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(pDataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
-                    systemSetting.settingDateTimeValue = archiveDateTime;
-                    pDataContext.SaveChanges();
+                    try
+                    {
+                        BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(pDataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+                        systemSetting.settingDateTimeValue = archiveDateTime;
+                        pDataContext.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        string errorMessage = string.Format("Notification on updating event date [{0}]", ex.Message);
+                    }
                 }
                 
             }

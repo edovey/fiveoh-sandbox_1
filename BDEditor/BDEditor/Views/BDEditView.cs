@@ -440,6 +440,7 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                             case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
                             case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
+                            case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional:
                             case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin:
                             case BDConstants.LayoutVariantType.Antibiotics_NameListing:
                             case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
@@ -584,6 +585,7 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Adult:
                             case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Paediatric:
                             case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin:
+                            case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional:
                             case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                                 childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
@@ -1930,7 +1932,6 @@ namespace BDEditor.Views
                 BDConstants.BDNodeType.BDDosage, BDDosage.PROPERTYNAME_COST, 0, "Based on Alberta Health Drug Benefit List (AH DBL) price, September 2012, or manufacturer's list price or wholesale price if drug not on AH DBL.  Prices in the hospital setting may be significantly different due to contract pricing.  Check with pharmacy for actual prices.  Does not include administration, supplies, or serum level costs.");
             */
             #endregion
-
             #region v.1.6.24
             /*
             // fix child layout variants for vancomycin section
@@ -1941,6 +1942,36 @@ namespace BDEditor.Views
             BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Dental_Prophylaxis, 0, "Antimicrobial", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_THERAPY, 0, "");
             BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Dental_Prophylaxis, 1, "Adult Dose", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, 0, "");
             BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Dental_Prophylaxis, 2, "Paediatric Dose", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE_1, 0, "");
+            */
+            #endregion
+            #region v.1.6.26
+            /*
+            // layout metadata for Renal impairment
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment, 0, "Antimicrobial", BDConstants.BDNodeType.BDAntimicrobial, BDNode.PROPERTYNAME_NAME, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment, 1, "Normal Adult<br>Dose", BDConstants.BDNodeType.BDDosage, BDDosage.PROPERTYNAME_DOSAGE, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment, 2, "Creatinine Clearance (mL/min)", BDConstants.BDNodeType.BDDosage, BDDosage.PROPERTYNAME_DOSAGE2, 0, ">50mL/min = >0.83mL/s; 10-50mL/mon = 0.17-0.83mL/s; <10mL/min = <0.17mL/s");
+            // reset layout variant for Aminoglycoside conventional dosing and monitoring to accommodate adult/peds category in hierarchy
+            BDNode section = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("ca7eefb1-81f8-465e-8818-34a35d92736a"));
+            List<IBDNode> sectionChildren = BDFabrik.GetChildrenForParent(dataContext, section);
+
+            BDNode categoryA = BDFabrik.CreateNode(dataContext, BDConstants.BDNodeType.BDCategory, section.Uuid, BDConstants.BDNodeType.BDSection) as BDNode;
+            categoryA.DisplayOrder = 0;
+            categoryA.Name = "ADULTS";
+            categoryA.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional;
+            BDNode.Save(dataContext, categoryA);
+
+            BDNode categoryP = BDFabrik.CreateNode(dataContext, BDConstants.BDNodeType.BDCategory, section.Uuid, BDConstants.BDNodeType.BDSection) as BDNode;
+            categoryP.DisplayOrder = 1;
+            categoryP.Name = "PAEDIATRICS";
+            categoryP.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional;
+            BDNode.Save(dataContext, categoryP);
+
+            foreach (IBDNode child in sectionChildren)
+                child.SetParent(categoryA);
+            dataContext.SaveChanges();
+
+            BDUtilities.ResetLayoutVariantWithChildren(dataContext, section, BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional, true);
+            dataContext.SaveChanges();
             */
             #endregion
         }

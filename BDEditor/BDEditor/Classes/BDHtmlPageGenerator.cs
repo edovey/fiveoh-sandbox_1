@@ -188,10 +188,6 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDAntimicrobial:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
-                            nodeChildPages.Add(generatePageForAntibioticsDosingInRenalImpairment(pContext, pNode as BDNode));
-                            isPageGenerated = true;
-                            break;
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                             nodeChildPages.Add(generatePageForAntibioticsClinicalGuidelines(pContext, pNode as BDNode));
                             isPageGenerated = true;
@@ -223,6 +219,10 @@ namespace BDEditor.Classes
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
                             nodeChildPages.Add(generatePageForAntibioticsPharmacodynamics(pContext, pNode as BDNode));
+                            isPageGenerated = true;
+                            break;
+                        case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
+                            nodeChildPages.Add(generatePageForAntibioticsDosingInRenalImpairment(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
@@ -836,7 +836,7 @@ namespace BDEditor.Classes
         private BDHtmlPage generatePageForAntibioticsDosingInRenalImpairment(Entities pContext, BDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
-            if (pNode.NodeType != BDConstants.BDNodeType.BDAntimicrobial)
+            if (pNode.NodeType != BDConstants.BDNodeType.BDCategory)
             {
 #if DEBUG
                 throw new InvalidOperationException();
@@ -844,7 +844,7 @@ namespace BDEditor.Classes
                 return null;
 #endif
             }
-
+            // Category > Antimicrobial with Dosage in a table
             metadataLayoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, pNode.LayoutVariant);
             StringBuilder bodyHTML = new StringBuilder();
             StringBuilder footerHTML = new StringBuilder();
@@ -852,37 +852,44 @@ namespace BDEditor.Classes
 
             bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h2"));
             
-            // child nodes are BDDosage 
+            // child nodes are BDAntimicrobial 
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
             if (childNodes.Count > 0)
             {
-                BDDosage firstNode = childNodes[0] as BDDosage;
-                List<BDLinkedNote> d1Inline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, firstNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.Inline);
-                List<BDLinkedNote> d1Marked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, firstNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.MarkedComment);
-                List<BDLinkedNote> d1Unmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, firstNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.UnmarkedComment);
+                List<string> labels = new List<string>();
+                // build markers and list for column header linked notes
+                labels.Add(retrieveLabelForPropertyName(pContext, BDConstants.BDNodeType.BDAntimicrobial, BDNode.PROPERTYNAME_NAME));
+                labels.Add(retrieveLabelForPropertyName(pContext, BDConstants.BDNodeType.BDDosage, BDDosage.PROPERTYNAME_NAME));
+                labels.Add(retrieveLabelForPropertyName(pContext, BDConstants.BDNodeType.BDDosage, BDDosage.PROPERTYNAME_DOSAGE));
+                List<string> footerMarkers = new List<string>();
+                footerMarkers.Add(buildFooterMarkerForList(retrieveNotesForLayoutColumn(pContext, metadataLayoutColumns[0]), true));
+                footerMarkers.Add(buildFooterMarkerForList(retrieveNotesForLayoutColumn(pContext, metadataLayoutColumns[1]), true));
+                footerMarkers.Add(buildFooterMarkerForList(retrieveNotesForLayoutColumn(pContext, metadataLayoutColumns[2]), true));
 
-                bodyHTML.Append(@"<h3>Normal Adult Dose</h3><br>");
-                BDHtmlPage d1NotePage = generatePageForLinkedNotes(pContext, firstNode.Uuid, BDConstants.BDNodeType.BDDosage, d1Inline, d1Marked, d1Unmarked);
-                if (d1NotePage != null)
-                {
-                    if (firstNode.dosage.Length > 0)
-                        bodyHTML.AppendFormat(@"<a href=""{0}"">{1}</a>", d1NotePage.Uuid, firstNode.dosage);
-                    else
-                        bodyHTML.AppendFormat(@"<a href=""{0}"">See Notes.</a>", d1NotePage.Uuid);
-                }
-                else
-                    bodyHTML.Append(firstNode.dosage);
-
-                bodyHTML.Append(@"<table><tr><th colspan=""3""><b>Dose and Interval Adjustment for Renal Impairment</b></th></tr>");
+                bodyHTML.AppendFormat(@"<table><tr><th rowspan=""3"">{0}{1}</th><th rowspan=""3"">{2}{3}</th>",labels[0],footerMarkers[0],labels[1],footerMarkers[1]);
+                bodyHTML.Append(@"<th colspan=""3""><b>Dose and Interval Adjustment for Renal Impairment</b></th></tr>");
+                bodyHTML.AppendFormat(@"<tr><th colspan=""3""><b>{0}{1}</b></th><tr>",labels[2],footerMarkers[2]);
                 bodyHTML.Append(@"<tr><th>&gt50</th><th>10 - 50</th><th>&lt10(Anuric)</th></tr>");
 
-                foreach (IBDNode node in childNodes)
+                foreach (IBDNode antimicrobial in childNodes) 
                 {
-                    if (node.NodeType == BDConstants.BDNodeType.BDDosage)
-                        bodyHTML.Append(buildDosageHTML(pContext, node));
+                    bodyHTML.AppendFormat("<tr><td>{0}</td>", antimicrobial.Name);
+                    List<IBDNode> dosageNodes = BDFabrik.GetChildrenForParent(pContext, antimicrobial);
+
+                    string dosageGroupName = string.Empty;
+                    foreach (IBDNode dNode in dosageNodes)
+                    {
+                        if (dNode.NodeType == BDConstants.BDNodeType.BDDosage)
+                        {
+                            bodyHTML.Append(buildDosageHTML(pContext, dNode, dosageGroupName));
+                            dosageGroupName = string.Empty;
+                        }
+                        else // BDDosageGroup
+                            dosageGroupName = dNode.Name;
+                    }
+                    bodyHTML.Append("</tr>");
                 }
                 bodyHTML.Append(@"</table>");
-
             }
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data);
         }
@@ -3114,22 +3121,22 @@ namespace BDEditor.Classes
             return cellHTML.ToString();
         }
 
-        private string buildDosageHTML(Entities pContext, IBDNode pNode)
+        private string buildDosageHTML(Entities pContext, IBDNode pNode, string pDosageGroupName)
         {
             BDDosage dosageNode = pNode as BDDosage;
             StringBuilder dosageHTML = new StringBuilder();
             string styleString = string.Empty;
             string colSpanTag = @"colspan=1";
-
-            dosageHTML.Append(@"<tr>");
-
-            if (dosageNode.dosage.Contains(@"NO CHANGE NEEDED"))
-            {
-                if (dosageNode.dosage2 == dosageNode.dosage3 && dosageNode.dosage2 == dosageNode.dosage4)
-                    colSpanTag = @"colspan=3";
-                if (dosageNode.dosage2 == dosageNode.dosage3 && dosageNode.dosage2 != dosageNode.dosage4)
-                    colSpanTag = @"colspan=2";
-            }
+            // dosage group if it exists, then adult dose in cell
+            if (pDosageGroupName.Length > 0)
+                dosageHTML.AppendFormat("<td><ul>{0}</ul><br>{1}</td>", pDosageGroupName,dosageNode.dosage);
+            else
+                dosageHTML.AppendFormat(@"<td>{0}</td>",dosageNode.dosage);
+            // 3 remaining doses in cells
+            if (dosageNode.dosage2 == dosageNode.dosage3 && dosageNode.dosage2 == dosageNode.dosage4)
+                colSpanTag = @"colspan=3";
+            if (dosageNode.dosage2 == dosageNode.dosage3 && dosageNode.dosage2 != dosageNode.dosage4)
+                colSpanTag = @"colspan=2";
 
             // Dosage 2
             List<BDLinkedNote> d2Inline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE2, BDConstants.LinkedNoteType.Inline);
@@ -3144,7 +3151,7 @@ namespace BDEditor.Classes
                 if (dosageNode.dosage2.Length > 0)
                     dosageHTML.AppendFormat(@"<td {0}><a href=""{1}"">{2}</a{3}>", colSpanTag, d2NotePage.Uuid, dosageNode.dosage2, d2FooterMarker);
                 else
-                    dosageHTML.AppendFormat(@"<td {0}><a href=""{1}"">See Notes.</a>", colSpanTag, d2NotePage.Uuid);
+                dosageHTML.AppendFormat(@"<td {0}><a href=""{1}"">See Notes.</a>{3}", colSpanTag, d2NotePage.Uuid,d2FooterMarker);
             }
             else
                 dosageHTML.AppendFormat(@"<td {0}>{1}{2}", colSpanTag, dosageNode.dosage2, d2FooterMarker);
@@ -3164,7 +3171,7 @@ namespace BDEditor.Classes
                 if (dosageNode.dosage3.Length > 0)
                     dosageHTML.AppendFormat(@"<td><a href=""{0}"">{1}</a{2}>", d3NotePage.Uuid, dosageNode.dosage3, d3FooterMarker);
                 else
-                    dosageHTML.AppendFormat(@"<td><a href=""{0}"">See Notes.</a>", d3NotePage.Uuid);
+                    dosageHTML.AppendFormat(@"<td><a href=""{0}"">See Notes.</a>{3}", d3NotePage.Uuid,d3FooterMarker);
             }
             else
                 dosageHTML.AppendFormat(@"<td>{0}{1}", dosageNode.dosage3, d3FooterMarker);
@@ -3184,7 +3191,7 @@ namespace BDEditor.Classes
                 if (dosageNode.dosage4.Length > 0)
                     dosageHTML.AppendFormat(@"<td><a href=""{0}"">{1}</a>{2}", d4NotePage.Uuid, dosageNode.dosage4);
                 else
-                    dosageHTML.AppendFormat(@"<td><a href=""{0}"">See Notes.</a>", d4NotePage.Uuid);
+                    dosageHTML.AppendFormat(@"<td><a href=""{0}"">See Notes.</a>{3}", d4NotePage.Uuid,d4FooterMarker);
             }
             else
                 dosageHTML.AppendFormat(@"<td>{0}{1}", dosageNode.dosage4, d4FooterMarker);

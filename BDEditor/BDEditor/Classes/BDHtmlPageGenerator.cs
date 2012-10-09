@@ -1861,28 +1861,24 @@ namespace BDEditor.Classes
                                 previousTherapyDosage = therapy.dosage;
                             therapiesHaveDosage = true;
                         }
-                        if (!string.IsNullOrEmpty(therapy.duration))
-                        {
-                            if (therapy.dosageSameAsPrevious == false)
-                                previousTherapyDosage = therapy.dosage;
-                            therapiesHaveDuration = true;
-                        }
                     }
                     if (!therapiesHaveDosage && !therapiesHaveDuration)
                         bodyHTML.Append(@"<tr><th>Recommended Empiric Therapy</th>");
                     else
                         bodyHTML.Append(@"<tr><th>Recommended<br>Empiric<br>Therapy</th>");
+
                     if (therapiesHaveDosage)
                     {
                         bodyHTML.Append(@"<th>Intermittent Dosing<br>Dwell time at least 6h</th>");
                         bodyHTML.Append(@"<th>Continuous dosing<br>(per L bag)</th>");
                     }
                     else
-                        bodyHTML.Append(@"<th></th>");
+                        bodyHTML.Append(@"<th />");
+                    
                     if (therapiesHaveDuration)
                         bodyHTML.Append(@"<th>Recommended<br>Duration</th>");
                     else
-                        bodyHTML.Append(@"<th></th>");
+                        bodyHTML.Append(@"<th />");
 
                     bodyHTML.Append(@"</tr>");
 
@@ -1945,8 +1941,8 @@ namespace BDEditor.Classes
                             }
                             if (!string.IsNullOrEmpty(therapy.duration))
                             {
-                                if (therapy.dosageSameAsPrevious == false)
-                                    previousTherapyDosage = therapy.dosage;
+                                if (therapy.durationSameAsPrevious == false)
+                                    previousTherapyDuration = therapy.duration;
                                 therapiesHaveDuration = true;
                             }
                         }
@@ -2244,25 +2240,25 @@ namespace BDEditor.Classes
                                     // therapy name - add to both cells
                                     if (therapy.nameSameAsPrevious.Value == true)
                                     {
-                                        adultDosageHTML.AppendFormat("<li>{0}", buildTherapyPropertyHTML(pContext, therapy, previousTherapyId, previousTherapyName, BDTherapy.PROPERTYNAME_THERAPY));
-                                        pedsDosageHTML.AppendFormat("<li>{0}", buildTherapyPropertyHTML(pContext, therapy, previousTherapyId, previousTherapyName, BDTherapy.PROPERTYNAME_THERAPY));
+                                        adultDosageHTML.AppendFormat("<li>{0}", buildNodePropertyHTML(pContext, therapy, previousTherapyId, previousTherapyName, BDTherapy.PROPERTYNAME_THERAPY, false));
+                                        pedsDosageHTML.AppendFormat("<li>{0}", buildNodePropertyHTML(pContext, therapy, previousTherapyId, previousTherapyName, BDTherapy.PROPERTYNAME_THERAPY, false));
                                     }
                                     else
                                     {
-                                        adultDosageHTML.AppendFormat("<li>{0}", buildTherapyPropertyHTML(pContext, therapy, therapy.Uuid, therapy.Name, BDTherapy.PROPERTYNAME_THERAPY));
-                                        pedsDosageHTML.AppendFormat("<li>{0}", buildTherapyPropertyHTML(pContext, therapy, therapy.Uuid, therapy.Name, BDTherapy.PROPERTYNAME_THERAPY));
+                                        adultDosageHTML.AppendFormat("<li>{0}", buildNodePropertyHTML(pContext, therapy, therapy.Uuid, therapy.Name, BDTherapy.PROPERTYNAME_THERAPY, false));
+                                        pedsDosageHTML.AppendFormat("<li>{0}", buildNodePropertyHTML(pContext, therapy, therapy.Uuid, therapy.Name, BDTherapy.PROPERTYNAME_THERAPY, false));
                                     }
                                     // Dosage - adult dose
                                     if (therapy.dosageSameAsPrevious.Value == true)
-                                        adultDosageHTML.Append(buildTherapyPropertyHTML(pContext, therapy, previousTherapyId, previousTherapyDosage, BDTherapy.PROPERTYNAME_DOSAGE));
+                                        adultDosageHTML.Append(buildNodePropertyHTML(pContext, therapy, previousTherapyId, previousTherapyDosage, BDTherapy.PROPERTYNAME_DOSAGE, false));
                                     else
-                                        adultDosageHTML.Append(buildTherapyPropertyHTML(pContext, therapy, therapy.Uuid, therapy.dosage, BDTherapy.PROPERTYNAME_DOSAGE));
+                                        adultDosageHTML.Append(buildNodePropertyHTML(pContext, therapy, therapy.Uuid, therapy.dosage, BDTherapy.PROPERTYNAME_DOSAGE, false));
 
                                     // Dosage 1 - Paediatric dose
                                     if (therapy.dosage1SameAsPrevious.Value == true)
-                                        pedsDosageHTML.Append(buildTherapyPropertyHTML(pContext, therapy, previousTherapyId, previousTherapyDosage1, BDTherapy.PROPERTYNAME_DOSAGE_1));
+                                        pedsDosageHTML.Append(buildNodePropertyHTML(pContext, therapy, previousTherapyId, previousTherapyDosage1, BDTherapy.PROPERTYNAME_DOSAGE_1, false));
                                     else
-                                        pedsDosageHTML.Append(buildTherapyPropertyHTML(pContext, therapy, therapy.Uuid, therapy.dosage1, BDTherapy.PROPERTYNAME_DOSAGE_1));
+                                        pedsDosageHTML.Append(buildNodePropertyHTML(pContext, therapy, therapy.Uuid, therapy.dosage1, BDTherapy.PROPERTYNAME_DOSAGE_1, false));
 
                                     // check for conjunctions and add a row for any that are found
                                     switch (therapy.therapyJoinType)
@@ -2301,30 +2297,6 @@ namespace BDEditor.Classes
                     }
                 }
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data);
-        }
-
-        private string buildTherapyPropertyHTML(Entities pContext, BDTherapy pTherapy, Guid pNoteParentId, string pPropertyValue, string pPropertyName)
-        {
-            StringBuilder propertyHTML = new StringBuilder();
-            List<BDLinkedNote> propertyFooters = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pTherapy.Uuid, pPropertyName, BDConstants.LinkedNoteType.Footnote));
-            string footerMarker = buildFooterMarkerForList(propertyFooters, true);
-
-            List<BDLinkedNote> inline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.Inline);
-            List<BDLinkedNote> marked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> unmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.UnmarkedComment);
-
-            BDHtmlPage notePage = generatePageForLinkedNotes(pContext, pTherapy.Uuid, BDConstants.BDNodeType.BDTherapy, inline, marked, unmarked);
-
-            if (notePage != null)
-            {
-                if (pPropertyValue.Length > 0 && !pPropertyValue.Contains("New Therapy"))
-                    propertyHTML.AppendFormat(@" <a href=""{0}"">{1}</a>{2}", notePage.Uuid, pPropertyValue.Trim(), footerMarker);
-                else
-                    propertyHTML.AppendFormat(@" <a href=""{0}"">See Comments.</a>", notePage.Uuid);
-            }
-            else
-                propertyHTML.AppendFormat(@" {0}{1}", pPropertyValue.Trim(), footerMarker);
-            return propertyHTML.ToString();
         }
 
         private BDHtmlPage generatePageForDentalMicroorganisms(Entities pContext, IBDNode pNode)
@@ -2541,6 +2513,12 @@ namespace BDEditor.Classes
             return bodyHtml;
         }
 
+        /// <summary>
+        /// Build HTML for therapy group, and associated therapies enclosed in a table
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pTherapyGroup"></param>
+        /// <returns></returns>
         private StringBuilder buildTherapyGroupHTML(Entities pContext, BDTherapyGroup pTherapyGroup)
         {
             StringBuilder therapyGroupHtml = new StringBuilder();
@@ -2606,17 +2584,11 @@ namespace BDEditor.Classes
             if (null != pNode && pNode.NodeType == BDConstants.BDNodeType.BDPathogenGroup)
             {
                 // Get overview for Pathogen Group
-                pathogenGroupHtml.Append(retrieveNoteTextForOverview(pContext, pathogenGroup.Uuid));
+                pathogenGroupHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h2"));
 
                 List<BDLinkedNote> inlineNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pathogenGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Inline);
                 List<BDLinkedNote> markedNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pathogenGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.MarkedComment);
                 List<BDLinkedNote> unmarkedNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pathogenGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.UnmarkedComment);
-
-                List<BDLinkedNote> itemFooters = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pathogenGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Footnote));
-                string footerMarker = buildFooterMarkerForList(itemFooters, true);
-
-                if (pNode.Name != null && pNode.Name.Length > 0)
-                    pathogenGroupHtml.AppendFormat(@"<h2>{0}</h2>{1}", pNode.Name, footerMarker);
 
                 pathogenGroupHtml.Append(buildTextFromNotes(inlineNotes));
                 pathogenGroupHtml.Append(buildTextFromNotes(markedNotes));
@@ -2626,39 +2598,10 @@ namespace BDEditor.Classes
                 if (pathogens.Count > 0)
                     pathogenGroupHtml.Append(@"<h3>Usual Pathogens</h3>");
 
-                foreach (IBDNode item in pathogens)
-                {
-                    if (item.NodeType == BDConstants.BDNodeType.BDPathogen)
-                    {
-                        BDNode node = item as BDNode;
-                        if (null != node)
-                            pathogenGroupHtml.Append(buildPathogenHtml(pContext, node));
-                    }
-                }
+                foreach (IBDNode pathogen in pathogens)
+                    pathogenGroupHtml.AppendFormat("{0}<br>", (buildNodeWithReferenceAndOverviewHTML(pContext, pathogen, "")));
             }
             return pathogenGroupHtml.ToString();
-        }
-
-        private string buildPathogenHtml(Entities pContext, BDNode pPathogen)
-        {
-            StringBuilder pathogenHtml = new StringBuilder();
-            List<BDLinkedNote> inlineNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pPathogen.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Inline);
-            List<BDLinkedNote> markedNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pPathogen.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> unmarkedNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pPathogen.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.UnmarkedComment);
-
-            List<BDLinkedNote> itemFooters = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pPathogen.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Footnote));
-            string footerMarker = buildFooterMarkerForList(itemFooters, true);
-
-            if (pPathogen.Name.Length > 0)
-                pathogenHtml.AppendFormat(@"{0}{1}<br>", pPathogen.name, footerMarker);
-
-            pathogenHtml.Append(buildTextFromNotes(inlineNotes));
-            pathogenHtml.Append(buildTextFromNotes(markedNotes));
-            pathogenHtml.Append(buildTextFromNotes(unmarkedNotes));
-
-            // TODO:  DEAL WITH ENDNOTES
-
-            return pathogenHtml.ToString();
         }
 
         /// <summary>
@@ -2674,9 +2617,6 @@ namespace BDEditor.Classes
             List<BDLinkedNote> markedNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pTherapyGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.MarkedComment);
             List<BDLinkedNote> unmarkedNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pTherapyGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.UnmarkedComment);
 
-            List<BDLinkedNote> itemFooters = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pTherapyGroup.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Footnote));
-            string footerMarker = buildFooterMarkerForList(itemFooters, true);
-
             // MAY NEED THIS if we decide to generate a page for the allNotes rather than putting them in-line.
             //if (notesListHasContent(pContext, pNotes))
             //{
@@ -2684,10 +2624,9 @@ namespace BDEditor.Classes
             //    therapyGroupHtml.AppendFormat(@"<h4><a href""{0}"">{1}</a></h4>", noteGuid, tgName);
             //}
             // else if (pDisplayParentNode.Name.Length > 0)
-
-            if (pTherapyGroup.Name.Length > 0 && !pTherapyGroup.Name.Contains("New Therapy Group"))
-                therapyGroupHtml.AppendFormat(@"<h4>{0}</h4>{1}", pTherapyGroup.Name, footerMarker);
-            therapyGroupHtml.Append(retrieveNoteTextForOverview(pContext, pTherapyGroup.Uuid));
+            
+            therapyGroupHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pTherapyGroup, "h4"));
+            
             therapyGroupHtml.Append(buildTextFromNotes(inlineNotes));
             therapyGroupHtml.Append(buildTextFromNotes(markedNotes));
             therapyGroupHtml.Append(buildTextFromNotes(unmarkedNotes));
@@ -2711,111 +2650,27 @@ namespace BDEditor.Classes
             if (pTherapy.leftBracket.Value == true)
                 therapyHtml.Append(@"&#91");
 
-            Guid nameNoteParentId = Guid.Empty;
-            string tName = string.Empty;
-
             if (pTherapy.nameSameAsPrevious.Value == true)
-            {
-                nameNoteParentId = previousTherapyId;
-                tName = previousTherapyName;
-            }
+                therapyHtml.AppendFormat("<b>{0}</b>", buildNodePropertyHTML(pContext, pTherapy, previousTherapyId, previousTherapyName, BDTherapy.PROPERTYNAME_THERAPY, false));
             else
-            {
-                nameNoteParentId = pTherapy.Uuid;
-                tName = pTherapy.Name;
-            }
+                therapyHtml.AppendFormat("<b>{0}</b>", buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.Name, BDTherapy.PROPERTYNAME_THERAPY, false));
 
-            List<BDLinkedNote> tNameInline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.Inline);
-            List<BDLinkedNote> tNameMarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> tNameUnmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.UnmarkedComment);
-
-            List<BDLinkedNote> therapyNameFooters = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.Footnote));
-            string therapyNameFooterMarker = buildFooterMarkerForList(therapyNameFooters, true);
-
-            BDHtmlPage tNameNotePage = generatePageForLinkedNotes(pContext, pTherapy.Uuid, BDConstants.BDNodeType.BDTherapy, tNameInline, tNameMarked, tNameUnmarked);
-            if (tNameNotePage != null)
-            {
-                if (tName.Length > 0)
-                    therapyHtml.AppendFormat(@"<a href=""{0}""><b>{1}</b></a>", tNameNotePage.Uuid, tName);
-                else
-                    therapyHtml.AppendFormat(@"<a href=""{0}""><b>See Notes.</b></a>", tNameNotePage.Uuid);
-            }
-            else
-                therapyHtml.AppendFormat(@"<b>{0}</b>", tName);
-
-            therapyHtml.Append(therapyNameFooterMarker);
             if (pTherapy.rightBracket.Value == true)
                 therapyHtml.Append(@"&#93");
 
             therapyHtml.Append(@"</td>");
 
             // Dosage
-            Guid dosageNoteParentId = Guid.Empty;
-            string tDosage = string.Empty;
-
             if (pTherapy.dosageSameAsPrevious.Value == true)
-            {
-                dosageNoteParentId = previousTherapyId;
-                tDosage = previousTherapyDosage;
-            }
+                therapyHtml.AppendFormat("<td>{0}</td>", buildNodePropertyHTML(pContext, pTherapy, previousTherapyId, previousTherapyDosage, BDTherapy.PROPERTYNAME_DOSAGE, false));
             else
-            {
-                dosageNoteParentId = pTherapy.Uuid;
-                tDosage = pTherapy.dosage;
-            }
-
-            List<BDLinkedNote> dosageFooters = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.Footnote));
-            string dosageFooterMarker = buildFooterMarkerForList(dosageFooters, true);
-
-            List<BDLinkedNote> tDosageInline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.Inline);
-            List<BDLinkedNote> tDosageMarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> tDosageUnmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.UnmarkedComment);
-
-            BDHtmlPage tDosageNotePage = generatePageForLinkedNotes(pContext, pTherapy.Uuid, BDConstants.BDNodeType.BDTherapy, tDosageInline, tDosageMarked, tDosageUnmarked);
-
-            if (tDosageNotePage != null)
-            {
-                if (pTherapy.dosage.Length > 0)
-                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">{1}</a>{1}</td>", tDosageNotePage.Uuid, tDosage.Trim(), dosageFooterMarker);
-                else
-                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See allNotes.</a></td>", tDosageNotePage.Uuid);
-            }
-            else
-                therapyHtml.AppendFormat(@"<td>{0}{1}</td>", tDosage.Trim(), dosageFooterMarker);
+                therapyHtml.AppendFormat("<td>{0}</td>", buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.dosage, BDTherapy.PROPERTYNAME_DOSAGE, false));
 
             // Duration
-            Guid durationNoteParentId = Guid.Empty;
-            string tDuration = string.Empty;
-
             if (pTherapy.durationSameAsPrevious.Value == true)
-            {
-                durationNoteParentId = previousTherapyId;
-                tDuration = previousTherapyDuration;
-            }
+                therapyHtml.AppendFormat("<td>{0}</td>", buildNodePropertyHTML(pContext, pTherapy, previousTherapyId, previousTherapyDuration, BDTherapy.PROPERTYNAME_DURATION, false));
             else
-            {
-                durationNoteParentId = pTherapy.Uuid;
-                tDuration = pTherapy.duration;
-            }
-
-            List<BDLinkedNote> durationFooters = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, durationNoteParentId, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.Footnote));
-            string durationFooterMarker = buildFooterMarkerForList(durationFooters, true);
-
-            List<BDLinkedNote> tDurationInline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, durationNoteParentId, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.Inline);
-            List<BDLinkedNote> tDurationMarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, durationNoteParentId, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> tDurationUnmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, durationNoteParentId, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.UnmarkedComment);
-
-            BDHtmlPage tDurationNotePage = generatePageForLinkedNotes(pContext, pTherapy.Uuid, BDConstants.BDNodeType.BDTherapy, tDurationInline, tDurationMarked, tDurationUnmarked);
-
-            if (tDurationNotePage != null)
-            {
-                if (pTherapy.duration.Length > 0)
-                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">{1}</a>{1}</td>", tDurationNotePage.Uuid, tDuration.Trim(), durationFooterMarker);
-                else
-                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See Notes.</a></td>", tDurationNotePage.Uuid);
-            }
-            else
-                therapyHtml.AppendFormat(@"<td>{0}{1}</td>", tDuration.Trim(), durationFooterMarker);
+                therapyHtml.AppendFormat("<td>{0}</td>", buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.duration, BDTherapy.PROPERTYNAME_DURATION, false));
 
             therapyHtml.Append(@"</tr>");
 
@@ -2837,6 +2692,7 @@ namespace BDEditor.Classes
                 default:
                     break;
             }
+
             return therapyHtml.ToString();
         }
 
@@ -2856,143 +2712,34 @@ namespace BDEditor.Classes
             if (pTherapy.leftBracket.Value == true)
                 therapyHtml.Append(@"&#91");
 
-            Guid nameNoteParentId = Guid.Empty;
-            string tName = string.Empty;
-
             if (pTherapy.nameSameAsPrevious.Value == true)
-            {
-                nameNoteParentId = previousTherapyId;
-                tName = previousTherapyName;
-            }
+                therapyHtml.AppendFormat("<td>{0}", buildNodePropertyHTML(pContext, pTherapy, previousTherapyId, previousTherapyName, BDTherapy.PROPERTYNAME_THERAPY, true, "b"));
             else
-            {
-                nameNoteParentId = pTherapy.Uuid;
-                tName = pTherapy.Name;
-            }
-
-            List<BDLinkedNote> therapyNameFooters = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.Footnote));
-            string therapyNameFooterMarker = buildFooterMarkerForList(therapyNameFooters, true);
-
-           List<BDLinkedNote> inlineName = ( retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.Inline));
-            List<BDLinkedNote> notesForName = new List<BDLinkedNote>();
-            notesForName.AddRange(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.MarkedComment));
-            notesForName.AddRange(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.UnmarkedComment));
-
-            therapyHtml.AppendFormat(@"<b>{0}</b>{1}", tName, therapyNameFooterMarker);
-            foreach (BDLinkedNote note in inlineName)
-            {
-                if (note.documentText.Length > EMPTY_PARAGRAPH)
-                    therapyHtml.AppendFormat(@"<br>{0}", note.documentText);
-            }
+                therapyHtml.AppendFormat("<td>{0}", buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.Name, BDTherapy.PROPERTYNAME_THERAPY, true, "b"));
 
             if (pTherapy.rightBracket.Value == true)
                 therapyHtml.Append(@"&#93");
 
             therapyHtml.Append(@"</td>");
 
-            // Dosage 1
-            Guid dosageNoteParentId = Guid.Empty;
-            string tDosage = string.Empty;
-
+            // Dosage
             if (pTherapy.dosageSameAsPrevious.Value == true)
-            {
-                dosageNoteParentId = previousTherapyId;
-                tDosage = previousTherapyDosage;
-            }
+                therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, previousTherapyId, previousTherapyDosage, BDTherapy.PROPERTYNAME_DOSAGE, false, "td"));
             else
-            {
-                dosageNoteParentId = pTherapy.Uuid;
-                tDosage = pTherapy.dosage;
-            }
-
-            List<BDLinkedNote> dosageFooters = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.Footnote));
-            string dosageFooterMarker = buildFooterMarkerForList(dosageFooters, true);
-
-            List<BDLinkedNote> tDosageInline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.Inline);
-            List<BDLinkedNote> tDosageMarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> tDosageUnmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.UnmarkedComment);
-
-            BDHtmlPage tDosageNotePage = generatePageForLinkedNotes(pContext, pTherapy.Uuid, BDConstants.BDNodeType.BDTherapy, tDosageInline, tDosageMarked, tDosageUnmarked);
-
-            if (tDosageNotePage != null)
-            {
-                if (pTherapy.dosage.Length > 0)
-                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">{1}</a>{2}</td>", tDosageNotePage.Uuid, tDosage.Trim(), dosageFooterMarker);
-                else
-                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See Comments.</a></td>", tDosageNotePage.Uuid);
-            }
-            else
-                therapyHtml.AppendFormat(@"<td>{0}{1}</td>", tDosage.Trim(), dosageFooterMarker);
+                therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.dosage, BDTherapy.PROPERTYNAME_DOSAGE, false, "td"));
 
             // Dosage 1
-            Guid dosage1NoteParentId = Guid.Empty;
-            string tDosage1 = string.Empty;
-
             if (pTherapy.dosage1SameAsPrevious.Value == true)
-            {
-                dosage1NoteParentId = previousTherapyId;
-                tDosage1 = previousTherapyDosage1;
-            }
+                therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, previousTherapyId, previousTherapyDosage1, BDTherapy.PROPERTYNAME_DOSAGE_1, false, "td"));
             else
-            {
-                dosage1NoteParentId = pTherapy.Uuid;
-                tDosage1 = pTherapy.dosage1;
-            }
-
-            List<BDLinkedNote> dosage1Footers = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosage1NoteParentId, BDTherapy.PROPERTYNAME_DOSAGE_1, BDConstants.LinkedNoteType.Footnote));
-            string dosage1FooterMarker = buildFooterMarkerForList(dosage1Footers, true);
-
-            List<BDLinkedNote> tDosage1Inline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosage1NoteParentId, BDTherapy.PROPERTYNAME_DOSAGE_1, BDConstants.LinkedNoteType.Inline);
-            List<BDLinkedNote> tDosage1Marked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosage1NoteParentId, BDTherapy.PROPERTYNAME_DOSAGE_1, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> tDosage1Unmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosage1NoteParentId, BDTherapy.PROPERTYNAME_DOSAGE_1, BDConstants.LinkedNoteType.UnmarkedComment);
-
-            BDHtmlPage tDosage1NotePage = generatePageForLinkedNotes(pContext, pTherapy.Uuid, BDConstants.BDNodeType.BDTherapy, tDosage1Inline, tDosage1Marked, tDosage1Unmarked);
-
-            if (tDosage1NotePage != null)
-            {
-                if (pTherapy.dosage1.Length > 0)
-                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">{1}</a>{2}</td>", tDosage1NotePage.Uuid, tDosage1.Trim(), dosage1FooterMarker);
-                else
-                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See Comments.</a></td>", tDosage1NotePage.Uuid);
-            }
-            else
-                therapyHtml.AppendFormat(@"<td>{0}{1}</td>", tDosage1.Trim(), dosage1FooterMarker);
+                therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.dosage1, BDTherapy.PROPERTYNAME_DOSAGE_1, false, "td"));
 
             // Duration
-            Guid durationNoteParentId = Guid.Empty;
-            string tDuration = string.Empty;
-
             if (pTherapy.durationSameAsPrevious.Value == true)
-            {
-                durationNoteParentId = previousTherapyId;
-                tDuration = previousTherapyDuration;
-            }
+                therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, previousTherapyId, previousTherapyDuration, BDTherapy.PROPERTYNAME_DURATION, false, "td"));
             else
-            {
-                durationNoteParentId = pTherapy.Uuid;
-                tDuration = pTherapy.duration;
-            }
-            if (tDuration.Length > 0)
-            {
-                List<BDLinkedNote> durationFooters = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, durationNoteParentId, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.Footnote));
-                string durationFooterMarker = buildFooterMarkerForList(durationFooters, true);
+                therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.duration, BDTherapy.PROPERTYNAME_DURATION, false, "td"));
 
-                List<BDLinkedNote> tDurationInline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, durationNoteParentId, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.Inline);
-                List<BDLinkedNote> tDurationMarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, durationNoteParentId, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.MarkedComment);
-                List<BDLinkedNote> tDurationUnmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, durationNoteParentId, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.UnmarkedComment);
-
-                BDHtmlPage tDurationNotePage = generatePageForLinkedNotes(pContext, pTherapy.Uuid, BDConstants.BDNodeType.BDTherapy, tDurationInline, tDurationMarked, tDurationUnmarked);
-
-                if (tDurationNotePage != null)
-                {
-                    if (pTherapy.duration.Length > 0)
-                        therapyHtml.AppendFormat(@"<td><a href=""{0}"">{1}</a>{2}</td>", tDurationNotePage.Uuid, tDuration.Trim(), durationFooterMarker);
-                    else
-                        therapyHtml.AppendFormat(@"<td><a href=""{0}"">See Notes.</a></td>", tDurationNotePage.Uuid);
-                }
-                else
-                    therapyHtml.AppendFormat(@"<td>{0}{1}</td>", tDuration.Trim(), durationFooterMarker);
-            }
             therapyHtml.Append(@"</tr>");
 
             // check for conjunctions and add a row for any that are found
@@ -3032,37 +2779,11 @@ namespace BDEditor.Classes
             if (pTherapy.leftBracket.Value == true)
                 therapyHtml.Append(@"&#91");
 
-            Guid nameNoteParentId = Guid.Empty;
-            string tName = string.Empty;
-
+            // Name
             if (pTherapy.nameSameAsPrevious.Value == true)
-            {
-                nameNoteParentId = previousTherapyId;
-                tName = previousTherapyName;
-            }
+                therapyHtml.AppendFormat("<td>{0}", buildNodePropertyHTML(pContext, pTherapy, previousTherapyId, previousTherapyName, BDTherapy.PROPERTYNAME_THERAPY, false, "b"));
             else
-            {
-                nameNoteParentId = pTherapy.Uuid;
-                tName = pTherapy.Name;
-            }
-
-            List<BDLinkedNote> therapyNameFooters = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.Footnote));
-            string therapyNameFooterMarker = buildFooterMarkerForList(therapyNameFooters, true);
-
-            List<BDLinkedNote> tNameInline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.Inline);
-            List<BDLinkedNote> tNameMarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> tNameUnmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, nameNoteParentId, BDTherapy.PROPERTYNAME_THERAPY, BDConstants.LinkedNoteType.UnmarkedComment);
-
-            BDHtmlPage tNameNotePage = generatePageForLinkedNotes(pContext, pTherapy.Uuid, BDConstants.BDNodeType.BDTherapy, tNameInline, tNameMarked, tNameUnmarked);
-            if (tNameNotePage != null)
-            {
-                if (tName.Length > 0)
-                    therapyHtml.AppendFormat(@"<a href=""{0}""><b>{1}</b>{2}</a>", tNameNotePage.Uuid, tName, therapyNameFooterMarker);
-                else
-                    therapyHtml.AppendFormat(@"<a href=""{0}""><b>See Notes.</b></a>", tNameNotePage.Uuid);
-            }
-            else
-                therapyHtml.AppendFormat(@"<b>{0}{1}</b>", tName, therapyNameFooterMarker);
+                therapyHtml.AppendFormat("<td>{0}", buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.Name, BDTherapy.PROPERTYNAME_THERAPY, false, "b"));
 
             if (pTherapy.rightBracket.Value == true)
                 therapyHtml.Append(@"&#93");
@@ -3070,106 +2791,22 @@ namespace BDEditor.Classes
             therapyHtml.Append(@"</td>");
 
             // Dosage
-            Guid dosageNoteParentId = Guid.Empty;
-            string tDosage = string.Empty;
-
             if (pTherapy.dosageSameAsPrevious.Value == true)
-            {
-                dosageNoteParentId = previousTherapyId;
-                tDosage = previousTherapyDosage;
-            }
+                therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, previousTherapyId, previousTherapyDosage, BDTherapy.PROPERTYNAME_DOSAGE, false, "td"));
             else
-            {
-                dosageNoteParentId = pTherapy.Uuid;
-                tDosage = pTherapy.dosage;
-            }
-
-            List<BDLinkedNote> dosageFooters = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.Footnote));
-            string dosageFooterMarker = buildFooterMarkerForList(dosageFooters, true);
-
-            List<BDLinkedNote> tDosageInline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.Inline);
-            List<BDLinkedNote> tDosageMarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> tDosageUnmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNoteParentId, BDTherapy.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.UnmarkedComment);
-
-            BDHtmlPage tDosageNotePage = generatePageForLinkedNotes(pContext, pTherapy.Uuid, BDConstants.BDNodeType.BDTherapy, tDosageInline, tDosageMarked, tDosageUnmarked);
-
-            if (tDosageNotePage != null)
-            {
-                if (pTherapy.dosage.Length > 0)
-                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">{1}</a>{2}</td>", tDosageNotePage.Uuid, tDosage.Trim(), dosageFooterMarker);
-                else
-                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See Comments.</a></td>", tDosageNotePage.Uuid);
-            }
-            else
-                therapyHtml.AppendFormat(@"<td>{0}{1}</td>", tDosage.Trim(), dosageFooterMarker);
+                therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.dosage, BDTherapy.PROPERTYNAME_DOSAGE, false, "td"));
 
             // Duration
-            Guid durationNoteParentId = Guid.Empty;
-            string tDuration = string.Empty;
-
             if (pTherapy.durationSameAsPrevious.Value == true)
-            {
-                durationNoteParentId = previousTherapyId;
-                tDuration = previousTherapyDuration;
-            }
+                therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, previousTherapyId, previousTherapyDuration, BDTherapy.PROPERTYNAME_DURATION, false, "td"));
             else
-            {
-                durationNoteParentId = pTherapy.Uuid;
-                tDuration = pTherapy.duration;
-            }
-
-            List<BDLinkedNote> durationFooters = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, durationNoteParentId, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.Footnote));
-            string durationFooterMarker = buildFooterMarkerForList(durationFooters, true);
+                therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.duration, BDTherapy.PROPERTYNAME_DURATION, false, "td"));
             
-            List<BDLinkedNote> tDurationInline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pTherapy.Uuid, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.Inline);
-            List<BDLinkedNote> tDurationMarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pTherapy.Uuid, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> tDurationUnmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pTherapy.Uuid, BDTherapy.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.UnmarkedComment);
-
-            BDHtmlPage tDurationNotePage = generatePageForLinkedNotes(pContext, pTherapy.Uuid, BDConstants.BDNodeType.BDTherapy, tDurationInline, tDurationMarked, tDurationUnmarked);
-
-            if (tDurationNotePage != null)
-            {
-                if (pTherapy.duration.Length > 0)
-                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">{1}</a></td>", tDurationNotePage.Uuid, tDuration.Trim());
-                else
-                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See Notes.</a></td>", tDurationNotePage.Uuid);
-            }
-            else
-                therapyHtml.AppendFormat(@"<td>{0}</td>", tDuration.Trim());
-
-            // Duration
-            Guid duration1NoteParentId = Guid.Empty;
-            string tDuration1 = string.Empty;
-
+            // Duration 1
             if (pTherapy.duration1SameAsPrevious.Value == true)
-            {
-                duration1NoteParentId = previousTherapyId;
-                tDuration1 = previousTherapyDuration1;
-            }
+                therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, previousTherapyId, previousTherapyDuration1, BDTherapy.PROPERTYNAME_DURATION_1, false, "td"));
             else
-            {
-                duration1NoteParentId = pTherapy.Uuid;
-                tDuration1 = pTherapy.duration1;
-            }
-
-            List<BDLinkedNote> duration1Footers = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, durationNoteParentId, BDTherapy.PROPERTYNAME_DURATION_1, BDConstants.LinkedNoteType.Footnote));
-            string duration1FooterMarker = buildFooterMarkerForList(duration1Footers, true);
-
-            List<BDLinkedNote> tDuration1Inline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, durationNoteParentId, BDTherapy.PROPERTYNAME_DURATION_1, BDConstants.LinkedNoteType.Inline);
-            List<BDLinkedNote> tDuration1Marked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, durationNoteParentId, BDTherapy.PROPERTYNAME_DURATION_1, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> tDuration1Unmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, durationNoteParentId, BDTherapy.PROPERTYNAME_DURATION_1, BDConstants.LinkedNoteType.UnmarkedComment);
-
-            BDHtmlPage tDuration1NotePage = generatePageForLinkedNotes(pContext, pTherapy.Uuid, BDConstants.BDNodeType.BDTherapy, tDuration1Inline, tDuration1Marked, tDuration1Unmarked);
-
-            if (tDuration1NotePage != null)
-            {
-                if (pTherapy.duration1.Length > 0)
-                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">{1}</a>{2}</td>", tDuration1NotePage.Uuid, tDuration1.Trim(), duration1FooterMarker);
-                else
-                    therapyHtml.AppendFormat(@"<td><a href=""{0}"">See Notes.</a></td>", tDuration1NotePage.Uuid);
-            }
-            else
-                therapyHtml.AppendFormat(@"<td>{0}{1}</td>", tDuration1.Trim(),duration1FooterMarker);
+                therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.duration1, BDTherapy.PROPERTYNAME_DURATION_1, false, "td"));
 
             therapyHtml.Append(@"</tr>");
 
@@ -3207,61 +2844,17 @@ namespace BDEditor.Classes
             StringBuilder dosageHTML = new StringBuilder();
             string styleString = string.Empty;
 
-            dosageHTML.Append(@"<tr><td>");
-            // dosageNode 1
-            List<BDLinkedNote> d1Inline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.Inline);
-            List<BDLinkedNote> d1Marked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> d1Unmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.UnmarkedComment);
-
-            List<BDLinkedNote> d1Footers = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE, BDConstants.LinkedNoteType.Footnote));
-            string d1FooterMarker = buildFooterMarkerForList(d1Footers, true);
-            
-            BDHtmlPage d1NotePage = generatePageForLinkedNotes(pContext, dosageNode.Uuid, BDConstants.BDNodeType.BDDosage, d1Inline, d1Marked, d1Unmarked);
-            if (d1NotePage != null)
-            {
-                if (dosageNode.dosage.Length > 0)
-                    dosageHTML.AppendFormat(@"<td><a href=""{0}"">{1}</a>{2}</td>", d1NotePage.Uuid, dosageNode.dosage, d1FooterMarker);
-                else
-                    dosageHTML.AppendFormat(@"<td><a href=""{0}"">See Notes.</a></td>", d1NotePage.Uuid);
-            }
-            else
-                dosageHTML.AppendFormat("<td>{0}{1}</td>", dosageNode.dosage,d1FooterMarker);
-
-            List<BDLinkedNote> costFooters = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNode.Uuid, BDDosage.PROPERTYNAME_COST, BDConstants.LinkedNoteType.Footnote));
-            string costFooterMarker = buildFooterMarkerForList(costFooters, true);
-            
-            dosageHTML.AppendFormat(@"<td>{0}{1}</td>", dosageNode.cost, costFooterMarker);
-
+            dosageHTML.AppendFormat("<tr>{0}",buildNodePropertyHTML(pContext, dosageNode, dosageNode.Uuid, dosageNode.dosage, BDDosage.PROPERTYNAME_DOSAGE, false, "td"));
+            dosageHTML.Append(buildNodePropertyHTML(pContext, dosageNode, dosageNode.Uuid, dosageNode.cost, BDDosage.PROPERTYNAME_COST, false, "td"));
+            dosageHTML.Append("</tr>");
             return dosageHTML.ToString();
         }
 
         private string buildCellHTML(Entities pContext, IBDNode pCellParentNode, string pPropertyName, string pPropertyValue, bool includeCellTags)
         {
-            StringBuilder cellHTML = new StringBuilder();
-            string styleString = string.Empty;
+            string cellTag = includeCellTags == true ? "td" : string.Empty;
 
-            if(includeCellTags)
-                cellHTML.Append(@"<td>");
-            
-            List<BDLinkedNote> inlineNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pCellParentNode.Uuid, pPropertyName, BDConstants.LinkedNoteType.Inline);
-            List<BDLinkedNote> markedNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pCellParentNode.Uuid, pPropertyName, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> unmarkedNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pCellParentNode.Uuid, pPropertyName, BDConstants.LinkedNoteType.UnmarkedComment);
-            List<BDLinkedNote> footerNotes = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pCellParentNode.Uuid, pPropertyName, BDConstants.LinkedNoteType.Footnote));
-            string cellFooterMarker = buildFooterMarkerForList(footerNotes, true);
-
-            BDHtmlPage notePage = generatePageForLinkedNotes(pContext, pCellParentNode.Uuid, pCellParentNode.NodeType, inlineNotes, markedNotes, unmarkedNotes);
-            if (notePage != null)
-            {
-                if (pPropertyValue.Length > 0)
-                    cellHTML.AppendFormat(@"<a href=""{0}"">{1}</a>{2}", notePage.Uuid, pPropertyValue, cellFooterMarker);
-                else
-                    cellHTML.AppendFormat(@"<a href=""{0}"">See Notes.</a>", notePage.Uuid);
-            }
-            else
-                cellHTML.AppendFormat("{0}{1}", pPropertyValue, cellFooterMarker);
-            if (includeCellTags)
-                cellHTML.Append("</td>");
-            return cellHTML.ToString();
+            return buildNodePropertyHTML(pContext, pCellParentNode, pCellParentNode.Uuid, pPropertyValue, pPropertyName, false, cellTag);
         }
 
         private string buildDosageHTML(Entities pContext, IBDNode pNode, string pDosageGroupName)
@@ -3515,6 +3108,62 @@ namespace BDEditor.Classes
                 bodyHTML.Append("</table>");
             }
             return bodyHTML.ToString();
+        }
+
+        /// <summary>
+        /// Build HTML segment for a single property of therapy, handling all linked note types
+        /// as well as footer marker, and filtering out 'New' name value.
+        /// No surrounding HTML tags are returned
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pTherapy"></param>
+        /// <param name="pNoteParentId"></param>
+        /// <param name="pPropertyValue"></param>
+        /// <param name="pPropertyName"></param>
+        /// <returns></returns>
+        private string buildNodePropertyHTML(Entities pContext, IBDNode pNode, Guid pNoteParentId, string pPropertyValue, string pPropertyName, bool showNotesInline)
+        {
+            return buildNodePropertyHTML(pContext, pNode, pNoteParentId, pPropertyValue, pPropertyName, showNotesInline, string.Empty);
+        }
+
+        private string buildNodePropertyHTML(Entities pContext, IBDNode pNode, Guid pNoteParentId, string pPropertyValue, string pPropertyName, bool showNotesInline, string pHtmlTag)
+        {
+            string startTag = (pHtmlTag.Length > 0) ? string.Format("<{0}>", pHtmlTag) : string.Empty;
+            string endTag = (pHtmlTag.Length > 0) ? string.Format("</{0}>", pHtmlTag) : string.Empty;
+
+            StringBuilder propertyHTML = new StringBuilder();
+            List<BDLinkedNote> propertyFooters = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, pPropertyName, BDConstants.LinkedNoteType.Footnote));
+            string footerMarker = buildFooterMarkerForList(propertyFooters, true);
+
+            List<BDLinkedNote> inline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.Inline);
+            List<BDLinkedNote> marked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.MarkedComment);
+            List<BDLinkedNote> unmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.UnmarkedComment);
+
+            if (showNotesInline)
+            {
+                propertyHTML.AppendFormat(@" {0}{1}{2}{3}<br>",startTag, pPropertyValue.Trim(), endTag, footerMarker);
+                List<BDLinkedNote> notesList = new List<BDLinkedNote>();
+                notesList.AddRange(inline);
+                notesList.AddRange(marked);
+                notesList.AddRange(unmarked);
+                foreach (BDLinkedNote note in notesList)
+                    propertyHTML.AppendFormat("{0}<br>", note.documentText);
+            }
+            else
+            {
+                BDHtmlPage notePage = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.NodeType, inline, marked, unmarked);
+
+                if (notePage != null)
+                {
+                    if (pPropertyValue.Length > 0 && !pPropertyValue.Contains(BDUtilities.GetEnumDescription(pNode.NodeType)))
+                        propertyHTML.AppendFormat(@" <a href=""{0}"">{1}{2}{3}</a>{4}", notePage.Uuid, startTag, pPropertyValue.Trim(), endTag, footerMarker);
+                    else
+                        propertyHTML.AppendFormat(@" <a href=""{0}"">See Comments.</a>", notePage.Uuid);
+                }
+                else
+                    propertyHTML.AppendFormat(@" {0}{1}{2}{3}", startTag, pPropertyValue.Trim(), endTag, footerMarker);
+            }
+            return propertyHTML.ToString();
         }
 
         #endregion

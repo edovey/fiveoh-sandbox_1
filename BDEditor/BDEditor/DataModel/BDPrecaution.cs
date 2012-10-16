@@ -224,6 +224,21 @@ namespace BDEditor.DataModel
             return entity;
         }
 
+        public static List<BDPrecaution> RetrievePrecautionsContainingString(Entities pContext, string pString)
+        {
+            List<BDPrecaution> returnList = new List<BDPrecaution>();
+            if (null != pString && pString.Length > 0)
+            {
+                IQueryable<BDPrecaution> entries = (from entry in pContext.BDPrecautions
+                                                 where entry.organism1.Contains(pString) || entry.organism2.Contains(pString) || 
+                                                 entry.infectiveMaterial.Contains(pString) || entry.modeOfTransmission.Contains(pString) ||
+                                                 entry.duration.Contains(pString)
+                                                 select entry);
+                returnList = entries.ToList<BDPrecaution>();
+            }
+            return returnList;
+        }
+
         public void SetParent(IBDNode pParent)
         {
             if (null == pParent)

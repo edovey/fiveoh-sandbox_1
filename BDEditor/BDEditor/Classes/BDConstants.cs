@@ -101,8 +101,10 @@ namespace BDEditor.Classes
             BDFrequency = 36,
             [Description("Regimen")]
             BDRegimen = 37,
+            //BDConfiguredEntry Class
             [Description("Configured Entry")]
             BDConfiguredEntry = 38,
+            //BDCombinedEntry Class
             [Description("Combined Entry")]
             BDCombinedEntry = 39,
             [Description("Layout Column")]

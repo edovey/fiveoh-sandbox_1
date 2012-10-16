@@ -333,7 +333,7 @@ namespace BDEditor.Views
         /// <summary>
         /// Get the HTML body from the text control contents
         /// </summary>
-        /// <param name="pText"></param>
+        /// <param name="pString"></param>
         /// <returns></returns>
         private string GetBodyContents(string pText)
         {
@@ -352,7 +352,7 @@ namespace BDEditor.Views
         /// <summary>
         /// Remove all occurences of requested tag from provided string to end tag
         /// </summary>
-        /// <param name="pText">Text to clean</param>
+        /// <param name="pString">Text to clean</param>
         /// <param name="pTagStart">Tag that begins the string to remove</param>
         /// <param name="pTagEnd">Tag that ends the string to remove</param>
         /// <param name="removeTagEnd">Boolean that indicates whether to remove the end tag with the operation</param>
@@ -377,7 +377,7 @@ namespace BDEditor.Views
         /// <summary>
         /// Remove extra markup from within a tag's boundaries but retain the tag itself
         /// </summary>
-        /// <param name="pText"></param>
+        /// <param name="pString"></param>
         /// <param name="pTagStart"></param>
         /// <param name="pTagEnd"></param>
         /// <param name="pTrimStart"></param>
@@ -401,7 +401,7 @@ namespace BDEditor.Views
         /// <summary>
         /// The Text Control inserts a span tag on every paragraph to control the font size.  This method strips it out.
         /// </summary>
-        /// <param name="pText"></param>
+        /// <param name="pString"></param>
         /// <param name="pTag"></param>
         /// <returns></returns>
         private string CleanFontStyleTag(string pText, string pTag)
@@ -528,7 +528,7 @@ namespace BDEditor.Views
         /// Strip the text of the formatting tags that may exist (usually from a Word document) 
         ///  Also strip out the HTML inserted by the TXTextControl that we don't want to keep in the data.
         /// </summary>
-        /// <param name="pText">String to search and clean</param>
+        /// <param name="pString">String to search and clean</param>
         /// <returns></returns>
         private string WashText(string pText)
         {

@@ -89,6 +89,22 @@ namespace BDEditor.DataModel
             return entryList;
         }
 
+        public static List<BDCombinedEntry> RetrieveCombinedEntryContainingString(Entities pContext, string pString)
+        {
+            List<BDCombinedEntry> returnList = new List<BDCombinedEntry>();
+            if (null != pString && pString.Length > 0)
+            {
+                IQueryable<BDCombinedEntry> entries = (from entry in pContext.BDCombinedEntries
+                                                 where entry.entryTitle01.Contains(pString) || entry.entryDetail01.Contains(pString) ||
+                                                 entry.entryTitle02.Contains(pString) || entry.entryDetail02.Contains(pString) ||
+                                                 entry.entryTitle03.Contains(pString) || entry.entryDetail03.Contains(pString) ||
+                                                 entry.entryTitle04.Contains(pString) || entry.entryDetail04.Contains(pString)
+                                                 select entry);
+                returnList = entries.ToList<BDCombinedEntry>();
+            }
+            return returnList;
+        }
+        
         protected override void OnPropertyChanged(string property)
         {
             if (!BDCommon.Settings.IsSyncLoad)

@@ -201,13 +201,13 @@ namespace BDEditor.DataModel
             return therapyGroupNames.ToArray();
         }
 
-        public static List<BDTherapyGroup> RetrieveTherapyGroupsNameWithText(Entities pContext, string pText)
+        public static List<BDTherapyGroup> RetrieveTherapyGroupsWithNameContainingString(Entities pContext, string pString)
         {
             List<BDTherapyGroup> returnList = new List<BDTherapyGroup>();
-            if (null != pText && pText.Length > 0)
+            if (null != pString && pString.Length > 0)
             {
                 IQueryable<BDTherapyGroup> entries = (from entry in pContext.BDTherapyGroups
-                                                 where entry.name.Contains(pText)
+                                                 where entry.name.Contains(pString)
                                                  select entry);
                 returnList = entries.ToList<BDTherapyGroup>();
             }

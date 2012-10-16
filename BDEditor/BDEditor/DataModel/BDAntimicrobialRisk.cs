@@ -244,6 +244,18 @@ namespace BDEditor.DataModel
             base.OnPropertyChanged(property);
         }
 
+        public static List<BDAntimicrobialRisk> RetrieveAntimicrobialRisksContainingString(Entities pContext, string pString)
+        {
+            List<BDAntimicrobialRisk> returnList = new List<BDAntimicrobialRisk>();
+            if (null != pString && pString.Length > 0)
+            {
+                IQueryable<BDAntimicrobialRisk> entries = (from entry in pContext.BDAntimicrobialRisks
+                                                 where entry.name.Contains(pString) || entry.riskFactor.Contains(pString) || entry.recommendations.Contains(pString) || entry.relativeInfantDose.Contains(pString)
+                                                 select entry);
+                returnList = entries.ToList<BDAntimicrobialRisk>();
+            }
+            return returnList;
+        }
         #region Repository
 
         /// <summary>

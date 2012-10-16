@@ -152,7 +152,11 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static List<BDHtmlPage> RetrieveHtmlPageForDisplayParentId(Entities pContext, Guid? pDisplayParentId)
         {
-            return RetrieveHtmlPageForDisplayParentIdOfPageType(pContext, pDisplayParentId, BDConstants.BDHtmlPageType.Data);
+            IQueryable<BDHtmlPage> entries = (from entry in pContext.BDHtmlPages
+                                              where entry.displayParentId == pDisplayParentId
+                                              select entry);
+            List<BDHtmlPage> resultList = entries.ToList<BDHtmlPage>();
+            return resultList;
         }
 
         public static List<BDHtmlPage> RetrieveHtmlPageForDisplayParentIdOfPageType(Entities pContext, Guid? pDisplayParentId, BDConstants.BDHtmlPageType pPageType)
@@ -184,24 +188,18 @@ namespace BDEditor.DataModel
 
         }
 
-        public static List<Guid> RetrieveAllIDs(Entities pContext)
+        public static List<Guid> RetrieveAllIds(Entities pContext)
         {
             IQueryable<Guid> pages = (from entry in pContext.BDHtmlPages
-                                            select entry.uuid);
+                                      select entry.uuid);
             return pages.ToList<Guid>();
         }
 
-        public static Guid RetrievePageIdForAnchorId(Entities pContext, string pAnchorIdAsText)
+        public static List<Guid> RetrieveAllDisplayParentIDs(Entities pContext)
         {
-            IQueryable<Guid> query = from lna in pContext.BDLinkedNoteAssociations
-                                     join p in pContext.BDHtmlPages
-                                     on lna.linkedNoteId equals p.displayParentId 
-                                     where lna.parentKeyPropertyName == pAnchorIdAsText
-                                     select p.uuid;
-            if (query.ToList<Guid>().Count > 0)
-                return query.ToList<Guid>()[0];
-            else
-                return Guid.Empty;
+            IQueryable<Guid> pages = (from entry in pContext.BDHtmlPages
+                                            select entry.displayParentId.Value);
+            return pages.ToList<Guid>();
         }
 
         #region Repository

@@ -187,6 +187,19 @@ namespace BDEditor.DataModel
             return entries.ToList<BDAttachment>().ToList<IBDObject>();
         }
 
+        public static List<BDAttachment> RetrieveAttachmentsWithNameContainingString(Entities pContext, string pString)
+        {
+            List<BDAttachment> returnList = new List<BDAttachment>();
+            if (null != pString && pString.Length > 0)
+            {
+                IQueryable<BDAttachment> entries = (from entry in pContext.BDAttachments
+                                                 where entry.name.Contains(pString)
+                                                 select entry);
+                returnList = entries.ToList<BDAttachment>();
+            }
+            return returnList;
+        }
+
         protected override void OnPropertyChanged(string property)
         {
             if (!BDCommon.Settings.IsSyncLoad)

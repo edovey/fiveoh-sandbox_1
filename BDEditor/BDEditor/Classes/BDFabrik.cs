@@ -108,28 +108,45 @@ namespace BDEditor.Classes
             {
                 switch (nodeType)
                 {
-                    case (int)BDConstants.BDNodeType.BDChapter:
-                    case (int)BDConstants.BDNodeType.BDSection:
-                    case (int)BDConstants.BDNodeType.BDCategory:
-                    case (int)BDConstants.BDNodeType.BDSubcategory:
-                    case (int)BDConstants.BDNodeType.BDDisease:
-                    case (int)BDConstants.BDNodeType.BDPathogenGroup:
-                    case (int)BDConstants.BDNodeType.BDPathogen:
-                        {
-                            BDConstants.BDNodeType nType = (BDConstants.BDNodeType)nodeType;
-                            nodeList.AddRange(BDNode.RetrieveNodesNameWithTextForType(pDataContext, pText,nType));
-                        } break;
                     case (int)BDConstants.BDNodeType.BDTherapyGroup:
-                        nodeList.AddRange(BDTherapyGroup.RetrieveTherapyGroupsNameWithText(pDataContext, pText));
+                        nodeList.AddRange(BDTherapyGroup.RetrieveTherapyGroupsWithNameContainingString(pDataContext, pText));
                         break;
                     case (int)BDConstants.BDNodeType.BDTherapy:
                         {
-                            nodeList.AddRange(BDTherapy.RetrieveTherapiesDosageWithText(pDataContext, pText));
-                            nodeList.AddRange(BDTherapy.RetrieveTherapiesNameWithText(pDataContext, pText));
-                            nodeList.AddRange(BDTherapy.RetrieveTherapiesDurationWithText(pDataContext, pText));
+                            nodeList.AddRange(BDTherapy.RetrieveTherapiesWithDosageContainingString(pDataContext, pText));
+                            nodeList.AddRange(BDTherapy.RetrieveTherapiesWithNameContainingString(pDataContext, pText));
+                            nodeList.AddRange(BDTherapy.RetrieveTherapiesWithDurationContainingString(pDataContext, pText));
                         }
                         break;
+                    case (int)BDConstants.BDNodeType.BDTableRow:
+                        // contains no text on its own - nothing to do for a table row
+                        break;
+                    case (int)BDConstants.BDNodeType.BDDosage:
+                        nodeList.AddRange(BDDosage.RetrieveDosagesWithDosageContainingString(pDataContext, pText));
+                        break;
+                    case (int)BDConstants.BDNodeType.BDPrecaution:
+                        nodeList.AddRange(BDPrecaution.RetrievePrecautionsContainingString(pDataContext, pText));
+                        break;
+                    case (int)BDConstants.BDNodeType.BDTableCell:
+                        nodeList.AddRange(BDTableCell.RetrieveTableCellsContainingString(pDataContext, pText));
+                        break;
+                    case(int)BDConstants.BDNodeType.BDAttachment:
+                        nodeList.AddRange(BDAttachment.RetrieveAttachmentsWithNameContainingString(pDataContext, pText));
+                        break;
+                    case(int) BDConstants.BDNodeType.BDAntimicrobialRisk:
+                        nodeList.AddRange(BDAntimicrobialRisk.RetrieveAntimicrobialRisksContainingString(pDataContext, pText));
+                        break;
+                    case (int)BDConstants.BDNodeType.BDConfiguredEntry:
+                        nodeList.AddRange(BDConfiguredEntry.RetrieveConfiguredEntriesContainingString(pDataContext, pText));
+                        break;
+                    case (int)BDConstants.BDNodeType.BDCombinedEntry:
+                        nodeList.AddRange(BDCombinedEntry.RetrieveCombinedEntryContainingString(pDataContext, pText));
+                        break;
                     default:
+                        {
+                            BDConstants.BDNodeType nType = (BDConstants.BDNodeType)nodeType;
+                            nodeList.AddRange(BDNode.RetrieveNodesWithNameContainingStringOfType(pDataContext, pText,nType));
+                        } 
                         break;
                 }
             }

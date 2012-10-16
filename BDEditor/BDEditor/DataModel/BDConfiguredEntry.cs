@@ -92,6 +92,24 @@ namespace BDEditor.DataModel
             return entryList;
         }
 
+        public static List<BDConfiguredEntry> RetrieveConfiguredEntriesContainingString(Entities pContext, string pString)
+        {
+            List<BDConfiguredEntry> returnList = new List<BDConfiguredEntry>();
+            if (null != pString && pString.Length > 0)
+            {
+                IQueryable<BDConfiguredEntry> entries = (from entry in pContext.BDConfiguredEntries
+                                                 where entry.name.Contains(pString) || entry.field01.Contains(pString) || entry.field02.Contains(pString) ||
+                                                 entry.field03.Contains(pString) || entry.field04.Contains(pString) || entry.field05.Contains(pString) ||
+                                                 entry.field06.Contains(pString) || entry.field07.Contains(pString) || entry.field08.Contains(pString) ||
+                                                 entry.field09.Contains(pString) || entry.field10.Contains(pString) || entry.field11.Contains(pString) ||
+                                                 entry.field12.Contains(pString) || entry.field13.Contains(pString) || entry.field14.Contains(pString) ||
+                                                 entry.field15.Contains(pString)
+                                                 select entry);
+                returnList = entries.ToList<BDConfiguredEntry>();
+            }
+            return returnList;
+        }
+        
         protected override void OnPropertyChanged(string property)
         {
             if (!BDCommon.Settings.IsSyncLoad)

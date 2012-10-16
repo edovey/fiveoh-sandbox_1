@@ -269,13 +269,13 @@ namespace BDEditor.DataModel
             return entryList;
         }
 
-        public static List<BDNode> RetrieveNodesNameWithTextForType(Entities pContext, string pText, BDConstants.BDNodeType pNodeType)
+        public static List<BDNode> RetrieveNodesWithNameContainingStringOfType(Entities pContext, string pString, BDConstants.BDNodeType pNodeType)
         {
             List<BDNode> returnList = new List<BDNode>();
-            if (null != pText && pText.Length > 0)
+            if (null != pString && pString.Length > 0)
             {
                 IQueryable<BDNode> entries = (from entry in pContext.BDNodes
-                                                 where (entry.name.Contains(pText) && entry.nodeType == (int)pNodeType)
+                                                 where (entry.name.Contains(pString) && entry.nodeType == (int)pNodeType)
                                                  select entry);
                 returnList = entries.ToList<BDNode>();
             }

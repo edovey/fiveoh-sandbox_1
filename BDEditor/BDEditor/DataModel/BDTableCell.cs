@@ -199,6 +199,19 @@ namespace BDEditor.DataModel
             return resultList;
         }
 
+        public static List<BDTableCell> RetrieveTableCellsContainingString(Entities pContext, string pString)
+        {
+            List<BDTableCell> returnList = new List<BDTableCell>();
+            if (null != pString && pString.Length > 0)
+            {
+                IQueryable<BDTableCell> entries = (from entry in pContext.BDTableCells
+                                                 where entry.value.Contains(pString)
+                                                 select entry);
+                returnList = entries.ToList<BDTableCell>();
+            }
+            return returnList;
+        }
+
         protected override void OnPropertyChanged(string property)
         {
             if (!BDCommon.Settings.IsSyncLoad)

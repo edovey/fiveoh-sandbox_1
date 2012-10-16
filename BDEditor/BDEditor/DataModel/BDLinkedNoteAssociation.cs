@@ -275,6 +275,38 @@ namespace BDEditor.DataModel
             return nameList.ToList<string>();
         }
 
+        public static Guid RetrieveInternalLinkIdForAssociationParentKeyPropertyName(Entities pContext, string pKeyNameValue, BDConstants.BDNodeType pParentNodeType)
+        {
+            // note-within-note records the guid of the second note in the parentKeyPropertyName of the first.  Weird.  but true.
+            // return the guid of the actual linked note record
+            IQueryable<BDLinkedNoteAssociation> query = (from lna in pContext.BDLinkedNoteAssociations
+                                     where lna.parentKeyPropertyName == pKeyNameValue && lna.parentType == (int)pParentNodeType
+                                     select lna);
+            if (query.ToList<BDLinkedNoteAssociation>().Count == 1)
+            {
+                BDLinkedNoteAssociation assn = query.ToList<BDLinkedNoteAssociation>()[0];
+                if (assn.internalLinkNodeId != null)
+                    return assn.internalLinkNodeId.Value;
+                else
+                    return Guid.Empty;
+            }
+            else
+                return Guid.Empty;
+        }
+
+        public static BDLinkedNoteAssociation RetrieveLinkedNoteAssociationForParentKeyPropertyName(Entities pContext, string pKeyNameValue)
+        {
+            IQueryable<BDLinkedNoteAssociation> query = (from lna in pContext.BDLinkedNoteAssociations
+                                                         where lna.parentKeyPropertyName == pKeyNameValue
+                                                         select lna);
+
+            if (query.ToList<BDLinkedNoteAssociation>().Count == 1)
+                return query.ToList<BDLinkedNoteAssociation>()[0];
+            else
+                return null;
+        }
+
+
         /// <summary>
         /// Returns all the LinkedNoteAssociations for a linkedNote uuid 
         /// </summary>

@@ -266,7 +266,6 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static string[] RetrieveTherapyDurations(Entities pContext)
         {
-            //TODO:  refactor for multiple duration properties
             var durations = pContext.BDTherapies.Where(x => (!string.IsNullOrEmpty(x.duration))).Select(pg => pg.duration).Distinct();
             var duration1 = pContext.BDTherapies.Where(x => (!string.IsNullOrEmpty(x.duration1))).Select(pg => pg.duration1).Distinct();
             var duration2 = pContext.BDTherapies.Where(x => (!string.IsNullOrEmpty(x.duration2))).Select(pg => pg.duration2).Distinct();
@@ -275,41 +274,39 @@ namespace BDEditor.DataModel
             return durationArray;
         }
 
-        public static List<BDTherapy> RetrieveTherapiesNameWithText(Entities pContext, string pText)
+        public static List<BDTherapy> RetrieveTherapiesWithNameContainingString(Entities pContext, string pString)
         {
             List<BDTherapy> returnList = new List<BDTherapy>();
-            if (null != pText && pText.Length > 0)
+            if (null != pString && pString.Length > 0)
             {
                 IQueryable<BDTherapy> entries = (from entry in pContext.BDTherapies
-                                                 where entry.name.Contains(pText)
+                                                 where entry.name.Contains(pString)
                                                  select entry);
                 returnList = entries.ToList<BDTherapy>();
             }
             return returnList;
         }
 
-        public static List<BDTherapy> RetrieveTherapiesDosageWithText(Entities pContext, string pText)
+        public static List<BDTherapy> RetrieveTherapiesWithDosageContainingString(Entities pContext, string pString)
         {
-            //TODO:  refactor for multiple dosageNode properties
             List<BDTherapy> returnList = new List<BDTherapy>();
-            if (null != pText && pText.Length > 0)
+            if (null != pString && pString.Length > 0)
             {
                 IQueryable<BDTherapy> entries = (from entry in pContext.BDTherapies
-                                                 where entry.dosage.Contains(pText)
+                                                 where entry.dosage.Contains(pString) || entry.dosage1.Contains(pString) || entry.dosage2.Contains(pString)
                                                  select entry);
                 returnList = entries.ToList<BDTherapy>();
             }
             return returnList;
         }
 
-        public static List<BDTherapy> RetrieveTherapiesDurationWithText(Entities pContext, string pText)
+        public static List<BDTherapy> RetrieveTherapiesWithDurationContainingString(Entities pContext, string pString)
         {
-            //TODO:  refactor for multiple duration properties
             List<BDTherapy> returnList = new List<BDTherapy>();
-            if(null != pText && pText.Length > 0)
+            if(null != pString && pString.Length > 0)
             {
                 IQueryable<BDTherapy> entries = (from entry in pContext.BDTherapies
-                                                 where entry.duration.Contains(pText)
+                                                 where entry.duration.Contains(pString) || entry.duration1.Contains(pString) || entry.duration2.Contains(pString)
                                                  select entry);
                 returnList = entries.ToList<BDTherapy>();
             }

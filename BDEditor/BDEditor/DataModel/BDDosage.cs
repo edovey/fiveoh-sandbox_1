@@ -208,7 +208,21 @@ namespace BDEditor.DataModel
             return entity;
         }
 
-        public void SetParent(IBDNode pParent)
+        public static List<BDDosage> RetrieveDosagesWithDosageContainingString(Entities pContext, string pString)
+        {
+            List<BDDosage> returnList = new List<BDDosage>();
+            if (null != pString && pString.Length > 0)
+            {
+                IQueryable<BDDosage> entries = (from entry in pContext.BDDosages 
+                                                 where entry.dosage.Contains(pString) || entry.dosage2.Contains(pString) || entry.dosage3.Contains(pString) || entry.dosage4.Contains(pString)
+                                                 select entry);
+                returnList = entries.ToList<BDDosage>();
+            }
+            return returnList;
+        }
+ 
+       
+       public void SetParent(IBDNode pParent)
         {
             if (null == pParent)
             {

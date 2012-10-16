@@ -1175,6 +1175,14 @@ namespace BDEditor.Views
             }
         }
 
+        public void setStatusText(string newText)
+        {
+            if (newText.Length > 0)
+            toolStripStatusLabel1.Text = newText;
+            toolStripStatusLabel1.ToolTipText = newText;
+            }
+
+
         private void btnPublish_Click(object sender, EventArgs e)
         {
             IBDNode chapterNode;
@@ -1231,6 +1239,9 @@ namespace BDEditor.Views
             BDSearchView searchView = new BDSearchView();
             searchView.AssignDataContext(dataContext);
             searchView.ShowDialog(this);
+
+            if (searchView.LocationString.Length > 0)
+                this.toolStripStatusLabel1.Text = string.Format("Last Search: {0}\n{1}", searchView.SearchTerm, searchView.LocationString);
 
             if (null != chapterTree.SelectedNode)
             {
@@ -1975,5 +1986,6 @@ namespace BDEditor.Views
             */
             #endregion
         }
+
     }
 }

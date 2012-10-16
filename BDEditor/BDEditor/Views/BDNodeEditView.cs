@@ -23,7 +23,10 @@ namespace BDEditor.Views
 
         private void BDNodeEditView_Load(object sender, EventArgs e)
         {
-            tbName.Text = currentNode.Name;
+            if (currentNode.NodeType == BDConstants.BDNodeType.BDTableCell)
+                tbName.Text = (currentNode as BDTableCell).value;
+            else
+                tbName.Text = currentNode.Name;
         }
 
         public IBDNode CurrentNode
@@ -91,12 +94,16 @@ namespace BDEditor.Views
 
             if (null != currentNode)
             {
-                if (currentNode.Name != tbName.Text) currentNode.Name = tbName.Text.Trim();
-
-                if (currentNode.NodeType == BDConstants.BDNodeType.BDTherapyGroup)
-                    BDTherapyGroup.Save(dataContext, (currentNode as BDTherapyGroup));
+                if (currentNode.NodeType == BDConstants.BDNodeType.BDTableCell)
+                {
+                    BDTableCell cell = currentNode as BDTableCell;
+                    if (cell.value != tbName.Text) cell.value = tbName.Text.Trim();
+                }
                 else
-                    BDNode.Save(dataContext, (currentNode as BDNode));
+                {
+                    if (currentNode.Name != tbName.Text) currentNode.Name = tbName.Text.Trim();
+                }
+                BDFabrik.SaveNode(dataContext, currentNode);
                 result = true;
             }
 

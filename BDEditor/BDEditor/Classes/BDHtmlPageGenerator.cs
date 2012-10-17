@@ -227,6 +227,10 @@ namespace BDEditor.Classes
                             nodeChildPages.Add(generatePageForPLAntimicrobialsInPregnancy(pContext, pNode));
                             isPageGenerated = true;
                             break;
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
+                            nodeChildPages.Add(generatePageForPLAntimicrobialsInLactation(pContext, pNode));
+                            isPageGenerated = true;
+                            break;
                         case BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation:
                             nodeChildPages.Add(generatePageForMicrobiologyGramStain(pContext, pNode));
                             isPageGenerated = true;
@@ -2388,7 +2392,7 @@ namespace BDEditor.Classes
         private BDHtmlPage generatePageForPLAntimicrobialsInLactation(Entities pContext, IBDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
-            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
+            if (pNode.NodeType != BDConstants.BDNodeType.BDCategory)
             {
 #if DEBUG
                 throw new InvalidOperationException();
@@ -2396,7 +2400,7 @@ namespace BDEditor.Classes
                 return null;
 #endif
             }
-            // Subcategory > antimicrobial > antimicrobialRisk
+            // Category > Subcategory > antimicrobialGroup > antimicrobial > antimicrobialRisk
             metadataLayoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, pNode.LayoutVariant);
             StringBuilder bodyHTML = new StringBuilder();
             StringBuilder footerHTML = new StringBuilder();
@@ -2404,14 +2408,47 @@ namespace BDEditor.Classes
             List<Guid> objectsOnPage = new List<Guid>();
 
             bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1", objectsOnPage));
+            List<string> labels = new List<string>();
+            // build markers and list for column header linked notes
+            labels.Add(retrieveMetadataLabelForPropertyName(pContext, BDConstants.BDNodeType.BDAntimicrobialRisk, BDAntimicrobialRisk.PROPERTYNAME_LACTATIONRISK));
+            labels.Add(retrieveMetadataLabelForPropertyName(pContext, BDConstants.BDNodeType.BDAntimicrobialRisk, BDAntimicrobialRisk.PROPERTYNAME_APPRATING));
+            labels.Add(retrieveMetadataLabelForPropertyName(pContext, BDConstants.BDNodeType.BDAntimicrobialRisk, BDAntimicrobialRisk.PROPERTYNAME_RELATIVEDOSE));
+
+            List<string> footerMarkers = new List<string>();
+            footerMarkers.Add(buildFooterMarkerForList(retrieveNotesForLayoutColumn(pContext, metadataLayoutColumns[1]), true, objectsOnPage));
+            footerMarkers.Add(buildFooterMarkerForList(retrieveNotesForLayoutColumn(pContext, metadataLayoutColumns[2]), true, objectsOnPage));
+            footerMarkers.Add(buildFooterMarkerForList(retrieveNotesForLayoutColumn(pContext, metadataLayoutColumns[3]), true, objectsOnPage));
 
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
-            if (childNodes.Count > 0)
+            foreach (IBDNode subcategory in childNodes)
             {
-                //Append HTML for child layout
+                bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, subcategory, "h2", objectsOnPage));
+                List<IBDNode> subcatChildren = BDFabrik.GetChildrenForParent(pContext, subcategory);
+                List<BDHtmlPage> amPages = new List<BDHtmlPage>();
+                List<IBDNode> amChildren = new List<IBDNode>();
+                if (subcatChildren.Count > 0 && subcatChildren[0].NodeType == BDConstants.BDNodeType.BDAntimicrobialGroup)
+                {
+                    foreach (IBDNode subcatChild in subcatChildren)
+                    {
+                        bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, subcatChild, "h3", objectsOnPage));
+                        List<IBDNode> antimicrobials = BDFabrik.GetChildrenForParent(pContext, subcatChild);
+                        amPages.AddRange(buildAntimicrobialWithRiskHTML(pContext, pNode, bodyHTML, labels, footerMarkers, antimicrobials));
+                        amChildren.AddRange(antimicrobials);
+                        for (int i = 0; i < amPages.Count; i++)
+                            bodyHTML.AppendFormat(@"<p><a href=""{0}""><b>{1}</b></a></p>", amPages[i].Uuid.ToString().ToUpper(), amChildren[i].Name);
+                    }
+                }
+                else
+                {
+                    amPages.AddRange(buildAntimicrobialWithRiskHTML(pContext, pNode, bodyHTML, labels, footerMarkers, subcatChildren));
+                    amChildren.AddRange(subcatChildren);
+                    for (int i = 0; i < amPages.Count; i++)
+                        bodyHTML.AppendFormat(@"<p><a href=""{0}""><b>{1}</b></a></p>", amPages[i].Uuid.ToString().ToUpper(), amChildren[i].Name);
+                }
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, true, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, false, objectsOnPage);
         }
+
 
         private BDHtmlPage generatePageForPLAntimicrobialsInPregnancy(Entities pContext, IBDNode pNode)
         {
@@ -3385,6 +3422,31 @@ namespace BDEditor.Classes
                 bodyHTML.Append("</table>");
             }
             return bodyHTML.ToString();
+        }
+
+        private List<BDHtmlPage> buildAntimicrobialWithRiskHTML(Entities pContext, IBDNode pNode, StringBuilder bodyHTML, List<string> labels, List<string> footerMarkers, List<IBDNode> antimicrobials)
+        {
+            List<BDHtmlPage> pages = new List<BDHtmlPage>();
+            foreach (IBDNode antimicrobial in antimicrobials)
+            {
+                // write an HTML page for the antimicrobial, build a link for the name
+                StringBuilder antimicrobialHTMLBody = new StringBuilder();
+                List<Guid> antimicrobialsOnPage = new List<Guid>();
+                antimicrobialHTMLBody.Append(buildNodeWithReferenceAndOverviewHTML(pContext, antimicrobial as BDNode, "h4", antimicrobialsOnPage));
+
+                List<IBDNode> amRisks = BDFabrik.GetChildrenForParent(pContext, antimicrobial);
+                foreach (IBDNode amRisk in amRisks)
+                {
+                    BDAntimicrobialRisk risk = amRisk as BDAntimicrobialRisk;
+                    antimicrobialHTMLBody.AppendFormat("<b>{0}{1}</b>: {2}", labels[0], footerMarkers[0], risk.riskFactor);
+                    antimicrobialHTMLBody.AppendFormat("<p><b>{0}{1}</b>: {2}</p>", labels[1], footerMarkers[1], risk.aapRating);
+                    antimicrobialHTMLBody.AppendFormat("<p><b>{0}{1}</b>: {2}</p>", labels[2], footerMarkers[2], risk.relativeInfantDose);
+                    antimicrobialsOnPage.Add(amRisk.Uuid);
+                }
+                antimicrobialHTMLBody.AppendFormat("<p><b>Comments</b><br>{0}</p>", buildTextForParentAndPropertyFromLinkedNotes(pContext, BDNode.PROPERTYNAME_NAME, antimicrobial, BDConstants.LinkedNoteType.UnmarkedComment, antimicrobialsOnPage));
+                pages.Add(writeBDHtmlPage(pContext, pNode, antimicrobialHTMLBody, BDConstants.BDHtmlPageType.Data, true, antimicrobialsOnPage));
+            }
+            return pages;
         }
 
         /// <summary>

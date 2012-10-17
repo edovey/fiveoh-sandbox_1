@@ -126,7 +126,7 @@ namespace BDEditor.DataModel
         /// <param name="pCreateDeletion">create entry in deletion table (bool)</param>
         public static void Delete(Entities pContext, Guid pUuid, bool pCreateDeletion)
         {
-            BDLinkedNote entity = BDLinkedNote.GetLinkedNoteWithId(pContext, pUuid);
+            BDLinkedNote entity = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, pUuid);
             Delete(pContext, entity, pCreateDeletion);
         }
 
@@ -139,7 +139,7 @@ namespace BDEditor.DataModel
         {
             if (null != pUuid)
             {
-                BDLinkedNote entry = BDLinkedNote.GetLinkedNoteWithId(pContext, pUuid.Value);
+                BDLinkedNote entry = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, pUuid.Value);
                 if (null != entry)
                 {
                     pContext.DeleteObject(entry);
@@ -153,7 +153,7 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pLinkedNoteId"></param>
         /// <returns></returns>
-        public static BDLinkedNote GetLinkedNoteWithId(Entities pContext, Guid? pLinkedNoteId)
+        public static BDLinkedNote RetrieveLinkedNoteWithId(Entities pContext, Guid? pLinkedNoteId)
         {
             BDLinkedNote result = null;
 
@@ -300,7 +300,7 @@ namespace BDEditor.DataModel
         {
             Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
             bool deprecated = bool.Parse(pAttributeDictionary[DEPRECATED]);
-            BDLinkedNote entry = BDLinkedNote.GetLinkedNoteWithId(pDataContext, uuid);
+            BDLinkedNote entry = BDLinkedNote.RetrieveLinkedNoteWithId(pDataContext, uuid);
             if (null == entry)
             {
                 entry = BDLinkedNote.CreateBDLinkedNote(uuid, deprecated);

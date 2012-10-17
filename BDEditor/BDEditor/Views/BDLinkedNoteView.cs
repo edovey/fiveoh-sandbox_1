@@ -149,7 +149,7 @@ namespace BDEditor.Views
 
                 this.linkedNoteTypeCombo.SelectedIndex = pAssociation.linkedNoteType.Value;
 
-                BDLinkedNote linkedNote = BDLinkedNote.GetLinkedNoteWithId(dataContext, pAssociation.linkedNoteId);
+                BDLinkedNote linkedNote = BDLinkedNote.RetrieveLinkedNoteWithId(dataContext, pAssociation.linkedNoteId);
                 bdLinkedNoteControl1.CurrentLinkedNote = linkedNote;
 
                 int idx = this.parentPropertyNoteAssociationList.IndexOf(pAssociation);

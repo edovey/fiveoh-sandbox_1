@@ -109,6 +109,20 @@ namespace BDEditor.DataModel
             }
             return returnList;
         }
+
+        public static BDConfiguredEntry RetrieveConfiguredEntryWithId(Entities pContext, Guid pUuid)
+        {
+            List<BDConfiguredEntry> entryList = new List<BDConfiguredEntry>();
+            IQueryable<BDConfiguredEntry> entries = (from entry in pContext.BDConfiguredEntries
+                                                     where entry.uuid == pUuid
+                                                     orderby entry.displayOrder
+                                                     select entry);
+            if (entries.Count<BDConfiguredEntry>() > 0)
+                entryList = entries.ToList<BDConfiguredEntry>();
+
+            return entryList.FirstOrDefault<BDConfiguredEntry>();
+
+        }
         
         protected override void OnPropertyChanged(string property)
         {

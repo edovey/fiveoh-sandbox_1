@@ -320,26 +320,26 @@ namespace BDEditor.Classes
 
             [Description(" Pregnancy / Lactation")]
             PregancyLactation = 500,
-            [Description("Antimicrobials in Pregancy")]
+            [Description("P/L - Antimicrobials in Pregancy")]
             PregnancyLactation_Antimicrobials_Pregnancy = 501,
-            [Description("Antimicrobials in Lactation")]
+            [Description("P/L - Antimicrobials in Lactation")]
             PregnancyLactation_Antimicrobials_Lactation = 502,
-            [Description("Exposure to Communicable Diseases during Pregnancy")]
+            [Description("P/L - Exposure to Communicable Diseases during Pregnancy")]
             PregnancyLactation_Exposure_CommunicableDiseases = 503,
-            [Description("Prevention of Perinatal Infection")]
+            [Description("P/L - Prevention of Perinatal Infection")]
             PregnancyLactation_Prevention_PerinatalInfection = 504,
-            [Description("Perinatal HIV Protocol")]
+            [Description("P/L - Perinatal HIV Protocol")]
             PregnancyLactation_Perinatal_HIVProtocol = 505,
 
             [Description("Microbiology")]
             Microbiology = 600,
-            [Description("Gram Stain Interpretation")]
+            [Description("Microbiology - Gram Stain Interpretation")]
             Microbiology_GramStainInterpretation = 601,
-            [Description("Microbiology for Specific Body Sites")]
+            [Description("Microbiology - Organisms for Specific Body Sites")]
             Microbiology_CommensalAndPathogenicOrganisms = 602,
-            [Description("Empiric Therapy of Specific Microbiology")]
+            [Description("Microbiology - Empiric Therapy of Specific Organisms")]
             Microbiology_EmpiricTherapy = 603,
-            [Description("Antibiogram")]
+            [Description("Microbiology - Antibiogram")]
             Microbiology_Antibiogram = 604,
 
             [Description("2-column Table")]

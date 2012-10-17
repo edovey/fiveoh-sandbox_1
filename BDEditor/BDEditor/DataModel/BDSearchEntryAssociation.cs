@@ -109,6 +109,29 @@ namespace BDEditor.DataModel
             return association;
         }
 
+        public static BDSearchEntryAssociation CreateBDSearchEntryAssociation(Entities pContext,
+                                                                            Guid pSearchEntryId,
+                                                                            BDConstants.BDNodeType pSearchEntryType,
+                                                                            Guid pDisplayParentId,
+                                                                            BDConstants.LayoutVariantType pLayoutVariant,
+                                                                            string pDisplayContext)
+        {
+            BDSearchEntryAssociation association = CreateBDSearchEntryAssociation(Guid.NewGuid());
+            association.createdBy = Guid.Empty;
+            association.schemaVersion = ENTITY_SCHEMAVERSION;
+            association.displayOrder = -1;
+            association.searchEntryId = pSearchEntryId;
+            association.searchEntryType = (int)pSearchEntryType;
+            association.displayParentId = pDisplayParentId;
+            association.displayParentType = -1;
+            association.displayContext = pDisplayContext;
+            association.layoutVariant = (int)pLayoutVariant;
+            pContext.AddObject(ENTITYNAME, association);
+
+            Save(pContext, association);
+
+            return association;
+        }
         public static void Save(Entities pContext, BDSearchEntryAssociation pAssociation)
         {
             if (pAssociation.EntityState != EntityState.Unchanged)

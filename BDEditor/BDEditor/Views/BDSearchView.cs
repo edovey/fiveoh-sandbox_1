@@ -132,38 +132,6 @@ namespace BDEditor.Views
             this.ResumeLayout();
         }
 
-        /// <summary>
-        /// Determine the parent hierarchy of the selected entry
-        /// </summary>
-        /// <param name="pStartNode"></param>
-        /// <returns></returns>
-        private string buildHierarchyString(IBDNode pStartNode)
-        {
-            StringBuilder hStringBuilder = new StringBuilder();
-            return getParentName(pStartNode, hStringBuilder).ToString();
-        }
-
-        /// <summary>
-        /// recursive call to determine the parent name of the node
-        /// </summary>
-        /// <param name="pNode"></param>
-        /// <param name="pHierarchyValue"></param>
-        /// <returns></returns>
-        private StringBuilder getParentName(IBDNode pNode, StringBuilder pHierarchyValue)
-        {
-            if (null != pNode && pNode.ParentId != Guid.Empty)
-            {
-                IBDNode parentNode = BDFabrik.RetrieveNode(dataContext, pNode.ParentType, pNode.ParentId);
-                if (null != parentNode)
-                {
-                    pHierarchyValue.Insert(0, string.Format("{0}\n", parentNode.Name));
-                    if(parentNode.ParentId != Guid.Empty)
-                        pHierarchyValue = getParentName(parentNode, pHierarchyValue);
-                }
-            }
-            return pHierarchyValue;
-        }
-
         private void btnSearch_Click(object sender, EventArgs e)
         {
             executeSearch();
@@ -182,7 +150,7 @@ namespace BDEditor.Views
             {
                 Guid linkedNoteId = (Guid)linkedNoteList[e.RowIndex].Uuid;
 
-                BDLinkedNote note = BDLinkedNote.GetLinkedNoteWithId(dataContext, linkedNoteId);
+                BDLinkedNote note = BDLinkedNote.RetrieveLinkedNoteWithId(dataContext, linkedNoteId);
                 List<BDLinkedNoteAssociation> assns = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForLinkedNoteId(dataContext, linkedNoteId);
                 BDLinkedNoteView noteView = new BDLinkedNoteView();
                 noteView.AssignDataContext(dataContext);
@@ -200,7 +168,7 @@ namespace BDEditor.Views
             }
             else if (dataGridView1.Columns["Location"].Index == e.ColumnIndex)
             {
-                locationString = buildHierarchyString(nodeList[e.RowIndex]);
+                locationString = BDUtilities.BuildHierarchyString(dataContext, nodeList[e.RowIndex], "\n");
                 rtbLocation.Text = locationString;
             }
         }

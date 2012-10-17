@@ -1202,9 +1202,8 @@ namespace BDEditor.Views
             BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
             generator.Generate(chapterNode);
             System.Diagnostics.Debug.WriteLine("HTML page generation complete.");
-
-            //BDSearchEntryGenerator.Generate();
-            //System.Diagnostics.Debug.WriteLine("Search entry generation complete.");
+            BDSearchEntryGenerator.Generate(dataContext, chapterNode, generator.PagesMap);
+            System.Diagnostics.Debug.WriteLine("Search entry generation complete.");
 
             if (BDCommon.Settings.SyncPushEnabled)
             {

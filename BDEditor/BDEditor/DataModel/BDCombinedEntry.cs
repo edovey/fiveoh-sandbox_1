@@ -89,6 +89,18 @@ namespace BDEditor.DataModel
             return entryList;
         }
 
+        public static BDCombinedEntry RetrieveCombinedEntryWithId(Entities pContext, Guid pUuid)
+        {
+            List<BDCombinedEntry> entryList = new List<BDCombinedEntry>();
+            IQueryable<BDCombinedEntry> entries = (from entry in pContext.BDCombinedEntries
+                                                   where entry.uuid == pUuid
+                                                   orderby entry.displayOrder
+                                                   select entry);
+
+            return entryList.FirstOrDefault<BDCombinedEntry>(); ;
+
+        }
+
         public static List<BDCombinedEntry> RetrieveCombinedEntryContainingString(Entities pContext, string pString)
         {
             List<BDCombinedEntry> returnList = new List<BDCombinedEntry>();

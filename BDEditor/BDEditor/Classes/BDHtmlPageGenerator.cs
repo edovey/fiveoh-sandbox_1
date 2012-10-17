@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,17 +18,24 @@ namespace BDEditor.Classes
 
         private List<BDLayoutMetadataColumn> metadataLayoutColumns = new List<BDLayoutMetadataColumn>();
         private List<BDLinkedNote> pageFooterList = new List<BDLinkedNote>();
-        private List<BDHtmlPageMap> pageMap = new List<BDHtmlPageMap>();
+        private List<BDHtmlPageMap> pagesMap = new List<BDHtmlPageMap>();
 
         // create variables to hold data for 'same as previous' settings on Therapy
         string previousTherapyName = string.Empty;
         string previousTherapyDosage = string.Empty;
         string previousTherapyDosage1 = string.Empty;
+        string previousTherapyDosage2 = string.Empty;
         string previousTherapyDuration = string.Empty;
         string previousTherapyDuration1 = string.Empty;
+        string previousTherapyDuration2 = string.Empty;
         Guid previousTherapyId = Guid.Empty;
         bool therapiesHaveDosage = false;
         bool therapiesHaveDuration = false;
+
+        public List<BDHtmlPageMap> PagesMap
+        {
+            get { return pagesMap; }
+        }
 
         public void Generate(IBDNode pNode)
         {
@@ -216,6 +222,13 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
                             nodeChildPages.Add(generatePageForDentalMicroorganisms(pContext, pNode));
                             isPageGenerated = true;
+                            break;
+                        case BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation:
+                            nodeChildPages.Add(generatePageForMicrobiologyGramStain(pContext, pNode));
+                            isPageGenerated = true;
+                            break;
+                        case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
+                            nodeChildPages.Add(generatePageForMicrobiologyOrganisms(pContext, pNode));
                             break;
                         default:
                             isPageGenerated = false;
@@ -2366,6 +2379,105 @@ namespace BDEditor.Classes
         }
         #endregion
 
+        #region Microbiology Sections
+
+        private BDHtmlPage generatePageForMicrobiologyGramStain(Entities pContext, IBDNode pNode)
+        {
+            // in the case where this method is called from the wrong node type 
+            if (pNode.NodeType != BDConstants.BDNodeType.BDCategory)
+            {
+#if DEBUG
+                throw new InvalidOperationException();
+#else
+                return null;
+#endif
+            }
+            metadataLayoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, pNode.LayoutVariant);
+            StringBuilder bodyHTML = new StringBuilder();
+            StringBuilder footerHTML = new StringBuilder();
+            List<BDLinkedNote> footerList = new List<BDLinkedNote>();
+            List<Guid> objectsOnPage = new List<Guid>();
+
+            // gram positive or gram negative
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1", objectsOnPage));
+
+            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
+            if (childNodes.Count > 0) // subcategory - column 1 values
+            {
+                List<string> labels = new List<string>();
+                // build markers and list for column header linked notes
+                labels.Add(retrieveMetadataLabelForPropertyName(pContext, BDConstants.BDNodeType.BDSubcategory, BDNode.PROPERTYNAME_NAME));
+                labels.Add(retrieveMetadataLabelForPropertyName(pContext, BDConstants.BDNodeType.BDMicroorganism, BDNode.PROPERTYNAME_NAME));
+
+                List<string> footerMarkers = new List<string>();
+                footerMarkers.Add(buildFooterMarkerForList(retrieveNotesForLayoutColumn(pContext, metadataLayoutColumns[0]), true, objectsOnPage));
+                footerMarkers.Add(buildFooterMarkerForList(retrieveNotesForLayoutColumn(pContext, metadataLayoutColumns[1]), true, objectsOnPage));
+                
+                bodyHTML.Append("<table><tr>");
+                for (int i = 0; i < metadataLayoutColumns.Count; i++)
+                    bodyHTML.AppendFormat("<th>{0}{1}</th>", labels[i], footerMarkers[i]);
+                bodyHTML.Append("</tr>");
+                
+                foreach (IBDNode child in childNodes)
+                {
+                    BDNode subcategory = child as BDNode;
+                    List<IBDNode> mos = BDFabrik.GetChildrenForParent(pContext, subcategory);
+                    StringBuilder mString = new StringBuilder();
+                    foreach (IBDNode microorganism in mos)
+                    {
+                        mString.AppendFormat("{0}<br>", microorganism.Name);
+                        objectsOnPage.Add(microorganism.Uuid);
+                    }
+                    bodyHTML.AppendFormat("<tr><td><ul><li>{0}</ul></td><td>{1}</td></tr>", subcategory.Name, mString);
+                    objectsOnPage.Add(child.Uuid);
+                }
+                bodyHTML.Append("</table>");
+            }
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, true, objectsOnPage);
+        }
+
+        private BDHtmlPage generatePageForMicrobiologyOrganisms(Entities pContext, IBDNode pNode)
+        {
+            // in the case where this method is called from the wrong node type 
+            if (pNode.NodeType != BDConstants.BDNodeType.BDCategory)
+            {
+#if DEBUG
+                throw new InvalidOperationException();
+#else
+                return null;
+#endif
+            }
+            // category > subcategory > microorganismGroup > microorganism
+            // no metadata required // metadataLayoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, pNode.LayoutVariant);
+            StringBuilder bodyHTML = new StringBuilder();
+            StringBuilder footerHTML = new StringBuilder();
+            List<BDLinkedNote> footerList = new List<BDLinkedNote>();
+            List<Guid> objectsOnPage = new List<Guid>();
+
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1", objectsOnPage));
+
+            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
+            foreach (IBDNode subcategory in childNodes)
+            {
+                // microorganism group
+                bodyHTML.Append(buildNodeWithLinkedNotesAsFootnotesHTML(pContext, subcategory as BDNode, "h2", objectsOnPage));
+
+
+                List<IBDNode> mGroups = BDFabrik.GetChildrenForParent(pContext, subcategory);
+                foreach (IBDNode mGroup in mGroups)
+                {
+                    bodyHTML.Append(buildNodeWithLinkedNotesAsFootnotesHTML(pContext, mGroup as BDNode, "h4", objectsOnPage));
+
+                    List<IBDNode> microorganisms = BDFabrik.GetChildrenForParent(pContext, mGroup);
+                    foreach (IBDNode microorganism in microorganisms)
+                        bodyHTML.AppendFormat("{0}<br>", buildNodeWithLinkedNotesAsFootnotesHTML(pContext, microorganism as BDNode, "", objectsOnPage));
+                }
+            }
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, true, objectsOnPage);
+        }
+
+        #endregion
+
         private BDHtmlPage generatePageForAttachment(Entities pContext, IBDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
@@ -2473,7 +2585,7 @@ namespace BDEditor.Classes
             string footnoteText = buildTextForParentAndPropertyFromLinkedNotes(pContext, pPropertyName, pNode, BDConstants.LinkedNoteType.Footnote, objectsOnPage);
             BDHtmlPage footnote = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.ParentType, footnoteText, BDConstants.BDHtmlPageType.Footnote, objectsOnPage);
             foreach(Guid id in objectsOnPage)
-                pageMap.Add(new BDHtmlPageMap(footnote.Uuid, id));
+                pagesMap.Add(new BDHtmlPageMap(footnote.Uuid, id));
             return footnote;
         }
 
@@ -2498,7 +2610,7 @@ namespace BDEditor.Classes
                
                 List<Guid> filteredObjects = objectsOnPage.Distinct().ToList();
                 foreach (Guid id in filteredObjects)
-                    pageMap.Add(new BDHtmlPageMap(footnote.Uuid, id));
+                    pagesMap.Add(new BDHtmlPageMap(footnote.Uuid, id));
 
                 return footnote.Uuid;
             }
@@ -3005,6 +3117,27 @@ namespace BDEditor.Classes
             return nodeHTML.ToString();
         }
 
+        private string buildNodeWithLinkedNotesAsFootnotesHTML(Entities pContext, BDNode pNode, string pHeaderTagLevel, List<Guid> pObjectsOnPage)
+        {
+            // footnotes - treat all types of linked notes as footnotes
+            List<BDLinkedNote> itemFooters = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Footnote);
+            itemFooters.AddRange(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Inline));
+            itemFooters.AddRange(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.MarkedComment));
+            itemFooters.AddRange(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.UnmarkedComment));
+            string itemFooterMarker = buildFooterMarkerForList(itemFooters, true, pObjectsOnPage);
+
+            string generatedNodeName = String.Format("New {0}", BDUtilities.GetEnumDescription(pNode.NodeType));
+            StringBuilder nodeHTML = new StringBuilder();
+            if (pNode.Name.Length > 0 && !pNode.Name.Contains(generatedNodeName) && pNode.Name != "SINGLE PRESENTATION")
+            {
+                if (pHeaderTagLevel.Length > 0)
+                    nodeHTML.AppendFormat(@"<{0}>{1}{2}</{3}>", pHeaderTagLevel, pNode.Name, itemFooterMarker, pHeaderTagLevel);
+                else
+                    nodeHTML.AppendFormat(@"{0}{1}", pNode.Name, itemFooterMarker);
+            }
+            return nodeHTML.ToString();
+        }
+
         private string buildTextFromNotes(List<BDLinkedNote> pNotes, List<Guid> pObjectsOnPage)
         {
             StringBuilder noteString = new StringBuilder();
@@ -3160,7 +3293,7 @@ namespace BDEditor.Classes
         }
 
         /// <summary>
-        /// Build HTML segment for a single property of therapy, handling all linked note types
+        /// Build HTML segment for a single property of a node, handling all linked note types
         /// as well as footer marker, and filtering out 'New' name value.
         /// No surrounding HTML tags are returned
         /// </summary>
@@ -3241,7 +3374,7 @@ namespace BDEditor.Classes
             List<BDLinkedNoteAssociation> list = BDLinkedNoteAssociation.GetLinkedNoteAssociationListForParentIdAndProperty(pContext, pParentId, propertyName);
             foreach (BDLinkedNoteAssociation assn in list)
             {
-                BDLinkedNote linkedNote = BDLinkedNote.GetLinkedNoteWithId(pContext, assn.linkedNoteId);
+                BDLinkedNote linkedNote = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, assn.linkedNoteId);
                 if (null != linkedNote)
                 {
                     linkedNoteHtml.Append(linkedNote.documentText);
@@ -3264,7 +3397,7 @@ namespace BDEditor.Classes
                 {
                     if (assn.linkedNoteType == (int)pNoteType)
                     {
-                        BDLinkedNote linkedNote = BDLinkedNote.GetLinkedNoteWithId(pContext, assn.linkedNoteId);
+                        BDLinkedNote linkedNote = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, assn.linkedNoteId);
                         if (null != linkedNote)
                             noteList.Add(linkedNote);
                     }
@@ -3349,8 +3482,8 @@ namespace BDEditor.Classes
                                 {
                                     if (linkTargetAssn.internalLinkNodeId.HasValue)
                                     {
-                                        // this is an internal link - first check the pageMap for the HTML page containing that object
-                                        BDHtmlPageMap mapEntry = pageMap.FirstOrDefault<BDHtmlPageMap>(x => x.OriginalIBDObjectId == linkTargetAssn.internalLinkNodeId.Value);
+                                        // this is an internal link - first check the pagesMap for the HTML page containing that object
+                                        BDHtmlPageMap mapEntry = pagesMap.FirstOrDefault<BDHtmlPageMap>(x => x.OriginalIBDObjectId == linkTargetAssn.internalLinkNodeId.Value);
 
                                         if (null != mapEntry && pExistingPages.Contains(mapEntry.HtmlPageId))
                                         {
@@ -3359,42 +3492,12 @@ namespace BDEditor.Classes
                                             pPage.documentText = newText;
                                             BDHtmlPage.Save(pContext, pPage);
                                         }
-
-
-                                        //if (pRespresentedNodes.Contains(linkTargetAssn.internalLinkNodeId.Value))
-                                        //{
-                                        //    List<BDHtmlPage> linkedNotePages = BDHtmlPage.RetrieveHtmlPageForDisplayParentId(pContext, linkTargetAssn.internalLinkNodeId.Value);
-                                        //    if (linkedNotePages.Count > 1)
-                                        //        throw new IndexOutOfRangeException();
-                                        //    else
-                                        //    {
-                                        //        // modify anchor tag to point to the html page generated for the targeted node
-                                        //        string newText = pPage.documentText.Replace(anchorGuid.ToString(), linkedNotePages[0].Uuid.ToString().ToUpper());
-                                        //        pPage.documentText = newText;
-                                        //        BDHtmlPage.Save(pContext, pPage);
-                                        //    }
-                                        //}
                                         else // no page exists for this - there should have been one if its an internal link.
                                             Debug.WriteLine("Unable to map link in {0} showing {1}",pPage.Uuid, anchorGuid);
-                                        //{
-                                        //    // create an html page for the linked note
-                                        //    BDLinkedNote targetNote = BDLinkedNote.GetLinkedNoteWithId(pContext, linkTargetAssn.linkedNoteId);
-                                        //    if (targetNote.documentText.Length > EMPTY_PARAGRAPH)
-                                        //    {
-                                        //        List<Guid> objectsOnPage = new List<Guid>();
-                                        //        BDHtmlPage newPage = generatePageForLinkedNotes(pContext, linkTargetAssn.linkedNoteId.Value, BDConstants.BDNodeType.BDLinkedNote, targetNote.documentText, BDConstants.BDHtmlPageType.Data, objectsOnPage);
-                                        //        foreach(Guid noteId in objectsOnPage)
-                                        //            pageMap.Add(new BDHtmlPageMap(newPage.Uuid, noteId));
-
-                                        //        string newText = pPage.documentText.Replace(anchorGuid.ToString(), newPage.Uuid.ToString().ToUpper());
-                                        //        pPage.documentText = newText;
-                                        //        BDHtmlPage.Save(pContext, pPage);
-                                        //    }
-                                        //}
                                     }
                                     else if (linkTargetAssn.linkedNoteId.HasValue)
                                     {
-                                        BDHtmlPageMap mapEntry = pageMap.FirstOrDefault<BDHtmlPageMap>(x => x.OriginalIBDObjectId == linkTargetAssn.linkedNoteId.Value);
+                                        BDHtmlPageMap mapEntry = pagesMap.FirstOrDefault<BDHtmlPageMap>(x => x.OriginalIBDObjectId == linkTargetAssn.linkedNoteId.Value);
 
                                         if (null != mapEntry && pExistingPages.Contains(mapEntry.HtmlPageId))
                                         {
@@ -3403,25 +3506,11 @@ namespace BDEditor.Classes
                                             pPage.documentText = newText;
                                             BDHtmlPage.Save(pContext, pPage);
                                         }
-
-                                        //if (pRespresentedNodes.Contains(linkTargetAssn.linkedNoteId.Value))
-                                        //{
-
-                                        //    List<BDHtmlPage> linkedNotePages = BDHtmlPage.RetrieveHtmlPageForDisplayParentId(pContext, linkTargetAssn.linkedNoteId.Value);
-                                        //    if (linkedNotePages.Count > 1)
-                                        //        throw new IndexOutOfRangeException();
-                                        //    else
-                                        //    {
-                                        //        string newText = pPage.documentText.Replace(anchorGuid.ToString(), linkedNotePages[0].Uuid.ToString().ToUpper());
-                                        //        pPage.documentText = newText;
-                                        //        BDHtmlPage.Save(pContext, pPage);
-                                        //    }
-                                        //}
 
                                         else
                                         {
                                             // create an html page for the linked note - if its a note-in-note it may not have been created yet
-                                            BDLinkedNote targetNote = BDLinkedNote.GetLinkedNoteWithId(pContext, linkTargetAssn.linkedNoteId);
+                                            BDLinkedNote targetNote = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, linkTargetAssn.linkedNoteId);
                                             if (targetNote.documentText.Length > EMPTY_PARAGRAPH)
                                             {
                                                 List<Guid> objectsOnPage = new List<Guid>();
@@ -3484,7 +3573,7 @@ namespace BDEditor.Classes
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(pContext, pColumn.Uuid);
             List<BDLinkedNote> notes = new List<BDLinkedNote>();
             foreach (BDLinkedNoteAssociation link in links)
-                notes.Add(BDLinkedNote.GetLinkedNoteWithId(pContext, link.linkedNoteId));
+                notes.Add(BDLinkedNote.RetrieveLinkedNoteWithId(pContext, link.linkedNoteId));
             
             return notes;
         }
@@ -3549,12 +3638,13 @@ namespace BDEditor.Classes
             if (pObjectsOnPage.Count == 0 && pDisplayParentId != Guid.Empty)
                 Debug.WriteLine("no objects added for page {0}", newPage.Uuid);
 
-            pageMap.Add(new BDHtmlPageMap(newPage.Uuid, pDisplayParentId));
+            pagesMap.Add(new BDHtmlPageMap(newPage.Uuid, pDisplayParentId));
 
             List<Guid> filteredObjects = pObjectsOnPage.Distinct().ToList();
             foreach (Guid objectId in filteredObjects)
-                pageMap.Add(new BDHtmlPageMap(newPage.Uuid, objectId));
-
+            {
+                pagesMap.Add(new BDHtmlPageMap(newPage.Uuid, objectId));
+            }
             return newPage;
         }
         #endregion

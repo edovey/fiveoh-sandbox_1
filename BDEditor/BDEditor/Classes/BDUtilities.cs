@@ -37,6 +37,41 @@ namespace BDEditor.Classes
             return value.ToString();
         }
 
+        /// <summary>
+        /// Determine the parent hierarchy of the selected entry
+        /// </summary>
+        /// <param name="pStartNode"></param>
+        /// <returns></returns>
+        public static string BuildHierarchyString(Entities pContext, IBDNode pStartNode, string pSeparationString)
+        {
+            StringBuilder hStringBuilder = new StringBuilder();
+            if (pStartNode != null)
+                return getParentName(pContext, pStartNode, hStringBuilder, pSeparationString).ToString();
+            else
+                return string.Empty;
+        }
+
+        /// <summary>
+        /// recursive call to determine the parent name of the node
+        /// </summary>
+        /// <param name="pNode"></param>
+        /// <param name="pHierarchyValue"></param>
+        /// <returns></returns>
+        private static StringBuilder getParentName(Entities pContext, IBDNode pNode, StringBuilder pHierarchyValue, string pSeparationString)
+        {
+            if (null != pNode && pNode.ParentId != Guid.Empty)
+            {
+                IBDNode parentNode = BDFabrik.RetrieveNode(pContext, pNode.ParentType, pNode.ParentId);
+                if (null != parentNode)
+                {
+                    pHierarchyValue.Insert(0, string.Format("{0}{1}", parentNode.Name, pSeparationString));
+                    if (parentNode.ParentId != Guid.Empty)
+                        pHierarchyValue = getParentName(pContext, parentNode, pHierarchyValue, pSeparationString);
+                }
+            }
+            return pHierarchyValue;
+        }
+
         public static void InjectNodeIntoHierarhy(Entities pContext)
         {
             BDNode disease = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("96cbc7d0-c4ba-4593-a1d9-0e7908deeffd"));

@@ -202,7 +202,7 @@ namespace BDEditor.Views
                 if ((null != associationList) && (associationList.Count > 0))
                 {
                     BDLinkedNoteAssociation association = associationList[0];
-                    durationLinkedNote = BDLinkedNote.GetLinkedNoteWithId(dataContext, association.linkedNoteId);
+                    durationLinkedNote = BDLinkedNote.RetrieveLinkedNoteWithId(dataContext, association.linkedNoteId);
                     bdLinkedNoteControl1.CurrentLinkedNote = durationLinkedNote;
                 }
                 bdLinkedNoteControl1.RefreshLayout();

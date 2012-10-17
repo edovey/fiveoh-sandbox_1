@@ -83,8 +83,8 @@ namespace BDEditor.Classes
             if (pSyncType == BDConstants.SyncType.Publish)
             {
                 syncDictionary.Add(BDHtmlPage.SyncInfo(pDataContext));
-//                syncDictionary.Add(BDSearchEntry.SyncInfo(pDataContext));
-//                syncDictionary.Add(BDSearchEntryAssociation.SyncInfo(pDataContext));
+                syncDictionary.Add(BDSearchEntry.SyncInfo(pDataContext));
+                syncDictionary.Add(BDSearchEntryAssociation.SyncInfo(pDataContext));
                 syncDictionary.Add(BDAttachment.SyncInfo(pDataContext));
             }
 
@@ -165,8 +165,8 @@ namespace BDEditor.Classes
 
                 // clear the remote tables / entities; clear all pages from S3
                 DeleteRemoteHTMLPages();
-                //DeleteRemoteSearch();
-                //DeleteRemoteAttachments();
+                DeleteRemoteSearch();
+                DeleteRemoteAttachments();
                 #endregion
 
                 foreach (SyncInfo syncInfoEntry in syncDictionary.Values)

@@ -1373,12 +1373,86 @@ namespace BDEditor.Classes
                     case BDConstants.BDNodeType.BDTableRow:
                         result = BDTableRow.RetrieveTableRowWithId(pContext, pUuid.Value);
                         break;
+                    case BDConstants.BDNodeType.BDConfiguredEntry:
+                        result = BDConfiguredEntry.RetrieveConfiguredEntryWithId(pContext, pUuid.Value);
+                        break;
+                    case BDConstants.BDNodeType.BDCombinedEntry:
+                        result = BDCombinedEntry.RetrieveCombinedEntryWithId(pContext, pUuid.Value);
+                        break;
+                    case BDConstants.BDNodeType.BDTableCell:
+                        BDTableCell.RetrieveWithId(pContext, pUuid.Value);
+                        break;
+                    case BDConstants.BDNodeType.BDLinkedNote:
+                        BDLinkedNote.RetrieveLinkedNoteWithId(pContext, pUuid.Value);
+                        break;
                     default:
                         result = BDNode.RetrieveNodeWithId(pContext, pUuid.Value);
                         break;
                 }
             }
             return result;
+        }
+
+        public static IBDNode RetrieveNode(Entities pContext, Guid? pUuid)
+        {
+            IBDNode result = null;
+            result = RetrieveNode(pContext, BDConstants.BDNodeType.BDChapter, pUuid);
+            if (null != result) return result;
+            else
+            {
+                result = RetrieveNode(pContext, BDConstants.BDNodeType.BDTherapy, pUuid);
+                if (result != null) return result;
+                else
+                {
+                    result = RetrieveNode(pContext, BDConstants.BDNodeType.BDTherapyGroup, pUuid);
+                    if (result != null) return result;
+                    else
+                    {
+                        result = RetrieveNode(pContext, BDConstants.BDNodeType.BDLinkedNote, pUuid);
+                        if (result != null) return result;
+                        else
+                        {
+                            result = RetrieveNode(pContext, BDConstants.BDNodeType.BDAntimicrobialRisk, pUuid);
+                            if (result != null) return result;
+                            else
+                            {
+                                result = RetrieveNode(pContext, BDConstants.BDNodeType.BDDosage, pUuid);
+                                if (result != null) return result;
+                                else
+                                {
+                                    result = RetrieveNode(pContext, BDConstants.BDNodeType.BDTableRow, pUuid);
+                                    if (result != null) return result;
+                                    else
+                                    {
+                                        result = RetrieveNode(pContext, BDConstants.BDNodeType.BDTableCell, pUuid);
+                                        if (result != null) return result;
+                                        else
+                                        {
+                                            result = RetrieveNode(pContext, BDConstants.BDNodeType.BDPrecaution, pUuid);
+                                            if (result != null) return result;
+                                            else
+                                            {
+                                                result = RetrieveNode(pContext, BDConstants.BDNodeType.BDConfiguredEntry, pUuid);
+                                                if (result != null) return result;
+                                                else
+                                                {
+                                                    result = RetrieveNode(pContext, BDConstants.BDNodeType.BDCombinedEntry, pUuid);
+                                                    if (result != null) return result;
+                                                    else
+                                                    {
+                                                        result = RetrieveNode(pContext, BDConstants.BDNodeType.BDAttachment, pUuid);
+                                                        return result;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public static IBDNode CreateNode(Entities pContext, BDConstants.BDNodeType pNodeType, Guid? pParentUuid, BDConstants.BDNodeType pParentNodeType)

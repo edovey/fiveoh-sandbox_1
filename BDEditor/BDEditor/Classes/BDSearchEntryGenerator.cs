@@ -55,7 +55,7 @@ namespace BDEditor.Classes
                         currentContext = (ibdNode as BDConfiguredEntry).Name;
                         break;
                     case BDConstants.BDNodeType.BDDosage:
-                        currentContext = (ibdNode as BDDosage).Description;
+                        // no valid properties
                         break;
                     case BDConstants.BDNodeType.BDLinkedNote:
                         currentContext = (ibdNode as BDLinkedNote).DescriptionForLinkedNote;
@@ -260,7 +260,6 @@ namespace BDEditor.Classes
                 }
             }
         }
-
 
         private static void generateEntryWithDisplayParent(Entities pDataContext, BDNode pDisplayParent, IBDNode pNode, string pDisplayContext)
         {

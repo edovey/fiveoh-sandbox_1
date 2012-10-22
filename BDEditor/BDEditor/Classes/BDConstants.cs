@@ -241,43 +241,43 @@ namespace BDEditor.Classes
             [Description("Antibiotics - BLactam Allergy Cross Reactivity Content Row")]
             Antibiotics_BLactamAllergy_CrossReactivity_ContentRow = 21011,
             
-            [Description("Prophylaxis Recommendations")]
-            Prophylaxis = 300, 
-            [Description("Pre-Op Antibiotic Administration")]
+            [Description("Prophylaxis - Recommendations")]
+            Prophylaxis = 300,
+            [Description("Prophylaxis - Pre-Op Antibiotic Administration")]
             Prophylaxis_PreOp = 301,
-            [Description("Pre-Op Antibiotic Administration Header Row")]
+            [Description("Prophylaxis - Pre-Op Antibiotic Administration Header Row")]
             Prophylaxis_PreOp_HeaderRow = 3011,
-            [Description("Pre-Op Antibiotic Administration Content Row")]
+            [Description("Prophylaxis - Pre-Op Antibiotic Administration Content Row")]
             Prophylaxis_PreOp_ContentRow = 3012,
 
-            [Description("Surgical Prophylaxis")]
+            [Description("Prophylaxis - Surgical")]
             Prophylaxis_Surgical = 302,
-            [Description("Prophylaxis of Infective Endocarditis")]
+            [Description("Prophylaxis - Infective Endocarditis")]
             Prophylaxis_IERecommendation = 303,
-            [Description("Infective Endocarditis Antibiotic Regimen")]
+            [Description("Prophylaxis - Infective Endocarditis Antibiotic Regimen")]
             Prophylaxis_IEDrugAndDosage = 304,
-            [Description("Blood/Body Fluid Exposure")]
+            [Description("Prophylaxis - Blood/Body Fluid Exposure")]
             Prophylaxis_FluidExposure = 305,
-            [Description("Blood/Body Fluid Exposure - Risk of Infection")]
+            [Description("Prophylaxis - Blood/Body Fluid Exposure - Risk of Infection")]
             Prophylaxis_FluidExposure_Risk = 3051,
-            [Description("Blood/Body Fluid Exposure - Followup Protocol I")]
+            [Description("Prophylaxis - Blood/Body Fluid Exposure - Followup Protocol I")]
             Prophylaxis_FluidExposure_Followup_I = 3052,
-            [Description("Blood/Body Fluid Exposure - Followup Protocol II")]
+            [Description("Prophylaxis - Blood/Body Fluid Exposure - Followup Protocol II")]
             Prophylaxis_FluidExposure_Followup_II = 3053,
 
-            [Description("Sexual Assault")]
+            [Description("Prophylaxis - Sexual Assault")]
             Prophylaxis_SexualAssault = 306,
-            [Description("Sexual Assault - Prophylaxis")]
+            [Description("Prophylaxis - Sexual Assault - Prophylaxis")]
             Prophylaxis_SexualAssault_Prophylaxis = 307,
 
-            [Description("Immunization Recommendations")]
+            [Description("Prophylaxis - Immunization Recommendations")]
             Prophylaxis_Immunization = 314,
 
-            [Description("Routine Immunization Programs")]
+            [Description("Prophylaxis - Routine Immunization Programs")]
             Prophylaxis_Immunization_Routine = 308,
-            [Description("Vaccines for High Risk")]
+            [Description("Prophylaxis - Vaccines for High Risk")]
             Prophylaxis_Immunization_HighRisk = 309,
-            [Description("Vaccine Details")]
+            [Description("Prophylaxis - Vaccine Details")]
             Prophylaxis_Immunization_VaccineDetail = 310,
 
             [Description("Prophylaxis - Communicable Diseases")]
@@ -302,7 +302,7 @@ namespace BDEditor.Classes
             Prophylaxis_Communicable_Influenza_Zanamivir = 3126,
             [Description("Prophylaxis - Pertussis")]
             Prophylaxis_Communicable_Pertussis = 316,
-            [Description("Infection Precautions")]
+            [Description("Prophylaxis - Infection Precautions")]
             Prophylaxis_InfectionPrecautions = 313,
 
             [Description("Dental")]

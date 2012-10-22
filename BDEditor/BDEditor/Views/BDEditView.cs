@@ -24,7 +24,7 @@ namespace BDEditor.Views
         private bool isSeedDataLoadAvailable = false;
         private string seedDataFileName = string.Empty;
         // enable & show move button when data move is required
-        private bool moveButtonVisible = false;
+        private bool moveButtonVisible = true;
 
         public BDEditView()
         {
@@ -1194,9 +1194,6 @@ namespace BDEditor.Views
             else
                 return;
 
-            if (chapterTree.SelectedNode != null)
-                chapterNode = chapterTree.SelectedNode.Tag as IBDNode;
-
             this.Cursor = Cursors.WaitCursor;
             
             BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
@@ -1983,6 +1980,33 @@ namespace BDEditor.Views
             BDUtilities.ResetLayoutVariantWithChildren(dataContext, section, BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional, true);
             dataContext.SaveChanges();
             */
+            #endregion
+
+            #region v.1.6.27
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation, 0, "Bacterial Morphology", BDConstants.BDNodeType.BDSubcategory, BDNode.PROPERTYNAME_NAME, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation, 1, "Probable Organisms", BDConstants.BDNodeType.BDMicroorganism, BDNode.PROPERTYNAME_NAME, 0, "");
+
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation, 0, "DRUG", BDConstants.BDNodeType.BDAntimicrobial, BDNode.PROPERTYNAME_NAME, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation, 1, "RISK CATEGORY", BDConstants.BDNodeType.BDAntimicrobialRisk, BDAntimicrobialRisk.PROPERTYNAME_LACTATIONRISK, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation, 2, "AAP RATING", BDConstants.BDNodeType.BDAntimicrobialRisk, BDAntimicrobialRisk.PROPERTYNAME_APPRATING, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation, 3, "RELATIVE INFANT DOSE", BDConstants.BDNodeType.BDAntimicrobialRisk, BDAntimicrobialRisk.PROPERTYNAME_RELATIVEDOSE, 0, "");
+
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy, 0, "DRUG", BDConstants.BDNodeType.BDAntimicrobial, BDNode.PROPERTYNAME_NAME, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy, 1, "FDA RISK CATEGORY", BDConstants.BDNodeType.BDAntimicrobialRisk, BDAntimicrobialRisk.PROPERTYNAME_PREGNANCYRISK, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy, 2, "RECOMMENDATION", BDConstants.BDNodeType.BDAntimicrobialRisk, BDAntimicrobialRisk.PROPERTYNAME_RECOMMENDATION, 0, "");
+            
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection, 0, "Antimicrobial Regimen", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_THERAPY, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection, 1, "Dose & Duration", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, 0, "");
+
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage, 0, "SITUATION", BDConstants.BDNodeType.BDTherapyGroup, BDTherapyGroup.PROPERTYNAME_NAME, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage, 1, "DRUG", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_THERAPY, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage, 2, "ADULT DOSE", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage, 3, "PAEDIATRIC DOSE", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE_1, 0, "");
+
+            BDNode prophylaxis = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("376b287e-1d80-40f5-bb0b-512e52720687"));
+            prophylaxis.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_IERecommendation;
+            BDNode.Save(dataContext, prophylaxis);
+
             #endregion
         }
 

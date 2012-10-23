@@ -408,6 +408,10 @@ namespace BDEditor.Classes
                             nodeChildPages.Add(generatePageForProphylaxisEndocarditis(pContext, pNode));
                             isPageGenerated = true;
                             break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
+                            nodeChildPages.Add(generatePageForProphylaxisInfectionPrevention(pContext, pNode));
+                            isPageGenerated = true;
+                            break;
                         case BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases:
                             nodeChildPages.Add(generatePageForPLCommunicableDiseases(pContext, pNode));
                             isPageGenerated = true;
@@ -2388,7 +2392,7 @@ namespace BDEditor.Classes
         private BDHtmlPage generatePageForProphylaxisInfectionPrevention(Entities pContext, IBDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
-            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
+            if (pNode.NodeType != BDConstants.BDNodeType.BDSection)
             {
 #if DEBUG
                 throw new InvalidOperationException();
@@ -2402,13 +2406,55 @@ namespace BDEditor.Classes
             List<BDLinkedNote> footnoteList = new List<BDLinkedNote>();
             List<Guid> objectsOnPage = new List<Guid>();
 
-            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1", footnoteList, objectsOnPage));
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h2", footnoteList, objectsOnPage));
 
-            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
-            if (childNodes.Count > 0)
+            List<string> mgTitles = new List<string>();
+            List<IBDNode> mGroups = BDFabrik.GetChildrenForParent(pContext, pNode);
+            StringBuilder mgHTML = new StringBuilder();
+            string previousGroupName = string.Empty;
+            foreach (IBDNode mGroup in mGroups)
             {
-                //Append HTML for child layout
+                if (mGroup.Name != previousGroupName)
+                {
+                    mgHTML.AppendFormat("<h3>{0}</h3>", mGroup.Name);
+                    previousGroupName = mGroup.Name;
+                }
+                List<BDHtmlPage> mPages = new List<BDHtmlPage>();
+                List<IBDNode> microorganisms = BDFabrik.GetChildrenForParent(pContext, mGroup);
+                foreach (IBDNode microorganism in microorganisms)
+                {
+                    StringBuilder mHTML = new StringBuilder();
+                    List<Guid> mObjectsOnPage = new List<Guid>();
+                    List<BDLinkedNote> mFootnotes = new List<BDLinkedNote>();
+                    mHTML.AppendFormat("<h2>{0}</h2>", microorganism.Name);
+                    mgTitles.Add(microorganism.Name);
+
+                    List<IBDNode> precautions = BDFabrik.GetChildrenForParent(pContext, microorganism);
+                    foreach (IBDNode precaution in precautions)
+                    {
+                        BDPrecaution p = precaution as BDPrecaution;
+                        mHTML.AppendFormat("<h4>Infective Material</h4>{0}", p.infectiveMaterial);
+                        mHTML.AppendFormat("<h4>Mode of Transmission</h4>{0}", p.modeOfTransmission);
+                        // build table
+                        mHTML.Append("<table><tr><th>Precautions</th><th>Acute Care</th><th>Long Term Care</th></tr>");
+                        mHTML.AppendFormat("<tr><td>Single Room</td><td>{0}</td><td>{1}</td></tr>", p.singleRoomAcute, p.singleRoomLongTerm);
+                        mHTML.AppendFormat("<tr><td>Gloves</td><td>{0}</td><td>{1}</td></tr>", p.glovesAcute, p.glovesLongTerm);
+                        mHTML.AppendFormat("<tr><td>Gowns</td><td>{0}</td><td>{1}</td></tr>", p.gownsAcute, p.gownsLongTerm);
+                        mHTML.AppendFormat("<tr><td>Mask</td><td>{0}</td><td>{1}</td></tr>", p.maskAcute, p.maskLongTerm);
+                        mHTML.Append("</table>");
+
+                        List<BDLinkedNote> durationNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, p.Uuid, BDPrecaution.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.MarkedComment);
+                        StringBuilder durationText = new StringBuilder();
+                        foreach (BDLinkedNote note in durationNotes)
+                            durationText.Append(note.documentText);
+                        mHTML.AppendFormat("<h4>Duration of Precautions</h4>{0}", durationText);
+                    }
+                    mPages.Add(writeBDHtmlPage(pContext, microorganism, mHTML, BDConstants.BDHtmlPageType.Data, mFootnotes, mObjectsOnPage));
+                }
+                for (int i = 0; i < mPages.Count; i++)
+                    mgHTML.AppendFormat(@"<p><a href=""{0}"">{1}</a></p>", mPages[i].Uuid.ToString().ToUpper(), mgTitles[i]);
             }
+            bodyHTML.Append(mgHTML);
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnoteList, objectsOnPage);
         }
         #endregion

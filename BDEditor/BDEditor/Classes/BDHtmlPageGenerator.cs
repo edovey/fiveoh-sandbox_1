@@ -11,7 +11,7 @@ namespace BDEditor.Classes
     public class BDHtmlPageGenerator
     {
         private const int maxNodeType = 6;
-        private const string topHtml = @"<html><head><meta http-equiv=""Content-type"" content=""text/html;charset=UTF-8\""/><link rel=""stylesheet"" type=""text/css"" href=""bdviewer.css"" /> </head><body>";
+        private const string topHtml = @"<html><head><meta http-equiv=""Content-type"" content=""text/html;charset=UTF-8\""/><meta name=""viewport"" content=""width=device-width; initial-scale=1.0; maximum-scale=1.0;""/><link rel=""stylesheet"" type=""text/css"" href=""bdviewer.css"" /> </head><body>";
         private const string bottomHtml = @"</body></html>";
         private const int EMPTY_PARAGRAPH = 8;  // <p> </p>
         private const string imgFileTag = "<img src=\"images/{0}{1}\" alt=\"\" width=\"300\" height=\"300\" />";
@@ -481,6 +481,18 @@ namespace BDEditor.Classes
                             nodeChildPages.Add(generatePageForEmpiricTherapyOfEndocarditisPaediatrics(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure_Risk:
+                            nodeChildPages.Add(generatePageForProphylaxisFluidExposureRiskOfInfection(pContext, pNode));
+                            isPageGenerated = true;
+                            break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure_Followup_I:
+                            nodeChildPages.Add(generatePageForProphylaxisFluidExposureFollowupProtocolI(pContext, pNode));
+                            isPageGenerated = true;
+                            break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure_Followup_II:
+                            nodeChildPages.Add(generatePageForProphylaxisFluidExposureFollowupProtocolII(pContext, pNode));
+                            isPageGenerated = true;
+                            break;
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
                             nodeChildPages.Add(generatePageForAntimicrobialAgentsForOralMicroorganisms(pContext, pNode));
                             isPageGenerated = true;
@@ -923,8 +935,8 @@ namespace BDEditor.Classes
                 footerMarkers.Add(buildFooterMarkerForList(retrieveNotesForLayoutColumn(pContext, metadataLayoutColumns[1]), true, footnotes, objectsOnPage));
                 footerMarkers.Add(buildFooterMarkerForList(retrieveNotesForLayoutColumn(pContext, metadataLayoutColumns[2]), true, footnotes, objectsOnPage));
 
-                bodyHTML.AppendFormat(@"<table><tr><th rowspan=""4"">{0}{1}</th><th rowspan=""4"">{2}{3}</th>",labels[0],footerMarkers[0],labels[1],footerMarkers[1]);
-                bodyHTML.Append(@"<th colspan=""3""><b>Dose and Interval Adjustment for Renal Impairment</b></th></tr>");
+                bodyHTML.AppendFormat(@"<table><tr><th rowspan=4>{0}{1}</th><th rowspan=4>{2}{3}</th>",labels[0],footerMarkers[0],labels[1],footerMarkers[1]);
+                bodyHTML.Append(@"<th colspan=3><b>Dose and Interval Adjustment for Renal Impairment</b></th></tr>");
                 bodyHTML.AppendFormat(@"<tr><th colspan=""3""><b>{0}{1}</b></th><tr>",labels[2],footerMarkers[2]);
                 bodyHTML.Append(@"<tr><th>&gt50</th><th>10 - 50</th><th>&lt10(Anuric)</th></tr>");
 
@@ -1069,7 +1081,7 @@ namespace BDEditor.Classes
                         else if (node.NodeType == BDConstants.BDNodeType.BDTableSection)
                         {
                             if (node.Name.Length > 0)
-                                bodyHTML.AppendFormat(@"<tr><td colspan = 3><b>{0}</b><td></tr>", node.Name);
+                                bodyHTML.AppendFormat(@"<tr><td colspan=3><b>{0}</b><td></tr>", node.Name);
                             List<IBDNode> sectionChildren = BDFabrik.GetChildrenForParent(pContext, node);
                             if (sectionChildren.Count > 0)
                             {
@@ -1079,7 +1091,7 @@ namespace BDEditor.Classes
                                     {
                                         if (sectionChild.Name.Length > 0)
                                         {
-                                            bodyHTML.AppendFormat(@"<tr><td colspan = 3><nbsp><nbsp>{0}<td></tr>", sectionChild.Name);
+                                            bodyHTML.AppendFormat(@"<tr><td colspan=3><nbsp><nbsp>{0}<td></tr>", sectionChild.Name);
                                             List<BDTableRow> rows = BDTableRow.RetrieveTableRowsForParentId(pContext, sectionChild.Uuid);
                                             foreach (BDTableRow row in rows)
                                                 bodyHTML.Append(buildTableRowHtml(pContext, row, false, true, footnotes, objectsOnPage));
@@ -1099,7 +1111,7 @@ namespace BDEditor.Classes
                         {
                             //TODO:  Make fontsize smaller than antimicrobialSection name
                             if (node.Name.Length > 0)
-                                bodyHTML.AppendFormat(@"<tr><td colspan = 3>{0}<td></tr>", node.Name);
+                                bodyHTML.AppendFormat(@"<tr><td colspan=3>{0}<td></tr>", node.Name);
                         }
                     }
                 }
@@ -1147,7 +1159,7 @@ namespace BDEditor.Classes
                         else if (node.NodeType == BDConstants.BDNodeType.BDTableSection)
                         {
                             if (node.Name.Length > 0)
-                                bodyHTML.AppendFormat(@"<tr><td colspan = 5><i>{0}</i><td></tr>", node.Name);
+                                bodyHTML.AppendFormat(@"<tr><td colspan=5><i>{0}</i><td></tr>", node.Name);
                             List<IBDNode> sectionChildren = BDFabrik.GetChildrenForParent(pContext, node);
                             if (sectionChildren.Count > 0)
                             {
@@ -1157,7 +1169,7 @@ namespace BDEditor.Classes
                                     {
                                         if (sectionChild.Name.Length > 0)
                                         {
-                                            bodyHTML.AppendFormat(@"<tr><td colspan = 5>{0}<td></tr>", sectionChild.Name);
+                                            bodyHTML.AppendFormat(@"<tr><td colspan=5>{0}<td></tr>", sectionChild.Name);
                                             List<BDTableRow> rows = BDTableRow.RetrieveTableRowsForParentId(pContext, sectionChild.Uuid);
                                             foreach (BDTableRow row in rows)
                                                 bodyHTML.Append(buildTableRowHtml(pContext, row, false, true, footnotes, objectsOnPage));
@@ -1177,7 +1189,7 @@ namespace BDEditor.Classes
                         {
                             //TODO:  Make fontsize smaller than antimicrobialSection name
                             if (node.Name.Length > 0)
-                                bodyHTML.AppendFormat(@"<tr><td colspan = 5>{0}<td></tr>", node.Name);
+                                bodyHTML.AppendFormat(@"<tr><td colspan=5>{0}<td></tr>", node.Name);
                             List<IBDNode> subsectionChildren = BDFabrik.GetChildrenForParent(pContext, node);
                             if (subsectionChildren.Count > 0)
                             {
@@ -1187,7 +1199,7 @@ namespace BDEditor.Classes
                                     {
                                         if (subsectionChild.Name.Length > 0)
                                         {
-                                            bodyHTML.AppendFormat(@"<tr><td colspan = 5>{0}<td></tr>", subsectionChild.Name);
+                                            bodyHTML.AppendFormat(@"<tr><td colspan=5>{0}<td></tr>", subsectionChild.Name);
                                             List<BDTableRow> rows = BDTableRow.RetrieveTableRowsForParentId(pContext, subsectionChild.Uuid);
                                             foreach (BDTableRow row in rows)
                                                 bodyHTML.Append(buildTableRowHtml(pContext, row, false, true, footnotes, objectsOnPage));
@@ -2118,7 +2130,7 @@ namespace BDEditor.Classes
                     therapyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child, "h2", therapyFootnotes, therapiesOnPage));
                     therapyFootnotes.AddRange(footnotesFromMetadata);
                     string subtext = "given 30-60 minutes before the procedure";
-                    therapyHTML.AppendFormat("<table><tr><th>{0}{1}</th><th>{2}{3}{4}/ROUTE</th><th>{5}{6}{7}/ROUTE</th></tr>",
+                    therapyHTML.AppendFormat("<table><tr><th>{0}{1}</th><th>{2} {3}{4}/ROUTE</th><th>{5}{6}{7}/ROUTE</th></tr>",
                         labelsFromMetadata[1], buildFooterMarkerForList(retrieveNotesForLayoutColumn(pContext, metadataLayoutColumns[1]), true, therapyFootnotes, objectsOnPage),
                         labelsFromMetadata[2], subtext, buildFooterMarkerForList(retrieveNotesForLayoutColumn(pContext, metadataLayoutColumns[2]), true, therapyFootnotes, objectsOnPage),
                         labelsFromMetadata[3], subtext, buildFooterMarkerForList(retrieveNotesForLayoutColumn(pContext, metadataLayoutColumns[3]), true, therapyFootnotes, objectsOnPage));
@@ -2142,10 +2154,10 @@ namespace BDEditor.Classes
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnoteList, objectsOnPage);
         }
 
-        private BDHtmlPage generatePageForProphylaxisFluidExposure(Entities pContext, IBDNode pNode)
+        private BDHtmlPage generatePageForProphylaxisFluidExposureRiskOfInfection(Entities pContext, IBDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
-            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
+            if (pNode.NodeType != BDConstants.BDNodeType.BDTable)
             {
 #if DEBUG
                 throw new InvalidOperationException();
@@ -2159,12 +2171,99 @@ namespace BDEditor.Classes
             List<BDLinkedNote> footnoteList = new List<BDLinkedNote>();
             List<Guid> objectsOnPage = new List<Guid>();
 
+            List<string> labelsFromMetadata = new List<string>();
+            labelsFromMetadata.Add(retrieveMetadataLabelForPropertyName(pContext, BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_NAME));
+            labelsFromMetadata.Add(retrieveMetadataLabelForPropertyName(pContext, BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD01));
+            labelsFromMetadata.Add(retrieveMetadataLabelForPropertyName(pContext, BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD02));
             bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1", footnoteList, objectsOnPage));
 
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
-            if (childNodes.Count > 0)
+            foreach (IBDNode entry in childNodes)
             {
-                //Append HTML for child layout
+                bodyHTML.AppendFormat("<h2>{0}</h2>", retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Name_fieldNote", objectsOnPage));
+                bodyHTML.AppendFormat("<table><tr><th>{0}</th></tr>", labelsFromMetadata[1]);
+                bodyHTML.AppendFormat("<tr><td>{0}</td></tr></table>",
+                    retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field01_fieldNote", objectsOnPage));
+                bodyHTML.AppendFormat("<table><tr><th>{0}</th></tr>", labelsFromMetadata[2]);
+                bodyHTML.AppendFormat("<tr><td>{0}</td></tr></table>",
+                    retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field02_fieldNote", objectsOnPage));
+                objectsOnPage.Add(entry.Uuid);
+            }
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnoteList, objectsOnPage);
+        }
+
+        private BDHtmlPage generatePageForProphylaxisFluidExposureFollowupProtocolI(Entities pContext, IBDNode pNode)
+        {
+            // in the case where this method is called from the wrong node type 
+            if (pNode.NodeType != BDConstants.BDNodeType.BDTable)
+            {
+#if DEBUG
+                throw new InvalidOperationException();
+#else
+                return null;
+#endif
+            }
+
+            metadataLayoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, pNode.LayoutVariant);
+            StringBuilder bodyHTML = new StringBuilder();
+            List<BDLinkedNote> footnoteList = new List<BDLinkedNote>();
+            List<Guid> objectsOnPage = new List<Guid>();
+
+            List<string> labelsFromMetadata = new List<string>();
+            labelsFromMetadata.Add(retrieveMetadataLabelForPropertyName(pContext, BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_NAME));
+            labelsFromMetadata.Add(retrieveMetadataLabelForPropertyName(pContext, BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD01));
+            labelsFromMetadata.Add(retrieveMetadataLabelForPropertyName(pContext, BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD02));
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1", footnoteList, objectsOnPage));
+
+                bodyHTML.AppendFormat("<table><tr><th>{0}</th><th>{1}</th></tr>", labelsFromMetadata[1], labelsFromMetadata[2]);
+            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
+            foreach (IBDNode entry in childNodes)
+            {
+                bodyHTML.AppendFormat("<tr><td>{0}</td><td>{1}</td></tr>",
+                    retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field01_fieldNote", objectsOnPage),
+                    retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field02_fieldNote", objectsOnPage));
+                objectsOnPage.Add(entry.Uuid);
+            }
+            bodyHTML.Append("</table>");
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnoteList, objectsOnPage);
+        }
+
+        private BDHtmlPage generatePageForProphylaxisFluidExposureFollowupProtocolII(Entities pContext, IBDNode pNode)
+        {
+            // in the case where this method is called from the wrong node type 
+            if (pNode.NodeType != BDConstants.BDNodeType.BDTable)
+            {
+#if DEBUG
+                throw new InvalidOperationException();
+#else
+                return null;
+#endif
+            }
+
+            metadataLayoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, pNode.LayoutVariant);
+            StringBuilder bodyHTML = new StringBuilder();
+            List<BDLinkedNote> footnoteList = new List<BDLinkedNote>();
+            List<Guid> objectsOnPage = new List<Guid>();
+
+            List<string> labelsFromMetadata = new List<string>();
+            labelsFromMetadata.Add(retrieveMetadataLabelForPropertyName(pContext, BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_NAME));
+            labelsFromMetadata.Add(retrieveMetadataLabelForPropertyName(pContext, BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD01));
+            labelsFromMetadata.Add(retrieveMetadataLabelForPropertyName(pContext, BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD02));
+            labelsFromMetadata.Add(retrieveMetadataLabelForPropertyName(pContext, BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD03));
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1", footnoteList, objectsOnPage));
+
+            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
+            foreach (IBDNode entry in childNodes)
+            {
+                bodyHTML.AppendFormat(@"<h4>SOURCE:  {0}</h4>", retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Name_fieldNote", objectsOnPage, true));
+                bodyHTML.Append(@"<table><tr colspan=3><th>RECIPIENT</th></tr>");
+                bodyHTML.AppendFormat("<tr><th>{0}</th><th>{1}</th><th>{2}</th></tr>", labelsFromMetadata[1], labelsFromMetadata[2], labelsFromMetadata[3]);
+                bodyHTML.AppendFormat("<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>",
+                    retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field01_fieldNote", objectsOnPage),
+                    retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field02_fieldNote", objectsOnPage),
+                    retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field03_fieldNote", objectsOnPage));
+                bodyHTML.Append("</table>");
+                objectsOnPage.Add(entry.Uuid);
             }
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnoteList, objectsOnPage);
         }
@@ -2366,7 +2465,7 @@ namespace BDEditor.Classes
                 foreach (IBDNode therapyGroup in tableChildren)
                 {
                     BDTherapyGroup entry = therapyGroup as BDTherapyGroup;
-                    bodyHTML.AppendFormat("<tr><td colspan=\"3\"><b>{0}</b></td></tr>",entry.Name);
+                    bodyHTML.AppendFormat("<tr><td colspan=3><b>{0}</b></td></tr>",entry.Name);
                     objectsOnPage.Add(therapyGroup.Uuid);
                     List<IBDNode> therapies = BDFabrik.GetChildrenForParent(pContext, entry);
                     foreach (IBDNode therapy in therapies)
@@ -3682,14 +3781,14 @@ namespace BDEditor.Classes
             StringBuilder tableRowHTML = new StringBuilder();
             string startCellTag = @"<td>";
             string endCellTag = @"</td>";
-            string firstCellStartTag = @"<td colspan=""3"">";
+            string firstCellStartTag = @"<td colspan=3>";
             if (pRow != null)
             {
                 if (BDFabrik.RowIsHeaderRow(pRow) || forceHeaderRow)
                 {
                     startCellTag = @"<th>";
                     endCellTag = @"</th>";
-                    firstCellStartTag = @"<th colspan=""3"">";
+                    firstCellStartTag = @"<th colspan=3>";
                 }
                 pObjectsOnPage.Add(pRow.Uuid);
                 tableRowHTML.Append(@"<tr>");
@@ -3936,6 +4035,37 @@ namespace BDEditor.Classes
                 return linkedNoteHtml.ToString();
             else
                 return "";
+        }
+
+        private string retrieveNoteTextForConfiguredEntryField(Entities pContext, Guid pParentId, string pPropertyName, List<Guid> pObjectsOnPage)
+        {
+            return retrieveNoteTextForConfiguredEntryField(pContext, pParentId, pPropertyName, pObjectsOnPage, false);
+        }
+
+        private string retrieveNoteTextForConfiguredEntryField(Entities pContext, Guid pParentId, string pPropertyName, List<Guid> pObjectsOnPage, bool trimTags)
+        {
+            StringBuilder noteText = new StringBuilder();
+            List<BDLinkedNote> notes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pParentId, pPropertyName, BDConstants.LinkedNoteType.MarkedComment);
+            foreach (BDLinkedNote note in notes)
+            {
+                if (null != note && note.documentText.Length > EMPTY_PARAGRAPH)
+                {
+                    string resultText = string.Empty;
+                    if (trimTags) // trim the start and end paragraph tags
+                    {
+                        if (note.documentText.StartsWith("<p>"))
+                            resultText = note.documentText.Substring(3);
+                        else
+                            resultText = note.documentText;
+                        if(resultText.EndsWith("</p>"))
+                            resultText = resultText.Substring(0,resultText.Length - 4);
+                    }
+                    else
+                        resultText = note.documentText;
+                    noteText.Append(resultText);
+                }
+            }
+            return noteText.ToString();
         }
 
         private List<BDLinkedNote> retrieveNotesForParentAndPropertyOfLinkedNoteType(Entities pContext, Guid pParentId, string pPropertyName, BDConstants.LinkedNoteType pNoteType)

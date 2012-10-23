@@ -513,6 +513,10 @@ namespace BDEditor.Classes
                             nodeChildPages.Add(generatePageForDentalProphylaxis(pContext, pNode));
                             isPageGenerated = true;
                             break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
+                            nodeChildPages.Add(generatePageForProhylaxisSexualAssault(pContext, pNode));
+                            isPageGenerated = true;
+                            break;
                         default:
                             isPageGenerated = false;
                             break;
@@ -2233,7 +2237,6 @@ namespace BDEditor.Classes
 
         private BDHtmlPage generatePageForProphylaxisFluidExposureFollowupProtocolII(Entities pContext, IBDNode pNode)
         {
-            // in the case where this method is called from the wrong node type 
             if (pNode.NodeType != BDConstants.BDNodeType.BDTable)
             {
 #if DEBUG
@@ -2282,6 +2285,52 @@ namespace BDEditor.Classes
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnoteList, objectsOnPage);
         }
 
+        private BDHtmlPage generatePageForProhylaxisSexualAssault(Entities pContext, IBDNode pNode)
+        {
+            // in the case where this method is called from the wrong node type 
+            if (pNode.NodeType != BDConstants.BDNodeType.BDTopic)
+            {
+#if DEBUG
+                throw new InvalidOperationException();
+#else
+                return null;
+#endif
+            }
+
+            metadataLayoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, pNode.LayoutVariant);
+            StringBuilder bodyHTML = new StringBuilder();
+            List<BDLinkedNote> footnoteList = new List<BDLinkedNote>();
+            List<Guid> objectsOnPage = new List<Guid>();
+
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1", footnoteList, objectsOnPage));
+
+            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
+            if (childNodes.Count > 0)
+            {
+                foreach (IBDNode child in childNodes)
+                {
+                    bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child, "h2", footnoteList, objectsOnPage));
+                    bodyHTML.Append("<table>");
+                    List<IBDNode> tableChildren = BDFabrik.GetChildrenForParent(pContext, child);
+                    foreach (IBDNode tableChild in tableChildren)
+                    {
+                        if (tableChild.NodeType == BDConstants.BDNodeType.BDTableRow)
+                            bodyHTML.Append(buildTableRowHtml(pContext, tableChild as BDTableRow, true, true, footnoteList, objectsOnPage));
+                        else if (tableChild.NodeType == BDConstants.BDNodeType.BDTableSection)
+                        {
+                            if (tableChild.Name.Length > 0)
+                                bodyHTML.AppendFormat("<tr><td colspan=3>{0}</td></tr>", tableChild.Name);
+                            List<IBDNode> tableRows = BDFabrik.GetChildrenForParent(pContext, tableChild);
+                            foreach(IBDNode row in tableRows)
+                                bodyHTML.Append(buildTableRowHtml(pContext, row as BDTableRow, false, true, footnoteList, objectsOnPage));
+                        }
+                    }
+                    bodyHTML.Append("</table>");
+                }
+            }
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnoteList, objectsOnPage);
+        }
+
         private BDHtmlPage generatePageForProhylaxisImmunization(Entities pContext, IBDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
@@ -2308,7 +2357,7 @@ namespace BDEditor.Classes
             }
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnoteList, objectsOnPage);
         }
-        
+
         private BDHtmlPage generatePageForProphylaxisCommunicableDiseases(Entities pContext, IBDNode pNode)
         {
             // in the case where this method is called from the wrong node type 

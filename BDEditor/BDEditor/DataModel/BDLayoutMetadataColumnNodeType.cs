@@ -76,7 +76,7 @@ namespace BDEditor.DataModel
         /// <param name="pDataContext"></param>
         /// <param name="pLayoutVariant"></param>
         /// <param name="pNodeType"></param>
-        /// <param name="pPropertyName"></param>
+        /// <param name="pNotePropertyName"></param>
         /// <returns></returns>
         static public List<BDLayoutMetadataColumnNodeType> RetrieveList(Entities pDataContext, BDConstants.LayoutVariantType pLayoutVariant, BDConstants.BDNodeType pNodeType, string pPropertyName)
         {
@@ -95,7 +95,7 @@ namespace BDEditor.DataModel
         /// <param name="pDataContext"></param>
         /// <param name="pLayoutVariant"></param>
         /// <param name="pNodeType"></param>
-        /// <param name="pPropertyName"></param>
+        /// <param name="pNotePropertyName"></param>
         /// <returns></returns>
         static public BDLayoutMetadataColumnNodeType Retrieve(Entities pDataContext, BDConstants.LayoutVariantType pLayoutVariant, BDConstants.BDNodeType pNodeType, string pPropertyName)
         {

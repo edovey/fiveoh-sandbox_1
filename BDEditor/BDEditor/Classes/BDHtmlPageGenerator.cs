@@ -2180,13 +2180,13 @@ namespace BDEditor.Classes
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
             foreach (IBDNode entry in childNodes)
             {
-                bodyHTML.AppendFormat("<h2>{0}</h2>", retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Name_fieldNote", objectsOnPage));
+                bodyHTML.AppendFormat("<h2>{0}</h2>", retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Name_fieldNote", objectsOnPage, footnoteList));
                 bodyHTML.AppendFormat("<table><tr><th>{0}</th></tr>", labelsFromMetadata[1]);
                 bodyHTML.AppendFormat("<tr><td>{0}</td></tr></table>",
-                    retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field01_fieldNote", objectsOnPage));
+                    retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field01_fieldNote", objectsOnPage, footnoteList));
                 bodyHTML.AppendFormat("<table><tr><th>{0}</th></tr>", labelsFromMetadata[2]);
                 bodyHTML.AppendFormat("<tr><td>{0}</td></tr></table>",
-                    retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field02_fieldNote", objectsOnPage));
+                    retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field02_fieldNote", objectsOnPage, footnoteList));
                 objectsOnPage.Add(entry.Uuid);
             }
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnoteList, objectsOnPage);
@@ -2213,15 +2213,18 @@ namespace BDEditor.Classes
             labelsFromMetadata.Add(retrieveMetadataLabelForPropertyName(pContext, BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_NAME));
             labelsFromMetadata.Add(retrieveMetadataLabelForPropertyName(pContext, BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD01));
             labelsFromMetadata.Add(retrieveMetadataLabelForPropertyName(pContext, BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD02));
+            
             bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1", footnoteList, objectsOnPage));
 
                 bodyHTML.AppendFormat("<table><tr><th>{0}</th><th>{1}</th></tr>", labelsFromMetadata[1], labelsFromMetadata[2]);
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
             foreach (IBDNode entry in childNodes)
             {
-                bodyHTML.AppendFormat("<tr><td>{0}</td><td>{1}</td></tr>",
-                    retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field01_fieldNote", objectsOnPage),
-                    retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field02_fieldNote", objectsOnPage));
+                bodyHTML.AppendFormat("<tr><td>{0}{1}</td><td>{2}{3}</td></tr>",
+                    retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field01_fieldNote", BDConfiguredEntry.PROPERTYNAME_FIELD01, objectsOnPage, true, footnoteList),
+                    buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, entry.Uuid, BDConfiguredEntry.PROPERTYNAME_FIELD01, BDConstants.LinkedNoteType.Footnote), true, footnoteList, objectsOnPage),
+                    retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field02_fieldNote", BDConfiguredEntry.PROPERTYNAME_FIELD02, objectsOnPage, true, footnoteList),
+                    buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, entry.Uuid, BDConfiguredEntry.PROPERTYNAME_FIELD02, BDConstants.LinkedNoteType.Footnote), true, footnoteList, objectsOnPage));
                 objectsOnPage.Add(entry.Uuid);
             }
             bodyHTML.Append("</table>");
@@ -2252,16 +2255,27 @@ namespace BDEditor.Classes
             labelsFromMetadata.Add(retrieveMetadataLabelForPropertyName(pContext, BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD03));
             bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1", footnoteList, objectsOnPage));
 
+            List<string> footnoteMarkersFromMetadata = new List<string>();
+            footnoteMarkersFromMetadata.Add(buildFooterMarkerForList(retrieveNotesForLayoutColumn(pContext, metadataLayoutColumns[0]), true, footnoteList, objectsOnPage));
+            footnoteMarkersFromMetadata.Add(buildFooterMarkerForList(retrieveNotesForLayoutColumn(pContext, metadataLayoutColumns[1]), true, footnoteList, objectsOnPage));
+            footnoteMarkersFromMetadata.Add(buildFooterMarkerForList(retrieveNotesForLayoutColumn(pContext, metadataLayoutColumns[2]), true, footnoteList, objectsOnPage));
+            footnoteMarkersFromMetadata.Add(buildFooterMarkerForList(retrieveNotesForLayoutColumn(pContext, metadataLayoutColumns[3]), true, footnoteList, objectsOnPage));
+
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
             foreach (IBDNode entry in childNodes)
             {
-                bodyHTML.AppendFormat(@"<h4>SOURCE:  {0}</h4>", retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Name_fieldNote", objectsOnPage, true));
-                bodyHTML.Append(@"<table><tr colspan=3><th>RECIPIENT</th></tr>");
-                bodyHTML.AppendFormat("<tr><th>{0}</th><th>{1}</th><th>{2}</th></tr>", labelsFromMetadata[1], labelsFromMetadata[2], labelsFromMetadata[3]);
-                bodyHTML.AppendFormat("<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>",
-                    retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field01_fieldNote", objectsOnPage),
-                    retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field02_fieldNote", objectsOnPage),
-                    retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field03_fieldNote", objectsOnPage));
+                bodyHTML.AppendFormat(@"<h4>SOURCE:  {0}</h4>", retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Name_fieldNote", BDConfiguredEntry.PROPERTYNAME_NAME, objectsOnPage, true, footnoteList));
+                bodyHTML.AppendFormat(@"<table><tr colspan=3><th>RECIPIENT{0}</th></tr>",footnoteMarkersFromMetadata[0]);
+                bodyHTML.AppendFormat("<tr><th>{0}{1}</th><th>{2}{3}</th><th>{4}{5}</th></tr>",
+                    labelsFromMetadata[1], footnoteMarkersFromMetadata[1], labelsFromMetadata[2], footnoteMarkersFromMetadata[2], labelsFromMetadata[3], footnoteMarkersFromMetadata[3]);
+                bodyHTML.AppendFormat("<tr><td>{0}{1}</td><td>{2}{3}</td><td>{4}{5}</td></tr>",
+                    retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field01_fieldNote", BDConfiguredEntry.PROPERTYNAME_FIELD01, objectsOnPage, true, footnoteList), 
+                    buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, entry.Uuid, BDConfiguredEntry.PROPERTYNAME_FIELD01, BDConstants.LinkedNoteType.Footnote), true, footnoteList, objectsOnPage),
+                    retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field02_fieldNote", BDConfiguredEntry.PROPERTYNAME_FIELD02, objectsOnPage, true, footnoteList), 
+                    buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, entry.Uuid, BDConfiguredEntry.PROPERTYNAME_FIELD02, BDConstants.LinkedNoteType.Footnote), true, footnoteList, objectsOnPage),
+                    retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field03_fieldNote", BDConfiguredEntry.PROPERTYNAME_FIELD03, objectsOnPage, true, footnoteList), 
+                    buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, entry.Uuid, BDConfiguredEntry.PROPERTYNAME_FIELD03, BDConstants.LinkedNoteType.Footnote), true, footnoteList, objectsOnPage));
+
                 bodyHTML.Append("</table>");
                 objectsOnPage.Add(entry.Uuid);
             }
@@ -3150,7 +3164,7 @@ namespace BDEditor.Classes
         /// Create an HTML page for the footnote attached to a node & property
         /// </summary>
         /// <param name="pContext"></param>
-        /// <param name="pPropertyName"></param>
+        /// <param name="pNotePropertyName"></param>
         /// <param name="pDisplayParentNode"></param>
         /// <returns>Guid of HTML page.</returns>
         private BDHtmlPage generatePageForParentAndPropertyFootnote(Entities pContext, string pPropertyName, IBDNode pNode)
@@ -3167,7 +3181,7 @@ namespace BDEditor.Classes
         /// Create an HTML page for the references attached to a node & property
         /// </summary>
         /// <param name="pContext"></param>
-        /// <param name="pPropertyName"></param>
+        /// <param name="pNotePropertyName"></param>
         /// <param name="pDisplayParentNode"></param>
         /// <returns>Guid of HTML page.</returns>
         /// 
@@ -3198,7 +3212,7 @@ namespace BDEditor.Classes
         /// Build HTML for linkedNotes attached to property in node, to inject into HTML page.
         /// </summary>
         /// <param name="pContext"></param>
-        /// <param name="pPropertyName"></param>
+        /// <param name="pNotePropertyName"></param>
         /// <param name="pDisplayParentNode"></param>
         /// <param name="pNoteType"></param>
         /// <returns>Text of linked note as HTML</returns>
@@ -3951,7 +3965,7 @@ namespace BDEditor.Classes
         /// <param name="pTherapy"></param>
         /// <param name="pNoteParentId"></param>
         /// <param name="pPropertyValue"></param>
-        /// <param name="pPropertyName"></param>
+        /// <param name="pNotePropertyName"></param>
         /// <returns></returns>
         private string buildNodePropertyHTML(Entities pContext, IBDNode pNode, Guid pNoteParentId, string pPropertyValue, string pPropertyName, bool showNotesInline, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
         {
@@ -4015,7 +4029,7 @@ namespace BDEditor.Classes
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pParentId"></param>
-        /// <param name="pPropertyName"></param>
+        /// <param name="pNotePropertyName"></param>
         /// <returns></returns>
         private string retrieveNoteTextForOverview(Entities pContext, Guid pParentId, List<Guid> pObjectsOnPage)
         {
@@ -4037,15 +4051,15 @@ namespace BDEditor.Classes
                 return "";
         }
 
-        private string retrieveNoteTextForConfiguredEntryField(Entities pContext, Guid pParentId, string pPropertyName, List<Guid> pObjectsOnPage)
+        private string retrieveNoteTextForConfiguredEntryField(Entities pContext, Guid pParentId, string pNotePropertyName, List<Guid> pObjectsOnPage, List<BDLinkedNote> pFootnotesOnPage)
         {
-            return retrieveNoteTextForConfiguredEntryField(pContext, pParentId, pPropertyName, pObjectsOnPage, false);
+            return retrieveNoteTextForConfiguredEntryField(pContext, pParentId, pNotePropertyName, string.Empty, pObjectsOnPage, false, pFootnotesOnPage);
         }
 
-        private string retrieveNoteTextForConfiguredEntryField(Entities pContext, Guid pParentId, string pPropertyName, List<Guid> pObjectsOnPage, bool trimTags)
+        private string retrieveNoteTextForConfiguredEntryField(Entities pContext, Guid pParentId, string pNotePropertyName, string pFieldPropertyName, List<Guid> pObjectsOnPage, bool trimTags, List<BDLinkedNote> pFootnotesOnPage)
         {
             StringBuilder noteText = new StringBuilder();
-            List<BDLinkedNote> notes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pParentId, pPropertyName, BDConstants.LinkedNoteType.MarkedComment);
+            List<BDLinkedNote> notes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pParentId, pNotePropertyName, BDConstants.LinkedNoteType.MarkedComment);
             foreach (BDLinkedNote note in notes)
             {
                 if (null != note && note.documentText.Length > EMPTY_PARAGRAPH)
@@ -4064,6 +4078,17 @@ namespace BDEditor.Classes
                         resultText = note.documentText;
                     noteText.Append(resultText);
                 }
+                // retrieve any linked notes for the named property; add to footnote collection and mark the text
+                if (pFieldPropertyName != string.Empty)
+                {
+                    List<BDLinkedNote> fieldNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pParentId, pFieldPropertyName, BDConstants.LinkedNoteType.Footnote);
+                    fieldNotes.AddRange(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pParentId, pFieldPropertyName, BDConstants.LinkedNoteType.Inline));
+                    fieldNotes.AddRange(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pParentId, pFieldPropertyName, BDConstants.LinkedNoteType.MarkedComment));
+                    fieldNotes.AddRange(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pParentId, pFieldPropertyName, BDConstants.LinkedNoteType.UnmarkedComment));
+                    List<string> footnoteMarkers = new List<string>();
+                    noteText.Append(buildFooterMarkerForList(fieldNotes, true, pFootnotesOnPage, pObjectsOnPage));
+                }
+
             }
             return noteText.ToString();
         }

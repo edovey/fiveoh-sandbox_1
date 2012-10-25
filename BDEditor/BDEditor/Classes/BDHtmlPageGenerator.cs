@@ -284,6 +284,16 @@ namespace BDEditor.Classes
                                 else
                                     isPageGenerated = false;
                                 break;
+                            case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Pertussis:
+                                nodeChildPages.Add(generatePageForProphylaxisCommunicableDiseases(pContext, pNode));
+                                isPageGenerated = true;
+                                break;
+                            case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:
+                                nodeChildPages.Add(generatePageForProphylaxisCommunicableDiseases(pContext, pNode));
+                                isPageGenerated = true;
+                                break;
                             default:
                                 isPageGenerated = false;
                                 break;
@@ -1518,7 +1528,7 @@ namespace BDEditor.Classes
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
             foreach(IBDNode child in childNodes)
             {
-                if(child.NodeType == BDConstants.BDNodeType.BDPathogenGroup)
+                if (child.NodeType == BDConstants.BDNodeType.BDPathogenGroup)
                     bodyHTML.Append(buildEmpiricTherapyHTML(pContext, pNode as BDNode, footnotes, objectsOnPage));
                 else if (child.NodeType == BDConstants.BDNodeType.BDTable)
                 {
@@ -2365,7 +2375,7 @@ namespace BDEditor.Classes
         private BDHtmlPage generatePageForProphylaxisCommunicableDiseases(Entities pContext, IBDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
-            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
+            if (pNode.NodeType != BDConstants.BDNodeType.BDDisease)
             {
 #if DEBUG
                 throw new InvalidOperationException();
@@ -2374,7 +2384,6 @@ namespace BDEditor.Classes
 #endif
             }
 
-            metadataLayoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, pNode.LayoutVariant);
             StringBuilder bodyHTML = new StringBuilder();
             List<BDLinkedNote> footnoteList = new List<BDLinkedNote>();
             List<Guid> objectsOnPage = new List<Guid>();
@@ -2382,10 +2391,57 @@ namespace BDEditor.Classes
             bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1", footnoteList, objectsOnPage));
 
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
-            if (childNodes.Count > 0)
+           foreach(IBDNode child in childNodes)
             {
-                //Append HTML for child layout
-            }
+                metadataLayoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, child.LayoutVariant);
+                bodyHTML.AppendFormat("<h3>{0}</h3>", child.Name);
+                objectsOnPage.Add(child.Uuid);
+                bodyHTML.Append("<table><tr>");  
+               for(int i = 0; i < metadataLayoutColumns.Count; i++)
+                   bodyHTML.AppendFormat("<th>{0}</th>",metadataLayoutColumns[i]);
+               bodyHTML.Append("</tr>");
+                List<IBDNode> tableChildren = BDFabrik.GetChildrenForParent(pContext, child);
+               StringBuilder cell0HTML = new StringBuilder();
+               StringBuilder cell1HTML = new StringBuilder();
+               StringBuilder cell2HTML = new StringBuilder();
+                foreach (IBDNode tableChild in tableChildren) // can be topic or table... doesnt matter
+                {
+                    if (tableChild.NodeType == BDConstants.BDNodeType.BDCombinedEntry)
+                    {
+                        BDCombinedEntry cEntry = tableChild as BDCombinedEntry;
+                        if (cEntry.groupTitle.Length > 0) // new row of cells 
+                        {
+                            if (cell0HTML.Length > 0 || cell1HTML.Length > 0 || cell2HTML.Length > 0)
+                            {
+                                // add line from previous process
+                                bodyHTML.AppendFormat("<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>", cell0HTML, cell1HTML, cell2HTML);
+                                cell0HTML.Clear();
+                                cell1HTML.Clear();
+                                cell2HTML.Clear();
+                            }
+                        }
+
+                        cell0HTML.AppendFormat("<u>{0}</u><br>", cEntry.groupTitle);
+                        cell0HTML.AppendFormat("<b>{0}</b>", cEntry.Name);
+                        cell0HTML.AppendFormat("<br>{0}", BDUtilities.GetEnumDescription(cEntry.GroupJoinType));
+                        if(!string.IsNullOrEmpty(cEntry.entryTitle01)) cell1HTML.AppendFormat("<u>{0}</u><br>", cEntry.entryTitle01);
+                        if(!string.IsNullOrEmpty(cEntry.entryDetail01)) cell1HTML.Append(cEntry.entryDetail01);
+                        if (!string.IsNullOrEmpty(cEntry.entryTitle02)) cell1HTML.AppendFormat("<br><u>{0}</u><br>", cEntry.entryTitle02);
+                        if (!string.IsNullOrEmpty(cEntry.entryDetail02)) cell1HTML.Append(cEntry.entryDetail02);
+                        if (!string.IsNullOrEmpty(cEntry.entryTitle03)) cell2HTML.AppendFormat("<u>{0}</u><br>", cEntry.entryTitle03);
+                        if (!string.IsNullOrEmpty(cEntry.entryDetail03)) cell2HTML.Append(cEntry.entryDetail03);
+                        if (!string.IsNullOrEmpty(cEntry.entryTitle04)) cell2HTML.AppendFormat("<br><u>{0}</u><br>", cEntry.entryTitle03);
+                        if (!string.IsNullOrEmpty(cEntry.entryDetail04)) cell2HTML.Append(cEntry.entryDetail04);
+                    }
+                    else
+                    {
+                        // handle configured entry
+                    }
+                    objectsOnPage.Add(tableChild.Uuid);
+                }
+                bodyHTML.AppendFormat("<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>", cell0HTML, cell1HTML, cell2HTML);
+                bodyHTML.Append("</table>");
+           }
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnoteList, objectsOnPage);
         }
 
@@ -2436,7 +2492,8 @@ namespace BDEditor.Classes
                         mHTML.AppendFormat("<h4>Infective Material</h4>{0}", p.infectiveMaterial);
                         mHTML.AppendFormat("<h4>Mode of Transmission</h4>{0}", p.modeOfTransmission);
                         // build table
-                        mHTML.Append("<table><tr><th>Precautions</th><th>Acute Care</th><th>Long Term Care</th></tr>");
+                        mHTML.AppendFormat("<table><tr><th>Precautions{0}</th><th>Acute Care</th><th>Long Term Care</th></tr>", 
+                            buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, precaution.Uuid, BDPrecaution.PROPERTYNAME_ORGANISM_1, BDConstants.LinkedNoteType.Footnote), true, footnoteList, objectsOnPage));
                         mHTML.AppendFormat("<tr><td>Single Room</td><td>{0}</td><td>{1}</td></tr>", p.singleRoomAcute, p.singleRoomLongTerm);
                         mHTML.AppendFormat("<tr><td>Gloves</td><td>{0}</td><td>{1}</td></tr>", p.glovesAcute, p.glovesLongTerm);
                         mHTML.AppendFormat("<tr><td>Gowns</td><td>{0}</td><td>{1}</td></tr>", p.gownsAcute, p.gownsLongTerm);
@@ -2624,7 +2681,7 @@ namespace BDEditor.Classes
                     List<IBDNode> surgeryChildren = BDFabrik.GetChildrenForParent(pContext, surgery); 
                     foreach (IBDNode surgeryChild in surgeryChildren)
                     {
-                        // surgery classification - owns the table row
+                        // surgery classification - owns the child row
                         if (surgeryChild.Name.Length > 0 && !surgeryChild.Name.Contains(BDUtilities.GetEnumDescription(surgeryChild.NodeType)))
                             bodyHTML.AppendFormat("<ul><li>{0}</ul>", surgeryChild.Name);
                         objectsOnPage.Add(surgeryChild.Uuid);

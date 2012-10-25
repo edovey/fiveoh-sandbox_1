@@ -284,7 +284,7 @@ namespace BDEditor.Classes
             Prophylaxis_Communicable = 317,
             [Description("Prophylaxis - Invasive Diseases")]
             Prophylaxis_Communicable_Invasive = 311,
-            [Description("Prophylaxis - Heamophilia influenaze")]
+            [Description("Prophylaxis - Haemophilus influenaze")]
             Prophylaxis_Communicable_HaemophiliusInfluenzae = 315,
             [Description("Prophylaxis - Influenza")]
             Prophylaxis_Communicable_Influenza = 312,
@@ -432,10 +432,15 @@ namespace BDEditor.Classes
 
         public enum BDJoinType
         {
+            [Description("")]
             None = 0,
+            [Description("and")]
             AndWithNext = 1,
+            [Description("or")]
             OrWithNext = 2,
+            [Description("then")]
             ThenWithNext = 3,
+            [Description("+/-")]
             WithOrWithoutWithNext = 4,
         }
 

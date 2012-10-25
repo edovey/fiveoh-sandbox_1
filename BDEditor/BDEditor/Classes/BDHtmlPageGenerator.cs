@@ -2393,53 +2393,169 @@ namespace BDEditor.Classes
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
            foreach(IBDNode child in childNodes)
             {
-                metadataLayoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, child.LayoutVariant);
-                bodyHTML.AppendFormat("<h3>{0}</h3>", child.Name);
-                objectsOnPage.Add(child.Uuid);
-                bodyHTML.Append("<table><tr>");  
-               for(int i = 0; i < metadataLayoutColumns.Count; i++)
-                   bodyHTML.AppendFormat("<th>{0}</th>",metadataLayoutColumns[i]);
-               bodyHTML.Append("</tr>");
-                List<IBDNode> tableChildren = BDFabrik.GetChildrenForParent(pContext, child);
-               StringBuilder cell0HTML = new StringBuilder();
-               StringBuilder cell1HTML = new StringBuilder();
-               StringBuilder cell2HTML = new StringBuilder();
-                foreach (IBDNode tableChild in tableChildren) // can be topic or table... doesnt matter
-                {
-                    if (tableChild.NodeType == BDConstants.BDNodeType.BDCombinedEntry)
-                    {
-                        BDCombinedEntry cEntry = tableChild as BDCombinedEntry;
-                        if (cEntry.groupTitle.Length > 0) // new row of cells 
-                        {
-                            if (cell0HTML.Length > 0 || cell1HTML.Length > 0 || cell2HTML.Length > 0)
-                            {
-                                // add line from previous process
-                                bodyHTML.AppendFormat("<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>", cell0HTML, cell1HTML, cell2HTML);
-                                cell0HTML.Clear();
-                                cell1HTML.Clear();
-                                cell2HTML.Clear();
-                            }
-                        }
+                bool isAlternateLayout = false;
 
-                        cell0HTML.AppendFormat("<u>{0}</u><br>", cEntry.groupTitle);
-                        cell0HTML.AppendFormat("<b>{0}</b>", cEntry.Name);
-                        cell0HTML.AppendFormat("<br>{0}", BDUtilities.GetEnumDescription(cEntry.GroupJoinType));
-                        if(!string.IsNullOrEmpty(cEntry.entryTitle01)) cell1HTML.AppendFormat("<u>{0}</u><br>", cEntry.entryTitle01);
-                        if(!string.IsNullOrEmpty(cEntry.entryDetail01)) cell1HTML.Append(cEntry.entryDetail01);
-                        if (!string.IsNullOrEmpty(cEntry.entryTitle02)) cell1HTML.AppendFormat("<br><u>{0}</u><br>", cEntry.entryTitle02);
-                        if (!string.IsNullOrEmpty(cEntry.entryDetail02)) cell1HTML.Append(cEntry.entryDetail02);
-                        if (!string.IsNullOrEmpty(cEntry.entryTitle03)) cell2HTML.AppendFormat("<u>{0}</u><br>", cEntry.entryTitle03);
-                        if (!string.IsNullOrEmpty(cEntry.entryDetail03)) cell2HTML.Append(cEntry.entryDetail03);
-                        if (!string.IsNullOrEmpty(cEntry.entryTitle04)) cell2HTML.AppendFormat("<br><u>{0}</u><br>", cEntry.entryTitle03);
-                        if (!string.IsNullOrEmpty(cEntry.entryDetail04)) cell2HTML.Append(cEntry.entryDetail04);
-                    }
-                    else
+                if (child.LayoutVariant == BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza && child.NodeType == BDConstants.BDNodeType.BDTable)
+                    isAlternateLayout = true;
+
+                bodyHTML.Append(buildNodeWithLinkedNotesAsFootnotesHTML(pContext, child, "h3", footnoteList, objectsOnPage));
+
+                StringBuilder tableHTML = new StringBuilder();
+               List<IBDNode> l2Children = BDFabrik.GetChildrenForParent(pContext, child);
+               bool isFirstChild = true;
+               bool isFirstConfiguredEntry = true;
+                foreach (IBDNode l2Child in l2Children) // lvl2 (l2) can be topic or table.
+                {
+                    if (isFirstChild)
                     {
-                        // handle configured entry
+                        metadataLayoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, l2Child.LayoutVariant);
+                        tableHTML.Append("<table><tr>");
+                        for (int i = 0; i < metadataLayoutColumns.Count; i++)
+                            tableHTML.AppendFormat("<th>{0}</th>", metadataLayoutColumns[i]);
+                        tableHTML.Append("</tr>");
+                        isFirstChild = false;
                     }
-                    objectsOnPage.Add(tableChild.Uuid);
+                    if (l2Child.NodeType == BDConstants.BDNodeType.BDCombinedEntry)
+                    {
+                        StringBuilder cell0HTML = new StringBuilder();
+                        StringBuilder cell1HTML = new StringBuilder();
+                        StringBuilder cell2HTML = new StringBuilder();
+                        BDCombinedEntry cEntry = l2Child as BDCombinedEntry;
+                        bool writeCellsToRow = false;
+
+                        if (l2Child.LayoutVariant == BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Oseltamivir_Weight ||
+                            l2Child.LayoutVariant == BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Oseltamivir_Creatinine)
+                        {
+                            tableHTML.AppendFormat("<tr><td rowspan=4>{0}{1}</td><td>{2}{3}</td><td>{4}{5}</td></tr>", 
+                                cEntry.Name, 
+                                buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage),
+                                cEntry.entryTitle01, 
+                                buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_ENTRYTITLE01, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage),
+                                cEntry.entryDetail01,
+                                buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_ENTRY01, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage));
+                            tableHTML.AppendFormat("<tr><td>{0}{1}</td><td>{2}{3}</td></tr>", 
+                                cEntry.entryTitle02,
+                                buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_ENTRYTITLE02, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage),
+                                cEntry.entryDetail02,
+                                buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_ENTRY02, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage));
+                            tableHTML.AppendFormat("<tr><td>{0}{1}</td><td>{2}{3}</td></tr>", 
+                                cEntry.entryTitle03, 
+                                 buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_ENTRYTITLE03, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage),
+                                cEntry.entryDetail03,
+                                buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_ENTRY03, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage));
+                            tableHTML.AppendFormat("<tr><td>{0}{1}</td><td>{2}{3}</td></tr>", 
+                                cEntry.entryTitle04, 
+                                buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_ENTRYTITLE04, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage),
+                                cEntry.entryDetail04,
+                                buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_ENTRY04, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage));
+                        }
+                        else if (l2Child.LayoutVariant == BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Amantadine_NoRenal)
+                        {
+                            bodyHTML.AppendFormat("<h4>{0}</h4>",cEntry.Name);
+                            tableHTML.AppendFormat("<tr><td>{0}{1}</td><td colspan=3>{2}{3}</td></tr>",
+                                cEntry.entryTitle01,
+                                buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_ENTRYTITLE01, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage),
+                                cEntry.entryDetail01,
+                                buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_ENTRY01, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage));
+                            tableHTML.AppendFormat("<tr><td>{0}{1}</td><td colspan=3>{2}{3}</td></tr>",
+                                cEntry.entryTitle02,
+                                buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_ENTRYTITLE02, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage),
+                                cEntry.entryDetail02,
+                                buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_ENTRY02, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage));
+                            tableHTML.AppendFormat("<tr><td>{0}{1}</td><td colspan=3>{2}{3}</td></tr>",
+                                cEntry.entryTitle03,
+                                 buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_ENTRYTITLE03, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage),
+                                cEntry.entryDetail03,
+                                buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_ENTRY03, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage));
+                        }
+                        else
+                        {
+                            writeCellsToRow = true;
+                            if (isAlternateLayout && !string.IsNullOrEmpty(cEntry.groupTitle))
+                                tableHTML.AppendFormat("<tr><td colspan={0}><b>{1}{2}</b> </td></tr>", metadataLayoutColumns.Count, cEntry.groupTitle,
+                                    buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_GROUPTITLE, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage));
+                            else if (!string.IsNullOrEmpty(cEntry.groupTitle)) cell0HTML.AppendFormat("<u>{0}{1}</u><br>", cEntry.groupTitle,
+                                buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_GROUPTITLE, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage));
+
+                            if (!string.IsNullOrEmpty(cEntry.Name))
+                                cell0HTML.AppendFormat("<b>{0}{1}</b><br>{2}<br>", cEntry.Name,
+                                    buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage),
+                                    BDUtilities.GetEnumDescription(cEntry.GroupJoinType));
+
+                            if (!string.IsNullOrEmpty(cEntry.entryTitle01)) cell1HTML.AppendFormat("<u>{0}{1}</u><br>", cEntry.entryTitle01,
+                                buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_ENTRYTITLE01, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage));
+
+                            if (!string.IsNullOrEmpty(cEntry.entryDetail01))
+                                cell1HTML.AppendFormat("{0}{1}<br><b>{2}</b><br>", cEntry.entryDetail01,
+                                    buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_ENTRY01, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage),
+                                    BDUtilities.GetEnumDescription(cEntry.JoinType01));
+
+                            if (!string.IsNullOrEmpty(cEntry.entryTitle02)) cell1HTML.AppendFormat("<br><u>{0}{1}</u><br>", cEntry.entryTitle02,
+                                buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_ENTRYTITLE02, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage));
+
+                            if (!string.IsNullOrEmpty(cEntry.entryDetail02))
+                                cell1HTML.AppendFormat("{0}{1}<br><b>{2}</b><br>", cEntry.entryDetail02,
+                                    buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_ENTRY02, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage),
+                                    BDUtilities.GetEnumDescription(cEntry.JoinType02));
+
+                            if (!string.IsNullOrEmpty(cEntry.entryTitle03)) cell2HTML.AppendFormat("<u>{0}{1}</u><br>", cEntry.entryTitle03,
+                                    buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_ENTRYTITLE03, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage));
+
+                            if (!string.IsNullOrEmpty(cEntry.entryDetail03))
+                                cell2HTML.AppendFormat("{0}{1}<br><b>{2}</b><br>", cEntry.entryDetail03,
+                                buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_ENTRY03, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage),
+                                BDUtilities.GetEnumDescription(cEntry.JoinType03));
+
+                            if (!string.IsNullOrEmpty(cEntry.entryTitle04)) cell2HTML.AppendFormat("<br><u>{0}{1}</u><br>", cEntry.entryTitle04,
+                                buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_ENTRYTITLE04, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage));
+
+                            if (!string.IsNullOrEmpty(cEntry.entryDetail04))
+                                cell2HTML.AppendFormat("{0}{1}<br><b>{2}</b><br>", cEntry.entryDetail04,
+                                    buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDCombinedEntry.PROPERTYNAME_ENTRY04, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage),
+                                    BDUtilities.GetEnumDescription(cEntry.JoinType04));
+                        }
+                        if(writeCellsToRow)
+                            tableHTML.AppendFormat("<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>", cell0HTML, cell1HTML, cell2HTML);
+                    }
+                    else if (l2Child.NodeType == BDConstants.BDNodeType.BDTopic)
+                    {
+                        List<IBDNode> topicChildren = BDFabrik.GetChildrenForParent(pContext, l2Child);
+                        foreach (IBDNode tChild in topicChildren)
+                        {
+                            if (tChild.NodeType == BDConstants.BDNodeType.BDConfiguredEntry)
+                            {
+                                BDConfiguredEntry cEntry = tChild as BDConfiguredEntry;
+                                if (isFirstConfiguredEntry)
+                                {
+                                    List<BDLayoutMetadataColumn> layoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, l2Child.LayoutVariant);
+                                    // handle configured entry for Amantadine with No renal impairment
+                                    tableHTML.Append("</table><h4>Renal Impairment</h4><table>");
+                                    tableHTML.AppendFormat("<tr><th rowspan=2>{0}</th><th colspan=2>Dosage with capsules</th><th>Daily dosage with solution (10mg/mL)</th></tr>", layoutColumns[0]);
+                                    tableHTML.AppendFormat("<tr><th>{0}{1}</th><th>{2}{3}</th><th>{4}{5}</th></tr>", 
+                                        layoutColumns[1],
+                                        buildFooterMarkerForList(retrieveNotesForLayoutColumn(pContext,layoutColumns[1]),true,footnoteList,objectsOnPage),
+                                        layoutColumns[2],
+                                        buildFooterMarkerForList(retrieveNotesForLayoutColumn(pContext, layoutColumns[2]), true, footnoteList, objectsOnPage),
+                                        layoutColumns[3],
+                                        buildFooterMarkerForList(retrieveNotesForLayoutColumn(pContext,layoutColumns[3]),true,footnoteList,objectsOnPage));
+                                    isFirstConfiguredEntry = false;
+                                }
+                                tableHTML.AppendFormat("<tr><td>{0}{1}</td><td><{2}{3}</td><td>{4}{5}</td><td>{6}{7}</td></tr>", 
+                                    cEntry.Name, 
+                                    buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid, BDConfiguredEntry.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage),
+                                    cEntry.field01, 
+                                    buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid,BDConfiguredEntry.PROPERTYNAME_FIELD01, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage),
+                                    cEntry.field02, 
+                                    buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid,BDConfiguredEntry.PROPERTYNAME_FIELD02, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage),
+                                    cEntry.field03,
+                                    buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, cEntry.Uuid,BDConfiguredEntry.PROPERTYNAME_FIELD03, BDConstants.LinkedNoteType.MarkedComment), true, footnoteList, objectsOnPage));
+                            }
+                            objectsOnPage.Add(tChild.Uuid);
+                        }
+                    }
+                    objectsOnPage.Add(l2Child.Uuid);
                 }
-                bodyHTML.AppendFormat("<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>", cell0HTML, cell1HTML, cell2HTML);
+                    bodyHTML.Append(tableHTML);
                 bodyHTML.Append("</table>");
            }
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnoteList, objectsOnPage);
@@ -3885,7 +4001,7 @@ namespace BDEditor.Classes
             return nodeHTML.ToString();
         }
 
-        private string buildNodeWithLinkedNotesAsFootnotesHTML(Entities pContext, BDNode pNode, string pHeaderTagLevel, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
+        private string buildNodeWithLinkedNotesAsFootnotesHTML(Entities pContext, IBDNode pNode, string pHeaderTagLevel, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
         {
             // footnotes - treat all types of linked notes as footnotes
             List<BDLinkedNote> itemFooters = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Footnote);

@@ -115,6 +115,9 @@ namespace BDEditor.Classes
         {
             Undefined = -1,
 
+            [Description("Preamble")]  // For Preface, Foreword 
+            Preamble = 0,
+
             [Description("Treatment Recommendation Chapter")]
             TreatmentRecommendation00 = 100, // Chapter
             [Description("Treatment Recommendation")]

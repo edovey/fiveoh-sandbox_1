@@ -230,33 +230,36 @@ namespace BDEditor.Classes
         private static void generateEntryWithDisplayParent(Entities pDataContext, Guid pOriginalNodeId, IBDNode pNode, string pDisplayContext)
         {
             string entryName = pNode.Name.Trim();
-
-            // get existing matching search entries
-            IQueryable<BDSearchEntry> entries = (from entry in pDataContext.BDSearchEntries
-                                                 where entry.name == entryName
-                                                 select entry);
-
-            // if matching search entry is not found, create one
-            if (entries.Count() == 0)
+            if (entryName.Length > 0)
             {
-                // create and save new search entry
-                BDSearchEntry searchEntry = BDSearchEntry.CreateBDSearchEntry(pDataContext, entryName);
 
-                // Create search association record
-                BDSearchEntryAssociation.CreateBDSearchEntryAssociation(pDataContext, searchEntry.Uuid, pNode.NodeType, pOriginalNodeId, pNode.LayoutVariant, pDisplayContext);
-            }
-            else
-            {
-                BDSearchEntry searchEntry = entries.First<BDSearchEntry>();
-                // get matching search association records for search entry
-                IQueryable<BDSearchEntryAssociation> associations = (from entry in pDataContext.BDSearchEntryAssociations
-                                                                     where (entry.searchEntryId == searchEntry.uuid
-                                                                     && entry.displayParentId == pOriginalNodeId)
-                                                                     select entry);
+                // get existing matching search entries
+                IQueryable<BDSearchEntry> entries = (from entry in pDataContext.BDSearchEntries
+                                                     where entry.name == entryName
+                                                     select entry);
 
-                if (associations.Count() == 0)
+                // if matching search entry is not found, create one
+                if (entries.Count() == 0)
                 {
+                    // create and save new search entry
+                    BDSearchEntry searchEntry = BDSearchEntry.CreateBDSearchEntry(pDataContext, entryName);
+
+                    // Create search association record
                     BDSearchEntryAssociation.CreateBDSearchEntryAssociation(pDataContext, searchEntry.Uuid, pNode.NodeType, pOriginalNodeId, pNode.LayoutVariant, pDisplayContext);
+                }
+                else
+                {
+                    BDSearchEntry searchEntry = entries.First<BDSearchEntry>();
+                    // get matching search association records for search entry
+                    IQueryable<BDSearchEntryAssociation> associations = (from entry in pDataContext.BDSearchEntryAssociations
+                                                                         where (entry.searchEntryId == searchEntry.uuid
+                                                                         && entry.displayParentId == pOriginalNodeId)
+                                                                         select entry);
+
+                    if (associations.Count() == 0)
+                    {
+                        BDSearchEntryAssociation.CreateBDSearchEntryAssociation(pDataContext, searchEntry.Uuid, pNode.NodeType, pOriginalNodeId, pNode.LayoutVariant, pDisplayContext);
+                    }
                 }
             }
         }
@@ -264,34 +267,39 @@ namespace BDEditor.Classes
         private static void generateEntryWithDisplayParent(Entities pDataContext, BDNode pDisplayParent, IBDNode pNode, string pDisplayContext)
         {
             string entryName = pNode.Name.Trim();
+            if(pNode.Name.Contains(BDUtilities.GetEnumDescription(pNode.NodeType)) || pNode.Name == "(Header)")
+                entryName = string.Empty;
 
-            // get existing matching search entries
-            IQueryable<BDSearchEntry> entries = (from entry in pDataContext.BDSearchEntries
-                                                 where entry.name == entryName
-                                                 select entry);
-
-            // if matching search entry is not found, create one
-            if (entries.Count() == 0)
+            if (!string.IsNullOrEmpty(entryName))
             {
-                // create and save new search entry
-                BDSearchEntry searchEntry = BDSearchEntry.CreateBDSearchEntry(pDataContext, entryName);
-                
-                // Create search association record
-                BDSearchEntryAssociation.CreateBDSearchEntryAssociation(pDataContext, searchEntry.Uuid, pNode.NodeType, pDisplayParent.Uuid, pDisplayParent.NodeType, pNode.LayoutVariant, pDisplayContext);
-            }
-            else
-            {
-                BDSearchEntry searchEntry = entries.First<BDSearchEntry>();
-                // get matching search association records for search entry
-                IQueryable<BDSearchEntryAssociation> associations = (from entry in pDataContext.BDSearchEntryAssociations
-                                                                     where (entry.searchEntryId == searchEntry.uuid
-                                                                     && entry.displayParentId == pDisplayParent.Uuid
-                                                                     && entry.displayParentType == (int)pDisplayParent.NodeType)
-                                                                     select entry);
+                // get existing matching search entries
+                IQueryable<BDSearchEntry> entries = (from entry in pDataContext.BDSearchEntries
+                                                     where entry.name == entryName
+                                                     select entry);
 
-                if (associations.Count() == 0)
+                // if matching search entry is not found, create one
+                if (entries.Count() == 0)
                 {
+                    // create and save new search entry
+                    BDSearchEntry searchEntry = BDSearchEntry.CreateBDSearchEntry(pDataContext, entryName);
+
+                    // Create search association record
                     BDSearchEntryAssociation.CreateBDSearchEntryAssociation(pDataContext, searchEntry.Uuid, pNode.NodeType, pDisplayParent.Uuid, pDisplayParent.NodeType, pNode.LayoutVariant, pDisplayContext);
+                }
+                else
+                {
+                    BDSearchEntry searchEntry = entries.First<BDSearchEntry>();
+                    // get matching search association records for search entry
+                    IQueryable<BDSearchEntryAssociation> associations = (from entry in pDataContext.BDSearchEntryAssociations
+                                                                         where (entry.searchEntryId == searchEntry.uuid
+                                                                         && entry.displayParentId == pDisplayParent.Uuid
+                                                                         && entry.displayParentType == (int)pDisplayParent.NodeType)
+                                                                         select entry);
+
+                    if (associations.Count() == 0)
+                    {
+                        BDSearchEntryAssociation.CreateBDSearchEntryAssociation(pDataContext, searchEntry.Uuid, pNode.NodeType, pDisplayParent.Uuid, pDisplayParent.NodeType, pNode.LayoutVariant, pDisplayContext);
+                    }
                 }
             }
         }

@@ -523,6 +523,10 @@ namespace BDEditor.Classes
                             nodeChildPages.Add(generatePageForAntibioticsClinicalGuidelinesSpectrum(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
+                            nodeChildPages.Add(generatePageForEmpiricTherapyOfFungalInfections(pContext, pNode));
+                            isPageGenerated = true;
+                            break;
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis:
                             nodeChildPages.Add(generatePageForDentalProphylaxis(pContext, pNode));
                             isPageGenerated = true;
@@ -1830,6 +1834,34 @@ namespace BDEditor.Classes
             }
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage);
         }
+
+        private BDHtmlPage generatePageForEmpiricTherapyOfFungalInfections(Entities pContext, IBDNode pNode)
+        {
+            // in the case where this method is called from the wrong node type 
+            if (pNode.NodeType != BDConstants.BDNodeType.BDTopic)
+            {
+#if DEBUG
+                throw new InvalidOperationException();
+#else
+                return null;
+#endif
+            }
+
+            metadataLayoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, pNode.LayoutVariant);
+            StringBuilder bodyHTML = new StringBuilder();
+            List<BDLinkedNote> footnoteList = new List<BDLinkedNote>();
+            List<Guid> objectsOnPage = new List<Guid>();
+
+            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1", footnoteList, objectsOnPage));
+
+            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
+            foreach(IBDNode child in childNodes)
+            {
+                bodyHTML.Append(buildAttachmentHTML(pContext,child,footnoteList,objectsOnPage));
+            }
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnoteList, objectsOnPage);
+        }
+
 
         /// <summary>
         /// Build page at PathogenGroup downward

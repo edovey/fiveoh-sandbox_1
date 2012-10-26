@@ -95,6 +95,9 @@ namespace BDEditor.Views
                 TreeNode node = null;
                 switch (pNode.LayoutVariant)
                 {
+                    case BDConstants.LayoutVariantType.Preamble:
+                        node = BDPreambleTree.BuildBranch(dataContext, pNode);
+                        break;
                     case BDConstants.LayoutVariantType.TreatmentRecommendation00:
                         node = BDTreatmentRecommendationTree.BuildBranch(dataContext, pNode);
                         break;
@@ -418,6 +421,12 @@ namespace BDEditor.Views
                     case BDConstants.BDNodeType.BDSection:
                         switch (node.LayoutVariant)
                         {
+                            case BDConstants.LayoutVariantType.Preamble:
+                                if (!pInterrogateOnly)
+                                {
+                                    showChildControls = true;
+                                }
+                                break;
                             case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
@@ -2003,10 +2012,64 @@ namespace BDEditor.Views
             BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage, 2, "ADULT DOSE", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, 0, "");
             BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage, 3, "PAEDIATRIC DOSE", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE_1, 0, "");
 
-            BDNode prophylaxis = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("376b287e-1d80-40f5-bb0b-512e52720687"));
-            prophylaxis.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_IERecommendation;
-            BDNode.Save(dataContext, prophylaxis);
+            BDNode ieProphylaxis = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("376b287e-1d80-40f5-bb0b-512e52720687"));
+            ieProphylaxis.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_IERecommendation;
+            BDNode.Save(dataContext, ieProphylaxis);
+            
+            BDNode intro = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.NewGuid());
+            intro.Name = "Preamble";
+            intro.DisplayOrder = 0;
+            intro.parentId = Guid.Empty;
+            intro.parentKeyName = BDUtilities.GetEnumDescription(BDConstants.BDNodeType.None);
+            intro.LayoutVariant = BDConstants.LayoutVariantType.Preamble;
+            BDNode antibiotics = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("45e13826-aedb-48d0-baf6-2f06ff45017f"));
+            antibiotics.DisplayOrder = 1;
+            BDNode treatmentRecommendations = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("f92fec3a-379d-41ef-a981-5ddf9c9a9f0e"));
+            treatmentRecommendations.DisplayOrder = 2;
+            BDNode prophylaxis = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("76e2f45c-c8c5-45e4-a079-65e1a3908cde"));
+            prophylaxis.DisplayOrder = 3;
+            BDNode dental = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("cddcc760-d8f2-460f-8982-668f98b5404b"));
+            dental.DisplayOrder = 4;
+            BDNode pregnancyLactation = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("690c044e-72c4-4115-b90e-33c9807dfe50"));
+            pregnancyLactation.DisplayOrder = 5;
+            BDNode organisms = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("fc322f9f-7204-42a7-9e6a-322a0869e6aa"));
+            organisms.DisplayOrder = 6;
+            organisms.Name = "Organisms";
+            dataContext.SaveChanges();
 
+            BDNode preface = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.NewGuid());
+            preface.DisplayOrder = 0;
+            preface.Name = "Preface";
+            preface.LayoutVariant = BDConstants.LayoutVariantType.Preamble;
+            preface.SetParent(intro);
+
+            BDNode foreward = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.NewGuid());
+            foreward.SetParent(intro);
+            foreward.DisplayOrder = 1;
+            foreward.LayoutVariant = BDConstants.LayoutVariantType.Preamble;
+            foreward.Name = "Foreward";
+            dataContext.SaveChanges();
+          
+            // change parent of BDAttachment in Fungal infections
+            BDNode section = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("40d92304-3224-4af0-8371-bcc27edad7dd"));
+            BDNode topic = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.NewGuid());
+            topic.Name = "Management of Adult Patients on Amphotericin B";
+            topic.DisplayOrder = 12;
+            topic.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal;
+            topic.SetParent(section);
+
+            BDAttachment att1 = BDAttachment.RetrieveWithId(dataContext, Guid.Parse("a9f389cf-f134-4513-bba4-9896c5e17356"));
+            att1.SetParent(topic);
+            att1.DisplayOrder = 0;
+
+            // for DEBUG only
+            //BDAttachment att2 = BDAttachment.RetrieveWithId(dataContext, Guid.Parse("8875a8cf-6b7b-490b-9158-2a7948f21363"));
+            //if (att2 != null)
+            //{
+            //    att2.SetParent(topic);
+            //    att2.DisplayOrder = 1;
+            //}
+            dataContext.SaveChanges();
             #endregion
         }
 

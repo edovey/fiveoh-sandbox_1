@@ -28,6 +28,7 @@ namespace BDEditor.Classes.Navigation
                 case BDConstants.BDNodeType.BDSubcategory:
                 case BDConstants.BDNodeType.BDDisease:
                 case BDConstants.BDNodeType.BDTable:
+                case BDConstants.BDNodeType.BDTopic:
                 case BDConstants.BDNodeType.BDResponse:
                 case BDConstants.BDNodeType.BDPathogenGroup:
                 case BDConstants.BDNodeType.BDPresentation:

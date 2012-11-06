@@ -4770,10 +4770,15 @@ namespace BDEditor.Classes
             BDHtmlPage.Save(pContext, newPage);
 
             if (indexEntry == null)
-                indexEntry = BDNodeToHtmlPageIndex.CreateBDNodeToHtmlPageIndex(pContext, masterGuid, newPage.Uuid, currentChapter.Uuid);
+            {
+                Guid chapterId = Guid.Empty;
+                if (currentChapter != null)
+                    chapterId = currentChapter.Uuid;
+                indexEntry = BDNodeToHtmlPageIndex.CreateBDNodeToHtmlPageIndex(pContext, masterGuid, newPage.Uuid, chapterId);
+            }
             else
             {
-                indexEntry.chapterId = currentChapter!= null ? currentChapter.Uuid : Guid.Empty;
+                indexEntry.chapterId = currentChapter != null ? currentChapter.Uuid : Guid.Empty;
                 indexEntry.wasGenerated = true;
             }
             BDNodeToHtmlPageIndex.Save(pContext, indexEntry);

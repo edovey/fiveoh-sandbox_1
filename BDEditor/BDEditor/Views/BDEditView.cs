@@ -470,7 +470,6 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Prophylaxis_IERecommendation:
                             case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
                             case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure:
-                            case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
                             case BDConstants.LayoutVariantType.Prophylaxis_Immunization:
                             case BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine:
                             case BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk:
@@ -604,6 +603,7 @@ namespace BDEditor.Views
                                 }
                                 break;
                             case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
+                            case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:
                                 childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
@@ -1989,7 +1989,6 @@ namespace BDEditor.Views
             dataContext.SaveChanges();
             */
             #endregion
-
             #region v.1.6.27
             /*
             BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation, 0, "Bacterial Morphology", BDConstants.BDNodeType.BDSubcategory, BDNode.PROPERTYNAME_NAME, 0, "");
@@ -2071,6 +2070,15 @@ namespace BDEditor.Views
             //}
             dataContext.SaveChanges();
              */
+            #endregion
+
+            #region v.1.6.28
+           /* BDNode sAssault = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("a6fdd2d3-96df-47b6-a598-8adbfa474c1b"));
+            BDNode bbFluidExposure = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("ec9b96ff-8744-4e27-82f6-9608fe22e4b4"));
+            sAssault.SetParent(bbFluidExposure);
+            sAssault.nodeType = (int)BDConstants.BDNodeType.BDCategory;
+            BDNode.Save(dataContext, sAssault);
+            */
             #endregion
         }
 

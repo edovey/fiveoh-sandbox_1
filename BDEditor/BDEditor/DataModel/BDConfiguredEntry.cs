@@ -64,21 +64,6 @@ namespace BDEditor.DataModel
             }
         }
 
-        static public void Delete(Entities pContext, BDConfiguredEntry pEntry, bool pCreateDeletion)
-        {
-            if (null == pEntry) return;
-
-            BDLinkedNoteAssociation.DeleteForParentId(pContext, pEntry.Uuid, pCreateDeletion);
-
-            BDMetadata.DeleteForItemId(pContext, pEntry.Uuid, pCreateDeletion);
-            // create BDDeletion record for the object to be deleted
-            if (pCreateDeletion)
-                BDDeletion.CreateBDDeletion(pContext, KEY_NAME, pEntry);
-            // delete record from local data store
-            pContext.DeleteObject(pEntry);
-            pContext.SaveChanges();
-        }
-
         static public List<BDConfiguredEntry> RetrieveListForParentId(Entities pDataContext, Guid pParentId)
         {
             List<BDConfiguredEntry> entryList = new List<BDConfiguredEntry>();

@@ -80,7 +80,7 @@ namespace BDEditor.DataModel
                 if (pSearchEntry.schemaVersion != ENTITY_SCHEMAVERSION)
                     pSearchEntry.schemaVersion = ENTITY_SCHEMAVERSION;
 
-                System.Diagnostics.Debug.WriteLine(@"SearchEntry Save");
+                // System.Diagnostics.Debug.WriteLine(@"SearchEntry Save");
                 pContext.SaveChanges();
             }
         }

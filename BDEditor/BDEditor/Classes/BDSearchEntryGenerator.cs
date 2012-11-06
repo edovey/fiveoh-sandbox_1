@@ -96,6 +96,7 @@ namespace BDEditor.Classes
             }
         }
 
+/*
         private static void GenerateSearchEntries(Entities pDataContext)
         {
             List<BDNode> chapters = BDNode.RetrieveNodesForType(pDataContext, BDConstants.BDNodeType.BDChapter);
@@ -225,7 +226,7 @@ namespace BDEditor.Classes
             }
             else
                 Debug.WriteLine("Search Entry Generation:  node was not found for:  {0}",pHtmlPageMap.OriginalIBDObjectId);
-        }
+        } */
 
         private static void generateEntryWithDisplayParent(Entities pDataContext, Guid pOriginalNodeId, IBDNode pNode, string pDisplayContext)
         {

@@ -84,22 +84,6 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<BDDeletion> BDDeletions
-        {
-            get
-            {
-                if ((_BDDeletions == null))
-                {
-                    _BDDeletions = base.CreateObjectSet<BDDeletion>("BDDeletions");
-                }
-                return _BDDeletions;
-            }
-        }
-        private ObjectSet<BDDeletion> _BDDeletions;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<BDLayoutMetadata> BDLayoutMetadatas
         {
             get
@@ -128,38 +112,6 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDLinkedNote> _BDLinkedNotes;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<BDMetadata> BDMetadatas
-        {
-            get
-            {
-                if ((_BDMetadatas == null))
-                {
-                    _BDMetadatas = base.CreateObjectSet<BDMetadata>("BDMetadatas");
-                }
-                return _BDMetadatas;
-            }
-        }
-        private ObjectSet<BDMetadata> _BDMetadatas;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<BDNodeAssociation> BDNodeAssociations
-        {
-            get
-            {
-                if ((_BDNodeAssociations == null))
-                {
-                    _BDNodeAssociations = base.CreateObjectSet<BDNodeAssociation>("BDNodeAssociations");
-                }
-                return _BDNodeAssociations;
-            }
-        }
-        private ObjectSet<BDNodeAssociation> _BDNodeAssociations;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -224,22 +176,6 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDSearchEntryAssociation> _BDSearchEntryAssociations;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<BDString> BDStrings
-        {
-            get
-            {
-                if ((_BDStrings == null))
-                {
-                    _BDStrings = base.CreateObjectSet<BDString>("BDStrings");
-                }
-                return _BDStrings;
-            }
-        }
-        private ObjectSet<BDString> _BDStrings;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -420,18 +356,34 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<BDNavigationNode> BDNavigationNodes
+        public ObjectSet<BDDosage> BDDosages
         {
             get
             {
-                if ((_BDNavigationNodes == null))
+                if ((_BDDosages == null))
                 {
-                    _BDNavigationNodes = base.CreateObjectSet<BDNavigationNode>("BDNavigationNodes");
+                    _BDDosages = base.CreateObjectSet<BDDosage>("BDDosages");
                 }
-                return _BDNavigationNodes;
+                return _BDDosages;
             }
         }
-        private ObjectSet<BDNavigationNode> _BDNavigationNodes;
+        private ObjectSet<BDDosage> _BDDosages;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDNodeToHtmlPageIndex> BDNodeToHtmlPageIndexes
+        {
+            get
+            {
+                if ((_BDNodeToHtmlPageIndexes == null))
+                {
+                    _BDNodeToHtmlPageIndexes = base.CreateObjectSet<BDNodeToHtmlPageIndex>("BDNodeToHtmlPageIndexes");
+                }
+                return _BDNodeToHtmlPageIndexes;
+            }
+        }
+        private ObjectSet<BDNodeToHtmlPageIndex> _BDNodeToHtmlPageIndexes;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -448,22 +400,6 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDHtmlPage> _BDHtmlPages;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<BDDosage> BDDosages
-        {
-            get
-            {
-                if ((_BDDosages == null))
-                {
-                    _BDDosages = base.CreateObjectSet<BDDosage>("BDDosages");
-                }
-                return _BDDosages;
-            }
-        }
-        private ObjectSet<BDDosage> _BDDosages;
 
         #endregion
         #region AddTo Methods
@@ -474,14 +410,6 @@ namespace BDEditor.DataModel
         public void AddToBDAntimicrobialRisks(BDAntimicrobialRisk bDAntimicrobialRisk)
         {
             base.AddObject("BDAntimicrobialRisks", bDAntimicrobialRisk);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDDeletions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDDeletions(BDDeletion bDDeletion)
-        {
-            base.AddObject("BDDeletions", bDDeletion);
         }
     
         /// <summary>
@@ -498,22 +426,6 @@ namespace BDEditor.DataModel
         public void AddToBDLinkedNotes(BDLinkedNote bDLinkedNote)
         {
             base.AddObject("BDLinkedNotes", bDLinkedNote);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDMetadatas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDMetadatas(BDMetadata bDMetadata)
-        {
-            base.AddObject("BDMetadatas", bDMetadata);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDNodeAssociations EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDNodeAssociations(BDNodeAssociation bDNodeAssociation)
-        {
-            base.AddObject("BDNodeAssociations", bDNodeAssociation);
         }
     
         /// <summary>
@@ -546,14 +458,6 @@ namespace BDEditor.DataModel
         public void AddToBDSearchEntryAssociations(BDSearchEntryAssociation bDSearchEntryAssociation)
         {
             base.AddObject("BDSearchEntryAssociations", bDSearchEntryAssociation);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDStrings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDStrings(BDString bDString)
-        {
-            base.AddObject("BDStrings", bDString);
         }
     
         /// <summary>
@@ -645,11 +549,19 @@ namespace BDEditor.DataModel
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the BDNavigationNodes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the BDDosages EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToBDNavigationNodes(BDNavigationNode bDNavigationNode)
+        public void AddToBDDosages(BDDosage bDDosage)
         {
-            base.AddObject("BDNavigationNodes", bDNavigationNode);
+            base.AddObject("BDDosages", bDDosage);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDNodeToHtmlPageIndexes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDNodeToHtmlPageIndexes(BDNodeToHtmlPageIndex bDNodeToHtmlPageIndex)
+        {
+            base.AddObject("BDNodeToHtmlPageIndexes", bDNodeToHtmlPageIndex);
         }
     
         /// <summary>
@@ -658,14 +570,6 @@ namespace BDEditor.DataModel
         public void AddToBDHtmlPages(BDHtmlPage bDHtmlPage)
         {
             base.AddObject("BDHtmlPages", bDHtmlPage);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDDosages EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDDosages(BDDosage bDDosage)
-        {
-            base.AddObject("BDDosages", bDDosage);
         }
 
         #endregion
@@ -2747,277 +2651,6 @@ namespace BDEditor.DataModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="BDDataModel", Name="BDDeletion")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class BDDeletion : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new BDDeletion object.
-        /// </summary>
-        /// <param name="uuid">Initial value of the uuid property.</param>
-        public static BDDeletion CreateBDDeletion(global::System.Guid uuid)
-        {
-            BDDeletion bDDeletion = new BDDeletion();
-            bDDeletion.uuid = uuid;
-            return bDDeletion;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Guid uuid
-        {
-            get
-            {
-                return _uuid;
-            }
-            set
-            {
-                if (_uuid != value)
-                {
-                    OnuuidChanging(value);
-                    ReportPropertyChanging("uuid");
-                    _uuid = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("uuid");
-                    OnuuidChanged();
-                }
-            }
-        }
-        private global::System.Guid _uuid;
-        partial void OnuuidChanging(global::System.Guid value);
-        partial void OnuuidChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Guid> createdBy
-        {
-            get
-            {
-                return _createdBy;
-            }
-            set
-            {
-                OncreatedByChanging(value);
-                ReportPropertyChanging("createdBy");
-                _createdBy = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("createdBy");
-                OncreatedByChanged();
-            }
-        }
-        private Nullable<global::System.Guid> _createdBy;
-        partial void OncreatedByChanging(Nullable<global::System.Guid> value);
-        partial void OncreatedByChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> createdDate
-        {
-            get
-            {
-                return _createdDate;
-            }
-            set
-            {
-                OncreatedDateChanging(value);
-                ReportPropertyChanging("createdDate");
-                _createdDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("createdDate");
-                OncreatedDateChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _createdDate;
-        partial void OncreatedDateChanging(Nullable<global::System.DateTime> value);
-        partial void OncreatedDateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Guid> modifiedBy
-        {
-            get
-            {
-                return _modifiedBy;
-            }
-            set
-            {
-                OnmodifiedByChanging(value);
-                ReportPropertyChanging("modifiedBy");
-                _modifiedBy = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("modifiedBy");
-                OnmodifiedByChanged();
-            }
-        }
-        private Nullable<global::System.Guid> _modifiedBy;
-        partial void OnmodifiedByChanging(Nullable<global::System.Guid> value);
-        partial void OnmodifiedByChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> modifiedDate
-        {
-            get
-            {
-                return _modifiedDate;
-            }
-            set
-            {
-                OnmodifiedDateChanging(value);
-                ReportPropertyChanging("modifiedDate");
-                _modifiedDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("modifiedDate");
-                OnmodifiedDateChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _modifiedDate;
-        partial void OnmodifiedDateChanging(Nullable<global::System.DateTime> value);
-        partial void OnmodifiedDateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> schemaVersion
-        {
-            get
-            {
-                return _schemaVersion;
-            }
-            set
-            {
-                OnschemaVersionChanging(value);
-                ReportPropertyChanging("schemaVersion");
-                _schemaVersion = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("schemaVersion");
-                OnschemaVersionChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _schemaVersion;
-        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
-        partial void OnschemaVersionChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Guid> targetId
-        {
-            get
-            {
-                return _targetId;
-            }
-            set
-            {
-                OntargetIdChanging(value);
-                ReportPropertyChanging("targetId");
-                _targetId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("targetId");
-                OntargetIdChanged();
-            }
-        }
-        private Nullable<global::System.Guid> _targetId;
-        partial void OntargetIdChanging(Nullable<global::System.Guid> value);
-        partial void OntargetIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String targetName
-        {
-            get
-            {
-                return _targetName;
-            }
-            set
-            {
-                OntargetNameChanging(value);
-                ReportPropertyChanging("targetName");
-                _targetName = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("targetName");
-                OntargetNameChanged();
-            }
-        }
-        private global::System.String _targetName;
-        partial void OntargetNameChanging(global::System.String value);
-        partial void OntargetNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> targetType
-        {
-            get
-            {
-                return _targetType;
-            }
-            set
-            {
-                OntargetTypeChanging(value);
-                ReportPropertyChanging("targetType");
-                _targetType = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("targetType");
-                OntargetTypeChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _targetType;
-        partial void OntargetTypeChanging(Nullable<global::System.Int32> value);
-        partial void OntargetTypeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> targetLayoutVariant
-        {
-            get
-            {
-                return _targetLayoutVariant;
-            }
-            set
-            {
-                OntargetLayoutVariantChanging(value);
-                ReportPropertyChanging("targetLayoutVariant");
-                _targetLayoutVariant = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("targetLayoutVariant");
-                OntargetLayoutVariantChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _targetLayoutVariant;
-        partial void OntargetLayoutVariantChanging(Nullable<global::System.Int32> value);
-        partial void OntargetLayoutVariantChanged();
-
-        #endregion
-    
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="BDDataModel", Name="BDDosage")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -3672,6 +3305,54 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Int32> _htmlPageType;
         partial void OnhtmlPageTypeChanging(Nullable<global::System.Int32> value);
         partial void OnhtmlPageTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> layoutVariant
+        {
+            get
+            {
+                return _layoutVariant;
+            }
+            set
+            {
+                OnlayoutVariantChanging(value);
+                ReportPropertyChanging("layoutVariant");
+                _layoutVariant = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("layoutVariant");
+                OnlayoutVariantChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _layoutVariant;
+        partial void OnlayoutVariantChanging(Nullable<global::System.Int32> value);
+        partial void OnlayoutVariantChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String pageTitle
+        {
+            get
+            {
+                return _pageTitle;
+            }
+            set
+            {
+                OnpageTitleChanging(value);
+                ReportPropertyChanging("pageTitle");
+                _pageTitle = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("pageTitle");
+                OnpageTitleChanged();
+            }
+        }
+        private global::System.String _pageTitle;
+        partial void OnpageTitleChanging(global::System.String value);
+        partial void OnpageTitleChanged();
 
         #endregion
     
@@ -4909,620 +4590,6 @@ namespace BDEditor.DataModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="BDDataModel", Name="BDMetadata")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class BDMetadata : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new BDMetadata object.
-        /// </summary>
-        /// <param name="uuid">Initial value of the uuid property.</param>
-        public static BDMetadata CreateBDMetadata(global::System.Guid uuid)
-        {
-            BDMetadata bDMetadata = new BDMetadata();
-            bDMetadata.uuid = uuid;
-            return bDMetadata;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Guid uuid
-        {
-            get
-            {
-                return _uuid;
-            }
-            set
-            {
-                if (_uuid != value)
-                {
-                    OnuuidChanging(value);
-                    ReportPropertyChanging("uuid");
-                    _uuid = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("uuid");
-                    OnuuidChanged();
-                }
-            }
-        }
-        private global::System.Guid _uuid;
-        partial void OnuuidChanging(global::System.Guid value);
-        partial void OnuuidChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String demographic
-        {
-            get
-            {
-                return _demographic;
-            }
-            set
-            {
-                OndemographicChanging(value);
-                ReportPropertyChanging("demographic");
-                _demographic = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("demographic");
-                OndemographicChanged();
-            }
-        }
-        private global::System.String _demographic;
-        partial void OndemographicChanging(global::System.String value);
-        partial void OndemographicChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> schemaVersion
-        {
-            get
-            {
-                return _schemaVersion;
-            }
-            set
-            {
-                OnschemaVersionChanging(value);
-                ReportPropertyChanging("schemaVersion");
-                _schemaVersion = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("schemaVersion");
-                OnschemaVersionChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _schemaVersion;
-        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
-        partial void OnschemaVersionChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Guid> createdBy
-        {
-            get
-            {
-                return _createdBy;
-            }
-            set
-            {
-                OncreatedByChanging(value);
-                ReportPropertyChanging("createdBy");
-                _createdBy = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("createdBy");
-                OncreatedByChanged();
-            }
-        }
-        private Nullable<global::System.Guid> _createdBy;
-        partial void OncreatedByChanging(Nullable<global::System.Guid> value);
-        partial void OncreatedByChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> createdDate
-        {
-            get
-            {
-                return _createdDate;
-            }
-            set
-            {
-                OncreatedDateChanging(value);
-                ReportPropertyChanging("createdDate");
-                _createdDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("createdDate");
-                OncreatedDateChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _createdDate;
-        partial void OncreatedDateChanging(Nullable<global::System.DateTime> value);
-        partial void OncreatedDateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Guid> modifiedBy
-        {
-            get
-            {
-                return _modifiedBy;
-            }
-            set
-            {
-                OnmodifiedByChanging(value);
-                ReportPropertyChanging("modifiedBy");
-                _modifiedBy = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("modifiedBy");
-                OnmodifiedByChanged();
-            }
-        }
-        private Nullable<global::System.Guid> _modifiedBy;
-        partial void OnmodifiedByChanging(Nullable<global::System.Guid> value);
-        partial void OnmodifiedByChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> modifiedDate
-        {
-            get
-            {
-                return _modifiedDate;
-            }
-            set
-            {
-                OnmodifiedDateChanging(value);
-                ReportPropertyChanging("modifiedDate");
-                _modifiedDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("modifiedDate");
-                OnmodifiedDateChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _modifiedDate;
-        partial void OnmodifiedDateChanging(Nullable<global::System.DateTime> value);
-        partial void OnmodifiedDateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Guid> itemId
-        {
-            get
-            {
-                return _itemId;
-            }
-            set
-            {
-                OnitemIdChanging(value);
-                ReportPropertyChanging("itemId");
-                _itemId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("itemId");
-                OnitemIdChanged();
-            }
-        }
-        private Nullable<global::System.Guid> _itemId;
-        partial void OnitemIdChanging(Nullable<global::System.Guid> value);
-        partial void OnitemIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Guid> displayParentId
-        {
-            get
-            {
-                return _displayParentId;
-            }
-            set
-            {
-                OndisplayParentIdChanging(value);
-                ReportPropertyChanging("displayParentId");
-                _displayParentId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("displayParentId");
-                OndisplayParentIdChanged();
-            }
-        }
-        private Nullable<global::System.Guid> _displayParentId;
-        partial void OndisplayParentIdChanging(Nullable<global::System.Guid> value);
-        partial void OndisplayParentIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String displayParentKeyName
-        {
-            get
-            {
-                return _displayParentKeyName;
-            }
-            set
-            {
-                OndisplayParentKeyNameChanging(value);
-                ReportPropertyChanging("displayParentKeyName");
-                _displayParentKeyName = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("displayParentKeyName");
-                OndisplayParentKeyNameChanged();
-            }
-        }
-        private global::System.String _displayParentKeyName;
-        partial void OndisplayParentKeyNameChanging(global::System.String value);
-        partial void OndisplayParentKeyNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String itemKeyName
-        {
-            get
-            {
-                return _itemKeyName;
-            }
-            set
-            {
-                OnitemKeyNameChanging(value);
-                ReportPropertyChanging("itemKeyName");
-                _itemKeyName = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("itemKeyName");
-                OnitemKeyNameChanged();
-            }
-        }
-        private global::System.String _itemKeyName;
-        partial void OnitemKeyNameChanging(global::System.String value);
-        partial void OnitemKeyNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> displayParentType
-        {
-            get
-            {
-                return _displayParentType;
-            }
-            set
-            {
-                OndisplayParentTypeChanging(value);
-                ReportPropertyChanging("displayParentType");
-                _displayParentType = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("displayParentType");
-                OndisplayParentTypeChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _displayParentType;
-        partial void OndisplayParentTypeChanging(Nullable<global::System.Int32> value);
-        partial void OndisplayParentTypeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> itemType
-        {
-            get
-            {
-                return _itemType;
-            }
-            set
-            {
-                OnitemTypeChanging(value);
-                ReportPropertyChanging("itemType");
-                _itemType = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("itemType");
-                OnitemTypeChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _itemType;
-        partial void OnitemTypeChanging(Nullable<global::System.Int32> value);
-        partial void OnitemTypeChanged();
-
-        #endregion
-    
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="BDDataModel", Name="BDNavigationNode")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class BDNavigationNode : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new BDNavigationNode object.
-        /// </summary>
-        /// <param name="uuid">Initial value of the uuid property.</param>
-        public static BDNavigationNode CreateBDNavigationNode(global::System.Guid uuid)
-        {
-            BDNavigationNode bDNavigationNode = new BDNavigationNode();
-            bDNavigationNode.uuid = uuid;
-            return bDNavigationNode;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Guid uuid
-        {
-            get
-            {
-                return _uuid;
-            }
-            set
-            {
-                if (_uuid != value)
-                {
-                    OnuuidChanging(value);
-                    ReportPropertyChanging("uuid");
-                    _uuid = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("uuid");
-                    OnuuidChanged();
-                }
-            }
-        }
-        private global::System.Guid _uuid;
-        partial void OnuuidChanging(global::System.Guid value);
-        partial void OnuuidChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> displayOrder
-        {
-            get
-            {
-                return _displayOrder;
-            }
-            set
-            {
-                OndisplayOrderChanging(value);
-                ReportPropertyChanging("displayOrder");
-                _displayOrder = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("displayOrder");
-                OndisplayOrderChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _displayOrder;
-        partial void OndisplayOrderChanging(Nullable<global::System.Int32> value);
-        partial void OndisplayOrderChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String name
-        {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                OnnameChanging(value);
-                ReportPropertyChanging("name");
-                _name = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("name");
-                OnnameChanged();
-            }
-        }
-        private global::System.String _name;
-        partial void OnnameChanging(global::System.String value);
-        partial void OnnameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String nodeKeyName
-        {
-            get
-            {
-                return _nodeKeyName;
-            }
-            set
-            {
-                OnnodeKeyNameChanging(value);
-                ReportPropertyChanging("nodeKeyName");
-                _nodeKeyName = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("nodeKeyName");
-                OnnodeKeyNameChanged();
-            }
-        }
-        private global::System.String _nodeKeyName;
-        partial void OnnodeKeyNameChanging(global::System.String value);
-        partial void OnnodeKeyNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> nodeType
-        {
-            get
-            {
-                return _nodeType;
-            }
-            set
-            {
-                OnnodeTypeChanging(value);
-                ReportPropertyChanging("nodeType");
-                _nodeType = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("nodeType");
-                OnnodeTypeChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _nodeType;
-        partial void OnnodeTypeChanging(Nullable<global::System.Int32> value);
-        partial void OnnodeTypeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> schemaVersion
-        {
-            get
-            {
-                return _schemaVersion;
-            }
-            set
-            {
-                OnschemaVersionChanging(value);
-                ReportPropertyChanging("schemaVersion");
-                _schemaVersion = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("schemaVersion");
-                OnschemaVersionChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _schemaVersion;
-        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
-        partial void OnschemaVersionChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> parentType
-        {
-            get
-            {
-                return _parentType;
-            }
-            set
-            {
-                OnparentTypeChanging(value);
-                ReportPropertyChanging("parentType");
-                _parentType = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("parentType");
-                OnparentTypeChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _parentType;
-        partial void OnparentTypeChanging(Nullable<global::System.Int32> value);
-        partial void OnparentTypeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String parentKeyName
-        {
-            get
-            {
-                return _parentKeyName;
-            }
-            set
-            {
-                OnparentKeyNameChanging(value);
-                ReportPropertyChanging("parentKeyName");
-                _parentKeyName = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("parentKeyName");
-                OnparentKeyNameChanged();
-            }
-        }
-        private global::System.String _parentKeyName;
-        partial void OnparentKeyNameChanging(global::System.String value);
-        partial void OnparentKeyNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> layoutVariant
-        {
-            get
-            {
-                return _layoutVariant;
-            }
-            set
-            {
-                OnlayoutVariantChanging(value);
-                ReportPropertyChanging("layoutVariant");
-                _layoutVariant = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("layoutVariant");
-                OnlayoutVariantChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _layoutVariant;
-        partial void OnlayoutVariantChanging(Nullable<global::System.Int32> value);
-        partial void OnlayoutVariantChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Guid> parentId
-        {
-            get
-            {
-                return _parentId;
-            }
-            set
-            {
-                OnparentIdChanging(value);
-                ReportPropertyChanging("parentId");
-                _parentId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("parentId");
-                OnparentIdChanged();
-            }
-        }
-        private Nullable<global::System.Guid> _parentId;
-        partial void OnparentIdChanging(Nullable<global::System.Guid> value);
-        partial void OnparentIdChanged();
-
-        #endregion
-    
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="BDDataModel", Name="BDNode")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -5914,22 +4981,24 @@ namespace BDEditor.DataModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="BDDataModel", Name="BDNodeAssociation")]
+    [EdmEntityTypeAttribute(NamespaceName="BDDataModel", Name="BDNodeToHtmlPageIndex")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
-    public partial class BDNodeAssociation : EntityObject
+    public partial class BDNodeToHtmlPageIndex : EntityObject
     {
         #region Factory Method
     
         /// <summary>
-        /// Create a new BDNodeAssociation object.
+        /// Create a new BDNodeToHtmlPageIndex object.
         /// </summary>
-        /// <param name="uuid">Initial value of the uuid property.</param>
-        public static BDNodeAssociation CreateBDNodeAssociation(global::System.Guid uuid)
+        /// <param name="ibdNodeId">Initial value of the ibdNodeId property.</param>
+        /// <param name="wasGenerated">Initial value of the wasGenerated property.</param>
+        public static BDNodeToHtmlPageIndex CreateBDNodeToHtmlPageIndex(global::System.Guid ibdNodeId, global::System.Boolean wasGenerated)
         {
-            BDNodeAssociation bDNodeAssociation = new BDNodeAssociation();
-            bDNodeAssociation.uuid = uuid;
-            return bDNodeAssociation;
+            BDNodeToHtmlPageIndex bDNodeToHtmlPageIndex = new BDNodeToHtmlPageIndex();
+            bDNodeToHtmlPageIndex.ibdNodeId = ibdNodeId;
+            bDNodeToHtmlPageIndex.wasGenerated = wasGenerated;
+            return bDNodeToHtmlPageIndex;
         }
 
         #endregion
@@ -5940,195 +5009,99 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Guid uuid
+        public global::System.Guid ibdNodeId
         {
             get
             {
-                return _uuid;
+                return _ibdNodeId;
             }
             set
             {
-                if (_uuid != value)
+                if (_ibdNodeId != value)
                 {
-                    OnuuidChanging(value);
-                    ReportPropertyChanging("uuid");
-                    _uuid = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("uuid");
-                    OnuuidChanged();
+                    OnibdNodeIdChanging(value);
+                    ReportPropertyChanging("ibdNodeId");
+                    _ibdNodeId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ibdNodeId");
+                    OnibdNodeIdChanged();
                 }
             }
         }
-        private global::System.Guid _uuid;
-        partial void OnuuidChanging(global::System.Guid value);
-        partial void OnuuidChanged();
+        private global::System.Guid _ibdNodeId;
+        partial void OnibdNodeIdChanging(global::System.Guid value);
+        partial void OnibdNodeIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Guid> nodeId
+        public Nullable<global::System.Guid> htmlPageId
         {
             get
             {
-                return _nodeId;
+                return _htmlPageId;
             }
             set
             {
-                OnnodeIdChanging(value);
-                ReportPropertyChanging("nodeId");
-                _nodeId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("nodeId");
-                OnnodeIdChanged();
+                OnhtmlPageIdChanging(value);
+                ReportPropertyChanging("htmlPageId");
+                _htmlPageId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("htmlPageId");
+                OnhtmlPageIdChanged();
             }
         }
-        private Nullable<global::System.Guid> _nodeId;
-        partial void OnnodeIdChanging(Nullable<global::System.Guid> value);
-        partial void OnnodeIdChanged();
+        private Nullable<global::System.Guid> _htmlPageId;
+        partial void OnhtmlPageIdChanging(Nullable<global::System.Guid> value);
+        partial void OnhtmlPageIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String nodeKeyName
+        public Nullable<global::System.Guid> chapterId
         {
             get
             {
-                return _nodeKeyName;
+                return _chapterId;
             }
             set
             {
-                OnnodeKeyNameChanging(value);
-                ReportPropertyChanging("nodeKeyName");
-                _nodeKeyName = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("nodeKeyName");
-                OnnodeKeyNameChanged();
+                OnchapterIdChanging(value);
+                ReportPropertyChanging("chapterId");
+                _chapterId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("chapterId");
+                OnchapterIdChanged();
             }
         }
-        private global::System.String _nodeKeyName;
-        partial void OnnodeKeyNameChanging(global::System.String value);
-        partial void OnnodeKeyNameChanged();
+        private Nullable<global::System.Guid> _chapterId;
+        partial void OnchapterIdChanging(Nullable<global::System.Guid> value);
+        partial void OnchapterIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String childKeyName
+        public global::System.Boolean wasGenerated
         {
             get
             {
-                return _childKeyName;
+                return _wasGenerated;
             }
             set
             {
-                OnchildKeyNameChanging(value);
-                ReportPropertyChanging("childKeyName");
-                _childKeyName = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("childKeyName");
-                OnchildKeyNameChanged();
+                OnwasGeneratedChanging(value);
+                ReportPropertyChanging("wasGenerated");
+                _wasGenerated = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("wasGenerated");
+                OnwasGeneratedChanged();
             }
         }
-        private global::System.String _childKeyName;
-        partial void OnchildKeyNameChanging(global::System.String value);
-        partial void OnchildKeyNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> schemaVersion
-        {
-            get
-            {
-                return _schemaVersion;
-            }
-            set
-            {
-                OnschemaVersionChanging(value);
-                ReportPropertyChanging("schemaVersion");
-                _schemaVersion = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("schemaVersion");
-                OnschemaVersionChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _schemaVersion;
-        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
-        partial void OnschemaVersionChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> createdDate
-        {
-            get
-            {
-                return _createdDate;
-            }
-            set
-            {
-                OncreatedDateChanging(value);
-                ReportPropertyChanging("createdDate");
-                _createdDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("createdDate");
-                OncreatedDateChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _createdDate;
-        partial void OncreatedDateChanging(Nullable<global::System.DateTime> value);
-        partial void OncreatedDateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> childNodeType
-        {
-            get
-            {
-                return _childNodeType;
-            }
-            set
-            {
-                OnchildNodeTypeChanging(value);
-                ReportPropertyChanging("childNodeType");
-                _childNodeType = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("childNodeType");
-                OnchildNodeTypeChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _childNodeType;
-        partial void OnchildNodeTypeChanging(Nullable<global::System.Int32> value);
-        partial void OnchildNodeTypeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> nodeType
-        {
-            get
-            {
-                return _nodeType;
-            }
-            set
-            {
-                OnnodeTypeChanging(value);
-                ReportPropertyChanging("nodeType");
-                _nodeType = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("nodeType");
-                OnnodeTypeChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _nodeType;
-        partial void OnnodeTypeChanging(Nullable<global::System.Int32> value);
-        partial void OnnodeTypeChanged();
+        private global::System.Boolean _wasGenerated;
+        partial void OnwasGeneratedChanging(global::System.Boolean value);
+        partial void OnwasGeneratedChanged();
 
         #endregion
     
@@ -7110,181 +6083,6 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Int32> _searchEntryType;
         partial void OnsearchEntryTypeChanging(Nullable<global::System.Int32> value);
         partial void OnsearchEntryTypeChanged();
-
-        #endregion
-    
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="BDDataModel", Name="BDString")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class BDString : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new BDString object.
-        /// </summary>
-        /// <param name="uuid">Initial value of the uuid property.</param>
-        public static BDString CreateBDString(global::System.Guid uuid)
-        {
-            BDString bDString = new BDString();
-            bDString.uuid = uuid;
-            return bDString;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Guid uuid
-        {
-            get
-            {
-                return _uuid;
-            }
-            set
-            {
-                if (_uuid != value)
-                {
-                    OnuuidChanging(value);
-                    ReportPropertyChanging("uuid");
-                    _uuid = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("uuid");
-                    OnuuidChanged();
-                }
-            }
-        }
-        private global::System.Guid _uuid;
-        partial void OnuuidChanging(global::System.Guid value);
-        partial void OnuuidChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Guid> parentId
-        {
-            get
-            {
-                return _parentId;
-            }
-            set
-            {
-                OnparentIdChanging(value);
-                ReportPropertyChanging("parentId");
-                _parentId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("parentId");
-                OnparentIdChanged();
-            }
-        }
-        private Nullable<global::System.Guid> _parentId;
-        partial void OnparentIdChanging(Nullable<global::System.Guid> value);
-        partial void OnparentIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> displayOrder
-        {
-            get
-            {
-                return _displayOrder;
-            }
-            set
-            {
-                OndisplayOrderChanging(value);
-                ReportPropertyChanging("displayOrder");
-                _displayOrder = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("displayOrder");
-                OndisplayOrderChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _displayOrder;
-        partial void OndisplayOrderChanging(Nullable<global::System.Int32> value);
-        partial void OndisplayOrderChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> modifiedDate
-        {
-            get
-            {
-                return _modifiedDate;
-            }
-            set
-            {
-                OnmodifiedDateChanging(value);
-                ReportPropertyChanging("modifiedDate");
-                _modifiedDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("modifiedDate");
-                OnmodifiedDateChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _modifiedDate;
-        partial void OnmodifiedDateChanging(Nullable<global::System.DateTime> value);
-        partial void OnmodifiedDateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String value
-        {
-            get
-            {
-                return _value;
-            }
-            set
-            {
-                OnvalueChanging(value);
-                ReportPropertyChanging("value");
-                _value = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("value");
-                OnvalueChanged();
-            }
-        }
-        private global::System.String _value;
-        partial void OnvalueChanging(global::System.String value);
-        partial void OnvalueChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> schemaVersion
-        {
-            get
-            {
-                return _schemaVersion;
-            }
-            set
-            {
-                OnschemaVersionChanging(value);
-                ReportPropertyChanging("schemaVersion");
-                _schemaVersion = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("schemaVersion");
-                OnschemaVersionChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _schemaVersion;
-        partial void OnschemaVersionChanging(Nullable<global::System.Int32> value);
-        partial void OnschemaVersionChanged();
 
         #endregion
     

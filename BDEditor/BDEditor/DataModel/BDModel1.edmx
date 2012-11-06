@@ -10,7 +10,6 @@
           <EntitySet Name="BDAttachments" EntityType="BDDataModel.Store.BDAttachments" store:Type="Tables" />
           <EntitySet Name="BDCombinedEntry" EntityType="BDDataModel.Store.BDCombinedEntry" store:Type="Tables" />
           <EntitySet Name="BDConfiguredEntry" EntityType="BDDataModel.Store.BDConfiguredEntry" store:Type="Tables" />
-          <EntitySet Name="BDDeletions" EntityType="BDDataModel.Store.BDDeletions" store:Type="Tables" />
           <EntitySet Name="BDDosages" EntityType="BDDataModel.Store.BDDosages" store:Type="Tables" />
           <EntitySet Name="BDHtmlPages" EntityType="BDDataModel.Store.BDHtmlPages" store:Type="Tables" />
           <EntitySet Name="BDLayoutMetadata" EntityType="BDDataModel.Store.BDLayoutMetadata" store:Type="Tables" />
@@ -18,14 +17,11 @@
           <EntitySet Name="BDLayoutMetadataColumnNodeType" EntityType="BDDataModel.Store.BDLayoutMetadataColumnNodeType" store:Type="Tables" />
           <EntitySet Name="BDLinkedNoteAssociations" EntityType="BDDataModel.Store.BDLinkedNoteAssociations" store:Type="Tables" />
           <EntitySet Name="BDLinkedNotes" EntityType="BDDataModel.Store.BDLinkedNotes" store:Type="Tables" />
-          <EntitySet Name="BDMetadatas" EntityType="BDDataModel.Store.BDMetadatas" store:Type="Tables" />
-          <EntitySet Name="BDNavigationNodes" EntityType="BDDataModel.Store.BDNavigationNodes" store:Type="Tables" />
-          <EntitySet Name="BDNodeAssociations" EntityType="BDDataModel.Store.BDNodeAssociations" store:Type="Tables" />
           <EntitySet Name="BDNodes" EntityType="BDDataModel.Store.BDNodes" store:Type="Tables" />
+          <EntitySet Name="BDNodeToHtmlPageIndex" EntityType="BDDataModel.Store.BDNodeToHtmlPageIndex" store:Type="Tables" />
           <EntitySet Name="BDPrecautions" EntityType="BDDataModel.Store.BDPrecautions" store:Type="Tables" />
           <EntitySet Name="BDSearchEntries" EntityType="BDDataModel.Store.BDSearchEntries" store:Type="Tables" />
           <EntitySet Name="BDSearchEntryAssociations" EntityType="BDDataModel.Store.BDSearchEntryAssociations" store:Type="Tables" />
-          <EntitySet Name="BDStrings" EntityType="BDDataModel.Store.BDStrings" store:Type="Tables" />
           <EntitySet Name="BDSystemSettings" EntityType="BDDataModel.Store.BDSystemSettings" store:Type="Tables" />
           <EntitySet Name="BDTableCells" EntityType="BDDataModel.Store.BDTableCells" store:Type="Tables" />
           <EntitySet Name="BDTableRows" EntityType="BDDataModel.Store.BDTableRows" store:Type="Tables" />
@@ -133,21 +129,6 @@
           <Property Name="field15" Type="nvarchar" MaxLength="750" />
           <Property Name="parentType" Type="int" />
         </EntityType>
-        <EntityType Name="BDDeletions">
-          <Key>
-            <PropertyRef Name="uuid" />
-          </Key>
-          <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="createdBy" Type="uniqueidentifier" />
-          <Property Name="createdDate" Type="datetime" />
-          <Property Name="modifiedBy" Type="uniqueidentifier" />
-          <Property Name="modifiedDate" Type="datetime" />
-          <Property Name="schemaVersion" Type="int" />
-          <Property Name="targetId" Type="uniqueidentifier" />
-          <Property Name="targetName" Type="nvarchar" MaxLength="100" />
-          <Property Name="targetType" Type="int" />
-          <Property Name="targetLayoutVariant" Type="int" />
-        </EntityType>
         <EntityType Name="BDDosages">
           <Key>
             <PropertyRef Name="uuid" />
@@ -182,6 +163,8 @@
           <Property Name="displayParentType" Type="int" />
           <Property Name="displayParentId" Type="uniqueidentifier" />
           <Property Name="htmlPageType" Type="int" />
+          <Property Name="layoutVariant" Type="int" />
+          <Property Name="pageTitle" Type="nvarchar" MaxLength="999" />
         </EntityType>
         <EntityType Name="BDLayoutMetadata">
           <Key>
@@ -252,52 +235,6 @@
           <Property Name="scopeId" Type="uniqueidentifier" />
           <Property Name="singleUse" Type="bit" />
         </EntityType>
-        <EntityType Name="BDMetadatas">
-          <Key>
-            <PropertyRef Name="uuid" />
-          </Key>
-          <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="demographic" Type="nvarchar" MaxLength="100" />
-          <Property Name="schemaVersion" Type="int" />
-          <Property Name="createdBy" Type="uniqueidentifier" />
-          <Property Name="createdDate" Type="datetime" />
-          <Property Name="modifiedBy" Type="uniqueidentifier" />
-          <Property Name="modifiedDate" Type="datetime" />
-          <Property Name="itemId" Type="uniqueidentifier" />
-          <Property Name="displayParentId" Type="uniqueidentifier" />
-          <Property Name="displayParentKeyName" Type="nvarchar" MaxLength="100" />
-          <Property Name="itemKeyName" Type="nvarchar" MaxLength="100" />
-          <Property Name="displayParentType" Type="int" />
-          <Property Name="itemType" Type="int" />
-        </EntityType>
-        <EntityType Name="BDNavigationNodes">
-          <Key>
-            <PropertyRef Name="uuid" />
-          </Key>
-          <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="displayOrder" Type="int" />
-          <Property Name="name" Type="nvarchar" MaxLength="750" />
-          <Property Name="nodeKeyName" Type="nvarchar" MaxLength="100" />
-          <Property Name="nodeType" Type="int" />
-          <Property Name="schemaVersion" Type="int" />
-          <Property Name="parentType" Type="int" />
-          <Property Name="parentKeyName" Type="nvarchar" MaxLength="100" />
-          <Property Name="layoutVariant" Type="int" />
-          <Property Name="parentId" Type="uniqueidentifier" />
-        </EntityType>
-        <EntityType Name="BDNodeAssociations">
-          <Key>
-            <PropertyRef Name="uuid" />
-          </Key>
-          <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="nodeId" Type="uniqueidentifier" />
-          <Property Name="nodeKeyName" Type="nvarchar" MaxLength="100" />
-          <Property Name="childKeyName" Type="nvarchar" MaxLength="100" />
-          <Property Name="schemaVersion" Type="int" />
-          <Property Name="createdDate" Type="datetime" />
-          <Property Name="childNodeType" Type="int" />
-          <Property Name="nodeType" Type="int" />
-        </EntityType>
         <EntityType Name="BDNodes">
           <Key>
             <PropertyRef Name="uuid" />
@@ -317,6 +254,15 @@
           <Property Name="inUseBy" Type="uniqueidentifier" />
           <Property Name="parentType" Type="int" />
           <Property Name="layoutVariant" Type="int" />
+        </EntityType>
+        <EntityType Name="BDNodeToHtmlPageIndex">
+          <Key>
+            <PropertyRef Name="ibdNodeId" />
+          </Key>
+          <Property Name="ibdNodeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="htmlPageId" Type="uniqueidentifier" />
+          <Property Name="chapterId" Type="uniqueidentifier" />
+          <Property Name="wasGenerated" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="BDPrecautions">
           <Key>
@@ -369,17 +315,6 @@
           <Property Name="displayParentType" Type="int" />
           <Property Name="layoutVariant" Type="int" />
           <Property Name="searchEntryType" Type="int" />
-        </EntityType>
-        <EntityType Name="BDStrings">
-          <Key>
-            <PropertyRef Name="uuid" />
-          </Key>
-          <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="parentId" Type="uniqueidentifier" />
-          <Property Name="displayOrder" Type="int" />
-          <Property Name="modifiedDate" Type="datetime" />
-          <Property Name="value" Type="nvarchar" MaxLength="1000" />
-          <Property Name="schemaVersion" Type="int" />
         </EntityType>
         <EntityType Name="BDSystemSettings">
           <Key>
@@ -490,16 +425,12 @@
       <Schema Namespace="BDDataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BDAntimicrobialRisks" EntityType="BDDataModel.BDAntimicrobialRisk" />
-          <EntitySet Name="BDDeletions" EntityType="BDDataModel.BDDeletion" />
           <EntitySet Name="BDLayoutMetadatas" EntityType="BDDataModel.BDLayoutMetadata" />
           <EntitySet Name="BDLinkedNotes" EntityType="BDDataModel.BDLinkedNote" />
-          <EntitySet Name="BDMetadatas" EntityType="BDDataModel.BDMetadata" />
-          <EntitySet Name="BDNodeAssociations" EntityType="BDDataModel.BDNodeAssociation" />
           <EntitySet Name="BDNodes" EntityType="BDDataModel.BDNode" />
           <EntitySet Name="BDPrecautions" EntityType="BDDataModel.BDPrecaution" />
           <EntitySet Name="BDSearchEntries" EntityType="BDDataModel.BDSearchEntry" />
           <EntitySet Name="BDSearchEntryAssociations" EntityType="BDDataModel.BDSearchEntryAssociation" />
-          <EntitySet Name="BDStrings" EntityType="BDDataModel.BDString" />
           <EntitySet Name="BDSystemSettings" EntityType="BDDataModel.BDSystemSetting" />
           <EntitySet Name="BDTableCells" EntityType="BDDataModel.BDTableCell" />
           <EntitySet Name="BDTableRows" EntityType="BDDataModel.BDTableRow" />
@@ -511,9 +442,9 @@
           <EntitySet Name="BDConfiguredEntries" EntityType="BDDataModel.BDConfiguredEntry" />
           <EntitySet Name="BDCombinedEntries" EntityType="BDDataModel.BDCombinedEntry" />
           <EntitySet Name="BDLinkedNoteAssociations" EntityType="BDDataModel.BDLinkedNoteAssociation" />
-          <EntitySet Name="BDNavigationNodes" EntityType="BDDataModel.BDNavigationNode" />
-          <EntitySet Name="BDHtmlPages" EntityType="BDDataModel.BDHtmlPage" />
           <EntitySet Name="BDDosages" EntityType="BDDataModel.BDDosage" />
+          <EntitySet Name="BDNodeToHtmlPageIndexes" EntityType="BDDataModel.BDNodeToHtmlPageIndex" />
+          <EntitySet Name="BDHtmlPages" EntityType="BDDataModel.BDHtmlPage" />
         </EntityContainer>
         <EntityType Name="BDAntimicrobialRisk">
           <Key>
@@ -534,21 +465,6 @@
           <Property Type="Guid" Name="parentId" />
           <Property Type="Int32" Name="displayOrder" />
           <Property Type="String" Name="recommendations" MaxLength="750" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="BDDeletion">
-          <Key>
-            <PropertyRef Name="uuid" />
-          </Key>
-          <Property Type="Guid" Name="uuid" Nullable="false" />
-          <Property Type="Guid" Name="createdBy" />
-          <Property Type="DateTime" Name="createdDate" />
-          <Property Type="Guid" Name="modifiedBy" />
-          <Property Type="DateTime" Name="modifiedDate" />
-          <Property Type="Int32" Name="schemaVersion" />
-          <Property Type="Guid" Name="targetId" />
-          <Property Type="String" Name="targetName" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="targetType" />
-          <Property Type="Int32" Name="targetLayoutVariant" />
         </EntityType>
         <EntityType Name="BDLayoutMetadata">
           <Key>
@@ -577,37 +493,6 @@
           <Property Type="String" Name="previewText" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Type="Guid" Name="scopeId" />
           <Property Type="Boolean" Name="singleUse" />
-        </EntityType>
-        <EntityType Name="BDMetadata">
-          <Key>
-            <PropertyRef Name="uuid" />
-          </Key>
-          <Property Type="Guid" Name="uuid" Nullable="false" />
-          <Property Type="String" Name="demographic" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="schemaVersion" />
-          <Property Type="Guid" Name="createdBy" />
-          <Property Type="DateTime" Name="createdDate" />
-          <Property Type="Guid" Name="modifiedBy" />
-          <Property Type="DateTime" Name="modifiedDate" />
-          <Property Type="Guid" Name="itemId" />
-          <Property Type="Guid" Name="displayParentId" />
-          <Property Type="String" Name="displayParentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="itemKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="displayParentType" />
-          <Property Type="Int32" Name="itemType" />
-        </EntityType>
-        <EntityType Name="BDNodeAssociation">
-          <Key>
-            <PropertyRef Name="uuid" />
-          </Key>
-          <Property Type="Guid" Name="uuid" Nullable="false" />
-          <Property Type="Guid" Name="nodeId" />
-          <Property Type="String" Name="nodeKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="childKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="schemaVersion" />
-          <Property Type="DateTime" Name="createdDate" />
-          <Property Type="Int32" Name="childNodeType" />
-          <Property Type="Int32" Name="nodeType" />
         </EntityType>
         <EntityType Name="BDNode">
           <Key>
@@ -680,17 +565,6 @@
           <Property Type="Int32" Name="displayParentType" />
           <Property Type="Int32" Name="layoutVariant" />
           <Property Type="Int32" Name="searchEntryType" />
-        </EntityType>
-        <EntityType Name="BDString">
-          <Key>
-            <PropertyRef Name="uuid" />
-          </Key>
-          <Property Type="Guid" Name="uuid" Nullable="false" />
-          <Property Type="Guid" Name="parentId" />
-          <Property Type="Int32" Name="displayOrder" />
-          <Property Type="DateTime" Name="modifiedDate" />
-          <Property Type="String" Name="value" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="schemaVersion" />
         </EntityType>
         <EntityType Name="BDSystemSetting">
           <Key>
@@ -917,35 +791,6 @@
           <Property Type="Guid" Name="internalLinkNodeId" />
           <Property Type="Int32" Name="internalLinkNodeType" />
         </EntityType>
-        <EntityType Name="BDNavigationNode">
-          <Key>
-            <PropertyRef Name="uuid" />
-          </Key>
-          <Property Type="Guid" Name="uuid" Nullable="false" />
-          <Property Type="Int32" Name="displayOrder" />
-          <Property Type="String" Name="name" MaxLength="750" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="nodeKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="nodeType" />
-          <Property Type="Int32" Name="schemaVersion" />
-          <Property Type="Int32" Name="parentType" />
-          <Property Type="String" Name="parentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="layoutVariant" />
-          <Property Type="Guid" Name="parentId" />
-        </EntityType>
-        <EntityType Name="BDHtmlPage">
-          <Key>
-            <PropertyRef Name="uuid" />
-          </Key>
-          <Property Type="Guid" Name="uuid" Nullable="false" />
-          <Property Type="DateTime" Name="createdDate" />
-          <Property Type="Guid" Name="createdBy" />
-          <Property Type="Int32" Name="schemaVersion" />
-          <Property Type="String" Name="documentText" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="storageKey" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="displayParentType" />
-          <Property Type="Guid" Name="displayParentId" />
-          <Property Type="Int32" Name="htmlPageType" />
-        </EntityType>
         <EntityType Name="BDDosage">
           <Key>
             <PropertyRef Name="uuid" />
@@ -966,6 +811,31 @@
           <Property Type="String" Name="dosage3" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="dosage4" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="cost2" MaxLength="750" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="BDNodeToHtmlPageIndex">
+          <Key>
+            <PropertyRef Name="ibdNodeId" />
+          </Key>
+          <Property Type="Guid" Name="ibdNodeId" Nullable="false" />
+          <Property Type="Guid" Name="htmlPageId" />
+          <Property Type="Guid" Name="chapterId" />
+          <Property Type="Boolean" Name="wasGenerated" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BDHtmlPage">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Type="Guid" Name="uuid" Nullable="false" />
+          <Property Type="DateTime" Name="createdDate" />
+          <Property Type="Guid" Name="createdBy" />
+          <Property Type="Int32" Name="schemaVersion" />
+          <Property Type="String" Name="documentText" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="storageKey" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="displayParentType" />
+          <Property Type="Guid" Name="displayParentId" />
+          <Property Type="Int32" Name="htmlPageType" />
+          <Property Type="Int32" Name="layoutVariant" />
+          <Property Type="String" Name="pageTitle" MaxLength="999" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -990,22 +860,6 @@
                 <ScalarProperty Name="nodeType" ColumnName="nodeType" />
                 <ScalarProperty Name="parentKeyName" ColumnName="parentKeyName" />
                 <ScalarProperty Name="parentType" ColumnName="parentType" />
-                <ScalarProperty Name="uuid" ColumnName="uuid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BDDeletions">
-            <EntityTypeMapping TypeName="BDDataModel.BDDeletion">
-              <MappingFragment StoreEntitySet="BDDeletions">
-                <ScalarProperty Name="targetLayoutVariant" ColumnName="targetLayoutVariant" />
-                <ScalarProperty Name="targetType" ColumnName="targetType" />
-                <ScalarProperty Name="targetName" ColumnName="targetName" />
-                <ScalarProperty Name="targetId" ColumnName="targetId" />
-                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
-                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
-                <ScalarProperty Name="modifiedBy" ColumnName="modifiedBy" />
-                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
-                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
                 <ScalarProperty Name="uuid" ColumnName="uuid" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1036,39 +890,6 @@
                 <ScalarProperty Name="modifiedBy" ColumnName="modifiedBy" />
                 <ScalarProperty Name="createdDate" ColumnName="createdDate" />
                 <ScalarProperty Name="createdBy" ColumnName="createdBy" />
-                <ScalarProperty Name="uuid" ColumnName="uuid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BDMetadatas">
-            <EntityTypeMapping TypeName="BDDataModel.BDMetadata">
-              <MappingFragment StoreEntitySet="BDMetadatas">
-                <ScalarProperty Name="itemType" ColumnName="itemType" />
-                <ScalarProperty Name="displayParentType" ColumnName="displayParentType" />
-                <ScalarProperty Name="itemKeyName" ColumnName="itemKeyName" />
-                <ScalarProperty Name="displayParentKeyName" ColumnName="displayParentKeyName" />
-                <ScalarProperty Name="displayParentId" ColumnName="displayParentId" />
-                <ScalarProperty Name="itemId" ColumnName="itemId" />
-                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
-                <ScalarProperty Name="modifiedBy" ColumnName="modifiedBy" />
-                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
-                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
-                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
-                <ScalarProperty Name="demographic" ColumnName="demographic" />
-                <ScalarProperty Name="uuid" ColumnName="uuid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BDNodeAssociations">
-            <EntityTypeMapping TypeName="BDDataModel.BDNodeAssociation">
-              <MappingFragment StoreEntitySet="BDNodeAssociations">
-                <ScalarProperty Name="nodeType" ColumnName="nodeType" />
-                <ScalarProperty Name="childNodeType" ColumnName="childNodeType" />
-                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
-                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
-                <ScalarProperty Name="childKeyName" ColumnName="childKeyName" />
-                <ScalarProperty Name="nodeKeyName" ColumnName="nodeKeyName" />
-                <ScalarProperty Name="nodeId" ColumnName="nodeId" />
                 <ScalarProperty Name="uuid" ColumnName="uuid" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1145,18 +966,6 @@
                 <ScalarProperty Name="searchEntryId" ColumnName="searchEntryId" />
                 <ScalarProperty Name="createdDate" ColumnName="createdDate" />
                 <ScalarProperty Name="createdBy" ColumnName="createdBy" />
-                <ScalarProperty Name="uuid" ColumnName="uuid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BDStrings">
-            <EntityTypeMapping TypeName="BDDataModel.BDString">
-              <MappingFragment StoreEntitySet="BDStrings">
-                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
-                <ScalarProperty Name="value" ColumnName="value" />
-                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
-                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
-                <ScalarProperty Name="parentId" ColumnName="parentId" />
                 <ScalarProperty Name="uuid" ColumnName="uuid" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1397,37 +1206,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BDNavigationNodes">
-            <EntityTypeMapping TypeName="BDDataModel.BDNavigationNode">
-              <MappingFragment StoreEntitySet="BDNavigationNodes">
-                <ScalarProperty Name="parentId" ColumnName="parentId" />
-                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
-                <ScalarProperty Name="parentKeyName" ColumnName="parentKeyName" />
-                <ScalarProperty Name="parentType" ColumnName="parentType" />
-                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
-                <ScalarProperty Name="nodeType" ColumnName="nodeType" />
-                <ScalarProperty Name="nodeKeyName" ColumnName="nodeKeyName" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
-                <ScalarProperty Name="uuid" ColumnName="uuid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BDHtmlPages">
-            <EntityTypeMapping TypeName="BDDataModel.BDHtmlPage">
-              <MappingFragment StoreEntitySet="BDHtmlPages">
-                <ScalarProperty Name="htmlPageType" ColumnName="htmlPageType" />
-                <ScalarProperty Name="displayParentId" ColumnName="displayParentId" />
-                <ScalarProperty Name="displayParentType" ColumnName="displayParentType" />
-                <ScalarProperty Name="storageKey" ColumnName="storageKey" />
-                <ScalarProperty Name="documentText" ColumnName="documentText" />
-                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
-                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
-                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
-                <ScalarProperty Name="uuid" ColumnName="uuid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="BDDosages">
             <EntityTypeMapping TypeName="BDDataModel.BDDosage">
               <MappingFragment StoreEntitySet="BDDosages">
@@ -1446,6 +1224,33 @@
                 <ScalarProperty Name="cost" ColumnName="cost" />
                 <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
                 <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BDNodeToHtmlPageIndexes">
+            <EntityTypeMapping TypeName="BDDataModel.BDNodeToHtmlPageIndex">
+              <MappingFragment StoreEntitySet="BDNodeToHtmlPageIndex">
+                <ScalarProperty Name="wasGenerated" ColumnName="wasGenerated" />
+                <ScalarProperty Name="chapterId" ColumnName="chapterId" />
+                <ScalarProperty Name="htmlPageId" ColumnName="htmlPageId" />
+                <ScalarProperty Name="ibdNodeId" ColumnName="ibdNodeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BDHtmlPages">
+            <EntityTypeMapping TypeName="BDDataModel.BDHtmlPage">
+              <MappingFragment StoreEntitySet="BDHtmlPages">
+                <ScalarProperty Name="pageTitle" ColumnName="pageTitle" />
+                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
+                <ScalarProperty Name="htmlPageType" ColumnName="htmlPageType" />
+                <ScalarProperty Name="displayParentId" ColumnName="displayParentId" />
+                <ScalarProperty Name="displayParentType" ColumnName="displayParentType" />
+                <ScalarProperty Name="storageKey" ColumnName="storageKey" />
+                <ScalarProperty Name="documentText" ColumnName="documentText" />
+                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
                 <ScalarProperty Name="uuid" ColumnName="uuid" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1471,30 +1276,26 @@
     <Diagrams>
       <Diagram Name="Model1" ZoomLevel="98">
         <EntityTypeShape EntityType="BDDataModel.BDAntimicrobialRisk" Width="1.5" PointX="0.75" PointY="0.75" Height="3.4001269531249818" />
-        <EntityTypeShape EntityType="BDDataModel.BDDeletion" Width="1.5" PointX="4.75" PointY="0.75" Height="2.5783902994791674" />
-        <EntityTypeShape EntityType="BDDataModel.BDLayoutMetadata" Width="3" PointX="14.75" PointY="3.875" Height="1.5923063151041674" />
-        <EntityTypeShape EntityType="BDDataModel.BDLinkedNote" Width="1.5" PointX="8.75" PointY="4.75" Height="3.235779622395853" />
-        <EntityTypeShape EntityType="BDDataModel.BDMetadata" Width="1.5" PointX="8.75" PointY="8.75" Height="3.0714322916666674" />
-        <EntityTypeShape EntityType="BDDataModel.BDNodeAssociation" Width="1.5" PointX="0.75" PointY="9.75" Height="2.249695638020853" />
+        <EntityTypeShape EntityType="BDDataModel.BDLayoutMetadata" Width="3" PointX="11" PointY="3.875" Height="1.7879850260416665" />
+        <EntityTypeShape EntityType="BDDataModel.BDLinkedNote" Width="1.5" PointX="5" PointY="4.75" Height="3.7109993489583335" />
         <EntityTypeShape EntityType="BDDataModel.BDNode" Width="1.5" PointX="2.75" PointY="9.75" Height="3.4001269531249818" />
         <EntityTypeShape EntityType="BDDataModel.BDPrecaution" Width="1.5" PointX="4.75" PointY="9.75" Height="4.3862109374999818" />
-        <EntityTypeShape EntityType="BDDataModel.BDSearchEntry" Width="1.5" PointX="10.75" PointY="0.75" Height="1.756653645833353" />
-        <EntityTypeShape EntityType="BDDataModel.BDSearchEntryAssociation" Width="1.5" PointX="10.75" PointY="3.75" Height="2.742737630208353" />
-        <EntityTypeShape EntityType="BDDataModel.BDString" Width="1.5" PointX="10.75" PointY="7.75" Height="1.9210009765624818" />
+        <EntityTypeShape EntityType="BDDataModel.BDSearchEntry" Width="1.5" PointX="7" PointY="0.75" Height="1.9802864583333331" />
+        <EntityTypeShape EntityType="BDDataModel.BDSearchEntryAssociation" Width="1.5" PointX="7" PointY="3.75" Height="3.1340950520833326" />
         <EntityTypeShape EntityType="BDDataModel.BDSystemSetting" Width="1.5" PointX="10.75" PointY="10.75" Height="1.5923063151041674" />
-        <EntityTypeShape EntityType="BDDataModel.BDTableCell" Width="1.5" PointX="12.75" PointY="0.75" Height="3.235779622395853" />
-        <EntityTypeShape EntityType="BDDataModel.BDTableRow" Width="1.5" PointX="12.75" PointY="4.75" Height="3.4001269531249818" />
+        <EntityTypeShape EntityType="BDDataModel.BDTableCell" Width="1.5" PointX="9" PointY="0.75" Height="3.7109993489583326" />
+        <EntityTypeShape EntityType="BDDataModel.BDTableRow" Width="1.5" PointX="9" PointY="4.75" Height="3.9033007812499996" />
         <EntityTypeShape EntityType="BDDataModel.BDTherapy" Width="1.5" PointX="6.75" PointY="9.75" Height="5.8653369140624818" />
         <EntityTypeShape EntityType="BDDataModel.BDTherapyGroup" Width="1.5" PointX="12.75" PointY="9.75" Height="3.4001269531249818" />
         <EntityTypeShape EntityType="BDDataModel.BDAttachment" Width="1.875" PointX="15.625" PointY="12.875" Height="3.4001269531250031" />
-        <EntityTypeShape EntityType="BDDataModel.BDLayoutMetadataColumn" Width="3" PointX="14.75" PointY="5.75" Height="1.5923063151041674" />
-        <EntityTypeShape EntityType="BDDataModel.BDLayoutMetadataColumnNodeType" Width="1.5" PointX="14.75" PointY="7.875" Height="1.9210009765625102" />
+        <EntityTypeShape EntityType="BDDataModel.BDLayoutMetadataColumn" Width="3" PointX="11" PointY="5.75" Height="1.7879850260416665" />
+        <EntityTypeShape EntityType="BDDataModel.BDLayoutMetadataColumnNodeType" Width="1.5" PointX="11" PointY="7.875" Height="2.1725878906249996" />
         <EntityTypeShape EntityType="BDDataModel.BDConfiguredEntry" Width="1.875" PointX="9.375" PointY="13.75" Height="5.2079475911458246" />
         <EntityTypeShape EntityType="BDDataModel.BDCombinedEntry" Width="2.625" PointX="0.625" PointY="13.875" Height="5.0436002604166674" />
         <EntityTypeShape EntityType="BDDataModel.BDLinkedNoteAssociation" Width="2.625" PointX="12.375" PointY="14.75" Height="3.5644742838541674" />
-        <EntityTypeShape EntityType="BDDataModel.BDNavigationNode" Width="1.5" PointX="7.375" PointY="0.75" Height="2.9417936197916674" />
-        <EntityTypeShape EntityType="BDDataModel.BDHtmlPage" Width="1.5" PointX="5.375" PointY="4.75" Height="2.7494921875000102" />
         <EntityTypeShape EntityType="BDDataModel.BDDosage" Width="1.5" PointX="4.375" PointY="15.125" Height="4.0956022135416674" />
+        <EntityTypeShape EntityType="BDDataModel.BDNodeToHtmlPageIndex" Width="1.5" PointX="0.75" PointY="5.75" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="BDDataModel.BDHtmlPage" Width="1.5" PointX="3.375" PointY="0.75" Height="3.1340950520833282" />
       </Diagram>
     </Diagrams>
   </Designer>

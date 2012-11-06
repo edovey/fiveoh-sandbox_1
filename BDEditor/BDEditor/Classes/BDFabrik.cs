@@ -1386,10 +1386,10 @@ namespace BDEditor.Classes
                         result = BDCombinedEntry.RetrieveCombinedEntryWithId(pContext, pUuid.Value);
                         break;
                     case BDConstants.BDNodeType.BDTableCell:
-                        BDTableCell.RetrieveWithId(pContext, pUuid.Value);
+                        result = BDTableCell.RetrieveWithId(pContext, pUuid.Value);
                         break;
                     case BDConstants.BDNodeType.BDLinkedNote:
-                        BDLinkedNote.RetrieveLinkedNoteWithId(pContext, pUuid.Value);
+                        // not a BDNode
                         break;
                     default:
                         result = BDNode.RetrieveNodeWithId(pContext, pUuid.Value);

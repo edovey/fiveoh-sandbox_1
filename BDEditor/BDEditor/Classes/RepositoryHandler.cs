@@ -252,38 +252,6 @@ namespace BDEditor.Classes
         }
         #endregion
 
-        public void DeleteRemoteNavigationNodes()
-        {
-            try
-            {
-                DeleteDomainRequest saRequest = new DeleteDomainRequest().WithDomainName(BDNavigationNode.AWS_DOMAIN);
-                SimpleDb.DeleteDomain(saRequest);
-
-                CreateDomainRequest createDomainRequest = (new CreateDomainRequest()).WithDomainName(BDNavigationNode.AWS_DOMAIN);
-                CreateDomainResponse createResponse = simpleDb.CreateDomain(createDomainRequest);
-                System.Diagnostics.Debug.WriteLine("Remote Navigation Nodes Deleted");
-            }
-            catch (AmazonS3Exception amazonS3Exception)
-            {
-                if (amazonS3Exception.ErrorCode != null &&
-                                    (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId")
-                                    ||
-                                    amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
-                {
-                    Console.WriteLine("Check the provided AWS Credentials.");
-                    Console.WriteLine(
-                    "To sign up for service, go to http://aws.amazon.com/s3");
-                }
-                else
-                {
-                    Console.WriteLine(
-                     "Error occurred. Message:'{0}' when listing objects",
-                     amazonS3Exception.Message);
-                }
-            }
-
-        }
-
         public void DeleteRemoteSearch()
         {
             try

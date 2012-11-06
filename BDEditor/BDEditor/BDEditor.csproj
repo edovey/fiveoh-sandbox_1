@@ -218,7 +218,6 @@
     <Compile Include="DataModel\BDAttachment.cs" />
     <Compile Include="DataModel\BDCombinedEntry.cs" />
     <Compile Include="DataModel\BDConfiguredEntry.cs" />
-    <Compile Include="DataModel\BDDeletion.cs" />
     <Compile Include="DataModel\BDDosage.cs" />
     <Compile Include="DataModel\BDHtmlPage.cs" />
     <Compile Include="DataModel\BDLayoutMetadata.cs" />
@@ -226,9 +225,8 @@
     <Compile Include="DataModel\BDLayoutMetadataColumnNodeType.cs" />
     <Compile Include="DataModel\BDLinkedNote.cs" />
     <Compile Include="DataModel\BDLinkedNoteAssociation.cs" />
-    <Compile Include="DataModel\BDMetadata.cs" />
-    <Compile Include="DataModel\BDNavigationNode.cs" />
     <Compile Include="DataModel\BDNode.cs" />
+    <Compile Include="DataModel\BDNodeToHtmlPageIndex.cs" />
     <Compile Include="DataModel\BDPrecaution.cs" />
     <Compile Include="DataModel\BDSearchEntry.cs" />
     <Compile Include="DataModel\BDSearchEntryAssociation.cs" />
@@ -237,7 +235,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BDModel1.edmx</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\BDString.cs" />
     <Compile Include="DataModel\BDSystemSetting.cs" />
     <Compile Include="DataModel\BDTableCell.cs" />
     <Compile Include="DataModel\BDTableRow.cs" />

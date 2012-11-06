@@ -160,10 +160,6 @@ namespace BDEditor.DataModel
                 }
             }
 
-            BDMetadata.DeleteForItemId(pContext, pNode.Uuid, pCreateDeletion);
-            // create BDDeletion record for the object to be deleted
-            if (pCreateDeletion)
-                BDDeletion.CreateBDDeletion(pContext, KEY_NAME, pNode);
             // delete record from local data store
             pContext.DeleteObject(pNode);
             pContext.SaveChanges();

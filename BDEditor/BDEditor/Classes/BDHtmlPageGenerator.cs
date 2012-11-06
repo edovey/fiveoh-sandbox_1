@@ -15,9 +15,19 @@ namespace BDEditor.Classes
         private const string bottomHtml = @"</body></html>";
         private const int EMPTY_PARAGRAPH = 8;  // <p> </p>
         private const string imgFileTag = "<img src=\"images/{0}{1}\" alt=\"\" width=\"300\" height=\"300\" />";
+        private const string paintChipTag = "<img src=\"{0}\" alt=\"\" width=\"30\" height=\"30\" />";
+        private const string PAINT_CHIP_ANTIBIOTICS = "AntibioticYellow.png";
+        private const string PAINT_CHIP_DENTISTRY = "DentistryPurple.png";
+        private const string PAINT_CHIP_ORGANISMS = "OrganismGreen.png";
+        private const string PAINT_CHIP_TREATMENT_PAEDIATRIC = "PaediatricTreatmentLightBlue.png";
+        private const string PAINT_CHIP_TREATMENT_ADULT = "TreatmentBlue.png";
+        private const string PAINT_CHIP_PREGNANCY = "PregnancyRed.png";
+        private const string PAINT_CHIP_PROPHYLAXIS = "ProphylaxisOrange.png";
 
         private List<BDLayoutMetadataColumn> metadataLayoutColumns = new List<BDLayoutMetadataColumn>();
         private List<BDHtmlPageMap> pagesMap = new List<BDHtmlPageMap>();
+        private IBDNode currentChapter = null;
+        private IBDObject currentPageMasterNode = null;
 
         // create variables to hold data for 'same as previous' settings on Therapy
         string previousTherapyName = string.Empty;
@@ -36,25 +46,22 @@ namespace BDEditor.Classes
             get { return pagesMap; }
         }
 
-        public void Generate(IBDNode pNode)
+        public void Generate(Entities pContext, IBDNode pNode)
         {
-            Entities dataContext = new Entities();
-
-            // Clear the data from the local store.
-            BDHtmlPage.DeleteAll();
-            BDNavigationNode.DeleteAll();
+            // reset index entries to false
+            BDNodeToHtmlPageIndex.ResetForRegeneration(pContext);
 
             generatePages(pNode);
 
-            List<BDHtmlPage> pages = BDHtmlPage.RetrieveAll(dataContext);
-            List<Guid> displayParentIds = BDHtmlPage.RetrieveAllDisplayParentIDs(dataContext);
-            List<Guid> pageIds = BDHtmlPage.RetrieveAllIds(dataContext);
+            List<BDHtmlPage> pages = BDHtmlPage.RetrieveAll(pContext);
+            List<Guid> displayParentIds = BDHtmlPage.RetrieveAllDisplayParentIDs(pContext);
+            List<Guid> pageIds = BDHtmlPage.RetrieveAllIds(pContext);
 
             foreach (BDHtmlPage page in pages)
             {
-                processTextForInternalLinks(dataContext, page, displayParentIds, pageIds);
-                processTextForSubscriptAndSuperscriptMarkup(dataContext, page);
-                processTextForCarriageReturn(dataContext, page);
+                processTextForInternalLinks(pContext, page, displayParentIds, pageIds);
+                processTextForSubscriptAndSuperscriptMarkup(pContext, page);
+                processTextForCarriageReturn(pContext, page);
             }
         }
 
@@ -70,6 +77,7 @@ namespace BDEditor.Classes
                 List<BDHtmlPage> childNavPages = new List<BDHtmlPage>();
                 foreach (BDNode chapter in chapters)
                 {
+                    currentChapter = chapter;
                     generateOverviewAndChildrenForNode(dataContext, chapter, childDetailPages, childNavPages);
                 }
                     if(childDetailPages.Count > 0)
@@ -83,6 +91,7 @@ namespace BDEditor.Classes
                 List<BDHtmlPage> childNavPages = new List<BDHtmlPage>();
                 if (pNode.NodeType == BDConstants.BDNodeType.BDChapter)
                 {
+                    currentChapter = pNode;
                     generateOverviewAndChildrenForNode(dataContext, pNode, childDetailPages, childNavPages);
                 }
                     allPages.AddRange(childDetailPages);
@@ -130,6 +139,7 @@ namespace BDEditor.Classes
 
         private BDHtmlPage generateNavigationPage(Entities pContext, IBDNode pNode, List<BDHtmlPage> pChildPages)
         {
+            currentPageMasterNode = pNode;
             StringBuilder pageHTML = new StringBuilder();
             List<Guid> objectsOnPage = new List<Guid>();
             List<BDLinkedNote> footnotesOnPage = new List<BDLinkedNote>();
@@ -141,7 +151,7 @@ namespace BDEditor.Classes
                     pageHTML.AppendFormat(@"<h2>{0}{1}</h2>", pNode.Name, footnoteMarkers);
                 else
                     pageHTML.AppendFormat(@"<h2>{0}</h2>", pNode.Name);
-    
+
                 string noteText = retrieveNoteTextForOverview(pContext, pNode.Uuid, objectsOnPage);
                 if (noteText.Length > EMPTY_PARAGRAPH)
                 {
@@ -158,20 +168,62 @@ namespace BDEditor.Classes
                     pageHTML.Append(note.documentText);
                     objectsOnPage.Add(note.Uuid);
                 }
-            }
 
-            // TODO:  build javascript blocks to expand/collapse overview
-            foreach (BDHtmlPage page in pChildPages)
-            {
-                if (page != null)
+                // TODO:  build javascript blocks to expand/collapse overview
+                foreach (BDHtmlPage page in pChildPages)
                 {
-                    BDNode childNode = BDNode.RetrieveNodeWithId(pContext, page.displayParentId.Value);
-                    if (childNode != null)
+                    if (page != null)
                     {
-                        pageHTML.AppendFormat(@"<p><a href=""{0}""><b>{1}</b></a></p>", page.Uuid.ToString().ToUpper(), childNode.Name);
+                        BDNode childNode = BDNode.RetrieveNodeWithId(pContext, page.displayParentId.Value);
+                        if (childNode != null)
+                            pageHTML.AppendFormat(@"<p><a href=""{0}""><b>{1}</b></a></p>", page.Uuid.ToString().ToUpper(), childNode.Name);
                     }
                 }
             }
+            else  // this is the main page of the app
+            {
+                currentChapter = null;
+                foreach (BDHtmlPage childPage in pChildPages)
+                {
+                    if (childPage != null)
+                    {
+                        pageHTML.Append("<table class=\"nav\">");
+                        BDNode childNode = BDNode.RetrieveNodeWithId(pContext, childPage.displayParentId.Value);
+                        if (childNode != null)
+                        {
+                            string paintChipFileName = string.Empty;
+                            switch (childNode.LayoutVariant)
+                            {
+                                case BDConstants.LayoutVariantType.Antibiotics:
+                                    paintChipFileName = PAINT_CHIP_ANTIBIOTICS;
+                                    break;
+                                case BDConstants.LayoutVariantType.Dental:
+                                    paintChipFileName = PAINT_CHIP_DENTISTRY;
+                                    break;
+                                case BDConstants.LayoutVariantType.Microbiology:
+                                    paintChipFileName = PAINT_CHIP_ORGANISMS;
+                                    break;
+                                case BDConstants.LayoutVariantType.TreatmentRecommendation00:
+                                    paintChipFileName = PAINT_CHIP_TREATMENT_ADULT;
+                                    break;
+                                case BDConstants.LayoutVariantType.PregancyLactation:
+                                    paintChipFileName = PAINT_CHIP_PREGNANCY;
+                                    break;
+                                case BDConstants.LayoutVariantType.Prophylaxis:
+                                    paintChipFileName = PAINT_CHIP_PROPHYLAXIS;
+                                    break;
+                                default:
+                                    paintChipFileName = string.Empty;
+                                    break;
+                            }
+                            string paintChipHtml = string.Format(paintChipTag, paintChipFileName);
+                            pageHTML.AppendFormat(@"<tr><td>{0}</td><td><a href=""{1}""><b>{2}</b></a></td></tr>", paintChipHtml, childPage.Uuid.ToString().ToUpper(), childNode.Name);
+                        }
+                        pageHTML.Append("</table>");
+                    }
+                }
+            }
+
             return writeBDHtmlPage(pContext, pNode as BDNode, pageHTML, BDConstants.BDHtmlPageType.Navigation, footnotesOnPage, objectsOnPage);
         }
         
@@ -194,6 +246,7 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForAntibioticsClinicalGuidelines(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
@@ -212,6 +265,7 @@ namespace BDEditor.Classes
                     break;
                 case BDConstants.BDNodeType.BDAttachment:
                             isPageGenerated = true;
+                            currentPageMasterNode = pNode;
                             generatePageForAttachment(pContext, pNode);
 
                     break;
@@ -220,43 +274,54 @@ namespace BDEditor.Classes
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin:
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForAntibioticsDosingAndMonitoring(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForAntibioticsPharmacodynamics(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForAntibioticsDosingInRenalImpairment(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForAntibioticDosingInHepaticImpairment(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForDentalMicroorganisms(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForPLAntimicrobialsInPregnancy(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForPLAntimicrobialsInLactation(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForPLPreventionPerinatalInfection(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForMicrobiologyGramStain(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForMicrobiologyOrganisms(pContext, pNode));
+                            isPageGenerated = true;
                             break;
                         default:
                             isPageGenerated = false;
@@ -279,6 +344,7 @@ namespace BDEditor.Classes
                                 if (node != null && childCount == 1)
                                 {
                                     isPageGenerated = true;
+                                    currentPageMasterNode = pNode;
                                     nodeChildPages.Add(generatePageForEmpiricTherapyDisease(pContext, pNode as BDNode));
                                 }
                                 else
@@ -286,11 +352,13 @@ namespace BDEditor.Classes
                                 break;
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Pertussis:
+                                currentPageMasterNode = pNode;
                                 nodeChildPages.Add(generatePageForProphylaxisCommunicableDiseases(pContext, pNode));
                                 isPageGenerated = true;
                                 break;
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:
+                                currentPageMasterNode = pNode;
                                 nodeChildPages.Add(generatePageForProphylaxisCommunicableDiseases(pContext, pNode));
                                 isPageGenerated = true;
                                 break;
@@ -312,21 +380,25 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForEmpiricTherapyOfBCNE(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForEmpiricTherapyOfParasitic(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForEmpiricTherapyOfCultureDirected(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForEmpiricTherapyOfCultureDirectedEndocarditis(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
@@ -339,6 +411,7 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation05_CultureProvenPeritonitis:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForEmpiricTherapyOfCultureDirectedPeritonitis(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
@@ -360,17 +433,21 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
                             // if the processing comes through here, then the Disease has > 1 Presentation 
                             isPageGenerated = true;
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForEmpiricTherapyPresentation(pContext, pNode as BDNode));
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation14_CellulitisExtremities:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForEmpiricTherapyOfCellulitisInExtremities(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatepageForEmpiricTherapyOfGenitalUlcers(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForEmpiricTherapyOfVesicularLesions(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
@@ -383,6 +460,7 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForEmpiricTherapyOfVesicularLesions(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
@@ -395,38 +473,47 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForAntibioticsDosingAndMonitoring(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForAntibioticsStepdown(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForAntibioticsCSFPenetration(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageforAntibioticsBLactam(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_NameListing:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForAntibioticsNameListing(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_IERecommendation:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForProphylaxisEndocarditis(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForProphylaxisInfectionPrevention(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForPLCommunicableDiseases(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.PregnancyLactation_Perinatal_HIVProtocol:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForPLPerinatalHIVProtocol(pContext, pNode));
                             isPageGenerated = true;
                             break;
@@ -441,13 +528,16 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Adult:
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Paediatric:
                             isPageGenerated = true;
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForAntibioticsDosingAndDailyCosts(pContext, pNode as BDNode));
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation17_Pneumonia:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForEmpiricTherapyOfPneumonia(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForDentalProphylaxisDrugRegimens(pContext, pNode));
                             isPageGenerated = true;
                             break;
@@ -484,30 +574,37 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_HepaticImpairment_Grading:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForAntibiotics_HepaticImpairmentGrading(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatepageForEmpiricTherapyOfGenitalUlcers(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForEmpiricTherapyOfEndocarditisPaediatrics(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure_Risk:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForProphylaxisFluidExposureRiskOfInfection(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure_Followup_I:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForProphylaxisFluidExposureFollowupProtocolI(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure_Followup_II:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForProphylaxisFluidExposureFollowupProtocolII(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForAntimicrobialAgentsForOralMicroorganisms(pContext, pNode));
                             isPageGenerated = true;
                             break;
@@ -520,18 +617,22 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines_Spectrum:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForAntibioticsClinicalGuidelinesSpectrum(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForEmpiricTherapyOfFungalInfections(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForDentalProphylaxis(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
+                            currentPageMasterNode = pNode;
                             nodeChildPages.Add(generatePageForProhylaxisSexualAssault(pContext, pNode));
                             isPageGenerated = true;
                             break;
@@ -2168,6 +2269,7 @@ namespace BDEditor.Classes
                     categoryHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child, "h2", catFootnotes, categoriesOnPage));
                     foreach (IBDNode subcategory in subcategories)
                         categoryHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, subcategory, "h4", catFootnotes, categoriesOnPage));
+                    currentPageMasterNode = child;
                     childPages.Add(writeBDHtmlPage(pContext, child, categoryHTML, BDConstants.BDHtmlPageType.Data, catFootnotes, categoriesOnPage));
                 }
                 else
@@ -2190,6 +2292,7 @@ namespace BDEditor.Classes
                         therapyHTML.AppendFormat(buildTherapyWithTwoDosagesHtml(pContext, therapy, false, therapyFootnotes, therapiesOnPage));
                     }
                     therapyHTML.Append("</table>");
+                    currentPageMasterNode = child;
                     childPages.Add(writeBDHtmlPage(pContext, child, therapyHTML, BDConstants.BDHtmlPageType.Data, therapyFootnotes, therapiesOnPage));
                 }
             }
@@ -2201,6 +2304,7 @@ namespace BDEditor.Classes
                     therapyGroupHTML.AppendFormat(@"<p><a href=""{0}""><b>{1}</b></a></p>", childPages[i].Uuid.ToString().ToUpper(), childNodes[i].Name);
             }
             bodyHTML.Append(therapyGroupHTML);
+            currentPageMasterNode = pNode;
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnoteList, objectsOnPage);
         }
 
@@ -2654,12 +2758,14 @@ namespace BDEditor.Classes
                             durationText.Append(note.documentText);
                         mHTML.AppendFormat("<h4>Duration of Precautions</h4>{0}", durationText);
                     }
+                    currentPageMasterNode = microorganism;
                     mPages.Add(writeBDHtmlPage(pContext, microorganism, mHTML, BDConstants.BDHtmlPageType.Data, mFootnotes, mObjectsOnPage));
                 }
                 for (int i = 0; i < mPages.Count; i++)
                     mgHTML.AppendFormat(@"<p><a href=""{0}"">{1}</a></p>", mPages[i].Uuid.ToString().ToUpper(), mgTitles[i]);
             }
             bodyHTML.Append(mgHTML);
+            currentPageMasterNode = pNode;
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnoteList, objectsOnPage);
         }
         #endregion
@@ -3036,7 +3142,10 @@ namespace BDEditor.Classes
                     for (int i = 0; i < apPages.Count; i++)
                         subcatHTML.AppendFormat(@"<p><a href=""{0}""><b>{1}</b></a></p>", apPages[i].Uuid.ToString().ToUpper(), subcategoryChildNodes[i].Name);
                     if (subcategory.Name.Length > 0)
+                    {
+                        currentPageMasterNode = subcategory;
                         subcatPages.Add(writeBDHtmlPage(pContext, subcategory, subcatHTML, BDConstants.BDHtmlPageType.Navigation, subcatFootnotes, subcatObjectsOnPage));
+                    }
                     else
                         bodyHTML.Append(subcatHTML);
                 }
@@ -3047,13 +3156,17 @@ namespace BDEditor.Classes
                     for (int i = 0; i < amPages.Count; i++)
                         apHTML.AppendFormat(@"<p><a href=""{0}""><b>{1}</b></a></p>", amPages[i].Uuid.ToString().ToUpper(), subcategoryChildNodes[i].Name);
                     if (subcategory.Name.Length > 0)
+                    {
+                        currentPageMasterNode = subcategory;
                         apPages.Add(writeBDHtmlPage(pContext, subcategory, apHTML, BDConstants.BDHtmlPageType.Navigation, apFootnotes, apObjectsOnPage));
+                    }
                     else
                         subcatHTML.Append(apHTML);
                 }
             }
             for (int i = 0; i < subcatPages.Count; i++)
                 bodyHTML.AppendFormat(@"<p><a href=""{0}""><b>{1}</b></a></p>", subcatPages[i].Uuid.ToString().ToUpper(), childNodes[i].Name);
+            currentPageMasterNode = pNode;
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage);
         }
 
@@ -3126,15 +3239,18 @@ namespace BDEditor.Classes
                     string commentText = buildTextForParentAndPropertyFromLinkedNotes(pContext, BDNode.PROPERTYNAME_NAME, antimicrobial, BDConstants.LinkedNoteType.UnmarkedComment, antimicrobialsOnPage);
                     if (commentText.Length > 0)
                         antimicrobialHTMLBody.AppendFormat("<p><b>Comments</b><br>{0}</p>", commentText);
+                    currentPageMasterNode = antimicrobial;
                     amPages.Add(writeBDHtmlPage(pContext, pNode, antimicrobialHTMLBody, BDConstants.BDHtmlPageType.Data, amFootnotes, antimicrobialsOnPage));
                 }
                 for (int i = 0; i < amPages.Count; i++)
                     subcatHTML.AppendFormat(@"<p><a href=""{0}""><b>{1}</b></a></p>", amPages[i].Uuid.ToString().ToUpper(), antimicrobials[i].Name);
+                currentPageMasterNode = subcategory;
                 subcatPages.Add(writeBDHtmlPage(pContext, pNode, subcatHTML, BDConstants.BDHtmlPageType.Navigation, subcatFootnotes, subcatObjectsOnPage));
 
             }
             for(int i = 0; i < subcatPages.Count; i++)
                 bodyHTML.AppendFormat(@"<p><a href=""{0}""><b>{1}</b></a></p>", subcatPages[i].Uuid.ToString().ToUpper(), childNodes[i].Name);
+            currentPageMasterNode = pNode;
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage);
         }
 
@@ -3176,12 +3292,13 @@ namespace BDEditor.Classes
                         objectsOnPathogenPage.Add(topic.Uuid);
                     }
                 }
+                currentPageMasterNode = pathogen;
                 pages.Add(writeBDHtmlPage(pContext, pathogen, pathogenHTML, BDConstants.BDHtmlPageType.Data, pFootnotes, objectsOnPathogenPage));
             }
             for (int i = 0; i < pages.Count; i++)
-            {
                 bodyHTML.AppendFormat(@"<p><a href=""{0}""><b>{1}</b></a></p>", pages[i].Uuid.ToString().ToUpper(), pathogens[i].Name);
-            }
+            
+            currentPageMasterNode = pNode;
             return writeBDHtmlPage(pContext, pNode as BDNode, bodyHTML, BDConstants.BDHtmlPageType.Navigation, footnotes, objectsOnPage);
         }
 
@@ -3455,7 +3572,17 @@ namespace BDEditor.Classes
         private BDHtmlPage generatePageForLinkedNotes(Entities pContext, Guid pDisplayParentId, BDConstants.BDNodeType pDisplayParentType, string pPageHtml, BDConstants.BDHtmlPageType pPageType, List<Guid> pObjectsOnPage)
         {
             if (pPageHtml.Length > EMPTY_PARAGRAPH)
-                return writeBDHtmlPage(pContext, pDisplayParentId,pDisplayParentType,pPageHtml,pPageType,new List<BDLinkedNote>(),pObjectsOnPage);
+            {
+                IBDNode node = BDFabrik.RetrieveNode(pContext, pDisplayParentId);
+                BDLinkedNote linkedNote = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, pDisplayParentId);
+                if (node != null)
+                    // check if the display parent is a linked note
+                    return writeBDHtmlPage(pContext, node, pPageHtml, pPageType, new List<BDLinkedNote>(), pObjectsOnPage);
+                else if (linkedNote != null)
+                    return writeBDHtmlPage(pContext, linkedNote, pPageHtml, pPageType, new List<BDLinkedNote>(), pObjectsOnPage);
+                else
+                    throw new NotSupportedException();
+            }
             else
                 return null;
         }
@@ -4520,8 +4647,9 @@ namespace BDEditor.Classes
                                             if (targetNote.documentText.Length > EMPTY_PARAGRAPH)
                                             {
                                                 List<Guid> objectsOnPage = new List<Guid>();
-                                                objectsOnPage.Add(linkTargetAssn.linkedNoteId.Value);
-                                                BDHtmlPage newPage = generatePageForLinkedNotes(pContext, linkTargetAssn.linkedNoteId.Value, BDConstants.BDNodeType.BDLinkedNote, targetNote.documentText, BDConstants.BDHtmlPageType.Data, objectsOnPage);
+                                                objectsOnPage.Add(targetNote.Uuid);
+                                                currentPageMasterNode = targetNote;
+                                                BDHtmlPage newPage = generatePageForLinkedNotes(pContext, targetNote.Uuid, BDConstants.BDNodeType.BDLinkedNote, targetNote.documentText, BDConstants.BDHtmlPageType.Data, objectsOnPage);
 
                                                 string newText = pPage.documentText.Replace(anchorGuid.ToString(), newPage.Uuid.ToString().ToUpper());
                                                 pPage.documentText = newText;
@@ -4589,14 +4717,6 @@ namespace BDEditor.Classes
             return writeBDHtmlPage(pContext, pDisplayParentNode, pBodyHTML.ToString(), pPageType, pFootnotes, pObjectsOnPage);
         }
 
-        private BDHtmlPage writeBDHtmlPage(Entities pContext, IBDNode pDisplayParentNode, string pBodyHTML, BDConstants.BDHtmlPageType pPageType, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
-        {
-            if(pDisplayParentNode == null)
-                return writeBDHtmlPage(pContext, Guid.Empty, BDConstants.BDNodeType.Undefined, pBodyHTML, pPageType, pFootnotes, pObjectsOnPage);
-            else
-                return writeBDHtmlPage(pContext, pDisplayParentNode.Uuid, pDisplayParentNode.NodeType, pBodyHTML, pPageType, pFootnotes, pObjectsOnPage);
-        }
-
         /// <summary>
         /// Append footnotes, then wrap HTML with outer tags and save to db
         /// </summary>
@@ -4606,7 +4726,7 @@ namespace BDEditor.Classes
         /// <param name="pBodyHTML"></param>
         /// <param name="pPageType"></param>
         /// <returns></returns>
-        private BDHtmlPage writeBDHtmlPage(Entities pContext, Guid pDisplayParentId, BDConstants.BDNodeType pDisplayParentType, string pBodyHTML, BDConstants.BDHtmlPageType pPageType, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
+        private BDHtmlPage writeBDHtmlPage(Entities pContext, IBDObject pDisplayParent, string pBodyHTML, BDConstants.BDHtmlPageType pPageType, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
         {
             StringBuilder footerHTML = new StringBuilder();
             // insert footer text
@@ -4626,17 +4746,44 @@ namespace BDEditor.Classes
 
             // inject Html into page html & save as a page to the database.
             string pageHtml = topHtml + pBodyHTML + bottomHtml;
-            BDHtmlPage newPage = BDHtmlPage.CreateBDHtmlPage(pContext);
-            newPage.displayParentType = (int)pDisplayParentType;
-            newPage.displayParentId = pDisplayParentId;
+
+            // the currentPageMasterNode will be null for the topmost page: this is expected as it has no parent
+            Guid masterGuid = Guid.Empty;
+            if (currentPageMasterNode != null)
+                masterGuid = currentPageMasterNode.Uuid;
+
+            BDNodeToHtmlPageIndex indexEntry = BDNodeToHtmlPageIndex.RetrieveIndexEntryForIBDNodeId(pContext, masterGuid);
+            
+            BDHtmlPage newPage = null;
+            if (indexEntry != null)
+                newPage = BDHtmlPage.RetrieveWithId(pContext, indexEntry.htmlPageId); 
+            if(newPage == null)
+                newPage = BDHtmlPage.CreateBDHtmlPage(pContext, Guid.NewGuid());
+
+            newPage.displayParentType = pDisplayParent != null && pDisplayParent is IBDNode ? (int)((IBDNode)pDisplayParent).NodeType : (int)BDConstants.BDNodeType.Undefined;
+            newPage.displayParentId = pDisplayParent != null ? pDisplayParent.Uuid : Guid.Empty;
             newPage.documentText = pageHtml;
             newPage.htmlPageType = (int)pPageType;
+            newPage.layoutVariant = currentChapter != null ? (int)currentChapter.LayoutVariant : (int)BDConstants.LayoutVariantType.Undefined;
+            newPage.pageTitle = currentPageMasterNode != null && currentPageMasterNode is IBDNode ? ((IBDNode)currentPageMasterNode).Name : string.Empty;
+
             BDHtmlPage.Save(pContext, newPage);
 
-            if (pObjectsOnPage.Count == 0 && pDisplayParentId != Guid.Empty)
+            if (indexEntry == null)
+                indexEntry = BDNodeToHtmlPageIndex.CreateBDNodeToHtmlPageIndex(pContext, masterGuid, newPage.Uuid, currentChapter.Uuid);
+            else
+            {
+                indexEntry.chapterId = currentChapter!= null ? currentChapter.Uuid : Guid.Empty;
+                indexEntry.wasGenerated = true;
+            }
+            BDNodeToHtmlPageIndex.Save(pContext, indexEntry);
+
+            if (pObjectsOnPage.Count == 0 && pDisplayParent != null)
                 Debug.WriteLine("no objects added for page {0}", newPage.Uuid);
 
-            pagesMap.Add(new BDHtmlPageMap(newPage.Uuid, pDisplayParentId));
+            if(pDisplayParent != null)
+                pagesMap.Add(new BDHtmlPageMap(newPage.Uuid, pDisplayParent.Uuid));
+
 
             List<Guid> filteredObjects = pObjectsOnPage.Distinct().ToList();
             foreach (Guid objectId in filteredObjects)

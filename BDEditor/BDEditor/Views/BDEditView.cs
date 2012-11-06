@@ -24,7 +24,7 @@ namespace BDEditor.Views
         private bool isSeedDataLoadAvailable = false;
         private string seedDataFileName = string.Empty;
         // enable & show move button when data move is required
-        private bool moveButtonVisible = true;
+        private bool moveButtonVisible = false;
 
         public BDEditView()
         {
@@ -1202,11 +1202,10 @@ namespace BDEditor.Views
                 chapterNode = (chapterDropDown.SelectedItem as BDNode);
             else
                 return;
-
             this.Cursor = Cursors.WaitCursor;
             
             BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
-            generator.Generate(chapterNode);
+            generator.Generate(dataContext, chapterNode);
             System.Diagnostics.Debug.WriteLine("HTML page generation complete.");
             BDSearchEntryGenerator.Generate(dataContext, chapterNode, generator.PagesMap);
             System.Diagnostics.Debug.WriteLine("Search entry generation complete.");
@@ -1992,6 +1991,7 @@ namespace BDEditor.Views
             #endregion
 
             #region v.1.6.27
+            /*
             BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation, 0, "Bacterial Morphology", BDConstants.BDNodeType.BDSubcategory, BDNode.PROPERTYNAME_NAME, 0, "");
             BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation, 1, "Probable Organisms", BDConstants.BDNodeType.BDMicroorganism, BDNode.PROPERTYNAME_NAME, 0, "");
 
@@ -2070,6 +2070,7 @@ namespace BDEditor.Views
             //    att2.DisplayOrder = 1;
             //}
             dataContext.SaveChanges();
+             */
             #endregion
         }
 

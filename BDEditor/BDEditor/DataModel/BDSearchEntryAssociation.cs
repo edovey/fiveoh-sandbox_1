@@ -139,13 +139,13 @@ namespace BDEditor.DataModel
                 if (pAssociation.schemaVersion != ENTITY_SCHEMAVERSION)
                     pAssociation.schemaVersion = ENTITY_SCHEMAVERSION;
 
-                System.Diagnostics.Debug.WriteLine(@"SearchEntryAssociation Save");
+                // System.Diagnostics.Debug.WriteLine(@"SearchEntryAssociation Save");
                 pContext.SaveChanges();
             }
         }
 
         /// <summary>
-        /// Extended Delete method that created a deletion record as well as deleting the local record
+        /// Delete the local record
         /// </summary>
         /// <param name="pContext">the data context</param>
         /// <param name="pEntity">the entry to be deleted</param>
@@ -155,20 +155,16 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Extended Delete method that created a deletion record as well as deleting the local record
+        /// Delete the record, save the context.
         /// </summary>
         /// <param name="pContext">the data context</param>
         /// <param name="pEntity">the entry to be deleted</param>
-        /// <param name="pCreateDeletion">Create entry in the deletion table (bool)</param>
+        /// <param name="pCreateDeletion">IGNORED</param>
         public static void Delete(Entities pContext, BDSearchEntryAssociation pEntity, bool pCreateDeletion)
         {
             // Don't delete the iNote from here. Deletion of a iNote will delete all association entries
             if (null == pEntity) return;
-            if (pCreateDeletion)
-            {
-                // create BDDeletion record for the object to be deleted
-                BDDeletion.CreateBDDeletion(pContext, KEY_NAME, pEntity);
-            }
+
             // delete record from local data store
             pContext.DeleteObject(pEntity);
             pContext.SaveChanges();

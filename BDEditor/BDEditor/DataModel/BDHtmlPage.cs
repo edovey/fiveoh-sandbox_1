@@ -5,6 +5,7 @@ using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 
 using Amazon.SimpleDB;
 using Amazon.SimpleDB.Model;
@@ -39,7 +40,7 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME_FRIENDLY = @"HTML Pages";
         public const string KEY_NAME = @"BDHtmlPage";
 
-        public const int ENTITY_SCHEMAVERSION = 0;
+        public const int ENTITY_SCHEMAVERSION = 1;
 
         private const string UUID = @"ht_uuid";
         private const string SCHEMAVERSION = @"ht_schemaVersion";
@@ -50,13 +51,10 @@ namespace BDEditor.DataModel
         private const string STORAGEKEY = @"ht_storageKey";
         private const string DOCUMENTTEXT = @"ht_documentText";
         private const string HTMLPAGETYPE = @"ht_htmlPageType";
+        private const string HTMLPAGELAYOUT = @"ht_layout";
+        private const string HTMLPAGETITLE = @"ht_pageTitle";
 
         public Guid? tempProductionUuid { get; set; }
-
-        public static BDHtmlPage CreateBDHtmlPage(Entities pContext)
-        {
-            return CreateBDHtmlPage(pContext, Guid.NewGuid());
-        }
 
         /// <summary>
         /// Extended Create method that sets the created date and schema version
@@ -73,6 +71,8 @@ namespace BDEditor.DataModel
             page.documentText = string.Empty;
             page.storageKey = GenerateStorageKey(page);
             page.htmlPageType = (int)BDConstants.BDHtmlPageType.Undefined;
+            page.layoutVariant = (int)BDConstants.LayoutVariantType.Undefined;
+            page.pageTitle = string.Empty;
 
             pContext.AddObject(ENTITYNAME, page);
             Save(pContext, page);
@@ -233,69 +233,6 @@ namespace BDEditor.DataModel
             return syncInfo;
         }
 
-        /// <summary>
-        /// Create or update an existing BDHtmlPage from attributes in a dictionary. Saves the entry.
-        /// </summary>
-        /// <param name="pDataContext"></param>
-        /// <param name="pAttributeDictionary"></param>
-        /// <returns>Uuid of the created/updated entry</returns>
-        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
-        {
-            Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
-            BDHtmlPage entry = BDHtmlPage.RetrieveWithId(pDataContext, uuid);
-            if (null == entry)
-            {
-                entry = BDHtmlPage.CreateBDHtmlPage(pDataContext, uuid);
-                pDataContext.AddObject(ENTITYNAME, entry);
-            }
-
-            short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
-            entry.schemaVersion = schemaVersion;
-            entry.createdBy = Guid.Parse(pAttributeDictionary[CREATEDBY]);
-            entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
-            entry.displayParentId = Guid.Parse(pAttributeDictionary[DISPLAYPARENTID]);
-            short displayParentType = short.Parse(pAttributeDictionary[DISPLAYPARENTTYPE]);
-            entry.displayParentType = displayParentType;
-            entry.storageKey = pAttributeDictionary[STORAGEKEY];
-            entry.htmlPageType = short.Parse(pAttributeDictionary[HTMLPAGETYPE]);
-            //entry.documentText is loaded from S3 storage
-
-            if (pSaveChanges)
-                pDataContext.SaveChanges();
-
-            return uuid;
-        }
-
-        /// <summary>
-        /// Create a new HtmlPage (creating a new uuid in the process) from an existing BDHtmlPage from attributes in a dictionary. Saves the entry.
-        /// The production uuid will be stored (by not persisted) in tempProductionUuid
-        /// </summary>
-        /// <param name="pDataContext"></param>
-        /// <param name="pAttributeDictionary"></param>
-        /// <returns>Uuid of the created/updated entry</returns>
-        public static BDHtmlPage CreateFromProdWithAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary)
-        {
-            Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
-
-            BDHtmlPage entry = BDHtmlPage.CreateBDHtmlPage(pDataContext);
-            entry.tempProductionUuid = uuid;
-
-            short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
-            entry.schemaVersion = schemaVersion;
-            entry.createdBy = Guid.Parse(pAttributeDictionary[CREATEDBY]);
-            entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
-            entry.displayParentId = Guid.Parse(pAttributeDictionary[DISPLAYPARENTID]);
-            short displayParentType = short.Parse(pAttributeDictionary[DISPLAYPARENTTYPE]);
-            entry.displayParentType = displayParentType;
-            entry.htmlPageType = short.Parse(pAttributeDictionary[HTMLPAGETYPE]);
-            entry.storageKey = pAttributeDictionary[STORAGEKEY]; // This is the storage key from the imported data: It will need to be rebuilt after the document text has been loaded.
-            //entry.documentText is loaded from S3 storage
-
-            pDataContext.SaveChanges();
-
-            return entry;
-        }
-
         public static string GenerateStorageKey(BDHtmlPage pNote)
         {
             string result = GenerateStorageKey(pNote.Uuid);
@@ -324,6 +261,11 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDHtmlPage.STORAGEKEY).WithValue((null == storageKey) ? string.Empty : storageKey).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDHtmlPage.DISPLAYPARENTTYPE).WithValue(string.Format(@"{0}", displayParentType)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDHtmlPage.HTMLPAGETYPE).WithValue(string.Format(@"{0}", htmlPageType)).WithReplace(true));
+
+            // schema version 1
+            attributeList.Add(new ReplaceableAttribute().WithName(BDHtmlPage.HTMLPAGELAYOUT).WithValue(string.Format(@"{0}", layoutVariant)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDHtmlPage.HTMLPAGETITLE).WithValue((null == pageTitle) ? string.Empty : pageTitle).WithReplace(true));
+
             return putAttributeRequest;
         }
 

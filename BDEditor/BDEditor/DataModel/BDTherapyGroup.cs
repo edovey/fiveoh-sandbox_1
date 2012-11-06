@@ -121,12 +121,6 @@ namespace BDEditor.DataModel
 
             BDTherapy.DeleteForParentId(pContext, pEntity.Uuid, pCreateDeletion);
 
-            BDMetadata.DeleteForItemId(pContext, pEntity.Uuid, pCreateDeletion);
-            // create BDDeletion record for the object to be deleted
-
-            if (pCreateDeletion)
-                BDDeletion.CreateBDDeletion(pContext, KEY_NAME, pEntity);
-
             pContext.DeleteObject(pEntity);
             pContext.SaveChanges();
         }

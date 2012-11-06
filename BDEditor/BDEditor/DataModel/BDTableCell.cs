@@ -136,13 +136,7 @@ namespace BDEditor.DataModel
         {
             // Don't delete the iNote from here. Deletion of a iNote will delete all association entries
             if (null == pEntity) return;
-            if (pCreateDeletion)
-            {
-                // create BDDeletion record for the object to be deleted
-                BDDeletion.CreateBDDeletion(pContext, KEY_NAME, pEntity);
-            }
 
-            BDMetadata.DeleteForItemId(pContext, pEntity.Uuid, pCreateDeletion);
             // delete record from local data store
             pContext.DeleteObject(pEntity);
             pContext.SaveChanges();

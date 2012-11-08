@@ -61,6 +61,20 @@ namespace BDEditor.DataModel
             return returnValue;
         }
 
+        public static BDNodeToHtmlPageIndex RetrieveIndexEntryForHtmlPageId(Entities pContext, Guid pHtmlPageId)
+        {
+            BDNodeToHtmlPageIndex returnValue = null;
+
+            if (pHtmlPageId != null)
+            {
+                IQueryable<BDNodeToHtmlPageIndex> entries = (from entry in pContext.BDNodeToHtmlPageIndexes
+                                                             where entry.htmlPageId == pHtmlPageId
+                                                             select entry);
+                returnValue = entries.FirstOrDefault<BDNodeToHtmlPageIndex>();
+            }
+            return returnValue;
+        }
+
         public static void WasGeneratedForChapter(Entities pContext, Guid pIBDNodeId, Guid pChapterId)
         {
             IQueryable<BDNodeToHtmlPageIndex> entries = (from entry in pContext.BDNodeToHtmlPageIndexes

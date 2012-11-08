@@ -75,10 +75,12 @@ namespace BDEditor.Classes
                         currentContext = (ibdNode as BDTherapyGroup).name;
                         break;
                     default:
-                        if (ibdNode.Name != string.Empty && !ibdNode.Name.Contains(BDUtilities.GetEnumDescription(ibdNode.NodeType)))
                             currentContext = ibdNode.Name;
                         break;
                 }
+                if(currentContext.Contains(BDUtilities.GetEnumDescription(ibdNode.NodeType)) || currentContext.Contains("(Header)"))
+                    currentContext = string.Empty;
+
                 List<IBDNode> childnodes = BDFabrik.GetChildrenForParent(pDataContext, ibdNode);
                 BDHtmlPageMap mapEntry = pPagesMap.FirstOrDefault<BDHtmlPageMap>(x => x.OriginalIBDObjectId == ibdNode.Uuid);
                 StringBuilder newContext = new StringBuilder();
@@ -91,7 +93,7 @@ namespace BDEditor.Classes
                 if (childnodes.Count > 0)
                     processNodeList(pDataContext, childnodes, newContext, pPagesMap);
 
-                else if(null != mapEntry)
+                else if(null != mapEntry && !(ibdNode is BDLinkedNote))
                     generateEntryWithDisplayParent(pDataContext, mapEntry.HtmlPageId, ibdNode, pNodeContext.ToString());
             }
         }
@@ -231,6 +233,9 @@ namespace BDEditor.Classes
         private static void generateEntryWithDisplayParent(Entities pDataContext, Guid pOriginalNodeId, IBDNode pNode, string pDisplayContext)
         {
             string entryName = pNode.Name.Trim();
+            if (pNode.Name.Contains(BDUtilities.GetEnumDescription(pNode.NodeType)) || pNode.Name == "(Header)")
+                return;
+
             if (entryName.Length > 0)
             {
 
@@ -265,44 +270,44 @@ namespace BDEditor.Classes
             }
         }
 
-        private static void generateEntryWithDisplayParent(Entities pDataContext, BDNode pDisplayParent, IBDNode pNode, string pDisplayContext)
-        {
-            string entryName = pNode.Name.Trim();
-            if(pNode.Name.Contains(BDUtilities.GetEnumDescription(pNode.NodeType)) || pNode.Name == "(Header)")
-                entryName = string.Empty;
+        //private static void generateEntryWithDisplayParent(Entities pDataContext, BDNode pDisplayParent, IBDNode pNode, string pDisplayContext)
+        //{
+        //    string entryName = pNode.Name.Trim();
+        //    if(pNode.Name.Contains(BDUtilities.GetEnumDescription(pNode.NodeType)) || pNode.Name == "(Header)")
+        //        entryName = string.Empty;
 
-            if (!string.IsNullOrEmpty(entryName))
-            {
-                // get existing matching search entries
-                IQueryable<BDSearchEntry> entries = (from entry in pDataContext.BDSearchEntries
-                                                     where entry.name == entryName
-                                                     select entry);
+        //    if (!string.IsNullOrEmpty(entryName))
+        //    {
+        //        // get existing matching search entries
+        //        IQueryable<BDSearchEntry> entries = (from entry in pDataContext.BDSearchEntries
+        //                                             where entry.name == entryName
+        //                                             select entry);
 
-                // if matching search entry is not found, create one
-                if (entries.Count() == 0)
-                {
-                    // create and save new search entry
-                    BDSearchEntry searchEntry = BDSearchEntry.CreateBDSearchEntry(pDataContext, entryName);
+        //        // if matching search entry is not found, create one
+        //        if (entries.Count() == 0)
+        //        {
+        //            // create and save new search entry
+        //            BDSearchEntry searchEntry = BDSearchEntry.CreateBDSearchEntry(pDataContext, entryName);
 
-                    // Create search association record
-                    BDSearchEntryAssociation.CreateBDSearchEntryAssociation(pDataContext, searchEntry.Uuid, pNode.NodeType, pDisplayParent.Uuid, pDisplayParent.NodeType, pNode.LayoutVariant, pDisplayContext);
-                }
-                else
-                {
-                    BDSearchEntry searchEntry = entries.First<BDSearchEntry>();
-                    // get matching search association records for search entry
-                    IQueryable<BDSearchEntryAssociation> associations = (from entry in pDataContext.BDSearchEntryAssociations
-                                                                         where (entry.searchEntryId == searchEntry.uuid
-                                                                         && entry.displayParentId == pDisplayParent.Uuid
-                                                                         && entry.displayParentType == (int)pDisplayParent.NodeType)
-                                                                         select entry);
+        //            // Create search association record
+        //            BDSearchEntryAssociation.CreateBDSearchEntryAssociation(pDataContext, searchEntry.Uuid, pNode.NodeType, pDisplayParent.Uuid, pDisplayParent.NodeType, pNode.LayoutVariant, pDisplayContext);
+        //        }
+        //        else
+        //        {
+        //            BDSearchEntry searchEntry = entries.First<BDSearchEntry>();
+        //            // get matching search association records for search entry
+        //            IQueryable<BDSearchEntryAssociation> associations = (from entry in pDataContext.BDSearchEntryAssociations
+        //                                                                 where (entry.searchEntryId == searchEntry.uuid
+        //                                                                 && entry.displayParentId == pDisplayParent.Uuid
+        //                                                                 && entry.displayParentType == (int)pDisplayParent.NodeType)
+        //                                                                 select entry);
 
-                    if (associations.Count() == 0)
-                    {
-                        BDSearchEntryAssociation.CreateBDSearchEntryAssociation(pDataContext, searchEntry.Uuid, pNode.NodeType, pDisplayParent.Uuid, pDisplayParent.NodeType, pNode.LayoutVariant, pDisplayContext);
-                    }
-                }
-            }
-        }
+        //            if (associations.Count() == 0)
+        //            {
+        //                BDSearchEntryAssociation.CreateBDSearchEntryAssociation(pDataContext, searchEntry.Uuid, pNode.NodeType, pDisplayParent.Uuid, pDisplayParent.NodeType, pNode.LayoutVariant, pDisplayContext);
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

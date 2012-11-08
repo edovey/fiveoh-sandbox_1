@@ -1214,7 +1214,7 @@ namespace BDEditor.Views
             {
                 BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
                 DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
-
+                Debug.WriteLine("Begin sync with AWS");
                 SyncInfoDictionary syncResultList = RepositoryHandler.Aws.Sync(DataContext, null, BDConstants.SyncType.Publish);
 
                 string resultMessage = string.Empty;

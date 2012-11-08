@@ -845,13 +845,13 @@ namespace BDEditor.Classes
                     {
                         if (child.NodeType == BDConstants.BDNodeType.BDTherapyGroup)
                         {
-                            dosageHTML.AppendFormat("<b><u>{0}</u></b><br>", buildCellHTML(pContext, child, BDNode.PROPERTYNAME_NAME, child.Name, false, footnotes, objectsOnPage));
+                            dosageHTML.AppendFormat("<u>{0}</u><br>", buildCellHTML(pContext, child, BDNode.PROPERTYNAME_NAME, child.Name, false, footnotes, objectsOnPage));
                             costHTML.Append("<br>");
                             List<IBDNode> lvl1Children = BDFabrik.GetChildrenForParent(pContext, child);
                             foreach (IBDNode lvl1Child in lvl1Children)
                             {
                                 // BDDosageGroup
-                                dosageHTML.AppendFormat("<u>{0}</u>:", buildCellHTML(pContext, lvl1Child, BDNode.PROPERTYNAME_NAME, lvl1Child.Name, false, footnotes, objectsOnPage));
+                                dosageHTML.AppendFormat("<b>{0}</b><br>", buildCellHTML(pContext, lvl1Child, BDNode.PROPERTYNAME_NAME, lvl1Child.Name, false, footnotes, objectsOnPage));
                                 costHTML.Append("<br>");
 
                                 List<IBDNode> lvl2Children = BDFabrik.GetChildrenForParent(pContext, lvl1Child);
@@ -860,10 +860,14 @@ namespace BDEditor.Classes
                                 {
                                     // BDDosage
                                     BDDosage dosage = lvl2Child as BDDosage;
-                                    dosageHTML.AppendFormat("{0}{1}", buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_DOSAGE, dosage.dosage, false, footnotes, objectsOnPage), cellLineTag);
+                                    if (dosage.joinType == (int)BDConstants.BDJoinType.None)
+                                        dosageHTML.AppendFormat("{0}{1}", buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_DOSAGE, dosage.dosage, false, footnotes, objectsOnPage), cellLineTag);
+                                    else
+                                        dosageHTML.AppendFormat("{0} {1}{2}", buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_DOSAGE, dosage.dosage, false, footnotes, objectsOnPage), retrieveConjunctionString((int)dosage.joinType), cellLineTag);
+                                     
                                     costHTML.Append(buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_COST, dosage.cost, false, footnotes, objectsOnPage));
-                                    if (dosage.cost2.Length > 0)
-                                        costHTML.AppendFormat("-{0}{1}", buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_COST2, dosage.cost2, false, footnotes, objectsOnPage), cellLineTag);
+                                    if (dosage.cost2.Length > 0) 
+                                            costHTML.AppendFormat("-{0}{1}", buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_COST2, dosage.cost2, false, footnotes, objectsOnPage), cellLineTag);
                                     else
                                         costHTML.Append(cellLineTag);
                                 }
@@ -871,7 +875,7 @@ namespace BDEditor.Classes
                         }
                         else if (child.NodeType == BDConstants.BDNodeType.BDDosageGroup)
                         {
-                            dosageHTML.AppendFormat("<u>{0}</u>:", buildCellHTML(pContext, child, BDNode.PROPERTYNAME_NAME, child.Name, false, footnotes, objectsOnPage));
+                            dosageHTML.AppendFormat("<b>{0}</b><br>", buildCellHTML(pContext, child, BDNode.PROPERTYNAME_NAME, child.Name, false, footnotes, objectsOnPage));
                             costHTML.Append("<br>");
 
                             List<IBDNode> lvl2Children = BDFabrik.GetChildrenForParent(pContext, child);
@@ -880,7 +884,10 @@ namespace BDEditor.Classes
                             {
                                 // BDDosage
                                 BDDosage dosage = lvl2Child as BDDosage;
-                                dosageHTML.AppendFormat("{0}{1}", buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_DOSAGE, dosage.dosage, false, footnotes, objectsOnPage), cellLineTag);
+                                if (dosage.joinType == (int)BDConstants.BDJoinType.None)
+                                    dosageHTML.AppendFormat("{0}{1}", buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_DOSAGE, dosage.dosage, false, footnotes, objectsOnPage), cellLineTag);
+                                else
+                                    dosageHTML.AppendFormat("{0} {1}{2}", buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_DOSAGE, dosage.dosage, false, footnotes, objectsOnPage), retrieveConjunctionString((int)dosage.joinType), cellLineTag);
                                 costHTML.Append(buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_COST, dosage.cost, false, footnotes, objectsOnPage));
                                 if (dosage.cost2.Length > 0)
                                     costHTML.AppendFormat("-{0}{1}", buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_COST2, dosage.cost2, false, footnotes, objectsOnPage), cellLineTag);
@@ -893,7 +900,10 @@ namespace BDEditor.Classes
                             string cellLineTag = (childNodes.Count > 0) ? "<br>" : "";
 
                             BDDosage dosage = child as BDDosage;
-                            dosageHTML.AppendFormat("{0}{1}", buildCellHTML(pContext, child, BDDosage.PROPERTYNAME_DOSAGE, dosage.dosage, false, footnotes, objectsOnPage), cellLineTag);
+                            if (dosage.joinType == (int)BDConstants.BDJoinType.None)
+                                dosageHTML.AppendFormat("{0}{1}", buildCellHTML(pContext, child, BDDosage.PROPERTYNAME_DOSAGE, dosage.dosage, false, footnotes, objectsOnPage), cellLineTag);
+                            else
+                                dosageHTML.AppendFormat("{0} {1}{2}", buildCellHTML(pContext, child, BDDosage.PROPERTYNAME_DOSAGE, dosage.dosage, false, footnotes, objectsOnPage), retrieveConjunctionString((int)dosage.joinType), cellLineTag);
                             costHTML.Append(buildCellHTML(pContext, child, BDDosage.PROPERTYNAME_COST, dosage.cost, false, footnotes, objectsOnPage));
                             if (dosage.cost2.Length > 0)
                                 costHTML.AppendFormat("-{0}{1}", buildCellHTML(pContext, child, BDDosage.PROPERTYNAME_COST2, dosage.cost2, false, footnotes, objectsOnPage), cellLineTag);
@@ -3007,23 +3017,13 @@ namespace BDEditor.Classes
                                     // check for conjunctions and add a row for any that are found
                                     switch (therapy.therapyJoinType)
                                     {
-                                        case (int)BDTherapy.TherapyJoinType.AndWithNext:
-                                            adultDosageHTML.Append(@" + ");
-                                            pedsDosageHTML.Append(@" + ");
-                                            break;
-                                        case (int)BDTherapy.TherapyJoinType.OrWithNext:
-                                            adultDosageHTML.Append(@"<br>or<br>");
-                                            pedsDosageHTML.Append(@"<br>or<br>");
-                                            break;
-                                        case (int)BDTherapy.TherapyJoinType.ThenWithNext:
-                                            adultDosageHTML.Append(@" then ");
-                                            pedsDosageHTML.Append(@" then ");
-                                            break;
-                                        case (int)BDTherapy.TherapyJoinType.WithOrWithoutWithNext:
-                                            adultDosageHTML.Append(@" +/- ");
-                                            pedsDosageHTML.Append(@" +/- ");
+                                        case (int)BDConstants.BDJoinType.OrWithNext:
+                                            adultDosageHTML.AppendFormat(@"<br>{0}<br> ", retrieveConjunctionString((int)therapy.therapyJoinType));
+                                            pedsDosageHTML.AppendFormat(@"<br>{0}<br>", retrieveConjunctionString((int)therapy.therapyJoinType));
                                             break;
                                         default:
+                                            adultDosageHTML.AppendFormat(@" {0} ", retrieveConjunctionString((int)therapy.therapyJoinType));
+                                            pedsDosageHTML.AppendFormat(@" {0} ", retrieveConjunctionString((int)therapy.therapyJoinType));
                                             break;
                                     }
                                     previousTherapyId = therapy.Uuid;
@@ -3534,7 +3534,7 @@ namespace BDEditor.Classes
         {
             StringBuilder noteHtml = new StringBuilder();
 
-            if (notesListHasContent(pContext, pInlineNotes))
+            if (null != pInlineNotes && notesListHasContent(pContext, pInlineNotes))
             {
                 foreach (BDLinkedNote iNote in pInlineNotes)
                 {
@@ -3548,7 +3548,7 @@ namespace BDEditor.Classes
                 }
             }
 
-            if (notesListHasContent(pContext, pMarkedNotes))
+            if (null != pMarkedNotes && notesListHasContent(pContext, pMarkedNotes))
             {
                 foreach (BDLinkedNote mNote in pMarkedNotes)
                 {
@@ -3562,7 +3562,7 @@ namespace BDEditor.Classes
                 }
             }
 
-            if (notesListHasContent(pContext, pUnmarkedNotes))
+            if (null != pUnmarkedNotes && notesListHasContent(pContext, pUnmarkedNotes))
             {
                 foreach (BDLinkedNote uNote in pUnmarkedNotes)
                 {
@@ -3792,7 +3792,7 @@ namespace BDEditor.Classes
             string styleString = string.Empty;
 
             // check join type - if none, then draw the bottom border on the table row
-            if (pTherapy.therapyJoinType == (int)BDTherapy.TherapyJoinType.None)
+            if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.None)
                 styleString = @"class=""d0""";  // row has bottom border
             else
                 styleString = @"class=""d1""";  // NO bottom border
@@ -3825,26 +3825,7 @@ namespace BDEditor.Classes
                 therapyHtml.AppendFormat("<td>{0}</td>", buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.duration, BDTherapy.PROPERTYNAME_DURATION, false, pFootnotes, pObjectsOnPage));
 
             therapyHtml.Append(@"</tr>");
-
-            // check for conjunctions and add a row for any that are found
-            switch (pTherapy.therapyJoinType)
-            {
-                case (int)BDTherapy.TherapyJoinType.AndWithNext:
-                    therapyHtml.Append(@"<tr><td> + </td><td /><td /></tr>");
-                    break;
-                case (int)BDTherapy.TherapyJoinType.OrWithNext:
-                    therapyHtml.Append(@"<tr><td> or</td><td /><td /></tr>");
-                    break;
-                case (int)BDTherapy.TherapyJoinType.ThenWithNext:
-                    therapyHtml.Append(@"<tr><td> then</td><td /><td /></tr>");
-                    break;
-                case (int)BDTherapy.TherapyJoinType.WithOrWithoutWithNext:
-                    therapyHtml.Append(@"<tr><td> +/-</td><td /><td /></tr>");
-                    break;
-                default:
-                    break;
-            }
-
+            therapyHtml.AppendFormat(@"<tr><td> {0}</td><td /><td /></tr>", retrieveConjunctionString((int)pTherapy.therapyJoinType));
             return therapyHtml.ToString();
         }
 
@@ -3854,7 +3835,7 @@ namespace BDEditor.Classes
             string styleString = string.Empty;
 
             // check join type - if none, then draw the bottom border on the table row
-            if (pTherapy.therapyJoinType == (int)BDTherapy.TherapyJoinType.None)
+            if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.None)
                 styleString = @"class=""d0""";
             else
                 styleString = @"class=""d1""";
@@ -3895,25 +3876,8 @@ namespace BDEditor.Classes
                     therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.duration, BDTherapy.PROPERTYNAME_DURATION, false, "td", pFootnotes, pObjectsOnPage));
             }
             therapyHtml.Append(@"</tr>");
-
-            // check for conjunctions and add a row for any that are found
-            switch (pTherapy.therapyJoinType)
-            {
-                case (int)BDTherapy.TherapyJoinType.AndWithNext:
-                    therapyHtml.Append(@"<tr><td> + </td><td /><td /><td /></tr>");
-                    break;
-                case (int)BDTherapy.TherapyJoinType.OrWithNext:
-                    therapyHtml.Append(@"<tr><td> or</td><td /><td /><td /></tr>");
-                    break;
-                case (int)BDTherapy.TherapyJoinType.ThenWithNext:
-                    therapyHtml.Append(@"<tr><td> then</td><td /><td /><td /></tr>");
-                    break;
-                case (int)BDTherapy.TherapyJoinType.WithOrWithoutWithNext:
-                    therapyHtml.Append(@"<tr><td> +/-</td><td /><td /><td /></tr>");
-                    break;
-                default:
-                    break;
-            }
+            therapyHtml.AppendFormat(@"<tr><td> {0}</td><td /><td /><td /></tr>", retrieveConjunctionString((int)pTherapy.therapyJoinType));
+            
             return therapyHtml.ToString();
         }
 
@@ -3923,7 +3887,7 @@ namespace BDEditor.Classes
             string styleString = string.Empty;
 
             // check join type - if NONE, then draw the bottom border on the table row
-            if (pTherapy.therapyJoinType == (int)BDTherapy.TherapyJoinType.None)
+            if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.None)
                 styleString = @"class=""d0""";
             else
                 styleString = @"class=""d1""";
@@ -3963,25 +3927,7 @@ namespace BDEditor.Classes
                 therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.duration1, BDTherapy.PROPERTYNAME_DURATION_1, false, "td", pFootnotes, pObjectsOnPage));
 
             therapyHtml.Append(@"</tr>");
-
-            // check for conjunctions and add a row for any that are found
-            switch (pTherapy.therapyJoinType)
-            {
-                case (int)BDTherapy.TherapyJoinType.AndWithNext:
-                    therapyHtml.Append(@"<tr><td> + </td><td /><td /><td /></tr>");
-                    break;
-                case (int)BDTherapy.TherapyJoinType.OrWithNext:
-                    therapyHtml.Append(@"<tr><td> or</td><td /><td /><td /></tr>");
-                    break;
-                case (int)BDTherapy.TherapyJoinType.ThenWithNext:
-                    therapyHtml.Append(@"<tr><td> then</td><td /><td /><td /></tr>");
-                    break;
-                case (int)BDTherapy.TherapyJoinType.WithOrWithoutWithNext:
-                    therapyHtml.Append(@"<tr><td> +/-</td><td /><td /><td /></tr>");
-                    break;
-                default:
-                    break;
-            }
+            therapyHtml.AppendFormat(@"<tr><td> {0}</td><td /><td /><td /></tr>", retrieveConjunctionString((int)pTherapy.therapyJoinType));
             return therapyHtml.ToString();
         }
 
@@ -3991,7 +3937,7 @@ namespace BDEditor.Classes
             string styleString = string.Empty;
 
             // check join type - if none, then draw the bottom border on the table row
-            if (pTherapy.therapyJoinType == (int)BDTherapy.TherapyJoinType.None)
+            if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.None)
                 styleString = @"class=""d0""";  // row has bottom border
             else
                 styleString = @"class=""d1""";  // NO bottom border
@@ -4018,25 +3964,7 @@ namespace BDEditor.Classes
                 therapyHtml.AppendFormat("<td>{0}</td>", buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.dosage, BDTherapy.PROPERTYNAME_DOSAGE, false, pFootnotes, pObjectsOnPage));
 
             therapyHtml.Append(@"</tr>");
-
-            // check for conjunctions and add a row for any that are found
-            switch (pTherapy.therapyJoinType)
-            {
-                case (int)BDTherapy.TherapyJoinType.AndWithNext:
-                    therapyHtml.Append(@"<tr><td> + </td><td /><td /></tr>");
-                    break;
-                case (int)BDTherapy.TherapyJoinType.OrWithNext:
-                    therapyHtml.Append(@"<tr><td> or</td><td /><td /></tr>");
-                    break;
-                case (int)BDTherapy.TherapyJoinType.ThenWithNext:
-                    therapyHtml.Append(@"<tr><td> then</td><td /><td /></tr>");
-                    break;
-                case (int)BDTherapy.TherapyJoinType.WithOrWithoutWithNext:
-                    therapyHtml.Append(@"<tr><td> +/-</td><td /><td /></tr>");
-                    break;
-                default:
-                    break;
-            }
+            therapyHtml.AppendFormat(@"<tr><td> {0}</td><td /><td /></tr>", retrieveConjunctionString((int)pTherapy.therapyJoinType));
 
             return therapyHtml.ToString();
         }
@@ -4230,7 +4158,7 @@ namespace BDEditor.Classes
             StringBuilder noteString = new StringBuilder();
             foreach (BDLinkedNote note in pNotes)
             {
-                if (note.documentText.Length > 0)
+                if (note.documentText.Length > EMPTY_PARAGRAPH)
                 {
                     noteString.Append(note.documentText);
                     pObjectsOnPage.Add(note.Uuid);
@@ -4455,17 +4383,17 @@ namespace BDEditor.Classes
             }
             else
             {
-                BDHtmlPage notePage = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.NodeType, inline, marked, unmarked, pObjectsOnPage);
+                BDHtmlPage notePage = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.NodeType, null, marked, unmarked, pObjectsOnPage);
 
                 if (notePage != null)
                 {
                     if (pPropertyValue.Length > 0)
-                        propertyHTML.AppendFormat(@"<a href=""{0}"">{1}{2}{3}</a>{4}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), endTag, footerMarker);
+                        propertyHTML.AppendFormat(@"<a href=""{0}"">{1}{2}{3}</a>{4}{5}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), endTag, footerMarker, buildTextFromNotes(inline, pObjectsOnPage));
                     else
-                        propertyHTML.AppendFormat(@"<a href=""{0}"">See Comments.</a>", notePage.Uuid.ToString().ToUpper());
+                        propertyHTML.AppendFormat(@"<a href=""{0}"">See Comments.</a>{1}", notePage.Uuid.ToString().ToUpper(), buildTextFromNotes(inline, pObjectsOnPage));
                 }
                 else
-                    propertyHTML.AppendFormat(@" {0}{1}{2}{3}", startTag, pPropertyValue.Trim(), endTag, footerMarker);
+                    propertyHTML.AppendFormat(@" {0}{1}{2}{3}{4}", startTag, pPropertyValue.Trim(), endTag, footerMarker, buildTextFromNotes(inline, pObjectsOnPage));
             }
             return propertyHTML.ToString();
         }
@@ -4708,6 +4636,31 @@ namespace BDEditor.Classes
                 }
             }
             return hasContent;
+        }
+
+        private string retrieveConjunctionString(int pBDJoinType)
+        {
+            string joinString = string.Empty;
+            // check for conjunctions and add a row for any that are found
+            switch (pBDJoinType)
+            {
+                case (int)BDConstants.BDJoinType.AndWithNext:
+                    joinString = BDUtilities.GetEnumDescription(BDConstants.BDJoinType.AndWithNext);
+                    break;
+                case (int)BDConstants.BDJoinType.OrWithNext:
+                    joinString = BDUtilities.GetEnumDescription(BDConstants.BDJoinType.OrWithNext);
+                    break;
+                case (int)BDConstants.BDJoinType.ThenWithNext:
+                    joinString = BDUtilities.GetEnumDescription(BDConstants.BDJoinType.ThenWithNext);
+                    break;
+                case (int)BDConstants.BDJoinType.WithOrWithoutWithNext:
+                    joinString = BDUtilities.GetEnumDescription(BDConstants.BDJoinType.WithOrWithoutWithNext);
+                    break;
+                default:
+                    joinString = BDUtilities.GetEnumDescription(BDConstants.BDJoinType.None);
+                    break;
+            }
+            return joinString;
         }
 
         private string retrieveMetadataLabelForPropertyName(Entities pContext, BDConstants.BDNodeType pNodeType,  string pPropertyName)

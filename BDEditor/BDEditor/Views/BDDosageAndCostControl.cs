@@ -156,21 +156,21 @@ namespace BDEditor.Views
                 rtbCost2.Text = currentDosage.cost2;
                 DisplayOrder = currentDosage.displayOrder;
 
-                switch ((BDDosage.DosageJoinType)currentDosage.joinType)
+                switch ((BDConstants.BDJoinType)currentDosage.joinType)
                 {
-                    case BDDosage.DosageJoinType.None:
+                    case BDConstants.BDJoinType.None:
                         noneRadioButton.Checked = true;
                         break;
-                    case BDDosage.DosageJoinType.AndWithNext:
+                    case BDConstants.BDJoinType.AndWithNext:
                         andRadioButton.Checked = true;
                         break;
-                    case BDDosage.DosageJoinType.OrWithNext:
+                    case BDConstants.BDJoinType.OrWithNext:
                         orRadioButton.Checked = true;
                         break;
-                    case BDDosage.DosageJoinType.ThenWithNext:
+                    case BDConstants.BDJoinType.ThenWithNext:
                         thenRadioButton.Checked = true;
                         break;
-                    case BDDosage.DosageJoinType.WithOrWithoutWithNext:
+                    case BDConstants.BDJoinType.WithOrWithoutWithNext:
                         andOrRadioButton.Checked = true;
                         break;
                     default:
@@ -234,28 +234,28 @@ namespace BDEditor.Views
 
                     if (andRadioButton.Checked)
                     {
-                        if (currentDosage.joinType != (int)BDDosage.DosageJoinType.AndWithNext)
-                            currentDosage.joinType = (int)BDDosage.DosageJoinType.AndWithNext;
+                        if (currentDosage.joinType != (int)BDConstants.BDJoinType.AndWithNext)
+                            currentDosage.joinType = (int)BDConstants.BDJoinType.AndWithNext;
                     }
                     else if (orRadioButton.Checked)
                     {
-                        if (currentDosage.joinType != (int)BDDosage.DosageJoinType.OrWithNext)
-                            currentDosage.joinType = (int)BDDosage.DosageJoinType.OrWithNext;
+                        if (currentDosage.joinType != (int)BDConstants.BDJoinType.OrWithNext)
+                            currentDosage.joinType = (int)BDConstants.BDJoinType.OrWithNext;
                     }
                     else if (thenRadioButton.Checked)
                     {
-                        if (currentDosage.joinType != (int)BDDosage.DosageJoinType.ThenWithNext)
-                            currentDosage.joinType = (int)BDDosage.DosageJoinType.ThenWithNext;
+                        if (currentDosage.joinType != (int)BDConstants.BDJoinType.ThenWithNext)
+                            currentDosage.joinType = (int)BDConstants.BDJoinType.ThenWithNext;
                     }
                     else if (andOrRadioButton.Checked)
                     {
-                        if (currentDosage.joinType != (int)BDDosage.DosageJoinType.WithOrWithoutWithNext)
-                            currentDosage.joinType = (int)BDDosage.DosageJoinType.WithOrWithoutWithNext;
+                        if (currentDosage.joinType != (int)BDConstants.BDJoinType.WithOrWithoutWithNext)
+                            currentDosage.joinType = (int)BDConstants.BDJoinType.WithOrWithoutWithNext;
                     }
                     else
                     {
-                        if (currentDosage.joinType != (int)BDDosage.DosageJoinType.None)
-                            currentDosage.joinType = (int)BDDosage.DosageJoinType.None;
+                        if (currentDosage.joinType != (int)BDConstants.BDJoinType.None)
+                            currentDosage.joinType = (int)BDConstants.BDJoinType.None;
                     }
 
                     BDDosage.Save(dataContext, currentDosage);
@@ -389,6 +389,13 @@ namespace BDEditor.Views
         private void sOneToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string newText = "¹";
+            insertTextFromMenu(newText);
+        }
+
+
+        private void superscriptTwoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newText = "²";
             insertTextFromMenu(newText);
         }
 

@@ -68,6 +68,7 @@
             this.orRadioButton = new System.Windows.Forms.RadioButton();
             this.thenRadioButton = new System.Windows.Forms.RadioButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.superscriptTwoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStripTextBox.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
@@ -98,6 +99,7 @@
             this.plusMinusToolStripMenuItem,
             this.degreeToolStripMenuItem,
             this.µToolStripMenuItem,
+            this.superscriptTwoToolStripMenuItem,
             this.toolStripMenuItem3,
             this.undoToolStripMenuItem,
             this.toolStripMenuItem4,
@@ -109,7 +111,7 @@
             this.selectAlloolStripMenuItem});
             this.contextMenuStripTextBox.Name = "contextMenuStrip1";
             this.contextMenuStripTextBox.ShowImageMargin = false;
-            this.contextMenuStripTextBox.Size = new System.Drawing.Size(128, 308);
+            this.contextMenuStripTextBox.Size = new System.Drawing.Size(128, 330);
             this.contextMenuStripTextBox.Text = "Insert Symbol";
             this.contextMenuStripTextBox.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripTextBox_Opening);
             // 
@@ -434,6 +436,14 @@
             this.thenRadioButton.Text = "Then (with next)";
             this.thenRadioButton.UseVisualStyleBackColor = true;
             // 
+            // superscriptTwoToolStripMenuItem
+            // 
+            this.superscriptTwoToolStripMenuItem.Name = "superscriptTwoToolStripMenuItem";
+            this.superscriptTwoToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.superscriptTwoToolStripMenuItem.Text = "²";
+            this.superscriptTwoToolStripMenuItem.ToolTipText = "Insert ²";
+            this.superscriptTwoToolStripMenuItem.Click += new System.EventHandler(this.superscriptTwoToolStripMenuItem_Click);
+            // 
             // BDDosageAndCostControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -495,5 +505,6 @@
         private System.Windows.Forms.ToolStripMenuItem selectAlloolStripMenuItem;
         private System.Windows.Forms.RichTextBox rtbCost2;
         private System.Windows.Forms.Button btnCost2Link;
+        private System.Windows.Forms.ToolStripMenuItem superscriptTwoToolStripMenuItem;
     }
 }

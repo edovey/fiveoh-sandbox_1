@@ -72,15 +72,6 @@ namespace BDEditor.DataModel
         private const string DURATION_1_PREVIOUS = @"th_duration1SameAsPrevious";
         private const string DURATION_2_PREVIOUS = @"th_duration2SameAsPrevious";
 
-        public enum TherapyJoinType
-        {
-            None = 0,
-            AndWithNext = 1,
-            OrWithNext = 2,
-            ThenWithNext = 3,
-            WithOrWithoutWithNext = 4,
-        }
-
         /// <summary>
         /// Extended Create method that sets created date and schema version
         /// </summary>
@@ -100,7 +91,7 @@ namespace BDEditor.DataModel
             therapy.createdBy = Guid.Empty;
             therapy.createdDate = DateTime.Now;
             therapy.schemaVersion = ENTITY_SCHEMAVERSION;
-            therapy.therapyJoinType = (int)TherapyJoinType.None;
+            therapy.therapyJoinType = (int)BDConstants.BDJoinType.None;
             therapy.leftBracket = false;
             therapy.rightBracket = false;
             therapy.displayOrder = -1;

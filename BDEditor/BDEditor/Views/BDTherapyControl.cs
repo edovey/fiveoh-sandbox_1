@@ -219,21 +219,21 @@ namespace BDEditor.Views
                 if(pnlMain.Controls.Contains(tbDuration2))
                     tbDuration2.Text = currentTherapy.duration2;
 
-                switch ((BDTherapy.TherapyJoinType)currentTherapy.therapyJoinType)
+                switch ((BDConstants.BDJoinType)currentTherapy.therapyJoinType)
                 {
-                    case BDTherapy.TherapyJoinType.None:
+                    case BDConstants.BDJoinType.None:
                         noneRadioButton.Checked = true;
                         break;
-                    case BDTherapy.TherapyJoinType.AndWithNext:
+                    case BDConstants.BDJoinType.AndWithNext:
                         andRadioButton.Checked = true;
                         break;
-                    case BDTherapy.TherapyJoinType.OrWithNext:
+                    case BDConstants.BDJoinType.OrWithNext:
                         orRadioButton.Checked = true;
                         break;
-                    case BDTherapy.TherapyJoinType.ThenWithNext:
+                    case BDConstants.BDJoinType.ThenWithNext:
                         thenRadioButton.Checked = true;
                         break;
-                    case BDTherapy.TherapyJoinType.WithOrWithoutWithNext:
+                    case BDConstants.BDJoinType.WithOrWithoutWithNext:
                         andOrRadioButton.Checked = true;
                         break;
                     default:
@@ -320,28 +320,28 @@ namespace BDEditor.Views
 
                     if (andRadioButton.Checked)
                     {
-                        if (currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.AndWithNext)
-                            currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.AndWithNext;
+                        if (currentTherapy.therapyJoinType != (int)BDConstants.BDJoinType.AndWithNext)
+                            currentTherapy.therapyJoinType = (int)BDConstants.BDJoinType.AndWithNext;
                     }
                     else if (orRadioButton.Checked)
                     {
-                        if (currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.OrWithNext)
-                            currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.OrWithNext;
+                        if (currentTherapy.therapyJoinType != (int)BDConstants.BDJoinType.OrWithNext)
+                            currentTherapy.therapyJoinType = (int)BDConstants.BDJoinType.OrWithNext;
                     }
                     else if (thenRadioButton.Checked)
                     {
-                        if (currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.ThenWithNext)
-                            currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.ThenWithNext;
+                        if (currentTherapy.therapyJoinType != (int)BDConstants.BDJoinType.ThenWithNext)
+                            currentTherapy.therapyJoinType = (int)BDConstants.BDJoinType.ThenWithNext;
                     }
                     else if (andOrRadioButton.Checked)
                     {
-                       if (currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.WithOrWithoutWithNext)
-                            currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.WithOrWithoutWithNext;
+                        if (currentTherapy.therapyJoinType != (int)BDConstants.BDJoinType.WithOrWithoutWithNext)
+                            currentTherapy.therapyJoinType = (int)BDConstants.BDJoinType.WithOrWithoutWithNext;
                     }
                    else 
                     {
-                        if (currentTherapy.therapyJoinType != (int)BDTherapy.TherapyJoinType.None)
-                            currentTherapy.therapyJoinType = (int)BDTherapy.TherapyJoinType.None;
+                        if (currentTherapy.therapyJoinType != (int)BDConstants.BDJoinType.None)
+                            currentTherapy.therapyJoinType = (int)BDConstants.BDJoinType.None;
                     }
 
                     if(currentTherapy.leftBracket != this.displayLeftBracket) currentTherapy.leftBracket = this.displayLeftBracket;

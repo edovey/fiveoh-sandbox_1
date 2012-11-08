@@ -61,15 +61,6 @@ namespace BDEditor.DataModel
         
         public Guid? tempProductionUuid { get; set; }
 
-        public enum DosageJoinType
-        {
-            None = 0,
-            AndWithNext = 1,
-            OrWithNext = 2,
-            ThenWithNext = 3,
-            WithOrWithoutWithNext = 4,
-        }
-
         /// <summary>
         /// Extended Create method that sets the schema version
         /// </summary>

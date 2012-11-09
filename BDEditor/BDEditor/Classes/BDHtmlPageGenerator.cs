@@ -1098,7 +1098,7 @@ namespace BDEditor.Classes
                 footerMarkers.Add(buildFooterMarkerForList(retrieveNotesForLayoutColumn(pContext, metadataLayoutColumns[1]), true, footnotes, objectsOnPage));
                 footerMarkers.Add(buildFooterMarkerForList(retrieveNotesForLayoutColumn(pContext, metadataLayoutColumns[2]), true, footnotes, objectsOnPage));
 
-                bodyHTML.AppendFormat(@"<table><tr><th rowspan=4>{0}{1}</th><th rowspan=4>{2}{3}</th>",labels[0],footerMarkers[0],labels[1],footerMarkers[1]);
+                bodyHTML.AppendFormat(@"<table class=""v{0}""><tr><th rowspan=4>{1}{2}</th><th rowspan=4>{3}{4}</th>",pNode.layoutVariant, labels[0],footerMarkers[0],labels[1],footerMarkers[1]);
                 bodyHTML.Append(@"<th colspan=3><b>Dose and Interval Adjustment for Renal Impairment</b></th></tr>");
                 bodyHTML.AppendFormat(@"<tr><th colspan=""3""><b>{0}{1}</b></th><tr>",labels[2],footerMarkers[2]);
                 bodyHTML.Append(@"<tr><th>&gt50</th><th>10 - 50</th><th>&lt10(Anuric)</th></tr>");
@@ -1106,18 +1106,18 @@ namespace BDEditor.Classes
                 foreach (IBDNode antimicrobial in childNodes) 
                 {
                     List<IBDNode> dosageNodes = BDFabrik.GetChildrenForParent(pContext, antimicrobial);
-
+                    string antimicrobialHtml = buildNodePropertyHTML(pContext, antimicrobial, antimicrobial.Name, BDNode.PROPERTYNAME_NAME, false, footnotes, objectsOnPage);
                     string dosageGroupName = string.Empty;
                     foreach (IBDNode dNode in dosageNodes)
                     {
-                        bodyHTML.AppendFormat("<tr><td>{0}</td>", antimicrobial.Name);
+                        bodyHTML.AppendFormat(@"<tr class=""v{0}""><td>{1}</td>", (int)dNode.LayoutVariant, antimicrobialHtml);
                         if (dNode.NodeType == BDConstants.BDNodeType.BDDosage)
                         {
                             bodyHTML.Append(buildDosageHTML(pContext, dNode, dosageGroupName, footnotes, objectsOnPage));
                             dosageGroupName = string.Empty;
                         }
                         else // BDDosageGroup
-                            dosageGroupName = dNode.Name;
+                            dosageGroupName = buildNodePropertyHTML(pContext, dNode, dNode.Uuid, dNode.Name, BDNode.PROPERTYNAME_NAME, false, "u", footnotes, objectsOnPage);
                     bodyHTML.Append("</tr>");
                     }
                 }
@@ -1414,7 +1414,7 @@ namespace BDEditor.Classes
                         List<IBDNode> categories = BDFabrik.GetChildrenForParent(pContext, child);
                         foreach (IBDNode category in categories)
                         {
-                            bodyHTML.Append(buildNodePropertyHTML(pContext, category, category.Uuid, category.Name, BDNode.PROPERTYNAME_NAME, false, footnotes, objectsOnPage));
+                            bodyHTML.Append(buildNodePropertyHTML(pContext, category, category.Name, BDNode.PROPERTYNAME_NAME, false, footnotes, objectsOnPage));
                             bodyHTML.Append("<table><tr><th>Excellent Penetration</th><th>Good Penetration</th><th>Poor Penetration</th></tr>");
                             
                             List<IBDNode> subcategories = BDFabrik.GetChildrenForParent(pContext, category);
@@ -1432,7 +1432,7 @@ namespace BDEditor.Classes
                                         StringBuilder colHTML = new StringBuilder();
                                         foreach (IBDNode antimicrobial in columnDetail)
                                         {
-                                            string antimicrobialHTML = buildNodePropertyHTML(pContext, antimicrobial, antimicrobial.Uuid, antimicrobial.Name, BDNode.PROPERTYNAME_NAME, false, footnotes, objectsOnPage);
+                                            string antimicrobialHTML = buildNodePropertyHTML(pContext, antimicrobial, antimicrobial.Name, BDNode.PROPERTYNAME_NAME, false, footnotes, objectsOnPage);
                                             List<BDLinkedNote> itemFooter = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, antimicrobial.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Footnote);
                                             if (itemFooter.Count == 0)
                                                 colHTML.AppendFormat(@"{0}<br>", antimicrobialHTML);
@@ -4024,81 +4024,60 @@ namespace BDEditor.Classes
             BDDosage dosageNode = pNode as BDDosage;
             StringBuilder dosageHTML = new StringBuilder();
             string styleString = string.Empty;
-            string colSpanTag = @"colspan=1";
+            string colSpanTag = string.Empty;  
+
+            if (dosageNode.dosage == dosageNode.dosage2 && dosageNode.dosage != dosageNode.dosage3)
+                colSpanTag = @" colspan=2";
+            if (dosageNode.dosage == dosageNode.dosage2 && dosageNode.dosage == dosageNode.dosage3 && dosageNode.dosage != dosageNode.dosage4)
+                colSpanTag = @" colspan=3";
+            if (dosageNode.dosage == dosageNode.dosage2 && dosageNode.dosage == dosageNode.dosage3 && dosageNode.dosage == dosageNode.dosage4)
+                colSpanTag = @" colspan=4";
+
             // dosage group if it exists, then adult dose in cell
             if (pDosageGroupName.Length > 0)
-                dosageHTML.AppendFormat("<td><ul>{0}</ul><br>{1}</td>", pDosageGroupName,dosageNode.dosage);
+                dosageHTML.AppendFormat("<td{0}>{1}{2}<br>{3}</td>", colSpanTag, pDosageGroupName, dosageNode.dosage);
             else
-                dosageHTML.AppendFormat(@"<td>{0}</td>",dosageNode.dosage);
+                dosageHTML.AppendFormat(@"<td{0}>{1}</td>", colSpanTag, dosageNode.dosage);
+
+            colSpanTag = string.Empty;
             // 3 remaining doses in cells
-            if (dosageNode.dosage2 == dosageNode.dosage3 && dosageNode.dosage2 == dosageNode.dosage4)
-                colSpanTag = @"colspan=3";
-            if (dosageNode.dosage2 == dosageNode.dosage3 && dosageNode.dosage2 != dosageNode.dosage4)
-                colSpanTag = @"colspan=2";
-
             // Dosage 2
-            List<BDLinkedNote> d2Inline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE2, BDConstants.LinkedNoteType.Inline);
-            List<BDLinkedNote> d2Marked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE2, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> d2Unmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE2, BDConstants.LinkedNoteType.UnmarkedComment);
-            List<BDLinkedNote> d2Footers = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE2, BDConstants.LinkedNoteType.Footnote));
-            string d2FooterMarker = buildFooterMarkerForList(d2Footers, true, pFootnotes, pObjectsOnPage);
+            if (dosageNode.dosage2 == dosageNode.dosage3 && dosageNode.dosage2 == dosageNode.dosage4)
+                colSpanTag = @" colspan=3";
+            if (dosageNode.dosage2 == dosageNode.dosage3 && dosageNode.dosage2 != dosageNode.dosage4)
+                colSpanTag = @" colspan=2";
 
-            BDHtmlPage d2NotePage = generatePageForLinkedNotes(pContext, dosageNode.Uuid, BDConstants.BDNodeType.BDDosage, d2Inline, d2Marked, d2Unmarked, pObjectsOnPage);
-            if (d2NotePage != null)
+            if (dosageNode.dosage2 != dosageNode.dosage)
             {
-                if (dosageNode.dosage2.Length > 0)
-                    dosageHTML.AppendFormat(@"<td {0}><a href=""{1}"">{2}</a{3}>", colSpanTag, d2NotePage.Uuid.ToString().ToUpper(), dosageNode.dosage2, d2FooterMarker);
+                string d2Html = buildNodePropertyHTML(pContext, dosageNode, dosageNode.dosage2, BDDosage.PROPERTYNAME_DOSAGE2, false, pFootnotes, pObjectsOnPage);
+                if (!string.IsNullOrEmpty(d2Html))
+                    dosageHTML.AppendFormat(@"<td{0}>{1}</td>", colSpanTag, d2Html);
                 else
-                    dosageHTML.AppendFormat(@"<td {0}><a href=""{1}"">See Notes.</a>{3}", colSpanTag, d2NotePage.Uuid.ToString().ToUpper(), d2FooterMarker);
+                    dosageHTML.Append(@"<td />");
             }
-            else
-                dosageHTML.AppendFormat(@"<td {0}>{1}{2}", colSpanTag, dosageNode.dosage2, d2FooterMarker);
-
-            dosageHTML.Append(@"</td>");
+            colSpanTag = string.Empty;
 
             // Dosage 3
-            if (dosageNode.dosage2 != dosageNode.dosage3)
+            if (dosageNode.dosage3 == dosageNode.dosage4)
+                colSpanTag = @" colspan=2";
+            if (dosageNode.dosage3 != dosageNode.dosage2 && dosageNode.dosage3 != dosageNode.dosage)
             {
-                List<BDLinkedNote> d3Inline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE3, BDConstants.LinkedNoteType.Inline);
-                List<BDLinkedNote> d3Marked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE3, BDConstants.LinkedNoteType.MarkedComment);
-                List<BDLinkedNote> d3Unmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE3, BDConstants.LinkedNoteType.UnmarkedComment);
-                List<BDLinkedNote> d3Footers = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE3, BDConstants.LinkedNoteType.Footnote));
-                string d3FooterMarker = buildFooterMarkerForList(d3Footers, true, pFootnotes, pObjectsOnPage);
-
-                BDHtmlPage d3NotePage = generatePageForLinkedNotes(pContext, dosageNode.Uuid, BDConstants.BDNodeType.BDDosage, d3Inline, d3Marked, d3Unmarked, pObjectsOnPage);
-                if (d3NotePage != null)
-                {
-                    if (dosageNode.dosage3.Length > 0)
-                        dosageHTML.AppendFormat(@"<td><a href=""{0}"">{1}</a{2}>", d3NotePage.Uuid.ToString().ToUpper(), dosageNode.dosage3, d3FooterMarker);
-                    else
-                        dosageHTML.AppendFormat(@"<td><a href=""{0}"">See Notes.</a>{3}", d3NotePage.Uuid.ToString().ToUpper(), d3FooterMarker);
-                }
+                string d3Html = buildNodePropertyHTML(pContext, dosageNode, dosageNode.dosage3, BDDosage.PROPERTYNAME_DOSAGE3, false, pFootnotes, pObjectsOnPage);
+                if (!string.IsNullOrEmpty(d3Html))
+                    dosageHTML.AppendFormat(@"<td{0}>{1}</td>", colSpanTag, d3Html);
                 else
-                    dosageHTML.AppendFormat("<td>{0}{1}", dosageNode.dosage3, d3FooterMarker);
-                dosageHTML.Append(@"</td>");
+                    dosageHTML.Append(@"<td />");
             }
+            colSpanTag = string.Empty;
 
             // Dosage 4
-            if (dosageNode.dosage2 != dosageNode.dosage4)
+            if (dosageNode.dosage3 != dosageNode.dosage4)
             {
-                List<BDLinkedNote> d4Inline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE4, BDConstants.LinkedNoteType.Inline);
-                List<BDLinkedNote> d4Marked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE4, BDConstants.LinkedNoteType.MarkedComment);
-                List<BDLinkedNote> d4Unmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE4, BDConstants.LinkedNoteType.UnmarkedComment);
-                List<BDLinkedNote> d4Footers = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, dosageNode.Uuid, BDDosage.PROPERTYNAME_DOSAGE4, BDConstants.LinkedNoteType.Footnote));
-                string d4FooterMarker = buildFooterMarkerForList(d4Footers, true,pFootnotes, pObjectsOnPage);
-
-                BDHtmlPage d4NotePage = generatePageForLinkedNotes(pContext, dosageNode.Uuid, BDConstants.BDNodeType.BDDosage, d4Inline, d4Marked, d4Unmarked, pObjectsOnPage);
-                if (d4NotePage != null)
-                {
-                    if (dosageNode.dosage4.Length > 0)
-                        dosageHTML.AppendFormat(@"<td><a href=""{0}"">{1}</a>{2}", d4NotePage.Uuid.ToString().ToUpper(), dosageNode.dosage4);
-                    else
-                        dosageHTML.AppendFormat(@"<td><a href=""{0}"">See Notes.</a>{3}", d4NotePage.Uuid.ToString().ToUpper(), d4FooterMarker);
-                }
+                string d4Html = buildNodePropertyHTML(pContext, dosageNode, dosageNode.dosage4, BDDosage.PROPERTYNAME_DOSAGE4, false, pFootnotes, pObjectsOnPage);
+                if (!string.IsNullOrEmpty(d4Html))
+                    dosageHTML.AppendFormat(@"<td{0}>{1}</td>", colSpanTag, d4Html);
                 else
-                    dosageHTML.AppendFormat("<td>{0}{1}", dosageNode.dosage4, d4FooterMarker);
-
-                dosageHTML.Append(@"</td>");
+                    dosageHTML.Append(@"<td />");
             }
             return dosageHTML.ToString();
         }
@@ -4119,7 +4098,7 @@ namespace BDEditor.Classes
                 string nodeWithNotes = buildNodePropertyHTML(pContext, pNode, pNode.Uuid, pNode.Name, BDNode.PROPERTYNAME_NAME, false, itemFooters, pObjectsOnPage);
                 if (pHeaderTagLevel.Length > 0)
                 {
-                    nodeHTML.AppendFormat(@"<{0}>{1}</{3}>", pHeaderTagLevel, nodeWithNotes, pHeaderTagLevel);
+                    nodeHTML.AppendFormat(@"<{0}>{1}</{2}>", pHeaderTagLevel, nodeWithNotes, pHeaderTagLevel);
                 }
                 else
                     nodeHTML.AppendFormat(@"{0}{1}", nodeWithNotes);
@@ -4372,6 +4351,7 @@ namespace BDEditor.Classes
         /// Build HTML segment for a single property of a node, handling all linked note types
         /// as well as footer marker, and filtering out 'New' name value.
         /// No surrounding HTML tags are returned
+        /// The note parent Id is passed separately to handle cases where data is marked 'same as previous'
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pTherapy"></param>
@@ -4384,18 +4364,47 @@ namespace BDEditor.Classes
             return buildNodePropertyHTML(pContext, pNode, pNoteParentId, pPropertyValue, pPropertyName, showNotesInline, string.Empty, pFootnotes, pObjectsOnPage);
         }
 
+        /// <summary>
+        /// Build HTML segment for a single property of a node, handling all linked note types
+        /// as well as footer marker, and filtering out 'New' name value.
+        /// No surrounding HTML tags are returned
+        /// Id of note parent is assumed from passed node
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pTherapy"></param>
+        /// <param name="pPropertyValue"></param>
+        /// <param name="pNotePropertyName"></param>
+        /// <returns></returns>
+        private string buildNodePropertyHTML(Entities pContext, IBDNode pNode, string pPropertyValue, string pPropertyName, bool showNotesInline, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
+        {
+            return buildNodePropertyHTML(pContext, pNode, pNode.Uuid, pPropertyValue, pPropertyName, showNotesInline, string.Empty, pFootnotes, pObjectsOnPage);
+        }
+
+        /// <summary>
+        /// The note parent Id is passed separately to handle cases where data is marked 'same as previous'
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pNode"></param>
+        /// <param name="pNoteParentId"></param>
+        /// <param name="pPropertyValue"></param>
+        /// <param name="pPropertyName"></param>
+        /// <param name="showNotesInline"></param>
+        /// <param name="pHtmlTag"></param>
+        /// <param name="pFootnotes"></param>
+        /// <param name="pObjectsOnPage"></param>
+        /// <returns></returns>
         private string buildNodePropertyHTML(Entities pContext, IBDNode pNode, Guid pNoteParentId, string pPropertyValue, string pPropertyName, bool showNotesInline, string pHtmlTag, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
         {
             string startTag = (pHtmlTag.Length > 0) ? string.Format("<{0}>", pHtmlTag) : string.Empty;
             string endTag = (pHtmlTag.Length > 0) ? string.Format("</{0}>", pHtmlTag) : string.Empty;
 
             StringBuilder propertyHTML = new StringBuilder();
-            List<BDLinkedNote> propertyFooters = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, pPropertyName, BDConstants.LinkedNoteType.Footnote));
+            List<BDLinkedNote> propertyFooters = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.Footnote));
             string footerMarker = buildFooterMarkerForList(propertyFooters, true, pFootnotes, pObjectsOnPage);
 
-            List<BDLinkedNote> inline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, pPropertyName, BDConstants.LinkedNoteType.Inline);
-            List<BDLinkedNote> marked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, pPropertyName, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> unmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, pPropertyName, BDConstants.LinkedNoteType.UnmarkedComment);
+            List<BDLinkedNote> inline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.Inline);
+            List<BDLinkedNote> marked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.MarkedComment);
+            List<BDLinkedNote> unmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.UnmarkedComment);
 
             if (pPropertyValue.Contains(BDUtilities.GetEnumDescription(pNode.NodeType)) || pPropertyValue == "SINGLE PRESENTATION")
                 pPropertyValue = string.Empty;
@@ -4404,7 +4413,7 @@ namespace BDEditor.Classes
             {
                 if (pPropertyValue.Length > 0)
                     propertyHTML.AppendFormat(@"{0}{1}{2}{3}<br>", startTag, pPropertyValue.Trim(), endTag, footerMarker);
-                pObjectsOnPage.Add(pNoteParentId);
+                pObjectsOnPage.Add(pNode.Uuid);
 
                 List<BDLinkedNote> notesList = new List<BDLinkedNote>();
                 notesList.AddRange(inline);

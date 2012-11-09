@@ -47,6 +47,12 @@ namespace BDEditor.Classes
             get { return pagesMap; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pNode">if the node is null,  all chapters are generated.  
+        /// Otherwise only the passed node is generated with its children</param>
         public void Generate(Entities pContext, IBDNode pNode)
         {
             // delete pages from the local store
@@ -55,7 +61,7 @@ namespace BDEditor.Classes
             // reset index entries to false
             BDNodeToHtmlPageIndex.ResetForRegeneration(pContext);
 
-            generatePages(pNode);
+            generatePages(pContext, pNode);
 
             List<BDHtmlPage> pages = BDHtmlPage.RetrieveAll(pContext);
             List<Guid> displayParentIds = BDHtmlPage.RetrieveAllDisplayParentIDs(pContext);
@@ -70,10 +76,9 @@ namespace BDEditor.Classes
             }
         }
 
-        private void generatePages(IBDNode pNode)
+        private void generatePages(Entities pContext, IBDNode pNode)
         {
-            Entities dataContext = new Entities();
-            List<BDNode> chapters = BDNode.RetrieveNodesForType(dataContext, BDConstants.BDNodeType.BDChapter);
+            List<BDNode> chapters = BDNode.RetrieveNodesForType(pContext, BDConstants.BDNodeType.BDChapter);
             List<BDHtmlPage> allPages = new List<BDHtmlPage>();
             if (pNode == null)
             {
@@ -83,7 +88,7 @@ namespace BDEditor.Classes
                 foreach (BDNode chapter in chapters)
                 {
                     currentChapter = chapter;
-                    generateOverviewAndChildrenForNode(dataContext, chapter, childDetailPages, childNavPages);
+                    generateOverviewAndChildrenForNode(pContext, chapter, childDetailPages, childNavPages);
                 }
                     if(childDetailPages.Count > 0)
                         allPages.AddRange(childDetailPages);
@@ -97,7 +102,7 @@ namespace BDEditor.Classes
                 if (pNode.NodeType == BDConstants.BDNodeType.BDChapter)
                 {
                     currentChapter = pNode;
-                    generateOverviewAndChildrenForNode(dataContext, pNode, childDetailPages, childNavPages);
+                    generateOverviewAndChildrenForNode(pContext, pNode, childDetailPages, childNavPages);
                 }
                     allPages.AddRange(childDetailPages);
                     allPages.AddRange(childNavPages);
@@ -105,7 +110,7 @@ namespace BDEditor.Classes
             List<BDHtmlPage> chapterPages = allPages.Distinct().ToList();
             Debug.WriteLine("Creating home page with filtered distinct list");
             if (chapterPages.Count > 0)
-                generateNavigationPage(dataContext, null, chapterPages);
+                generateNavigationPage(pContext, null, chapterPages);
         }
 
         /// <summary>
@@ -1234,7 +1239,7 @@ namespace BDEditor.Classes
                                     {
                                         if (sectionChild.Name.Length > 0)
                                         {
-                                            bodyHTML.AppendFormat(@"<tr><td colspan=3><nbsp><nbsp>{0}<td></tr>", sectionChild.Name);
+                                            bodyHTML.AppendFormat(@"<tr><td colspan=3><nbsp><nbsp><u>{0}</u><td></tr>", sectionChild.Name);
                                             List<BDTableRow> rows = BDTableRow.RetrieveTableRowsForParentId(pContext, sectionChild.Uuid);
                                             foreach (BDTableRow row in rows)
                                                 bodyHTML.Append(buildTableRowHtml(pContext, row, false, true, footnotes, objectsOnPage));
@@ -1389,15 +1394,14 @@ namespace BDEditor.Classes
                     if (child.LayoutVariant == BDConstants.LayoutVariantType.Antibiotics_CSFPenetration)
                     {
                         //Append HTML for Topic + overview
-                        bodyHTML.AppendFormat(@"<h3>{0}</h3>", child.Name);
-                        bodyHTML.Append(retrieveNoteTextForOverview(pContext, child.Uuid, objectsOnPage));
+                        bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child, "h3", footnotes, objectsOnPage));
 
                         List<IBDNode> categories = BDFabrik.GetChildrenForParent(pContext, child);
                         foreach (IBDNode category in categories)
                         {
-                            bodyHTML.AppendFormat(@"<h4>{0}</h4>", category.Name);
+                            bodyHTML.Append(buildNodePropertyHTML(pContext, category, category.Uuid, category.Name, BDNode.PROPERTYNAME_NAME, false, footnotes, objectsOnPage));
                             bodyHTML.Append("<table><tr><th>Excellent Penetration</th><th>Good Penetration</th><th>Poor Penetration</th></tr>");
-                            objectsOnPage.Add(category.Uuid);
+                            
                             List<IBDNode> subcategories = BDFabrik.GetChildrenForParent(pContext, category);
                             if (subcategories.Count > 0)
                             {
@@ -1413,10 +1417,10 @@ namespace BDEditor.Classes
                                         StringBuilder colHTML = new StringBuilder();
                                         foreach (IBDNode antimicrobial in columnDetail)
                                         {
-                                            objectsOnPage.Add(antimicrobial.Uuid);
+                                            string antimicrobialHTML = buildNodePropertyHTML(pContext, antimicrobial, antimicrobial.Uuid, antimicrobial.Name, BDNode.PROPERTYNAME_NAME, false, footnotes, objectsOnPage);
                                             List<BDLinkedNote> itemFooter = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, antimicrobial.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Footnote);
                                             if (itemFooter.Count == 0)
-                                                colHTML.AppendFormat(@"{0}<br>", antimicrobial.Name);
+                                                colHTML.AppendFormat(@"{0}<br>", antimicrobialHTML);
                                             else
                                             {
                                                 StringBuilder footerMarker = new StringBuilder();
@@ -1431,7 +1435,7 @@ namespace BDEditor.Classes
                                                 }
                                                 if (footerMarker.Length > 0)
                                                     footerMarker.Remove(footerMarker.Length - 1, 1);
-                                                colHTML.AppendFormat(@"{0}{1}<br>", antimicrobial.Name, footerMarker);
+                                                colHTML.AppendFormat(@"{0}{1}<br>", antimicrobialHTML, footerMarker);
                                             }
                                         }
                                         bodyHTML.Append(colHTML);
@@ -4087,13 +4091,21 @@ namespace BDEditor.Classes
 
             string generatedNodeName = String.Format("New {0}", BDUtilities.GetEnumDescription(pNode.NodeType));
             StringBuilder nodeHTML = new StringBuilder();
-            if (pNode.Name.Length > 0 && !pNode.Name.Contains(generatedNodeName) && pNode.Name != "SINGLE PRESENTATION")
-            {
+
+            List<BDLinkedNote> inline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Inline);
+            List<BDLinkedNote> marked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.MarkedComment);
+            List<BDLinkedNote> unmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.UnmarkedComment);
+
+                string nodeWithNotes = buildNodePropertyHTML(pContext, pNode, pNode.Uuid, pNode.Name, BDNode.PROPERTYNAME_NAME, false, itemFooters, pObjectsOnPage);
                 if (pHeaderTagLevel.Length > 0)
-                    nodeHTML.AppendFormat(@"<{0}>{1}{2}</{3}>", pHeaderTagLevel, pNode.Name, itemFooterMarker, pHeaderTagLevel);
+                {
+                    nodeHTML.AppendFormat(@"<{0}>{1}</{3}>", pHeaderTagLevel, nodeWithNotes, pHeaderTagLevel);
+                }
                 else
-                    nodeHTML.AppendFormat(@"{0}{1}",pNode.Name,itemFooterMarker);
-            }
+                    nodeHTML.AppendFormat(@"{0}{1}", nodeWithNotes);
+
+            nodeHTML.Append(buildTextFromNotes(inline, pObjectsOnPage));
+
             nodeHTML.Append(buildReferenceHtml(pContext, pNode, pObjectsOnPage));
 
             // overview
@@ -4191,22 +4203,23 @@ namespace BDEditor.Classes
                     string startTag = startCellTag;
                     if (i == 0 && pRow.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I_ContentRow)
                         startTag = firstCellStartTag;
-                    
+
                     List<BDLinkedNote> itemFooters = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, tableCell.Uuid, BDTableCell.PROPERTYNAME_CONTENTS, BDConstants.LinkedNoteType.Footnote);
+                    string cellHTML = buildNodePropertyHTML(pContext, tableCell, tableCell.Uuid, tableCell.value, BDTableCell.PROPERTYNAME_CONTENTS, false, itemFooters, pObjectsOnPage);
                     if (itemFooters.Count == 0)
-                        tableRowHTML.AppendFormat(@"{0}{1}{2}", startTag, tableCell.value, endCellTag);
+                        tableRowHTML.AppendFormat(@"{0}{1}{2}", startTag, cellHTML, endCellTag);
                     else
                     {
                        string itemFooterMarker = buildFooterMarkerForList(itemFooters, true, pFootnotes, pObjectsOnPage);
 
                         if (markFooterAtEnd)
-                            tableRowHTML.AppendFormat(@"{0}{1}{2}{3}", startTag, tableCell.value, itemFooterMarker, endCellTag);
+                            tableRowHTML.AppendFormat(@"{0}{1}{2}{3}", startTag, cellHTML, itemFooterMarker, endCellTag);
                         else
                         {
                             int lineBreakIndex = tableCell.value.Length;
                             if (tableCell.value.Contains("\n"))
                                 lineBreakIndex = tableCell.value.IndexOf("\n");
-                            string cellTextWithFooterTag = tableCell.value.Insert(lineBreakIndex, itemFooterMarker);
+                            string cellTextWithFooterTag = cellHTML.Insert(lineBreakIndex, itemFooterMarker);
                             tableRowHTML.AppendFormat(@"{0}{1}{2}", startTag, cellTextWithFooterTag, endCellTag);
                         }
                     }
@@ -4298,8 +4311,10 @@ namespace BDEditor.Classes
                 foreach (IBDNode child in childNodes)
                 {
                     BDConfiguredEntry entry = child as BDConfiguredEntry;
-                    bodyHTML.AppendFormat("<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>", entry.Name, entry.field01, entry.field02);
-                    pObjectsOnPage.Add(child.Uuid);
+                    string c1HTML = buildNodePropertyHTML(pContext, child, child.Uuid, child.Name, BDConfiguredEntry.PROPERTYNAME_NAME, false, footnotes, pObjectsOnPage);
+                    string c2HTML = buildNodePropertyHTML(pContext, child, child.Uuid, entry.field01, BDConfiguredEntry.PROPERTYNAME_FIELD01, false, footnotes, pObjectsOnPage);
+                    string c3HTML = buildNodePropertyHTML(pContext, child, child.Uuid, entry.field02, BDConfiguredEntry.PROPERTYNAME_FIELD02, false, footnotes, pObjectsOnPage);
+                    bodyHTML.AppendFormat("<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>", c1HTML, c2HTML, c3HTML);
                 }
                 bodyHTML.Append("</table>");
             }
@@ -4358,11 +4373,11 @@ namespace BDEditor.Classes
             List<BDLinkedNote> propertyFooters = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, pPropertyName, BDConstants.LinkedNoteType.Footnote));
             string footerMarker = buildFooterMarkerForList(propertyFooters, true, pFootnotes, pObjectsOnPage);
 
-            List<BDLinkedNote> inline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.Inline);
-            List<BDLinkedNote> marked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> unmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.UnmarkedComment);
+            List<BDLinkedNote> inline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, pPropertyName, BDConstants.LinkedNoteType.Inline);
+            List<BDLinkedNote> marked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, pPropertyName, BDConstants.LinkedNoteType.MarkedComment);
+            List<BDLinkedNote> unmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, pPropertyName, BDConstants.LinkedNoteType.UnmarkedComment);
 
-            if (pPropertyValue.Contains(BDUtilities.GetEnumDescription(pNode.NodeType)))
+            if (pPropertyValue.Contains(BDUtilities.GetEnumDescription(pNode.NodeType)) || pPropertyValue == "SINGLE PRESENTATION")
                 pPropertyValue = string.Empty;
 
             if (showNotesInline)

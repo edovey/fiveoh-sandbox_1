@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
+using System.IO;
 
 using BDEditor.DataModel;
 
@@ -42,6 +43,9 @@ namespace BDEditor.Classes
         bool therapiesHaveDosage = false;
         bool therapiesHaveDuration = false;
 
+        //ks
+        private List<BDHtmlPageGeneratorLogEntry> referencePageUuidList = new List<BDHtmlPageGeneratorLogEntry>();
+
         public List<BDHtmlPageMap> PagesMap
         {
             get { return pagesMap; }
@@ -74,6 +78,17 @@ namespace BDEditor.Classes
                 processTextForSubscriptAndSuperscriptMarkup(pContext, page);
                 processTextForCarriageReturn(pContext, page);
             }
+
+            #region Output logs
+
+            //ks: Write out all the verbose logs
+            string mydocpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            // Reference Pages
+            BDHtmlPageGeneratorLogEntry.WriteToFile(this.referencePageUuidList, mydocpath, @"ReferencePageUuidList.txt");
+
+            #endregion
+
         }
 
         private void generatePages(Entities pContext, IBDNode pNode)
@@ -3647,6 +3662,11 @@ namespace BDEditor.Classes
                 foreach (Guid id in filteredObjects)
                     pagesMap.Add(new BDHtmlPageMap(footnote.Uuid, id));
 
+                //ks: keep track of the create pages.
+                BDHtmlPageGeneratorLogEntry logEntry = new BDHtmlPageGeneratorLogEntry(footnote.Uuid, pNode.Name);
+                this.referencePageUuidList.Add(logEntry);
+                logEntry.AppendToFile(@"refPageUuidAppendLog.txt");
+
                 return footnote.Uuid;
             }
             else
@@ -4802,5 +4822,82 @@ namespace BDEditor.Classes
             return newPage;
         }
         #endregion
+    }
+
+    public class BDHtmlPageGeneratorLogEntry
+    {
+        public Guid Uuid { get; set;}
+        public String Label { get; set; }
+        public string Tag { get; set; }
+
+        public BDHtmlPageGeneratorLogEntry(Guid pUuid, String pLabel)
+        {
+            Uuid = pUuid;
+            Label = pLabel;
+        }
+
+        public BDHtmlPageGeneratorLogEntry(Guid pUuid, String pLabel, string pTag)
+        {
+            Uuid = pUuid;
+            Label = pLabel;
+            Tag = pTag;
+        }
+
+        public void AppendToFile(String pFilename)
+        {
+            string mydocpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            using (StreamWriter outfile = new StreamWriter(Path.Combine(mydocpath, pFilename), true)) // overwrite the file if it exists
+            {
+                outfile.Write(this.ToString());
+            }
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0}\t{1}\t{2}", this.Uuid, this.Label, this.Tag);
+        }
+
+        /// <summary>
+        /// Write the log to disk, either appending to or overwriting existing
+        /// </summary>
+        /// <param name="pList"></param>
+        /// <param name="pFolder"></param>
+        /// <param name="pFilename"></param>
+        /// <param name="pAppend">False: Overwrite</param>
+        static public void WriteToFile(List<BDHtmlPageGeneratorLogEntry> pList, string pFolder, String pFilename, bool pAppend)
+        {
+            StringBuilder sbReferencePages = new StringBuilder();
+            foreach (BDHtmlPageGeneratorLogEntry entry in pList)
+            {
+                sbReferencePages.AppendLine(entry.ToString());
+            }
+
+            using (StreamWriter outfile = new StreamWriter(Path.Combine(pFolder, pFilename), pAppend)) // overwrite the file if it exists
+            {
+                outfile.Write(sbReferencePages.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Write the log to disk. Overwrite existing
+        /// </summary>
+        /// <param name="pList"></param>
+        /// <param name="pFolder"></param>
+        /// <param name="pFilename"></param>
+        static public void WriteToFile(List<BDHtmlPageGeneratorLogEntry> pList, string pFolder, String pFilename)
+        {
+            BDHtmlPageGeneratorLogEntry.WriteToFile(pList, pFolder, pFilename, false);
+        }
+
+        /// <summary>
+        /// Write list to filename. Use myDocuments folder
+        /// </summary>
+        /// <param name="pList"></param>
+        /// <param name="pFilename"></param>
+        static public void WriteToFile(List<BDHtmlPageGeneratorLogEntry> pList, String pFilename)
+        {
+            string mydocpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            BDHtmlPageGeneratorLogEntry.WriteToFile(pList, mydocpath, pFilename, false);
+        }
     }
 }

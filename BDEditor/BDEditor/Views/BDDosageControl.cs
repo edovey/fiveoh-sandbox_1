@@ -89,15 +89,6 @@ namespace BDEditor.Views
         public BDDosageControl()
         {
             InitializeComponent();
-            rtbAdultDosage.Tag = btnAdultLink;
-            rtbDosage2.Tag = btnDosage2Link;
-            rtbDosage3.Tag = btnDosage3Link;
-            rtbDosage4.Tag = btnDosage4Link;
-
-            btnAdultLink.Tag = BDDosage.PROPERTYNAME_DOSAGE;
-            btnDosage2Link.Tag = BDDosage.PROPERTYNAME_DOSAGE2;
-            btnDosage3Link.Tag = BDDosage.PROPERTYNAME_DOSAGE3;
-            btnDosage4Link.Tag = BDDosage.PROPERTYNAME_DOSAGE4;
         }
 
         public BDDosageControl(Entities pDataContext, IBDNode pNode)
@@ -157,6 +148,10 @@ namespace BDEditor.Views
                 rtbDosage3.Text = currentDosage.dosage3;
                 rtbDosage4.Text = currentDosage.dosage4;
                 DisplayOrder = currentDosage.displayOrder;
+
+                chkPreviousDose2.Checked = currentDosage.dosage2SameAsPrevious;
+                chkPreviousDose3.Checked = currentDosage.dosage3SameAsPrevious;
+                chkPreviousDose4.Checked = currentDosage.dosage4SameAsPrevious;
             }
 
             ShowLinksInUse(false);
@@ -202,7 +197,10 @@ namespace BDEditor.Views
                 if ((null == currentDosage) &&
                     (rtbAdultDosage.Text != string.Empty) ||
                     (rtbDosage2.Text != string.Empty) ||
-                    (rtbDosage4.Text != string.Empty))
+                    (rtbDosage4.Text != string.Empty) ||
+                    chkPreviousDose2.Checked ||
+                    chkPreviousDose3.Checked ||
+                    chkPreviousDose4.Checked )
                 {
                     CreateCurrentObject();
                 }
@@ -214,6 +212,10 @@ namespace BDEditor.Views
                     if (currentDosage.dosage3 != rtbDosage3.Text) currentDosage.dosage3 = rtbDosage3.Text;
                     if (currentDosage.dosage4 != rtbDosage4.Text) currentDosage.dosage4 = rtbDosage4.Text;
                     if (currentDosage.displayOrder != DisplayOrder) currentDosage.displayOrder = DisplayOrder;
+
+                    if (currentDosage.dosage2SameAsPrevious != this.chkPreviousDose2.Checked) currentDosage.dosage2SameAsPrevious = this.chkPreviousDose2.Checked;
+                    if (currentDosage.dosage3SameAsPrevious != this.chkPreviousDose3.Checked) currentDosage.dosage3SameAsPrevious = this.chkPreviousDose3.Checked;
+                    if (currentDosage.dosage4SameAsPrevious != this.chkPreviousDose4.Checked) currentDosage.dosage4SameAsPrevious = this.chkPreviousDose4.Checked;
 
                     BDDosage.Save(dataContext, currentDosage);
                     result = true;
@@ -409,6 +411,11 @@ namespace BDEditor.Views
             currentControlName = DOSAGE4_TEXTBOX;
         }
 
+        private void checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            toggleLinkButtonEnablement();
+        }
+
         public BDConstants.BDNodeType DefaultNodeType { get; set; }
 
         public BDConstants.LayoutVariantType DefaultLayoutVariantType { get; set; }
@@ -436,6 +443,20 @@ namespace BDEditor.Views
         {
             Boolean origState = BDCommon.Settings.IsUpdating;
             BDCommon.Settings.IsUpdating = true;
+
+            rtbAdultDosage.Tag = btnAdultLink;
+            rtbDosage2.Tag = btnDosage2Link;
+            rtbDosage3.Tag = btnDosage3Link;
+            rtbDosage4.Tag = btnDosage4Link;
+
+            chkPreviousDose2.Tag = btnDosage2Link;
+            chkPreviousDose3.Tag = btnDosage3Link;
+            chkPreviousDose4.Tag = btnDosage4Link;
+
+            btnAdultLink.Tag = BDDosage.PROPERTYNAME_DOSAGE;
+            btnDosage2Link.Tag = BDDosage.PROPERTYNAME_DOSAGE2;
+            btnDosage3Link.Tag = BDDosage.PROPERTYNAME_DOSAGE3;
+            btnDosage4Link.Tag = BDDosage.PROPERTYNAME_DOSAGE4;
 
             rtbAdultDosage.SelectAll();
 

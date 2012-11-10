@@ -816,6 +816,8 @@ namespace BDEditor.Views
                     case BDConstants.BDNodeType.BDSubsection:
                         switch (node.LayoutVariant)
                         {
+                            case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
+                            case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional:
                             case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
                                 childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
@@ -2071,13 +2073,57 @@ namespace BDEditor.Views
             dataContext.SaveChanges();
              */
             #endregion
-
             #region v.1.6.28
            /* BDNode sAssault = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("a6fdd2d3-96df-47b6-a598-8adbfa474c1b"));
             BDNode bbFluidExposure = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("ec9b96ff-8744-4e27-82f6-9608fe22e4b4"));
             sAssault.SetParent(bbFluidExposure);
             sAssault.nodeType = (int)BDConstants.BDNodeType.BDCategory;
             BDNode.Save(dataContext, sAssault);
+            */
+            #endregion
+
+            #region v.1.6.29 
+            /*
+            // move Organism groups up in the hierarchy
+            BDNode legend = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("d013a04e-a653-4509-9ab3-907effef5ee6"));
+            BDNode legendParent = BDNode.RetrieveNodeWithId(dataContext, legend.parentId.Value);
+            List<IBDNode> children = BDFabrik.GetChildrenForParent(dataContext, legend);
+            foreach (IBDNode child in children)
+                child.SetParent(legendParent);
+            dataContext.SaveChanges();
+            
+            BDNode antibioticChapter = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("45e13826-aedb-48d0-baf6-2f06ff45017f"));
+            BDNode admg = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.NewGuid());
+            admg.Name = "Aminoglycoside Dosing and Monitoring Guidelines";
+            admg.DisplayOrder = 3;
+            admg.SetParent(antibioticChapter);
+            admg.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring;
+
+            BDNode highDose = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("147410a3-ca09-4b4a-af50-c5f8719f1729"));
+            highDose.nodeType = (int)BDConstants.BDNodeType.BDSubsection;
+            highDose.nodeKeyName = BDUtilities.GetEnumDescription(BDConstants.BDNodeType.BDSubsection);
+            highDose.SetParent(BDConstants.BDNodeType.BDSection, admg.Uuid);
+            highDose.DisplayOrder = 0;
+
+            BDNode conventionalDose = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("ca7eefb1-81f8-465e-8818-34a35d92736a"));
+            conventionalDose.nodeType = (int)BDConstants.BDNodeType.BDSubsection;
+            conventionalDose.nodeKeyName = BDUtilities.GetEnumDescription(BDConstants.BDNodeType.BDSubsection);
+            conventionalDose.SetParent(BDConstants.BDNodeType.BDSection, admg.Uuid);
+            conventionalDose.DisplayOrder = 1;
+            dataContext.SaveChanges();
+
+            BDNode newParent = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDCategory, Guid.NewGuid());
+            newParent.Name = "Monitoring";
+            newParent.SetParent(conventionalDose);
+            newParent.LayoutVariant = conventionalDose.LayoutVariant;
+
+            BDNode monitoring = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("54aee8b1-9c6f-4f08-9491-622347f222fc"));
+            monitoring.SetParent(newParent);
+            BDNode serum = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("785e754c-6fb6-43ca-9cbd-b871ba2dc8ba"));
+            serum.SetParent(newParent);
+            BDNode frequency = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("9293d8bb-a55e-41fa-a941-7b1376715763"));
+            frequency.SetParent(newParent);
+            dataContext.SaveChanges();
             */
             #endregion
         }

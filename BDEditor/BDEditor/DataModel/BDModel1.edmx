@@ -149,6 +149,9 @@
           <Property Name="dosage3" Type="nvarchar" />
           <Property Name="dosage4" Type="nvarchar" />
           <Property Name="cost2" Type="nvarchar" MaxLength="750" />
+          <Property Name="dosage2SameAsPrevious" Type="bit" Nullable="false" />
+          <Property Name="dosage3SameAsPrevious" Type="bit" Nullable="false" />
+          <Property Name="dosage4SameAsPrevious" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="BDHtmlPages">
           <Key>
@@ -442,9 +445,9 @@
           <EntitySet Name="BDConfiguredEntries" EntityType="BDDataModel.BDConfiguredEntry" />
           <EntitySet Name="BDCombinedEntries" EntityType="BDDataModel.BDCombinedEntry" />
           <EntitySet Name="BDLinkedNoteAssociations" EntityType="BDDataModel.BDLinkedNoteAssociation" />
-          <EntitySet Name="BDDosages" EntityType="BDDataModel.BDDosage" />
           <EntitySet Name="BDNodeToHtmlPageIndexes" EntityType="BDDataModel.BDNodeToHtmlPageIndex" />
           <EntitySet Name="BDHtmlPages" EntityType="BDDataModel.BDHtmlPage" />
+          <EntitySet Name="BDDosages" EntityType="BDDataModel.BDDosage" />
         </EntityContainer>
         <EntityType Name="BDAntimicrobialRisk">
           <Key>
@@ -791,27 +794,6 @@
           <Property Type="Guid" Name="internalLinkNodeId" />
           <Property Type="Int32" Name="internalLinkNodeType" />
         </EntityType>
-        <EntityType Name="BDDosage">
-          <Key>
-            <PropertyRef Name="uuid" />
-          </Key>
-          <Property Type="Guid" Name="uuid" Nullable="false" />
-          <Property Type="Int32" Name="displayOrder" />
-          <Property Type="DateTime" Name="modifiedDate" />
-          <Property Type="String" Name="cost" MaxLength="750" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="dosage" MaxLength="750" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="name" MaxLength="750" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="joinType" />
-          <Property Type="Guid" Name="parentId" />
-          <Property Type="Int32" Name="parentType" />
-          <Property Type="Int32" Name="layoutVariant" />
-          <Property Type="Int32" Name="schemaVersion" />
-          <Property Type="String" Name="parentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="dosage2" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="dosage3" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="dosage4" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="cost2" MaxLength="750" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="BDNodeToHtmlPageIndex">
           <Key>
             <PropertyRef Name="ibdNodeId" />
@@ -836,6 +818,30 @@
           <Property Type="Int32" Name="htmlPageType" />
           <Property Type="Int32" Name="layoutVariant" />
           <Property Type="String" Name="pageTitle" MaxLength="999" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="BDDosage">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Type="Guid" Name="uuid" Nullable="false" />
+          <Property Type="Int32" Name="displayOrder" />
+          <Property Type="DateTime" Name="modifiedDate" />
+          <Property Type="String" Name="cost" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="dosage" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="name" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="joinType" />
+          <Property Type="Guid" Name="parentId" />
+          <Property Type="Int32" Name="parentType" />
+          <Property Type="Int32" Name="layoutVariant" />
+          <Property Type="Int32" Name="schemaVersion" />
+          <Property Type="String" Name="parentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="dosage2" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="dosage3" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="dosage4" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="cost2" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="dosage2SameAsPrevious" Nullable="false" />
+          <Property Type="Boolean" Name="dosage3SameAsPrevious" Nullable="false" />
+          <Property Type="Boolean" Name="dosage4SameAsPrevious" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1206,28 +1212,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BDDosages">
-            <EntityTypeMapping TypeName="BDDataModel.BDDosage">
-              <MappingFragment StoreEntitySet="BDDosages">
-                <ScalarProperty Name="cost2" ColumnName="cost2" />
-                <ScalarProperty Name="dosage4" ColumnName="dosage4" />
-                <ScalarProperty Name="dosage3" ColumnName="dosage3" />
-                <ScalarProperty Name="dosage2" ColumnName="dosage2" />
-                <ScalarProperty Name="parentKeyName" ColumnName="parentKeyName" />
-                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
-                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
-                <ScalarProperty Name="parentType" ColumnName="parentType" />
-                <ScalarProperty Name="parentId" ColumnName="parentId" />
-                <ScalarProperty Name="joinType" ColumnName="joinType" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="dosage" ColumnName="dosage" />
-                <ScalarProperty Name="cost" ColumnName="cost" />
-                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
-                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
-                <ScalarProperty Name="uuid" ColumnName="uuid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="BDNodeToHtmlPageIndexes">
             <EntityTypeMapping TypeName="BDDataModel.BDNodeToHtmlPageIndex">
               <MappingFragment StoreEntitySet="BDNodeToHtmlPageIndex">
@@ -1251,6 +1235,31 @@
                 <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
                 <ScalarProperty Name="createdBy" ColumnName="createdBy" />
                 <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BDDosages">
+            <EntityTypeMapping TypeName="BDDataModel.BDDosage">
+              <MappingFragment StoreEntitySet="BDDosages">
+                <ScalarProperty Name="dosage4SameAsPrevious" ColumnName="dosage4SameAsPrevious" />
+                <ScalarProperty Name="dosage3SameAsPrevious" ColumnName="dosage3SameAsPrevious" />
+                <ScalarProperty Name="dosage2SameAsPrevious" ColumnName="dosage2SameAsPrevious" />
+                <ScalarProperty Name="cost2" ColumnName="cost2" />
+                <ScalarProperty Name="dosage4" ColumnName="dosage4" />
+                <ScalarProperty Name="dosage3" ColumnName="dosage3" />
+                <ScalarProperty Name="dosage2" ColumnName="dosage2" />
+                <ScalarProperty Name="parentKeyName" ColumnName="parentKeyName" />
+                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
+                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
+                <ScalarProperty Name="parentType" ColumnName="parentType" />
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
+                <ScalarProperty Name="joinType" ColumnName="joinType" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="dosage" ColumnName="dosage" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
+                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
                 <ScalarProperty Name="uuid" ColumnName="uuid" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1293,9 +1302,9 @@
         <EntityTypeShape EntityType="BDDataModel.BDConfiguredEntry" Width="1.875" PointX="9.375" PointY="13.75" Height="5.2079475911458246" />
         <EntityTypeShape EntityType="BDDataModel.BDCombinedEntry" Width="2.625" PointX="0.625" PointY="13.875" Height="5.0436002604166674" />
         <EntityTypeShape EntityType="BDDataModel.BDLinkedNoteAssociation" Width="2.625" PointX="12.375" PointY="14.75" Height="3.5644742838541674" />
-        <EntityTypeShape EntityType="BDDataModel.BDDosage" Width="1.5" PointX="4.375" PointY="15.125" Height="4.0956022135416674" />
         <EntityTypeShape EntityType="BDDataModel.BDNodeToHtmlPageIndex" Width="1.5" PointX="0.75" PointY="5.75" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="BDDataModel.BDHtmlPage" Width="1.5" PointX="3.375" PointY="0.75" Height="3.1340950520833282" />
+        <EntityTypeShape EntityType="BDDataModel.BDDosage" Width="1.5" PointX="15.375" PointY="0.75" Height="4.6725065104166674" />
       </Diagram>
     </Diagrams>
   </Designer>

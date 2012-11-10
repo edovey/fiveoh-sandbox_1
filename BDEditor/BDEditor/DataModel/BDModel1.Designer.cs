@@ -356,22 +356,6 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<BDDosage> BDDosages
-        {
-            get
-            {
-                if ((_BDDosages == null))
-                {
-                    _BDDosages = base.CreateObjectSet<BDDosage>("BDDosages");
-                }
-                return _BDDosages;
-            }
-        }
-        private ObjectSet<BDDosage> _BDDosages;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<BDNodeToHtmlPageIndex> BDNodeToHtmlPageIndexes
         {
             get
@@ -400,6 +384,22 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDHtmlPage> _BDHtmlPages;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDDosage> BDDosages
+        {
+            get
+            {
+                if ((_BDDosages == null))
+                {
+                    _BDDosages = base.CreateObjectSet<BDDosage>("BDDosages");
+                }
+                return _BDDosages;
+            }
+        }
+        private ObjectSet<BDDosage> _BDDosages;
 
         #endregion
         #region AddTo Methods
@@ -549,14 +549,6 @@ namespace BDEditor.DataModel
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the BDDosages EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDDosages(BDDosage bDDosage)
-        {
-            base.AddObject("BDDosages", bDDosage);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the BDNodeToHtmlPageIndexes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToBDNodeToHtmlPageIndexes(BDNodeToHtmlPageIndex bDNodeToHtmlPageIndex)
@@ -570,6 +562,14 @@ namespace BDEditor.DataModel
         public void AddToBDHtmlPages(BDHtmlPage bDHtmlPage)
         {
             base.AddObject("BDHtmlPages", bDHtmlPage);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDDosages EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDDosages(BDDosage bDDosage)
+        {
+            base.AddObject("BDDosages", bDDosage);
         }
 
         #endregion
@@ -2662,10 +2662,16 @@ namespace BDEditor.DataModel
         /// Create a new BDDosage object.
         /// </summary>
         /// <param name="uuid">Initial value of the uuid property.</param>
-        public static BDDosage CreateBDDosage(global::System.Guid uuid)
+        /// <param name="dosage2SameAsPrevious">Initial value of the dosage2SameAsPrevious property.</param>
+        /// <param name="dosage3SameAsPrevious">Initial value of the dosage3SameAsPrevious property.</param>
+        /// <param name="dosage4SameAsPrevious">Initial value of the dosage4SameAsPrevious property.</param>
+        public static BDDosage CreateBDDosage(global::System.Guid uuid, global::System.Boolean dosage2SameAsPrevious, global::System.Boolean dosage3SameAsPrevious, global::System.Boolean dosage4SameAsPrevious)
         {
             BDDosage bDDosage = new BDDosage();
             bDDosage.uuid = uuid;
+            bDDosage.dosage2SameAsPrevious = dosage2SameAsPrevious;
+            bDDosage.dosage3SameAsPrevious = dosage3SameAsPrevious;
+            bDDosage.dosage4SameAsPrevious = dosage4SameAsPrevious;
             return bDDosage;
         }
 
@@ -3058,6 +3064,78 @@ namespace BDEditor.DataModel
         private global::System.String _cost2;
         partial void Oncost2Changing(global::System.String value);
         partial void Oncost2Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean dosage2SameAsPrevious
+        {
+            get
+            {
+                return _dosage2SameAsPrevious;
+            }
+            set
+            {
+                Ondosage2SameAsPreviousChanging(value);
+                ReportPropertyChanging("dosage2SameAsPrevious");
+                _dosage2SameAsPrevious = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("dosage2SameAsPrevious");
+                Ondosage2SameAsPreviousChanged();
+            }
+        }
+        private global::System.Boolean _dosage2SameAsPrevious;
+        partial void Ondosage2SameAsPreviousChanging(global::System.Boolean value);
+        partial void Ondosage2SameAsPreviousChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean dosage3SameAsPrevious
+        {
+            get
+            {
+                return _dosage3SameAsPrevious;
+            }
+            set
+            {
+                Ondosage3SameAsPreviousChanging(value);
+                ReportPropertyChanging("dosage3SameAsPrevious");
+                _dosage3SameAsPrevious = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("dosage3SameAsPrevious");
+                Ondosage3SameAsPreviousChanged();
+            }
+        }
+        private global::System.Boolean _dosage3SameAsPrevious;
+        partial void Ondosage3SameAsPreviousChanging(global::System.Boolean value);
+        partial void Ondosage3SameAsPreviousChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean dosage4SameAsPrevious
+        {
+            get
+            {
+                return _dosage4SameAsPrevious;
+            }
+            set
+            {
+                Ondosage4SameAsPreviousChanging(value);
+                ReportPropertyChanging("dosage4SameAsPrevious");
+                _dosage4SameAsPrevious = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("dosage4SameAsPrevious");
+                Ondosage4SameAsPreviousChanged();
+            }
+        }
+        private global::System.Boolean _dosage4SameAsPrevious;
+        partial void Ondosage4SameAsPreviousChanging(global::System.Boolean value);
+        partial void Ondosage4SameAsPreviousChanged();
 
         #endregion
     

@@ -76,7 +76,7 @@ namespace BDEditor.DataModel
         /// <returns>BDPrecaution</returns>
         public static BDDosage CreateBDDosage(Entities pContext, Guid pParentId, Guid pUuid)
         {
-            BDDosage entity = CreateBDDosage(pUuid);
+            BDDosage entity = CreateBDDosage(pUuid,false,false,false);
             entity.schemaVersion = ENTITY_SCHEMAVERSION;
             entity.displayOrder = -1;
             entity.name = string.Empty;
@@ -365,7 +365,7 @@ namespace BDEditor.DataModel
             BDDosage entry = BDDosage.RetrieveDosageWithId(pDataContext, uuid);
             if (null == entry)
             {
-                entry = BDDosage.CreateBDDosage(uuid);
+                entry = BDDosage.CreateBDDosage(uuid,false,false,false);
                 pDataContext.AddObject(ENTITYNAME, entry);
             }
 
@@ -384,6 +384,8 @@ namespace BDEditor.DataModel
             entry.dosage = pAttributeDictionary[DOSAGE];
             entry.cost = pAttributeDictionary[COST];
             entry.joinType = int.Parse(pAttributeDictionary[DOSAGEJOINTYPE]);
+
+            //entry.dosage2SameAsPrevious = pAttributeDictionary[DOSAGE
 
             if (pSaveChanges)
                 pDataContext.SaveChanges();

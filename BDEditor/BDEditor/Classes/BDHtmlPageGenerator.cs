@@ -4028,12 +4028,12 @@ namespace BDEditor.Classes
             string styleString = string.Empty;
             string colSpanTag = string.Empty;  
 
-            if (dosageNode.dosage == dosageNode.dosage2 && dosageNode.dosage != dosageNode.dosage3)
-                colSpanTag = @" colspan=2";
-            if (dosageNode.dosage == dosageNode.dosage2 && dosageNode.dosage == dosageNode.dosage3 && dosageNode.dosage != dosageNode.dosage4)
-                colSpanTag = @" colspan=3";
-            if (dosageNode.dosage == dosageNode.dosage2 && dosageNode.dosage == dosageNode.dosage3 && dosageNode.dosage == dosageNode.dosage4)
+            if (dosageNode.dosage2SameAsPrevious && dosageNode.dosage3SameAsPrevious && dosageNode.dosage4SameAsPrevious)
                 colSpanTag = @" colspan=4";
+            if (dosageNode.dosage2SameAsPrevious && dosageNode.dosage3SameAsPrevious && !dosageNode.dosage4SameAsPrevious)
+                colSpanTag = @" colspan=3";
+            if (dosageNode.dosage2SameAsPrevious && !dosageNode.dosage3SameAsPrevious && !dosageNode.dosage4SameAsPrevious)
+                colSpanTag = @" colspan=2";
 
             // dosage group if it exists, then adult dose in cell
             if (!string.IsNullOrEmpty(pDosageGroupName))
@@ -4044,12 +4044,12 @@ namespace BDEditor.Classes
             colSpanTag = string.Empty;
             // 3 remaining doses in cells
             // Dosage 2
-            if (dosageNode.dosage2 == dosageNode.dosage3 && dosageNode.dosage2 == dosageNode.dosage4)
+            if (dosageNode.dosage3SameAsPrevious && dosageNode.dosage4SameAsPrevious)
                 colSpanTag = @" colspan=3";
-            if (dosageNode.dosage2 == dosageNode.dosage3 && dosageNode.dosage2 != dosageNode.dosage4)
+            if (dosageNode.dosage3SameAsPrevious && !dosageNode.dosage4SameAsPrevious)
                 colSpanTag = @" colspan=2";
 
-            if (dosageNode.dosage2 != dosageNode.dosage)
+            if (!dosageNode.dosage2SameAsPrevious)
             {
                 string d2Html = buildNodePropertyHTML(pContext, dosageNode, dosageNode.dosage2, BDDosage.PROPERTYNAME_DOSAGE2, false, pFootnotes, pObjectsOnPage);
                 if (!string.IsNullOrEmpty(d2Html))
@@ -4060,9 +4060,10 @@ namespace BDEditor.Classes
             colSpanTag = string.Empty;
 
             // Dosage 3
-            if (dosageNode.dosage3 == dosageNode.dosage4)
+            if (dosageNode.dosage3SameAsPrevious)
                 colSpanTag = @" colspan=2";
-            if (dosageNode.dosage3 != dosageNode.dosage2 && dosageNode.dosage3 != dosageNode.dosage)
+
+            if (!dosageNode.dosage3SameAsPrevious)
             {
                 string d3Html = buildNodePropertyHTML(pContext, dosageNode, dosageNode.dosage3, BDDosage.PROPERTYNAME_DOSAGE3, false, pFootnotes, pObjectsOnPage);
                 if (!string.IsNullOrEmpty(d3Html))
@@ -4073,7 +4074,7 @@ namespace BDEditor.Classes
             colSpanTag = string.Empty;
 
             // Dosage 4
-            if (dosageNode.dosage3 != dosageNode.dosage4)
+            if (!dosageNode.dosage4SameAsPrevious)
             {
                 string d4Html = buildNodePropertyHTML(pContext, dosageNode, dosageNode.dosage4, BDDosage.PROPERTYNAME_DOSAGE4, false, pFootnotes, pObjectsOnPage);
                 if (!string.IsNullOrEmpty(d4Html))

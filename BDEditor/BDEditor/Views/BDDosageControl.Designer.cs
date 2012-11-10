@@ -70,6 +70,9 @@
             this.lblDose3 = new System.Windows.Forms.Label();
             this.lblDose4 = new System.Windows.Forms.Label();
             this.pnlLabels = new System.Windows.Forms.Panel();
+            this.chkPreviousDose2 = new System.Windows.Forms.CheckBox();
+            this.chkPreviousDose3 = new System.Windows.Forms.CheckBox();
+            this.chkPreviousDose4 = new System.Windows.Forms.CheckBox();
             this.contextMenuStripTextBox.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
@@ -223,6 +226,9 @@
             // 
             this.pnlMain.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pnlMain.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlMain.Controls.Add(this.chkPreviousDose4);
+            this.pnlMain.Controls.Add(this.chkPreviousDose3);
+            this.pnlMain.Controls.Add(this.chkPreviousDose2);
             this.pnlMain.Controls.Add(this.rtbDosage3);
             this.pnlMain.Controls.Add(this.btnDosage3Link);
             this.pnlMain.Controls.Add(this.btnAdultLink);
@@ -244,7 +250,7 @@
             this.rtbDosage3.ContextMenuStrip = this.contextMenuStripTextBox;
             this.rtbDosage3.DetectUrls = false;
             this.rtbDosage3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbDosage3.Location = new System.Drawing.Point(486, 3);
+            this.rtbDosage3.Location = new System.Drawing.Point(453, 3);
             this.rtbDosage3.Name = "rtbDosage3";
             this.rtbDosage3.ShortcutsEnabled = false;
             this.rtbDosage3.Size = new System.Drawing.Size(135, 50);
@@ -258,7 +264,7 @@
             // 
             this.btnDosage3Link.Enabled = false;
             this.btnDosage3Link.Image = ((System.Drawing.Image)(resources.GetObject("btnDosage3Link.Image")));
-            this.btnDosage3Link.Location = new System.Drawing.Point(627, 2);
+            this.btnDosage3Link.Location = new System.Drawing.Point(594, 2);
             this.btnDosage3Link.Name = "btnDosage3Link";
             this.btnDosage3Link.Size = new System.Drawing.Size(28, 28);
             this.btnDosage3Link.TabIndex = 5;
@@ -269,7 +275,7 @@
             // 
             this.btnAdultLink.Enabled = false;
             this.btnAdultLink.Image = ((System.Drawing.Image)(resources.GetObject("btnAdultLink.Image")));
-            this.btnAdultLink.Location = new System.Drawing.Point(277, 3);
+            this.btnAdultLink.Location = new System.Drawing.Point(185, 3);
             this.btnAdultLink.Name = "btnAdultLink";
             this.btnAdultLink.Size = new System.Drawing.Size(28, 28);
             this.btnAdultLink.TabIndex = 1;
@@ -281,7 +287,7 @@
             this.rtbAdultDosage.ContextMenuStrip = this.contextMenuStripTextBox;
             this.rtbAdultDosage.DetectUrls = false;
             this.rtbAdultDosage.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbAdultDosage.Location = new System.Drawing.Point(102, 2);
+            this.rtbAdultDosage.Location = new System.Drawing.Point(10, 2);
             this.rtbAdultDosage.Name = "rtbAdultDosage";
             this.rtbAdultDosage.ShortcutsEnabled = false;
             this.rtbAdultDosage.Size = new System.Drawing.Size(169, 50);
@@ -296,7 +302,7 @@
             this.rtbDosage2.ContextMenuStrip = this.contextMenuStripTextBox;
             this.rtbDosage2.DetectUrls = false;
             this.rtbDosage2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbDosage2.Location = new System.Drawing.Point(311, 2);
+            this.rtbDosage2.Location = new System.Drawing.Point(245, 2);
             this.rtbDosage2.Name = "rtbDosage2";
             this.rtbDosage2.ShortcutsEnabled = false;
             this.rtbDosage2.Size = new System.Drawing.Size(135, 50);
@@ -310,7 +316,7 @@
             // 
             this.btnDosage2Link.Enabled = false;
             this.btnDosage2Link.Image = ((System.Drawing.Image)(resources.GetObject("btnDosage2Link.Image")));
-            this.btnDosage2Link.Location = new System.Drawing.Point(452, 2);
+            this.btnDosage2Link.Location = new System.Drawing.Point(386, 2);
             this.btnDosage2Link.Name = "btnDosage2Link";
             this.btnDosage2Link.Size = new System.Drawing.Size(28, 28);
             this.btnDosage2Link.TabIndex = 3;
@@ -397,7 +403,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(125, 13);
+            this.label1.Location = new System.Drawing.Point(41, 13);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(112, 13);
             this.label1.TabIndex = 33;
@@ -416,7 +422,7 @@
             // lblDose2
             // 
             this.lblDose2.AutoSize = true;
-            this.lblDose2.Location = new System.Drawing.Point(347, 30);
+            this.lblDose2.Location = new System.Drawing.Point(308, 30);
             this.lblDose2.Name = "lblDose2";
             this.lblDose2.Size = new System.Drawing.Size(25, 13);
             this.lblDose2.TabIndex = 35;
@@ -425,7 +431,7 @@
             // lblDose3
             // 
             this.lblDose3.AutoSize = true;
-            this.lblDose3.Location = new System.Drawing.Point(525, 30);
+            this.lblDose3.Location = new System.Drawing.Point(511, 30);
             this.lblDose3.Name = "lblDose3";
             this.lblDose3.Size = new System.Drawing.Size(40, 13);
             this.lblDose3.TabIndex = 36;
@@ -454,6 +460,39 @@
             this.pnlLabels.Size = new System.Drawing.Size(868, 47);
             this.pnlLabels.TabIndex = 38;
             // 
+            // chkPreviousDose2
+            // 
+            this.chkPreviousDose2.AutoSize = true;
+            this.chkPreviousDose2.Location = new System.Drawing.Point(224, 6);
+            this.chkPreviousDose2.Name = "chkPreviousDose2";
+            this.chkPreviousDose2.Size = new System.Drawing.Size(15, 14);
+            this.chkPreviousDose2.TabIndex = 9;
+            this.toolTip1.SetToolTip(this.chkPreviousDose2, "Same as previous");
+            this.chkPreviousDose2.UseVisualStyleBackColor = true;
+            this.chkPreviousDose2.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // chkPreviousDose3
+            // 
+            this.chkPreviousDose3.AutoSize = true;
+            this.chkPreviousDose3.Location = new System.Drawing.Point(432, 6);
+            this.chkPreviousDose3.Name = "chkPreviousDose3";
+            this.chkPreviousDose3.Size = new System.Drawing.Size(15, 14);
+            this.chkPreviousDose3.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.chkPreviousDose3, "Same as previous");
+            this.chkPreviousDose3.UseVisualStyleBackColor = true;
+            this.chkPreviousDose3.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // chkPreviousDose4
+            // 
+            this.chkPreviousDose4.AutoSize = true;
+            this.chkPreviousDose4.Location = new System.Drawing.Point(640, 6);
+            this.chkPreviousDose4.Name = "chkPreviousDose4";
+            this.chkPreviousDose4.Size = new System.Drawing.Size(15, 14);
+            this.chkPreviousDose4.TabIndex = 11;
+            this.toolTip1.SetToolTip(this.chkPreviousDose4, "Same as previous");
+            this.chkPreviousDose4.UseVisualStyleBackColor = true;
+            this.chkPreviousDose4.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
             // BDDosageControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -466,6 +505,7 @@
             this.Leave += new System.EventHandler(this.BDDosageControl_Leave);
             this.contextMenuStripTextBox.ResumeLayout(false);
             this.pnlMain.ResumeLayout(false);
+            this.pnlMain.PerformLayout();
             this.contextMenuStripEvents.ResumeLayout(false);
             this.pnlLabels.ResumeLayout(false);
             this.pnlLabels.PerformLayout();
@@ -515,5 +555,8 @@
         private System.Windows.Forms.Label lblDose3;
         private System.Windows.Forms.Label lblDose4;
         private System.Windows.Forms.Panel pnlLabels;
+        private System.Windows.Forms.CheckBox chkPreviousDose4;
+        private System.Windows.Forms.CheckBox chkPreviousDose3;
+        private System.Windows.Forms.CheckBox chkPreviousDose2;
     }
 }

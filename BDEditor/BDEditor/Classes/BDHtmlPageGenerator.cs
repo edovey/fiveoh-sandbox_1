@@ -298,15 +298,14 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDCategory:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin:
-                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional:
-                            currentPageMasterObject = pNode;
-                            nodeChildPages.Add(generatePageForAntibioticsDosingAndMonitoring(pContext, pNode as BDNode));
-                            isPageGenerated = true;
-                            break;
                         case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
                             currentPageMasterObject = pNode;
                             nodeChildPages.Add(generatePageForAntibioticsPharmacodynamics(pContext, pNode as BDNode));
+                            isPageGenerated = true;
+                            break;
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional:
+                            currentPageMasterObject = pNode;
+                            nodeChildPages.Add(generatePageForAntibioticsDosingAndMonitoring(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
@@ -498,11 +497,6 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDSection:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
-                            currentPageMasterObject = pNode;
-                            nodeChildPages.Add(generatePageForAntibioticsDosingAndMonitoring(pContext, pNode as BDNode));
-                            isPageGenerated = true;
-                            break;
                         case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
                             currentPageMasterObject = pNode;
                             nodeChildPages.Add(generatePageForAntibioticsStepdown(pContext, pNode as BDNode));
@@ -565,6 +559,19 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
                             currentPageMasterObject = pNode;
                             nodeChildPages.Add(generatePageForDentalProphylaxisDrugRegimens(pContext, pNode));
+                            isPageGenerated = true;
+                            break;
+                        default:
+                            isPageGenerated = false;
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDSubsection:
+                    switch (pNode.LayoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
+                            currentPageMasterObject = pNode;
+                            nodeChildPages.Add(generatePageForAntibioticsDosingAndMonitoring(pContext, pNode as BDNode));
                             isPageGenerated = true;
                             break;
                         default:
@@ -670,7 +677,6 @@ namespace BDEditor.Classes
 
                 case BDConstants.BDNodeType.BDChapter:
                 case BDConstants.BDNodeType.BDMicroorganism:
-                case BDConstants.BDNodeType.BDSubsection:
                 case BDConstants.BDNodeType.BDTableCell:
                 case BDConstants.BDNodeType.BDTableRow:
                 case BDConstants.BDNodeType.BDTherapyGroup:
@@ -943,7 +949,7 @@ namespace BDEditor.Classes
         private BDHtmlPage generatePageForAntibioticsDosingAndMonitoring(Entities pContext, BDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
-            if (pNode.NodeType != BDConstants.BDNodeType.BDSection && pNode.NodeType != BDConstants.BDNodeType.BDCategory)
+            if (pNode.NodeType != BDConstants.BDNodeType.BDSubsection && pNode.NodeType != BDConstants.BDNodeType.BDCategory)
             {
 #if DEBUG
                 throw new InvalidOperationException();
@@ -1107,17 +1113,33 @@ namespace BDEditor.Classes
                 {
                     List<IBDNode> dosageNodes = BDFabrik.GetChildrenForParent(pContext, antimicrobial);
                     string antimicrobialHtml = buildNodePropertyHTML(pContext, antimicrobial, antimicrobial.Name, BDNode.PROPERTYNAME_NAME, false, footnotes, objectsOnPage);
+                    bodyHTML.AppendFormat(@"<tr class=""v{0}""><td>{1}</td>", (int)antimicrobial.LayoutVariant, antimicrobialHtml);
+
                     string dosageGroupName = string.Empty;
+                    string rowStartTag = string.Format(@"<tr class=""v{0}""><td />", (int)antimicrobial.LayoutVariant);
+                    string rowEndTag = "</tr>";
+                    bool isFirstRow = true;
                     foreach (IBDNode dNode in dosageNodes)
                     {
-                        bodyHTML.AppendFormat(@"<tr class=""v{0}""><td>{1}</td>", (int)dNode.LayoutVariant, antimicrobialHtml);
                         if (dNode.NodeType == BDConstants.BDNodeType.BDDosage)
                         {
+                            if (!isFirstRow) bodyHTML.Append(rowStartTag);
                             bodyHTML.Append(buildDosageHTML(pContext, dNode, dosageGroupName, footnotes, objectsOnPage));
-                            dosageGroupName = string.Empty;
+                            bodyHTML.Append(rowEndTag);
+                            isFirstRow = false;
                         }
                         else // BDDosageGroup
+                        {
+                            if (!isFirstRow) bodyHTML.Append(rowStartTag);
                             dosageGroupName = buildNodePropertyHTML(pContext, dNode, dNode.Uuid, dNode.Name, BDNode.PROPERTYNAME_NAME, false, "u", footnotes, objectsOnPage);
+                            List<IBDNode> dgChildren = BDFabrik.GetChildrenForParent(pContext, dNode);
+                            foreach (IBDNode dgChild in dgChildren)
+                            {
+                                bodyHTML.Append(buildDosageHTML(pContext, dgChild, dosageGroupName, footnotes, objectsOnPage));
+                            }
+                            isFirstRow = false;
+                            bodyHTML.Append(rowEndTag);
+                        }
                     bodyHTML.Append("</tr>");
                     }
                 }
@@ -4026,28 +4048,28 @@ namespace BDEditor.Classes
             string styleString = string.Empty;
             string colSpanTag = string.Empty;  
 
-            if (dosageNode.dosage == dosageNode.dosage2 && dosageNode.dosage != dosageNode.dosage3)
-                colSpanTag = @" colspan=2";
-            if (dosageNode.dosage == dosageNode.dosage2 && dosageNode.dosage == dosageNode.dosage3 && dosageNode.dosage != dosageNode.dosage4)
-                colSpanTag = @" colspan=3";
-            if (dosageNode.dosage == dosageNode.dosage2 && dosageNode.dosage == dosageNode.dosage3 && dosageNode.dosage == dosageNode.dosage4)
+            if (dosageNode.dosage2SameAsPrevious && dosageNode.dosage3SameAsPrevious && dosageNode.dosage4SameAsPrevious)
                 colSpanTag = @" colspan=4";
+            if (dosageNode.dosage2SameAsPrevious && dosageNode.dosage3SameAsPrevious && !dosageNode.dosage4SameAsPrevious)
+                colSpanTag = @" colspan=3";
+            if (dosageNode.dosage2SameAsPrevious && !dosageNode.dosage3SameAsPrevious && !dosageNode.dosage4SameAsPrevious)
+                colSpanTag = @" colspan=2";
 
             // dosage group if it exists, then adult dose in cell
-            if (pDosageGroupName.Length > 0)
-                dosageHTML.AppendFormat("<td{0}>{1}{2}<br>{3}</td>", colSpanTag, pDosageGroupName, dosageNode.dosage);
+            if (!string.IsNullOrEmpty(pDosageGroupName))
+                dosageHTML.AppendFormat("<td{0}>{1}<br>{2}</td>", colSpanTag, pDosageGroupName, dosageNode.dosage);
             else
                 dosageHTML.AppendFormat(@"<td{0}>{1}</td>", colSpanTag, dosageNode.dosage);
 
             colSpanTag = string.Empty;
             // 3 remaining doses in cells
             // Dosage 2
-            if (dosageNode.dosage2 == dosageNode.dosage3 && dosageNode.dosage2 == dosageNode.dosage4)
+            if (dosageNode.dosage3SameAsPrevious && dosageNode.dosage4SameAsPrevious)
                 colSpanTag = @" colspan=3";
-            if (dosageNode.dosage2 == dosageNode.dosage3 && dosageNode.dosage2 != dosageNode.dosage4)
+            if (dosageNode.dosage3SameAsPrevious && !dosageNode.dosage4SameAsPrevious)
                 colSpanTag = @" colspan=2";
 
-            if (dosageNode.dosage2 != dosageNode.dosage)
+            if (!dosageNode.dosage2SameAsPrevious)
             {
                 string d2Html = buildNodePropertyHTML(pContext, dosageNode, dosageNode.dosage2, BDDosage.PROPERTYNAME_DOSAGE2, false, pFootnotes, pObjectsOnPage);
                 if (!string.IsNullOrEmpty(d2Html))
@@ -4058,9 +4080,10 @@ namespace BDEditor.Classes
             colSpanTag = string.Empty;
 
             // Dosage 3
-            if (dosageNode.dosage3 == dosageNode.dosage4)
+            if (dosageNode.dosage3SameAsPrevious)
                 colSpanTag = @" colspan=2";
-            if (dosageNode.dosage3 != dosageNode.dosage2 && dosageNode.dosage3 != dosageNode.dosage)
+
+            if (!dosageNode.dosage3SameAsPrevious)
             {
                 string d3Html = buildNodePropertyHTML(pContext, dosageNode, dosageNode.dosage3, BDDosage.PROPERTYNAME_DOSAGE3, false, pFootnotes, pObjectsOnPage);
                 if (!string.IsNullOrEmpty(d3Html))
@@ -4071,7 +4094,7 @@ namespace BDEditor.Classes
             colSpanTag = string.Empty;
 
             // Dosage 4
-            if (dosageNode.dosage3 != dosageNode.dosage4)
+            if (!dosageNode.dosage4SameAsPrevious)
             {
                 string d4Html = buildNodePropertyHTML(pContext, dosageNode, dosageNode.dosage4, BDDosage.PROPERTYNAME_DOSAGE4, false, pFootnotes, pObjectsOnPage);
                 if (!string.IsNullOrEmpty(d4Html))

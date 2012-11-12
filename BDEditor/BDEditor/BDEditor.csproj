@@ -192,6 +192,7 @@
     <Compile Include="Classes\BDFabrik.cs" />
     <Compile Include="Classes\BDFormsUtilties.cs" />
     <Compile Include="Classes\BDHtmlPageGenerator.cs" />
+    <Compile Include="Classes\BDGuidLogEntry.cs" />
     <Compile Include="Classes\BDHtmlPageMap.cs" />
     <Compile Include="Classes\BDNodeWrapper.cs" />
     <Compile Include="Classes\BDTreeNode.cs" />
@@ -698,7 +699,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
+      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

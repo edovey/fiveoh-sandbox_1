@@ -1480,8 +1480,6 @@ namespace BDEditor.Classes
                         if (legendHTML.Length > EMPTY_PARAGRAPH)
                             bodyHTML.Append(legendHTML);
                     }
-                    // write a page for the data
-                    // write a link for the parent
                 }
                 else
                     bodyHTML.Append(buildAntibioticsCSFPenetrationDosagesHTML(pContext, child, footnotesOnPage, objectsOnPage));
@@ -3538,7 +3536,7 @@ namespace BDEditor.Classes
                 }
             }
 
-            return generatePageForLinkedNotes(pContext, pParentId, pParentType, noteHtml.ToString(), BDConstants.BDHtmlPageType.Comments,pObjectsOnPage);
+            return generatePageForLinkedNotes(pContext, pParentId, pParentType, noteHtml.ToString(), BDConstants.BDHtmlPageType.Comments, pObjectsOnPage);
         }
 
         private BDHtmlPage generatePageForLinkedNotes(Entities pContext, Guid pDisplayParentId, BDConstants.BDNodeType pDisplayParentType, string pPageHtml, BDConstants.BDHtmlPageType pPageType, List<Guid> pObjectsOnPage)
@@ -4237,6 +4235,7 @@ namespace BDEditor.Classes
             string footnoteMarker = buildFooterMarkerForList(cFootnotes, true, pFootnotes, pObjectsOnPage);
             List<BDLinkedNote> marked = retrieveNotesForLayoutColumn(pContext, pColumn, BDConstants.LinkedNoteType.MarkedComment);
             List<BDLinkedNote> unmarked = retrieveNotesForLayoutColumn(pContext, pColumn, BDConstants.LinkedNoteType.UnmarkedComment);
+            pObjectsOnPage.Add(pColumn.Uuid);
 
             BDHtmlPage notePage = generatePageForLinkedNotes(pContext, pPageDisplayParent.Uuid, pPageDisplayParent.NodeType, null, marked, unmarked, pObjectsOnPage);
 
@@ -4509,7 +4508,7 @@ namespace BDEditor.Classes
                             Guid anchorGuid = new Guid(guidString);
                             if (!pExistingPages.Contains(anchorGuid))
                             {
-                                // none of the existing html pages has this guid so the existing link is invalid
+                                // none of the existing html pages has this guid so the existing link is invalid as its currently written
                                 // look up the linkedNoteAssociation with the provided guid in the'parentKeyPropertyName'
                                 // if returned object is null, then its either not found or collection was > 1 entry
                                 BDLinkedNoteAssociation linkTargetAssn = BDLinkedNoteAssociation.RetrieveLinkedNoteAssociationForParentKeyPropertyName(pContext, anchorGuid.ToString());
@@ -4517,17 +4516,24 @@ namespace BDEditor.Classes
                                 {
                                     if (linkTargetAssn.internalLinkNodeId.HasValue)
                                     {
+                                        Guid htmlPageId = Guid.Empty;
+
                                         // this is an internal link - first check the pagesMap for the HTML page containing that object
                                         BDHtmlPageMap mapEntry = pagesMap.FirstOrDefault<BDHtmlPageMap>(x => x.OriginalIBDObjectId == linkTargetAssn.internalLinkNodeId.Value);
 
                                         if (null != mapEntry && pExistingPages.Contains(mapEntry.HtmlPageId))
+                                            htmlPageId = mapEntry.HtmlPageId;
+                                        else
+                                            htmlPageId = BDNodeToHtmlPageIndex.RetrieveHtmlPageIdForIBDNodeId(pContext, linkTargetAssn.internalLinkNodeId.Value);
+                                        
+                                        if(htmlPageId != Guid.Empty && null != BDHtmlPage.RetrieveWithId(pContext, htmlPageId))
                                         {
-                                            // modify anchor tag to point to the html page generated for the targeted node
-                                            string newText = pPage.documentText.Replace(anchorGuid.ToString(), mapEntry.HtmlPageId.ToString().ToUpper());
+                                        // modify anchor tag to point to the html page generated for the targeted node
+                                            string newText = pPage.documentText.Replace(anchorGuid.ToString(), htmlPageId.ToString().ToUpper());
                                             pPage.documentText = newText;
                                             BDHtmlPage.Save(pContext, pPage);
                                         }
-                                        else // no page exists for this - there should have been one if its an internal link.
+                                        else // if this is an internal link there should be a page for it
                                             Debug.WriteLine("Unable to map link in {0} showing {1}", pPage.Uuid, anchorGuid);
                                     }
                                     else if (linkTargetAssn.linkedNoteId.HasValue)
@@ -4739,7 +4745,6 @@ namespace BDEditor.Classes
 
             if(pDisplayParent != null)
                 pagesMap.Add(new BDHtmlPageMap(newPage.Uuid, pDisplayParent.Uuid));
-
 
             List<Guid> filteredObjects = pObjectsOnPage.Distinct().ToList();
             foreach (Guid objectId in filteredObjects)

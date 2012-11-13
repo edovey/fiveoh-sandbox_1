@@ -42,7 +42,9 @@ namespace BDEditor.DataModel
                 IQueryable<BDNodeToHtmlPageIndex> entries = (from entry in pContext.BDNodeToHtmlPageIndexes
                                                              where entry.ibdNodeId == pIBDNodeId
                                                              select entry);
-                returnValue = entries.FirstOrDefault<BDNodeToHtmlPageIndex>().htmlPageId.Value;
+                BDNodeToHtmlPageIndex indexEntry = entries.FirstOrDefault<BDNodeToHtmlPageIndex>();
+                if (null != indexEntry)
+                    returnValue = indexEntry.htmlPageId.Value;
             }
             return returnValue;
         }

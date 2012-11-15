@@ -204,7 +204,7 @@ namespace BDEditor.Classes
             [Description("Antibiotics Dosing and Costs: Paediatric")]
             Antibiotics_DosingAndCosts_Paediatric = 2032,
 
-            [Description("Antibiotics Dosing and Monitoring")]
+            [Description("Antibiotics Dosing and Monitoring")] // +Aminoglycoside 
             Antibiotics_DosingAndMonitoring = 204,
             [Description("Antibiotics Dosing and Monitoring: Conventional")]
             Antibiotics_DosingAndMonitoring_Conventional = 2041,

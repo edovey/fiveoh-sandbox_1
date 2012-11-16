@@ -200,6 +200,10 @@
     <Compile Include="Classes\BDConstants.cs" />
     <Compile Include="Classes\BDUtilities.cs" />
     <Compile Include="Classes\ControlHelper.cs" />
+    <Compile Include="Classes\HtmlGeneration\BDHtmlLinkedNote.cs" />
+    <Compile Include="Classes\HtmlGeneration\BDHtmlNoteProcessor.cs" />
+    <Compile Include="Classes\HtmlGeneration\BDHtmlProcessPackage.cs" />
+    <Compile Include="Classes\HtmlGeneration\BDHtmlSegment.cs" />
     <Compile Include="Classes\Navigation\BDAntibioticsTree.cs" />
     <Compile Include="Classes\Navigation\BDDentalTree.cs" />
     <Compile Include="Classes\Navigation\BDMicrobiologyTree.cs" />
@@ -699,7 +703,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
+      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -316,6 +316,11 @@ namespace BDEditor.DataModel
             return resultList;
         }
 
+        public static BDLinkedNoteAssociation RetrieveLinkedNoteAssociationWithId(Entities pContext, Guid? pLinkedNoteAssociationId)
+        {
+            return GetLinkedNoteAssociationWithId(pContext, pLinkedNoteAssociationId);
+        }
+
         /// <summary>
         /// Return the LinkedNoteAssociation for the uuid. Returns null if not found.
         /// </summary>

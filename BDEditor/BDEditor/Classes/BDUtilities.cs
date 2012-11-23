@@ -22,6 +22,7 @@ namespace BDEditor.Classes
         {
             Type type = value.GetType();
             string name = Enum.GetName(type, value);
+            
             if (name != null)
             {
                 FieldInfo field = type.GetField(name);
@@ -35,6 +36,26 @@ namespace BDEditor.Classes
                 }
             }
             return value.ToString();
+        }
+
+        public static string GetEnumDescriptionWithNumber(Enum value)
+        {
+            Type type = value.GetType();
+            string name = Enum.GetName(type, value);
+            string number = string.Format("{0:D}", value);
+            if (name != null)
+            {
+                FieldInfo field = type.GetField(name);
+                if (field != null)
+                {
+                    DescriptionAttribute attr = Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) as DescriptionAttribute;
+                    if (attr != null)
+                    {
+                        return string.Format("{0} [{1}]", attr.Description, number);
+                    }
+                }
+            }
+            return string.Format("{0} [{1}]",value.ToString(), number);
         }
 
         /// <summary>

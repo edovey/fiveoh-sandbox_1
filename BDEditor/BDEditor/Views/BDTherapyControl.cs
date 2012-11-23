@@ -250,6 +250,17 @@ namespace BDEditor.Views
                 chkPreviousName.Checked = currentTherapy.nameSameAsPrevious.Value;
                 chkPreviousDose.Checked = currentTherapy.dosageSameAsPrevious.Value;
                 chkPreviousDuration.Checked = currentTherapy.durationSameAsPrevious.Value;
+
+                if (pnlMain.Controls.Contains(chkPreviousDose1))
+                    chkPreviousDose1.Checked = currentTherapy.dosage1SameAsPrevious.Value;
+                if (pnlMain.Controls.Contains(chkPreviousDose2))
+                    chkPreviousDose2.Checked = currentTherapy.dosage2SameAsPrevious.Value;
+
+                if (pnlMain.Controls.Contains(chkPreviousDuration1))
+                    chkPreviousDuration1.Checked = currentTherapy.duration1SameAsPrevious.Value;
+                if (pnlMain.Controls.Contains(chkPreviousDuration2))
+                    chkPreviousDuration2.Checked = currentTherapy.duration2SameAsPrevious.Value;
+
             }
             ShowLinksInUse(false);
             ControlHelper.ResumeDrawing(this);

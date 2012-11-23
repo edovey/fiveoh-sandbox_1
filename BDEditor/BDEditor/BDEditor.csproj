@@ -201,6 +201,7 @@
     <Compile Include="Classes\BDUtilities.cs" />
     <Compile Include="Classes\ControlHelper.cs" />
     <Compile Include="Classes\HtmlGeneration\BDHtmlLinkedNote.cs" />
+    <Compile Include="Classes\HtmlGeneration\BDHtmlNoteList.cs" />
     <Compile Include="Classes\HtmlGeneration\BDHtmlNoteProcessor.cs" />
     <Compile Include="Classes\HtmlGeneration\BDHtmlProcessPackage.cs" />
     <Compile Include="Classes\HtmlGeneration\BDHtmlSegment.cs" />
@@ -592,7 +593,9 @@
     <None Include="Resources\del_16.png" />
     <None Include="Resources\down_16.png" />
     <Content Include="Resources\Cancel2.png" />
-    <Content Include="Resources\Chapter_1a.txt" />
+    <Content Include="Resources\Chapter_1a.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Chapter_1c.txt" />
     <Content Include="Resources\Chapter_1d.txt" />
     <Content Include="Resources\Chapter_1e.txt" />
@@ -607,7 +610,9 @@
     <None Include="Resources\Flag-Green1.PNG" />
     <Content Include="Resources\Chapter_2d.txt" />
     <Content Include="Resources\Chapter_2e.txt" />
-    <Content Include="Resources\Chapter_1b.txt" />
+    <Content Include="Resources\Chapter_1b.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Chapter_2f.txt" />
     <Content Include="Resources\Chapter_3a.txt" />
     <Content Include="Resources\Chapter_3c.txt" />
@@ -703,7 +708,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
+      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

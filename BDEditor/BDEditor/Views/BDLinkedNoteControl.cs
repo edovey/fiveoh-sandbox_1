@@ -742,8 +742,11 @@ namespace BDEditor.Views
         private void textControl_HypertextLinkClicked(object sender, TXTextControl.HypertextLinkEventArgs e)
         {
             TXTextControl.HypertextLink link = textControl.HypertextLinks.GetItem();
-            if (!link.Target.Contains(@"http://"))
-                openLinkEditor(link.Target);
+            if (null != link)
+            {
+                if (!link.Target.Contains(@"http://"))
+                    openLinkEditor(link.Target);
+            }
         }
         #endregion
 

@@ -323,14 +323,14 @@ namespace BDEditor.Views
             lblNode.Text = BDUtilities.GetEnumDescription(DefaultNodeType);
             lblNode.Enabled = !showAsChild;
             lblNode.Visible = !showAsChild;
-            toolTip1.SetToolTip(lblNode, BDUtilities.GetEnumDescription(DefaultLayoutVariantType));
+            toolTip1.SetToolTip(lblNode, BDUtilities.GetEnumDescriptionWithNumber(DefaultLayoutVariantType));
             
             btnMenuRight.Enabled = showAsChild;
             btnMenuRight.Visible = showAsChild;
             lblNodeAsChild.Text = BDUtilities.GetEnumDescription(DefaultNodeType);
             lblNodeAsChild.Enabled = showAsChild;
             lblNodeAsChild.Visible = showAsChild;
-            toolTip1.SetToolTip(lblNodeAsChild, BDUtilities.GetEnumDescription(DefaultLayoutVariantType));
+            toolTip1.SetToolTip(lblNodeAsChild, BDUtilities.GetEnumDescriptionWithNumber(DefaultLayoutVariantType));
         }
 
         private void insertText(TextBox pTextBox, string pText)

@@ -12,8 +12,9 @@ namespace BDEditor.Classes.HtmlGeneration
     {
         public Guid Uuid { get; set; }
         public string DocumentText { get; set; }
+        public Guid? InternalLinkUuid { get; set; }
 
-        static BDHtmlLinkedNote CopyFromLinkedNote(BDLinkedNote pOriginal)
+        static public BDHtmlLinkedNote CopyFromLinkedNote(BDLinkedNote pOriginal)
         {
             BDHtmlLinkedNote entry = null;
 

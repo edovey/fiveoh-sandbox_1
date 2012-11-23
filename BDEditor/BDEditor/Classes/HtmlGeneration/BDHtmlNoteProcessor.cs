@@ -16,38 +16,125 @@ namespace BDEditor.Classes.HtmlGeneration
         /// Process all notes for a given owner/parent uuid, examining and processing all 'notes within note'
         /// </summary>
         /// <param name="pContext"></param>
-        /// <param name="pProcessPackage"></param>
+        /// <param name="pParentProcessPackage"></param>
         /// <param name="pOwnerUuid"></param>
         /// <returns></returns>
-        static public void processForOwnerUuid(Entities pContext, ref BDHtmlProcessPackage pProcessPackage, Guid pOwnerUuid, string pPropertyName)
+        static public void processForOwnerUuidAndProperty(Entities pContext, ref BDHtmlProcessPackage pParentProcessPackage, Guid pOwnerUuid, string pPropertyName)
         {
-            if (null == pProcessPackage) throw new System.ArgumentNullException("pProcessPackage");
+            if (null == pParentProcessPackage) throw new System.ArgumentNullException("pParentProcessPackage");
 
-            List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(pContext, pOwnerUuid);
+            List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationListForParentIdAndProperty(pContext, pOwnerUuid, pPropertyName);
+
+            BDHtmlProcessPackage forwardProcessPackage = new BDHtmlProcessPackage();
+
+            // group by type
             foreach (BDLinkedNoteAssociation association in links)
             {
-                processNoteAssociation(pContext, ref pProcessPackage, association);
+                BDLinkedNote note = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, association.linkedNoteId);
+                BDHtmlLinkedNote noteWrapper = BDHtmlLinkedNote.CopyFromLinkedNote(note);
+                noteWrapper.InternalLinkUuid = association.internalLinkNodeId;
+
+                switch (association.LinkedNoteType)
+                {
+                    case BDConstants.LinkedNoteType.Endnote:
+                    case BDConstants.LinkedNoteType.Footnote:
+                        forwardProcessPackage.FootnoteNoteList.Add(noteWrapper);
+                        break;
+                    case BDConstants.LinkedNoteType.Inline:
+                        forwardProcessPackage.InlineNoteList.Add(noteWrapper);
+                        break;
+                    case BDConstants.LinkedNoteType.InternalLink:
+                        forwardProcessPackage.InternalLinkList.Add(noteWrapper);
+                        break;
+                    case BDConstants.LinkedNoteType.Legend:
+                        forwardProcessPackage.LegendNoteList.Add(noteWrapper);
+                        break;
+                    case BDConstants.LinkedNoteType.Reference:
+                    case BDConstants.LinkedNoteType.ReferenceEndnote:
+                        forwardProcessPackage.ReferenceNoteList.Add(noteWrapper);
+                        break;
+                    case BDConstants.LinkedNoteType.MarkedComment:
+                    case BDConstants.LinkedNoteType.UnmarkedComment:
+                        forwardProcessPackage.CreatePageNoteList.Add(noteWrapper);
+                        break;
+                    default:
+                        break;
+                }
             }
+
+            BDHtmlProcessPackage internalLinkPkg = processNoteList(pContext, forwardProcessPackage.InternalLinkList);
+            BDHtmlProcessPackage mcPkg = null;
+            if (forwardProcessPackage.InternalLinkList.Count <= 0) // An Internal-Link note takes precedence over other page producing notes
+            {
+                mcPkg = processNoteList(pContext, forwardProcessPackage.CreatePageNoteList);
+            }
+
+            BDHtmlProcessPackage footnotePkg = processNoteList(pContext, forwardProcessPackage.FootnoteNoteList);
+            BDHtmlProcessPackage inlinePkg = processNoteList(pContext, forwardProcessPackage.InlineNoteList);
+            
+            BDHtmlProcessPackage referencePkg = processNoteList(pContext, forwardProcessPackage.ReferenceNoteList);
+            BDHtmlProcessPackage legendPkg = processNoteList(pContext, forwardProcessPackage.LegendNoteList);
+           
+            // sew everything together here before returning results in the pParentProcessPackage
+
+            pParentProcessPackage.AggregatePackages(footnotePkg, inlinePkg, internalLinkPkg, referencePkg, legendPkg, mcPkg);
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pContext"></param>
-        /// <param name="pProcessPackage"></param>
-        /// <param name="pNoteAssociation"></param>
-        /// <returns>Guid of a BDHtmlPage to replace the propertyname (which is a uuid) embedded in a note-within-note link</returns>
-        static private Guid? processNoteAssociation(Entities pContext, ref BDHtmlProcessPackage pProcessPackage, BDLinkedNoteAssociation pNoteAssociation)
+
+        static private BDHtmlProcessPackage processNoteList(Entities pContext, BDHtmlNoteList pNoteList)
         {
-            Guid? htmlPageUuid = null; // guid that will replace the linked note association uuid embedded in a note-within-note link
+            BDHtmlProcessPackage returnPackage = new BDHtmlProcessPackage();
 
-            if (null == pProcessPackage) throw new System.ArgumentNullException("pProcessPackage");
+            if ((null == pNoteList) || (pNoteList.Count == 0)) return returnPackage;
 
-            BDLinkedNote note = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, pNoteAssociation.linkedNoteId);
+            // create a single page with the aggregation of any "page-notes" (i.e. marked comments)
+            // return back collections of fully processed notes grouped by type. (i.e. footnotes, legends)
+            // return back inline html
+
+            if (pNoteList.ListType == BDHtmlNoteList.BDHtmlNoteListType.InternalLink) // Internal-Links do not support Notes-Within-note nor more than one per link
+            {
+                if(pNoteList.Count > 0)
+                {
+                    BDHtmlLinkedNote note = pNoteList[0];
+                    returnPackage.CreatedHtmlPageUuid = note.InternalLinkUuid;
+                    if (note.DocumentText.Length > BDHtmlPageGenerator.EMPTY_PARAGRAPH)
+                    {
+                        returnPackage.InlineHtmlSegmentList.Add(new BDHtmlSegment(note.DocumentText));
+                    }
+                }
+            }
+            else
+            {
+                for (int idx = 0; idx < pNoteList.Count; idx++)
+                {
+                    BDHtmlLinkedNote note = pNoteList[idx];
+                    BDHtmlProcessPackage pkg = processNotesWithinNote(pContext, note);
+                    returnPackage.AppendPackageTransients(pkg);
+                }
+            }
+
+            //
+            switch (pNoteList.ListType)
+            {
+                case BDHtmlNoteList.BDHtmlNoteListType.Inline:
+
+                case BDHtmlNoteList.BDHtmlNoteListType.Footnote:
+                case BDHtmlNoteList.BDHtmlNoteListType.Legend:
+                case BDHtmlNoteList.BDHtmlNoteListType.Reference:
+                    // put together the 
+                    break;
+                case BDHtmlNoteList.BDHtmlNoteListType.Page:
+                    // generate an Html page
+                    break;
+                case BDHtmlNoteList.BDHtmlNoteListType.InternalLink:
+                    //do nothing
+                    break;
+            }
 
             // process any notes-within-note
-
+            /*
             processNotesWithinNote(pContext, ref pProcessPackage, note);
-
+            */
+            /*
             // build pages, replace internal links, or pass along
             switch (pNoteAssociation.LinkedNoteType)
             {
@@ -64,62 +151,96 @@ namespace BDEditor.Classes.HtmlGeneration
                 default:
                     break;
             }
-
-            return htmlPageUuid;
+            */
+            return returnPackage;
         }
 
         /// <summary>
-        /// Recursive method to walk the notes-within-note hierarchy
+        /// Recursive method to walk the notes-within-note hierarchy. Replace the propertyname-uuid embedded in the note-within-note links
         /// </summary>
         /// <param name="pContext"></param>
-        /// <param name="pProcessPackage"></param>
         /// <param name="pNote"></param>
-        /// <returns>Guid of a BDHtmlPage to replace the propertyname-uuid embedded in a note-within-note link</returns>
-        static private Guid? processNotesWithinNote(Entities pContext, ref BDHtmlProcessPackage pProcessPackage, BDLinkedNote pNote)
+        /// <returns>A processPackage containing the processed InlineHtmlSegments from the note documentText</returns>
+        static private BDHtmlProcessPackage processNotesWithinNote(Entities pContext, BDHtmlLinkedNote pNote)
         {
-            Guid? replacementGuid = null;
+            BDHtmlProcessPackage returnPackage = new BDHtmlProcessPackage();
 
-            if (null == pNote) return replacementGuid;
+            string documentText = pNote.DocumentText;
 
-            string documentText = pNote.documentText;
-
-            string compareString = @"<a href=";
+            string anchorStartString = @"<a href=";
+            string anchorEndString = @"</a>";
             StringBuilder newString = new StringBuilder();
-            if (documentText.Contains(compareString))
+            if (documentText.Contains(anchorStartString))
             {
                 int startPosition = 0;
 
                 while (startPosition < documentText.Length)
                 {
                     // find the anchor tag
-                    int tagLocation = documentText.IndexOf(compareString, startPosition);
+                    int tagLocation = documentText.IndexOf(anchorStartString, startPosition);
                     if (tagLocation >= 0)
                     {
+                        int endTagLocation = documentText.IndexOf(anchorEndString, tagLocation);
                         // inspect the 'guid'
-                        int guidStart = tagLocation + 1 + compareString.Length;
+                        int guidStart = tagLocation + 1 + anchorStartString.Length;
                         string guidString = documentText.Substring(guidStart, 36);
                         // if the guid exists as an external URL, dont change it...
-                        if (!guidString.Contains("http://www"))
+                        if (guidString.Contains("http://www"))
                         {
-                            Guid anchorGuid = new Guid(guidString);
-
-                            BDLinkedNoteAssociation linkedAssociation = BDLinkedNoteAssociation.RetrieveLinkedNoteAssociationWithId(pContext, anchorGuid);
-
-                            BDLinkedNote linkedNote = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, linkedAssociation.linkedNoteId);
-
-                            Guid? innerReplacementGuid = processNotesWithinNote(pContext, ref pProcessPackage, linkedNote);
-                            documentText.Replace(anchorGuid.ToString(), innerReplacementGuid.ToString().ToUpper());
-
-
+                            startPosition = guidStart;
                         }
-                        startPosition = guidStart;
+                        else
+                        {
+                            startPosition = endTagLocation + (anchorEndString.Length + 1);
+
+
+                            // When finished this guid WILL be replaced with EITHER a generated Html page uuid OR a BDNode uuid
+                            Guid abstractPropertyName = new Guid(guidString);
+
+                            BDHtmlProcessPackage noteWithinNotePackage = new BDHtmlProcessPackage();
+
+                            if (pNote.InternalLinkUuid.HasValue)
+                            {
+                                noteWithinNotePackage.CreatedHtmlPageUuid = pNote.InternalLinkUuid.Value;
+                                
+                            }
+                            else
+                            {
+                                processForOwnerUuidAndProperty(pContext, ref noteWithinNotePackage, pNote.Uuid, abstractPropertyName.ToString());
+                            }
+
+                            string originalAnchor = string.Format("{0}\"{1}\">", anchorStartString, guidString);
+
+                            //makes changes to the documentText based on what is returned in the processPackage
+
+                            // if a new page was generated, replace the guid (which is an abstract-property) with the html page uuid
+                            if (noteWithinNotePackage.CreatedHtmlPageUuid.HasValue)
+                            {
+                                documentText.Replace(guidString, noteWithinNotePackage.CreatedHtmlPageUuid.Value.ToString().ToUpper());
+                            }
+
+                            string inlineHtml = noteWithinNotePackage.InlineHtml;
+                            if (inlineHtml.Length > 0)
+                            {
+                                documentText.Insert(startPosition, inlineHtml);
+                                startPosition += inlineHtml.Length; // update the start position so that any embedded links (already handled) are bypassed in this pass              
+                            }
+
+                            returnPackage.AppendPackageTransients(noteWithinNotePackage); // everything else is handled by the caller
+                        }
                     }
                     else
+                    {
                         startPosition = documentText.Length;
+                    }
                 }
+
+                pNote.DocumentText = documentText; // update the note wrapper with the cleaned up text
             }
 
-            return replacementGuid;
+            returnPackage.InlineHtmlSegmentList.Add(new BDHtmlSegment(documentText));
+
+            return returnPackage;
         }
 
         static private BDHtmlPage writePage(Entities pContext, IBDObject pDisplayParent, BDHtmlSegment pHtmlSegment, BDHtmlProcessPackage pProcessPackage )

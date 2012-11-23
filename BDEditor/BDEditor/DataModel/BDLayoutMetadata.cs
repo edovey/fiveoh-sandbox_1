@@ -34,13 +34,13 @@ namespace BDEditor.DataModel
 
                 if (null != entry)
                 {
-                    entry.descrip = BDUtilities.GetEnumDescription(layoutVariant);
+                    entry.descrip = BDUtilities.GetEnumDescriptionWithNumber(layoutVariant);
                 }
                 else
                 {
                     System.Diagnostics.Debug.WriteLine("empty");
                     entry = BDLayoutMetadata.CreateBDLayoutMetadata((int)layoutVariant, false, order++);
-                    entry.descrip = BDUtilities.GetEnumDescription(layoutVariant);
+                    entry.descrip = BDUtilities.GetEnumDescriptionWithNumber(layoutVariant);
                     pDataContext.AddObject(ENTITYNAME, entry);
                 }
             }

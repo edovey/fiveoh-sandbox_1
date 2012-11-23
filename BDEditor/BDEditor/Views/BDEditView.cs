@@ -958,7 +958,7 @@ namespace BDEditor.Views
                         control_tr01.RefreshLayout(showChildControls);
 
                     }
-
+                    BDCommon.Settings.IsUpdating = false;
                     ControlHelper.ResumeDrawing(splitContainer1.Panel2);
                     splitContainer1.Panel2.ResumeLayout();
                 }
@@ -999,8 +999,8 @@ namespace BDEditor.Views
             this.Cursor = Cursors.WaitCursor;
             BDDataLoader dataLoader = new BDDataLoader();
 
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_1a.txt", BDDataLoader.baseDataDefinitionType.chapter1a);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_1b.txt", BDDataLoader.baseDataDefinitionType.chapter1b);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_1a.txt", BDDataLoader.baseDataDefinitionType.chapter1a);
+            dataLoader.ImportData(dataContext, @"Resources\Chapter_1b.txt", BDDataLoader.baseDataDefinitionType.chapter1b);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_1c.txt", BDDataLoader.baseDataDefinitionType.chapter1c);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_1d.txt", BDDataLoader.baseDataDefinitionType.chapter1d);
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_1e.txt", BDDataLoader.baseDataDefinitionType.chapter1e);
@@ -1091,18 +1091,23 @@ namespace BDEditor.Views
             this.Text = string.Format("{0} - {1}" , "Bugs & Drugs Editor", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
             // Loading Seed Data:  set the following variables
-            isSeedDataLoadAvailable = false;
 
+            isSeedDataLoadAvailable = false;
+            
 #if DEBUG
+            isSeedDataLoadAvailable = true;
             this.Text = this.Text + @" < DEVELOPMENT >";
             this.btnPublish.Visible = true;
             this.btnMove.Visible = !isSeedDataLoadAvailable && moveButtonVisible;
             this.btnMove.Enabled = !isSeedDataLoadAvailable && moveButtonVisible;
 #else
             this.btnPublish.Visible = false;
-
+            
             this.btnMove.Visible = moveButtonVisible;
             this.btnMove.Enabled = moveButtonVisible;
+
+            this.btnDebug.Visible = false;
+            this.btnDebug.Enabled = false;
 #endif
 
             BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
@@ -1205,18 +1210,26 @@ namespace BDEditor.Views
             else
                 return;
             this.Cursor = Cursors.WaitCursor;
-            
+
+
+            Debug.WriteLine(string.Format("Start {0}", DateTime.Now));
+            BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Publish Start\t{0}", DateTime.Now));
+
             BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
             generator.Generate(dataContext, chapterNode);
             System.Diagnostics.Debug.WriteLine("HTML page generation complete.");
-            BDSearchEntryGenerator.Generate(dataContext, chapterNode, generator.PagesMap);
-            System.Diagnostics.Debug.WriteLine("Search entry generation complete.");
+            BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Generation Complete\t{0}", DateTime.Now));
 
+            BDSearchEntryGenerator.Generate(dataContext, chapterNode, generator.PagesMap);
+            System.Diagnostics.Debug.WriteLine("Search entry generation complete. {0}", DateTime.Now );
+
+            BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Search Generation Complete\t{0}", DateTime.Now));
             if (BDCommon.Settings.SyncPushEnabled)
             {
                 BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
                 DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
                 Debug.WriteLine("Begin sync with AWS");
+                BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("AWS Push Start\t{0}", DateTime.Now));
                 SyncInfoDictionary syncResultList = RepositoryHandler.Aws.Sync(DataContext, null, BDConstants.SyncType.Publish);
 
                 string resultMessage = string.Empty;
@@ -1228,12 +1241,16 @@ namespace BDEditor.Views
                         resultMessage = string.Format("{0}{1}{4}: Pulled {2}, Pushed {3}", resultMessage, (string.IsNullOrEmpty(resultMessage) ? "" : "\n"), syncInfo.RowsPulled, syncInfo.RowsPushed, syncInfo.FriendlyName);
                 }
 
+                Debug.WriteLine(string.Format("Syc Complete at {0}", DateTime.Now));
+                BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("AWS Push Complete\t{0}", DateTime.Now));
+
                 if (string.IsNullOrEmpty(resultMessage)) resultMessage = "No changes";
 
                 MessageBox.Show(resultMessage, "Synchronization");
             }
             else MessageBox.Show("Synchronization Disabled", "Synchronization");
 
+            BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Publish Complete\t{0}", DateTime.Now));
             this.Cursor = Cursors.Default;
         }
 
@@ -2126,6 +2143,27 @@ namespace BDEditor.Views
             dataContext.SaveChanges();
             */
             #endregion
+        }
+
+        private void btnDebug_Click(object sender, EventArgs e)
+        {
+            Guid nodeUuid = Guid.Parse("62fade9f-603c-4479-817f-737cb28f1d62");
+            BDTherapy therapy = BDTherapy.RetrieveTherapyWithId(dataContext, nodeUuid);
+
+            List<BDLinkedNote> footnotes = new List<BDLinkedNote>();
+            List<Guid> objectsOnPage = new List<Guid>();
+
+            BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
+            string htmlString = generator.buildTherapyWithTwoDurationsHtml(dataContext, therapy, footnotes, objectsOnPage);
+
+            Debug.WriteLine(htmlString);
+
+            nodeUuid = Guid.Parse("24DEE453-D880-4D8E-B869-CA89DBE13067");
+            BDNode node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
+            BDHtmlPage htmlPage = generator.generatePageForEmpiricTherapyOfCultureDirectedEndocarditis(dataContext, node);
+
+            Debug.WriteLine(htmlPage.documentText);
+
         }
 
     }

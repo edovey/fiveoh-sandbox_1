@@ -62,7 +62,11 @@ namespace BDEditor.Classes
         {
             get
             { 
-                if (null == simpleDb) { simpleDb = AWSClientFactory.CreateAmazonSimpleDBClient(BD_ACCESS_KEY, BD_SECRET_KEY); }
+                AmazonSimpleDBConfig sdbConfig = new AmazonSimpleDBConfig();
+                sdbConfig.MaxErrorRetry = 15;
+
+                if (null == simpleDb) { simpleDb = AWSClientFactory.CreateAmazonSimpleDBClient(BD_ACCESS_KEY, BD_SECRET_KEY, sdbConfig); }
+                
                 return simpleDb;
             }
         }
@@ -71,7 +75,10 @@ namespace BDEditor.Classes
         {
             get
             {
-                if (null == s3) { s3 = Amazon.AWSClientFactory.CreateAmazonS3Client(BD_ACCESS_KEY, BD_SECRET_KEY); }
+                AmazonS3Config s3Config = new AmazonS3Config();
+                s3Config.MaxErrorRetry = 15;
+
+                if (null == s3) { s3 = Amazon.AWSClientFactory.CreateAmazonS3Client(BD_ACCESS_KEY, BD_SECRET_KEY, s3Config); }
                 return s3;
             }
         }
@@ -257,6 +264,7 @@ namespace BDEditor.Classes
             try
             {
                 DeleteDomainRequest saRequest = new DeleteDomainRequest().WithDomainName(BDSearchEntry.AWS_DOMAIN);
+               
                 SimpleDb.DeleteDomain(saRequest);
                 DeleteDomainRequest seRequest = new DeleteDomainRequest().WithDomainName(BDSearchEntryAssociation.AWS_DOMAIN);
                 SimpleDb.DeleteDomain(seRequest);
@@ -267,12 +275,12 @@ namespace BDEditor.Classes
                 CreateDomainResponse createResponse2 = simpleDb.CreateDomain(createDomainRequest2);
                 System.Diagnostics.Debug.WriteLine("Remote Search Deleted");
             }
-            catch (AmazonS3Exception amazonS3Exception)
+            catch (AmazonSimpleDBException amazonSdbException)
             {
-                if (amazonS3Exception.ErrorCode != null &&
-                                    (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId")
+                if (amazonSdbException.ErrorCode != null &&
+                                    (amazonSdbException.ErrorCode.Equals("InvalidAccessKeyId")
                                     ||
-                                    amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
+                                    amazonSdbException.ErrorCode.Equals("InvalidSecurity")))
                 {
                     Console.WriteLine("Check the provided AWS Credentials.");
                     Console.WriteLine(
@@ -281,8 +289,8 @@ namespace BDEditor.Classes
                 else
                 {
                     Console.WriteLine(
-                     "Error occurred. Message:'{0}' when listing objects",
-                     amazonS3Exception.Message);
+                     "DeleteRemoteSearch Error occurred. Message:'{0}' ",
+                     amazonSdbException.Message);
                 }
             }
 

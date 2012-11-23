@@ -44,6 +44,7 @@
             this.plusMinusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.degreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.µToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sOneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sTwoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trademarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label3 = new System.Windows.Forms.Label();
@@ -55,7 +56,6 @@
             this.btnMoveColumnPrevious = new System.Windows.Forms.Button();
             this.btnRemoveColumn = new System.Windows.Forms.Button();
             this.btnAddColumn = new System.Windows.Forms.Button();
-            this.sOneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,7 +64,7 @@
             this.listBoxLayoutVariants.FormattingEnabled = true;
             this.listBoxLayoutVariants.Location = new System.Drawing.Point(12, 27);
             this.listBoxLayoutVariants.Name = "listBoxLayoutVariants";
-            this.listBoxLayoutVariants.Size = new System.Drawing.Size(316, 420);
+            this.listBoxLayoutVariants.Size = new System.Drawing.Size(414, 420);
             this.listBoxLayoutVariants.TabIndex = 0;
             this.listBoxLayoutVariants.SelectedIndexChanged += new System.EventHandler(this.listBoxLayoutVariants_SelectedIndexChanged);
             // 
@@ -81,9 +81,9 @@
             // listBoxLayoutColumns
             // 
             this.listBoxLayoutColumns.FormattingEnabled = true;
-            this.listBoxLayoutColumns.Location = new System.Drawing.Point(347, 101);
+            this.listBoxLayoutColumns.Location = new System.Drawing.Point(435, 101);
             this.listBoxLayoutColumns.Name = "listBoxLayoutColumns";
-            this.listBoxLayoutColumns.Size = new System.Drawing.Size(319, 134);
+            this.listBoxLayoutColumns.Size = new System.Drawing.Size(405, 134);
             this.listBoxLayoutColumns.TabIndex = 3;
             this.listBoxLayoutColumns.SelectedIndexChanged += new System.EventHandler(this.listBoxLayoutColumns_SelectedIndexChanged);
             // 
@@ -91,16 +91,16 @@
             // 
             this.lblSelectedLayout.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblSelectedLayout.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSelectedLayout.Location = new System.Drawing.Point(347, 28);
+            this.lblSelectedLayout.Location = new System.Drawing.Point(435, 28);
             this.lblSelectedLayout.Name = "lblSelectedLayout";
-            this.lblSelectedLayout.Size = new System.Drawing.Size(319, 24);
+            this.lblSelectedLayout.Size = new System.Drawing.Size(405, 24);
             this.lblSelectedLayout.TabIndex = 4;
             this.lblSelectedLayout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // chkLayoutIncluded
             // 
             this.chkLayoutIncluded.AutoSize = true;
-            this.chkLayoutIncluded.Location = new System.Drawing.Point(347, 56);
+            this.chkLayoutIncluded.Location = new System.Drawing.Point(435, 56);
             this.chkLayoutIncluded.Name = "chkLayoutIncluded";
             this.chkLayoutIncluded.Size = new System.Drawing.Size(67, 17);
             this.chkLayoutIncluded.TabIndex = 5;
@@ -112,7 +112,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(344, 85);
+            this.label2.Location = new System.Drawing.Point(432, 85);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(47, 13);
             this.label2.TabIndex = 6;
@@ -121,9 +121,9 @@
             // txtColumnLabel
             // 
             this.txtColumnLabel.ContextMenuStrip = this.contextMenuStrip1;
-            this.txtColumnLabel.Location = new System.Drawing.Point(347, 298);
+            this.txtColumnLabel.Location = new System.Drawing.Point(435, 298);
             this.txtColumnLabel.Name = "txtColumnLabel";
-            this.txtColumnLabel.Size = new System.Drawing.Size(319, 20);
+            this.txtColumnLabel.Size = new System.Drawing.Size(371, 20);
             this.txtColumnLabel.TabIndex = 7;
             this.txtColumnLabel.Leave += new System.EventHandler(this.txtColumnLabel_Leave);
             // 
@@ -141,13 +141,13 @@
             this.trademarkToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.ShowImageMargin = false;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(128, 224);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 202);
             this.contextMenuStrip1.Text = "Insert Symbol";
             // 
             // bToolStripMenuItem
             // 
             this.bToolStripMenuItem.Name = "bToolStripMenuItem";
-            this.bToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.bToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.bToolStripMenuItem.Text = "ß";
             this.bToolStripMenuItem.ToolTipText = "Insert ß";
             this.bToolStripMenuItem.Click += new System.EventHandler(this.bToolStripMenuItem_Click);
@@ -155,7 +155,7 @@
             // geToolStripMenuItem
             // 
             this.geToolStripMenuItem.Name = "geToolStripMenuItem";
-            this.geToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.geToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.geToolStripMenuItem.Text = "≥";
             this.geToolStripMenuItem.ToolTipText = "Insert ≥";
             this.geToolStripMenuItem.Click += new System.EventHandler(this.geToolStripMenuItem_Click);
@@ -163,7 +163,7 @@
             // leToolStripMenuItem
             // 
             this.leToolStripMenuItem.Name = "leToolStripMenuItem";
-            this.leToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.leToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.leToolStripMenuItem.Text = "≤";
             this.leToolStripMenuItem.ToolTipText = "Insert ≤";
             this.leToolStripMenuItem.Click += new System.EventHandler(this.leToolStripMenuItem_Click);
@@ -171,7 +171,7 @@
             // plusMinusToolStripMenuItem
             // 
             this.plusMinusToolStripMenuItem.Name = "plusMinusToolStripMenuItem";
-            this.plusMinusToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.plusMinusToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.plusMinusToolStripMenuItem.Text = "±";
             this.plusMinusToolStripMenuItem.ToolTipText = "Insert ±";
             this.plusMinusToolStripMenuItem.Click += new System.EventHandler(this.plusMinusToolStripMenuItem_Click);
@@ -179,7 +179,7 @@
             // degreeToolStripMenuItem
             // 
             this.degreeToolStripMenuItem.Name = "degreeToolStripMenuItem";
-            this.degreeToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.degreeToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.degreeToolStripMenuItem.Text = "°";
             this.degreeToolStripMenuItem.ToolTipText = "Insert °";
             this.degreeToolStripMenuItem.Click += new System.EventHandler(this.degreeToolStripMenuItem_Click);
@@ -187,14 +187,22 @@
             // µToolStripMenuItem
             // 
             this.µToolStripMenuItem.Name = "µToolStripMenuItem";
-            this.µToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.µToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.µToolStripMenuItem.Text = "µ";
             this.µToolStripMenuItem.Click += new System.EventHandler(this.µToolStripMenuItem_Click);
+            // 
+            // sOneToolStripMenuItem
+            // 
+            this.sOneToolStripMenuItem.Name = "sOneToolStripMenuItem";
+            this.sOneToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
+            this.sOneToolStripMenuItem.Text = "¹";
+            this.sOneToolStripMenuItem.ToolTipText = "Insert ¹";
+            this.sOneToolStripMenuItem.Click += new System.EventHandler(this.sOneToolStripMenuItem_Click);
             // 
             // sTwoToolStripMenuItem
             // 
             this.sTwoToolStripMenuItem.Name = "sTwoToolStripMenuItem";
-            this.sTwoToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.sTwoToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.sTwoToolStripMenuItem.Text = "²";
             this.sTwoToolStripMenuItem.ToolTipText = "Insert ²";
             this.sTwoToolStripMenuItem.Click += new System.EventHandler(this.sTwoToolStripMenuItem_Click);
@@ -202,7 +210,7 @@
             // trademarkToolStripMenuItem
             // 
             this.trademarkToolStripMenuItem.Name = "trademarkToolStripMenuItem";
-            this.trademarkToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.trademarkToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.trademarkToolStripMenuItem.Text = "®";
             this.trademarkToolStripMenuItem.ToolTipText = "Insert ®";
             this.trademarkToolStripMenuItem.Click += new System.EventHandler(this.trademarkToolStripMenuItem_Click);
@@ -211,7 +219,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(344, 282);
+            this.label3.Location = new System.Drawing.Point(432, 282);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(71, 13);
             this.label3.TabIndex = 8;
@@ -220,17 +228,17 @@
             // listBoxColumnNodeTypes
             // 
             this.listBoxColumnNodeTypes.FormattingEnabled = true;
-            this.listBoxColumnNodeTypes.Location = new System.Drawing.Point(347, 347);
+            this.listBoxColumnNodeTypes.Location = new System.Drawing.Point(435, 347);
             this.listBoxColumnNodeTypes.Name = "listBoxColumnNodeTypes";
             this.listBoxColumnNodeTypes.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.listBoxColumnNodeTypes.Size = new System.Drawing.Size(319, 69);
+            this.listBoxColumnNodeTypes.Size = new System.Drawing.Size(405, 69);
             this.listBoxColumnNodeTypes.TabIndex = 35;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(344, 331);
+            this.label4.Location = new System.Drawing.Point(432, 331);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(78, 13);
             this.label4.TabIndex = 37;
@@ -239,7 +247,7 @@
             // btnColumnNoteTypeSetup
             // 
             this.btnColumnNoteTypeSetup.Image = global::BDEditor.Properties.Resources.document_code;
-            this.btnColumnNoteTypeSetup.Location = new System.Drawing.Point(347, 423);
+            this.btnColumnNoteTypeSetup.Location = new System.Drawing.Point(435, 423);
             this.btnColumnNoteTypeSetup.Name = "btnColumnNoteTypeSetup";
             this.btnColumnNoteTypeSetup.Size = new System.Drawing.Size(24, 24);
             this.btnColumnNoteTypeSetup.TabIndex = 36;
@@ -249,7 +257,7 @@
             // btnLinkedNote
             // 
             this.btnLinkedNote.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkedNote.Image")));
-            this.btnLinkedNote.Location = new System.Drawing.Point(671, 293);
+            this.btnLinkedNote.Location = new System.Drawing.Point(812, 293);
             this.btnLinkedNote.Name = "btnLinkedNote";
             this.btnLinkedNote.Size = new System.Drawing.Size(28, 28);
             this.btnLinkedNote.TabIndex = 30;
@@ -259,7 +267,7 @@
             // btnMoveColumnNext
             // 
             this.btnMoveColumnNext.Image = global::BDEditor.Properties.Resources.next_16;
-            this.btnMoveColumnNext.Location = new System.Drawing.Point(377, 241);
+            this.btnMoveColumnNext.Location = new System.Drawing.Point(465, 241);
             this.btnMoveColumnNext.Name = "btnMoveColumnNext";
             this.btnMoveColumnNext.Size = new System.Drawing.Size(24, 24);
             this.btnMoveColumnNext.TabIndex = 32;
@@ -269,7 +277,7 @@
             // btnMoveColumnPrevious
             // 
             this.btnMoveColumnPrevious.Image = global::BDEditor.Properties.Resources.previous_16;
-            this.btnMoveColumnPrevious.Location = new System.Drawing.Point(347, 241);
+            this.btnMoveColumnPrevious.Location = new System.Drawing.Point(435, 241);
             this.btnMoveColumnPrevious.Name = "btnMoveColumnPrevious";
             this.btnMoveColumnPrevious.Size = new System.Drawing.Size(24, 24);
             this.btnMoveColumnPrevious.TabIndex = 31;
@@ -279,7 +287,7 @@
             // btnRemoveColumn
             // 
             this.btnRemoveColumn.Image = global::BDEditor.Properties.Resources.minus;
-            this.btnRemoveColumn.Location = new System.Drawing.Point(612, 241);
+            this.btnRemoveColumn.Location = new System.Drawing.Point(786, 241);
             this.btnRemoveColumn.Name = "btnRemoveColumn";
             this.btnRemoveColumn.Size = new System.Drawing.Size(24, 24);
             this.btnRemoveColumn.TabIndex = 34;
@@ -289,26 +297,18 @@
             // btnAddColumn
             // 
             this.btnAddColumn.Image = global::BDEditor.Properties.Resources.plus;
-            this.btnAddColumn.Location = new System.Drawing.Point(642, 241);
+            this.btnAddColumn.Location = new System.Drawing.Point(816, 241);
             this.btnAddColumn.Name = "btnAddColumn";
             this.btnAddColumn.Size = new System.Drawing.Size(24, 24);
             this.btnAddColumn.TabIndex = 33;
             this.btnAddColumn.UseVisualStyleBackColor = true;
             this.btnAddColumn.Click += new System.EventHandler(this.btnAddColumn_Click);
             // 
-            // sOneToolStripMenuItem
-            // 
-            this.sOneToolStripMenuItem.Name = "sOneToolStripMenuItem";
-            this.sOneToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
-            this.sOneToolStripMenuItem.Text = "¹";
-            this.sOneToolStripMenuItem.ToolTipText = "Insert ¹";
-            this.sOneToolStripMenuItem.Click += new System.EventHandler(this.sOneToolStripMenuItem_Click);
-            // 
             // BDLayoutMetadataEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(707, 465);
+            this.ClientSize = new System.Drawing.Size(866, 465);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnColumnNoteTypeSetup);
             this.Controls.Add(this.btnLinkedNote);

@@ -42,7 +42,7 @@
             this.trademarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tbDosage = new System.Windows.Forms.TextBox();
             this.tbDuration = new System.Windows.Forms.TextBox();
-            this.noneRadioButton = new System.Windows.Forms.RadioButton();
+            this.nextTherapyRadioButton = new System.Windows.Forms.RadioButton();
             this.andRadioButton = new System.Windows.Forms.RadioButton();
             this.orRadioButton = new System.Windows.Forms.RadioButton();
             this.lblLeftBracket = new System.Windows.Forms.Label();
@@ -78,6 +78,7 @@
             this.btnDosage2Link = new System.Windows.Forms.Button();
             this.tbDuration2 = new System.Windows.Forms.TextBox();
             this.tbDosage2 = new System.Windows.Forms.TextBox();
+            this.otherRadioButton = new System.Windows.Forms.RadioButton();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
             this.pnlRadioButtons.SuspendLayout();
@@ -114,7 +115,7 @@
             // bToolStripMenuItem
             // 
             this.bToolStripMenuItem.Name = "bToolStripMenuItem";
-            this.bToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.bToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.bToolStripMenuItem.Text = "ß";
             this.bToolStripMenuItem.ToolTipText = "Insert ß";
             this.bToolStripMenuItem.Click += new System.EventHandler(this.bToolStripMenuItem_Click);
@@ -122,7 +123,7 @@
             // geToolStripMenuItem
             // 
             this.geToolStripMenuItem.Name = "geToolStripMenuItem";
-            this.geToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.geToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.geToolStripMenuItem.Text = "≥";
             this.geToolStripMenuItem.ToolTipText = "Insert ≥";
             this.geToolStripMenuItem.Click += new System.EventHandler(this.geToolStripMenuItem_Click);
@@ -130,7 +131,7 @@
             // leToolStripMenuItem
             // 
             this.leToolStripMenuItem.Name = "leToolStripMenuItem";
-            this.leToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.leToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.leToolStripMenuItem.Text = "≤";
             this.leToolStripMenuItem.ToolTipText = "Insert ≤";
             this.leToolStripMenuItem.Click += new System.EventHandler(this.leToolStripMenuItem_Click);
@@ -138,7 +139,7 @@
             // plusMinusToolStripMenuItem
             // 
             this.plusMinusToolStripMenuItem.Name = "plusMinusToolStripMenuItem";
-            this.plusMinusToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.plusMinusToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.plusMinusToolStripMenuItem.Text = "±";
             this.plusMinusToolStripMenuItem.ToolTipText = "Insert ±";
             this.plusMinusToolStripMenuItem.Click += new System.EventHandler(this.plusMinusToolStripMenuItem_Click);
@@ -146,7 +147,7 @@
             // degreeToolStripMenuItem
             // 
             this.degreeToolStripMenuItem.Name = "degreeToolStripMenuItem";
-            this.degreeToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.degreeToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.degreeToolStripMenuItem.Text = "°";
             this.degreeToolStripMenuItem.ToolTipText = "Insert °";
             this.degreeToolStripMenuItem.Click += new System.EventHandler(this.degreeToolStripMenuItem_Click);
@@ -154,14 +155,14 @@
             // µToolStripMenuItem
             // 
             this.µToolStripMenuItem.Name = "µToolStripMenuItem";
-            this.µToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.µToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.µToolStripMenuItem.Text = "µ";
             this.µToolStripMenuItem.Click += new System.EventHandler(this.µToolStripMenuItem_Click);
             // 
             // sOneToolStripMenuItem
             // 
             this.sOneToolStripMenuItem.Name = "sOneToolStripMenuItem";
-            this.sOneToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.sOneToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.sOneToolStripMenuItem.Text = "¹";
             this.sOneToolStripMenuItem.ToolTipText = "Insert ¹";
             this.sOneToolStripMenuItem.Click += new System.EventHandler(this.sOneToolStripMenuItem_Click);
@@ -169,7 +170,7 @@
             // trademarkToolStripMenuItem
             // 
             this.trademarkToolStripMenuItem.Name = "trademarkToolStripMenuItem";
-            this.trademarkToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.trademarkToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.trademarkToolStripMenuItem.Text = "®";
             this.trademarkToolStripMenuItem.ToolTipText = "Insert ®";
             this.trademarkToolStripMenuItem.Click += new System.EventHandler(this.trademarkToolStripMenuItem_Click);
@@ -196,16 +197,16 @@
             this.tbDuration.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             this.tbDuration.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDuration_MouseDown);
             // 
-            // noneRadioButton
+            // nextTherapyRadioButton
             // 
-            this.noneRadioButton.AutoSize = true;
-            this.noneRadioButton.Location = new System.Drawing.Point(28, 3);
-            this.noneRadioButton.Name = "noneRadioButton";
-            this.noneRadioButton.Size = new System.Drawing.Size(89, 17);
-            this.noneRadioButton.TabIndex = 9;
-            this.noneRadioButton.TabStop = true;
-            this.noneRadioButton.Text = "Next Therapy";
-            this.noneRadioButton.UseVisualStyleBackColor = true;
+            this.nextTherapyRadioButton.AutoSize = true;
+            this.nextTherapyRadioButton.Location = new System.Drawing.Point(28, 3);
+            this.nextTherapyRadioButton.Name = "nextTherapyRadioButton";
+            this.nextTherapyRadioButton.Size = new System.Drawing.Size(89, 17);
+            this.nextTherapyRadioButton.TabIndex = 9;
+            this.nextTherapyRadioButton.TabStop = true;
+            this.nextTherapyRadioButton.Text = "Next Therapy";
+            this.nextTherapyRadioButton.UseVisualStyleBackColor = true;
             // 
             // andRadioButton
             // 
@@ -496,8 +497,9 @@
             // pnlRadioButtons
             // 
             this.pnlRadioButtons.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlRadioButtons.Controls.Add(this.otherRadioButton);
             this.pnlRadioButtons.Controls.Add(this.andOrRadioButton);
-            this.pnlRadioButtons.Controls.Add(this.noneRadioButton);
+            this.pnlRadioButtons.Controls.Add(this.nextTherapyRadioButton);
             this.pnlRadioButtons.Controls.Add(this.andRadioButton);
             this.pnlRadioButtons.Controls.Add(this.orRadioButton);
             this.pnlRadioButtons.Controls.Add(this.thenRadioButton);
@@ -587,6 +589,17 @@
             this.tbDosage2.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             this.tbDosage2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDosage2_MouseDown);
             // 
+            // otherRadioButton
+            // 
+            this.otherRadioButton.AutoSize = true;
+            this.otherRadioButton.Location = new System.Drawing.Point(525, 3);
+            this.otherRadioButton.Name = "otherRadioButton";
+            this.otherRadioButton.Size = new System.Drawing.Size(51, 17);
+            this.otherRadioButton.TabIndex = 14;
+            this.otherRadioButton.TabStop = true;
+            this.otherRadioButton.Text = "Other";
+            this.otherRadioButton.UseVisualStyleBackColor = true;
+            // 
             // BDTherapyControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -622,7 +635,7 @@
         private System.Windows.Forms.Button btnTherapyLink;
         private System.Windows.Forms.Button btnDosageLink;
         private System.Windows.Forms.Button btnDurationLink;
-        private System.Windows.Forms.RadioButton noneRadioButton;
+        private System.Windows.Forms.RadioButton nextTherapyRadioButton;
         private System.Windows.Forms.RadioButton andRadioButton;
         private System.Windows.Forms.RadioButton orRadioButton;
         private System.Windows.Forms.Label lblLeftBracket;
@@ -664,5 +677,6 @@
         private System.Windows.Forms.TextBox tbDuration2;
         private System.Windows.Forms.TextBox tbDosage2;
         private System.Windows.Forms.ToolStripMenuItem trademarkToolStripMenuItem;
+        private System.Windows.Forms.RadioButton otherRadioButton;
     }
 }

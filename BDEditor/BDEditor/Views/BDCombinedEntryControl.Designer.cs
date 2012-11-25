@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panelTop = new System.Windows.Forms.Panel();
+            this.btnMenu = new System.Windows.Forms.Button();
             this.lblName = new System.Windows.Forms.Label();
             this.lblGroup = new System.Windows.Forms.Label();
             this.pnlRadioButtons = new System.Windows.Forms.Panel();
@@ -51,11 +52,14 @@
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.panelFields = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.bdCombinedEntryFieldControl4 = new BDEditor.Views.BDCombinedEntryFieldControl();
+            this.bdCombinedEntryFieldControl3 = new BDEditor.Views.BDCombinedEntryFieldControl();
             this.lblVirtualColumnTwo = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.bdCombinedEntryFieldControl2 = new BDEditor.Views.BDCombinedEntryFieldControl();
+            this.bdCombinedEntryFieldControl1 = new BDEditor.Views.BDCombinedEntryFieldControl();
             this.lblVirtualColumnOne = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.btnMenu = new System.Windows.Forms.Button();
             this.contextMenuStripEvents = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.reorderPreviousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reorderNextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,10 +68,7 @@
             this.addChildNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bdCombinedEntryFieldControl4 = new BDEditor.Views.BDCombinedEntryFieldControl();
-            this.bdCombinedEntryFieldControl3 = new BDEditor.Views.BDCombinedEntryFieldControl();
-            this.bdCombinedEntryFieldControl2 = new BDEditor.Views.BDCombinedEntryFieldControl();
-            this.bdCombinedEntryFieldControl1 = new BDEditor.Views.BDCombinedEntryFieldControl();
+            this.otherRadioButton = new System.Windows.Forms.RadioButton();
             this.panelTop.SuspendLayout();
             this.pnlRadioButtons.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -91,6 +92,17 @@
             this.panelTop.Size = new System.Drawing.Size(629, 83);
             this.panelTop.TabIndex = 1;
             // 
+            // btnMenu
+            // 
+            this.btnMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMenu.Image = global::BDEditor.Properties.Resources.apps_16;
+            this.btnMenu.Location = new System.Drawing.Point(596, 3);
+            this.btnMenu.Name = "btnMenu";
+            this.btnMenu.Size = new System.Drawing.Size(28, 28);
+            this.btnMenu.TabIndex = 43;
+            this.btnMenu.UseVisualStyleBackColor = true;
+            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
+            // 
             // lblName
             // 
             this.lblName.AutoSize = true;
@@ -113,6 +125,7 @@
             // pnlRadioButtons
             // 
             this.pnlRadioButtons.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlRadioButtons.Controls.Add(this.otherRadioButton);
             this.pnlRadioButtons.Controls.Add(this.andOrRadioButton);
             this.pnlRadioButtons.Controls.Add(this.noneRadioButton);
             this.pnlRadioButtons.Controls.Add(this.andRadioButton);
@@ -210,13 +223,13 @@
             this.trademarkToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.ShowImageMargin = false;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(71, 180);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 180);
             this.contextMenuStrip1.Text = "Insert Symbol";
             // 
             // bToolStripMenuItem
             // 
             this.bToolStripMenuItem.Name = "bToolStripMenuItem";
-            this.bToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
+            this.bToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.bToolStripMenuItem.Text = "ß";
             this.bToolStripMenuItem.ToolTipText = "Insert ß";
             this.bToolStripMenuItem.Click += new System.EventHandler(this.bToolStripMenuItem_Click);
@@ -224,7 +237,7 @@
             // geToolStripMenuItem
             // 
             this.geToolStripMenuItem.Name = "geToolStripMenuItem";
-            this.geToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
+            this.geToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.geToolStripMenuItem.Text = "≥";
             this.geToolStripMenuItem.ToolTipText = "Insert ≥";
             this.geToolStripMenuItem.Click += new System.EventHandler(this.geToolStripMenuItem_Click);
@@ -232,7 +245,7 @@
             // leToolStripMenuItem
             // 
             this.leToolStripMenuItem.Name = "leToolStripMenuItem";
-            this.leToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
+            this.leToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.leToolStripMenuItem.Text = "≤";
             this.leToolStripMenuItem.ToolTipText = "Insert ≤";
             this.leToolStripMenuItem.Click += new System.EventHandler(this.leToolStripMenuItem_Click);
@@ -240,7 +253,7 @@
             // plusMinusToolStripMenuItem
             // 
             this.plusMinusToolStripMenuItem.Name = "plusMinusToolStripMenuItem";
-            this.plusMinusToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
+            this.plusMinusToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.plusMinusToolStripMenuItem.Text = "±";
             this.plusMinusToolStripMenuItem.ToolTipText = "Insert ±";
             this.plusMinusToolStripMenuItem.Click += new System.EventHandler(this.plusMinusToolStripMenuItem_Click);
@@ -248,7 +261,7 @@
             // degreeToolStripMenuItem
             // 
             this.degreeToolStripMenuItem.Name = "degreeToolStripMenuItem";
-            this.degreeToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
+            this.degreeToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.degreeToolStripMenuItem.Text = "°";
             this.degreeToolStripMenuItem.ToolTipText = "Insert °";
             this.degreeToolStripMenuItem.Click += new System.EventHandler(this.degreeToolStripMenuItem_Click);
@@ -256,14 +269,14 @@
             // µToolStripMenuItem
             // 
             this.µToolStripMenuItem.Name = "µToolStripMenuItem";
-            this.µToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
+            this.µToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.µToolStripMenuItem.Text = "µ";
             this.µToolStripMenuItem.Click += new System.EventHandler(this.µToolStripMenuItem_Click);
             // 
             // sOneToolStripMenuItem
             // 
             this.sOneToolStripMenuItem.Name = "sOneToolStripMenuItem";
-            this.sOneToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
+            this.sOneToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.sOneToolStripMenuItem.Text = "¹";
             this.sOneToolStripMenuItem.ToolTipText = "Insert ¹";
             this.sOneToolStripMenuItem.Click += new System.EventHandler(this.sOneToolStripMenuItem_Click);
@@ -271,7 +284,7 @@
             // trademarkToolStripMenuItem
             // 
             this.trademarkToolStripMenuItem.Name = "trademarkToolStripMenuItem";
-            this.trademarkToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
+            this.trademarkToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.trademarkToolStripMenuItem.Text = "®";
             this.trademarkToolStripMenuItem.ToolTipText = "Insert ®";
             this.trademarkToolStripMenuItem.Click += new System.EventHandler(this.trademarkToolStripMenuItem_Click);
@@ -312,6 +325,22 @@
             this.panel2.Size = new System.Drawing.Size(629, 214);
             this.panel2.TabIndex = 1;
             // 
+            // bdCombinedEntryFieldControl4
+            // 
+            this.bdCombinedEntryFieldControl4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.bdCombinedEntryFieldControl4.Location = new System.Drawing.Point(3, 116);
+            this.bdCombinedEntryFieldControl4.Name = "bdCombinedEntryFieldControl4";
+            this.bdCombinedEntryFieldControl4.Size = new System.Drawing.Size(623, 91);
+            this.bdCombinedEntryFieldControl4.TabIndex = 2;
+            // 
+            // bdCombinedEntryFieldControl3
+            // 
+            this.bdCombinedEntryFieldControl3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.bdCombinedEntryFieldControl3.Location = new System.Drawing.Point(3, 25);
+            this.bdCombinedEntryFieldControl3.Name = "bdCombinedEntryFieldControl3";
+            this.bdCombinedEntryFieldControl3.Size = new System.Drawing.Size(623, 91);
+            this.bdCombinedEntryFieldControl3.TabIndex = 1;
+            // 
             // lblVirtualColumnTwo
             // 
             this.lblVirtualColumnTwo.Dock = System.Windows.Forms.DockStyle.Top;
@@ -334,105 +363,6 @@
             this.panel1.Size = new System.Drawing.Size(629, 214);
             this.panel1.TabIndex = 0;
             // 
-            // lblVirtualColumnOne
-            // 
-            this.lblVirtualColumnOne.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblVirtualColumnOne.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVirtualColumnOne.Location = new System.Drawing.Point(3, 3);
-            this.lblVirtualColumnOne.Name = "lblVirtualColumnOne";
-            this.lblVirtualColumnOne.Size = new System.Drawing.Size(623, 22);
-            this.lblVirtualColumnOne.TabIndex = 0;
-            // 
-            // btnMenu
-            // 
-            this.btnMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMenu.Image = global::BDEditor.Properties.Resources.apps_16;
-            this.btnMenu.Location = new System.Drawing.Point(596, 3);
-            this.btnMenu.Name = "btnMenu";
-            this.btnMenu.Size = new System.Drawing.Size(28, 28);
-            this.btnMenu.TabIndex = 43;
-            this.btnMenu.UseVisualStyleBackColor = true;
-            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
-            // 
-            // contextMenuStripEvents
-            // 
-            this.contextMenuStripEvents.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.reorderPreviousToolStripMenuItem,
-            this.reorderNextToolStripMenuItem,
-            this.toolStripSeparator2,
-            this.addSiblingNodeToolStripMenuItem,
-            this.addChildNodeToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.deleteNodeToolStripMenuItem});
-            this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(156, 126);
-            // 
-            // reorderPreviousToolStripMenuItem
-            // 
-            this.reorderPreviousToolStripMenuItem.Image = global::BDEditor.Properties.Resources.previous_16;
-            this.reorderPreviousToolStripMenuItem.Name = "reorderPreviousToolStripMenuItem";
-            this.reorderPreviousToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.reorderPreviousToolStripMenuItem.Text = "Move &Previous";
-            this.reorderPreviousToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToPrevious_Click);
-            // 
-            // reorderNextToolStripMenuItem
-            // 
-            this.reorderNextToolStripMenuItem.Image = global::BDEditor.Properties.Resources.next_16;
-            this.reorderNextToolStripMenuItem.Name = "reorderNextToolStripMenuItem";
-            this.reorderNextToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.reorderNextToolStripMenuItem.Text = "Move &Next";
-            this.reorderNextToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToNext_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(152, 6);
-            // 
-            // addSiblingNodeToolStripMenuItem
-            // 
-            this.addSiblingNodeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_16x16;
-            this.addSiblingNodeToolStripMenuItem.Name = "addSiblingNodeToolStripMenuItem";
-            this.addSiblingNodeToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.addSiblingNodeToolStripMenuItem.Text = "Add Sibling";
-            this.addSiblingNodeToolStripMenuItem.Click += new System.EventHandler(this.addSiblingNode_Click);
-            // 
-            // addChildNodeToolStripMenuItem
-            // 
-            this.addChildNodeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_record_16;
-            this.addChildNodeToolStripMenuItem.Name = "addChildNodeToolStripMenuItem";
-            this.addChildNodeToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.addChildNodeToolStripMenuItem.Text = "Add Child";
-            this.addChildNodeToolStripMenuItem.Visible = false;
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(152, 6);
-            // 
-            // deleteNodeToolStripMenuItem
-            // 
-            this.deleteNodeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.remove;
-            this.deleteNodeToolStripMenuItem.Name = "deleteNodeToolStripMenuItem";
-            this.deleteNodeToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.deleteNodeToolStripMenuItem.Text = "Delete";
-            this.deleteNodeToolStripMenuItem.Click += new System.EventHandler(this.btnDeleteNode_Click);
-            // 
-            // bdCombinedEntryFieldControl4
-            // 
-            this.bdCombinedEntryFieldControl4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.bdCombinedEntryFieldControl4.Location = new System.Drawing.Point(3, 116);
-            this.bdCombinedEntryFieldControl4.Name = "bdCombinedEntryFieldControl4";
-            this.bdCombinedEntryFieldControl4.Size = new System.Drawing.Size(623, 91);
-            this.bdCombinedEntryFieldControl4.TabIndex = 2;
-            // 
-            // bdCombinedEntryFieldControl3
-            // 
-            this.bdCombinedEntryFieldControl3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.bdCombinedEntryFieldControl3.Location = new System.Drawing.Point(3, 25);
-            this.bdCombinedEntryFieldControl3.Name = "bdCombinedEntryFieldControl3";
-            this.bdCombinedEntryFieldControl3.Size = new System.Drawing.Size(623, 91);
-            this.bdCombinedEntryFieldControl3.TabIndex = 1;
-            // 
             // bdCombinedEntryFieldControl2
             // 
             this.bdCombinedEntryFieldControl2.Dock = System.Windows.Forms.DockStyle.Top;
@@ -448,6 +378,89 @@
             this.bdCombinedEntryFieldControl1.Name = "bdCombinedEntryFieldControl1";
             this.bdCombinedEntryFieldControl1.Size = new System.Drawing.Size(623, 91);
             this.bdCombinedEntryFieldControl1.TabIndex = 1;
+            // 
+            // lblVirtualColumnOne
+            // 
+            this.lblVirtualColumnOne.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblVirtualColumnOne.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVirtualColumnOne.Location = new System.Drawing.Point(3, 3);
+            this.lblVirtualColumnOne.Name = "lblVirtualColumnOne";
+            this.lblVirtualColumnOne.Size = new System.Drawing.Size(623, 22);
+            this.lblVirtualColumnOne.TabIndex = 0;
+            // 
+            // contextMenuStripEvents
+            // 
+            this.contextMenuStripEvents.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.reorderPreviousToolStripMenuItem,
+            this.reorderNextToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.addSiblingNodeToolStripMenuItem,
+            this.addChildNodeToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.deleteNodeToolStripMenuItem});
+            this.contextMenuStripEvents.Name = "contextMenuStripEvents";
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(153, 126);
+            // 
+            // reorderPreviousToolStripMenuItem
+            // 
+            this.reorderPreviousToolStripMenuItem.Image = global::BDEditor.Properties.Resources.previous_16;
+            this.reorderPreviousToolStripMenuItem.Name = "reorderPreviousToolStripMenuItem";
+            this.reorderPreviousToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.reorderPreviousToolStripMenuItem.Text = "Move &Previous";
+            this.reorderPreviousToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToPrevious_Click);
+            // 
+            // reorderNextToolStripMenuItem
+            // 
+            this.reorderNextToolStripMenuItem.Image = global::BDEditor.Properties.Resources.next_16;
+            this.reorderNextToolStripMenuItem.Name = "reorderNextToolStripMenuItem";
+            this.reorderNextToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.reorderNextToolStripMenuItem.Text = "Move &Next";
+            this.reorderNextToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToNext_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            // 
+            // addSiblingNodeToolStripMenuItem
+            // 
+            this.addSiblingNodeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_16x16;
+            this.addSiblingNodeToolStripMenuItem.Name = "addSiblingNodeToolStripMenuItem";
+            this.addSiblingNodeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addSiblingNodeToolStripMenuItem.Text = "Add Sibling";
+            this.addSiblingNodeToolStripMenuItem.Click += new System.EventHandler(this.addSiblingNode_Click);
+            // 
+            // addChildNodeToolStripMenuItem
+            // 
+            this.addChildNodeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_record_16;
+            this.addChildNodeToolStripMenuItem.Name = "addChildNodeToolStripMenuItem";
+            this.addChildNodeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addChildNodeToolStripMenuItem.Text = "Add Child";
+            this.addChildNodeToolStripMenuItem.Visible = false;
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            // 
+            // deleteNodeToolStripMenuItem
+            // 
+            this.deleteNodeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.remove;
+            this.deleteNodeToolStripMenuItem.Name = "deleteNodeToolStripMenuItem";
+            this.deleteNodeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteNodeToolStripMenuItem.Text = "Delete";
+            this.deleteNodeToolStripMenuItem.Click += new System.EventHandler(this.btnDeleteNode_Click);
+            // 
+            // otherRadioButton
+            // 
+            this.otherRadioButton.AutoSize = true;
+            this.otherRadioButton.Location = new System.Drawing.Point(483, 3);
+            this.otherRadioButton.Name = "otherRadioButton";
+            this.otherRadioButton.Size = new System.Drawing.Size(51, 17);
+            this.otherRadioButton.TabIndex = 14;
+            this.otherRadioButton.TabStop = true;
+            this.otherRadioButton.Text = "Other";
+            this.otherRadioButton.UseVisualStyleBackColor = true;
             // 
             // BDCombinedEntryControl
             // 
@@ -519,6 +532,7 @@
         private System.Windows.Forms.ToolStripMenuItem addChildNodeToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem deleteNodeToolStripMenuItem;
+        private System.Windows.Forms.RadioButton otherRadioButton;
 
     }
 }

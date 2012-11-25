@@ -194,7 +194,7 @@ namespace BDEditor.Views
                 tbName.Text = @"";
                 tbDosage.Text = @"";
                 tbDuration.Text = @"";
-                noneRadioButton.Checked = true;
+                nextTherapyRadioButton.Checked = true;
                 lblLeftBracket.ForeColor = SystemColors.ControlLight;
                 lblRightBracket.ForeColor = SystemColors.ControlLight;
                 chkPreviousName.Checked = false;
@@ -221,8 +221,8 @@ namespace BDEditor.Views
 
                 switch ((BDConstants.BDJoinType)currentTherapy.therapyJoinType)
                 {
-                    case BDConstants.BDJoinType.None:
-                        noneRadioButton.Checked = true;
+                    case BDConstants.BDJoinType.Next:
+                        nextTherapyRadioButton.Checked = true;
                         break;
                     case BDConstants.BDJoinType.AndWithNext:
                         andRadioButton.Checked = true;
@@ -236,8 +236,11 @@ namespace BDEditor.Views
                     case BDConstants.BDJoinType.WithOrWithoutWithNext:
                         andOrRadioButton.Checked = true;
                         break;
+                    case BDConstants.BDJoinType.Other:
+                        otherRadioButton.Checked = true;
+                        break;
                     default:
-                        noneRadioButton.Checked = true;
+                        nextTherapyRadioButton.Checked = true;
                         break;
                 }
 
@@ -349,10 +352,15 @@ namespace BDEditor.Views
                         if (currentTherapy.therapyJoinType != (int)BDConstants.BDJoinType.WithOrWithoutWithNext)
                             currentTherapy.therapyJoinType = (int)BDConstants.BDJoinType.WithOrWithoutWithNext;
                     }
+                    else if (otherRadioButton.Checked)
+                    {
+                        if (currentTherapy.therapyJoinType != (int)BDConstants.BDJoinType.Other)
+                            currentTherapy.therapyJoinType = (int)BDConstants.BDJoinType.Other;
+                    }
                    else 
                     {
-                        if (currentTherapy.therapyJoinType != (int)BDConstants.BDJoinType.None)
-                            currentTherapy.therapyJoinType = (int)BDConstants.BDJoinType.None;
+                        if (currentTherapy.therapyJoinType != (int)BDConstants.BDJoinType.Next)
+                            currentTherapy.therapyJoinType = (int)BDConstants.BDJoinType.Next;
                     }
 
                     if(currentTherapy.leftBracket != this.displayLeftBracket) currentTherapy.leftBracket = this.displayLeftBracket;

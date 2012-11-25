@@ -52,18 +52,19 @@
             this.thenRadioButton = new System.Windows.Forms.RadioButton();
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblDetail = new System.Windows.Forms.Label();
+            this.otherRadioButton = new System.Windows.Forms.RadioButton();
             this.contextMenuStrip1.SuspendLayout();
             this.pnlRadioButtons.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtEntryTitle
             // 
-            this.txtEntryTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtEntryTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEntryTitle.ContextMenuStrip = this.contextMenuStrip1;
             this.txtEntryTitle.Location = new System.Drawing.Point(81, 11);
             this.txtEntryTitle.Name = "txtEntryTitle";
-            this.txtEntryTitle.Size = new System.Drawing.Size(468, 20);
+            this.txtEntryTitle.Size = new System.Drawing.Size(560, 20);
             this.txtEntryTitle.TabIndex = 0;
             this.toolTip1.SetToolTip(this.txtEntryTitle, "Entry Title");
             this.txtEntryTitle.Leave += new System.EventHandler(this.txtField_Leave);
@@ -82,13 +83,13 @@
             this.trademarkToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.ShowImageMargin = false;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(71, 180);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 180);
             this.contextMenuStrip1.Text = "Insert Symbol";
             // 
             // bToolStripMenuItem
             // 
             this.bToolStripMenuItem.Name = "bToolStripMenuItem";
-            this.bToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
+            this.bToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.bToolStripMenuItem.Text = "ß";
             this.bToolStripMenuItem.ToolTipText = "Insert ß";
             this.bToolStripMenuItem.Click += new System.EventHandler(this.bToolStripMenuItem_Click);
@@ -96,7 +97,7 @@
             // geToolStripMenuItem
             // 
             this.geToolStripMenuItem.Name = "geToolStripMenuItem";
-            this.geToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
+            this.geToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.geToolStripMenuItem.Text = "≥";
             this.geToolStripMenuItem.ToolTipText = "Insert ≥";
             this.geToolStripMenuItem.Click += new System.EventHandler(this.geToolStripMenuItem_Click);
@@ -104,7 +105,7 @@
             // leToolStripMenuItem
             // 
             this.leToolStripMenuItem.Name = "leToolStripMenuItem";
-            this.leToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
+            this.leToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.leToolStripMenuItem.Text = "≤";
             this.leToolStripMenuItem.ToolTipText = "Insert ≤";
             this.leToolStripMenuItem.Click += new System.EventHandler(this.leToolStripMenuItem_Click);
@@ -112,7 +113,7 @@
             // plusMinusToolStripMenuItem
             // 
             this.plusMinusToolStripMenuItem.Name = "plusMinusToolStripMenuItem";
-            this.plusMinusToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
+            this.plusMinusToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.plusMinusToolStripMenuItem.Text = "±";
             this.plusMinusToolStripMenuItem.ToolTipText = "Insert ±";
             this.plusMinusToolStripMenuItem.Click += new System.EventHandler(this.plusMinusToolStripMenuItem_Click);
@@ -120,7 +121,7 @@
             // degreeToolStripMenuItem
             // 
             this.degreeToolStripMenuItem.Name = "degreeToolStripMenuItem";
-            this.degreeToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
+            this.degreeToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.degreeToolStripMenuItem.Text = "°";
             this.degreeToolStripMenuItem.ToolTipText = "Insert °";
             this.degreeToolStripMenuItem.Click += new System.EventHandler(this.degreeToolStripMenuItem_Click);
@@ -128,14 +129,14 @@
             // µToolStripMenuItem
             // 
             this.µToolStripMenuItem.Name = "µToolStripMenuItem";
-            this.µToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
+            this.µToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.µToolStripMenuItem.Text = "µ";
             this.µToolStripMenuItem.Click += new System.EventHandler(this.µToolStripMenuItem_Click);
             // 
             // sOneToolStripMenuItem
             // 
             this.sOneToolStripMenuItem.Name = "sOneToolStripMenuItem";
-            this.sOneToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
+            this.sOneToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.sOneToolStripMenuItem.Text = "¹";
             this.sOneToolStripMenuItem.ToolTipText = "Insert ¹";
             this.sOneToolStripMenuItem.Click += new System.EventHandler(this.sOneToolStripMenuItem_Click);
@@ -143,7 +144,7 @@
             // trademarkToolStripMenuItem
             // 
             this.trademarkToolStripMenuItem.Name = "trademarkToolStripMenuItem";
-            this.trademarkToolStripMenuItem.Size = new System.Drawing.Size(70, 22);
+            this.trademarkToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.trademarkToolStripMenuItem.Text = "®";
             this.trademarkToolStripMenuItem.ToolTipText = "Insert ®";
             this.trademarkToolStripMenuItem.Click += new System.EventHandler(this.trademarkToolStripMenuItem_Click);
@@ -152,7 +153,7 @@
             // 
             this.btnLinkedNoteTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLinkedNoteTitle.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkedNoteTitle.Image")));
-            this.btnLinkedNoteTitle.Location = new System.Drawing.Point(553, 7);
+            this.btnLinkedNoteTitle.Location = new System.Drawing.Point(645, 7);
             this.btnLinkedNoteTitle.Name = "btnLinkedNoteTitle";
             this.btnLinkedNoteTitle.Size = new System.Drawing.Size(28, 28);
             this.btnLinkedNoteTitle.TabIndex = 37;
@@ -164,7 +165,7 @@
             // 
             this.btnLinkedNoteDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLinkedNoteDetail.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkedNoteDetail.Image")));
-            this.btnLinkedNoteDetail.Location = new System.Drawing.Point(553, 38);
+            this.btnLinkedNoteDetail.Location = new System.Drawing.Point(645, 38);
             this.btnLinkedNoteDetail.Name = "btnLinkedNoteDetail";
             this.btnLinkedNoteDetail.Size = new System.Drawing.Size(28, 28);
             this.btnLinkedNoteDetail.TabIndex = 39;
@@ -174,12 +175,12 @@
             // 
             // txtEntryDetail
             // 
-            this.txtEntryDetail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtEntryDetail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEntryDetail.ContextMenuStrip = this.contextMenuStrip1;
             this.txtEntryDetail.Location = new System.Drawing.Point(81, 42);
             this.txtEntryDetail.Name = "txtEntryDetail";
-            this.txtEntryDetail.Size = new System.Drawing.Size(468, 20);
+            this.txtEntryDetail.Size = new System.Drawing.Size(560, 20);
             this.txtEntryDetail.TabIndex = 38;
             this.toolTip1.SetToolTip(this.txtEntryDetail, "Entry Detail");
             this.txtEntryDetail.Leave += new System.EventHandler(this.txtField_Leave);
@@ -188,6 +189,7 @@
             // pnlRadioButtons
             // 
             this.pnlRadioButtons.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlRadioButtons.Controls.Add(this.otherRadioButton);
             this.pnlRadioButtons.Controls.Add(this.andOrRadioButton);
             this.pnlRadioButtons.Controls.Add(this.noneRadioButton);
             this.pnlRadioButtons.Controls.Add(this.andRadioButton);
@@ -196,7 +198,7 @@
             this.pnlRadioButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlRadioButtons.Location = new System.Drawing.Point(0, 76);
             this.pnlRadioButtons.Name = "pnlRadioButtons";
-            this.pnlRadioButtons.Size = new System.Drawing.Size(586, 23);
+            this.pnlRadioButtons.Size = new System.Drawing.Size(678, 23);
             this.pnlRadioButtons.TabIndex = 40;
             // 
             // andOrRadioButton
@@ -275,6 +277,17 @@
             this.lblDetail.TabIndex = 42;
             this.lblDetail.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // otherRadioButton
+            // 
+            this.otherRadioButton.AutoSize = true;
+            this.otherRadioButton.Location = new System.Drawing.Point(548, 3);
+            this.otherRadioButton.Name = "otherRadioButton";
+            this.otherRadioButton.Size = new System.Drawing.Size(51, 17);
+            this.otherRadioButton.TabIndex = 14;
+            this.otherRadioButton.TabStop = true;
+            this.otherRadioButton.Text = "Other";
+            this.otherRadioButton.UseVisualStyleBackColor = true;
+            // 
             // BDCombinedEntryFieldControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -287,7 +300,7 @@
             this.Controls.Add(this.btnLinkedNoteTitle);
             this.Controls.Add(this.txtEntryTitle);
             this.Name = "BDCombinedEntryFieldControl";
-            this.Size = new System.Drawing.Size(586, 99);
+            this.Size = new System.Drawing.Size(678, 99);
             this.Load += new System.EventHandler(this.BDCombinedEntryFieldControl_Load);
             this.contextMenuStrip1.ResumeLayout(false);
             this.pnlRadioButtons.ResumeLayout(false);
@@ -321,6 +334,7 @@
         private System.Windows.Forms.ToolStripMenuItem trademarkToolStripMenuItem;
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblDetail;
+        private System.Windows.Forms.RadioButton otherRadioButton;
 
     }
 }

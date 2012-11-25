@@ -158,7 +158,7 @@ namespace BDEditor.Views
 
                 switch ((BDConstants.BDJoinType)currentDosage.joinType)
                 {
-                    case BDConstants.BDJoinType.None:
+                    case BDConstants.BDJoinType.Next:
                         noneRadioButton.Checked = true;
                         break;
                     case BDConstants.BDJoinType.AndWithNext:
@@ -173,8 +173,11 @@ namespace BDEditor.Views
                     case BDConstants.BDJoinType.WithOrWithoutWithNext:
                         andOrRadioButton.Checked = true;
                         break;
+                    case BDConstants.BDJoinType.Other:
+                        otherRadioButton.Checked = true;
+                        break;
                     default:
-                        noneRadioButton.Checked = true;
+                       noneRadioButton.Checked = true;
                         break;
                 }
             }
@@ -252,10 +255,15 @@ namespace BDEditor.Views
                         if (currentDosage.joinType != (int)BDConstants.BDJoinType.WithOrWithoutWithNext)
                             currentDosage.joinType = (int)BDConstants.BDJoinType.WithOrWithoutWithNext;
                     }
+                    else if (otherRadioButton.Checked)
+                    {
+                        if (currentDosage.joinType != (int)BDConstants.BDJoinType.Other)
+                            currentDosage.joinType = (int)BDConstants.BDJoinType.Other;
+                    }
                     else
                     {
-                        if (currentDosage.joinType != (int)BDConstants.BDJoinType.None)
-                            currentDosage.joinType = (int)BDConstants.BDJoinType.None;
+                        if (currentDosage.joinType != (int)BDConstants.BDJoinType.Next)
+                            currentDosage.joinType = (int)BDConstants.BDJoinType.Next;
                     }
 
                     BDDosage.Save(dataContext, currentDosage);

@@ -892,7 +892,7 @@ namespace BDEditor.Classes
                                 {
                                     // BDDosage
                                     BDDosage dosage = lvl2Child as BDDosage;
-                                    if (dosage.joinType == (int)BDConstants.BDJoinType.None)
+                                    if (dosage.joinType == (int)BDConstants.BDJoinType.Next)
                                         dosageHTML.AppendFormat("{0}{1}", buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_DOSAGE, dosage.dosage, false, footnotes, objectsOnPage), cellLineTag);
                                     else
                                         dosageHTML.AppendFormat("{0} {1}{2}", buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_DOSAGE, dosage.dosage, false, footnotes, objectsOnPage), retrieveConjunctionString((int)dosage.joinType), cellLineTag);
@@ -916,7 +916,7 @@ namespace BDEditor.Classes
                             {
                                 // BDDosage
                                 BDDosage dosage = lvl2Child as BDDosage;
-                                if (dosage.joinType == (int)BDConstants.BDJoinType.None)
+                                if (dosage.joinType == (int)BDConstants.BDJoinType.Next)
                                     dosageHTML.AppendFormat("{0}{1}", buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_DOSAGE, dosage.dosage, false, footnotes, objectsOnPage), cellLineTag);
                                 else
                                     dosageHTML.AppendFormat("{0} {1}{2}", buildCellHTML(pContext, lvl2Child, BDDosage.PROPERTYNAME_DOSAGE, dosage.dosage, false, footnotes, objectsOnPage), retrieveConjunctionString((int)dosage.joinType), cellLineTag);
@@ -932,7 +932,7 @@ namespace BDEditor.Classes
                             string cellLineTag = (childNodes.Count > 0) ? "<br>" : "";
 
                             BDDosage dosage = child as BDDosage;
-                            if (dosage.joinType == (int)BDConstants.BDJoinType.None)
+                            if (dosage.joinType == (int)BDConstants.BDJoinType.Next)
                                 dosageHTML.AppendFormat("{0}{1}", buildCellHTML(pContext, child, BDDosage.PROPERTYNAME_DOSAGE, dosage.dosage, false, footnotes, objectsOnPage), cellLineTag);
                             else
                                 dosageHTML.AppendFormat("{0} {1}{2}", buildCellHTML(pContext, child, BDDosage.PROPERTYNAME_DOSAGE, dosage.dosage, false, footnotes, objectsOnPage), retrieveConjunctionString((int)dosage.joinType), cellLineTag);
@@ -3856,7 +3856,7 @@ namespace BDEditor.Classes
             string styleString = string.Empty;
 
             // check join type - if none, then draw the bottom border on the table row
-            if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.None)
+            if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.Next)
                 styleString = @"class=""d0""";  // row has bottom border
             else
                 styleString = @"class=""d1""";  // NO bottom border
@@ -3907,7 +3907,7 @@ namespace BDEditor.Classes
             string styleString = string.Empty;
 
             // check join type - if none, then draw the bottom border on the table row
-            if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.None)
+            if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.Next)
                 styleString = @"class=""d0""";
             else
                 styleString = @"class=""d1""";
@@ -3962,7 +3962,7 @@ namespace BDEditor.Classes
             string styleString = string.Empty;
 
             // check join type - if NONE, then draw the bottom border on the table row
-            if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.None)
+            if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.Next)
                 styleString = @"class=""d0""";
             else
                 styleString = @"class=""d1""";
@@ -4016,7 +4016,7 @@ namespace BDEditor.Classes
             string styleString = string.Empty;
 
             // check join type - if none, then draw the bottom border on the table row
-            if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.None)
+            if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.Next)
                 styleString = @"class=""d0""";  // row has bottom border
             else
                 styleString = @"class=""d1""";  // NO bottom border
@@ -4734,7 +4734,7 @@ namespace BDEditor.Classes
                     joinString = BDUtilities.GetEnumDescription(BDConstants.BDJoinType.WithOrWithoutWithNext);
                     break;
                 default:
-                    joinString = BDUtilities.GetEnumDescription(BDConstants.BDJoinType.None);
+                    joinString = BDUtilities.GetEnumDescription(BDConstants.BDJoinType.Next);
                     break;
             }
             return joinString;

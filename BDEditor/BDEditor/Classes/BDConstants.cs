@@ -438,7 +438,7 @@ namespace BDEditor.Classes
         public enum BDJoinType
         {
             [Description("")]
-            None = 0,
+            Next = 0,
             [Description("and")]
             AndWithNext = 1,
             [Description("or")]
@@ -447,6 +447,8 @@ namespace BDEditor.Classes
             ThenWithNext = 3,
             [Description("+/-")]
             WithOrWithoutWithNext = 4,
+            [Description("Other")]
+            Other = 5,
         }
 
         /// <summary>

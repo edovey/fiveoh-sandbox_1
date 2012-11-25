@@ -127,7 +127,7 @@ namespace BDEditor.DataModel
         {
             get
             {
-                BDConstants.BDJoinType value = BDConstants.BDJoinType.None;
+                BDConstants.BDJoinType value = BDConstants.BDJoinType.Next;
                 if (null != groupJoinType) value = (BDConstants.BDJoinType)groupJoinType;
                 return value;
             }
@@ -136,7 +136,7 @@ namespace BDEditor.DataModel
         {
             get
             {
-                BDConstants.BDJoinType value = BDConstants.BDJoinType.None;
+                BDConstants.BDJoinType value = BDConstants.BDJoinType.Next;
                 if (null != entryJoinType01) value = (BDConstants.BDJoinType)entryJoinType01;
                 return value;
             }
@@ -145,7 +145,7 @@ namespace BDEditor.DataModel
         {
             get
             {
-                BDConstants.BDJoinType value = BDConstants.BDJoinType.None;
+                BDConstants.BDJoinType value = BDConstants.BDJoinType.Next;
                 if (null != entryJoinType02) value = (BDConstants.BDJoinType)entryJoinType02;
                 return value;
             }
@@ -154,7 +154,7 @@ namespace BDEditor.DataModel
         {
             get
             {
-                BDConstants.BDJoinType value = BDConstants.BDJoinType.None;
+                BDConstants.BDJoinType value = BDConstants.BDJoinType.Next;
                 if (null != entryJoinType03) value = (BDConstants.BDJoinType)entryJoinType03;
                 return value;
             }
@@ -163,7 +163,7 @@ namespace BDEditor.DataModel
         {
             get
             {
-                BDConstants.BDJoinType value = BDConstants.BDJoinType.None;
+                BDConstants.BDJoinType value = BDConstants.BDJoinType.Next;
                 if (null != entryJoinType04) value = (BDConstants.BDJoinType)entryJoinType04;
                 return value;
             }

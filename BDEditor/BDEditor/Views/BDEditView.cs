@@ -1242,7 +1242,7 @@ namespace BDEditor.Views
                 }
 
                 Debug.WriteLine(string.Format("Syc Complete at {0}", DateTime.Now));
-                BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("AWS Push Complete\t{0}", DateTime.Now));
+                BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("AWS Push (Publish) Complete\t{0}", DateTime.Now));
 
                 if (string.IsNullOrEmpty(resultMessage)) resultMessage = "No changes";
 

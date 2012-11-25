@@ -91,7 +91,7 @@ namespace BDEditor.DataModel
             therapy.createdBy = Guid.Empty;
             therapy.createdDate = DateTime.Now;
             therapy.schemaVersion = ENTITY_SCHEMAVERSION;
-            therapy.therapyJoinType = (int)BDConstants.BDJoinType.None;
+            therapy.therapyJoinType = (int)BDConstants.BDJoinType.Next;
             therapy.leftBracket = false;
             therapy.rightBracket = false;
             therapy.displayOrder = -1;

@@ -160,7 +160,7 @@ namespace BDEditor.Views
             txtEntryDetail.Text = detailValueFromField(CurrentEntry);
             switch (joinValueFromField(CurrentEntry))
             {
-                case BDConstants.BDJoinType.None:
+                case BDConstants.BDJoinType.Next:
                     noneRadioButton.Checked = true;
                     break;
                 case BDConstants.BDJoinType.AndWithNext:
@@ -174,6 +174,9 @@ namespace BDEditor.Views
                     break;
                 case BDConstants.BDJoinType.WithOrWithoutWithNext:
                     andOrRadioButton.Checked = true;
+                    break;
+                case BDConstants.BDJoinType.Other:
+                    otherRadioButton.Checked = true;
                     break;
                 default:
                     noneRadioButton.Checked = true;
@@ -228,7 +231,7 @@ namespace BDEditor.Views
         
         private BDConstants.BDJoinType joinValueFromField(BDCombinedEntry pEntry)
         {
-            BDConstants.BDJoinType joinType = BDConstants.BDJoinType.None;
+            BDConstants.BDJoinType joinType = BDConstants.BDJoinType.Next;
 
             switch (FieldName)
             {
@@ -250,13 +253,13 @@ namespace BDEditor.Views
 
         private BDConstants.BDJoinType gatherJoinType()
         {
-            BDConstants.BDJoinType joinType = BDConstants.BDJoinType.None;
+            BDConstants.BDJoinType joinType = BDConstants.BDJoinType.Next;
 
             if (andRadioButton.Checked) joinType = BDConstants.BDJoinType.AndWithNext;
             else if (orRadioButton.Checked) joinType = BDConstants.BDJoinType.OrWithNext;
             else if (thenRadioButton.Checked) joinType = BDConstants.BDJoinType.ThenWithNext;
             else if (andOrRadioButton.Checked) joinType = BDConstants.BDJoinType.WithOrWithoutWithNext;
-
+            else if (otherRadioButton.Checked) joinType = BDConstants.BDJoinType.Other;
             return joinType;
         }
 

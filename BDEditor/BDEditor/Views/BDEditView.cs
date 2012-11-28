@@ -2147,6 +2147,7 @@ namespace BDEditor.Views
 
         private void btnDebug_Click(object sender, EventArgs e)
         {
+            Debug.WriteLine("");
             Guid nodeUuid = Guid.Parse("62fade9f-603c-4479-817f-737cb28f1d62");
             BDTherapy therapy = BDTherapy.RetrieveTherapyWithId(dataContext, nodeUuid);
 
@@ -2154,16 +2155,26 @@ namespace BDEditor.Views
             List<Guid> objectsOnPage = new List<Guid>();
 
             BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
-            string htmlString = generator.buildTherapyWithTwoDurationsHtml(dataContext, therapy, footnotes, objectsOnPage);
 
-            Debug.WriteLine(htmlString);
+            //string htmlString = generator.buildTherapyWithTwoDurationsHtml(dataContext, therapy, footnotes, objectsOnPage);
+            //Debug.WriteLine(htmlString);
 
-            nodeUuid = Guid.Parse("24DEE453-D880-4D8E-B869-CA89DBE13067");
+            //nodeUuid = Guid.Parse("24DEE453-D880-4D8E-B869-CA89DBE13067");
+            //BDNode node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
+            //BDHtmlPage htmlPage = generator.generatePageForEmpiricTherapyOfCultureDirectedEndocarditis(dataContext, node);
+            //Debug.WriteLine(htmlPage.documentText);
+
+            nodeUuid = Guid.Parse("c77ee0f1-e2f8-4e18-82c5-b4ab0bc917cc");
+
             BDNode node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
-            BDHtmlPage htmlPage = generator.generatePageForEmpiricTherapyOfCultureDirectedEndocarditis(dataContext, node);
-
+            BDHtmlPage htmlPage = generator.generatePageForEmpiricTherapyOfEndocarditisPaediatrics(dataContext, node);
             Debug.WriteLine(htmlPage.documentText);
-
+            Debug.WriteLine("");
+            nodeUuid = Guid.Parse("f63383e6-af5f-4f15-81a0-8f32cf058d01");
+            node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
+            htmlPage = generator.generatePageForEmpiricTherapyPresentation(dataContext, node);
+            Debug.WriteLine(htmlPage.documentText);
+            Debug.WriteLine("");
         }
 
     }

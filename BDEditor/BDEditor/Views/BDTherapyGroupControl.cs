@@ -95,6 +95,9 @@ namespace BDEditor.Views
             bool origState = BDCommon.Settings.IsUpdating;
             BDCommon.Settings.IsUpdating = true;
 
+            string lblString = string.Format(@"u={0} : p={1} : {2}", CurrentNode.Uuid, CurrentNode.ParentId, BDUtilities.GetEnumDescription(CurrentNode.LayoutVariant));
+            toolTip1.SetToolTip(therapyGroupName, lblString);
+
             ControlHelper.SuspendDrawing(this);
 
             // This is generic for Constants.LayoutVariantType.TreatmentRecommendation01

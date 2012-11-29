@@ -1201,29 +1201,49 @@ namespace BDEditor.Views
 
         private void btnPublish_Click(object sender, EventArgs e)
         {
-            IBDNode chapterNode;
-            DialogResult result = MessageBox.Show("Generate All Chapters?", "Publish", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-            if (result == DialogResult.Yes)
-                chapterNode = null;
-            else if (result == DialogResult.No)
-                chapterNode = (chapterDropDown.SelectedItem as BDNode);
+            IBDNode chapterNode = null;
+
+            bool awsPushOnly = false;
+
+            DialogResult pushChoice = MessageBox.Show("Push to Amazon only?", "AWS", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+            if (pushChoice == DialogResult.Yes)
+                awsPushOnly = true;
+            else if (pushChoice == DialogResult.No)
+                awsPushOnly = false;
             else
                 return;
+
+            if (!awsPushOnly)
+            {
+                DialogResult result = MessageBox.Show("Generate All Chapters?", "Publish", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                if (result == DialogResult.Yes)
+                    chapterNode = null;
+                else if (result == DialogResult.No)
+                    chapterNode = (chapterDropDown.SelectedItem as BDNode);
+                else
+                    return;
+            }
+
             this.Cursor = Cursors.WaitCursor;
 
 
             Debug.WriteLine(string.Format("Start {0}", DateTime.Now));
+
             BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Publish Start\t{0}", DateTime.Now));
 
-            BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
-            generator.Generate(dataContext, chapterNode);
-            System.Diagnostics.Debug.WriteLine("HTML page generation complete.");
-            BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Generation Complete\t{0}", DateTime.Now));
+            if (!awsPushOnly)
+            {
+                BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
+                generator.Generate(dataContext, chapterNode);
+                System.Diagnostics.Debug.WriteLine("HTML page generation complete.");
+                BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Generation Complete\t{0}", DateTime.Now));
 
-            BDSearchEntryGenerator.Generate(dataContext, chapterNode, generator.PagesMap);
-            System.Diagnostics.Debug.WriteLine("Search entry generation complete. {0}", DateTime.Now );
+                BDSearchEntryGenerator.Generate(dataContext, chapterNode, generator.PagesMap);
+                System.Diagnostics.Debug.WriteLine("Search entry generation complete. {0}", DateTime.Now);
 
-            BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Search Generation Complete\t{0}", DateTime.Now));
+                BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Search Generation Complete\t{0}", DateTime.Now));
+            }
+
             if (BDCommon.Settings.SyncPushEnabled)
             {
                 BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
@@ -2164,17 +2184,43 @@ namespace BDEditor.Views
             //BDHtmlPage htmlPage = generator.generatePageForEmpiricTherapyOfCultureDirectedEndocarditis(dataContext, node);
             //Debug.WriteLine(htmlPage.documentText);
 
+            Debug.WriteLine("-- A --");
             nodeUuid = Guid.Parse("c77ee0f1-e2f8-4e18-82c5-b4ab0bc917cc");
-
             BDNode node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
             BDHtmlPage htmlPage = generator.generatePageForEmpiricTherapyOfEndocarditisPaediatrics(dataContext, node);
             Debug.WriteLine(htmlPage.documentText);
             Debug.WriteLine("");
+
+            Debug.WriteLine(" -- A2 --");
+            htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
+            Debug.WriteLine(htmlPage.documentText);
+            Debug.WriteLine("");
+
+            Debug.WriteLine("-- B --");
             nodeUuid = Guid.Parse("f63383e6-af5f-4f15-81a0-8f32cf058d01");
             node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
             htmlPage = generator.generatePageForEmpiricTherapyPresentation(dataContext, node);
             Debug.WriteLine(htmlPage.documentText);
             Debug.WriteLine("");
+            Debug.WriteLine("-- B2 --");
+            htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
+            Debug.WriteLine(htmlPage.documentText);
+            Debug.WriteLine("");
+
+
+            Debug.WriteLine("-- C --");
+            nodeUuid = Guid.Parse("68f69d10-4d5f-4717-8815-843fbe6b5ed8");
+            node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
+            htmlPage = generator.generatePageForEmpiricTherapyDisease(dataContext, node);
+            Debug.WriteLine(htmlPage.documentText);
+            Debug.WriteLine("");
+
+            Debug.WriteLine("-- C2 --");
+            htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
+            Debug.WriteLine(htmlPage.documentText);
+            Debug.WriteLine("");
+
+            Debug.WriteLine("-- Complete --");
         }
 
     }

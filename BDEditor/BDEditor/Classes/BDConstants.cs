@@ -447,8 +447,10 @@ namespace BDEditor.Classes
             ThenWithNext = 3,
             [Description("+/-")]
             WithOrWithoutWithNext = 4,
-            [Description("Other")]
+            [Description("other")]
             Other = 5,
+            [Description("and/or")]
+            AndOr = 6,
         }
 
         /// <summary>

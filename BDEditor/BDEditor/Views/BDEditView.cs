@@ -2192,23 +2192,27 @@ namespace BDEditor.Views
             Debug.WriteLine("");
 
             Debug.WriteLine(" -- A2 --");
+            htmlPage = null;
             htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
             Debug.WriteLine(htmlPage.documentText);
             Debug.WriteLine("");
 
             Debug.WriteLine("-- B --");
+            htmlPage = null;
             nodeUuid = Guid.Parse("f63383e6-af5f-4f15-81a0-8f32cf058d01");
             node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
             htmlPage = generator.generatePageForEmpiricTherapyPresentation(dataContext, node);
             Debug.WriteLine(htmlPage.documentText);
             Debug.WriteLine("");
             Debug.WriteLine("-- B2 --");
+            htmlPage = null;
             htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
             Debug.WriteLine(htmlPage.documentText);
             Debug.WriteLine("");
 
 
             Debug.WriteLine("-- C --");
+            htmlPage = null;
             nodeUuid = Guid.Parse("68f69d10-4d5f-4717-8815-843fbe6b5ed8");
             node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
             htmlPage = generator.generatePageForEmpiricTherapyDisease(dataContext, node);
@@ -2216,6 +2220,7 @@ namespace BDEditor.Views
             Debug.WriteLine("");
 
             Debug.WriteLine("-- C2 --");
+            htmlPage = null;
             htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
             Debug.WriteLine(htmlPage.documentText);
             Debug.WriteLine("");

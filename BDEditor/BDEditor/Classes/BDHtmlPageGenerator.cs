@@ -4488,7 +4488,7 @@ namespace BDEditor.Classes
                     switch (configuredEntry.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Amantadine_Renal:
-                            html.AppendFormat("<tr><td>{0}</td><td><{1}</td><td>{2}</td><td>{3}</td></tr>",
+                            html.AppendFormat("<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td></tr>",
                                               buildNodePropertyHTML(pContext, configuredEntry, configuredEntry.Name, BDConfiguredEntry.PROPERTYNAME_NAME, false, pFootnotes, pObjectsOnPage),
                                               buildNodePropertyHTML(pContext, configuredEntry, configuredEntry.field01, BDConfiguredEntry.PROPERTYNAME_FIELD01, false, pFootnotes, pObjectsOnPage),
                                               buildNodePropertyHTML(pContext, configuredEntry, configuredEntry.field02, BDConfiguredEntry.PROPERTYNAME_FIELD02, false, pFootnotes, pObjectsOnPage),
@@ -4506,6 +4506,8 @@ namespace BDEditor.Classes
             // Gates on LayoutVariant to facilitate customization
 
             StringBuilder html = new StringBuilder();
+            StringBuilder prefixHtml = new StringBuilder();
+
             if ((null != pNode) && (pNode.NodeType == BDConstants.BDNodeType.BDCombinedEntry))
             {
                 BDCombinedEntry combinedEntry = pNode as BDCombinedEntry;
@@ -4517,7 +4519,7 @@ namespace BDEditor.Classes
                     //html.AppendFormat("<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel), combinedEntry.Name);
 
                     //NOTE: This expects that a matching number of columns have been defined
-                    html.Append("<table><tr>");
+                    html.Append("<table><tr><th></th>"); // insert a blank column header: Combined Entries layout columns, by definition, are offset by 1
                     for (int i = 0; i < metadataLayoutColumns.Count; i++)
                         html.AppendFormat("<th>{0}</th>", metadataLayoutColumns[i]);
                     html.Append("</tr>");
@@ -4526,7 +4528,12 @@ namespace BDEditor.Classes
                 switch (pNode.LayoutVariant)
                 {
                     // created from a table (Prophylaxis_Communicable_Influenza)
+                    //case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza:
+
+                    //    break;
+
                     case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Amantadine_NoRenal: //3121
+                        prefixHtml.AppendFormat("<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel), combinedEntry.Name);
                         html.AppendFormat("<tr><td>{0}</td><td colspan=3>{1}</td></tr>",
                             buildNodePropertyHTML(pContext, combinedEntry, combinedEntry.entryTitle01, BDCombinedEntry.PROPERTYNAME_ENTRYTITLE01, false, pFootnotes, pObjectsOnPage),
                             buildNodePropertyHTML(pContext, combinedEntry, combinedEntry.entryDetail01, BDCombinedEntry.PROPERTYNAME_ENTRY01, false, pFootnotes, pObjectsOnPage));
@@ -4576,55 +4583,80 @@ namespace BDEditor.Classes
                     default:
                         StringBuilder cell0HTML = new StringBuilder();
                         StringBuilder cell1HTML = new StringBuilder();
-                        StringBuilder cell2HTML = new StringBuilder();
-                        StringBuilder cell3HTML = new StringBuilder();
+                        StringBuilder cell2HTML = new StringBuilder();   
+
+                        // first column
+                        if (!string.IsNullOrEmpty(combinedEntry.groupTitle))
+                            cell0HTML.AppendFormat("<u>{0}</u>",
+                                buildNodePropertyHTML(pContext, combinedEntry, combinedEntry.groupTitle, BDCombinedEntry.PROPERTYNAME_GROUPTITLE, false, pFootnotes, pObjectsOnPage));
+                        cell0HTML.Append("<br>");
 
                         if (!string.IsNullOrEmpty(combinedEntry.Name))
-                            cell0HTML.AppendFormat("<b>{0}</b><br>{1}<br>",
-                                buildNodePropertyHTML(pContext, combinedEntry, combinedEntry.Name, BDCombinedEntry.PROPERTYNAME_NAME, false, pFootnotes, pObjectsOnPage),
-                                BDUtilities.GetEnumDescription(combinedEntry.GroupJoinType));
+                        {
+                            cell0HTML.AppendFormat("<b>{0}</b><br>",
+                                                   buildNodePropertyHTML(pContext, combinedEntry, combinedEntry.Name, BDCombinedEntry.PROPERTYNAME_NAME, false, pFootnotes, pObjectsOnPage));
+                            if (retrieveConjunctionString(combinedEntry.GroupJoinType) != string.Empty)
+                                cell0HTML.AppendFormat("{0}<br>", retrieveConjunctionString(combinedEntry.GroupJoinType));
+                        }
 
+                        // second column
                         if (!string.IsNullOrEmpty(combinedEntry.entryTitle01))
-                            cell1HTML.AppendFormat("<u>{0}</u><br>",
+                            cell1HTML.AppendFormat("<u>{0}</u>",
                                 buildNodePropertyHTML(pContext, combinedEntry, combinedEntry.entryTitle01, BDCombinedEntry.PROPERTYNAME_ENTRYTITLE01, false, pFootnotes, pObjectsOnPage));
+                        cell1HTML.Append("<br>");
 
                         if (!string.IsNullOrEmpty(combinedEntry.entryDetail01))
-                            cell1HTML.AppendFormat("{0}<br><b>{1}</b><br>",
-                                buildNodePropertyHTML(pContext, combinedEntry, combinedEntry.entryDetail01, BDCombinedEntry.PROPERTYNAME_ENTRY01, false, pFootnotes, pObjectsOnPage),
-                                BDUtilities.GetEnumDescription(combinedEntry.JoinType01));
+                        {
+                            cell1HTML.AppendFormat("{0}<br>",
+                                buildNodePropertyHTML(pContext, combinedEntry, combinedEntry.entryDetail01, BDCombinedEntry.PROPERTYNAME_ENTRY01, false, pFootnotes, pObjectsOnPage));
+                            if (retrieveConjunctionString(combinedEntry.JoinType01) != string.Empty)
+                                cell1HTML.AppendFormat("<b>{0}</b><br>", retrieveConjunctionString(combinedEntry.JoinType01));
+                        }
 
                         if (!string.IsNullOrEmpty(combinedEntry.entryTitle02))
                             cell1HTML.AppendFormat("<u>{0}</u><br>",
                                 buildNodePropertyHTML(pContext, combinedEntry, combinedEntry.entryTitle02, BDCombinedEntry.PROPERTYNAME_ENTRYTITLE02, false, pFootnotes, pObjectsOnPage));
 
                         if (!string.IsNullOrEmpty(combinedEntry.entryDetail02))
-                            cell1HTML.AppendFormat("{0}<br><b>{1}</b><br>",
-                                buildNodePropertyHTML(pContext, combinedEntry, combinedEntry.entryDetail02, BDCombinedEntry.PROPERTYNAME_ENTRY02, false, pFootnotes, pObjectsOnPage),
-                                BDUtilities.GetEnumDescription(combinedEntry.JoinType02));
-
+                        {
+                            cell1HTML.AppendFormat("{0}<br>", buildNodePropertyHTML(pContext, combinedEntry, combinedEntry.entryDetail02, BDCombinedEntry.PROPERTYNAME_ENTRY02, false, pFootnotes, pObjectsOnPage));
+                            if (retrieveConjunctionString(combinedEntry.JoinType02) != string.Empty)
+                            {
+                                cell1HTML.AppendFormat("<b>{0}</b>", retrieveConjunctionString(combinedEntry.JoinType02));
+                            }
+                        }
+                        
+                        //third column
                         if (!string.IsNullOrEmpty(combinedEntry.entryTitle03))
-                            cell2HTML.AppendFormat("<u>{0}</u><br>",
+                            cell2HTML.AppendFormat("<u>{0}</u>",
                                 buildNodePropertyHTML(pContext, combinedEntry, combinedEntry.entryTitle03, BDCombinedEntry.PROPERTYNAME_ENTRYTITLE03, false, pFootnotes, pObjectsOnPage));
+                        cell2HTML.Append("<br>");
 
                         if (!string.IsNullOrEmpty(combinedEntry.entryDetail03))
-                            cell2HTML.AppendFormat("{0}<br><b>{1}</b><br>",
-                                buildNodePropertyHTML(pContext, combinedEntry, combinedEntry.entryDetail03, BDCombinedEntry.PROPERTYNAME_ENTRY03, false, pFootnotes, pObjectsOnPage),
-                                BDUtilities.GetEnumDescription(combinedEntry.JoinType03));
+                        {
+                            cell2HTML.AppendFormat("{0}<br>", buildNodePropertyHTML(pContext, combinedEntry, combinedEntry.entryDetail03, BDCombinedEntry.PROPERTYNAME_ENTRY03, false, pFootnotes, pObjectsOnPage));
+                            if (retrieveConjunctionString(combinedEntry.JoinType03) != string.Empty)
+                                cell2HTML.AppendFormat("<b>{0}</b><br>", retrieveConjunctionString(combinedEntry.JoinType03));
+                        }
 
                         if (!string.IsNullOrEmpty(combinedEntry.entryTitle04))
                             cell2HTML.AppendFormat("<u>{0}</u><br>",
                                 buildNodePropertyHTML(pContext, combinedEntry, combinedEntry.entryTitle04, BDCombinedEntry.PROPERTYNAME_ENTRYTITLE04, false, pFootnotes, pObjectsOnPage));
 
                         if (!string.IsNullOrEmpty(combinedEntry.entryDetail04))
-                            cell2HTML.AppendFormat("{0}<br><b>{1}</b><br>",
-                                buildNodePropertyHTML(pContext, combinedEntry, combinedEntry.entryDetail04, BDCombinedEntry.PROPERTYNAME_ENTRY04, false, pFootnotes, pObjectsOnPage),
-                                BDUtilities.GetEnumDescription(combinedEntry.JoinType04));
+                        {
+                            cell2HTML.AppendFormat("{0}<br>",
+                                buildNodePropertyHTML(pContext, combinedEntry, combinedEntry.entryDetail04, BDCombinedEntry.PROPERTYNAME_ENTRY04, false, pFootnotes, pObjectsOnPage));
+                            if (retrieveConjunctionString(combinedEntry.JoinType04) != string.Empty)
+                                cell2HTML.AppendFormat("<b>{0}</b><br>", retrieveConjunctionString(combinedEntry.JoinType04));
+                        }
                         
                         html.AppendFormat("<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>", cell0HTML, cell1HTML, cell2HTML);
                         break;
                 }
             }
 
+            html.Insert(0, prefixHtml);
             return html.ToString();
         }
 
@@ -4953,7 +4985,8 @@ namespace BDEditor.Classes
                                 string c4Html = buildHtmlForMetadataColumn(pContext, pciarPageDisplayParent, metadataLayoutColumns[3], BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD03, pFootnotes, pObjectsOnPage);
 
                                 // handle configured entry for Amantadine with No renal impairment
-                                html.AppendFormat("</table><{0}>Renal Impairment</{0}><table>", HtmlHeaderTagLevelString(pLevel + 1));
+                                //html.AppendFormat("</table><{0}>Renal Impairment</{0}><table>", HtmlHeaderTagLevelString(pLevel + 1));
+                                html.AppendFormat("<table>");
                                 html.AppendFormat("<tr><th rowspan=2>{0}</th><th colspan=2>Dosage with capsules</th><th>Daily dosage with solution (10mg/mL)</th></tr>", metadataLayoutColumns[0]);
                                 html.AppendFormat("<tr><th>{0}</th><th>{1}</th><th>{2}</th></tr>", c1Html, c2Html, c3Html);
                             }
@@ -4974,6 +5007,7 @@ namespace BDEditor.Classes
                             html.Append(BuildBDCombinedEntryHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1, isFirstChild));
                             isFirstChild = false;
                         }
+                        html.Append("</table>");
                         
                         break;
                     case BDConstants.LayoutVariantType.TreatmentRecommendation01:
@@ -5827,7 +5861,7 @@ namespace BDEditor.Classes
             if (notePage != null)
             {
                 if (pPropertyValue.Length > 0)
-                    propertyHTML.AppendFormat(@"<a href=""{0}"">{1}{2}{3}</a>{4}{5}{6}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), footerMarker, endTag, overviewHTML, buildTextFromNotes(inline, pObjectsOnPage));
+                    propertyHTML.AppendFormat(@"{1}<a href=""{0}"">{2}{3}</a>{4}{5}{6}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), footerMarker, endTag, overviewHTML, buildTextFromNotes(inline, pObjectsOnPage));
                 else
                     propertyHTML.AppendFormat(@"<a href=""{0}"">See Comments.</a>{1}{2}", notePage.Uuid.ToString().ToUpper(), overviewHTML, buildTextFromNotes(inline, pObjectsOnPage));
             }
@@ -6084,12 +6118,21 @@ namespace BDEditor.Classes
             return hasContent;
         }
 
+
+        private string retrieveConjunctionString(BDConstants.BDJoinType pBDJoinType)
+        {
+            return retrieveConjunctionString((int) pBDJoinType);
+        }
+
         private string retrieveConjunctionString(int pBDJoinType)
         {
             string joinString = string.Empty;
             // check for conjunctions and add a row for any that are found
             switch (pBDJoinType)
             {
+                case (int)BDConstants.BDJoinType.Next:
+                    joinString = BDUtilities.GetEnumDescription(BDConstants.BDJoinType.Next);
+                    break;
                 case (int)BDConstants.BDJoinType.AndWithNext:
                     joinString = BDUtilities.GetEnumDescription(BDConstants.BDJoinType.AndWithNext);
                     break;
@@ -6102,8 +6145,14 @@ namespace BDEditor.Classes
                 case (int)BDConstants.BDJoinType.WithOrWithoutWithNext:
                     joinString = BDUtilities.GetEnumDescription(BDConstants.BDJoinType.WithOrWithoutWithNext);
                     break;
+                case (int)BDConstants.BDJoinType.Other:
+                    joinString = string.Empty;
+                    break;
+                case (int)BDConstants.BDJoinType.AndOr:
+                    joinString = BDUtilities.GetEnumDescription(BDConstants.BDJoinType.AndOr);
+                    break;
                 default:
-                    joinString = BDUtilities.GetEnumDescription(BDConstants.BDJoinType.Next);
+                    joinString = string.Empty;
                     break;
             }
             return joinString;

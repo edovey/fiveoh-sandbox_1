@@ -82,6 +82,9 @@ namespace BDEditor.DataModel
                                                    orderby entry.displayOrder
                                                    select entry);
 
+            if (entries.Count<BDCombinedEntry>() > 0)
+                entryList = entries.ToList<BDCombinedEntry>();
+
             return entryList.FirstOrDefault<BDCombinedEntry>(); ;
 
         }

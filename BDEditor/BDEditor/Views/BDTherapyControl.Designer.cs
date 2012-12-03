@@ -73,12 +73,13 @@
             this.tbDuration1 = new System.Windows.Forms.TextBox();
             this.tbDosage1 = new System.Windows.Forms.TextBox();
             this.pnlRadioButtons = new System.Windows.Forms.Panel();
+            this.aoRadioButton = new System.Windows.Forms.RadioButton();
+            this.otherRadioButton = new System.Windows.Forms.RadioButton();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.btnDuration2Link = new System.Windows.Forms.Button();
             this.btnDosage2Link = new System.Windows.Forms.Button();
             this.tbDuration2 = new System.Windows.Forms.TextBox();
             this.tbDosage2 = new System.Windows.Forms.TextBox();
-            this.otherRadioButton = new System.Windows.Forms.RadioButton();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
             this.pnlRadioButtons.SuspendLayout();
@@ -213,10 +214,10 @@
             this.andRadioButton.AutoSize = true;
             this.andRadioButton.Location = new System.Drawing.Point(123, 3);
             this.andRadioButton.Name = "andRadioButton";
-            this.andRadioButton.Size = new System.Drawing.Size(95, 17);
+            this.andRadioButton.Size = new System.Drawing.Size(86, 17);
             this.andRadioButton.TabIndex = 10;
             this.andRadioButton.TabStop = true;
-            this.andRadioButton.Text = "And (with next)";
+            this.andRadioButton.Text = "And (w/next)";
             this.andRadioButton.UseVisualStyleBackColor = true;
             // 
             // orRadioButton
@@ -224,10 +225,10 @@
             this.orRadioButton.AutoSize = true;
             this.orRadioButton.Location = new System.Drawing.Point(224, 3);
             this.orRadioButton.Name = "orRadioButton";
-            this.orRadioButton.Size = new System.Drawing.Size(87, 17);
+            this.orRadioButton.Size = new System.Drawing.Size(78, 17);
             this.orRadioButton.TabIndex = 11;
             this.orRadioButton.TabStop = true;
-            this.orRadioButton.Text = "Or (with next)";
+            this.orRadioButton.Text = "Or (w/next)";
             this.orRadioButton.UseVisualStyleBackColor = true;
             // 
             // lblLeftBracket
@@ -259,10 +260,10 @@
             this.thenRadioButton.AutoSize = true;
             this.thenRadioButton.Location = new System.Drawing.Point(318, 3);
             this.thenRadioButton.Name = "thenRadioButton";
-            this.thenRadioButton.Size = new System.Drawing.Size(101, 17);
+            this.thenRadioButton.Size = new System.Drawing.Size(92, 17);
             this.thenRadioButton.TabIndex = 12;
             this.thenRadioButton.TabStop = true;
-            this.thenRadioButton.Text = "Then (with next)";
+            this.thenRadioButton.Text = "Then (w/next)";
             this.thenRadioButton.UseVisualStyleBackColor = true;
             // 
             // btnDurationLink
@@ -367,10 +368,10 @@
             this.andOrRadioButton.AutoSize = true;
             this.andOrRadioButton.Location = new System.Drawing.Point(426, 3);
             this.andOrRadioButton.Name = "andOrRadioButton";
-            this.andOrRadioButton.Size = new System.Drawing.Size(93, 17);
+            this.andOrRadioButton.Size = new System.Drawing.Size(84, 17);
             this.andOrRadioButton.TabIndex = 13;
             this.andOrRadioButton.TabStop = true;
-            this.andOrRadioButton.Text = "+/-  (with next)";
+            this.andOrRadioButton.Text = "+/-  (w/next)";
             this.andOrRadioButton.UseVisualStyleBackColor = true;
             // 
             // chkPreviousName
@@ -497,6 +498,7 @@
             // pnlRadioButtons
             // 
             this.pnlRadioButtons.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlRadioButtons.Controls.Add(this.aoRadioButton);
             this.pnlRadioButtons.Controls.Add(this.otherRadioButton);
             this.pnlRadioButtons.Controls.Add(this.andOrRadioButton);
             this.pnlRadioButtons.Controls.Add(this.nextTherapyRadioButton);
@@ -508,6 +510,28 @@
             this.pnlRadioButtons.Name = "pnlRadioButtons";
             this.pnlRadioButtons.Size = new System.Drawing.Size(866, 23);
             this.pnlRadioButtons.TabIndex = 29;
+            // 
+            // aoRadioButton
+            // 
+            this.aoRadioButton.AutoSize = true;
+            this.aoRadioButton.Location = new System.Drawing.Point(525, 3);
+            this.aoRadioButton.Name = "aoRadioButton";
+            this.aoRadioButton.Size = new System.Drawing.Size(102, 17);
+            this.aoRadioButton.TabIndex = 15;
+            this.aoRadioButton.TabStop = true;
+            this.aoRadioButton.Text = "And/Or (w/next)";
+            this.aoRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // otherRadioButton
+            // 
+            this.otherRadioButton.AutoSize = true;
+            this.otherRadioButton.Location = new System.Drawing.Point(630, 3);
+            this.otherRadioButton.Name = "otherRadioButton";
+            this.otherRadioButton.Size = new System.Drawing.Size(51, 17);
+            this.otherRadioButton.TabIndex = 14;
+            this.otherRadioButton.TabStop = true;
+            this.otherRadioButton.Text = "Other";
+            this.otherRadioButton.UseVisualStyleBackColor = true;
             // 
             // pnlMain
             // 
@@ -589,17 +613,6 @@
             this.tbDosage2.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             this.tbDosage2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDosage2_MouseDown);
             // 
-            // otherRadioButton
-            // 
-            this.otherRadioButton.AutoSize = true;
-            this.otherRadioButton.Location = new System.Drawing.Point(525, 3);
-            this.otherRadioButton.Name = "otherRadioButton";
-            this.otherRadioButton.Size = new System.Drawing.Size(51, 17);
-            this.otherRadioButton.TabIndex = 14;
-            this.otherRadioButton.TabStop = true;
-            this.otherRadioButton.Text = "Other";
-            this.otherRadioButton.UseVisualStyleBackColor = true;
-            // 
             // BDTherapyControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -678,5 +691,6 @@
         private System.Windows.Forms.TextBox tbDosage2;
         private System.Windows.Forms.ToolStripMenuItem trademarkToolStripMenuItem;
         private System.Windows.Forms.RadioButton otherRadioButton;
+        private System.Windows.Forms.RadioButton aoRadioButton;
     }
 }

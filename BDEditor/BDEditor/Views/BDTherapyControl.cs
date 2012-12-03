@@ -239,6 +239,9 @@ namespace BDEditor.Views
                     case BDConstants.BDJoinType.Other:
                         otherRadioButton.Checked = true;
                         break;
+                    case BDConstants.BDJoinType.AndOr:
+                        aoRadioButton.Checked = true;
+                        break;
                     default:
                         nextTherapyRadioButton.Checked = true;
                         break;
@@ -356,6 +359,11 @@ namespace BDEditor.Views
                     {
                         if (currentTherapy.therapyJoinType != (int)BDConstants.BDJoinType.Other)
                             currentTherapy.therapyJoinType = (int)BDConstants.BDJoinType.Other;
+                    }
+                    else if (aoRadioButton.Checked)
+                    {
+                        if (currentTherapy.therapyJoinType != (int)BDConstants.BDJoinType.AndOr)
+                            currentTherapy.therapyJoinType = (int)BDConstants.BDJoinType.AndOr;
                     }
                    else 
                     {

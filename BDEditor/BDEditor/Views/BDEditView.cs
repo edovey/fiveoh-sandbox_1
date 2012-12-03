@@ -2231,7 +2231,7 @@ namespace BDEditor.Views
             Debug.WriteLine(htmlPage.documentText);
             Debug.WriteLine("");
             */
-
+            /*
             Debug.WriteLine("-- D --");
             nodeUuid = Guid.Parse("4b476e8b-fa56-4d1a-b0c8-5fb29f820b6f");
             node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
@@ -2259,6 +2259,26 @@ namespace BDEditor.Views
             htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
             Debug.WriteLine(htmlPage.documentText);
             Debug.WriteLine("");
+            
+            Debug.WriteLine("-- H --");
+            nodeUuid = Guid.Parse("35879474-3d20-457d-9094-32cc46b838fc");
+            node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
+            htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
+            Debug.WriteLine(htmlPage.documentText);
+            Debug.WriteLine("");
+*/
+            Debug.WriteLine("-- I2 --");
+            nodeUuid = Guid.Parse("ea10c501-ab98-492a-8c02-efcc70fad9a1");
+            node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
+            htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
+            Debug.WriteLine(htmlPage.documentText);
+            Debug.WriteLine("");
+
+            
+
+            
+
+
 
             Debug.WriteLine("-- Complete --");
            

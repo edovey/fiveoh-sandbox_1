@@ -450,19 +450,22 @@ namespace BDEditor.Classes
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
                             currentPageMasterObject = pNode;
-                            nodeChildPages.Add(generatePageForEmpiricTherapyOfBCNE(pContext, pNode as BDNode));
+                            //nodeChildPages.Add(generatePageForEmpiricTherapyOfBCNE(pContext, pNode as BDNode));
+                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                             currentPageMasterObject = pNode;
-                            nodeChildPages.Add(generatePageForEmpiricTherapyOfParasitic(pContext, pNode as BDNode));
+                            //nodeChildPages.Add(generatePageForEmpiricTherapyOfParasitic(pContext, pNode as BDNode));
+                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:
                             currentPageMasterObject = pNode;
-                            nodeChildPages.Add(generatePageForEmpiricTherapyOfCultureDirected(pContext, pNode as BDNode));
+                            //nodeChildPages.Add(generatePageForEmpiricTherapyOfCultureDirected(pContext, pNode as BDNode));
+                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
@@ -1815,6 +1818,9 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDDisease:
                     bodyHTML.Append(BuildBDDiseaseHtml(pContext, pNode, footnotes, objectsOnPage, 1));
                     break;
+                case BDConstants.BDNodeType.BDPathogen:
+                    bodyHTML.Append(BuildBDPathogenHtml(pContext, pNode, footnotes, objectsOnPage, 1));
+                    break;
                 case BDConstants.BDNodeType.BDPresentation:
                     bodyHTML.Append(buildBDPresentationHtml(pContext, pNode, footnotes, objectsOnPage, 1));
                     break;
@@ -1935,6 +1941,7 @@ namespace BDEditor.Classes
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage);
         }
 
+        [Obsolete("use GenerateBDHtmlPage instead")]
         private BDHtmlPage generatePageForEmpiricTherapyOfBCNE(Entities pContext, BDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
@@ -2019,6 +2026,7 @@ namespace BDEditor.Classes
             }
         }
 
+        [Obsolete("use GenerateBDHtmlPage instead")]
         private BDHtmlPage generatePageForEmpiricTherapyOfParasitic(Entities pContext, BDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
@@ -2133,6 +2141,7 @@ namespace BDEditor.Classes
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pDisplayParentNode"></param>
+        [Obsolete("use GenerateBDHtmlPage instead")]
         private BDHtmlPage generatePageForEmpiricTherapyOfCultureDirected(Entities pContext, BDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
@@ -4174,6 +4183,127 @@ namespace BDEditor.Classes
                 }
             }
             return pathogenGroupHtml.ToString();
+        }
+
+        public string BuildBDPathogenHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel)
+        {
+         StringBuilder html = new StringBuilder();
+            StringBuilder suffixHtml = new StringBuilder();
+
+            if ((null != pNode) && (pNode.NodeType == BDConstants.BDNodeType.BDPathogen))
+            {
+                pObjectsOnPage.Add(pNode.Uuid);
+
+                // moved to layout specific because of customizations
+                //html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+                List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
+
+                switch (pNode.LayoutVariant)
+                {
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
+                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogenResistance, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                        html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+
+                        break;
+
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia:
+                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogenResistance, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                        html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+
+                        foreach (IBDNode child in children)
+                        {
+                            html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child, HtmlHeaderTagLevelString(pLevel + 1), pFootnotes, pObjectsOnPage));
+                            List<IBDNode> therapyGroups = BDFabrik.GetChildrenForParent(pContext, child);
+                            foreach (IBDNode therapyGroupChild in therapyGroups)
+                            {
+                                BDTherapyGroup therapyGroup = therapyGroupChild as BDTherapyGroup;
+                                html.Append(buildNodePropertyHTML(pContext, therapyGroupChild, therapyGroupChild.Name, BDTherapyGroup.PROPERTYNAME_NAME, false, pFootnotes, pObjectsOnPage));
+                                html.Append(BuildBDTherapyGroupHTML(pContext, therapyGroup, pFootnotes, pObjectsOnPage, pLevel + 1, null));
+                            }
+                        }
+
+                        break;
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
+                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPresentation, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
+
+                        if (pNode.Name.Length > 0 && !pNode.Name.Contains(@"New ") )
+                            html.AppendFormat(@"<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel), pNode.Name);
+                
+                        html.Append(buildReferenceHtml(pContext, pNode, pObjectsOnPage));
+
+                        // overview
+                        string symptomsOverview = retrieveNoteTextForOverview(pContext, pNode.Uuid, pObjectsOnPage);
+                        if (symptomsOverview.Length > EMPTY_PARAGRAPH)
+                            html.AppendFormat(@"<u><b>Symptoms</b></u><br>{0}",symptomsOverview);
+
+                        List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
+                        foreach (IBDNode child in children) 
+                        {
+                            switch (child.NodeType)
+                            {
+                                case BDConstants.BDNodeType.BDPresentation:
+
+                                    string presentationOverview = retrieveNoteTextForOverview(pContext, child.Uuid, pObjectsOnPage);
+                                    if (presentationOverview.Length > EMPTY_PARAGRAPH)
+                                        html.AppendFormat(@"<u><b>Comments</b></u><br>{0}", presentationOverview);
+                                    break;
+                                case BDConstants.BDNodeType.BDTherapyGroup:
+                                    html.Append(buildNodePropertyHTML(pContext, child, child.Name, BDNode.PROPERTYNAME_NAME, false, pFootnotes, pObjectsOnPage));
+                                    html.Append(BuildBDTherapyGroupHTML(pContext, child as BDTherapyGroup, pFootnotes, pObjectsOnPage, pLevel + 1, null));
+                                    break;
+                            }
+                        }   
+
+
+
+
+                        break;
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
+                        html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
+
+                        StringBuilder diagnosis = new StringBuilder();
+                        StringBuilder clinical = new StringBuilder();
+                        StringBuilder therapy = new StringBuilder();
+
+                        diagnosis.Append(string.Format("<{0}>Diagnosis</{0}>", HtmlHeaderTagLevelString(pLevel + 1)));
+                        clinical.Append(string.Format("<{0}>Clinical</{0}>", HtmlHeaderTagLevelString(pLevel + 1)));
+
+                        foreach (IBDNode child in children)
+                        {
+                            switch (child.NodeType)
+                            {
+                                case BDConstants.BDNodeType.BDTherapyGroup:
+                                    BDTherapyGroup therapyGroup = child as BDTherapyGroup;
+                                    therapy.Append(BuildBDTherapyGroupHTML(pContext, therapyGroup, pFootnotes, pObjectsOnPage, pLevel + 1, null));
+                                    break;
+                                case BDConstants.BDNodeType.BDTopic:
+                                    clinical.AppendFormat(@"<p><b>{0}</b><br>", child.Name);
+                                    pObjectsOnPage.Add(child.Uuid);
+                                    clinical.AppendFormat(@"{0}</p>", buildTextForParentAndPropertyFromLinkedNotes(pContext, BDNode.PROPERTYNAME_NAME, child, BDConstants.LinkedNoteType.Inline, pObjectsOnPage));
+                                    // overview contains the 'Diagnosis' column data
+                                    diagnosis.Append(retrieveNoteTextForOverview(pContext, child.Uuid, pObjectsOnPage));
+                                    break;
+                            }
+                        }
+                        html.AppendFormat(@"{0}<br>{1}<br>{2}", clinical, diagnosis, therapy);
+
+                        break;
+                    case BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases:
+                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                        html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            html.Insert(0, suffixHtml);
+            return html.ToString();
         }
 
         public string BuildBDAntimicrobialHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel)

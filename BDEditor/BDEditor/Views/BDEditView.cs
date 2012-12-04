@@ -2268,7 +2268,7 @@ namespace BDEditor.Views
             Debug.WriteLine("");
 */
             Debug.WriteLine("-- I2 --");
-            nodeUuid = Guid.Parse("ea10c501-ab98-492a-8c02-efcc70fad9a1");
+            nodeUuid = Guid.Parse("e83a8e3f-10b4-4677-aa73-197aa8ce5c8c");
             node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
             htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
             Debug.WriteLine(htmlPage.documentText);

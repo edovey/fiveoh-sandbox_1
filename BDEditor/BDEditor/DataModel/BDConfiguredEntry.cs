@@ -109,6 +109,68 @@ namespace BDEditor.DataModel
 
         }
         
+        public static string PropertyNameForIndex(int pIndex)
+        {
+            string result;
+
+            switch (pIndex)
+            {
+                case 0:
+                    result = PROPERTYNAME_NAME;
+                    break;
+                case 1:
+                    result = PROPERTYNAME_FIELD01;
+                    break;
+                case 2:
+                    result = PROPERTYNAME_FIELD02;
+                    break;
+                case 3:
+                    result = PROPERTYNAME_FIELD03;
+                    break;
+                case 4:
+                    result = PROPERTYNAME_FIELD04;
+                    break;
+                case 5:
+                    result = PROPERTYNAME_FIELD05;
+                    break;
+                case 6:
+                    result = PROPERTYNAME_FIELD06;
+                    break;
+                case 7:
+                    result = PROPERTYNAME_FIELD07;
+                    break;
+                case 8:
+                    result = PROPERTYNAME_FIELD08;
+                    break;
+                case 9:
+                    result = PROPERTYNAME_FIELD09;
+                    break;
+                case 10:
+                    result = PROPERTYNAME_FIELD10;
+                    break;
+                case 11:
+                    result = PROPERTYNAME_FIELD11;
+                    break;
+                case 12:
+                    result = PROPERTYNAME_FIELD12;
+                    break;
+                case 13:
+                    result = PROPERTYNAME_FIELD13;
+                    break;
+                case 14:
+                    result = PROPERTYNAME_FIELD14;
+                    break;
+                case 15:
+                    result = PROPERTYNAME_FIELD15;
+                    break;
+                default:
+                    result = string.Empty;
+                    break;
+            }
+
+            return result;
+        }
+
         protected override void OnPropertyChanged(string property)
         {
             if (!BDCommon.Settings.IsSyncLoad)

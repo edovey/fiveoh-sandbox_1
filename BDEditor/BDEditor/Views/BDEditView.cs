@@ -2274,12 +2274,6 @@ namespace BDEditor.Views
             Debug.WriteLine(htmlPage.documentText);
             Debug.WriteLine("");
 
-            
-
-            
-
-
-
             Debug.WriteLine("-- Complete --");
            
         }

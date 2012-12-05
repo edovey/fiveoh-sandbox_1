@@ -108,7 +108,68 @@ namespace BDEditor.DataModel
             return entryList.FirstOrDefault<BDConfiguredEntry>();
 
         }
-        
+
+        public string PropertyValueForIndex(int pIndex)
+        {
+            string result;
+
+            switch (pIndex)
+            {
+                case 0:
+                    result = this.Name;
+                    break;
+                case 1:
+                    result = this.field01;
+                    break;
+                case 2:
+                    result = this.field02;
+                    break;
+                case 3:
+                    result = this.field03;
+                    break;
+                case 4:
+                    result = this.field04;
+                    break;
+                case 5:
+                    result = this.field05;
+                    break;
+                case 6:
+                    result = this.field06;
+                    break;
+                case 7:
+                    result = this.field07;
+                    break;
+                case 8:
+                    result = this.field08;
+                    break;
+                case 9:
+                    result = this.field09;
+                    break;
+                case 10:
+                    result = this.field10;
+                    break;
+                case 11:
+                    result = this.field11;
+                    break;
+                case 12:
+                    result = this.field12;
+                    break;
+                case 13:
+                    result = this.field13;
+                    break;
+                case 14:
+                    result = this.field14;
+                    break;
+                case 15:
+                    result = this.field15;
+                    break;
+                default:
+                    result = string.Empty;
+                    break;
+            }
+
+            return result;
+        }
         public static string PropertyNameForIndex(int pIndex)
         {
             string result;

@@ -586,17 +586,20 @@ namespace BDEditor.Classes
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
                             currentPageMasterObject = pNode;
-                            nodeChildPages.Add(generatePageForProphylaxisInfectionPrevention(pContext, pNode));
+                            //nodeChildPages.Add(generatePageForProphylaxisInfectionPrevention(pContext, pNode));
+                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases:
                             currentPageMasterObject = pNode;
-                            nodeChildPages.Add(generatePageForPLCommunicableDiseases(pContext, pNode));
+                            //nodeChildPages.Add(generatePageForPLCommunicableDiseases(pContext, pNode));
+                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.PregnancyLactation_Perinatal_HIVProtocol:
                             currentPageMasterObject = pNode;
-                            nodeChildPages.Add(generatePageForPLPerinatalHIVProtocol(pContext, pNode));
+                            //nodeChildPages.Add(generatePageForPLPerinatalHIVProtocol(pContext, pNode));
+                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         default:
@@ -2941,6 +2944,7 @@ namespace BDEditor.Classes
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
         }
 
+        [Obsolete("use GenerateBDHtmlPage instead")]
         private BDHtmlPage generatePageForProphylaxisInfectionPrevention(Entities pContext, IBDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
@@ -3453,6 +3457,7 @@ namespace BDEditor.Classes
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
         }
 
+        [Obsolete("use GenerateBDHtmlPage instead")]
         private BDHtmlPage generatePageForPLCommunicableDiseases(Entities pContext, IBDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
@@ -3557,6 +3562,7 @@ namespace BDEditor.Classes
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
         }
 
+        [Obsolete("use GenerateBDHtmlPage instead")]
         private BDHtmlPage generatePageForPLPerinatalHIVProtocol(Entities pContext, IBDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
@@ -4281,10 +4287,17 @@ namespace BDEditor.Classes
             return html.ToString();
         }
 
-        public string BuildBDPathogenHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel)
+        public string BuildBDPathogenHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel )
         {
-         StringBuilder html = new StringBuilder();
+            List<BDHtmlPage> generatedPages;
+            return BuildBDPathogenHtml(pContext, pNode, pFootnotes, pObjectsOnPage, pLevel, out generatedPages);
+        }
+
+        public string BuildBDPathogenHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel, out List<BDHtmlPage> pGeneratedPages)
+        {
+            StringBuilder html = new StringBuilder();
             StringBuilder suffixHtml = new StringBuilder();
+            pGeneratedPages = null;
 
             if ((null != pNode) && (pNode.NodeType == BDConstants.BDNodeType.BDPathogen))
             {
@@ -4396,7 +4409,27 @@ namespace BDEditor.Classes
                         break;
                     case BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                        html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+
+                        pGeneratedPages = new List<BDHtmlPage>();
+                        List<Guid> localObjectsOnPage = new List<Guid>();
+                        List<BDLinkedNote> localFootnotes = new List<BDLinkedNote>();
+                        StringBuilder localHtml = new StringBuilder();
+
+                        localHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), localFootnotes, localObjectsOnPage));
+                        localHtml.Append(buildTextForParentAndPropertyFromLinkedNotes(pContext, BDNode.PROPERTYNAME_NAME, pNode, BDConstants.LinkedNoteType.UnmarkedComment, localObjectsOnPage));
+
+                        List<IBDNode> topics = BDFabrik.GetChildrenForParent(pContext, pNode);
+                        foreach (IBDNode topic in topics)
+                        {
+                            if (topic.Name != "Infectious Agent")
+                            {
+                                localHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, topic, HtmlHeaderTagLevelString(pLevel + 2), localFootnotes, localObjectsOnPage));
+                                localObjectsOnPage.Add(topic.Uuid);
+                            }
+                        }
+                        currentPageMasterObject = pNode;
+                        pGeneratedPages.Add(writeBDHtmlPage(pContext, pNode, localHtml, BDConstants.BDHtmlPageType.Data, localFootnotes, localObjectsOnPage));
+
                         break;
                     default:
                         break;
@@ -5511,6 +5544,67 @@ namespace BDEditor.Classes
             return html.ToString();
         }
 
+        public string BuildBDSectionProphylaxisInfectionPreventionHtmlAndPages(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel)
+        {
+            StringBuilder html = new StringBuilder();
+
+//            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDMicroorganismGroup, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage }));
+
+            if ((null != pNode) && (pNode.NodeType == BDConstants.BDNodeType.BDSection))
+            {
+                List<string> mgTitles = new List<string>();
+                List<IBDNode> mGroups = BDFabrik.GetChildrenForParent(pContext, pNode);
+                StringBuilder mgHTML = new StringBuilder();
+                string previousGroupName = string.Empty;
+                foreach (IBDNode mGroup in mGroups)
+                {
+                    if (mGroup.Name != previousGroupName)
+                    {
+                        mgHTML.AppendFormat("<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel + 2), mGroup.Name);
+                        previousGroupName = mGroup.Name;
+                    }
+                    List<BDHtmlPage> mPages = new List<BDHtmlPage>();
+                    List<IBDNode> microorganisms = BDFabrik.GetChildrenForParent(pContext, mGroup);
+                    foreach (IBDNode microorganism in microorganisms)
+                    {
+                        StringBuilder mHTML = new StringBuilder();
+                        List<Guid> mObjectsOnPage = new List<Guid>();
+                        List<BDLinkedNote> mFootnotes = new List<BDLinkedNote>();
+                        mHTML.AppendFormat("<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel + 2), microorganism.Name);
+                        mgTitles.Add(microorganism.Name);
+
+                        List<IBDNode> precautions = BDFabrik.GetChildrenForParent(pContext, microorganism);
+                        foreach (IBDNode precaution in precautions)
+                        {
+                            BDPrecaution p = precaution as BDPrecaution;
+                            mHTML.AppendFormat("<{0}>Infective Material</{0}>{1}", HtmlHeaderTagLevelString(pLevel + 3), p.infectiveMaterial);
+                            mHTML.AppendFormat("<{0}>Mode of Transmission</{0}>{1}", HtmlHeaderTagLevelString(pLevel + 3), p.modeOfTransmission);
+                            // build table
+                            mHTML.AppendFormat("<table><tr><th>Precautions{0}</th><th>Acute Care</th><th>Long Term Care</th></tr>",
+                                buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, precaution.Uuid, BDPrecaution.PROPERTYNAME_ORGANISM_1, BDConstants.LinkedNoteType.Footnote), true, footnotesOnPage, objectsOnPage));
+                            mHTML.AppendFormat("<tr><td>Single Room</td><td>{0}</td><td>{1}</td></tr>", p.singleRoomAcute, p.singleRoomLongTerm);
+                            mHTML.AppendFormat("<tr><td>Gloves</td><td>{0}</td><td>{1}</td></tr>", p.glovesAcute, p.glovesLongTerm);
+                            mHTML.AppendFormat("<tr><td>Gowns</td><td>{0}</td><td>{1}</td></tr>", p.gownsAcute, p.gownsLongTerm);
+                            mHTML.AppendFormat("<tr><td>Mask</td><td>{0}</td><td>{1}</td></tr>", p.maskAcute, p.maskLongTerm);
+                            mHTML.Append("</table>");
+
+                            List<BDLinkedNote> durationNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, p.Uuid, BDPrecaution.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.MarkedComment);
+                            StringBuilder durationText = new StringBuilder();
+                            foreach (BDLinkedNote note in durationNotes)
+                                durationText.Append(note.documentText);
+                            mHTML.AppendFormat("<{0}>Duration of Precautions</{0}>{1}", HtmlHeaderTagLevelString(pLevel + 3), durationText);
+                        }
+                        currentPageMasterObject = microorganism;
+                        mPages.Add(writeBDHtmlPage(pContext, microorganism, mHTML, BDConstants.BDHtmlPageType.Data, mFootnotes, mObjectsOnPage));
+                    }
+                    for (int i = 0; i < mPages.Count; i++)
+                        mgHTML.AppendFormat(@"<p><a href=""{0}"">{1}</a></p>", mPages[i].Uuid.ToString().ToUpper(), mgTitles[i]);
+                }
+            }
+
+            return html.ToString();
+        }
+
         public string BuildBDSectionProphylaxisEndocarditisHtmlAndPages(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel)
         {
             StringBuilder html = new StringBuilder();
@@ -5647,6 +5741,10 @@ namespace BDEditor.Classes
 
                 switch (pNode.LayoutVariant)
                 {
+                    case BDConstants.LayoutVariantType.PregnancyLactation_Perinatal_HIVProtocol:
+                        //ks: Nothing in the editor: Zero child types defined.
+                        break;
+                    
                     case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
@@ -5761,7 +5859,9 @@ namespace BDEditor.Classes
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDisease, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza, BDConstants.LayoutVariantType.Prophylaxis_Communicable_Pertussis }));
                         break;
                     case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
+                        // complex: builds multiple pages
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDMicroorganismGroup, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage }));
+                        html.Append(BuildBDSectionProphylaxisInfectionPreventionHtmlAndPages(pContext, pNode, pFootnotes, pObjectsOnPage, pLevel));
                         break;
                     case BDConstants.LayoutVariantType.Prophylaxis:
                     case BDConstants.LayoutVariantType.Prophylaxis_IERecommendation:
@@ -5778,6 +5878,24 @@ namespace BDEditor.Classes
                         break;
                     case BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogen, new BDConstants.LayoutVariantType[] { layoutVariant }));
+
+
+                        //xxxx
+                        html.AppendFormat("<{0}>Infectious Agent</{0}>", HtmlHeaderTagLevelString(pLevel + 1));
+                        List<BDHtmlPage> generatedPages = new List<BDHtmlPage>();
+                        foreach (IBDNode child in children)
+                        {
+                            List<BDHtmlPage> childPages = null;
+                            html.Append(BuildBDPathogenHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 2, out childPages));
+                            // Only one page should be generated
+                            if(null != childPages) generatedPages.AddRange(childPages);
+                        }
+
+                        //Expects that children.count == generatedPages.count: May it blow up real gud if it isn't
+   
+                        for (int i = 0; i < generatedPages.Count; i++)
+                            html.AppendFormat(@"<p><a href=""{0}""><b>{1}</b></a></p>", generatedPages[i].Uuid.ToString().ToUpper(), children[i].Name);
+
                         break;
                     case BDConstants.LayoutVariantType.Microbiology_Antibiogram:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAttachment, new BDConstants.LayoutVariantType[] { layoutVariant }));

@@ -107,6 +107,8 @@ namespace BDEditor.Classes
             //BDCombinedEntry Class
             [Description("Combined Entry")]
             BDCombinedEntry = 39,
+            [Description("Meta Decoration")]
+            BDMetaDecoration = 888,
             [Description("Layout Column")]
             BDLayoutColumn = 999,
         }

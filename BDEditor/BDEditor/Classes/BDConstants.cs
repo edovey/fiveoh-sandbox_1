@@ -115,8 +115,8 @@ namespace BDEditor.Classes
         {
             Undefined = -1,
 
-            [Description("Preamble")]  // For Preface, Foreword 
-            Preamble = 0,
+            [Description("FrontMatter")]  // For Preface, Foreword 
+            FrontMatter = 0,
 
             [Description("Treatment Recommendation Chapter")]
             TreatmentRecommendation00 = 100, // Chapter
@@ -372,6 +372,9 @@ namespace BDEditor.Classes
             Table_5_Column_HeaderRow = 9031,
             [Description("5-column Table Content Row")]
             Table_5_Column_ContentRow = 9032,
+
+            [Description("Back Matter")]
+            BackMatter = 9999,
         }
 
         public enum SyncType

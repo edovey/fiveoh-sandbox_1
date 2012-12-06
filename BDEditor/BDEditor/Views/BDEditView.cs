@@ -24,7 +24,7 @@ namespace BDEditor.Views
         private bool isSeedDataLoadAvailable = false;
         private string seedDataFileName = string.Empty;
         // enable & show move button when data move is required
-        private bool moveButtonVisible = false;
+        private bool moveButtonVisible = true;
 
         public BDEditView()
         {
@@ -95,8 +95,11 @@ namespace BDEditor.Views
                 TreeNode node = null;
                 switch (pNode.LayoutVariant)
                 {
-                    case BDConstants.LayoutVariantType.Preamble:
-                        node = BDPreambleTree.BuildBranch(dataContext, pNode);
+                    case BDConstants.LayoutVariantType.FrontMatter:
+                        node = BDFrontMatterTree.BuildBranch(dataContext, pNode);
+                        break;
+                    case BDConstants.LayoutVariantType.BackMatter:
+                        node = BDBackMatterTree.BuildBranch(dataContext, pNode);
                         break;
                     case BDConstants.LayoutVariantType.TreatmentRecommendation00:
                         node = BDTreatmentRecommendationTree.BuildBranch(dataContext, pNode);
@@ -421,7 +424,8 @@ namespace BDEditor.Views
                     case BDConstants.BDNodeType.BDSection:
                         switch (node.LayoutVariant)
                         {
-                            case BDConstants.LayoutVariantType.Preamble:
+                            case BDConstants.LayoutVariantType.FrontMatter:
+                            case BDConstants.LayoutVariantType.BackMatter:
                                 if (!pInterrogateOnly)
                                 {
                                     showChildControls = true;
@@ -1095,7 +1099,7 @@ namespace BDEditor.Views
             isSeedDataLoadAvailable = false;
             
 #if DEBUG
-            isSeedDataLoadAvailable = true;
+            isSeedDataLoadAvailable = false;
             this.Text = this.Text + @" < DEVELOPMENT >";
             this.btnPublish.Visible = true;
             this.btnMove.Visible = !isSeedDataLoadAvailable && moveButtonVisible;
@@ -2055,11 +2059,11 @@ namespace BDEditor.Views
             BDNode.Save(dataContext, ieProphylaxis);
             
             BDNode intro = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.NewGuid());
-            intro.Name = "Preamble";
+            intro.Name = "FrontMatter";
             intro.DisplayOrder = 0;
             intro.parentId = Guid.Empty;
             intro.parentKeyName = BDUtilities.GetEnumDescription(BDConstants.BDNodeType.None);
-            intro.LayoutVariant = BDConstants.LayoutVariantType.Preamble;
+            intro.LayoutVariant = BDConstants.LayoutVariantType.FrontMatter;
             BDNode antibiotics = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("45e13826-aedb-48d0-baf6-2f06ff45017f"));
             antibiotics.DisplayOrder = 1;
             BDNode treatmentRecommendations = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("f92fec3a-379d-41ef-a981-5ddf9c9a9f0e"));
@@ -2078,13 +2082,13 @@ namespace BDEditor.Views
             BDNode preface = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.NewGuid());
             preface.DisplayOrder = 0;
             preface.Name = "Preface";
-            preface.LayoutVariant = BDConstants.LayoutVariantType.Preamble;
+            preface.LayoutVariant = BDConstants.LayoutVariantType.FrontMatter;
             preface.SetParent(intro);
 
             BDNode foreward = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.NewGuid());
             foreward.SetParent(intro);
             foreward.DisplayOrder = 1;
-            foreward.LayoutVariant = BDConstants.LayoutVariantType.Preamble;
+            foreward.LayoutVariant = BDConstants.LayoutVariantType.FrontMatter;
             foreward.Name = "Foreward";
             dataContext.SaveChanges();
           
@@ -2118,7 +2122,6 @@ namespace BDEditor.Views
             BDNode.Save(dataContext, sAssault);
             */
             #endregion
-
             #region v.1.6.29 
             /*
             // move Organism groups up in the hierarchy
@@ -2162,6 +2165,27 @@ namespace BDEditor.Views
             frequency.SetParent(newParent);
             dataContext.SaveChanges();
             */
+            #endregion
+
+            #region v.1.6.34
+            BDNode backMatter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.NewGuid());
+            backMatter.Name = "Back Matter";
+            backMatter.DisplayOrder = 7;
+            backMatter.parentId = Guid.Empty;
+            backMatter.parentKeyName = BDUtilities.GetEnumDescription(BDConstants.BDNodeType.None);
+            backMatter.LayoutVariant = BDConstants.LayoutVariantType.BackMatter;
+
+            BDNode afterword = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.NewGuid());
+            afterword.Name = "Afterword";
+            afterword.DisplayOrder = 0;
+            afterword.SetParent(backMatter);
+            afterword.LayoutVariant = BDConstants.LayoutVariantType.BackMatter;
+
+            BDNode frontMatter = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("5fe7fc06-5d76-438b-ac5b-0c3c483ea871"));
+            frontMatter.name = "Front Matter";
+
+            dataContext.SaveChanges();
+
             #endregion
         }
 
@@ -2268,7 +2292,7 @@ namespace BDEditor.Views
             Debug.WriteLine("");
 */
             Debug.WriteLine("-- I2 --");
-            nodeUuid = Guid.Parse("e83a8e3f-10b4-4677-aa73-197aa8ce5c8c");
+            nodeUuid = Guid.Parse("2569b75a-92cc-4a3a-9317-9125361f4785");
             node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
             htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
             Debug.WriteLine(htmlPage.documentText);

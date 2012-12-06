@@ -9,9 +9,9 @@ using BDEditor.DataModel;
 
 namespace BDEditor.Classes.Navigation
 {
-    public class BDPreambleTree
+    public class BDFrontMatterTree
     {
-         private BDPreambleTree() { }
+         private BDFrontMatterTree() { }
 
         public static TreeNode BuildBranch(Entities pDataContext, IBDNode pNode)
         {
@@ -27,7 +27,7 @@ namespace BDEditor.Classes.Navigation
                 case BDConstants.BDNodeType.BDSubsection:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.Preamble:
+                        case BDConstants.LayoutVariantType.FrontMatter:
                             foreach (IBDNode childNode in childList)
                             {
                                 string name = childNode.Name;

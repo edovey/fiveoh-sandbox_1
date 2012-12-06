@@ -292,7 +292,8 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDChapter:
                     switch (layoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.Preamble:
+                        case BDConstants.LayoutVariantType.FrontMatter:
+                        case BDConstants.LayoutVariantType.BackMatter:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation00:
                         case BDConstants.LayoutVariantType.Antibiotics:
                         case BDConstants.LayoutVariantType.Dental: // Catch all for dental

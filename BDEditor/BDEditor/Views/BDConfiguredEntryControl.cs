@@ -223,7 +223,7 @@ namespace BDEditor.Views
             fieldControlList.Clear();
             panelFields.Controls.Clear();
 
-            List<BDLayoutMetadataColumn> metaDataColumnList = BDLayoutMetadataColumn.RetrieveListForLayout(dataContext, currentEntry.LayoutVariant);
+            List<BDLayoutMetadataColumn> metaDataColumnList = BDLayoutMetadataColumn.RetrieveListForLayout(dataContext, currentEntry.LayoutVariant, BDConstants.BDNodeType.BDConfiguredEntry);
             int tabIndex = 0;
             foreach (BDLayoutMetadataColumn columnDef in metaDataColumnList)
             {

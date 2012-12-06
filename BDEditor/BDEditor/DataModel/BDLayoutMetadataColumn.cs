@@ -72,6 +72,12 @@ namespace BDEditor.DataModel
             return existingEntryList;
         }
 
+        /// <summary>
+        /// Retrieves a list of all layout columns defined for the layoutVariant
+        /// </summary>
+        /// <param name="pDataContext"></param>
+        /// <param name="pLayoutVariant"></param>
+        /// <returns></returns>
         static public List<BDLayoutMetadataColumn> RetrieveListForLayout(Entities pDataContext, BDConstants.LayoutVariantType pLayoutVariant)
         {
             IQueryable<BDLayoutMetadataColumn> existingEntries = (from dbEntry in pDataContext.BDLayoutMetadataColumns
@@ -81,6 +87,29 @@ namespace BDEditor.DataModel
             List<BDLayoutMetadataColumn> existingEntryList = existingEntries.ToList<BDLayoutMetadataColumn>();
 
             return existingEntryList;
+        }
+
+        /// <summary>
+        /// Retrieves a list of layout columns that are mapped to the provided nodeType
+        /// </summary>
+        /// <param name="pDataContext"></param>
+        /// <param name="pLayoutVariant"></param>
+        /// <param name="pNodeType"></param>
+        /// <returns></returns>
+        static public List<BDLayoutMetadataColumn> RetrieveListForLayout(Entities pDataContext, BDConstants.LayoutVariantType pLayoutVariant, BDConstants.BDNodeType pNodeType)
+        {
+            List<BDLayoutMetadataColumn> existingEntryList = RetrieveListForLayout(pDataContext, pLayoutVariant);
+
+            List<BDLayoutMetadataColumn> resultList = new List<BDLayoutMetadataColumn>();
+
+            foreach (BDLayoutMetadataColumn metadataColumn in existingEntryList)
+            {
+                List<BDLayoutMetadataColumnNodeType> associatedFieldList = BDLayoutMetadataColumnNodeType.RetrieveListForLayoutColumn(pDataContext, metadataColumn.Uuid, pNodeType);
+                if(associatedFieldList.Count > 0)
+                    resultList.Add(metadataColumn);
+            }
+
+            return resultList;
         }
 
         static public BDLayoutMetadataColumn Retrieve(Entities pDataContext, Guid pUuid)

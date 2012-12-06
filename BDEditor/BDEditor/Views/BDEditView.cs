@@ -24,7 +24,7 @@ namespace BDEditor.Views
         private bool isSeedDataLoadAvailable = false;
         private string seedDataFileName = string.Empty;
         // enable & show move button when data move is required
-        private bool moveButtonVisible = true;
+        private bool moveButtonVisible = false;
 
         public BDEditView()
         {
@@ -2168,23 +2168,23 @@ namespace BDEditor.Views
             #endregion
 
             #region v.1.6.34
-            BDNode backMatter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.NewGuid());
-            backMatter.Name = "Back Matter";
-            backMatter.DisplayOrder = 7;
-            backMatter.parentId = Guid.Empty;
-            backMatter.parentKeyName = BDUtilities.GetEnumDescription(BDConstants.BDNodeType.None);
-            backMatter.LayoutVariant = BDConstants.LayoutVariantType.BackMatter;
+            //BDNode backMatter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.NewGuid());
+            //backMatter.Name = "Back Matter";
+            //backMatter.DisplayOrder = 7;
+            //backMatter.parentId = Guid.Empty;
+            //backMatter.parentKeyName = BDUtilities.GetEnumDescription(BDConstants.BDNodeType.None);
+            //backMatter.LayoutVariant = BDConstants.LayoutVariantType.BackMatter;
 
-            BDNode afterword = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.NewGuid());
-            afterword.Name = "Afterword";
-            afterword.DisplayOrder = 0;
-            afterword.SetParent(backMatter);
-            afterword.LayoutVariant = BDConstants.LayoutVariantType.BackMatter;
+            //BDNode afterword = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDSection, Guid.NewGuid());
+            //afterword.Name = "Afterword";
+            //afterword.DisplayOrder = 0;
+            //afterword.SetParent(backMatter);
+            //afterword.LayoutVariant = BDConstants.LayoutVariantType.BackMatter;
 
-            BDNode frontMatter = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("5fe7fc06-5d76-438b-ac5b-0c3c483ea871"));
-            frontMatter.name = "Front Matter";
+            //BDNode frontMatter = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("5fe7fc06-5d76-438b-ac5b-0c3c483ea871"));
+            //frontMatter.name = "Front Matter";
 
-            dataContext.SaveChanges();
+            //dataContext.SaveChanges();
 
             #endregion
         }

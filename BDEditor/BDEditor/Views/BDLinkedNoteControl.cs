@@ -26,6 +26,8 @@ namespace BDEditor.Views
       
         private BDLinkedNoteAssociation currentAssociation;
 
+        public BDConstants.LinkedNoteType? DefaultLinkedNoteType = null;
+
         private bool showChildren = true;
         public bool ShowChildren
         {
@@ -203,7 +205,7 @@ namespace BDEditor.Views
 
         public bool Save()
         {
-            return Save(null);
+            return Save(DefaultLinkedNoteType);
         }
 
         public bool Save(BDConstants.LinkedNoteType? pLinkedNoteType)

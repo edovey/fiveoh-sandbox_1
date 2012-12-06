@@ -18,11 +18,13 @@ namespace BDEditor.Views
         public BDConfiguredEntryFieldOverviewControl()
         {
             InitializeComponent();
+            bdLinkedNoteControl1.DefaultLinkedNoteType = BDConstants.LinkedNoteType.Inline;
         }
 
         public BDConfiguredEntryFieldOverviewControl(Entities pDataContext, BDConfiguredEntry pConfiguredEntry, string pFieldName, Guid pScopeId): base(pDataContext,pConfiguredEntry, pFieldName, pScopeId)
         {
             InitializeComponent();
+            bdLinkedNoteControl1.DefaultLinkedNoteType = BDConstants.LinkedNoteType.Inline;
         }
 
         public override void RefreshLayout()
@@ -38,6 +40,8 @@ namespace BDEditor.Views
             bdLinkedNoteControl1.AssignDataContext(dataContext);
             bdLinkedNoteControl1.AssignContextPropertyName(fieldNoteContextPropertyName);
             bdLinkedNoteControl1.AssignScopeId(scopeId);
+            bdLinkedNoteControl1.DefaultLinkedNoteType = BDConstants.LinkedNoteType.Inline;
+
             if (configuredEntry == null)
             {
                 overviewLinkedNote = null;

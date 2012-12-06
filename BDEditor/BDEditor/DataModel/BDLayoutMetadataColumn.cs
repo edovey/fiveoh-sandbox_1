@@ -147,6 +147,18 @@ namespace BDEditor.DataModel
             }
         }
 
+        public List<string> FieldNameListForColumnOfNodeType(Entities pDataContext, BDConstants.BDNodeType pNodeType)
+        {
+            List<BDLayoutMetadataColumnNodeType> columnMappingList = BDLayoutMetadataColumnNodeType.RetrieveListForLayoutColumn(pDataContext, this.Uuid, pNodeType);
+            return columnMappingList.Select(entry => entry.propertyName).ToList();
+        }
+
+        public string FieldNameForColumnOfNodeType(Entities pDataContext, BDConstants.BDNodeType pNodeType)
+        {
+            List<string> fieldnameList = FieldNameListForColumnOfNodeType(pDataContext, pNodeType);
+            string result = ((null != fieldnameList) && (fieldnameList.Count > 0)) ? fieldnameList[0] : null;
+            return result;
+        }
         public Amazon.SimpleDB.Model.PutAttributesRequest PutAttributes()
         {
             return null;

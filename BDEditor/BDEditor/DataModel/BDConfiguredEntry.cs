@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 
 using BDEditor.DataModel;
 using BDEditor.Classes;
 
 namespace BDEditor.DataModel
 {
-    public partial class BDConfiguredEntry: IBDNode
+    public partial class BDConfiguredEntry : IBDNode
     {
         public const string ENTITYNAME = @"BDConfiguredEntries";
         public const string ENTITYNAME_FRIENDLY = @"Configured Entry";
@@ -32,6 +33,28 @@ namespace BDEditor.DataModel
         public const string PROPERTYNAME_FIELD13 = @"Field13";
         public const string PROPERTYNAME_FIELD14 = @"Field14";
         public const string PROPERTYNAME_FIELD15 = @"Field15";
+
+        public const string FIELDNOTE_SUFFIX = @"_fieldNote";
+
+        public static readonly string[] PropertyNameArray = new string[]
+            {
+                PROPERTYNAME_NAME,
+                PROPERTYNAME_FIELD01,
+                PROPERTYNAME_FIELD02,
+                PROPERTYNAME_FIELD03,
+                PROPERTYNAME_FIELD04,
+                PROPERTYNAME_FIELD05,
+                PROPERTYNAME_FIELD06,
+                PROPERTYNAME_FIELD07,
+                PROPERTYNAME_FIELD08,
+                PROPERTYNAME_FIELD09,
+                PROPERTYNAME_FIELD10,
+                PROPERTYNAME_FIELD11,
+                PROPERTYNAME_FIELD12,
+                PROPERTYNAME_FIELD13,
+                PROPERTYNAME_FIELD14,
+                PROPERTYNAME_FIELD15
+            };
 
         static public BDConfiguredEntry Create(Entities pDataContext, BDConstants.LayoutVariantType pLayoutVariant, Guid pParentUuid, BDConstants.BDNodeType pParentNodeType, string pName)
         {
@@ -109,6 +132,29 @@ namespace BDEditor.DataModel
 
         }
 
+        static public string FieldNotePropertyNameForIndex(int pIndex)
+        {
+            string result = string.Format("{0}_fieldNote", PropertyNameForIndex(pIndex));
+            return result;
+        }
+
+        public string PropertyValueForName(string pPropertyName)
+        {
+            string result = null;
+            if ((null != pPropertyName) && (PropertyNameArray.Contains(pPropertyName)))
+            {
+                for (int idx = 0; idx < PropertyNameArray.GetUpperBound(0); idx++)
+                {
+                    if (PropertyNameArray[idx] == pPropertyName)
+                    {
+                        result = PropertyValueForIndex(idx);
+                        break;
+                    }
+                }
+            }
+            return result;
+        }
+
         public string PropertyValueForIndex(int pIndex)
         {
             string result;
@@ -117,6 +163,7 @@ namespace BDEditor.DataModel
             {
                 case 0:
                     result = this.Name;
+                    if (result.StartsWith("Entry-")) result = string.Empty;
                     break;
                 case 1:
                     result = this.field01;
@@ -174,59 +221,13 @@ namespace BDEditor.DataModel
         {
             string result;
 
-            switch (pIndex)
+            if ((pIndex >= PropertyNameArray.GetLowerBound(0)) && (pIndex <= PropertyNameArray.GetUpperBound(0)))
             {
-                case 0:
-                    result = PROPERTYNAME_NAME;
-                    break;
-                case 1:
-                    result = PROPERTYNAME_FIELD01;
-                    break;
-                case 2:
-                    result = PROPERTYNAME_FIELD02;
-                    break;
-                case 3:
-                    result = PROPERTYNAME_FIELD03;
-                    break;
-                case 4:
-                    result = PROPERTYNAME_FIELD04;
-                    break;
-                case 5:
-                    result = PROPERTYNAME_FIELD05;
-                    break;
-                case 6:
-                    result = PROPERTYNAME_FIELD06;
-                    break;
-                case 7:
-                    result = PROPERTYNAME_FIELD07;
-                    break;
-                case 8:
-                    result = PROPERTYNAME_FIELD08;
-                    break;
-                case 9:
-                    result = PROPERTYNAME_FIELD09;
-                    break;
-                case 10:
-                    result = PROPERTYNAME_FIELD10;
-                    break;
-                case 11:
-                    result = PROPERTYNAME_FIELD11;
-                    break;
-                case 12:
-                    result = PROPERTYNAME_FIELD12;
-                    break;
-                case 13:
-                    result = PROPERTYNAME_FIELD13;
-                    break;
-                case 14:
-                    result = PROPERTYNAME_FIELD14;
-                    break;
-                case 15:
-                    result = PROPERTYNAME_FIELD15;
-                    break;
-                default:
-                    result = string.Empty;
-                    break;
+               result = PropertyNameArray[pIndex];
+            }
+            else
+            {
+                result = string.Empty;
             }
 
             return result;

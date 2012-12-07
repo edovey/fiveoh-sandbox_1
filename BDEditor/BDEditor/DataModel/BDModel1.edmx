@@ -261,11 +261,13 @@
         <EntityType Name="BDNodeToHtmlPageIndex">
           <Key>
             <PropertyRef Name="ibdNodeId" />
+            <PropertyRef Name="htmlPageType" />
           </Key>
           <Property Name="ibdNodeId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="htmlPageId" Type="uniqueidentifier" />
           <Property Name="chapterId" Type="uniqueidentifier" />
           <Property Name="wasGenerated" Type="bit" Nullable="false" />
+          <Property Name="htmlPageType" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="BDPrecautions">
           <Key>
@@ -445,9 +447,9 @@
           <EntitySet Name="BDConfiguredEntries" EntityType="BDDataModel.BDConfiguredEntry" />
           <EntitySet Name="BDCombinedEntries" EntityType="BDDataModel.BDCombinedEntry" />
           <EntitySet Name="BDLinkedNoteAssociations" EntityType="BDDataModel.BDLinkedNoteAssociation" />
-          <EntitySet Name="BDNodeToHtmlPageIndexes" EntityType="BDDataModel.BDNodeToHtmlPageIndex" />
           <EntitySet Name="BDHtmlPages" EntityType="BDDataModel.BDHtmlPage" />
           <EntitySet Name="BDDosages" EntityType="BDDataModel.BDDosage" />
+          <EntitySet Name="BDNodeToHtmlPageIndexes" EntityType="BDDataModel.BDNodeToHtmlPageIndex" />
         </EntityContainer>
         <EntityType Name="BDAntimicrobialRisk">
           <Key>
@@ -794,15 +796,6 @@
           <Property Type="Guid" Name="internalLinkNodeId" />
           <Property Type="Int32" Name="internalLinkNodeType" />
         </EntityType>
-        <EntityType Name="BDNodeToHtmlPageIndex">
-          <Key>
-            <PropertyRef Name="ibdNodeId" />
-          </Key>
-          <Property Type="Guid" Name="ibdNodeId" Nullable="false" />
-          <Property Type="Guid" Name="htmlPageId" />
-          <Property Type="Guid" Name="chapterId" />
-          <Property Type="Boolean" Name="wasGenerated" Nullable="false" />
-        </EntityType>
         <EntityType Name="BDHtmlPage">
           <Key>
             <PropertyRef Name="uuid" />
@@ -842,6 +835,17 @@
           <Property Type="Boolean" Name="dosage2SameAsPrevious" Nullable="false" />
           <Property Type="Boolean" Name="dosage3SameAsPrevious" Nullable="false" />
           <Property Type="Boolean" Name="dosage4SameAsPrevious" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BDNodeToHtmlPageIndex">
+          <Key>
+            <PropertyRef Name="ibdNodeId" />
+            <PropertyRef Name="htmlPageType" />
+          </Key>
+          <Property Type="Guid" Name="ibdNodeId" Nullable="false" />
+          <Property Type="Guid" Name="htmlPageId" />
+          <Property Type="Guid" Name="chapterId" />
+          <Property Type="Boolean" Name="wasGenerated" Nullable="false" />
+          <Property Type="Int32" Name="htmlPageType" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1212,16 +1216,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BDNodeToHtmlPageIndexes">
-            <EntityTypeMapping TypeName="BDDataModel.BDNodeToHtmlPageIndex">
-              <MappingFragment StoreEntitySet="BDNodeToHtmlPageIndex">
-                <ScalarProperty Name="wasGenerated" ColumnName="wasGenerated" />
-                <ScalarProperty Name="chapterId" ColumnName="chapterId" />
-                <ScalarProperty Name="htmlPageId" ColumnName="htmlPageId" />
-                <ScalarProperty Name="ibdNodeId" ColumnName="ibdNodeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="BDHtmlPages">
             <EntityTypeMapping TypeName="BDDataModel.BDHtmlPage">
               <MappingFragment StoreEntitySet="BDHtmlPages">
@@ -1264,6 +1258,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BDNodeToHtmlPageIndexes">
+            <EntityTypeMapping TypeName="BDDataModel.BDNodeToHtmlPageIndex">
+              <MappingFragment StoreEntitySet="BDNodeToHtmlPageIndex">
+                <ScalarProperty Name="htmlPageType" ColumnName="htmlPageType" />
+                <ScalarProperty Name="wasGenerated" ColumnName="wasGenerated" />
+                <ScalarProperty Name="chapterId" ColumnName="chapterId" />
+                <ScalarProperty Name="htmlPageId" ColumnName="htmlPageId" />
+                <ScalarProperty Name="ibdNodeId" ColumnName="ibdNodeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -1302,9 +1307,9 @@
         <EntityTypeShape EntityType="BDDataModel.BDConfiguredEntry" Width="1.875" PointX="9.375" PointY="13.75" Height="5.2079475911458246" />
         <EntityTypeShape EntityType="BDDataModel.BDCombinedEntry" Width="2.625" PointX="0.625" PointY="13.875" Height="5.0436002604166674" />
         <EntityTypeShape EntityType="BDDataModel.BDLinkedNoteAssociation" Width="2.625" PointX="12.375" PointY="14.75" Height="3.5644742838541674" />
-        <EntityTypeShape EntityType="BDDataModel.BDNodeToHtmlPageIndex" Width="1.5" PointX="0.75" PointY="5.75" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="BDDataModel.BDHtmlPage" Width="1.5" PointX="3.375" PointY="0.75" Height="3.1340950520833282" />
         <EntityTypeShape EntityType="BDDataModel.BDDosage" Width="1.5" PointX="15.375" PointY="0.75" Height="4.6725065104166674" />
+        <EntityTypeShape EntityType="BDDataModel.BDNodeToHtmlPageIndex" Width="2" PointX="0.75" PointY="5.75" Height="1.9802864583333282" />
       </Diagram>
     </Diagrams>
   </Designer>

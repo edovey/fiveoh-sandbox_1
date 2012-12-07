@@ -2197,109 +2197,19 @@ namespace BDEditor.Views
             BDHtmlPage htmlPage = null;
             BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
 
-            /*
-            Debug.WriteLine("");
-            nodeUuid = Guid.Parse("62fade9f-603c-4479-817f-737cb28f1d62");
-            BDTherapy therapy = BDTherapy.RetrieveTherapyWithId(dataContext, nodeUuid);
-
-            List<BDLinkedNote> footnotes = new List<BDLinkedNote>();
-            List<Guid> objectsOnPage = new List<Guid>();
-
-            
-
-            //string htmlString = generator.buildTherapyWithTwoDurationsHtml(dataContext, therapy, footnotes, objectsOnPage);
-            //Debug.WriteLine(htmlString);
-
-            //nodeUuid = Guid.Parse("24DEE453-D880-4D8E-B869-CA89DBE13067");
-            //BDNode node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
-            //BDHtmlPage htmlPage = generator.generatePageForEmpiricTherapyOfCultureDirectedEndocarditis(dataContext, node);
-            //Debug.WriteLine(htmlPage.documentText);
 
             Debug.WriteLine("-- A --");
-            nodeUuid = Guid.Parse("c77ee0f1-e2f8-4e18-82c5-b4ab0bc917cc");
-            node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
-            htmlPage = generator.generatePageForEmpiricTherapyOfEndocarditisPaediatrics(dataContext, node);
-            Debug.WriteLine(htmlPage.documentText);
-            Debug.WriteLine("");
-
-            Debug.WriteLine(" -- A2 --");
-            htmlPage = null;
-            htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
-            Debug.WriteLine(htmlPage.documentText);
-            Debug.WriteLine("");
-
-            Debug.WriteLine("-- B --");
-            htmlPage = null;
-            nodeUuid = Guid.Parse("f63383e6-af5f-4f15-81a0-8f32cf058d01");
-            node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
-            htmlPage = generator.generatePageForEmpiricTherapyPresentation(dataContext, node);
-            Debug.WriteLine(htmlPage.documentText);
-            Debug.WriteLine("");
-            Debug.WriteLine("-- B2 --");
-            htmlPage = null;
-            htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
-            Debug.WriteLine(htmlPage.documentText);
-            Debug.WriteLine("");
-
-            Debug.WriteLine("-- C --");
-            htmlPage = null;
-            nodeUuid = Guid.Parse("68f69d10-4d5f-4717-8815-843fbe6b5ed8");
-            node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
-            htmlPage = generator.generatePageForEmpiricTherapyDisease(dataContext, node);
-            Debug.WriteLine(htmlPage.documentText);
-            Debug.WriteLine("");
-
-            Debug.WriteLine("-- C2 --");
-            htmlPage = null;
-            htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
-            Debug.WriteLine(htmlPage.documentText);
-            Debug.WriteLine("");
-            */
-            /*
-            Debug.WriteLine("-- D --");
-            nodeUuid = Guid.Parse("4b476e8b-fa56-4d1a-b0c8-5fb29f820b6f");
+            Debug.Indent();
+            nodeUuid = Guid.Parse("e6af9869-aca3-4347-a656-2c5f845401ae");
             node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
             htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
             Debug.WriteLine(htmlPage.documentText);
             Debug.WriteLine("");
-
-            Debug.WriteLine("-- E --");
-            nodeUuid = Guid.Parse("2a52c687-4fc6-4df8-bcc8-cdf38e678c52");
-            node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
-            htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
-            Debug.WriteLine(htmlPage.documentText);
+            Debug.WriteLine("HtmlPage Uuid= {0}", htmlPage.Uuid);
             Debug.WriteLine("");
-
-            Debug.WriteLine("-- F --");
-            nodeUuid = Guid.Parse("3a5c4685-aa62-4235-a545-c919815a75e0");
-            node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
-            htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
-            Debug.WriteLine(htmlPage.documentText);
-            Debug.WriteLine("");
-
-            Debug.WriteLine("-- G --");
-            nodeUuid = Guid.Parse("d2b46ef0-16a8-4217-b5c3-ca80531ab8b5");
-            node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
-            htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
-            Debug.WriteLine(htmlPage.documentText);
-            Debug.WriteLine("");
-            
-            Debug.WriteLine("-- H --");
-            nodeUuid = Guid.Parse("35879474-3d20-457d-9094-32cc46b838fc");
-            node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
-            htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
-            Debug.WriteLine(htmlPage.documentText);
-            Debug.WriteLine("");
-*/
-            Debug.WriteLine("-- I2 --");
-            nodeUuid = Guid.Parse("7fcee364-81d0-47ea-b1c3-ebdc508e6272");
-            node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
-            htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
-            Debug.WriteLine(htmlPage.documentText);
-            Debug.WriteLine("");
-
+            Debug.Unindent();
             Debug.WriteLine("-- Complete --");
-           
+
         }
 
     }

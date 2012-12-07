@@ -14,11 +14,12 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME = @"BDNodeToHtmlPageIndexes";
         public const string KEY_NAME = @"BDNodeToHtmlPageIndex";
 
-        public static BDNodeToHtmlPageIndex CreateBDNodeToHtmlPageIndex(Entities pContext, Guid pNodeId, Guid pHtmlPageId, Guid pChapterId)
+        public static BDNodeToHtmlPageIndex CreateBDNodeToHtmlPageIndex(Entities pContext, Guid pNodeId, Guid pHtmlPageId, Guid pChapterId, BDConstants.BDHtmlPageType pHtmlPageType)
         {
-            BDNodeToHtmlPageIndex nodeIndex = BDNodeToHtmlPageIndex.CreateBDNodeToHtmlPageIndex(pNodeId,true);
+            BDNodeToHtmlPageIndex nodeIndex = BDNodeToHtmlPageIndex.CreateBDNodeToHtmlPageIndex(pNodeId,true,(int)pHtmlPageType);
             nodeIndex.chapterId = pChapterId;
             nodeIndex.htmlPageId = pHtmlPageId;
+            nodeIndex.htmlPageType = (int) pHtmlPageType;
 
             pContext.AddObject(ENTITYNAME, nodeIndex);
             return nodeIndex;
@@ -33,15 +34,28 @@ namespace BDEditor.DataModel
             }
         }
 
-        public static Guid RetrieveHtmlPageIdForIBDNodeId(Entities pContext, Guid pIBDNodeId)
+        public static Guid RetrieveHtmlPageIdForIBDNodeId(Entities pContext, Guid pIBDNodeId, BDConstants.BDHtmlPageType pPageType)
         {
             Guid returnValue = Guid.Empty;
 
             if (pIBDNodeId != null && pIBDNodeId != Guid.Empty)
             {
-                IQueryable<BDNodeToHtmlPageIndex> entries = (from entry in pContext.BDNodeToHtmlPageIndexes
-                                                             where entry.ibdNodeId == pIBDNodeId
-                                                             select entry);
+                IQueryable<BDNodeToHtmlPageIndex> entries;
+
+                if (null == pPageType)
+                {
+                    entries = (from entry in pContext.BDNodeToHtmlPageIndexes
+                               where entry.ibdNodeId == pIBDNodeId
+                               select entry);
+                }
+                else
+                {
+                    int pageType = (int) pPageType;
+                    entries = (from entry in pContext.BDNodeToHtmlPageIndexes
+                               where (entry.ibdNodeId == pIBDNodeId) && (entry.htmlPageType == pageType)
+                               select entry);
+                }
+
                 BDNodeToHtmlPageIndex indexEntry = entries.FirstOrDefault<BDNodeToHtmlPageIndex>();
                 if (null != indexEntry)
                     returnValue = indexEntry.htmlPageId.Value;
@@ -49,15 +63,26 @@ namespace BDEditor.DataModel
             return returnValue;
         }
 
-        public static BDNodeToHtmlPageIndex RetrieveIndexEntryForIBDNodeId(Entities pContext, Guid pIBDNodeId)
+        public static BDNodeToHtmlPageIndex RetrieveIndexEntryForIBDNodeId(Entities pContext, Guid pIBDNodeId, BDConstants.BDHtmlPageType pPageType)
         {
             BDNodeToHtmlPageIndex returnValue = null;
 
             if (pIBDNodeId != null)
             {
-                IQueryable<BDNodeToHtmlPageIndex> entries = (from entry in pContext.BDNodeToHtmlPageIndexes
-                                                             where entry.ibdNodeId == pIBDNodeId
-                                                             select entry);
+                IQueryable<BDNodeToHtmlPageIndex> entries;
+                if (null == pPageType)
+                {
+                    entries = (from entry in pContext.BDNodeToHtmlPageIndexes
+                               where entry.ibdNodeId == pIBDNodeId
+                               select entry);
+                }
+                else
+                {
+                    int pageType = (int) pPageType;
+                    entries = (from entry in pContext.BDNodeToHtmlPageIndexes
+                               where (entry.ibdNodeId == pIBDNodeId) && (entry.htmlPageType == pageType)
+                               select entry);
+                }
                 returnValue = entries.FirstOrDefault<BDNodeToHtmlPageIndex>();
             }
             return returnValue;

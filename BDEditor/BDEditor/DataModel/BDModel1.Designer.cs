@@ -8,15 +8,15 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
-
 namespace BDEditor.DataModel
 {
     #region Contexts
@@ -356,22 +356,6 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<BDNodeToHtmlPageIndex> BDNodeToHtmlPageIndexes
-        {
-            get
-            {
-                if ((_BDNodeToHtmlPageIndexes == null))
-                {
-                    _BDNodeToHtmlPageIndexes = base.CreateObjectSet<BDNodeToHtmlPageIndex>("BDNodeToHtmlPageIndexes");
-                }
-                return _BDNodeToHtmlPageIndexes;
-            }
-        }
-        private ObjectSet<BDNodeToHtmlPageIndex> _BDNodeToHtmlPageIndexes;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<BDHtmlPage> BDHtmlPages
         {
             get
@@ -400,8 +384,25 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDDosage> _BDDosages;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDNodeToHtmlPageIndex> BDNodeToHtmlPageIndexes
+        {
+            get
+            {
+                if ((_BDNodeToHtmlPageIndexes == null))
+                {
+                    _BDNodeToHtmlPageIndexes = base.CreateObjectSet<BDNodeToHtmlPageIndex>("BDNodeToHtmlPageIndexes");
+                }
+                return _BDNodeToHtmlPageIndexes;
+            }
+        }
+        private ObjectSet<BDNodeToHtmlPageIndex> _BDNodeToHtmlPageIndexes;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
@@ -549,14 +550,6 @@ namespace BDEditor.DataModel
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the BDNodeToHtmlPageIndexes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDNodeToHtmlPageIndexes(BDNodeToHtmlPageIndex bDNodeToHtmlPageIndex)
-        {
-            base.AddObject("BDNodeToHtmlPageIndexes", bDNodeToHtmlPageIndex);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the BDHtmlPages EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToBDHtmlPages(BDHtmlPage bDHtmlPage)
@@ -571,13 +564,21 @@ namespace BDEditor.DataModel
         {
             base.AddObject("BDDosages", bDDosage);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDNodeToHtmlPageIndexes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDNodeToHtmlPageIndexes(BDNodeToHtmlPageIndex bDNodeToHtmlPageIndex)
+        {
+            base.AddObject("BDNodeToHtmlPageIndexes", bDNodeToHtmlPageIndex);
+        }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
     
     /// <summary>
@@ -602,6 +603,7 @@ namespace BDEditor.DataModel
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -968,6 +970,7 @@ namespace BDEditor.DataModel
         partial void OnrecommendationsChanged();
 
         #endregion
+
     
     }
     
@@ -993,6 +996,7 @@ namespace BDEditor.DataModel
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1359,6 +1363,7 @@ namespace BDEditor.DataModel
         partial void OnfilesizeChanged();
 
         #endregion
+
     
     }
     
@@ -1384,6 +1389,7 @@ namespace BDEditor.DataModel
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1990,6 +1996,7 @@ namespace BDEditor.DataModel
         partial void OnentryJoinType04Changed();
 
         #endregion
+
     
     }
     
@@ -2015,6 +2022,7 @@ namespace BDEditor.DataModel
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2645,6 +2653,7 @@ namespace BDEditor.DataModel
         partial void OnparentTypeChanged();
 
         #endregion
+
     
     }
     
@@ -2676,6 +2685,7 @@ namespace BDEditor.DataModel
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3138,6 +3148,7 @@ namespace BDEditor.DataModel
         partial void Ondosage4SameAsPreviousChanged();
 
         #endregion
+
     
     }
     
@@ -3163,6 +3174,7 @@ namespace BDEditor.DataModel
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3433,6 +3445,7 @@ namespace BDEditor.DataModel
         partial void OnpageTitleChanged();
 
         #endregion
+
     
     }
     
@@ -3462,6 +3475,7 @@ namespace BDEditor.DataModel
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3564,6 +3578,7 @@ namespace BDEditor.DataModel
         partial void OndisplayOrderChanged();
 
         #endregion
+
     
     }
     
@@ -3593,6 +3608,7 @@ namespace BDEditor.DataModel
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3695,6 +3711,7 @@ namespace BDEditor.DataModel
         partial void OnlabelChanged();
 
         #endregion
+
     
     }
     
@@ -3726,6 +3743,7 @@ namespace BDEditor.DataModel
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3876,6 +3894,7 @@ namespace BDEditor.DataModel
         partial void OnorderOfPrecedenceChanged();
 
         #endregion
+
     
     }
     
@@ -3903,6 +3922,7 @@ namespace BDEditor.DataModel
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4245,6 +4265,7 @@ namespace BDEditor.DataModel
         partial void OnsingleUseChanged();
 
         #endregion
+
     
     }
     
@@ -4272,6 +4293,7 @@ namespace BDEditor.DataModel
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4662,6 +4684,7 @@ namespace BDEditor.DataModel
         partial void OninternalLinkNodeTypeChanged();
 
         #endregion
+
     
     }
     
@@ -4687,6 +4710,7 @@ namespace BDEditor.DataModel
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -5053,6 +5077,7 @@ namespace BDEditor.DataModel
         partial void OnlayoutVariantChanged();
 
         #endregion
+
     
     }
     
@@ -5071,15 +5096,18 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="ibdNodeId">Initial value of the ibdNodeId property.</param>
         /// <param name="wasGenerated">Initial value of the wasGenerated property.</param>
-        public static BDNodeToHtmlPageIndex CreateBDNodeToHtmlPageIndex(global::System.Guid ibdNodeId, global::System.Boolean wasGenerated)
+        /// <param name="htmlPageType">Initial value of the htmlPageType property.</param>
+        public static BDNodeToHtmlPageIndex CreateBDNodeToHtmlPageIndex(global::System.Guid ibdNodeId, global::System.Boolean wasGenerated, global::System.Int32 htmlPageType)
         {
             BDNodeToHtmlPageIndex bDNodeToHtmlPageIndex = new BDNodeToHtmlPageIndex();
             bDNodeToHtmlPageIndex.ibdNodeId = ibdNodeId;
             bDNodeToHtmlPageIndex.wasGenerated = wasGenerated;
+            bDNodeToHtmlPageIndex.htmlPageType = htmlPageType;
             return bDNodeToHtmlPageIndex;
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -5180,8 +5208,36 @@ namespace BDEditor.DataModel
         private global::System.Boolean _wasGenerated;
         partial void OnwasGeneratedChanging(global::System.Boolean value);
         partial void OnwasGeneratedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 htmlPageType
+        {
+            get
+            {
+                return _htmlPageType;
+            }
+            set
+            {
+                if (_htmlPageType != value)
+                {
+                    OnhtmlPageTypeChanging(value);
+                    ReportPropertyChanging("htmlPageType");
+                    _htmlPageType = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("htmlPageType");
+                    OnhtmlPageTypeChanged();
+                }
+            }
+        }
+        private global::System.Int32 _htmlPageType;
+        partial void OnhtmlPageTypeChanging(global::System.Int32 value);
+        partial void OnhtmlPageTypeChanged();
 
         #endregion
+
     
     }
     
@@ -5207,6 +5263,7 @@ namespace BDEditor.DataModel
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -5717,6 +5774,7 @@ namespace BDEditor.DataModel
         partial void OndurationChanged();
 
         #endregion
+
     
     }
     
@@ -5742,6 +5800,7 @@ namespace BDEditor.DataModel
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -5868,6 +5927,7 @@ namespace BDEditor.DataModel
         partial void OnschemaVersionChanged();
 
         #endregion
+
     
     }
     
@@ -5893,6 +5953,7 @@ namespace BDEditor.DataModel
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -6163,6 +6224,7 @@ namespace BDEditor.DataModel
         partial void OnsearchEntryTypeChanged();
 
         #endregion
+
     
     }
     
@@ -6190,6 +6252,7 @@ namespace BDEditor.DataModel
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -6292,6 +6355,7 @@ namespace BDEditor.DataModel
         partial void OnsettingDateTimeValueChanged();
 
         #endregion
+
     
     }
     
@@ -6317,6 +6381,7 @@ namespace BDEditor.DataModel
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -6659,6 +6724,7 @@ namespace BDEditor.DataModel
         partial void OnparentTypeChanged();
 
         #endregion
+
     
     }
     
@@ -6684,6 +6750,7 @@ namespace BDEditor.DataModel
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -7050,6 +7117,7 @@ namespace BDEditor.DataModel
         partial void OnnodeKeyNameChanged();
 
         #endregion
+
     
     }
     
@@ -7077,6 +7145,7 @@ namespace BDEditor.DataModel
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -7803,6 +7872,7 @@ namespace BDEditor.DataModel
         partial void OndosageSameAsPreviousChanged();
 
         #endregion
+
     
     }
     
@@ -7830,6 +7900,7 @@ namespace BDEditor.DataModel
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -8196,9 +8267,11 @@ namespace BDEditor.DataModel
         partial void OnlayoutVariantChanged();
 
         #endregion
+
     
     }
 
     #endregion
+
     
 }

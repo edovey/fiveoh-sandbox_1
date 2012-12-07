@@ -3796,7 +3796,7 @@ namespace BDEditor.Classes
 
             if (noteHtml.ToString().Length > EMPTY_PARAGRAPH && resultPage == null)
             {
-                resultPage = writeLayoutBDHtmlPage(pContext, pLayoutColumn, noteHtml.ToString(), objectsOnPage);
+                resultPage = writeLayoutBDHtmlPage(pContext, pLayoutColumn, noteHtml.ToString(), objectsOnPage, BDConstants.BDHtmlPageType.Comments);
             }
 
             return resultPage;
@@ -7547,7 +7547,8 @@ namespace BDEditor.Classes
                                         if (null != mapEntry && pExistingPages.Contains(mapEntry.HtmlPageId))
                                             htmlPageId = mapEntry.HtmlPageId;
                                         else
-                                            htmlPageId = BDNodeToHtmlPageIndex.RetrieveHtmlPageIdForIBDNodeId(pContext, linkTargetAssn.internalLinkNodeId.Value);
+                                            //ks: Expectation that internal links will always link to "data" pages rather than "linked note" pages
+                                            htmlPageId = BDNodeToHtmlPageIndex.RetrieveHtmlPageIdForIBDNodeId(pContext, linkTargetAssn.internalLinkNodeId.Value, BDConstants.BDHtmlPageType.Data);
                                         
                                         if(htmlPageId != Guid.Empty && null != BDHtmlPage.RetrieveWithId(pContext, htmlPageId))
                                         {
@@ -7752,7 +7753,7 @@ namespace BDEditor.Classes
             if (currentPageMasterObject != null)
                 masterGuid = currentPageMasterObject.Uuid;
 
-            BDNodeToHtmlPageIndex indexEntry = BDNodeToHtmlPageIndex.RetrieveIndexEntryForIBDNodeId(pContext, masterGuid);
+            BDNodeToHtmlPageIndex indexEntry = BDNodeToHtmlPageIndex.RetrieveIndexEntryForIBDNodeId(pContext, masterGuid, pPageType);
             
             BDHtmlPage newPage = null;
             if (indexEntry != null)
@@ -7782,7 +7783,7 @@ namespace BDEditor.Classes
                 Guid chapterId = Guid.Empty;
                 if (currentChapter != null)
                     chapterId = currentChapter.Uuid;
-                indexEntry = BDNodeToHtmlPageIndex.CreateBDNodeToHtmlPageIndex(pContext, masterGuid, newPage.Uuid, chapterId);
+                indexEntry = BDNodeToHtmlPageIndex.CreateBDNodeToHtmlPageIndex(pContext, masterGuid, newPage.Uuid, chapterId, pPageType);
             }
             else
             {
@@ -7805,12 +7806,12 @@ namespace BDEditor.Classes
             return newPage;
         }
 
-        private BDHtmlPage writeLayoutBDHtmlPage(Entities pContext, BDLayoutMetadataColumn pLayoutColumn, string pBodyHTML, List<Guid> pObjectsOnPage)
+        private BDHtmlPage writeLayoutBDHtmlPage(Entities pContext, BDLayoutMetadataColumn pLayoutColumn, string pBodyHTML, List<Guid> pObjectsOnPage, BDConstants.BDHtmlPageType pPageType)
         {
             // inject Html into page html & save as a page to the database.
             string pageHtml = topHtml + pBodyHTML + bottomHtml;
 
-            BDNodeToHtmlPageIndex indexEntry = BDNodeToHtmlPageIndex.RetrieveIndexEntryForIBDNodeId(pContext, pLayoutColumn.Uuid);
+            BDNodeToHtmlPageIndex indexEntry = BDNodeToHtmlPageIndex.RetrieveIndexEntryForIBDNodeId(pContext, pLayoutColumn.Uuid, pPageType);
 
             BDHtmlPage newPage = null;
             if (indexEntry != null)
@@ -7836,7 +7837,7 @@ namespace BDEditor.Classes
                 Guid chapterId = Guid.Empty;
                 if (currentChapter != null)
                     chapterId = currentChapter.Uuid;
-                indexEntry = BDNodeToHtmlPageIndex.CreateBDNodeToHtmlPageIndex(pContext, pLayoutColumn.Uuid, newPage.Uuid, chapterId);
+                indexEntry = BDNodeToHtmlPageIndex.CreateBDNodeToHtmlPageIndex(pContext, pLayoutColumn.Uuid, newPage.Uuid, chapterId, pPageType);
             }
             else
             {

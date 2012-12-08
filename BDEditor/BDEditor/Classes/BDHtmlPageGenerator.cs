@@ -4573,8 +4573,6 @@ namespace BDEditor.Classes
             BDNode node = pNode as BDNode;
             if (null != pNode && pNode.NodeType == BDConstants.BDNodeType.BDAntimicrobial)
             {
-                html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
-
                 List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
                 switch (pNode.LayoutVariant)
                 {
@@ -4583,6 +4581,8 @@ namespace BDEditor.Classes
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDosageGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDosage, new BDConstants.LayoutVariantType[] { layoutVariant }));
+
+                        html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
 
                         string amHtml = buildNodePropertyHTML(pContext, pNode, pNode.Name, BDNode.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage);
                         List<BDLinkedNote> amFooters = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Footnote);
@@ -4731,6 +4731,9 @@ namespace BDEditor.Classes
                         break;
                     case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
+        
+                        html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+
                         foreach (IBDNode child in children)
                         {
                             if (child.NodeType == BDConstants.BDNodeType.BDTopic)
@@ -5932,7 +5935,7 @@ namespace BDEditor.Classes
                     if (childNodes[i].LayoutVariant == BDConstants.LayoutVariantType.Prophylaxis_IERecommendation)
                         html.AppendFormat(@"<p><a href=""{0}""><b>{1}</b></a></p>", childPages[i].Uuid.ToString().ToUpper(), childNodes[i].Name);
                     else
-                        therapyGroupHTML.AppendFormat(@"<p><a href=""{0}""><b>{1}</b></a></p>", childPages[i].Uuid.ToString().ToUpper(), childNodes[i].Name);
+                        therapyGroupHTML.AppendFormat(@"<p><a href=""{0}""><b>{1}</b></a></p>", childPages[i].Uuid.ToString().ToUpper(), childPages[i].pageTitle);
                 }
                 html.Append(therapyGroupHTML);
             }

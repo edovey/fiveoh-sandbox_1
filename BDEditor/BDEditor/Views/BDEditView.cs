@@ -2166,7 +2166,6 @@ namespace BDEditor.Views
             dataContext.SaveChanges();
             */
             #endregion
-
             #region v.1.6.34
             //BDNode backMatter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.NewGuid());
             //backMatter.Name = "Back Matter";
@@ -2187,6 +2186,27 @@ namespace BDEditor.Views
             //dataContext.SaveChanges();
 
             #endregion
+
+            #region v.1.6.35
+            //BDNode table = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("f7998d6e-78d9-49b2-aea5-d7396be0a877"));
+            //BDNode odontogenic = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("a6874e73-7f2c-4f29-8e24-d0d2bb57b8a6"));
+            //odontogenic.nodeType = (int)BDConstants.BDNodeType.BDSubcategory;
+            //odontogenic.nodeKeyName = "BDSubcategory";
+            //odontogenic.SetParent(table);
+
+            //BDNode peri = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("e1bb6301-0ab0-47ae-a15d-6607897aac84"));
+            //peri.nodeType = (int)BDConstants.BDNodeType.BDSubcategory;
+            //peri.nodeKeyName = "BDSubcategory";
+            //peri.SetParent(table);
+
+            //BDNode oral = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("030842eb-f3cd-4679-ae60-deac35161bca"));
+            //oral.nodeType = (int)BDConstants.BDNodeType.BDSubcategory;
+            //oral.nodeKeyName = "BDSubcategory";
+            //oral.SetParent(table);
+
+            //dataContext.SaveChanges();
+            #endregion
+
         }
 
         private void btnDebug_Click(object sender, EventArgs e)

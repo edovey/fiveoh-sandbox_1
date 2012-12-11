@@ -444,7 +444,7 @@ namespace BDEditor.Classes
         {
             [Description("")]
             Next = 0,
-            [Description("and")]
+            [Description("+")]
             AndWithNext = 1,
             [Description("or")]
             OrWithNext = 2,

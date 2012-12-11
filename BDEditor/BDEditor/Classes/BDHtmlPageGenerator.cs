@@ -4932,26 +4932,27 @@ namespace BDEditor.Classes
                         break;
 
                     case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure_Risk:
-                        foreach (IBDNode child in children)
-                        {
-                            html.Append(BuildBDConfiguredEntryHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1, true));
-                        }
-                        break;
+                        //foreach (IBDNode child in children)
+                        //{
+                        //    html.Append(BuildBDConfiguredEntryHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1, true));
+                        //}
+                        //break;
 
                     case BDConstants.LayoutVariantType.Antibiotics_HepaticImpairment_Grading:
                     case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration_Dosages:
                     case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure_Followup_I:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDConfiguredEntry, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                            if (null != metadataLayoutColumns)
+                        if (null != metadataLayoutColumns)
                         {
                             html.Append("<table><tr>");
                             foreach (BDLayoutMetadataColumn metadataColumn in metadataLayoutColumns)
                                 html.AppendFormat("<th>{0}</th>", buildHtmlForMetadataColumn(pContext, pNode, metadataColumn, BDConstants.BDNodeType.BDConfiguredEntry, pFootnotes, pObjectsOnPage));
                             html.Append("</tr>");
 
+                            bool firstColumnEmphasized = (pNode.LayoutVariant == BDConstants.LayoutVariantType.Prophylaxis_FluidExposure_Risk);
                             foreach (IBDNode child in children)
                             {
-                                html.Append(BuildBDConfiguredEntryHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
+                                html.Append(BuildBDConfiguredEntryHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1, false, firstColumnEmphasized));
                             }
                             html.Append("</table>");
                         }
@@ -5067,7 +5068,7 @@ namespace BDEditor.Classes
         /// <returns></returns>
         public string BuildBDConfiguredEntryHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel)
         {
-            return BuildBDConfiguredEntryHtml(pContext, pNode, pFootnotes, pObjectsOnPage,pLevel, false);
+            return BuildBDConfiguredEntryHtml(pContext, pNode, pFootnotes, pObjectsOnPage,pLevel, false, false);
         }
 
         /// <summary>
@@ -5080,7 +5081,7 @@ namespace BDEditor.Classes
         /// <param name="pLevel"></param>
         /// <param name="pVerticalLayout"></param>
         /// <returns></returns>
-        public string BuildBDConfiguredEntryHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel, bool pVerticalLayout)
+        public string BuildBDConfiguredEntryHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel, bool pVerticalLayout, bool pFirstColumnEmphasized)
         {
             StringBuilder html = new StringBuilder();
             if ((null != pNode) && (pNode.NodeType == BDConstants.BDNodeType.BDConfiguredEntry))
@@ -5130,7 +5131,10 @@ namespace BDEditor.Classes
                                 if(string.IsNullOrEmpty(propertyHtml))
                                     propertyHtml = buildNodePropertyHTML(pContext, configuredEntry, propertyValue, string.Format("{0}{1}", propertyName, BDConfiguredEntry.FIELDNOTE_SUFFIX), pFootnotes, pObjectsOnPage);
 
-                                html.AppendFormat("<td>{0}</td>", propertyHtml);
+                                if(pFirstColumnEmphasized && (idx == 0))
+                                    html.AppendFormat("<td><b>{0}</b></td>", propertyHtml);
+                                else
+                                    html.AppendFormat("<td>{0}</td>", propertyHtml);
                             }
                         }
 

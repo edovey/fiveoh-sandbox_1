@@ -7685,12 +7685,12 @@ namespace BDEditor.Classes
                     
                     if (null != pNode)
                     {
-                        switch (pNode.LayoutVariant)
-                        {
-                            case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
-                                joinString = "+";
-                                break;
-                        }
+                        //switch (pNode.LayoutVariant)
+                        //{
+                        //    case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
+                        //        joinString = "+";
+                        //        break;
+                        //}
                     }
                     break;
                 case (int) BDConstants.BDJoinType.OrWithNext:

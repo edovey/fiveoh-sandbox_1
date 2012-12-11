@@ -749,8 +749,10 @@ namespace BDEditor.Classes
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
+                        case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
                             currentPageMasterObject = pNode;
-                            nodeChildPages.Add(generatePageForProhylaxisSexualAssault(pContext, pNode));
+                            //nodeChildPages.Add(generatePageForProhylaxisSexualAssault(pContext, pNode));
+                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         default:
@@ -4068,7 +4070,7 @@ namespace BDEditor.Classes
             // Because this is used across many layout variants without rendering differences, allow for an override
             BDConstants.LayoutVariantType layoutLayoutVariant = (pLayoutOverride.HasValue && pLayoutOverride != BDConstants.LayoutVariantType.Undefined) ? pLayoutOverride.Value : pTherapyGroup.LayoutVariant;
 
-            List<BDLayoutMetadataColumn> metadataLayoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, layoutLayoutVariant);
+            List<BDLayoutMetadataColumn> metadataLayoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, layoutLayoutVariant, BDConstants.BDNodeType.BDTherapy);
 
             if (metadataLayoutColumns.Count > 0)
                 therapyNameTitleHtml = buildHtmlForMetadataColumn(pContext, pTherapyGroup, metadataLayoutColumns[0], BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_THERAPY, pFootnotes, pObjectsOnPage);
@@ -4134,6 +4136,7 @@ namespace BDEditor.Classes
                         break;
 
                     case BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics:
+                    case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
                         therapyGroupHtml.AppendFormat(@"<tr><th>{0}</th><th>{1}</th><tr>",therapyNameTitleHtml,therapyDosageTitleHtml);
                         therapyGroupHtml.Append(therapyHTML);
                         therapyGroupHtml.Append(@"</table>");
@@ -6433,6 +6436,10 @@ namespace BDEditor.Classes
                         break;
                     case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDisease, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis }));
+                        foreach (IBDNode child in children)
+                        {
+                            html.Append(BuildBDDiseaseHtml(pContext, child as BDTherapyGroup, pFootnotes, pObjectsOnPage, pLevel + 1));
+                        }
                         break;
                     case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
                     case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional:
@@ -6639,7 +6646,9 @@ namespace BDEditor.Classes
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         foreach (IBDNode child in children)
                         {
+                            html.Append(BuildBDTherapyGroupHTML(pContext, child as BDTherapyGroup, pFootnotes, pObjectsOnPage, pLevel + 1, null));
                         }
+
                         break;
                     case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
                     case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:

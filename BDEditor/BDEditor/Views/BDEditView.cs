@@ -1234,7 +1234,7 @@ namespace BDEditor.Views
             Debug.WriteLine(string.Format("Start {0}", DateTime.Now));
 
             BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Publish Start\t{0}", DateTime.Now));
-
+            BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("{0} -------------------------------", DateTime.Now));
             if (!awsPushOnly)
             {
                 BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
@@ -2220,7 +2220,7 @@ namespace BDEditor.Views
 
             Debug.WriteLine("-- A --");
             Debug.Indent();
-            nodeUuid = Guid.Parse("da54b83e-2bdc-471e-af12-2eba55507849");
+            nodeUuid = Guid.Parse("7d93f938-7ea2-4a9d-a310-923e8165371a");
             node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
             htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
             Debug.WriteLine(htmlPage.documentText);

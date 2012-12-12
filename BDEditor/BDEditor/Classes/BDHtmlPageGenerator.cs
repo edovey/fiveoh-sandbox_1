@@ -1767,7 +1767,7 @@ namespace BDEditor.Classes
                         switch (entry.NodeType)
                         {
                             case BDConstants.BDNodeType.BDPathogenGroup:
-                                bodyHTML.Append(BuildBDPathogenGroupHtml(pContext, entry, footnotesOnPage, objectsOnPage, 3));
+                                bodyHTML.Append(BuildBDPathogenGroupHtml(pContext, entry, footnotesOnPage, objectsOnPage, 3, true));
                                 break;
                             case BDConstants.BDNodeType.BDTopic:
                                 // describe the topic
@@ -1778,7 +1778,7 @@ namespace BDEditor.Classes
                                 {
                                     //ks: casting pathogenGroup as BDNode may result in null objects
                                     //bodyHTML.Append(buildEmpiricTherapyHTML(pContext, pathogenGroup as BDNode, footnotesOnPage, objectsOnPage));
-                                    bodyHTML.Append(BuildBDPathogenGroupHtml(pContext, entry, footnotesOnPage, objectsOnPage, 3));
+                                    bodyHTML.Append(BuildBDPathogenGroupHtml(pContext, entry, footnotesOnPage, objectsOnPage, 3, true));
                                 }
                                 break;
                             default:
@@ -1803,7 +1803,7 @@ namespace BDEditor.Classes
                 default:
                     List<IBDNode> pathogenGroupList = BDFabrik.GetChildrenForParent(pContext, pNode);
                     foreach (IBDNode pathogenGroup in childNodes)
-                        bodyHTML.Append(BuildBDPathogenGroupHtml(pContext, pathogenGroup, footnotesOnPage, objectsOnPage, 3));
+                        bodyHTML.Append(BuildBDPathogenGroupHtml(pContext, pathogenGroup, footnotesOnPage, objectsOnPage, 3, true));
                         //bodyHTML.Append(buildEmpiricTherapyHTML(pContext, pathogenGroup as BDNode, footnotesOnPage, objectsOnPage));
                     break;
             }
@@ -1855,7 +1855,7 @@ namespace BDEditor.Classes
                     bodyHTML.Append(BuildBDPathogenHtml(pContext, pNode, footnotes, objectsOnPage, 1));
                     break;
                 case BDConstants.BDNodeType.BDPathogenGroup:
-                    bodyHTML.Append(BuildBDPathogenGroupHtml(pContext, pNode, footnotes, objectsOnPage, 1));
+                    bodyHTML.Append(BuildBDPathogenGroupHtml(pContext, pNode, footnotes, objectsOnPage, 1, true));
                     break;
                 case BDConstants.BDNodeType.BDPresentation:
                     bodyHTML.Append(buildBDPresentationHtml(pContext, pNode, footnotes, objectsOnPage, 1));
@@ -4064,6 +4064,9 @@ namespace BDEditor.Classes
             // Exception occurs in BuildBDPathogenResistanceHtml, BuildBDPathogenGroupHtml
 
             StringBuilder therapyGroupHtml = new StringBuilder();
+
+            therapyGroupHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pTherapyGroup, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+
             string therapyNameTitleHtml = string.Empty;
             string therapyDosageTitleHtml = string.Empty;
             string therapyDurationTitleHtml = string.Empty;
@@ -4209,7 +4212,7 @@ namespace BDEditor.Classes
         /// <param name="pFootnotes"></param>
         /// <param name="pObjectsOnPage"></param>
         /// <returns></returns>
-        public string BuildBDPathogenGroupHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel)
+        public string BuildBDPathogenGroupHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel, bool pUsualPathogenTitle)
         {
             // Exception: TherapyGroup & Therapy
             StringBuilder html = new StringBuilder();
@@ -4217,8 +4220,6 @@ namespace BDEditor.Classes
             BDNode pathogenGroup = pNode as BDNode;
             if (null != pNode && pNode.NodeType == BDConstants.BDNodeType.BDPathogenGroup)
             {
-                
-
                 List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pathogenGroup);
 
                 switch (pNode.LayoutVariant)
@@ -4304,15 +4305,24 @@ namespace BDEditor.Classes
 
                     default:
 
-                        if (children.Count > 0)
+                        bool childrenHavePathogens = false;
+                        foreach (IBDNode child in children)
+                        {
+                            if (child.NodeType == BDConstants.BDNodeType.BDPathogen)
+                            {
+                                childrenHavePathogens = true;
+                                break;
+                            }
+                        }
+                        if (pUsualPathogenTitle && childrenHavePathogens)
                         {
                             string title = "Usual Pathogens";
                             if (pNode.ParentId == Guid.Parse("54f2fcf0-8cbb-42d0-b61e-494838b1920e")) title = "Potential Pathogens";
-                            html.Append(string.Format("<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel + 1), title));
+                            html.Append(string.Format("<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel), title));
                         }
 
                         // describe the pathogen group
-                        html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+                        html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel + 1), pFootnotes, pObjectsOnPage));
 
                         foreach (IBDNode child in children)
                         {
@@ -4325,7 +4335,7 @@ namespace BDEditor.Classes
                                     BDTherapyGroup therapyGroup = child as BDTherapyGroup;
                                     if (null != therapyGroup)
                                     {
-                                        html.AppendFormat("{0}<br>", (BuildBDTherapyGroupHTML(pContext, therapyGroup, pFootnotes, pObjectsOnPage, pLevel + 1, null)));
+                                        html.AppendFormat("{0}<br>", (BuildBDTherapyGroupHTML(pContext, therapyGroup, pFootnotes, pObjectsOnPage, pLevel + 2, null)));
                                     }
                                     break;
                             }
@@ -6204,7 +6214,7 @@ namespace BDEditor.Classes
 
                         if (children.Count > 0)
                         {
-                            string c1Html = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[0], pNode.NodeType, BDNode.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage);
+                            string c1Html = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[0], BDConstants.BDNodeType.BDAntimicrobial, BDNode.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage);
                             string c2Html = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[1], BDConstants.BDNodeType.BDDosage, BDDosage.PROPERTYNAME_DOSAGE, pFootnotes, pObjectsOnPage);
                             string c3Html = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[2], BDConstants.BDNodeType.BDDosage, BDDosage.PROPERTYNAME_COST, pFootnotes, pObjectsOnPage);
 
@@ -6536,7 +6546,8 @@ namespace BDEditor.Classes
                     case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
                         foreach (IBDNode child in children)
                         {
-                            html.Append(BuildBDPathogenGroupHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
+                            html.Append(BuildBDPathogenGroupHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1, isFirstChild));
+                            isFirstChild = false;
                         }
                         break;
                     case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
@@ -6567,6 +6578,7 @@ namespace BDEditor.Classes
                 //ks: Not sure if the the response should be described here
                 // html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
                 List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
+                bool isFirstChild = true;
 
                 switch (pNode.LayoutVariant)
                 {
@@ -6578,7 +6590,8 @@ namespace BDEditor.Classes
                             List<IBDNode> pathogenGroups = BDFabrik.GetChildrenForParent(pContext, frequency); //assumes pathogenGroups are being returned (as defined in BDFabrik)
                             foreach (IBDNode pathogenGroup in pathogenGroups)
                             {
-                                html.Append(BuildBDPathogenGroupHtml(pContext, pathogenGroup as BDNode, pFootnotes, pObjectsOnPage, pLevel + 1));
+                                html.Append(BuildBDPathogenGroupHtml(pContext, pathogenGroup as BDNode, pFootnotes, pObjectsOnPage, pLevel + 1, isFirstChild));
+                                isFirstChild = false;
                             }
                         }
                         break;
@@ -6706,67 +6719,100 @@ namespace BDEditor.Classes
             BDNode presentation = pNode as BDNode;
             if((null != presentation) && (presentation.NodeType == BDConstants.BDNodeType.BDPresentation))
             {
+                bool isFirstChild = true;
                 html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, presentation, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
                 List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, presentation);
-                foreach (IBDNode child in children)
-                {
-                    switch (child.NodeType)
-                    {
-                        case BDConstants.BDNodeType.BDPathogenGroup:
-                            html.Append(BuildBDPathogenGroupHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
-                            break;
-                        case BDConstants.BDNodeType.BDResponse:
-                            html.Append(BuildBDResponseHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
-                            break;
-                        case BDConstants.BDNodeType.BDTable:
-                            html.Append(BuildBDTableHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
-                            break;
-                        case BDConstants.BDNodeType.BDTherapyGroup:
-                            BDTherapyGroup therapyGroup = child as BDTherapyGroup;
-                            html.Append(BuildBDTherapyGroupHTML(pContext, therapyGroup, pFootnotes, pObjectsOnPage, pLevel + 1, null));
-                            break;
-                        case BDConstants.BDNodeType.BDTopic:
-                            html.Append(BuildBDTopicHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
-                            break;
-                        default:
-                            string errorMsg = string.Format("buildBDPresentationHtml : Unhandled Presentation child node type [{0}]", child.NodeType.ToString());
-                            throw new InvalidDataException(errorMsg);
-                            break;
-                    }
 
-                    /*
-                    switch (presentation.LayoutVariant)
-                    {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Adult:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Paediatric:
-                            //PathogenGroup
-                            //Topic
-                            break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis:
-                            //PathogenGroup
-                            //Topic
-                            break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
-                            //PathogenGroup
-                            //Response
-                            break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation14_CellulitisExtremities:
-                            //PathogenGroup
-                            //Table
-                            break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
-                            //PathogenGroup
-                            break;
-                        case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
-                            //TherapyGroup
-                            break;
-                        default:
-                            break;
-                    }
-                    */
+                switch (presentation.LayoutVariant)
+                {
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Adult:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Paediatric:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis:
+                        //PathogenGroup
+                        //Topic
+                        foreach (IBDNode child in children)
+                        {
+                            switch (child.NodeType)
+                            {
+                                case BDConstants.BDNodeType.BDPathogenGroup:
+                                    html.Append(BuildBDPathogenGroupHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1, isFirstChild));
+                                    break;
+                                case BDConstants.BDNodeType.BDTopic:
+                                    html.Append(BuildBDTopicHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
+                                    break;
+                            }
+                            isFirstChild = false;
+                        }
+
+                        break;
+
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
+                        //PathogenGroup
+                        //Response
+
+                        foreach (IBDNode child in children)
+                        {
+                            switch (child.NodeType)
+                            {
+                                case BDConstants.BDNodeType.BDPathogenGroup:
+                                    html.Append(BuildBDPathogenGroupHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1, isFirstChild));
+                                    break;
+                                case BDConstants.BDNodeType.BDResponse:
+                                    html.Append(BuildBDResponseHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
+                                    break;
+                            }
+                            isFirstChild = false;
+                        }
+                        break;
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation14_CellulitisExtremities:
+                        //PathogenGroup
+                        //Table
+                        foreach (IBDNode child in children)
+                        {
+                            switch (child.NodeType)
+                            {
+                                case BDConstants.BDNodeType.BDPathogenGroup:
+                                    html.Append(BuildBDPathogenGroupHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1, isFirstChild));
+                                    break;
+                                case BDConstants.BDNodeType.BDTable:
+                                    html.Append(BuildBDTableHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
+                                    break;
+                            }
+                            isFirstChild = false;
+                        }
+                        break;
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
+                        //PathogenGroup
+                        foreach (IBDNode child in children)
+                        {
+                            switch (child.NodeType)
+                            {
+                                case BDConstants.BDNodeType.BDPathogenGroup:
+                                    html.Append(BuildBDPathogenGroupHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1, isFirstChild));
+                                    break;
+                            }
+                            isFirstChild = false;
+                        }
+                        break;
+                    case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
+                        //TherapyGroup
+                        foreach (IBDNode child in children)
+                        {
+                            switch (child.NodeType)
+                            {
+                                case BDConstants.BDNodeType.BDTherapyGroup:
+                                    BDTherapyGroup therapyGroup = child as BDTherapyGroup;
+                                    html.Append(BuildBDTherapyGroupHTML(pContext, therapyGroup, pFootnotes, pObjectsOnPage, pLevel + 1, null));
+                                    break;
+                            }
+                            isFirstChild = false;
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
 
@@ -7586,16 +7632,19 @@ namespace BDEditor.Classes
                                         else
                                             //ks: Expectation that internal links will always link to "data" pages rather than "linked note" pages
                                             htmlPageId = BDNodeToHtmlPageIndex.RetrieveHtmlPageIdForIBDNodeId(pContext, linkTargetAssn.internalLinkNodeId.Value, BDConstants.BDHtmlPageType.Data);
-                                        
-                                        if(htmlPageId != Guid.Empty && null != BDHtmlPage.RetrieveWithId(pContext, htmlPageId))
+
+                                        if (htmlPageId != Guid.Empty && null != BDHtmlPage.RetrieveWithId(pContext, htmlPageId))
                                         {
-                                        // modify anchor tag to point to the html page generated for the targeted node
+                                            // modify anchor tag to point to the html page generated for the targeted node
                                             string newText = pPage.documentText.Replace(anchorGuid.ToString(), htmlPageId.ToString().ToUpper());
                                             pPage.documentText = newText;
                                             BDHtmlPage.Save(pContext, pPage);
                                         }
                                         else // if this is an internal link there should be a page for it
+                                        {
                                             Debug.WriteLine("Unable to map link in {0} showing {1}", pPage.Uuid, anchorGuid);
+                                            BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("{0} Html page Uuid {1} anchor Uuid {2}", DateTime.Now, pPage.Uuid, anchorGuid));
+                                        }
                                     }
                                     else if (linkTargetAssn.linkedNoteId.HasValue)
                                     {

@@ -739,7 +739,6 @@ namespace BDEditor.Views
                         switch (node.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.TreatmentRecommendation05_CultureProvenPeritonitis:
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                                 childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
@@ -2166,7 +2165,7 @@ namespace BDEditor.Views
             dataContext.SaveChanges();
             */
             #endregion
-            #region v.1.6.34
+            #region v.1.6.33
             //BDNode backMatter = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.NewGuid());
             //backMatter.Name = "Back Matter";
             //backMatter.DisplayOrder = 7;
@@ -2186,8 +2185,7 @@ namespace BDEditor.Views
             //dataContext.SaveChanges();
 
             #endregion
-
-            #region v.1.6.35
+            #region v.1.6.34
             //BDNode table = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("f7998d6e-78d9-49b2-aea5-d7396be0a877"));
             //BDNode odontogenic = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("a6874e73-7f2c-4f29-8e24-d0d2bb57b8a6"));
             //odontogenic.nodeType = (int)BDConstants.BDNodeType.BDSubcategory;
@@ -2207,6 +2205,113 @@ namespace BDEditor.Views
             //dataContext.SaveChanges();
             #endregion
 
+            #region v.1.6.35
+            //#region Part One
+            //// move child nodes from Otitis Media to Otiis Externa
+            //BDNode externa = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("7fda2fdf-f8cd-4e87-ad1c-a377f196bd6c"));
+            //BDNode child1 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("da944325-f078-4d4f-8608-136d457c8fd8"));
+            //child1.SetParent(externa);
+            //child1.DisplayOrder = 0;
+            //BDNode child2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("265c7303-3c3d-4e16-a120-3cade8343fb3"));
+            //child2.SetParent(externa);
+            //child2.DisplayOrder = 1;
+            //dataContext.SaveChanges();
+
+            //// Move Human Bites up to Disease level and out of Animal Bites
+            //BDNode parentNode = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("8d188a42-7ac0-453c-95cd-f753a9c9d81a"));
+            //BDNode hbites = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDDisease, Guid.NewGuid());
+            //hbites.Name = "Human Bites";
+            //hbites.DisplayOrder = 9;
+            //hbites.SetParent(parentNode);
+            //hbites.layoutVariant = (int)parentNode.LayoutVariant;
+
+            //BDNode presentation = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("0845c606-5018-4711-b413-0053e415da50"));
+            //presentation.Name = "SINGLE PRESENTATION";
+            //presentation.SetParent(hbites);
+            //presentation.DisplayOrder = 0;
+            //dataContext.SaveChanges();
+
+            //// Move presentaions out of CAP into Hospitalized
+            //BDNode hospitalized = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("026f2db5-a22c-434b-927b-0fadd648c19f"));
+            //BDNode moderate = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("ef43b894-e820-4499-9466-83c5a15845ae"));
+            //BDNode severe = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("c085d1e6-31eb-4704-b11b-7379d2751804"));
+            //moderate.DisplayOrder = 0;
+            //moderate.SetParent(hospitalized);
+            //severe.DisplayOrder = 1;
+            //severe.SetParent(hospitalized);
+            //dataContext.SaveChanges();
+
+            //// change node from presentation to disease, move (sibling) nodes under 
+            //BDNode respiratory = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("0b65f9e2-7436-4c22-9785-93be2b7e4f5a"));
+            ////AECB
+            //BDNode newDisease = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("cb141fa1-9769-49a9-86fe-793c6c259405"));
+            //newDisease.nodeType = (int)BDConstants.BDNodeType.BDDisease;
+            //newDisease.nodeKeyName = "BDDisease";
+            //newDisease.DisplayOrder = 23;
+            //newDisease.SetParent(respiratory);
+            //BDNode d1c1 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("477f6ba2-d2b9-4b80-af7f-3e9ecc0da21b"));
+            //d1c1.SetParent(newDisease);
+            //d1c1.DisplayOrder = 0;
+            //BDNode d1c2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("f9a7701a-0ffe-46bf-9f67-676110c0d5e1"));
+            //d1c2.SetParent(newDisease);
+            //d1c2.DisplayOrder = 1;
+            ////Bronchiectasis
+            //BDNode d2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("63a768cd-397d-491b-9978-97e38c054acf"));
+            //d2.nodeType = (int)BDConstants.BDNodeType.BDDisease;
+            //d2.nodeKeyName = "BDDisease";
+            //d2.DisplayOrder = 24;
+            //d2.SetParent(respiratory);
+            //BDNode d2c1 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("a3b15507-15af-4276-ba06-76c996c822fc"));
+            //d2c1.SetParent(d2);
+            //d2.DisplayOrder = 0;
+            //dataContext.SaveChanges();
+            //#endregion
+
+            //#region Part Two
+            // remove pathogen group from hierarchy in Culture-proven Endocarditis
+            BDNode parent = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("8741d365-16ef-4de8-8d08-dabc574c010a"));
+            BDNode pathogenGroup = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("251bbd0f-2d96-433c-acfa-ac21553859f2"));
+            List<BDNode> pathogens = BDNode.RetrieveNodesForParentIdAndChildNodeType(dataContext, pathogenGroup.Uuid, BDConstants.BDNodeType.BDPathogen);
+            //List<IBDNode> pathogens = BDFabrik.GetChildrenForParent(dataContext, pathogenGroup);
+            foreach (BDNode pathogen in pathogens)
+                pathogen.SetParent(parent);
+            dataContext.SaveChanges();
+
+            //// Remove first column from CURB table
+            //BDTableRow  header = BDTableRow.RetrieveTableRowWithId(dataContext, Guid.Parse("ab6fb715-929b-4d47-acad-41a202b1708b"));
+            //List<BDTableCell> headerCells = BDTableCell.RetrieveTableCellsForParentId(dataContext, header.uuid);
+            //BDTableCell cellToDelete = null;
+            //for(int i = 0; i < headerCells.Count; i++)
+            //{
+            //    BDTableCell hCell = headerCells[i];
+            //    if (i == 0)
+            //        cellToDelete = hCell;
+            //    else
+            //        hCell.DisplayOrder = i - 1;
+            //}
+            //if (cellToDelete != null)
+            //    BDTableCell.Delete(dataContext, cellToDelete, false);
+
+            //BDNode tSection = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("de6c6855-f290-471b-a884-accb87cf24e6"));
+            //List<BDTableRow> contentRows = BDTableRow.RetrieveTableRowsForParentId(dataContext, tSection.Uuid);
+            //foreach(BDTableRow cRow in contentRows)
+            //{
+            //    List<BDTableCell> cCells = BDTableCell.RetrieveTableCellsForParentId(dataContext, cRow.uuid);
+            //    BDTableCell contentCellToDelete = null;
+            //    for(int i = 0; i < cCells.Count; i++)
+            //    {
+            //        BDTableCell cCell = cCells[i];
+            //        if(i == 0)
+            //            contentCellToDelete = cCell;
+            //        else
+            //            cCell.DisplayOrder = i - 1;
+            //    }
+            //    if (cellToDelete != null)
+            //        BDTableCell.Delete(dataContext, contentCellToDelete, false);
+            //}
+            //dataContext.SaveChanges();
+            //#endregion
+            #endregion
         }
 
         private void btnDebug_Click(object sender, EventArgs e)

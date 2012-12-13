@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -1204,7 +1205,7 @@ namespace BDEditor.Views
 
         private void btnPublish_Click(object sender, EventArgs e)
         {
-            IBDNode chapterNode = null;
+            BDNode chapterNode = null;
 
             bool awsPushOnly = false;
 
@@ -1237,7 +1238,10 @@ namespace BDEditor.Views
             if (!awsPushOnly)
             {
                 BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
-                generator.Generate(dataContext, chapterNode);
+                List<BDNode> nodeList = (null == chapterNode) ? null : new List<BDNode>(1) {chapterNode};
+
+                generator.Generate(dataContext, nodeList);
+
                 System.Diagnostics.Debug.WriteLine("HTML page generation complete.");
                 BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Generation Complete\t{0}", DateTime.Now));
 
@@ -2322,7 +2326,7 @@ namespace BDEditor.Views
             BDHtmlPage htmlPage = null;
             BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
 
-
+            /*
             Debug.WriteLine("-- A --");
             Debug.Indent();
             nodeUuid = Guid.Parse("7d93f938-7ea2-4a9d-a310-923e8165371a");
@@ -2333,6 +2337,7 @@ namespace BDEditor.Views
             Debug.WriteLine("HtmlPage Uuid= {0}", htmlPage.Uuid);
             Debug.WriteLine("");
             Debug.Unindent();
+            */
 
             //Debug.WriteLine("-- B --");
             //Debug.Indent();
@@ -2346,6 +2351,38 @@ namespace BDEditor.Views
             //Debug.Unindent();
             //Debug.WriteLine("-- Complete --");
 
+            Debug.WriteLine("-- DEBUG FORENSICS --");
+            List<IBDNode> fList = new List<IBDNode>(); 
+            string mydocpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            using (StreamReader sr = File.OpenText(Path.Combine(mydocpath,"NodeUuidList.txt")))
+            {
+                String input;
+
+                
+                while ((input = sr.ReadLine()) != null)
+                {
+                    IBDNode fNode = BDFabrik.RetrieveNode(dataContext, Guid.Parse(input));
+                    fList.Add(fNode);
+                }
+
+            }
+
+            Debug.WriteLine("-- DEBUG GENERATION --");
+            List<BDNode> nodeList = new List<BDNode>();
+            List<Guid> guidList = new List<Guid>();
+            guidList.Add(Guid.Parse("b38a1c03-2f74-4b08-b104-0da7f054c529")); //BCNE
+            //guidList.Add(Guid.Parse("37bdbd5c-334f-474c-9fff-4809fbd9989c"));
+            //guidList.Add(Guid.Parse("feed97da-e652-4cff-9d8e-bc58169b0024"));
+            //guidList.Add(Guid.Parse("12c6c370-b63b-4b3c-9dc1-5cb9fa988918"));
+            guidList.Add(Guid.Parse("c0cf6533-c4c9-480b-ad85-c7d187672849"));
+            foreach (Guid guid in guidList)
+            {
+                nodeList.Add(BDNode.RetrieveNodeWithId(dataContext, guid));
+            }
+
+            generator.Generate(dataContext, nodeList);
+
+            Debug.WriteLine("-- Complete --");
         }
 
     }

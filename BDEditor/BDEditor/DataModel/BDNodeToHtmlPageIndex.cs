@@ -14,7 +14,7 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME = @"BDNodeToHtmlPageIndexes";
         public const string KEY_NAME = @"BDNodeToHtmlPageIndex";
 
-        public static BDNodeToHtmlPageIndex CreateBDNodeToHtmlPageIndex(Entities pContext, Guid pNodeId, Guid pHtmlPageId, Guid pChapterId, BDConstants.BDHtmlPageType pHtmlPageType)
+        private static BDNodeToHtmlPageIndex CreateBDNodeToHtmlPageIndex(Entities pContext, Guid pNodeId, Guid pHtmlPageId, Guid pChapterId, BDConstants.BDHtmlPageType pHtmlPageType)
         {
             BDNodeToHtmlPageIndex nodeIndex = BDNodeToHtmlPageIndex.CreateBDNodeToHtmlPageIndex(pNodeId,true,(int)pHtmlPageType);
             nodeIndex.chapterId = pChapterId;
@@ -63,7 +63,19 @@ namespace BDEditor.DataModel
             return returnValue;
         }
 
-        public static BDNodeToHtmlPageIndex RetrieveIndexEntryForIBDNodeId(Entities pContext, Guid pIBDNodeId, BDConstants.BDHtmlPageType pPageType)
+        public static BDNodeToHtmlPageIndex RetrieveOrCreateForIBDNodeId(Entities pContext, Guid pIBDNodeId, BDConstants.BDHtmlPageType pPageType, Guid pChapterId)
+        {
+            BDNodeToHtmlPageIndex index = RetrieveIndexEntryForIBDNodeId(pContext, pIBDNodeId, pPageType);
+            if (null == index)
+            {
+                index = CreateBDNodeToHtmlPageIndex(pContext, pIBDNodeId, Guid.NewGuid(), pChapterId, pPageType);
+            }
+            index.wasGenerated = true;
+            Save(pContext, index);
+            return index;
+        }
+
+        private static BDNodeToHtmlPageIndex RetrieveIndexEntryForIBDNodeId(Entities pContext, Guid pIBDNodeId, BDConstants.BDHtmlPageType pPageType)
         {
             BDNodeToHtmlPageIndex returnValue = null;
 
@@ -88,7 +100,8 @@ namespace BDEditor.DataModel
             return returnValue;
         }
 
-        public static BDNodeToHtmlPageIndex RetrieveIndexEntryForHtmlPageId(Entities pContext, Guid pHtmlPageId)
+        [Obsolete("Do not use", true)]
+        private static BDNodeToHtmlPageIndex RetrieveIndexEntryForHtmlPageId(Entities pContext, Guid pHtmlPageId)
         {
             BDNodeToHtmlPageIndex returnValue = null;
 

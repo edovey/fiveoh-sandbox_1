@@ -29,5 +29,10 @@ namespace BDEditor.Classes
             HtmlPageId = pHtmlPageId;
             OriginalIBDObjectId = pOriginalIBDObjectId;
         }
+
+        public override string ToString()
+        {
+            return string.Format("O={0} H={1}", originalIBDObjectId.ToString(), htmlPageId.ToString());
+        }
     }
 }

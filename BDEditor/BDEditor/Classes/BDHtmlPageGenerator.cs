@@ -69,7 +69,7 @@ namespace BDEditor.Classes
         /// <param name="pContext"></param>
         /// <param name="pNode">if the node is null,  all chapters are generated.  
         /// Otherwise only the passed node is generated with its children</param>
-        public void Generate(Entities pContext, IBDNode pNode)
+        public void Generate(Entities pContext, List<BDNode> pNodeList /* IBDNode pNode */)
         {
             // delete pages from the local store
             BDHtmlPage.DeleteAll();
@@ -77,11 +77,16 @@ namespace BDEditor.Classes
             // reset index entries to false
             BDNodeToHtmlPageIndex.ResetForRegeneration(pContext);
 
-            generatePages(pContext, pNode);
+            generatePages(pContext, pNodeList);
 
             List<BDHtmlPage> pages = BDHtmlPage.RetrieveAll(pContext);
             List<Guid> displayParentIds = BDHtmlPage.RetrieveAllDisplayParentIDs(pContext);
             List<Guid> pageIds = BDHtmlPage.RetrieveAllIds(pContext);
+            BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditPageMap.txt", "----------------------");
+            foreach (BDHtmlPageMap pageMap in pagesMap)
+            {
+                BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditPageMap.txt", string.Format("{0}\t{1}", pageMap.OriginalIBDObjectId, pageMap.HtmlPageId));
+            }
 
             Debug.WriteLine("Post-processing HTML pages");
             foreach (BDHtmlPage page in pages)
@@ -103,24 +108,40 @@ namespace BDEditor.Classes
 
         }
 
-        private void generatePages(Entities pContext, IBDNode pNode)
+        private void generatePages(Entities pContext, List<BDNode> pNodeList /* IBDNode pNode */)
         {
-            List<BDNode> chapters = BDNode.RetrieveNodesForType(pContext, BDConstants.BDNodeType.BDChapter);
+            //List<BDNode> chapters = BDNode.RetrieveNodesForType(pContext, BDConstants.BDNodeType.BDChapter);
             List<BDHtmlPage> allPages = new List<BDHtmlPage>();
+
+            List<BDNode> chapters = pNodeList ?? BDNode.RetrieveNodesForType(pContext, BDConstants.BDNodeType.BDChapter);
+
+            List<BDHtmlPage> childDetailPages = new List<BDHtmlPage>();
+            List<BDHtmlPage> childNavPages = new List<BDHtmlPage>();
+
+            foreach (BDNode chapter in chapters)
+            {
+                currentChapter = chapter;
+                generateOverviewAndChildrenForNode(pContext, chapter, childDetailPages, childNavPages);
+            }
+            if (childDetailPages.Count > 0)
+                allPages.AddRange(childDetailPages);
+            if (childNavPages.Count > 0)
+                allPages.AddRange(childNavPages);
+
+            /*
             if (pNode == null)
             {
                 List<BDHtmlPage> childDetailPages = new List<BDHtmlPage>();
-
                 List<BDHtmlPage> childNavPages = new List<BDHtmlPage>();
                 foreach (BDNode chapter in chapters)
                 {
                     currentChapter = chapter;
                     generateOverviewAndChildrenForNode(pContext, chapter, childDetailPages, childNavPages);
                 }
-                    if(childDetailPages.Count > 0)
-                        allPages.AddRange(childDetailPages);
-                    if (childNavPages.Count > 0)
-                        allPages.AddRange(childNavPages);
+                if(childDetailPages.Count > 0)
+                    allPages.AddRange(childDetailPages);
+                if (childNavPages.Count > 0)
+                    allPages.AddRange(childNavPages);
             }
             else
             {
@@ -131,9 +152,10 @@ namespace BDEditor.Classes
                     currentChapter = pNode;
                     generateOverviewAndChildrenForNode(pContext, pNode, childDetailPages, childNavPages);
                 }
-                    allPages.AddRange(childDetailPages);
-                    allPages.AddRange(childNavPages);
+                allPages.AddRange(childDetailPages);
+                allPages.AddRange(childNavPages);
             }
+             * */
             List<BDHtmlPage> chapterPages = allPages.Distinct().ToList();
             Debug.WriteLine("Creating home page with filtered distinct list");
             if (chapterPages.Count > 0)
@@ -7297,7 +7319,7 @@ namespace BDEditor.Classes
             pFootnotes.AddRange(cFootnotes);
             string footnoteMarker = buildFooterMarkerForList(cFootnotes, true, pFootnotes, pObjectsOnPage);
             
-            pObjectsOnPage.Add(pMetadataColumn.Uuid);
+            //pObjectsOnPage.Add(pMetadataColumn.Uuid);
 
             BDHtmlPage notePage = generatePageForLinkedNotesLayoutColumn(pContext, pMetadataColumn, marked, unmarked);
 
@@ -7805,13 +7827,16 @@ namespace BDEditor.Classes
             if (currentPageMasterObject != null)
                 masterGuid = currentPageMasterObject.Uuid;
 
-            BDNodeToHtmlPageIndex indexEntry = BDNodeToHtmlPageIndex.RetrieveIndexEntryForIBDNodeId(pContext, masterGuid, pPageType);
-            
+            //BDNodeToHtmlPageIndex indexEntry = BDNodeToHtmlPageIndex.RetrieveIndexEntryForIBDNodeId(pContext, masterGuid, pPageType);
+            Guid chapterId = (currentChapter == null) ? Guid.Empty : currentChapter.Uuid;
+ 
+            BDNodeToHtmlPageIndex indexEntry = BDNodeToHtmlPageIndex.RetrieveOrCreateForIBDNodeId(pContext, masterGuid, pPageType, chapterId);
+
             BDHtmlPage newPage = null;
             if (indexEntry != null)
-                newPage = BDHtmlPage.RetrieveWithId(pContext, indexEntry.htmlPageId); 
-            if(newPage == null)
-                newPage = BDHtmlPage.CreateBDHtmlPage(pContext, Guid.NewGuid());
+                newPage = BDHtmlPage.RetrieveWithId(pContext, indexEntry.htmlPageId);
+            if (newPage == null)
+                newPage = BDHtmlPage.CreateBDHtmlPage(pContext, indexEntry.htmlPageId.Value /* Guid.NewGuid() */);
 
             newPage.displayParentType = pDisplayParent != null && pDisplayParent is IBDNode ? (int)((IBDNode)pDisplayParent).NodeType : (int)BDConstants.BDNodeType.Undefined;
             newPage.displayParentId = pDisplayParent != null ? pDisplayParent.Uuid : Guid.Empty;
@@ -7824,36 +7849,39 @@ namespace BDEditor.Classes
                 newPage.pageTitle = ((IBDNode)currentPageMasterObject).Name;
             else if (currentPageMasterObject is BDLinkedNote)
                 newPage.pageTitle = currentPageMasterObject.DescriptionForLinkedNote;
-            
-            if ( (currentChapter != null) && (newPage.layoutVariant == -1 ) )
+
+            if ((currentChapter != null) && (newPage.layoutVariant == -1))
                 Debug.WriteLine("Page has no layout assigned: {0}", newPage.Uuid);
 
             BDHtmlPage.Save(pContext, newPage);
 
-            if (indexEntry == null)
-            {
-                Guid chapterId = Guid.Empty;
-                if (currentChapter != null)
-                    chapterId = currentChapter.Uuid;
-                indexEntry = BDNodeToHtmlPageIndex.CreateBDNodeToHtmlPageIndex(pContext, masterGuid, newPage.Uuid, chapterId, pPageType);
-            }
-            else
-            {
-                indexEntry.chapterId = currentChapter != null ? currentChapter.Uuid : Guid.Empty;
-                indexEntry.wasGenerated = true;
-            }
-            BDNodeToHtmlPageIndex.Save(pContext, indexEntry);
+            //if (indexEntry == null)
+            //{
+            //    Guid chapterId = Guid.Empty;
+            //    if (currentChapter != null)
+            //        chapterId = currentChapter.Uuid;
+            //    indexEntry = BDNodeToHtmlPageIndex.CreateBDNodeToHtmlPageIndex(pContext, masterGuid, newPage.Uuid, chapterId, pPageType);
+            //}
+            //else
+            //{
+            //    indexEntry.chapterId = currentChapter != null ? currentChapter.Uuid : Guid.Empty;
+            //    indexEntry.wasGenerated = true;
+            //}
+            //BDNodeToHtmlPageIndex.Save(pContext, indexEntry);
 
             if (pObjectsOnPage.Count == 0 && pDisplayParent != null)
                 Debug.WriteLine("no objects added for page {0}", newPage.Uuid);
 
-            if(pDisplayParent != null)
-                pagesMap.Add(new BDHtmlPageMap(newPage.Uuid, pDisplayParent.Uuid));
+            //if (pDisplayParent != null)
+            //    pagesMap.Add(new BDHtmlPageMap(newPage.Uuid, pDisplayParent.Uuid));
 
-            List<Guid> filteredObjects = pObjectsOnPage.Distinct().ToList();
-            foreach (Guid objectId in filteredObjects)
+            if (newPage.HtmlPageType == BDConstants.BDHtmlPageType.Data)
             {
-                pagesMap.Add(new BDHtmlPageMap(newPage.Uuid, objectId));
+                List<Guid> filteredObjects = pObjectsOnPage.Distinct().ToList();
+                foreach (Guid objectId in filteredObjects)
+                {
+                    pagesMap.Add(new BDHtmlPageMap(newPage.Uuid, objectId));
+                }
             }
             return newPage;
         }
@@ -7863,13 +7891,15 @@ namespace BDEditor.Classes
             // inject Html into page html & save as a page to the database.
             string pageHtml = topHtml + pBodyHTML + bottomHtml;
 
-            BDNodeToHtmlPageIndex indexEntry = BDNodeToHtmlPageIndex.RetrieveIndexEntryForIBDNodeId(pContext, pLayoutColumn.Uuid, pPageType);
+            Guid chapterId = (currentChapter == null) ? Guid.Empty : currentChapter.Uuid;
+
+            BDNodeToHtmlPageIndex indexEntry = BDNodeToHtmlPageIndex.RetrieveOrCreateForIBDNodeId(pContext, pLayoutColumn.Uuid, pPageType, chapterId);
 
             BDHtmlPage newPage = null;
             if (indexEntry != null)
                 newPage = BDHtmlPage.RetrieveWithId(pContext, indexEntry.htmlPageId);
             if (newPage == null)
-                newPage = BDHtmlPage.CreateBDHtmlPage(pContext, Guid.NewGuid());
+                newPage = BDHtmlPage.CreateBDHtmlPage(pContext, indexEntry.htmlPageId.Value);
 
             newPage.displayParentType = (int)BDConstants.BDNodeType.BDLayoutColumn;
             newPage.displayParentId = pLayoutColumn.Uuid;
@@ -7884,6 +7914,7 @@ namespace BDEditor.Classes
 
             BDHtmlPage.Save(pContext, newPage);
 
+            /*
             if (indexEntry == null)
             {
                 Guid chapterId = Guid.Empty;
@@ -7897,17 +7928,21 @@ namespace BDEditor.Classes
                 indexEntry.wasGenerated = true;
             }
             BDNodeToHtmlPageIndex.Save(pContext, indexEntry);
+            */
 
             if (pObjectsOnPage.Count == 0 && pLayoutColumn != null)
                 Debug.WriteLine("no objects added for page {0}", newPage.Uuid);
 
-            if (pLayoutColumn != null)
-                pagesMap.Add(new BDHtmlPageMap(newPage.Uuid, pLayoutColumn.Uuid));
+            //if (pLayoutColumn != null)
+            //    pagesMap.Add(new BDHtmlPageMap(newPage.Uuid, pLayoutColumn.Uuid));
 
-            List<Guid> filteredObjects = pObjectsOnPage.Distinct().ToList();
-            foreach (Guid objectId in filteredObjects)
+            if (newPage.HtmlPageType == BDConstants.BDHtmlPageType.Data)
             {
-                pagesMap.Add(new BDHtmlPageMap(newPage.Uuid, objectId));
+                List<Guid> filteredObjects = pObjectsOnPage.Distinct().ToList();
+                foreach (Guid objectId in filteredObjects)
+                {
+                    pagesMap.Add(new BDHtmlPageMap(newPage.Uuid, objectId));
+                }
             }
             return newPage;
         }

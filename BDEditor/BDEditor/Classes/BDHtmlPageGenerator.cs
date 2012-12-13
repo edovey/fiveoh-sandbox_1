@@ -6001,6 +6001,15 @@ namespace BDEditor.Classes
                         break;
 
                     case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
+                        html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "b", pFootnotes, pObjectsOnPage));
+                        html.Append("<ul>");
+
+                        foreach (IBDNode child in children)
+                        {
+                            html.AppendFormat("<li>{0}</li>",buildNodeWithReferenceAndOverviewHTML(pContext, child, "", pFootnotes, pObjectsOnPage));
+                        }
+                        html.Append("</ul>");
+                        break;
                     case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
                     case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDMicroorganism, new BDConstants.LayoutVariantType[] { layoutVariant }));

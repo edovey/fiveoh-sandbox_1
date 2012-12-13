@@ -6442,7 +6442,7 @@ namespace BDEditor.Classes
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDisease, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis }));
                         foreach (IBDNode child in children)
                         {
-                            html.Append(BuildBDDiseaseHtml(pContext, child as BDTherapyGroup, pFootnotes, pObjectsOnPage, pLevel + 1));
+                            html.Append(BuildBDDiseaseHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
                         }
                         break;
                     case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:

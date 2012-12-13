@@ -201,6 +201,10 @@ namespace BDEditor.Classes
             List<BDLinkedNote> footnotesOnPage = new List<BDLinkedNote>();
             if (pNode != null)
             {
+                pageHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(2), footnotesOnPage, objectsOnPage));
+
+                //ks: consistently manage the title and notes
+                /*
                 footnotesOnPage.AddRange(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Footnote));
                 string footnoteMarkers = buildFooterMarkerForList(footnotesOnPage, true, footnotesOnPage, objectsOnPage);
                 if (footnotesOnPage.Count > 0)
@@ -224,6 +228,7 @@ namespace BDEditor.Classes
                     pageHTML.Append(note.documentText);
                     objectsOnPage.Add(note.Uuid);
                 }
+                */
 
                 // TODO:  build javascript blocks to expand/collapse overview
                 foreach (BDHtmlPage page in pChildPages)
@@ -7587,11 +7592,11 @@ namespace BDEditor.Classes
         private void processTextForInternalLinks(Entities pContext, BDHtmlPage pPage, List<Guid> pRespresentedNodes, List<Guid> pExistingPages)
         {
             postProcessingPageLayoutVariant = pPage.layoutVariant;
-            BDNodeToHtmlPageIndex index = BDNodeToHtmlPageIndex.RetrieveIndexEntryForHtmlPageId(pContext, pPage.Uuid);
-            if (index != null)
-                currentChapter = BDFabrik.RetrieveNode(pContext, index.chapterId);
-            else
-                currentChapter = null;
+            //BDNodeToHtmlPageIndex index = BDNodeToHtmlPageIndex.RetrieveIndexEntryForHtmlPageId(pContext, pPage.Uuid);
+            //if (index != null)
+            //    currentChapter = BDFabrik.RetrieveNode(pContext, index.chapterId);
+            //else
+            //    currentChapter = null;
 
             string compareString = @"<a href=";
             StringBuilder newString = new StringBuilder();
@@ -7684,6 +7689,7 @@ namespace BDEditor.Classes
                 }
             }
         }
+
 
         private bool notesListHasContent(Entities pContext, List<BDLinkedNote> pNotes)
         {
@@ -7875,8 +7881,8 @@ namespace BDEditor.Classes
                 newPage.pageTitle = ((IBDNode)currentPageMasterObject).Name;
             else if (currentPageMasterObject is BDLinkedNote)
                 newPage.pageTitle = currentPageMasterObject.DescriptionForLinkedNote;
-            ;
-            if (newPage.layoutVariant == -1 )
+            
+            if ( (currentChapter != null) && (newPage.layoutVariant == -1 ) )
                 Debug.WriteLine("Page has no layout assigned: {0}", newPage.Uuid);
 
             BDHtmlPage.Save(pContext, newPage);

@@ -6556,8 +6556,6 @@ namespace BDEditor.Classes
             StringBuilder html = new StringBuilder();
             if ((null != pNode) && (pNode.NodeType == BDConstants.BDNodeType.BDResponse))
             {
-
-                //ks: Not sure if the the response should be described here
                 html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
                 List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
                 bool isFirstChild = true;
@@ -7608,8 +7606,14 @@ namespace BDEditor.Classes
                                         if (null != mapEntry && pExistingPages.Contains(mapEntry.HtmlPageId))
                                             htmlPageId = mapEntry.HtmlPageId;
                                         else
+                                        {
                                             //ks: Expectation that internal links will always link to "data" pages rather than "linked note" pages
                                             htmlPageId = BDNodeToHtmlPageIndex.RetrieveHtmlPageIdForIBDNodeId(pContext, linkTargetAssn.internalLinkNodeId.Value, BDConstants.BDHtmlPageType.Data);
+                                            if (htmlPageId == Guid.Empty)
+                                            {
+                                                htmlPageId = BDNodeToHtmlPageIndex.RetrieveHtmlPageIdForIBDNodeId(pContext, linkTargetAssn.internalLinkNodeId.Value, BDConstants.BDHtmlPageType.Navigation);
+                                            }
+                                        }
 
                                         if (htmlPageId != Guid.Empty && null != BDHtmlPage.RetrieveWithId(pContext, htmlPageId))
                                         {

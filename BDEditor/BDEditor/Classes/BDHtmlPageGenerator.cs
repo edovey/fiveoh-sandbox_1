@@ -4273,6 +4273,10 @@ namespace BDEditor.Classes
                             }
                         }
 
+                        List<BDLinkedNote> legendNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.ParentId.Value, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Legend);
+                        string legendHTML = buildTextFromNotes(legendNotes, pObjectsOnPage);
+                        if (legendHTML.Length > EMPTY_PARAGRAPH)
+                            html.Append(legendHTML);
                         break;
 
                     default:
@@ -6822,8 +6826,8 @@ namespace BDEditor.Classes
             if(!string.IsNullOrEmpty(therapyNameHtml))
                 therapyHtml.AppendFormat("<b>{0}</b>", therapyNameHtml);
 
-            if (pTherapy.rightBracket.Value == true)
-                therapyHtml.Append(RIGHT_SQUARE_BRACKET);
+            //if (pTherapy.rightBracket.Value == true)
+            //    therapyHtml.Append(RIGHT_SQUARE_BRACKET);
 
             therapyHtml.Append(@"</td>");
 
@@ -6843,7 +6847,11 @@ namespace BDEditor.Classes
             else
                 durationHtml = buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.duration, BDTherapy.PROPERTYNAME_DURATION, pFootnotes, pObjectsOnPage);
 
-            therapyHtml.AppendFormat("<td>{0}</td>", durationHtml);
+            string rightBracket = "";
+            if (pTherapy.rightBracket.Value == true)
+                rightBracket = RIGHT_SQUARE_BRACKET;
+
+            therapyHtml.AppendFormat("<td>{0}{1}</td>", durationHtml, rightBracket);
 
             therapyHtml.Append(@"</tr>");
             therapyHtml.AppendFormat(@"<tr><td> {0}</td><td /><td /></tr>", retrieveConjunctionString((int)pTherapy.therapyJoinType));

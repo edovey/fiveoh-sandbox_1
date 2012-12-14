@@ -7625,7 +7625,7 @@ namespace BDEditor.Classes
                                         else // if this is an internal link there should be a page for it
                                         {
                                             Debug.WriteLine("Unable to map link in {0} showing {1}", pPage.Uuid, anchorGuid);
-                                            BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("{0} Html page Uuid {1} anchor Uuid {2}", DateTime.Now, pPage.Uuid, anchorGuid));
+                                            BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("{0}\tHtml page Uuid {1}\tAnchor Uuid {2}\tLNA {3}", DateTime.Now, pPage.Uuid, anchorGuid.ToString(), linkTargetAssn.Uuid.ToString()));
                                         }
                                     }
                                     else if (linkTargetAssn.linkedNoteId.HasValue)

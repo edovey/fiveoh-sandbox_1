@@ -6558,7 +6558,7 @@ namespace BDEditor.Classes
             {
 
                 //ks: Not sure if the the response should be described here
-                // html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+                html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
                 List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
                 bool isFirstChild = true;
 
@@ -6568,7 +6568,7 @@ namespace BDEditor.Classes
                         
                         foreach (IBDNode frequency in children)
                         {
-                            html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, frequency as BDNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+                            html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, frequency as BDNode, HtmlHeaderTagLevelString(pLevel + 1), pFootnotes, pObjectsOnPage));
                             List<IBDNode> pathogenGroups = BDFabrik.GetChildrenForParent(pContext, frequency); //assumes pathogenGroups are being returned (as defined in BDFabrik)
                             foreach (IBDNode pathogenGroup in pathogenGroups)
                             {

@@ -2320,16 +2320,14 @@ namespace BDEditor.Views
 
         private void btnDebug_Click(object sender, EventArgs e)
         {
-
             Guid nodeUuid = Guid.Empty;
             BDNode node = null;
             BDHtmlPage htmlPage = null;
             BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
 
-            /*
             Debug.WriteLine("-- A --");
             Debug.Indent();
-            nodeUuid = Guid.Parse("7d93f938-7ea2-4a9d-a310-923e8165371a");
+            nodeUuid = Guid.Parse("793c1ab0-a93e-4511-90d7-a240d6d9c345");
             node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
             htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
             Debug.WriteLine(htmlPage.documentText);
@@ -2337,7 +2335,6 @@ namespace BDEditor.Views
             Debug.WriteLine("HtmlPage Uuid= {0}", htmlPage.Uuid);
             Debug.WriteLine("");
             Debug.Unindent();
-            */
 
             //Debug.WriteLine("-- B --");
             //Debug.Indent();
@@ -2351,6 +2348,7 @@ namespace BDEditor.Views
             //Debug.Unindent();
             //Debug.WriteLine("-- Complete --");
 
+            /*
             Debug.WriteLine("-- DEBUG FORENSICS --");
             List<IBDNode> fList = new List<IBDNode>(); 
             string mydocpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -2381,6 +2379,7 @@ namespace BDEditor.Views
             }
 
             generator.Generate(dataContext, nodeList);
+            */
 
             Debug.WriteLine("-- Complete --");
         }

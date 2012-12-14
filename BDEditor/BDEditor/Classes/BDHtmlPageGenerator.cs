@@ -4259,33 +4259,12 @@ namespace BDEditor.Classes
                                     if (!string.IsNullOrEmpty(therapy.Name) && therapy.nameSameAsPrevious == false)
                                         previousTherapyName = therapy.Name;
 
-                                    if (!string.IsNullOrEmpty(therapy.dosage))
-                                    {
-                                        if (therapy.dosageSameAsPrevious == false)
-                                            previousTherapyDosage = therapy.dosage;
-                                        therapiesHaveDosage = true;
-                                    }
+                                    previousTherapyId = therapy.Uuid;
 
-                                    if (!string.IsNullOrEmpty(therapy.duration))
-                                    {
-                                        if (therapy.durationSameAsPrevious == false)
-                                            previousTherapyDuration = therapy.duration;
-                                        therapiesHaveDuration = true;
-                                    }
                                 }
                                 html.AppendFormat(@"<tr><th>{0}</th>",therapyNameTitleHtml);
-
-                                if (therapiesHaveDosage)
-                                {
-                                    html.AppendFormat(@"<th>{0}</th><th>{1}</th>",therapyDosage1TitleHtml,therapyDosage2TitleHtml);
-                                }
-                                else
-                                    html.Append(@"<th />");
-
-                                if (therapiesHaveDuration)
-                                    html.AppendFormat(@"<th>{0}</th>",therapyDurationTitleHtml);
-                                else
-                                    html.Append(@"<th />");
+                                html.AppendFormat(@"<th>{0}</th><th>{1}</th>", therapyDosage1TitleHtml, therapyDosage2TitleHtml);
+                                html.AppendFormat(@"<th>{0}</th>", therapyDurationTitleHtml);
 
                                 html.Append(@"</tr>");
 
@@ -7388,6 +7367,12 @@ namespace BDEditor.Classes
         /// <returns></returns>
         private string buildNodePropertyHTML(Entities pContext, IBDNode pNode, Guid pNoteParentId, string pPropertyValue, string pPropertyName, string pHtmlTag, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
         {
+            string resolvedValue = null;
+            return buildNodePropertyHTML(pContext, pNode, pNoteParentId, pPropertyValue, pPropertyName,pHtmlTag, pFootnotes, pObjectsOnPage, out resolvedValue);
+        }
+
+        private string buildNodePropertyHTML(Entities pContext, IBDNode pNode, Guid pNoteParentId, string pPropertyValue, string pPropertyName, string pHtmlTag, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, out string pResolvedValue)
+        {
             string startTag = (pHtmlTag.Length > 0) ? string.Format("<{0}>", pHtmlTag) : string.Empty;
             string endTag = (pHtmlTag.Length > 0) ? string.Format("</{0}>", pHtmlTag) : string.Empty;
 
@@ -7414,16 +7399,22 @@ namespace BDEditor.Classes
 
             BDHtmlPage notePage = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.NodeType, marked, unmarked);
 
+            pResolvedValue = string.Format("{0}{1}{2}{3}", pPropertyValue.Trim(), footerMarker, buildTextFromNotes(inline, pObjectsOnPage), overviewHTML);
+
             if (notePage != null)
             {
                 if (pPropertyValue.Length > 0)
-                    propertyHTML.AppendFormat(@"{1}<a href=""{0}"">{2}{3}</a>{4}{5}{6}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), footerMarker, endTag, buildTextFromNotes(inline, pObjectsOnPage), overviewHTML);
+                    propertyHTML.AppendFormat(@"{1}<a href=""{0}"">{2}{3}</a>{4}{5}{6}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), footerMarker, buildTextFromNotes(inline, pObjectsOnPage), overviewHTML, endTag);
                 else
-                    propertyHTML.AppendFormat(@"<a href=""{0}"">See Comments.</a>{1}{2}", notePage.Uuid.ToString().ToUpper(), buildTextFromNotes(inline, pObjectsOnPage), overviewHTML);
+                {
+                    pResolvedValue = string.Format(@"<a href=""{0}"">See Comments.</a>{1}{2}", notePage.Uuid.ToString().ToUpper(), buildTextFromNotes(inline, pObjectsOnPage), overviewHTML);
+                    propertyHTML.AppendFormat(@"{0}{1}{2}", startTag, pResolvedValue, endTag);
+                }
             }
             else
-                propertyHTML.AppendFormat(@" {0}{1}{2}{3}{4}{5}", startTag, pPropertyValue.Trim(), footerMarker, endTag, buildTextFromNotes(inline, pObjectsOnPage), overviewHTML);
-
+            {
+                propertyHTML.AppendFormat(@" {0}{1}{2}", startTag, pResolvedValue, endTag);
+            }
             return propertyHTML.ToString().Trim();
         }
 

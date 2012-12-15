@@ -159,6 +159,8 @@ namespace BDEditor.Classes
             TreatmentRecommendation06_CultureProvenMeningitis = 107,  // table 5
             [Description("Treatment of Culture-Proven Endocarditis")]
             TreatmentRecommendation07_CultureProvenEndocarditis = 108, // table 6
+            [Description("Treatment of Culture-Proven Endocarditis - Single Duration")]
+            TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration = 1081, // table 6
             [Description("Treatment of Culture-Proven Endocarditis:  Paediatric Doses")]
             TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics = 120,
             [Description("Treatment of Opthalmic Infections")]
@@ -188,6 +190,10 @@ namespace BDEditor.Classes
             TreatmentRecommendation19_Peritonitis_PD_Adult = 121,
             [Description("Treatment of PD Peritonitis - Paediatric")]
             TreatmentRecommendation19_Peritonitis_PD_Paediatric = 122,
+            [Description("Treatment Recommendations - Adult Genital with Topic")]
+            TreatmentRecommendation20_Adult_GenitalWithTopic = 123,
+            [Description("Treatment Recommendations - Adult Genital with Topic and Subtopic")]
+            TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic = 124,
 
             [Description("Antibiotics")]
             Antibiotics = 200, 

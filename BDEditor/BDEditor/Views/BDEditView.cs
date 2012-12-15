@@ -475,6 +475,7 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Prophylaxis_IERecommendation:
                             case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
                             case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure:
+                            case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
                             case BDConstants.LayoutVariantType.Prophylaxis_Immunization:
                             case BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine:
                             case BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk:
@@ -608,7 +609,6 @@ namespace BDEditor.Views
                                 }
                                 break;
                             case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
-                            case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:
                                 childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
@@ -724,6 +724,7 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.TreatmentRecommendation05_CultureProvenPeritonitis:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
@@ -754,6 +755,8 @@ namespace BDEditor.Views
                         switch (node.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic:
                                 childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
@@ -925,6 +928,15 @@ namespace BDEditor.Views
                                     showChildControls = false;
                                 }
                                 break;
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic:
+                                childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
+                                if (!pInterrogateOnly)
+                                {
+                                    graftTreeNode(selectedNode, childTreeNode);
+                                    showChildControls = false;
+                                }
+                                break;
+                            case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
                             case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
                             case BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine:
                             case BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk:
@@ -2208,7 +2220,6 @@ namespace BDEditor.Views
 
             //dataContext.SaveChanges();
             #endregion
-
             #region v.1.6.35
             //#region Part One
             //// move child nodes from Otitis Media to Otiis Externa
@@ -2272,14 +2283,14 @@ namespace BDEditor.Views
             //#endregion
 
             //#region Part Two
-            // remove pathogen group from hierarchy in Culture-proven Endocarditis
-            BDNode parent = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("8741d365-16ef-4de8-8d08-dabc574c010a"));
-            BDNode pathogenGroup = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("251bbd0f-2d96-433c-acfa-ac21553859f2"));
-            List<BDNode> pathogens = BDNode.RetrieveNodesForParentIdAndChildNodeType(dataContext, pathogenGroup.Uuid, BDConstants.BDNodeType.BDPathogen);
-            //List<IBDNode> pathogens = BDFabrik.GetChildrenForParent(dataContext, pathogenGroup);
-            foreach (BDNode pathogen in pathogens)
-                pathogen.SetParent(parent);
-            dataContext.SaveChanges();
+            //// remove pathogen group from hierarchy in Culture-proven Endocarditis
+            //BDNode parent = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("8741d365-16ef-4de8-8d08-dabc574c010a"));
+            //BDNode pathogenGroup = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("251bbd0f-2d96-433c-acfa-ac21553859f2"));
+            //List<BDNode> pathogens = BDNode.RetrieveNodesForParentIdAndChildNodeType(dataContext, pathogenGroup.Uuid, BDConstants.BDNodeType.BDPathogen);
+            ////List<IBDNode> pathogens = BDFabrik.GetChildrenForParent(dataContext, pathogenGroup);
+            //foreach (BDNode pathogen in pathogens)
+            //    pathogen.SetParent(parent);
+            //dataContext.SaveChanges();
 
             //// Remove first column from CURB table
             //BDTableRow  header = BDTableRow.RetrieveTableRowWithId(dataContext, Guid.Parse("ab6fb715-929b-4d47-acad-41a202b1708b"));
@@ -2315,6 +2326,173 @@ namespace BDEditor.Views
             //}
             //dataContext.SaveChanges();
             //#endregion
+            #endregion
+
+            #region v.1.5.36
+            // move sexual assault up to Section under Chapter
+            //BDNode sAssault = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("a6fdd2d3-96df-47b6-a598-8adbfa474c1b"));
+            //sAssault.nodeType = (int)BDConstants.BDNodeType.BDSection;
+            //sAssault.nodeKeyName = "BDSection";
+            //BDNode chapter = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("76e2f45c-c8c5-45e4-a079-65e1a3908cde"));
+            //sAssault.SetParent(chapter);
+            //dataContext.SaveChanges();
+
+            // update pathogens in treatment recommendations > culture directed > endocarditis with new layout variant
+            //BDNode p1 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("df678b4a-2df9-436e-b8ee-729775c575b7"));
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, p1, BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration, true);
+            //BDNode p2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("eda0074a-8a49-4b17-a4e0-268622d7ec08"));
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, p2, BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration, true);
+            //BDNode p3 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("005ce2ad-c080-41f0-9d4b-0133d98d6325"));
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, p3, BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration, true);
+            //BDNode p4 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("b05d29ad-ef60-40a1-bc4c-c094c6aeb8ba"));
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, p4, BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration, true);
+            //BDNode p5 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("ca8fce91-4008-4607-9bc8-ecdb3a1eedfb"));
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, p5, BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration, true);
+            //BDNode p6 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("e93196e1-f9a4-4acf-a426-06ecb543bf46"));
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, p6, BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration, true);
+            //BDNode p7 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("a090e43d-cab0-410e-a695-d3f0a448a18f"));
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, p7, BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration, true);
+            //BDNode p8 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("839b5b46-84bc-4720-ace3-46bff17cbf70"));
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, p8, BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration, true);
+            //BDNode p9 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("b569ad10-a31f-450e-8dc8-f9f8df83ae6d"));
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, p9, BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration, true);
+            //dataContext.SaveChanges();
+
+            // update structure for genital warts
+            // change Genital Warts to a Topic, reassign layout variant
+            //BDNode gw = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("305e98f5-cbe2-4e7b-ba1f-6c06d04c065a"));
+            //gw.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic;
+            //BDNode gwChild = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("6794bbba-54d4-4b5e-9e91-6ef6788c7cad"));
+            //gwChild.SetParent(gw);
+            //gwChild.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            //gwChild.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            //dataContext.SaveChanges();
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, gwChild, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic, true);
+            //dataContext.SaveChanges();
+
+            // change Syphilis layout variant
+            //BDNode sy = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("9fab60cf-dccc-45f7-84cb-a2ac156ed30e"));
+            //sy.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic;
+            //BDNode syChild1 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("06682028-0f1f-4b5d-87df-ff8ed24afa20"));
+            //BDNode syChild2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("e13bc857-aeea-4b54-af38-cb27977b6062"));
+            //BDNode syChild3 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("522c06ef-91f5-44a3-9736-1552bc3fbdc6"));
+            //syChild1.SetParent(sy);
+            //syChild1.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            //syChild1.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            //syChild2.SetParent(sy);
+            //syChild2.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            //syChild2.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            //syChild3.SetParent(sy);
+            //syChild3.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            //syChild3.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, syChild1, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, syChild2, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, syChild3, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic, true);
+
+            // change Herpes layout variant
+            //BDNode hp = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("ac4e5aae-4ccc-4c35-898e-40328cdd3146"));
+            //hp.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic;
+            // pregnancy
+            //BDNode hpChild1 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("ef7d314a-301d-4389-bfc7-c945412ef598"));
+            //hpChild1.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            //hpChild1.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            //hpChild1.SetParent(hp);
+            //hpChild1.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic;
+            // primary
+            //BDNode hpChild2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("18dd3ae5-5374-4c03-b334-5efeabc4d5a1"));
+            //hpChild2.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            //hpChild2.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            //hpChild2.SetParent(hp);
+            // recurrent
+            //BDNode hpChild3 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("0c8311d6-cb82-41e5-b040-8ca58706d800"));
+            //hpChild3.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            //hpChild3.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            //hpChild3.SetParent(hp);
+            // recurrent immunocompromised
+            //BDNode hpChild4 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("3ca492df-3782-474c-bf99-f19053a79518"));
+            //hpChild4.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            //hpChild4.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            //hpChild4.SetParent(hp);
+            //dataContext.SaveChanges();
+
+            //BDNode hpg_Child1 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("40f1e9dd-2833-40f2-8d45-0b8c0b93f8ab"));
+            //hpg_Child1.SetParent(hpChild1);
+            //hpg_Child1.nodeType = (int)BDConstants.BDNodeType.BDSubtopic;
+            //hpg_Child1.nodeKeyName = BDConstants.BDNodeType.BDSubtopic.ToString();
+            //BDNode hpg_Child2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("b611e280-1617-4ed8-88c8-aab60d534fba"));
+            //hpg_Child2.SetParent(hpChild1);
+            //hpg_Child2.nodeType = (int)BDConstants.BDNodeType.BDSubtopic;
+            //hpg_Child2.nodeKeyName = BDConstants.BDNodeType.BDSubtopic.ToString();
+            //dataContext.SaveChanges();
+
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, hpChild2, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, hpChild3, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, hpChild4, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic, true);
+
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, hpg_Child1, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, hpg_Child2, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic, true);
+            //dataContext.SaveChanges();
+
+            // change layout variant and children of Vulvovaginitis
+            //BDNode vv = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("32ca6e75-3180-4706-a3a8-6835cdb9a0d3"));
+            //BDNode candidiasis = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDPresentation, Guid.NewGuid());
+            //candidiasis.SetParent(vv);
+            //candidiasis.name = "Candidiasis";
+            //candidiasis.displayOrder = 2;
+            //candidiasis.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic;
+            //dataContext.SaveChanges();
+
+            //BDNode vvC1 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("a5510470-d077-4ad7-ac49-d23d9fe7e777"));
+            //vvC1.SetParent(candidiasis);
+            //vvC1.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            //vvC1.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            //dataContext.SaveChanges();
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vvC1, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic, true);
+            
+            //BDNode vvC2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("058fd5c0-ad16-46c3-ba22-fc57963d1341"));
+            //vvC2.SetParent(candidiasis);
+            //vvC2.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            //vvC2.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            //dataContext.SaveChanges();
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vvC2, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic, true);
+            
+            //BDNode vvC3 = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.NewGuid());
+            //vvC3.name = "Candidiasis - symptomatic, complicated";
+            //vvC3.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            //vvC3.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            //vvC3.DisplayOrder = 0;
+            //vvC3.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic;
+            //vvC3.SetParent(candidiasis);
+            //dataContext.SaveChanges();
+
+            //BDNode vvC3C1 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("78c88fab-2027-4937-8405-ba29104b34eb"));
+            //vvC3C1.SetParent(vvC3);
+            //vvC3C1.nodeType = (int)BDConstants.BDNodeType.BDSubtopic;
+            //vvC3C1.nodeKeyName = BDConstants.BDNodeType.BDSubtopic.ToString();
+            //BDNode vvC3C2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("f576d9d1-1b8b-43f4-80d0-8dd9f8520210"));
+            //vvC3C2.SetParent(vvC3);
+            //vvC3C2.nodeType = (int)BDConstants.BDNodeType.BDSubtopic;
+            //vvC3C2.nodeKeyName = BDConstants.BDNodeType.BDSubtopic.ToString();
+            //BDNode vvC3C3 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("c4b4b893-113c-4d93-81be-b2d2223dd7ba"));
+            //vvC3C3.SetParent(vvC3);
+            //vvC3C3.nodeType = (int)BDConstants.BDNodeType.BDSubtopic;
+            //vvC3C3.nodeKeyName = BDConstants.BDNodeType.BDSubtopic.ToString();
+            //BDNode vvC3C4 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("3963e550-4524-4224-8885-99fe28bc4fb9"));
+            //vvC3C4.SetParent(vvC3);
+            //vvC3C4.nodeType = (int)BDConstants.BDNodeType.BDSubtopic;
+            //vvC3C4.nodeKeyName = BDConstants.BDNodeType.BDSubtopic.ToString();
+            //BDNode vvC3C5 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("a1640930-83c7-4e2c-a444-e6cdc5d638eb"));
+            //vvC3C5.SetParent(vvC3);
+            //vvC3C5.nodeType = (int)BDConstants.BDNodeType.BDSubtopic;
+            //vvC3C5.nodeKeyName = BDConstants.BDNodeType.BDSubtopic.ToString();
+            //dataContext.SaveChanges();
+
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vvC3C1, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vvC3C2, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vvC3C3, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vvC3C4, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vvC3C5, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic, true);
+            //dataContext.SaveChanges();
             #endregion
         }
 

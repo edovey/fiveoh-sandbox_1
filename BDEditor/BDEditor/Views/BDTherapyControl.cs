@@ -727,6 +727,10 @@ namespace BDEditor.Views
                 case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic:
                 case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                 case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
                 case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -192,7 +193,7 @@ namespace BDEditor.Classes
                                         .WithContentBody(htmlPage.documentText)
                                         .WithBucketName(BDHtmlPage.AWS_BUCKET)
                                         .WithKey(htmlPage.storageKey);
-
+                            //Debug.WriteLine(htmlPage.ToString());
                             S3Response s3Response = S3.PutObject(putObjectRequest);
                             s3Response.Dispose();
                         }

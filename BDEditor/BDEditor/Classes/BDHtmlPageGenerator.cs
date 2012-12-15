@@ -4259,33 +4259,12 @@ namespace BDEditor.Classes
                                     if (!string.IsNullOrEmpty(therapy.Name) && therapy.nameSameAsPrevious == false)
                                         previousTherapyName = therapy.Name;
 
-                                    if (!string.IsNullOrEmpty(therapy.dosage))
-                                    {
-                                        if (therapy.dosageSameAsPrevious == false)
-                                            previousTherapyDosage = therapy.dosage;
-                                        therapiesHaveDosage = true;
-                                    }
+                                    previousTherapyId = therapy.Uuid;
 
-                                    if (!string.IsNullOrEmpty(therapy.duration))
-                                    {
-                                        if (therapy.durationSameAsPrevious == false)
-                                            previousTherapyDuration = therapy.duration;
-                                        therapiesHaveDuration = true;
-                                    }
                                 }
                                 html.AppendFormat(@"<tr><th>{0}</th>",therapyNameTitleHtml);
-
-                                if (therapiesHaveDosage)
-                                {
-                                    html.AppendFormat(@"<th>{0}</th><th>{1}</th>",therapyDosage1TitleHtml,therapyDosage2TitleHtml);
-                                }
-                                else
-                                    html.Append(@"<th />");
-
-                                if (therapiesHaveDuration)
-                                    html.AppendFormat(@"<th>{0}</th>",therapyDurationTitleHtml);
-                                else
-                                    html.Append(@"<th />");
+                                html.AppendFormat(@"<th>{0}</th><th>{1}</th>", therapyDosage1TitleHtml, therapyDosage2TitleHtml);
+                                html.AppendFormat(@"<th>{0}</th>", therapyDurationTitleHtml);
 
                                 html.Append(@"</tr>");
 
@@ -4294,6 +4273,10 @@ namespace BDEditor.Classes
                             }
                         }
 
+                        List<BDLinkedNote> legendNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.ParentId.Value, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Legend);
+                        string legendHTML = buildTextFromNotes(legendNotes, pObjectsOnPage);
+                        if (legendHTML.Length > EMPTY_PARAGRAPH)
+                            html.Append(legendHTML);
                         break;
 
                     default:
@@ -6573,9 +6556,7 @@ namespace BDEditor.Classes
             StringBuilder html = new StringBuilder();
             if ((null != pNode) && (pNode.NodeType == BDConstants.BDNodeType.BDResponse))
             {
-
-                //ks: Not sure if the the response should be described here
-                // html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+                html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
                 List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
                 bool isFirstChild = true;
 
@@ -6585,7 +6566,7 @@ namespace BDEditor.Classes
                         
                         foreach (IBDNode frequency in children)
                         {
-                            html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, frequency as BDNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+                            html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, frequency as BDNode, HtmlHeaderTagLevelString(pLevel + 1), pFootnotes, pObjectsOnPage));
                             List<IBDNode> pathogenGroups = BDFabrik.GetChildrenForParent(pContext, frequency); //assumes pathogenGroups are being returned (as defined in BDFabrik)
                             foreach (IBDNode pathogenGroup in pathogenGroups)
                             {
@@ -6843,8 +6824,8 @@ namespace BDEditor.Classes
             if(!string.IsNullOrEmpty(therapyNameHtml))
                 therapyHtml.AppendFormat("<b>{0}</b>", therapyNameHtml);
 
-            if (pTherapy.rightBracket.Value == true)
-                therapyHtml.Append(RIGHT_SQUARE_BRACKET);
+            //if (pTherapy.rightBracket.Value == true)
+            //    therapyHtml.Append(RIGHT_SQUARE_BRACKET);
 
             therapyHtml.Append(@"</td>");
 
@@ -6864,7 +6845,11 @@ namespace BDEditor.Classes
             else
                 durationHtml = buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.duration, BDTherapy.PROPERTYNAME_DURATION, pFootnotes, pObjectsOnPage);
 
-            therapyHtml.AppendFormat("<td>{0}</td>", durationHtml);
+            string rightBracket = "";
+            if (pTherapy.rightBracket.Value == true)
+                rightBracket = RIGHT_SQUARE_BRACKET;
+
+            therapyHtml.AppendFormat("<td>{0}{1}</td>", durationHtml, rightBracket);
 
             therapyHtml.Append(@"</tr>");
             therapyHtml.AppendFormat(@"<tr><td> {0}</td><td /><td /></tr>", retrieveConjunctionString((int)pTherapy.therapyJoinType));
@@ -7388,6 +7373,12 @@ namespace BDEditor.Classes
         /// <returns></returns>
         private string buildNodePropertyHTML(Entities pContext, IBDNode pNode, Guid pNoteParentId, string pPropertyValue, string pPropertyName, string pHtmlTag, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
         {
+            string resolvedValue = null;
+            return buildNodePropertyHTML(pContext, pNode, pNoteParentId, pPropertyValue, pPropertyName,pHtmlTag, pFootnotes, pObjectsOnPage, out resolvedValue);
+        }
+
+        private string buildNodePropertyHTML(Entities pContext, IBDNode pNode, Guid pNoteParentId, string pPropertyValue, string pPropertyName, string pHtmlTag, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, out string pResolvedValue)
+        {
             string startTag = (pHtmlTag.Length > 0) ? string.Format("<{0}>", pHtmlTag) : string.Empty;
             string endTag = (pHtmlTag.Length > 0) ? string.Format("</{0}>", pHtmlTag) : string.Empty;
 
@@ -7414,16 +7405,22 @@ namespace BDEditor.Classes
 
             BDHtmlPage notePage = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.NodeType, marked, unmarked);
 
+            pResolvedValue = string.Format("{0}{1}{2}{3}", pPropertyValue.Trim(), footerMarker, buildTextFromNotes(inline, pObjectsOnPage), overviewHTML);
+
             if (notePage != null)
             {
                 if (pPropertyValue.Length > 0)
-                    propertyHTML.AppendFormat(@"{1}<a href=""{0}"">{2}{3}</a>{4}{5}{6}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), footerMarker, endTag, buildTextFromNotes(inline, pObjectsOnPage), overviewHTML);
+                    propertyHTML.AppendFormat(@"{1}<a href=""{0}"">{2}{3}</a>{4}{5}{6}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), footerMarker, buildTextFromNotes(inline, pObjectsOnPage), overviewHTML, endTag);
                 else
-                    propertyHTML.AppendFormat(@"<a href=""{0}"">See Comments.</a>{1}{2}", notePage.Uuid.ToString().ToUpper(), buildTextFromNotes(inline, pObjectsOnPage), overviewHTML);
+                {
+                    pResolvedValue = string.Format(@"<a href=""{0}"">See Comments.</a>{1}{2}", notePage.Uuid.ToString().ToUpper(), buildTextFromNotes(inline, pObjectsOnPage), overviewHTML);
+                    propertyHTML.AppendFormat(@"{0}{1}{2}", startTag, pResolvedValue, endTag);
+                }
             }
             else
-                propertyHTML.AppendFormat(@" {0}{1}{2}{3}{4}{5}", startTag, pPropertyValue.Trim(), footerMarker, endTag, buildTextFromNotes(inline, pObjectsOnPage), overviewHTML);
-
+            {
+                propertyHTML.AppendFormat(@" {0}{1}{2}", startTag, pResolvedValue, endTag);
+            }
             return propertyHTML.ToString().Trim();
         }
 
@@ -7609,8 +7606,14 @@ namespace BDEditor.Classes
                                         if (null != mapEntry && pExistingPages.Contains(mapEntry.HtmlPageId))
                                             htmlPageId = mapEntry.HtmlPageId;
                                         else
+                                        {
                                             //ks: Expectation that internal links will always link to "data" pages rather than "linked note" pages
                                             htmlPageId = BDNodeToHtmlPageIndex.RetrieveHtmlPageIdForIBDNodeId(pContext, linkTargetAssn.internalLinkNodeId.Value, BDConstants.BDHtmlPageType.Data);
+                                            if (htmlPageId == Guid.Empty)
+                                            {
+                                                htmlPageId = BDNodeToHtmlPageIndex.RetrieveHtmlPageIdForIBDNodeId(pContext, linkTargetAssn.internalLinkNodeId.Value, BDConstants.BDHtmlPageType.Navigation);
+                                            }
+                                        }
 
                                         if (htmlPageId != Guid.Empty && null != BDHtmlPage.RetrieveWithId(pContext, htmlPageId))
                                         {
@@ -7622,7 +7625,7 @@ namespace BDEditor.Classes
                                         else // if this is an internal link there should be a page for it
                                         {
                                             Debug.WriteLine("Unable to map link in {0} showing {1}", pPage.Uuid, anchorGuid);
-                                            BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("{0} Html page Uuid {1} anchor Uuid {2}", DateTime.Now, pPage.Uuid, anchorGuid));
+                                            BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("{0}\tHtml page Uuid {1}\tAnchor Uuid {2}\tLNA {3}", DateTime.Now, pPage.Uuid, anchorGuid.ToString(), linkTargetAssn.Uuid.ToString()));
                                         }
                                     }
                                     else if (linkTargetAssn.linkedNoteId.HasValue)

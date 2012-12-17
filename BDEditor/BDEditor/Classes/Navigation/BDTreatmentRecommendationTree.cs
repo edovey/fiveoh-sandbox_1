@@ -53,8 +53,8 @@ namespace BDEditor.Classes.Navigation
                         case BDConstants.LayoutVariantType.TreatmentRecommendation16_CultureDirected:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation17_Pneumonia:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic:
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic:
                             foreach (IBDNode childNode in childList)
                             {
                                 string name = childNode.Name;

@@ -659,6 +659,8 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic:
                                 childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
@@ -755,8 +757,8 @@ namespace BDEditor.Views
                         switch (node.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic:
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic:
                                 childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
@@ -928,7 +930,7 @@ namespace BDEditor.Views
                                     showChildControls = false;
                                 }
                                 break;
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic:
                                 childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
@@ -2327,7 +2329,6 @@ namespace BDEditor.Views
             //dataContext.SaveChanges();
             //#endregion
             #endregion
-
             #region v.1.5.36
             // move sexual assault up to Section under Chapter
             //BDNode sAssault = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("a6fdd2d3-96df-47b6-a598-8adbfa474c1b"));
@@ -2361,18 +2362,18 @@ namespace BDEditor.Views
             // update structure for genital warts
             // change Genital Warts to a Topic, reassign layout variant
             //BDNode gw = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("305e98f5-cbe2-4e7b-ba1f-6c06d04c065a"));
-            //gw.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic;
+            //gw.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic;
             //BDNode gwChild = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("6794bbba-54d4-4b5e-9e91-6ef6788c7cad"));
             //gwChild.SetParent(gw);
             //gwChild.nodeType = (int)BDConstants.BDNodeType.BDTopic;
             //gwChild.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
             //dataContext.SaveChanges();
-            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, gwChild, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, gwChild, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, true);
             //dataContext.SaveChanges();
 
             // change Syphilis layout variant
             //BDNode sy = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("9fab60cf-dccc-45f7-84cb-a2ac156ed30e"));
-            //sy.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic;
+            //sy.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic;
             //BDNode syChild1 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("06682028-0f1f-4b5d-87df-ff8ed24afa20"));
             //BDNode syChild2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("e13bc857-aeea-4b54-af38-cb27977b6062"));
             //BDNode syChild3 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("522c06ef-91f5-44a3-9736-1552bc3fbdc6"));
@@ -2385,19 +2386,19 @@ namespace BDEditor.Views
             //syChild3.SetParent(sy);
             //syChild3.nodeType = (int)BDConstants.BDNodeType.BDTopic;
             //syChild3.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
-            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, syChild1, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic, true);
-            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, syChild2, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic, true);
-            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, syChild3, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, syChild1, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, syChild2, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, syChild3, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, true);
 
             // change Herpes layout variant
             //BDNode hp = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("ac4e5aae-4ccc-4c35-898e-40328cdd3146"));
-            //hp.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic;
+            //hp.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic;
             // pregnancy
             //BDNode hpChild1 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("ef7d314a-301d-4389-bfc7-c945412ef598"));
             //hpChild1.nodeType = (int)BDConstants.BDNodeType.BDTopic;
             //hpChild1.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
             //hpChild1.SetParent(hp);
-            //hpChild1.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic;
+            //hpChild1.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic;
             // primary
             //BDNode hpChild2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("18dd3ae5-5374-4c03-b334-5efeabc4d5a1"));
             //hpChild2.nodeType = (int)BDConstants.BDNodeType.BDTopic;
@@ -2425,12 +2426,12 @@ namespace BDEditor.Views
             //hpg_Child2.nodeKeyName = BDConstants.BDNodeType.BDSubtopic.ToString();
             //dataContext.SaveChanges();
 
-            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, hpChild2, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic, true);
-            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, hpChild3, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic, true);
-            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, hpChild4, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, hpChild2, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, hpChild3, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, hpChild4, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, true);
 
-            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, hpg_Child1, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic, true);
-            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, hpg_Child2, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, hpg_Child1, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, hpg_Child2, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic, true);
             //dataContext.SaveChanges();
 
             // change layout variant and children of Vulvovaginitis
@@ -2439,7 +2440,7 @@ namespace BDEditor.Views
             //candidiasis.SetParent(vv);
             //candidiasis.name = "Candidiasis";
             //candidiasis.displayOrder = 2;
-            //candidiasis.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic;
+            //candidiasis.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic;
             //dataContext.SaveChanges();
 
             //BDNode vvC1 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("a5510470-d077-4ad7-ac49-d23d9fe7e777"));
@@ -2447,21 +2448,21 @@ namespace BDEditor.Views
             //vvC1.nodeType = (int)BDConstants.BDNodeType.BDTopic;
             //vvC1.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
             //dataContext.SaveChanges();
-            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vvC1, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vvC1, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, true);
             
             //BDNode vvC2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("058fd5c0-ad16-46c3-ba22-fc57963d1341"));
             //vvC2.SetParent(candidiasis);
             //vvC2.nodeType = (int)BDConstants.BDNodeType.BDTopic;
             //vvC2.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
             //dataContext.SaveChanges();
-            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vvC2, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vvC2, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, true);
             
             //BDNode vvC3 = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.NewGuid());
             //vvC3.name = "Candidiasis - symptomatic, complicated";
             //vvC3.nodeType = (int)BDConstants.BDNodeType.BDTopic;
             //vvC3.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
             //vvC3.DisplayOrder = 0;
-            //vvC3.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic;
+            //vvC3.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic;
             //vvC3.SetParent(candidiasis);
             //dataContext.SaveChanges();
 
@@ -2487,11 +2488,110 @@ namespace BDEditor.Views
             //vvC3C5.nodeKeyName = BDConstants.BDNodeType.BDSubtopic.ToString();
             //dataContext.SaveChanges();
 
-            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vvC3C1, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic, true);
-            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vvC3C2, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic, true);
-            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vvC3C3, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic, true);
-            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vvC3C4, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic, true);
-            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vvC3C5, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vvC3C1, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vvC3C2, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vvC3C3, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vvC3C4, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic, true);
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vvC3C5, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic, true);
+            //dataContext.SaveChanges();
+            #endregion
+
+            #region v.1.6.36
+            //// retrieve Adults > Recurrent Cystitis (Presentation); add 2 new Topics & move children under as requested. Reset them to Subtopic
+            //BDNode r_cystitis = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("d427b03f-8fe2-45a6-ba9f-9d584aaf854d"));
+            //r_cystitis.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic;
+            //BDNode c1 = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDTopic, Guid.NewGuid());
+            //BDNode c2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("369708ef-4b19-4c43-8f11-19d12ec1be15"));
+            //BDNode c1g1 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("3e9cc4be-daed-4b6d-bdb4-bee39b7185dd"));
+            //BDNode c1g2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("b95c9bdd-55a2-4380-914a-60c16a5a3a66"));
+            //BDNode c2g1 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("2d05e6fd-cc53-48c8-b78e-d103083a60f6"));
+            //BDNode c2g2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("e104104c-d2e4-42f6-a48d-64e94fa72837"));
+
+            //c1.name = "Females Sexually active";
+            //c1.DisplayOrder = 0;
+            //c1.SetParent(r_cystitis);
+            //c1.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic;
+
+            //c2.DisplayOrder = 1;
+            //c2.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            //c2.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            //c2.SetParent(r_cystitis);
+            //c2.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic;
+
+            //dataContext.SaveChanges();
+
+            //c1g1.SetParent(c1);
+            //c1g1.DisplayOrder = 0;
+            //c1g1.nodeType = (int)BDConstants.BDNodeType.BDSubtopic;
+            //c1g1.nodeKeyName = BDConstants.BDNodeType.BDSubtopic.ToString();
+
+            //c1g2.SetParent(c1);
+            //c1g2.DisplayOrder = 0;
+            //c1g2.nodeType = (int)BDConstants.BDNodeType.BDSubtopic;
+            //c1g2.nodeKeyName = BDConstants.BDNodeType.BDSubtopic.ToString();
+
+            //c2g1.SetParent(c2);
+            //c2g1.DisplayOrder = 0;
+            //c2g1.nodeType = (int)BDConstants.BDNodeType.BDSubtopic;
+            //c2g1.nodeKeyName = BDConstants.BDNodeType.BDSubtopic.ToString();
+
+            //c2g2.SetParent(c2);
+            //c2g2.DisplayOrder = 1;
+            //c2g2.nodeType = (int)BDConstants.BDNodeType.BDSubtopic;
+            //c2g2.nodeKeyName = BDConstants.BDNodeType.BDSubtopic.ToString();
+
+            //dataContext.SaveChanges();
+
+            //// Part Deux
+            //// retrieve Adults > Respiratory > HAP and children. Create New topics, move children under as requested.
+            //BDNode hap = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("49c1480c-78a0-4ce5-ac1a-daf74757d251"));
+            //BDNode h1 = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDPresentation, Guid.NewGuid());
+            //BDNode h2 = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDPresentation, Guid.NewGuid());
+            //BDNode h1c1 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("d2fa1506-331a-424a-b937-321e82382ab1"));
+            //BDNode h2c1 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("9a2562f5-96ae-414b-9ee9-b6b6487a427b"));
+            //BDNode h2c2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("ed212ed9-23d5-40ac-ab06-2b7e89dddde2"));
+            //BDNode h2c3 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("28fcacef-e218-411b-9087-dae8d41547fb"));
+            //BDNode h2c4 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("6f3e8da6-b041-417b-9e34-0636d123a85a"));
+
+            //h1.name = "Early onset";
+            //h1.DisplayOrder = 0;
+            //h1.SetParent(hap);
+            //h1.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic;
+
+            //h2.name = "Late onset";
+            //h2.DisplayOrder = 1;
+            //h2.SetParent(hap);
+            //h2.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic;
+
+            //h1c1.SetParent(h1);
+            //h1c1.DisplayOrder = 0;
+            //h1c1.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            //h1c1.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            //h2c1.SetParent(h2);
+            //h2c1.DisplayOrder = 0;
+            //h2c1.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            //h2c1.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            //h2c2.SetParent(h2);
+            //h2c2.DisplayOrder = 1;
+            //h2c2.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            //h2c2.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            //h2c3.SetParent(h2);
+            //h2c3.DisplayOrder = 2;
+            //h2c3.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            //h2c3.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            //h2c4.SetParent(h2);
+            //h2c4.DisplayOrder = 3;
+            //h2c4.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            //h2c4.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            //dataContext.SaveChanges();
+
+            //// Change layout variant for all
+            //BDNode r_cystitis = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("d427b03f-8fe2-45a6-ba9f-9d584aaf854d"));
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, r_cystitis, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic, true);
+            //dataContext.SaveChanges();
+
+            //BDNode hap = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("49c1480c-78a0-4ce5-ac1a-daf74757d251"));
+            //BDUtilities.ResetLayoutVariantWithChildren(dataContext, hap, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, true);
             //dataContext.SaveChanges();
             #endregion
         }

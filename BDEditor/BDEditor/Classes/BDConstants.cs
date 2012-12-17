@@ -190,10 +190,10 @@ namespace BDEditor.Classes
             TreatmentRecommendation19_Peritonitis_PD_Adult = 121,
             [Description("Treatment of PD Peritonitis - Paediatric")]
             TreatmentRecommendation19_Peritonitis_PD_Paediatric = 122,
-            [Description("Treatment Recommendations - Adult Genital with Topic")]
-            TreatmentRecommendation20_Adult_GenitalWithTopic = 123,
-            [Description("Treatment Recommendations - Adult Genital with Topic and Subtopic")]
-            TreatmentRecommendation20_Adult_GenitalWithTopicAndSubtopic = 124,
+            [Description("Treatment Recommendations - Adult with Topic")]
+            TreatmentRecommendation20_Adult_WithTopic = 123,
+            [Description("Treatment Recommendations - Adult with Topic and Subtopic")]
+            TreatmentRecommendation20_Adult_WithTopicAndSubtopic = 124,
 
             [Description("Antibiotics")]
             Antibiotics = 200, 

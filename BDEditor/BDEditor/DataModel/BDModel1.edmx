@@ -1314,7 +1314,7 @@
         <EntityTypeShape EntityType="BDDataModel.BDLinkedNoteAssociation" Width="2.625" PointX="12.375" PointY="14.75" Height="3.5644742838541674" />
         <EntityTypeShape EntityType="BDDataModel.BDHtmlPage" Width="1.5" PointX="3.375" PointY="0.75" Height="3.1340950520833282" />
         <EntityTypeShape EntityType="BDDataModel.BDDosage" Width="1.5" PointX="15.375" PointY="0.75" Height="4.6725065104166674" />
-        <EntityTypeShape EntityType="BDDataModel.BDNodeToHtmlPageIndex" Width="3.125" PointX="0.75" PointY="5.75" Height="2.1725878906250067" />
+        <EntityTypeShape EntityType="BDDataModel.BDNodeToHtmlPageIndex" Width="1.5" PointX="0.75" PointY="5.75" Height="2.1725878906250067" />
       </Diagram>
     </Diagrams>
   </Designer>

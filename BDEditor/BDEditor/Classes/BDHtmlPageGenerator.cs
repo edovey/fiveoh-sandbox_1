@@ -4101,6 +4101,8 @@ namespace BDEditor.Classes
                             previousTherapyDuration = therapy.duration;
                         therapiesHaveDuration = true;
                     }
+
+                    previousTherapyId = therapy.Uuid;
                 }
 
                 // Build the header

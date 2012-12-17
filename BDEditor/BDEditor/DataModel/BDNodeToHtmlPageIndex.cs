@@ -13,14 +13,16 @@ namespace BDEditor.DataModel
     {
         public const string ENTITYNAME = @"BDNodeToHtmlPageIndexes";
         public const string KEY_NAME = @"BDNodeToHtmlPageIndex";
+        public const string DEFAULTPARENTKEYPROPERTYNAME = @"<no key>";
 
-        private static BDNodeToHtmlPageIndex CreateBDNodeToHtmlPageIndex(Entities pContext, Guid pNodeId, Guid pHtmlPageId, Guid pChapterId, BDConstants.BDHtmlPageType pHtmlPageType)
+        private static BDNodeToHtmlPageIndex CreateBDNodeToHtmlPageIndex(Entities pContext, Guid pNodeId, Guid pHtmlPageId, Guid pChapterId, BDConstants.BDHtmlPageType pHtmlPageType, string pParentKeyPropertyName)
         {
-            BDNodeToHtmlPageIndex nodeIndex = BDNodeToHtmlPageIndex.CreateBDNodeToHtmlPageIndex(pNodeId,true,(int)pHtmlPageType);
+            string propertyKeyName = pParentKeyPropertyName ?? DEFAULTPARENTKEYPROPERTYNAME;
+            BDNodeToHtmlPageIndex nodeIndex = BDNodeToHtmlPageIndex.CreateBDNodeToHtmlPageIndex(pNodeId,true,(int)pHtmlPageType, propertyKeyName);
             nodeIndex.chapterId = pChapterId;
             nodeIndex.htmlPageId = pHtmlPageId;
             nodeIndex.htmlPageType = (int) pHtmlPageType;
-
+            nodeIndex.parentKeyPropertyName = propertyKeyName;
             pContext.AddObject(ENTITYNAME, nodeIndex);
             return nodeIndex;
         }
@@ -42,19 +44,10 @@ namespace BDEditor.DataModel
             {
                 IQueryable<BDNodeToHtmlPageIndex> entries;
 
-                if (null == pPageType)
-                {
-                    entries = (from entry in pContext.BDNodeToHtmlPageIndexes
-                               where entry.ibdNodeId == pIBDNodeId
-                               select entry);
-                }
-                else
-                {
-                    int pageType = (int) pPageType;
-                    entries = (from entry in pContext.BDNodeToHtmlPageIndexes
-                               where (entry.ibdNodeId == pIBDNodeId) && (entry.htmlPageType == pageType)
-                               select entry);
-                }
+                int pageType = (int) pPageType;
+                entries = (from entry in pContext.BDNodeToHtmlPageIndexes
+                            where (entry.ibdNodeId == pIBDNodeId) && (entry.htmlPageType == pageType)
+                            select entry);
 
                 BDNodeToHtmlPageIndex indexEntry = entries.FirstOrDefault<BDNodeToHtmlPageIndex>();
                 if (null != indexEntry)
@@ -63,38 +56,32 @@ namespace BDEditor.DataModel
             return returnValue;
         }
 
-        public static BDNodeToHtmlPageIndex RetrieveOrCreateForIBDNodeId(Entities pContext, Guid pIBDNodeId, BDConstants.BDHtmlPageType pPageType, Guid pChapterId)
+        public static BDNodeToHtmlPageIndex RetrieveOrCreateForIBDNodeId(Entities pContext, Guid pIBDNodeId, BDConstants.BDHtmlPageType pPageType, Guid pChapterId, string pParentKeyPropertyName)
         {
-            BDNodeToHtmlPageIndex index = RetrieveIndexEntryForIBDNodeId(pContext, pIBDNodeId, pPageType);
+            BDNodeToHtmlPageIndex index = RetrieveIndexEntryForIBDNodeId(pContext, pIBDNodeId, pPageType, pParentKeyPropertyName);
             if (null == index)
             {
-                index = CreateBDNodeToHtmlPageIndex(pContext, pIBDNodeId, Guid.NewGuid(), pChapterId, pPageType);
+                index = CreateBDNodeToHtmlPageIndex(pContext, pIBDNodeId, Guid.NewGuid(), pChapterId, pPageType, pParentKeyPropertyName);
             }
             index.wasGenerated = true;
             Save(pContext, index);
             return index;
         }
 
-        private static BDNodeToHtmlPageIndex RetrieveIndexEntryForIBDNodeId(Entities pContext, Guid pIBDNodeId, BDConstants.BDHtmlPageType pPageType)
+        private static BDNodeToHtmlPageIndex RetrieveIndexEntryForIBDNodeId(Entities pContext, Guid pIBDNodeId, BDConstants.BDHtmlPageType pPageType, string pParentKeyPropertyName)
         {
             BDNodeToHtmlPageIndex returnValue = null;
 
             if (pIBDNodeId != null)
             {
                 IQueryable<BDNodeToHtmlPageIndex> entries;
-                if (null == pPageType)
-                {
-                    entries = (from entry in pContext.BDNodeToHtmlPageIndexes
-                               where entry.ibdNodeId == pIBDNodeId
-                               select entry);
-                }
-                else
-                {
-                    int pageType = (int) pPageType;
-                    entries = (from entry in pContext.BDNodeToHtmlPageIndexes
-                               where (entry.ibdNodeId == pIBDNodeId) && (entry.htmlPageType == pageType)
-                               select entry);
-                }
+
+                string parentKeyPropertyName = pParentKeyPropertyName ?? DEFAULTPARENTKEYPROPERTYNAME;
+                int pageType = (int) pPageType;
+                entries = (from entry in pContext.BDNodeToHtmlPageIndexes
+                            where (entry.ibdNodeId == pIBDNodeId) && (entry.htmlPageType == pageType) && (entry.parentKeyPropertyName == parentKeyPropertyName )
+                            select entry);
+                
                 returnValue = entries.FirstOrDefault<BDNodeToHtmlPageIndex>();
             }
             return returnValue;

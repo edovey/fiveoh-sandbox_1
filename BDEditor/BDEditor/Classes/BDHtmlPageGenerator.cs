@@ -308,7 +308,7 @@ namespace BDEditor.Classes
                 pageHTML.Append("</table>");
             }
 
-            return writeBDHtmlPage(pContext, pNode as BDNode, pageHTML, BDConstants.BDHtmlPageType.Navigation, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode as BDNode, pageHTML, BDConstants.BDHtmlPageType.Navigation, footnotesOnPage, objectsOnPage, null);
         }
         
         /// <summary>
@@ -824,7 +824,7 @@ namespace BDEditor.Classes
             {
                 //Append HTML for child layout
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         #region Antibiotics sections
@@ -858,7 +858,7 @@ namespace BDEditor.Classes
                 }
                 objectsOnPage.Add(childNode.Uuid);
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage, null);
         }
 
         private BDHtmlPage generatePageForAntibioticsClinicalGuidelinesSpectrum(Entities pContext, BDNode pNode)
@@ -885,7 +885,7 @@ namespace BDEditor.Classes
             {
                 bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child as BDNode, "h3", footnotes, objectsOnPage));
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage, null);
 }
 
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -914,7 +914,7 @@ namespace BDEditor.Classes
                 if (node.NodeType == BDConstants.BDNodeType.BDAntimicrobialGroup)
                     bodyHTML.AppendFormat("{0}<br>",buildNodeWithReferenceAndOverviewHTML(pContext, node, string.Empty, footnotes, objectsOnPage));
             }
-           return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -1041,7 +1041,7 @@ namespace BDEditor.Classes
                 if (legendHTML.Length > EMPTY_PARAGRAPH)
                     bodyHTML.Append(legendHTML);
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage, null);
         }
 
 
@@ -1197,7 +1197,7 @@ namespace BDEditor.Classes
                     }
                 }
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -1275,7 +1275,7 @@ namespace BDEditor.Classes
                     bodyHTML.Append(legendHTML);
 
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage, null);
         }
 
         private BDHtmlPage generatePageForAntibioticDosingInHepaticImpairment(Entities pContext, BDNode pNode)
@@ -1316,7 +1316,7 @@ namespace BDEditor.Classes
                     bodyHTML.Append(legendHTML);
 
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -1360,7 +1360,7 @@ namespace BDEditor.Classes
             if (legendHTML.Length > EMPTY_PARAGRAPH)
                 bodyHTML.Append(legendHTML);
 
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -1442,7 +1442,7 @@ namespace BDEditor.Classes
 
             }
 
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtml instead")]
@@ -1549,7 +1549,7 @@ namespace BDEditor.Classes
                     bodyHTML.Append(legendHTML);
 
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtml instead")]
@@ -1621,7 +1621,7 @@ namespace BDEditor.Classes
                     bodyHTML.Append(buildAntibioticsCSFPenetrationDosagesHTML(pContext, child, footnotesOnPage, objectsOnPage));
                 }
 
-                return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -1694,7 +1694,7 @@ namespace BDEditor.Classes
                     }
                 }
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage, null);
         }
         #endregion
 
@@ -1754,7 +1754,7 @@ namespace BDEditor.Classes
                         bodyHTML.Append(buildEmpiricTherapyHTML(pContext, pathogenGroup as BDNode, footnotesOnPage, objectsOnPage));
                 }
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         /// <summary>
@@ -1856,7 +1856,7 @@ namespace BDEditor.Classes
                 }
             }
              */
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         public BDHtmlPage GenerateBDHtmlPage(Entities pContext, IBDNode pNode)
@@ -1912,7 +1912,7 @@ namespace BDEditor.Classes
             //TODO: Verify that this assignment is correct
             currentPageMasterObject = pNode;
 
-            BDHtmlPage htmlPage = writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage);
+            BDHtmlPage htmlPage = writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage, null);
 
             return htmlPage;
         }
@@ -1981,7 +1981,7 @@ namespace BDEditor.Classes
                     }
                 }
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -2027,7 +2027,7 @@ namespace BDEditor.Classes
                         bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pathogen as BDNode, "h4", footnotes, objectsOnPage));
                 }
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -2074,7 +2074,7 @@ namespace BDEditor.Classes
 
             }
             bodyHTML.AppendFormat(@"{0}<br>{1}<br>{2}", clinical, diagnosis, therapy);
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -2107,7 +2107,7 @@ namespace BDEditor.Classes
                     foreach (IBDNode subtopic in subtopics)
                         bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, subtopic as BDNode, "h4", footnotes, objectsOnPage));
                 }
-                return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage);
+                return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage, null);
             }
             else
             {
@@ -2158,7 +2158,7 @@ namespace BDEditor.Classes
                         bodyHTML.AppendFormat(@"<u><b>Comments</b></u><br>{0}", presentationOverview);
                 }
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         /// <summary>
@@ -2223,7 +2223,7 @@ namespace BDEditor.Classes
             }
             bodyHTML.Append(@"</table>");
 
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         /// <summary>
@@ -2263,7 +2263,7 @@ namespace BDEditor.Classes
                     bodyHTML.Append(buildTherapyGroupHTML(pContext, therapyGroup as BDTherapyGroup, footnotesOnPage, objectsOnPage));
                 }
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         private BDHtmlPage generatePageForEmpiricTherapyOfFungalInfections(Entities pContext, IBDNode pNode)
@@ -2290,7 +2290,7 @@ namespace BDEditor.Classes
             {
                 bodyHTML.Append(buildAttachmentHTML(pContext,child,footnotesOnPage,objectsOnPage));
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
 
@@ -2372,7 +2372,7 @@ namespace BDEditor.Classes
 
                 
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -2455,7 +2455,7 @@ namespace BDEditor.Classes
 
                 }
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -2526,7 +2526,7 @@ namespace BDEditor.Classes
                         bodyHTML.Append(@"</table>");
                     }
                 }
-                return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+                return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
         #endregion
 
@@ -2555,7 +2555,7 @@ namespace BDEditor.Classes
             {
                 //Append HTML for child layout
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
         
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -2601,7 +2601,7 @@ namespace BDEditor.Classes
                     foreach (IBDNode subcategory in subcategories)
                         categoryHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, subcategory, "h4", catFootnotes, categoriesOnPage));
                     currentPageMasterObject = child;
-                    childPages.Add(writeBDHtmlPage(pContext, child, categoryHTML, BDConstants.BDHtmlPageType.Data, catFootnotes, categoriesOnPage));
+                    childPages.Add(writeBDHtmlPage(pContext, child, categoryHTML, BDConstants.BDHtmlPageType.Data, catFootnotes, categoriesOnPage, null));
                 }
                 else
                 {
@@ -2621,7 +2621,7 @@ namespace BDEditor.Classes
                     }
                     therapyHTML.Append("</table>");
                     currentPageMasterObject = child;
-                    childPages.Add(writeBDHtmlPage(pContext, child, therapyHTML, BDConstants.BDHtmlPageType.Data, therapyFootnotes, therapiesOnPage));
+                    childPages.Add(writeBDHtmlPage(pContext, child, therapyHTML, BDConstants.BDHtmlPageType.Data, therapyFootnotes, therapiesOnPage, null));
                 }
             }
             for (int i = 0; i < childPages.Count; i++)
@@ -2633,7 +2633,7 @@ namespace BDEditor.Classes
             }
             bodyHTML.Append(therapyGroupHTML);
             currentPageMasterObject = pNode;
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -2672,7 +2672,7 @@ namespace BDEditor.Classes
                     retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field02_fieldNote", objectsOnPage, footnotesOnPage));
                 objectsOnPage.Add(entry.Uuid);
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -2710,7 +2710,7 @@ namespace BDEditor.Classes
                 objectsOnPage.Add(entry.Uuid);
             }
             bodyHTML.Append("</table>");
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -2752,7 +2752,7 @@ namespace BDEditor.Classes
                 bodyHTML.Append("</table>");
                 objectsOnPage.Add(entry.Uuid);
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         private BDHtmlPage generatePageForProhylaxisSexualAssault(Entities pContext, IBDNode pNode)
@@ -2799,7 +2799,7 @@ namespace BDEditor.Classes
                     bodyHTML.Append("</table>");
                 }
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         private BDHtmlPage generatePageForProhylaxisImmunization(Entities pContext, IBDNode pNode)
@@ -2826,7 +2826,7 @@ namespace BDEditor.Classes
             {
                 //Append HTML for child layout
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtmlPage instead", true)]
@@ -3008,7 +3008,7 @@ namespace BDEditor.Classes
                     bodyHTML.Append(tableHTML);
                 bodyHTML.Append("</table>");
            }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+           return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -3074,14 +3074,14 @@ namespace BDEditor.Classes
                         mHTML.AppendFormat("<h4>Duration of Precautions</h4>{0}", durationText);
                     }
                     currentPageMasterObject = microorganism;
-                    mPages.Add(writeBDHtmlPage(pContext, microorganism, mHTML, BDConstants.BDHtmlPageType.Data, mFootnotes, mObjectsOnPage));
+                    mPages.Add(writeBDHtmlPage(pContext, microorganism, mHTML, BDConstants.BDHtmlPageType.Data, mFootnotes, mObjectsOnPage, null));
                 }
                 for (int i = 0; i < mPages.Count; i++)
                     mgHTML.AppendFormat(@"<p><a href=""{0}"">{1}</a></p>", mPages[i].Uuid.ToString().ToUpper(), mgTitles[i]);
             }
             bodyHTML.Append(mgHTML);
             currentPageMasterObject = pNode;
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
         #endregion
 
@@ -3132,7 +3132,7 @@ namespace BDEditor.Classes
                 }
                 bodyHTML.Append("</table>");
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         private BDHtmlPage generatePageForDentalProphylaxis(Entities pContext, IBDNode pNode)
@@ -3202,7 +3202,7 @@ namespace BDEditor.Classes
                 }
                 bodyHTML.Append("</table>");
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -3317,7 +3317,7 @@ namespace BDEditor.Classes
                         }
                     }
                 }
-                return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+                return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -3360,7 +3360,7 @@ namespace BDEditor.Classes
                 }
                 bodyHTML.Append("</p>");
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
         #endregion
 
@@ -3427,7 +3427,7 @@ namespace BDEditor.Classes
                     if (subcategory.Name.Length > 0)
                     {
                         currentPageMasterObject = subcategory;
-                        subcatPages.Add(writeBDHtmlPage(pContext, subcategory, subcatHTML, BDConstants.BDHtmlPageType.Navigation, subcatFootnotes, subcatObjectsOnPage));
+                        subcatPages.Add(writeBDHtmlPage(pContext, subcategory, subcatHTML, BDConstants.BDHtmlPageType.Navigation, subcatFootnotes, subcatObjectsOnPage, null));
                     }
                     else
                         bodyHTML.Append(subcatHTML);
@@ -3441,7 +3441,7 @@ namespace BDEditor.Classes
                     if (subcategory.Name.Length > 0)
                     {
                         currentPageMasterObject = subcategory;
-                        apPages.Add(writeBDHtmlPage(pContext, subcategory, apHTML, BDConstants.BDHtmlPageType.Navigation, apFootnotes, apObjectsOnPage));
+                        apPages.Add(writeBDHtmlPage(pContext, subcategory, apHTML, BDConstants.BDHtmlPageType.Navigation, apFootnotes, apObjectsOnPage, null));
                     }
                     else
                         subcatHTML.Append(apHTML);
@@ -3450,7 +3450,7 @@ namespace BDEditor.Classes
             for (int i = 0; i < subcatPages.Count; i++)
                 bodyHTML.AppendFormat(@"<p><a href=""{0}""><b>{1}</b></a></p>", subcatPages[i].Uuid.ToString().ToUpper(), childNodes[i].Name);
             currentPageMasterObject = pNode;
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -3513,18 +3513,18 @@ namespace BDEditor.Classes
                     if (commentText.Length > 0)
                         antimicrobialHTMLBody.AppendFormat("<p><b>Comments</b><br>{0}</p>", commentText);
                     currentPageMasterObject = antimicrobial;
-                    amPages.Add(writeBDHtmlPage(pContext, pNode, antimicrobialHTMLBody, BDConstants.BDHtmlPageType.Data, amFootnotes, antimicrobialsOnPage));
+                    amPages.Add(writeBDHtmlPage(pContext, pNode, antimicrobialHTMLBody, BDConstants.BDHtmlPageType.Data, amFootnotes, antimicrobialsOnPage, null));
                 }
                 for (int i = 0; i < amPages.Count; i++)
                     subcatHTML.AppendFormat(@"<p><a href=""{0}""><b>{1}</b></a></p>", amPages[i].Uuid.ToString().ToUpper(), antimicrobials[i].Name);
                 currentPageMasterObject = subcategory;
-                subcatPages.Add(writeBDHtmlPage(pContext, pNode, subcatHTML, BDConstants.BDHtmlPageType.Navigation, subcatFootnotes, subcatObjectsOnPage));
+                subcatPages.Add(writeBDHtmlPage(pContext, pNode, subcatHTML, BDConstants.BDHtmlPageType.Navigation, subcatFootnotes, subcatObjectsOnPage, null));
 
             }
             for(int i = 0; i < subcatPages.Count; i++)
                 bodyHTML.AppendFormat(@"<p><a href=""{0}""><b>{1}</b></a></p>", subcatPages[i].Uuid.ToString().ToUpper(), childNodes[i].Name);
             currentPageMasterObject = pNode;
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -3567,13 +3567,13 @@ namespace BDEditor.Classes
                     }
                 }
                 currentPageMasterObject = pathogen;
-                pages.Add(writeBDHtmlPage(pContext, pathogen, pathogenHTML, BDConstants.BDHtmlPageType.Data, pFootnotes, objectsOnPathogenPage));
+                pages.Add(writeBDHtmlPage(pContext, pathogen, pathogenHTML, BDConstants.BDHtmlPageType.Data, pFootnotes, objectsOnPathogenPage, null));
             }
             for (int i = 0; i < pages.Count; i++)
                 bodyHTML.AppendFormat(@"<p><a href=""{0}""><b>{1}</b></a></p>", pages[i].Uuid.ToString().ToUpper(), pathogens[i].Name);
             
             currentPageMasterObject = pNode;
-            return writeBDHtmlPage(pContext, pNode as BDNode, bodyHTML, BDConstants.BDHtmlPageType.Navigation, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode as BDNode, bodyHTML, BDConstants.BDHtmlPageType.Navigation, footnotesOnPage, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -3629,7 +3629,7 @@ namespace BDEditor.Classes
                 }
             }
             bodyHTML.Append("</table>");
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -3652,7 +3652,7 @@ namespace BDEditor.Classes
 
             bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1", footnotesOnPage, objectsOnPage));
 
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
         
         #endregion
@@ -3706,7 +3706,7 @@ namespace BDEditor.Classes
                 }
                 bodyHTML.Append("</table>");
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         [Obsolete("use GenerateBDHtmlPage instead")]
@@ -3746,7 +3746,7 @@ namespace BDEditor.Classes
                         bodyHTML.AppendFormat("{0}<br>", buildNodePropertyHTML(pContext, microorganism, microorganism.Name, BDNode.PROPERTYNAME_NAME, footnotesOnPage, objectsOnPage));
                 }
             }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         #endregion
@@ -3772,7 +3772,7 @@ namespace BDEditor.Classes
             bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1", footnotesOnPage, objectsOnPage));
 
             bodyHTML.Append(buildAttachmentHTML(pContext, pNode, footnotesOnPage, objectsOnPage));
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage);
+            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
 
@@ -3831,7 +3831,7 @@ namespace BDEditor.Classes
             return resultPage;
         }
 
-        private BDHtmlPage generatePageForLinkedNotes(Entities pContext, Guid pParentId, BDConstants.BDNodeType pParentType, List<BDLinkedNote> pMarkedNotes, List<BDLinkedNote> pUnmarkedNotes)
+        private BDHtmlPage generatePageForLinkedNotes(Entities pContext, Guid pParentId, BDConstants.BDNodeType pParentType, List<BDLinkedNote> pMarkedNotes, List<BDLinkedNote> pUnmarkedNotes, string pParentKeyPropertyName)
         {
             StringBuilder noteHtml = new StringBuilder();
             List<Guid> objectsOnPage = new List<Guid>();
@@ -3860,10 +3860,10 @@ namespace BDEditor.Classes
                 }
             }
 
-            return generatePageForLinkedNotes(pContext, pParentId, pParentType, noteHtml.ToString(), BDConstants.BDHtmlPageType.Comments, objectsOnPage);
+            return generatePageForLinkedNotes(pContext, pParentId, pParentType, noteHtml.ToString(), BDConstants.BDHtmlPageType.Comments, objectsOnPage, pParentKeyPropertyName);
         }
 
-        private BDHtmlPage generatePageForLinkedNotes(Entities pContext, Guid pDisplayParentId, BDConstants.BDNodeType pDisplayParentType, string pPageHtml, BDConstants.BDHtmlPageType pPageType, List<Guid> pObjectsOnPage)
+        private BDHtmlPage generatePageForLinkedNotes(Entities pContext, Guid pDisplayParentId, BDConstants.BDNodeType pDisplayParentType, string pPageHtml, BDConstants.BDHtmlPageType pPageType, List<Guid> pObjectsOnPage, string pParentKeyPropertyName)
         {
             if (pPageHtml.Length > EMPTY_PARAGRAPH)
             {
@@ -3873,12 +3873,12 @@ namespace BDEditor.Classes
                 if (node != null)
                 {
                     currentPageMasterObject = node;
-                    return writeBDHtmlPage(pContext, node, pPageHtml, pPageType, new List<BDLinkedNote>(), pObjectsOnPage);
+                    return writeBDHtmlPage(pContext, node, pPageHtml, pPageType, new List<BDLinkedNote>(), pObjectsOnPage, pParentKeyPropertyName);
                 }
                 else if (linkedNote != null)
                 {
                     currentPageMasterObject = linkedNote;
-                    return writeBDHtmlPage(pContext, linkedNote, pPageHtml, pPageType, new List<BDLinkedNote>(), pObjectsOnPage);
+                    return writeBDHtmlPage(pContext, linkedNote, pPageHtml, pPageType, new List<BDLinkedNote>(), pObjectsOnPage, pParentKeyPropertyName);
                 }
                 else
                     throw new NotSupportedException();
@@ -3904,7 +3904,7 @@ namespace BDEditor.Classes
                 StringBuilder referenceText = new StringBuilder();
                 referenceText.AppendFormat(@"<h2>{0} References</h2>", pNode.Name);
                 referenceText.Append(reference);
-                BDHtmlPage footnote = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.ParentType, referenceText.ToString(), BDConstants.BDHtmlPageType.Reference, objectsOnPage);
+                BDHtmlPage footnote = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.ParentType, referenceText.ToString(), BDConstants.BDHtmlPageType.Reference, objectsOnPage, pPropertyName);
                
                 List<Guid> filteredObjects = objectsOnPage.Distinct().ToList();
                 foreach (Guid id in filteredObjects)
@@ -4461,7 +4461,7 @@ namespace BDEditor.Classes
                             }
                         }
                         currentPageMasterObject = pNode;
-                        pGeneratedPages.Add(writeBDHtmlPage(pContext, pNode, localHtml, BDConstants.BDHtmlPageType.Data, localFootnotes, localObjectsOnPage));
+                        pGeneratedPages.Add(writeBDHtmlPage(pContext, pNode, localHtml, BDConstants.BDHtmlPageType.Data, localFootnotes, localObjectsOnPage, null));
 
                         break;
                     default:
@@ -5873,7 +5873,7 @@ namespace BDEditor.Classes
                             mHTML.AppendFormat("<{0}{1}</{0}>{2}", HtmlHeaderTagLevelString(pLevel + 3), columnHtml[6], durationText);
                         }
                         currentPageMasterObject = microorganism;
-                        mPages.Add(writeBDHtmlPage(pContext, microorganism, mHTML, BDConstants.BDHtmlPageType.Data, mFootnotes, mObjectsOnPage));
+                        mPages.Add(writeBDHtmlPage(pContext, microorganism, mHTML, BDConstants.BDHtmlPageType.Data, mFootnotes, mObjectsOnPage, null));
                     }
                     for (int i = 0; i < mPages.Count; i++)
                         mgHTML.AppendFormat(@"<p><a href=""{0}"">{1}</a></p>", mPages[i].Uuid.ToString().ToUpper(), mPages[i].pageTitle);
@@ -5914,7 +5914,7 @@ namespace BDEditor.Classes
                             foreach (IBDNode subcategory in subcategories)
                                 categoryHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, subcategory, HtmlHeaderTagLevelString(pLevel + 3), catFootnotes, categoriesOnPage));
                             currentPageMasterObject = child;
-                            childPages.Add(writeBDHtmlPage(pContext, child, categoryHTML, BDConstants.BDHtmlPageType.Data, catFootnotes, categoriesOnPage));
+                            childPages.Add(writeBDHtmlPage(pContext, child, categoryHTML, BDConstants.BDHtmlPageType.Data, catFootnotes, categoriesOnPage, null));
                             break;
 
                         case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
@@ -5947,7 +5947,7 @@ namespace BDEditor.Classes
                             }
                             therapyHTML.Append("</table>");
                             currentPageMasterObject = child;
-                            childPages.Add(writeBDHtmlPage(pContext, child, therapyHTML, BDConstants.BDHtmlPageType.Data, therapyFootnotes, therapiesOnPage));
+                            childPages.Add(writeBDHtmlPage(pContext, child, therapyHTML, BDConstants.BDHtmlPageType.Data, therapyFootnotes, therapiesOnPage, null));
                             break;
                     }
                 }
@@ -7258,7 +7258,7 @@ namespace BDEditor.Classes
                     antimicrobialHTMLBody.AppendFormat("<p><b>{0}</b>: {1}</p>", columnHtml[2], buildNodePropertyHTML(pContext, risk, risk.relativeInfantDose, BDAntimicrobialRisk.PROPERTYNAME_RELATIVEDOSE, pageFootnotes, antimicrobialsOnPage));
                 }
                 antimicrobialHTMLBody.AppendFormat("<p><b>Comments:</b><br>{0}</p>", buildTextForParentAndPropertyFromLinkedNotes(pContext, BDNode.PROPERTYNAME_NAME, antimicrobial, BDConstants.LinkedNoteType.UnmarkedComment, antimicrobialsOnPage));
-                pages.Add(writeBDHtmlPage(pContext, antimicrobial, antimicrobialHTMLBody, BDConstants.BDHtmlPageType.Data, pageFootnotes, antimicrobialsOnPage));
+                pages.Add(writeBDHtmlPage(pContext, antimicrobial, antimicrobialHTMLBody, BDConstants.BDHtmlPageType.Data, pageFootnotes, antimicrobialsOnPage, null));
             }
             return pages;
         }
@@ -7405,7 +7405,7 @@ namespace BDEditor.Classes
 
             pObjectsOnPage.Add(pNode.Uuid);
 
-            BDHtmlPage notePage = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.NodeType, marked, unmarked);
+            BDHtmlPage notePage = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.NodeType, marked, unmarked, pPropertyName);
 
             pResolvedValue = string.Format("{0}{1}{2}{3}", pPropertyValue.Trim(), footerMarker, buildTextFromNotes(inline, pObjectsOnPage), overviewHTML);
 
@@ -7650,7 +7650,7 @@ namespace BDEditor.Classes
                                             {
                                                 List<Guid> objectsOnPage = new List<Guid>();
                                                 objectsOnPage.Add(linkTargetAssn.linkedNoteId.Value);
-                                                BDHtmlPage newPage = generatePageForLinkedNotes(pContext, linkTargetAssn.linkedNoteId.Value, BDConstants.BDNodeType.BDLinkedNote, targetNote.documentText, BDConstants.BDHtmlPageType.Data, objectsOnPage);
+                                                BDHtmlPage newPage = generatePageForLinkedNotes(pContext, linkTargetAssn.linkedNoteId.Value, BDConstants.BDNodeType.BDLinkedNote, targetNote.documentText, BDConstants.BDHtmlPageType.Data, objectsOnPage, linkTargetAssn.parentKeyPropertyName);
 
                                                 string newText = pPage.documentText.Replace(anchorGuid.ToString(), newPage.Uuid.ToString().ToUpper());
                                                 pPage.documentText = newText;
@@ -7801,21 +7801,15 @@ namespace BDEditor.Classes
             return notes;
         }
 
-        private BDHtmlPage writeBDHtmlPage(Entities pContext, IBDNode pDisplayParentNode, StringBuilder pBodyHTML, BDConstants.BDHtmlPageType pPageType, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
+        private BDHtmlPage writeBDHtmlPage(Entities pContext, IBDNode pDisplayParentNode, StringBuilder pBodyHTML, BDConstants.BDHtmlPageType pPageType, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, string pParentKeyPropertyName)
         {
-            return writeBDHtmlPage(pContext, pDisplayParentNode, pBodyHTML.ToString(), pPageType, pFootnotes, pObjectsOnPage);
+            return writeBDHtmlPage(pContext, pDisplayParentNode, pBodyHTML.ToString(), pPageType, pFootnotes, pObjectsOnPage, pParentKeyPropertyName);
         }
 
         /// <summary>
         /// Append footnotes, then wrap HTML with outer tags and save to db
         /// </summary>
-        /// <param name="pContext"></param>
-        /// <param name="pDisplayParentId"></param>
-        /// <param name="pDisplayParentType"></param>
-        /// <param name="pBodyHTML"></param>
-        /// <param name="pPageType"></param>
-        /// <returns></returns>
-        private BDHtmlPage writeBDHtmlPage(Entities pContext, IBDObject pDisplayParent, string pBodyHTML, BDConstants.BDHtmlPageType pPageType, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
+        private BDHtmlPage writeBDHtmlPage(Entities pContext, IBDObject pDisplayParent, string pBodyHTML, BDConstants.BDHtmlPageType pPageType, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, string pParentKeyPropertyName)
         {
             StringBuilder footerHTML = new StringBuilder();
             // insert footer text
@@ -7844,7 +7838,7 @@ namespace BDEditor.Classes
             //BDNodeToHtmlPageIndex indexEntry = BDNodeToHtmlPageIndex.RetrieveIndexEntryForIBDNodeId(pContext, masterGuid, pPageType);
             Guid chapterId = (currentChapter == null) ? Guid.Empty : currentChapter.Uuid;
  
-            BDNodeToHtmlPageIndex indexEntry = BDNodeToHtmlPageIndex.RetrieveOrCreateForIBDNodeId(pContext, masterGuid, pPageType, chapterId);
+            BDNodeToHtmlPageIndex indexEntry = BDNodeToHtmlPageIndex.RetrieveOrCreateForIBDNodeId(pContext, masterGuid, pPageType, chapterId, pParentKeyPropertyName);
 
             BDHtmlPage newPage = null;
             if (indexEntry != null)
@@ -7907,7 +7901,7 @@ namespace BDEditor.Classes
 
             Guid chapterId = (currentChapter == null) ? Guid.Empty : currentChapter.Uuid;
 
-            BDNodeToHtmlPageIndex indexEntry = BDNodeToHtmlPageIndex.RetrieveOrCreateForIBDNodeId(pContext, pLayoutColumn.Uuid, pPageType, chapterId);
+            BDNodeToHtmlPageIndex indexEntry = BDNodeToHtmlPageIndex.RetrieveOrCreateForIBDNodeId(pContext, pLayoutColumn.Uuid, pPageType, chapterId, null);
 
             BDHtmlPage newPage = null;
             if (indexEntry != null)

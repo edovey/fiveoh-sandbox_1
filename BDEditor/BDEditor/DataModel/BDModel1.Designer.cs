@@ -5097,12 +5097,14 @@ namespace BDEditor.DataModel
         /// <param name="ibdNodeId">Initial value of the ibdNodeId property.</param>
         /// <param name="wasGenerated">Initial value of the wasGenerated property.</param>
         /// <param name="htmlPageType">Initial value of the htmlPageType property.</param>
-        public static BDNodeToHtmlPageIndex CreateBDNodeToHtmlPageIndex(global::System.Guid ibdNodeId, global::System.Boolean wasGenerated, global::System.Int32 htmlPageType)
+        /// <param name="parentKeyPropertyName">Initial value of the parentKeyPropertyName property.</param>
+        public static BDNodeToHtmlPageIndex CreateBDNodeToHtmlPageIndex(global::System.Guid ibdNodeId, global::System.Boolean wasGenerated, global::System.Int32 htmlPageType, global::System.String parentKeyPropertyName)
         {
             BDNodeToHtmlPageIndex bDNodeToHtmlPageIndex = new BDNodeToHtmlPageIndex();
             bDNodeToHtmlPageIndex.ibdNodeId = ibdNodeId;
             bDNodeToHtmlPageIndex.wasGenerated = wasGenerated;
             bDNodeToHtmlPageIndex.htmlPageType = htmlPageType;
+            bDNodeToHtmlPageIndex.parentKeyPropertyName = parentKeyPropertyName;
             return bDNodeToHtmlPageIndex;
         }
 
@@ -5235,6 +5237,33 @@ namespace BDEditor.DataModel
         private global::System.Int32 _htmlPageType;
         partial void OnhtmlPageTypeChanging(global::System.Int32 value);
         partial void OnhtmlPageTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String parentKeyPropertyName
+        {
+            get
+            {
+                return _parentKeyPropertyName;
+            }
+            set
+            {
+                if (_parentKeyPropertyName != value)
+                {
+                    OnparentKeyPropertyNameChanging(value);
+                    ReportPropertyChanging("parentKeyPropertyName");
+                    _parentKeyPropertyName = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("parentKeyPropertyName");
+                    OnparentKeyPropertyNameChanged();
+                }
+            }
+        }
+        private global::System.String _parentKeyPropertyName;
+        partial void OnparentKeyPropertyNameChanging(global::System.String value);
+        partial void OnparentKeyPropertyNameChanged();
 
         #endregion
 

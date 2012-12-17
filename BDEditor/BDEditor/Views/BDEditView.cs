@@ -2603,16 +2603,16 @@ namespace BDEditor.Views
             BDHtmlPage htmlPage = null;
             BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
 
-            Debug.WriteLine("-- A --");
-            Debug.Indent();
-            nodeUuid = Guid.Parse("793c1ab0-a93e-4511-90d7-a240d6d9c345");
-            node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
-            htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
-            Debug.WriteLine(htmlPage.documentText);
-            Debug.WriteLine("");
-            Debug.WriteLine("HtmlPage Uuid= {0}", htmlPage.Uuid);
-            Debug.WriteLine("");
-            Debug.Unindent();
+            //Debug.WriteLine("-- A --");
+            //Debug.Indent();
+            //nodeUuid = Guid.Parse("793c1ab0-a93e-4511-90d7-a240d6d9c345");
+            //node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
+            //htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
+            //Debug.WriteLine(htmlPage.documentText);
+            //Debug.WriteLine("");
+            //Debug.WriteLine("HtmlPage Uuid= {0}", htmlPage.Uuid);
+            //Debug.WriteLine("");
+            //Debug.Unindent();
 
             //Debug.WriteLine("-- B --");
             //Debug.Indent();
@@ -2626,7 +2626,7 @@ namespace BDEditor.Views
             //Debug.Unindent();
             //Debug.WriteLine("-- Complete --");
 
-            /*
+/*
             Debug.WriteLine("-- DEBUG FORENSICS --");
             List<IBDNode> fList = new List<IBDNode>(); 
             string mydocpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -2642,22 +2642,22 @@ namespace BDEditor.Views
                 }
 
             }
-
+   */
             Debug.WriteLine("-- DEBUG GENERATION --");
             List<BDNode> nodeList = new List<BDNode>();
             List<Guid> guidList = new List<Guid>();
-            guidList.Add(Guid.Parse("b38a1c03-2f74-4b08-b104-0da7f054c529")); //BCNE
+            guidList.Add(Guid.Parse("7276391d-c619-4d4e-bca4-bfd23241033f")); //BCNE
             //guidList.Add(Guid.Parse("37bdbd5c-334f-474c-9fff-4809fbd9989c"));
             //guidList.Add(Guid.Parse("feed97da-e652-4cff-9d8e-bc58169b0024"));
             //guidList.Add(Guid.Parse("12c6c370-b63b-4b3c-9dc1-5cb9fa988918"));
-            guidList.Add(Guid.Parse("c0cf6533-c4c9-480b-ad85-c7d187672849"));
+            //guidList.Add(Guid.Parse("c0cf6533-c4c9-480b-ad85-c7d187672849"));
             foreach (Guid guid in guidList)
             {
                 nodeList.Add(BDNode.RetrieveNodeWithId(dataContext, guid));
             }
 
             generator.Generate(dataContext, nodeList);
-            */
+         
 
             Debug.WriteLine("-- Complete --");
         }

@@ -4877,7 +4877,7 @@ namespace BDEditor.Classes
             return html.ToString();
         }
 
-        public string BuildBDAntimicrobialGroupHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel)
+        public string BuildBDAntimicrobialGroupHtmlAndPage(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel)
         {
             StringBuilder html = new StringBuilder();
 
@@ -5878,7 +5878,7 @@ namespace BDEditor.Classes
                                     if (!string.IsNullOrEmpty(gChild.Name))
                                     {
                                         // create a page and add to collection
-                                        string gcHtml = BuildBDAntimicrobialGroupHtml(pContext, gChild, gcFootnotes, gcObjects, pLevel);
+                                        string gcHtml = BuildBDAntimicrobialGroupHtmlAndPage(pContext, gChild, gcFootnotes, gcObjects, pLevel);
                                         currentPageMasterObject = gChild;
                                         l_childPages.Add(writeBDHtmlPage(pContext, gChild, gcHtml, BDConstants.BDHtmlPageType.Navigation, gcFootnotes, gcObjects, null));
                                     }
@@ -6618,7 +6618,7 @@ namespace BDEditor.Classes
                             if (!string.IsNullOrEmpty(child.Name))
                             {
                                 // create a page and add to collection
-                                string agHtml = BuildBDAntimicrobialGroupHtml(pContext, child, childFootnotes, childObjects, pLevel);
+                                string agHtml = BuildBDAntimicrobialGroupHtmlAndPage(pContext, child, childFootnotes, childObjects, pLevel);
                                 currentPageMasterObject = child;
                                 childPages.Add(writeBDHtmlPage(pContext, child, agHtml, BDConstants.BDHtmlPageType.Navigation, childFootnotes, childObjects, null));
                             }
@@ -6672,17 +6672,37 @@ namespace BDEditor.Classes
                 {
                     case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
+
                         foreach (IBDNode child in children)
                         {
-                            html.Append(BuildBDTopicHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
+                            List<BDLinkedNote> footnoteList = new List<BDLinkedNote>();
+                            List<Guid> objectsOnChildPage = new List<Guid>();
+
+                            string childHtml = BuildBDTopicHtml(pContext, child, footnoteList, objectsOnChildPage, pLevel + 1);
+                            currentPageMasterObject = child;
+                            BDHtmlPage childPage = writeBDHtmlPage(pContext, child, childHtml, BDConstants.BDHtmlPageType.Navigation, footnoteList, objectsOnChildPage, null);
+                            html.AppendFormat(anchorTag, childPage.Uuid.ToString().ToUpper(), childPage.pageTitle);
                         }
+
                         break;
                     case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin }));
+                        //foreach (IBDNode child in children)
+                        //{
+                        //    html.Append(BuildBDTopicHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
+                        //}
+
                         foreach (IBDNode child in children)
                         {
-                            html.Append(BuildBDTopicHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
+                            List<BDLinkedNote> footnoteList = new List<BDLinkedNote>();
+                            List<Guid> objectsOnChildPage = new List<Guid>();
+
+                            string childHtml = BuildBDTopicHtml(pContext, child, footnoteList, objectsOnChildPage, pLevel + 1);
+                            currentPageMasterObject = child;
+                            BDHtmlPage childPage = writeBDHtmlPage(pContext, child, childHtml, BDConstants.BDHtmlPageType.Navigation, footnoteList, objectsOnChildPage, null);
+                            html.AppendFormat(anchorTag, childPage.Uuid.ToString().ToUpper(), childPage.pageTitle);
                         }
+
                         break;
                     case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDCategory, new BDConstants.LayoutVariantType[] { layoutVariant }));

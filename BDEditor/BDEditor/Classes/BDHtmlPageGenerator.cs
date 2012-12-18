@@ -671,6 +671,17 @@ namespace BDEditor.Classes
                             break;
                     }
                     break;
+                case BDConstants.BDNodeType.BDSubtopic:
+                    switch (pNode.LayoutVariant)
+                    {
+                        //case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic:
+                            currentPageMasterObject = pNode;
+                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
+                            isPageGenerated = true;
+                            break;
+                    }
+                    break;
                 case BDConstants.BDNodeType.BDSurgery:
                     switch (pNode.LayoutVariant)
                     {
@@ -770,6 +781,11 @@ namespace BDEditor.Classes
                             nodeChildPages.Add(generatePageForEmpiricTherapyOfFungalInfections(pContext, pNode));
                             isPageGenerated = true;
                             break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic:
+                            currentPageMasterObject = pNode;
+                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
+                            isPageGenerated = true;
+                            break;
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis:
                             currentPageMasterObject = pNode;
                             nodeChildPages.Add(generatePageForDentalProphylaxis(pContext, pNode));
@@ -782,6 +798,7 @@ namespace BDEditor.Classes
                             nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
                             break;
+
                         default:
                             isPageGenerated = false;
                             break;
@@ -1898,6 +1915,9 @@ namespace BDEditor.Classes
                     break;
                 case BDConstants.BDNodeType.BDSubsection:
                     bodyHTML.Append(BuildBDSubSectionHtml(pContext, pNode, footnotes, objectsOnPage, 1));
+                    break;
+                case BDConstants.BDNodeType.BDSubtopic:
+                    bodyHTML.Append(BuildBDSubTopicHtml(pContext, pNode, footnotes, objectsOnPage, 1));
                     break;
                 case BDConstants.BDNodeType.BDTable:
                     bodyHTML.Append(BuildBDTableHtml(pContext, pNode, footnotes, objectsOnPage, 1));
@@ -6390,6 +6410,15 @@ namespace BDEditor.Classes
                             html.Append(BuildBDTableHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
                         }
                         break;
+                    //case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic:
+                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogenGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                        foreach (IBDNode child in children)
+                        {
+                            html.Append(BuildBDPathogenGroupHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1, isFirstChild));
+                            isFirstChild = false;
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -6543,6 +6572,27 @@ namespace BDEditor.Classes
                     case BDConstants.LayoutVariantType.Dental_Prophylaxis:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         break;
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic:
+                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogenGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubtopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                        foreach (IBDNode child in children)
+                        {
+                            switch (child.NodeType)
+                            {
+                                case BDConstants.BDNodeType.BDSubtopic:
+                                    html.Append(BuildBDSubTopicHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
+                                    break;
+                                case BDConstants.BDNodeType.BDPathogenGroup:
+                                    html.Append(BuildBDPathogenGroupHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1, isFirstChild));
+                                    isFirstChild = false;
+                                    break;
+                            }
+                        }
+                        break;
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic:
+                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubtopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                        break;
+
                     default:
                         break;
                 }

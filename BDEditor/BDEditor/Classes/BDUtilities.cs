@@ -492,5 +492,29 @@ namespace BDEditor.Classes
                 }
             }
         }
+
+
+        public static string buildTextFromInlineNotes(List<BDLinkedNote> pNotes, List<Guid> pObjectsOnPage)
+        {
+            StringBuilder noteString = new StringBuilder();
+            if (null != pNotes)
+            {
+                foreach (BDLinkedNote note in pNotes)
+                {
+                    if ((null == note) || (note.documentText.Length <= BDHtmlPageGenerator.EMPTY_PARAGRAPH)) continue;
+
+                    string documentText = note.documentText;
+
+                    documentText = documentText.Replace("<p>", string.Empty);
+                    documentText = documentText.Replace("</p>", "<br>");
+
+                    if (documentText.EndsWith("<br>")) documentText = documentText.Substring(0, documentText.Length - 4);
+
+                    noteString.AppendFormat(" {0}", documentText);
+                    if (null != pObjectsOnPage) pObjectsOnPage.Add(note.Uuid);
+                }
+            }
+            return noteString.ToString();
+        }
     }
 }

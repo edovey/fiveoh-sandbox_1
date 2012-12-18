@@ -25,7 +25,7 @@ namespace BDEditor.Views
         private bool isSeedDataLoadAvailable = false;
         private string seedDataFileName = string.Empty;
         // enable & show move button when data move is required
-        private bool moveButtonVisible = false;
+        private bool moveButtonVisible = true;
 
         public BDEditView()
         {
@@ -2495,8 +2495,7 @@ namespace BDEditor.Views
             //BDUtilities.ResetLayoutVariantWithChildren(dataContext, vvC3C5, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic, true);
             //dataContext.SaveChanges();
             #endregion
-
-            #region v.1.6.36
+            #region v.1.6.37
             //// retrieve Adults > Recurrent Cystitis (Presentation); add 2 new Topics & move children under as requested. Reset them to Subtopic
             //BDNode r_cystitis = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("d427b03f-8fe2-45a6-ba9f-9d584aaf854d"));
             //r_cystitis.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic;
@@ -2593,6 +2592,45 @@ namespace BDEditor.Views
             //BDNode hap = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("49c1480c-78a0-4ce5-ac1a-daf74757d251"));
             //BDUtilities.ResetLayoutVariantWithChildren(dataContext, hap, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, true);
             //dataContext.SaveChanges();
+            #endregion
+
+            #region v.1.6.38
+            BDNode cardio = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("9a80eb9b-6438-48bd-901c-e258f29f4bf3"));
+            BDNode deviceRelated = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDDisease, Guid.NewGuid());
+            BDNode endocarditis = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("c0cf6533-c4c9-480b-ad85-c7d187672849"));
+            BDNode dr2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("3e59213d-8ba4-4a83-acda-edb66eb0a1fb"));
+            BDNode pValve = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDPresentation, Guid.NewGuid());
+            BDNode pvc1 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("12c6c370-b63b-4b3c-9dc1-5cb9fa988918"));
+            BDNode pvc2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("cbf0e055-db66-449f-9f49-0bdb0473f942"));
+
+            deviceRelated.Name = @"Cardiac device-related infections/endocarditis (CDRIE)";
+            deviceRelated.SetParent(cardio);
+            deviceRelated.DisplayOrder = 0;
+            deviceRelated.LayoutVariant = cardio.LayoutVariant;
+
+            dr2.SetParent(deviceRelated);
+
+            dataContext.SaveChanges();
+
+            pValve.Name = "Prosthetic Valve";
+            pValve.SetParent(endocarditis);
+            pValve.DisplayOrder = 2;
+            pValve.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation01;
+            dataContext.SaveChanges();
+
+            pvc1.SetParent(pValve);
+            pvc2.SetParent(pValve);
+            pvc1.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            pvc1.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            pvc2.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            pvc2.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            
+            dataContext.SaveChanges();
+            dataContext.Refresh(System.Data.Objects.RefreshMode.ClientWins, pValve);
+
+            BDUtilities.ResetLayoutVariantWithChildren(dataContext, pValve, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, true);
+            
+            dataContext.SaveChanges();
             #endregion
         }
 

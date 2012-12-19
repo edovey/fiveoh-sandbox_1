@@ -2641,16 +2641,16 @@ namespace BDEditor.Views
             BDHtmlPage htmlPage = null;
             BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
 
-            //Debug.WriteLine("-- A --");
-            //Debug.Indent();
-            //nodeUuid = Guid.Parse("793c1ab0-a93e-4511-90d7-a240d6d9c345");
-            //node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
-            //htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
-            //Debug.WriteLine(htmlPage.documentText);
-            //Debug.WriteLine("");
-            //Debug.WriteLine("HtmlPage Uuid= {0}", htmlPage.Uuid);
-            //Debug.WriteLine("");
-            //Debug.Unindent();
+            Debug.WriteLine("-- A --");
+            Debug.Indent();
+            nodeUuid = Guid.Parse("50f3bd8b-1b4c-4088-887a-b87a909fbe13");
+            node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
+            htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
+            Debug.WriteLine(htmlPage.documentText);
+            Debug.WriteLine("");
+            Debug.WriteLine("HtmlPage Uuid= {0}", htmlPage.Uuid);
+            Debug.WriteLine("");
+            Debug.Unindent();
 
             //Debug.WriteLine("-- B --");
             //Debug.Indent();
@@ -2680,11 +2680,11 @@ namespace BDEditor.Views
                 }
 
             }
-   */
+  
             Debug.WriteLine("-- DEBUG GENERATION --");
             List<BDNode> nodeList = new List<BDNode>();
             List<Guid> guidList = new List<Guid>();
-            guidList.Add(Guid.Parse("942b90b6-cfdb-4ce6-b018-36aa9bf9f602"));
+            guidList.Add(Guid.Parse("47c8bb45-6c68-43b8-83d0-c2ec3cd40b8c"));
             //guidList.Add(Guid.Parse("40d92304-3224-4af0-8371-bcc27edad7dd"));
             //guidList.Add(Guid.Parse("32ca6e75-3180-4706-a3a8-6835cdb9a0d3"));
             //guidList.Add(Guid.Parse("12c6c370-b63b-4b3c-9dc1-5cb9fa988918"));
@@ -2696,7 +2696,7 @@ namespace BDEditor.Views
 
             generator.Generate(dataContext, nodeList);
          
-
+ */
             Debug.WriteLine("-- Complete --");
         }
 

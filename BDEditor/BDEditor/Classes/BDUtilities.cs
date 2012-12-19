@@ -516,5 +516,19 @@ namespace BDEditor.Classes
             }
             return noteString.ToString();
         }
+
+        public static string buildTextFromNotes(List<BDLinkedNote> pNotes, List<Guid> pObjectsOnPage)
+        {
+            StringBuilder noteString = new StringBuilder();
+            foreach (BDLinkedNote note in pNotes)
+            {
+                if ((null == note) || (note.documentText.Length <= BDHtmlPageGenerator.EMPTY_PARAGRAPH)) continue;
+ 
+                noteString.Append(note.documentText);
+                pObjectsOnPage.Add(note.Uuid);
+
+            }
+            return noteString.ToString();
+        }
     }
 }

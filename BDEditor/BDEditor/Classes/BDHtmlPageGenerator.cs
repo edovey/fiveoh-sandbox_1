@@ -5151,6 +5151,7 @@ namespace BDEditor.Classes
             List<BDLinkedNote> inline = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.Inline);
             List<BDLinkedNote> marked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.MarkedComment);
             List<BDLinkedNote> unmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.UnmarkedComment);
+            List<BDLinkedNote> immediate = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.Immediate);
 
             //ks: added "New " prefix to permit the use of terms like "Table A" to appear in the name of a BDTable instance
             string namePlaceholderText = string.Format(@"New {0}", BDUtilities.GetEnumDescription(pNode.NodeType));
@@ -5167,31 +5168,33 @@ namespace BDEditor.Classes
 
             BDHtmlPage notePage = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.NodeType, marked, unmarked, pPropertyName);
 
-            pResolvedValue = string.Format("{0}{1}{2}", pPropertyValue.Trim(), footerMarker, BDUtilities.buildTextFromInlineNotes(inline, pObjectsOnPage));
+            string inlineOverviewText = BDUtilities.buildTextFromNotes(inline, pObjectsOnPage);
+            string immediateText = BDUtilities.buildTextFromInlineNotes(immediate, pObjectsOnPage);
+
+            pResolvedValue = string.Format("{0}{1}{2}", pPropertyValue.Trim(), footerMarker, immediateText);
 
             if (pHtmlTag.ToLower() == "td")
             {
                 if (notePage != null)
                 {
                     if (pPropertyValue.Length > 0)
-                        propertyHTML.AppendFormat(@"{1}<a href=""{0}"">{2}{3}</a>{4}{5}{6}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), footerMarker, BDUtilities.buildTextFromInlineNotes(inline, pObjectsOnPage), overviewHTML, endTag);
+                        propertyHTML.AppendFormat(@"{1}<a href=""{0}"">{2}{3}{4}</a>{5}{6}{7}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), immediateText, footerMarker, inlineOverviewText, overviewHTML, endTag);
                     else
                     {
-                        string inlineText = BDUtilities.buildTextFromInlineNotes(inline, pObjectsOnPage);
-                        if (inlineText.Length > 0)
+                        if (immediateText.Length > 0)
                         {
-                            pResolvedValue = string.Format(@"<a href=""{0}"">{1}</a>", notePage.Uuid.ToString().ToUpper(), inlineText);
+                            pResolvedValue = string.Format(@"<a href=""{0}"">{1}</a>", notePage.Uuid.ToString().ToUpper(), immediateText);
                         }
                         else
                         {
                             pResolvedValue = string.Format(@"<a href=""{0}"">See Comments.</a>", notePage.Uuid.ToString().ToUpper());
                         }
-                        propertyHTML.AppendFormat(@"{0}{1}{2}{3}", startTag, pResolvedValue, overviewHTML, endTag);
+                        propertyHTML.AppendFormat(@"{0}{1}{2}{3}{4}", startTag, pResolvedValue, inlineOverviewText, overviewHTML, endTag);
                     }
                 }
                 else
                 {
-                    propertyHTML.AppendFormat(@" {0}{1}{2}{3}", startTag, pResolvedValue, overviewHTML, endTag);
+                    propertyHTML.AppendFormat(@"{0}{1}{2}{3}{4}", startTag, pResolvedValue, inlineOverviewText, overviewHTML, endTag);
                 }
             }
             else
@@ -5199,25 +5202,26 @@ namespace BDEditor.Classes
                 if (notePage != null)
                 {
                     if (pPropertyValue.Length > 0)
-                        propertyHTML.AppendFormat(@"{1}<a href=""{0}"">{2}{3}</a>{4}{5}{6}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), footerMarker, BDUtilities.buildTextFromInlineNotes(inline, pObjectsOnPage), endTag, overviewHTML);
+                        propertyHTML.AppendFormat(@"{1}<a href=""{0}"">{2}{3}</a>{4}{5}{6}{7}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), footerMarker, immediateText, endTag, inlineOverviewText, overviewHTML);
                     else
                     {
-                        string inlineText = BDUtilities.buildTextFromInlineNotes(inline, pObjectsOnPage);
-                        if (inlineText.Length > 0)
+                        //string inlineOverviewText = BDUtilities.buildTextFromInlineNotes(inline, pObjectsOnPage);
+                        //string immediateText = BDUtilities.buildTextFromInlineNotes(immediate, pObjectsOnPage);
+                        if (immediateText.Length > 0)
                         {
-                            pResolvedValue = string.Format(@"<a href=""{0}""{1}</a>", notePage.Uuid.ToString().ToUpper(), inlineText);
+                            pResolvedValue = string.Format(@"<a href=""{0}""{1}</a>", notePage.Uuid.ToString().ToUpper(), immediateText);
                         }
                         else
                         {
                             pResolvedValue = string.Format(@"<a href=""{0}"">See Comments.</a>", notePage.Uuid.ToString().ToUpper());
                         }
                         
-                        propertyHTML.AppendFormat(@"{0}{1}{2}{3}", startTag, pResolvedValue, endTag, overviewHTML);
+                        propertyHTML.AppendFormat(@"{0}{1}{2}{3}{4}", startTag, pResolvedValue, endTag, inlineOverviewText, overviewHTML);
                     }
                 }
                 else
                 {
-                    propertyHTML.AppendFormat(@" {0}{1}{2}{3}", startTag, pResolvedValue, endTag, overviewHTML);
+                    propertyHTML.AppendFormat(@"{0}{1}{2}{3}{4}", startTag, pResolvedValue, endTag, inlineOverviewText, overviewHTML);
                 }
             }
 

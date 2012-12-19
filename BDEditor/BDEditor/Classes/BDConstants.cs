@@ -396,7 +396,7 @@ namespace BDEditor.Classes
 
         public enum LinkedNoteType
         {
-            [Description("Inline")]
+            [Description("Inline Overview")]
             Inline = 0,
             [Description("Unmarked Comment")]
             UnmarkedComment = 1,
@@ -414,6 +414,8 @@ namespace BDEditor.Classes
             ReferenceEndnote = 7,
             [Description("Legend")]
             Legend = 8,
+            [Description("Immediate Inline")]
+            Immediate = 9,
         }
 
         public enum TableCellAlignment

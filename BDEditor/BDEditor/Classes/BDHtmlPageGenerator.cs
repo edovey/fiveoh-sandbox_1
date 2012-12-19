@@ -24,7 +24,7 @@ namespace BDEditor.Classes
         private const string bottomHtml = @"</body></html>";
         private const string anchorTag = @"<p><a href=""{0}""><b>{1}</b></a></p>";
         public const int EMPTY_PARAGRAPH = 8;  // <p> </p>
-        private const string imgFileTag = "<img src=\"images/{0}{1}\" alt=\"\" width=\"300\" height=\"300\" />";
+        private const string imgFileTag = "<img src=\"images/{0}{1}\" alt=\"\" width=\"300\" height=\"456\" />";
         private const string paintChipTag = "<img class=\"paintChip\" src=\"{0}\" alt=\"\" />";
         private const string PAINT_CHIP_ANTIBIOTICS = "AntibioticYellow.png";
         private const string PAINT_CHIP_DENTISTRY = "DentistryPurple.png";
@@ -2512,7 +2512,7 @@ namespace BDEditor.Classes
                 List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
 
 
-                html.AppendFormat(@"<tr><td colspan={0}>{1}</td></tr>", pColumnCount, buildNodeWithReferenceAndOverviewHTML(pContext, pNode as BDNode, HtmlHeaderTagLevelString(pLevel + 1), pFootnotes, pObjectsOnPage));
+                html.AppendFormat(@"<tr><td colspan={0}>{1}</td></tr>", pColumnCount, buildNodeWithReferenceAndOverviewHTML(pContext, pNode as BDNode, "b", pFootnotes, pObjectsOnPage));
 
                 foreach (IBDNode child in children)
                 {
@@ -4961,7 +4961,7 @@ namespace BDEditor.Classes
             BDAttachment attachmentNode = pNode as BDAttachment;
 
             attHtml.AppendFormat(imgFileTag, attachmentNode.uuid.ToString().ToUpper(), attachmentNode.MimeFileExtension());
-
+            attHtml.Append(BuildBDLegendHtml(pContext, pNode, pObjectsOnPage));
             return attHtml.ToString();
         }
 

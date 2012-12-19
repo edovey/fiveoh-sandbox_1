@@ -268,7 +268,7 @@ namespace BDEditor.Classes
             else  // this is the main page of the app
             {
                 currentChapter = null;
-                pageHTML.Append("<table>");
+                pageHTML.AppendFormat(@"<table>");
                 foreach (BDHtmlPage childPage in pChildPages)
                 {
                     if (childPage != null)
@@ -302,7 +302,8 @@ namespace BDEditor.Classes
                                     break;
                             }
                             string paintChipHtml = string.Format(paintChipTag, paintChipFileName);
-                            pageHTML.Append("<table>");
+
+                            pageHTML.AppendFormat(@"<table class=""v{0}"">", (int)childNode.LayoutVariant);
                             pageHTML.AppendFormat(@"<tr class=""nav""><td>{0}</td><td><a href=""{1}""><b>{2}</b></a></td></tr>", paintChipHtml, childPage.Uuid.ToString().ToUpper(), childNode.Name);
                         }
                     }
@@ -902,7 +903,7 @@ namespace BDEditor.Classes
             if (childNodes.Count > 0)
             {
                 // start table html
-                bodyHTML.Append(@"<table><tr><th>Antimicrobial</th><th>Dosage Adjustment</th></tr>");
+                bodyHTML.AppendFormat(@"<table class=""v{0}""><tr><th>Antimicrobial</th><th>Dosage Adjustment</th></tr>", (int)pNode.layoutVariant);
                 foreach (IBDNode child in childNodes)
                 {
                     //child is antimicrobial with overview:  add a row
@@ -1121,8 +1122,8 @@ namespace BDEditor.Classes
                 colHtml.Add(buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[5], BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD05, footnotesOnPage, objectsOnPage));
                 colHtml.Add(buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[6], BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD06, footnotesOnPage, objectsOnPage));
                 colHtml.Add(buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[7], BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD07, footnotesOnPage, objectsOnPage));
-                
-                bodyHTML.Append("<table><tr>");
+
+                bodyHTML.AppendFormat(@"<table class=""v{0}""><tr>", (int)pNode.LayoutVariant);
                 for (int i = 0; i < colHtml.Count; i++)
                     bodyHTML.AppendFormat("<th>{0}</th>", colHtml[i]);
                 bodyHTML.Append("</tr>");
@@ -1179,8 +1180,8 @@ namespace BDEditor.Classes
                 columnHtml.Add(buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[0], BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_THERAPY, footnotesOnPage, objectsOnPage));
                 columnHtml.Add(buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[1], BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, footnotesOnPage, objectsOnPage));
                 columnHtml.Add(buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[2], BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE_1, footnotesOnPage, objectsOnPage));
-                
-                bodyHTML.Append("<table><tr>");
+
+                bodyHTML.AppendFormat(@"<table class=""v{0}""><tr>", (int)table.LayoutVariant);
 
                 for (int i = 0; i < metadataLayoutColumns.Count; i++)
                     bodyHTML.AppendFormat("<th>{0}</th>", columnHtml[i]);
@@ -1436,7 +1437,7 @@ namespace BDEditor.Classes
             List<BDTherapy> therapies = BDTherapy.RetrieveTherapiesForParentId(pContext, pTherapyGroup.Uuid);
             if (therapies.Count > 0)
             {
-                therapyGroupHtml.Append(@"<table>");
+                therapyGroupHtml.AppendFormat(@"<table class=""v{0}"">", (int)pTherapyGroup.LayoutVariant);
 
                 StringBuilder therapyHTML = new StringBuilder();
                 resetGlobalVariablesForTherapies();
@@ -1581,7 +1582,7 @@ namespace BDEditor.Classes
                             List<BDTherapy> therapies = BDTherapy.RetrieveTherapiesForParentId(pContext, child.Uuid);
                             if (therapies.Count > 0)
                             {
-                                html.Append(@"<table>");
+                                html.AppendFormat(@"<table class=""v{0}"">", (int)child.LayoutVariant);
 
                                 resetGlobalVariablesForTherapies();
                                 StringBuilder therapyHTML = new StringBuilder();
@@ -1851,7 +1852,7 @@ namespace BDEditor.Classes
                             List<BDTherapy> therapies = BDTherapy.RetrieveTherapiesForParentId(pContext, child.Uuid);
                             if (therapies.Count > 0)
                             {
-                                html.Append(@"<table>");
+                                html.AppendFormat(@"<table class=""v{0}"">", (int)child.LayoutVariant);
 
                                 resetGlobalVariablesForTherapies();
                                 StringBuilder therapyHTML = new StringBuilder();
@@ -1915,7 +1916,7 @@ namespace BDEditor.Classes
                             List<BDTherapy> therapies = BDTherapy.RetrieveTherapiesForParentId(pContext, child.Uuid);
                             if (therapies.Count > 0)
                             {
-                                html.Append(@"<table>");
+                                html.AppendFormat(@"<table class=""v{0}"">", (int)child.LayoutVariant);
 
                                 resetGlobalVariablesForTherapies();
                                 StringBuilder therapyHTML = new StringBuilder();
@@ -2320,7 +2321,7 @@ namespace BDEditor.Classes
                         //List<IBDNode> conditions = BDFabrik.GetChildrenForParent(pContext, pNode);
                         if (children.Count > 0)
                         {
-                            html.Append("<table><tr><th>Condition</th><th>Other Potential Pathogens</th></tr>");
+                            html.AppendFormat(@"<table class=""v{0}""><tr><th>Condition</th><th>Other Potential Pathogens</th></tr>", (int)pNode.LayoutVariant);
                             foreach (IBDNode child in children)
                             {
                                 html.AppendFormat(@"<tr><td>{0}</td><td>", child.Name);
@@ -2366,7 +2367,7 @@ namespace BDEditor.Classes
                         int columnCount = BDFabrik.GetTableColumnCount(pNode.LayoutVariant);
                         if (children.Count > 0)
                         {
-                            html.Append(@"<table>");
+                            html.AppendFormat(@"<table class=""v{0}"">", (int)pNode.LayoutVariant);
                             foreach (IBDNode child in children)
                             {
                                 switch (child.NodeType)
@@ -2400,7 +2401,7 @@ namespace BDEditor.Classes
                         {
                             html.AppendFormat(@"<{0}>SOURCE:  {1}</{0}>", HtmlHeaderTagLevelString(pLevel + 3), retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Name_fieldNote", BDConfiguredEntry.PROPERTYNAME_NAME, pObjectsOnPage, true, pFootnotes));
                             html.AppendFormat(@"<{0}>{1} {2}</{0}>", HtmlHeaderTagLevelString(pLevel + 3), c5Html, c1Html);
-                            html.AppendFormat("<table><tr><th>{0}</th><th>{1}</th><th>{2}</th></tr>", c2Html, c3Html, c4Html);
+                            html.AppendFormat(@"<table class=""v{3}""><tr><th>{0}</th><th>{1}</th><th>{2}</th></tr>", c2Html, c3Html, c4Html, (int)entry.LayoutVariant);
                             html.AppendFormat("<tr><td>{0}{1}</td><td>{2}{3}</td><td>{4}{5}</td></tr>",
                                 retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field01_fieldNote", BDConfiguredEntry.PROPERTYNAME_FIELD01, pObjectsOnPage, true, pFootnotes),
                                 buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, entry.Uuid, BDConfiguredEntry.PROPERTYNAME_FIELD01, BDConstants.LinkedNoteType.Footnote), true, pFootnotes, pObjectsOnPage),
@@ -2427,7 +2428,7 @@ namespace BDEditor.Classes
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDConfiguredEntry, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         if (null != metadataLayoutColumns)
                         {
-                            html.Append("<table><tr>");
+                            html.AppendFormat(@"<table class=""v{0}""><tr>", (int)pNode.LayoutVariant);
                             foreach (BDLayoutMetadataColumn metadataColumn in metadataLayoutColumns)
                                 html.AppendFormat("<th>{0}</th>", buildHtmlForMetadataColumn(pContext, pNode, metadataColumn, BDConstants.BDNodeType.BDConfiguredEntry, pFootnotes, pObjectsOnPage));
                             html.Append("</tr>");
@@ -2593,7 +2594,7 @@ namespace BDEditor.Classes
                                 string title = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[idx], BDConstants.BDNodeType.BDConfiguredEntry, propertyName, pFootnotes, pObjectsOnPage);
                                 string content = retrieveNoteTextForConfiguredEntryField(pContext, pNode.Uuid, BDConfiguredEntry.FieldNotePropertyNameForIndex(idx), pObjectsOnPage, pFootnotes);
                                 html.AppendFormat("<{0}>{1}</{0}>",HtmlHeaderTagLevelString(pLevel + 2), title );
-                                html.Append("<table>");
+                                html.AppendFormat(@"<table class=""v{0}"">", (int)pNode.LayoutVariant);
                                 html.AppendFormat("<tr><td>{0}<td></tr>", content);
                                 html.Append("</table>");
                             }                        
@@ -2647,7 +2648,7 @@ namespace BDEditor.Classes
                     //html.AppendFormat("<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel), combinedEntry.Name);
 
                     //NOTE: This expects that a matching number of columns have been defined
-                    html.Append("<table><tr><th></th>"); // insert a blank column header: Combined Entries layout columns, by definition, are offset by 1
+                    html.AppendFormat(@"<table class=""v{0}""><tr><th></th>", (int)pNode.LayoutVariant); // insert a blank column header: Combined Entries layout columns, by definition, are offset by 1
                     for (int i = 0; i < metadataLayoutColumns.Count; i++)
                         html.AppendFormat("<th>{0}</th>", metadataLayoutColumns[i]);
                     html.Append("</tr>");
@@ -2831,7 +2832,7 @@ namespace BDEditor.Classes
                             {
                                 StringBuilder adultDosageHTML = new StringBuilder();
                                 StringBuilder pedsDosageHTML = new StringBuilder();
-                                html.Append(@"<table>");
+                                html.AppendFormat(@"<table class=""v{0}"">", surgeryClassification.LayoutVariant);
                                 html.AppendFormat(@"<tr><th>{0}</th><th>{1}</th></tr>", c2Html, c3Html);
                                 foreach (IBDNode therapyGroup in therapyGroups)
                                 {
@@ -2966,7 +2967,7 @@ namespace BDEditor.Classes
                             columnHtml601.Add(buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[0], BDConstants.BDNodeType.BDSubcategory, BDNode.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage));
                             columnHtml601.Add(buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[1], BDConstants.BDNodeType.BDMicroorganism, BDNode.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage));
 
-                            html.Append("<table><tr>");
+                            html.AppendFormat(@"<table class=""v{0}""><tr>", (int)pNode.LayoutVariant);
                             for (int i = 0; i < columnHtml601.Count; i++)
                                 html.AppendFormat("<th>{0}</th>", columnHtml601[i]);
                             html.Append("</tr>");
@@ -2990,7 +2991,7 @@ namespace BDEditor.Classes
 
                     case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
 
-                        html.Append("<table><tr><th>Excellent Penetration</th><th>Good Penetration</th><th>Poor Penetration</th></tr>");
+                        html.AppendFormat(@"<table class=""v{0}""><tr><th>Excellent Penetration</th><th>Good Penetration</th><th>Poor Penetration</th></tr>", (int)pNode.LayoutVariant);
                         if (children.Count > 0)
                         {
                             html.Append(@"<tr>");
@@ -3083,7 +3084,8 @@ namespace BDEditor.Classes
                         if (children.Count > 0)
                         {
                             // start table html
-                            html.Append(@"<table><tr><th>Antimicrobial</th><th>Dosage Adjustment</th></tr>");
+
+                            html.AppendFormat(@"<table class=""v{0}""><tr><th>Antimicrobial</th><th>Dosage Adjustment</th></tr>", (int)pNode.LayoutVariant);
                             foreach (IBDNode child in children)
                             {
                                 //child is antimicrobial with overview:  add a row
@@ -3225,7 +3227,7 @@ namespace BDEditor.Classes
                         columnHtml.Add(buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[0], BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_THERAPY, pFootnotes, pObjectsOnPage));
                         columnHtml.Add(buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[1], BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, pFootnotes, pObjectsOnPage));
 
-                        html.Append("<table><tr>");
+                        html.AppendFormat(@"<table class=""v{0}""><tr>", (int)pNode.LayoutVariant);
                         for (int i = 0; i < metadataLayoutColumns.Count; i++)
                             html.AppendFormat("<th>{0}</th>", columnHtml[i]);
                         html.Append("</tr>");
@@ -3458,7 +3460,7 @@ namespace BDEditor.Classes
                             mHTML.AppendFormat("<{0}>{1}</{0}>{2}", HtmlHeaderTagLevelString(pLevel + 3), columnHtml[0], p.infectiveMaterial);
                             mHTML.AppendFormat("<{0}>{1}</{0}>{2}", HtmlHeaderTagLevelString(pLevel + 3), columnHtml[1], p.modeOfTransmission);
                             // build table
-                            mHTML.AppendFormat("<table><tr><th>{0}</th><th>Acute Care</th><th>Long Term Care</th></tr>", precautionTitle);
+                            mHTML.AppendFormat(@"<table class=""v{0}""><tr><th>{1}</th><th>Acute Care</th><th>Long Term Care</th></tr>",(int)precaution.LayoutVariant, precautionTitle);
                             mHTML.AppendFormat("<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>", columnHtml[2], p.singleRoomAcute, p.singleRoomLongTerm);
                             mHTML.AppendFormat("<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>", columnHtml[3], p.glovesAcute, p.glovesLongTerm);
                             mHTML.AppendFormat("<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>", columnHtml[4], p.gownsAcute, p.gownsLongTerm);
@@ -3538,8 +3540,8 @@ namespace BDEditor.Classes
                             therapyGroupHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child, HtmlHeaderTagLevelString(pLevel + 1), pFootnotes, pObjectsOnPage));
                             // the complexity of the column headers cannot be handled in the standard methods so the text is built manually
                             string subtext = "given 30-60 minutes before the procedure";
-                            therapyHTML.AppendFormat("<table><tr><th>{0}</th><th><b>{1}</b> {2}<b>/ROUTE</b></th><th><b>{3}</b> {4}<b>/ROUTE</b></th></tr>",
-                                c2Html, c3Html, subtext, c4Html, subtext);
+                            therapyHTML.AppendFormat(@"<table class=""v{5}""><tr><th>{0}</th><th><b>{1}</b> {2}<b>/ROUTE</b></th><th><b>{3}</b> {4}<b>/ROUTE</b></th></tr>",
+                                c2Html, c3Html, subtext, c4Html, subtext, (int)child.LayoutVariant);
                             therapyHTML.Append(@"<tr><th colspan=3>Dental, Oral, Respiratory Tract Procedures</td></tr>");
                             foreach (IBDNode t in therapies)
                             {
@@ -3799,7 +3801,7 @@ namespace BDEditor.Classes
                             string c2Html = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[1], BDConstants.BDNodeType.BDDosage, BDDosage.PROPERTYNAME_DOSAGE, pFootnotes, pObjectsOnPage);
                             string c3Html = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[2], BDConstants.BDNodeType.BDDosage, BDDosage.PROPERTYNAME_COST, pFootnotes, pObjectsOnPage);
 
-                            html.AppendFormat(@"<table><tr><th>{0}</th><th>{1}</th><th>{2}</th></tr>", c1Html, c2Html, c3Html);
+                            html.AppendFormat(@"<table class=""v{3}""><tr><th>{0}</th><th>{1}</th><th>{2}</th></tr>", c1Html, c2Html, c3Html, (int)pNode.LayoutVariant);
                             foreach (IBDNode child in children)
                             {
                                 html.Append(BuildBDAntimicrobialHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
@@ -3815,7 +3817,7 @@ namespace BDEditor.Classes
 
                     case BDConstants.LayoutVariantType.TreatmentRecommendation17_Pneumonia:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I, BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II }));
-                        html.Append(@"<table>");
+                        html.AppendFormat(@"<table class=""v{0}"">", (int)pNode.LayoutVariant);
                         foreach (IBDNode child in children) //tables
                         {
                             switch (child.LayoutVariant)
@@ -4174,7 +4176,7 @@ namespace BDEditor.Classes
 
                                 // handle configured entry for Amantadine with No renal impairment
                                 //html.AppendFormat("</table><{0}>Renal Impairment</{0}><table>", HtmlHeaderTagLevelString(pLevel + 1));
-                                html.AppendFormat("<table>");
+                                html.AppendFormat(@"<table class=""v{0}"">", (int)child.LayoutVariant);
                                 html.AppendFormat("<tr><th rowspan=2>{0}</th><th colspan=2>Dosage with capsules</th><th>Daily dosage with solution (10mg/mL)</th></tr>", metadataLayoutColumns[0]);
                                 html.AppendFormat("<tr><th>{0}</th><th>{1}</th><th>{2}</th></tr>", c1Html, c2Html, c3Html);
                             }
@@ -4208,7 +4210,7 @@ namespace BDEditor.Classes
                                     if (!tableOpen)
                                     {
                                         List<BDLayoutMetadataColumn> metadataLayoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, child.LayoutVariant);
-                                        html.Append("<table><tr>");
+                                        html.AppendFormat(@"<table class=""v{0}""><tr>", (int)child.LayoutVariant);
                                         foreach (BDLayoutMetadataColumn metadataColumn in metadataLayoutColumns)
                                             html.AppendFormat("<th>{0}</th>", buildHtmlForMetadataColumn(pContext, pNode, metadataColumn, BDConstants.BDNodeType.BDConfiguredEntry, pFootnotes, pObjectsOnPage));
                                         html.Append("</tr>");
@@ -4978,8 +4980,8 @@ namespace BDEditor.Classes
                 columnHtml.Add(buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[0], BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_NAME, pFootnotesOnPage, pObjectsOnPage));
                 columnHtml.Add(buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[1], BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD01, pFootnotesOnPage, pObjectsOnPage));
                 columnHtml.Add(buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[2], BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD02, pFootnotesOnPage, pObjectsOnPage));
-                
-                bodyHTML.Append("<table><tr>");
+
+                bodyHTML.AppendFormat(@"<table class=""v{0}""><tr>", (int)pNode.LayoutVariant);
                 for (int i = 0; i < metadataLayoutColumns.Count; i++)
                     bodyHTML.AppendFormat("<th>{0}</th>", columnHtml[i]);
                 bodyHTML.Append("</tr>");

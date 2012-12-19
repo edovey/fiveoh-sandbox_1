@@ -8032,7 +8032,7 @@ namespace BDEditor.Classes
             //    currentChapter = BDFabrik.RetrieveNode(pContext, index.chapterId);
             //else
             //    currentChapter = null;
-
+            BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkToSelfLog.txt", string.Format("---------"));
             string compareString = @"<a href=";
             StringBuilder newString = new StringBuilder();
             if (pPage.documentText.Contains(compareString))
@@ -8085,6 +8085,11 @@ namespace BDEditor.Classes
                                             string newText = pPage.documentText.Replace(anchorGuid.ToString(), htmlPageId.ToString().ToUpper());
                                             pPage.documentText = newText;
                                             BDHtmlPage.Save(pContext, pPage);
+
+                                            if (htmlPageId == pPage.Uuid)
+                                            {
+                                                BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkToSelfLog.txt", string.Format("{0}\tHtml page Uuid {1}\tObjId={2}\tTitle={3}", DateTime.Now, pPage.Uuid, pPage.displayParentId, pPage.pageTitle));
+                                            }
                                         }
                                         else // if this is an internal link there should be a page for it
                                         {

@@ -3820,6 +3820,8 @@ namespace BDEditor.Classes
                         html.AppendFormat(@"<table class=""v{0}"">", (int)pNode.LayoutVariant);
                         foreach (IBDNode child in children) //tables
                         {
+                            pObjectsOnPage.Add(child.Uuid);
+
                             switch (child.LayoutVariant)
                             {
                                 case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:

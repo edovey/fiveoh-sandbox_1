@@ -85,6 +85,7 @@ namespace BDEditor.Classes
             List<Guid> displayParentIds = BDHtmlPage.RetrieveAllDisplayParentIDs(pContext);
             List<Guid> pageIds = BDHtmlPage.RetrieveAllIds(pContext);
             BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditPageMap.txt", "----------------------");
+            BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkToSelfLog.txt", "---------");
             foreach (BDHtmlPageMap pageMap in pagesMap)
             {
                 BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditPageMap.txt", string.Format("{0}\t{1}", pageMap.OriginalIBDObjectId, pageMap.HtmlPageId));
@@ -769,6 +770,10 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDTopic:
                     switch (pNode.LayoutVariant)
                     {
+                            case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
+                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
+                            isPageGenerated = true;
+                            break;
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines_Spectrum:
                             currentPageMasterObject = pNode;
                             nodeChildPages.Add(generatePageForAntibioticsClinicalGuidelinesSpectrum(pContext, pNode as BDNode));
@@ -5155,6 +5160,30 @@ namespace BDEditor.Classes
             List<BDLinkedNote> unmarked = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.UnmarkedComment);
             List<BDLinkedNote> immediate = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.Immediate);
 
+
+            #region BF Hack that makes me grumpy
+
+            // Antibiotics > Antimicrobial Spectrum of Activity > Antimicrobials | Antifungals > {Antimicrobial} > topic {Predictable | Unpredictable | no/Insufficient Activity
+
+            // Layout must be created for layout Antibiotics_ClinicalGuidelines with at least 3 columns in order of the expected order of Pred, Unpred, Insuff.
+            // Column names must have associated Marked Comment Notes that will be attached to existing marked comments here.
+
+            // Required: pNode Display order = [0..2] corresponding to layout column order
+            if ((pNode.LayoutVariant == BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines) && (pNode.NodeType == BDConstants.BDNodeType.BDTopic) && (pNode.ParentType == BDConstants.BDNodeType.BDAntimicrobial))
+            {
+                List<BDLayoutMetadataColumn> legendList = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines);
+                if ((null != legendList) && (legendList.Count >= 3))
+                {
+                    BDLayoutMetadataColumn column = legendList[pNode.DisplayOrder.Value];
+                    List<BDLinkedNote> legendMarkedList = retrieveNotesForLayoutColumn(pContext, column, BDConstants.LinkedNoteType.MarkedComment);
+                    marked.AddRange(legendMarkedList);
+                }
+            }
+
+            #endregion
+
+
+
             //ks: added "New " prefix to permit the use of terms like "Table A" to appear in the name of a BDTable instance
             string namePlaceholderText = string.Format(@"New {0}", BDUtilities.GetEnumDescription(pNode.NodeType));
             if (pPropertyValue.Contains(namePlaceholderText) || pPropertyValue == "SINGLE PRESENTATION")
@@ -5376,7 +5405,6 @@ namespace BDEditor.Classes
             //    currentChapter = BDFabrik.RetrieveNode(pContext, index.chapterId);
             //else
             //    currentChapter = null;
-            BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkToSelfLog.txt", string.Format("---------"));
             string compareString = @"<a href=";
             StringBuilder newString = new StringBuilder();
             if (pPage.documentText.Contains(compareString))

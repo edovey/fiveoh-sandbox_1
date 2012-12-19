@@ -437,7 +437,16 @@ namespace BDEditor.Views
             if (null != internalLinkNodeId)
             {
                 IBDNode node = BDFabrik.RetrieveNode(dataContext, internalLinkNodeType, internalLinkNodeId);
-                lblInternalLinkDescription.Text = node.ToString();
+                if (null != node)
+                {
+                    lblInternalLinkDescription.Text = node.ToString();
+                    lblInternalLinkDescription.ForeColor = Color.Black;
+                }
+                else
+                {
+                    lblInternalLinkDescription.Text = @"Target is no longer valid: Has it been deleted?";
+                    lblInternalLinkDescription.ForeColor = Color.Red;
+                }
             }
         }
     }

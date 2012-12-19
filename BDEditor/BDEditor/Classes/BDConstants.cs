@@ -128,6 +128,8 @@ namespace BDEditor.Classes
             TreatmentRecommendation01_Gastroenteritis = 10141,
             [Description("Treatment Recommendation Gastroenteritis Culture Directed")]
             TreatmentRecommendation01_Gastroenteritis_CultureDirected = 101412,
+            [Description("Treatment Recommendation CNS Meningitis Table")]
+            TreatmentRecommendation01_CNS_Meningitis_Table = 101500,
 
             [Description("Wound Management")]
             TreatmentRecommendation02_WoundMgmt = 102, // table 1 - wound management

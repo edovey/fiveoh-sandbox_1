@@ -779,6 +779,10 @@ namespace BDEditor.Classes
                             nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
                             break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01_CNS_Meningitis_Table:
+                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
+                            isPageGenerated = true;
+                            break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                             currentPageMasterObject = pNode;
                             nodeChildPages.Add(generatePageForEmpiricTherapyOfFungalInfections(pContext, pNode));
@@ -6888,6 +6892,33 @@ namespace BDEditor.Classes
                         }
                         html.Append("</table>");
                         
+                        break;
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation01_CNS_Meningitis_Table:
+                        bool tableOpen = false;
+                        foreach (IBDNode child in children)
+                        {
+                            switch (child.NodeType)
+                            {
+                                case BDConstants.BDNodeType.BDConfiguredEntry:
+                                    if (!tableOpen)
+                                    {
+                                        List<BDLayoutMetadataColumn> metadataLayoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, child.LayoutVariant);
+                                        html.Append("<table><tr>");
+                                        foreach (BDLayoutMetadataColumn metadataColumn in metadataLayoutColumns)
+                                            html.AppendFormat("<th>{0}</th>", buildHtmlForMetadataColumn(pContext, pNode, metadataColumn, BDConstants.BDNodeType.BDConfiguredEntry, pFootnotes, pObjectsOnPage));
+                                        html.Append("</tr>");
+                                    }
+                                    tableOpen = true;
+                                    html.Append(BuildBDConfiguredEntryHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1, false, false));
+                                    break;
+                                case BDConstants.BDNodeType.BDSubtopic:
+                                    if (tableOpen) html.Append("</table>");
+                                    tableOpen = false;
+                                    html.Append(BuildBDSubTopicHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
+                                    break;
+                            }
+                        }
+                        if (tableOpen) html.Append("</table>");
                         break;
                     case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:

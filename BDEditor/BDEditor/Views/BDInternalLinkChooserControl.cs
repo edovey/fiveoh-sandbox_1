@@ -161,6 +161,10 @@ namespace BDEditor.Views
                                 if (!pInterrogateOnly)
                                     showChildControls = true;
                                 break;
+                            //case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
+                            //    if (!pInterrogateOnly)
+                            //        showChildControls = true;
+                            //    break;
                             default:
                                 if (!pInterrogateOnly)
                                 {
@@ -339,6 +343,7 @@ namespace BDEditor.Views
                         switch (node.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
+                            case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
                                 if (!pInterrogateOnly)
                                 {
                                     showChildControls = false;

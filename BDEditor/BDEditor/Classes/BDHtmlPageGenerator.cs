@@ -2244,7 +2244,7 @@ namespace BDEditor.Classes
                 case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
                     BDAntimicrobialRisk risk = pNode as BDAntimicrobialRisk;
                     html.AppendFormat("<b>{0}</b>: {1}", columnHtml[0], buildNodePropertyHTML(pContext, risk, risk.riskFactor, BDAntimicrobialRisk.PROPERTYNAME_PREGNANCYRISK, pFootnotes, pObjectsOnPage));
-                    html.AppendFormat("<p><b>{0}</b>: {1}</p>", columnHtml[1], buildNodePropertyHTML(pContext, risk, risk.relativeInfantDose, BDAntimicrobialRisk.PROPERTYNAME_RECOMMENDATION, pFootnotes, pObjectsOnPage));
+                    html.AppendFormat("<p><b>{0}</b>: {1}</p>", columnHtml[1], buildNodePropertyHTML(pContext, risk, risk.recommendations, BDAntimicrobialRisk.PROPERTYNAME_RECOMMENDATION, pFootnotes, pObjectsOnPage));
                     break;
                 case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
                     BDAntimicrobialRisk lRisk = pNode as BDAntimicrobialRisk;

@@ -3800,6 +3800,9 @@ namespace BDEditor.Classes
                     case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Paediatric:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAntimicrobial, new BDConstants.LayoutVariantType[] { layoutVariant }));
 
+                        IBDNode parentNode = BDFabrik.RetrieveNode(pContext, pNode.ParentId);
+                        string parentLegendHtml = BuildBDLegendHtml(pContext, parentNode, pObjectsOnPage);
+
                         if (children.Count > 0)
                         {
                             string c1Html = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[0], BDConstants.BDNodeType.BDAntimicrobial, BDNode.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage);
@@ -3814,6 +3817,9 @@ namespace BDEditor.Classes
 
                             html.Append(@"</table>");
                         }
+
+                        html.Append(parentLegendHtml);
+
                         break;
 
                     case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:

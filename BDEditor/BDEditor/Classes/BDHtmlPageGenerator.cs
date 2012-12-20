@@ -1287,7 +1287,10 @@ namespace BDEditor.Classes
             BDHtmlPage resultPage = null;
             foreach (BDHtmlPage page in columnHtmlPages)
                 if (page.documentText.Contains(noteHtml.ToString()))
+                {
                     resultPage = page;
+                    break;
+                }
 
             if (noteHtml.ToString().Length > EMPTY_PARAGRAPH && resultPage == null)
             {
@@ -5361,8 +5364,11 @@ namespace BDEditor.Classes
         private void processTextForCarriageReturn(Entities pContext, BDHtmlPage pPage)
         {
             string pageText = pPage.documentText;
-            pageText.Replace("\n", "<br>");
-            BDHtmlPage.Save(pContext, pPage);
+            if (pageText.Contains("\n"))
+            {
+                pageText.Replace("\n", "<br>");
+                BDHtmlPage.Save(pContext, pPage);
+            }
         }
 
         private void processTextForSubscriptAndSuperscriptMarkup(Entities pContext, BDHtmlPage pPage)
@@ -5377,6 +5383,7 @@ namespace BDEditor.Classes
             string htmlSubscriptEnd = @"</sub>";
 
             string newText = pPage.documentText;
+            bool hasChanges = false;
 
             // do subscripts first because of double braces
             while (newText.Contains(subscriptStart))
@@ -5387,6 +5394,7 @@ namespace BDEditor.Classes
                 int tEndIndex = newText.IndexOf(subscriptEnd, tStartIndex);
                 newText = newText.Remove(tEndIndex, subscriptEnd.Length);
                 newText = newText.Insert(tEndIndex, htmlSubscriptEnd);
+                hasChanges = true;
             }
 
             while (newText.Contains(superscriptStart))
@@ -5397,10 +5405,14 @@ namespace BDEditor.Classes
                 int tEndIndex = newText.IndexOf(superscriptEnd, tStartIndex);
                 newText = newText.Remove(tEndIndex, superscriptEnd.Length);
                 newText = newText.Insert(tEndIndex, htmlSuperscriptEnd);
+                hasChanges = true;
             }
 
-            pPage.documentText = newText;
-            BDHtmlPage.Save(pContext, pPage);
+            if (hasChanges)
+            {
+                pPage.documentText = newText;
+                BDHtmlPage.Save(pContext, pPage);
+            }
         }
 
         private void processTextForInternalLinks(Entities pContext, BDHtmlPage pPage, List<Guid> pRespresentedNodes, List<Guid> pExistingPages)
@@ -5747,7 +5759,12 @@ namespace BDEditor.Classes
 
             Guid chapterId = (currentChapter == null) ? Guid.Empty : currentChapter.Uuid;
 
-            BDNodeToHtmlPageIndex indexEntry = BDNodeToHtmlPageIndex.RetrieveOrCreateForIBDNodeId(pContext, pLayoutColumn.Uuid, pPageType, chapterId, null);
+            string pseudoPropertyName = null;
+            if (pLayoutColumn.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation01)
+            {
+                pseudoPropertyName = (overrideType == OverrideType.Paediatric) ? "Paediatric" : "Adult";
+            }
+            BDNodeToHtmlPageIndex indexEntry = BDNodeToHtmlPageIndex.RetrieveOrCreateForIBDNodeId(pContext, pLayoutColumn.Uuid, pPageType, chapterId, pseudoPropertyName);
 
             BDHtmlPage newPage = null;
             if (indexEntry != null)

@@ -3916,39 +3916,58 @@ namespace BDEditor.Classes
                         break;
                     case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
                         // child is BDAntimicrobialGroup: write a page for the child and add it as a link to this page
-                        List<Guid> childObjects = new List<Guid>();
-                        List<BDLinkedNote> childFootnotes = new List<BDLinkedNote>();
+                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAntimicrobial, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAntimicrobialGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
+
+                        //List<Guid> childObjects = new List<Guid>();
+                        //List<BDLinkedNote> childFootnotes = new List<BDLinkedNote>();
                         List<BDHtmlPage> childPages = new List<BDHtmlPage>();
                         foreach (IBDNode child in children)
                         {
+                            List<Guid> childObjects = new List<Guid>();
+                            List<BDLinkedNote> childFootnotes = new List<BDLinkedNote>();
+
                             string childName = child.Name;
                             string namePlaceholderText = string.Format(@"New {0}", BDUtilities.GetEnumDescription(child.NodeType));
                             if (childName.Contains(namePlaceholderText))
                                 childName = string.Empty;
 
-                            if (!string.IsNullOrEmpty(childName))
+                            switch (child.NodeType)
                             {
-                                // create a page and add to collection
-                                string agHtml = BuildBDAntimicrobialGroupHtmlAndPage(pContext, child, childFootnotes, childObjects, pLevel);
-                                currentPageMasterObject = child;
-                                childPages.Add(writeBDHtmlPage(pContext, child, agHtml, BDConstants.BDHtmlPageType.Navigation, childFootnotes, childObjects, null));
-                            }
-                            else // antimicrobial group name is empty - move to next layer and build pages + links
-                            {
-                                List<IBDNode> grandchildren = BDFabrik.GetChildrenForParent(pContext, child);
-                                List<Guid> gcObjects = new List<Guid>();
-                                List<BDLinkedNote> gcFootnotes = new List<BDLinkedNote>();
-                                foreach (IBDNode gChild in grandchildren)
-                                {
-                                    if (!string.IsNullOrEmpty(gChild.Name))
+                                case BDConstants.BDNodeType.BDAntimicrobial:
+                                   
+                                    // create a page and add to collection
+                                    string childHtml = BuildBDAntimicrobialHtml(pContext, child, childFootnotes, childObjects, pLevel);
+                                    currentPageMasterObject = child;
+                                    childPages.Add(writeBDHtmlPage(pContext, child, childHtml, BDConstants.BDHtmlPageType.Navigation, childFootnotes, childObjects, null));
+
+                                    break;
+                                case BDConstants.BDNodeType.BDAntimicrobialGroup:
+                                    if (!string.IsNullOrEmpty(childName))
                                     {
                                         // create a page and add to collection
-                                        string gcHtml = BuildBDAntimicrobialHtml(pContext, gChild, gcFootnotes, gcObjects, pLevel);
-                                        currentPageMasterObject = gChild;
-                                        childPages.Add(writeBDHtmlPage(pContext, gChild, gcHtml, BDConstants.BDHtmlPageType.Navigation, gcFootnotes, gcObjects, null));
+                                        string agHtml = BuildBDAntimicrobialGroupHtmlAndPage(pContext, child, childFootnotes, childObjects, pLevel);
+                                        currentPageMasterObject = child;
+                                        childPages.Add(writeBDHtmlPage(pContext, child, agHtml, BDConstants.BDHtmlPageType.Navigation, childFootnotes, childObjects, null));
                                     }
-                                }
-                            }
+                                    else // antimicrobial group name is empty - move to next layer and build pages + links
+                                    {
+                                        List<IBDNode> grandchildren = BDFabrik.GetChildrenForParent(pContext, child);
+                                        List<Guid> gcObjects = new List<Guid>();
+                                        List<BDLinkedNote> gcFootnotes = new List<BDLinkedNote>();
+                                        foreach (IBDNode gChild in grandchildren)
+                                        {
+                                            if (!string.IsNullOrEmpty(gChild.Name))
+                                            {
+                                                // create a page and add to collection
+                                                string gcHtml = BuildBDAntimicrobialHtml(pContext, gChild, gcFootnotes, gcObjects, pLevel);
+                                                currentPageMasterObject = gChild;
+                                                childPages.Add(writeBDHtmlPage(pContext, gChild, gcHtml, BDConstants.BDHtmlPageType.Navigation, gcFootnotes, gcObjects, null));
+                                            }
+                                        }
+                                    }
+                                    break;
+                            }   
                         }
                         for (int i = 0; i < childPages.Count; i++)
                         {

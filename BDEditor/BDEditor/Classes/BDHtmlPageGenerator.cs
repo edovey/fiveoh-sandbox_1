@@ -2172,7 +2172,7 @@ namespace BDEditor.Classes
             StringBuilder html = new StringBuilder();
 
             html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
-                        bool isFirstChild = true;
+            bool isFirstChild = true;
 
             BDNode node = pNode as BDNode;
             if (null != pNode && pNode.NodeType == BDConstants.BDNodeType.BDAntimicrobialGroup)
@@ -3921,7 +3921,12 @@ namespace BDEditor.Classes
                         List<BDHtmlPage> childPages = new List<BDHtmlPage>();
                         foreach (IBDNode child in children)
                         {
-                            if (!string.IsNullOrEmpty(child.Name))
+                            string childName = child.Name;
+                            string namePlaceholderText = string.Format(@"New {0}", BDUtilities.GetEnumDescription(child.NodeType));
+                            if (childName.Contains(namePlaceholderText))
+                                childName = string.Empty;
+
+                            if (!string.IsNullOrEmpty(childName))
                             {
                                 // create a page and add to collection
                                 string agHtml = BuildBDAntimicrobialGroupHtmlAndPage(pContext, child, childFootnotes, childObjects, pLevel);

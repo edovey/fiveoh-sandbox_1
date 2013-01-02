@@ -2138,7 +2138,12 @@ namespace BDEditor.Classes
                         }
                         break;
                     case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
-                        html.Append(buildNodePropertyHTML(pContext, pNode, pNode.ParentId.Value, pNode.Name, BDNode.PROPERTYNAME_NAME, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+                        //ks: Another hack that makes Karl grumpy
+                        // Specific to Lactation
+                        if (pNode.Name.Length > 0)
+                        {
+                            html.Append(buildNodePropertyHTML(pContext, pNode, pNode.ParentId.Value, pNode.Name, BDNode.PROPERTYNAME_NAME, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+                        }
                         List<BDLayoutMetadataColumn> lactationColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, pNode.LayoutVariant);
 
                         List<string> lactationColumnsHtml = new List<string>();
@@ -2188,6 +2193,11 @@ namespace BDEditor.Classes
                                 string amHtml = BuildBDAntimicrobialHtml(pContext, child, childFootnotes, childObjects, pLevel);
                                 currentPageMasterObject = child;
                                 childPages.Add(writeBDHtmlPage(pContext, child, amHtml, BDConstants.BDHtmlPageType.Navigation, childFootnotes, childObjects, null));
+                            }
+                            else
+                            {
+                                string amHtml = BuildBDAntimicrobialHtml(pContext, child, childFootnotes, childObjects, pLevel);
+                                html.Append(amHtml);
                             }
                         }
                         for (int i = 0; i < childPages.Count; i++)

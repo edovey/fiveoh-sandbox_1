@@ -829,6 +829,7 @@ namespace BDEditor.Views
                     pnlMain.Controls.Remove(tbDuration2);
                     break;
                 case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_ViridansStrep:
                     // remove dosage1, dosage2, duration2
                     pnlMain.Controls.Remove(tbDosage1);
                     pnlMain.Controls.Remove(chkPreviousDose1);

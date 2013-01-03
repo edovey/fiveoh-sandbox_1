@@ -2264,9 +2264,6 @@ namespace BDEditor.Classes
                 List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
                 switch (pNode.LayoutVariant)
                 {
-                    case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity:
-                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity_ContentRow }));
-                        break;
                     case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         break;
@@ -2330,6 +2327,8 @@ namespace BDEditor.Classes
                         break;
 
                     // Common generic render
+                                    case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity:
+
                     case BDConstants.LayoutVariantType.Antibiotics_NameListing:
                     case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
                     //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_Stepdown_HeaderRow }));

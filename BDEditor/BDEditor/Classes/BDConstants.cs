@@ -124,11 +124,11 @@ namespace BDEditor.Classes
             TreatmentRecommendation00 = 100, // Chapter
             [Description("Treatment Recommendation")]
             TreatmentRecommendation01 = 101, // default layout chapter 2, selected infections
-            [Description("Treatment Recommendation Gastroenteritis")]
+            [Description("Treatment Recommendations - Gastroenteritis")]
             TreatmentRecommendation01_Gastroenteritis = 10141,
-            [Description("Treatment Recommendation Gastroenteritis Culture Directed")]
+            [Description("Treatment Recommendations - Gastroenteritis Culture Directed")]
             TreatmentRecommendation01_Gastroenteritis_CultureDirected = 101412,
-            [Description("Treatment Recommendation CNS Meningitis Table")]
+            [Description("Treatment Recommendations - CNS Meningitis Table")]
             TreatmentRecommendation01_CNS_Meningitis_Table = 101500,
 
             [Description("Wound Management")]
@@ -143,54 +143,56 @@ namespace BDEditor.Classes
             [Description("Wound Classification Content Row")]
             TreatmentRecommendation03_WoundClass_ContentRow = 1032, // table 2 - wound classification content row
 
-            [Description("Pneumonia Patient Characteristic")]
+            [Description("Treatment Recommendations - Pneumonia Patient Characteristic")]
             TreatmentRecommendation04_Pneumonia_I = 104,  //  table 3 - top antimicrobialSection
-            [Description("Pneumonia Patient Characteristic Content Row")]
+            [Description("Treatment Recommendations - Pneumonia Patient Characteristic Content Row")]
             TreatmentRecommendation04_Pneumonia_I_ContentRow = 1041,  //  table 3 - top antimicrobialSection
 
-            [Description("Pneumonia Risk and Recommendation")]
+            [Description("Treatment Recommendations - Pneumonia Risk and Recommendation")]
             TreatmentRecommendation04_Pneumonia_II = 105,  // table 3 - bottom antimicrobialSection
-            [Description("Pneumonia Risk and Recommendation Header Row")]
+            [Description("Treatment Recommendations - Pneumonia Risk and Recommendation Header Row")]
             TreatmentRecommendation04_Pneumonia_II_HeaderRow = 1051,  // table 3 - bottom antimicrobialSection header row
-            [Description("Pneumonia Risk and Recommendation Content Row")]
+            [Description("Treatment Recommendations - Pneumonia Risk and Recommendation Content Row")]
             TreatmentRecommendation04_Pneumonia_II_ContentRow = 1052,  // table 3 - bottom antimicrobialSection content row
 
-            [Description("Treatment of Culture-Proven Peritonitis")]
+            [Description("Treatment Recommendations - Culture-Proven Peritonitis")]
             TreatmentRecommendation05_CultureProvenPeritonitis = 106,  // table 4
-            [Description("Treatment of Culture-Proven Meningitis")]
+            [Description("Treatment Recommendations - Culture-Proven Meningitis")]
             TreatmentRecommendation06_CultureProvenMeningitis = 107,  // table 5
-            [Description("Treatment of Culture-Proven Endocarditis")]
+            [Description("Treatment Recommendations - Culture-Proven Endocarditis")]
             TreatmentRecommendation07_CultureProvenEndocarditis = 108, // table 6
-            [Description("Treatment of Culture-Proven Endocarditis - Single Duration")]
+            [Description("Treatment Recommendations - Culture-Proven Endocarditis : Single Duration")]
             TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration = 1081, // table 6
-            [Description("Treatment of Culture-Proven Endocarditis:  Paediatric Doses")]
+            [Description("Treatment Recommendations - Culture-Proven Endocarditis : Viridans Streptococci")]
+            TreatmentRecommendation07_CultureProvenEndocarditis_ViridansStrep = 1082,
+            [Description("Treatment Recommendations - Culture-Proven Endocarditis:  Paediatric Doses")]
             TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics = 120,
-            [Description("Treatment of Opthalmic Infections")]
+            [Description("Treatment Recommendations - Opthalmic Infections")]
             TreatmentRecommendation08_Opthalmic = 109,
-            [Description("Treatment of Enteric Parasitic Infections I")]
+            [Description("Treatment Recommendations - Enteric Parasitic Infections I")]
             TreatmentRecommendation09_Parasitic_I = 110,
-            [Description("Treatment of Fungal Infections")]
+            [Description("Treatment Recommendations - Fungal Infections")]
             TreatmentRecommendation10_Fungal = 111,
-            [Description("Treatment of Enteric Parasitic Infections II")]
+            [Description("Treatment Recommendations - Enteric Parasitic Infections II")]
             TreatmentRecommendation09_Parasitic_II = 112,
 
-            [Description("Genital Ulcers")]
+            [Description("Treatment Recommendations - Genital Ulcers")]
             TreatmentRecommendation11_GenitalUlcers = 113,
-            [Description("Blood Culture Negative Endocarditis")]
+            [Description("Treatment Recommendations - Blood Culture Negative Endocarditis")]
             TreatmentRecommendation12_Endocarditis_BCNE = 114,
-            [Description("Vesicular Lesions")]
+            [Description("Treatment Recommendations - Vesicular Lesions")]
             TreatmentRecommendation13_VesicularLesions = 115,
-            [Description("Treatment of Cellulitis - Extremities")]
+            [Description("Treatment Recommendations - Cellulitis : Extremities")]
             TreatmentRecommendation14_CellulitisExtremities = 116,
-            [Description("Treatment of Culture-Proven Pneumonia")]
+            [Description("Treatment Recommendations - Culture-Proven Pneumonia")]
             TreatmentRecommendation15_CultureProvenPneumonia = 117,  // table xx 
-            [Description("Treamtent of Culture-Directed Infections")]
+            [Description("Treatment Recommendations - Culture-Directed Infections")]
             TreatmentRecommendation16_CultureDirected = 118,
-            [Description("Severity of Illness - Pneumonia")]
+            [Description("Treatment Recommendations - Severity of Illness - Pneumonia")]
             TreatmentRecommendation17_Pneumonia = 119,
-            [Description("Treatment of PD Peritonitis - Adult")]
+            [Description("Treatment Recommendations - PD Peritonitis - Adult")]
             TreatmentRecommendation19_Peritonitis_PD_Adult = 121,
-            [Description("Treatment of PD Peritonitis - Paediatric")]
+            [Description("Treatment Recommendations - PD Peritonitis : Paediatric")]
             TreatmentRecommendation19_Peritonitis_PD_Paediatric = 122,
             [Description("Treatment Recommendations - Adult with Topic")]
             TreatmentRecommendation20_Adult_WithTopic = 123,
@@ -199,33 +201,33 @@ namespace BDEditor.Classes
 
             [Description("Antibiotics")]
             Antibiotics = 200, 
-            [Description("Clinical Antibiotic Guidelines")]
+            [Description("Antibiotics - Clinical Antibiotic Guidelines")]
             Antibiotics_ClinicalGuidelines = 201,
-            [Description("Antimicrobial Spectrum")]
+            [Description("Antibiotics - Antimicrobial Spectrum")]
             Antibiotics_ClinicalGuidelines_Spectrum = 212,
 
             [Description("Antibiotics - Pharmacodynamics")]
             Antibiotics_Pharmacodynamics = 202,
             
-            [Description("Antibiotics Dosing and Costs")]
+            [Description("Antibiotics - Dosing and Costs")]
             Antibiotics_DosingAndCosts = 203,
-            [Description("Antibiotics Dosing and Costs: Adult")]
+            [Description("Antibiotics - Dosing and Costs: Adult")]
             Antibiotics_DosingAndCosts_Adult = 2031,
-            [Description("Antibiotics Dosing and Costs: Paediatric")]
+            [Description("Antibiotics - Dosing and Costs: Paediatric")]
             Antibiotics_DosingAndCosts_Paediatric = 2032,
 
-            [Description("Antibiotics Dosing and Monitoring")] // +Aminoglycoside 
+            [Description("Antibiotics - Dosing and Monitoring")] // +Aminoglycoside 
             Antibiotics_DosingAndMonitoring = 204,
-            [Description("Antibiotics Dosing and Monitoring: Conventional")]
+            [Description("Antibiotics - Dosing and Monitoring: Conventional")]
             Antibiotics_DosingAndMonitoring_Conventional = 2041,
-            [Description("Antibiotics Dosing and Monitoring: Vancomycin")]
+            [Description("Antibiotics - Dosing and Monitoring: Vancomycin")]
             Antibiotics_DosingAndMonitoring_Vancomycin = 211,
-            [Description("Antibiotics Dosing in Renal Impairment")]
+            [Description("Antibiotics - Dosing in Renal Impairment")]
             Antibiotics_Dosing_RenalImpairment = 205,
 
-            [Description("Antibiotics Dosing in Hepatic Impairment")]
+            [Description("Antibiotics - Dosing in Hepatic Impairment")]
             Antibiotics_Dosing_HepaticImpairment = 206,
-            [Description("Child-Pugh Grading of Chronic Liver Disease")]
+            [Description("Antibiotics - Child-Pugh Grading of Chronic Liver Disease")]
             Antibiotics_HepaticImpairment_Grading = 2061,
 
             [Description("Antibiotics Name Listing")]
@@ -235,19 +237,19 @@ namespace BDEditor.Classes
             [Description("Antibiotics Name Listing Content Row")]
             Antibiotics_NameListing_ContentRow = 2072,
 
-            [Description("Antibiotics IV to PO SWITCH Recommendations")]
+            [Description("Antibiotics - IV to PO SWITCH Recommendations")]
             Antibiotics_Stepdown = 208,
             [Description("Antibiotics Stepdown Header Row")]
             Antibiotics_Stepdown_HeaderRow = 2081,
             [Description("Antibiotics Stepdown Content Row")]
             Antibiotics_Stepdown_ContentRow = 2082,
 
-            [Description("Antibiotics CSF Penetration")]
+            [Description("Antibiotics - CSF Penetration")]
             Antibiotics_CSFPenetration = 209,
-            [Description("Antibiotics CSF Penetration - Intrathecal and/or Intraventricular Doses")]
+            [Description("Antibiotics - CSF Penetration : Intrathecal and/or Intraventricular Doses")]
             Antibiotics_CSFPenetration_Dosages = 2091,
 
-            [Description("Antibiotics B Lactam Allergy")]
+            [Description("Antibiotics - B Lactam Allergy")]
             Antibiotics_BLactamAllergy = 210,
             [Description("Antibiotics - BLactam Allergy Cross Reactivity")]
             Antibiotics_BLactamAllergy_CrossReactivity = 2101,
@@ -320,15 +322,15 @@ namespace BDEditor.Classes
 
             [Description("Dental")]
             Dental = 400,
-            [Description("Dental Prophylaxis")]
+            [Description("Dental - Prophylaxis")]
             Dental_Prophylaxis = 401,
-            [Description("Dental Prophylaxis DrugRegimens")]
+            [Description("Dental - Prophylaxis DrugRegimens")]
             Dental_Prophylaxis_DrugRegimens = 405,
-            [Description("Dental Recommended Therapy Antimicrobial Activity")]
+            [Description("Dental - Recommended Therapy Antimicrobial Activity")]
             Dental_RecommendedTherapy_AntimicrobialActivity = 406,
-            [Description("Dental Recommended Therapy Microorganisms")]
+            [Description("Dental - Recommended Therapy Microorganisms")]
             Dental_RecommendedTherapy_Microorganisms = 407,
-            [Description("Dental Recommended Therapy")]
+            [Description("Dental - Recommended Therapy")]
             Dental_RecommendedTherapy = 408,
 
             [Description(" Pregnancy / Lactation")]
@@ -416,6 +418,8 @@ namespace BDEditor.Classes
             Legend = 8,
             [Description("Immediate Inline")]
             Immediate = 9,
+            [Description("External Link")]
+            External = 10,
         }
 
         public enum TableCellAlignment

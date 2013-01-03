@@ -783,7 +783,7 @@ namespace BDEditor.Views
                         //subDescription = (pBDNode.NodeType == BDConstants.BDNodeType.BDTableRow) ? string.Format(" ({0})", BDUtilities.GetEnumDescription(((BDTableRow)pBDNode).NodeType)) : string.Empty;
                         //subDescription = (childTypeInfoList[idx].Item1 == BDConstants.BDNodeType.BDTableRow) ? string.Format(" ({0})", BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item2[0])) : string.Empty;
                         subDescription = BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item2[0]);
-                        item.Text = string.Format("&Add {0} [{1}]", BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item1), subDescription);
+                        item.Text = string.Format("&Add {0}", BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item1));
                         item.Tag = new BDNodeWrapper(pBDNode, childTypeInfoList[idx].Item1, childTypeInfoList[idx].Item2[0], null);
                         item.Click += new System.EventHandler(this.addChildNode_Click);
 

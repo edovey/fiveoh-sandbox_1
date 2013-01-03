@@ -4897,7 +4897,7 @@ namespace BDEditor.Classes
             if (!string.IsNullOrEmpty(pDosageGroupName))
                 dosageHTML.AppendFormat("<td{0}>{1}<br>{2}</td>", colSpanTag, pDosageGroupName, buildNodePropertyHTML(pContext, dosageNode, dosageNode.dosage,BDDosage.PROPERTYNAME_DOSAGE,pFootnotes, pObjectsOnPage));
             else
-                dosageHTML.AppendFormat(@"<td{0}>{1}</td>", colSpanTag, pDosageGroupName, buildNodePropertyHTML(pContext, dosageNode, dosageNode.dosage,BDDosage.PROPERTYNAME_DOSAGE,pFootnotes, pObjectsOnPage));
+                dosageHTML.AppendFormat(@"<td{0}>{1}</td>", colSpanTag, buildNodePropertyHTML(pContext, dosageNode, dosageNode.dosage,BDDosage.PROPERTYNAME_DOSAGE,pFootnotes, pObjectsOnPage));
 
             colSpanTag = string.Empty;
             // 3 remaining doses in cells

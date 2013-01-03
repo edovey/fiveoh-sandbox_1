@@ -24,7 +24,7 @@ namespace BDEditor.Classes
         private const string bottomHtml = @"</body></html>";
         private const string anchorTag = @"<p><a href=""{0}""><b>{1}</b></a></p>";
         public const int EMPTY_PARAGRAPH = 8;  // <p> </p>
-        private const string imgFileTag = "<img src=\"images/{0}{1}\" alt=\"\" width=\"300\" height=\"456\" />";
+        private const string imgFileTag = "<img src=\"images/{0}{1}\" alt=\"\" width=\"300\" height=\"197\" />";
         private const string paintChipTag = "<img class=\"paintChip\" src=\"{0}\" alt=\"\" />";
         private const string PAINT_CHIP_ANTIBIOTICS = "AntibioticYellow.png";
         private const string PAINT_CHIP_DENTISTRY = "DentistryPurple.png";
@@ -2331,10 +2331,12 @@ namespace BDEditor.Classes
 
                     case BDConstants.LayoutVariantType.Antibiotics_NameListing:
                     case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
-                    //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_Stepdown_HeaderRow }));
-                    //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
-
+                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_Stepdown_HeaderRow }));
+                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                    case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity:
+                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity_ContentRow }));
                     case BDConstants.LayoutVariantType.Table_2_Column:
+                    
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Table_2_Column_HeaderRow }));
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
 
@@ -2623,6 +2625,10 @@ namespace BDEditor.Classes
             StringBuilder html = new StringBuilder();
             StringBuilder prefixHtml = new StringBuilder();
 
+            string col1Header = "";
+            string col2Header = "";
+            string col3Header = "";
+
             if ((null != pNode) && (pNode.NodeType == BDConstants.BDNodeType.BDCombinedEntry))
             {
                 BDCombinedEntry combinedEntry = pNode as BDCombinedEntry;
@@ -2634,10 +2640,26 @@ namespace BDEditor.Classes
                     //html.AppendFormat("<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel), combinedEntry.Name);
 
                     //NOTE: This expects that a matching number of columns have been defined
-                    html.AppendFormat(@"<table class=""v{0}""><tr><th></th>", (int)pNode.LayoutVariant); // insert a blank column header: Combined Entries layout columns, by definition, are offset by 1
-                    for (int i = 0; i < metadataLayoutColumns.Count; i++)
-                        html.AppendFormat("<th>{0}</th>", metadataLayoutColumns[i]);
-                    html.Append("</tr>");
+                    html.AppendFormat(@"<table class=""v{0}""><tr>", (int)pNode.LayoutVariant);
+
+                    foreach (BDLayoutMetadataColumn layoutColumn in metadataLayoutColumns)
+                    {
+                        string definedColumnName = layoutColumn.FieldNameForColumnOfNodeType(pContext, BDConstants.BDNodeType.BDCombinedEntry);
+                        switch (definedColumnName)
+                        {
+                            case BDCombinedEntry.PROPERTYNAME_NAME:
+                                col1Header = layoutColumn.label;
+                                break;
+                            case  BDCombinedEntry.VIRTUALPROPERTYNAME_ENTRYTITLE:
+                                col2Header = layoutColumn.label;
+                                break;
+                            case  BDCombinedEntry.VIRTUALPROPERTYNAME_ENTRYDETAIL:
+                                col3Header = layoutColumn.label;
+                                break;
+                        }
+                    }
+
+                    //html.AppendFormat("<th>{0}</th><th>{1}</th><th>{2}</th></tr>", col1Header, col2Header, col3Header);
                 }
 
                 switch (pNode.LayoutVariant)
@@ -2648,6 +2670,11 @@ namespace BDEditor.Classes
                     //    break;
 
                     case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Amantadine_NoRenal: //3121
+                        if (pRenderTableHeader)
+                        {
+                            html.AppendFormat("<th>{0}</th><th>{1}</th></tr>", col2Header, col3Header);
+                        }
+
                         prefixHtml.AppendFormat("<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel), combinedEntry.Name);
                         html.AppendFormat("<tr><td>{0}</td><td colspan=3>{1}</td></tr>",
                             buildNodePropertyHTML(pContext, combinedEntry, combinedEntry.entryTitle01, BDCombinedEntry.PROPERTYNAME_ENTRYTITLE01, pFootnotes, pObjectsOnPage),
@@ -2663,6 +2690,10 @@ namespace BDEditor.Classes
                     // created from a topic (Prophylaxis_Communicable_Influenza_Oseltamivir) 3123
                     case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Oseltamivir_Creatinine: //3124
                     case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Oseltamivir_Weight: //3125
+                        if (pRenderTableHeader)
+                        {
+                            html.AppendFormat("<th>{0}</th><th>{1}</th><th>{2}</th></tr>", col1Header, col2Header, col3Header);
+                        }
                         html.AppendFormat("<tr><td rowspan=4>{0}</td><td>{1}</td><td>{2}</td></tr>",
                             buildNodePropertyHTML(pContext, combinedEntry, combinedEntry.Name, BDCombinedEntry.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage),
                             buildNodePropertyHTML(pContext, combinedEntry, combinedEntry.entryTitle01, BDCombinedEntry.PROPERTYNAME_ENTRYTITLE01, pFootnotes, pObjectsOnPage),
@@ -2694,11 +2725,24 @@ namespace BDEditor.Classes
                     case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Pertussis: //316
                     // created from a topic (Prophylaxis_Communicable_Influenza_Zanamivir) 3126
                     case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Zanamivir: //3126
+                        
                     // everything else
                     default:
                         StringBuilder cell0HTML = new StringBuilder();
                         StringBuilder cell1HTML = new StringBuilder();
-                        StringBuilder cell2HTML = new StringBuilder();   
+                        StringBuilder cell2HTML = new StringBuilder();
+
+                        if (pRenderTableHeader)
+                        {
+                            if (pNode.LayoutVariant == BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Zanamivir) 
+                            {
+                                html.AppendFormat("<th>{0}</th><th>{1}</th></tr>", col1Header, col3Header);
+                            }
+                            else
+                            {
+                                html.AppendFormat("<th>{0}</th><th>{1}</th><th>{2}</th></tr>", col1Header, col2Header, col3Header);
+                            }
+                        }
 
                         // first column
                         if (!string.IsNullOrEmpty(combinedEntry.groupTitle))
@@ -3511,11 +3555,11 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
                         default:
                             // this is a TherapyGroup > therapy hierarchy
-                            if (isFirstChildEntry)
-                            {
-                                therapyGroupHTML.AppendFormat("<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel + 1), c1Html);
-                                isFirstChildEntry = false;
-                            }
+                            //if (isFirstChildEntry)
+                            //{
+                            //    therapyGroupHTML.AppendFormat("<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel + 1), c1Html);
+                            //    isFirstChildEntry = false;
+                            //}
                             StringBuilder therapyHTML = new StringBuilder();
 
                             string c2Html = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[1], BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_THERAPY, pFootnotes, pObjectsOnPage);
@@ -4210,6 +4254,7 @@ namespace BDEditor.Classes
                     case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Zanamivir: //3126
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDCombinedEntry, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Prophylaxis_Communicable_Influenza_Zanamivir }));
                         isFirstChild = true;
+
                         foreach (IBDNode child in children)
                         {
                             html.Append(BuildBDCombinedEntryHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1, isFirstChild));
@@ -4854,7 +4899,7 @@ namespace BDEditor.Classes
             if (!string.IsNullOrEmpty(pDosageGroupName))
                 dosageHTML.AppendFormat("<td{0}>{1}<br>{2}</td>", colSpanTag, pDosageGroupName, buildNodePropertyHTML(pContext, dosageNode, dosageNode.dosage,BDDosage.PROPERTYNAME_DOSAGE,pFootnotes, pObjectsOnPage));
             else
-                dosageHTML.AppendFormat(@"<td{0}>{1}</td>", colSpanTag, pDosageGroupName, buildNodePropertyHTML(pContext, dosageNode, dosageNode.dosage,BDDosage.PROPERTYNAME_DOSAGE,pFootnotes, pObjectsOnPage));
+                dosageHTML.AppendFormat(@"<td{0}>{1}</td>", colSpanTag, buildNodePropertyHTML(pContext, dosageNode, dosageNode.dosage,BDDosage.PROPERTYNAME_DOSAGE,pFootnotes, pObjectsOnPage));
 
             colSpanTag = string.Empty;
             // 3 remaining doses in cells

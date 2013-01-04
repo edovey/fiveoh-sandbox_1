@@ -20,7 +20,7 @@ namespace BDEditor.Classes
         }
 
         private const int maxNodeType = 6;
-        private const string topHtml = @"<html><head><meta http-equiv=""Content-type"" content=""text/html;charset=UTF-8\""/><meta name=""viewport"" content=""width=device-width; initial-scale=1.0; maximum-scale=1.0;""/><link rel=""stylesheet"" type=""text/css"" href=""bdviewer.css"" /> </head><body>";
+        private const string topHtml = @"<!DOCTYPE html PUBLIC ""-//W3C//DTD HTML 4.01//EN\""><html><head><meta http-equiv=""Content-type"" content=""text/html;charset=UTF-8\""/><meta name=""viewport"" content=""width=device-width; initial-scale=1.0; maximum-scale=1.0;""/><link rel=""stylesheet"" type=""text/css"" href=""bdviewer.css"" /> </head><body>";
         private const string bottomHtml = @"</body></html>";
         private const string anchorTag = @"<p><a href=""{0}""><b>{1}</b></a></p>";
         public const int EMPTY_PARAGRAPH = 8;  // <p> </p>
@@ -33,8 +33,8 @@ namespace BDEditor.Classes
         private const string PAINT_CHIP_TREATMENT_ADULT = "TreatmentBlue.png";
         private const string PAINT_CHIP_PREGNANCY = "PregnancyRed.png";
         private const string PAINT_CHIP_PROPHYLAXIS = "ProphylaxisOrange.png";
-        private const string LEFT_SQUARE_BRACKET = "&#91";
-        private const string RIGHT_SQUARE_BRACKET = "&#93";
+        private const string LEFT_SQUARE_BRACKET = "&#91;";
+        private const string RIGHT_SQUARE_BRACKET = "&#93;";
 
         //private List<BDLayoutMetadataColumn> metadataLayoutColumns = new List<BDLayoutMetadataColumn>();
         private List<BDHtmlPageMap> pagesMap = new List<BDHtmlPageMap>();
@@ -503,6 +503,7 @@ namespace BDEditor.Classes
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_ViridansStrep:
                         //case BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics: //ks: pathogen with this layout variant is not possible in BDFabrik 
                             currentPageMasterObject = pNode;
                             //nodeChildPages.Add(generatePageForEmpiricTherapyOfCultureDirectedEndocarditis(pContext, pNode as BDNode));
@@ -1688,6 +1689,7 @@ namespace BDEditor.Classes
                 {
                     case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_ViridansStrep:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogenResistance, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
 
@@ -1710,7 +1712,6 @@ namespace BDEditor.Classes
                             foreach (IBDNode therapyGroupChild in therapyGroups)
                             {
                                 BDTherapyGroup therapyGroup = therapyGroupChild as BDTherapyGroup;
-                                html.Append(buildNodePropertyHTML(pContext, therapyGroupChild, therapyGroupChild.Name, BDTherapyGroup.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage));
                                 html.Append(BuildBDTherapyGroupHTML(pContext, therapyGroup, pFootnotes, pObjectsOnPage, pLevel + 1, null));
                             }
                         }
@@ -1740,7 +1741,6 @@ namespace BDEditor.Classes
                                     pObjectsOnPage.Add(child.Uuid);
                                    break;
                                 case BDConstants.BDNodeType.BDTherapyGroup:
-                                    html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child, HtmlHeaderTagLevelString(pLevel + 2), pFootnotes, pObjectsOnPage));
                                     html.Append(BuildBDTherapyGroupHTML(pContext, child as BDTherapyGroup, pFootnotes, pObjectsOnPage, pLevel + 1, null));
                                     break;
                             }
@@ -1832,8 +1832,9 @@ namespace BDEditor.Classes
                         break;
 
                     case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_ViridansStrep:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                        // custom-built - Therapy has 2 dosages and a custom header
+                        // custom-built - Therapy has 2 durations and a custom header
 
                         string therapyNameTitleHtml = string.Empty;
                         string therapyDosage1TitleHtml = string.Empty;
@@ -1864,9 +1865,14 @@ namespace BDEditor.Classes
 
                                 resetGlobalVariablesForTherapies();
                                 StringBuilder therapyHTML = new StringBuilder();
-                                foreach (BDTherapy therapy in therapies)
+                                for(int i =0; i < therapies.Count; i++)
                                 {
-                                    therapyHTML.Append(buildTherapyWithTwoDurationsHtml(pContext, therapy, pFootnotes, pObjectsOnPage));
+                                    BDTherapy therapy = therapies[i];
+                                    bool addEndBracket = false;
+                                    // check the name on the following therapy - if empty and the right bracket is set, addEndBracket
+                                    if (i < therapies.Count - 1 && string.IsNullOrEmpty(therapies[i + 1].name) && therapies[i + 1].rightBracket.Value == true)
+                                        addEndBracket = true;
+                                    therapyHTML.Append(buildTherapyWithTwoDurationsHtml(pContext, therapy, pFootnotes, pObjectsOnPage, addEndBracket));
 
                                     if (!string.IsNullOrEmpty(therapy.Name) && therapy.nameSameAsPrevious == false)
                                         previousTherapyName = therapy.Name;
@@ -1903,7 +1909,7 @@ namespace BDEditor.Classes
                         break;
                     case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                        // custom-built - Therapy has 2 dosages and a custom header
+                        // custom-built - Therapy has 1 duration and a custom header
 
                         string t1therapyNameTitleHtml = string.Empty;
                         string t1therapyDosage1TitleHtml = string.Empty;
@@ -2327,8 +2333,6 @@ namespace BDEditor.Classes
                         break;
 
                     // Common generic render
-                                    case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity:
-
                     case BDConstants.LayoutVariantType.Antibiotics_NameListing:
                     case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_Stepdown_HeaderRow }));
@@ -2480,12 +2484,14 @@ namespace BDEditor.Classes
                                     html.Append(BuildBDTopicHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
                                     break;
                             }
+
                         }
                         break;
                     default:
                         break;
                 }
             }
+            html.Append(BuildBDLegendHtml(pContext, pNode, pObjectsOnPage));
 
             return html.ToString();
         }
@@ -4240,7 +4246,7 @@ namespace BDEditor.Classes
                                 //html.AppendFormat("</table><{0}>Renal Impairment</{0}><table>", HtmlHeaderTagLevelString(pLevel + 1));
                                 html.AppendFormat(@"<table class=""v{0}"">", (int)child.LayoutVariant);
                                 html.AppendFormat("<tr><th rowspan=2>{0}</th><th colspan=2>Dosage with capsules</th><th>Daily dosage with solution (10mg/mL)</th></tr>", metadataLayoutColumns[0]);
-                                html.AppendFormat("<tr><th>{0}</th><th>{1}</th><th>{2}</th></tr>", c1Html, c2Html, c3Html);
+                                html.AppendFormat("<tr><th>{0}</th><th>{1}</th><th>{2}</th></tr>", c2Html, c3Html, c4Html);
                             }
                             isFirstChild = false;
 
@@ -4743,7 +4749,7 @@ namespace BDEditor.Classes
             return therapyHtml.ToString();
         }
 
-        public string buildTherapyWithTwoDurationsHtml(Entities pContext, BDTherapy pTherapy, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
+        public string buildTherapyWithTwoDurationsHtml(Entities pContext, BDTherapy pTherapy, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, bool pAddEndBracket)
         {
             //string debugString = string.Format("Therapy {0} {1}", pTherapy.Uuid, pTherapy.Name);
             //Debug.WriteLine(debugString);
@@ -4774,9 +4780,10 @@ namespace BDEditor.Classes
 
             if (null != resolvedValue) therapiesHaveName = true;
 
-            if (pTherapy.rightBracket.Value == true)
+            if (pTherapy.rightBracket.Value == true && !string.IsNullOrEmpty(pTherapy.name)) // if there is no value in 'name' then the bracket was added to the previous name by the caller to this method.
                 therapyHtml.Append(RIGHT_SQUARE_BRACKET);
-
+            if(pAddEndBracket)
+                therapyHtml.Append(RIGHT_SQUARE_BRACKET);
             therapyHtml.Append(@"</td>");
 
             // Dosage

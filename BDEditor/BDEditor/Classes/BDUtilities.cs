@@ -1405,7 +1405,6 @@ namespace BDEditor.Classes
             //BDUtilities.ResetLayoutVariantWithChildren(dataContext, hap, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, true);
             //dataContext.SaveChanges();
             #endregion
-
             #region v.1.6.38
             //BDNode cardio = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("9a80eb9b-6438-48bd-901c-e258f29f4bf3"));
             //BDNode deviceRelated = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDDisease, Guid.NewGuid());
@@ -1447,25 +1446,25 @@ namespace BDEditor.Classes
 
             #region v.1.6.39
             // fix layout variant for Antibiotics > BLactam > cross-reactivity table
-            BDNode crossReactivityTable = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("2ff81d9e-1f69-455f-846e-16a9b098ad50"));
-            List<IBDNode> tablesections = BDFabrik.GetChildrenForParent(pContext, crossReactivityTable);
-            foreach (IBDNode section in tablesections)
-            {
-                List<IBDNode> tableRows = BDFabrik.GetChildrenForParent(pContext, section);
-                foreach (IBDNode row in tableRows)
-                    BDUtilities.ResetLayoutVariantWithChildren(pContext, row, BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity_ContentRow, true);
+            //BDNode crossReactivityTable = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("2ff81d9e-1f69-455f-846e-16a9b098ad50"));
+            //List<IBDNode> tablesections = BDFabrik.GetChildrenForParent(pContext, crossReactivityTable);
+            //foreach (IBDNode section in tablesections)
+            //{
+            //    List<IBDNode> tableRows = BDFabrik.GetChildrenForParent(pContext, section);
+            //    foreach (IBDNode row in tableRows)
+            //        BDUtilities.ResetLayoutVariantWithChildren(pContext, row, BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity_ContentRow, true);
 
-                section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity;
-                BDNode.Save(pContext, section as BDNode);
-            }
-            crossReactivityTable.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity;
-            BDNode.Save(pContext, crossReactivityTable);
+            //    section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity;
+            //    BDNode.Save(pContext, section as BDNode);
+            //}
+            //crossReactivityTable.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity;
+            //BDNode.Save(pContext, crossReactivityTable);
 
 
-            // reassign layout variant in TreatmentRecommendations > Culture-Directed > Endocarditis > Viridans Group,,,
-            BDNode pathogen = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("24dee453-d880-4d8e-b869-ca89dbe13067"));
-            BDUtilities.ResetLayoutVariantWithChildren(pContext, pathogen, BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_ViridansStrep, true);
-            pContext.SaveChanges();
+            //// reassign layout variant in TreatmentRecommendations > Culture-Directed > Endocarditis > Viridans Group,,,
+            //BDNode pathogen = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("24dee453-d880-4d8e-b869-ca89dbe13067"));
+            //BDUtilities.ResetLayoutVariantWithChildren(pContext, pathogen, BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_ViridansStrep, true);
+            //pContext.SaveChanges();
             #endregion
 
         }

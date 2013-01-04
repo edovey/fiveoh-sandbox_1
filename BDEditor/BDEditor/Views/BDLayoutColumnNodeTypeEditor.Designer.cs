@@ -158,6 +158,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "BDLayoutColumnNodeTypeEditor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Virtual Column Nodetype Association Editor";
             this.Load += new System.EventHandler(this.BDLayoutColumnNodeTypeEditor_Load);
             this.ResumeLayout(false);

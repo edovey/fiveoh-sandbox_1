@@ -330,6 +330,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "BDLayoutMetadataEditor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Layout Virtual Column Editor";
             this.Load += new System.EventHandler(this.BDLayoutMetadataEditor_Load);
             this.contextMenuStrip1.ResumeLayout(false);

@@ -25,7 +25,7 @@ namespace BDEditor.Views
         private bool isSeedDataLoadAvailable = false;
         private string seedDataFileName = string.Empty;
         // enable & show move button when data move is required
-        private bool moveButtonVisible = true;
+        private bool moveButtonVisible = false;
 
         public BDEditView()
         {
@@ -1441,7 +1441,7 @@ namespace BDEditor.Views
 
             Debug.WriteLine("-- A --");
             Debug.Indent();
-            nodeUuid = Guid.Parse("50f3bd8b-1b4c-4088-887a-b87a909fbe13");
+            nodeUuid = Guid.Parse("24dee453-d880-4d8e-b869-ca89dbe13067");
             node = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
             htmlPage = generator.GenerateBDHtmlPage(dataContext, node);
             Debug.WriteLine(htmlPage.documentText);

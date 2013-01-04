@@ -163,7 +163,7 @@ namespace BDEditor.Classes
             TreatmentRecommendation07_CultureProvenEndocarditis = 108, // table 6
             [Description("Treatment Recommendations - Culture-Proven Endocarditis : Single Duration")]
             TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration = 1081, // table 6
-            [Description("Treatment Recommendations - Culture-Proven Endocarditis : Viridans Streptococci")]
+            [Description("Treatment Recommendations - Culture-Proven Endocarditis : Viridans Group et al")]
             TreatmentRecommendation07_CultureProvenEndocarditis_ViridansStrep = 1082,
             [Description("Treatment Recommendations - Culture-Proven Endocarditis:  Paediatric Doses")]
             TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics = 120,

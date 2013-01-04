@@ -3102,7 +3102,7 @@ namespace BDEditor.Classes
 
                             html.AppendFormat(@"<table class=""v{0}""><tr><th rowspan=4>{1}</th><th rowspan=4>{2}</th>", (int)pNode.LayoutVariant, c1Html, c2Html);
                             html.Append(@"<th colspan=3><b>Dose and Interval Adjustment for Renal Impairment</b></th></tr>");
-                            html.AppendFormat(@"<tr><th colspan=""3""><b>{0}</b></th><tr>", c3Html);
+                            html.AppendFormat(@"<tr><th colspan=3><b>{0}</b></th><tr>", c3Html);
                             html.Append(@"<tr><th>&gt50</th><th>10 - 50</th><th>&lt10(Anuric)</th></tr>");
 
                             foreach (IBDNode child in children)

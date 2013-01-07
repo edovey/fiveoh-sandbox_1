@@ -25,7 +25,7 @@ namespace BDEditor.Views
         private bool isSeedDataLoadAvailable = false;
         private string seedDataFileName = string.Empty;
         // enable & show move button when data move is required
-        private bool moveButtonVisible = false;
+        private bool moveButtonVisible = true;
 
         public BDEditView()
         {
@@ -426,10 +426,19 @@ namespace BDEditor.Views
                         switch (node.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.FrontMatter:
-                            case BDConstants.LayoutVariantType.BackMatter:
+                                childTreeNode = BDFrontMatterTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
-                                    showChildControls = true;
+                                    graftTreeNode(selectedNode, childTreeNode);
+                                    showChildControls = false;
+                                }
+                                break;
+                            case BDConstants.LayoutVariantType.BackMatter:
+                                childTreeNode = BDBackMatterTree.BuildBranch(dataContext, node);
+                                if (!pInterrogateOnly)
+                                {
+                                    graftTreeNode(selectedNode, childTreeNode);
+                                    showChildControls = false;
                                 }
                                 break;
                             case BDConstants.LayoutVariantType.TreatmentRecommendation01:
@@ -833,6 +842,12 @@ namespace BDEditor.Views
                                 {
                                     graftTreeNode(selectedNode, childTreeNode);
                                     showChildControls = false;
+                                }
+                                break;
+                            default:
+                                if (!pInterrogateOnly)
+                                {
+                                    showChildControls = true;
                                 }
                                 break;
                         }
@@ -1485,7 +1500,7 @@ namespace BDEditor.Views
                         Debug.WriteLine("-- DEBUG GENERATION --");
                         List<BDNode> nodeList = new List<BDNode>();
                         List<Guid> guidList = new List<Guid>();
-                        guidList.Add(Guid.Parse("d8eb7ab6-038f-43c5-8780-5cd50a27b983"));
+                        guidList.Add(Guid.Parse("5bc35b60-135e-4d7d-89d3-b0e45d6ce9bf"));
                         //guidList.Add(Guid.Parse("40d92304-3224-4af0-8371-bcc27edad7dd"));
                         //guidList.Add(Guid.Parse("32ca6e75-3180-4706-a3a8-6835cdb9a0d3"));
                         //guidList.Add(Guid.Parse("12c6c370-b63b-4b3c-9dc1-5cb9fa988918"));

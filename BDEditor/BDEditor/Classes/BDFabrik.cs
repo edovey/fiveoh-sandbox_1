@@ -1858,6 +1858,12 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDResponse:
                     switch (pNode.LayoutVariant)
                     {
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
+                            nodeControl = new BDNodeOverviewControl(pContext, pNode);
+                            BDNodeOverviewControl newControl = nodeControl as BDNodeOverviewControl;
+                            newControl.ShowAsChild = true;
+                            newControl.ShowSiblingAdd = true;
+                            break;
                         default:
                             nodeControl = new BDNodeControl(pContext, pNode);
                             break;

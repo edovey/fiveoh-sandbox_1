@@ -1439,6 +1439,7 @@ namespace BDEditor.Views
             BDHtmlPage htmlPage = null;
             BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
 
+            /*
             Debug.WriteLine("-- A --");
             Debug.Indent();
             nodeUuid = Guid.Parse("24dee453-d880-4d8e-b869-ca89dbe13067");
@@ -1462,39 +1463,40 @@ namespace BDEditor.Views
             //Debug.Unindent();
             //Debug.WriteLine("-- Complete --");
 
-/*
-            Debug.WriteLine("-- DEBUG FORENSICS --");
-            List<IBDNode> fList = new List<IBDNode>(); 
-            string mydocpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            using (StreamReader sr = File.OpenText(Path.Combine(mydocpath,"NodeUuidList.txt")))
-            {
-                String input;
+                        Debug.WriteLine("-- DEBUG FORENSICS --");
+                        List<IBDNode> fList = new List<IBDNode>(); 
+                        string mydocpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                        using (StreamReader sr = File.OpenText(Path.Combine(mydocpath,"NodeUuidList.txt")))
+                        {
+                            String input;
 
                 
-                while ((input = sr.ReadLine()) != null)
-                {
-                    IBDNode fNode = BDFabrik.RetrieveNode(dataContext, Guid.Parse(input));
-                    fList.Add(fNode);
-                }
+                            while ((input = sr.ReadLine()) != null)
+                            {
+                                IBDNode fNode = BDFabrik.RetrieveNode(dataContext, Guid.Parse(input));
+                                fList.Add(fNode);
+                            }
 
-            }
-  
-            Debug.WriteLine("-- DEBUG GENERATION --");
-            List<BDNode> nodeList = new List<BDNode>();
-            List<Guid> guidList = new List<Guid>();
-            guidList.Add(Guid.Parse("47c8bb45-6c68-43b8-83d0-c2ec3cd40b8c"));
-            //guidList.Add(Guid.Parse("40d92304-3224-4af0-8371-bcc27edad7dd"));
-            //guidList.Add(Guid.Parse("32ca6e75-3180-4706-a3a8-6835cdb9a0d3"));
-            //guidList.Add(Guid.Parse("12c6c370-b63b-4b3c-9dc1-5cb9fa988918"));
-            //guidList.Add(Guid.Parse("c0cf6533-c4c9-480b-ad85-c7d187672849"));
-            foreach (Guid guid in guidList)
-            {
-                nodeList.Add(BDNode.RetrieveNodeWithId(dataContext, guid));
-            }
+                        }
+             */
 
-            generator.Generate(dataContext, nodeList);
+                        /// this section generates to HTML page in database, used for hierarchy of pages
+                        // simulates the publish operation for the nodes specified.
+                        Debug.WriteLine("-- DEBUG GENERATION --");
+                        List<BDNode> nodeList = new List<BDNode>();
+                        List<Guid> guidList = new List<Guid>();
+                        guidList.Add(Guid.Parse("d8eb7ab6-038f-43c5-8780-5cd50a27b983"));
+                        //guidList.Add(Guid.Parse("40d92304-3224-4af0-8371-bcc27edad7dd"));
+                        //guidList.Add(Guid.Parse("32ca6e75-3180-4706-a3a8-6835cdb9a0d3"));
+                        //guidList.Add(Guid.Parse("12c6c370-b63b-4b3c-9dc1-5cb9fa988918"));
+                        //guidList.Add(Guid.Parse("c0cf6533-c4c9-480b-ad85-c7d187672849"));
+                        foreach (Guid guid in guidList)
+                        {
+                            nodeList.Add(BDNode.RetrieveNodeWithId(dataContext, guid));
+                        }
+
+                        generator.Generate(dataContext, nodeList);
          
- */
             Debug.WriteLine("-- Complete --");
         }
 

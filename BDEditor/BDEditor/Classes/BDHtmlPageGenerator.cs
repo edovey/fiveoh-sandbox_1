@@ -231,33 +231,6 @@ namespace BDEditor.Classes
             {
                 pageHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(2), footnotesOnPage, objectsOnPage));
 
-                //ks: consistently manage the title and notes
-                /*
-                footnotesOnPage.AddRange(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Footnote));
-                string footnoteMarkers = buildFooterMarkerForList(footnotesOnPage, true, footnotesOnPage, objectsOnPage);
-                if (footnotesOnPage.Count > 0)
-                    pageHTML.AppendFormat(@"<h2>{0}{1}</h2>", pNode.Name, footnoteMarkers);
-                else
-                    pageHTML.AppendFormat(@"<h2>{0}</h2>", pNode.Name);
-
-                string noteText = retrieveNoteTextForOverview(pContext, pNode.Uuid, objectsOnPage);
-                if (noteText.Length > EMPTY_PARAGRAPH)
-                {
-                    pageHTML.Append(noteText);
-                }
-                objectsOnPage.Add(pNode.Uuid);
-
-                // add text for other linked note types
-                List<BDLinkedNote> noteList = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Inline);
-                noteList.AddRange(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.MarkedComment));
-                noteList.AddRange(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.UnmarkedComment));
-                foreach (BDLinkedNote note in noteList)
-                {
-                    pageHTML.Append(note.documentText);
-                    objectsOnPage.Add(note.Uuid);
-                }
-                */
-
                 // TODO:  build javascript blocks to expand/collapse overview
                 foreach (BDHtmlPage page in pChildPages)
                 {
@@ -268,6 +241,7 @@ namespace BDEditor.Classes
                             pageHTML.AppendFormat(@"<p><a href=""{0}""><b>{1}</b></a></p>", page.Uuid.ToString().ToUpper(), childNode.Name);
                     }
                 }
+                pageHTML.Append(BuildBDLegendHtml(pContext, pNode, objectsOnPage));
             }
             else  // this is the main page of the app
             {

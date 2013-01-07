@@ -1168,6 +1168,10 @@ namespace BDEditor.Classes
                     }
                 }
                 bodyHTML.Append("</table>");
+
+                string legendHTML = BuildBDLegendHtml(pContext, table, objectsOnPage);
+                if (legendHTML.Length > EMPTY_PARAGRAPH)
+                    bodyHTML.Append(legendHTML);
             }
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
@@ -2855,10 +2859,15 @@ namespace BDEditor.Classes
                                 html.AppendFormat(@"<tr><th>{0}</th><th>{1}</th></tr>", c2Html, c3Html);
                                 foreach (IBDNode therapyGroup in therapyGroups)
                                 {
+                                    StringBuilder therapyGroupHtml = new StringBuilder();
+                                    therapyGroupHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, therapyGroup, "u", pFootnotes, pObjectsOnPage));
+
                                     if (therapyGroup.Name.Length > 0 && !therapyGroup.Name.Contains("New Therapy Group"))
                                     {
-                                        adultDosageHTML.AppendFormat("<u>{0}</u><ul>", therapyGroup.Name);
-                                        pedsDosageHTML.AppendFormat("<u>{0}</u><ul>", therapyGroup.Name);
+                                        //adultDosageHTML.AppendFormat("<u>{0}</u><ul>", therapyGroupHtml);
+                                        //pedsDosageHTML.AppendFormat("<u>{0}</u><ul>", therapyGroupHtml);
+                                        adultDosageHTML.AppendFormat("{0}<ul>", therapyGroupHtml);
+                                        pedsDosageHTML.AppendFormat("{0}<ul>", therapyGroupHtml);
                                     }
                                     else
                                     {

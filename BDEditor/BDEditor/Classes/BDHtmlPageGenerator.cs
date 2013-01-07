@@ -763,7 +763,8 @@ namespace BDEditor.Classes
                             break;
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
                             currentPageMasterObject = pNode;
-                            nodeChildPages.Add(generatePageForAntimicrobialAgentsForOralMicroorganisms(pContext, pNode));
+                            //nodeChildPages.Add(generatePageForAntimicrobialAgentsForOralMicroorganisms(pContext, pNode));
+                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         default:
@@ -1100,6 +1101,7 @@ namespace BDEditor.Classes
         #endregion
 
         #region Dental Sections
+        [Obsolete("Use BDGeneratePage instead")]
         private BDHtmlPage generatePageForAntimicrobialAgentsForOralMicroorganisms(Entities pContext, IBDNode pNode)
         {
             // in the case where this method is called from the wrong node type 
@@ -2453,6 +2455,21 @@ namespace BDEditor.Classes
                     case BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk:
                     case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDConfiguredEntry, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                        if (null != metadataLayoutColumns)
+                        {
+                            html.AppendFormat(@"<table class=""v{0}""><tr>", (int)pNode.LayoutVariant);
+                            foreach (BDLayoutMetadataColumn metadataColumn in metadataLayoutColumns)
+                                html.AppendFormat("<th>{0}</th>", buildHtmlForMetadataColumn(pContext, pNode, metadataColumn, BDConstants.BDNodeType.BDConfiguredEntry, pFootnotes, pObjectsOnPage));
+                            html.Append("</tr>");
+
+                            bool firstColumnEmphasized = (pNode.LayoutVariant == BDConstants.LayoutVariantType.Prophylaxis_FluidExposure_Risk);
+                            foreach (IBDNode child in children)
+                            {
+                                html.Append(BuildBDConfiguredEntryHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1, false, firstColumnEmphasized));
+                            }
+                            html.Append("</table>");
+                        }
+
                         break;
 
                     case BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics:

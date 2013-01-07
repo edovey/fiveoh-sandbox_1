@@ -1443,7 +1443,6 @@ namespace BDEditor.Classes
 
             //dataContext.SaveChanges();
             #endregion
-
             #region v.1.6.39
             // fix layout variant for Antibiotics > BLactam > cross-reactivity table
             //BDNode crossReactivityTable = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("2ff81d9e-1f69-455f-846e-16a9b098ad50"));
@@ -1465,6 +1464,52 @@ namespace BDEditor.Classes
             //BDNode pathogen = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("24dee453-d880-4d8e-b869-ca89dbe13067"));
             //BDUtilities.ResetLayoutVariantWithChildren(pContext, pathogen, BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_ViridansStrep, true);
             //pContext.SaveChanges();
+            #endregion
+
+            #region v.1.6.41
+            //BDNode nodeToMove = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("9904de9f-dc28-4ab3-a5e6-2a3bc9809938"));
+            //BDNode parentNode = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("5bc35b60-135e-4d7d-89d3-b0e45d6ce9bf"));
+            //nodeToMove.SetParent(parentNode);
+            //nodeToMove.nodeType = (int)BDConstants.BDNodeType.BDCategory;
+            //nodeToMove.nodeKeyName = "BDCategory";
+            //nodeToMove.DisplayOrder = 2;
+            //BDNode.Save(pContext, nodeToMove);
+
+            BDNode newAntimatterNode = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDChapter,Guid.NewGuid());
+            newAntimatterNode.LayoutVariant = BDConstants.LayoutVariantType.FrontMatter;
+            newAntimatterNode.name = "Publication Notes";
+            newAntimatterNode.nodeKeyName = "BDChapter";
+            newAntimatterNode.parentId = Guid.Empty;
+            newAntimatterNode.DisplayOrder = 0;
+            newAntimatterNode.parentKeyName = BDUtilities.GetEnumDescription(BDConstants.BDNodeType.None);
+            newAntimatterNode.LayoutVariant = BDConstants.LayoutVariantType.FrontMatter;
+
+            BDNode frontmatter = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("5fe7fc06-5d76-438b-ac5b-0c3c483ea871"));
+            frontmatter.nodeType = (int)BDConstants.BDNodeType.BDSection;
+            frontmatter.nodeKeyName = BDUtilities.GetEnumDescription(BDConstants.BDNodeType.BDSubsection);
+            frontmatter.SetParent(newAntimatterNode);
+
+            BDNode backmatter = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("2cbb9208-5003-4155-a24e-dc4a86026d00"));
+            backmatter.nodeType = (int)BDConstants.BDNodeType.BDSection;
+            backmatter.nodeKeyName = BDUtilities.GetEnumDescription(BDConstants.BDNodeType.BDSection);
+            backmatter.SetParent(newAntimatterNode);
+            pContext.SaveChanges();
+
+            BDNode preface = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("1400e49c-8e18-4571-aba5-b792ab9332f7"));
+            preface.nodeType = (int)BDConstants.BDNodeType.BDSubsection;
+            preface.nodeKeyName = BDUtilities.GetEnumDescription(BDConstants.BDNodeType.BDSubsection);
+            preface.SetParent(frontmatter);
+
+            BDNode foreword = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("e7ee1b98-5c2d-46ab-ada2-9599baaa5260"));
+            foreword.nodeType = (int)BDConstants.BDNodeType.BDSubsection;
+            foreword.nodeKeyName = BDUtilities.GetEnumDescription(BDConstants.BDNodeType.BDSubsection);
+            foreword.SetParent(frontmatter);
+
+            BDNode afterword = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("9fa45212-0b08-452d-8443-0d4ec86792f7"));
+            afterword.nodeType = (int)BDConstants.BDNodeType.BDSubsection;
+            afterword.nodeKeyName = BDUtilities.GetEnumDescription(BDConstants.BDNodeType.BDSubsection);
+            afterword.SetParent(backmatter);
+
             #endregion
 
         }

@@ -542,7 +542,6 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Antibiotics_Dosing_RenalImpairment:
                         case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
                         case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
-                        case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
                         case BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation:
                         case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
                         case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
@@ -625,11 +624,18 @@ namespace BDEditor.Classes
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDCategory, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
+                        case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDCategory, new BDConstants.LayoutVariantType[] { layoutVariant, BDConstants.LayoutVariantType.PregnancyLactation_Perinatal_HIVProtocol }));
+                            break;
                         case BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogen, new BDConstants.LayoutVariantType[] { layoutVariant })); 
                             break;
                         case BDConstants.LayoutVariantType.Microbiology_Antibiogram:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAttachment, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        case BDConstants.LayoutVariantType.FrontMatter:
+                        case BDConstants.LayoutVariantType.BackMatter:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubsection, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         default:
                             break;

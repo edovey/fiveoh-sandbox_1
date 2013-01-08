@@ -5371,7 +5371,7 @@ namespace BDEditor.Classes
 
             BDHtmlPage notePage = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.NodeType, marked, unmarked, pPropertyName);
 
-            string inlineOverviewText = BDUtilities.buildTextFromNotes(inline, pObjectsOnPage);
+            string inlineOverviewText = BDUtilities.buildTextFromNotes(inline, pObjectsOnPage); // In approx 50% of cases, "inline" notes have been used like an "overview"
             string immediateText = BDUtilities.buildTextFromInlineNotes(immediate, pObjectsOnPage);
 
             pResolvedValue = string.Format("{0}{1}{2}", pPropertyValue.Trim(), footerMarker, immediateText);
@@ -5381,7 +5381,7 @@ namespace BDEditor.Classes
                 if (notePage != null)
                 {
                     if (pPropertyValue.Length > 0)
-                        propertyHTML.AppendFormat(@"{1}<a href=""{0}"">{2}{3}{4}</a>{5}{6}{7}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), immediateText, footerMarker, inlineOverviewText, overviewHTML, endTag);
+                        propertyHTML.AppendFormat(@"{1}<a href=""{0}"">{2}{3}</a>{4}{5}{6}{7}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), immediateText, footerMarker, inlineOverviewText, overviewHTML, endTag);
                     else
                     {
                         if (immediateText.Length > 0)
@@ -5405,7 +5405,7 @@ namespace BDEditor.Classes
                 if (notePage != null)
                 {
                     if (pPropertyValue.Length > 0)
-                        propertyHTML.AppendFormat(@"{1}<a href=""{0}"">{2}{3}</a>{4}{5}{6}{7}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), footerMarker, immediateText, endTag, inlineOverviewText, overviewHTML);
+                        propertyHTML.AppendFormat(@"{1}<a href=""{0}"">{2}{3}</a>{4}{5}{6}{7}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), immediateText, footerMarker, endTag, inlineOverviewText, overviewHTML);
                     else
                     {
                         //string inlineOverviewText = BDUtilities.buildTextFromInlineNotes(inline, pObjectsOnPage);
@@ -5426,8 +5426,9 @@ namespace BDEditor.Classes
                 {
                     propertyHTML.AppendFormat(@"{0}{1}{2}{3}{4}", startTag, pResolvedValue, endTag, inlineOverviewText, overviewHTML);
                 }
-                pResolvedValue = string.Format("{0}{1}", pResolvedValue, inlineOverviewText);
             }
+
+            pResolvedValue = string.Format("{0}{1}", pResolvedValue, inlineOverviewText);
 
             if (pResolvedValue.Trim().Length == 0) pResolvedValue = null;
 

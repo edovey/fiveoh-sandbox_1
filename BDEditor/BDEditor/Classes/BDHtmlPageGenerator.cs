@@ -5371,7 +5371,7 @@ namespace BDEditor.Classes
 
             BDHtmlPage notePage = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.NodeType, marked, unmarked, pPropertyName);
 
-            string inlineOverviewText = BDUtilities.buildTextFromNotes(inline, pObjectsOnPage);
+            string inlineOverviewText = BDUtilities.buildTextFromNotes(inline, pObjectsOnPage); // In approx 50% of cases, "inline" notes have been used like an "overview"
             string immediateText = BDUtilities.buildTextFromInlineNotes(immediate, pObjectsOnPage);
 
             pResolvedValue = string.Format("{0}{1}{2}", pPropertyValue.Trim(), footerMarker, immediateText);

@@ -82,6 +82,8 @@ namespace BDEditor.Classes
             // reset index entries to false
             BDNodeToHtmlPageIndex.ResetForRegeneration(pContext);
 
+            generatePages(pContext, pNodeList);
+
             List<BDHtmlPage> pages = BDHtmlPage.RetrieveAll(pContext);
             List<Guid> displayParentIds = BDHtmlPage.RetrieveAllDisplayParentIDs(pContext);
             List<Guid> pageIds = BDHtmlPage.RetrieveAllIds(pContext);
@@ -4648,8 +4650,8 @@ namespace BDEditor.Classes
             if(!string.IsNullOrEmpty(therapyNameHtml))
                 therapyHtml.AppendFormat("<b>{0}</b>", therapyNameHtml);
 
-            //if (pTherapy.rightBracket.Value == true)
-            //    therapyHtml.Append(RIGHT_SQUARE_BRACKET);
+            if (pTherapy.rightBracket.Value == true)
+                therapyHtml.Append(RIGHT_SQUARE_BRACKET);
 
             therapyHtml.Append(@"</td>");
 
@@ -4674,11 +4676,7 @@ namespace BDEditor.Classes
 
             if (null != resolvedValue) therapiesHaveDuration = true;
 
-            string rightBracket = "";
-            if (pTherapy.rightBracket.Value == true)
-                rightBracket = RIGHT_SQUARE_BRACKET;
-
-            therapyHtml.AppendFormat("<td>{0}{1}</td>", durationHtml, rightBracket);
+            therapyHtml.AppendFormat("<td>{0}</td>", durationHtml);
 
             therapyHtml.Append(@"</tr>");
             therapyHtml.AppendFormat(@"<tr><td> {0}</td><td /><td /></tr>", retrieveConjunctionString((int)pTherapy.therapyJoinType));

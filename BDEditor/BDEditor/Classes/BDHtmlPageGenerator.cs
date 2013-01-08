@@ -1422,14 +1422,14 @@ namespace BDEditor.Classes
                     {
                         if (therapy.dosageSameAsPrevious == false)
                             previousTherapyDosage = therapy.dosage;
-                        therapiesHaveDosage = true;
+                        //therapiesHaveDosage = true;
                     }
 
                     if (!string.IsNullOrEmpty(therapy.duration))
                     {
                         if (therapy.durationSameAsPrevious == false)
                             previousTherapyDuration = therapy.duration;
-                        therapiesHaveDuration = true;
+                        //therapiesHaveDuration = true;
                     }
 
                     previousTherapyId = therapy.Uuid;
@@ -5415,6 +5415,7 @@ namespace BDEditor.Classes
                 {
                     propertyHTML.AppendFormat(@"{0}{1}{2}{3}{4}", startTag, pResolvedValue, endTag, inlineOverviewText, overviewHTML);
                 }
+                pResolvedValue = string.Format("{0}{1}", pResolvedValue, inlineOverviewText);
             }
 
             if (pResolvedValue.Trim().Length == 0) pResolvedValue = null;

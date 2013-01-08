@@ -35,8 +35,8 @@ namespace BDEditor.Classes
         private const string PAINT_CHIP_PROPHYLAXIS = "ProphylaxisOrange.png";
         private const string LEFT_SQUARE_BRACKET = "&#91;";
         private const string RIGHT_SQUARE_BRACKET = "&#93;";
-        private const string TABLE_ROW_NO_BORDER = @"class=""d1""";  
-        private const string TABLE_ROW_WITH_BORDER = @"class=""d0""";
+        private const string TABLEROWSTYLE_NO_BORDERS = @"class=""d1""";  
+        private const string TABLEROWSTYLE_BOTTOM_BORDER = @"class=""d0""";
 
 
         //private List<BDLayoutMetadataColumn> metadataLayoutColumns = new List<BDLayoutMetadataColumn>();
@@ -1985,17 +1985,17 @@ namespace BDEditor.Classes
                             if (idxChildren == 0)
                             {
                                 if (children.Count > 1) 
-                                    html.AppendFormat(@"<tr {0}><td>{1}</td>", TABLE_ROW_NO_BORDER, amHtml);
+                                    html.AppendFormat(@"<tr {0}><td>{1}</td>", TABLEROWSTYLE_NO_BORDERS, amHtml);
                                 else
-                                    html.AppendFormat(@"<tr {0}><td>{1}</td>", TABLE_ROW_WITH_BORDER, amHtml);
+                                    html.AppendFormat(@"<tr {0}><td>{1}</td>", TABLEROWSTYLE_BOTTOM_BORDER, amHtml);
                             }
                             else
                             {
                                 if (idxChildren == children.Count - 1)
                                     // This is the last child element of the antimicrobial: first cell is empty, has bottom border
-                                    html.AppendFormat("<tr {0}><td />", TABLE_ROW_NO_BORDER);
+                                    html.AppendFormat("<tr {0}><td />", TABLEROWSTYLE_NO_BORDERS);
                                 else // intermediate table row - first cell is empty and there is no bottom border on the cells
-                                    html.AppendFormat("<tr {0}><td />", TABLE_ROW_WITH_BORDER);
+                                    html.AppendFormat("<tr {0}><td />", TABLEROWSTYLE_BOTTOM_BORDER);
                             }
                             IBDNode child = children[idxChildren];
                             switch (child.NodeType)
@@ -4634,9 +4634,9 @@ namespace BDEditor.Classes
 
             // check join type - if none, then draw the bottom border on the table row
             if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.Next)
-                styleString = TABLE_ROW_WITH_BORDER;  // row has bottom border
+                styleString = TABLEROWSTYLE_BOTTOM_BORDER;  // row has bottom border
             else
-                styleString = TABLE_ROW_NO_BORDER;  // NO bottom border
+                styleString = TABLEROWSTYLE_NO_BORDERS;  // NO bottom border
 
             therapyHtml.AppendFormat(@"<tr {0}><td>", styleString);
 
@@ -4697,9 +4697,9 @@ namespace BDEditor.Classes
 
             // check join type - if none, then draw the bottom border on the table row
             if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.Next)
-                styleString = @"class=""d0""";
+                styleString = TABLEROWSTYLE_BOTTOM_BORDER;
             else
-                styleString = @"class=""d1""";
+                styleString = TABLEROWSTYLE_NO_BORDERS;
 
             therapyHtml.AppendFormat(@"<tr {0}>", styleString);
 
@@ -4764,9 +4764,9 @@ namespace BDEditor.Classes
 
             // check join type - if NONE, then draw the bottom border on the table row
             if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.Next)
-                styleString = @"class=""d0""";
+                styleString = TABLEROWSTYLE_BOTTOM_BORDER;
             else
-                styleString = @"class=""d1""";
+                styleString = TABLEROWSTYLE_NO_BORDERS;
 
             therapyHtml.AppendFormat(@"<tr {0}>", styleString);
 
@@ -4830,9 +4830,9 @@ namespace BDEditor.Classes
 
             // check join type - if none, then draw the bottom border on the table row
             if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.Next)
-                styleString = @"class=""d0""";  // row has bottom border
+                styleString = TABLEROWSTYLE_BOTTOM_BORDER;  // row has bottom border
             else
-                styleString = @"class=""d1""";  // NO bottom border
+                styleString = TABLEROWSTYLE_NO_BORDERS;  // NO bottom border
 
             therapyHtml.AppendFormat(@"<tr {0}><td>", styleString);
 

@@ -1916,6 +1916,8 @@ namespace BDEditor.Classes
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional:
+                        case BDConstants.LayoutVariantType.FrontMatter:
+                        case BDConstants.LayoutVariantType.BackMatter:
                             {
                                 nodeControl = new BDNodeOverviewControl(pContext, pNode);
                                 BDNodeOverviewControl newOverviewControl = nodeControl as BDNodeOverviewControl;

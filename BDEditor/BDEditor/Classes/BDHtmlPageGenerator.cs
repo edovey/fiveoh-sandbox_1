@@ -135,6 +135,11 @@ namespace BDEditor.Classes
                 allPages.AddRange(childNavPages);
 
             List<BDHtmlPage> chapterPages = allPages.Distinct().ToList();
+            
+            List<BDHtmlPage> infoPages = BDHtmlPage.RetrieveHtmlPageForDisplayParentId(pContext, Guid.Parse("a6d03c7e-a095-4c04-b0e7-ffe74bcfa8e6"));
+            foreach(BDHtmlPage page in infoPages)
+                allPages.Remove(page);
+
             Debug.WriteLine("Creating home page with filtered distinct list");
             if (chapterPages.Count > 0)
                 generateNavigationPage(pContext, null, chapterPages);

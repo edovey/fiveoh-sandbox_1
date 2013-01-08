@@ -1465,25 +1465,24 @@ namespace BDEditor.Classes
             //BDUtilities.ResetLayoutVariantWithChildren(pContext, pathogen, BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_ViridansStrep, true);
             //pContext.SaveChanges();
             #endregion
-
             #region v.1.6.41
-            BDNode nodeToMove = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("9904de9f-dc28-4ab3-a5e6-2a3bc9809938"));
-            BDNode parentNode = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("5bc35b60-135e-4d7d-89d3-b0e45d6ce9bf"));
-            nodeToMove.SetParent(parentNode);
-            nodeToMove.nodeType = (int)BDConstants.BDNodeType.BDCategory;
-            nodeToMove.nodeKeyName = "BDCategory";
-            nodeToMove.DisplayOrder = 2;
-            BDNode.Save(pContext, nodeToMove);
+            //BDNode nodeToMove = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("9904de9f-dc28-4ab3-a5e6-2a3bc9809938"));
+            //BDNode parentNode = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("5bc35b60-135e-4d7d-89d3-b0e45d6ce9bf"));
+            //nodeToMove.SetParent(parentNode);
+            //nodeToMove.nodeType = (int)BDConstants.BDNodeType.BDCategory;
+            //nodeToMove.nodeKeyName = "BDCategory";
+            //nodeToMove.DisplayOrder = 2;
+            //BDNode.Save(pContext, nodeToMove);
 
-            BDNode newAntimatterNode = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDChapter, Guid.Parse("a6d03c7e-a095-4c04-b0e7-ffe74bcfa8e6"));
-            newAntimatterNode.LayoutVariant = BDConstants.LayoutVariantType.FrontMatter;
-            newAntimatterNode.name = "Publication Notes";
-            newAntimatterNode.nodeKeyName = "BDChapter";
-            newAntimatterNode.parentId = Guid.Empty;
-            newAntimatterNode.DisplayOrder = 0;
-            newAntimatterNode.parentKeyName = string.Empty;
-            newAntimatterNode.LayoutVariant = BDConstants.LayoutVariantType.FrontMatter;
-            pContext.SaveChanges();
+            //BDNode newAntimatterNode = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDChapter, Guid.Parse("a6d03c7e-a095-4c04-b0e7-ffe74bcfa8e6"));
+            //newAntimatterNode.LayoutVariant = BDConstants.LayoutVariantType.FrontMatter;
+            //newAntimatterNode.name = "Publication Notes";
+            //newAntimatterNode.nodeKeyName = "BDChapter";
+            //newAntimatterNode.parentId = Guid.Empty;
+            //newAntimatterNode.DisplayOrder = 0;
+            //newAntimatterNode.parentKeyName = string.Empty;
+            //newAntimatterNode.LayoutVariant = BDConstants.LayoutVariantType.FrontMatter;
+            //pContext.SaveChanges();
 
             //BDNode newAntimatterNode = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("a6d03c7e-a095-4c04-b0e7-ffe74bcfa8e6"));
             //BDNode preface = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("1400e49c-8e18-4571-aba5-b792ab9332f7"));

@@ -921,7 +921,7 @@ namespace BDEditor.Classes
                     bodyHTML.Append(BuildBDPathogenGroupHtml(pContext, pNode, footnotes, objectsOnPage, 1, true));
                     break;
                 case BDConstants.BDNodeType.BDPresentation:
-                    bodyHTML.Append(buildBDPresentationHtml(pContext, pNode, footnotes, objectsOnPage, 1));
+                    bodyHTML.Append(BuildBDPresentationHtml(pContext, pNode, footnotes, objectsOnPage, 1));
                     break;
                 case BDConstants.BDNodeType.BDResponse: //ks: BDFabrik doesn't show this nodeType to create a page...
                     bodyHTML.Append(BuildBDResponseHtml(pContext, pNode, footnotes, objectsOnPage, 1));
@@ -1515,7 +1515,7 @@ namespace BDEditor.Classes
         /// <param name="pFootnotes"></param>
         /// <param name="pObjectsOnPage"></param>
         /// <returns></returns>
-        public string BuildBDPathogenGroupHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel, bool pUsualPathogenTitle)
+        public string BuildBDPathogenGroupHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel, bool pHasUsualPathogenTitle)
         {
             // Exception: TherapyGroup & Therapy
             StringBuilder html = new StringBuilder();
@@ -1600,10 +1600,16 @@ namespace BDEditor.Classes
                                 break;
                             }
                         }
-                        if (pUsualPathogenTitle && childrenHavePathogens)
+                        if (pHasUsualPathogenTitle && childrenHavePathogens)
                         {
                             string title = "Usual Pathogens";
                             if (pNode.ParentId == Guid.Parse("54f2fcf0-8cbb-42d0-b61e-494838b1920e")) title = "Potential Pathogens";
+                            html.Append(string.Format("<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel), title));
+                        }
+                        else if (pHasUsualPathogenTitle && pNode.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis)
+                        {
+                            // in the specific case of this layout, the title is required even if there are no pathogens.  <ld - Jan 2013>
+                            string title = "Usual Pathogens";
                             html.Append(string.Format("<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel), title));
                         }
 
@@ -4397,7 +4403,7 @@ namespace BDEditor.Classes
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPresentation, new BDConstants.LayoutVariantType[] { layoutVariant, BDConstants.LayoutVariantType.TreatmentRecommendation14_CellulitisExtremities, BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions, BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Adult, BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Paediatric }));
                         foreach (IBDNode child in children)
                         {
-                            html.Append(buildBDPresentationHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
+                            html.Append(BuildBDPresentationHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
                         }
                         break;
                     case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
@@ -4406,7 +4412,7 @@ namespace BDEditor.Classes
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPresentation, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         foreach (IBDNode child in children)
                         {
-                            html.Append(buildBDPresentationHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
+                            html.Append(BuildBDPresentationHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
                         }
                         break;
                     case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
@@ -4417,7 +4423,7 @@ namespace BDEditor.Classes
                             switch (child.NodeType)
                             {
                                 case BDConstants.BDNodeType.BDPresentation:
-                                    html.Append(buildBDPresentationHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
+                                    html.Append(BuildBDPresentationHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
                                     break;
                                 case BDConstants.BDNodeType.BDTable:
                                     html.Append(BuildBDTableHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
@@ -4513,7 +4519,7 @@ namespace BDEditor.Classes
             return html.ToString();
         }
 
-        public string buildBDPresentationHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel)
+        public string BuildBDPresentationHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel)
         {
             // gated on child node type: very few variations and no identified customizations yet
             StringBuilder html = new StringBuilder();
@@ -4628,9 +4634,9 @@ namespace BDEditor.Classes
 
             // check join type - if none, then draw the bottom border on the table row
             if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.Next)
-                styleString = @"class=""d0""";  // row has bottom border
+                styleString = TABLE_ROW_WITH_BORDER;  // row has bottom border
             else
-                styleString = @"class=""d1""";  // NO bottom border
+                styleString = TABLE_ROW_NO_BORDER;  // NO bottom border
 
             therapyHtml.AppendFormat(@"<tr {0}><td>", styleString);
 

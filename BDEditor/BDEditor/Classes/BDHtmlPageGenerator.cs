@@ -141,7 +141,7 @@ namespace BDEditor.Classes
             
             List<BDHtmlPage> infoPages = BDHtmlPage.RetrieveHtmlPageForDisplayParentId(pContext, Guid.Parse(PUBLICATION_NOTES_UUID));
             foreach(BDHtmlPage page in infoPages)
-                allPages.Remove(page);
+                chapterPages.Remove(page);
 
             Debug.WriteLine("Creating home page with filtered distinct list");
             if (chapterPages.Count > 0)
@@ -184,7 +184,7 @@ namespace BDEditor.Classes
                 List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
                 foreach (IBDNode child in children)
                 {
-                   // if((int)child.NodeType < maxNodeType) - for debugging recursive call
+                    //if((int)child.NodeType < (int)BDConstants.BDNodeType.BDCategory)  // - for debugging recursive call
                     generateOverviewAndChildrenForNode(pContext, child, childDetailPages, childNavPages);
                 }
                 // we are NOT on a leaf node, still on a navigation level
@@ -262,7 +262,7 @@ namespace BDEditor.Classes
                             }
                             string paintChipHtml = string.Format(paintChipTag, paintChipFileName);
 
-                            pageHTML.AppendFormat(@"<table class=""v{0}"">", (int)childNode.LayoutVariant);
+                            //pageHTML.AppendFormat(@"<table class=""v{0}"">", (int)childNode.LayoutVariant);
                             pageHTML.AppendFormat(@"<tr class=""nav""><td>{0}</td><td><a href=""{1}""><b>{2}</b></a></td></tr>", paintChipHtml, childPage.Uuid.ToString().ToUpper(), childNode.Name);
                         }
                     }

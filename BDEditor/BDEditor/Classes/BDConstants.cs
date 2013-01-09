@@ -255,6 +255,13 @@ namespace BDEditor.Classes
             Antibiotics_BLactamAllergy_CrossReactivity = 2101,
             [Description("Antibiotics - BLactam Allergy Cross Reactivity Content Row")]
             Antibiotics_BLactamAllergy_CrossReactivity_ContentRow = 21011,
+
+            [Description("Antibiotics - B Lactam Allergy Classifications")]
+            Antibiotics_BLactamAllergy_Classifications = 2102,
+            [Description("Antibiotics - B Lactam Allergy Classifications Header Row")]
+            Antibiotics_BLactamAllergy_Classifications_HeaderRow = 21021,
+            [Description("Antibiotics - B Lactam Allergy Classifications Content Row")]
+            Antibiotics_BLactamAllergy_Classifications_ContentRow = 21022,
             
             [Description("Prophylaxis - Recommendations")]
             Prophylaxis = 300,

@@ -1765,6 +1765,14 @@ namespace BDEditor.Classes
             }
         }
 
+        public static string cleanNoteText(string pNoteText)
+        {
+            string resultText = pNoteText.Replace("<p>", string.Empty);
+            resultText = resultText.Replace("</p>", "<br>");
+
+            if (resultText.EndsWith("<br>")) resultText = resultText.Substring(0, resultText.Length - 4);
+            return resultText;
+        }
 
         public static string buildTextFromInlineNotes(List<BDLinkedNote> pNotes, List<Guid> pObjectsOnPage)
         {

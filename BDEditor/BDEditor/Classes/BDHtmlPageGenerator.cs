@@ -3215,7 +3215,9 @@ namespace BDEditor.Classes
                                 BDNode node = child as BDNode;
 
                                 // this is more convenient than calling buildBDAntimicrobial
-                                html.AppendFormat(@"<tr><td>{0}</td><td>{1}</td></tr>", child.Name, retrieveNoteTextForOverview(pContext, child.Uuid, pObjectsOnPage));
+                                string noteTextForCell = retrieveNoteTextForOverview(pContext, child.Uuid, pObjectsOnPage);
+                                noteTextForCell = BDUtilities.cleanNoteText(noteTextForCell);
+                                html.AppendFormat(@"<tr><td>{0}</td><td>{1}</td></tr>", child.Name, noteTextForCell);
                                 pObjectsOnPage.Add(child.Uuid);
                             }
                             html.Append(@"</table>");

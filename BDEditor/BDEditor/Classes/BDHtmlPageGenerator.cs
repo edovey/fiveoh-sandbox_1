@@ -2951,6 +2951,8 @@ namespace BDEditor.Classes
                                 html.AppendFormat(@"<tr><th>{0}</th><th>{1}</th></tr>", c2Html, c3Html);
                                 foreach (IBDNode therapyGroup in therapyGroups)
                                 {
+                                    adultDosageHTML.Clear();
+                                    pedsDosageHTML.Clear();
                                     StringBuilder therapyGroupHtml = new StringBuilder();
                                     therapyGroupHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, therapyGroup, "u", pFootnotes, pObjectsOnPage));
 
@@ -3015,9 +3017,10 @@ namespace BDEditor.Classes
                                     }
                                     #endregion
                                     adultDosageHTML.Append("</ul>");
-                                    pedsDosageHTML.Append("</ul>");
+                                    pedsDosageHTML.Append("</ul>"); 
+                                    html.AppendFormat("<tr><td>{0}</td><td>{1}</td</tr>", adultDosageHTML, pedsDosageHTML);
                                 }
-                                html.AppendFormat("<tr><td>{0}</td><td>{1}</td</tr>", adultDosageHTML, pedsDosageHTML);
+                               
                                 html.Append(@"</table>");
                             }
                         }

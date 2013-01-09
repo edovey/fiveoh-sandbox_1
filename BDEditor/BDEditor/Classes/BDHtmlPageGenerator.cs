@@ -139,6 +139,7 @@ namespace BDEditor.Classes
 
             List<BDHtmlPage> chapterPages = allPages.Distinct().ToList();
             
+            // Remove the info page from the collection of pages so that there is no link to it on the main page
             List<BDHtmlPage> infoPages = BDHtmlPage.RetrieveHtmlPageForDisplayParentId(pContext, Guid.Parse(PUBLICATION_NOTES_UUID));
             foreach(BDHtmlPage page in infoPages)
                 chapterPages.Remove(page);
@@ -262,7 +263,6 @@ namespace BDEditor.Classes
                             }
                             string paintChipHtml = string.Format(paintChipTag, paintChipFileName);
 
-                            //pageHTML.AppendFormat(@"<table class=""v{0}"">", (int)childNode.LayoutVariant);
                             pageHTML.AppendFormat(@"<tr class=""nav""><td>{0}</td><td><a href=""{1}""><b>{2}</b></a></td></tr>", paintChipHtml, childPage.Uuid.ToString().ToUpper(), childNode.Name);
                         }
                     }

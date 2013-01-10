@@ -216,21 +216,39 @@ namespace BDEditor.Views
                     lblName.Text = "Age";
                     break;
                 default:
-                    List<BDLayoutMetadataColumn> metaDataColumnList = BDLayoutMetadataColumn.RetrieveListForLayout(dataContext, currentEntry.LayoutVariant);
-                    int columnNumber = 0;
-                    foreach (BDLayoutMetadataColumn columnDef in metaDataColumnList)
-                    {
-                        switch (columnNumber)
-                        {
-                            case 0:
-                                lblVirtualColumnOne.Text = columnDef.label;
-                                break;
-                            case 1:
-                                lblVirtualColumnTwo.Text = columnDef.label;
-                                break;
-                        }
-                        columnNumber++;
-                    }
+                    List<String> virtualColumnLabelList = BDCombinedEntry.VirtualColumnLabelListForIndex(dataContext, currentEntry.LayoutVariant);
+                    lblVirtualColumnOne.Text = virtualColumnLabelList[0];
+                    lblVirtualColumnTwo.Text = virtualColumnLabelList[1];
+
+                    //List<BDLayoutMetadataColumn> metaDataColumnList = BDLayoutMetadataColumn.RetrieveListForLayout(dataContext, currentEntry.LayoutVariant);
+                    //int columnNumber = 0;
+                    //foreach (BDLayoutMetadataColumn columnDef in metaDataColumnList)
+                    //{
+                    //    string columnName = columnDef.FieldNameForColumnOfNodeType(dataContext, BDConstants.BDNodeType.BDCombinedEntry)
+                    //    switch (columnName)
+                    //    {
+                    //        case BDCombinedEntry.VIRTUALCOLUMNNAME_01:
+                    //            lblVirtualColumnOne.Text = columnDef.label;
+                    //            break;
+                    //        case BDCombinedEntry.VIRTUALCOLUMNNAME_02:
+                    //            lblVirtualColumnTwo.Text = columnDef.label;
+                    //            break;
+                    //        default:
+                    //            switch (columnNumber)
+                    //            {
+                    //                case 0:
+                    //                    lblVirtualColumnOne.Text = columnDef.label;
+                    //                    break;
+                    //                case 1:
+                    //                    lblVirtualColumnTwo.Text = columnDef.label;
+                    //                    break;
+                    //            }
+                    //            break;
+                    //    }
+
+                        
+                    //    columnNumber++;
+                    //}
                     break;
             }
 

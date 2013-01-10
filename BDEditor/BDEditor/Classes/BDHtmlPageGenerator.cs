@@ -2726,7 +2726,7 @@ namespace BDEditor.Classes
 
                     //NOTE: This expects that a matching number of columns have been defined
                     html.AppendFormat(@"<table class=""v{0}""><tr>", (int)pNode.LayoutVariant);
-
+                    int columnIndex = 0;
                     foreach (BDLayoutMetadataColumn layoutColumn in metadataLayoutColumns)
                     {
                         string definedColumnName = layoutColumn.FieldNameForColumnOfNodeType(pContext, BDConstants.BDNodeType.BDCombinedEntry);
@@ -2740,6 +2740,23 @@ namespace BDEditor.Classes
                                 break;
                             case  BDCombinedEntry.VIRTUALPROPERTYNAME_ENTRYDETAIL:
                                 col3Header = layoutColumn.label;
+                                break;
+                            case BDCombinedEntry.VIRTUALCOLUMNNAME_01:
+                                col2Header = layoutColumn.label;
+                                break;
+                            case BDCombinedEntry.VIRTUALCOLUMNNAME_02:
+                                col3Header = layoutColumn.label;
+                                break;
+                            case "":
+                                switch (columnIndex)
+                                {
+                                    case 0:
+                                        col2Header = layoutColumn.label;
+                                        break;
+                                    case 1:
+                                        col3Header = layoutColumn.label;
+                                        break;
+                                }
                                 break;
                         }
                     }

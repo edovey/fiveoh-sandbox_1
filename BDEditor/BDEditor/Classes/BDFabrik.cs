@@ -2316,6 +2316,8 @@ namespace BDEditor.Classes
                     propertyList.Add(BDCombinedEntry.PROPERTYNAME_GROUPTITLE);
                     propertyList.Add(BDCombinedEntry.VIRTUALPROPERTYNAME_ENTRYTITLE);
                     propertyList.Add(BDCombinedEntry.VIRTUALPROPERTYNAME_ENTRYDETAIL);
+                    propertyList.Add(BDCombinedEntry.VIRTUALCOLUMNNAME_01);
+                    propertyList.Add(BDCombinedEntry.VIRTUALCOLUMNNAME_02);
                     break;
                 case BDConstants.BDNodeType.BDDosage:
                     propertyList.Add(BDDosage.PROPERTYNAME_COST);

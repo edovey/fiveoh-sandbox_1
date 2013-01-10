@@ -30,6 +30,9 @@ namespace BDEditor.DataModel
         public const string PROPERTYNAME_ENTRYTITLE04 = @"EntryTitle04";
         public const string PROPERTYNAME_ENTRY04 = @"EntryDetail04";
 
+        public const string VIRTUALCOLUMNNAME_01 = @"VirtualColumn01";
+        public const string VIRTUALCOLUMNNAME_02 = @"VirtualColumn02";
+
         static public BDCombinedEntry Create(Entities pDataContext, BDConstants.LayoutVariantType pLayoutVariant, Guid pParentUuid, BDConstants.BDNodeType pParentNodeType, string pName)
         {
             BDCombinedEntry entry = BDCombinedEntry.CreateBDCombinedEntry(Guid.NewGuid());
@@ -170,6 +173,51 @@ namespace BDEditor.DataModel
                 if (null != entryJoinType04) value = (BDConstants.BDJoinType)entryJoinType04;
                 return value;
             }
+        }
+
+        /// <summary>
+        /// Returns a list of size 2 with the virtual column label list
+        /// </summary>
+        /// <param name="pDataContext"></param>
+        /// <param name="pLayoutVariant"></param>
+        /// <returns></returns>
+        public static List<String> VirtualColumnLabelListForIndex(Entities pDataContext, BDConstants.LayoutVariantType pLayoutVariant)
+        {
+            List<String> columnLabelList = new List<string>(2); // There may only be two virtual columns
+            columnLabelList.Add(string.Empty);
+            columnLabelList.Add(string.Empty);
+
+            List<BDLayoutMetadataColumn> metaDataColumnList = BDLayoutMetadataColumn.RetrieveListForLayout(pDataContext, pLayoutVariant);
+
+            int columnNumber = 0;
+            foreach (BDLayoutMetadataColumn columnDef in metaDataColumnList)
+            {
+                string columnName = columnDef.FieldNameForColumnOfNodeType(pDataContext, BDConstants.BDNodeType.BDCombinedEntry);
+                switch (columnName)
+                {
+                    case BDCombinedEntry.VIRTUALCOLUMNNAME_01:
+                        columnLabelList[0] = columnDef.label;
+                        break;
+                    case BDCombinedEntry.VIRTUALCOLUMNNAME_02:
+                        columnLabelList[1] = columnDef.label;
+                        break;
+                    case "":
+                        switch (columnNumber)
+                        {
+                            case 0:
+                                columnLabelList[0] = columnDef.label;
+                                break;
+                            case 1:
+                                columnLabelList[1] = columnDef.label;
+                                break;
+                        }
+                        break;
+                }
+
+                columnNumber++;
+                if (columnNumber > 1) break;
+            }
+            return columnLabelList;
         }
 
         #region IBDNode

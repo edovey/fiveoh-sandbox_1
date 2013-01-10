@@ -128,10 +128,7 @@ namespace BDEditor.Views
 
             btnLinkedNote.Tag = BDNode.PROPERTYNAME_NAME;
             setFormLayoutState();
-            lblInfo.Visible = false;
-#if DEBUG
             lblInfo.Visible = true;
-#endif
             if (null != currentNode)
             {
                 if (tbName.Text != currentNode.Name) tbName.Text = currentNode.Name;

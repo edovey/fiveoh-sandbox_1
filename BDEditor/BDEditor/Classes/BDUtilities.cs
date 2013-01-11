@@ -1767,10 +1767,15 @@ namespace BDEditor.Classes
 
         public static string cleanNoteText(string pNoteText)
         {
-            string resultText = pNoteText.Replace("<p>", string.Empty);
-            resultText = resultText.Replace("</p>", "<br>");
+            string resultText = string.Empty;
+            string noteText = CleanseStringOfEmptyTag(pNoteText, "p");
+            if (!string.IsNullOrEmpty(noteText))
+            {
+                resultText = pNoteText.Replace("<p>", string.Empty);
+                resultText = resultText.Replace("</p>", "<br>");
 
-            if (resultText.EndsWith("<br>")) resultText = resultText.Substring(0, resultText.Length - 4);
+                if (resultText.EndsWith("<br>")) resultText = resultText.Substring(0, resultText.Length - 4);
+            }
             return resultText;
         }
 
@@ -1781,17 +1786,23 @@ namespace BDEditor.Classes
             {
                 foreach (BDLinkedNote note in pNotes)
                 {
-                    if ((null == note) || (note.documentText.Length <= BDHtmlPageGenerator.EMPTY_PARAGRAPH)) continue;
+                    if (null != note)
+                    {
+                        string documentText = CleanseStringOfEmptyTag(note.documentText, "p");
+                        if (!string.IsNullOrEmpty(documentText))
+                        {
+                            documentText = documentText.Replace("<p>", string.Empty);
+                            documentText = documentText.Replace("</p>", "<br>");
 
-                    string documentText = note.documentText;
+                            if (documentText.EndsWith("<br>"))
+                            {
+                                documentText = documentText.Substring(0, documentText.Length - 4);
+                            }
 
-                    documentText = documentText.Replace("<p>", string.Empty);
-                    documentText = documentText.Replace("</p>", "<br>");
-
-                    if (documentText.EndsWith("<br>")) documentText = documentText.Substring(0, documentText.Length - 4);
-
-                    noteString.AppendFormat(" {0}", documentText);
-                    if (null != pObjectsOnPage) pObjectsOnPage.Add(note.Uuid);
+                            noteString.AppendFormat(" {0}", documentText);
+                            if (null != pObjectsOnPage) pObjectsOnPage.Add(note.Uuid);
+                        }
+                    }
                 }
             }
             return noteString.ToString();
@@ -1802,13 +1813,67 @@ namespace BDEditor.Classes
             StringBuilder noteString = new StringBuilder();
             foreach (BDLinkedNote note in pNotes)
             {
-                if ((null == note) || (note.documentText.Length <= BDHtmlPageGenerator.EMPTY_PARAGRAPH)) continue;
- 
-                noteString.Append(note.documentText);
-                pObjectsOnPage.Add(note.Uuid);
-
+                if (null != note)
+                {
+                    string documentText = CleanseStringOfEmptyTag(note.documentText, "p");
+                    if (!string.IsNullOrEmpty(documentText))
+                    {
+                        noteString.Append(note.documentText);
+                        pObjectsOnPage.Add(note.Uuid);
+                    } 
+                }
             }
+
             return noteString.ToString();
+        }
+
+        /// <summary>
+        /// Test for and cleanse if necessary, a string containing only a start and end tag. 
+        /// Returns original string if not "empty" or string.Empty if cleansed
+        /// </summary>
+        /// <param name="pString"></param>
+        /// <param name="pTagRoot"></param>
+        /// <returns>Returns original string if not "empty" or string.Empty if cleansed</returns>
+        public static string CleanseStringOfEmptyTag(string pString, string pTagRoot)
+        {
+            string result = pString;
+
+            if (!String.IsNullOrEmpty(pTagRoot))
+            {
+                string startTag = string.Format("<{0}>", pTagRoot);
+                string endTag = string.Format("</{0}>", pTagRoot);
+                result = CleanseStringOfEmptyTag(pString, startTag, endTag);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Test for and cleanse if necessary, a string containing only a start and end tag.
+        /// Returns original string if not "empty" or string.Empty if cleansed
+        /// </summary>
+        /// <param name="pString"></param>
+        /// <param name="pStartTag"></param>
+        /// <param name="pEndTag"></param>
+        /// <returns>Returns original string if not "empty" or string.Empty if cleansed</returns>
+        public static string CleanseStringOfEmptyTag(string pString, string pStartTag, string pEndTag)
+        {
+            string resultValue = pString;
+            if (!String.IsNullOrEmpty(pStartTag) && !String.IsNullOrEmpty(pEndTag))
+            {
+                string startTag = pStartTag.ToLower();
+                string endTag = pEndTag.ToLower();
+
+                string testValue = pString.ToLower();
+                testValue = testValue.Replace(startTag, string.Empty);
+                testValue = testValue.Replace(endTag, string.Empty);
+
+                if (string.IsNullOrEmpty(testValue))
+                {
+                    resultValue = string.Empty;
+                }
+            }
+
+            return resultValue;
         }
     }
 }

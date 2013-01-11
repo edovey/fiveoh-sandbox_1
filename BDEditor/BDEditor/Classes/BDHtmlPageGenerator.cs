@@ -2458,13 +2458,26 @@ namespace BDEditor.Classes
                             html.AppendFormat(@"<{0}>SOURCE:  {1}</{0}>", HtmlHeaderTagLevelString(pLevel + 3), retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Name_fieldNote", BDConfiguredEntry.PROPERTYNAME_NAME, pObjectsOnPage, true, pFootnotes));
                             html.AppendFormat(@"<{0}>{1} {2}</{0}>", HtmlHeaderTagLevelString(pLevel + 3), c5Html, c1Html);
                             html.AppendFormat(@"<table class=""v{3}""><tr><th>{0}</th><th>{1}</th><th>{2}</th></tr>", c2Html, c3Html, c4Html, (int)entry.LayoutVariant);
+
+                            string fieldNoteText1 = retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field01_fieldNote", BDConfiguredEntry.PROPERTYNAME_FIELD01, pObjectsOnPage, true, pFootnotes);
+                            string fieldNoteText2 = retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field02_fieldNote", BDConfiguredEntry.PROPERTYNAME_FIELD02, pObjectsOnPage, true, pFootnotes);
+                            string fieldNoteText3 = retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field03_fieldNote", BDConfiguredEntry.PROPERTYNAME_FIELD03, pObjectsOnPage, true, pFootnotes);
+
+                            List<BDLinkedNote> fieldFootnoteList1 = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, entry.Uuid, BDConfiguredEntry.PROPERTYNAME_FIELD01, BDConstants.LinkedNoteType.Footnote);
+                            List<BDLinkedNote> fieldFootnoteList2 = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, entry.Uuid, BDConfiguredEntry.PROPERTYNAME_FIELD02, BDConstants.LinkedNoteType.Footnote);
+                            List<BDLinkedNote> fieldFootnoteList3 = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, entry.Uuid, BDConfiguredEntry.PROPERTYNAME_FIELD03, BDConstants.LinkedNoteType.Footnote);
+
+                            string fieldNoteFootnote1 = buildFooterMarkerForList(fieldFootnoteList1, true, pFootnotes, pObjectsOnPage);
+                            string fieldNoteFootnote2 = buildFooterMarkerForList(fieldFootnoteList2, true, pFootnotes, pObjectsOnPage);
+                            string fieldNoteFootnote3 = buildFooterMarkerForList(fieldFootnoteList3, true, pFootnotes, pObjectsOnPage);
+
                             html.AppendFormat("<tr><td>{0}{1}</td><td>{2}{3}</td><td>{4}{5}</td></tr>",
-                                retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field01_fieldNote", BDConfiguredEntry.PROPERTYNAME_FIELD01, pObjectsOnPage, true, pFootnotes),
-                                buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, entry.Uuid, BDConfiguredEntry.PROPERTYNAME_FIELD01, BDConstants.LinkedNoteType.Footnote), true, pFootnotes, pObjectsOnPage),
-                                retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field02_fieldNote", BDConfiguredEntry.PROPERTYNAME_FIELD02, pObjectsOnPage, true, pFootnotes),
-                                buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, entry.Uuid, BDConfiguredEntry.PROPERTYNAME_FIELD02, BDConstants.LinkedNoteType.Footnote), true, pFootnotes, pObjectsOnPage),
-                                retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field03_fieldNote", BDConfiguredEntry.PROPERTYNAME_FIELD03, pObjectsOnPage, true, pFootnotes),
-                                buildFooterMarkerForList(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, entry.Uuid, BDConfiguredEntry.PROPERTYNAME_FIELD03, BDConstants.LinkedNoteType.Footnote), true, pFootnotes, pObjectsOnPage));
+                                fieldNoteText1,
+                                fieldNoteFootnote1,
+                                fieldNoteText2,
+                                fieldNoteFootnote2,
+                                fieldNoteText3,
+                                fieldNoteFootnote3);
 
                             html.Append("</table>");
                             pObjectsOnPage.Add(entry.Uuid);
@@ -5600,6 +5613,7 @@ namespace BDEditor.Classes
                 // retrieve any linked notes for the named property; add to footnote collection and mark the text
                 if (pFieldPropertyName != string.Empty)
                 {
+                    //TODO:Remove connection of ALL notes as footnotes. UI must not allow linked note button when overview editor is visible on ConfiguredEntries
                     List<BDLinkedNote> fieldNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pParentId, pFieldPropertyName, BDConstants.LinkedNoteType.Footnote);
                     fieldNotes.AddRange(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pParentId, pFieldPropertyName, BDConstants.LinkedNoteType.Inline));
                     fieldNotes.AddRange(retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pParentId, pFieldPropertyName, BDConstants.LinkedNoteType.MarkedComment));

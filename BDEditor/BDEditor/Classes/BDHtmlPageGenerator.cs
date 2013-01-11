@@ -886,7 +886,7 @@ namespace BDEditor.Classes
 
                 List<BDLinkedNote> legendNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Legend);
                 string legendHTML = buildTextFromNotes(legendNotes, objectsOnPage);
-                if (legendHTML.Length > EMPTY_PARAGRAPH)
+                if (!string.IsNullOrEmpty(legendHTML))
                     bodyHTML.Append(legendHTML);
 
             }
@@ -959,16 +959,25 @@ namespace BDEditor.Classes
             return htmlPage;
         }
 
+        /// <summary>
+        /// Will return string.Empty if result contains only 'p /p' tags
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pNode"></param>
+        /// <param name="pObjectsOnPage"></param>
+        /// <returns></returns>
         public string BuildBDLegendHtml(Entities pContext, IBDNode pNode, List<Guid> pObjectsOnPage)
         {
             if (null == pNode) return string.Empty;
 
             StringBuilder html = new StringBuilder();
             List<BDLinkedNote> legendNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Legend);
+
             foreach (BDLinkedNote note in legendNotes)
                 pObjectsOnPage.Add(note.Uuid);
+
             string legendHTML = buildTextFromNotes(legendNotes, pObjectsOnPage);
-            if (legendHTML.Length > EMPTY_PARAGRAPH)
+            if (!string.IsNullOrEmpty(legendHTML))
                 html.Append(legendHTML);
 
             return html.ToString();
@@ -1180,7 +1189,7 @@ namespace BDEditor.Classes
                 bodyHTML.Append("</table>");
 
                 string legendHTML = BuildBDLegendHtml(pContext, table, objectsOnPage);
-                if (legendHTML.Length > EMPTY_PARAGRAPH)
+                if (!string.IsNullOrEmpty(legendHTML))
                     bodyHTML.Append(legendHTML);
             }
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
@@ -1234,9 +1243,10 @@ namespace BDEditor.Classes
             {
                 foreach (BDLinkedNote mNote in pMarkedNotes)
                 {
-                    if (mNote.documentText.Length > EMPTY_PARAGRAPH)
+                    string documentText = BDUtilities.CleanseStringOfEmptyTag(mNote.documentText, "p");
+                    if (!string.IsNullOrEmpty(documentText))
                     {
-                        noteHtml.Append(mNote.documentText);
+                        noteHtml.Append(documentText);
                        // objectsOnPage.Add(mNote.Uuid);
                     }
                 }
@@ -1246,9 +1256,10 @@ namespace BDEditor.Classes
             {
                 foreach (BDLinkedNote uNote in pUnmarkedNotes)
                 {
-                    if (uNote.documentText.Length > EMPTY_PARAGRAPH)
+                    string documentText = BDUtilities.CleanseStringOfEmptyTag(uNote.documentText, "p");
+                    if (!string.IsNullOrEmpty(documentText))
                     {
-                        noteHtml.Append(uNote.documentText);
+                        noteHtml.Append(documentText);
                         //objectsOnPage.Add(uNote.Uuid);
                     }
                 }
@@ -1257,13 +1268,15 @@ namespace BDEditor.Classes
             List<BDHtmlPage> columnHtmlPages = BDHtmlPage.RetrieveHtmlPageForDisplayParentId(pContext, pLayoutColumn.Uuid);
             BDHtmlPage resultPage = null;
             foreach (BDHtmlPage page in columnHtmlPages)
+            {
                 if (page.documentText.Contains(noteHtml.ToString()))
                 {
                     resultPage = page;
                     break;
                 }
-
-            if (noteHtml.ToString().Length > EMPTY_PARAGRAPH && resultPage == null)
+            }
+            string noteHtmlText = BDUtilities.CleanseStringOfEmptyTag(noteHtml.ToString(), "p");
+            if (!string.IsNullOrEmpty(noteHtmlText) && resultPage == null)
             {
                 resultPage = writeLayoutBDHtmlPage(pContext, pLayoutColumn, noteHtml.ToString(), objectsOnPage, BDConstants.BDHtmlPageType.Comments);
             }
@@ -1280,9 +1293,10 @@ namespace BDEditor.Classes
             {
                 foreach (BDLinkedNote mNote in pMarkedNotes)
                 {
-                    if (mNote.documentText.Length > EMPTY_PARAGRAPH)
+                    string documentText = BDUtilities.CleanseStringOfEmptyTag(mNote.documentText, "p");
+                    if (!string.IsNullOrEmpty(documentText))
                     {
-                        noteHtml.Append(mNote.documentText);
+                        noteHtml.Append(documentText);
                        //objectsOnPage.Add(mNote.Uuid);
                     }
                 }
@@ -1292,9 +1306,10 @@ namespace BDEditor.Classes
             {
                 foreach (BDLinkedNote uNote in pUnmarkedNotes)
                 {
-                    if (uNote.documentText.Length > EMPTY_PARAGRAPH)
+                    string documentText = BDUtilities.CleanseStringOfEmptyTag(uNote.documentText, "p");
+                    if (!String.IsNullOrEmpty(documentText))
                     {
-                        noteHtml.Append(uNote.documentText);
+                        noteHtml.Append(documentText);
                         //objectsOnPage.Add(uNote.Uuid);
                     }
                 }
@@ -1305,7 +1320,8 @@ namespace BDEditor.Classes
 
         private BDHtmlPage generatePageForLinkedNotes(Entities pContext, Guid pDisplayParentId, BDConstants.BDNodeType pDisplayParentType, string pPageHtml, BDConstants.BDHtmlPageType pPageType, List<Guid> pObjectsOnPage, string pParentKeyPropertyName)
         {
-            if (pPageHtml.Length > EMPTY_PARAGRAPH)
+            string testValue = BDUtilities.CleanseStringOfEmptyTag(pPageHtml, "p");
+            if (!string.IsNullOrEmpty(testValue))
             {
                 // the linked note being processed will have a parent that is a BDNode OR another linked note
                 IBDNode node = BDFabrik.RetrieveNode(pContext, pDisplayParentId);
@@ -1339,7 +1355,7 @@ namespace BDEditor.Classes
         {
             List<Guid> objectsOnPage = new List<Guid>();
             string reference = buildTextForParentAndPropertyFromLinkedNotes(pContext, pPropertyName, pNode, BDConstants.LinkedNoteType.Reference, objectsOnPage);
-            if (reference.Length > EMPTY_PARAGRAPH)
+            if (!string.IsNullOrEmpty(reference))
             {
                 StringBuilder referenceText = new StringBuilder();
                 referenceText.AppendFormat(@"<h2>{0} References</h2>", pNode.Name);
@@ -1375,7 +1391,8 @@ namespace BDEditor.Classes
         {
             StringBuilder notesHTML = new StringBuilder();
             List<BDLinkedNote> notes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, pPropertyName, pNoteType);
-            notesHTML.Append(buildTextFromNotes(notes,pObjectsOnPage));
+      
+            notesHTML.Append(buildTextFromNotes(notes, pObjectsOnPage));
             return notesHTML.ToString();
         }
 
@@ -1588,7 +1605,7 @@ namespace BDEditor.Classes
 
                         List<BDLinkedNote> legendNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.ParentId.Value, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Legend);
                         string legendHTML = buildTextFromNotes(legendNotes, pObjectsOnPage);
-                        if (legendHTML.Length > EMPTY_PARAGRAPH)
+                        if (!string.IsNullOrEmpty(legendHTML))
                             html.Append(legendHTML);
                         break;
 
@@ -1661,7 +1678,7 @@ namespace BDEditor.Classes
 
                                         List<BDLinkedNote> lgndNotes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.ParentId.Value, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Legend);
                                         string lgndHtml = buildTextFromNotes(lgndNotes, pObjectsOnPage);
-                                        if (lgndHtml.Length > EMPTY_PARAGRAPH)
+                                        if (!string.IsNullOrEmpty(lgndHtml))
                                             html.Append(lgndHtml);
                                         break;
                                 }
@@ -1788,7 +1805,7 @@ namespace BDEditor.Classes
                                 case BDConstants.BDNodeType.BDPresentation:
 
                                     string symptoms = retrieveNoteTextForOverview(pContext, child.Uuid, pObjectsOnPage);
-                                    if (symptoms.Length > EMPTY_PARAGRAPH)
+                                    if (!string.IsNullOrEmpty(symptoms))
                                         html.AppendFormat(@"<u><b>Symptoms</b></u><br>{0}", symptoms);
                                     pObjectsOnPage.Add(child.Uuid);
                                    break;
@@ -1800,7 +1817,7 @@ namespace BDEditor.Classes
 
                         // overview - contains 'Comments'
                         string comments = retrieveNoteTextForOverview(pContext, pNode.Uuid, pObjectsOnPage);
-                        if (comments.Length > EMPTY_PARAGRAPH)
+                        if (!string.IsNullOrEmpty(comments))
                             html.AppendFormat(@"<u><b>Comments</b></u><br>{0}", comments);
                         break;
                     case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
@@ -5169,18 +5186,22 @@ namespace BDEditor.Classes
 
             nodeHTML.Append(buildReferenceHtml(pContext, pNode, pObjectsOnPage));
 
-            if (nodeHTML.Length <= (pHeaderTagLevel.Length * 2 + 6))
-                return string.Empty;
-            else
-                return nodeHTML.ToString();
+            return nodeHTML.ToString();
         }
 
+        /// <summary>
+        /// Will cleanse each note via BDUtilities.CleanseStringOfEmptyTag
+        /// </summary>
+        /// <param name="pNotes"></param>
+        /// <param name="pObjectsOnPage"></param>
+        /// <returns></returns>
         private string buildTextFromNotes(List<BDLinkedNote> pNotes, List<Guid> pObjectsOnPage)
         {
             StringBuilder noteString = new StringBuilder();
             foreach (BDLinkedNote note in pNotes)
             {
-                if (note.documentText.Length > EMPTY_PARAGRAPH)
+                string documentText = BDUtilities.CleanseStringOfEmptyTag(note.documentText, "p");
+                if (!string.IsNullOrEmpty(documentText))
                 {
                     noteString.Append(note.documentText);
                     pObjectsOnPage.Add(note.Uuid);
@@ -5231,7 +5252,8 @@ namespace BDEditor.Classes
             List<BDHtmlPage> referencePages = BDHtmlPage.RetrieveHtmlPageForDisplayParentIdOfPageType(pContext, pNode.Uuid, BDConstants.BDHtmlPageType.Reference);
             foreach (BDHtmlPage refPage in referencePages)
             {
-                if (refPage.documentText.Length > EMPTY_PARAGRAPH)
+                string documentText = BDUtilities.CleanseStringOfEmptyTag(refPage.documentText, "p");
+                if (!string.IsNullOrEmpty(documentText))
                 {
                     refHTML.AppendFormat(@"<br><a href=""{0}"">References</a>", refPage.Uuid.ToString().ToUpper());
                     pObjectsOnPage.Add(refPage.Uuid);
@@ -5496,8 +5518,6 @@ namespace BDEditor.Classes
             // overview
 
             string overviewHTML = retrieveNoteTextForOverview(pContext, pNode.Uuid, pObjectsOnPage);
-            if (overviewHTML.Length <= EMPTY_PARAGRAPH)
-                overviewHTML = @"";
 
             pObjectsOnPage.Add(pNode.Uuid);
 
@@ -5591,10 +5611,10 @@ namespace BDEditor.Classes
                     pObjectsOnPage.Add(linkedNote.Uuid);
                 }
             }
-            if (linkedNoteHtml.Length > EMPTY_PARAGRAPH)
-                return linkedNoteHtml.ToString();
-            else
-                return "";
+
+            string resultValue = BDUtilities.CleanseStringOfEmptyTag(linkedNoteHtml.ToString(), "p");
+
+            return resultValue;
         }
 
         private string retrieveNoteTextForConfiguredEntryField(Entities pContext, Guid pParentId, string pNotePropertyName, List<Guid> pObjectsOnPage, List<BDLinkedNote> pFootnotesOnPage)
@@ -5608,7 +5628,8 @@ namespace BDEditor.Classes
             List<BDLinkedNote> notes = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pParentId, pNotePropertyName, BDConstants.LinkedNoteType.Inline);
             foreach (BDLinkedNote note in notes)
             {
-                if (null != note && note.documentText.Length > EMPTY_PARAGRAPH)
+                string documentText = BDUtilities.CleanseStringOfEmptyTag(note.documentText, "p");
+                if (!String.IsNullOrEmpty(documentText))
                 {
                     string resultText = string.Empty;
                     if (trimTags) // trim the start and end paragraph tags
@@ -5792,7 +5813,8 @@ namespace BDEditor.Classes
                                         if (linkTargetAssn.LinkedNoteType == BDConstants.LinkedNoteType.External)
                                         {
                                             BDLinkedNote targetNote = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, linkTargetAssn.linkedNoteId);
-                                            if (targetNote.documentText.Length > EMPTY_PARAGRAPH)
+                                            string documentText = BDUtilities.CleanseStringOfEmptyTag(targetNote.documentText, "p");
+                                            if (!String.IsNullOrEmpty(documentText))
                                             {
                                                 //Remove all the paragraph markers and such.
                                                 string externalLinkText = targetNote.documentText.Replace("<p>", string.Empty);
@@ -5825,7 +5847,8 @@ namespace BDEditor.Classes
                                             {
                                                 // create an html page for the linked note - if its a note-in-note it may not have been created yet
                                                 BDLinkedNote targetNote = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, linkTargetAssn.linkedNoteId);
-                                                if (targetNote.documentText.Length > EMPTY_PARAGRAPH)
+                                                string documentText = BDUtilities.CleanseStringOfEmptyTag(targetNote.documentText, "p");
+                                                if (!String.IsNullOrEmpty(documentText))
                                                 {
                                                     List<Guid> objectsOnPage = new List<Guid>();
                                                     objectsOnPage.Add(linkTargetAssn.linkedNoteId.Value);
@@ -5855,7 +5878,8 @@ namespace BDEditor.Classes
             bool hasContent = false;
             foreach (BDLinkedNote note in pNotes)
             {
-                if (note.documentText.Length > EMPTY_PARAGRAPH)
+                string documentText = BDUtilities.CleanseStringOfEmptyTag(note.documentText, "p");
+                if (!String.IsNullOrEmpty(documentText))
                 {
                     hasContent = true;
                     break;

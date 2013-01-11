@@ -2079,8 +2079,6 @@ namespace BDEditor.Classes
                             if (idxChildren == children.Count - 1)
                                 isLastChild = true;
 
-                            string rowStyle = (isLastChild) ? TABLEROWSTYLE_BOTTOM_BORDER : TABLEROWSTYLE_NO_BORDERS;
-
                             IBDNode child = children[idxChildren];
                             switch (child.NodeType)
                             {
@@ -2092,12 +2090,14 @@ namespace BDEditor.Classes
                                     // if this is the first row, put antimicrobial in the first column
                                     string cellHtml = buildCellHTML(pContext, child, BDNode.PROPERTYNAME_NAME, child.Name, false, pFootnotes, pObjectsOnPage);
                                     if (isFirstChild)
-                                        html.AppendFormat("<tr {0}><td>{1}</td><td><b><u>{2}</u></b></td><td /></tr>", rowStyle, amHtml, cellHtml);
+                                        html.AppendFormat("<tr {0}><td>{1}</td><td><b><u>{2}</u></b></td><td /></tr>", TABLEROWSTYLE_NO_BORDERS, amHtml, cellHtml);
                                     else
-                                        html.AppendFormat("<tr {0}><td /><td><b><u>{1}</u></b></td><td /></tr>", rowStyle, cellHtml);
+                                        html.AppendFormat("<tr {0}><td /><td><b><u>{1}</u></b></td><td /></tr>", TABLEROWSTYLE_NO_BORDERS, cellHtml);
 
                                     bool isLastTopicChild = false;
-                                    bool isFirstTopicChild = true;
+
+                                    // a row has been written to the table for the topic, so isFirstRow is false
+                                    bool isFirstRow = false;
 
                                     List<IBDNode> topicChildren = BDFabrik.GetChildrenForParent(pContext, child);
                                     for (int idxTopicChildren = 0; idxTopicChildren < topicChildren.Count; idxTopicChildren++)
@@ -2109,13 +2109,12 @@ namespace BDEditor.Classes
                                         switch (topicChild.NodeType)
                                         {
                                             case BDConstants.BDNodeType.BDDosageGroup:
-                                                html.Append(BuildBDDosageGroupHtml(pContext, topicChild, pFootnotes, pObjectsOnPage, pLevel, isFirstChild && isFirstTopicChild, isLastChild && isLastTopicChild, amHtml));
+                                                html.Append(BuildBDDosageGroupHtml(pContext, topicChild, pFootnotes, pObjectsOnPage, pLevel, isFirstRow, isLastChild && isLastTopicChild, amHtml));
                                                 break;
                                             case BDConstants.BDNodeType.BDDosage:
-                                                html.Append(BuildBDDosageHtml(pContext, topicChild, pFootnotes, pObjectsOnPage, pLevel, isFirstChild && isFirstTopicChild, isLastChild && isLastTopicChild, amHtml));
+                                                html.Append(BuildBDDosageHtml(pContext, topicChild, pFootnotes, pObjectsOnPage, pLevel, isFirstRow, isLastChild && isLastTopicChild, amHtml));
                                                 break;
                                         }
-                                        isFirstTopicChild = false;
                                     }
                                     break;
                                 case BDConstants.BDNodeType.BDDosageGroup:
@@ -4605,7 +4604,7 @@ namespace BDEditor.Classes
                     if (pIsFirstChildRow) // append parent html for first column
                         html.AppendFormat("<tr {0}><td>{1}</td>", rowStyle, pParentHtml);
                     else // append empty column
-                        html.AppendFormat("<tr {0}><td />", rowStyle, pParentHtml);
+                        html.AppendFormat("<tr {0}><td />", rowStyle);
 
                     string dosageCellHtml = buildCellHTML(pContext, dosage, BDDosage.PROPERTYNAME_DOSAGE, dosage.dosage, false, pFootnotes, pObjectsOnPage);
                     if (dosage.joinType == (int)BDConstants.BDJoinType.Next)
@@ -4636,22 +4635,20 @@ namespace BDEditor.Classes
                     // append a row for the DosageGroup
                     string dosageGroupHtml = buildCellHTML(pContext, pNode, BDNode.PROPERTYNAME_NAME, pNode.Name, false, pFootnotes, pObjectsOnPage);
                     if (pIsFirstRow) // add parent to first column (antimicrobial)
-                        html.AppendFormat("<tr {0}><td>{1}</td><td><u>{1}:</u></td><td /></tr>", TABLEROWSTYLE_NO_BORDERS, pParentHtml, dosageGroupHtml);
+                        html.AppendFormat("<tr {0}><td>{1}</td><td><u>{2}:</u></td><td /></tr>", TABLEROWSTYLE_NO_BORDERS, pParentHtml, dosageGroupHtml);
                     else
                         html.AppendFormat("<tr {0}><td /><td><u>{1}:</u></td><td /></tr>", TABLEROWSTYLE_NO_BORDERS, dosageGroupHtml);
 
                     bool isLastDosage = false;
-                    // test if this is the first row being written for the children of an antimicrobial 
-                    bool isFirstDosageGroup = (pIsFirstRow && pNode.ParentType == BDConstants.BDNodeType.BDAntimicrobial);
-                    bool isFirstDosage = true;
+                    // a row is now written to the table for this group, so anything following is not the first row.
+                    bool isFirstRow = false;
                     List<IBDNode> dosageGroupChildren = BDFabrik.GetChildrenForParent(pContext, pNode);
                     for (int i = 0; i < dosageGroupChildren.Count; i++)
                     {
                         if (i == dosageGroupChildren.Count - 1)
                             isLastDosage = true;
                         // add row for BDDosage
-                        html.Append(BuildBDDosageHtml(pContext, dosageGroupChildren[i], pFootnotes, pObjectsOnPage, pLevel, (isFirstDosageGroup && isFirstDosage), (isLastDosage && pIsLastDosageGroup), pParentHtml));
-                        isFirstDosage = false;
+                        html.Append(BuildBDDosageHtml(pContext, dosageGroupChildren[i], pFootnotes, pObjectsOnPage, pLevel, isFirstRow, (isLastDosage && pIsLastDosageGroup), pParentHtml));
                     }
                     break;
                 default:

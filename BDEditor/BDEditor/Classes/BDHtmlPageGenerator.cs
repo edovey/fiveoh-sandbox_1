@@ -2087,92 +2087,62 @@ namespace BDEditor.Classes
 
                         // table tags are handled by the caller : BuildBDSubcategoryHTML
                         string amHtml = buildNodeWithReferenceAndOverviewHTML(pContext, pNode, string.Empty, pFootnotes, pObjectsOnPage);
-                        StringBuilder dosageHTML = new StringBuilder();
-                        dosageHTML.Append("<td>");
-                        StringBuilder costHTML = new StringBuilder();
-                        costHTML.Append("<td>");
 
-                        // build each row of table, 
-                        // begin with antimicrobial : put name in first column
+                        bool isLastChild = false;
+
+                        // build table rows
                         for (int idxChildren = 0; idxChildren < children.Count; idxChildren++) 
                         {
-                            if (idxChildren == 0)
-                            {
-                                if (children.Count > 1) 
-                                    html.AppendFormat(@"<tr {0}><td>{1}</td>", TABLEROWSTYLE_NO_BORDERS, amHtml);
-                                else
-                                    html.AppendFormat(@"<tr {0}><td>{1}</td>", TABLEROWSTYLE_BOTTOM_BORDER, amHtml);
-                            }
-                            else
-                            {
-                                if (idxChildren == children.Count - 1)
-                                    // This is the last child element of the antimicrobial: first cell is empty, has bottom border
-                                    html.AppendFormat("<tr {0}><td />", TABLEROWSTYLE_NO_BORDERS);
-                                else // intermediate table row - first cell is empty and there is no bottom border on the cells
-                                    html.AppendFormat("<tr {0}><td />", TABLEROWSTYLE_BOTTOM_BORDER);
-                            }
+                            if (idxChildren == children.Count - 1)
+                                isLastChild = true;
+
+                            string rowStyle = (isLastChild) ? TABLEROWSTYLE_BOTTOM_BORDER : TABLEROWSTYLE_NO_BORDERS;
+
                             IBDNode child = children[idxChildren];
                             switch (child.NodeType)
                             {
                                 case BDConstants.BDNodeType.BDTopic:
                                     //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDosageGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
                                     //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDosage, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                                    html.AppendFormat("<td><b><u>{0}</u></b></td><td /></tr><tr><td />", buildCellHTML(pContext, child, BDNode.PROPERTYNAME_NAME, child.Name, false, pFootnotes, pObjectsOnPage));
+
+                                    //add topic on its own row
+                                    // if this is the first row, put antimicrobial in the first column
+                                    string cellHtml = buildCellHTML(pContext, child, BDNode.PROPERTYNAME_NAME, child.Name, false, pFootnotes, pObjectsOnPage);
+                                    if (isFirstChild)
+                                        html.AppendFormat("<tr {0}><td>{1}</td><td><b><u>{2}</u></b></td><td /></tr>", rowStyle, amHtml, cellHtml);
+                                    else
+                                        html.AppendFormat("<tr {0}><td /><td><b><u>{1}</u></b></td><td /></tr>", rowStyle, cellHtml);
+
+                                    bool isLastTopicChild = false;
+                                    bool isFirstTopicChild = true;
+
                                     List<IBDNode> topicChildren = BDFabrik.GetChildrenForParent(pContext, child);
                                     for (int idxTopicChildren = 0; idxTopicChildren < topicChildren.Count; idxTopicChildren++)
                                     {
+                                        if (idxTopicChildren == topicChildren.Count - 1)
+                                            isLastTopicChild = true;
+
                                         IBDNode topicChild = topicChildren[idxTopicChildren];
                                         switch (topicChild.NodeType)
                                         {
                                             case BDConstants.BDNodeType.BDDosageGroup:
-                                                // write a row for the dosageGroup, begin next row
-                                                html.AppendFormat("<td><u>{0}:</u></td><td /></tr><tr><td />", buildCellHTML(pContext, topicChild, BDNode.PROPERTYNAME_NAME, topicChild.Name, false, pFootnotes, pObjectsOnPage));
-
-                                                List<IBDNode> topicDosageGroupChildren = BDFabrik.GetChildrenForParent(pContext, topicChild);
-
-                                                for (int idxTopicDosageGroupChildren = 0; idxTopicDosageGroupChildren < topicDosageGroupChildren.Count; idxTopicDosageGroupChildren++)
-                                                {
-                                                    IBDNode topicDosageGroupChild = topicDosageGroupChildren[idxTopicDosageGroupChildren];
-                                                    html.Append(BuildBDDosageHtml(pContext, topicDosageGroupChild, pFootnotes, pObjectsOnPage, pLevel));
-                                                    html.Append("</tr>");
-                                                    if (idxTopicDosageGroupChildren < topicDosageGroupChildren.Count - 1)
-                                                        html.Append("<tr><td />");
-                                                }
-
+                                                html.Append(BuildBDDosageGroupHtml(pContext, topicChild, pFootnotes, pObjectsOnPage, pLevel, isFirstChild && isFirstTopicChild, isLastChild && isLastTopicChild, amHtml));
                                                 break;
                                             case BDConstants.BDNodeType.BDDosage:
-                                                html.Append(BuildBDDosageHtml(pContext, topicChild, pFootnotes, pObjectsOnPage, pLevel));
-                                                html.Append("</tr>");
+                                                html.Append(BuildBDDosageHtml(pContext, topicChild, pFootnotes, pObjectsOnPage, pLevel, isFirstChild && isFirstTopicChild, isLastChild && isLastTopicChild, amHtml));
                                                 break;
                                         }
-                                        if (idxTopicChildren < topicChildren.Count - 1)
-                                            html.Append("<tr><td />");
+                                        isFirstTopicChild = false;
                                     }
                                     break;
                                 case BDConstants.BDNodeType.BDDosageGroup:
                                     //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDosage, new BDConstants.LayoutVariantType[] { layoutVariant }));
-
-                                    // write a row for the dosageGroup and begin new row for next child
-                                    html.AppendFormat("<td><u>{0}:</u></td><td /></tr><tr><td />", buildCellHTML(pContext, child, BDNode.PROPERTYNAME_NAME, child.Name, false, pFootnotes, pObjectsOnPage));
-
-                                    List<IBDNode> dosageGroupChildren = BDFabrik.GetChildrenForParent(pContext, child);
-                                    for (int iDosageGroupChildren = 0; iDosageGroupChildren < dosageGroupChildren.Count; iDosageGroupChildren++)
-                                    {
-                                        IBDNode dosageGroupChild = dosageGroupChildren[iDosageGroupChildren];
-                                        // BDDosage
-                                        html.Append(BuildBDDosageHtml(pContext, dosageGroupChild, pFootnotes, pObjectsOnPage, pLevel));
-                                        html.Append("</tr>");
-                                        if (iDosageGroupChildren < dosageGroupChildren.Count - 1)
-                                            html.Append("<tr><td />");
-                                    }
+                                    html.Append(BuildBDDosageGroupHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel, isFirstChild, isLastChild, amHtml));
                                     break;
                                 case BDConstants.BDNodeType.BDDosage:
-                                    html.Append(BuildBDDosageHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel));
-                                    html.Append("</tr>");
+                                    html.Append(BuildBDDosageHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel, isFirstChild, isLastChild, amHtml));
                                     break;
                             }
-                            if (idxChildren < children.Count - 1)
-                                html.Append("<tr><td />");
                             isFirstChild = false;
                         }
                         break;
@@ -3973,9 +3943,6 @@ namespace BDEditor.Classes
             {
                 List<BDLayoutMetadataColumn> metadataLayoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, pNode.LayoutVariant);
 
-                pObjectsOnPage.Add(pNode.Uuid);
-
-                //html.Append("<p>"); // why is this here??  LD
                 html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
 
                 List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
@@ -4640,27 +4607,35 @@ namespace BDEditor.Classes
             return result;
         }
 
-        public string BuildBDDosageHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel)
+        public string BuildBDDosageHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel, bool pIsFirstChildRow, bool pIsLastDosage, string pParentHtml)
         {
-                    StringBuilder html = new StringBuilder();
+            StringBuilder html = new StringBuilder();
             switch (pNode.LayoutVariant)
             {
                 case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Paediatric:
                 case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Adult:
                     StringBuilder costHTML = new StringBuilder();
-                    BDDosage topicDosage = pNode as BDDosage;
+                    BDDosage dosage = pNode as BDDosage;
 
-                    string dosageCellHtml = buildCellHTML(pContext, topicDosage, BDDosage.PROPERTYNAME_DOSAGE, topicDosage.dosage, false, pFootnotes, pObjectsOnPage);
-                    if (topicDosage.joinType == (int) BDConstants.BDJoinType.Next)
+                    string rowStyle = (pIsLastDosage) ? TABLEROWSTYLE_BOTTOM_BORDER : TABLEROWSTYLE_NO_BORDERS;
+
+                    if (pIsFirstChildRow) // append parent html for first column
+                        html.AppendFormat("<tr {0}><td>{1}</td>", rowStyle, pParentHtml);
+                    else // append empty column
+                        html.AppendFormat("<tr {0}><td />", rowStyle, pParentHtml);
+
+                    string dosageCellHtml = buildCellHTML(pContext, dosage, BDDosage.PROPERTYNAME_DOSAGE, dosage.dosage, false, pFootnotes, pObjectsOnPage);
+                    if (dosage.joinType == (int)BDConstants.BDJoinType.Next)
                         html.AppendFormat("<td>{0}</td>", dosageCellHtml);
                     else
-                        html.AppendFormat("<td>{0} {1}</td>", dosageCellHtml, retrieveConjunctionString((int) topicDosage.joinType));
+                        html.AppendFormat("<td>{0} {1}</td>", dosageCellHtml, retrieveConjunctionString((int)dosage.joinType));
 
-                    html.AppendFormat("<td>{0}",buildCellHTML(pContext, topicDosage, BDDosage.PROPERTYNAME_COST, topicDosage.cost, false, pFootnotes, pObjectsOnPage));
-                    if (topicDosage.cost2.Length > 0)
-                        html.AppendFormat("-{0}</td>", buildCellHTML(pContext, topicDosage, BDDosage.PROPERTYNAME_COST2, topicDosage.cost2, false, pFootnotes, pObjectsOnPage));
+                    html.AppendFormat("<td>{0}", buildCellHTML(pContext, dosage, BDDosage.PROPERTYNAME_COST, dosage.cost, false, pFootnotes, pObjectsOnPage));
+                    if (dosage.cost2.Length > 0)
+                        html.AppendFormat("-{0}</td>", buildCellHTML(pContext, dosage, BDDosage.PROPERTYNAME_COST2, dosage.cost2, false, pFootnotes, pObjectsOnPage));
                     else
                         html.Append("</td>");
+                    html.Append("</tr>");
                     break;
                 default:
                     break;
@@ -4668,6 +4643,39 @@ namespace BDEditor.Classes
             return html.ToString();
         }
 
+        public string BuildBDDosageGroupHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel, bool pIsFirstRow, bool pIsLastDosageGroup, string pParentHtml)
+        {
+            StringBuilder html = new StringBuilder();
+            switch (pNode.LayoutVariant)
+            {
+                case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Adult:
+                case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Paediatric:
+                    // append a row for the DosageGroup
+                    string dosageGroupHtml = buildCellHTML(pContext, pNode, BDNode.PROPERTYNAME_NAME, pNode.Name, false, pFootnotes, pObjectsOnPage);
+                    if (pIsFirstRow) // add parent to first column (antimicrobial)
+                        html.AppendFormat("<tr {0}><td>{1}</td><td><u>{1}:</u></td><td /></tr>", TABLEROWSTYLE_NO_BORDERS, pParentHtml, dosageGroupHtml);
+                    else
+                        html.AppendFormat("<tr {0}><td /><td><u>{1}:</u></td><td /></tr>", TABLEROWSTYLE_NO_BORDERS, dosageGroupHtml);
+
+                    bool isLastDosage = false;
+                    // test if this is the first row being written for the children of an antimicrobial 
+                    bool isFirstDosageGroup = (pIsFirstRow && pNode.ParentType == BDConstants.BDNodeType.BDAntimicrobial);
+                    bool isFirstDosage = true;
+                    List<IBDNode> dosageGroupChildren = BDFabrik.GetChildrenForParent(pContext, pNode);
+                    for (int i = 0; i < dosageGroupChildren.Count; i++)
+                    {
+                        if (i == dosageGroupChildren.Count - 1)
+                            isLastDosage = true;
+                        // add row for BDDosage
+                        html.Append(BuildBDDosageHtml(pContext, dosageGroupChildren[i], pFootnotes, pObjectsOnPage, pLevel, (isFirstDosageGroup && isFirstDosage), (isLastDosage && pIsLastDosageGroup), pParentHtml));
+                        isFirstDosage = false;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return html.ToString();
+        }
         public string BuildBDPresentationHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel)
         {
             // gated on child node type: very few variations and no identified customizations yet

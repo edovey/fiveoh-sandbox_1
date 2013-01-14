@@ -1929,32 +1929,32 @@ namespace BDEditor.Classes
                         resetGlobalVariablesForTherapies();
                         StringBuilder endoTherapyHTML = new StringBuilder();
 
-                        bool isLastTherapyGroup = false;
-                        bool isLastTherapy = false;
+                        bool isLastEndoTherapyGroup = false;
+                        bool isLastEndoTherapy = false;
 
-                        for (int idxTherapyGroups = 0; idxTherapyGroups < children.Count; idxTherapyGroups++)
+                        for (int idxEndoTherapyGroups = 0; idxEndoTherapyGroups < children.Count; idxEndoTherapyGroups++)
                         {
-                            IBDNode therapyGroup = children[idxTherapyGroups];
-                            endoTherapyHTML.AppendFormat(@"<tr {0}><td>{1}</td></tr>", TABLEROWSTYLE_NO_BORDERS, (buildNodeWithReferenceAndOverviewHTML(pContext, therapyGroup, "u", pFootnotes, pObjectsOnPage)));
-                            
-                            List<BDTherapy> therapies = BDTherapy.RetrieveTherapiesForParentId(pContext, therapyGroup.Uuid);
-                            if (therapies.Count > 0)
-                            {
-                                if (idxTherapyGroups == children.Count - 1)
-                                    isLastTherapyGroup = true;
-                                for (int idxTherapies = 0; idxTherapies < therapies.Count; idxTherapies++)
-                                {
-                                    if (idxTherapies == therapies.Count)
-                                        isLastTherapy = true;
+                            IBDNode endoTherapyGroup = children[idxEndoTherapyGroups];
+                            endoTherapyHTML.AppendFormat(@"<tr {0}><td>{1}</td></tr>", TABLEROWSTYLE_NO_BORDERS, (buildNodeWithReferenceAndOverviewHTML(pContext, endoTherapyGroup, "u", pFootnotes, pObjectsOnPage)));
 
-                                    BDTherapy therapy = therapies[idxTherapies];
+                            List<BDTherapy> endoTherapies = BDTherapy.RetrieveTherapiesForParentId(pContext, endoTherapyGroup.Uuid);
+                            if (endoTherapies.Count > 0)
+                            {
+                                if (idxEndoTherapyGroups == children.Count - 1)
+                                    isLastEndoTherapyGroup = true;
+                                for (int idxEndoTherapies = 0; idxEndoTherapies < endoTherapies.Count; idxEndoTherapies++)
+                                {
+                                    if (idxEndoTherapies == endoTherapies.Count)
+                                        isLastEndoTherapy = true;
+
+                                    BDTherapy therapy = endoTherapies[idxEndoTherapies];
                                     bool addEndBracket = false;
                                     // check the name on the following therapy - if empty and the right bracket is set, addEndBracket
-                                    if (idxTherapies < therapies.Count - 1 && string.IsNullOrEmpty(therapies[idxTherapies + 1].name) && therapies[idxTherapies + 1].rightBracket.Value == true)
+                                    if (idxEndoTherapies < endoTherapies.Count - 1 && string.IsNullOrEmpty(endoTherapies[idxEndoTherapies + 1].name) && endoTherapies[idxEndoTherapies + 1].rightBracket.Value == true)
                                         addEndBracket = true;
-                                    string rowStyle = (isLastTherapyGroup && isLastTherapy) ? TABLEROWSTYLE_BOTTOM_BORDER : TABLEROWSTYLE_NO_BORDERS;
+                                    string rowStyle = (isLastEndoTherapyGroup && isLastEndoTherapy) ? TABLEROWSTYLE_BOTTOM_BORDER : TABLEROWSTYLE_NO_BORDERS;
 
-                                    endoTherapyHTML.Append(buildTherapyWithTwoDurationsHtml(pContext, therapy, pFootnotes, pObjectsOnPage, addEndBracket, rowStyle));
+                                    endoTherapyHTML.Append(buildTherapyWithTwoDurationsHtml(pContext, therapy, pFootnotes, pObjectsOnPage, addEndBracket));
 
                                     if (!string.IsNullOrEmpty(therapy.Name) && therapy.nameSameAsPrevious == false)
                                         previousTherapyName = therapy.Name;
@@ -1972,7 +1972,6 @@ namespace BDEditor.Classes
                                     }
                                 }
                             }
-
                         }
                         // build table header
                         html.AppendFormat(@"<table class=""v{0}"">", (int)pNode.LayoutVariant);
@@ -2011,19 +2010,37 @@ namespace BDEditor.Classes
                         if (t1metadataLayoutColumns.Count > 2)
                             t1therapyDurationSpanTitleHtml = buildHtmlForMetadataColumn(pContext, pNode, t1metadataLayoutColumns[2], BDConstants.BDNodeType.BDMetaDecoration, pFootnotes, pObjectsOnPage);
 
+                        resetGlobalVariablesForTherapies();
+                        StringBuilder therapyHTML = new StringBuilder();
+                        bool isLastTherapyGroup = false;
+                        bool isLastTherapy = false;
 
-                        foreach (IBDNode child in children)
+                        for (int idxTherapyGroups = 0; idxTherapyGroups < children.Count; idxTherapyGroups++)
                         {
-                            List<BDTherapy> therapies = BDTherapy.RetrieveTherapiesForParentId(pContext, child.Uuid);
+                            IBDNode therapyGroup = children[idxTherapyGroups];
+                            therapyHTML.AppendFormat(@"<tr {0}><td>{1}</td></tr>", TABLEROWSTYLE_NO_BORDERS, (buildNodeWithReferenceAndOverviewHTML(pContext, therapyGroup, "u", pFootnotes, pObjectsOnPage)));
+
+                            List<BDTherapy> therapies = BDTherapy.RetrieveTherapiesForParentId(pContext, therapyGroup.Uuid);
                             if (therapies.Count > 0)
                             {
-                                html.AppendFormat(@"<table class=""v{0}"">", (int)child.LayoutVariant);
+                                if (idxTherapyGroups == children.Count - 1)
+                                    isLastTherapyGroup = true;
 
-                                resetGlobalVariablesForTherapies();
-                                StringBuilder therapyHTML = new StringBuilder();
-                                foreach (BDTherapy therapy in therapies)
+                                for (int idxTherapies = 0; idxTherapies < therapies.Count; idxTherapies++)
                                 {
-                                    therapyHTML.Append(buildTherapyHtml(pContext, therapy, pFootnotes, pObjectsOnPage));
+                                    if (idxTherapies == therapies.Count)
+                                        isLastTherapy = true;
+
+                                    BDTherapy therapy = therapies[idxTherapies];
+                                    bool addEndBracket = false;
+
+                                    // check the name on the following therapy - if empty and the right bracket is set, addEndBracket
+                                    if (idxTherapies < therapies.Count - 1 && string.IsNullOrEmpty(therapies[idxTherapies + 1].name) && therapies[idxTherapies + 1].rightBracket.Value == true)
+                                        addEndBracket = true;
+                                    string rowStyle = (isLastTherapyGroup && isLastTherapy) ? TABLEROWSTYLE_BOTTOM_BORDER : TABLEROWSTYLE_NO_BORDERS;
+
+
+                                    therapyHTML.Append(buildTherapyHtml(pContext, therapy, pFootnotes, pObjectsOnPage, addEndBracket));
 
                                     if (!string.IsNullOrEmpty(therapy.Name) && therapy.nameSameAsPrevious == false)
                                         previousTherapyName = therapy.Name;
@@ -2040,6 +2057,11 @@ namespace BDEditor.Classes
                                         therapiesHaveDuration = true;
                                     }
                                 }
+                            }
+                        }
+
+                        // build table header
+                                html.AppendFormat(@"<table class=""v{0}"">", (int)pNode.LayoutVariant);
                                 html.AppendFormat(@"<tr><th>{0}</th>", t1therapyNameTitleHtml);
                                 if (therapiesHaveDosage)
                                 {
@@ -2048,14 +2070,12 @@ namespace BDEditor.Classes
                                 else
                                     html.Append(@"<th />");
                                 if (therapiesHaveDuration)
-                                    html.AppendFormat(@"<th colspan=2>{0}</th>", t1therapyDurationSpanTitleHtml);
+                                    html.AppendFormat(@"<th>{0}</th>", t1therapyDurationSpanTitleHtml);
                                 else
-                                    html.Append("<th colspan=2></th>");
+                                    html.Append("<th />");
 
                                 html.Append(therapyHTML);
                                 html.Append(@"</table>");
-                            }
-                        }
                         break;
                     default:
                         break;
@@ -4783,6 +4803,13 @@ namespace BDEditor.Classes
 
         private string buildTherapyHtml(Entities pContext, BDTherapy pTherapy, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
         {
+            return buildTherapyHtml(pContext, pTherapy, pFootnotes, pObjectsOnPage, false);
+        }
+
+
+        private string buildTherapyHtml(Entities pContext, BDTherapy pTherapy, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, bool pAddEndBracket)
+        {
+
             StringBuilder therapyHtml = new StringBuilder();
             string styleString = string.Empty;
 
@@ -4810,7 +4837,7 @@ namespace BDEditor.Classes
             if(!string.IsNullOrEmpty(therapyNameHtml))
                 therapyHtml.AppendFormat("<b>{0}</b>", therapyNameHtml);
 
-            if (pTherapy.rightBracket.Value == true)
+            if (pTherapy.rightBracket.Value == true || pAddEndBracket)
                 therapyHtml.Append(RIGHT_SQUARE_BRACKET);
 
             therapyHtml.Append(@"</td>");
@@ -4907,21 +4934,17 @@ namespace BDEditor.Classes
             return therapyHtml.ToString();
         }
 
-        public string buildTherapyWithTwoDurationsHtml(Entities pContext, BDTherapy pTherapy, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, bool pAddEndBracket, string rowStyleString)
+        public string buildTherapyWithTwoDurationsHtml(Entities pContext, BDTherapy pTherapy, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, bool pAddEndBracket)
         {
-            //string debugString = string.Format("Therapy {0} {1}", pTherapy.Uuid, pTherapy.Name);
-            //Debug.WriteLine(debugString);
-
-            string resolvedValue = null;
-
             StringBuilder therapyHtml = new StringBuilder();
 
-            // borders determined by and passed from the caller, at a parent level
-            //(see BuildBDPathogenResistanceHtml)
-            if (!string.IsNullOrEmpty(rowStyleString))
-                therapyHtml.AppendFormat(@"<tr {0}><td>", rowStyleString);
+            // check join type - if none, then draw the bottom border on the table row
+            if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.Next)
+                therapyHtml.AppendFormat(@"<tr {0}><td>", TABLEROWSTYLE_BOTTOM_BORDER);  // row has bottom border
             else
-                therapyHtml.Append(@"<tr><td>");
+                therapyHtml.AppendFormat(@"<tr {0}><td>", TABLEROWSTYLE_NO_BORDERS);  // NO bottom border
+
+            string resolvedValue = null;
 
             if (pTherapy.leftBracket.Value == true)
                 therapyHtml.Append(LEFT_SQUARE_BRACKET);

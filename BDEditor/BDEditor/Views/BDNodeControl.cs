@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Data;
 using System.Linq;
@@ -134,6 +135,14 @@ namespace BDEditor.Views
                 if (tbName.Text != currentNode.Name) tbName.Text = currentNode.Name;
                 tbName.Select();
             }
+
+#if DEBUG
+            contextMenuStripDebug.Enabled = true;
+            copyUUIDToolStripMenuItem.Enabled = true;
+            publishToDatabaseToolStripMenuItem.Enabled = true;
+#else
+            contextMenuStripDebug.Enabled = false;
+#endif
 
             BDCommon.Settings.IsUpdating = origState;
         }
@@ -852,6 +861,26 @@ namespace BDEditor.Views
             cutToolStripMenuItem.Enabled = (tbName.SelectionLength > 0);
             copyToolStripMenuItem.Enabled = (tbName.SelectionLength > 0);
             deleteToolStripMenuItem.Enabled = (tbName.SelectionLength > 0);
+        }
+
+        private void copyUUIDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(currentNode.Uuid.ToString());
+        }
+
+        private void publishToDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+#if DEBUG
+            this.Cursor = Cursors.WaitCursor;
+            Guid nodeUuid = Guid.Empty;
+            BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
+            List<BDNode> nodeList = new List<BDNode>();
+            nodeList.Add(currentNode as BDNode);
+
+            generator.Generate(dataContext, nodeList);
+            this.Cursor = Cursors.Default;
+            MessageBox.Show(this, "HTML page generation complete", "Notice", MessageBoxButtons.OK);
+#endif
         }
     }
 }

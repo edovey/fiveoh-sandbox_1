@@ -514,6 +514,7 @@ namespace BDEditor.Classes
                             //nodeChildPages.Add(generatePageForEmpiricTherapyPresentation(pContext, pNode as BDNode));
                             nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation14_CellulitisExtremities:
                             currentPageMasterObject = pNode;
                             //nodeChildPages.Add(generatePageForEmpiricTherapyOfCellulitisInExtremities(pContext, pNode as BDNode));
@@ -611,6 +612,11 @@ namespace BDEditor.Classes
                             isPageGenerated = true;
                             currentPageMasterObject = pNode;
                             //nodeChildPages.Add(generatePageForAntibioticsDosingAndDailyCosts(pContext, pNode as BDNode));
+                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
+                            break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus:
+                            isPageGenerated = true;
+                            currentPageMasterObject = pNode;
                             nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation17_Pneumonia:
@@ -3025,6 +3031,7 @@ namespace BDEditor.Classes
                 switch (presentation.LayoutVariant)
                 {
                     case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Adult:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Paediatric:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis:
@@ -3756,7 +3763,21 @@ namespace BDEditor.Classes
                     case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAntimicrobial, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         break;
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus:
+                        //PathogenGroup
+                        //Topic
+                        foreach (IBDNode child in children)
+                        {
+                            switch (child.NodeType)
+                            {
+                                case BDConstants.BDNodeType.BDPathogenGroup:
+                                    html.Append(BuildBDPathogenGroupHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1, isFirstChild));
+                                    break;
+                            }
+                            isFirstChild = false;
+                        }
 
+                        break;
                     case BDConstants.LayoutVariantType.TreatmentRecommendation17_Pneumonia:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I, BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II }));
                         html.AppendFormat(@"<table class=""v{0}"">", (int)pNode.LayoutVariant);

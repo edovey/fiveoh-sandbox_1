@@ -1506,9 +1506,100 @@ namespace BDEditor.Classes
             //BDNode.DeleteLocal(pContext, Guid.Parse("5fe7fc06-5d76-438b-ac5b-0c3c483ea871"));
             //BDNode.DeleteLocal(pContext, Guid.Parse("2cbb9208-5003-4155-a24e-dc4a86026d00"));
             //pContext.SaveChanges();
-
             #endregion
+            #region v.1.6.42
+            // Part 1:  reorganize 'Sepsis without a focus' in TR > Peds.
+            //BDNode parentNode = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("9e263b5f-27e7-4a51-ab2f-34eb157ed273"));
+            //BDNode neonates = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("f3d08e78-829c-45ab-9cfc-320cbf4b4fbb"));
+            //BDNode children = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("a4ef0b9e-56a2-4cc6-971b-3b31ab3bbf78"));
+            //// change to subcategory, change layout variant
+            //neonates.nodeType = (int)BDConstants.BDNodeType.BDSubcategory;
+            //neonates.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus;
+            //neonates.nodeKeyName = BDConstants.BDNodeType.BDSubcategory.ToString();
+            //neonates.SetParent(parentNode);
+            //children.nodeType = (int)BDConstants.BDNodeType.BDSubcategory;
+            //children.nodeKeyName = BDConstants.BDNodeType.BDSubcategory.ToString();
+            //children.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus;
+            //children.SetParent(parentNode);
+            //// create new node for Infants
+            //BDNode infants = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubcategory, Guid.Parse("0b24d10d-8375-45c1-82dc-f7aef63f71ec"));
+            //infants.SetParent(parentNode);
+            //infants.DisplayOrder = 1;
+            //infants.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk;
+            //infants.name = "Infants 1-3 months";
+            //infants.nodeKeyName = BDConstants.BDNodeType.BDSubcategory.ToString();
+            //pContext.SaveChanges();
 
+            // Part 2:  rename node (previously for infants) and reset layout variants
+            //BDNode newInfants = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("0b24d10d-8375-45c1-82dc-f7aef63f71ec"));
+            //BDNode prevInfants = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("5634d24c-d08b-44db-b85f-dcf844d3236e"));
+            //prevInfants.SetParent(newInfants);
+            //prevInfants.name = "Low risk";
+            //prevInfants.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk;
+            //BDUtilities.ResetLayoutVariantWithChildren(pContext, prevInfants, BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk, false);
+            //pContext.SaveChanges();
+
+            //// Part 3:  Create a copy of the BDPresentation and its children for 'High risk'
+            //BDNode lowRiskPresentation = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("5634d24c-d08b-44db-b85f-dcf844d3236e"));
+
+            //BDNode newInfantsNode = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("0b24d10d-8375-45c1-82dc-f7aef63f71ec"));
+            //BDNode highRiskPresentation = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDPresentation, Guid.NewGuid());
+            //highRiskPresentation.SetParent(newInfantsNode);
+            //highRiskPresentation.DisplayOrder = 1;
+            //highRiskPresentation.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk;
+            //highRiskPresentation.name = "High risk";
+            //highRiskPresentation.nodeKeyName = BDConstants.BDNodeType.BDPresentation.ToString();
+            //pContext.SaveChanges();
+
+            //List<IBDNode> pathogenGroups = BDFabrik.GetChildrenForParent(pContext, lowRiskPresentation);
+            //for (int idxPG = 0; idxPG < pathogenGroups.Count; idxPG++)
+            //{
+            //    BDNode pathogenGroup = pathogenGroups[idxPG] as BDNode;
+            //    BDNode hr_pathogenGroup = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDPathogenGroup, Guid.NewGuid());
+            //    hr_pathogenGroup.SetParent(highRiskPresentation);
+            //    hr_pathogenGroup.DisplayOrder = idxPG;
+            //    hr_pathogenGroup.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk;
+            //    hr_pathogenGroup.name = pathogenGroup.name;
+            //    pContext.SaveChanges();
+
+            //    List<IBDNode> pg_children = BDFabrik.GetChildrenForParent(pContext, pathogenGroup);
+            //    for (int idxPG_C = 0; idxPG_C < pg_children.Count; idxPG_C++)
+            //    {
+            //        IBDNode pgChild = pg_children[idxPG_C];
+            //        if (pgChild.NodeType == BDConstants.BDNodeType.BDPathogen)
+            //        {
+            //            BDNode pathogen = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDPathogen, Guid.NewGuid());
+            //            pathogen.SetParent(hr_pathogenGroup);
+            //            pathogen.DisplayOrder = idxPG_C;
+            //            pathogen.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk;
+            //            pathogen.name = pgChild.Name;
+            //            pContext.SaveChanges();
+            //        }
+            //        else if (pgChild.NodeType == BDConstants.BDNodeType.BDTherapyGroup)
+            //        {
+            //            BDTherapyGroup tGroup = BDTherapyGroup.CreateBDTherapyGroup(pContext, hr_pathogenGroup.Uuid);
+            //            tGroup.DisplayOrder = idxPG_C;
+            //            tGroup.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk;
+            //            tGroup.Name = pgChild.Name;
+            //            pContext.SaveChanges();
+
+            //            List<BDTherapy> therapies = BDTherapy.RetrieveTherapiesForParentId(pContext, pgChild.Uuid);
+            //            for (int idxTherapies = 0; idxTherapies < therapies.Count; idxTherapies++)
+            //            {
+            //                BDTherapy lr_Therapy = therapies[idxTherapies];
+            //                BDTherapy therapy = BDTherapy.CreateBDTherapy(pContext, tGroup.Uuid);
+            //                therapy.DisplayOrder = idxTherapies;
+            //                therapy.name = lr_Therapy.name;
+            //                therapy.dosage = lr_Therapy.dosage;
+            //                therapy.duration = lr_Therapy.duration;
+            //                therapy.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk;
+            //                pContext.SaveChanges();
+            //            }
+            //        }
+            //    }
+            //}
+            
+            #endregion
         }
 
         /// <summary>

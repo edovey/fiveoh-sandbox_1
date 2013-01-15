@@ -130,6 +130,10 @@ namespace BDEditor.Classes
             TreatmentRecommendation01_Gastroenteritis_CultureDirected = 101412,
             [Description("Treatment Recommendations - CNS Meningitis Table")]
             TreatmentRecommendation01_CNS_Meningitis_Table = 101500,
+            [Description("Treatment Recommendations - Sepsis Without a Focus")]
+            TreatmentRecommendation01_Sepsis_Without_Focus = 101600,
+            [Description("Treatment Recommendations - Sepsis Without a Focus, with Risk")]
+            TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk = 101601,
 
             [Description("Wound Management")]
             TreatmentRecommendation02_WoundMgmt = 102, // table 1 - wound management

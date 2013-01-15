@@ -591,6 +591,8 @@ namespace BDEditor.Views
                                 }
                                 break;
                             case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
@@ -798,6 +800,7 @@ namespace BDEditor.Views
                         switch (node.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation17_Pneumonia:
                                 childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)

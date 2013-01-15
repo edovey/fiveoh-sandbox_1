@@ -719,6 +719,8 @@ namespace BDEditor.Views
                 case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:

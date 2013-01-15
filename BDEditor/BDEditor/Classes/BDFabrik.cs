@@ -228,7 +228,7 @@ namespace BDEditor.Classes
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics,
                             BDConstants.LayoutVariantType.TreatmentRecommendation05_CultureProvenPeritonitis,BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis, 
                             BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis, BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia}));
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubcategory, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation17_Pneumonia }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubcategory, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation17_Pneumonia, BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus }));
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
                         case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
@@ -254,6 +254,9 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
                         case BDConstants.LayoutVariantType.Prophylaxis_IERecommendation:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubcategory, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubcategory, new BDConstants.LayoutVariantType[] { layoutVariant, BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk }));
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSurgeryClassification, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -433,6 +436,8 @@ namespace BDEditor.Classes
                     switch (layoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
@@ -477,6 +482,8 @@ namespace BDEditor.Classes
                     switch (layoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Adult:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Paediatric:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogenGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -656,6 +663,12 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAntimicrobial, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAntimicrobialGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogenGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPresentation, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSurgery, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -909,6 +922,8 @@ namespace BDEditor.Classes
                     switch (layoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation05_CultureProvenPeritonitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:

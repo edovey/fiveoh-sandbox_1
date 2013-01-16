@@ -4651,15 +4651,15 @@ namespace BDEditor.Classes
             else
                 styleString = TABLEROWSTYLE_NO_BORDERS;
 
-            therapyHtml.AppendFormat(@"<tr {0}>", styleString);
+            therapyHtml.AppendFormat(@"<tr {0}><td>", styleString);
 
             if (pTherapy.leftBracket.Value == true)
                 therapyHtml.Append(LEFT_SQUARE_BRACKET);
 
             if (pTherapy.nameSameAsPrevious.Value == true)
-                therapyHtml.AppendFormat("<td>{0}", buildNodePropertyHTML(pContext, pTherapy, previousTherapyId, previousTherapyName, BDTherapy.PROPERTYNAME_THERAPY, "b", pFootnotes, pObjectsOnPage, out resolvedValue));
+                therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, previousTherapyId, previousTherapyName, BDTherapy.PROPERTYNAME_THERAPY, "b", pFootnotes, pObjectsOnPage, out resolvedValue));
             else
-                therapyHtml.AppendFormat("<td>{0}", buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.Name, BDTherapy.PROPERTYNAME_THERAPY, "b", pFootnotes, pObjectsOnPage, out resolvedValue));
+                therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.Name, BDTherapy.PROPERTYNAME_THERAPY, "b", pFootnotes, pObjectsOnPage, out resolvedValue));
 
             if (null != resolvedValue) therapiesHaveName = true;
 
@@ -4720,9 +4720,9 @@ namespace BDEditor.Classes
 
             // Name
             if (pTherapy.nameSameAsPrevious.Value == true)
-                therapyHtml.AppendFormat("{0}", buildNodePropertyHTML(pContext, pTherapy, previousTherapyId, previousTherapyName, BDTherapy.PROPERTYNAME_THERAPY, "b", pFootnotes, pObjectsOnPage, out resolvedValue));
+                therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, previousTherapyId, previousTherapyName, BDTherapy.PROPERTYNAME_THERAPY, "b", pFootnotes, pObjectsOnPage, out resolvedValue));
             else
-                therapyHtml.AppendFormat("{0}", buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.Name, BDTherapy.PROPERTYNAME_THERAPY, "b", pFootnotes, pObjectsOnPage, out resolvedValue));
+                therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.Name, BDTherapy.PROPERTYNAME_THERAPY, "b", pFootnotes, pObjectsOnPage, out resolvedValue));
 
             if (null != resolvedValue) therapiesHaveName = true;
 

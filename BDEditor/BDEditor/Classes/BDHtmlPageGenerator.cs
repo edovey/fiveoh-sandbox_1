@@ -24,7 +24,7 @@ namespace BDEditor.Classes
         private const string bottomHtml = @"</body></html>";
         private const string anchorTag = @"<p><a href=""{0}""><b>{1}</b></a></p>";
         public const int EMPTY_PARAGRAPH = 8;  // <p> </p>
-        private const string imgFileTag = "<img src=\"images/{0}{1}\" alt=\"\" width=\"300\" height=\"197\" />";
+        private const string imgFileTag = "<img src=\"images/{0}{1}\" alt=\"\" width=\"{2}\" height=\"{3}\" />";
         private const string paintChipTag = "<img class=\"paintChip\" src=\"{0}\" alt=\"\" />";
         private const string PAINT_CHIP_ANTIBIOTICS = "AntibioticYellow.png";
         private const string PAINT_CHIP_DENTISTRY = "DentistryPurple.png";
@@ -215,7 +215,8 @@ namespace BDEditor.Classes
                 {
                     if (page != null)
                     {
-                        BDNode childNode = BDNode.RetrieveNodeWithId(pContext, page.displayParentId.Value);
+                        IBDNode childNode = BDFabrik.RetrieveNode(pContext, page.displayParentId.Value);
+                        //BDNode childNode = BDNode.RetrieveNodeWithId(pContext, page.displayParentId.Value);
                         if (childNode != null)
                             pageHTML.AppendFormat(@"<p><a href=""{0}""><b>{1}</b></a></p>", page.Uuid.ToString().ToUpper(), childNode.Name);
                     }
@@ -310,7 +311,7 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDAttachment:
                             isPageGenerated = true;
                             currentPageMasterObject = pNode;
-                            generatePageForAttachment(pContext, pNode);
+                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
 
                     break;
                 case BDConstants.BDNodeType.BDCategory:
@@ -609,25 +610,11 @@ namespace BDEditor.Classes
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Adult:
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Paediatric:
-                            isPageGenerated = true;
-                            currentPageMasterObject = pNode;
-                            //nodeChildPages.Add(generatePageForAntibioticsDosingAndDailyCosts(pContext, pNode as BDNode));
-                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
-                            break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus:
-                            isPageGenerated = true;
-                            currentPageMasterObject = pNode;
-                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
-                            break;
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal_Amphotericin_B:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation17_Pneumonia:
-                            currentPageMasterObject = pNode;
-                            //nodeChildPages.Add(generatePageForEmpiricTherapyOfPneumonia(pContext, pNode as BDNode));
-                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
-                            isPageGenerated = true;
-                            break;
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
                             currentPageMasterObject = pNode;
-                            //nodeChildPages.Add(generatePageForDentalProphylaxisDrugRegimens(pContext, pNode));
                             nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
                             break;
@@ -758,11 +745,6 @@ namespace BDEditor.Classes
                             nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
                             break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
-                            currentPageMasterObject = pNode;
-                            nodeChildPages.Add(generatePageForEmpiricTherapyOfFungalInfections(pContext, pNode));
-                            isPageGenerated = true;
-                            break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic:
                             currentPageMasterObject = pNode;
                             nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
@@ -811,6 +793,9 @@ namespace BDEditor.Classes
             {
                 case BDConstants.BDNodeType.BDAntimicrobial:
                     bodyHTML.Append(BuildBDAntimicrobialHtml(pContext, pNode, footnotes, objectsOnPage, 1));
+                    break;
+                case BDConstants.BDNodeType.BDAttachment:
+                    bodyHTML.Append(BuildBDAttachmentHtml(pContext, pNode, footnotes, objectsOnPage, 1));
                     break;
                 case BDConstants.BDNodeType.BDCategory:
                     bodyHTML.Append(BuildBDCategoryHtml(pContext, pNode, footnotes, objectsOnPage, 1));
@@ -3778,6 +3763,17 @@ namespace BDEditor.Classes
                         }
 
                         break;
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal_Amphotericin_B:
+                        // BDTopic
+                        // BDSubtopic
+                        foreach(IBDNode child in children) 
+                        {
+                            html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child, HtmlHeaderTagLevelString(pLevel + 1), pFootnotes, pObjectsOnPage));
+                            List<IBDNode> subtopics = BDFabrik.GetChildrenForParent(pContext, child);
+                            foreach (IBDNode subtopic in subtopics)
+                                html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, subtopic, HtmlHeaderTagLevelString(pLevel + 2), pFootnotes, pObjectsOnPage));
+                        }
+                        break;
                     case BDConstants.LayoutVariantType.TreatmentRecommendation17_Pneumonia:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I, BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II }));
                         html.AppendFormat(@"<table class=""v{0}"">", (int)pNode.LayoutVariant);
@@ -5025,11 +5021,20 @@ namespace BDEditor.Classes
         private string buildAttachmentHTML(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
         {
             StringBuilder attHtml = new StringBuilder();
-            attHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h4", pFootnotes, pObjectsOnPage));
+            //attHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h4", pFootnotes, pObjectsOnPage));
+            int imgWidth = 300;
+            int imgHeight = 300;
+
+            // TR > fungal > mgmt of amphotericin B, first child
+            if (pNode.Uuid == Guid.Parse("a9f389cf-f134-4513-bba4-9896c5e17356"))
+                imgHeight = 441;
+            // TR > fungal > mgmt of amphotericin B, third child
+            if (pNode.Uuid == Guid.Parse("854e48e6-6911-4ef5-ab77-984eddafec14"))
+                imgHeight = 250;
 
             BDAttachment attachmentNode = pNode as BDAttachment;
 
-            attHtml.AppendFormat(imgFileTag, attachmentNode.uuid.ToString().ToUpper(), attachmentNode.MimeFileExtension());
+            attHtml.AppendFormat(imgFileTag, attachmentNode.uuid.ToString().ToUpper(), attachmentNode.MimeFileExtension(), imgWidth, imgHeight);
             attHtml.Append(BuildBDLegendHtml(pContext, pNode, pObjectsOnPage));
             return attHtml.ToString();
         }

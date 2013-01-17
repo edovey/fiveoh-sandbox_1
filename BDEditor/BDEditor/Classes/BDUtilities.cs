@@ -1600,6 +1600,13 @@ namespace BDEditor.Classes
             //}
             
             #endregion
+            #region v.1.5.43
+            BDNode amphoB = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("3dc48109-147a-47a7-99c9-118373374784"));
+            amphoB.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal_Amphotericin_B;
+            amphoB.nodeType = (int)BDConstants.BDNodeType.BDCategory;
+            amphoB.nodeKeyName = BDConstants.BDNodeType.BDCategory.ToString();
+            pContext.SaveChanges();
+            #endregion
         }
 
         /// <summary>

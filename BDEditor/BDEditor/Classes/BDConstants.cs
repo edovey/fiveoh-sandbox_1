@@ -177,6 +177,8 @@ namespace BDEditor.Classes
             TreatmentRecommendation09_Parasitic_I = 110,
             [Description("Treatment Recommendations - Fungal Infections")]
             TreatmentRecommendation10_Fungal = 111,
+            [Description("Treatment Recommendations - Fungal Infections : Amphotericin B")]
+            TreatmentRecommendation10_Fungal_Amphotericin_B = 1111,
             [Description("Treatment Recommendations - Enteric Parasitic Infections II")]
             TreatmentRecommendation09_Parasitic_II = 112,
 

@@ -25,7 +25,7 @@ namespace BDEditor.Views
         private bool isSeedDataLoadAvailable = false;
         private string seedDataFileName = string.Empty;
         // enable & show move button when data move is required
-        private bool moveButtonVisible = false;
+        private bool moveButtonVisible = true;
 
         public BDEditView()
         {
@@ -446,6 +446,7 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal_Amphotericin_B:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation16_CultureDirected:
                                 childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);
@@ -595,6 +596,7 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal_Amphotericin_B:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
                                 childTreeNode = BDTreatmentRecommendationTree.BuildBranch(dataContext, node);

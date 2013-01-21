@@ -2347,9 +2347,9 @@ namespace BDEditor.Classes
                     // append a row for the DosageGroup
                     string dosageGroupHtml = buildCellHTML(pContext, pNode, BDNode.PROPERTYNAME_NAME, pNode.Name, false, pFootnotes, pObjectsOnPage);
                     if (pIsFirstRow) // add parent to first column (antimicrobial)
-                        html.AppendFormat("<tr {0}><td>{1}</td><td><u>{2}:</u></td><td /></tr>", TABLEROWSTYLE_NO_BORDERS, pParentHtml, dosageGroupHtml);
+                        html.AppendFormat("<tr {0}><td>{1}</td><td><u>{2}</u></td><td /></tr>", TABLEROWSTYLE_NO_BORDERS, pParentHtml, dosageGroupHtml);
                     else
-                        html.AppendFormat("<tr {0}><td /><td><u>{1}:</u></td><td /></tr>", TABLEROWSTYLE_NO_BORDERS, dosageGroupHtml);
+                        html.AppendFormat("<tr {0}><td /><td><u>{1}</u></td><td /></tr>", TABLEROWSTYLE_NO_BORDERS, dosageGroupHtml);
 
                     bool isLastDosage = false;
                     // a row is now written to the table for this group, so anything following is not the first row.

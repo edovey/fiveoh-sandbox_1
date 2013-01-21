@@ -1607,6 +1607,24 @@ namespace BDEditor.Classes
             amphoB.nodeKeyName = BDConstants.BDNodeType.BDCategory.ToString();
             pContext.SaveChanges();
             #endregion
+
+            #region v.1.6.44
+            BDNode section = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("376b287e-1d80-40f5-bb0b-512e52720687"));
+            //BDNode category = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDCategory, Guid.Parse("93e36f86-d472-49de-b002-843e12f7366b"));
+            //category.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage;
+            //category.displayOrder = 2;
+            //category.SetParent(section);
+            //category.Name = "Antimicrobial Regimens for Endocarditis Prophylaxis";
+            //category.nodeKeyName = BDConstants.BDNodeType.BDCategory.ToString();
+            //pContext.SaveChanges();
+
+            BDNode newCategory = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("93e36f86-d472-49de-b002-843e12f7366b"));
+            List<BDTherapyGroup> children = BDTherapyGroup.RetrieveTherapyGroupsForParentId(pContext, section.Uuid);
+            foreach (BDTherapyGroup child in children)
+                    child.SetParent(newCategory);
+            pContext.SaveChanges();
+
+            #endregion
         }
 
         /// <summary>

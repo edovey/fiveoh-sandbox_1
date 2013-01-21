@@ -622,6 +622,7 @@ namespace BDEditor.Views
                                 }
                                 break;
                             case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
+                            case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:
                                 childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);

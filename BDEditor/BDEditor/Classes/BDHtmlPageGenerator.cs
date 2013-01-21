@@ -3366,7 +3366,6 @@ namespace BDEditor.Classes
                 List<BDLayoutMetadataColumn> metadataLayoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage);
                 string c1Html = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[0], BDConstants.BDNodeType.BDTherapyGroup, BDTherapyGroup.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage);
 
-                StringBuilder therapyGroupHTML = new StringBuilder();
                 List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
                 List<BDHtmlPage> childPages = new List<BDHtmlPage>();
                 foreach (IBDNode child in childNodes)
@@ -3378,9 +3377,9 @@ namespace BDEditor.Classes
                             StringBuilder categoryHTML = new StringBuilder();
                             List<Guid> categoriesOnPage = new List<Guid>();
                             List<IBDNode> subcategories = BDFabrik.GetChildrenForParent(pContext, child);
-                            categoryHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child, HtmlHeaderTagLevelString(pLevel + 2), catFootnotes, categoriesOnPage));
+                            categoryHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child, HtmlHeaderTagLevelString(pLevel + 1), catFootnotes, categoriesOnPage));
                             foreach (IBDNode subcategory in subcategories)
-                                categoryHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, subcategory, HtmlHeaderTagLevelString(pLevel + 3), catFootnotes, categoriesOnPage));
+                                categoryHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, subcategory, HtmlHeaderTagLevelString(pLevel + 2), catFootnotes, categoriesOnPage));
                             currentPageMasterObject = child;
                             BDHtmlPage childPage = writeBDHtmlPage(pContext, child, categoryHTML, BDConstants.BDHtmlPageType.Data, catFootnotes, categoriesOnPage, null);
                             html.AppendFormat(anchorTag, childPage.Uuid.ToString().ToUpper(), child.Name);
@@ -3388,36 +3387,38 @@ namespace BDEditor.Classes
 
                         case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
                         default:
-                            // this is a TherapyGroup > therapy hierarchy
-                            //if (isFirstChildEntry)
-                            //{
-                            //    therapyGroupHTML.AppendFormat("<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel + 1), c1Html);
-                            //    isFirstChildEntry = false;
-                            //}
-                            StringBuilder therapyHTML = new StringBuilder();
+                            // add title for category
+                            html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child, HtmlHeaderTagLevelString(pLevel + 1), pFootnotes, pObjectsOnPage));
+                            List<IBDNode> therapyGroups = BDFabrik.GetChildrenForParent(pContext, child);
+
 
                             string c2Html = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[1], BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_THERAPY, pFootnotes, pObjectsOnPage);
                             string c3Html = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[2], BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, pFootnotes, pObjectsOnPage);
                             string c4Html = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[3], BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE_1, pFootnotes, pObjectsOnPage);
 
-                            List<IBDNode> therapies = BDFabrik.GetChildrenForParent(pContext, child);
-                            therapyGroupHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child, HtmlHeaderTagLevelString(pLevel + 1), pFootnotes, pObjectsOnPage));
-                            // the complexity of the column headers cannot be handled in the standard methods so the text is built manually
-                            string subtext = "given 30-60 minutes before the procedure";
-                            therapyHTML.AppendFormat(@"<table class=""v{5}""><tr><th>{0}</th><th><b>{1}</b> {2}<b>/ROUTE</b></th><th><b>{3}</b> {4}<b>/ROUTE</b></th></tr>",
-                                c2Html, c3Html, subtext, c4Html, subtext, (int)child.LayoutVariant);
-                            therapyHTML.Append(@"<tr><th colspan=3>Dental, Oral, Respiratory Tract Procedures</td></tr>");
-                            foreach (IBDNode t in therapies)
+                            StringBuilder therapyGroupHTML = new StringBuilder();
+                            foreach (IBDNode tGroup in therapyGroups)
                             {
-                                BDTherapy therapy = t as BDTherapy;
-                                therapyHTML.AppendFormat(buildTherapyWithTwoDosagesHtml(pContext, therapy, false, pFootnotes, pObjectsOnPage));
+                                StringBuilder therapyHTML = new StringBuilder();
+                                List<IBDNode> therapies = BDFabrik.GetChildrenForParent(pContext, tGroup);
+                                therapyGroupHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, tGroup, HtmlHeaderTagLevelString(pLevel + 2), pFootnotes, pObjectsOnPage));
+                                // the complexity of the column headers cannot be handled in the standard methods so the text is built manually
+                                string subtext = "given 30-60 minutes before the procedure";
+                                therapyHTML.AppendFormat(@"<table class=""v{5}""><tr><th>{0}</th><th><b>{1}</b> {2}<b>/ROUTE</b></th><th><b>{3}</b> {4}<b>/ROUTE</b></th></tr>",
+                                    c2Html, c3Html, subtext, c4Html, subtext, (int)tGroup.LayoutVariant);
+                                therapyHTML.Append(@"<tr><th colspan=3>Dental, Oral, Respiratory Tract Procedures</td></tr>");
+                                foreach (IBDNode t in therapies)
+                                {
+                                    BDTherapy therapy = t as BDTherapy;
+                                    therapyHTML.AppendFormat(buildTherapyWithTwoDosagesHtml(pContext, therapy, false, pFootnotes, pObjectsOnPage));
+                                }
+                                therapyHTML.Append("</table>");
+                                therapyGroupHTML.Append(therapyHTML);
                             }
-                            therapyHTML.Append("</table>");
-                            therapyGroupHTML.Append(therapyHTML);
+                            html.Append(therapyGroupHTML);
                             break;
                     }
                 }
-                html.Append(therapyGroupHTML);
             }
 
             return html.ToString();

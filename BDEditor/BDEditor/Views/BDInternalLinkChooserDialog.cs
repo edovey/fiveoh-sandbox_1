@@ -23,6 +23,11 @@ namespace BDEditor.Views
             DataContext = pDataContext;
         }
 
+        public void Setup(IBDNode pInitialNode)
+        {
+            bdInternalLinkChooserControl1.Setup(DataContext, pInitialNode);    
+        }
+
         private void btnOK_Click(object sender, EventArgs e)
         {
             IBDNode selectedNode = bdInternalLinkChooserControl1.SelectedIBDNode;

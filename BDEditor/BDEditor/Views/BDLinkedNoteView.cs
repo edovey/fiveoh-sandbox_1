@@ -128,6 +128,15 @@ namespace BDEditor.Views
 
             isRendering = false;
 
+            if (null != scopeId)
+            {
+                IBDNode scopeNode = BDFabrik.RetrieveNode(dataContext, scopeId);
+                lblScopeTitle.Text = scopeNode.Name;
+            }
+            else
+            {
+                lblScopeTitle.Text = "";
+            }
             this.Cursor = Cursors.Default;
         }
 
@@ -447,6 +456,21 @@ namespace BDEditor.Views
                     lblInternalLinkDescription.Text = @"Target is no longer valid: Has it been deleted?";
                     lblInternalLinkDescription.ForeColor = Color.Red;
                 }
+            }
+        }
+
+        private void btnChangeScope_Click(object sender, EventArgs e)
+        {
+            Guid? selectedScopeUuid = scopeId;
+
+            IBDNode scopeNode = BDFabrik.RetrieveNode(dataContext, selectedScopeUuid);
+            BDInternalLinkChooserDialog dialog = new BDInternalLinkChooserDialog(dataContext);
+            dialog.Setup(scopeNode);
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                selectedScopeUuid = dialog.SelectedUuid;
+                AssignScopeId(selectedScopeUuid);
+                RefreshListOfScopeNotes();
             }
         }
     }

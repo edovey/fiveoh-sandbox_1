@@ -88,6 +88,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "BDInternalLinkChooserDialog";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "BDInternalLinkChooserDialog";
             this.Load += new System.EventHandler(this.BDInternalLinkChooserDialog_Load);
             this.panel1.ResumeLayout(false);

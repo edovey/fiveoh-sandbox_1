@@ -54,8 +54,10 @@
             this.movePreviousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveNextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelInternalLink = new System.Windows.Forms.Panel();
-            this.btnInternalLink = new System.Windows.Forms.Button();
             this.lblInternalLinkDescription = new System.Windows.Forms.Label();
+            this.btnInternalLink = new System.Windows.Forms.Button();
+            this.btnChangeScope = new System.Windows.Forms.Button();
+            this.lblScopeTitle = new System.Windows.Forms.Label();
             this.bdLinkedNoteControl1 = new BDEditor.Views.BDLinkedNoteControl();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -72,15 +74,16 @@
             this.panel1.Controls.Add(this.tabControl1);
             this.panel1.Controls.Add(this.btnOK);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 309);
+            this.panel1.Location = new System.Drawing.Point(0, 318);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(810, 175);
+            this.panel1.Size = new System.Drawing.Size(817, 175);
             this.panel1.TabIndex = 1;
             // 
             // btnMenu
             // 
+            this.btnMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnMenu.Image = global::BDEditor.Properties.Resources.apps_16;
-            this.btnMenu.Location = new System.Drawing.Point(637, 139);
+            this.btnMenu.Location = new System.Drawing.Point(641, 139);
             this.btnMenu.Name = "btnMenu";
             this.btnMenu.Size = new System.Drawing.Size(28, 28);
             this.btnMenu.TabIndex = 17;
@@ -89,13 +92,15 @@
             // 
             // tabControl1
             // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPageLinks);
             this.tabControl1.Controls.Add(this.tabPageNotes);
             this.tabControl1.Location = new System.Drawing.Point(12, 2);
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(619, 169);
+            this.tabControl1.Size = new System.Drawing.Size(614, 170);
             this.tabControl1.TabIndex = 3;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -123,20 +128,24 @@
             // 
             // tabPageNotes
             // 
+            this.tabPageNotes.Controls.Add(this.lblScopeTitle);
+            this.tabPageNotes.Controls.Add(this.btnChangeScope);
             this.tabPageNotes.Controls.Add(this.btnAssignNote);
             this.tabPageNotes.Controls.Add(this.chListNotes);
             this.tabPageNotes.Location = new System.Drawing.Point(4, 22);
             this.tabPageNotes.Name = "tabPageNotes";
             this.tabPageNotes.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageNotes.Size = new System.Drawing.Size(611, 143);
+            this.tabPageNotes.Size = new System.Drawing.Size(606, 144);
             this.tabPageNotes.TabIndex = 1;
             this.tabPageNotes.Text = "Attached Notes";
             this.tabPageNotes.UseVisualStyleBackColor = true;
             // 
             // btnAssignNote
             // 
+            this.btnAssignNote.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAssignNote.Enabled = false;
-            this.btnAssignNote.Location = new System.Drawing.Point(177, 117);
+            this.btnAssignNote.Location = new System.Drawing.Point(521, 116);
             this.btnAssignNote.Name = "btnAssignNote";
             this.btnAssignNote.Size = new System.Drawing.Size(75, 23);
             this.btnAssignNote.TabIndex = 8;
@@ -147,11 +156,13 @@
             // 
             // chListNotes
             // 
-            this.chListNotes.Dock = System.Windows.Forms.DockStyle.Top;
+            this.chListNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.chListNotes.FormattingEnabled = true;
             this.chListNotes.Location = new System.Drawing.Point(3, 3);
             this.chListNotes.Name = "chListNotes";
-            this.chListNotes.Size = new System.Drawing.Size(605, 109);
+            this.chListNotes.Size = new System.Drawing.Size(593, 109);
             this.chListNotes.TabIndex = 7;
             this.chListNotes.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.linkedNoteView_ItemCheck);
             this.chListNotes.SelectedIndexChanged += new System.EventHandler(this.chListNotes_SelectedIndexChanged);
@@ -160,7 +171,7 @@
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(723, 146);
+            this.btnOK.Location = new System.Drawing.Point(730, 146);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 2;
@@ -180,7 +191,7 @@
             this.headerPanel.Location = new System.Drawing.Point(0, 0);
             this.headerPanel.Name = "headerPanel";
             this.headerPanel.Padding = new System.Windows.Forms.Padding(5);
-            this.headerPanel.Size = new System.Drawing.Size(810, 53);
+            this.headerPanel.Size = new System.Drawing.Size(817, 53);
             this.headerPanel.TabIndex = 3;
             // 
             // btnNext
@@ -188,7 +199,7 @@
             this.btnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNext.Enabled = false;
             this.btnNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNext.Location = new System.Drawing.Point(786, 9);
+            this.btnNext.Location = new System.Drawing.Point(793, 9);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(20, 37);
             this.btnNext.TabIndex = 5;
@@ -201,7 +212,7 @@
             this.btnPrevious.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPrevious.Enabled = false;
             this.btnPrevious.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPrevious.Location = new System.Drawing.Point(716, 8);
+            this.btnPrevious.Location = new System.Drawing.Point(723, 8);
             this.btnPrevious.Name = "btnPrevious";
             this.btnPrevious.Size = new System.Drawing.Size(20, 37);
             this.btnPrevious.TabIndex = 4;
@@ -213,7 +224,7 @@
             // 
             this.lblNoteCounter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblNoteCounter.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNoteCounter.Location = new System.Drawing.Point(738, 9);
+            this.lblNoteCounter.Location = new System.Drawing.Point(745, 9);
             this.lblNoteCounter.Name = "lblNoteCounter";
             this.lblNoteCounter.Size = new System.Drawing.Size(46, 36);
             this.lblNoteCounter.TabIndex = 3;
@@ -240,12 +251,12 @@
             // 
             // rtfContextInfo
             // 
-            this.rtfContextInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtfContextInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.rtfContextInfo.Location = new System.Drawing.Point(150, 5);
             this.rtfContextInfo.Name = "rtfContextInfo";
             this.rtfContextInfo.ReadOnly = true;
-            this.rtfContextInfo.Size = new System.Drawing.Size(559, 43);
+            this.rtfContextInfo.Size = new System.Drawing.Size(566, 43);
             this.rtfContextInfo.TabIndex = 0;
             this.rtfContextInfo.TabStop = false;
             this.rtfContextInfo.Text = "";
@@ -261,26 +272,26 @@
             this.movePreviousToolStripMenuItem,
             this.moveNextToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(174, 126);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(172, 126);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Image = global::BDEditor.Properties.Resources.delete_record_16;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.deleteToolStripMenuItem.Text = "Delete Association";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.RemoveCurrentAssociation_Action);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(170, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(168, 6);
             // 
             // addAnotherNoteToolStripMenuItem
             // 
             this.addAnotherNoteToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_16x16;
             this.addAnotherNoteToolStripMenuItem.Name = "addAnotherNoteToolStripMenuItem";
-            this.addAnotherNoteToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.addAnotherNoteToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.addAnotherNoteToolStripMenuItem.Text = "Add Another Note";
             this.addAnotherNoteToolStripMenuItem.Click += new System.EventHandler(this.addAnotherNoteToolStripMenuItem_Click);
             // 
@@ -288,21 +299,21 @@
             // 
             this.deleteNoteToolStripMenuItem.Image = global::BDEditor.Properties.Resources.remove;
             this.deleteNoteToolStripMenuItem.Name = "deleteNoteToolStripMenuItem";
-            this.deleteNoteToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.deleteNoteToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.deleteNoteToolStripMenuItem.Text = "Delete Note";
             this.deleteNoteToolStripMenuItem.Click += new System.EventHandler(this.DeleteCurrentNote_Action);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(170, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(168, 6);
             this.toolStripMenuItem2.Visible = false;
             // 
             // movePreviousToolStripMenuItem
             // 
             this.movePreviousToolStripMenuItem.Image = global::BDEditor.Properties.Resources.previous_16;
             this.movePreviousToolStripMenuItem.Name = "movePreviousToolStripMenuItem";
-            this.movePreviousToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.movePreviousToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.movePreviousToolStripMenuItem.Text = "Move Previous";
             this.movePreviousToolStripMenuItem.Visible = false;
             this.movePreviousToolStripMenuItem.Click += new System.EventHandler(this.movePreviousToolStripMenuItem_Click);
@@ -311,7 +322,7 @@
             // 
             this.moveNextToolStripMenuItem.Image = global::BDEditor.Properties.Resources.next_16;
             this.moveNextToolStripMenuItem.Name = "moveNextToolStripMenuItem";
-            this.moveNextToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.moveNextToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.moveNextToolStripMenuItem.Text = "Move Next";
             this.moveNextToolStripMenuItem.Visible = false;
             this.moveNextToolStripMenuItem.Click += new System.EventHandler(this.moveNextToolStripMenuItem_Click);
@@ -321,11 +332,21 @@
             this.panelInternalLink.Controls.Add(this.lblInternalLinkDescription);
             this.panelInternalLink.Controls.Add(this.btnInternalLink);
             this.panelInternalLink.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelInternalLink.Location = new System.Drawing.Point(0, 274);
+            this.panelInternalLink.Location = new System.Drawing.Point(0, 283);
             this.panelInternalLink.Name = "panelInternalLink";
             this.panelInternalLink.Padding = new System.Windows.Forms.Padding(4);
-            this.panelInternalLink.Size = new System.Drawing.Size(810, 35);
+            this.panelInternalLink.Size = new System.Drawing.Size(817, 35);
             this.panelInternalLink.TabIndex = 4;
+            // 
+            // lblInternalLinkDescription
+            // 
+            this.lblInternalLinkDescription.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblInternalLinkDescription.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblInternalLinkDescription.Location = new System.Drawing.Point(75, 4);
+            this.lblInternalLinkDescription.Name = "lblInternalLinkDescription";
+            this.lblInternalLinkDescription.Size = new System.Drawing.Size(738, 27);
+            this.lblInternalLinkDescription.TabIndex = 1;
+            this.lblInternalLinkDescription.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnInternalLink
             // 
@@ -337,15 +358,27 @@
             this.btnInternalLink.UseVisualStyleBackColor = true;
             this.btnInternalLink.Click += new System.EventHandler(this.btnInternalLink_Click);
             // 
-            // lblInternalLinkDescription
+            // btnChangeScope
             // 
-            this.lblInternalLinkDescription.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblInternalLinkDescription.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblInternalLinkDescription.Location = new System.Drawing.Point(68, 4);
-            this.lblInternalLinkDescription.Name = "lblInternalLinkDescription";
-            this.lblInternalLinkDescription.Size = new System.Drawing.Size(738, 27);
-            this.lblInternalLinkDescription.TabIndex = 1;
-            this.lblInternalLinkDescription.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnChangeScope.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnChangeScope.Location = new System.Drawing.Point(6, 115);
+            this.btnChangeScope.Name = "btnChangeScope";
+            this.btnChangeScope.Size = new System.Drawing.Size(96, 23);
+            this.btnChangeScope.TabIndex = 9;
+            this.btnChangeScope.Text = "Change Scope";
+            this.btnChangeScope.UseVisualStyleBackColor = true;
+            this.btnChangeScope.Click += new System.EventHandler(this.btnChangeScope_Click);
+            // 
+            // lblScopeTitle
+            // 
+            this.lblScopeTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblScopeTitle.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblScopeTitle.Location = new System.Drawing.Point(108, 116);
+            this.lblScopeTitle.Name = "lblScopeTitle";
+            this.lblScopeTitle.Size = new System.Drawing.Size(396, 20);
+            this.lblScopeTitle.TabIndex = 10;
+            this.lblScopeTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // bdLinkedNoteControl1
             // 
@@ -360,14 +393,15 @@
             this.bdLinkedNoteControl1.Padding = new System.Windows.Forms.Padding(3);
             this.bdLinkedNoteControl1.SaveOnLeave = false;
             this.bdLinkedNoteControl1.ShowAsChild = false;
-            this.bdLinkedNoteControl1.Size = new System.Drawing.Size(810, 221);
+            this.bdLinkedNoteControl1.ShowChildren = true;
+            this.bdLinkedNoteControl1.Size = new System.Drawing.Size(817, 230);
             this.bdLinkedNoteControl1.TabIndex = 1;
             // 
             // BDLinkedNoteView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(810, 484);
+            this.ClientSize = new System.Drawing.Size(817, 493);
             this.Controls.Add(this.bdLinkedNoteControl1);
             this.Controls.Add(this.panelInternalLink);
             this.Controls.Add(this.headerPanel);
@@ -419,6 +453,8 @@
         private System.Windows.Forms.Panel panelInternalLink;
         private System.Windows.Forms.Label lblInternalLinkDescription;
         private System.Windows.Forms.Button btnInternalLink;
+        private System.Windows.Forms.Button btnChangeScope;
+        private System.Windows.Forms.Label lblScopeTitle;
 
     }
 }

@@ -98,9 +98,10 @@ namespace BDEditor.Classes
             Debug.WriteLine("Post-processing HTML pages");
             foreach (BDHtmlPage page in pages)
             {
-                processTextForInternalLinks(pContext, page, displayParentIds, pageIds);
-                processTextForSubscriptAndSuperscriptMarkup(pContext, page);
-                processTextForCarriageReturn(pContext, page);
+                postProcessPage(pContext, page, pageIds);
+                //processTextForInternalLinks(pContext, page, displayParentIds, pageIds);
+                //processTextForSubscriptAndSuperscriptMarkup(pContext, page);
+                //processTextForCarriageReturn(pContext, page);
             }
 
             #region Output logs
@@ -5424,7 +5425,14 @@ namespace BDEditor.Classes
             }
         }
 
-        private void processTextForInternalLinks(Entities pContext, BDHtmlPage pPage, List<Guid> pRespresentedNodes, List<Guid> pExistingPages)
+        private void postProcessPage(Entities pContext, BDHtmlPage pPage, List<Guid> pExistingPages)
+        {
+            processTextForInternalLinks(pContext, pPage, pExistingPages);
+            processTextForSubscriptAndSuperscriptMarkup(pContext, pPage);
+            processTextForCarriageReturn(pContext, pPage);
+        }
+
+        private void processTextForInternalLinks(Entities pContext, BDHtmlPage pPage, List<Guid> pExistingPages)
         {
             postProcessingPageLayoutVariant = pPage.layoutVariant;
             //BDNodeToHtmlPageIndex index = BDNodeToHtmlPageIndex.RetrieveIndexEntryForHtmlPageId(pContext, pPage.Uuid);
@@ -5547,6 +5555,10 @@ namespace BDEditor.Classes
                                                     string newText = pPage.documentText.Replace(anchorGuid.ToString(), newPage.Uuid.ToString().ToUpper());
                                                     pPage.documentText = newText;
                                                     BDHtmlPage.Save(pContext, pPage);
+
+                                                    pExistingPages.Add(newPage.Uuid);
+
+                                                    postProcessPage(pContext, newPage, pExistingPages);
                                                 }
                                             }
                                         }

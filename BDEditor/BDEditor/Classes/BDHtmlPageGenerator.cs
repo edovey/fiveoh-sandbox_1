@@ -2326,7 +2326,7 @@ namespace BDEditor.Classes
 
                     html.AppendFormat("<td>{0}", buildCellHTML(pContext, dosage, BDDosage.PROPERTYNAME_COST, dosage.cost, false, pFootnotes, pObjectsOnPage));
                     if (dosage.cost2.Length > 0)
-                        html.AppendFormat("-{0}</td>", buildCellHTML(pContext, dosage, BDDosage.PROPERTYNAME_COST2, dosage.cost2, false, pFootnotes, pObjectsOnPage));
+                        html.AppendFormat(" {0}</td>", buildCellHTML(pContext, dosage, BDDosage.PROPERTYNAME_COST2, dosage.cost2, false, pFootnotes, pObjectsOnPage));
                     else
                         html.Append("</td>");
                     html.Append("</tr>");

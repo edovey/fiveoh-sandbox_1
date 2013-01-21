@@ -256,12 +256,14 @@ namespace BDEditor.Views
 
         public void Delete()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            System.Diagnostics.Debug.WriteLine("Delete Not implemented");
         }
 
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            System.Diagnostics.Debug.WriteLine("'Show Links in Use' Not implemented");
         }
 
         public bool CreateCurrentObject()

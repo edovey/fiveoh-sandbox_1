@@ -1598,7 +1598,6 @@ namespace BDEditor.Classes
             //        }
             //    }
             //}
-            
             #endregion
             #region v.1.5.43
             BDNode amphoB = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("3dc48109-147a-47a7-99c9-118373374784"));
@@ -1618,12 +1617,11 @@ namespace BDEditor.Classes
             //category.nodeKeyName = BDConstants.BDNodeType.BDCategory.ToString();
             //pContext.SaveChanges();
 
-            BDNode newCategory = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("93e36f86-d472-49de-b002-843e12f7366b"));
-            List<BDTherapyGroup> children = BDTherapyGroup.RetrieveTherapyGroupsForParentId(pContext, section.Uuid);
-            foreach (BDTherapyGroup child in children)
-                    child.SetParent(newCategory);
-            pContext.SaveChanges();
-
+            //BDNode newCategory = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("93e36f86-d472-49de-b002-843e12f7366b"));
+            //List<BDTherapyGroup> children = BDTherapyGroup.RetrieveTherapyGroupsForParentId(pContext, section.Uuid);
+            //foreach (BDTherapyGroup child in children)
+            //    child.SetParent(newCategory);
+            //pContext.SaveChanges();
             #endregion
         }
 

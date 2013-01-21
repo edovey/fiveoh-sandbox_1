@@ -3338,7 +3338,7 @@ namespace BDEditor.Classes
                                 durationText.Append(note.documentText);
                                 mObjectsOnPage.Add(note.Uuid);
                             }
-                            mHTML.AppendFormat("<{0}{1}</{0}>{2}", HtmlHeaderTagLevelString(pLevel + 3), columnHtml[6], durationText);
+                            mHTML.AppendFormat("<{0}>{1}</{0}>{2}", HtmlHeaderTagLevelString(pLevel + 3), columnHtml[6], durationText);
                         }
                         currentPageMasterObject = microorganism;
                         mPages.Add(writeBDHtmlPage(pContext, microorganism, mHTML, BDConstants.BDHtmlPageType.Data, mFootnotes, mObjectsOnPage, null));

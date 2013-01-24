@@ -5256,19 +5256,24 @@ namespace BDEditor.Classes
                         //string immediateText = BDUtilities.buildTextFromInlineNotes(immediate, pObjectsOnPage);
                         if (immediateText.Length > 0)
                         {
-                            pResolvedValue = string.Format(@"<a href=""{0}""{1}</a>", notePage.Uuid.ToString().ToUpper(), immediateText);
+                            pResolvedValue = string.Format(@"<a href=""{0}"">{1}</a>", notePage.Uuid.ToString().ToUpper(), immediateText);
                         }
                         else
                         {
                             pResolvedValue = string.Format(@"<a href=""{0}"">See Comments.</a>", notePage.Uuid.ToString().ToUpper());
                         }
-                        
-                        propertyHTML.AppendFormat(@"{0}{1}{2}{3}{4}", startTag, pResolvedValue, endTag, inlineOverviewText, overviewHTML);
+                        if(!string.IsNullOrEmpty(pResolvedValue))
+                            propertyHTML.AppendFormat(@"{0}{1}{2}{3}{4}", startTag, pResolvedValue, endTag, inlineOverviewText, overviewHTML);
+                        else
+                            propertyHTML.AppendFormat(@"{0}{1}", inlineOverviewText, overviewHTML);
                     }
                 }
                 else
                 {
-                    propertyHTML.AppendFormat(@"{0}{1}{2}{3}{4}", startTag, pResolvedValue, endTag, inlineOverviewText, overviewHTML);
+                    if (!string.IsNullOrEmpty(pResolvedValue))
+                        propertyHTML.AppendFormat(@"{0}{1}{2}{3}{4}", startTag, pResolvedValue, endTag, inlineOverviewText, overviewHTML);
+                    else
+                        propertyHTML.AppendFormat(@"{0}{1}", inlineOverviewText, overviewHTML);
                 }
             }
 

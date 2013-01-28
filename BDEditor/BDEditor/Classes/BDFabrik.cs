@@ -703,6 +703,8 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDSubsection:
                     switch (layoutVariant)
                     {
+                        case BDConstants.LayoutVariantType.FrontMatter:
+                        case BDConstants.LayoutVariantType.BackMatter:
                         case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;

@@ -3698,6 +3698,9 @@ namespace BDEditor.Classes
                         break;
                     case BDConstants.LayoutVariantType.FrontMatter:
                     case BDConstants.LayoutVariantType.BackMatter:
+                        foreach (IBDNode child in children)
+                            html.Append(BuildBDSubSectionHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 2));
+                        break;
                     default:
                         break;
                 }
@@ -4001,6 +4004,11 @@ namespace BDEditor.Classes
                             html.AppendFormat(anchorTag, childPage.Uuid.ToString().ToUpper(), childPage.pageTitle);
                         }
 
+                        break;
+                    case BDConstants.LayoutVariantType.FrontMatter:
+                    case BDConstants.LayoutVariantType.BackMatter:
+                        foreach (IBDNode child in children)
+                            html.Append(BuildBDTopicHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
                         break;
                     case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDCategory, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -4561,6 +4569,8 @@ namespace BDEditor.Classes
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubtopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         break;
 
+                    case BDConstants.LayoutVariantType.FrontMatter:
+                    case BDConstants.LayoutVariantType.BackMatter:
                     default:
                         break;
                 }
@@ -5569,6 +5579,14 @@ namespace BDEditor.Classes
                                             }
                                         }
                                     }
+                                }
+
+                                // if we have null here, then we'll have a link that leads to a blank page.  Need to flag when this happens
+                                else
+                                {
+                                    Debug.WriteLine("Unable to map anchor guid {0} on page {1} to an existing linkedNote", anchorGuid, pPage.Uuid);
+                                    //BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("{0}\tHtml page Uuid {1}\tAnchor Uuid {2}\tLNA {3}", DateTime.Now, pPage.Uuid, anchorGuid.ToString(), linkTargetAssn.Uuid.ToString()));
+
                                 }
                             }
                         }

@@ -128,6 +128,28 @@ namespace BDEditor.Views
                     TreeNode[] nodeList = new TreeNode[node.Nodes.Count];
                     node.Nodes.CopyTo(nodeList, 0);
                     chapterTree.Nodes.AddRange(nodeList);
+
+                    BDCommon.Settings.WaitingForEvent = true;
+                    BDCommon.Settings.IsUpdating = true;
+                    IBDControl control_tr01 = BDFabrik.CreateControlForNode(dataContext, pNode);
+                    if (null != control_tr01)
+                    {
+                        bool showChildControls = false;
+                        ((System.Windows.Forms.UserControl)control_tr01).Validated += new EventHandler(BDEditView_Validated);
+                        control_tr01.ShowChildren = showChildControls;
+                        control_tr01.AssignScopeId((null != node) ? pNode.Uuid : Guid.Empty);
+                        control_tr01.AssignParentInfo(pNode.ParentId, pNode.ParentType);
+                        ((System.Windows.Forms.UserControl)control_tr01).Dock = DockStyle.Fill;
+                        control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                        control_tr01.RequestItemAdd += new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
+                        splitContainer1.Panel2.Controls.Add((System.Windows.Forms.UserControl)control_tr01);
+                        control_tr01.RefreshLayout(showChildControls);
+
+                    }
+                    BDCommon.Settings.IsUpdating = false;
+                    ControlHelper.ResumeDrawing(splitContainer1.Panel2);
+                    splitContainer1.Panel2.ResumeLayout();
+
                 }
             }
 

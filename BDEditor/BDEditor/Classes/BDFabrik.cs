@@ -1662,6 +1662,14 @@ namespace BDEditor.Classes
                             break;
                     }
                     break;
+                case BDConstants.BDNodeType.BDChapter:
+                    switch (pNode.LayoutVariant)
+                    {
+                        default:
+                            nodeControl = new BDNodeControl(pContext, pNode);
+                            break;
+                    }
+                    break;
                 case BDConstants.BDNodeType.BDCondition:
                     switch (pNode.LayoutVariant)
                     {

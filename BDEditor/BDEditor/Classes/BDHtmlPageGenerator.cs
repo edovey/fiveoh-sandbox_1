@@ -2779,6 +2779,9 @@ namespace BDEditor.Classes
                             html.Append(string.Format("<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel), title));
                         }
 
+                        // separate the pathogen groups' data with a line
+                        html.Append("<hr>");
+
                         // describe the pathogen group
                         html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel + 1), pFootnotes, pObjectsOnPage));
 
@@ -2787,8 +2790,8 @@ namespace BDEditor.Classes
                             switch (child.NodeType)
                             {
                                 case BDConstants.BDNodeType.BDPathogen:
-                                    html.AppendFormat("{0}<br>", (buildNodeWithReferenceAndOverviewHTML(pContext, child, "", pFootnotes, pObjectsOnPage)));
-//                                    html.AppendFormat("<div id=\"h3\">{0}</div><br>", (buildNodeWithReferenceAndOverviewHTML(pContext, child, "", pFootnotes, pObjectsOnPage)));
+                                    //html.AppendFormat("{0}<br>", (buildNodeWithReferenceAndOverviewHTML(pContext, child, "", pFootnotes, pObjectsOnPage)));
+                                    html.AppendFormat("{0}<br>", (buildNodeWithReferenceAndOverviewHTML(pContext, child, "div", pFootnotes, pObjectsOnPage)));
                                     break;
                                 case BDConstants.BDNodeType.BDTherapyGroup:
                                     BDTherapyGroup therapyGroup = child as BDTherapyGroup;
@@ -4379,7 +4382,6 @@ namespace BDEditor.Classes
                         break;
                 }
             }
-            html.Append(BuildBDLegendHtml(pContext, pNode, pObjectsOnPage));
 
             return html.ToString();
         }
@@ -5229,6 +5231,17 @@ namespace BDEditor.Classes
         {
             string startTag = (pHtmlTag.Length > 0) ? string.Format("<{0}>", pHtmlTag) : string.Empty;
             string endTag = (pHtmlTag.Length > 0) ? string.Format("</{0}>", pHtmlTag) : string.Empty;
+
+            if(pHtmlTag == "div") {
+                switch (pNode.LayoutVariant)
+                {
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
+                        startTag = "<div class=\"emphasis\">";
+                        break;
+                    default:
+                        break;
+                }
+            }
 
             StringBuilder propertyHTML = new StringBuilder();
             List<BDLinkedNote> propertyFooters = (retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.Footnote));

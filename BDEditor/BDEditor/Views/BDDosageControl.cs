@@ -106,6 +106,7 @@ namespace BDEditor.Views
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentDosage) ? this.currentDosage.uuid : Guid.Empty);
             btnAdultLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnAdultLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR; 
             btnDosage2Link.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnDosage2Link.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
+            btnDosage3Link.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnDosage3Link.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
             btnDosage4Link.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnDosage4Link.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
         }
 

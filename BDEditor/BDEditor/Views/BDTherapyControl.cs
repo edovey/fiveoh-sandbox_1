@@ -257,14 +257,14 @@ namespace BDEditor.Views
                 chkPreviousDose.Checked = currentTherapy.dosageSameAsPrevious.Value;
                 chkPreviousDuration.Checked = currentTherapy.durationSameAsPrevious.Value;
 
-                if (pnlMain.Controls.Contains(chkPreviousDose1))
+                if (pnlMain.Controls.Contains(chkPreviousDose1) && currentTherapy.dosage1SameAsPrevious.HasValue)
                     chkPreviousDose1.Checked = currentTherapy.dosage1SameAsPrevious.Value;
-                if (pnlMain.Controls.Contains(chkPreviousDose2))
+                if (pnlMain.Controls.Contains(chkPreviousDose2) && currentTherapy.dosage2SameAsPrevious.HasValue)
                     chkPreviousDose2.Checked = currentTherapy.dosage2SameAsPrevious.Value;
 
-                if (pnlMain.Controls.Contains(chkPreviousDuration1))
+                if (pnlMain.Controls.Contains(chkPreviousDuration1) && currentTherapy.duration1SameAsPrevious.HasValue)
                     chkPreviousDuration1.Checked = currentTherapy.duration1SameAsPrevious.Value;
-                if (pnlMain.Controls.Contains(chkPreviousDuration2))
+                if (pnlMain.Controls.Contains(chkPreviousDuration2) && currentTherapy.duration2SameAsPrevious.HasValue)
                     chkPreviousDuration2.Checked = currentTherapy.duration2SameAsPrevious.Value;
 
             }
@@ -721,6 +721,7 @@ namespace BDEditor.Views
                 case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
@@ -860,8 +861,6 @@ namespace BDEditor.Views
                     toolTip1.SetToolTip(tbDosage, "Adult Dose");
                     toolTip1.SetToolTip(tbDosage1, "Paediatric Dose");
                     break;
-                case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II:
                 case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:

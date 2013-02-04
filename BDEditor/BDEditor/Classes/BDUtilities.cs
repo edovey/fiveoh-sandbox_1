@@ -1606,7 +1606,6 @@ namespace BDEditor.Classes
             amphoB.nodeKeyName = BDConstants.BDNodeType.BDCategory.ToString();
             pContext.SaveChanges();
             #endregion
-
             #region v.1.6.44
             BDNode section = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("376b287e-1d80-40f5-bb0b-512e52720687"));
             //BDNode category = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDCategory, Guid.Parse("93e36f86-d472-49de-b002-843e12f7366b"));
@@ -1623,6 +1622,74 @@ namespace BDEditor.Classes
             //    child.SetParent(newCategory);
             //pContext.SaveChanges();
             #endregion
+
+            #region v.1.6.46
+            //// necrotizing fasciitis - change layout variant
+            //BDNode nf = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("9e2409c4-1ef0-49a9-ab20-887954f25ca0"));
+            //BDUtilities.ResetLayoutVariantWithChildren(pContext, nf, BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis, true);
+            //pContext.SaveChanges();
+
+            //// reorganize TR > Adult > CAP
+            //BDNode cap = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("cc7487dd-3b06-4826-9554-4b822bcfd9ba"));
+
+            //BDNode outpatient = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDPresentation, Guid.Parse("0a73d4a0-5c7a-4204-a0d5-0136ccdd973b"));
+            ////BDNode outpatient = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("0a73d4a0-5c7a-4204-a0d5-0136ccdd973b"));
+            //outpatient.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic;
+            //outpatient.displayOrder = 0;
+            //outpatient.SetParent(cap);
+            //outpatient.Name = "CAP, Outpatient";
+            //outpatient.nodeKeyName = BDConstants.BDNodeType.BDPresentation.ToString();
+            //outpatient.nodeType = (int)BDConstants.BDNodeType.BDPresentation;
+            //pContext.SaveChanges();
+
+            //BDNode hospitalized = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("026f2db5-a22c-434b-927b-0fadd648c19f"));
+            //hospitalized.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic;
+            //hospitalized.displayOrder = 1;
+            //hospitalized.SetParent(cap);
+            //hospitalized.Name = "CAP, Hospitalized";
+            //hospitalized.nodeKeyName = BDConstants.BDNodeType.BDPresentation.ToString();
+            //hospitalized.nodeType = (int)BDConstants.BDNodeType.BDPresentation;
+            //pContext.SaveChanges();
+
+            //BDNode op_1 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("4a0d101e-b220-4564-b7de-1b3bfdd9c308"));
+            //op_1.SetParent(outpatient);
+            //op_1.Name = "No comorbid factors";
+            //op_1.DisplayOrder = 0;
+            //op_1.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            //op_1.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            //BDNode op_2 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("e429a80e-8518-4ea2-81dc-f27010e880a2"));
+            //op_2.SetParent(outpatient);
+            //op_2.Name = "Comorbid factors";
+            //op_2.DisplayOrder = 1;
+            //op_2.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            //op_2.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            //BDNode op_3 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("13b73c3b-5eff-48b5-935f-411dd7930c82"));
+            //op_3.SetParent(outpatient);
+            //op_3.Name = "Failure of 1st line agents";
+            //op_3.DisplayOrder = 2;
+            //op_3.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            //op_3.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            //BDNode ho_1 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("ef43b894-e820-4499-9466-83c5a15845ae"));
+            //ho_1.SetParent(hospitalized);
+            //ho_1.Name = "Moderate";
+            //ho_1.DisplayOrder = 0;
+            //ho_1.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            //ho_1.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            //BDNode ho_2 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("c085d1e6-31eb-4704-b11b-7379d2751804"));
+            //ho_2.SetParent(hospitalized);
+            //ho_2.Name = "Severe/ICU";
+            //ho_2.DisplayOrder = 1;
+            //ho_2.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+            //ho_2.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            //pContext.SaveChanges();
+
+            BDNode outpatient = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("0a73d4a0-5c7a-4204-a0d5-0136ccdd973b"));
+            BDNode hospitalized = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("026f2db5-a22c-434b-927b-0fadd648c19f"));
+            BDUtilities.ResetLayoutVariantWithChildren(pContext, outpatient, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, false);
+            BDUtilities.ResetLayoutVariantWithChildren(pContext, hospitalized, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, false);
+
+            #endregion
+
         }
 
         /// <summary>

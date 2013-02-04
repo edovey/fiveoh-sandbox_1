@@ -405,6 +405,7 @@ namespace BDEditor.Classes
                         switch (pNode.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis:
                             case BDConstants.LayoutVariantType.Dental_Prophylaxis:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                             case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
@@ -508,10 +509,12 @@ namespace BDEditor.Classes
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Adult:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Paediatric:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic:
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis:
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
                             // if the processing comes through here, then the Disease has > 1 Presentation 
@@ -743,7 +746,8 @@ namespace BDEditor.Classes
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines_Spectrum:
                             currentPageMasterObject = pNode;
-                            nodeChildPages.Add(generatePageForAntibioticsClinicalGuidelinesSpectrum(pContext, pNode as BDNode));
+                            //nodeChildPages.Add(generatePageForAntibioticsClinicalGuidelinesSpectrum(pContext, pNode as BDNode));
+                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01_CNS_Meningitis_Table:
@@ -874,7 +878,7 @@ namespace BDEditor.Classes
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
             foreach (IBDNode child in childNodes)
             {
-                bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child as BDNode, "h3", footnotes, objectsOnPage));
+                bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child as BDNode, "h2", footnotes, objectsOnPage));
             }
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage, null);
 }
@@ -2221,6 +2225,7 @@ namespace BDEditor.Classes
                 {
                     case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPresentation, new BDConstants.LayoutVariantType[] { layoutVariant, BDConstants.LayoutVariantType.TreatmentRecommendation14_CellulitisExtremities, BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions, BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Adult, BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Paediatric }));
                         foreach (IBDNode child in children)
                         {
@@ -2803,8 +2808,38 @@ namespace BDEditor.Classes
                             }
                         }
                         break;
-                    default:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis:
+                        if (pHasUsualPathogenTitle)
+                        {
+                            string title = "Usual Pathogens";
+                            if (pNode.ParentId == Guid.Parse("54f2fcf0-8cbb-42d0-b61e-494838b1920e")) title = "Potential Pathogens";
+                            html.Append(string.Format("<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel), title));
+                        }
 
+                        // separate the pathogen groups' data with a line
+                        html.Append("<hr>");
+
+                        // describe the pathogen group
+                        html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel + 1), pFootnotes, pObjectsOnPage));
+
+                        foreach (IBDNode child in children)
+                        {
+                            switch (child.NodeType)
+                            {
+                                case BDConstants.BDNodeType.BDPathogen:
+                                    html.AppendFormat("{0}<br>", (buildNodeWithReferenceAndOverviewHTML(pContext, child, "div", pFootnotes, pObjectsOnPage)));
+                                    break;
+                                case BDConstants.BDNodeType.BDTherapyGroup:
+                                    BDTherapyGroup therapyGroup = child as BDTherapyGroup;
+                                    if (null != therapyGroup)
+                                    {
+                                        html.AppendFormat("{0}<br>", (BuildBDTherapyGroupHTML(pContext, therapyGroup, pFootnotes, pObjectsOnPage, pLevel + 2, null)));
+                                    }
+                                    break;
+                            }
+                        }
+                        break;
+                    default:
                         bool childrenHavePathogens = false;
                         foreach (IBDNode child in children)
                         {
@@ -2826,7 +2861,13 @@ namespace BDEditor.Classes
                             string title = "Usual Pathogens";
                             html.Append(string.Format("<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel), title));
                         }
-
+                        // separate the pathogen groups' data with a line
+                        if (pNode.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis)
+                        {
+                            html.Append("<hr>");
+                            html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel - 1), pFootnotes, pObjectsOnPage));
+                        }
+                        else
                         // describe the pathogen group
                         html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel + 1), pFootnotes, pObjectsOnPage));
 
@@ -3070,9 +3111,11 @@ namespace BDEditor.Classes
                 {
                     case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Adult:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Paediatric:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic:
                         //PathogenGroup
                         //Topic
                         foreach (IBDNode child in children)
@@ -4133,13 +4176,6 @@ namespace BDEditor.Classes
                 List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
                 switch (pNode.LayoutVariant)
                 {
-                    case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
-                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                        break;
-                    case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
-                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass_HeaderRow }));
-                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                        break;
                     case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
                     case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -4472,6 +4508,7 @@ namespace BDEditor.Classes
                     case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
                     case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional:
                     case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin:
+                    case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines_Spectrum:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubtopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Table_2_Column, BDConstants.LayoutVariantType.Table_3_Column, BDConstants.LayoutVariantType.Table_4_Column, BDConstants.LayoutVariantType.Table_5_Column }));
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAttachment, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -4491,7 +4528,6 @@ namespace BDEditor.Classes
                             }
                         }
                         break;
-                    case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines_Spectrum:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubtopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         break;
@@ -5236,6 +5272,7 @@ namespace BDEditor.Classes
                 switch (pNode.LayoutVariant)
                 {
                     case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis:
                         startTag = "<div class=\"emphasis\">";
                         break;
                     default:

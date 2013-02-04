@@ -41,6 +41,7 @@ namespace BDEditor.Classes.Navigation
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation05_CultureProvenPeritonitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:

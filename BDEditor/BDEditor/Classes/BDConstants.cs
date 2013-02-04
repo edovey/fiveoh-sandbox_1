@@ -135,17 +135,8 @@ namespace BDEditor.Classes
             [Description("Treatment Recommendations - Sepsis Without a Focus, with Risk")]
             TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk = 101601,
 
-            [Description("Wound Management")]
-            TreatmentRecommendation02_WoundMgmt = 102, // table 1 - wound management
-            [Description("Wound Management Content Row")]
-            TreatmentRecommendation02_WoundMgmt_ContentRow = 1021, // table 1 - wound management
-
-            [Description("Wound Classification")]
-            TreatmentRecommendation03_WoundClass = 103, // table 2 - wound classification
-            [Description("Wound Classification Header Row")]
-            TreatmentRecommendation03_WoundClass_HeaderRow = 1031, // table 2 - wound classification header row
-            [Description("Wound Classification Content Row")]
-            TreatmentRecommendation03_WoundClass_ContentRow = 1032, // table 2 - wound classification content row
+            [Description("Treatment Recommendations - Necrotizing Fasciitis")]
+            TreatmentRecommendation02_NecrotizingFasciitis = 102, 
 
             [Description("Treatment Recommendations - Pneumonia Patient Characteristic")]
             TreatmentRecommendation04_Pneumonia_I = 104,  //  table 3 - top antimicrobialSection

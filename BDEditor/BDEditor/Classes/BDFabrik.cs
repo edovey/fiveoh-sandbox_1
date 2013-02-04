@@ -327,7 +327,7 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPresentation, new BDConstants.LayoutVariantType[] { layoutVariant, BDConstants.LayoutVariantType.TreatmentRecommendation14_CellulitisExtremities, BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions, BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Adult, BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Paediatric, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPresentation, new BDConstants.LayoutVariantType[] { layoutVariant, BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis, BDConstants.LayoutVariantType.TreatmentRecommendation14_CellulitisExtremities, BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions, BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Adult, BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Paediatric, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation01_CNS_Meningitis_Table }));
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis:
@@ -443,6 +443,7 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
@@ -487,6 +488,7 @@ namespace BDEditor.Classes
                     switch (layoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Adult:
@@ -783,13 +785,6 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                            break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass_HeaderRow }));
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                            break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -874,12 +869,6 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity_ContentRow }));
                             break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt_ContentRow}));
-                            break;
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass_ContentRow }));
-                            break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I_ContentRow }));
                             break;
@@ -935,6 +924,7 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
+                        case BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation05_CultureProvenPeritonitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia:
@@ -2075,12 +2065,6 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDTableRow:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
-                            nodeControl = new BDNodeOverviewControl(pContext, pNode);
-                            BDNodeOverviewControl newOverviewControl = nodeControl as BDNodeOverviewControl;
-                            newOverviewControl.ShowAsChild = true;
-                            newOverviewControl.ShowSiblingAdd = true;
-                            break;
                         default:
                             nodeControl = new BDTableRowControl();
                             break;
@@ -2235,7 +2219,6 @@ namespace BDEditor.Classes
                 {
                     case BDConstants.LayoutVariantType.Antibiotics_NameListing_HeaderRow:
                     case BDConstants.LayoutVariantType.Antibiotics_Stepdown_HeaderRow:
-                    case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass_HeaderRow:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_HeaderRow:
                     case BDConstants.LayoutVariantType.Prophylaxis_PreOp_HeaderRow:
                     case BDConstants.LayoutVariantType.Table_2_Column_HeaderRow:
@@ -2257,11 +2240,6 @@ namespace BDEditor.Classes
             int maxColumns = 0;
             switch (pLayoutVariant)
             {
-                case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation02_WoundMgmt_ContentRow:
-                    // no cells:  data is stored in the Name property and in a Linked Note (type Overview)
-                    maxColumns = 0;
-                    break;
                 case BDConstants.LayoutVariantType.Antibiotics_NameListing:
                 case BDConstants.LayoutVariantType.Antibiotics_NameListing_ContentRow:
                 case BDConstants.LayoutVariantType.Antibiotics_NameListing_HeaderRow:
@@ -2287,9 +2265,6 @@ namespace BDEditor.Classes
                     maxColumns = 3;
                     break;
 
-                case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass_HeaderRow:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation03_WoundClass_ContentRow:
                 case BDConstants.LayoutVariantType.Table_4_Column:
                 case BDConstants.LayoutVariantType.Table_4_Column_HeaderRow:
                 case BDConstants.LayoutVariantType.Table_4_Column_ContentRow:

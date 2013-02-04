@@ -1683,10 +1683,10 @@ namespace BDEditor.Classes
             //ho_2.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
             //pContext.SaveChanges();
 
-            BDNode outpatient = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("0a73d4a0-5c7a-4204-a0d5-0136ccdd973b"));
-            BDNode hospitalized = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("026f2db5-a22c-434b-927b-0fadd648c19f"));
-            BDUtilities.ResetLayoutVariantWithChildren(pContext, outpatient, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, false);
-            BDUtilities.ResetLayoutVariantWithChildren(pContext, hospitalized, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, false);
+            //BDNode outpatient = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("0a73d4a0-5c7a-4204-a0d5-0136ccdd973b"));
+            //BDNode hospitalized = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("026f2db5-a22c-434b-927b-0fadd648c19f"));
+            //BDUtilities.ResetLayoutVariantWithChildren(pContext, outpatient, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, false);
+            //BDUtilities.ResetLayoutVariantWithChildren(pContext, hospitalized, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, false);
 
             #endregion
 

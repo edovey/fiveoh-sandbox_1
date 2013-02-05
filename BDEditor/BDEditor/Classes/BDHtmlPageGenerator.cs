@@ -2560,14 +2560,23 @@ namespace BDEditor.Classes
                                     therapy.Append(BuildBDTherapyGroupHTML(pContext, therapyGroup, pFootnotes, pObjectsOnPage, pLevel + 1, null));
                                     break;
                                 case BDConstants.BDNodeType.BDTopic:
-                                    clinical.AppendFormat(@"<p><b>{0}</b><br>", child.Name);
+                                    //HACK
+                                    List<BDLinkedNote> immediate = retrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, child.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Immediate);
+                                    string immediateText = BDUtilities.buildTextFromInlineNotes(immediate, pObjectsOnPage);
+                                    //end hack
+
+                                    clinical.AppendFormat(@"{0}{1}", child.Name, immediateText);
+                                    
                                     pObjectsOnPage.Add(child.Uuid);
-                                    clinical.AppendFormat(@"{0}</p>", buildTextForParentAndPropertyFromLinkedNotes(pContext, BDNode.PROPERTYNAME_NAME, child, BDConstants.LinkedNoteType.Inline, pObjectsOnPage));
+                                    string inlineText = buildTextForParentAndPropertyFromLinkedNotes(pContext, BDNode.PROPERTYNAME_NAME, child, BDConstants.LinkedNoteType.Inline, pObjectsOnPage);
+                                    inlineText = BDUtilities.cleanNoteText(inlineText);
+                                    clinical.AppendFormat(@" {0}", inlineText);
                                     // overview contains the 'Diagnosis' column data
                                     diagnosis.Append(retrieveNoteTextForOverview(pContext, child.Uuid, pObjectsOnPage));
                                     break;
                             }
                         }
+
                         html.AppendFormat(@"{0}<br>{1}<br>{2}", clinical, diagnosis, therapy);
 
                         break;

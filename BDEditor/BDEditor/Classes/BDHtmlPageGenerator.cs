@@ -3607,29 +3607,35 @@ namespace BDEditor.Classes
                                     foreach (IBDNode t in therapies)
                                     {
                                         BDTherapy therapy = t as BDTherapy;
-                                        // therapy name - add to both cells
-                                        if (therapy.nameSameAsPrevious.Value == true && previousTherapyId != Guid.Empty)
-                                        {
-                                            adultDosageHTML.AppendFormat("<li>{0} ", buildNodePropertyHTML(pContext, therapy, previousTherapyId, previousTherapyName, BDTherapy.PROPERTYNAME_THERAPY, pFootnotes, pObjectsOnPage));
-                                            pedsDosageHTML.AppendFormat("<li>{0} ", buildNodePropertyHTML(pContext, therapy, previousTherapyId, previousTherapyName, BDTherapy.PROPERTYNAME_THERAPY, pFootnotes, pObjectsOnPage));
-                                        }
-                                        else
-                                        {
-                                            adultDosageHTML.AppendFormat("<li>{0} ", buildNodePropertyHTML(pContext, therapy, therapy.Uuid, therapy.Name, BDTherapy.PROPERTYNAME_THERAPY, pFootnotes, pObjectsOnPage));
-                                            pedsDosageHTML.AppendFormat("<li>{0} ", buildNodePropertyHTML(pContext, therapy, therapy.Uuid, therapy.Name, BDTherapy.PROPERTYNAME_THERAPY, pFootnotes, pObjectsOnPage));
-                                        }
+                                        string adultDosageString = string.Empty;
+                                        string pedsDosageString = string.Empty;
                                         // Dosage - adult dose
                                         if (therapy.dosageSameAsPrevious.Value == true)
-                                            adultDosageHTML.Append(buildNodePropertyHTML(pContext, therapy, previousTherapyId, previousTherapyDosage, BDTherapy.PROPERTYNAME_DOSAGE, pFootnotes, pObjectsOnPage));
+                                            adultDosageString = buildNodePropertyHTML(pContext, therapy, previousTherapyId, previousTherapyDosage, BDTherapy.PROPERTYNAME_DOSAGE, pFootnotes, pObjectsOnPage);
                                         else
-                                            adultDosageHTML.Append(buildNodePropertyHTML(pContext, therapy, therapy.Uuid, therapy.dosage, BDTherapy.PROPERTYNAME_DOSAGE, pFootnotes, pObjectsOnPage));
+                                            adultDosageString = buildNodePropertyHTML(pContext, therapy, therapy.Uuid, therapy.dosage, BDTherapy.PROPERTYNAME_DOSAGE, pFootnotes, pObjectsOnPage);
 
                                         // Dosage 1 - Paediatric dose
                                         if (therapy.dosage1SameAsPrevious.Value == true)
-                                            pedsDosageHTML.Append(buildNodePropertyHTML(pContext, therapy, previousTherapyId, previousTherapyDosage1, BDTherapy.PROPERTYNAME_DOSAGE_1, pFootnotes, pObjectsOnPage));
+                                            pedsDosageString = buildNodePropertyHTML(pContext, therapy, previousTherapyId, previousTherapyDosage1, BDTherapy.PROPERTYNAME_DOSAGE_1, pFootnotes, pObjectsOnPage);
                                         else
-                                            pedsDosageHTML.Append(buildNodePropertyHTML(pContext, therapy, therapy.Uuid, therapy.dosage1, BDTherapy.PROPERTYNAME_DOSAGE_1, pFootnotes, pObjectsOnPage));
+                                            pedsDosageString = buildNodePropertyHTML(pContext, therapy, therapy.Uuid, therapy.dosage1, BDTherapy.PROPERTYNAME_DOSAGE_1, pFootnotes, pObjectsOnPage);
 
+                                        // therapy name - add to both cells
+                                        if (therapy.nameSameAsPrevious.Value == true && previousTherapyId != Guid.Empty)
+                                        {
+                                            if(!string.IsNullOrEmpty(adultDosageString))
+                                            adultDosageHTML.AppendFormat("<li>{0} {1}", buildNodePropertyHTML(pContext, therapy, previousTherapyId, previousTherapyName, BDTherapy.PROPERTYNAME_THERAPY, pFootnotes, pObjectsOnPage),adultDosageString);
+                                            if(!string.IsNullOrEmpty(pedsDosageString))
+                                            pedsDosageHTML.AppendFormat("<li>{0} {1}", buildNodePropertyHTML(pContext, therapy, previousTherapyId, previousTherapyName, BDTherapy.PROPERTYNAME_THERAPY, pFootnotes, pObjectsOnPage),pedsDosageString);
+                                        }
+                                        else
+                                        {
+                                            if (!string.IsNullOrEmpty(adultDosageString))
+                                            adultDosageHTML.AppendFormat("<li>{0} {1}", buildNodePropertyHTML(pContext, therapy, therapy.Uuid, therapy.Name, BDTherapy.PROPERTYNAME_THERAPY, pFootnotes, pObjectsOnPage), adultDosageString);
+                                            if(!string.IsNullOrEmpty(pedsDosageString))
+                                            pedsDosageHTML.AppendFormat("<li>{0} {1}", buildNodePropertyHTML(pContext, therapy, therapy.Uuid, therapy.Name, BDTherapy.PROPERTYNAME_THERAPY, pFootnotes, pObjectsOnPage), pedsDosageString);
+                                        }
                                         // check for conjunctions and add a row for any that are found
                                         switch (therapy.therapyJoinType)
                                         {
@@ -5188,10 +5194,13 @@ namespace BDEditor.Classes
         {
             StringBuilder columnHtml = new StringBuilder();
             string cLabel = retrieveMetadataLabelForPropertyName(pContext, pNodeType, pPropertyName, pMetadataColumn);
+            List<BDLinkedNote> immediate = retrieveNotesForLayoutColumn(pContext, pMetadataColumn, BDConstants.LinkedNoteType.Immediate);
+            List<BDLinkedNote> inline = retrieveNotesForLayoutColumn(pContext, pMetadataColumn, BDConstants.LinkedNoteType.Inline);
 
             List<BDLinkedNote> marked = retrieveNotesForLayoutColumn(pContext, pMetadataColumn, BDConstants.LinkedNoteType.MarkedComment);
             List<BDLinkedNote> unmarked = retrieveNotesForLayoutColumn(pContext, pMetadataColumn, BDConstants.LinkedNoteType.UnmarkedComment);
             List<BDLinkedNote> cFootnotes = retrieveNotesForLayoutColumn(pContext, pMetadataColumn, BDConstants.LinkedNoteType.Footnote);
+            
             // Specific for Hack (Treatment recommendations)
             //Hack cont'd
             if (pPageDisplayParent.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation01)
@@ -5218,7 +5227,12 @@ namespace BDEditor.Classes
 
             pFootnotes.AddRange(cFootnotes);
             string footnoteMarker = buildFooterMarkerForList(cFootnotes, true, pFootnotes, pObjectsOnPage);
-            
+
+            string inlineText = BDUtilities.buildTextFromNotes(inline, pObjectsOnPage); // In approx 50% of cases, "inline" notes have been used like an "overview"
+            string immediateText = BDUtilities.buildTextFromInlineNotes(immediate, pObjectsOnPage);
+
+            cLabel = string.Format("{0}{1}{2}{3}", (retrieveMetadataLabelForPropertyName(pContext, pNodeType, pPropertyName, pMetadataColumn)).Trim(), footnoteMarker, immediateText, inlineText);
+
             //pObjectsOnPage.Add(pMetadataColumn.Uuid);
 
             BDHtmlPage notePage = generatePageForLinkedNotesLayoutColumn(pContext, pMetadataColumn, marked, unmarked);

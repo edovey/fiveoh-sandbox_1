@@ -293,8 +293,8 @@ namespace BDEditor.DataModel
         public static int? RetrieveChildCountForNode(Entities pContext, BDNode pParent)
         {
             if (null == pParent) return 0;
-            var count = pContext.BDNodes.Where(x => (x.parentId == pParent.Uuid)).Count();
-            return (null == count) ? 0 : count;
+            int count = pContext.BDNodes.Where(x => (x.parentId == pParent.Uuid)).Count();
+            return count;
         }
 
         protected override void OnPropertyChanged(string property)

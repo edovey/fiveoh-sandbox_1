@@ -21,224 +21,136 @@ namespace BDEditor.Classes
         /// <summary>
         /// Generate new Search Entries from the data
         /// </summary>
-        public static void Generate(Entities pDataContext, IBDNode pNode, List<BDHtmlPageMap> pPagesMap)
+        public void Generate(Entities pDataContext, IBDNode pNode)
         {
             // clear the data from the database
-            BDSearchEntry.DeleteAll();
-            BDSearchEntryAssociation.DeleteAll();
+            // BDSearchEntry.DeleteAll(pDataContext);
+            BDSearchEntryAssociation.DeleteAll(pDataContext);
 
-            generateSearchEntries(pDataContext, pNode, pPagesMap);
+            generateSearchEntries(pDataContext, pNode);
         }
 
-        private static void generateSearchEntries(Entities pDataContext, IBDNode pNode, List<BDHtmlPageMap> pPagesMap)
+        private void generateSearchEntries(Entities pDataContext, IBDNode pNode)
         {
             List<IBDNode> chapters = new List<IBDNode>();  
             StringBuilder displayContext = new StringBuilder();
-            if (pNode != null)
+            if (pNode != null && pNode.NodeType == BDConstants.BDNodeType.BDChapter)
                 chapters.Add(pNode);
             else 
                 chapters.AddRange(BDNode.RetrieveNodesForType(pDataContext, BDConstants.BDNodeType.BDChapter));
-             processNodeList(pDataContext, chapters.ToList<IBDNode>(), displayContext, pPagesMap);
+             processNodeList(pDataContext, chapters.ToList<IBDNode>(), displayContext);
        }
 
-        private static void processNodeList(Entities pDataContext, List<IBDNode> pNodes, StringBuilder pNodeContext, List<BDHtmlPageMap> pPagesMap)
+        private void processNodeList(Entities pDataContext, List<IBDNode> pNodes, StringBuilder pNodeContext)
         {
             string currentContext = string.Empty;
+            string searchableText = string.Empty;
             foreach (IBDNode ibdNode in pNodes)
             {
                 switch (ibdNode.NodeType)
                 {
+                    case BDConstants.BDNodeType.BDAntimicrobial:
+                        currentContext = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDNode.PROPERTYNAME_NAME);
+                        searchableText = currentContext;
+                        break;
                     case BDConstants.BDNodeType.BDAntimicrobialRisk:
-                        currentContext = (ibdNode as BDAntimicrobialRisk).name;
+                        currentContext = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDNode.PROPERTYNAME_NAME);
+                        searchableText = currentContext;
                         break;
                     case BDConstants.BDNodeType.BDConfiguredEntry:
-                        currentContext = (ibdNode as BDConfiguredEntry).Name;
+                        currentContext = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDNode.PROPERTYNAME_NAME);
+                        searchableText = currentContext;
                         break;
                     case BDConstants.BDNodeType.BDDosage:
                         // no valid properties
                         break;
                     case BDConstants.BDNodeType.BDLinkedNote:
                         currentContext = (ibdNode as BDLinkedNote).DescriptionForLinkedNote;
+                        searchableText = currentContext;
                         break;
                     case BDConstants.BDNodeType.BDPrecaution:
-                        currentContext = (ibdNode as BDPrecaution).Description;
+                        currentContext = buildResolvedNameForNode(pDataContext, ibdNode, (ibdNode as BDPrecaution).Description, BDPrecaution.PROPERTYNAME_ORGANISM_1);
+                        searchableText = currentContext;
+                        break;
+                    case BDConstants.BDNodeType.BDSubcategory:
+                                currentContext = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDNode.PROPERTYNAME_NAME);
+                        switch (ibdNode.LayoutVariant)
+                        {
+                            case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
+                                searchableText = currentContext;
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case BDConstants.BDNodeType.BDSubtopic:
+                                currentContext = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDNode.PROPERTYNAME_NAME);
+                        switch (ibdNode.LayoutVariant)
+                        {
+                            case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines_Spectrum:
+                                searchableText = currentContext;
+                                break;
+                            default:
+                                break;
+                        }
                         break;
                     case BDConstants.BDNodeType.BDTableCell:
-                        currentContext = (ibdNode as BDTableCell).value;
-                        break;
-                    case BDConstants.BDNodeType.BDTableRow:
+                        if (ibdNode.DisplayOrder == 0)
+                        {
+                                    currentContext = buildResolvedNameForNode(pDataContext, ibdNode, (ibdNode as BDTableCell).value, BDTableCell.PROPERTYNAME_CONTENTS);
+                            switch (ibdNode.LayoutVariant)
+                            {
+                                case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_Classifications_ContentRow:
+                                case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity_ContentRow:
+                                case BDConstants.LayoutVariantType.Antibiotics_NameListing_ContentRow:
+                                case BDConstants.LayoutVariantType.Antibiotics_Stepdown_ContentRow:
+                                    searchableText = currentContext;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
                         break;
                     case BDConstants.BDNodeType.BDTherapy:
-                        currentContext = (ibdNode as BDTherapy).name;
+                        currentContext = buildResolvedNameForNode(pDataContext, ibdNode, (ibdNode as BDTherapy).Description, BDTherapy.PROPERTYNAME_THERAPY);
+                        searchableText = currentContext;
                         break;
                     case BDConstants.BDNodeType.BDTherapyGroup:
-                        currentContext = (ibdNode as BDTherapyGroup).name;
+                        currentContext = buildResolvedNameForNode(pDataContext, ibdNode, (ibdNode as BDTherapyGroup).Description, BDTherapyGroup.PROPERTYNAME_NAME);
                         break;
+                    case BDConstants.BDNodeType.BDTableRow:
+                    case BDConstants.BDNodeType.BDTopic:
                     default:
-                            currentContext = ibdNode.Name;
                         break;
                 }
-                if(currentContext.Contains(BDUtilities.GetEnumDescription(ibdNode.NodeType)) || currentContext.Contains("(Header)"))
-                    currentContext = string.Empty;
 
                 List<IBDNode> childnodes = BDFabrik.GetChildrenForParent(pDataContext, ibdNode);
-                BDHtmlPageMap mapEntry = pPagesMap.FirstOrDefault<BDHtmlPageMap>(x => x.OriginalIBDObjectId == ibdNode.Uuid);
+                Guid htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pDataContext, ibdNode.Uuid); 
                 StringBuilder newContext = new StringBuilder();
                 
+                // build a string representation of the search entry's location in the hierarchy
                 if (pNodeContext.Length > 0)
                     newContext.AppendFormat("{0} : {1}", pNodeContext, currentContext);
                 else
                     newContext.Append(currentContext);
 
+                // recurse to process the next child layer
                 if (childnodes.Count > 0)
-                    processNodeList(pDataContext, childnodes, newContext, pPagesMap);
+                    processNodeList(pDataContext, childnodes, newContext);
 
-                else if(null != mapEntry && !(ibdNode is BDLinkedNote))
-                    generateEntryWithDisplayParent(pDataContext, mapEntry.HtmlPageId, ibdNode, pNodeContext.ToString());
+                    // build the search entry
+                if(!string.IsNullOrEmpty(searchableText) && htmlPageId != Guid.Empty && !(ibdNode is BDLinkedNote))
+                    generateEntryWithDisplayParent(pDataContext, htmlPageId, ibdNode, searchableText, pNodeContext.ToString());
             }
         }
 
-/*
-        private static void GenerateSearchEntries(Entities pDataContext)
+        private void generateEntryWithDisplayParent(Entities pDataContext, Guid pOriginalNodeId, IBDNode pNode, string pCurrentContext, string pDisplayContext)
         {
-            List<BDNode> chapters = BDNode.RetrieveNodesForType(pDataContext, BDConstants.BDNodeType.BDChapter);
-
-            foreach (BDNode chapter in chapters)
-            {
-                string chapterDisplayContext = chapter.Name;
-                switch (chapter.LayoutVariant)
-                {
-                    case BDConstants.LayoutVariantType.TreatmentRecommendation00:
-                        {
-                            List<IBDNode> sections = BDFabrik.GetChildrenForParent(pDataContext, chapter);
-                            foreach (IBDNode section in sections)
-                            {
-                                string sectionDisplayContext = chapterDisplayContext + " : " + section.Name;
-                                switch (section.LayoutVariant)
-                                {
-                                    case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                                        {
-                                            List<IBDNode> categories = BDFabrik.GetChildrenForParent(pDataContext, section);
-                                            foreach (IBDNode category in categories)
-                                            {
-                                                string categoryDisplayContext = sectionDisplayContext + " : " + category.Name;
-                                                List<IBDNode> diseases = BDFabrik.GetChildrenForParent(pDataContext, category);
-                                                foreach (IBDNode disease in diseases)
-                                                {
-                                                    string diseaseDisplayContext = categoryDisplayContext + " : " + disease.Name;
-
-                                                    List<IBDNode> presentations = BDFabrik.GetChildrenForParent(pDataContext, disease);
-                                                    foreach (IBDNode presentation in presentations)
-                                                    {
-                                                        string presentationDisplayContext = string.Empty;
-                                                        if (presentation.Name != "SINGLE PRESENTATION")
-                                                            presentationDisplayContext = diseaseDisplayContext + " : " + presentation.Name;
-                                                        else
-                                                            presentationDisplayContext = diseaseDisplayContext;
-
-                                                        List<IBDNode> pathogenGroups = BDFabrik.GetChildrenForParent(pDataContext, presentation);
-                                                        foreach (IBDNode pathogenGroup in pathogenGroups)
-                                                        {
-                                                            string pathogenGroupDisplayContext = presentationDisplayContext + " : " + pathogenGroup.Name;
-                                                            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pDataContext, pathogenGroup);
-                                                            foreach (IBDNode node in childNodes)
-                                                            {
-                                                                BDNode displayParentNode = presentation as BDNode;
-                                                                switch (node.NodeType)
-                                                                {
-                                                                    case BDConstants.BDNodeType.BDPathogen:
-                                                                        {
-                                                                            if (null != displayParentNode && node.Name.Length > 0)
-                                                                                generateEntryWithDisplayParent(pDataContext, displayParentNode, node, pathogenGroupDisplayContext);
-                                                                        }
-                                                                        break;
-                                                                    case BDConstants.BDNodeType.BDTherapyGroup:
-                                                                        {
-                                                                            string therapyGroupDisplayContext = pathogenGroupDisplayContext + " : " + node.Name;
-                                                                            List<IBDNode> therapies = BDFabrik.GetChildrenForParent(pDataContext, node);
-                                                                            foreach (IBDNode therapy in therapies)
-                                                                            {
-                                                                                if (null != displayParentNode && therapy.Name.Length > 0)
-                                                                                    generateEntryWithDisplayParent(pDataContext, displayParentNode, therapy, therapyGroupDisplayContext);
-                                                                            }
-                                                                        }
-                                                                        break;
-
-                                                                    default:
-                                                                        break;
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        public static void GenerateSearchEntryFromPageMap(Entities pDataContext, BDHtmlPageMap pHtmlPageMap)
-        {
-            // retrieve original node using uuid in pHtmlPage
-            IBDNode node = BDFabrik.RetrieveNode(pDataContext, pHtmlPageMap.OriginalIBDObjectId);
-            // query for an existing search entry
-            // get existing matching search entries
-            IQueryable<BDSearchEntry> entries = (from entry in pDataContext.BDSearchEntries
-                                                 where entry.name == node.Name
-                                                 select entry);
-            if (node != null)
-            {
-                // generate the hierarchy from the node parent data
-                string nodeContext = BDUtilities.BuildHierarchyString(pDataContext, node, " : ");
-
-                // create the search entry & association as required.
-                // if matching search entry is not found, create one
-                if (entries.Count() == 0)
-                {
-                    // create and save new search entry
-                    BDSearchEntry searchEntry = BDSearchEntry.CreateBDSearchEntry(pDataContext, node.Name);
-
-                    // Create search association record
-                    BDSearchEntryAssociation.CreateBDSearchEntryAssociation(pDataContext, searchEntry.Uuid, node.NodeType, pHtmlPageMap.HtmlPageId, node.NodeType, node.LayoutVariant, nodeContext);
-                }
-                else
-                {
-                    BDSearchEntry searchEntry = entries.First<BDSearchEntry>();
-                    // get matching search association records for search entry
-                    IQueryable<BDSearchEntryAssociation> associations = (from entry in pDataContext.BDSearchEntryAssociations
-                                                                         where (entry.searchEntryId == searchEntry.uuid
-                                                                         && entry.displayParentId == pHtmlPageMap.HtmlPageId
-                                                                         && entry.displayParentType == (int)node.NodeType)
-                                                                         select entry);
-
-                    if (associations.Count() == 0)
-                    {
-                        BDSearchEntryAssociation.CreateBDSearchEntryAssociation(pDataContext, searchEntry.Uuid, node.NodeType, pHtmlPageMap.HtmlPageId, node.NodeType, node.LayoutVariant, nodeContext);
-                    }
-                }
-            }
-            else
-                Debug.WriteLine("Search Entry Generation:  node was not found for:  {0}",pHtmlPageMap.OriginalIBDObjectId);
-        } */
-
-        private static void generateEntryWithDisplayParent(Entities pDataContext, Guid pOriginalNodeId, IBDNode pNode, string pDisplayContext)
-        {
-            string entryName = pNode.Name.Trim();
-            if (pNode.Name.Contains(BDUtilities.GetEnumDescription(pNode.NodeType)) || pNode.Name == "(Header)")
-                return;
+            //string entryName = pNode.Name.Trim();
+            string entryName = buildResolvedNameForNode(pDataContext, pNode, pNode.Name, BDNode.PROPERTYNAME_NAME);
 
             if (entryName.Length > 0)
             {
-
                 // get existing matching search entries
                 IQueryable<BDSearchEntry> entries = (from entry in pDataContext.BDSearchEntries
                                                      where entry.name == entryName
@@ -270,44 +182,22 @@ namespace BDEditor.Classes
             }
         }
 
-        //private static void generateEntryWithDisplayParent(Entities pDataContext, BDNode pDisplayParent, IBDNode pNode, string pDisplayContext)
-        //{
-        //    string entryName = pNode.Name.Trim();
-        //    if(pNode.Name.Contains(BDUtilities.GetEnumDescription(pNode.NodeType)) || pNode.Name == "(Header)")
-        //        entryName = string.Empty;
+        private string buildResolvedNameForNode(Entities pContext, IBDNode pNode, string pPropertyValue, string pPropertyName)
+        {
+            List<BDLinkedNote> immediate = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, pPropertyName, BDConstants.LinkedNoteType.Immediate);
 
-        //    if (!string.IsNullOrEmpty(entryName))
-        //    {
-        //        // get existing matching search entries
-        //        IQueryable<BDSearchEntry> entries = (from entry in pDataContext.BDSearchEntries
-        //                                             where entry.name == entryName
-        //                                             select entry);
+            //ks: added "New " prefix to permit the use of terms like "Table A" to appear in the name of a BDTable instance
+            string namePlaceholderText = string.Format(@"New {0}", BDUtilities.GetEnumDescription(pNode.NodeType));
+            if (pPropertyValue.Contains(namePlaceholderText) || pPropertyValue == "SINGLE PRESENTATION" || pPropertyValue == "(Header)")
+                pPropertyValue = string.Empty;
 
-        //        // if matching search entry is not found, create one
-        //        if (entries.Count() == 0)
-        //        {
-        //            // create and save new search entry
-        //            BDSearchEntry searchEntry = BDSearchEntry.CreateBDSearchEntry(pDataContext, entryName);
+            string immediateText = BDUtilities.BuildTextFromInlineNotes(immediate, null);
 
-        //            // Create search association record
-        //            BDSearchEntryAssociation.CreateBDSearchEntryAssociation(pDataContext, searchEntry.Uuid, pNode.NodeType, pDisplayParent.Uuid, pDisplayParent.NodeType, pNode.LayoutVariant, pDisplayContext);
-        //        }
-        //        else
-        //        {
-        //            BDSearchEntry searchEntry = entries.First<BDSearchEntry>();
-        //            // get matching search association records for search entry
-        //            IQueryable<BDSearchEntryAssociation> associations = (from entry in pDataContext.BDSearchEntryAssociations
-        //                                                                 where (entry.searchEntryId == searchEntry.uuid
-        //                                                                 && entry.displayParentId == pDisplayParent.Uuid
-        //                                                                 && entry.displayParentType == (int)pDisplayParent.NodeType)
-        //                                                                 select entry);
+            string resolvedName = string.Format("{0}{1}", pPropertyValue.Trim(), immediateText.Trim());
 
-        //            if (associations.Count() == 0)
-        //            {
-        //                BDSearchEntryAssociation.CreateBDSearchEntryAssociation(pDataContext, searchEntry.Uuid, pNode.NodeType, pDisplayParent.Uuid, pDisplayParent.NodeType, pNode.LayoutVariant, pDisplayContext);
-        //            }
-        //        }
-        //    }
-        //}
+            if (resolvedName.Trim().Length == 0) resolvedName = null;
+
+            return resolvedName;
+        }
     }
 }

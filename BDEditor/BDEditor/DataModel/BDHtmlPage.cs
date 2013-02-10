@@ -110,15 +110,13 @@ namespace BDEditor.DataModel
         /// <summary>
         /// Delete all records from local store
         /// </summary>
-        public static void DeleteAll()
+        public static void DeleteAll(Entities pContext)
         {
-            BDEditor.DataModel.Entities dataContext = new BDEditor.DataModel.Entities();
             // check if table exists:
-            
-            int result = dataContext.ExecuteStoreQuery<int> (@"SELECT COUNT(TABLE_NAME) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME ='BDHtmlPages'").SingleOrDefault();
+            int result = pContext.ExecuteStoreQuery<int> (@"SELECT COUNT(TABLE_NAME) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME ='BDHtmlPages'").SingleOrDefault();
             
             if(result == 1) 
-                dataContext.ExecuteStoreCommand("DELETE FROM BDHtmlPages");
+                pContext.ExecuteStoreCommand("DELETE FROM BDHtmlPages");
         }
 
         /// <summary>

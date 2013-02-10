@@ -1946,7 +1946,7 @@ namespace BDEditor.Classes
             }
         }
 
-        public static string cleanNoteText(string pNoteText)
+        public static string CleanNoteText(string pNoteText)
         {
             string resultText = string.Empty;
             string noteText = CleanseStringOfEmptyTag(pNoteText, "p");
@@ -1960,7 +1960,7 @@ namespace BDEditor.Classes
             return resultText;
         }
 
-        public static string buildTextFromInlineNotes(List<BDLinkedNote> pNotes, List<Guid> pObjectsOnPage)
+        public static string BuildTextFromInlineNotes(List<BDLinkedNote> pNotes, List<Guid> pObjectsOnPage)
         {
             StringBuilder noteString = new StringBuilder();
             if (null != pNotes)
@@ -1989,7 +1989,7 @@ namespace BDEditor.Classes
             return noteString.ToString();
         }
 
-        public static string buildTextFromNotes(List<BDLinkedNote> pNotes, List<Guid> pObjectsOnPage)
+        public static string BuildTextFromNotes(List<BDLinkedNote> pNotes, List<Guid> pObjectsOnPage)
         {
             StringBuilder noteString = new StringBuilder();
             foreach (BDLinkedNote note in pNotes)
@@ -2055,6 +2055,67 @@ namespace BDEditor.Classes
             }
 
             return resultValue;
+        }
+
+        public static List<BDLinkedNote> RetrieveNotesForParentAndPropertyOfLinkedNoteType(Entities pContext, Guid pParentId, string pPropertyName, BDConstants.LinkedNoteType pNoteType)
+        {
+            List<BDLinkedNote> noteList = new List<BDLinkedNote>();
+            if (null != pPropertyName && pPropertyName.Length > 0)
+            {
+                List<BDLinkedNoteAssociation> list = BDLinkedNoteAssociation.GetLinkedNoteAssociationListForParentIdAndProperty(pContext, pParentId, pPropertyName);
+                foreach (BDLinkedNoteAssociation assn in list)
+                {
+                    if (assn.linkedNoteType == (int)pNoteType)
+                    {
+                        BDLinkedNote linkedNote = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, assn.linkedNoteId);
+                        if (null != linkedNote)
+                            noteList.Add(linkedNote);
+                    }
+                }
+            }
+            return noteList;
+        }
+
+        public static string ProcessTextForCarriageReturn(Entities pContext, string pTextToProcess)
+        {
+            if (pTextToProcess.Contains("\n"))
+                pTextToProcess.Replace("\n", "<br>");
+            return pTextToProcess;
+        }
+
+        public static string ProcessTextForSubscriptAndSuperscriptMarkup(Entities pContext, string pTextToProcess)
+        {
+            string superscriptStart = @"{";
+            string superscriptEnd = @"}";
+            string subscriptStart = @"{{";
+            string subscriptEnd = @"}}";
+            string htmlSuperscriptStart = @"<sup>";
+            string htmlSuperscriptEnd = @"</sup>";
+            string htmlSubscriptStart = @"<sub>";
+            string htmlSubscriptEnd = @"</sub>";
+
+            // do subscripts first because of double braces
+            while (pTextToProcess.Contains(subscriptStart))
+            {
+                int tStartIndex = pTextToProcess.IndexOf(subscriptStart);
+                pTextToProcess = pTextToProcess.Remove(tStartIndex, subscriptStart.Length);
+                pTextToProcess = pTextToProcess.Insert(tStartIndex, htmlSubscriptStart);
+                int tEndIndex = pTextToProcess.IndexOf(subscriptEnd, tStartIndex);
+                pTextToProcess = pTextToProcess.Remove(tEndIndex, subscriptEnd.Length);
+                pTextToProcess = pTextToProcess.Insert(tEndIndex, htmlSubscriptEnd);
+            }
+
+            while (pTextToProcess.Contains(superscriptStart))
+            {
+                int tStartIndex = pTextToProcess.IndexOf(superscriptStart);
+                pTextToProcess = pTextToProcess.Remove(tStartIndex, superscriptStart.Length);
+                pTextToProcess = pTextToProcess.Insert(tStartIndex, htmlSuperscriptStart);
+                int tEndIndex = pTextToProcess.IndexOf(superscriptEnd, tStartIndex);
+                pTextToProcess = pTextToProcess.Remove(tEndIndex, superscriptEnd.Length);
+                pTextToProcess = pTextToProcess.Insert(tEndIndex, htmlSuperscriptEnd);
+            }
+
+            return pTextToProcess;
         }
     }
 }

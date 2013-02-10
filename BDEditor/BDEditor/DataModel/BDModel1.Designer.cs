@@ -400,6 +400,22 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDNodeToHtmlPageIndex> _BDNodeToHtmlPageIndexes;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDHtmlPageMap> BDHtmlPageMap
+        {
+            get
+            {
+                if ((_BDHtmlPageMap == null))
+                {
+                    _BDHtmlPageMap = base.CreateObjectSet<BDHtmlPageMap>("BDHtmlPageMap");
+                }
+                return _BDHtmlPageMap;
+            }
+        }
+        private ObjectSet<BDHtmlPageMap> _BDHtmlPageMap;
 
         #endregion
         #region AddTo Methods
@@ -570,6 +586,14 @@ namespace BDEditor.DataModel
         public void AddToBDNodeToHtmlPageIndexes(BDNodeToHtmlPageIndex bDNodeToHtmlPageIndex)
         {
             base.AddObject("BDNodeToHtmlPageIndexes", bDNodeToHtmlPageIndex);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDHtmlPageMap EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDHtmlPageMap(BDHtmlPageMap bDHtmlPageMap)
+        {
+            base.AddObject("BDHtmlPageMap", bDHtmlPageMap);
         }
 
         #endregion
@@ -3431,6 +3455,113 @@ namespace BDEditor.DataModel
         private global::System.String _pageTitle;
         partial void OnpageTitleChanging(global::System.String value);
         partial void OnpageTitleChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="BDDataModel", Name="BDHtmlPageMap")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class BDHtmlPageMap : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new BDHtmlPageMap object.
+        /// </summary>
+        /// <param name="htmlPageId">Initial value of the htmlPageId property.</param>
+        /// <param name="uuid">Initial value of the uuid property.</param>
+        /// <param name="originalIbdObjectId">Initial value of the originalIbdObjectId property.</param>
+        public static BDHtmlPageMap CreateBDHtmlPageMap(global::System.Guid htmlPageId, global::System.Guid uuid, global::System.Guid originalIbdObjectId)
+        {
+            BDHtmlPageMap bDHtmlPageMap = new BDHtmlPageMap();
+            bDHtmlPageMap.htmlPageId = htmlPageId;
+            bDHtmlPageMap.uuid = uuid;
+            bDHtmlPageMap.originalIbdObjectId = originalIbdObjectId;
+            return bDHtmlPageMap;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid htmlPageId
+        {
+            get
+            {
+                return _htmlPageId;
+            }
+            set
+            {
+                OnhtmlPageIdChanging(value);
+                ReportPropertyChanging("htmlPageId");
+                _htmlPageId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("htmlPageId");
+                OnhtmlPageIdChanged();
+            }
+        }
+        private global::System.Guid _htmlPageId;
+        partial void OnhtmlPageIdChanging(global::System.Guid value);
+        partial void OnhtmlPageIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid uuid
+        {
+            get
+            {
+                return _uuid;
+            }
+            set
+            {
+                if (_uuid != value)
+                {
+                    OnuuidChanging(value);
+                    ReportPropertyChanging("uuid");
+                    _uuid = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("uuid");
+                    OnuuidChanged();
+                }
+            }
+        }
+        private global::System.Guid _uuid;
+        partial void OnuuidChanging(global::System.Guid value);
+        partial void OnuuidChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid originalIbdObjectId
+        {
+            get
+            {
+                return _originalIbdObjectId;
+            }
+            set
+            {
+                OnoriginalIbdObjectIdChanging(value);
+                ReportPropertyChanging("originalIbdObjectId");
+                _originalIbdObjectId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("originalIbdObjectId");
+                OnoriginalIbdObjectIdChanged();
+            }
+        }
+        private global::System.Guid _originalIbdObjectId;
+        partial void OnoriginalIbdObjectIdChanging(global::System.Guid value);
+        partial void OnoriginalIbdObjectIdChanged();
 
         #endregion
     

@@ -68,6 +68,7 @@
             this.pnlDetail = new System.Windows.Forms.Panel();
             this.pnlOverview = new System.Windows.Forms.Panel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.generateSearchEntriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelHeader.SuspendLayout();
             this.contextMenuStripDebug.SuspendLayout();
             this.contextMenuStripTextBox.SuspendLayout();
@@ -116,18 +117,18 @@
             // 
             // contextMenuStripDebug
             // 
-            this.contextMenuStripDebug.Enabled = false;
             this.contextMenuStripDebug.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.copyUUIDToolStripMenuItem,
-            this.publishToDatabaseToolStripMenuItem});
+            this.publishToDatabaseToolStripMenuItem,
+            this.generateSearchEntriesToolStripMenuItem});
             this.contextMenuStripDebug.Name = "contextMenuStrip1";
-            this.contextMenuStripDebug.Size = new System.Drawing.Size(179, 70);
+            this.contextMenuStripDebug.Size = new System.Drawing.Size(198, 92);
             // 
             // copyUUIDToolStripMenuItem
             // 
             this.copyUUIDToolStripMenuItem.Enabled = false;
             this.copyUUIDToolStripMenuItem.Name = "copyUUIDToolStripMenuItem";
-            this.copyUUIDToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.copyUUIDToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.copyUUIDToolStripMenuItem.Text = "Copy UUID";
             this.copyUUIDToolStripMenuItem.Click += new System.EventHandler(this.copyUUIDToolStripMenuItem_Click);
             // 
@@ -135,7 +136,7 @@
             // 
             this.publishToDatabaseToolStripMenuItem.Enabled = false;
             this.publishToDatabaseToolStripMenuItem.Name = "publishToDatabaseToolStripMenuItem";
-            this.publishToDatabaseToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.publishToDatabaseToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.publishToDatabaseToolStripMenuItem.Text = "Publish to Database";
             this.publishToDatabaseToolStripMenuItem.Click += new System.EventHandler(this.publishToDatabaseToolStripMenuItem_Click);
             // 
@@ -408,6 +409,14 @@
             this.pnlOverview.Size = new System.Drawing.Size(870, 2);
             this.pnlOverview.TabIndex = 10;
             // 
+            // generateSearchEntriesToolStripMenuItem
+            // 
+            this.generateSearchEntriesToolStripMenuItem.Enabled = false;
+            this.generateSearchEntriesToolStripMenuItem.Name = "generateSearchEntriesToolStripMenuItem";
+            this.generateSearchEntriesToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.generateSearchEntriesToolStripMenuItem.Text = "Generate Search Entries";
+            this.generateSearchEntriesToolStripMenuItem.Click += new System.EventHandler(this.generateSearchEntriesToolStripMenuItem_Click);
+            // 
             // BDNodeControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -474,5 +483,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStripDebug;
         private System.Windows.Forms.ToolStripMenuItem copyUUIDToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem publishToDatabaseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem generateSearchEntriesToolStripMenuItem;
     }
 }

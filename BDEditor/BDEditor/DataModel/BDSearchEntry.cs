@@ -114,10 +114,9 @@ namespace BDEditor.DataModel
             BDSearchEntry.Delete(pContext, entity, pCreateDeletion);
         }
 
-        public static void DeleteAll()
+        public static void DeleteAll(Entities pContext)
         {
-            BDEditor.DataModel.Entities dataContext = new BDEditor.DataModel.Entities();
-            dataContext.ExecuteStoreCommand("DELETE FROM BDSearchEntries");
+            pContext.ExecuteStoreCommand("DELETE FROM BDSearchEntries");
         }
 
         /// <summary>

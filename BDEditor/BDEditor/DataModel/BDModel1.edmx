@@ -11,6 +11,7 @@
           <EntitySet Name="BDCombinedEntry" EntityType="BDDataModel.Store.BDCombinedEntry" store:Type="Tables" />
           <EntitySet Name="BDConfiguredEntry" EntityType="BDDataModel.Store.BDConfiguredEntry" store:Type="Tables" />
           <EntitySet Name="BDDosages" EntityType="BDDataModel.Store.BDDosages" store:Type="Tables" />
+          <EntitySet Name="BDHtmlPageMap" EntityType="BDDataModel.Store.BDHtmlPageMap" store:Type="Tables" />
           <EntitySet Name="BDHtmlPages" EntityType="BDDataModel.Store.BDHtmlPages" store:Type="Tables" />
           <EntitySet Name="BDLayoutMetadata" EntityType="BDDataModel.Store.BDLayoutMetadata" store:Type="Tables" />
           <EntitySet Name="BDLayoutMetadataColumn" EntityType="BDDataModel.Store.BDLayoutMetadataColumn" store:Type="Tables" />
@@ -152,6 +153,14 @@
           <Property Name="dosage2SameAsPrevious" Type="bit" Nullable="false" />
           <Property Name="dosage3SameAsPrevious" Type="bit" Nullable="false" />
           <Property Name="dosage4SameAsPrevious" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BDHtmlPageMap">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Name="htmlPageId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="uuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="originalIbdObjectId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="BDHtmlPages">
           <Key>
@@ -452,6 +461,7 @@
           <EntitySet Name="BDHtmlPages" EntityType="BDDataModel.BDHtmlPage" />
           <EntitySet Name="BDDosages" EntityType="BDDataModel.BDDosage" />
           <EntitySet Name="BDNodeToHtmlPageIndexes" EntityType="BDDataModel.BDNodeToHtmlPageIndex" />
+          <EntitySet Name="BDHtmlPageMap" EntityType="BDDataModel.BDHtmlPageMap" />
         </EntityContainer>
         <EntityType Name="BDAntimicrobialRisk">
           <Key>
@@ -850,6 +860,14 @@
           <Property Type="Boolean" Name="wasGenerated" Nullable="false" />
           <Property Type="Int32" Name="htmlPageType" Nullable="false" />
           <Property Type="String" Name="parentKeyPropertyName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="BDHtmlPageMap">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Type="Guid" Name="htmlPageId" Nullable="false" />
+          <Property Type="Guid" Name="uuid" Nullable="false" />
+          <Property Type="Guid" Name="originalIbdObjectId" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1274,6 +1292,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BDHtmlPageMap">
+            <EntityTypeMapping TypeName="BDDataModel.BDHtmlPageMap">
+              <MappingFragment StoreEntitySet="BDHtmlPageMap">
+                <ScalarProperty Name="originalIbdObjectId" ColumnName="originalIbdObjectId" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+                <ScalarProperty Name="htmlPageId" ColumnName="htmlPageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -1287,7 +1314,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
@@ -1315,6 +1342,7 @@
         <EntityTypeShape EntityType="BDDataModel.BDHtmlPage" Width="1.5" PointX="2.75" PointY="0.75" Height="3.1340950520833282" />
         <EntityTypeShape EntityType="BDDataModel.BDDosage" Width="1.5" PointX="2.875" PointY="14.125" Height="4.6725065104166674" />
         <EntityTypeShape EntityType="BDDataModel.BDNodeToHtmlPageIndex" Width="1.75" PointX="2.625" PointY="4.5" Height="2.1725878906250067" />
+        <EntityTypeShape EntityType="BDDataModel.BDHtmlPageMap" Width="1.5" PointX="2.75" PointY="7" Height="1.5956835937500102" />
       </Diagram>
     </Diagrams>
   </Designer>

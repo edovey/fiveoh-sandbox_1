@@ -140,6 +140,7 @@ namespace BDEditor.Views
             contextMenuStripDebug.Enabled = true;
             copyUUIDToolStripMenuItem.Enabled = true;
             publishToDatabaseToolStripMenuItem.Enabled = true;
+            generateSearchEntriesToolStripMenuItem.Enabled = true;
 #else
             contextMenuStripDebug.Enabled = false;
 #endif
@@ -880,6 +881,26 @@ namespace BDEditor.Views
             generator.Generate(dataContext, nodeList);
             this.Cursor = Cursors.Default;
             MessageBox.Show(this, "HTML page generation complete", "Notice", MessageBoxButtons.OK);
+#endif
+        }
+
+        private void generateSearchEntriesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+#if DEBUG
+            this.Cursor = Cursors.WaitCursor;
+            Guid nodeUuid = Guid.Empty;
+            BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
+            List<BDNode> nodeList = new List<BDNode>();
+            nodeList.Add(currentNode as BDNode);
+
+            generator.Generate(dataContext, nodeList);
+            Debug.WriteLine("HTML page generation complete");
+
+            BDSearchEntryGenerator searchGenerator = new BDSearchEntryGenerator();
+            searchGenerator.Generate(dataContext, currentNode);
+            
+            this.Cursor = Cursors.Default;
+            MessageBox.Show(this, "Search Entry generation complete", "Notice", MessageBoxButtons.OK);
 #endif
         }
     }

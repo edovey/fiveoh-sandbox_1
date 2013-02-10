@@ -1304,7 +1304,8 @@ namespace BDEditor.Views
                 System.Diagnostics.Debug.WriteLine("HTML page generation complete.");
                 BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Generation Complete\t{0}", DateTime.Now));
 
-                BDSearchEntryGenerator.Generate(dataContext, chapterNode, generator.PagesMap);
+                BDSearchEntryGenerator searchGenerator = new BDSearchEntryGenerator();
+                searchGenerator.Generate(dataContext, chapterNode);
                 System.Diagnostics.Debug.WriteLine("Search entry generation complete. {0}", DateTime.Now);
 
                 BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Search Generation Complete\t{0}", DateTime.Now));

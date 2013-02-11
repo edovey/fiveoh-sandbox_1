@@ -224,7 +224,7 @@ namespace BDEditor.Classes
             else  // this is the main page of the app
             {
                 currentChapter = null;
-                pageHTML.Append(@"div class=""toolbar""><h1>Bugs &amp; Drugs</h1></div>");
+                pageHTML.Append(@"<div class=""toolbar""><h1>Bugs &amp; Drugs</h1></div>");
                 pageHTML.Append(@"<div class=""scroll""><ul class=""rounded"">");
                 foreach (BDHtmlPage childPage in pChildPages)
                 {

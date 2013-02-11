@@ -1622,7 +1622,6 @@ namespace BDEditor.Classes
             //    child.SetParent(newCategory);
             //pContext.SaveChanges();
             #endregion
-
             #region v.1.6.46
             //// necrotizing fasciitis - change layout variant
             //BDNode nf = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("9e2409c4-1ef0-49a9-ab20-887954f25ca0"));
@@ -1690,6 +1689,13 @@ namespace BDEditor.Classes
 
             #endregion
 
+            #region v.1.6.47
+            // necrotizing fasciitis - change layout variant
+            BDNode nf = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("44e9114b-d3d5-4fa6-a56f-ce3eb346d6eb"));
+            BDUtilities.ResetLayoutVariantWithChildren(pContext, nf, BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis, true);
+            pContext.SaveChanges();
+
+            #endregion
         }
 
         /// <summary>

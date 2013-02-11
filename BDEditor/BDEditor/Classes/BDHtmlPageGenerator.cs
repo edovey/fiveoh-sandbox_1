@@ -5685,9 +5685,9 @@ namespace BDEditor.Classes
         {
             processTextForInternalLinks(pContext, pPage, pExistingPages);
             BDHtmlPage.Save(pContext, pPage);
-            BDUtilities.ProcessTextForSubscriptAndSuperscriptMarkup(pContext, pPage.documentText);
+            pPage.documentText = BDUtilities.ProcessTextForSubscriptAndSuperscriptMarkup(pContext, pPage.documentText);
             BDHtmlPage.Save(pContext, pPage);
-            BDUtilities.ProcessTextForCarriageReturn(pContext, pPage.documentText);
+            pPage.documentText = BDUtilities.ProcessTextForCarriageReturn(pContext, pPage.documentText);
             BDHtmlPage.Save(pContext, pPage);
         }
 

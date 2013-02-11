@@ -149,7 +149,7 @@ namespace BDEditor.Classes
             //string entryName = pNode.Name.Trim();
             string entryName = buildResolvedNameForNode(pDataContext, pNode, pNode.Name, BDNode.PROPERTYNAME_NAME);
 
-            if (entryName.Length > 0)
+            if (!string.IsNullOrEmpty(entryName))
             {
                 // get existing matching search entries
                 IQueryable<BDSearchEntry> entries = (from entry in pDataContext.BDSearchEntries

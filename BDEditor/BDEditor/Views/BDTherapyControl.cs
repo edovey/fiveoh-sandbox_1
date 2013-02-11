@@ -533,12 +533,14 @@ namespace BDEditor.Views
 
         private void lblLeftBracket_Click(object sender, EventArgs e)
         {
+            this.Focus();
             this.displayLeftBracket = !this.displayLeftBracket;
             lblLeftBracket.ForeColor = (this.displayLeftBracket) ? SystemColors.ControlText : SystemColors.ControlLight;
         }
 
         private void lblRightBracket_Click(object sender, EventArgs e)
         {
+            this.Focus();
             this.displayRightBracket = !this.displayRightBracket;
             lblRightBracket.ForeColor = (this.displayRightBracket) ? SystemColors.ControlText : SystemColors.ControlLight;
         }

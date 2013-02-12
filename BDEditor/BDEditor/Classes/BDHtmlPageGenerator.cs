@@ -23,6 +23,9 @@ namespace BDEditor.Classes
         private const string topHtml = @"<!DOCTYPE html PUBLIC ""-//W3C//DTD HTML 4.01//EN\""><html><head><meta http-equiv=""Content-type"" content=""text/html;charset=UTF-8\""/><meta name=""viewport"" content=""width=device-width; initial-scale=1.0; maximum-scale=10.0;""/><link rel=""stylesheet"" type=""text/css"" href=""ra_bd.base.css"" /><title>Bugs &amp; Drugs</title> </head><body><div id=""ra_bd""><div class=""current"">";
         private const string bottomHtml = @"</div></div></body></html>";
         private const string anchorTag = @"<p><a href=""{0}""><b>{1}</b></a></p>";
+        private const string navListDivPrefix = @"<div class=""scroll""><ul class=""rounded"">";
+        private const string navListDivSuffix = @"</ul></div>";
+        private const string navListAnchorTag = @"<li class=""arrow""><a href=""{0}"">{1}</a></li>";
         public const int EMPTY_PARAGRAPH = 8;  // <p> </p>
         private const string imgFileTag = "<img src=\"images/{0}{1}\" alt=\"\" width=\"{2}\" height=\"{3}\" />";
         private const string paintChipTag = "<img class=\"paintChip\" src=\"{0}\" alt=\"\" />";
@@ -220,7 +223,7 @@ namespace BDEditor.Classes
             {
                 currentChapter = null;
                 pageHTML.Append(@"<div class=""toolbar""><h1>Bugs &amp; Drugs</h1></div>");
-                pageHTML.Append(@"<div class=""scroll""><ul class=""rounded"">");
+                pageHTML.Append(@"<div class=""scroll""><ul id=""home"" class=""rounded"">");
                 foreach (BDHtmlPage childPage in pChildPages)
                 {
                     if (childPage != null)
@@ -260,7 +263,7 @@ namespace BDEditor.Classes
                         }
                     }
                 }
-                pageHTML.Append("</table>");
+                pageHTML.Append("</ul></div>");
             }
 
             return writeBDHtmlPage(pContext, pNode as BDNode, pageHTML, BDConstants.BDHtmlPageType.Navigation, footnotesOnPage, objectsOnPage, null);
@@ -1474,10 +1477,12 @@ namespace BDEditor.Classes
                                 html.Append(amHtml);
                             }
                         }
+                        html.Append(navListDivPrefix);
                         for (int i = 0; i < childPages.Count; i++)
                         {
-                            html.AppendFormat(anchorTag, childPages[i].Uuid.ToString().ToUpper(), childPages[i].pageTitle);
+                            html.AppendFormat(navListAnchorTag, childPages[i].Uuid.ToString().ToUpper(), childPages[i].pageTitle);
                         }
+                        html.Append(navListDivSuffix);
                         break;
                     default:
                         break;
@@ -1504,12 +1509,12 @@ namespace BDEditor.Classes
             {
                 case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
                     BDAntimicrobialRisk risk = pNode as BDAntimicrobialRisk;
-                    html.AppendFormat("<b>{0}</b>: {1}", columnHtml[0], buildNodePropertyHTML(pContext, risk, risk.riskFactor, BDAntimicrobialRisk.PROPERTYNAME_PREGNANCYRISK, pFootnotes, pObjectsOnPage));
+                    html.AppendFormat("<p><b>{0}</b>: {1}</p>", columnHtml[0], buildNodePropertyHTML(pContext, risk, risk.riskFactor, BDAntimicrobialRisk.PROPERTYNAME_PREGNANCYRISK, pFootnotes, pObjectsOnPage));
                     html.AppendFormat("<p><b>{0}</b>: {1}</p>", columnHtml[1], buildNodePropertyHTML(pContext, risk, risk.recommendations, BDAntimicrobialRisk.PROPERTYNAME_RECOMMENDATION, pFootnotes, pObjectsOnPage));
                     break;
                 case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
                     BDAntimicrobialRisk lRisk = pNode as BDAntimicrobialRisk;
-                    html.AppendFormat("<b>{0}</b>: {1}", columnHtml[0], buildNodePropertyHTML(pContext, lRisk, lRisk.riskFactor, BDAntimicrobialRisk.PROPERTYNAME_LACTATIONRISK, pFootnotes, pObjectsOnPage));
+                    html.AppendFormat("<p><b>{0}</b>: {1}</p>", columnHtml[0], buildNodePropertyHTML(pContext, lRisk, lRisk.riskFactor, BDAntimicrobialRisk.PROPERTYNAME_LACTATIONRISK, pFootnotes, pObjectsOnPage));
                     html.AppendFormat("<p><b>{0}</b>: {1}</p>", columnHtml[1], buildNodePropertyHTML(pContext, lRisk, lRisk.aapRating, BDAntimicrobialRisk.PROPERTYNAME_APPRATING, pFootnotes, pObjectsOnPage));
                     html.AppendFormat("<p><b>{0}</b>: {1}</p>", columnHtml[2], buildNodePropertyHTML(pContext, lRisk, lRisk.relativeInfantDose, BDAntimicrobialRisk.PROPERTYNAME_RELATIVEDOSE, pFootnotes, pObjectsOnPage));
                     break;
@@ -1808,10 +1813,12 @@ namespace BDEditor.Classes
                                 }
                             }
                         }
+                        html.Append(navListDivPrefix);
                         for (int i = 0; i < childPages.Count; i++)
                         {
-                            html.AppendFormat(anchorTag, childPages[i].Uuid.ToString().ToUpper(), childPages[i].pageTitle);
+                            html.AppendFormat(navListAnchorTag, childPages[i].Uuid.ToString().ToUpper(), childPages[i].pageTitle);
                         }
+                        html.Append(navListDivSuffix);
                         break;
                     case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
                         // create next navigation page manually - since the name of the subcategory is often blank
@@ -1863,10 +1870,12 @@ namespace BDEditor.Classes
                                 }
                             }
                         }
+                        html.Append(navListDivPrefix);
                         for (int i = 0; i < l_childPages.Count; i++)
                         {
-                            html.AppendFormat(anchorTag, l_childPages[i].Uuid.ToString().ToUpper(), l_childPages[i].pageTitle);
+                            html.AppendFormat(navListAnchorTag, l_childPages[i].Uuid.ToString().ToUpper(), l_childPages[i].pageTitle);
                         }
+                        html.Append(navListDivSuffix);
                         break;
                     case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -3472,8 +3481,10 @@ namespace BDEditor.Classes
                         currentPageMasterObject = microorganism;
                         mPages.Add(writeBDHtmlPage(pContext, microorganism, mHTML, BDConstants.BDHtmlPageType.Data, mFootnotes, mObjectsOnPage, null));
                     }
+                    mgHTML.Append(navListDivPrefix);
                     for (int i = 0; i < mPages.Count; i++)
-                        mgHTML.AppendFormat(anchorTag, mPages[i].Uuid.ToString().ToUpper(), mPages[i].pageTitle);
+                        mgHTML.AppendFormat(navListAnchorTag, mPages[i].Uuid.ToString().ToUpper(), mPages[i].pageTitle);
+                    mgHTML.Append(navListDivSuffix);
                 }
                 html.Append(mgHTML);
                 currentPageMasterObject = pNode;
@@ -3823,10 +3834,10 @@ namespace BDEditor.Classes
                         }
 
                         //Expects that children.count == generatedPages.count: May it blow up real gud if it isn't
-   
+                        html.Append(navListDivPrefix);
                         for (int i = 0; i < generatedPages.Count; i++)
-                            html.AppendFormat(anchorTag, generatedPages[i].Uuid.ToString().ToUpper(), children[i].Name);
-
+                            html.AppendFormat(navListAnchorTag, generatedPages[i].Uuid.ToString().ToUpper(), children[i].Name);
+                        html.Append(navListDivSuffix);
                         break;
                     case BDConstants.LayoutVariantType.Microbiology_Antibiogram:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAttachment, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -4017,10 +4028,12 @@ namespace BDEditor.Classes
                                 amPages.Add(writeBDHtmlPage(pContext, child, amHtml, BDConstants.BDHtmlPageType.Navigation, amFootnotes, amObjects, null));
                             }
                         }
+                        html.Append(navListDivPrefix);
                         for (int i = 0; i < amPages.Count; i++)
                         {
-                            html.AppendFormat(anchorTag, amPages[i].Uuid.ToString().ToUpper(), amPages[i].pageTitle);
+                            html.AppendFormat(navListAnchorTag, amPages[i].Uuid.ToString().ToUpper(), amPages[i].pageTitle);
                         }
+                        html.Append(navListDivSuffix);
                         break;
                     case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
                         // child is BDAntimicrobialGroup: write a page for the child and add it as a link to this page
@@ -4077,11 +4090,12 @@ namespace BDEditor.Classes
                                     break;
                             }   
                         }
+                        html.Append(navListDivPrefix);
                         for (int i = 0; i < childPages.Count; i++)
                         {
-                            html.AppendFormat(anchorTag, childPages[i].Uuid.ToString().ToUpper(), childPages[i].pageTitle);
+                            html.AppendFormat(navListAnchorTag, childPages[i].Uuid.ToString().ToUpper(), childPages[i].pageTitle);
                         }
-
+                        html.Append(navListDivSuffix);
                         break;
                     default:
                         break;
@@ -4110,7 +4124,7 @@ namespace BDEditor.Classes
                 {
                     case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
-
+                        html.Append(navListDivPrefix);
                         foreach (IBDNode child in children)
                         {
                             List<BDLinkedNote> footnoteList = new List<BDLinkedNote>();
@@ -4119,9 +4133,9 @@ namespace BDEditor.Classes
                             string childHtml = BuildBDTopicHtml(pContext, child, footnoteList, objectsOnChildPage, pLevel + 1);
                             currentPageMasterObject = child;
                             BDHtmlPage childPage = writeBDHtmlPage(pContext, child, childHtml, BDConstants.BDHtmlPageType.Navigation, footnoteList, objectsOnChildPage, null);
-                            html.AppendFormat(anchorTag, childPage.Uuid.ToString().ToUpper(), childPage.pageTitle);
+                            html.AppendFormat(navListAnchorTag, childPage.Uuid.ToString().ToUpper(), childPage.pageTitle);
                         }
-
+                        html.Append(navListDivSuffix);
                         break;
                     case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin }));
@@ -4129,7 +4143,7 @@ namespace BDEditor.Classes
                         //{
                         //    html.Append(BuildBDTopicHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
                         //}
-
+                        html.Append(navListDivPrefix);
                         foreach (IBDNode child in children)
                         {
                             List<BDLinkedNote> footnoteList = new List<BDLinkedNote>();
@@ -4138,9 +4152,9 @@ namespace BDEditor.Classes
                             string childHtml = BuildBDTopicHtml(pContext, child, footnoteList, objectsOnChildPage, pLevel + 1);
                             currentPageMasterObject = child;
                             BDHtmlPage childPage = writeBDHtmlPage(pContext, child, childHtml, BDConstants.BDHtmlPageType.Navigation, footnoteList, objectsOnChildPage, null);
-                            html.AppendFormat(anchorTag, childPage.Uuid.ToString().ToUpper(), childPage.pageTitle);
+                            html.AppendFormat(navListAnchorTag, childPage.Uuid.ToString().ToUpper(), childPage.pageTitle);
                         }
-
+                        html.Append(navListDivSuffix);
                         break;
                     case BDConstants.LayoutVariantType.FrontMatter:
                     case BDConstants.LayoutVariantType.BackMatter:

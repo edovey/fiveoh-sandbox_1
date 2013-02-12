@@ -1267,6 +1267,7 @@ namespace BDEditor.Views
             BDNode chapterNode = null;
 
             bool awsPushOnly = false;
+            bool searchentriesOnly = false;
 
             DialogResult pushChoice = MessageBox.Show("Push to Amazon only?", "AWS", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
             if (pushChoice == DialogResult.Yes)
@@ -1285,6 +1286,10 @@ namespace BDEditor.Views
                     chapterNode = (chapterDropDown.SelectedItem as BDNode);
                 else
                     return;
+
+                DialogResult searchResult = MessageBox.Show("Generate Search Entries Only?", "Publish", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                searchentriesOnly = (searchResult == DialogResult.Yes);
+
             }
 
             this.Cursor = Cursors.WaitCursor;
@@ -1297,12 +1302,16 @@ namespace BDEditor.Views
             if (!awsPushOnly)
             {
                 BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
-                List<BDNode> nodeList = (null == chapterNode) ? null : new List<BDNode>(1) {chapterNode};
 
-                generator.Generate(dataContext, nodeList);
+                if(!searchentriesOnly)
+                {
+                    List<BDNode> nodeList = (null == chapterNode) ? null : new List<BDNode>(1) {chapterNode};
 
-                System.Diagnostics.Debug.WriteLine("HTML page generation complete.");
-                BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Generation Complete\t{0}", DateTime.Now));
+                    generator.Generate(dataContext, nodeList);
+
+                    System.Diagnostics.Debug.WriteLine("HTML page generation complete.");
+                    BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Generation Complete\t{0}", DateTime.Now));
+                }
 
                 BDSearchEntryGenerator searchGenerator = new BDSearchEntryGenerator();
                 searchGenerator.Generate(dataContext, chapterNode);
@@ -1531,8 +1540,8 @@ namespace BDEditor.Views
                         Debug.WriteLine("-- DEBUG GENERATION --");
                         List<BDNode> nodeList = new List<BDNode>();
                         List<Guid> guidList = new List<Guid>();
-                        guidList.Add(Guid.Parse("267febcb-f1da-431c-94df-1c612a6e7d3e"));
-                        //guidList.Add(Guid.Parse("40d92304-3224-4af0-8371-bcc27edad7dd"));
+                        guidList.Add(Guid.Parse("6a42f57f-d490-422e-b975-235ccabbc40d"));
+                        guidList.Add(Guid.Parse("5e5fe9f4-1e8f-4de4-a1d6-33c3fac379fa"));
                         //guidList.Add(Guid.Parse("32ca6e75-3180-4706-a3a8-6835cdb9a0d3"));
                         //guidList.Add(Guid.Parse("12c6c370-b63b-4b3c-9dc1-5cb9fa988918"));
                         //guidList.Add(Guid.Parse("c0cf6533-c4c9-480b-ad85-c7d187672849"));

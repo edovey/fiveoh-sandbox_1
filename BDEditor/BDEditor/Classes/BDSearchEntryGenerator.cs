@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
@@ -57,8 +58,36 @@ namespace BDEditor.Classes
                         currentContext = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDNode.PROPERTYNAME_NAME);
                         searchableText = currentContext;
                         break;
-                    case BDConstants.BDNodeType.BDConfiguredEntry:
+                    case BDConstants.BDNodeType.BDCombinedEntry:
+                        currentContext = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDCombinedEntry.PROPERTYNAME_NAME);
+                        switch (ibdNode.LayoutVariant)
+                        {
+                            case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Pertussis:
+                                searchableText = currentContext;
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case BDConstants.BDNodeType.BDCategory:
                         currentContext = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDNode.PROPERTYNAME_NAME);
+                        searchableText = currentContext;
+                        break;
+                    case BDConstants.BDNodeType.BDConfiguredEntry:
+                        currentContext = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDConfiguredEntry.PROPERTYNAME_NAME);
+                        switch (ibdNode.LayoutVariant)
+                        {
+                            case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration_Dosages:
+                            case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk:
+                                searchableText = currentContext;
+                                break;
+                            case BDConstants.LayoutVariantType.TreatmentRecommendation01_CNS_Meningitis_Table:
+                            default:
+                                break;
+                        }
                         searchableText = currentContext;
                         break;
                     case BDConstants.BDNodeType.BDDosage:
@@ -70,6 +99,10 @@ namespace BDEditor.Classes
                         break;
                     case BDConstants.BDNodeType.BDPrecaution:
                         currentContext = buildResolvedNameForNode(pDataContext, ibdNode, (ibdNode as BDPrecaution).Description, BDPrecaution.PROPERTYNAME_ORGANISM_1);
+                        searchableText = currentContext;
+                        break;
+                    case BDConstants.BDNodeType.BDSection:
+                        currentContext = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDNode.PROPERTYNAME_NAME);
                         searchableText = currentContext;
                         break;
                     case BDConstants.BDNodeType.BDSubcategory:
@@ -121,6 +154,8 @@ namespace BDEditor.Classes
                     case BDConstants.BDNodeType.BDTableRow:
                     case BDConstants.BDNodeType.BDTopic:
                     default:
+                        // process the node name to add to the context
+                        currentContext = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDNode.PROPERTYNAME_NAME);
                         break;
                 }
 
@@ -191,11 +226,17 @@ namespace BDEditor.Classes
             if (pPropertyValue.Contains(namePlaceholderText) || pPropertyValue == "SINGLE PRESENTATION" || pPropertyValue == "(Header)")
                 pPropertyValue = string.Empty;
 
+            if (pNode.NodeType == BDConstants.BDNodeType.BDConfiguredEntry && (pNode.Name.Length >=5 && pNode.Name.Substring(0, 5) == "Entry"))
+                pPropertyValue = string.Empty;
+
             string immediateText = BDUtilities.BuildTextFromInlineNotes(immediate, null);
 
-            string resolvedName = string.Format("{0}{1}", pPropertyValue.Trim(), immediateText.Trim());
+            //TextInfo tInfo = new CultureInfo("en-US", false).TextInfo;
 
-            if (resolvedName.Trim().Length == 0) resolvedName = null;
+            //string resolvedName = string.Format("{0}{1}", tInfo.ToTitleCase(pPropertyValue.Trim()), immediateText.Trim());
+            string resolvedName = string.Format("{0}{1}",pPropertyValue.Trim(), immediateText.Trim());
+
+            if (resolvedName.Length == 0) resolvedName = null;
 
             return resolvedName;
         }

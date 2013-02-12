@@ -23,6 +23,15 @@ namespace BDEditor.DataModel
         public const string KEY_NAME = @"BDHtmlPageMap";
         public const string DEFAULTPARENTKEYPROPERTYNAME = @"< no key >";
 
+        public static BDHtmlPageMap CreateBDHtmlPageMap(Entities pContext, Guid pHtmlPageId, Guid pOriginalIBDObjectId)
+        {
+            BDHtmlPageMap pageMap = CreateBDHtmlPageMap(pHtmlPageId, Guid.NewGuid(), pOriginalIBDObjectId);
+            pContext.AddObject(ENTITYNAME, pageMap);
+
+            BDHtmlPageMap.Save(pContext, pageMap);
+            return pageMap;
+        }
+
         public static BDHtmlPageMap RetrieveByOriginalObjectIdAndHtmlPageId(Entities pContext, Guid pHtmlPageId, Guid pOriginalIBDObjectId)
         {
             if (pOriginalIBDObjectId != null && pOriginalIBDObjectId != Guid.Empty)

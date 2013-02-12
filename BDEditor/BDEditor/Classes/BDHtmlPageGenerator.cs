@@ -212,7 +212,6 @@ namespace BDEditor.Classes
                         if (childNode != null)
                         {
                             pageHTML.AppendFormat(@"<li class=""arrow""><a href=""{0}""><b>{1}</b></a></li>", page.Uuid.ToString().ToUpper(), childNode.Name);
-                            objectsOnPage.Add(childNode.Uuid);
                         }
                     }
                 }
@@ -259,14 +258,19 @@ namespace BDEditor.Classes
                             string paintChipHtml = string.Format(paintChipTag, paintChipFileName);
 
                             pageHTML.AppendFormat(@"<li class=""arrow""><a href=""{0}"">{1}{2}</a></li>", childPage.Uuid.ToString().ToUpper(), paintChipHtml, childNode.Name);
-                            objectsOnPage.Add(childNode.Uuid);
                         }
                     }
                 }
                 pageHTML.Append("</ul></div>");
             }
 
-            return writeBDHtmlPage(pContext, pNode as BDNode, pageHTML, BDConstants.BDHtmlPageType.Navigation, footnotesOnPage, objectsOnPage, null);
+            BDHtmlPage navPage = writeBDHtmlPage(pContext, pNode as BDNode, pageHTML, BDConstants.BDHtmlPageType.Navigation, footnotesOnPage, objectsOnPage, null); 
+            // create a page map entry for search - only for the topmost node on this page.
+            if (pNode != null)
+            {
+                BDHtmlPageMap nodePageMap = BDHtmlPageMap.CreateBDHtmlPageMap(pContext, navPage.Uuid, pNode.Uuid);
+            }
+            return navPage;
         }
         
         /// <summary>

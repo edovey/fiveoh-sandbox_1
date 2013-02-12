@@ -22,10 +22,10 @@ namespace BDEditor.Classes
         private const int maxNodeType = 6;
         private const string topHtml = @"<!DOCTYPE html PUBLIC ""-//W3C//DTD HTML 4.01//EN\""><html><head><meta http-equiv=""Content-type"" content=""text/html;charset=UTF-8\""/><meta name=""viewport"" content=""width=device-width; initial-scale=1.0; maximum-scale=10.0;""/><link rel=""stylesheet"" type=""text/css"" href=""ra_bd.base.css"" /><title>Bugs &amp; Drugs</title> </head><body><div id=""ra_bd""><div class=""current"">";
         private const string bottomHtml = @"</div></div></body></html>";
-        private const string anchorTag = @"<p><a href=""{0}""><b>{1}</b></a></p>";
+        private const string anchorTag = @"<p><a class=""aa"" href=""{0}""><b>{1}</b></a></p>";
         private const string navListDivPrefix = @"<div class=""scroll""><ul class=""rounded"">";
         private const string navListDivSuffix = @"</ul></div>";
-        private const string navListAnchorTag = @"<li class=""arrow""><a href=""{0}"">{1}</a></li>";
+        private const string navListAnchorTag = @"<li class=""arrow""><a class=""nav"" href=""{0}"">{1}</a></li>";
         public const int EMPTY_PARAGRAPH = 8;  // <p> </p>
         private const string imgFileTag = "<img src=\"images/{0}{1}\" alt=\"\" width=\"{2}\" height=\"{3}\" />";
         private const string paintChipTag = "<img class=\"paintChip\" src=\"{0}\" alt=\"\" />";
@@ -211,7 +211,7 @@ namespace BDEditor.Classes
                         //BDNode childNode = BDNode.RetrieveNodeWithId(pContext, page.displayParentId.Value);
                         if (childNode != null)
                         {
-                            pageHTML.AppendFormat(@"<li class=""arrow""><a href=""{0}""><b>{1}</b></a></li>", page.Uuid.ToString().ToUpper(), childNode.Name);
+                            pageHTML.AppendFormat(@"<li class=""arrow""><a class=""nav"" href=""{0}""><b>{1}</b></a></li>", page.Uuid.ToString().ToUpper(), childNode.Name);
                         }
                     }
                 }
@@ -257,7 +257,7 @@ namespace BDEditor.Classes
                             }
                             string paintChipHtml = string.Format(paintChipTag, paintChipFileName);
 
-                            pageHTML.AppendFormat(@"<li class=""arrow""><a href=""{0}"">{1}{2}</a></li>", childPage.Uuid.ToString().ToUpper(), paintChipHtml, childNode.Name);
+                            pageHTML.AppendFormat(@"<li class=""arrow""><a class=""nav"" href=""{0}"">{1}{2}</a></li>", childPage.Uuid.ToString().ToUpper(), paintChipHtml, childNode.Name);
                         }
                     }
                 }
@@ -5008,7 +5008,7 @@ namespace BDEditor.Classes
                 }
             }
 
-            colSpanTag = (colSpanLength > 1) ? string.Format(" colspan={0}", colSpanLength) : string.Empty;
+            colSpanTag = (colSpanLength > 1) ? string.Format(@"class=""v{1}cs"" colspan={0}", colSpanLength, (int)dosageNode.LayoutVariant) : string.Empty;
 
             string dosage1Html = buildNodePropertyHTML(pContext, dosageNode, dosageNode.dosage, BDDosage.PROPERTYNAME_DOSAGE, pFootnotes, pObjectsOnPage);
 
@@ -5146,7 +5146,7 @@ namespace BDEditor.Classes
                 string documentText = BDUtilities.CleanseStringOfEmptyTag(refPage.documentText, "p");
                 if (!string.IsNullOrEmpty(documentText))
                 {
-                    refHTML.AppendFormat(@"<br><a href=""{0}"">References</a>", refPage.Uuid.ToString().ToUpper());
+                    refHTML.AppendFormat(@"<br><a class=""aa"" href=""{0}"">References</a>", refPage.Uuid.ToString().ToUpper());
                     pObjectsOnPage.Add(refPage.Uuid);
                 }
             }
@@ -5263,7 +5263,7 @@ namespace BDEditor.Classes
             BDHtmlPage notePage = generatePageForLinkedNotesLayoutColumn(pContext, pMetadataColumn, marked, unmarked);
 
             if (notePage != null)
-                columnHtml.AppendFormat(@"<a href=""{0}"">{1}{2}</a>", notePage.Uuid.ToString().ToUpper(), cLabel, footnoteMarker);
+                columnHtml.AppendFormat(@"<a class=""aa"" href=""{0}"">{1}{2}</a>", notePage.Uuid.ToString().ToUpper(), cLabel, footnoteMarker);
             else
                 columnHtml.AppendFormat(@"{0}{1}", cLabel, footnoteMarker);
 
@@ -5402,16 +5402,16 @@ namespace BDEditor.Classes
                 if (notePage != null)
                 {
                     if (pPropertyValue.Length > 0)
-                        propertyHTML.AppendFormat(@"{1}<a href=""{0}"">{2}{3}</a>{4}{5}{6}{7}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), immediateText, footerMarker, inlineOverviewText, overviewHTML, endTag);
+                        propertyHTML.AppendFormat(@"{1}<a class=""aa"" href=""{0}"">{2}{3}</a>{4}{5}{6}{7}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), immediateText, footerMarker, inlineOverviewText, overviewHTML, endTag);
                     else
                     {
                         if (immediateText.Length > 0)
                         {
-                            pResolvedValue = string.Format(@"<a href=""{0}"">{1}</a>", notePage.Uuid.ToString().ToUpper(), immediateText);
+                            pResolvedValue = string.Format(@"<a class=""aa"" href=""{0}"">{1}</a>", notePage.Uuid.ToString().ToUpper(), immediateText);
                         }
                         else
                         {
-                            pResolvedValue = string.Format(@"<a href=""{0}"">See Comments.</a>", notePage.Uuid.ToString().ToUpper());
+                            pResolvedValue = string.Format(@"<a class=""aa"" href=""{0}"">See Comments.</a>", notePage.Uuid.ToString().ToUpper());
                         }
                         propertyHTML.AppendFormat(@"{0}{1}{2}{3}{4}", startTag, pResolvedValue, inlineOverviewText, overviewHTML, endTag);
                     }
@@ -5426,18 +5426,18 @@ namespace BDEditor.Classes
                 if (notePage != null)
                 {
                     if (pPropertyValue.Length > 0)
-                        propertyHTML.AppendFormat(@"{1}<a href=""{0}"">{2}{3}</a>{4}{5}{6}{7}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), immediateText, footerMarker, endTag, inlineOverviewText, overviewHTML);
+                        propertyHTML.AppendFormat(@"{1}<a class=""aa"" href=""{0}"">{2}{3}</a>{4}{5}{6}{7}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), immediateText, footerMarker, endTag, inlineOverviewText, overviewHTML);
                     else
                     {
                         //string inlineOverviewText = BDUtilities.buildTextFromInlineNotes(inline, pObjectsOnPage);
                         //string immediateText = BDUtilities.buildTextFromInlineNotes(immediate, pObjectsOnPage);
                         if (immediateText.Length > 0)
                         {
-                            pResolvedValue = string.Format(@"<a href=""{0}"">{1}</a>", notePage.Uuid.ToString().ToUpper(), immediateText);
+                            pResolvedValue = string.Format(@"<a class=""aa"" href=""{0}"">{1}</a>", notePage.Uuid.ToString().ToUpper(), immediateText);
                         }
                         else
                         {
-                            pResolvedValue = string.Format(@"<a href=""{0}"">See Comments.</a>", notePage.Uuid.ToString().ToUpper());
+                            pResolvedValue = string.Format(@"<a class=""aa"" href=""{0}"">See Comments.</a>", notePage.Uuid.ToString().ToUpper());
                         }
                         if(!string.IsNullOrEmpty(pResolvedValue))
                             propertyHTML.AppendFormat(@"{0}{1}{2}{3}{4}", startTag, pResolvedValue, endTag, inlineOverviewText, overviewHTML);
@@ -5543,20 +5543,40 @@ namespace BDEditor.Classes
             //    currentChapter = BDFabrik.RetrieveNode(pContext, index.chapterId);
             //else
             //    currentChapter = null;
-            string compareString = @"<a href=";
-            StringBuilder newString = new StringBuilder();
-            if (pPage.documentText.Contains(compareString))
+
+            //TODO: convert to constants
+            string compareString1 = @"<a class=""aa"" href=";
+            string compareString2 = @"<a href=";
+
+            string temp = pPage.documentText;
+            temp = temp.Replace(compareString2, compareString1);
+            if(pPage.documentText != temp)
+                pPage.documentText = temp;
+
+            if (pPage.documentText.Contains(compareString1) || pPage.documentText.Contains(compareString2))
             {
                 int startPosition = 0;
 
                 while (startPosition < pPage.documentText.Length)
                 {
                     // find the anchor tag
-                    int tagLocation = pPage.documentText.IndexOf(compareString, startPosition);
+                    int tagLocation = 0;
+                    int compareStringLength = 0;
+                    if (pPage.documentText.Contains(compareString1))
+                    {
+                        tagLocation = pPage.documentText.IndexOf(compareString1, startPosition);
+                        compareStringLength = compareString1.Length;
+                    }
+                    if (pPage.documentText.Contains(compareString2))
+                    {
+                        tagLocation = pPage.documentText.IndexOf(compareString2, startPosition);
+                        compareStringLength = compareString2.Length;
+                    }
+
                     if (tagLocation >= 0)
                     {
                         // inspect the 'guid'
-                        int guidStart = tagLocation + 1 + compareString.Length;
+                        int guidStart = tagLocation + 1 + compareStringLength;
                         string guidString = pPage.documentText.Substring(guidStart, 36);
                         // if the guid exists as an external URL, dont change it...
                         if (!guidString.Contains("http://www"))

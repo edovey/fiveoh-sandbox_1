@@ -5639,6 +5639,14 @@ namespace BDEditor.Classes
                                                 externalLinkText = externalLinkText.Replace("</p>", string.Empty);
                                                 externalLinkText = externalLinkText.Trim();
 
+                                                if (externalLinkText.StartsWith("<a"))  //Compensate for accidentally misentered external link
+                                                {
+                                                    //strip the anchor tags
+                                                    int anchorEndPos = externalLinkText.IndexOf(">");
+                                                    externalLinkText = externalLinkText.Substring(anchorEndPos + 1);
+                                                    externalLinkText = externalLinkText.Replace("</a>", "");
+                                                }
+
                                                 if (!externalLinkText.ToLower().StartsWith("http://"))
                                                 {
                                                     externalLinkText = string.Format("http://{0}", externalLinkText);

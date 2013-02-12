@@ -1268,6 +1268,7 @@ namespace BDEditor.Views
 
             bool awsPushOnly = false;
             bool searchentriesOnly = false;
+            bool includeSearchEntries = true;
 
             DialogResult pushChoice = MessageBox.Show("Push to Amazon only?", "AWS", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
             if (pushChoice == DialogResult.Yes)
@@ -1287,9 +1288,14 @@ namespace BDEditor.Views
                 else
                     return;
 
-                DialogResult searchResult = MessageBox.Show("Generate Search Entries Only?", "Publish", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                DialogResult searchResult = MessageBox.Show("Generate Search Entries Only?", "Publish", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                 searchentriesOnly = (searchResult == DialogResult.Yes);
 
+                if (!searchentriesOnly)
+                {
+                    DialogResult includeSearchResult = MessageBox.Show("Include Search Entries?", "Publish", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+                    includeSearchEntries = (includeSearchResult == DialogResult.Yes);
+                }
             }
 
             this.Cursor = Cursors.WaitCursor;
@@ -1313,11 +1319,14 @@ namespace BDEditor.Views
                     BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Generation Complete\t{0}", DateTime.Now));
                 }
 
-                BDSearchEntryGenerator searchGenerator = new BDSearchEntryGenerator();
-                searchGenerator.Generate(dataContext, chapterNode);
-                System.Diagnostics.Debug.WriteLine("Search entry generation complete. {0}", DateTime.Now);
+                if (includeSearchEntries)
+                {
+                    BDSearchEntryGenerator searchGenerator = new BDSearchEntryGenerator();
+                    searchGenerator.Generate(dataContext, chapterNode);
+                    System.Diagnostics.Debug.WriteLine("Search entry generation complete. {0}", DateTime.Now);
 
-                BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Search Generation Complete\t{0}", DateTime.Now));
+                    BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Search Generation Complete\t{0}", DateTime.Now));
+                }
             }
 
             if (BDCommon.Settings.SyncPushEnabled)

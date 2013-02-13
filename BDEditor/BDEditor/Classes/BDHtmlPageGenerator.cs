@@ -22,7 +22,10 @@ namespace BDEditor.Classes
         private const int maxNodeType = 6;
         private const string topHtml = @"<!DOCTYPE html PUBLIC ""-//W3C//DTD HTML 4.01//EN\""><html><head><meta http-equiv=""Content-type"" content=""text/html;charset=UTF-8\""/><meta name=""viewport"" content=""width=device-width; initial-scale=1.0; maximum-scale=10.0;""/><link rel=""stylesheet"" type=""text/css"" href=""ra_bd.base.css"" /><title>Bugs &amp; Drugs</title> </head><body><div id=""ra_bd""><div class=""current"">";
         private const string bottomHtml = @"</div></div></body></html>";
-        private const string anchorTag = @"<p><a href=""{0}""><b>{1}</b></a></p>";
+        private const string anchorTag = @"<p><a class=""aa"" href=""{0}""><b>{1}</b></a></p>";
+        private const string navListDivPrefix = @"<div class=""scroll""><ul class=""rounded"">";
+        private const string navListDivSuffix = @"</ul></div>";
+        private const string navListAnchorTag = @"<li class=""arrow""><a class=""nav"" href=""{0}"">{1}</a></li>";
         public const int EMPTY_PARAGRAPH = 8;  // <p> </p>
         private const string imgFileTag = "<img src=\"images/{0}{1}\" alt=\"\" width=\"{2}\" height=\"{3}\" />";
         private const string paintChipTag = "<img class=\"paintChip\" src=\"{0}\" alt=\"\" />";
@@ -208,7 +211,7 @@ namespace BDEditor.Classes
                         //BDNode childNode = BDNode.RetrieveNodeWithId(pContext, page.displayParentId.Value);
                         if (childNode != null)
                         {
-                            pageHTML.AppendFormat(@"<li class=""arrow""><a href=""{0}""><b>{1}</b></a></li>", page.Uuid.ToString().ToUpper(), childNode.Name);
+                            pageHTML.AppendFormat(@"<li class=""arrow""><a class=""nav"" href=""{0}""><b>{1}</b></a></li>", page.Uuid.ToString().ToUpper(), childNode.Name);
                         }
                     }
                 }
@@ -219,7 +222,7 @@ namespace BDEditor.Classes
             {
                 currentChapter = null;
                 pageHTML.Append(@"<div class=""toolbar""><h1>Bugs &amp; Drugs</h1></div>");
-                pageHTML.Append(@"<div class=""scroll""><ul class=""rounded"">");
+                pageHTML.Append(@"<div class=""scroll""><ul id=""home"" class=""rounded"">");
                 foreach (BDHtmlPage childPage in pChildPages)
                 {
                     if (childPage != null)
@@ -254,11 +257,11 @@ namespace BDEditor.Classes
                             }
                             string paintChipHtml = string.Format(paintChipTag, paintChipFileName);
 
-                            pageHTML.AppendFormat(@"<li class=""arrow""><a href=""{0}"">{1}{2}</a></li>", childPage.Uuid.ToString().ToUpper(), paintChipHtml, childNode.Name);
+                            pageHTML.AppendFormat(@"<li class=""arrow""><a class=""nav"" href=""{0}"">{1}{2}</a></li>", childPage.Uuid.ToString().ToUpper(), paintChipHtml, childNode.Name);
                         }
                     }
                 }
-                pageHTML.Append("</table>");
+                pageHTML.Append("</ul></div>");
             }
 
             BDHtmlPage navPage = writeBDHtmlPage(pContext, pNode as BDNode, pageHTML, BDConstants.BDHtmlPageType.Navigation, footnotesOnPage, objectsOnPage, null); 
@@ -1382,7 +1385,6 @@ namespace BDEditor.Classes
                                     html.Append(ROWENDTAG);
                                     break;
                             }
-                            html.Append(ROWENDTAG);
                         }
 
                         break;
@@ -1478,10 +1480,12 @@ namespace BDEditor.Classes
                                 html.Append(amHtml);
                             }
                         }
+                        html.Append(navListDivPrefix);
                         for (int i = 0; i < childPages.Count; i++)
                         {
-                            html.AppendFormat(anchorTag, childPages[i].Uuid.ToString().ToUpper(), childPages[i].pageTitle);
+                            html.AppendFormat(navListAnchorTag, childPages[i].Uuid.ToString().ToUpper(), childPages[i].pageTitle);
                         }
+                        html.Append(navListDivSuffix);
                         break;
                     default:
                         break;
@@ -1508,12 +1512,12 @@ namespace BDEditor.Classes
             {
                 case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
                     BDAntimicrobialRisk risk = pNode as BDAntimicrobialRisk;
-                    html.AppendFormat("<b>{0}</b>: {1}", columnHtml[0], buildNodePropertyHTML(pContext, risk, risk.riskFactor, BDAntimicrobialRisk.PROPERTYNAME_PREGNANCYRISK, pFootnotes, pObjectsOnPage));
+                    html.AppendFormat("<p><b>{0}</b>: {1}</p>", columnHtml[0], buildNodePropertyHTML(pContext, risk, risk.riskFactor, BDAntimicrobialRisk.PROPERTYNAME_PREGNANCYRISK, pFootnotes, pObjectsOnPage));
                     html.AppendFormat("<p><b>{0}</b>: {1}</p>", columnHtml[1], buildNodePropertyHTML(pContext, risk, risk.recommendations, BDAntimicrobialRisk.PROPERTYNAME_RECOMMENDATION, pFootnotes, pObjectsOnPage));
                     break;
                 case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
                     BDAntimicrobialRisk lRisk = pNode as BDAntimicrobialRisk;
-                    html.AppendFormat("<b>{0}</b>: {1}", columnHtml[0], buildNodePropertyHTML(pContext, lRisk, lRisk.riskFactor, BDAntimicrobialRisk.PROPERTYNAME_LACTATIONRISK, pFootnotes, pObjectsOnPage));
+                    html.AppendFormat("<p><b>{0}</b>: {1}</p>", columnHtml[0], buildNodePropertyHTML(pContext, lRisk, lRisk.riskFactor, BDAntimicrobialRisk.PROPERTYNAME_LACTATIONRISK, pFootnotes, pObjectsOnPage));
                     html.AppendFormat("<p><b>{0}</b>: {1}</p>", columnHtml[1], buildNodePropertyHTML(pContext, lRisk, lRisk.aapRating, BDAntimicrobialRisk.PROPERTYNAME_APPRATING, pFootnotes, pObjectsOnPage));
                     html.AppendFormat("<p><b>{0}</b>: {1}</p>", columnHtml[2], buildNodePropertyHTML(pContext, lRisk, lRisk.relativeInfantDose, BDAntimicrobialRisk.PROPERTYNAME_RELATIVEDOSE, pFootnotes, pObjectsOnPage));
                     break;
@@ -1719,7 +1723,7 @@ namespace BDEditor.Classes
 
                             html.AppendFormat(@"<table class=""v{0}""><tr><th rowspan=4>{1}</th><th rowspan=4>{2}</th>", (int)pNode.LayoutVariant, c1Html, c2Html);
                             html.Append(@"<th colspan=3><b>Dose and Interval Adjustment for Renal Impairment</b></th></tr>");
-                            html.AppendFormat(@"<tr><th colspan=3><b>{0}</b></th><tr>", c3Html);
+                            html.AppendFormat(@"<tr><th colspan=3><b>{0}</b></th></tr><tr><td></td></tr>", c3Html);
                             html.Append(@"<tr><th>&gt50</th><th>10 - 50</th><th>&lt10(Anuric)</th></tr>");
 
                             foreach (IBDNode child in children)
@@ -1812,10 +1816,12 @@ namespace BDEditor.Classes
                                 }
                             }
                         }
+                        html.Append(navListDivPrefix);
                         for (int i = 0; i < childPages.Count; i++)
                         {
-                            html.AppendFormat(anchorTag, childPages[i].Uuid.ToString().ToUpper(), childPages[i].pageTitle);
+                            html.AppendFormat(navListAnchorTag, childPages[i].Uuid.ToString().ToUpper(), childPages[i].pageTitle);
                         }
+                        html.Append(navListDivSuffix);
                         break;
                     case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
                         // create next navigation page manually - since the name of the subcategory is often blank
@@ -1867,10 +1873,12 @@ namespace BDEditor.Classes
                                 }
                             }
                         }
+                        html.Append(navListDivPrefix);
                         for (int i = 0; i < l_childPages.Count; i++)
                         {
-                            html.AppendFormat(anchorTag, l_childPages[i].Uuid.ToString().ToUpper(), l_childPages[i].pageTitle);
+                            html.AppendFormat(navListAnchorTag, l_childPages[i].Uuid.ToString().ToUpper(), l_childPages[i].pageTitle);
                         }
+                        html.Append(navListDivSuffix);
                         break;
                     case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -2743,7 +2751,7 @@ namespace BDEditor.Classes
                                     BDTherapyGroup therapyGroup = child as BDTherapyGroup;
                                     string tgHtml = buildNodePropertyHTML(pContext, child, child.Name, BDTherapyGroup.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage);
                                     if (!string.IsNullOrEmpty(tgHtml))
-                                        html.AppendFormat("<{0}>{1}<{0}><br>", HtmlHeaderTagLevelString(pLevel + 2), tgHtml);
+                                        html.AppendFormat("<{0}>{1}</{0}><br>", HtmlHeaderTagLevelString(pLevel + 1), tgHtml);
 
                                     // Therapy has 2 dosages, no duration and a custom header
                                     string therapyNameTitleHtml = string.Empty;
@@ -3476,8 +3484,10 @@ namespace BDEditor.Classes
                         currentPageMasterObject = microorganism;
                         mPages.Add(writeBDHtmlPage(pContext, microorganism, mHTML, BDConstants.BDHtmlPageType.Data, mFootnotes, mObjectsOnPage, null));
                     }
+                    mgHTML.Append(navListDivPrefix);
                     for (int i = 0; i < mPages.Count; i++)
-                        mgHTML.AppendFormat(anchorTag, mPages[i].Uuid.ToString().ToUpper(), mPages[i].pageTitle);
+                        mgHTML.AppendFormat(navListAnchorTag, mPages[i].Uuid.ToString().ToUpper(), mPages[i].pageTitle);
+                    mgHTML.Append(navListDivSuffix);
                 }
                 html.Append(mgHTML);
                 currentPageMasterObject = pNode;
@@ -3827,10 +3837,10 @@ namespace BDEditor.Classes
                         }
 
                         //Expects that children.count == generatedPages.count: May it blow up real gud if it isn't
-   
+                        html.Append(navListDivPrefix);
                         for (int i = 0; i < generatedPages.Count; i++)
-                            html.AppendFormat(anchorTag, generatedPages[i].Uuid.ToString().ToUpper(), children[i].Name);
-
+                            html.AppendFormat(navListAnchorTag, generatedPages[i].Uuid.ToString().ToUpper(), children[i].Name);
+                        html.Append(navListDivSuffix);
                         break;
                     case BDConstants.LayoutVariantType.Microbiology_Antibiogram:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAttachment, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -4021,10 +4031,12 @@ namespace BDEditor.Classes
                                 amPages.Add(writeBDHtmlPage(pContext, child, amHtml, BDConstants.BDHtmlPageType.Navigation, amFootnotes, amObjects, null));
                             }
                         }
+                        html.Append(navListDivPrefix);
                         for (int i = 0; i < amPages.Count; i++)
                         {
-                            html.AppendFormat(anchorTag, amPages[i].Uuid.ToString().ToUpper(), amPages[i].pageTitle);
+                            html.AppendFormat(navListAnchorTag, amPages[i].Uuid.ToString().ToUpper(), amPages[i].pageTitle);
                         }
+                        html.Append(navListDivSuffix);
                         break;
                     case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
                         // child is BDAntimicrobialGroup: write a page for the child and add it as a link to this page
@@ -4081,11 +4093,12 @@ namespace BDEditor.Classes
                                     break;
                             }   
                         }
+                        html.Append(navListDivPrefix);
                         for (int i = 0; i < childPages.Count; i++)
                         {
-                            html.AppendFormat(anchorTag, childPages[i].Uuid.ToString().ToUpper(), childPages[i].pageTitle);
+                            html.AppendFormat(navListAnchorTag, childPages[i].Uuid.ToString().ToUpper(), childPages[i].pageTitle);
                         }
-
+                        html.Append(navListDivSuffix);
                         break;
                     default:
                         break;
@@ -4114,7 +4127,7 @@ namespace BDEditor.Classes
                 {
                     case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
-
+                        html.Append(navListDivPrefix);
                         foreach (IBDNode child in children)
                         {
                             List<BDLinkedNote> footnoteList = new List<BDLinkedNote>();
@@ -4123,9 +4136,9 @@ namespace BDEditor.Classes
                             string childHtml = BuildBDTopicHtml(pContext, child, footnoteList, objectsOnChildPage, pLevel + 1);
                             currentPageMasterObject = child;
                             BDHtmlPage childPage = writeBDHtmlPage(pContext, child, childHtml, BDConstants.BDHtmlPageType.Navigation, footnoteList, objectsOnChildPage, null);
-                            html.AppendFormat(anchorTag, childPage.Uuid.ToString().ToUpper(), childPage.pageTitle);
+                            html.AppendFormat(navListAnchorTag, childPage.Uuid.ToString().ToUpper(), childPage.pageTitle);
                         }
-
+                        html.Append(navListDivSuffix);
                         break;
                     case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin }));
@@ -4133,7 +4146,7 @@ namespace BDEditor.Classes
                         //{
                         //    html.Append(BuildBDTopicHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
                         //}
-
+                        html.Append(navListDivPrefix);
                         foreach (IBDNode child in children)
                         {
                             List<BDLinkedNote> footnoteList = new List<BDLinkedNote>();
@@ -4142,9 +4155,9 @@ namespace BDEditor.Classes
                             string childHtml = BuildBDTopicHtml(pContext, child, footnoteList, objectsOnChildPage, pLevel + 1);
                             currentPageMasterObject = child;
                             BDHtmlPage childPage = writeBDHtmlPage(pContext, child, childHtml, BDConstants.BDHtmlPageType.Navigation, footnoteList, objectsOnChildPage, null);
-                            html.AppendFormat(anchorTag, childPage.Uuid.ToString().ToUpper(), childPage.pageTitle);
+                            html.AppendFormat(navListAnchorTag, childPage.Uuid.ToString().ToUpper(), childPage.pageTitle);
                         }
-
+                        html.Append(navListDivSuffix);
                         break;
                     case BDConstants.LayoutVariantType.FrontMatter:
                     case BDConstants.LayoutVariantType.BackMatter:
@@ -4994,7 +5007,7 @@ namespace BDEditor.Classes
                 }
             }
 
-            colSpanTag = (colSpanLength > 1) ? string.Format(" colspan={0}", colSpanLength) : string.Empty;
+            colSpanTag = (colSpanLength > 1) ? string.Format(@" class=""v{1}cs"" colspan={0}", colSpanLength, (int)dosageNode.LayoutVariant) : string.Empty;
 
             string dosage1Html = buildNodePropertyHTML(pContext, dosageNode, dosageNode.dosage, BDDosage.PROPERTYNAME_DOSAGE, pFootnotes, pObjectsOnPage);
 
@@ -5132,7 +5145,7 @@ namespace BDEditor.Classes
                 string documentText = BDUtilities.CleanseStringOfEmptyTag(refPage.documentText, "p");
                 if (!string.IsNullOrEmpty(documentText))
                 {
-                    refHTML.AppendFormat(@"<br><a href=""{0}"">References</a>", refPage.Uuid.ToString().ToUpper());
+                    refHTML.AppendFormat(@"<br><a class=""aa"" href=""{0}"">References</a>", refPage.Uuid.ToString().ToUpper());
                     pObjectsOnPage.Add(refPage.Uuid);
                 }
             }
@@ -5249,7 +5262,7 @@ namespace BDEditor.Classes
             BDHtmlPage notePage = generatePageForLinkedNotesLayoutColumn(pContext, pMetadataColumn, marked, unmarked);
 
             if (notePage != null)
-                columnHtml.AppendFormat(@"<a href=""{0}"">{1}{2}</a>", notePage.Uuid.ToString().ToUpper(), cLabel, footnoteMarker);
+                columnHtml.AppendFormat(@"<a class=""aa"" href=""{0}"">{1}{2}</a>", notePage.Uuid.ToString().ToUpper(), cLabel, footnoteMarker);
             else
                 columnHtml.AppendFormat(@"{0}{1}", cLabel, footnoteMarker);
 
@@ -5385,19 +5398,20 @@ namespace BDEditor.Classes
 
             if (pHtmlTag.ToLower() == "td")
             {
+                inlineOverviewText = string.Format("<br>{0}", BDUtilities.CleanNoteText(inlineOverviewText)); // strip the p tags. prefix with a br inorder to preserve intended newline start of "inline"
                 if (notePage != null)
                 {
                     if (pPropertyValue.Length > 0)
-                        propertyHTML.AppendFormat(@"{1}<a href=""{0}"">{2}{3}</a>{4}{5}{6}{7}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), immediateText, footerMarker, inlineOverviewText, overviewHTML, endTag);
+                        propertyHTML.AppendFormat(@"{1}<a class=""aa"" href=""{0}"">{2}{3}</a>{4}{5}{6}{7}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), immediateText, footerMarker, inlineOverviewText, overviewHTML, endTag);
                     else
                     {
                         if (immediateText.Length > 0)
                         {
-                            pResolvedValue = string.Format(@"<a href=""{0}"">{1}</a>", notePage.Uuid.ToString().ToUpper(), immediateText);
+                            pResolvedValue = string.Format(@"<a class=""aa"" href=""{0}"">{1}</a>", notePage.Uuid.ToString().ToUpper(), immediateText);
                         }
                         else
                         {
-                            pResolvedValue = string.Format(@"<a href=""{0}"">See Comments.</a>", notePage.Uuid.ToString().ToUpper());
+                            pResolvedValue = string.Format(@"<a class=""aa"" href=""{0}"">See Comments.</a>", notePage.Uuid.ToString().ToUpper());
                         }
                         propertyHTML.AppendFormat(@"{0}{1}{2}{3}{4}", startTag, pResolvedValue, inlineOverviewText, overviewHTML, endTag);
                     }
@@ -5412,18 +5426,18 @@ namespace BDEditor.Classes
                 if (notePage != null)
                 {
                     if (pPropertyValue.Length > 0)
-                        propertyHTML.AppendFormat(@"{1}<a href=""{0}"">{2}{3}</a>{4}{5}{6}{7}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), immediateText, footerMarker, endTag, inlineOverviewText, overviewHTML);
+                        propertyHTML.AppendFormat(@"{1}<a class=""aa"" href=""{0}"">{2}{3}</a>{4}{5}{6}{7}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), immediateText, footerMarker, endTag, inlineOverviewText, overviewHTML);
                     else
                     {
                         //string inlineOverviewText = BDUtilities.buildTextFromInlineNotes(inline, pObjectsOnPage);
                         //string immediateText = BDUtilities.buildTextFromInlineNotes(immediate, pObjectsOnPage);
                         if (immediateText.Length > 0)
                         {
-                            pResolvedValue = string.Format(@"<a href=""{0}"">{1}</a>", notePage.Uuid.ToString().ToUpper(), immediateText);
+                            pResolvedValue = string.Format(@"<a class=""aa"" href=""{0}"">{1}</a>", notePage.Uuid.ToString().ToUpper(), immediateText);
                         }
                         else
                         {
-                            pResolvedValue = string.Format(@"<a href=""{0}"">See Comments.</a>", notePage.Uuid.ToString().ToUpper());
+                            pResolvedValue = string.Format(@"<a class=""aa"" href=""{0}"">See Comments.</a>", notePage.Uuid.ToString().ToUpper());
                         }
                         if(!string.IsNullOrEmpty(pResolvedValue))
                             propertyHTML.AppendFormat(@"{0}{1}{2}{3}{4}", startTag, pResolvedValue, endTag, inlineOverviewText, overviewHTML);
@@ -5529,20 +5543,40 @@ namespace BDEditor.Classes
             //    currentChapter = BDFabrik.RetrieveNode(pContext, index.chapterId);
             //else
             //    currentChapter = null;
-            string compareString = @"<a href=";
-            StringBuilder newString = new StringBuilder();
-            if (pPage.documentText.Contains(compareString))
+
+            //TODO: convert to constants
+            string compareString1 = @"<a class=""aa"" href=";
+            string compareString2 = @"<a href=";
+
+            string temp = pPage.documentText;
+            temp = temp.Replace(compareString2, compareString1);
+            if(pPage.documentText != temp)
+                pPage.documentText = temp;
+
+            if (pPage.documentText.Contains(compareString1) || pPage.documentText.Contains(compareString2))
             {
                 int startPosition = 0;
 
                 while (startPosition < pPage.documentText.Length)
                 {
                     // find the anchor tag
-                    int tagLocation = pPage.documentText.IndexOf(compareString, startPosition);
+                    int tagLocation = 0;
+                    int compareStringLength = 0;
+                    if (pPage.documentText.Contains(compareString1))
+                    {
+                        tagLocation = pPage.documentText.IndexOf(compareString1, startPosition);
+                        compareStringLength = compareString1.Length;
+                    }
+                    if (pPage.documentText.Contains(compareString2))
+                    {
+                        tagLocation = pPage.documentText.IndexOf(compareString2, startPosition);
+                        compareStringLength = compareString2.Length;
+                    }
+
                     if (tagLocation >= 0)
                     {
                         // inspect the 'guid'
-                        int guidStart = tagLocation + 1 + compareString.Length;
+                        int guidStart = tagLocation + 1 + compareStringLength;
                         string guidString = pPage.documentText.Substring(guidStart, 36);
                         // if the guid exists as an external URL, dont change it...
                         if (!guidString.Contains("http://www"))
@@ -5604,6 +5638,14 @@ namespace BDEditor.Classes
                                                 string externalLinkText = targetNote.documentText.Replace("<p>", string.Empty);
                                                 externalLinkText = externalLinkText.Replace("</p>", string.Empty);
                                                 externalLinkText = externalLinkText.Trim();
+
+                                                if (externalLinkText.StartsWith("<a"))  //Compensate for accidentally misentered external link
+                                                {
+                                                    //strip the anchor tags
+                                                    int anchorEndPos = externalLinkText.IndexOf(">");
+                                                    externalLinkText = externalLinkText.Substring(anchorEndPos + 1);
+                                                    externalLinkText = externalLinkText.Replace("</a>", "");
+                                                }
 
                                                 if (!externalLinkText.ToLower().StartsWith("http://"))
                                                 {

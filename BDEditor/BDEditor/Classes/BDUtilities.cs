@@ -1992,6 +1992,11 @@ namespace BDEditor.Classes
             }
         }
 
+        /// <summary>
+        /// Replaces p tags with br.
+        /// </summary>
+        /// <param name="pNoteText"></param>
+        /// <returns></returns>
         public static string CleanNoteText(string pNoteText)
         {
             string resultText = string.Empty;

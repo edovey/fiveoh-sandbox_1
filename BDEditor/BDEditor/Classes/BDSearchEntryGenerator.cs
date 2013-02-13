@@ -44,118 +44,40 @@ namespace BDEditor.Classes
 
         private void processNodeList(Entities pDataContext, List<IBDNode> pNodes, StringBuilder pNodeContext)
         {
-            string currentContext = string.Empty;
+            string resolvedName = string.Empty;
             string searchableText = string.Empty;
             foreach (IBDNode ibdNode in pNodes)
             {
                 switch (ibdNode.NodeType)
                 {
-                    case BDConstants.BDNodeType.BDAntimicrobial:
-                        currentContext = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDNode.PROPERTYNAME_NAME);
-                        searchableText = currentContext;
-                        break;
-                    case BDConstants.BDNodeType.BDAntimicrobialRisk:
-                        currentContext = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDNode.PROPERTYNAME_NAME);
-                        searchableText = currentContext;
-                        break;
                     case BDConstants.BDNodeType.BDCombinedEntry:
-                        currentContext = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDCombinedEntry.PROPERTYNAME_NAME);
-                        switch (ibdNode.LayoutVariant)
-                        {
-                            case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
-                            case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:
-                            case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Pertussis:
-                                searchableText = currentContext;
-                                break;
-                            default:
-                                break;
-                        }
-                        break;
-                    case BDConstants.BDNodeType.BDCategory:
-                        currentContext = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDNode.PROPERTYNAME_NAME);
-                        searchableText = currentContext;
+                        resolvedName = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDCombinedEntry.PROPERTYNAME_NAME);
                         break;
                     case BDConstants.BDNodeType.BDConfiguredEntry:
-                        currentContext = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDConfiguredEntry.PROPERTYNAME_NAME);
-                        switch (ibdNode.LayoutVariant)
-                        {
-                            case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration_Dosages:
-                            case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
-                            case BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk:
-                                searchableText = currentContext;
-                                break;
-                            case BDConstants.LayoutVariantType.TreatmentRecommendation01_CNS_Meningitis_Table:
-                            default:
-                                break;
-                        }
-                        searchableText = currentContext;
+                        resolvedName = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDConfiguredEntry.PROPERTYNAME_NAME);
                         break;
                     case BDConstants.BDNodeType.BDDosage:
                         // no valid properties
                         break;
                     case BDConstants.BDNodeType.BDLinkedNote:
-                        currentContext = (ibdNode as BDLinkedNote).DescriptionForLinkedNote;
-                        searchableText = currentContext;
                         break;
                     case BDConstants.BDNodeType.BDPrecaution:
-                        currentContext = buildResolvedNameForNode(pDataContext, ibdNode, (ibdNode as BDPrecaution).Description, BDPrecaution.PROPERTYNAME_ORGANISM_1);
-                        searchableText = currentContext;
-                        break;
-                    case BDConstants.BDNodeType.BDSection:
-                        currentContext = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDNode.PROPERTYNAME_NAME);
-                        searchableText = currentContext;
-                        break;
-                    case BDConstants.BDNodeType.BDSubcategory:
-                                currentContext = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDNode.PROPERTYNAME_NAME);
-                        switch (ibdNode.LayoutVariant)
-                        {
-                            case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts:
-                                searchableText = currentContext;
-                                break;
-                            default:
-                                break;
-                        }
-                        break;
-                    case BDConstants.BDNodeType.BDSubtopic:
-                                currentContext = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDNode.PROPERTYNAME_NAME);
-                        switch (ibdNode.LayoutVariant)
-                        {
-                            case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines_Spectrum:
-                                searchableText = currentContext;
-                                break;
-                            default:
-                                break;
-                        }
+                        resolvedName = buildResolvedNameForNode(pDataContext, ibdNode, (ibdNode as BDPrecaution).Description, BDPrecaution.PROPERTYNAME_ORGANISM_1);
                         break;
                     case BDConstants.BDNodeType.BDTableCell:
-                        if (ibdNode.DisplayOrder == 0)
-                        {
-                                    currentContext = buildResolvedNameForNode(pDataContext, ibdNode, (ibdNode as BDTableCell).value, BDTableCell.PROPERTYNAME_CONTENTS);
-                            switch (ibdNode.LayoutVariant)
-                            {
-                                case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_Classifications_ContentRow:
-                                case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity_ContentRow:
-                                case BDConstants.LayoutVariantType.Antibiotics_NameListing_ContentRow:
-                                case BDConstants.LayoutVariantType.Antibiotics_Stepdown_ContentRow:
-                                    searchableText = currentContext;
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
+                        resolvedName = buildResolvedNameForNode(pDataContext, ibdNode, (ibdNode as BDTableCell).value, BDTableCell.PROPERTYNAME_CONTENTS);
                         break;
                     case BDConstants.BDNodeType.BDTherapy:
-                        currentContext = buildResolvedNameForNode(pDataContext, ibdNode, (ibdNode as BDTherapy).Description, BDTherapy.PROPERTYNAME_THERAPY);
-                        searchableText = currentContext;
+                        resolvedName = buildResolvedNameForNode(pDataContext, ibdNode, (ibdNode as BDTherapy).Description, BDTherapy.PROPERTYNAME_THERAPY);
                         break;
                     case BDConstants.BDNodeType.BDTherapyGroup:
-                        currentContext = buildResolvedNameForNode(pDataContext, ibdNode, (ibdNode as BDTherapyGroup).Description, BDTherapyGroup.PROPERTYNAME_NAME);
+                        resolvedName = buildResolvedNameForNode(pDataContext, ibdNode, (ibdNode as BDTherapyGroup).Description, BDTherapyGroup.PROPERTYNAME_NAME);
                         break;
                     case BDConstants.BDNodeType.BDTableRow:
                     case BDConstants.BDNodeType.BDTopic:
                     default:
-                        // process the node name to add to the context
-                        currentContext = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDNode.PROPERTYNAME_NAME);
+                        // process all BDNodes
+                        resolvedName = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDNode.PROPERTYNAME_NAME);
                         break;
                 }
 
@@ -165,9 +87,9 @@ namespace BDEditor.Classes
                 
                 // build a string representation of the search entry's location in the hierarchy
                 if (pNodeContext.Length > 0)
-                    newContext.AppendFormat("{0} : {1}", pNodeContext, currentContext);
+                    newContext.AppendFormat("{0} : {1}", pNodeContext, resolvedName);
                 else
-                    newContext.Append(currentContext);
+                    newContext.Append(resolvedName);
 
                 // recurse to process the next child layer
                 if (childnodes.Count > 0)
@@ -175,38 +97,32 @@ namespace BDEditor.Classes
 
                     // build the search entry
                 if(!string.IsNullOrEmpty(searchableText) && htmlPageId != Guid.Empty && !(ibdNode is BDLinkedNote))
-                    generateEntryWithDisplayParent(pDataContext, htmlPageId, ibdNode, searchableText, pNodeContext.ToString());
+                    generateLinkForEntryWithDisplayParent(pDataContext, htmlPageId, ibdNode, resolvedName, pNodeContext.ToString());
             }
         }
 
-        private void generateEntryWithDisplayParent(Entities pDataContext, Guid pOriginalNodeId, IBDNode pNode, string pCurrentContext, string pDisplayContext)
+        private void generateLinkForEntryWithDisplayParent(Entities pDataContext, Guid pOriginalNodeId, IBDNode pNode, string pResolvedName, string pDisplayContext)
         {
             //string entryName = pNode.Name.Trim();
-            string entryName = buildResolvedNameForNode(pDataContext, pNode, pNode.Name, BDNode.PROPERTYNAME_NAME);
-
-            if (!string.IsNullOrEmpty(entryName))
+            BDSearchEntry searchEntry = null;
+            if (!string.IsNullOrEmpty(pResolvedName))
             {
                 // get existing matching search entries
                 IQueryable<BDSearchEntry> entries = (from entry in pDataContext.BDSearchEntries
-                                                     where entry.name.Contains(entryName)
+                                                     where entry.name.Contains(pResolvedName)
                                                      select entry);
 
                 // get existing matching search entries
                 IQueryable<BDSearchEntry> contains = (from entry in pDataContext.BDSearchEntries
-                                                     where entryName.Contains(entry.name)
+                                                      where pResolvedName.Contains(entry.name)
                                                      select entry);
                 // if matching search entry is not found, create one
-                if (entries.Count() == 0 && entries.Count() == 0)
+                if (entries.Count() > 0)
+                    searchEntry = entries.First<BDSearchEntry>();
+                else if(contains.Count() > 0)
+                    searchEntry = contains.First<BDSearchEntry>();
+                if(searchEntry != null)
                 {
-                    // create and save new search entry
-                    BDSearchEntry searchEntry = BDSearchEntry.CreateBDSearchEntry(pDataContext, entryName);
-
-                    // Create search association record
-                    BDSearchEntryAssociation.CreateBDSearchEntryAssociation(pDataContext, searchEntry.Uuid, pNode.NodeType, pOriginalNodeId, pNode.LayoutVariant, pDisplayContext);
-                }
-                else
-                {
-                    BDSearchEntry searchEntry = entries.First<BDSearchEntry>();
                     // get matching search association records for search entry
                     IQueryable<BDSearchEntryAssociation> associations = (from entry in pDataContext.BDSearchEntryAssociations
                                                                          where (entry.searchEntryId == searchEntry.uuid

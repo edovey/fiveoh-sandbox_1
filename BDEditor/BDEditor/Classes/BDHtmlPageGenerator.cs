@@ -2751,7 +2751,7 @@ namespace BDEditor.Classes
                                     BDTherapyGroup therapyGroup = child as BDTherapyGroup;
                                     string tgHtml = buildNodePropertyHTML(pContext, child, child.Name, BDTherapyGroup.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage);
                                     if (!string.IsNullOrEmpty(tgHtml))
-                                        html.AppendFormat("<{0}>{1}<{0}><br>", HtmlHeaderTagLevelString(pLevel + 2), tgHtml);
+                                        html.AppendFormat("<{0}>{1}</{0}><br>", HtmlHeaderTagLevelString(pLevel + 1), tgHtml);
 
                                     // Therapy has 2 dosages, no duration and a custom header
                                     string therapyNameTitleHtml = string.Empty;
@@ -5398,6 +5398,7 @@ namespace BDEditor.Classes
 
             if (pHtmlTag.ToLower() == "td")
             {
+                inlineOverviewText = string.Format("<br>{0}", BDUtilities.CleanNoteText(inlineOverviewText)); // strip the p tags. prefix with a br inorder to preserve intended newline start of "inline"
                 if (notePage != null)
                 {
                     if (pPropertyValue.Length > 0)

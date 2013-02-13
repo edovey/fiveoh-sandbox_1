@@ -188,11 +188,15 @@ namespace BDEditor.Classes
             {
                 // get existing matching search entries
                 IQueryable<BDSearchEntry> entries = (from entry in pDataContext.BDSearchEntries
-                                                     where entry.name == entryName
+                                                     where entry.name.Contains(entryName)
                                                      select entry);
 
+                // get existing matching search entries
+                IQueryable<BDSearchEntry> contains = (from entry in pDataContext.BDSearchEntries
+                                                     where entryName.Contains(entry.name)
+                                                     select entry);
                 // if matching search entry is not found, create one
-                if (entries.Count() == 0)
+                if (entries.Count() == 0 && entries.Count() == 0)
                 {
                     // create and save new search entry
                     BDSearchEntry searchEntry = BDSearchEntry.CreateBDSearchEntry(pDataContext, entryName);

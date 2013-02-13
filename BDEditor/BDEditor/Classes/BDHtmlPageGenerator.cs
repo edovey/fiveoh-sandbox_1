@@ -1674,9 +1674,9 @@ namespace BDEditor.Classes
                             therapyGroupHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, tGroup, HtmlHeaderTagLevelString(pLevel + 2), pFootnotes, pObjectsOnPage));
                             // the complexity of the column headers cannot be handled in the standard methods so the text is built manually
                             string subtext = "given 30-60 minutes before the procedure";
-                            therapyHTML.AppendFormat(@"<table class=""v{5}""><tr><th>{0}</th><th><b>{1}</b> {2}<b>/ROUTE</b></th><th><b>{3}</b> {4}<b>/ROUTE</b></th></tr>",
+                            therapyHTML.AppendFormat(@"<table class=""v{5}""><tr><th>{0}</th><th><b>{1}</b><br>{2}<b>/ROUTE</b></th><th><b>{3}</b><br>{4}<b>/ROUTE</b></th></tr>",
                                 tc2Html, tc3Html, subtext, tc4Html, subtext, (int)tGroup.LayoutVariant);
-                            therapyHTML.Append(@"<tr><th colspan=3>Dental, Oral, Respiratory Tract Procedures</td></tr>");
+                            therapyHTML.Append(@"<tr><th class=""inner"" colspan=3>Dental, Oral, Respiratory Tract Procedures</th></tr>");
                             foreach (IBDNode t in therapies)
                             {
                                 BDTherapy therapy = t as BDTherapy;
@@ -1721,10 +1721,10 @@ namespace BDEditor.Classes
                             string c2Html = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[1], BDConstants.BDNodeType.BDDosage, BDDosage.PROPERTYNAME_DOSAGE, pFootnotes, pObjectsOnPage);
                             string c3Html = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[2], BDConstants.BDNodeType.BDDosage, BDDosage.PROPERTYNAME_DOSAGE2, pFootnotes, pObjectsOnPage);
 
-                            html.AppendFormat(@"<table class=""v{0}""><tr><th rowspan=4>{1}</th><th rowspan=4>{2}</th>", (int)pNode.LayoutVariant, c1Html, c2Html);
+                            html.AppendFormat(@"<table class=""v{0}""><tr><th rowspan=3>{1}</th><th rowspan=3>{2}</th>", (int)pNode.LayoutVariant, c1Html, c2Html);
                             html.Append(@"<th colspan=3><b>Dose and Interval Adjustment for Renal Impairment</b></th></tr>");
-                            html.AppendFormat(@"<tr><th colspan=3><b>{0}</b></th></tr><tr><td></td></tr>", c3Html);
-                            html.Append(@"<tr><th>&gt50</th><th>10 - 50</th><th>&lt10(Anuric)</th></tr>");
+                            html.AppendFormat(@"<tr><th class=""inner"" colspan=3><b>{0}</b></th></tr>", c3Html);
+                            html.Append(@"<tr><th class=""inner"">&gt50</th><th class=""inner"">10 - 50</th><th class=""inner"">&lt10(Anuric)</th></tr>");
 
                             foreach (IBDNode child in children)
                             {
@@ -2789,7 +2789,7 @@ namespace BDEditor.Classes
                                         }
                                         html.AppendFormat(@"<tr><th rowspan=2>{0}</th>", therapyNameTitleHtml);
                                         html.AppendFormat(@"<th colspan=2>{0}</th></tr>", therapyDosageSpanTitle);
-                                        html.AppendFormat(@"<tr><th>{0}</th><th>{1}</th></tr>", therapyDosage1TitleHtml, therapyDosage2TitleHtml);
+                                        html.AppendFormat(@"<tr><th class=""inner"">{0}</th><th class=""inner"">{1}</th></tr>", therapyDosage1TitleHtml, therapyDosage2TitleHtml);
 
                                         html.Append(therapyHTML);
                                         html.Append(@"</table>");
@@ -3045,7 +3045,7 @@ namespace BDEditor.Classes
                         else
                             html.Append("<th colspan=2></th>");
 
-                        html.AppendFormat(@"</tr><tr><th /><th /><th>{0}</th><th>{1}</th></tr>", therapyDuration1TitleHtml, therapyDuration2TitleHtml);
+                        html.AppendFormat(@"</tr><tr><th class=""inner"" /><th class=""inner"" /><th class=""inner"">{0}</th><th class=""inner"">{1}</th></tr>", therapyDuration1TitleHtml, therapyDuration2TitleHtml);
 
                         // append child html
                         html.Append(endoTherapyHTML);
@@ -4626,8 +4626,8 @@ namespace BDEditor.Classes
                                 // handle configured entry for Amantadine with No renal impairment
                                 //html.AppendFormat("</table><{0}>Renal Impairment</{0}><table>", HtmlHeaderTagLevelString(pLevel + 1));
                                 html.AppendFormat(@"<table class=""v{0}"">", (int)child.LayoutVariant);
-                                html.AppendFormat("<tr><th rowspan=2>{0}</th><th colspan=2>Dosage with capsules</th><th>Daily dosage with solution (10mg/mL)</th></tr>", metadataLayoutColumns[0]);
-                                html.AppendFormat("<tr><th>{0}</th><th>{1}</th><th>{2}</th></tr>", c2Html, c3Html, c4Html);
+                                html.AppendFormat(@"<tr><th rowspan=2>{0}</th><th colspan=2>Dosage with capsules</th><th class=""inner"">Daily dosage with solution (10mg/mL)</th></tr>", metadataLayoutColumns[0]);
+                                html.AppendFormat(@"<tr><th class=""inner"">{0}</th><th class=""inner"">{1}</th><th class=""inner"">{2}</th></tr>", c2Html, c3Html, c4Html);
                             }
                             isFirstChild = false;
 

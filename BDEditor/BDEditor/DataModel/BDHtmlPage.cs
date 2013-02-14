@@ -17,7 +17,7 @@ namespace BDEditor.DataModel
     /// <summary>
     /// Extension of generated BDHtmlPage
     /// </summary>
-    public partial class BDHtmlPage : IBDObject
+    public partial class BDHtmlPage : IBDObject, IComparable<BDHtmlPage>
     {
         public const string AWS_PROD_DOMAIN = @"bd_2_htmlPages";
         public const string AWS_DEV_DOMAIN = @"bd_dev_2_htmlPages";
@@ -245,6 +245,12 @@ namespace BDEditor.DataModel
 
          #endregion
 
+        public string Name
+        {
+            get { return name;}
+            set { name = value; }
+        }
+
         #region IBDObject implementation
         public PutAttributesRequest PutAttributes()
         {
@@ -283,6 +289,24 @@ namespace BDEditor.DataModel
         }
 
         #endregion
+
+        public int CompareTo(BDHtmlPage other)
+        {
+            if (other == null)
+            {
+                return 1;
+            }
+
+            int comp = Name.CompareTo(other.Name);
+
+            if (comp == 0)
+            {
+                return pageTitle.CompareTo(other.pageTitle);
+            }
+
+            return comp;
+        }
+
         public override string ToString()
         {
             return this.uuid.ToString();
@@ -301,5 +325,6 @@ namespace BDEditor.DataModel
                 return result;
             }
         }
+
     }
 }

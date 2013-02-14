@@ -177,6 +177,7 @@
           <Property Name="htmlPageType" Type="int" />
           <Property Name="layoutVariant" Type="int" />
           <Property Name="pageTitle" Type="nvarchar" MaxLength="999" />
+          <Property Name="name" Type="nvarchar" MaxLength="750" />
         </EntityType>
         <EntityType Name="BDLayoutMetadata">
           <Key>
@@ -458,10 +459,10 @@
           <EntitySet Name="BDConfiguredEntries" EntityType="BDDataModel.BDConfiguredEntry" />
           <EntitySet Name="BDCombinedEntries" EntityType="BDDataModel.BDCombinedEntry" />
           <EntitySet Name="BDLinkedNoteAssociations" EntityType="BDDataModel.BDLinkedNoteAssociation" />
-          <EntitySet Name="BDHtmlPages" EntityType="BDDataModel.BDHtmlPage" />
           <EntitySet Name="BDDosages" EntityType="BDDataModel.BDDosage" />
           <EntitySet Name="BDNodeToHtmlPageIndexes" EntityType="BDDataModel.BDNodeToHtmlPageIndex" />
           <EntitySet Name="BDHtmlPageMap" EntityType="BDDataModel.BDHtmlPageMap" />
+          <EntitySet Name="BDHtmlPages" EntityType="BDDataModel.BDHtmlPage" />
         </EntityContainer>
         <EntityType Name="BDAntimicrobialRisk">
           <Key>
@@ -808,22 +809,6 @@
           <Property Type="Guid" Name="internalLinkNodeId" />
           <Property Type="Int32" Name="internalLinkNodeType" />
         </EntityType>
-        <EntityType Name="BDHtmlPage">
-          <Key>
-            <PropertyRef Name="uuid" />
-          </Key>
-          <Property Type="Guid" Name="uuid" Nullable="false" />
-          <Property Type="DateTime" Name="createdDate" />
-          <Property Type="Guid" Name="createdBy" />
-          <Property Type="Int32" Name="schemaVersion" />
-          <Property Type="String" Name="documentText" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="storageKey" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="displayParentType" />
-          <Property Type="Guid" Name="displayParentId" />
-          <Property Type="Int32" Name="htmlPageType" />
-          <Property Type="Int32" Name="layoutVariant" />
-          <Property Type="String" Name="pageTitle" MaxLength="999" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="BDDosage">
           <Key>
             <PropertyRef Name="uuid" />
@@ -868,6 +853,23 @@
           <Property Type="Guid" Name="htmlPageId" Nullable="false" />
           <Property Type="Guid" Name="uuid" Nullable="false" />
           <Property Type="Guid" Name="originalIbdObjectId" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BDHtmlPage">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Type="Guid" Name="uuid" Nullable="false" />
+          <Property Type="DateTime" Name="createdDate" />
+          <Property Type="Guid" Name="createdBy" />
+          <Property Type="Int32" Name="schemaVersion" />
+          <Property Type="String" Name="documentText" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="storageKey" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="displayParentType" />
+          <Property Type="Guid" Name="displayParentId" />
+          <Property Type="Int32" Name="htmlPageType" />
+          <Property Type="Int32" Name="layoutVariant" />
+          <Property Type="String" Name="pageTitle" MaxLength="999" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="name" MaxLength="750" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1238,23 +1240,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BDHtmlPages">
-            <EntityTypeMapping TypeName="BDDataModel.BDHtmlPage">
-              <MappingFragment StoreEntitySet="BDHtmlPages">
-                <ScalarProperty Name="pageTitle" ColumnName="pageTitle" />
-                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
-                <ScalarProperty Name="htmlPageType" ColumnName="htmlPageType" />
-                <ScalarProperty Name="displayParentId" ColumnName="displayParentId" />
-                <ScalarProperty Name="displayParentType" ColumnName="displayParentType" />
-                <ScalarProperty Name="storageKey" ColumnName="storageKey" />
-                <ScalarProperty Name="documentText" ColumnName="documentText" />
-                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
-                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
-                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
-                <ScalarProperty Name="uuid" ColumnName="uuid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="BDDosages">
             <EntityTypeMapping TypeName="BDDataModel.BDDosage">
               <MappingFragment StoreEntitySet="BDDosages">
@@ -1301,6 +1286,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BDHtmlPages">
+            <EntityTypeMapping TypeName="BDDataModel.BDHtmlPage">
+              <MappingFragment StoreEntitySet="BDHtmlPages">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="pageTitle" ColumnName="pageTitle" />
+                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
+                <ScalarProperty Name="htmlPageType" ColumnName="htmlPageType" />
+                <ScalarProperty Name="displayParentId" ColumnName="displayParentId" />
+                <ScalarProperty Name="displayParentType" ColumnName="displayParentType" />
+                <ScalarProperty Name="storageKey" ColumnName="storageKey" />
+                <ScalarProperty Name="documentText" ColumnName="documentText" />
+                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -1314,7 +1317,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
@@ -1339,10 +1342,10 @@
         <EntityTypeShape EntityType="BDDataModel.BDConfiguredEntry" Width="1.875" PointX="12.375" PointY="1.25" Height="6.0186165364583353" />
         <EntityTypeShape EntityType="BDDataModel.BDCombinedEntry" Width="1.875" PointX="14.625" PointY="1.25" Height="5.8263151041666674" />
         <EntityTypeShape EntityType="BDDataModel.BDLinkedNoteAssociation" Width="2.125" PointX="4.5" PointY="4.625" Height="4.0956022135416674" />
-        <EntityTypeShape EntityType="BDDataModel.BDHtmlPage" Width="1.5" PointX="2.75" PointY="0.75" Height="3.1340950520833282" />
         <EntityTypeShape EntityType="BDDataModel.BDDosage" Width="1.5" PointX="2.875" PointY="14.125" Height="4.6725065104166674" />
         <EntityTypeShape EntityType="BDDataModel.BDNodeToHtmlPageIndex" Width="1.75" PointX="2.625" PointY="4.5" Height="2.1725878906250067" />
         <EntityTypeShape EntityType="BDDataModel.BDHtmlPageMap" Width="1.5" PointX="2.75" PointY="7" Height="1.5956835937500102" />
+        <EntityTypeShape EntityType="BDDataModel.BDHtmlPage" Width="1.5" PointX="1" PointY="9.5" Height="3.3263964843750102" />
       </Diagram>
     </Diagrams>
   </Designer>

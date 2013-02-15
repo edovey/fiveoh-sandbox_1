@@ -287,16 +287,23 @@ namespace BDEditor.DataModel
                 return Guid.Empty;
         }
 
-        public static BDLinkedNoteAssociation RetrieveLinkedNoteAssociationForParentKeyPropertyName(Entities pContext, string pKeyNameValue)
+        public static BDLinkedNoteAssociation RetrieveLinkedNoteAssociationForParentKeyPropertyName(Entities pContext, string pKeyNameValue, bool pReturnFirstEntry)
         {
             IQueryable<BDLinkedNoteAssociation> query = (from lna in pContext.BDLinkedNoteAssociations
                                                          where lna.parentKeyPropertyName == pKeyNameValue
                                                          select lna);
 
-            if (query.ToList<BDLinkedNoteAssociation>().Count == 1)
+            if (query.ToList<BDLinkedNoteAssociation>().Count >= 1 && pReturnFirstEntry)
+                return query.ToList<BDLinkedNoteAssociation>()[0];
+            else if (query.ToList<BDLinkedNoteAssociation>().Count == 1)
                 return query.ToList<BDLinkedNoteAssociation>()[0];
             else
                 return null;
+        }
+
+        public static BDLinkedNoteAssociation RetrieveLinkedNoteAssociationForParentKeyPropertyName(Entities pContext, string pKeyNameValue)
+        {
+            return RetrieveLinkedNoteAssociationForParentKeyPropertyName(pContext, pKeyNameValue, false);
         }
 
 

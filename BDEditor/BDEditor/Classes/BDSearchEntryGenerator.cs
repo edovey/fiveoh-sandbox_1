@@ -45,7 +45,6 @@ namespace BDEditor.Classes
         private void processNodeList(Entities pDataContext, List<IBDNode> pNodes, StringBuilder pNodeContext)
         {
             string resolvedName = string.Empty;
-            string searchableText = string.Empty;
             foreach (IBDNode ibdNode in pNodes)
             {
                 switch (ibdNode.NodeType)
@@ -73,10 +72,8 @@ namespace BDEditor.Classes
                     case BDConstants.BDNodeType.BDTherapyGroup:
                         resolvedName = buildResolvedNameForNode(pDataContext, ibdNode, (ibdNode as BDTherapyGroup).Description, BDTherapyGroup.PROPERTYNAME_NAME);
                         break;
-                    case BDConstants.BDNodeType.BDTableRow:
-                    case BDConstants.BDNodeType.BDTopic:
                     default:
-                        // process all BDNodes
+                        // process all BDNodes, any type
                         resolvedName = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDNode.PROPERTYNAME_NAME);
                         break;
                 }
@@ -96,7 +93,7 @@ namespace BDEditor.Classes
                     processNodeList(pDataContext, childnodes, newContext);
 
                     // build the search entry
-                if(!string.IsNullOrEmpty(searchableText) && htmlPageId != Guid.Empty && !(ibdNode is BDLinkedNote))
+                if(!string.IsNullOrEmpty(resolvedName) && htmlPageId != Guid.Empty && !(ibdNode is BDLinkedNote))
                     generateLinkForEntryWithDisplayParent(pDataContext, htmlPageId, ibdNode, resolvedName, pNodeContext.ToString());
             }
         }
@@ -109,14 +106,13 @@ namespace BDEditor.Classes
             {
                 // get existing matching search entries
                 IQueryable<BDSearchEntry> entries = (from entry in pDataContext.BDSearchEntries
-                                                     where entry.name.Contains(pResolvedName)
+                                                     where entry.name.ToLower().Contains(pResolvedName.ToLower())
                                                      select entry);
 
                 // get existing matching search entries
                 IQueryable<BDSearchEntry> contains = (from entry in pDataContext.BDSearchEntries
-                                                      where pResolvedName.Contains(entry.name)
+                                                      where pResolvedName.ToLower().Contains(entry.name.ToLower())
                                                      select entry);
-                // if matching search entry is not found, create one
                 if (entries.Count() > 0)
                     searchEntry = entries.First<BDSearchEntry>();
                 else if(contains.Count() > 0)
@@ -158,7 +154,7 @@ namespace BDEditor.Classes
 
             if (resolvedName.Length == 0) resolvedName = null;
 
-            return resolvedName;
+            return BDUtilities.ProcessTextForSubscriptAndSuperscriptMarkup(pContext, resolvedName);
         }
     }
 }

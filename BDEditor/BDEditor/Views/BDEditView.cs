@@ -1549,9 +1549,9 @@ namespace BDEditor.Views
                         Debug.WriteLine("-- DEBUG GENERATION --");
                         List<BDNode> nodeList = new List<BDNode>();
                         List<Guid> guidList = new List<Guid>();
-                        guidList.Add(Guid.Parse("6a42f57f-d490-422e-b975-235ccabbc40d"));
-                        guidList.Add(Guid.Parse("5e5fe9f4-1e8f-4de4-a1d6-33c3fac379fa"));
-                        //guidList.Add(Guid.Parse("32ca6e75-3180-4706-a3a8-6835cdb9a0d3"));
+                        guidList.Add(Guid.Parse("0264e99b-20ad-4abf-b349-a8202582326e"));
+                        guidList.Add(Guid.Parse("9fe2fc95-d340-4586-9f1b-b7a6adcfb95b"));
+                        guidList.Add(Guid.Parse("17905052-f5e7-475e-987e-fc4dbe80bfbd"));
                         //guidList.Add(Guid.Parse("12c6c370-b63b-4b3c-9dc1-5cb9fa988918"));
                         //guidList.Add(Guid.Parse("c0cf6533-c4c9-480b-ad85-c7d187672849"));
                         foreach (Guid guid in guidList)

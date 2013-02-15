@@ -5637,7 +5637,19 @@ namespace BDEditor.Classes
                                 // look up the linkedNoteAssociation with the provided guid in the'parentKeyPropertyName'
                                 // if returned object is null, then its either not found or collection was > 1 entry
                                 BDLinkedNoteAssociation linkTargetAssn = BDLinkedNoteAssociation.RetrieveLinkedNoteAssociationForParentKeyPropertyName(pContext, anchorGuid.ToString());
-                                if (linkTargetAssn != null)
+                                if (linkTargetAssn == null)
+                                {
+                                    // there may be multiple matches in the database - retrieve the first one only
+                                    linkTargetAssn = BDLinkedNoteAssociation.RetrieveLinkedNoteAssociationForParentKeyPropertyName(pContext, anchorGuid.ToString(), true);
+                                    if (linkTargetAssn == null)
+                                    {
+                                        // if we have null here, then we'll have a link that leads to a blank page.  Need to flag when this happens
+                                        BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("Unresolved internal link - no match found:  {0}\tHtml page Uuid {1}\tAnchor Uuid {2}\tLNA {3}", DateTime.Now, pPage.Uuid, anchorGuid.ToString(), linkTargetAssn.Uuid.ToString()));
+                                    }
+                                    else
+                                        BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("Unresolved internal link - multiple matches found:  {0}\tHtml page Uuid {1}\tAnchor Uuid {2}\tLNA {3}", DateTime.Now, pPage.Uuid, anchorGuid.ToString(), linkTargetAssn.Uuid.ToString()));
+                                }
+                                if(linkTargetAssn != null)
                                 {
                                     //Internal Link
                                     if (linkTargetAssn.internalLinkNodeId.HasValue)
@@ -5740,14 +5752,6 @@ namespace BDEditor.Classes
                                             }
                                         }
                                     }
-                                }
-
-                                // if we have null here, then we'll have a link that leads to a blank page.  Need to flag when this happens
-                                else
-                                {
-                                    Debug.WriteLine("Unable to map anchor guid {0} on page {1} to an existing linkedNote", anchorGuid, pPage.Uuid);
-                                    //BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("{0}\tHtml page Uuid {1}\tAnchor Uuid {2}\tLNA {3}", DateTime.Now, pPage.Uuid, anchorGuid.ToString(), linkTargetAssn.Uuid.ToString()));
-
                                 }
                             }
                         }

@@ -2145,25 +2145,28 @@ namespace BDEditor.Classes
             string htmlSubscriptStart = @"<sub>";
             string htmlSubscriptEnd = @"</sub>";
 
-            // do subscripts first because of double braces
-            while (pTextToProcess.Contains(subscriptStart))
+            if(!string.IsNullOrEmpty(pTextToProcess))
             {
-                int tStartIndex = pTextToProcess.IndexOf(subscriptStart);
-                pTextToProcess = pTextToProcess.Remove(tStartIndex, subscriptStart.Length);
-                pTextToProcess = pTextToProcess.Insert(tStartIndex, htmlSubscriptStart);
-                int tEndIndex = pTextToProcess.IndexOf(subscriptEnd, tStartIndex);
-                pTextToProcess = pTextToProcess.Remove(tEndIndex, subscriptEnd.Length);
-                pTextToProcess = pTextToProcess.Insert(tEndIndex, htmlSubscriptEnd);
-            }
+                // do subscripts first because of double braces
+                while (pTextToProcess.Contains(subscriptStart))
+                {
+                    int tStartIndex = pTextToProcess.IndexOf(subscriptStart);
+                    pTextToProcess = pTextToProcess.Remove(tStartIndex, subscriptStart.Length);
+                    pTextToProcess = pTextToProcess.Insert(tStartIndex, htmlSubscriptStart);
+                    int tEndIndex = pTextToProcess.IndexOf(subscriptEnd, tStartIndex);
+                    pTextToProcess = pTextToProcess.Remove(tEndIndex, subscriptEnd.Length);
+                    pTextToProcess = pTextToProcess.Insert(tEndIndex, htmlSubscriptEnd);
+                }
 
-            while (pTextToProcess.Contains(superscriptStart))
-            {
-                int tStartIndex = pTextToProcess.IndexOf(superscriptStart);
-                pTextToProcess = pTextToProcess.Remove(tStartIndex, superscriptStart.Length);
-                pTextToProcess = pTextToProcess.Insert(tStartIndex, htmlSuperscriptStart);
-                int tEndIndex = pTextToProcess.IndexOf(superscriptEnd, tStartIndex);
-                pTextToProcess = pTextToProcess.Remove(tEndIndex, superscriptEnd.Length);
-                pTextToProcess = pTextToProcess.Insert(tEndIndex, htmlSuperscriptEnd);
+                while (pTextToProcess.Contains(superscriptStart))
+                {
+                    int tStartIndex = pTextToProcess.IndexOf(superscriptStart);
+                    pTextToProcess = pTextToProcess.Remove(tStartIndex, superscriptStart.Length);
+                    pTextToProcess = pTextToProcess.Insert(tStartIndex, htmlSuperscriptStart);
+                    int tEndIndex = pTextToProcess.IndexOf(superscriptEnd, tStartIndex);
+                    pTextToProcess = pTextToProcess.Remove(tEndIndex, superscriptEnd.Length);
+                    pTextToProcess = pTextToProcess.Insert(tEndIndex, htmlSuperscriptEnd);
+                }
             }
 
             return pTextToProcess;

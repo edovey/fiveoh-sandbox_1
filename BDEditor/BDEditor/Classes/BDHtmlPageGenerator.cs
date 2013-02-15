@@ -19,6 +19,7 @@ namespace BDEditor.Classes
             Adult = 2
         }
 
+        private const bool sortData = false;
         private const int maxNodeType = 6;
         private const string topHtml = @"<!DOCTYPE html PUBLIC ""-//W3C//DTD HTML 4.01//EN\""><html><head><meta http-equiv=""Content-type"" content=""text/html;charset=UTF-8\""/><meta name=""viewport"" content=""width=device-width; initial-scale=1.0; maximum-scale=10.0;""/><link rel=""stylesheet"" type=""text/css"" href=""ra_bd.base.css"" /><title>Bugs &amp; Drugs</title> </head><body><div id=""ra_bd""><div class=""current"">";
         private const string bottomHtml = @"</div></div></body></html>";
@@ -194,7 +195,7 @@ namespace BDEditor.Classes
 
         private BDHtmlPage generateNavigationPage(Entities pContext, IBDNode pNode, List<BDHtmlPage> pChildPages)
         {
-            pChildPages.Sort();
+            
 
             currentPageMasterObject = pNode;
             StringBuilder pageHTML = new StringBuilder();
@@ -202,6 +203,8 @@ namespace BDEditor.Classes
             List<BDLinkedNote> footnotesOnPage = new List<BDLinkedNote>();
             if (pNode != null)
             {
+                if(sortData) pChildPages.Sort();
+
                 pageHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(2), footnotesOnPage, objectsOnPage));
                 pageHTML.Append(@"<div class=""scroll""><ul class=""rounded"">");
                 // TODO:  build javascript blocks to expand/collapse overview
@@ -1488,7 +1491,9 @@ namespace BDEditor.Classes
                             }
                         }
                         html.Append(navListDivPrefix);
-                        childPages.Sort();
+
+                        if(sortData) childPages.Sort();
+
                         for (int i = 0; i < childPages.Count; i++)
                         {
                             html.AppendFormat(navListAnchorTag, childPages[i].Uuid.ToString().ToUpper(), childPages[i].pageTitle);
@@ -1704,7 +1709,9 @@ namespace BDEditor.Classes
                     case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAntimicrobialGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         html.Append("<p>");
-                        children.Sort((a, b) => String.Compare(a.Name, b.Name));
+
+                        if(sortData) children.Sort((a, b) => String.Compare(a.Name, b.Name));
+
                         foreach (IBDNode child in children)
                         {
                             if (child.NodeType == BDConstants.BDNodeType.BDAntimicrobialGroup)
@@ -1826,7 +1833,9 @@ namespace BDEditor.Classes
                             }
                         }
                         html.Append(navListDivPrefix);
-                        childPages.Sort();
+
+                        if (sortData) childPages.Sort();
+
                         for (int i = 0; i < childPages.Count; i++)
                         {
                             html.AppendFormat(navListAnchorTag, childPages[i].Uuid.ToString().ToUpper(), childPages[i].pageTitle);
@@ -1884,7 +1893,9 @@ namespace BDEditor.Classes
                             }
                         }
                         html.Append(navListDivPrefix);
-                        l_childPages.Sort();
+
+                        if (sortData) l_childPages.Sort();
+
                         for (int i = 0; i < l_childPages.Count; i++)
                         {
                             html.AppendFormat(navListAnchorTag, l_childPages[i].Uuid.ToString().ToUpper(), l_childPages[i].pageTitle);
@@ -3496,7 +3507,9 @@ namespace BDEditor.Classes
                         mPages.Add(writeBDHtmlPage(pContext, microorganism, mHTML, BDConstants.BDHtmlPageType.Data, mFootnotes, mObjectsOnPage, null));
                     }
                     mgHTML.Append(navListDivPrefix);
-                    mPages.Sort();
+
+                    if (sortData) mPages.Sort();
+
                     for (int i = 0; i < mPages.Count; i++)
                         mgHTML.AppendFormat(navListAnchorTag, mPages[i].Uuid.ToString().ToUpper(), mPages[i].pageTitle);
                     mgHTML.Append(navListDivSuffix);
@@ -3859,7 +3872,9 @@ namespace BDEditor.Classes
 
                         //Expects that children.count == generatedPages.count: May it blow up real gud if it isn't
                         html.Append(navListDivPrefix);
-                        generatedPages.Sort();
+
+                        if (sortData) generatedPages.Sort();
+
                         for (int i = 0; i < generatedPages.Count; i++)
                             html.AppendFormat(navListAnchorTag, generatedPages[i].Uuid.ToString().ToUpper(), children[i].Name);
                         html.Append(navListDivSuffix);
@@ -4054,7 +4069,9 @@ namespace BDEditor.Classes
                             }
                         }
                         html.Append(navListDivPrefix);
-                        amPages.Sort();
+
+                        if (sortData) amPages.Sort();
+
                         for (int i = 0; i < amPages.Count; i++)
                         {
                             html.AppendFormat(navListAnchorTag, amPages[i].Uuid.ToString().ToUpper(), amPages[i].pageTitle);
@@ -4117,7 +4134,9 @@ namespace BDEditor.Classes
                             }   
                         }
                         html.Append(navListDivPrefix);
-                        childPages.Sort();
+
+                        if (sortData) childPages.Sort();
+
                         for (int i = 0; i < childPages.Count; i++)
                         {
                             html.AppendFormat(navListAnchorTag, childPages[i].Uuid.ToString().ToUpper(), childPages[i].pageTitle);
@@ -4152,7 +4171,9 @@ namespace BDEditor.Classes
                     case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         html.Append(navListDivPrefix);
-                        children.Sort((a, b) => String.Compare(a.Name, b.Name));
+
+                        if (sortData) children.Sort((a, b) => String.Compare(a.Name, b.Name));
+
                         foreach (IBDNode child in children)
                         {
                             List<BDLinkedNote> footnoteList = new List<BDLinkedNote>();
@@ -4172,7 +4193,9 @@ namespace BDEditor.Classes
                         //    html.Append(BuildBDTopicHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
                         //}
                         html.Append(navListDivPrefix);
-                        children.Sort((a, b) => String.Compare(a.Name, b.Name));
+
+                        if (sortData) children.Sort((a, b) => String.Compare(a.Name, b.Name));
+
                         foreach (IBDNode child in children)
                         {
                             List<BDLinkedNote> footnoteList = new List<BDLinkedNote>();

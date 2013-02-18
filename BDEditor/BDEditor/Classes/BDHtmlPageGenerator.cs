@@ -330,7 +330,6 @@ namespace BDEditor.Classes
                             //isPageGenerated = true;
                             isPageGenerated = false;
                             break;
-                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin:
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional:
                             currentPageMasterObject = pNode;
                             //nodeChildPages.Add(generatePageForAntibioticsDosingAndMonitoring(pContext, pNode as BDNode));
@@ -750,6 +749,7 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                             case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
+                            case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin:
                             nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
                             break;
@@ -5644,7 +5644,7 @@ namespace BDEditor.Classes
                                     if (linkTargetAssn == null)
                                     {
                                         // if we have null here, then we'll have a link that leads to a blank page.  Need to flag when this happens
-                                        BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("Unresolved internal link - no match found:  {0}\tHtml page Uuid {1}\tAnchor Uuid {2}\tLNA {3}", DateTime.Now, pPage.Uuid, anchorGuid.ToString(), linkTargetAssn.Uuid.ToString()));
+                                        BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("Unresolved internal link - no match found:  {0}\tHtml page Uuid {1}\tAnchor Uuid {2}\tLNA LinkedNoteAssociation is NULL", DateTime.Now, pPage.Uuid, anchorGuid.ToString()));
                                     }
                                     else
                                         BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("Unresolved internal link - multiple matches found:  {0}\tHtml page Uuid {1}\tAnchor Uuid {2}\tLNA {3}", DateTime.Now, pPage.Uuid, anchorGuid.ToString(), linkTargetAssn.Uuid.ToString()));

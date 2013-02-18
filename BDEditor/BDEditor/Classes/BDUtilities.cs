@@ -1725,15 +1725,16 @@ namespace BDEditor.Classes
             //BDNode hospitalized = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("026f2db5-a22c-434b-927b-0fadd648c19f"));
             //BDUtilities.ResetLayoutVariantWithChildren(pContext, outpatient, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, false);
             //BDUtilities.ResetLayoutVariantWithChildren(pContext, hospitalized, BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic, false);
-
             #endregion
-
-            #region v.1.6.47
-            //// necrotizing fasciitis - change layout variant
-            //BDNode nf = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("44e9114b-d3d5-4fa6-a56f-ce3eb346d6eb"));
-            //BDUtilities.ResetLayoutVariantWithChildren(pContext, nf, BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis, true);
+            #region v.1.6.47 / 48
+            //// necrotizing fasciitis - change layout variant (peds)
+            //BDNode nf = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("4c2e056c-8276-45be-964d-e9f64e036beb"));
+            //BDUtilities.ResetLayoutVariantWithChildren(pContext, nf, BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected, false);
             //pContext.SaveChanges();
 
+            //BDNode node = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("0797d5fd-b764-4a88-aa2e-bf55d81b87bf"));
+            //node.name = "S. lugdunensis";
+            //pContext.SaveChanges();
             #endregion
             // LoadSearchEntries(pContext);
         }

@@ -79,9 +79,9 @@ namespace BDEditor.Classes
                 }
 
                 List<IBDNode> childnodes = BDFabrik.GetChildrenForParent(pDataContext, ibdNode);
-                Guid htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pDataContext, ibdNode.Uuid); 
+                Guid htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pDataContext, ibdNode.Uuid);
                 StringBuilder newContext = new StringBuilder();
-                
+
                 // build a string representation of the search entry's location in the hierarchy
                 if (pNodeContext.Length > 0)
                     newContext.AppendFormat("{0} : {1}", pNodeContext, resolvedName);
@@ -92,9 +92,36 @@ namespace BDEditor.Classes
                 if (childnodes.Count > 0)
                     processNodeList(pDataContext, childnodes, newContext);
 
-                    // build the search entry
-                if(!string.IsNullOrEmpty(resolvedName) && htmlPageId != Guid.Empty && !(ibdNode is BDLinkedNote))
-                    generateLinkForEntryWithDisplayParent(pDataContext, htmlPageId, ibdNode, resolvedName, pNodeContext.ToString());
+                // build the search entry
+                bool generateSearchAssociation = false;
+                if (!string.IsNullOrEmpty(resolvedName) && htmlPageId != Guid.Empty && !(ibdNode is BDLinkedNote))
+                {
+                    switch (ibdNode.NodeType)
+                    {
+                        case BDConstants.BDNodeType.BDAntimicrobial:
+                            if (ibdNode.LayoutVariant == BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines_Spectrum)
+                                generateSearchAssociation = true;
+                            else
+                                generateSearchAssociation = false;
+                            break;
+                        case BDConstants.BDNodeType.BDMicroorganism:
+                            switch (ibdNode.LayoutVariant)
+                            {
+                                case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
+                                    generateSearchAssociation = true;
+                                    break;
+                                default:
+                                    generateSearchAssociation = false;
+                                    break;
+                            }
+                            break;
+                        default:
+                            generateSearchAssociation = true;
+                            break;
+                    }
+                    if (generateSearchAssociation)
+                        generateLinkForEntryWithDisplayParent(pDataContext, htmlPageId, ibdNode, resolvedName, pNodeContext.ToString());
+                }
             }
         }
 

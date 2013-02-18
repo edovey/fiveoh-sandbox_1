@@ -1321,9 +1321,11 @@ namespace BDEditor.Views
 
                 if (includeSearchEntries)
                 {
+                    Debug.WriteLine(string.Format("Search Gen Start {0}", DateTime.Now));
+                    BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Search Gen Start\t{0}", DateTime.Now));
                     BDSearchEntryGenerator searchGenerator = new BDSearchEntryGenerator();
                     searchGenerator.Generate(dataContext, chapterNode);
-                    System.Diagnostics.Debug.WriteLine("Search entry generation complete. {0}", DateTime.Now);
+                    Debug.WriteLine("Search entry generation complete. {0}", DateTime.Now);
 
                     BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Search Generation Complete\t{0}", DateTime.Now));
                 }

@@ -99,11 +99,16 @@ namespace BDEditor.Classes
                     switch (ibdNode.NodeType)
                     {
                         case BDConstants.BDNodeType.BDAntimicrobial:
-                            if (ibdNode.LayoutVariant == BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines_Spectrum)
+                            switch(ibdNode.LayoutVariant)
+                            {
+                                case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                                 generateSearchAssociation = true;
-                            else
+                                    break;
+                                default:
                                 generateSearchAssociation = false;
-                            break;
+                                    break;
+                    }
+                    break;
                         case BDConstants.BDNodeType.BDMicroorganism:
                             switch (ibdNode.LayoutVariant)
                             {
@@ -181,7 +186,7 @@ namespace BDEditor.Classes
 
             if (resolvedName.Length == 0) resolvedName = null;
 
-            return BDUtilities.ProcessTextForSubscriptAndSuperscriptMarkup(pContext, resolvedName);
+            return BDUtilities.ProcessTextToPlainText(pContext, resolvedName);
         }
     }
 }

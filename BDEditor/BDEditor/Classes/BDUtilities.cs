@@ -2172,5 +2172,33 @@ namespace BDEditor.Classes
 
             return pTextToProcess;
         }
+
+        public static string ProcessTextToPlainText(Entities pContext, string pTextToProcess)
+        {
+            string superscriptStart = @"{";
+            string superscriptEnd = @"}";
+            string subscriptStart = @"{{";
+            string subscriptEnd = @"}}";
+            string htmlSuperscriptStart = @"<sup>";
+            string htmlSuperscriptEnd = @"</sup>";
+            string htmlSubscriptStart = @"<sub>";
+            string htmlSubscriptEnd = @"</sub>";
+
+            if (!string.IsNullOrEmpty(pTextToProcess))
+            {
+                // do subscripts first because of double braces
+                pTextToProcess.Replace(subscriptStart, "");
+                pTextToProcess.Replace(subscriptEnd, "");
+                pTextToProcess.Replace(superscriptStart, "");
+                pTextToProcess.Replace(superscriptEnd, "");
+                pTextToProcess.Replace(htmlSuperscriptStart, "");
+                pTextToProcess.Replace(htmlSuperscriptEnd, "");
+                pTextToProcess.Replace(htmlSubscriptStart, "");
+                pTextToProcess.Replace(htmlSubscriptEnd, "");
+                pTextToProcess.Replace("<br>", " ");
+                pTextToProcess.Replace("<hr>", ""); 
+            }
+            return pTextToProcess;
+        }
     }
 }

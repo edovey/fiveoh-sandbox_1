@@ -123,6 +123,9 @@ namespace BDEditor.Classes
             List<BDHtmlPage> childDetailPages = new List<BDHtmlPage>();
             List<BDHtmlPage> childNavPages = new List<BDHtmlPage>();
 
+            // remove the info chapter 
+            chapters.Remove(BDNode.RetrieveNodeWithId(pContext, Guid.Parse(PUBLICATION_NOTES_UUID)));
+
             foreach (BDNode chapter in chapters)
             {
                 currentChapter = chapter;
@@ -135,14 +138,21 @@ namespace BDEditor.Classes
 
             List<BDHtmlPage> chapterPages = allPages.Distinct().ToList();
             
-            // Remove the info page from the collection of pages so that there is no link to it on the main page
-            List<BDHtmlPage> infoPages = BDHtmlPage.RetrieveHtmlPageForDisplayParentId(pContext, Guid.Parse(PUBLICATION_NOTES_UUID));
-            foreach(BDHtmlPage page in infoPages)
-                chapterPages.Remove(page);
+            //// Remove the info page from the collection of pages so that there is no link to it on the main page
+            //List<BDHtmlPage> infoPages = BDHtmlPage.RetrieveHtmlPageForDisplayParentId(pContext, Guid.Parse(PUBLICATION_NOTES_UUID));
+            //foreach(BDHtmlPage page in infoPages)
+            //    chapterPages.Remove(page);
 
             Debug.WriteLine("Creating home page with filtered distinct list");
             if (chapterPages.Count > 0)
                 generateNavigationPage(pContext, null, chapterPages);
+
+            // generate info page
+            Debug.WriteLine("Creating info pages");
+            BDNode infoNode = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("1400e49c-8e18-4571-aba5-b792ab9332f7"));
+            List<BDHtmlPage> infoChildPages = new List<BDHtmlPage>();
+            currentChapter = infoNode;
+            generateOverviewAndChildrenForNode(pContext, infoNode, infoChildPages, infoChildPages); 
         }
 
         /// <summary>
@@ -324,11 +334,7 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
-                            //currentPageMasterObject = pNode;
-                            ////nodeChildPages.Add(generatePageForAntibioticsPharmacodynamics(pContext, pNode as BDNode));
-                            //nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
-                            //isPageGenerated = true;
-                            isPageGenerated = false;
+                           isPageGenerated = false;
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional:
                             currentPageMasterObject = pNode;
@@ -499,7 +505,6 @@ namespace BDEditor.Classes
                     }
                     break;
                 case BDConstants.BDNodeType.BDPathogenGroup:
-                    Debug.WriteLine("BONK - BDPathogenGroup");
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation05_CultureProvenPeritonitis:
@@ -557,7 +562,6 @@ namespace BDEditor.Classes
                     }
                     break;
                 case BDConstants.BDNodeType.BDResponse: //ks: BDFabrik doesn't show this to create a page
-                    Debug.WriteLine("BONK - BDResponse");
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
@@ -610,12 +614,6 @@ namespace BDEditor.Classes
                             nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
                             break;
-                        case BDConstants.LayoutVariantType.FrontMatter:
-                        case BDConstants.LayoutVariantType.BackMatter:
-                            currentPageMasterObject = pNode;
-                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
-                            isPageGenerated = true;
-                            break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                         default:
                             isPageGenerated = false;
@@ -646,6 +644,12 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
                             currentPageMasterObject = pNode;
                             //nodeChildPages.Add(generatePageForAntibioticsDosingAndMonitoring(pContext, pNode as BDNode));
+                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
+                            isPageGenerated = true;
+                            break;
+                        case BDConstants.LayoutVariantType.FrontMatter:
+                        case BDConstants.LayoutVariantType.BackMatter:
+                            currentPageMasterObject = pNode;
                             nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
                             break;
@@ -3881,11 +3885,6 @@ namespace BDEditor.Classes
                         break;
                     case BDConstants.LayoutVariantType.Microbiology_Antibiogram:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAttachment, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                        break;
-                    case BDConstants.LayoutVariantType.FrontMatter:
-                    case BDConstants.LayoutVariantType.BackMatter:
-                        foreach (IBDNode child in children)
-                            html.Append(BuildBDSubSectionHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 2));
                         break;
                     default:
                         break;

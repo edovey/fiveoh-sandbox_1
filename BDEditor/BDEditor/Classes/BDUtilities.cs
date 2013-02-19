@@ -2183,18 +2183,22 @@ namespace BDEditor.Classes
             string htmlSuperscriptEnd = @"</sup>";
             string htmlSubscriptStart = @"<sub>";
             string htmlSubscriptEnd = @"</sub>";
+            string boldStart = @"<b>";
+            string boldEnd = @"</b>";
 
             if (!string.IsNullOrEmpty(pTextToProcess))
             {
                 // do subscripts first because of double braces
-                pTextToProcess.Replace(subscriptStart, "");
-                pTextToProcess.Replace(subscriptEnd, "");
-                pTextToProcess.Replace(superscriptStart, "");
-                pTextToProcess.Replace(superscriptEnd, "");
-                pTextToProcess.Replace(htmlSuperscriptStart, "");
-                pTextToProcess.Replace(htmlSuperscriptEnd, "");
-                pTextToProcess.Replace(htmlSubscriptStart, "");
-                pTextToProcess.Replace(htmlSubscriptEnd, "");
+                pTextToProcess = pTextToProcess.Replace(subscriptStart, "");
+                pTextToProcess = pTextToProcess.Replace(subscriptEnd, "");
+                pTextToProcess = pTextToProcess.Replace(superscriptStart, "");
+                pTextToProcess = pTextToProcess.Replace(superscriptEnd, "");
+                pTextToProcess = pTextToProcess.Replace(htmlSuperscriptStart, "");
+                pTextToProcess = pTextToProcess.Replace(htmlSuperscriptEnd, "");
+                pTextToProcess = pTextToProcess.Replace(htmlSubscriptStart, "");
+                pTextToProcess = pTextToProcess.Replace(htmlSubscriptEnd, "");
+                pTextToProcess = pTextToProcess.Replace(boldStart, "");
+                pTextToProcess = pTextToProcess.Replace(boldEnd, "");
                 pTextToProcess.Replace("<br>", " ");
                 pTextToProcess.Replace("<hr>", ""); 
             }

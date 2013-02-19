@@ -753,6 +753,7 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                             case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
                             case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin:
                             nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;

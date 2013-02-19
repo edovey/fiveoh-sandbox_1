@@ -141,14 +141,14 @@ namespace BDEditor.Classes
                                                      where entry.name.ToLower().Contains(pResolvedName.ToLower())
                                                      select entry);
 
-                // get existing matching search entries
-                IQueryable<BDSearchEntry> contains = (from entry in pDataContext.BDSearchEntries
-                                                      where pResolvedName.ToLower().Contains(entry.name.ToLower())
-                                                     select entry);
+                //// get existing matching search entries
+                //IQueryable<BDSearchEntry> contains = (from entry in pDataContext.BDSearchEntries
+                //                                      where pResolvedName.ToLower().Contains(entry.name.ToLower())
+                //                                     select entry);
                 if (entries.Count() > 0)
                     searchEntry = entries.First<BDSearchEntry>();
-                else if(contains.Count() > 0)
-                    searchEntry = contains.First<BDSearchEntry>();
+                //else if(contains.Count() > 0)
+                //    searchEntry = contains.First<BDSearchEntry>();
                 if(searchEntry != null)
                 {
                     // get matching search association records for search entry
@@ -179,9 +179,6 @@ namespace BDEditor.Classes
 
             string immediateText = BDUtilities.BuildTextFromInlineNotes(immediate, null);
 
-            //TextInfo tInfo = new CultureInfo("en-US", false).TextInfo;
-
-            //string resolvedName = string.Format("{0}{1}", tInfo.ToTitleCase(pPropertyValue.Trim()), immediateText.Trim());
             string resolvedName = string.Format("{0}{1}",pPropertyValue.Trim(), immediateText.Trim());
 
             if (resolvedName.Length == 0) resolvedName = null;

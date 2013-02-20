@@ -5627,8 +5627,8 @@ namespace BDEditor.Classes
                         // inspect the 'guid'
                         int guidStart = tagLocation + 1 + compareStringLength;
                         string guidString = pPage.documentText.Substring(guidStart, 36);
-                        // if the guid exists as an external URL, dont change it...
-                        if (!guidString.Contains("http://www"))
+                        // if the guid exists as an external URL, or an email address, dont change it...
+                        if (!guidString.Contains("http://www") && !guidString.Contains("mailto:"))
                         {
                             Guid anchorGuid = new Guid(guidString);
                             if (!pExistingPages.Contains(anchorGuid))
@@ -5707,10 +5707,13 @@ namespace BDEditor.Classes
                                                     externalLinkText = externalLinkText.Substring(anchorEndPos + 1);
                                                     externalLinkText = externalLinkText.Replace("</a>", "");
                                                 }
-
-                                                if (!externalLinkText.ToLower().StartsWith("http://"))
+                                                if (!externalLinkText.ToLower().StartsWith("mailto:"))
                                                 {
-                                                    externalLinkText = string.Format("http://{0}", externalLinkText);
+
+                                                    if (!externalLinkText.ToLower().StartsWith("http://"))
+                                                    {
+                                                        externalLinkText = string.Format("http://{0}", externalLinkText);
+                                                    }
                                                 }
 
                                                 string newDocumentText = pPage.documentText.Replace(anchorGuid.ToString(), externalLinkText);

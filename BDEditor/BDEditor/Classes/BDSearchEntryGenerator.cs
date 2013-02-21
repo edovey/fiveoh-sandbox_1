@@ -17,6 +17,8 @@ namespace BDEditor.Classes
     /// </summary>
     public class BDSearchEntryGenerator
     {
+        private List<string> searchEntryList;
+
         public BDSearchEntryGenerator() { }
         
         /// <summary>
@@ -27,6 +29,8 @@ namespace BDEditor.Classes
             // clear the data from the database
             // BDSearchEntry.DeleteAll(pDataContext);
             BDSearchEntryAssociation.DeleteAll(pDataContext);
+
+            searchEntryList = BDSearchEntry.RetrieveSearchEntryNames(pDataContext);
 
             generateSearchEntries(pDataContext, pNode);
         }
@@ -93,74 +97,83 @@ namespace BDEditor.Classes
                     processNodeList(pDataContext, childnodes, newContext);
 
                 // build the search entry
-                bool generateSearchAssociation = false;
+                //bool generateSearchAssociation = false;
                 if (!string.IsNullOrEmpty(resolvedName) && htmlPageId != Guid.Empty && !(ibdNode is BDLinkedNote))
                 {
-                    switch (ibdNode.NodeType)
-                    {
-                        case BDConstants.BDNodeType.BDAntimicrobial:
-                            switch(ibdNode.LayoutVariant)
-                            {
-                                case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
-                                generateSearchAssociation = true;
-                                    break;
-                                default:
-                                generateSearchAssociation = false;
-                                    break;
-                    }
-                    break;
-                        case BDConstants.BDNodeType.BDMicroorganism:
-                            switch (ibdNode.LayoutVariant)
-                            {
-                                case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
-                                    generateSearchAssociation = true;
-                                    break;
-                                default:
-                                    generateSearchAssociation = false;
-                                    break;
-                            }
-                            break;
-                        default:
-                            generateSearchAssociation = true;
-                            break;
-                    }
-                    if (generateSearchAssociation)
-                        generateLinkForEntryWithDisplayParent(pDataContext, htmlPageId, ibdNode, resolvedName, pNodeContext.ToString());
+                    //switch (ibdNode.NodeType)
+                    //{
+                    //    case BDConstants.BDNodeType.BDAntimicrobial:
+                    //        switch (ibdNode.LayoutVariant)
+                    //        {
+                    //            case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
+                    //                generateSearchAssociation = true;
+                    //                break;
+                    //            default:
+                    //                generateSearchAssociation = false;
+                    //                break;
+                    //        }
+                    //        break;
+                    //    case BDConstants.BDNodeType.BDMicroorganism:
+                    //        switch (ibdNode.LayoutVariant)
+                    //        {
+                    //            case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
+                    //                generateSearchAssociation = true;
+                    //                break;
+                    //            default:
+                    //                generateSearchAssociation = false;
+                    //                break;
+                    //        }
+                    //        break;
+                    //    case BDConstants.BDNodeType.BDPathogen:
+                    //        switch (ibdNode.LayoutVariant)
+                    //        {
+                    //            case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
+                    //            case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
+                    //                generateSearchAssociation = true;
+                    //                break;
+                    //            default:
+                    //                generateSearchAssociation = false;
+                    //                break;
+                    //        }
+                    //        break;
+                    //    //case BDConstants.BDNodeType.BDChapter:
+                    //    //case BDConstants.BDNodeType.BDSection:
+                    //    //case BDConstants.BDNodeType.BDCategory:
+                    //    //case BDConstants.BDNodeType.BDDisease:
+                    //    //case BDConstants.BDNodeType.BDPresentation:
+                    //    //    generateSearchAssociation = false;
+                    //    //    break;
+                    //    default:
+                    //        generateSearchAssociation = true;
+                    //        break;
+                    //}
+                    //if (generateSearchAssociation)
+                    generateSearchEntryLink(pDataContext, htmlPageId, ibdNode, resolvedName, pNodeContext.ToString());
                 }
             }
         }
 
-        private void generateLinkForEntryWithDisplayParent(Entities pDataContext, Guid pOriginalNodeId, IBDNode pNode, string pResolvedName, string pDisplayContext)
+        private void generateSearchEntryLink(Entities pDataContext, Guid pOriginalNodeId, IBDNode pNode, string pResolvedName, string pDisplayContext)
         {
             //string entryName = pNode.Name.Trim();
-            BDSearchEntry searchEntry = null;
+            List<BDSearchEntry> matchingSearchEntries = new List<BDSearchEntry>();
             if (!string.IsNullOrEmpty(pResolvedName))
             {
-                // get existing matching search entries
-                IQueryable<BDSearchEntry> entries = (from entry in pDataContext.BDSearchEntries
-                                                     where entry.name.ToLower().Contains(pResolvedName.ToLower())
-                                                     select entry);
-
-                //// get existing matching search entries
-                //IQueryable<BDSearchEntry> contains = (from entry in pDataContext.BDSearchEntries
-                //                                      where pResolvedName.ToLower().Contains(entry.name.ToLower())
-                //                                     select entry);
-                if (entries.Count() > 0)
-                    searchEntry = entries.First<BDSearchEntry>();
-                //else if(contains.Count() > 0)
-                //    searchEntry = contains.First<BDSearchEntry>();
-                if(searchEntry != null)
+                foreach (string searchEntryTerm in searchEntryList)
                 {
-                    // get matching search association records for search entry
-                    IQueryable<BDSearchEntryAssociation> associations = (from entry in pDataContext.BDSearchEntryAssociations
-                                                                         where (entry.searchEntryId == searchEntry.uuid
-                                                                         && entry.displayParentId == pOriginalNodeId)
-                                                                         select entry);
+                    if (searchEntryTerm.IndexOf(pResolvedName, StringComparison.OrdinalIgnoreCase) >= 0)
+                        matchingSearchEntries.Add(BDSearchEntry.RetrieveWithName(pDataContext, searchEntryTerm));
+                    else if (pResolvedName.IndexOf(searchEntryTerm, StringComparison.OrdinalIgnoreCase) >= 0)
+                        matchingSearchEntries.Add(BDSearchEntry.RetrieveWithName(pDataContext, searchEntryTerm));
+                }
+            }
+            foreach (BDSearchEntry entry in matchingSearchEntries)
+            {
+                List<BDSearchEntryAssociation> associations = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryId(pDataContext, entry.uuid);
 
-                    if (associations.Count() == 0)
-                    {
-                        BDSearchEntryAssociation.CreateBDSearchEntryAssociation(pDataContext, searchEntry.Uuid, pNode.NodeType, pOriginalNodeId, pNode.LayoutVariant, pDisplayContext);
-                    }
+                if (associations.Count() == 0)
+                {
+                    BDSearchEntryAssociation.CreateBDSearchEntryAssociation(pDataContext, entry.Uuid, pNode.NodeType, pOriginalNodeId, pNode.LayoutVariant, pDisplayContext);
                 }
             }
         }

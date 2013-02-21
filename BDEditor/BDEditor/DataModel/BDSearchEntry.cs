@@ -174,6 +174,34 @@ namespace BDEditor.DataModel
             return result;
         }
 
+        /// <summary>
+        /// Get a string array of all the distinct Search Entry Name values in the database.
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <returns></returns>
+        public static List<string> RetrieveSearchEntryNames(Entities pContext)
+        {
+            var names = pContext.BDSearchEntries.Where(x => (!string.IsNullOrEmpty(x.name))).Select(pg => pg.name).Distinct();
+
+            return names.ToList<string>();
+        }
+
+        public static BDSearchEntry RetrieveWithName(Entities pContext, string pName)
+        {
+            BDSearchEntry result = null;
+            if (!string.IsNullOrEmpty(pName))
+            {
+                IQueryable<BDSearchEntry> entries = (from searchEntries in pContext.BDSearchEntries
+                                                     where searchEntries.name == pName
+                                                     select searchEntries);
+
+                if (entries.Count<BDSearchEntry>() > 0)
+                    result = entries.AsQueryable().First<BDSearchEntry>();
+
+            }
+
+            return result;
+        }
 
         #region Repository
 

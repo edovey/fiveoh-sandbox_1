@@ -163,7 +163,7 @@ namespace BDEditor.Classes
                 {
                     if (searchEntryTerm.IndexOf(pResolvedName, StringComparison.OrdinalIgnoreCase) >= 0)
                         matchingSearchEntries.Add(BDSearchEntry.RetrieveWithName(pDataContext, searchEntryTerm));
-                    else if (pResolvedName.IndexOf(searchEntryTerm, StringComparison.OrdinalIgnoreCase) >= 0)
+                    if (pResolvedName.IndexOf(searchEntryTerm, StringComparison.OrdinalIgnoreCase) >= 0)
                         matchingSearchEntries.Add(BDSearchEntry.RetrieveWithName(pDataContext, searchEntryTerm));
                 }
             }

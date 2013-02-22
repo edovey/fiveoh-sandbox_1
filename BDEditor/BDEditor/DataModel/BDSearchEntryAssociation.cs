@@ -259,6 +259,23 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
+        /// Returns all the SearchEntryAssociations for a searchEntry uuid 
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pLinkedNoteId"></param>
+        /// <returns></returns>
+        public static List<BDSearchEntryAssociation> RetrieveSearchEntryAssociationsForSearchEntryIdAndDisplayParentid(Entities pContext, Guid pSearchEntryId, Guid pDisplayParentId)
+        {
+            IQueryable<BDSearchEntryAssociation> entries = (from entities in pContext.BDSearchEntryAssociations
+                                                            where entities.searchEntryId == pSearchEntryId
+                                                            && entities.displayParentId == pDisplayParentId
+                                                            orderby entities.displayParentType ascending, entities.displayContext ascending
+                                                            select entities);
+            List<BDSearchEntryAssociation> resultList = entries.ToList<BDSearchEntryAssociation>();
+            return resultList;
+        }
+
+        /// <summary>
         /// Return the LinkedNoteAssociation for the uuid. Returns null if not found.
         /// </summary>
         /// <param name="pContext"></param>

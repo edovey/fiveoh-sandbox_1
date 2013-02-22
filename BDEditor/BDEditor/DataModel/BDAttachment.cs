@@ -38,7 +38,8 @@ namespace BDEditor.DataModel
 
         public const int ENTITY_SCHEMAVERSION = 0;
 
-        public const string PROPERTYNAME_DATA = @"Data";
+        public const string PROPERTYNAME_DATA = @"Data"; 
+        public const string PROPERTYNAME_NAME = @"Name";
 
         private const string UUID = @"at_uuid";
         private const string NODETYPE = @"at_nodeType";

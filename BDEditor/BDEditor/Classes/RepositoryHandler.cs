@@ -182,9 +182,16 @@ namespace BDEditor.Classes
                 #region Purge Remote
 
                 // clear the remote tables / entities; clear all pages from S3
-                DeleteRemoteHTMLPages();
-                DeleteRemoteSearch();
-                DeleteRemoteAttachments();
+                if (pSyncType == BDConstants.SyncType.All || pSyncType == BDConstants.SyncType.HtmlOnly)
+                {
+                    DeleteRemoteHTMLPages();
+                    DeleteRemoteSearch();
+                    DeleteRemoteAttachments();
+                }
+                else if (pSyncType == BDConstants.SyncType.SearchOnly)
+                {
+                    DeleteRemoteSearch();
+                }
                 #endregion
 
                 foreach (SyncInfo syncInfoEntry in syncDictionary.Values)

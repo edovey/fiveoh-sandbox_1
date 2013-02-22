@@ -39,6 +39,7 @@ namespace BDEditor.DataModel
         private const string CREATEDDATE = @"se_createdDate";
         private const string NAME = @"se_name";
 
+
         /// <summary>
         /// Extended Create method that sets the created date, schema version and name.  Saves the instance.
         /// </summary>
@@ -63,6 +64,7 @@ namespace BDEditor.DataModel
             entry.createdDate = DateTime.Now;
             entry.schemaVersion = ENTITY_SCHEMAVERSION;
             entry.name = string.Empty;
+            entry.show = false;
 
             pContext.AddObject(ENTITYNAME, entry);
             return entry;

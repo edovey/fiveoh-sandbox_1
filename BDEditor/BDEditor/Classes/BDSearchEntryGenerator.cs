@@ -94,10 +94,7 @@ namespace BDEditor.Classes
 
                 // build a string representation of the search entry's location in the hierarchy
                 if (!string.IsNullOrEmpty(pNodeContext.ToString()))
-                {
-                    if (!string.IsNullOrEmpty(resolvedName))
-                        newContext.AppendFormat("{0} : {1}", pNodeContext, resolvedName);
-                }
+                    newContext.AppendFormat("{0} : {1}", pNodeContext, resolvedName);
                 else
                     newContext.Append(resolvedName);
 
@@ -170,6 +167,8 @@ namespace BDEditor.Classes
             List<BDSearchEntry> matchingSearchEntries = new List<BDSearchEntry>();
             if (!string.IsNullOrEmpty(pResolvedName))
             {
+                pResolvedName = pResolvedName.Replace(":  :", ":");
+
                 foreach (string searchEntryTerm in searchEntryList)
                 {
                     if (pResolvedName.IndexOf(searchEntryTerm, StringComparison.OrdinalIgnoreCase) >= 0)

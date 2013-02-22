@@ -397,7 +397,9 @@ namespace BDEditor.Classes
         {
             Undefined = -1,
             Default = 0,
-            Publish = 2
+            All = 2,
+            HtmlOnly = 3,
+            SearchOnly = 4
         }
 
         public enum LinkedNoteType

@@ -88,14 +88,24 @@ namespace BDEditor.Classes
         {
             SyncInfoDictionary syncDictionary = new SyncInfoDictionary();
 
-            if (pSyncType == BDConstants.SyncType.Publish)
+            if (pSyncType == BDConstants.SyncType.All)
             {
                 syncDictionary.Add(BDHtmlPage.SyncInfo(pDataContext));
                 syncDictionary.Add(BDSearchEntry.SyncInfo(pDataContext));
                 syncDictionary.Add(BDSearchEntryAssociation.SyncInfo(pDataContext));
                 syncDictionary.Add(BDAttachment.SyncInfo(pDataContext));
             }
-
+            else if (pSyncType == BDConstants.SyncType.HtmlOnly)
+            {
+                syncDictionary.Add(BDHtmlPage.SyncInfo(pDataContext));
+                syncDictionary.Add(BDAttachment.SyncInfo(pDataContext));
+            }
+            else if (pSyncType == BDConstants.SyncType.SearchOnly)
+            {
+                syncDictionary.Add(BDSearchEntry.SyncInfo(pDataContext));
+                syncDictionary.Add(BDSearchEntryAssociation.SyncInfo(pDataContext));
+            }
+            
             // List the remote domains
             ListDomainsResponse sdbListDomainsResponse = SimpleDb.ListDomains(new ListDomainsRequest());
             if (sdbListDomainsResponse.IsSetListDomainsResult())

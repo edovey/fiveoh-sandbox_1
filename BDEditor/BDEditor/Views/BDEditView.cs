@@ -1337,23 +1337,34 @@ namespace BDEditor.Views
                 DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
                 Debug.WriteLine("Begin sync with AWS");
                 BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("AWS Push Start\t{0}", DateTime.Now));
-                SyncInfoDictionary syncResultList = RepositoryHandler.Aws.Sync(DataContext, null, BDConstants.SyncType.Publish);
-
+                SyncInfoDictionary syncResultList = null;
+                if (searchentriesOnly)
+                    //syncResultList = RepositoryHandler.Aws.Sync(DataContext, null, BDConstants.SyncType.SearchOnly);
+                    Debug.WriteLine("Sync Search Only");
+                else if (!includeSearchEntries)
+                    //syncResultList = RepositoryHandler.Aws.Sync(DataContext, null, BDConstants.SyncType.HtmlOnly);
+                    Debug.WriteLine("Sync Html Only");
+                else
+                    //syncResultList = RepositoryHandler.Aws.Sync(DataContext, null, BDConstants.SyncType.All);
+                    Debug.WriteLine("Sync All");
                 string resultMessage = string.Empty;
 
-                foreach (SyncInfo syncInfo in syncResultList.Values)
+                if (syncResultList != null)
                 {
-                    System.Diagnostics.Debug.WriteLine(syncInfo.FriendlyName);
-                    if ((syncInfo.RowsPulled > 0) || (syncInfo.RowsPushed > 0))
-                        resultMessage = string.Format("{0}{1}{4}: Pulled {2}, Pushed {3}", resultMessage, (string.IsNullOrEmpty(resultMessage) ? "" : "\n"), syncInfo.RowsPulled, syncInfo.RowsPushed, syncInfo.FriendlyName);
+                    foreach (SyncInfo syncInfo in syncResultList.Values)
+                    {
+                        System.Diagnostics.Debug.WriteLine(syncInfo.FriendlyName);
+                        if ((syncInfo.RowsPulled > 0) || (syncInfo.RowsPushed > 0))
+                            resultMessage = string.Format("{0}{1}{4}: Pulled {2}, Pushed {3}", resultMessage, (string.IsNullOrEmpty(resultMessage) ? "" : "\n"), syncInfo.RowsPulled, syncInfo.RowsPushed, syncInfo.FriendlyName);
+                    }
+
+                    Debug.WriteLine(string.Format("Syc Complete at {0}", DateTime.Now));
+                    BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("AWS Push (Publish) Complete\t{0}", DateTime.Now));
+
+                    if (string.IsNullOrEmpty(resultMessage)) resultMessage = "No changes";
+
+                    MessageBox.Show(resultMessage, "Synchronization");
                 }
-
-                Debug.WriteLine(string.Format("Syc Complete at {0}", DateTime.Now));
-                BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("AWS Push (Publish) Complete\t{0}", DateTime.Now));
-
-                if (string.IsNullOrEmpty(resultMessage)) resultMessage = "No changes";
-
-                MessageBox.Show(resultMessage, "Synchronization");
             }
             else MessageBox.Show("Synchronization Disabled", "Synchronization");
 

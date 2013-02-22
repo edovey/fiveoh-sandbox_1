@@ -1810,7 +1810,7 @@ namespace BDEditor.Classes
                         List<BDHtmlPage> childPages = new List<BDHtmlPage>();
                         List<Guid> childObjectsOnPage = new List<Guid>();
                         List<BDLinkedNote> childFootnotes = new List<BDLinkedNote>();
-                        foreach (IBDNode child in children)
+                        foreach (IBDNode child in children) // subcategories
                         {
                             if (!string.IsNullOrEmpty(child.Name))
                             {

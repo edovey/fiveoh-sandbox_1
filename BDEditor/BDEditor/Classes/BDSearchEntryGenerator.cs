@@ -28,7 +28,7 @@ namespace BDEditor.Classes
         {
             BDHtmlPageGeneratorLogEntry.AppendToFile("BDSearchGeneratorLog.txt", string.Format("Start: {0} -------------------------------", DateTime.Now));
             // clear the data from the database
-            // BDSearchEntry.DeleteAll(pDataContext);
+            BDSearchEntry.ResetForRegeneration(pDataContext);
             BDSearchEntryAssociation.DeleteAll(pDataContext);
 
             searchEntryList = BDSearchEntry.RetrieveSearchEntryNames(pDataContext);
@@ -172,18 +172,25 @@ namespace BDEditor.Classes
             {
                 foreach (string searchEntryTerm in searchEntryList)
                 {
-                    //if (searchEntryTerm.IndexOf(pResolvedName, StringComparison.OrdinalIgnoreCase) >= 0)
-                    //    matchingSearchEntries.Add(BDSearchEntry.RetrieveWithName(pDataContext, searchEntryTerm));
                     if (pResolvedName.IndexOf(searchEntryTerm, StringComparison.OrdinalIgnoreCase) >= 0)
-                        matchingSearchEntries.Add(BDSearchEntry.RetrieveWithName(pDataContext, searchEntryTerm));
+                    {
+                        BDSearchEntry matchedSearchEntry = BDSearchEntry.RetrieveWithName(pDataContext, searchEntryTerm);
+                        matchingSearchEntries.Add(matchedSearchEntry);
+                        matchedSearchEntry.show = true;
+                    }
                     else
                     {
                         string shortName = pResolvedName.Replace(" ", "");
                         string shortSearchTerm = searchEntryTerm.Replace(" ", "");
                         if (shortName.IndexOf(shortSearchTerm, StringComparison.OrdinalIgnoreCase) >= 0)
-                            matchingSearchEntries.Add(BDSearchEntry.RetrieveWithName(pDataContext, searchEntryTerm));
+                        {
+                            BDSearchEntry matchedSearchEntry = BDSearchEntry.RetrieveWithName(pDataContext, searchEntryTerm);
+                            matchingSearchEntries.Add(matchedSearchEntry);
+                            matchedSearchEntry.show = true;
+                        }
                     }
                 }
+                pDataContext.SaveChanges();
             }
             //BDHtmlPageGeneratorLogEntry.AppendToFile("BDSearchGeneratorLog.txt", string.Format(@"{0} matches for name: {1}", matchingSearchEntries.Count, pResolvedName));
             

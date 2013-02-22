@@ -2956,7 +2956,10 @@ namespace BDEditor.Classes
                                     BDTherapyGroup therapyGroup = child as BDTherapyGroup;
                                     if (null != therapyGroup)
                                     {
-                                        html.AppendFormat("{0}<br>", (BuildBDTherapyGroupHTML(pContext, therapyGroup, pFootnotes, pObjectsOnPage, pLevel + 2, null)));
+                                        int level = pLevel + 2;
+                                        if (child.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic)
+                                            level = pLevel + 1;
+                                        html.AppendFormat("{0}<br>", (BuildBDTherapyGroupHTML(pContext, therapyGroup, pFootnotes, pObjectsOnPage,level, null)));
                                     }
                                     break;
                             }
@@ -4762,6 +4765,10 @@ namespace BDEditor.Classes
                         break;
                     case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubtopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                        foreach (IBDNode child in children)
+                        {
+                            html.Append(BuildBDSubTopicHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
+                        }
                         break;
 
                     case BDConstants.LayoutVariantType.FrontMatter:

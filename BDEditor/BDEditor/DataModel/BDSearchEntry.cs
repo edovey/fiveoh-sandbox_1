@@ -38,6 +38,7 @@ namespace BDEditor.DataModel
         private const string CREATEDBY = @"se_createdBy";
         private const string CREATEDDATE = @"se_createdDate";
         private const string NAME = @"se_name";
+        private const string SHOW = @"se_show";
 
 
         /// <summary>
@@ -152,6 +153,15 @@ namespace BDEditor.DataModel
             return entryList;
         }
 
+        public static List<IBDObject> RetrieveAllShowEntries(Entities pContext)
+        {
+            List<IBDObject> entryList;
+            IQueryable<BDSearchEntry> entries = (from searchEntries in pContext.BDSearchEntries
+                                                 where searchEntries.show == true
+                                                 select searchEntries);
+            entryList = new List<IBDObject>(entries.ToList<BDSearchEntry>());
+            return entryList;
+        }
 
         /// <summary>
         /// Return the LinkedNote for the uuid. Returns null if not found.
@@ -245,7 +255,7 @@ namespace BDEditor.DataModel
         public static SyncInfo SyncInfo(Entities pDataContext)
         {
             SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
-            syncInfo.PushList = BDSearchEntry.RetrieveAll(pDataContext);
+            syncInfo.PushList = BDSearchEntry.RetrieveAllShowEntries(pDataContext);
             syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
             return syncInfo;
         }

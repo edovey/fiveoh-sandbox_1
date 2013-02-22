@@ -2199,8 +2199,10 @@ namespace BDEditor.Classes
                 pTextToProcess = pTextToProcess.Replace(htmlSubscriptEnd, "");
                 pTextToProcess = pTextToProcess.Replace(boldStart, "");
                 pTextToProcess = pTextToProcess.Replace(boldEnd, "");
-                pTextToProcess.Replace("<br>", " ");
-                pTextToProcess.Replace("<hr>", ""); 
+                pTextToProcess = pTextToProcess.Replace("<br>", " ");
+                pTextToProcess = pTextToProcess.Replace("<hr>", "");
+                pTextToProcess = pTextToProcess.Replace("[", "");
+                pTextToProcess = pTextToProcess.Replace("]", "");
             }
             return pTextToProcess;
         }

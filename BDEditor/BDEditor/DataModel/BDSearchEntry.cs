@@ -205,6 +205,20 @@ namespace BDEditor.DataModel
             return result;
         }
 
+        public static void ResetForRegeneration(Entities pContext)
+        {
+            List<BDSearchEntry> allEntries = new List<BDSearchEntry>();
+            IQueryable<BDSearchEntry> entries = from entry in pContext.BDSearchEntries
+                                                        select entry;
+            allEntries = entries.ToList<BDSearchEntry>();
+
+            foreach (BDSearchEntry entry in allEntries)
+                entry.show = false;
+
+            pContext.SaveChanges();
+        }
+
+
         #region Repository
 
         /// <summary>

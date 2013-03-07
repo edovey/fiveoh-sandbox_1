@@ -1339,14 +1339,21 @@ namespace BDEditor.Views
                 BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("AWS Push Start\t{0}", DateTime.Now));
                 SyncInfoDictionary syncResultList = null;
                 if (searchentriesOnly)
-                    //syncResultList = RepositoryHandler.Aws.Sync(DataContext, null, BDConstants.SyncType.SearchOnly);
+                {
                     Debug.WriteLine("Sync Search Only");
+                    syncResultList = RepositoryHandler.Aws.Sync(DataContext, null, BDConstants.SyncType.SearchOnly);
+                }
                 else if (!includeSearchEntries)
-                    //syncResultList = RepositoryHandler.Aws.Sync(DataContext, null, BDConstants.SyncType.HtmlOnly);
+                {
                     Debug.WriteLine("Sync Html Only");
+                    syncResultList = RepositoryHandler.Aws.Sync(DataContext, null, BDConstants.SyncType.HtmlOnly);
+                }
                 else
-                    //syncResultList = RepositoryHandler.Aws.Sync(DataContext, null, BDConstants.SyncType.All);
+                {
                     Debug.WriteLine("Sync All");
+                    syncResultList = RepositoryHandler.Aws.Sync(DataContext, null, BDConstants.SyncType.All);
+                }
+
                 string resultMessage = string.Empty;
 
                 if (syncResultList != null)

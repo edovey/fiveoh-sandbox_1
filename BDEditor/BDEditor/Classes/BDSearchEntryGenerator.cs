@@ -167,7 +167,7 @@ namespace BDEditor.Classes
             List<BDSearchEntry> matchingSearchEntries = new List<BDSearchEntry>();
             if (!string.IsNullOrEmpty(pResolvedName))
             {
-                pResolvedName = pResolvedName.Replace(":  :", ":");
+                pDisplayContext = pDisplayContext.Replace(":  :", ":");
 
                 foreach (string searchEntryTerm in searchEntryList)
                 {

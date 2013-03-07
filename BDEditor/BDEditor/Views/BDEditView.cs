@@ -128,29 +128,6 @@ namespace BDEditor.Views
                     TreeNode[] nodeList = new TreeNode[node.Nodes.Count];
                     node.Nodes.CopyTo(nodeList, 0);
                     chapterTree.Nodes.AddRange(nodeList);
-
-                    //TODO:  uncomment and test this change..  a Legend was added to the Chapter 'Pregnancy/Lactation'
-                    //BDCommon.Settings.WaitingForEvent = true;
-                    //BDCommon.Settings.IsUpdating = true;
-                    //IBDControl control_tr01 = BDFabrik.CreateControlForNode(dataContext, pNode);
-                    //if (null != control_tr01)
-                    //{
-                    //    bool showChildControls = false;
-                    //    ((System.Windows.Forms.UserControl)control_tr01).Validated += new EventHandler(BDEditView_Validated);
-                    //    control_tr01.ShowChildren = showChildControls;
-                    //    control_tr01.AssignScopeId((null != node) ? pNode.Uuid : Guid.Empty);
-                    //    control_tr01.AssignParentInfo(pNode.ParentId, pNode.ParentType);
-                    //    ((System.Windows.Forms.UserControl)control_tr01).Dock = DockStyle.Fill;
-                    //    control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
-                    //    control_tr01.RequestItemAdd += new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
-                    //    splitContainer1.Panel2.Controls.Add((System.Windows.Forms.UserControl)control_tr01);
-                    //    control_tr01.RefreshLayout(showChildControls);
-
-                    //}
-                    //BDCommon.Settings.IsUpdating = false;
-                    //ControlHelper.ResumeDrawing(splitContainer1.Panel2);
-                    //splitContainer1.Panel2.ResumeLayout();
-
                 }
             }
 
@@ -1063,50 +1040,6 @@ namespace BDEditor.Views
             BDDataLoader dataLoader = new BDDataLoader();
 
             //dataLoader.ImportData(dataContext, @"Resources\Chapter_1a.txt", BDDataLoader.baseDataDefinitionType.chapter1a);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_1b.txt", BDDataLoader.baseDataDefinitionType.chapter1b);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_1c.txt", BDDataLoader.baseDataDefinitionType.chapter1c);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_1d.txt", BDDataLoader.baseDataDefinitionType.chapter1d);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_1e.txt", BDDataLoader.baseDataDefinitionType.chapter1e);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_1f.txt", BDDataLoader.baseDataDefinitionType.chapter1f);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_1g.txt", BDDataLoader.baseDataDefinitionType.chapter1g);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_1h.txt", BDDataLoader.baseDataDefinitionType.chapter1h);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_1i.txt", BDDataLoader.baseDataDefinitionType.chapter1i);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_1j.txt", BDDataLoader.baseDataDefinitionType.chapter1j);
-
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_4a.txt", BDDataLoader.baseDataDefinitionType.chapter4a);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_4b.txt", BDDataLoader.baseDataDefinitionType.chapter4b);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_4c.txt", BDDataLoader.baseDataDefinitionType.chapter4c);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_4d.txt", BDDataLoader.baseDataDefinitionType.chapter4d);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_4e.txt", BDDataLoader.baseDataDefinitionType.chapter4e);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_4f.txt", BDDataLoader.baseDataDefinitionType.chapter4f);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_4g.txt", BDDataLoader.baseDataDefinitionType.chapter4g);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_4h.txt", BDDataLoader.baseDataDefinitionType.chapter4h);
-            
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_5a.txt", BDDataLoader.baseDataDefinitionType.chapter5a);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_5b.txt", BDDataLoader.baseDataDefinitionType.chapter5b);
-           // dataLoader.ImportData(dataContext, @"Resources\Chapter_5c.txt", BDDataLoader.baseDataDefinitionType.chapter5c);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_5d.txt", BDDataLoader.baseDataDefinitionType.chapter5d);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_5e.txt", BDDataLoader.baseDataDefinitionType.chapter5e);
-
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_6a.txt", BDDataLoader.baseDataDefinitionType.chapter6a);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_6b.txt", BDDataLoader.baseDataDefinitionType.chapter6b);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_6c.txt", BDDataLoader.baseDataDefinitionType.chapter6c);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_6d.txt", BDDataLoader.baseDataDefinitionType.chapter6d);
-
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_2f.txt", BDDataLoader.baseDataDefinitionType.chapter2f);
-
-           // dataLoader.ImportData(dataContext, @"Resources\Chapter_3a.txt", BDDataLoader.baseDataDefinitionType.chapter3a);
-           // dataLoader.ImportData(dataContext, @"Resources\Chapter_3b.txt", BDDataLoader.baseDataDefinitionType.chapter3b);
-           // dataLoader.ImportData(dataContext, @"Resources\Chapter_3c.txt", BDDataLoader.baseDataDefinitionType.chapter3c);
-           // dataLoader.ImportData(dataContext, @"Resources\Chapter_3d.txt", BDDataLoader.baseDataDefinitionType.chapter3d);
-           // dataLoader.ImportData(dataContext, @"Resources\Chapter_3e.txt", BDDataLoader.baseDataDefinitionType.chapter3e);
-           // dataLoader.ImportData(dataContext, @"Resources\Chapter_3f.txt", BDDataLoader.baseDataDefinitionType.chapter3f);
-           // dataLoader.ImportData(dataContext, @"Resources\Chapter_3g.txt", BDDataLoader.baseDataDefinitionType.chapter3g);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3h.txt", BDDataLoader.baseDataDefinitionType.chapter3h);
-           // dataLoader.ImportData(dataContext, @"Resources\Chapter_3i.txt", BDDataLoader.baseDataDefinitionType.chapter3i);
-           // dataLoader.ImportData(dataContext, @"Resources\Chapter_3j.txt", BDDataLoader.baseDataDefinitionType.chapter3j);
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_3k.txt", BDDataLoader.baseDataDefinitionType.chapter3k);
-           // dataLoader.ImportData(dataContext, @"Resources\Chapter_3l.txt", BDDataLoader.baseDataDefinitionType.chapter3l);
             //LoadChapterDropDown();
             //BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             //DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
@@ -1264,119 +1197,11 @@ namespace BDEditor.Views
 
         private void btnPublish_Click(object sender, EventArgs e)
         {
-            BDNode chapterNode = null;
 
-            bool awsPushOnly = false;
-            bool searchentriesOnly = false;
-            bool includeSearchEntries = true;
-
-            DialogResult pushChoice = MessageBox.Show("Push to Amazon only?", "AWS", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-            if (pushChoice == DialogResult.Yes)
-                awsPushOnly = true;
-            else if (pushChoice == DialogResult.No)
-                awsPushOnly = false;
-            else
-                return;
-
-            if (!awsPushOnly)
-            {
-                DialogResult result = MessageBox.Show("Generate All Chapters?", "Publish", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-                if (result == DialogResult.Yes)
-                    chapterNode = null;
-                else if (result == DialogResult.No)
-                    chapterNode = (chapterDropDown.SelectedItem as BDNode);
-                else
-                    return;
-
-                DialogResult searchResult = MessageBox.Show("Generate Search Entries Only?", "Publish", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-                searchentriesOnly = (searchResult == DialogResult.Yes);
-
-                if (!searchentriesOnly)
-                {
-                    DialogResult includeSearchResult = MessageBox.Show("Include Search Entries?", "Publish", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-                    includeSearchEntries = (includeSearchResult == DialogResult.Yes);
-                }
-            }
-
-            this.Cursor = Cursors.WaitCursor;
-
-
-            Debug.WriteLine(string.Format("Start {0}", DateTime.Now));
-
-            BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Publish Start\t{0}", DateTime.Now));
-            BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("{0} -------------------------------", DateTime.Now));
-            if (!awsPushOnly)
-            {
-                BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
-
-                if(!searchentriesOnly)
-                {
-                    List<BDNode> nodeList = (null == chapterNode) ? null : new List<BDNode>(1) {chapterNode};
-
-                    generator.Generate(dataContext, nodeList);
-
-                    System.Diagnostics.Debug.WriteLine("HTML page generation complete.");
-                    BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Generation Complete\t{0}", DateTime.Now));
-                }
-
-                if (includeSearchEntries)
-                {
-                    Debug.WriteLine(string.Format("Search Gen Start {0}", DateTime.Now));
-                    BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Search Gen Start\t{0}", DateTime.Now));
-                    BDSearchEntryGenerator searchGenerator = new BDSearchEntryGenerator();
-                    searchGenerator.Generate(dataContext, chapterNode);
-                    Debug.WriteLine("Search entry generation complete. {0}", DateTime.Now);
-
-                    BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Search Generation Complete\t{0}", DateTime.Now));
-                }
-            }
-
-            if (BDCommon.Settings.SyncPushEnabled)
-            {
-                BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
-                DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
-                Debug.WriteLine("Begin sync with AWS");
-                BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("AWS Push Start\t{0}", DateTime.Now));
-                SyncInfoDictionary syncResultList = null;
-                if (searchentriesOnly)
-                {
-                    Debug.WriteLine("Sync Search Only");
-                    syncResultList = RepositoryHandler.Aws.Sync(DataContext, null, BDConstants.SyncType.SearchOnly);
-                }
-                else if (!includeSearchEntries)
-                {
-                    Debug.WriteLine("Sync Html Only");
-                    syncResultList = RepositoryHandler.Aws.Sync(DataContext, null, BDConstants.SyncType.HtmlOnly);
-                }
-                else
-                {
-                    Debug.WriteLine("Sync All");
-                    syncResultList = RepositoryHandler.Aws.Sync(DataContext, null, BDConstants.SyncType.All);
-                }
-
-                string resultMessage = string.Empty;
-
-                if (syncResultList != null)
-                {
-                    foreach (SyncInfo syncInfo in syncResultList.Values)
-                    {
-                        System.Diagnostics.Debug.WriteLine(syncInfo.FriendlyName);
-                        if ((syncInfo.RowsPulled > 0) || (syncInfo.RowsPushed > 0))
-                            resultMessage = string.Format("{0}{1}{4}: Pulled {2}, Pushed {3}", resultMessage, (string.IsNullOrEmpty(resultMessage) ? "" : "\n"), syncInfo.RowsPulled, syncInfo.RowsPushed, syncInfo.FriendlyName);
-                    }
-
-                    Debug.WriteLine(string.Format("Syc Complete at {0}", DateTime.Now));
-                    BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("AWS Push (Publish) Complete\t{0}", DateTime.Now));
-
-                    if (string.IsNullOrEmpty(resultMessage)) resultMessage = "No changes";
-
-                    MessageBox.Show(resultMessage, "Synchronization");
-                }
-            }
-            else MessageBox.Show("Synchronization Disabled", "Synchronization");
-
-            BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Publish Complete\t{0}", DateTime.Now));
-            this.Cursor = Cursors.Default;
+            BDBuildView build = new BDBuildView(dataContext);
+            DialogResult result = build.ShowDialog(this);
+            if (result == DialogResult.OK)
+                MessageBox.Show(this, "Close the application before publishing again.", "Publish Is Complete", MessageBoxButtons.OK);
         }
 
         private void btnSearch_Click(object sender, EventArgs e)

@@ -265,6 +265,12 @@
     <Compile Include="Views\BDAttachmentControl.Designer.cs">
       <DependentUpon>BDAttachmentControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\BDBuildView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\BDBuildView.Designer.cs">
+      <DependentUpon>BDBuildView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\BDCombinedEntryControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -443,6 +449,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDAttachmentControl.resx">
       <DependentUpon>BDAttachmentControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDBuildView.resx">
+      <DependentUpon>BDBuildView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDCombinedEntryControl.resx">
       <DependentUpon>BDCombinedEntryControl.cs</DependentUpon>
@@ -709,7 +718,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
+      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

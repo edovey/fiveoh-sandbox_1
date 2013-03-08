@@ -37,6 +37,21 @@ namespace BDEditor.Views
             InitializeComponent();
         }
 
+        private void BDBuildView_Load(object sender, EventArgs e)
+        {
+            cbSyncWithAws.Enabled = BDCommon.Settings.SyncPushEnabled;
+            flagGreen.Visible = BDCommon.Settings.SyncPushEnabled;
+
+            maskedTextBox1.Text = string.Empty;
+
+            chapterList = BDNode.RetrieveNodesForType(dataContext, BDConstants.BDNodeType.BDChapter);
+            selectedNodeList = new List<BDNode>();
+            selectedNodeList.AddRange(chapterList);
+            foreach (BDNode chapter in chapterList)
+                clbChaptersToGenerate.Items.Add(chapter.name, false);
+
+        }
+
         private void cbGeneratePages_CheckedChanged(object sender, EventArgs e)
         {
             if (cbGeneratePages.CheckState == CheckState.Checked)
@@ -142,26 +157,22 @@ namespace BDEditor.Views
             }
         }
 
-        private void BDBuildView_Load(object sender, EventArgs e)
+        private void maskedTextBox1_TextChanged(object sender, EventArgs e)
         {
-            if (BDCommon.Settings.SyncPushEnabled)
-            {
-                cbSyncWithAws.Enabled = true;
-                flagGreen.Visible = true;
-                flagRed.Visible = false;
-            }
-            else
-            {
-                flagRed.Visible = true;
-                flagGreen.Visible = false;
-            }
+            flagGreen.Visible = BDCommon.Settings.Validate(maskedTextBox1.Text);
+            cbSyncWithAws.Enabled = flagGreen.Visible;
+            BDCommon.Settings.Authenticate(maskedTextBox1.Text);
+        }
 
-            chapterList = BDNode.RetrieveNodesForType(dataContext, BDConstants.BDNodeType.BDChapter);
-            selectedNodeList = new List<BDNode>();
-            selectedNodeList.AddRange(chapterList);
-            foreach (BDNode chapter in chapterList)
-                clbChaptersToGenerate.Items.Add(chapter.name, false);
+        private void btn_OK_Click(object sender, EventArgs e)
+        {
+            this.publish();
+            this.DialogResult = DialogResult.OK;
+        }
 
+        private void btn_Cancel_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
         }
 
         private void publish()
@@ -235,17 +246,6 @@ namespace BDEditor.Views
 
             BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Publish Complete\t{0}", DateTime.Now));
             this.Cursor = Cursors.Default;
-        }
-
-        private void btn_OK_Click(object sender, EventArgs e)
-        {
-            this.publish();
-            this.DialogResult = DialogResult.OK;
-        }
-
-        private void btn_Cancel_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.Cancel;
         }
     }
 }

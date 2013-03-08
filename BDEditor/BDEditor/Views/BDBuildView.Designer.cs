@@ -50,6 +50,7 @@
             this.gbSyncRecordTypes = new System.Windows.Forms.GroupBox();
             this.flagGreen = new System.Windows.Forms.PictureBox();
             this.flagRed = new System.Windows.Forms.PictureBox();
+            this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
             this.gbSelectHtmlPages.SuspendLayout();
             this.gbSyncRecordTypes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.flagGreen)).BeginInit();
@@ -278,6 +279,15 @@
             this.flagRed.TabIndex = 15;
             this.flagRed.TabStop = false;
             // 
+            // maskedTextBox1
+            // 
+            this.maskedTextBox1.Location = new System.Drawing.Point(154, 474);
+            this.maskedTextBox1.Name = "maskedTextBox1";
+            this.maskedTextBox1.PasswordChar = '*';
+            this.maskedTextBox1.Size = new System.Drawing.Size(188, 20);
+            this.maskedTextBox1.TabIndex = 16;
+            this.maskedTextBox1.TextChanged += new System.EventHandler(this.maskedTextBox1_TextChanged);
+            // 
             // BDBuildView
             // 
             this.AcceptButton = this.btn_OK;
@@ -285,7 +295,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btn_Cancel;
             this.ClientSize = new System.Drawing.Size(413, 635);
-            this.Controls.Add(this.flagRed);
+            this.Controls.Add(this.maskedTextBox1);
             this.Controls.Add(this.flagGreen);
             this.Controls.Add(this.cbGenerateSearch);
             this.Controls.Add(this.label5);
@@ -301,6 +311,7 @@
             this.Controls.Add(this.btn_OK);
             this.Controls.Add(this.gbSelectHtmlPages);
             this.Controls.Add(this.gbSyncRecordTypes);
+            this.Controls.Add(this.flagRed);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "BDBuildView";
@@ -343,5 +354,6 @@
         private System.Windows.Forms.GroupBox gbSyncRecordTypes;
         private System.Windows.Forms.PictureBox flagGreen;
         private System.Windows.Forms.PictureBox flagRed;
+        private System.Windows.Forms.MaskedTextBox maskedTextBox1;
     }
 }

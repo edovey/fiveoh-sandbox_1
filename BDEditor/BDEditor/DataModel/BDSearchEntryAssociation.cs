@@ -227,21 +227,6 @@ namespace BDEditor.DataModel
             return entryList;
         }
 
-        public static List<BDSearchEntryAssociation> RetrieveSearchEntryAssociationsForDisplayParentId(Entities pContext, Guid? pDisplayParentId)
-        {
-            List<BDSearchEntryAssociation> resultList = new List<BDSearchEntryAssociation>();
-            if (pDisplayParentId != null)
-            {
-                IQueryable<BDSearchEntryAssociation> associations = (from entries in pContext.BDSearchEntryAssociations
-                                                                              where entries.displayParentId == pDisplayParentId
-                                                                              orderby entries.displayOrder
-                                                                              select entries);
-
-                resultList = associations.ToList<BDSearchEntryAssociation>();
-            }
-            return resultList;
-        }
-
         /// <summary>
         /// Returns all the SearchEntryAssociations for a searchEntry uuid 
         /// </summary>
@@ -252,7 +237,7 @@ namespace BDEditor.DataModel
         {
             IQueryable<BDSearchEntryAssociation> entries = (from entities in pContext.BDSearchEntryAssociations
                                                             where entities.searchEntryId == pSearchEntryId
-                                                            orderby entities.displayParentType ascending, entities.displayContext ascending
+                                                            orderby entities.displayOrder ascending
                                                             select entities);
             List<BDSearchEntryAssociation> resultList = entries.ToList<BDSearchEntryAssociation>();
             return resultList;

@@ -143,16 +143,21 @@ namespace BDEditor.DataModel
         /// Retrieve all SearchEntry Nodes
         /// </summary>
         /// <param name="pContext"></param>
-        /// <returns>List of BDNavigationNode objects.</returns>
-        public static List<IBDObject> RetrieveAll(Entities pContext)
+        /// <returns>List of IBDNode objects.</returns>
+        public static List<BDSearchEntry> RetrieveAll(Entities pContext)
         {
-            List<IBDObject> entryList;
+            List<BDSearchEntry> entryList;
             IQueryable<BDSearchEntry> entries = (from bdNodes in pContext.BDSearchEntries
                                                     select bdNodes);
-            entryList = new List<IBDObject>(entries.ToList<BDSearchEntry>());
+            entryList = new List<BDSearchEntry>(entries.ToList<BDSearchEntry>());
             return entryList;
         }
 
+        /// <summary>
+        /// Retrieve all SearchEntry nodes where show is true
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <returns>List of IBDObjects</returns>
         public static List<IBDObject> RetrieveAllShowEntries(Entities pContext)
         {
             List<IBDObject> entryList;
@@ -164,11 +169,11 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Return the LinkedNote for the uuid. Returns null if not found.
+        /// Return the SearchEntry for the uuid. Returns null if not found.
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pLinkedNoteId"></param>
-        /// <returns></returns>
+        /// <returns>BDSearchEntry</returns>
         public static BDSearchEntry RetrieveSearchEntryWithId(Entities pContext, Guid? pEntityId)
         {
             BDSearchEntry result = null;
@@ -187,10 +192,28 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
+        /// Retrieve all search entries associated with the supplied parent ID
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pDisplayParentId"></param>
+        /// <returns></returns>
+        public static List<BDSearchEntry> RetrieveSearchEntriesForDisplayParent(Entities pContext, Guid pDisplayParentId)
+        {
+            List<BDSearchEntry> resultList;
+            IQueryable<BDSearchEntry> entries = (from assns in pContext.BDSearchEntryAssociations
+                                                 join searchEntries in pContext.BDSearchEntries
+                                                 on assns.searchEntryId equals searchEntries.uuid
+                                                 where assns.displayParentId == pDisplayParentId
+                                                 select searchEntries );
+            resultList = new List<BDSearchEntry>(entries.ToList<BDSearchEntry>());
+            return resultList;
+        }
+
+        /// <summary>
         /// Get a string array of all the distinct Search Entry Name values in the database.
         /// </summary>
         /// <param name="pContext"></param>
-        /// <returns></returns>
+        /// <returns>List of strings</returns>
         public static List<string> RetrieveSearchEntryNames(Entities pContext)
         {
             var names = pContext.BDSearchEntries.Where(x => (!string.IsNullOrEmpty(x.name))).Select(pg => pg.name).Distinct();

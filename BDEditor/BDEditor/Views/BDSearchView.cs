@@ -22,9 +22,13 @@ namespace BDEditor.Views
         public BDSearchView()
         {
             InitializeComponent();
+        }
+
+        private void BDSearchView_Load(object sender, EventArgs e)
+        {
             nodeList = new List<IBDNode>();
             linkedNoteList = new List<BDLinkedNote>();
-            
+
             DataGridViewTextBoxColumn col0 = new DataGridViewTextBoxColumn();
             col0.DataPropertyName = "nodeType";
             col0.HeaderText = "Type";

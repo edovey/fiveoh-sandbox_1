@@ -193,6 +193,7 @@
     <Compile Include="Classes\BDFormsUtilties.cs" />
     <Compile Include="Classes\BDHtmlPageGenerator.cs" />
     <Compile Include="Classes\BDGuidLogEntry.cs" />
+    <Compile Include="Classes\BDSortableBindingList.cs" />
     <Compile Include="DataModel\BDHtmlPageMap.cs" />
     <Compile Include="Classes\BDNodeWrapper.cs" />
     <Compile Include="Classes\BDTreeNode.cs" />

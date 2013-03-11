@@ -381,7 +381,7 @@ namespace BDEditor.DataModel
 
         public override string ToString()
         {
-            return this.uuid.ToString();
+            return this.displayContext;
         }
 
         public string DescriptionForLinkedNote

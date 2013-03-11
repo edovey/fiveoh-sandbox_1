@@ -1,6 +1,6 @@
 ﻿namespace BDEditor.Views
 {
-    partial class IndexEntryEditView
+    partial class BDIndexEntryEditView
     {
         /// <summary>
         /// Required designer variable.
@@ -31,24 +31,24 @@
             this.components = new System.ComponentModel.Container();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.listBox2 = new System.Windows.Forms.ListBox();
-            this.btnAddToSelected = new System.Windows.Forms.Button();
-            this.btnRemoveFromSelected = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnAddNew = new System.Windows.Forms.Button();
             this.lblName = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.pnlSelectTerms = new System.Windows.Forms.Panel();
-            this.btnEditEntryName = new System.Windows.Forms.Button();
-            this.btnDeleteSearchEntry = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.listBox3 = new System.Windows.Forms.ListBox();
-            this.btnMoveAssnPrevious = new System.Windows.Forms.Button();
-            this.btnMoveAssnNext = new System.Windows.Forms.Button();
-            this.btnDeleteAssociation = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnDeleteAssociation = new System.Windows.Forms.Button();
+            this.btnMoveAssnNext = new System.Windows.Forms.Button();
+            this.btnMoveAssnPrevious = new System.Windows.Forms.Button();
+            this.btnEditEntryName = new System.Windows.Forms.Button();
+            this.btnDeleteSearchEntry = new System.Windows.Forms.Button();
+            this.btnAddNew = new System.Windows.Forms.Button();
+            this.btnRemoveFromSelected = new System.Windows.Forms.Button();
+            this.btnAddToSelected = new System.Windows.Forms.Button();
             this.pnlSelectTerms.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,28 +72,6 @@
             this.listBox2.Size = new System.Drawing.Size(233, 329);
             this.listBox2.TabIndex = 1;
             // 
-            // btnAddToSelected
-            // 
-            this.btnAddToSelected.Image = global::BDEditor.Properties.Resources.arrow;
-            this.btnAddToSelected.Location = new System.Drawing.Point(249, 74);
-            this.btnAddToSelected.Name = "btnAddToSelected";
-            this.btnAddToSelected.Size = new System.Drawing.Size(40, 30);
-            this.btnAddToSelected.TabIndex = 2;
-            this.toolTip1.SetToolTip(this.btnAddToSelected, "Add to list");
-            this.btnAddToSelected.UseVisualStyleBackColor = true;
-            this.btnAddToSelected.Click += new System.EventHandler(this.btnAddToSelected_Click);
-            // 
-            // btnRemoveFromSelected
-            // 
-            this.btnRemoveFromSelected.Image = global::BDEditor.Properties.Resources.arrow_180;
-            this.btnRemoveFromSelected.Location = new System.Drawing.Point(249, 110);
-            this.btnRemoveFromSelected.Name = "btnRemoveFromSelected";
-            this.btnRemoveFromSelected.Size = new System.Drawing.Size(40, 30);
-            this.btnRemoveFromSelected.TabIndex = 3;
-            this.toolTip1.SetToolTip(this.btnRemoveFromSelected, "Remove from list");
-            this.btnRemoveFromSelected.UseVisualStyleBackColor = true;
-            this.btnRemoveFromSelected.Click += new System.EventHandler(this.btnRemoveFromSelected_Click);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -114,16 +92,6 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "Selected Index Entries";
             // 
-            // btnAddNew
-            // 
-            this.btnAddNew.Image = global::BDEditor.Properties.Resources.add_16x16;
-            this.btnAddNew.Location = new System.Drawing.Point(249, 237);
-            this.btnAddNew.Name = "btnAddNew";
-            this.btnAddNew.Size = new System.Drawing.Size(40, 34);
-            this.btnAddNew.TabIndex = 6;
-            this.toolTip1.SetToolTip(this.btnAddNew, "New Index Entry");
-            this.btnAddNew.UseVisualStyleBackColor = true;
-            // 
             // lblName
             // 
             this.lblName.AutoSize = true;
@@ -138,7 +106,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(175, 417);
+            this.label3.Location = new System.Drawing.Point(150, 417);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(132, 17);
             this.label3.TabIndex = 8;
@@ -162,36 +130,14 @@
             this.pnlSelectTerms.Size = new System.Drawing.Size(565, 414);
             this.pnlSelectTerms.TabIndex = 10;
             // 
-            // btnEditEntryName
-            // 
-            this.btnEditEntryName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEditEntryName.Image = global::BDEditor.Properties.Resources.del_16x16;
-            this.btnEditEntryName.Location = new System.Drawing.Point(249, 340);
-            this.btnEditEntryName.Name = "btnEditEntryName";
-            this.btnEditEntryName.Size = new System.Drawing.Size(40, 30);
-            this.btnEditEntryName.TabIndex = 17;
-            this.toolTip1.SetToolTip(this.btnEditEntryName, "Remove Index Entry");
-            this.btnEditEntryName.UseVisualStyleBackColor = true;
-            // 
-            // btnDeleteSearchEntry
-            // 
-            this.btnDeleteSearchEntry.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeleteSearchEntry.Image = global::BDEditor.Properties.Resources.del_16x16;
-            this.btnDeleteSearchEntry.Location = new System.Drawing.Point(249, 277);
-            this.btnDeleteSearchEntry.Name = "btnDeleteSearchEntry";
-            this.btnDeleteSearchEntry.Size = new System.Drawing.Size(40, 30);
-            this.btnDeleteSearchEntry.TabIndex = 16;
-            this.toolTip1.SetToolTip(this.btnDeleteSearchEntry, "Remove Index Entry");
-            this.btnDeleteSearchEntry.UseVisualStyleBackColor = true;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(12, 421);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(157, 13);
+            this.label4.Size = new System.Drawing.Size(132, 13);
             this.label4.TabIndex = 11;
-            this.label4.Text = "Other locations associated with:";
+            this.label4.Text = "Locations associated with:";
             // 
             // listBox3
             // 
@@ -203,42 +149,6 @@
             this.listBox3.Name = "listBox3";
             this.listBox3.Size = new System.Drawing.Size(536, 290);
             this.listBox3.TabIndex = 12;
-            // 
-            // btnMoveAssnPrevious
-            // 
-            this.btnMoveAssnPrevious.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMoveAssnPrevious.Image = global::BDEditor.Properties.Resources.arrow_090;
-            this.btnMoveAssnPrevious.Location = new System.Drawing.Point(124, 748);
-            this.btnMoveAssnPrevious.Name = "btnMoveAssnPrevious";
-            this.btnMoveAssnPrevious.Size = new System.Drawing.Size(40, 30);
-            this.btnMoveAssnPrevious.TabIndex = 13;
-            this.toolTip1.SetToolTip(this.btnMoveAssnPrevious, "Move Previous");
-            this.btnMoveAssnPrevious.UseVisualStyleBackColor = true;
-            this.btnMoveAssnPrevious.Click += new System.EventHandler(this.btnMoveAssnPrevious_Click);
-            // 
-            // btnMoveAssnNext
-            // 
-            this.btnMoveAssnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMoveAssnNext.Image = global::BDEditor.Properties.Resources.arrow_270;
-            this.btnMoveAssnNext.Location = new System.Drawing.Point(173, 748);
-            this.btnMoveAssnNext.Name = "btnMoveAssnNext";
-            this.btnMoveAssnNext.Size = new System.Drawing.Size(40, 30);
-            this.btnMoveAssnNext.TabIndex = 14;
-            this.toolTip1.SetToolTip(this.btnMoveAssnNext, "Move Next");
-            this.btnMoveAssnNext.UseVisualStyleBackColor = true;
-            this.btnMoveAssnNext.Click += new System.EventHandler(this.btnMoveAssnNext_Click);
-            // 
-            // btnDeleteAssociation
-            // 
-            this.btnDeleteAssociation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeleteAssociation.Image = global::BDEditor.Properties.Resources.del_16x16;
-            this.btnDeleteAssociation.Location = new System.Drawing.Point(243, 748);
-            this.btnDeleteAssociation.Name = "btnDeleteAssociation";
-            this.btnDeleteAssociation.Size = new System.Drawing.Size(40, 30);
-            this.btnDeleteAssociation.TabIndex = 15;
-            this.toolTip1.SetToolTip(this.btnDeleteAssociation, "Delete selected location");
-            this.btnDeleteAssociation.UseVisualStyleBackColor = true;
-            this.btnDeleteAssociation.Click += new System.EventHandler(this.btnDeleteAssociation_Click);
             // 
             // btnOk
             // 
@@ -262,6 +172,97 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnDeleteAssociation
+            // 
+            this.btnDeleteAssociation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDeleteAssociation.Image = global::BDEditor.Properties.Resources.delete_record_16;
+            this.btnDeleteAssociation.Location = new System.Drawing.Point(243, 748);
+            this.btnDeleteAssociation.Name = "btnDeleteAssociation";
+            this.btnDeleteAssociation.Size = new System.Drawing.Size(40, 30);
+            this.btnDeleteAssociation.TabIndex = 15;
+            this.toolTip1.SetToolTip(this.btnDeleteAssociation, "Delete selected association");
+            this.btnDeleteAssociation.UseVisualStyleBackColor = true;
+            this.btnDeleteAssociation.Click += new System.EventHandler(this.btnDeleteAssociation_Click);
+            // 
+            // btnMoveAssnNext
+            // 
+            this.btnMoveAssnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMoveAssnNext.Image = global::BDEditor.Properties.Resources.arrow_270;
+            this.btnMoveAssnNext.Location = new System.Drawing.Point(173, 748);
+            this.btnMoveAssnNext.Name = "btnMoveAssnNext";
+            this.btnMoveAssnNext.Size = new System.Drawing.Size(40, 30);
+            this.btnMoveAssnNext.TabIndex = 14;
+            this.toolTip1.SetToolTip(this.btnMoveAssnNext, "Move Next");
+            this.btnMoveAssnNext.UseVisualStyleBackColor = true;
+            this.btnMoveAssnNext.Click += new System.EventHandler(this.btnMoveAssnNext_Click);
+            // 
+            // btnMoveAssnPrevious
+            // 
+            this.btnMoveAssnPrevious.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMoveAssnPrevious.Image = global::BDEditor.Properties.Resources.arrow_090;
+            this.btnMoveAssnPrevious.Location = new System.Drawing.Point(124, 748);
+            this.btnMoveAssnPrevious.Name = "btnMoveAssnPrevious";
+            this.btnMoveAssnPrevious.Size = new System.Drawing.Size(40, 30);
+            this.btnMoveAssnPrevious.TabIndex = 13;
+            this.toolTip1.SetToolTip(this.btnMoveAssnPrevious, "Move Previous");
+            this.btnMoveAssnPrevious.UseVisualStyleBackColor = true;
+            this.btnMoveAssnPrevious.Click += new System.EventHandler(this.btnMoveAssnPrevious_Click);
+            // 
+            // btnEditEntryName
+            // 
+            this.btnEditEntryName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditEntryName.Image = global::BDEditor.Properties.Resources.edit_16x16;
+            this.btnEditEntryName.Location = new System.Drawing.Point(249, 340);
+            this.btnEditEntryName.Name = "btnEditEntryName";
+            this.btnEditEntryName.Size = new System.Drawing.Size(40, 30);
+            this.btnEditEntryName.TabIndex = 17;
+            this.toolTip1.SetToolTip(this.btnEditEntryName, "Edit Index Entry");
+            this.btnEditEntryName.UseVisualStyleBackColor = true;
+            this.btnEditEntryName.Click += new System.EventHandler(this.btnEditEntryName_Click);
+            // 
+            // btnDeleteSearchEntry
+            // 
+            this.btnDeleteSearchEntry.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDeleteSearchEntry.Image = global::BDEditor.Properties.Resources.del_16x16;
+            this.btnDeleteSearchEntry.Location = new System.Drawing.Point(249, 277);
+            this.btnDeleteSearchEntry.Name = "btnDeleteSearchEntry";
+            this.btnDeleteSearchEntry.Size = new System.Drawing.Size(40, 30);
+            this.btnDeleteSearchEntry.TabIndex = 16;
+            this.toolTip1.SetToolTip(this.btnDeleteSearchEntry, "Remove Index Entry");
+            this.btnDeleteSearchEntry.UseVisualStyleBackColor = true;
+            // 
+            // btnAddNew
+            // 
+            this.btnAddNew.Image = global::BDEditor.Properties.Resources.add_16x16;
+            this.btnAddNew.Location = new System.Drawing.Point(249, 237);
+            this.btnAddNew.Name = "btnAddNew";
+            this.btnAddNew.Size = new System.Drawing.Size(40, 34);
+            this.btnAddNew.TabIndex = 6;
+            this.toolTip1.SetToolTip(this.btnAddNew, "New Index Entry");
+            this.btnAddNew.UseVisualStyleBackColor = true;
+            // 
+            // btnRemoveFromSelected
+            // 
+            this.btnRemoveFromSelected.Image = global::BDEditor.Properties.Resources.arrow_180;
+            this.btnRemoveFromSelected.Location = new System.Drawing.Point(249, 110);
+            this.btnRemoveFromSelected.Name = "btnRemoveFromSelected";
+            this.btnRemoveFromSelected.Size = new System.Drawing.Size(40, 30);
+            this.btnRemoveFromSelected.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.btnRemoveFromSelected, "Remove from list");
+            this.btnRemoveFromSelected.UseVisualStyleBackColor = true;
+            this.btnRemoveFromSelected.Click += new System.EventHandler(this.btnRemoveFromSelected_Click);
+            // 
+            // btnAddToSelected
+            // 
+            this.btnAddToSelected.Image = global::BDEditor.Properties.Resources.arrow;
+            this.btnAddToSelected.Location = new System.Drawing.Point(249, 74);
+            this.btnAddToSelected.Name = "btnAddToSelected";
+            this.btnAddToSelected.Size = new System.Drawing.Size(40, 30);
+            this.btnAddToSelected.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.btnAddToSelected, "Add to list");
+            this.btnAddToSelected.UseVisualStyleBackColor = true;
+            this.btnAddToSelected.Click += new System.EventHandler(this.btnAddToSelected_Click);
             // 
             // IndexEntryEditView
             // 

@@ -33,7 +33,7 @@ namespace BDEditor.Views
 
         protected List<ToolStripMenuItem> addChildNodeToolStripMenuItemList = new List<ToolStripMenuItem>(); //List of possible children
         protected List<ToolStripMenuItem> addSiblingNodeToolStripMenuItemList = new List<ToolStripMenuItem>(); //Bubbles to parent for creation
-       
+
         public event EventHandler<NodeEventArgs> RequestItemAdd;
         public event EventHandler<NodeEventArgs> RequestItemDelete;
 
@@ -538,6 +538,24 @@ namespace BDEditor.Views
         }
 
         // Context Menu events for children
+        private void editIndexStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
+            if (null != menuItem)
+            {
+                BDNodeWrapper nodeWrapper = menuItem.Tag as BDNodeWrapper;
+                if (null != nodeWrapper) {
+                    BDIndexEntryEditView indexEditView = new BDIndexEntryEditView();
+                    indexEditView.AssignDataContext(dataContext);
+                    indexEditView.AssignCurrentNode(nodeWrapper.Node);
+                    string contextString = BDUtilities.BuildHierarchyString(dataContext, nodeWrapper.Node, ":");
+                    indexEditView.DisplayContext = contextString;
+                    indexEditView.ShowDialog(this);
+                
+                }
+            }
+        }
+
         private void btnReorderToPrevious_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
@@ -716,6 +734,7 @@ namespace BDEditor.Views
             addSiblingNodeToolStripMenuItem.DropDownItems.Clear();
 
             // build the entries
+            editIndexStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, null);
             reorderNextToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, null);
             reorderPreviousToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, null);
             deleteNodeToolStripMenuItem.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, null);

@@ -36,7 +36,8 @@ namespace BDEditor.Views
         }
 
         public int? DisplayOrder { get; set; }
-        
+
+        public event EventHandler<NodeEventArgs> EditIndexEntries;
 
         public event EventHandler<NodeEventArgs> RequestItemAdd;
         public event EventHandler<NodeEventArgs> RequestItemDelete;

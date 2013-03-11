@@ -247,11 +247,11 @@
     <Compile Include="DataModel\BDTableRow.cs" />
     <Compile Include="DataModel\IBDNode.cs" />
     <Compile Include="DataModel\IBDObject.cs" />
-    <Compile Include="Views\BDAntimicrobialRiskContol.cs">
+    <Compile Include="Views\BDAntimicrobialRiskControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\BDAntimicrobialRiskContol.Designer.cs">
-      <DependentUpon>BDAntimicrobialRiskContol.cs</DependentUpon>
+    <Compile Include="Views\BDAntimicrobialRiskControl.Designer.cs">
+      <DependentUpon>BDAntimicrobialRiskControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\BDArchiveDialog.cs">
       <SubType>Form</SubType>
@@ -438,17 +438,17 @@
     <Compile Include="Views\AuthenticationInputBox.Designer.cs">
       <DependentUpon>AuthenticationInputBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\IndexEntryEditView.cs">
+    <Compile Include="Views\BDIndexEntryEditView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\IndexEntryEditView.Designer.cs">
-      <DependentUpon>IndexEntryEditView.cs</DependentUpon>
+    <Compile Include="Views\BDIndexEntryEditView.Designer.cs">
+      <DependentUpon>BDIndexEntryEditView.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\licenses.licx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\BDAntimicrobialRiskContol.resx">
-      <DependentUpon>BDAntimicrobialRiskContol.cs</DependentUpon>
+    <EmbeddedResource Include="Views\BDAntimicrobialRiskControl.resx">
+      <DependentUpon>BDAntimicrobialRiskControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDArchiveDialog.resx">
       <DependentUpon>BDArchiveDialog.cs</DependentUpon>
@@ -547,8 +547,8 @@
     <EmbeddedResource Include="Views\BDDosageControl.resx">
       <DependentUpon>BDDosageControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\IndexEntryEditView.resx">
-      <DependentUpon>IndexEntryEditView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\BDIndexEntryEditView.resx">
+      <DependentUpon>BDIndexEntryEditView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.Config">
       <SubType>Designer</SubType>
@@ -663,8 +663,11 @@
     <Content Include="Resources\Chapter_6c.txt" />
     <Content Include="Resources\Chapter_6d.txt" />
     <None Include="Resources\document-code.png" />
+    <Content Include="Resources\deletetrans_16x16.png" />
     <Content Include="Resources\document.bmp" />
     <Content Include="Resources\document.png" />
+    <Content Include="Resources\edit_16x16.png" />
+    <None Include="Resources\edit_24x24.png" />
     <Content Include="Resources\Flag-Red.png" />
     <None Include="Resources\minus.png" />
     <Content Include="Resources\Ok2.png" />
@@ -727,7 +730,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
+      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

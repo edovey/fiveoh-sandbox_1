@@ -11,7 +11,7 @@ using BDEditor.Classes;
 
 namespace BDEditor.Views
 {
-    public partial class IndexEntryEditView : Form
+    public partial class BDIndexEntryEditView : Form
     {
         private Entities dataContext;
         IBDNode currentNode;
@@ -22,7 +22,7 @@ namespace BDEditor.Views
         List<BDSearchEntryAssociation> searchEntryAssociations;
         string displayContext = string.Empty;
 
-        public IndexEntryEditView()
+        public BDIndexEntryEditView()
         {
             InitializeComponent();
         }
@@ -35,6 +35,10 @@ namespace BDEditor.Views
         public string DisplayContext
         {
             get { return displayContext; }
+            set { 
+                if(!string.IsNullOrEmpty(value))
+                    displayContext = value; 
+            }
         }
 
         public void AssignCurrentNode(IBDNode pCurrentNode)
@@ -69,6 +73,22 @@ namespace BDEditor.Views
 
         }
 
+        private void btnAddToSelected_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnRemoveFromSelected_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnEditEntryName_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
         private void btnMoveAssnPrevious_Click(object sender, EventArgs e)
         {
 
@@ -93,16 +113,6 @@ namespace BDEditor.Views
         {
 
         }
-
-        private void btnAddToSelected_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnRemoveFromSelected_Click(object sender, EventArgs e)
-        {
-
-        }
-
-}    }
+    }    
+}
 

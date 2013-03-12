@@ -177,7 +177,7 @@ namespace BDEditor.Classes
 
             //BDConstants.BDNodeType nodeType = result.Item1;
             //BDConstants.LayoutVariantType[] variants = result.Item2;
-
+            
             List<Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>> childDefinitionList = new List<Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>>();
 
             BDConstants.LayoutVariantType layoutVariant = pLayoutVariant;

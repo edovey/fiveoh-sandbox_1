@@ -17,9 +17,11 @@ namespace BDEditor.Views
         IBDNode currentNode;
         BDSearchEntry currentSearchEntry;
         List<BDSearchEntry> allSearchEntries;
-        BDSortableBindingList<BDSearchEntry> selectedSearchEntries;
-        BDSortableBindingList<BDSearchEntry> availableSearchEntries;
-        List<BDSearchEntryAssociation> searchEntryAssociations;
+        BDSearchEntryBindingList selectedSearchEntries;
+        BDSearchEntryBindingList availableSearchEntries;
+        BDSearchEntryAssociationBindingList searchEntryAssociations;
+        List<BDSearchEntry> entriesToDelete;
+        List<BDSearchEntryAssociation> assnsToDelete;
         string displayContext = string.Empty;
 
         public BDIndexEntryEditView()
@@ -49,18 +51,22 @@ namespace BDEditor.Views
         private void IndexEntryEditView_Load(object sender, EventArgs e)
         {
             allSearchEntries = BDSearchEntry.RetrieveAll(dataContext);
-            
-            selectedSearchEntries = new BDSortableBindingList<BDSearchEntry>(BDSearchEntry.RetrieveSearchEntriesForDisplayParent(dataContext, currentNode.Uuid));
+            searchEntryAssociations = new BDSearchEntryAssociationBindingList();
+            entriesToDelete = new List<BDSearchEntry>();
+            assnsToDelete = new List<BDSearchEntryAssociation>();
+
+            selectedSearchEntries = new BDSearchEntryBindingList(BDSearchEntry.RetrieveSearchEntriesForDisplayParent(dataContext, currentNode.Uuid));
             List<BDSearchEntry> tmpEntry = new List<BDSearchEntry>(allSearchEntries);
             foreach (BDSearchEntry entry in selectedSearchEntries)
                 tmpEntry.Remove(entry);
-            availableSearchEntries = new BDSortableBindingList<BDSearchEntry>(tmpEntry);
+            availableSearchEntries = new BDSearchEntryBindingList(tmpEntry);
 
             lblSelectedSearchEntry.Text = string.Empty;
             lblName.Text = !string.IsNullOrEmpty(currentNode.Name) ? currentNode.Name : "<intentionally blank>";
 
-            lbAvailableIndexEntries.DataSource = availableSearchEntries;
+            lbExistingIndexEntries.DataSource = availableSearchEntries;
             lbSelectedIndexEntries.DataSource = selectedSearchEntries;
+            lbIndexEntryAssociations.DataSource = searchEntryAssociations;
         }
 
         private void reloadAssociatedLocations()
@@ -70,39 +76,45 @@ namespace BDEditor.Views
             searchEntryAssociations.Clear();
 
             currentSearchEntry = selectedSearchEntries[lbSelectedIndexEntries.SelectedIndices[0]];
+            List<BDSearchEntryAssociation> tmpList = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryId(dataContext, currentSearchEntry.Uuid);
+            foreach (BDSearchEntryAssociation assn in tmpList)
+                searchEntryAssociations.Add(assn);
 
-            searchEntryAssociations = new List<BDSearchEntryAssociation>(BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryId(dataContext, currentSearchEntry.Uuid));
-
-            foreach(BDSearchEntryAssociation assn in searchEntryAssociations)
-            {
-                lbIndexEntryAssociations.Items.Add(assn);
-            }
             lbIndexEntryAssociations.EndUpdate();
+
+            btnMoveAssnNext.Enabled = searchEntryAssociations.Count > 1 ? true : false;
+            btnMoveAssnPrevious.Enabled = searchEntryAssociations.Count > 1 ? true : false;
+
+            btnDeleteAssociation.Enabled = searchEntryAssociations.Count > 0 ? true : false;
         }
 
         private void btnAddToSelected_Click(object sender, EventArgs e)
         {
-            lbAvailableIndexEntries.BeginUpdate();
+            lbExistingIndexEntries.BeginUpdate();
             lbSelectedIndexEntries.BeginUpdate();
-            List<BDSearchEntry> selected = lbAvailableIndexEntries.SelectedItems.Cast<BDSearchEntry>().ToList();
+            List<BDSearchEntry> selected = lbExistingIndexEntries.SelectedItems.Cast<BDSearchEntry>().ToList();
             foreach(BDSearchEntry entry in selected)
             {
                 selectedSearchEntries.Add(entry);
                 availableSearchEntries.Remove(entry);
             }
-
-            // Re-sort the list
+            currentSearchEntry = selected[0];
+            
             selectedSearchEntries.Sort("name", ListSortDirection.Ascending);
             
-            lbAvailableIndexEntries.ClearSelected();
+            lbExistingIndexEntries.ClearSelected();
             lbSelectedIndexEntries.ClearSelected();
-            lbAvailableIndexEntries.EndUpdate();
+            lbExistingIndexEntries.EndUpdate();
             lbSelectedIndexEntries.EndUpdate();
+
+            lbSelectedIndexEntries.SetSelected(selectedSearchEntries.IndexOf(currentSearchEntry), true);
+
+            btnOk.Enabled = true;
         }
 
         private void btnRemoveFromSelected_Click(object sender, EventArgs e)
         {
-            lbAvailableIndexEntries.BeginUpdate();
+            lbExistingIndexEntries.BeginUpdate();
             lbSelectedIndexEntries.BeginUpdate();
             List<BDSearchEntry> selected = lbSelectedIndexEntries.SelectedItems.Cast<BDSearchEntry>().ToList();
             foreach (BDSearchEntry entry in selected)
@@ -110,33 +122,44 @@ namespace BDEditor.Views
                 availableSearchEntries.Add(entry);
                 selectedSearchEntries.Remove(entry);
             }
+            currentSearchEntry = selected[0];
             availableSearchEntries.Sort("name", ListSortDirection.Ascending);
 
-            lbAvailableIndexEntries.EndUpdate();
+            lbExistingIndexEntries.EndUpdate();
             lbSelectedIndexEntries.EndUpdate();
-            lbAvailableIndexEntries.ClearSelected();
+            lbExistingIndexEntries.ClearSelected();
             lbSelectedIndexEntries.ClearSelected();
+
+            lbExistingIndexEntries.SetSelected(availableSearchEntries.IndexOf(currentSearchEntry), true);
+            searchEntryAssociations.Clear();
+            lblSelectedSearchEntry.Text = string.Empty;
+
+            btnOk.Enabled = true;
         }
 
         private void btnEditEntryName_Click(object sender, EventArgs e)
         {
 
+            btnOk.Enabled = true;
         }
 
 
         private void btnMoveAssnPrevious_Click(object sender, EventArgs e)
         {
 
+            btnOk.Enabled = true;
         }
 
         private void btnMoveAssnNext_Click(object sender, EventArgs e)
         {
 
+            btnOk.Enabled = true;
         }
 
         private void btnDeleteAssociation_Click(object sender, EventArgs e)
         {
 
+            btnOk.Enabled = true;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -146,6 +169,7 @@ namespace BDEditor.Views
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+
             this.DialogResult = DialogResult.OK;
         }
 
@@ -156,6 +180,8 @@ namespace BDEditor.Views
             {
                 BDSearchEntry entry = selectedSearchEntries[lbSelectedIndexEntries.SelectedIndices[0]];
                 lblSelectedSearchEntry.Text = entry.name;
+
+                reloadAssociatedLocations();
             }
         }
     }    

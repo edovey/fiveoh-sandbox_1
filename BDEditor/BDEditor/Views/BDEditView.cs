@@ -1194,7 +1194,6 @@ namespace BDEditor.Views
             toolStripStatusLabel1.ToolTipText = newText;
             }
 
-
         private void btnPublish_Click(object sender, EventArgs e)
         {
 

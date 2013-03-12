@@ -91,6 +91,10 @@ namespace BDEditor.DataModel
                                                                             BDConstants.LayoutVariantType pLayoutVariant,
                                                                             string pDisplayContext)
         {
+            List<BDSearchEntryAssociation> associations = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryIdAndDisplayParentid(pContext, pSearchEntryId, pDisplayParentId);
+            if (associations.Count >= 0)
+                return associations[0];
+
             BDSearchEntryAssociation association = CreateBDSearchEntryAssociation(Guid.NewGuid());
             association.createdBy = Guid.Empty;
             association.schemaVersion = ENTITY_SCHEMAVERSION;
@@ -116,6 +120,9 @@ namespace BDEditor.DataModel
                                                                             BDConstants.LayoutVariantType pLayoutVariant,
                                                                             string pDisplayContext)
         {
+            List<BDSearchEntryAssociation> associations = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryIdAndDisplayParentid(pContext, pSearchEntryId, pDisplayParentId);
+            if (associations.Count >= 0)
+                return associations[0];
             BDSearchEntryAssociation association = CreateBDSearchEntryAssociation(Guid.NewGuid());
             association.createdBy = Guid.Empty;
             association.schemaVersion = ENTITY_SCHEMAVERSION;
@@ -228,7 +235,7 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Returns all the SearchEntryAssociations for a searchEntry uuid 
+        /// Returns all the SearchEntryAssociations for a searchEntry uuid, sorted in display order 
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pLinkedNoteId"></param>

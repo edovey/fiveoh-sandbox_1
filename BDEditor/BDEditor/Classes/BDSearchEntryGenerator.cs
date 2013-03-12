@@ -29,7 +29,7 @@ namespace BDEditor.Classes
             BDHtmlPageGeneratorLogEntry.AppendToFile("BDSearchGeneratorLog.txt", string.Format("Start: {0} -------------------------------", DateTime.Now));
             // clear the data from the database
             BDSearchEntry.ResetForRegeneration(pDataContext);
-            BDSearchEntryAssociation.DeleteAll(pDataContext);
+            // BDSearchEntryAssociation.DeleteAll(pDataContext);
 
             searchEntryList = BDSearchEntry.RetrieveSearchEntryNames(pDataContext);
 

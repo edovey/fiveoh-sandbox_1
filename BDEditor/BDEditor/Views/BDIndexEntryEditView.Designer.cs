@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.lbAvailableIndexEntries = new System.Windows.Forms.ListBox();
+            this.lbExistingIndexEntries = new System.Windows.Forms.ListBox();
             this.lbSelectedIndexEntries = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -52,16 +52,16 @@
             this.pnlSelectTerms.SuspendLayout();
             this.SuspendLayout();
             // 
-            // lbAvailableIndexEntries
+            // lbExistingIndexEntries
             // 
-            this.lbAvailableIndexEntries.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lbExistingIndexEntries.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.lbAvailableIndexEntries.FormattingEnabled = true;
-            this.lbAvailableIndexEntries.Location = new System.Drawing.Point(25, 64);
-            this.lbAvailableIndexEntries.Name = "lbAvailableIndexEntries";
-            this.lbAvailableIndexEntries.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbAvailableIndexEntries.Size = new System.Drawing.Size(209, 329);
-            this.lbAvailableIndexEntries.TabIndex = 0;
+            this.lbExistingIndexEntries.FormattingEnabled = true;
+            this.lbExistingIndexEntries.Location = new System.Drawing.Point(25, 64);
+            this.lbExistingIndexEntries.Name = "lbExistingIndexEntries";
+            this.lbExistingIndexEntries.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lbExistingIndexEntries.Size = new System.Drawing.Size(209, 329);
+            this.lbExistingIndexEntries.TabIndex = 0;
             // 
             // lbSelectedIndexEntries
             // 
@@ -81,9 +81,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(25, 45);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(137, 13);
+            this.label1.Size = new System.Drawing.Size(129, 13);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Available Index Entries";
+            this.label1.Text = "Existing Index Entries";
             // 
             // label2
             // 
@@ -125,7 +125,7 @@
             this.pnlSelectTerms.Controls.Add(this.label2);
             this.pnlSelectTerms.Controls.Add(this.btnRemoveFromSelected);
             this.pnlSelectTerms.Controls.Add(this.btnAddToSelected);
-            this.pnlSelectTerms.Controls.Add(this.lbAvailableIndexEntries);
+            this.pnlSelectTerms.Controls.Add(this.lbExistingIndexEntries);
             this.pnlSelectTerms.Controls.Add(this.lbSelectedIndexEntries);
             this.pnlSelectTerms.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlSelectTerms.Location = new System.Drawing.Point(0, 0);
@@ -211,6 +211,7 @@
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOk.Enabled = false;
             this.btnOk.Location = new System.Drawing.Point(478, 755);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
@@ -234,6 +235,7 @@
             // btnDeleteAssociation
             // 
             this.btnDeleteAssociation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDeleteAssociation.Enabled = false;
             this.btnDeleteAssociation.Image = global::BDEditor.Properties.Resources.delete_record_16;
             this.btnDeleteAssociation.Location = new System.Drawing.Point(243, 748);
             this.btnDeleteAssociation.Name = "btnDeleteAssociation";
@@ -246,6 +248,7 @@
             // btnMoveAssnNext
             // 
             this.btnMoveAssnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMoveAssnNext.Enabled = false;
             this.btnMoveAssnNext.Image = global::BDEditor.Properties.Resources.arrow_270;
             this.btnMoveAssnNext.Location = new System.Drawing.Point(173, 748);
             this.btnMoveAssnNext.Name = "btnMoveAssnNext";
@@ -258,6 +261,7 @@
             // btnMoveAssnPrevious
             // 
             this.btnMoveAssnPrevious.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMoveAssnPrevious.Enabled = false;
             this.btnMoveAssnPrevious.Image = global::BDEditor.Properties.Resources.arrow_090;
             this.btnMoveAssnPrevious.Location = new System.Drawing.Point(124, 748);
             this.btnMoveAssnPrevious.Name = "btnMoveAssnPrevious";
@@ -295,7 +299,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox lbAvailableIndexEntries;
+        private System.Windows.Forms.ListBox lbExistingIndexEntries;
         private System.Windows.Forms.ListBox lbSelectedIndexEntries;
         private System.Windows.Forms.Button btnAddToSelected;
         private System.Windows.Forms.Button btnRemoveFromSelected;

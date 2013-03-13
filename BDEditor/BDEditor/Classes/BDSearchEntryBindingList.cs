@@ -116,6 +116,19 @@ namespace BDEditor.Classes
                 index = items.FindIndex(this.findMatch);
             return index;
         }
+
+        public void Filter(string field, ListSortDirection direction)
+        {
+            if (this.Count > 0)
+            {
+                PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(this.Items[0]);
+                PropertyDescriptor myProperty = properties.Find(field, false);
+                if (myProperty != null)
+                    FindCore(myProperty, direction);
+            }
+        }
+
+
         #endregion
     }
 }

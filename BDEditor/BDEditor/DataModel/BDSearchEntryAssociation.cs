@@ -121,7 +121,7 @@ namespace BDEditor.DataModel
                                                                             string pDisplayContext)
         {
             List<BDSearchEntryAssociation> associations = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryIdAndDisplayParentid(pContext, pSearchEntryId, pDisplayParentId);
-            if (associations.Count >= 0)
+            if (associations.Count > 0)
                 return associations[0];
             BDSearchEntryAssociation association = CreateBDSearchEntryAssociation(Guid.NewGuid());
             association.createdBy = Guid.Empty;
@@ -139,6 +139,15 @@ namespace BDEditor.DataModel
 
             return association;
         }
+        public static BDSearchEntryAssociation CreateBDSearchEntryAssociation(Entities pContext,
+                                                                            Guid pSearchEntryId,
+                                                                            Guid pDisplayParentId,
+                                                                            BDConstants.LayoutVariantType pLayoutVariant,
+                                                                            string pDisplayContext)
+        {
+            return CreateBDSearchEntryAssociation(pContext, pSearchEntryId, BDConstants.BDNodeType.Undefined, pDisplayParentId, pLayoutVariant, pDisplayContext);
+        }
+
         public static void Save(Entities pContext, BDSearchEntryAssociation pAssociation)
         {
             if (pAssociation.EntityState != EntityState.Unchanged)

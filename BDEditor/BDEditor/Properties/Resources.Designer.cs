@@ -214,6 +214,13 @@ namespace BDEditor.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap filter_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("filter_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Flag_Green1 {
             get {
                 object obj = ResourceManager.GetObject("Flag_Green1", resourceCulture);
@@ -238,6 +245,20 @@ namespace BDEditor.Properties {
         internal static System.Drawing.Bitmap minus {
             get {
                 object obj = ResourceManager.GetObject("minus", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap new_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("new_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap new_24x24 {
+            get {
+                object obj = ResourceManager.GetObject("new_24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

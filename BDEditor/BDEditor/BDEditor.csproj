@@ -316,6 +316,12 @@
     <Compile Include="Views\BDDosageAndCostControl.Designer.cs">
       <DependentUpon>BDDosageAndCostControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\BDEditNameDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\BDEditNameDialog.Designer.cs">
+      <DependentUpon>BDEditNameDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\BDInternalLinkChooserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -483,6 +489,9 @@
     <EmbeddedResource Include="Views\BDDosageAndCostControl.resx">
       <DependentUpon>BDDosageAndCostControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDEditNameDialog.resx">
+      <DependentUpon>BDEditNameDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\BDInternalLinkChooserControl.resx">
       <DependentUpon>BDInternalLinkChooserControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -594,15 +603,6 @@
     <None Include="Resources\arrow-join-180.png" />
     <None Include="Resources\arrow-split.png" />
     <None Include="Resources\arrow-split-180.png" />
-    <Content Include="Resources\Chapter_3b.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Chapter_3g.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Chapter_3h.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Resources\BDEditorStructure.txt" />
     <None Include="Resources\link_16.png" />
     <None Include="Resources\del_16x16.png" />
@@ -615,64 +615,17 @@
     <None Include="Resources\del_16.png" />
     <None Include="Resources\down_16.png" />
     <Content Include="Resources\Cancel2.png" />
-    <Content Include="Resources\Chapter_1a.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Chapter_1c.txt" />
-    <Content Include="Resources\Chapter_1d.txt" />
-    <Content Include="Resources\Chapter_1e.txt" />
-    <Content Include="Resources\Chapter_1f.txt" />
-    <Content Include="Resources\Chapter_1g.txt" />
-    <Content Include="Resources\Chapter_1h.txt" />
-    <Content Include="Resources\Chapter_1i.txt" />
-    <Content Include="Resources\Chapter_1j.txt" />
-    <Content Include="Resources\Chapter_2c.txt" />
-    <Content Include="Resources\Chapter_2b.txt" />
-    <Content Include="Resources\Chapter_2a.txt" />
     <None Include="Resources\Flag-Green1.PNG" />
-    <Content Include="Resources\Chapter_2d.txt" />
-    <Content Include="Resources\Chapter_2e.txt" />
-    <Content Include="Resources\Chapter_1b.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Chapter_2f.txt" />
-    <Content Include="Resources\Chapter_3a.txt" />
-    <Content Include="Resources\Chapter_3c.txt" />
-    <Content Include="Resources\Chapter_3d.txt" />
-    <Content Include="Resources\Chapter_3e.txt" />
-    <Content Include="Resources\Chapter_3f.txt" />
-    <Content Include="Resources\Chapter_3i.txt" />
-    <Content Include="Resources\Chapter_3j.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Chapter_3l.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Chapter_4a.txt" />
-    <Content Include="Resources\Chapter_4b.txt" />
-    <Content Include="Resources\Chapter_4c.txt" />
-    <Content Include="Resources\Chapter_4d.txt" />
-    <Content Include="Resources\Chapter_4e.txt" />
-    <Content Include="Resources\Chapter_4f.txt" />
-    <Content Include="Resources\Chapter_4g.txt" />
-    <Content Include="Resources\Chapter_4h.txt" />
-    <Content Include="Resources\Chapter_5a.txt" />
-    <Content Include="Resources\Chapter_5b.txt" />
-    <Content Include="Resources\Chapter_5c.txt" />
-    <Content Include="Resources\Chapter_5d.txt" />
-    <Content Include="Resources\Chapter_5e.txt" />
-    <Content Include="Resources\Chapter_6a.txt" />
-    <Content Include="Resources\Chapter_6b.txt" />
-    <Content Include="Resources\Chapter_6c.txt" />
-    <Content Include="Resources\Chapter_6d.txt" />
     <None Include="Resources\document-code.png" />
     <Content Include="Resources\deletetrans_16x16.png" />
     <Content Include="Resources\document.bmp" />
     <Content Include="Resources\document.png" />
     <Content Include="Resources\edit_16x16.png" />
-    <None Include="Resources\edit_24x24.png" />
+    <None Include="Resources\filter_16x16.png" />
     <Content Include="Resources\Flag-Red.png" />
     <None Include="Resources\minus.png" />
+    <None Include="Resources\new_16x16.png" />
+    <None Include="Resources\new_24x24.png" />
     <Content Include="Resources\Ok2.png" />
     <Content Include="Resources\pen.ico" />
     <None Include="Resources\plus.png" />

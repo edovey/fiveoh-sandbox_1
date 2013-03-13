@@ -1,6 +1,6 @@
 ﻿namespace BDEditor.Views
 {
-    partial class BDIndexEntryEditView
+    partial class BDSearchEntryEditView
     {
         /// <summary>
         /// Required designer variable.
@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.lbExistingIndexEntries = new System.Windows.Forms.ListBox();
-            this.lbSelectedIndexEntries = new System.Windows.Forms.ListBox();
+            this.lbExistingSearchEntries = new System.Windows.Forms.ListBox();
+            this.lbSelectedSearchEntries = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
@@ -44,7 +44,7 @@
             this.btnRemoveFromSelected = new System.Windows.Forms.Button();
             this.btnAddToSelected = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.lbIndexEntryAssociations = new System.Windows.Forms.ListBox();
+            this.lbSearchEntryAssociations = new System.Windows.Forms.ListBox();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -54,29 +54,29 @@
             this.pnlSelectTerms.SuspendLayout();
             this.SuspendLayout();
             // 
-            // lbExistingIndexEntries
+            // lbExistingSearchEntries
             // 
-            this.lbExistingIndexEntries.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lbExistingSearchEntries.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.lbExistingIndexEntries.FormattingEnabled = true;
-            this.lbExistingIndexEntries.Location = new System.Drawing.Point(19, 90);
-            this.lbExistingIndexEntries.Name = "lbExistingIndexEntries";
-            this.lbExistingIndexEntries.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbExistingIndexEntries.Size = new System.Drawing.Size(233, 303);
-            this.lbExistingIndexEntries.TabIndex = 0;
-            this.lbExistingIndexEntries.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbExistingIndexEntries_MouseDown);
+            this.lbExistingSearchEntries.FormattingEnabled = true;
+            this.lbExistingSearchEntries.Location = new System.Drawing.Point(19, 90);
+            this.lbExistingSearchEntries.Name = "lbExistingSearchEntries";
+            this.lbExistingSearchEntries.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lbExistingSearchEntries.Size = new System.Drawing.Size(233, 303);
+            this.lbExistingSearchEntries.TabIndex = 0;
+            this.lbExistingSearchEntries.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbExistingIndexEntries_MouseDown);
             // 
-            // lbSelectedIndexEntries
+            // lbSelectedSearchEntries
             // 
-            this.lbSelectedIndexEntries.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lbSelectedSearchEntries.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.lbSelectedIndexEntries.FormattingEnabled = true;
-            this.lbSelectedIndexEntries.Location = new System.Drawing.Point(316, 90);
-            this.lbSelectedIndexEntries.Name = "lbSelectedIndexEntries";
-            this.lbSelectedIndexEntries.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbSelectedIndexEntries.Size = new System.Drawing.Size(233, 303);
-            this.lbSelectedIndexEntries.TabIndex = 2;
-            this.lbSelectedIndexEntries.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbSelectedIndexEntries_MouseDown);
+            this.lbSelectedSearchEntries.FormattingEnabled = true;
+            this.lbSelectedSearchEntries.Location = new System.Drawing.Point(316, 90);
+            this.lbSelectedSearchEntries.Name = "lbSelectedSearchEntries";
+            this.lbSelectedSearchEntries.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lbSelectedSearchEntries.Size = new System.Drawing.Size(233, 303);
+            this.lbSelectedSearchEntries.TabIndex = 2;
+            this.lbSelectedSearchEntries.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbSelectedSearchEntries_MouseDown);
             // 
             // label1
             // 
@@ -130,8 +130,8 @@
             this.pnlSelectTerms.Controls.Add(this.label2);
             this.pnlSelectTerms.Controls.Add(this.btnRemoveFromSelected);
             this.pnlSelectTerms.Controls.Add(this.btnAddToSelected);
-            this.pnlSelectTerms.Controls.Add(this.lbExistingIndexEntries);
-            this.pnlSelectTerms.Controls.Add(this.lbSelectedIndexEntries);
+            this.pnlSelectTerms.Controls.Add(this.lbExistingSearchEntries);
+            this.pnlSelectTerms.Controls.Add(this.lbSelectedSearchEntries);
             this.pnlSelectTerms.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlSelectTerms.Location = new System.Drawing.Point(0, 0);
             this.pnlSelectTerms.Name = "pnlSelectTerms";
@@ -230,17 +230,17 @@
             this.label4.TabIndex = 11;
             this.label4.Text = "Locations associated with:";
             // 
-            // lbIndexEntryAssociations
+            // lbSearchEntryAssociations
             // 
-            this.lbIndexEntryAssociations.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lbSearchEntryAssociations.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbIndexEntryAssociations.FormattingEnabled = true;
-            this.lbIndexEntryAssociations.HorizontalScrollbar = true;
-            this.lbIndexEntryAssociations.Location = new System.Drawing.Point(17, 437);
-            this.lbIndexEntryAssociations.Name = "lbIndexEntryAssociations";
-            this.lbIndexEntryAssociations.Size = new System.Drawing.Size(536, 264);
-            this.lbIndexEntryAssociations.TabIndex = 1;
+            this.lbSearchEntryAssociations.FormattingEnabled = true;
+            this.lbSearchEntryAssociations.HorizontalScrollbar = true;
+            this.lbSearchEntryAssociations.Location = new System.Drawing.Point(17, 437);
+            this.lbSearchEntryAssociations.Name = "lbSearchEntryAssociations";
+            this.lbSearchEntryAssociations.Size = new System.Drawing.Size(536, 264);
+            this.lbSearchEntryAssociations.TabIndex = 1;
             // 
             // btnOk
             // 
@@ -318,14 +318,14 @@
             this.Controls.Add(this.btnDeleteAssociation);
             this.Controls.Add(this.btnMoveAssnNext);
             this.Controls.Add(this.btnMoveAssnPrevious);
-            this.Controls.Add(this.lbIndexEntryAssociations);
+            this.Controls.Add(this.lbSearchEntryAssociations);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.pnlSelectTerms);
             this.Controls.Add(this.lblSelectedSearchEntry);
             this.Name = "BDIndexEntryEditView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Index Entry Editor";
-            this.Load += new System.EventHandler(this.IndexEntryEditView_Load);
+            this.Load += new System.EventHandler(this.BDSearchEntryEditView_Load);
             this.pnlSelectTerms.ResumeLayout(false);
             this.pnlSelectTerms.PerformLayout();
             this.ResumeLayout(false);
@@ -335,8 +335,8 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox lbExistingIndexEntries;
-        private System.Windows.Forms.ListBox lbSelectedIndexEntries;
+        private System.Windows.Forms.ListBox lbExistingSearchEntries;
+        private System.Windows.Forms.ListBox lbSelectedSearchEntries;
         private System.Windows.Forms.Button btnAddToSelected;
         private System.Windows.Forms.Button btnRemoveFromSelected;
         private System.Windows.Forms.Label label1;
@@ -346,7 +346,7 @@
         private System.Windows.Forms.Label lblSelectedSearchEntry;
         private System.Windows.Forms.Panel pnlSelectTerms;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ListBox lbIndexEntryAssociations;
+        private System.Windows.Forms.ListBox lbSearchEntryAssociations;
         private System.Windows.Forms.Button btnMoveAssnPrevious;
         private System.Windows.Forms.Button btnMoveAssnNext;
         private System.Windows.Forms.Button btnDeleteAssociation;

@@ -447,11 +447,11 @@
     <Compile Include="Views\AuthenticationInputBox.Designer.cs">
       <DependentUpon>AuthenticationInputBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\BDIndexEntryEditView.cs">
+    <Compile Include="Views\BDSearchEntryEditView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\BDIndexEntryEditView.Designer.cs">
-      <DependentUpon>BDIndexEntryEditView.cs</DependentUpon>
+    <Compile Include="Views\BDSearchEntryEditView.Designer.cs">
+      <DependentUpon>BDSearchEntryEditView.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\licenses.licx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -559,8 +559,8 @@
     <EmbeddedResource Include="Views\BDDosageControl.resx">
       <DependentUpon>BDDosageControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\BDIndexEntryEditView.resx">
-      <DependentUpon>BDIndexEntryEditView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\BDSearchEntryEditView.resx">
+      <DependentUpon>BDSearchEntryEditView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.Config">
       <SubType>Designer</SubType>
@@ -686,7 +686,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
+      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -214,7 +214,7 @@ namespace BDEditor.Views
                 BDNodeWrapper nodeWrapper = menuItem.Tag as BDNodeWrapper;
                 if (null != nodeWrapper)
                 {
-                    BDIndexEntryEditView indexEditView = new BDIndexEntryEditView();
+                    BDSearchEntryEditView indexEditView = new BDSearchEntryEditView();
                     indexEditView.AssignDataContext(dataContext);
                     indexEditView.AssignCurrentNode(nodeWrapper.Node);
                     string contextString = BDUtilities.BuildHierarchyString(dataContext, nodeWrapper.Node, ":");

@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDDosageControl));
-            this.rtbDosage4 = new System.Windows.Forms.RichTextBox();
+            this.tbDosage4 = new System.Windows.Forms.TextBox();
             this.contextMenuStripTextBox = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.bToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,11 +48,14 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.selectAlloolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlMain = new System.Windows.Forms.Panel();
-            this.rtbDosage3 = new System.Windows.Forms.RichTextBox();
+            this.chkPreviousDose4 = new System.Windows.Forms.CheckBox();
+            this.chkPreviousDose3 = new System.Windows.Forms.CheckBox();
+            this.chkPreviousDose2 = new System.Windows.Forms.CheckBox();
+            this.tbDosage3 = new System.Windows.Forms.TextBox();
             this.btnDosage3Link = new System.Windows.Forms.Button();
             this.btnAdultLink = new System.Windows.Forms.Button();
-            this.rtbAdultDosage = new System.Windows.Forms.RichTextBox();
-            this.rtbDosage2 = new System.Windows.Forms.RichTextBox();
+            this.tbAdultDosage = new System.Windows.Forms.TextBox();
+            this.tbDosage2 = new System.Windows.Forms.TextBox();
             this.btnDosage2Link = new System.Windows.Forms.Button();
             this.btnDosage4Link = new System.Windows.Forms.Button();
             this.btnMenu = new System.Windows.Forms.Button();
@@ -70,29 +73,24 @@
             this.lblDose3 = new System.Windows.Forms.Label();
             this.lblDose4 = new System.Windows.Forms.Label();
             this.pnlLabels = new System.Windows.Forms.Panel();
-            this.chkPreviousDose2 = new System.Windows.Forms.CheckBox();
-            this.chkPreviousDose3 = new System.Windows.Forms.CheckBox();
-            this.chkPreviousDose4 = new System.Windows.Forms.CheckBox();
             this.contextMenuStripTextBox.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
             this.pnlLabels.SuspendLayout();
             this.SuspendLayout();
             // 
-            // rtbDosage4
+            // tbDosage4
             // 
-            this.rtbDosage4.ContextMenuStrip = this.contextMenuStripTextBox;
-            this.rtbDosage4.DetectUrls = false;
-            this.rtbDosage4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbDosage4.Location = new System.Drawing.Point(661, 2);
-            this.rtbDosage4.Name = "rtbDosage4";
-            this.rtbDosage4.ShortcutsEnabled = false;
-            this.rtbDosage4.Size = new System.Drawing.Size(135, 50);
-            this.rtbDosage4.TabIndex = 6;
-            this.rtbDosage4.Text = "";
-            this.toolTip1.SetToolTip(this.rtbDosage4, "< 10 (Anuric)");
-            this.rtbDosage4.TextChanged += new System.EventHandler(this.textBox_TextChanged);
-            this.rtbDosage4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rtbDosage4_MouseDown);
+            this.tbDosage4.ContextMenuStrip = this.contextMenuStripTextBox;
+            this.tbDosage4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbDosage4.Location = new System.Drawing.Point(661, 2);
+            this.tbDosage4.Name = "tbDosage4";
+            this.tbDosage4.ShortcutsEnabled = false;
+            this.tbDosage4.Size = new System.Drawing.Size(135, 24);
+            this.tbDosage4.TabIndex = 6;
+            this.toolTip1.SetToolTip(this.tbDosage4, "< 10 (Anuric)");
+            this.tbDosage4.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.tbDosage4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDosage4_MouseDown);
             // 
             // contextMenuStripTextBox
             // 
@@ -229,36 +227,67 @@
             this.pnlMain.Controls.Add(this.chkPreviousDose4);
             this.pnlMain.Controls.Add(this.chkPreviousDose3);
             this.pnlMain.Controls.Add(this.chkPreviousDose2);
-            this.pnlMain.Controls.Add(this.rtbDosage3);
+            this.pnlMain.Controls.Add(this.tbDosage3);
             this.pnlMain.Controls.Add(this.btnDosage3Link);
             this.pnlMain.Controls.Add(this.btnAdultLink);
-            this.pnlMain.Controls.Add(this.rtbAdultDosage);
-            this.pnlMain.Controls.Add(this.rtbDosage2);
-            this.pnlMain.Controls.Add(this.rtbDosage4);
+            this.pnlMain.Controls.Add(this.tbAdultDosage);
+            this.pnlMain.Controls.Add(this.tbDosage2);
+            this.pnlMain.Controls.Add(this.tbDosage4);
             this.pnlMain.Controls.Add(this.btnDosage2Link);
             this.pnlMain.Controls.Add(this.btnDosage4Link);
             this.pnlMain.Controls.Add(this.btnMenu);
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlMain.Location = new System.Drawing.Point(0, 47);
-            this.pnlMain.MinimumSize = new System.Drawing.Size(866, 56);
+            this.pnlMain.MinimumSize = new System.Drawing.Size(866, 39);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(868, 56);
+            this.pnlMain.Size = new System.Drawing.Size(868, 39);
             this.pnlMain.TabIndex = 0;
             // 
-            // rtbDosage3
+            // chkPreviousDose4
             // 
-            this.rtbDosage3.ContextMenuStrip = this.contextMenuStripTextBox;
-            this.rtbDosage3.DetectUrls = false;
-            this.rtbDosage3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbDosage3.Location = new System.Drawing.Point(453, 3);
-            this.rtbDosage3.Name = "rtbDosage3";
-            this.rtbDosage3.ShortcutsEnabled = false;
-            this.rtbDosage3.Size = new System.Drawing.Size(135, 50);
-            this.rtbDosage3.TabIndex = 4;
-            this.rtbDosage3.Text = "";
-            this.toolTip1.SetToolTip(this.rtbDosage3, "10 - 50");
-            this.rtbDosage3.TextChanged += new System.EventHandler(this.textBox_TextChanged);
-            this.rtbDosage3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rtbDosage3_MouseDown);
+            this.chkPreviousDose4.AutoSize = true;
+            this.chkPreviousDose4.Location = new System.Drawing.Point(640, 6);
+            this.chkPreviousDose4.Name = "chkPreviousDose4";
+            this.chkPreviousDose4.Size = new System.Drawing.Size(15, 14);
+            this.chkPreviousDose4.TabIndex = 11;
+            this.toolTip1.SetToolTip(this.chkPreviousDose4, "Same as previous");
+            this.chkPreviousDose4.UseVisualStyleBackColor = true;
+            this.chkPreviousDose4.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // chkPreviousDose3
+            // 
+            this.chkPreviousDose3.AutoSize = true;
+            this.chkPreviousDose3.Location = new System.Drawing.Point(432, 6);
+            this.chkPreviousDose3.Name = "chkPreviousDose3";
+            this.chkPreviousDose3.Size = new System.Drawing.Size(15, 14);
+            this.chkPreviousDose3.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.chkPreviousDose3, "Same as previous");
+            this.chkPreviousDose3.UseVisualStyleBackColor = true;
+            this.chkPreviousDose3.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // chkPreviousDose2
+            // 
+            this.chkPreviousDose2.AutoSize = true;
+            this.chkPreviousDose2.Location = new System.Drawing.Point(224, 6);
+            this.chkPreviousDose2.Name = "chkPreviousDose2";
+            this.chkPreviousDose2.Size = new System.Drawing.Size(15, 14);
+            this.chkPreviousDose2.TabIndex = 9;
+            this.toolTip1.SetToolTip(this.chkPreviousDose2, "Same as previous");
+            this.chkPreviousDose2.UseVisualStyleBackColor = true;
+            this.chkPreviousDose2.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            // 
+            // tbDosage3
+            // 
+            this.tbDosage3.ContextMenuStrip = this.contextMenuStripTextBox;
+            this.tbDosage3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbDosage3.Location = new System.Drawing.Point(453, 3);
+            this.tbDosage3.Name = "tbDosage3";
+            this.tbDosage3.ShortcutsEnabled = false;
+            this.tbDosage3.Size = new System.Drawing.Size(135, 24);
+            this.tbDosage3.TabIndex = 4;
+            this.toolTip1.SetToolTip(this.tbDosage3, "10 - 50");
+            this.tbDosage3.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.tbDosage3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDosage3_MouseDown);
             // 
             // btnDosage3Link
             // 
@@ -282,35 +311,31 @@
             this.btnAdultLink.UseVisualStyleBackColor = true;
             this.btnAdultLink.Click += new System.EventHandler(this.btnLink_Click);
             // 
-            // rtbAdultDosage
+            // tbAdultDosage
             // 
-            this.rtbAdultDosage.ContextMenuStrip = this.contextMenuStripTextBox;
-            this.rtbAdultDosage.DetectUrls = false;
-            this.rtbAdultDosage.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbAdultDosage.Location = new System.Drawing.Point(10, 2);
-            this.rtbAdultDosage.Name = "rtbAdultDosage";
-            this.rtbAdultDosage.ShortcutsEnabled = false;
-            this.rtbAdultDosage.Size = new System.Drawing.Size(169, 50);
-            this.rtbAdultDosage.TabIndex = 0;
-            this.rtbAdultDosage.Text = "";
-            this.toolTip1.SetToolTip(this.rtbAdultDosage, "Adult");
-            this.rtbAdultDosage.TextChanged += new System.EventHandler(this.textBox_TextChanged);
-            this.rtbAdultDosage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rtbAdultDosage_MouseDown);
+            this.tbAdultDosage.ContextMenuStrip = this.contextMenuStripTextBox;
+            this.tbAdultDosage.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbAdultDosage.Location = new System.Drawing.Point(10, 2);
+            this.tbAdultDosage.Name = "tbAdultDosage";
+            this.tbAdultDosage.ShortcutsEnabled = false;
+            this.tbAdultDosage.Size = new System.Drawing.Size(169, 24);
+            this.tbAdultDosage.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.tbAdultDosage, "Adult");
+            this.tbAdultDosage.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.tbAdultDosage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbAdultDosage_MouseDown);
             // 
-            // rtbDosage2
+            // tbDosage2
             // 
-            this.rtbDosage2.ContextMenuStrip = this.contextMenuStripTextBox;
-            this.rtbDosage2.DetectUrls = false;
-            this.rtbDosage2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbDosage2.Location = new System.Drawing.Point(245, 2);
-            this.rtbDosage2.Name = "rtbDosage2";
-            this.rtbDosage2.ShortcutsEnabled = false;
-            this.rtbDosage2.Size = new System.Drawing.Size(135, 50);
-            this.rtbDosage2.TabIndex = 2;
-            this.rtbDosage2.Text = "";
-            this.toolTip1.SetToolTip(this.rtbDosage2, "< 50");
-            this.rtbDosage2.TextChanged += new System.EventHandler(this.textBox_TextChanged);
-            this.rtbDosage2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rtbDosage2_MouseDown);
+            this.tbDosage2.ContextMenuStrip = this.contextMenuStripTextBox;
+            this.tbDosage2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbDosage2.Location = new System.Drawing.Point(245, 2);
+            this.tbDosage2.Name = "tbDosage2";
+            this.tbDosage2.ShortcutsEnabled = false;
+            this.tbDosage2.Size = new System.Drawing.Size(135, 24);
+            this.tbDosage2.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.tbDosage2, "< 50");
+            this.tbDosage2.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.tbDosage2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDosage2_MouseDown);
             // 
             // btnDosage2Link
             // 
@@ -460,39 +485,6 @@
             this.pnlLabels.Size = new System.Drawing.Size(868, 47);
             this.pnlLabels.TabIndex = 38;
             // 
-            // chkPreviousDose2
-            // 
-            this.chkPreviousDose2.AutoSize = true;
-            this.chkPreviousDose2.Location = new System.Drawing.Point(224, 6);
-            this.chkPreviousDose2.Name = "chkPreviousDose2";
-            this.chkPreviousDose2.Size = new System.Drawing.Size(15, 14);
-            this.chkPreviousDose2.TabIndex = 9;
-            this.toolTip1.SetToolTip(this.chkPreviousDose2, "Same as previous");
-            this.chkPreviousDose2.UseVisualStyleBackColor = true;
-            this.chkPreviousDose2.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
-            // 
-            // chkPreviousDose3
-            // 
-            this.chkPreviousDose3.AutoSize = true;
-            this.chkPreviousDose3.Location = new System.Drawing.Point(432, 6);
-            this.chkPreviousDose3.Name = "chkPreviousDose3";
-            this.chkPreviousDose3.Size = new System.Drawing.Size(15, 14);
-            this.chkPreviousDose3.TabIndex = 10;
-            this.toolTip1.SetToolTip(this.chkPreviousDose3, "Same as previous");
-            this.chkPreviousDose3.UseVisualStyleBackColor = true;
-            this.chkPreviousDose3.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
-            // 
-            // chkPreviousDose4
-            // 
-            this.chkPreviousDose4.AutoSize = true;
-            this.chkPreviousDose4.Location = new System.Drawing.Point(640, 6);
-            this.chkPreviousDose4.Name = "chkPreviousDose4";
-            this.chkPreviousDose4.Size = new System.Drawing.Size(15, 14);
-            this.chkPreviousDose4.TabIndex = 11;
-            this.toolTip1.SetToolTip(this.chkPreviousDose4, "Same as previous");
-            this.chkPreviousDose4.UseVisualStyleBackColor = true;
-            this.chkPreviousDose4.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
-            // 
             // BDDosageControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -500,7 +492,7 @@
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.pnlLabels);
             this.Name = "BDDosageControl";
-            this.Size = new System.Drawing.Size(868, 107);
+            this.Size = new System.Drawing.Size(868, 89);
             this.Load += new System.EventHandler(this.BDDosageControl_Load);
             this.Leave += new System.EventHandler(this.BDDosageControl_Leave);
             this.contextMenuStripTextBox.ResumeLayout(false);
@@ -520,9 +512,9 @@
         private System.Windows.Forms.Button btnDosage4Link;
         private System.Windows.Forms.Button btnMenu;
         private System.Windows.Forms.Button btnAdultLink;
-        private System.Windows.Forms.RichTextBox rtbAdultDosage;
-        private System.Windows.Forms.RichTextBox rtbDosage2;
-        private System.Windows.Forms.RichTextBox rtbDosage4;
+        private System.Windows.Forms.TextBox tbAdultDosage;
+        private System.Windows.Forms.TextBox tbDosage2;
+        private System.Windows.Forms.TextBox tbDosage4;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripTextBox;
         private System.Windows.Forms.ToolStripMenuItem bToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem geToolStripMenuItem;
@@ -547,7 +539,7 @@
         private System.Windows.Forms.ToolStripMenuItem delDosagetoolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem selectAlloolStripMenuItem;
-        private System.Windows.Forms.RichTextBox rtbDosage3;
+        private System.Windows.Forms.TextBox tbDosage3;
         private System.Windows.Forms.Button btnDosage3Link;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;

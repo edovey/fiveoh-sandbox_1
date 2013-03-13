@@ -143,8 +143,8 @@ namespace BDEditor.Views
                     case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
                         this.Controls.Remove(pnlRtbL);
 
-                        rtbRiskPregnancy.Text = currentRisk.riskFactor;
-                        rtbRecommendations.Text = currentRisk.recommendations;
+                        tbRiskPregnancy.Text = currentRisk.riskFactor;
+                        tbRecommendations.Text = currentRisk.recommendations;
 
                         break;
 
@@ -152,9 +152,9 @@ namespace BDEditor.Views
                         this.Controls.Remove(pnlRtbP);
                         pnlRtbL.Dock = DockStyle.Top;
 
-                        rtbRiskLactation.Text = currentRisk.riskFactor;
-                        rtbAapRating.Text = currentRisk.aapRating;
-                        rtbRelativeDose.Text = currentRisk.relativeInfantDose;
+                        tbRiskLactation.Text = currentRisk.riskFactor;
+                        tbAapRating.Text = currentRisk.aapRating;
+                        tbRelativeDose.Text = currentRisk.relativeInfantDose;
 
                         break;
                     default:
@@ -163,11 +163,11 @@ namespace BDEditor.Views
             }
             else
             {
-                rtbRiskPregnancy.Text = "";
-                rtbRecommendations.Text = "";
-                rtbRiskLactation.Text = "";
-                rtbAapRating.Text = "";
-                rtbRelativeDose.Text = "";
+                tbRiskPregnancy.Text = "";
+                tbRecommendations.Text = "";
+                tbRiskLactation.Text = "";
+                tbAapRating.Text = "";
+                tbRelativeDose.Text = "";
             }
 
             ShowLinksInUse(false);
@@ -221,19 +221,19 @@ namespace BDEditor.Views
                     switch (currentRisk.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
-                            if (currentRisk.riskFactor != rtbRiskPregnancy.Text)
-                                currentRisk.riskFactor = rtbRiskPregnancy.Text;
-                            if (currentRisk.recommendations != rtbRecommendations.Text)
-                                currentRisk.recommendations = rtbRecommendations.Text;
+                            if (currentRisk.riskFactor != tbRiskPregnancy.Text)
+                                currentRisk.riskFactor = tbRiskPregnancy.Text;
+                            if (currentRisk.recommendations != tbRecommendations.Text)
+                                currentRisk.recommendations = tbRecommendations.Text;
                             break;
 
                         case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
-                            if (currentRisk.riskFactor != rtbRiskLactation.Text)
-                                currentRisk.riskFactor = rtbRiskLactation.Text;
-                            if (currentRisk.aapRating != rtbAapRating.Text)
-                                currentRisk.aapRating = rtbAapRating.Text;
-                            if (currentRisk.relativeInfantDose != rtbRelativeDose.Text)
-                                currentRisk.relativeInfantDose = rtbRelativeDose.Text;
+                            if (currentRisk.riskFactor != tbRiskLactation.Text)
+                                currentRisk.riskFactor = tbRiskLactation.Text;
+                            if (currentRisk.aapRating != tbAapRating.Text)
+                                currentRisk.aapRating = tbAapRating.Text;
+                            if (currentRisk.relativeInfantDose != tbRelativeDose.Text)
+                                currentRisk.relativeInfantDose = tbRelativeDose.Text;
                             break;
                         default:
                             break;
@@ -266,11 +266,11 @@ namespace BDEditor.Views
             bool origState = BDCommon.Settings.IsUpdating;
             BDCommon.Settings.IsUpdating = true;
 
-            rtbRiskPregnancy.Tag = btnRiskPregnancy;
-            rtbRecommendations.Tag = btnRecommendation;
-            rtbRiskLactation.Tag = btnRiskLactation;
-            rtbAapRating.Tag = btnAapRating;
-            rtbRelativeDose.Tag = btnRelativeDose;
+            tbRiskPregnancy.Tag = btnRiskPregnancy;
+            tbRecommendations.Tag = btnRecommendation;
+            tbRiskLactation.Tag = btnRiskLactation;
+            tbAapRating.Tag = btnAapRating;
+            tbRelativeDose.Tag = btnRelativeDose;
 
             btnRiskPregnancy.Tag = BDAntimicrobialRisk.PROPERTYNAME_PREGNANCYRISK;
             btnRecommendation.Tag = BDAntimicrobialRisk.PROPERTYNAME_RECOMMENDATION;
@@ -313,48 +313,48 @@ namespace BDEditor.Views
         {
             if (currentControlName == RISK_PREGNANCY_RTB)
             {
-                int position = rtbRiskPregnancy.SelectionStart;
-                rtbRiskPregnancy.Text = rtbRiskPregnancy.Text.Insert(rtbRiskPregnancy.SelectionStart, textToInsert);
-                rtbRiskPregnancy.SelectionStart = textToInsert.Length + position;
+                int position = tbRiskPregnancy.SelectionStart;
+                tbRiskPregnancy.Text = tbRiskPregnancy.Text.Insert(tbRiskPregnancy.SelectionStart, textToInsert);
+                tbRiskPregnancy.SelectionStart = textToInsert.Length + position;
             }
             else if (currentControlName == RECOMMENDATION_RTB)
             {
-                int position = rtbRecommendations.SelectionStart;
-                rtbRecommendations.Text = rtbRecommendations.Text.Insert(rtbRecommendations.SelectionStart, textToInsert);
-                rtbRecommendations.SelectionStart = textToInsert.Length + position;
+                int position = tbRecommendations.SelectionStart;
+                tbRecommendations.Text = tbRecommendations.Text.Insert(tbRecommendations.SelectionStart, textToInsert);
+                tbRecommendations.SelectionStart = textToInsert.Length + position;
             }
             else if (currentControlName == RISK_LACTATION_RTB)
             {
-                int position = rtbRiskLactation.SelectionStart;
-                rtbRiskLactation.Text = rtbRiskLactation.Text.Insert(rtbRiskLactation.SelectionStart, textToInsert);
-                rtbRiskLactation.SelectionStart = textToInsert.Length + position;
+                int position = tbRiskLactation.SelectionStart;
+                tbRiskLactation.Text = tbRiskLactation.Text.Insert(tbRiskLactation.SelectionStart, textToInsert);
+                tbRiskLactation.SelectionStart = textToInsert.Length + position;
             }
             else if (currentControlName == AAPRATING_RTB)
             {
-                int position = rtbAapRating.SelectionStart;
-                rtbAapRating.Text = rtbAapRating.Text.Insert(rtbAapRating.SelectionStart, textToInsert);
-                rtbAapRating.SelectionStart = textToInsert.Length + position;
+                int position = tbAapRating.SelectionStart;
+                tbAapRating.Text = tbAapRating.Text.Insert(tbAapRating.SelectionStart, textToInsert);
+                tbAapRating.SelectionStart = textToInsert.Length + position;
             }
             else if (currentControlName == RELATIVEDOSE_RTB)
             {
-                int position = rtbRelativeDose.SelectionStart;
-                rtbRelativeDose.Text = rtbRelativeDose.Text.Insert(rtbRelativeDose.SelectionStart, textToInsert);
-                rtbRelativeDose.SelectionStart = textToInsert.Length + position;
+                int position = tbRelativeDose.SelectionStart;
+                tbRelativeDose.Text = tbRelativeDose.Text.Insert(tbRelativeDose.SelectionStart, textToInsert);
+                tbRelativeDose.SelectionStart = textToInsert.Length + position;
             }
         }
 
-        private RichTextBox getActiveControl()
+        private TextBox getActiveControl()
         {
             if (currentControlName == RISK_PREGNANCY_RTB)
-                return rtbRiskPregnancy;
+                return tbRiskPregnancy;
             else if (currentControlName == RECOMMENDATION_RTB)
-                return rtbRecommendations;
+                return tbRecommendations;
             else if (currentControlName == RISK_LACTATION_RTB)
-                return rtbRiskLactation;
+                return tbRiskLactation;
             else if (currentControlName == AAPRATING_RTB)
-                return rtbAapRating;
+                return tbAapRating;
             else if (currentControlName == RELATIVEDOSE_RTB)
-                return rtbRelativeDose;
+                return tbRelativeDose;
             return null;
         }
 
@@ -399,8 +399,27 @@ namespace BDEditor.Views
             OnReorderToNext(new NodeEventArgs(dataContext, currentNode.Uuid));
         }
 
+        private void editIndexStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
+            if (null != menuItem)
+            {
+                BDNodeWrapper nodeWrapper = menuItem.Tag as BDNodeWrapper;
+                if (null != nodeWrapper)
+                {
+                    BDIndexEntryEditView indexEditView = new BDIndexEntryEditView();
+                    indexEditView.AssignDataContext(dataContext);
+                    indexEditView.AssignCurrentNode(nodeWrapper.Node);
+                    string contextString = BDUtilities.BuildHierarchyString(dataContext, nodeWrapper.Node, ":");
+                    indexEditView.DisplayContext = contextString;
+                    indexEditView.ShowDialog(this);
+                }
+            }
+        }
+
         private void btnMenu_Click(object sender, EventArgs e)
         {
+            editIndexStripMenuItem.Tag = new BDNodeWrapper(currentNode, currentNode.NodeType, currentNode.LayoutVariant, null);
             this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
         }
 
@@ -476,87 +495,87 @@ namespace BDEditor.Views
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RichTextBox rtb = getActiveControl();
-            if(rtb != null)
-                rtb.Undo();
+            TextBox tb = getActiveControl();
+            if(tb != null)
+                tb.Undo();
         }
 
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RichTextBox rtb = getActiveControl();
-            if (rtb != null)
-                rtb.Cut();
+            TextBox tb = getActiveControl();
+            if (tb != null)
+                tb.Cut();
         }
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RichTextBox rtb = getActiveControl();
-            if (rtb != null)
-                rtb.Copy();
+            TextBox tb = getActiveControl();
+            if (tb != null)
+                tb.Copy();
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RichTextBox rtb = getActiveControl();
-            if (rtb != null)
-                rtb.Paste();
+            TextBox tb = getActiveControl();
+            if (tb != null)
+                tb.Paste();
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RichTextBox rtb = getActiveControl();
-            if (rtb != null)
+            TextBox tb = getActiveControl();
+            if (tb != null)
             {
-                int i = rtb.SelectionStart;
-                rtb.Text = rtb.Text.Substring(0, i) + rtb.Text.Substring(i + rtb.SelectionLength);
-                rtb.SelectionStart = i;
-                rtb.SelectionLength = 0;
+                int i = tb.SelectionStart;
+                tb.Text = tb.Text.Substring(0, i) + tb.Text.Substring(i + tb.SelectionLength);
+                tb.SelectionStart = i;
+                tb.SelectionLength = 0;
             }
         }
 
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RichTextBox rtb = getActiveControl();
-            if (rtb != null)
+            TextBox tb = getActiveControl();
+            if (tb != null)
             {
-                rtb.SelectionStart = 0;
-                rtb.SelectionLength = rtb.Text.Length;
-                rtb.Focus();
+                tb.SelectionStart = 0;
+                tb.SelectionLength = tb.Text.Length;
+                tb.Focus();
             }
         }
 
         private void contextMenuStripTextBox_Opening(object sender, CancelEventArgs e)
         {
-            RichTextBox rtb = getActiveControl();
-            if (rtb != null)
-                undoToolStripMenuItem.Enabled = rtb.CanUndo;
+            TextBox tb = getActiveControl();
+            if (tb != null)
+                undoToolStripMenuItem.Enabled = tb.CanUndo;
             pasteToolStripMenuItem.Enabled = (Clipboard.ContainsText());
-            cutToolStripMenuItem.Enabled = (rtb.SelectionLength > 0);
-            copyToolStripMenuItem.Enabled = (rtb.SelectionLength > 0);
-            deleteToolStripMenuItem.Enabled = (rtb.SelectionLength > 0);
+            cutToolStripMenuItem.Enabled = (tb.SelectionLength > 0);
+            copyToolStripMenuItem.Enabled = (tb.SelectionLength > 0);
+            deleteToolStripMenuItem.Enabled = (tb.SelectionLength > 0);
         }
 
-        private void rtbRiskPregnancy_MouseDown(object sender, MouseEventArgs e)
+        private void tbRiskPregnancy_MouseDown(object sender, MouseEventArgs e)
         {
             currentControlName = RISK_PREGNANCY_RTB;
         }
 
-        private void rtbRecommendations_MouseDown(object sender, MouseEventArgs e)
+        private void tbRecommendations_MouseDown(object sender, MouseEventArgs e)
         {
             currentControlName = RECOMMENDATION_RTB;
         }
 
-        private void rtbRiskLactation_MouseDown(object sender, MouseEventArgs e)
+        private void tbRiskLactation_MouseDown(object sender, MouseEventArgs e)
         {
             currentControlName = RISK_LACTATION_RTB;
         }
 
-        private void rtbAapRating_MouseDown(object sender, MouseEventArgs e)
+        private void tbAapRating_MouseDown(object sender, MouseEventArgs e)
         {
             currentControlName = AAPRATING_RTB;
         }
 
-        private void rtbRelativeDose_MouseDown(object sender, MouseEventArgs e)
+        private void tbRelativeDose_MouseDown(object sender, MouseEventArgs e)
         {
             currentControlName = RELATIVEDOSE_RTB;
         }

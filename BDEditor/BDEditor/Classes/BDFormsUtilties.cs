@@ -19,6 +19,7 @@ namespace BDEditor.Classes
                                                 ToolStripMenuItem pChildAdd, 
                                                 ToolStripMenuItem pSiblingAdd,
                                                 ToolStripMenuItem pDelete,
+            ToolStripMenuItem pEditIndexEntry,
                                                 ToolStripMenuItem pReorderPrev, 
                                                 ToolStripMenuItem pReorderNext,
                                                 EventHandler<NodeEventArgs> pRequestItemDelete,
@@ -60,6 +61,7 @@ namespace BDEditor.Classes
             pSiblingAdd.DropDownItems.Clear();
 
             // build the entries
+            pEditIndexEntry.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, null);
             pReorderNext.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, null);
             pReorderPrev.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, null);
             pDelete.Tag = new BDNodeWrapper(pBDNode, pBDNode.NodeType, pBDNode.LayoutVariant, null);

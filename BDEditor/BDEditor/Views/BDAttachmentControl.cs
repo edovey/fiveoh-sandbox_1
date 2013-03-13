@@ -205,5 +205,25 @@ namespace BDEditor.Views
                 }
             }
         }
+
+        private void editIndexStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
+            if (null != menuItem)
+            {
+                BDNodeWrapper nodeWrapper = menuItem.Tag as BDNodeWrapper;
+                if (null != nodeWrapper)
+                {
+                    BDIndexEntryEditView indexEditView = new BDIndexEntryEditView();
+                    indexEditView.AssignDataContext(dataContext);
+                    indexEditView.AssignCurrentNode(nodeWrapper.Node);
+                    string contextString = BDUtilities.BuildHierarchyString(dataContext, nodeWrapper.Node, ":");
+                    indexEditView.DisplayContext = contextString;
+                    indexEditView.ShowDialog(this);
+
+                }
+            }
+
+        }
     }
 }

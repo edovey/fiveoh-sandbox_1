@@ -99,9 +99,9 @@ namespace BDEditor.Views
             DefaultNodeType = pNode.NodeType;
             DefaultLayoutVariantType = pNode.LayoutVariant;
 
-            rtbDosage.Tag = btnDosageLink;
-            rtbCost.Tag = btnCostLink;
-            rtbCost2.Tag = btnCost2Link;
+            tbDosage.Tag = btnDosageLink;
+            tbCost.Tag = btnCostLink;
+            tbCost2.Tag = btnCost2Link;
 
             btnDosageLink.Tag = BDDosage.PROPERTYNAME_DOSAGE;
             btnCostLink.Tag = BDDosage.PROPERTYNAME_COST;
@@ -142,18 +142,18 @@ namespace BDEditor.Views
             ControlHelper.SuspendDrawing(this);
             if (currentDosage == null)
             {
-                rtbDosage.Text = @"";
-                rtbCost.Text = @"";
-                rtbCost2.Text = @"";
+                tbDosage.Text = @"";
+                tbCost.Text = @"";
+                tbCost2.Text = @"";
                 noneRadioButton.Checked = true;
             }
             else
             {
                 this.BackColor = SystemColors.Control;
 
-                rtbDosage.Text = currentDosage.dosage;
-                rtbCost.Text = currentDosage.cost;
-                rtbCost2.Text = currentDosage.cost2;
+                tbDosage.Text = currentDosage.dosage;
+                tbCost.Text = currentDosage.cost;
+                tbCost2.Text = currentDosage.cost2;
                 DisplayOrder = currentDosage.displayOrder;
 
                 switch ((BDConstants.BDJoinType)currentDosage.joinType)
@@ -221,18 +221,18 @@ namespace BDEditor.Views
             if (null != parentId)
             {
                 if ((null == currentDosage) &&
-                    (rtbDosage.Text != string.Empty) ||
-                    (rtbCost.Text != string.Empty) ||
-                    (rtbCost2.Text != string.Empty))
+                    (tbDosage.Text != string.Empty) ||
+                    (tbCost.Text != string.Empty) ||
+                    (tbCost2.Text != string.Empty))
                 {
                     CreateCurrentObject();
                 }
 
                 if (null != currentDosage)
                 {
-                    if (currentDosage.dosage != rtbDosage.Text) currentDosage.dosage = rtbDosage.Text;
-                    if (currentDosage.cost != rtbCost.Text) currentDosage.cost = rtbCost.Text;
-                    if (currentDosage.cost2 != rtbCost2.Text) currentDosage.cost2 = rtbCost2.Text;
+                    if (currentDosage.dosage != tbDosage.Text) currentDosage.dosage = tbDosage.Text;
+                    if (currentDosage.cost != tbCost.Text) currentDosage.cost = tbCost.Text;
+                    if (currentDosage.cost2 != tbCost2.Text) currentDosage.cost2 = tbCost2.Text;
                     if (currentDosage.displayOrder != DisplayOrder) currentDosage.displayOrder = DisplayOrder;
 
                     if (andRadioButton.Checked)
@@ -310,27 +310,27 @@ namespace BDEditor.Views
         {
             if (currentControlName == COST_TEXTBOX)
             {
-                int position = rtbCost.SelectionStart;
-                rtbCost.Text = rtbCost.Text.Insert(rtbCost.SelectionStart, textToInsert);
-                rtbCost.SelectionStart = textToInsert.Length + position;
+                int position = tbCost.SelectionStart;
+                tbCost.Text = tbCost.Text.Insert(tbCost.SelectionStart, textToInsert);
+                tbCost.SelectionStart = textToInsert.Length + position;
             }
             else if (currentControlName == DOSAGE_TEXTBOX)
             {
-                int position = rtbDosage.SelectionStart;
-                rtbDosage.Text = rtbDosage.Text.Insert(rtbDosage.SelectionStart, textToInsert);
-                rtbDosage.SelectionStart = textToInsert.Length + position;
+                int position = tbDosage.SelectionStart;
+                tbDosage.Text = tbDosage.Text.Insert(tbDosage.SelectionStart, textToInsert);
+                tbDosage.SelectionStart = textToInsert.Length + position;
             }
             else if (currentControlName == COST2_TEXTBOX)
             {
-                int position = rtbCost2.SelectionStart;
-                rtbCost2.Text = rtbCost2.Text.Insert(rtbCost2.SelectionStart, textToInsert);
-                rtbCost2.SelectionStart = textToInsert.Length + position;
+                int position = tbCost2.SelectionStart;
+                tbCost2.Text = tbCost2.Text.Insert(tbCost2.SelectionStart, textToInsert);
+                tbCost2.SelectionStart = textToInsert.Length + position;
             }
         }
 
         private void toggleLinkButtonEnablement()
         {
-            bool enabled = ( (rtbDosage.Text.Length > 0) || (rtbCost.Text.Length > 0)  || (rtbCost2.Text.Length > 0));
+            bool enabled = ( (tbDosage.Text.Length > 0) || (tbCost.Text.Length > 0)  || (tbCost2.Text.Length > 0));
 
             btnDosageLink.Enabled = enabled;
             btnCostLink.Enabled = enabled;
@@ -450,12 +450,12 @@ namespace BDEditor.Views
             currentControlName = DOSAGE_TEXTBOX;
         }
 
-        private void rtbCost_MouseDown(object sender, MouseEventArgs e)
+        private void tbCost_MouseDown(object sender, MouseEventArgs e)
         {
             currentControlName = COST_TEXTBOX;
         }
 
-        private void rtbCost2_MouseDown(object sender, MouseEventArgs e)
+        private void tbCost2_MouseDown(object sender, MouseEventArgs e)
         {
             currentControlName = COST2_TEXTBOX;
         }
@@ -485,93 +485,93 @@ namespace BDEditor.Views
 
         private void BDDosageControl_Load(object sender, EventArgs e)
         {
-            rtbDosage.SelectAll();
+            tbDosage.SelectAll();
         }
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (currentControlName == DOSAGE_TEXTBOX)
-                rtbDosage.Undo();
+                tbDosage.Undo();
             else if (currentControlName == COST_TEXTBOX)
-                rtbCost.Undo();
+                tbCost.Undo();
             else if (currentControlName == COST2_TEXTBOX)
-                rtbCost2.Undo();
+                tbCost2.Undo();
         }
 
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (currentControlName == DOSAGE_TEXTBOX)
-                rtbDosage.Cut();
+                tbDosage.Cut();
             else if (currentControlName == COST_TEXTBOX)
-                rtbCost.Cut();
+                tbCost.Cut();
             else if (currentControlName == COST2_TEXTBOX)
-                rtbCost2.Cut();
+                tbCost2.Cut();
         }
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (currentControlName == DOSAGE_TEXTBOX)
-                rtbDosage.Copy();
+                tbDosage.Copy();
             else if (currentControlName == COST_TEXTBOX)
-                rtbCost.Copy();
+                tbCost.Copy();
             else if (currentControlName == COST2_TEXTBOX)
-                rtbCost2.Copy();
+                tbCost2.Copy();
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (currentControlName == DOSAGE_TEXTBOX)
-                rtbDosage.Paste();
+                tbDosage.Paste();
             else if (currentControlName == COST_TEXTBOX)
-                rtbCost.Paste();
+                tbCost.Paste();
             else if (currentControlName == COST2_TEXTBOX)
-                rtbCost2.Paste();
+                tbCost2.Paste();
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RichTextBox rtb = null;
+            TextBox tb = null;
             if (currentControlName == DOSAGE_TEXTBOX)
-                rtb = rtbDosage;
+                tb = tbDosage;
             else if (currentControlName == COST_TEXTBOX)
-                rtb = rtbCost;
+                tb = tbCost;
             else if (currentControlName == COST2_TEXTBOX)
-                rtb = rtbCost2;
-            if (rtb != null)
+                tb = tbCost2;
+            if (tb != null)
             {
-                int i = rtb.SelectionStart;
-                rtb.Text = rtb.Text.Substring(0, i) + rtb.Text.Substring(i + rtb.SelectionLength);
-                rtb.SelectionStart = i;
-                rtb.SelectionLength = 0;
+                int i = tb.SelectionStart;
+                tb.Text = tb.Text.Substring(0, i) + tb.Text.Substring(i + tb.SelectionLength);
+                tb.SelectionStart = i;
+                tb.SelectionLength = 0;
             }
         }
 
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (currentControlName == DOSAGE_TEXTBOX)
-                rtbDosage.SelectAll();
+                tbDosage.SelectAll();
             else if (currentControlName == COST_TEXTBOX)
-                rtbCost.SelectAll();
+                tbCost.SelectAll();
             else if (currentControlName == COST2_TEXTBOX)
-                rtbCost2.SelectAll();
+                tbCost2.SelectAll();
         }
 
         private void contextMenuStripTextBox_Opening(object sender, CancelEventArgs e)
         {
-            RichTextBox rtb = null;
+            TextBox tb = null;
             if (currentControlName == DOSAGE_TEXTBOX)
-                rtb = rtbDosage;
+                tb = tbDosage;
             else if (currentControlName == COST_TEXTBOX)
-                rtb = rtbCost;
+                tb = tbCost;
             else if (currentControlName == COST2_TEXTBOX)
-                rtb = rtbCost2;
-            if (rtb != null)
+                tb = tbCost2;
+            if (tb != null)
             {
-                undoToolStripMenuItem.Enabled = rtb.CanUndo;
+                undoToolStripMenuItem.Enabled = tb.CanUndo;
                 pasteToolStripMenuItem.Enabled = (Clipboard.ContainsText());
-                cutToolStripMenuItem.Enabled = (rtb.SelectionLength > 0);
-                copyToolStripMenuItem.Enabled = (rtb.SelectionLength > 0);
-                deleteToolStripMenuItem.Enabled = (rtb.SelectionLength > 0);
+                cutToolStripMenuItem.Enabled = (tb.SelectionLength > 0);
+                copyToolStripMenuItem.Enabled = (tb.SelectionLength > 0);
+                deleteToolStripMenuItem.Enabled = (tb.SelectionLength > 0);
             }
         }
     }

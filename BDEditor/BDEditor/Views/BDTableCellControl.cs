@@ -23,8 +23,8 @@ namespace BDEditor.Views
 
         public string RichText
         {
-            get { return rtbValue.Text; }
-            set { rtbValue.Text = value; }
+            get { return tbValue.Text; }
+            set { tbValue.Text = value; }
         }
 
         public int? DisplayOrder { get; set; }
@@ -133,7 +133,7 @@ namespace BDEditor.Views
 
             ControlHelper.SuspendDrawing(this);
 
-            rtbValue.Text = CurrentTableCell.value;
+            tbValue.Text = CurrentTableCell.value;
 
             ShowLinksInUse(false);
             ControlHelper.ResumeDrawing(this);
@@ -180,7 +180,7 @@ namespace BDEditor.Views
                 if (null != currentNode)
                 {
                     BDTableCell currentTableCell  = currentNode as BDTableCell;
-                    currentTableCell.value = rtbValue.Text;
+                    currentTableCell.value = tbValue.Text;
                     BDTableCell.Save(dataContext, currentTableCell);
                     result = true;
                 }
@@ -259,81 +259,81 @@ namespace BDEditor.Views
 
         private void bToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            insertText(rtbValue, "ß");
+            insertText(tbValue, "ß");
         }
 
         private void degreeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            insertText(rtbValue, "°");
+            insertText(tbValue, "°");
         }
 
         private void µToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            insertText(rtbValue, "µ");
+            insertText(tbValue, "µ");
         }
 
         private void geToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            insertText(rtbValue, "≥");
+            insertText(tbValue, "≥");
         }
 
         private void leToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            insertText(rtbValue, "≤");
+            insertText(tbValue, "≤");
         }
 
         private void plusMinusToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            insertText(rtbValue, "±");
+            insertText(tbValue, "±");
         }
 
         private void checkmarkToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            insertText(rtbValue, "√");
+            insertText(tbValue, "√");
         }
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            rtbValue.Undo();
+            tbValue.Undo();
         }
 
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            rtbValue.Cut();
+            tbValue.Cut();
         }
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            rtbValue.Copy();
+            tbValue.Copy();
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            rtbValue.Paste();
+            tbValue.Paste();
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int i = rtbValue.SelectionStart;
-            rtbValue.Text = rtbValue.Text.Substring(0, i) + rtbValue.Text.Substring(i + rtbValue.SelectionLength);
-            rtbValue.SelectionStart = i;
-            rtbValue.SelectionLength = 0;
+            int i = tbValue.SelectionStart;
+            tbValue.Text = tbValue.Text.Substring(0, i) + tbValue.Text.Substring(i + tbValue.SelectionLength);
+            tbValue.SelectionStart = i;
+            tbValue.SelectionLength = 0;
         }
 
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            rtbValue.SelectionStart = 0;
-            rtbValue.SelectionLength = rtbValue.Text.Length;
-            rtbValue.Focus();
+            tbValue.SelectionStart = 0;
+            tbValue.SelectionLength = tbValue.Text.Length;
+            tbValue.Focus();
         }
 
         private void contextMenuStripTextBox_Opening(object sender, CancelEventArgs e)
         {
-            undoToolStripMenuItem.Enabled = rtbValue.CanUndo;
+            undoToolStripMenuItem.Enabled = tbValue.CanUndo;
             pasteToolStripMenuItem.Enabled = (Clipboard.ContainsText());
-            cutToolStripMenuItem.Enabled = (rtbValue.SelectionLength > 0);
-            copyToolStripMenuItem.Enabled = (rtbValue.SelectionLength > 0);
-            deleteToolStripMenuItem.Enabled = (rtbValue.SelectionLength > 0);
+            cutToolStripMenuItem.Enabled = (tbValue.SelectionLength > 0);
+            copyToolStripMenuItem.Enabled = (tbValue.SelectionLength > 0);
+            deleteToolStripMenuItem.Enabled = (tbValue.SelectionLength > 0);
         }
 
         private void BDTableCellControl_Load(object sender, EventArgs e)
@@ -342,10 +342,10 @@ namespace BDEditor.Views
 
             BDTableCell cell = currentNode as BDTableCell;
             if (cell != null)
-                rtbValue.Text = cell.value;
+                tbValue.Text = cell.value;
         }
 
-        private void insertText(RichTextBox pTextBox, string pText)
+        private void insertText(TextBox pTextBox, string pText)
         {
             int x = pTextBox.SelectionStart;
             pTextBox.Text = pTextBox.Text.Insert(pTextBox.SelectionStart, pText);

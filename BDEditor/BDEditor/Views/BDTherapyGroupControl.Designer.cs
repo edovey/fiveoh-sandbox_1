@@ -66,6 +66,8 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.editIndexStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.contextMenuStrip1.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
@@ -349,6 +351,8 @@
             // contextMenuStripEvents
             // 
             this.contextMenuStripEvents.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editIndexStripMenuItem,
+            this.toolStripSeparator1,
             this.reorderPreviousToolStripMenuItem,
             this.reorderNextToolStripMenuItem,
             this.toolStripMenuItem1,
@@ -357,7 +361,7 @@
             this.toolStripMenuItem2,
             this.deleteToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(179, 126);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(179, 176);
             // 
             // reorderPreviousToolStripMenuItem
             // 
@@ -409,6 +413,19 @@
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.TherapyGroup_RequestItemDelete);
             // 
+            // editIndexStripMenuItem
+            // 
+            this.editIndexStripMenuItem.Image = global::BDEditor.Properties.Resources.edit_24x24;
+            this.editIndexStripMenuItem.Name = "editIndexStripMenuItem";
+            this.editIndexStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.editIndexStripMenuItem.Text = "&Edit Index Entries";
+            this.editIndexStripMenuItem.Click += new System.EventHandler(this.editIndexStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(175, 6);
+            // 
             // BDTherapyGroupControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -423,7 +440,7 @@
             this.DoubleBuffered = true;
             this.MinimumSize = new System.Drawing.Size(860, 100);
             this.Name = "BDTherapyGroupControl";
-            this.Size = new System.Drawing.Size(856, 96);
+            this.Size = new System.Drawing.Size(856, 111);
             this.Load += new System.EventHandler(this.BDTherapyGroupControl_Load);
             this.Leave += new System.EventHandler(this.BDTherapyGroupControl_Leave);
             this.contextMenuStrip1.ResumeLayout(false);
@@ -474,5 +491,7 @@
         private System.Windows.Forms.ToolStripMenuItem sOneToolStripMenuItem;
         private System.Windows.Forms.Label lblInfo;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolStripMenuItem editIndexStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }

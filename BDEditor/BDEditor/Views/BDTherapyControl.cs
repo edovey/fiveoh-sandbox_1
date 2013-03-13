@@ -625,6 +625,8 @@ namespace BDEditor.Views
 
         private void btnMenu_Click(object sender, EventArgs e)
         {
+            editIndexStripMenuItem.Tag = new BDNodeWrapper(CurrentNode, CurrentNode.NodeType, CurrentNode.LayoutVariant, null);
+
             this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
         }
 
@@ -875,5 +877,23 @@ namespace BDEditor.Views
             BDCommon.Settings.IsUpdating = origState;
         }
 
+        private void editIndexStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
+            if (null != menuItem)
+            {
+                BDNodeWrapper nodeWrapper = menuItem.Tag as BDNodeWrapper;
+                if (null != nodeWrapper)
+                {
+                    BDIndexEntryEditView indexEditView = new BDIndexEntryEditView();
+                    indexEditView.AssignDataContext(dataContext);
+                    indexEditView.AssignCurrentNode(nodeWrapper.Node);
+                    string contextString = BDUtilities.BuildHierarchyString(dataContext, nodeWrapper.Node, ":");
+                    indexEditView.DisplayContext = contextString;
+                    indexEditView.ShowDialog(this);
+
+                }
+            }
+        }
     }
 }

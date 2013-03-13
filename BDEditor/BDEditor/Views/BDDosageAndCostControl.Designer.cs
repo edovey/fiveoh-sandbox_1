@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDDosageAndCostControl));
-            this.rtbCost = new System.Windows.Forms.RichTextBox();
+            this.tbCost = new System.Windows.Forms.TextBox();
             this.contextMenuStripTextBox = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.bToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,9 +50,9 @@
             this.selectAlloolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.andOrRadioButton = new System.Windows.Forms.RadioButton();
             this.pnlMain = new System.Windows.Forms.Panel();
-            this.rtbCost2 = new System.Windows.Forms.RichTextBox();
+            this.tbCost2 = new System.Windows.Forms.TextBox();
             this.btnCost2Link = new System.Windows.Forms.Button();
-            this.rtbDosage = new System.Windows.Forms.RichTextBox();
+            this.tbDosage = new System.Windows.Forms.TextBox();
             this.btnDosageLink = new System.Windows.Forms.Button();
             this.btnCostLink = new System.Windows.Forms.Button();
             this.btnMenu = new System.Windows.Forms.Button();
@@ -64,32 +64,30 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.delDosagetoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlRadioButtons = new System.Windows.Forms.Panel();
+            this.otherRadioButton = new System.Windows.Forms.RadioButton();
             this.noneRadioButton = new System.Windows.Forms.RadioButton();
             this.andRadioButton = new System.Windows.Forms.RadioButton();
             this.orRadioButton = new System.Windows.Forms.RadioButton();
             this.thenRadioButton = new System.Windows.Forms.RadioButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.otherRadioButton = new System.Windows.Forms.RadioButton();
             this.contextMenuStripTextBox.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
             this.pnlRadioButtons.SuspendLayout();
             this.SuspendLayout();
             // 
-            // rtbCost
+            // tbCost
             // 
-            this.rtbCost.ContextMenuStrip = this.contextMenuStripTextBox;
-            this.rtbCost.DetectUrls = false;
-            this.rtbCost.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbCost.Location = new System.Drawing.Point(528, 2);
-            this.rtbCost.Name = "rtbCost";
-            this.rtbCost.ShortcutsEnabled = false;
-            this.rtbCost.Size = new System.Drawing.Size(112, 50);
-            this.rtbCost.TabIndex = 2;
-            this.rtbCost.Text = "";
-            this.toolTip1.SetToolTip(this.rtbCost, "Cost");
-            this.rtbCost.TextChanged += new System.EventHandler(this.textBox_TextChanged);
-            this.rtbCost.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rtbCost_MouseDown);
+            this.tbCost.ContextMenuStrip = this.contextMenuStripTextBox;
+            this.tbCost.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbCost.Location = new System.Drawing.Point(528, 2);
+            this.tbCost.Name = "tbCost";
+            this.tbCost.ShortcutsEnabled = false;
+            this.tbCost.Size = new System.Drawing.Size(112, 24);
+            this.tbCost.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.tbCost, "Cost");
+            this.tbCost.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.tbCost.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbCost_MouseDown);
             // 
             // contextMenuStripTextBox
             // 
@@ -244,10 +242,10 @@
             this.pnlMain.AutoSize = true;
             this.pnlMain.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pnlMain.BackColor = System.Drawing.SystemColors.Control;
-            this.pnlMain.Controls.Add(this.rtbCost2);
+            this.pnlMain.Controls.Add(this.tbCost2);
             this.pnlMain.Controls.Add(this.btnCost2Link);
-            this.pnlMain.Controls.Add(this.rtbDosage);
-            this.pnlMain.Controls.Add(this.rtbCost);
+            this.pnlMain.Controls.Add(this.tbDosage);
+            this.pnlMain.Controls.Add(this.tbCost);
             this.pnlMain.Controls.Add(this.btnDosageLink);
             this.pnlMain.Controls.Add(this.btnCostLink);
             this.pnlMain.Controls.Add(this.btnMenu);
@@ -255,23 +253,21 @@
             this.pnlMain.Location = new System.Drawing.Point(0, 0);
             this.pnlMain.MinimumSize = new System.Drawing.Size(866, 10);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(868, 55);
+            this.pnlMain.Size = new System.Drawing.Size(868, 33);
             this.pnlMain.TabIndex = 0;
             // 
-            // rtbCost2
+            // tbCost2
             // 
-            this.rtbCost2.ContextMenuStrip = this.contextMenuStripTextBox;
-            this.rtbCost2.DetectUrls = false;
-            this.rtbCost2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbCost2.Location = new System.Drawing.Point(680, 2);
-            this.rtbCost2.Name = "rtbCost2";
-            this.rtbCost2.ShortcutsEnabled = false;
-            this.rtbCost2.Size = new System.Drawing.Size(112, 50);
-            this.rtbCost2.TabIndex = 4;
-            this.rtbCost2.Text = "";
-            this.toolTip1.SetToolTip(this.rtbCost2, "Cost");
-            this.rtbCost2.TextChanged += new System.EventHandler(this.textBox_TextChanged);
-            this.rtbCost2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rtbCost2_MouseDown);
+            this.tbCost2.ContextMenuStrip = this.contextMenuStripTextBox;
+            this.tbCost2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbCost2.Location = new System.Drawing.Point(680, 2);
+            this.tbCost2.Name = "tbCost2";
+            this.tbCost2.ShortcutsEnabled = false;
+            this.tbCost2.Size = new System.Drawing.Size(112, 24);
+            this.tbCost2.TabIndex = 4;
+            this.toolTip1.SetToolTip(this.tbCost2, "Cost");
+            this.tbCost2.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.tbCost2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbCost2_MouseDown);
             // 
             // btnCost2Link
             // 
@@ -284,20 +280,18 @@
             this.btnCost2Link.UseVisualStyleBackColor = true;
             this.btnCost2Link.Click += new System.EventHandler(this.btnLink_Click);
             // 
-            // rtbDosage
+            // tbDosage
             // 
-            this.rtbDosage.ContextMenuStrip = this.contextMenuStripTextBox;
-            this.rtbDosage.DetectUrls = false;
-            this.rtbDosage.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbDosage.Location = new System.Drawing.Point(185, 2);
-            this.rtbDosage.Name = "rtbDosage";
-            this.rtbDosage.ShortcutsEnabled = false;
-            this.rtbDosage.Size = new System.Drawing.Size(303, 50);
-            this.rtbDosage.TabIndex = 0;
-            this.rtbDosage.Text = "";
-            this.toolTip1.SetToolTip(this.rtbDosage, "Dosage");
-            this.rtbDosage.TextChanged += new System.EventHandler(this.textBox_TextChanged);
-            this.rtbDosage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rtbDosage_MouseDown);
+            this.tbDosage.ContextMenuStrip = this.contextMenuStripTextBox;
+            this.tbDosage.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbDosage.Location = new System.Drawing.Point(185, 2);
+            this.tbDosage.Name = "tbDosage";
+            this.tbDosage.ShortcutsEnabled = false;
+            this.tbDosage.Size = new System.Drawing.Size(303, 24);
+            this.tbDosage.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.tbDosage, "Dosage");
+            this.tbDosage.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.tbDosage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rtbDosage_MouseDown);
             // 
             // btnDosageLink
             // 
@@ -397,10 +391,21 @@
             this.pnlRadioButtons.Controls.Add(this.orRadioButton);
             this.pnlRadioButtons.Controls.Add(this.thenRadioButton);
             this.pnlRadioButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlRadioButtons.Location = new System.Drawing.Point(0, 80);
+            this.pnlRadioButtons.Location = new System.Drawing.Point(0, 38);
             this.pnlRadioButtons.Name = "pnlRadioButtons";
             this.pnlRadioButtons.Size = new System.Drawing.Size(868, 23);
             this.pnlRadioButtons.TabIndex = 1;
+            // 
+            // otherRadioButton
+            // 
+            this.otherRadioButton.AutoSize = true;
+            this.otherRadioButton.Location = new System.Drawing.Point(525, 3);
+            this.otherRadioButton.Name = "otherRadioButton";
+            this.otherRadioButton.Size = new System.Drawing.Size(51, 17);
+            this.otherRadioButton.TabIndex = 5;
+            this.otherRadioButton.TabStop = true;
+            this.otherRadioButton.Text = "Other";
+            this.otherRadioButton.UseVisualStyleBackColor = true;
             // 
             // noneRadioButton
             // 
@@ -446,17 +451,6 @@
             this.thenRadioButton.Text = "Then (with next)";
             this.thenRadioButton.UseVisualStyleBackColor = true;
             // 
-            // otherRadioButton
-            // 
-            this.otherRadioButton.AutoSize = true;
-            this.otherRadioButton.Location = new System.Drawing.Point(525, 3);
-            this.otherRadioButton.Name = "otherRadioButton";
-            this.otherRadioButton.Size = new System.Drawing.Size(51, 17);
-            this.otherRadioButton.TabIndex = 5;
-            this.otherRadioButton.TabStop = true;
-            this.otherRadioButton.Text = "Other";
-            this.otherRadioButton.UseVisualStyleBackColor = true;
-            // 
             // BDDosageAndCostControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -465,11 +459,12 @@
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.pnlRadioButtons);
             this.Name = "BDDosageAndCostControl";
-            this.Size = new System.Drawing.Size(868, 103);
+            this.Size = new System.Drawing.Size(868, 61);
             this.Load += new System.EventHandler(this.BDDosageControl_Load);
             this.Leave += new System.EventHandler(this.BDDosageControl_Leave);
             this.contextMenuStripTextBox.ResumeLayout(false);
             this.pnlMain.ResumeLayout(false);
+            this.pnlMain.PerformLayout();
             this.contextMenuStripEvents.ResumeLayout(false);
             this.pnlRadioButtons.ResumeLayout(false);
             this.pnlRadioButtons.PerformLayout();
@@ -490,8 +485,8 @@
         private System.Windows.Forms.RadioButton andRadioButton;
         private System.Windows.Forms.RadioButton orRadioButton;
         private System.Windows.Forms.RadioButton thenRadioButton;
-        private System.Windows.Forms.RichTextBox rtbDosage;
-        private System.Windows.Forms.RichTextBox rtbCost;
+        private System.Windows.Forms.TextBox tbDosage;
+        private System.Windows.Forms.TextBox tbCost;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripTextBox;
         private System.Windows.Forms.ToolStripMenuItem bToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem geToolStripMenuItem;
@@ -516,7 +511,7 @@
         private System.Windows.Forms.ToolStripMenuItem delDosagetoolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem selectAlloolStripMenuItem;
-        private System.Windows.Forms.RichTextBox rtbCost2;
+        private System.Windows.Forms.TextBox tbCost2;
         private System.Windows.Forms.Button btnCost2Link;
         private System.Windows.Forms.ToolStripMenuItem superscriptTwoToolStripMenuItem;
         private System.Windows.Forms.RadioButton otherRadioButton;

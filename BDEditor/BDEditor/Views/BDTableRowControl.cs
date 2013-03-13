@@ -126,7 +126,6 @@ namespace BDEditor.Views
             {
                 int maxColumns = BDFabrik.GetTableColumnCount(currentNode.LayoutVariant);
                 List<BDTableCell> list = BDTableCell.RetrieveTableCellsForParentId(dataContext, currentNode.Uuid);
-
                 for (int i = 0; i < maxColumns; i++)
                 {
                     IBDControl newControl = BDFabrik.CreateControlForNode(dataContext, list[i]);
@@ -155,24 +154,6 @@ namespace BDEditor.Views
            }
         }
 
-        private BDTableCellControl addChildCellControl(BDTableCell cell)
-        {
-            BDTableCellControl cellControl = new BDTableCellControl();
-            ((System.Windows.Forms.UserControl)cellControl).Dock = DockStyle.Right;
-            ((System.Windows.Forms.UserControl)cellControl).TabIndex = cell.DisplayOrder.Value;
-            cellControl.DisplayOrder = cell.DisplayOrder;
-            cellControl.AssignParentInfo(currentNode.Uuid, currentNode.NodeType);
-            cellControl.AssignDataContext(dataContext);
-            cellControl.AssignScopeId(scopeId);
-            cellControl.ShowAsChild = true;
-
-            cellControl.CurrentTableCell = cell;
-            cellControl.RefreshLayout();
-
-            cellControlList.Add(cellControl);
-            return cellControl;
-        }
-
         private BDNodeOverviewControl addNodeOverviewControl(BDTableCell cell)
         {
             BDNodeOverviewControl cellControl = new BDNodeOverviewControl();
@@ -188,7 +169,6 @@ namespace BDEditor.Views
 
             cellControlList.Add(cellControl);
             return cellControl;
-
         }
 
         public void AssignDataContext(Entities pDataContext)
@@ -317,6 +297,7 @@ namespace BDEditor.Views
 
         private void btnMenu_Click(object sender, EventArgs e)
         {
+            editIndexStripMenuItem.Tag = new BDNodeWrapper(currentNode, currentNode.NodeType, currentNode.LayoutVariant, null);
             this.contextMenuStripEvents.Show(btnMenu, new System.Drawing.Point(0, btnMenu.Height));
         }
 
@@ -338,6 +319,24 @@ namespace BDEditor.Views
                     default:
                         this.BackColor = SystemColors.Control;
                         break;
+                }
+            }
+        }
+
+        private void editIndexStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
+            if (null != menuItem)
+            {
+                BDNodeWrapper nodeWrapper = menuItem.Tag as BDNodeWrapper;
+                if (null != nodeWrapper) {
+                    BDIndexEntryEditView indexEditView = new BDIndexEntryEditView();
+                    indexEditView.AssignDataContext(dataContext);
+                    indexEditView.AssignCurrentNode(nodeWrapper.Node);
+                    string contextString = BDUtilities.BuildHierarchyString(dataContext, nodeWrapper.Node, ":");
+                    indexEditView.DisplayContext = contextString;
+                    indexEditView.ShowDialog(this);
+                
                 }
             }
         }

@@ -135,19 +135,19 @@ namespace BDEditor.Views
             ControlHelper.SuspendDrawing(this);
             if (currentDosage == null)
             {
-                rtbAdultDosage.Text = @"";
-                rtbDosage2.Text = @"";
-                rtbDosage3.Text = @"";
-                rtbDosage4.Text = @"";
+                tbAdultDosage.Text = @"";
+                tbDosage2.Text = @"";
+                tbDosage3.Text = @"";
+                tbDosage4.Text = @"";
             }
             else
             {
                 this.BackColor = SystemColors.Control;
 
-                rtbAdultDosage.Text = currentDosage.dosage;
-                rtbDosage2.Text = currentDosage.dosage2;
-                rtbDosage3.Text = currentDosage.dosage3;
-                rtbDosage4.Text = currentDosage.dosage4;
+                tbAdultDosage.Text = currentDosage.dosage;
+                tbDosage2.Text = currentDosage.dosage2;
+                tbDosage3.Text = currentDosage.dosage3;
+                tbDosage4.Text = currentDosage.dosage4;
                 DisplayOrder = currentDosage.displayOrder;
 
                 chkPreviousDose2.Checked = currentDosage.dosage2SameAsPrevious;
@@ -196,9 +196,9 @@ namespace BDEditor.Views
             if (null != parentId)
             {
                 if ((null == currentDosage) &&
-                    (rtbAdultDosage.Text != string.Empty) ||
-                    (rtbDosage2.Text != string.Empty) ||
-                    (rtbDosage4.Text != string.Empty) ||
+                    (tbAdultDosage.Text != string.Empty) ||
+                    (tbDosage2.Text != string.Empty) ||
+                    (tbDosage4.Text != string.Empty) ||
                     chkPreviousDose2.Checked ||
                     chkPreviousDose3.Checked ||
                     chkPreviousDose4.Checked )
@@ -208,10 +208,10 @@ namespace BDEditor.Views
 
                 if (null != currentDosage)
                 {
-                    if (currentDosage.dosage != rtbAdultDosage.Text) currentDosage.dosage = rtbAdultDosage.Text;
-                    if (currentDosage.dosage2 != rtbDosage2.Text) currentDosage.dosage2 = rtbDosage2.Text;
-                    if (currentDosage.dosage3 != rtbDosage3.Text) currentDosage.dosage3 = rtbDosage3.Text;
-                    if (currentDosage.dosage4 != rtbDosage4.Text) currentDosage.dosage4 = rtbDosage4.Text;
+                    if (currentDosage.dosage != tbAdultDosage.Text) currentDosage.dosage = tbAdultDosage.Text;
+                    if (currentDosage.dosage2 != tbDosage2.Text) currentDosage.dosage2 = tbDosage2.Text;
+                    if (currentDosage.dosage3 != tbDosage3.Text) currentDosage.dosage3 = tbDosage3.Text;
+                    if (currentDosage.dosage4 != tbDosage4.Text) currentDosage.dosage4 = tbDosage4.Text;
                     if (currentDosage.displayOrder != DisplayOrder) currentDosage.displayOrder = DisplayOrder;
 
                     if (currentDosage.dosage2SameAsPrevious != this.chkPreviousDose2.Checked) currentDosage.dosage2SameAsPrevious = this.chkPreviousDose2.Checked;
@@ -262,33 +262,33 @@ namespace BDEditor.Views
         {
             if (currentControlName == ADULT_TEXTBOX)
             {
-                int position = rtbAdultDosage.SelectionStart;
-                rtbAdultDosage.Text = rtbAdultDosage.Text.Insert(rtbAdultDosage.SelectionStart, textToInsert);
-                rtbAdultDosage.SelectionStart = textToInsert.Length + position;
+                int position = tbAdultDosage.SelectionStart;
+                tbAdultDosage.Text = tbAdultDosage.Text.Insert(tbAdultDosage.SelectionStart, textToInsert);
+                tbAdultDosage.SelectionStart = textToInsert.Length + position;
             }
             if (currentControlName == DOSAGE4_TEXTBOX)
             {
-                int position = rtbDosage4.SelectionStart;
-                rtbDosage4.Text = rtbDosage4.Text.Insert(rtbDosage4.SelectionStart, textToInsert);
-                rtbDosage4.SelectionStart = textToInsert.Length + position;
+                int position = tbDosage4.SelectionStart;
+                tbDosage4.Text = tbDosage4.Text.Insert(tbDosage4.SelectionStart, textToInsert);
+                tbDosage4.SelectionStart = textToInsert.Length + position;
             }
             else if (currentControlName == DOSAGE2_TEXTBOX)
             {
-                int position = rtbDosage2.SelectionStart;
-                rtbDosage2.Text = rtbDosage2.Text.Insert(rtbDosage2.SelectionStart, textToInsert);
-                rtbDosage2.SelectionStart = textToInsert.Length + position;
+                int position = tbDosage2.SelectionStart;
+                tbDosage2.Text = tbDosage2.Text.Insert(tbDosage2.SelectionStart, textToInsert);
+                tbDosage2.SelectionStart = textToInsert.Length + position;
             }
             else if (currentControlName == DOSAGE3_TEXTBOX)
             {
-                int position = rtbDosage3.SelectionStart;
-                rtbDosage3.Text = rtbDosage3.Text.Insert(rtbDosage3.SelectionStart, textToInsert);
-                rtbDosage3.SelectionStart = textToInsert.Length + position;
+                int position = tbDosage3.SelectionStart;
+                tbDosage3.Text = tbDosage3.Text.Insert(tbDosage3.SelectionStart, textToInsert);
+                tbDosage3.SelectionStart = textToInsert.Length + position;
             }
         }
 
         private void toggleLinkButtonEnablement()
         {
-            bool enabled = ( (rtbAdultDosage.Text.Length > 0) || (rtbDosage2.Text.Length > 0) || (rtbDosage3.Text.Length > 0) || (rtbDosage4.Text.Length > 0) );
+            bool enabled = ( (tbAdultDosage.Text.Length > 0) || (tbDosage2.Text.Length > 0) || (tbDosage3.Text.Length > 0) || (tbDosage4.Text.Length > 0) );
 
             btnAdultLink.Enabled = enabled;
             btnDosage2Link.Enabled = enabled;
@@ -392,22 +392,22 @@ namespace BDEditor.Views
             OnNotesChanged(e);
         }
 
-        private void rtbAdultDosage_MouseDown(object sender, MouseEventArgs e)
+        private void tbAdultDosage_MouseDown(object sender, MouseEventArgs e)
         {
             currentControlName = ADULT_TEXTBOX;
         }
 
-        private void rtbDosage2_MouseDown(object sender, MouseEventArgs e)
+        private void tbDosage2_MouseDown(object sender, MouseEventArgs e)
         {
             currentControlName = DOSAGE2_TEXTBOX;
         }
 
-        private void rtbDosage3_MouseDown(object sender, MouseEventArgs e)
+        private void tbDosage3_MouseDown(object sender, MouseEventArgs e)
         {
             currentControlName = DOSAGE3_TEXTBOX;
         }
 
-        private void rtbDosage4_MouseDown(object sender, MouseEventArgs e)
+        private void tbDosage4_MouseDown(object sender, MouseEventArgs e)
         {
             currentControlName = DOSAGE4_TEXTBOX;
         }
@@ -445,10 +445,10 @@ namespace BDEditor.Views
             Boolean origState = BDCommon.Settings.IsUpdating;
             BDCommon.Settings.IsUpdating = true;
 
-            rtbAdultDosage.Tag = btnAdultLink;
-            rtbDosage2.Tag = btnDosage2Link;
-            rtbDosage3.Tag = btnDosage3Link;
-            rtbDosage4.Tag = btnDosage4Link;
+            tbAdultDosage.Tag = btnAdultLink;
+            tbDosage2.Tag = btnDosage2Link;
+            tbDosage3.Tag = btnDosage3Link;
+            tbDosage4.Tag = btnDosage4Link;
 
             chkPreviousDose2.Tag = btnDosage2Link;
             chkPreviousDose3.Tag = btnDosage3Link;
@@ -459,7 +459,7 @@ namespace BDEditor.Views
             btnDosage3Link.Tag = BDDosage.PROPERTYNAME_DOSAGE3;
             btnDosage4Link.Tag = BDDosage.PROPERTYNAME_DOSAGE4;
 
-            rtbAdultDosage.SelectAll();
+            tbAdultDosage.SelectAll();
 
             BDCommon.Settings.IsUpdating = origState;
         }
@@ -467,104 +467,104 @@ namespace BDEditor.Views
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (currentControlName == ADULT_TEXTBOX)
-                rtbAdultDosage.Undo();
+                tbAdultDosage.Undo();
             else if (currentControlName == DOSAGE2_TEXTBOX)
-                rtbDosage2.Undo();
+                tbDosage2.Undo();
             else if (currentControlName == DOSAGE3_TEXTBOX)
-                rtbDosage3.Undo();
+                tbDosage3.Undo();
             else if (currentControlName == DOSAGE4_TEXTBOX)
-                rtbDosage4.Undo();
+                tbDosage4.Undo();
         }
 
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (currentControlName == ADULT_TEXTBOX)
-                rtbAdultDosage.Cut();
+                tbAdultDosage.Cut();
             else if (currentControlName == DOSAGE2_TEXTBOX)
-                rtbDosage2.Cut();
+                tbDosage2.Cut();
             else if (currentControlName == DOSAGE3_TEXTBOX)
-                rtbDosage3.Cut();
+                tbDosage3.Cut();
             else if (currentControlName == DOSAGE4_TEXTBOX)
-                rtbDosage4.Cut();
+                tbDosage4.Cut();
         }
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (currentControlName == ADULT_TEXTBOX)
-                rtbAdultDosage.Copy();
+                tbAdultDosage.Copy();
             else if (currentControlName == DOSAGE2_TEXTBOX)
-                rtbDosage2.Copy();
+                tbDosage2.Copy();
             else if (currentControlName == DOSAGE3_TEXTBOX)
-                rtbDosage3.Copy();
+                tbDosage3.Copy();
             else if (currentControlName == DOSAGE4_TEXTBOX)
-                rtbDosage4.Copy();
+                tbDosage4.Copy();
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (currentControlName == ADULT_TEXTBOX)
-                rtbAdultDosage.Paste();
+                tbAdultDosage.Paste();
             else if (currentControlName == DOSAGE2_TEXTBOX)
-                rtbDosage2.Paste();
+                tbDosage2.Paste();
             else if (currentControlName == DOSAGE3_TEXTBOX)
-                rtbDosage3.Paste();
+                tbDosage3.Paste();
             else if (currentControlName == DOSAGE4_TEXTBOX)
-                rtbDosage4.Paste();
+                tbDosage4.Paste();
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RichTextBox rtb = null;
+            TextBox tb = null;
             if (currentControlName == ADULT_TEXTBOX)
-                rtb = rtbAdultDosage;
+                tb = tbAdultDosage;
             else if (currentControlName == DOSAGE2_TEXTBOX)
-                rtb = rtbDosage2;
+                tb = tbDosage2;
             else if (currentControlName == DOSAGE3_TEXTBOX)
-                rtb = rtbDosage3;
+                tb = tbDosage3;
             else if (currentControlName == DOSAGE4_TEXTBOX)
-                rtb = rtbDosage4;
-            if (rtb != null)
-            {
-                int i = rtb.SelectionStart;
-                rtb.Text = rtb.Text.Substring(0, i) + rtb.Text.Substring(i + rtb.SelectionLength);
-                rtb.SelectionStart = i;
-                rtb.SelectionLength = 0;
+                tb = tbDosage4;
+            if (tb != null)
+            {   
+                int i = tb.SelectionStart;
+                tb.Text = tb.Text.Substring(0, i) + tb.Text.Substring(i + tb.SelectionLength);
+                tb.SelectionStart = i;
+                tb.SelectionLength = 0;
             }
         }
 
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-                        RichTextBox rtb = null;
+                        TextBox tb = null;
             if (currentControlName == ADULT_TEXTBOX)
-                rtb = rtbAdultDosage;
+                tb = tbAdultDosage;
             else if (currentControlName == DOSAGE2_TEXTBOX)
-                rtb = rtbDosage2;
+                tb = tbDosage2;
             else if (currentControlName == DOSAGE3_TEXTBOX)
-                rtb = rtbDosage3;
+                tb = tbDosage3;
             else if (currentControlName == DOSAGE4_TEXTBOX)
-                rtb = rtbDosage4;
-            if (rtb != null)
-                rtb.SelectAll();
+                tb = tbDosage4;
+            if (tb != null)
+                tb.SelectAll();
         }
 
         private void contextMenuStripTextBox_Opening(object sender, CancelEventArgs e)
         {
-            RichTextBox rtb = null;
+            TextBox tb = null;
             if (currentControlName == ADULT_TEXTBOX)
-                rtb = rtbAdultDosage;
+                tb = tbAdultDosage;
             else if (currentControlName == DOSAGE2_TEXTBOX)
-                rtb = rtbDosage2;
+                tb = tbDosage2;
             else if (currentControlName == DOSAGE3_TEXTBOX)
-                rtb = rtbDosage3;
+                tb = tbDosage3;
             else if (currentControlName == DOSAGE4_TEXTBOX)
-                rtb = rtbDosage4;
-            if (rtb != null)
+                tb = tbDosage4;
+            if (tb != null)
             {
-                undoToolStripMenuItem.Enabled = rtb.CanUndo;
+                undoToolStripMenuItem.Enabled = tb.CanUndo;
                 pasteToolStripMenuItem.Enabled = (Clipboard.ContainsText());
-                cutToolStripMenuItem.Enabled = (rtb.SelectionLength > 0);
-                copyToolStripMenuItem.Enabled = (rtb.SelectionLength > 0);
-                deleteToolStripMenuItem.Enabled = (rtb.SelectionLength > 0);
+                cutToolStripMenuItem.Enabled = (tb.SelectionLength > 0);
+                copyToolStripMenuItem.Enabled = (tb.SelectionLength > 0);
+                deleteToolStripMenuItem.Enabled = (tb.SelectionLength > 0);
             }
         }
     }

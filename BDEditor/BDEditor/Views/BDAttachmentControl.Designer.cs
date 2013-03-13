@@ -46,6 +46,8 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.lblFilename = new System.Windows.Forms.Label();
             this.attachmentPictureBox = new System.Windows.Forms.PictureBox();
+            this.editIndexStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.pnlOverview.SuspendLayout();
             this.contextMenuStripEvents.SuspendLayout();
             this.attachmentSurfaceContextMenuStrip.SuspendLayout();
@@ -62,6 +64,8 @@
             // contextMenuStripEvents
             // 
             this.contextMenuStripEvents.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editIndexStripMenuItem,
+            this.toolStripSeparator3,
             this.reorderPreviousToolStripMenuItem,
             this.reorderNextToolStripMenuItem,
             this.toolStripSeparator2,
@@ -70,51 +74,51 @@
             this.toolStripSeparator1,
             this.deleteNodeToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(156, 126);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(164, 154);
             // 
             // reorderPreviousToolStripMenuItem
             // 
             this.reorderPreviousToolStripMenuItem.Image = global::BDEditor.Properties.Resources.previous_16;
             this.reorderPreviousToolStripMenuItem.Name = "reorderPreviousToolStripMenuItem";
-            this.reorderPreviousToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.reorderPreviousToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.reorderPreviousToolStripMenuItem.Text = "Move &Previous";
             // 
             // reorderNextToolStripMenuItem
             // 
             this.reorderNextToolStripMenuItem.Image = global::BDEditor.Properties.Resources.next_16;
             this.reorderNextToolStripMenuItem.Name = "reorderNextToolStripMenuItem";
-            this.reorderNextToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.reorderNextToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.reorderNextToolStripMenuItem.Text = "Move &Next";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(152, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
             // 
             // addSiblingNodeToolStripMenuItem
             // 
             this.addSiblingNodeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_16x16;
             this.addSiblingNodeToolStripMenuItem.Name = "addSiblingNodeToolStripMenuItem";
-            this.addSiblingNodeToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.addSiblingNodeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.addSiblingNodeToolStripMenuItem.Text = "Add Sibling";
             // 
             // addChildNodeToolStripMenuItem
             // 
             this.addChildNodeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_record_16;
             this.addChildNodeToolStripMenuItem.Name = "addChildNodeToolStripMenuItem";
-            this.addChildNodeToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.addChildNodeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.addChildNodeToolStripMenuItem.Text = "Add Child";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(152, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // deleteNodeToolStripMenuItem
             // 
             this.deleteNodeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.remove;
             this.deleteNodeToolStripMenuItem.Name = "deleteNodeToolStripMenuItem";
-            this.deleteNodeToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.deleteNodeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.deleteNodeToolStripMenuItem.Text = "Delete";
             // 
             // openFileDialog1
@@ -180,6 +184,19 @@
             this.attachmentPictureBox.TabStop = false;
             this.attachmentPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.attachmentSurface_MouseDown);
             // 
+            // editIndexStripMenuItem
+            // 
+            this.editIndexStripMenuItem.Image = global::BDEditor.Properties.Resources.edit_24x24;
+            this.editIndexStripMenuItem.Name = "editIndexStripMenuItem";
+            this.editIndexStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.editIndexStripMenuItem.Text = "&Edit Index Entries";
+            this.editIndexStripMenuItem.Click += new System.EventHandler(this.editIndexStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(160, 6);
+            // 
             // BDAttachmentControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -215,5 +232,7 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Label lblFilename;
         private System.Windows.Forms.PictureBox attachmentPictureBox;
+        private System.Windows.Forms.ToolStripMenuItem editIndexStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }

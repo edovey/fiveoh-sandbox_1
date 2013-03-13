@@ -33,7 +33,7 @@
             this.pnlButton = new System.Windows.Forms.Panel();
             this.btnMenu = new System.Windows.Forms.Button();
             this.pnlRtbP = new System.Windows.Forms.Panel();
-            this.rtbRecommendations = new System.Windows.Forms.RichTextBox();
+            this.tbRecommendations = new System.Windows.Forms.TextBox();
             this.contextMenuStripTextBox = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.bToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,7 +53,7 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rtbRiskPregnancy = new System.Windows.Forms.RichTextBox();
+            this.tbRiskPregnancy = new System.Windows.Forms.TextBox();
             this.btnRiskPregnancy = new System.Windows.Forms.Button();
             this.btnRecommendation = new System.Windows.Forms.Button();
             this.contextMenuStripEvents = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -65,10 +65,12 @@
             this.btnRelativeDose = new System.Windows.Forms.Button();
             this.btnAapRating = new System.Windows.Forms.Button();
             this.btnRiskLactation = new System.Windows.Forms.Button();
-            this.rtbRiskLactation = new System.Windows.Forms.RichTextBox();
-            this.rtbAapRating = new System.Windows.Forms.RichTextBox();
-            this.rtbRelativeDose = new System.Windows.Forms.RichTextBox();
+            this.tbRiskLactation = new System.Windows.Forms.TextBox();
+            this.tbAapRating = new System.Windows.Forms.TextBox();
+            this.tbRelativeDose = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.editIndexStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.pnlButton.SuspendLayout();
             this.pnlRtbP.SuspendLayout();
             this.contextMenuStripTextBox.SuspendLayout();
@@ -82,13 +84,13 @@
             this.pnlButton.Controls.Add(this.btnMenu);
             this.pnlButton.Location = new System.Drawing.Point(680, 2);
             this.pnlButton.Name = "pnlButton";
-            this.pnlButton.Size = new System.Drawing.Size(39, 56);
+            this.pnlButton.Size = new System.Drawing.Size(39, 32);
             this.pnlButton.TabIndex = 2;
             // 
             // btnMenu
             // 
             this.btnMenu.Image = global::BDEditor.Properties.Resources.apps_16;
-            this.btnMenu.Location = new System.Drawing.Point(8, 2);
+            this.btnMenu.Location = new System.Drawing.Point(8, 1);
             this.btnMenu.Name = "btnMenu";
             this.btnMenu.Size = new System.Drawing.Size(28, 28);
             this.btnMenu.TabIndex = 0;
@@ -98,24 +100,23 @@
             // pnlRtbP
             // 
             this.pnlRtbP.AllowDrop = true;
-            this.pnlRtbP.Controls.Add(this.rtbRecommendations);
-            this.pnlRtbP.Controls.Add(this.rtbRiskPregnancy);
+            this.pnlRtbP.Controls.Add(this.tbRecommendations);
+            this.pnlRtbP.Controls.Add(this.tbRiskPregnancy);
             this.pnlRtbP.Controls.Add(this.btnRiskPregnancy);
             this.pnlRtbP.Controls.Add(this.btnRecommendation);
             this.pnlRtbP.Location = new System.Drawing.Point(0, 0);
             this.pnlRtbP.Name = "pnlRtbP";
-            this.pnlRtbP.Size = new System.Drawing.Size(678, 58);
+            this.pnlRtbP.Size = new System.Drawing.Size(678, 32);
             this.pnlRtbP.TabIndex = 0;
             // 
-            // rtbRecommendations
+            // tbRecommendations
             // 
-            this.rtbRecommendations.ContextMenuStrip = this.contextMenuStripTextBox;
-            this.rtbRecommendations.Location = new System.Drawing.Point(264, 3);
-            this.rtbRecommendations.Name = "rtbRecommendations";
-            this.rtbRecommendations.Size = new System.Drawing.Size(380, 55);
-            this.rtbRecommendations.TabIndex = 2;
-            this.rtbRecommendations.Text = "";
-            this.rtbRecommendations.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rtbRecommendations_MouseDown);
+            this.tbRecommendations.ContextMenuStrip = this.contextMenuStripTextBox;
+            this.tbRecommendations.Location = new System.Drawing.Point(264, 5);
+            this.tbRecommendations.Name = "tbRecommendations";
+            this.tbRecommendations.Size = new System.Drawing.Size(380, 20);
+            this.tbRecommendations.TabIndex = 2;
+            this.tbRecommendations.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbRecommendations_MouseDown);
             // 
             // contextMenuStripTextBox
             // 
@@ -272,15 +273,14 @@
             this.selectAllToolStripMenuItem.Text = "Select All";
             this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
             // 
-            // rtbRiskPregnancy
+            // tbRiskPregnancy
             // 
-            this.rtbRiskPregnancy.ContextMenuStrip = this.contextMenuStripTextBox;
-            this.rtbRiskPregnancy.Location = new System.Drawing.Point(124, 3);
-            this.rtbRiskPregnancy.Name = "rtbRiskPregnancy";
-            this.rtbRiskPregnancy.Size = new System.Drawing.Size(100, 55);
-            this.rtbRiskPregnancy.TabIndex = 0;
-            this.rtbRiskPregnancy.Text = "";
-            this.rtbRiskPregnancy.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rtbRiskPregnancy_MouseDown);
+            this.tbRiskPregnancy.ContextMenuStrip = this.contextMenuStripTextBox;
+            this.tbRiskPregnancy.Location = new System.Drawing.Point(124, 5);
+            this.tbRiskPregnancy.Name = "tbRiskPregnancy";
+            this.tbRiskPregnancy.Size = new System.Drawing.Size(100, 20);
+            this.tbRiskPregnancy.TabIndex = 0;
+            this.tbRiskPregnancy.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbRiskPregnancy_MouseDown);
             // 
             // btnRiskPregnancy
             // 
@@ -305,12 +305,14 @@
             // contextMenuStripEvents
             // 
             this.contextMenuStripEvents.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editIndexStripMenuItem,
+            this.toolStripSeparator2,
             this.reorderPreviousToolStripMenuItem,
             this.reorderNextToolStripMenuItem,
             this.toolStripMenuItem1,
             this.deleteToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(153, 76);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(164, 126);
             // 
             // reorderPreviousToolStripMenuItem
             // 
@@ -346,12 +348,12 @@
             this.pnlRtbL.Controls.Add(this.btnRelativeDose);
             this.pnlRtbL.Controls.Add(this.btnAapRating);
             this.pnlRtbL.Controls.Add(this.btnRiskLactation);
-            this.pnlRtbL.Controls.Add(this.rtbRiskLactation);
-            this.pnlRtbL.Controls.Add(this.rtbAapRating);
-            this.pnlRtbL.Controls.Add(this.rtbRelativeDose);
-            this.pnlRtbL.Location = new System.Drawing.Point(0, 76);
+            this.pnlRtbL.Controls.Add(this.tbRiskLactation);
+            this.pnlRtbL.Controls.Add(this.tbAapRating);
+            this.pnlRtbL.Controls.Add(this.tbRelativeDose);
+            this.pnlRtbL.Location = new System.Drawing.Point(0, 36);
             this.pnlRtbL.Name = "pnlRtbL";
-            this.pnlRtbL.Size = new System.Drawing.Size(678, 57);
+            this.pnlRtbL.Size = new System.Drawing.Size(678, 33);
             this.pnlRtbL.TabIndex = 1;
             // 
             // btnRelativeDose
@@ -384,35 +386,45 @@
             this.btnRiskLactation.UseVisualStyleBackColor = true;
             this.btnRiskLactation.Click += new System.EventHandler(this.btnLinkedNote_Click);
             // 
-            // rtbRiskLactation
+            // tbRiskLactation
             // 
-            this.rtbRiskLactation.ContextMenuStrip = this.contextMenuStripTextBox;
-            this.rtbRiskLactation.Location = new System.Drawing.Point(124, 0);
-            this.rtbRiskLactation.Name = "rtbRiskLactation";
-            this.rtbRiskLactation.Size = new System.Drawing.Size(100, 55);
-            this.rtbRiskLactation.TabIndex = 0;
-            this.rtbRiskLactation.Text = "";
-            this.rtbRiskLactation.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rtbRiskLactation_MouseDown);
+            this.tbRiskLactation.ContextMenuStrip = this.contextMenuStripTextBox;
+            this.tbRiskLactation.Location = new System.Drawing.Point(124, 8);
+            this.tbRiskLactation.Name = "tbRiskLactation";
+            this.tbRiskLactation.Size = new System.Drawing.Size(100, 20);
+            this.tbRiskLactation.TabIndex = 0;
+            this.tbRiskLactation.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbRiskLactation_MouseDown);
             // 
-            // rtbAapRating
+            // tbAapRating
             // 
-            this.rtbAapRating.ContextMenuStrip = this.contextMenuStripTextBox;
-            this.rtbAapRating.Location = new System.Drawing.Point(337, 0);
-            this.rtbAapRating.Name = "rtbAapRating";
-            this.rtbAapRating.Size = new System.Drawing.Size(100, 55);
-            this.rtbAapRating.TabIndex = 2;
-            this.rtbAapRating.Text = "";
-            this.rtbAapRating.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rtbAapRating_MouseDown);
+            this.tbAapRating.ContextMenuStrip = this.contextMenuStripTextBox;
+            this.tbAapRating.Location = new System.Drawing.Point(337, 6);
+            this.tbAapRating.Name = "tbAapRating";
+            this.tbAapRating.Size = new System.Drawing.Size(100, 20);
+            this.tbAapRating.TabIndex = 2;
+            this.tbAapRating.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbAapRating_MouseDown);
             // 
-            // rtbRelativeDose
+            // tbRelativeDose
             // 
-            this.rtbRelativeDose.ContextMenuStrip = this.contextMenuStripTextBox;
-            this.rtbRelativeDose.Location = new System.Drawing.Point(544, 0);
-            this.rtbRelativeDose.Name = "rtbRelativeDose";
-            this.rtbRelativeDose.Size = new System.Drawing.Size(100, 55);
-            this.rtbRelativeDose.TabIndex = 4;
-            this.rtbRelativeDose.Text = "";
-            this.rtbRelativeDose.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rtbRelativeDose_MouseDown);
+            this.tbRelativeDose.ContextMenuStrip = this.contextMenuStripTextBox;
+            this.tbRelativeDose.Location = new System.Drawing.Point(544, 6);
+            this.tbRelativeDose.Name = "tbRelativeDose";
+            this.tbRelativeDose.Size = new System.Drawing.Size(100, 20);
+            this.tbRelativeDose.TabIndex = 4;
+            this.tbRelativeDose.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbRelativeDose_MouseDown);
+            // 
+            // editIndexStripMenuItem
+            // 
+            this.editIndexStripMenuItem.Image = global::BDEditor.Properties.Resources.edit_24x24;
+            this.editIndexStripMenuItem.Name = "editIndexStripMenuItem";
+            this.editIndexStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.editIndexStripMenuItem.Text = "&Edit Index Entries";
+            this.editIndexStripMenuItem.Click += new System.EventHandler(this.editIndexStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(160, 6);
             // 
             // BDAntimicrobialRiskControl
             // 
@@ -423,14 +435,16 @@
             this.Controls.Add(this.pnlRtbL);
             this.Controls.Add(this.pnlButton);
             this.Name = "BDAntimicrobialRiskControl";
-            this.Size = new System.Drawing.Size(722, 141);
+            this.Size = new System.Drawing.Size(722, 72);
             this.Load += new System.EventHandler(this.BDAntimicrobialRiskControl_Load);
             this.Leave += new System.EventHandler(this.BDAntimicrobialRiskControl_Leave);
             this.pnlButton.ResumeLayout(false);
             this.pnlRtbP.ResumeLayout(false);
+            this.pnlRtbP.PerformLayout();
             this.contextMenuStripTextBox.ResumeLayout(false);
             this.contextMenuStripEvents.ResumeLayout(false);
             this.pnlRtbL.ResumeLayout(false);
+            this.pnlRtbL.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -463,19 +477,21 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
-        private System.Windows.Forms.RichTextBox rtbRiskLactation;
-        private System.Windows.Forms.RichTextBox rtbAapRating;
-        private System.Windows.Forms.RichTextBox rtbRelativeDose;
-        private System.Windows.Forms.RichTextBox rtbRiskPregnancy;
+        private System.Windows.Forms.TextBox tbRiskLactation;
+        private System.Windows.Forms.TextBox tbAapRating;
+        private System.Windows.Forms.TextBox tbRelativeDose;
+        private System.Windows.Forms.TextBox tbRiskPregnancy;
         private System.Windows.Forms.Button btnRiskPregnancy;
         private System.Windows.Forms.Button btnRecommendation;
         private System.Windows.Forms.Button btnRelativeDose;
         private System.Windows.Forms.Button btnAapRating;
         private System.Windows.Forms.Button btnRiskLactation;
-        private System.Windows.Forms.RichTextBox rtbRecommendations;
+        private System.Windows.Forms.TextBox tbRecommendations;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ToolStripMenuItem sOneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem trademarkToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkmarkToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editIndexStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }

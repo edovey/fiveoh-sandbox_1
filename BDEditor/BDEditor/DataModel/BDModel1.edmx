@@ -333,6 +333,8 @@
           <Property Name="displayParentType" Type="int" />
           <Property Name="layoutVariant" Type="int" />
           <Property Name="searchEntryType" Type="int" />
+          <Property Name="anchorNodeId" Type="uniqueidentifier" />
+          <Property Name="editorContext" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="BDSystemSettings">
           <Key>
@@ -447,7 +449,6 @@
           <EntitySet Name="BDLinkedNotes" EntityType="BDDataModel.BDLinkedNote" />
           <EntitySet Name="BDNodes" EntityType="BDDataModel.BDNode" />
           <EntitySet Name="BDPrecautions" EntityType="BDDataModel.BDPrecaution" />
-          <EntitySet Name="BDSearchEntryAssociations" EntityType="BDDataModel.BDSearchEntryAssociation" />
           <EntitySet Name="BDSystemSettings" EntityType="BDDataModel.BDSystemSetting" />
           <EntitySet Name="BDTableCells" EntityType="BDDataModel.BDTableCell" />
           <EntitySet Name="BDTableRows" EntityType="BDDataModel.BDTableRow" />
@@ -464,6 +465,7 @@
           <EntitySet Name="BDHtmlPageMap" EntityType="BDDataModel.BDHtmlPageMap" />
           <EntitySet Name="BDHtmlPages" EntityType="BDDataModel.BDHtmlPage" />
           <EntitySet Name="BDSearchEntries" EntityType="BDDataModel.BDSearchEntry" />
+          <EntitySet Name="BDSearchEntryAssociations" EntityType="BDDataModel.BDSearchEntryAssociation" />
         </EntityContainer>
         <EntityType Name="BDAntimicrobialRisk">
           <Key>
@@ -558,22 +560,6 @@
           <Property Type="String" Name="maskAcute" MaxLength="750" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="maskLongTerm" MaxLength="750" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="duration" MaxLength="750" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="BDSearchEntryAssociation">
-          <Key>
-            <PropertyRef Name="uuid" />
-          </Key>
-          <Property Type="Guid" Name="uuid" Nullable="false" />
-          <Property Type="Guid" Name="createdBy" />
-          <Property Type="DateTime" Name="createdDate" />
-          <Property Type="Guid" Name="searchEntryId" />
-          <Property Type="Int32" Name="displayOrder" />
-          <Property Type="Int32" Name="schemaVersion" />
-          <Property Type="Guid" Name="displayParentId" />
-          <Property Type="String" Name="displayContext" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="displayParentType" />
-          <Property Type="Int32" Name="layoutVariant" />
-          <Property Type="Int32" Name="searchEntryType" />
         </EntityType>
         <EntityType Name="BDSystemSetting">
           <Key>
@@ -873,6 +859,24 @@
           <Property Type="Int32" Name="schemaVersion" />
           <Property Type="Boolean" Name="show" />
         </EntityType>
+        <EntityType Name="BDSearchEntryAssociation">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Type="Guid" Name="uuid" Nullable="false" />
+          <Property Type="Guid" Name="createdBy" />
+          <Property Type="DateTime" Name="createdDate" />
+          <Property Type="Guid" Name="searchEntryId" />
+          <Property Type="Int32" Name="displayOrder" />
+          <Property Type="Int32" Name="schemaVersion" />
+          <Property Type="Guid" Name="displayParentId" />
+          <Property Type="String" Name="displayContext" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="displayParentType" />
+          <Property Type="Int32" Name="layoutVariant" />
+          <Property Type="Int32" Name="searchEntryType" />
+          <Property Type="Guid" Name="anchorNodeId" />
+          <Property Type="String" Name="editorContext" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -974,23 +978,6 @@
                 <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
                 <ScalarProperty Name="parentType" ColumnName="parentType" />
                 <ScalarProperty Name="parentId" ColumnName="parentId" />
-                <ScalarProperty Name="uuid" ColumnName="uuid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BDSearchEntryAssociations">
-            <EntityTypeMapping TypeName="BDDataModel.BDSearchEntryAssociation">
-              <MappingFragment StoreEntitySet="BDSearchEntryAssociations">
-                <ScalarProperty Name="searchEntryType" ColumnName="searchEntryType" />
-                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
-                <ScalarProperty Name="displayParentType" ColumnName="displayParentType" />
-                <ScalarProperty Name="displayContext" ColumnName="displayContext" />
-                <ScalarProperty Name="displayParentId" ColumnName="displayParentId" />
-                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
-                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
-                <ScalarProperty Name="searchEntryId" ColumnName="searchEntryId" />
-                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
-                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
                 <ScalarProperty Name="uuid" ColumnName="uuid" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1307,6 +1294,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BDSearchEntryAssociations">
+            <EntityTypeMapping TypeName="BDDataModel.BDSearchEntryAssociation">
+              <MappingFragment StoreEntitySet="BDSearchEntryAssociations">
+                <ScalarProperty Name="editorContext" ColumnName="editorContext" />
+                <ScalarProperty Name="anchorNodeId" ColumnName="anchorNodeId" />
+                <ScalarProperty Name="searchEntryType" ColumnName="searchEntryType" />
+                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
+                <ScalarProperty Name="displayParentType" ColumnName="displayParentType" />
+                <ScalarProperty Name="displayContext" ColumnName="displayContext" />
+                <ScalarProperty Name="displayParentId" ColumnName="displayParentId" />
+                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
+                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
+                <ScalarProperty Name="searchEntryId" ColumnName="searchEntryId" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -1332,7 +1338,6 @@
         <EntityTypeShape EntityType="BDDataModel.BDLinkedNote" Width="1.5" PointX="4.75" PointY="0.75" Height="3.7109993489583335" />
         <EntityTypeShape EntityType="BDDataModel.BDNode" Width="1.5" PointX="0.625" PointY="0.75" Height="3.9033007812499996" />
         <EntityTypeShape EntityType="BDDataModel.BDPrecaution" Width="1.5" PointX="4.75" PointY="14.125" Height="5.057109375" />
-        <EntityTypeShape EntityType="BDDataModel.BDSearchEntryAssociation" Width="2" PointX="10" PointY="3.25" Height="3.1340950520833326" />
         <EntityTypeShape EntityType="BDDataModel.BDSystemSetting" Width="1.75" PointX="10.25" PointY="6.75" Height="1.7879850260416657" />
         <EntityTypeShape EntityType="BDDataModel.BDTableCell" Width="1.5" PointX="12.125" PointY="14.125" Height="3.7109993489583326" />
         <EntityTypeShape EntityType="BDDataModel.BDTableRow" Width="1.5" PointX="10.375" PointY="14.125" Height="3.9033007812499996" />
@@ -1343,12 +1348,13 @@
         <EntityTypeShape EntityType="BDDataModel.BDLayoutMetadataColumnNodeType" Width="2.875" PointX="7" PointY="5.875" Height="2.1725878906249996" />
         <EntityTypeShape EntityType="BDDataModel.BDConfiguredEntry" Width="1.875" PointX="12.375" PointY="1.25" Height="6.0186165364583353" />
         <EntityTypeShape EntityType="BDDataModel.BDCombinedEntry" Width="1.875" PointX="14.625" PointY="1.25" Height="5.8263151041666674" />
-        <EntityTypeShape EntityType="BDDataModel.BDLinkedNoteAssociation" Width="2.125" PointX="4.5" PointY="4.625" Height="4.0956022135416674" />
+        <EntityTypeShape EntityType="BDDataModel.BDLinkedNoteAssociation" Width="2" PointX="4.875" PointY="4.625" Height="4.0956022135416674" />
         <EntityTypeShape EntityType="BDDataModel.BDDosage" Width="1.5" PointX="2.875" PointY="14.125" Height="4.6725065104166674" />
-        <EntityTypeShape EntityType="BDDataModel.BDNodeToHtmlPageIndex" Width="1.75" PointX="2.625" PointY="4.5" Height="2.1725878906250067" />
-        <EntityTypeShape EntityType="BDDataModel.BDHtmlPageMap" Width="1.5" PointX="2.75" PointY="7" Height="1.5956835937500102" />
+        <EntityTypeShape EntityType="BDDataModel.BDNodeToHtmlPageIndex" Width="2.125" PointX="2.625" PointY="4.5" Height="2.1725878906250067" />
+        <EntityTypeShape EntityType="BDDataModel.BDHtmlPageMap" Width="1.75" PointX="2.625" PointY="7" Height="1.5956835937500102" />
         <EntityTypeShape EntityType="BDDataModel.BDHtmlPage" Width="1.5" PointX="2.75" PointY="0.875" Height="3.3263964843750102" />
         <EntityTypeShape EntityType="BDDataModel.BDSearchEntry" Width="1.5" PointX="10.25" PointY="0.875" Height="2.1725878906250102" />
+        <EntityTypeShape EntityType="BDDataModel.BDSearchEntryAssociation" Width="1.75" PointX="10.25" PointY="3.125" Height="3.5186979166666674" />
       </Diagram>
     </Diagrams>
   </Designer>

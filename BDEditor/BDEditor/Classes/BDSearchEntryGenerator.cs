@@ -17,7 +17,8 @@ namespace BDEditor.Classes
     /// </summary>
     public class BDSearchEntryGenerator
     {
-        private List<string> searchEntryList;
+        private List<BDSearchEntry> searchEntryList;
+        private List<BDHtmlPage> htmlPages;
 
         public BDSearchEntryGenerator() { }
         
@@ -27,16 +28,45 @@ namespace BDEditor.Classes
         public void Generate(Entities pDataContext, IBDNode pNode)
         {
             BDHtmlPageGeneratorLogEntry.AppendToFile("BDSearchGeneratorLog.txt", string.Format("Start: {0} -------------------------------", DateTime.Now));
-            // clear the data from the database
-            BDSearchEntry.ResetForRegeneration(pDataContext);
-            // BDSearchEntryAssociation.DeleteAll(pDataContext);
 
-            searchEntryList = BDSearchEntry.RetrieveSearchEntryNames(pDataContext);
+            // reset Id of display parent in association records
 
-            generateSearchEntries(pDataContext, pNode);
+            BDSearchEntryAssociation.ResetForRegeneration(pDataContext);
+
+            searchEntryList = BDSearchEntry.RetrieveAll(pDataContext);
+            htmlPages = BDHtmlPage.RetrieveAll(pDataContext);
+
+            foreach (BDSearchEntry entry in searchEntryList)
+            {
+                List<BDSearchEntryAssociation> associations = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryId(pDataContext, entry.Uuid);
+
+                foreach (BDSearchEntryAssociation assoc in associations)
+                {
+                    // determine the displayParentId : this is the HTML page Id where the anchorNode has been rendered
+                    // NB: this may change at any time, so it is always repopulated on a Build.
+                    Guid htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pDataContext, assoc.anchorNodeId.Value);
+                    if (htmlPageId != Guid.Empty)
+                    {
+                        BDHtmlPage htmlPage = BDHtmlPage.RetrieveWithId(pDataContext, htmlPageId);
+                        if (htmlPage != null)
+                        {
+                            BDNode masterNode = BDNode.RetrieveNodeWithId(pDataContext, htmlPage.displayParentId.Value);
+                            if (masterNode != null)
+                            {
+                                // determine the masterNode for the HTML page; generate the display context from that. 
+                                assoc.displayContext = BDUtilities.BuildHierarchyString(pDataContext, masterNode, " : ");
+                            }
+                        }
+                    }
+                }
+            }
+
+            //[Obsolete] generateSearchEntries(pDataContext, pNode);  
+
             BDHtmlPageGeneratorLogEntry.AppendToFile("BDSearchGeneratorLog.txt", string.Format("End: {0} -------------------------------", DateTime.Now));
         }
 
+        [Obsolete]
         private void generateSearchEntries(Entities pDataContext, IBDNode pNode)
         {
             List<IBDNode> chapters = new List<IBDNode>();  
@@ -45,9 +75,10 @@ namespace BDEditor.Classes
                 chapters.Add(pNode);
             else 
                 chapters.AddRange(BDNode.RetrieveNodesForType(pDataContext, BDConstants.BDNodeType.BDChapter));
-             processNodeList(pDataContext, chapters.ToList<IBDNode>(), displayContext);
+            // processNodeList(pDataContext, chapters.ToList<IBDNode>(), editorContext);
        }
 
+        [Obsolete]
         private void processNodeList(Entities pDataContext, List<IBDNode> pNodes, StringBuilder pNodeContext)
         {
             string resolvedName = string.Empty;
@@ -161,47 +192,48 @@ namespace BDEditor.Classes
             }
         }
 
+        [Obsolete]
         private void generateSearchEntryLink(Entities pDataContext, Guid pOriginalNodeId, IBDNode pNode, string pResolvedName, string pDisplayContext)
         {
             //string entryName = pNode.Name.Trim();
-            List<BDSearchEntry> matchingSearchEntries = new List<BDSearchEntry>();
-            if (!string.IsNullOrEmpty(pResolvedName))
-            {
-                pDisplayContext = pDisplayContext.Replace(":  :", ":");
+            //List<BDSearchEntry> matchingSearchEntries = new List<BDSearchEntry>();
+            //if (!string.IsNullOrEmpty(pResolvedName))
+            //{
+            //    pDisplayContext = pDisplayContext.Replace(":  :", ":");
 
-                foreach (string searchEntryTerm in searchEntryList)
-                {
-                    if (pResolvedName.IndexOf(searchEntryTerm, StringComparison.OrdinalIgnoreCase) >= 0)
-                    {
-                        BDSearchEntry matchedSearchEntry = BDSearchEntry.RetrieveWithName(pDataContext, searchEntryTerm);
-                        matchingSearchEntries.Add(matchedSearchEntry);
-                        matchedSearchEntry.show = true;
-                    }
-                    else
-                    {
-                        string shortName = pResolvedName.Replace(" ", "");
-                        string shortSearchTerm = searchEntryTerm.Replace(" ", "");
-                        if (shortName.IndexOf(shortSearchTerm, StringComparison.OrdinalIgnoreCase) >= 0)
-                        {
-                            BDSearchEntry matchedSearchEntry = BDSearchEntry.RetrieveWithName(pDataContext, searchEntryTerm);
-                            matchingSearchEntries.Add(matchedSearchEntry);
-                            matchedSearchEntry.show = true;
-                        }
-                    }
-                }
-                pDataContext.SaveChanges();
-            }
-            //BDHtmlPageGeneratorLogEntry.AppendToFile("BDSearchGeneratorLog.txt", string.Format(@"{0} matches for name: {1}", matchingSearchEntries.Count, pResolvedName));
+            //    foreach (string searchEntryTerm in searchEntryList)
+            //    {
+            //        if (pResolvedName.IndexOf(searchEntryTerm, StringComparison.OrdinalIgnoreCase) >= 0)
+            //        {
+            //            BDSearchEntry matchedSearchEntry = BDSearchEntry.RetrieveWithName(pDataContext, searchEntryTerm);
+            //            matchingSearchEntries.Add(matchedSearchEntry);
+            //            matchedSearchEntry.show = true;
+            //        }
+            //        else
+            //        {
+            //            string shortName = pResolvedName.Replace(" ", "");
+            //            string shortSearchTerm = searchEntryTerm.Replace(" ", "");
+            //            if (shortName.IndexOf(shortSearchTerm, StringComparison.OrdinalIgnoreCase) >= 0)
+            //            {
+            //                BDSearchEntry matchedSearchEntry = BDSearchEntry.RetrieveWithName(pDataContext, searchEntryTerm);
+            //                matchingSearchEntries.Add(matchedSearchEntry);
+            //                matchedSearchEntry.show = true;
+            //            }
+            //        }
+            //    }
+            //    pDataContext.SaveChanges();
+            //}
+            ////BDHtmlPageGeneratorLogEntry.AppendToFile("BDSearchGeneratorLog.txt", string.Format(@"{0} matches for name: {1}", matchingSearchEntries.Count, pResolvedName));
             
-            foreach (BDSearchEntry entry in matchingSearchEntries)
-            {
-                List<BDSearchEntryAssociation> associations = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryIdAndDisplayParentid(pDataContext, entry.uuid, pNode.Uuid);
+            //foreach (BDSearchEntry entry in matchingSearchEntries)
+            //{
+            //    List<BDSearchEntryAssociation> associations = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryIdAndDisplayParentid(pDataContext, entry.uuid, pNode.Uuid);
 
-                if (associations.Count() == 0)
-                {
-                    BDSearchEntryAssociation.CreateBDSearchEntryAssociation(pDataContext, entry.Uuid, pNode.NodeType, pOriginalNodeId, pNode.LayoutVariant, pDisplayContext);
-                }
-            }
+            //    if (associations.Count() == 0)
+            //    {
+            //        BDSearchEntryAssociation.CreateBDSearchEntryAssociation(pDataContext, entry.Uuid, pNode.NodeType, pOriginalNodeId, pNode.LayoutVariant, pDisplayContext);
+            //    }
+            //}
         }
 
         private string buildResolvedNameForNode(Entities pContext, IBDNode pNode, string pPropertyValue, string pPropertyName)

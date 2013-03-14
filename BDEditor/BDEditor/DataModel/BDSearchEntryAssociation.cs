@@ -31,7 +31,7 @@ namespace BDEditor.DataModel
         public const string ENTITYNAME_FRIENDLY = @"Search Entry Association";
         public const string KEY_NAME = @"BDSearchEntryAssociation";
 
-        public const int ENTITY_SCHEMAVERSION = 0;
+        public const int ENTITY_SCHEMAVERSION = 1;
 
         private const string UUID = @"sa_uuid";
         private const string SCHEMAVERSION = @"sa_schemaVersion";
@@ -43,8 +43,9 @@ namespace BDEditor.DataModel
         private const string DISPLAYPARENTID = @"sa_displayParentId";
         private const string DISPLAYPARENTTYPE = @"sa_displayParentType";
         private const string LAYOUTVARIANT = @"sa_layoutVariant";
-        
         private const string DISPLAYCONTEXT = @"sa_displayContext";
+        private const string EDITORCONTEXT = @"sa_editorContext";
+        private const string ANCHORNODEID = @"sa_anchorNodeId";
 
         /// <summary>
         /// Extended Create method that sets the created data and schema version. Does not save.
@@ -73,25 +74,20 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Extended create method that includes parent information. Saves the instance.
+        /// Extended create method that includes parent information.
+        /// Initial create stored the EDITOR context.  Display context is built & added during Publish / Build. 
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pSearchEntryId"></param>
-        /// <param name="pSearchEntryType"></param>
-        /// <param name="pDisplayParentType"></param>
         /// <param name="pDisplayParentId"></param>
-        /// <param name="pLayoutVariant"></param>
-        /// <param name="pDisplayContext"></param>
-        /// <returns></returns>
-        public static BDSearchEntryAssociation CreateBDSearchEntryAssociation(Entities pContext,
+        /// <param name="pEditorContext"></param>
+        /// <returns>BDSearchEntryAssociation</returns>
+        public static BDSearchEntryAssociation CreateBDSearchEntryAssociation(Entities pDataContext,
                                                                             Guid pSearchEntryId,
-                                                                            BDConstants.BDNodeType pSearchEntryType,
-                                                                            Guid pDisplayParentId,
-                                                                            BDConstants.BDNodeType pDisplayParentType,
-                                                                            BDConstants.LayoutVariantType pLayoutVariant,
-                                                                            string pDisplayContext)
+                                                                            Guid pAnchorNodeId,
+                                                                            string pEditorContext)
         {
-            List<BDSearchEntryAssociation> associations = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryIdAndDisplayParentid(pContext, pSearchEntryId, pDisplayParentId);
+            List<BDSearchEntryAssociation> associations = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryIdAndDisplayParentid(pDataContext, pSearchEntryId, pAnchorNodeId);
             if (associations.Count >= 0)
                 return associations[0];
 
@@ -101,51 +97,13 @@ namespace BDEditor.DataModel
             association.displayOrder = -1;
 
             association.searchEntryId = pSearchEntryId;
-            association.searchEntryType = (int)pSearchEntryType;
-            association.displayParentId = pDisplayParentId;
-            association.displayParentType = (int)pDisplayParentType;
-            association.displayContext = pDisplayContext;
-            association.layoutVariant = (int)pLayoutVariant;
-            pContext.AddObject(ENTITYNAME, association);
+            association.anchorNodeId = pAnchorNodeId;
+            association.editorContext = pEditorContext;
+            pDataContext.AddObject(ENTITYNAME, association);
 
-            Save(pContext, association);
+            Save(pDataContext, association);
 
             return association;
-        }
-
-        public static BDSearchEntryAssociation CreateBDSearchEntryAssociation(Entities pContext,
-                                                                            Guid pSearchEntryId,
-                                                                            BDConstants.BDNodeType pSearchEntryType,
-                                                                            Guid pDisplayParentId,
-                                                                            BDConstants.LayoutVariantType pLayoutVariant,
-                                                                            string pDisplayContext)
-        {
-            List<BDSearchEntryAssociation> associations = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryIdAndDisplayParentid(pContext, pSearchEntryId, pDisplayParentId);
-            if (associations.Count > 0)
-                return associations[0];
-            BDSearchEntryAssociation association = CreateBDSearchEntryAssociation(Guid.NewGuid());
-            association.createdBy = Guid.Empty;
-            association.schemaVersion = ENTITY_SCHEMAVERSION;
-            association.displayOrder = -1;
-            association.searchEntryId = pSearchEntryId;
-            association.searchEntryType = (int)pSearchEntryType;
-            association.displayParentId = pDisplayParentId;
-            association.displayParentType = -1;
-            association.displayContext = pDisplayContext;
-            association.layoutVariant = (int)pLayoutVariant;
-            pContext.AddObject(ENTITYNAME, association);
-
-            Save(pContext, association);
-
-            return association;
-        }
-        public static BDSearchEntryAssociation CreateBDSearchEntryAssociation(Entities pContext,
-                                                                            Guid pSearchEntryId,
-                                                                            Guid pDisplayParentId,
-                                                                            BDConstants.LayoutVariantType pLayoutVariant,
-                                                                            string pDisplayContext)
-        {
-            return CreateBDSearchEntryAssociation(pContext, pSearchEntryId, BDConstants.BDNodeType.Undefined, pDisplayParentId, pLayoutVariant, pDisplayContext);
         }
 
         public static void Save(Entities pContext, BDSearchEntryAssociation pAssociation)
@@ -251,8 +209,27 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static List<BDSearchEntryAssociation> RetrieveSearchEntryAssociationsForSearchEntryId(Entities pContext, Guid pSearchEntryId)
         {
+            List<BDSearchEntryAssociation> resultList = new List<BDSearchEntryAssociation>();
             IQueryable<BDSearchEntryAssociation> entries = (from entities in pContext.BDSearchEntryAssociations
                                                             where entities.searchEntryId == pSearchEntryId
+                                                            orderby entities.displayOrder ascending
+                                                            select entities);
+            resultList = entries.ToList<BDSearchEntryAssociation>();
+            return resultList;
+        }
+
+        /// <summary>
+        /// Returns all the SearchEntryAssociations for a searchEntry uuid and anchor node uuid
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pSearchEntryId"></param>
+        /// <param name="pAnchorNodeId"></param>
+        /// <returns>List of BDSearchEntryAssociation</returns>
+        public static List<BDSearchEntryAssociation> RetrieveSearchEntryAssociationsForSearchEntryIdAndAnchorNodeId(Entities pContext, Guid pSearchEntryId, Guid pAnchorNodeId)
+        {
+            IQueryable<BDSearchEntryAssociation> entries = (from entities in pContext.BDSearchEntryAssociations
+                                                            where entities.searchEntryId == pSearchEntryId
+                                                            && entities.anchorNodeId == pAnchorNodeId
                                                             orderby entities.displayOrder ascending
                                                             select entities);
             List<BDSearchEntryAssociation> resultList = entries.ToList<BDSearchEntryAssociation>();
@@ -270,7 +247,7 @@ namespace BDEditor.DataModel
             IQueryable<BDSearchEntryAssociation> entries = (from entities in pContext.BDSearchEntryAssociations
                                                             where entities.searchEntryId == pSearchEntryId
                                                             && entities.displayParentId == pDisplayParentId
-                                                            orderby entities.displayParentType ascending, entities.displayContext ascending
+                                                            orderby entities.displayContext ascending
                                                             select entities);
             List<BDSearchEntryAssociation> resultList = entries.ToList<BDSearchEntryAssociation>();
             return resultList;
@@ -297,6 +274,19 @@ namespace BDEditor.DataModel
             }
 
             return result;
+        }
+
+        public static void ResetForRegeneration(Entities pContext)
+        {
+            List<BDSearchEntryAssociation> allEntries = new List<BDSearchEntryAssociation>();
+            IQueryable<BDSearchEntryAssociation> entries = from entry in pContext.BDSearchEntryAssociations
+                                                select entry;
+            allEntries = entries.ToList<BDSearchEntryAssociation>();
+
+            foreach (BDSearchEntryAssociation entry in allEntries)
+                entry.displayParentId = null;
+
+            pContext.SaveChanges();
         }
 
         #region Repository
@@ -330,40 +320,6 @@ namespace BDEditor.DataModel
             return syncInfo;
         }
 
-        /// <summary>
-        /// Create or update an existing BDSearchEntryAssociation from attributes in a dictionary. Saves the entry.
-        /// </summary>
-        /// <param name="pDataContext"></param>
-        /// <param name="pAttributeDictionary"></param>
-        /// <returns>Uuid of the created/updated entry</returns>
-        public static Guid? LoadFromAttributes(Entities pDataContext, AttributeDictionary pAttributeDictionary, bool pSaveChanges)
-        {
-            Guid uuid = Guid.Parse(pAttributeDictionary[UUID]);
-            BDSearchEntryAssociation entry = BDSearchEntryAssociation.RetrieveSearchEntryAssociationWithId(pDataContext, uuid);
-            if (null == entry)
-            {
-                entry = BDSearchEntryAssociation.CreateBDSearchEntryAssociation(uuid);
-                pDataContext.AddObject(ENTITYNAME, entry);
-            }
-
-            short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
-            entry.schemaVersion = schemaVersion;
-            short displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]);
-            entry.displayOrder = displayOrder;
-            entry.createdBy = Guid.Parse(pAttributeDictionary[CREATEDBY]);
-            entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
-            entry.searchEntryId = Guid.Parse(pAttributeDictionary[SEARCHENTRYID]);
-            entry.searchEntryType = short.Parse(pAttributeDictionary[SEARCHENTRYTYPE]);
-            entry.displayParentId = Guid.Parse(pAttributeDictionary[DISPLAYPARENTID]);
-            entry.displayParentType = short.Parse(pAttributeDictionary[DISPLAYPARENTTYPE]);
-            entry.displayContext = pAttributeDictionary[DISPLAYCONTEXT];
-            entry.layoutVariant = short.Parse(pAttributeDictionary[LAYOUTVARIANT]);
-            if (pSaveChanges)
-                pDataContext.SaveChanges();
-
-            return uuid;
-        }
-
         public PutAttributesRequest PutAttributes()
         {
             PutAttributesRequest putAttributeRequest = new PutAttributesRequest().WithDomainName(AWS_DOMAIN).WithItemName(this.uuid.ToString().ToUpper());
@@ -379,7 +335,9 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDSearchEntryAssociation.DISPLAYPARENTID).WithValue((null == displayParentId) ? Guid.Empty.ToString() : displayParentId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDSearchEntryAssociation.DISPLAYPARENTTYPE).WithValue(string.Format(@"{0}", displayParentType)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDSearchEntryAssociation.DISPLAYCONTEXT).WithValue((null == displayContext) ? string.Empty : displayContext).WithReplace(true));
+            //attributeList.Add(new ReplaceableAttribute().WithName(BDSearchEntryAssociation.EDITORCONTEXT).WithValue((null == editorContext) ? string.Empty : editorContext).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDSearchEntryAssociation.LAYOUTVARIANT).WithValue(string.Format(@"{0}", layoutVariant)).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDSearchEntryAssociation.ANCHORNODEID).WithValue((null == anchorNodeId) ? Guid.Empty.ToString() : anchorNodeId.ToString().ToUpper()).WithReplace(true));
 
             return putAttributeRequest;
         }

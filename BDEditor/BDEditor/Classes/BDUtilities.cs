@@ -67,7 +67,11 @@ namespace BDEditor.Classes
         {
             StringBuilder hStringBuilder = new StringBuilder();
             if (pStartNode != null)
-                return getParentName(pContext, pStartNode, hStringBuilder, pSeparationString).ToString();
+            {
+                getParentName(pContext, pStartNode, hStringBuilder, pSeparationString).ToString();
+                hStringBuilder.Append(pStartNode.Name);
+                return hStringBuilder.ToString();
+            }
             else
                 return string.Empty;
         }

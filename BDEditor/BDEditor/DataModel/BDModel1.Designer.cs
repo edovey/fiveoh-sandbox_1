@@ -148,22 +148,6 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<BDSearchEntryAssociation> BDSearchEntryAssociations
-        {
-            get
-            {
-                if ((_BDSearchEntryAssociations == null))
-                {
-                    _BDSearchEntryAssociations = base.CreateObjectSet<BDSearchEntryAssociation>("BDSearchEntryAssociations");
-                }
-                return _BDSearchEntryAssociations;
-            }
-        }
-        private ObjectSet<BDSearchEntryAssociation> _BDSearchEntryAssociations;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<BDSystemSetting> BDSystemSettings
         {
             get
@@ -416,6 +400,22 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDSearchEntry> _BDSearchEntries;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDSearchEntryAssociation> BDSearchEntryAssociations
+        {
+            get
+            {
+                if ((_BDSearchEntryAssociations == null))
+                {
+                    _BDSearchEntryAssociations = base.CreateObjectSet<BDSearchEntryAssociation>("BDSearchEntryAssociations");
+                }
+                return _BDSearchEntryAssociations;
+            }
+        }
+        private ObjectSet<BDSearchEntryAssociation> _BDSearchEntryAssociations;
 
         #endregion
         #region AddTo Methods
@@ -458,14 +458,6 @@ namespace BDEditor.DataModel
         public void AddToBDPrecautions(BDPrecaution bDPrecaution)
         {
             base.AddObject("BDPrecautions", bDPrecaution);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the BDSearchEntryAssociations EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDSearchEntryAssociations(BDSearchEntryAssociation bDSearchEntryAssociation)
-        {
-            base.AddObject("BDSearchEntryAssociations", bDSearchEntryAssociation);
         }
     
         /// <summary>
@@ -594,6 +586,14 @@ namespace BDEditor.DataModel
         public void AddToBDSearchEntries(BDSearchEntry bDSearchEntry)
         {
             base.AddObject("BDSearchEntries", bDSearchEntry);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDSearchEntryAssociations EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDSearchEntryAssociations(BDSearchEntryAssociation bDSearchEntryAssociation)
+        {
+            base.AddObject("BDSearchEntryAssociations", bDSearchEntryAssociation);
         }
 
         #endregion
@@ -6317,9 +6317,9 @@ namespace BDEditor.DataModel
             set
             {
                 OndisplayContextChanging(value);
-                ReportPropertyChanging("displayContext");
+                ReportPropertyChanging("editorContext");
                 _displayContext = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("displayContext");
+                ReportPropertyChanged("editorContext");
                 OndisplayContextChanged();
             }
         }
@@ -6398,6 +6398,54 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Int32> _searchEntryType;
         partial void OnsearchEntryTypeChanging(Nullable<global::System.Int32> value);
         partial void OnsearchEntryTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Guid> anchorNodeId
+        {
+            get
+            {
+                return _anchorNodeId;
+            }
+            set
+            {
+                OnanchorNodeIdChanging(value);
+                ReportPropertyChanging("anchorNodeId");
+                _anchorNodeId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("anchorNodeId");
+                OnanchorNodeIdChanged();
+            }
+        }
+        private Nullable<global::System.Guid> _anchorNodeId;
+        partial void OnanchorNodeIdChanging(Nullable<global::System.Guid> value);
+        partial void OnanchorNodeIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String editorContext
+        {
+            get
+            {
+                return _editorContext;
+            }
+            set
+            {
+                OneditorContextChanging(value);
+                ReportPropertyChanging("editorContext");
+                _editorContext = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("editorContext");
+                OneditorContextChanged();
+            }
+        }
+        private global::System.String _editorContext;
+        partial void OneditorContextChanging(global::System.String value);
+        partial void OneditorContextChanged();
 
         #endregion
     

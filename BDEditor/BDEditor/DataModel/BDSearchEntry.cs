@@ -154,16 +154,19 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Retrieve all SearchEntry nodes where show is true
+        /// Retrieve all SearchEntry nodes where a searchEntryAssociation exists
         /// </summary>
         /// <param name="pContext"></param>
         /// <returns>List of IBDObjects</returns>
-        public static List<IBDObject> RetrieveAllShowEntries(Entities pContext)
+        public static List<IBDObject> RetrieveSearchEntriesWithAssociations(Entities pContext)
         {
             List<IBDObject> entryList;
-            IQueryable<BDSearchEntry> entries = (from searchEntries in pContext.BDSearchEntries
-                                                 where searchEntries.show == true
-                                                 select searchEntries);
+
+            IQueryable<BDSearchEntry> entries = (from e in pContext.BDSearchEntries
+                                                 join a in pContext.BDSearchEntryAssociations
+                                                 on e.uuid equals a.searchEntryId
+                                                 select e);
+
             entryList = new List<IBDObject>(entries.ToList<BDSearchEntry>());
             return entryList;
         }
@@ -214,6 +217,7 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext"></param>
         /// <returns>List of strings</returns>
+        [Obsolete]
         public static List<string> RetrieveSearchEntryNames(Entities pContext)
         {
             var names = pContext.BDSearchEntries.Where(x => (!string.IsNullOrEmpty(x.name))).Select(pg => pg.name).Distinct();
@@ -238,6 +242,7 @@ namespace BDEditor.DataModel
             return result;
         }
 
+        [Obsolete]
         public static void ResetForRegeneration(Entities pContext)
         {
             List<BDSearchEntry> allEntries = new List<BDSearchEntry>();
@@ -278,7 +283,7 @@ namespace BDEditor.DataModel
         public static SyncInfo SyncInfo(Entities pDataContext)
         {
             SyncInfo syncInfo = new SyncInfo(AWS_DOMAIN, AWS_PROD_DOMAIN, AWS_DEV_DOMAIN);
-            syncInfo.PushList = BDSearchEntry.RetrieveAllShowEntries(pDataContext);
+            syncInfo.PushList = BDSearchEntry.RetrieveSearchEntriesWithAssociations(pDataContext);
             syncInfo.FriendlyName = ENTITYNAME_FRIENDLY;
             return syncInfo;
         }

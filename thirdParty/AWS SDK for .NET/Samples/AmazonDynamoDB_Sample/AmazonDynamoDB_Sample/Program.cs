@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************
-* Copyright 2009-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+* Copyright 2009-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 * 
 * Licensed under the Apache License, Version 2.0 (the "License"). You may
 * not use this file except in compliance with the License. A copy of the
@@ -34,7 +34,7 @@ namespace AmazonDynamoDB_Sample
         {
             Console.WriteLine();
             Console.WriteLine("Setting up DynamoDB client");
-            SetupClient();
+            client = new AmazonDynamoDBClient(RegionEndpoint.USWest2);
 
             Console.WriteLine();
             Console.WriteLine("Creating sample tables");
@@ -55,15 +55,6 @@ namespace AmazonDynamoDB_Sample
             Console.WriteLine();
             Console.WriteLine("Press Enter to continue...");
             Console.Read();
-        }
-
-        public static void SetupClient()
-        {
-            Console.WriteLine("Creating AmazonSecurityTokenServiceClient, using Access and Secret keys from app.config");
-            AmazonSecurityTokenServiceClient stsClient = new AmazonSecurityTokenServiceClient();
-            Console.WriteLine("Creating RefreshingSessionAWSCredentials and initializing AmazonDynamoDBClient");
-            RefreshingSessionAWSCredentials sessionCredentials = new RefreshingSessionAWSCredentials(stsClient);
-            client = new AmazonDynamoDBClient(sessionCredentials);
         }
     }
 }

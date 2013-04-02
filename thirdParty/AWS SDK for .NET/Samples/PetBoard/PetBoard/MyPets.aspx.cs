@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************
- *  Copyright 2008-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  Copyright 2008-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  Licensed under the Apache License, Version 2.0 (the "License"). You may not use
  *  this file except in compliance with the License. A copy of the License is located at
  *
@@ -42,7 +42,7 @@ namespace Petboard
 
             if (!this.Page.IsPostBack)
             {
-                using (AmazonSimpleDBClient sdbClient = new AmazonSimpleDBClient())
+                using (AmazonSimpleDBClient sdbClient = new AmazonSimpleDBClient(Amazon.RegionEndpoint.USWest2))
                 {
                     DomainHelper.CheckForDomain(this._domainName, sdbClient);
                     SelectRequest selectRequest = new SelectRequest().WithSelectExpression(String.Format("select * from `{0}`", this._domainName));

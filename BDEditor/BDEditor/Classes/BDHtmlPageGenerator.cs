@@ -1134,9 +1134,7 @@ namespace BDEditor.Classes
         /// Use for LayoutColumn Note Rendering
         /// </summary>
         /// <param name="pContext"></param>
-        /// <param name="pLayoutColumnId"></param>
-        /// <param name="pLayoutType"></param>
-        /// <param name="pInlineNotes"></param>
+        /// <param name="pLayoutColumn"></param>
         /// <param name="pMarkedNotes"></param>
         /// <param name="pUnmarkedNotes"></param>
         /// <param name="pObjectsOnPage"></param>
@@ -5538,7 +5536,7 @@ namespace BDEditor.Classes
                 if (null != linkedNote)
                 {
                     linkedNoteHtml.Append(linkedNote.documentText);
-                    pObjectsOnPage.Add(linkedNote.Uuid);
+                    pObjectsOnPage.Add(assn.Uuid);
                 }
             }
 

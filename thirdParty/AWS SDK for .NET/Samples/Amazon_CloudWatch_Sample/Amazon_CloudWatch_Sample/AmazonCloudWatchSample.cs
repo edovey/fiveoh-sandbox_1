@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************
-* Copyright 2009-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+* Copyright 2009-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 * 
 * Licensed under the Apache License, Version 2.0 (the "License"). You may
 * not use this file except in compliance with the License. A copy of the
@@ -35,7 +35,7 @@ namespace GettingStartedGuide
             PerformanceCounter peakPageFile    = new PerformanceCounter("Paging File", "% Usage Peak", "_Total");
 
 
-            AmazonCloudWatch client = Amazon.AWSClientFactory.CreateAmazonCloudWatchClient();
+            AmazonCloudWatch client = Amazon.AWSClientFactory.CreateAmazonCloudWatchClient(RegionEndpoint.USWest2);
 
             // Once a minute, send paging file usage statistics to CloudWatch
             for (; ; )

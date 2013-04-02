@@ -15,8 +15,9 @@ namespace BDEditor.Views
     {
         private Entities dataContext;
         private IBDNode currentNode;
+        private BDLinkedNoteAssociation currentLinkedNoteAssociation;
         private BDSearchEntry currentSearchEntry;
-        private BDSearchEntryAssociation currentAssociation;
+        private BDSearchEntryAssociation currentSearchEntryAssociation;
 
         private List<BDSearchEntry> allSearchEntries;
         private BDSearchEntryBindingList selectedSearchEntries;
@@ -52,6 +53,11 @@ namespace BDEditor.Views
             currentNode = pCurrentNode;
         }
 
+        public void AssignCurrentLinkedNoteAssociation(BDLinkedNoteAssociation pLinkedNoteAssociation)
+        {
+            currentLinkedNoteAssociation = pLinkedNoteAssociation;
+        }
+
         private void BDSearchEntryEditView_Load(object sender, EventArgs e)
         {
             lbExistingSearchEntries.BeginUpdate();
@@ -69,7 +75,10 @@ namespace BDEditor.Views
             selectedSearchEntries.Sort("name", ListSortDirection.Ascending);
 
             lblSelectedSearchEntry.Text = string.Empty;
+            if(null != currentNode)
             lblName.Text = !string.IsNullOrEmpty(currentNode.Name) ? currentNode.Name : "<intentionally blank>";
+            if(null != currentLinkedNoteAssociation)
+                lblName.Text = !string.IsNullOrEmpty(currentLinkedNoteAssociation.DescriptionForLinkedNote) ? currentLinkedNoteAssociation.DescriptionForLinkedNote : "<intentionally blank>";
 
             lbExistingSearchEntries.DataSource = availableSearchEntries;
             lbSelectedSearchEntries.DataSource = selectedSearchEntries;
@@ -102,12 +111,25 @@ namespace BDEditor.Views
         private void reloadSelectedEntries()
         {
             selectedSearchEntries.Clear();
-            // there shouldn't be any of these
-            List<BDSearchEntry> tmpSelected = BDSearchEntry.RetrieveSearchEntriesForDisplayParent(dataContext, currentNode.Uuid);
-            htmlPageUuid = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(dataContext, currentNode.Uuid);
-            // the entries should be found here
-            tmpSelected.AddRange(BDSearchEntry.RetrieveSearchEntriesForDisplayParent(dataContext, htmlPageUuid));
-            selectedSearchEntries = new BDSearchEntryBindingList(tmpSelected.Distinct().ToList());
+            if (null != currentNode)
+            {
+                List<BDSearchEntry> tmpSelected = BDSearchEntry.RetrieveSearchEntriesForAnchorNode(dataContext, currentNode.Uuid);
+                // search entries generated but never edited may not have the anchor id 
+                // so any entries found by backtracking through the HTML page are added
+                htmlPageUuid = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(dataContext, currentNode.Uuid);
+                tmpSelected.AddRange(BDSearchEntry.RetrieveSearchEntriesForDisplayParent(dataContext, htmlPageUuid));
+
+                selectedSearchEntries = new BDSearchEntryBindingList(tmpSelected.Distinct().ToList());
+            }
+            else if (null != currentLinkedNoteAssociation)
+            {
+                List<BDSearchEntry> tmpSelected = BDSearchEntry.RetrieveSearchEntriesForAnchorNode(dataContext, currentLinkedNoteAssociation.Uuid);
+                // search entries generated but never edited may not have the anchor id 
+                // so any entries found by backtracking through the HTML page are added
+                htmlPageUuid = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(dataContext, currentLinkedNoteAssociation.Uuid);
+                tmpSelected.AddRange(BDSearchEntry.RetrieveSearchEntriesForDisplayParent(dataContext, htmlPageUuid));
+                selectedSearchEntries = new BDSearchEntryBindingList(tmpSelected.Distinct().ToList());
+            }
         }
 
         private void reloadAssociatedLocations()
@@ -117,9 +139,11 @@ namespace BDEditor.Views
 
             if (null != currentSearchEntry)
             {
-                currentAssociation = null;
+                currentSearchEntryAssociation = null;
                 lblSelectedSearchEntry.Text = currentSearchEntry.name;
                 List<BDSearchEntryAssociation> tmpList = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryId(dataContext, currentSearchEntry.Uuid);
+
+                Guid ownerUuid = (currentNode != null) ? currentNode.Uuid : currentLinkedNoteAssociation.Uuid;
                 foreach (BDSearchEntryAssociation nodeAssn in tmpList)
                 {
                     searchEntryAssociations.Add(nodeAssn);
@@ -128,29 +152,29 @@ namespace BDEditor.Views
                         nodeAssn.displayOrder = searchEntryAssociations.IndexOf(nodeAssn);
                         BDSearchEntryAssociation.Save(dataContext, nodeAssn);
                     }
-                    if (nodeAssn.displayParentId == htmlPageUuid)
-                        currentAssociation = nodeAssn;
+                    if (nodeAssn.anchorNodeId == ownerUuid || nodeAssn.displayParentId == htmlPageUuid)
+                        currentSearchEntryAssociation = nodeAssn;
                     // repair if empty so there is something to display on the UI
                     if (string.IsNullOrEmpty(nodeAssn.editorContext))
                         nodeAssn.editorContext = nodeAssn.displayContext;
                 }
-                if (null != currentAssociation)
+                if (null != currentSearchEntryAssociation)
                 {
-                    if (currentAssociation.editorContext != this.editorContext)
-                        currentAssociation.editorContext = this.editorContext; // update to current location
+                    if (currentSearchEntryAssociation.editorContext != this.editorContext)
+                        currentSearchEntryAssociation.editorContext = this.editorContext; // update to current location
 
                     // repair any missing data : needed for converting from fully generated associations to managed associations
-                    if (string.IsNullOrEmpty(currentAssociation.editorContext))
-                        currentAssociation.editorContext = currentAssociation.displayContext;
-                    if (currentAssociation.anchorNodeId != currentNode.Uuid)
-                        currentAssociation.anchorNodeId = currentNode.Uuid;
+                    if (string.IsNullOrEmpty(currentSearchEntryAssociation.editorContext))
+                        currentSearchEntryAssociation.editorContext = currentSearchEntryAssociation.displayContext;
+                    if (currentSearchEntryAssociation.anchorNodeId == Guid.Empty)
+                        currentSearchEntryAssociation.anchorNodeId = ownerUuid;
 
                    // adjust editorContext for visibility
-                    if (currentAssociation.editorContext.IndexOf("*") != 0)
-                        currentAssociation.editorContext = currentAssociation.editorContext.Insert(0, "*");
+                    if (currentSearchEntryAssociation.editorContext.IndexOf("*") != 0)
+                        currentSearchEntryAssociation.editorContext = currentSearchEntryAssociation.editorContext.Insert(0, "*");
 
-                    BDSearchEntryAssociation.Save(dataContext, currentAssociation);
-                    lbSearchEntryAssociations.SetSelected(searchEntryAssociations.IndexOf(currentAssociation), true);
+                    BDSearchEntryAssociation.Save(dataContext, currentSearchEntryAssociation);
+                    lbSearchEntryAssociations.SetSelected(searchEntryAssociations.IndexOf(currentSearchEntryAssociation), true);
                 }
                 else
                     lbSearchEntryAssociations.ClearSelected();
@@ -189,7 +213,8 @@ namespace BDEditor.Views
             {
                 selectedSearchEntries.Add(entry);
                 int assnCount = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryId(dataContext, entry.Uuid).Count;
-                BDSearchEntryAssociation assnForEntry = BDSearchEntryAssociation.CreateBDSearchEntryAssociation(dataContext, entry.Uuid, currentNode.Uuid, editorContext);
+                Guid ownerUuid = (currentNode != null) ? currentNode.Uuid : currentLinkedNoteAssociation.Uuid;
+                BDSearchEntryAssociation assnForEntry = BDSearchEntryAssociation.CreateBDSearchEntryAssociation(dataContext, entry.Uuid, ownerUuid, editorContext);
                 assnForEntry.displayOrder = assnCount;
                 BDSearchEntryAssociation.Save(dataContext, assnForEntry);
 
@@ -422,8 +447,8 @@ namespace BDEditor.Views
             if (lbSelectedSearchEntries.SelectedIndices.Count > 0)
             {
                 currentSearchEntry = selectedSearchEntries[lbSelectedSearchEntries.SelectedIndices[0]];
-                if (currentAssociation.editorContext.IndexOf("*") == 0)
-                    currentAssociation.editorContext = currentAssociation.editorContext.Substring(1);
+                if (currentSearchEntryAssociation.editorContext.IndexOf("*") == 0)
+                    currentSearchEntryAssociation.editorContext = currentSearchEntryAssociation.editorContext.Substring(1);
                 reloadAssociatedLocations();
             }
             resetButtons();

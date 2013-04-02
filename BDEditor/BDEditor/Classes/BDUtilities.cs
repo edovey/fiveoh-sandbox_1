@@ -59,6 +59,40 @@ namespace BDEditor.Classes
         }
 
         /// <summary>
+        /// Determine the parent hierarchy of the selected Linked Note Association
+        /// </summary>
+        /// <param name="pStartNode"></param>
+        /// <returns></returns>
+        public static string BuildHierarchyString(Entities pContext, BDLinkedNoteAssociation pNoteAssociation, string pSeparationString)
+        {
+            StringBuilder hStringBuilder = new StringBuilder();
+
+            if (pNoteAssociation != null)
+            {
+                IBDNode parentNode = BDFabrik.RetrieveNode(pContext, pNoteAssociation.parentId.Value);
+                if (parentNode != null)
+                {
+                    getParentName(pContext, parentNode, hStringBuilder, pSeparationString).ToString();
+                    hStringBuilder.Append(parentNode.Name);
+                    return hStringBuilder.ToString();
+                }
+                else
+                {
+                    // parent is a linked note
+                    // TODO:  what needs to be rendered in this case??
+                    //BDLinkedNote parentNote = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, pNoteAssociation.parentId.Value);
+                    //BDLinkedNoteAssociation parentAssn = BDLinkedNoteAssociation.Ret
+                    //getParentName(pContext, pParentNode, hStringBuilder, pSeparationString).ToString();
+                    //hStringBuilder.Append(pStartNode.Name);
+                    //return hStringBuilder.ToString();
+                    return string.Empty;
+                }
+            }
+            else
+                return string.Empty;
+        }
+
+        /// <summary>
         /// Determine the parent hierarchy of the selected entry
         /// </summary>
         /// <param name="pStartNode"></param>

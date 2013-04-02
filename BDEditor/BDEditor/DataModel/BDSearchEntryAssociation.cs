@@ -75,7 +75,9 @@ namespace BDEditor.DataModel
 
         /// <summary>
         /// Extended create method that includes parent information.
-        /// Initial create stored the EDITOR context.  Display context is built & added during Publish / Build. 
+        /// Initial create stores the EDITOR context, i.e., the context that was visible from the editor UI.  It is a more
+        /// complete path as it goes to the endpoint, and its purpose is to help the user sort / order the entries in the UI.
+        /// Display context for the purposes of the viewer is built & added later - during Publish / Build. 
         /// </summary>
         /// <param name="pContext"></param>
         /// <param name="pSearchEntryId"></param>
@@ -88,7 +90,7 @@ namespace BDEditor.DataModel
                                                                             string pEditorContext)
         {
             List<BDSearchEntryAssociation> associations = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryIdAndDisplayParentid(pDataContext, pSearchEntryId, pAnchorNodeId);
-            if (associations.Count >= 0)
+            if (associations.Count > 0)
                 return associations[0];
 
             BDSearchEntryAssociation association = CreateBDSearchEntryAssociation(Guid.NewGuid());

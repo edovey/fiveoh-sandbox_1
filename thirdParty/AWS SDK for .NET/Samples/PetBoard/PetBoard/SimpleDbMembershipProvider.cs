@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************
- *  Copyright 2008-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *  Copyright 2008-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *  Licensed under the Apache License, Version 2.0 (the "License"). You may not use
  *  this file except in compliance with the License. A copy of the License is located at
  *
@@ -512,7 +512,7 @@ namespace Petboard
                 }
             }
 
-            this._simpleDBClient = new AmazonSimpleDBClient();
+            this._simpleDBClient = new AmazonSimpleDBClient(Amazon.RegionEndpoint.USWest2);
 
             CreateDomainRequest cdRequest = new CreateDomainRequest()
                 .WithDomainName(Settings.Default.AWSMembershipDomain);

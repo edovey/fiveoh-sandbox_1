@@ -29,8 +29,7 @@ namespace BDEditor.Classes
         {
             BDHtmlPageGeneratorLogEntry.AppendToFile("BDSearchGeneratorLog.txt", string.Format("Start: {0} -------------------------------", DateTime.Now));
 
-            // reset Id of display parent in association records
-
+            // reset Id of display parent in search entry association records
             BDSearchEntryAssociation.ResetForRegeneration(pDataContext);
 
             searchEntryList = BDSearchEntry.RetrieveAll(pDataContext);
@@ -40,11 +39,11 @@ namespace BDEditor.Classes
             {
                 List<BDSearchEntryAssociation> associations = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryId(pDataContext, entry.Uuid);
 
-                foreach (BDSearchEntryAssociation assoc in associations)
+                foreach (BDSearchEntryAssociation seAssociation in associations)
                 {
                     // determine the displayParentId : this is the HTML page Id where the anchorNode has been rendered
                     // NB: this may change at any time, so it is always repopulated on a Build.
-                    Guid htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pDataContext, assoc.anchorNodeId.Value);
+                    Guid htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pDataContext, seAssociation.anchorNodeId.Value);
                     if (htmlPageId != Guid.Empty)
                     {
                         BDHtmlPage htmlPage = BDHtmlPage.RetrieveWithId(pDataContext, htmlPageId);
@@ -54,7 +53,8 @@ namespace BDEditor.Classes
                             if (masterNode != null)
                             {
                                 // determine the masterNode for the HTML page; generate the display context from that. 
-                                assoc.displayContext = BDUtilities.BuildHierarchyString(pDataContext, masterNode, " : ");
+                                seAssociation.displayContext = BDUtilities.BuildHierarchyString(pDataContext, masterNode, " : ");
+                                BDSearchEntryAssociation.Save(pDataContext, seAssociation);
                             }
                         }
                     }

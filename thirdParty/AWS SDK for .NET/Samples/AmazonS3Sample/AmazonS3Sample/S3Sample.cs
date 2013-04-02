@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************
-* Copyright 2009-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+* Copyright 2009-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 * 
 * Licensed under the Apache License, Version 2.0 (the "License"). You may
 * not use this file except in compliance with the License. A copy of the
@@ -20,6 +20,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 
+using Amazon;
 using Amazon.S3;
 using Amazon.S3.Model;
 
@@ -40,7 +41,7 @@ namespace GettingStartedGuide
         {
             if (checkRequiredFields())
             {
-                using (client = Amazon.AWSClientFactory.CreateAmazonS3Client())
+                using (client = Amazon.AWSClientFactory.CreateAmazonS3Client(RegionEndpoint.USWest2))
                 {
                     Console.WriteLine("Listing buckets");
                     ListingBuckets();

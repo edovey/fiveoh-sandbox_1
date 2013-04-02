@@ -21,8 +21,8 @@
         {
             get
             {
-                if (System.Configuration.ConfigurationSettings.AppSettings["AWSAccessKey"] != null)
-                    return System.Configuration.ConfigurationSettings.AppSettings["AWSAccessKey"];
+                if (System.Configuration.ConfigurationManager.AppSettings["AWSAccessKey"] != null)
+                    return System.Configuration.ConfigurationManager.AppSettings["AWSAccessKey"];
                 return "";
             }
         }
@@ -31,8 +31,8 @@
         {
             get
             {
-                if (System.Configuration.ConfigurationSettings.AppSettings["AWSSecretKey"] != null)
-                    return System.Configuration.ConfigurationSettings.AppSettings["AWSSecretKey"];
+                if (System.Configuration.ConfigurationManager.AppSettings["AWSSecretKey"] != null)
+                    return System.Configuration.ConfigurationManager.AppSettings["AWSSecretKey"];
                 return "";
             }
         }

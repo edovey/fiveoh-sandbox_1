@@ -568,6 +568,8 @@ namespace BDEditor.Classes
                                 {
                                     PutObjectRequest putObjectRequest = new PutObjectRequest();
                                     putObjectRequest
+                                        .WithTimeout(-1)  // infinite  - sent to HttpTimeout
+                                        .WithReadWriteTimeout(10 * 60 * 1000)  // 10 minutes - sent to HTTPRequestTimeout
                                         .WithBucketName(pBucketName)
                                         .WithKey(filename)
                                         .WithInputStream(memoryStream)
@@ -575,22 +577,27 @@ namespace BDEditor.Classes
 
                                     S3Response s3Response = S3.PutObject(putObjectRequest);
                                     s3Response.Dispose();
+
                                 }
-                                catch (AmazonS3Exception amazonS3Exception)             
-                                {                 
-                                    if (amazonS3Exception.ErrorCode != null && (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId") || amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))                 
+                                catch (AmazonS3Exception amazonS3Exception)
+                                {
+                                    if (amazonS3Exception.ErrorCode != null && (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId") || amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
                                     {
                                         string errorMessage = string.Format("Please check the provided AWS Credentials.");
                                         MessageBox.Show(errorMessage);
-                                    }                
-                                    else                 
-                                    {                 
+                                    }
+                                    else
+                                    {
                                         string errorMessage = string.Format("AWS message '{0}' when writing an object", amazonS3Exception.Message);
                                         MessageBox.Show(errorMessage);
-                                    }             
-                                } 
+                                    }
+                                }
+                                catch (System.Net.WebException webException)
+                                {
+                                    string errorMessage = string.Format("Web Exception Message:  {0}", webException.Message);
+                                    MessageBox.Show(errorMessage);
+                                }
                             }
-
                         }
                         else
                         {
@@ -607,7 +614,6 @@ namespace BDEditor.Classes
                 {
                     pDataContext.Connection.Open();
                 }
-                
                 if (!pIsBackup)
                 {
                     try
@@ -621,7 +627,6 @@ namespace BDEditor.Classes
                         string errorMessage = string.Format("Notification on updating event date [{0}]", ex.Message);
                     }
                 }
-                
             }
         }
 

@@ -213,6 +213,24 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
+        /// Retrieve all search entries associated with the supplied anchor node ID
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pAnchorNodeUuid"></param>
+        /// <returns></returns>
+        public static List<BDSearchEntry> RetrieveSearchEntriesForAnchorNode(Entities pContext, Guid pAnchorNodeUuid)
+        {
+            List<BDSearchEntry> resultList;
+            IQueryable<BDSearchEntry> entries = (from assns in pContext.BDSearchEntryAssociations
+                                                 join searchEntries in pContext.BDSearchEntries
+                                                 on assns.searchEntryId equals searchEntries.uuid
+                                                 where assns.anchorNodeId == pAnchorNodeUuid
+                                                 select searchEntries);
+            resultList = new List<BDSearchEntry>(entries.ToList<BDSearchEntry>());
+            return resultList;
+        }
+
+        /// <summary>
         /// Get a string array of all the distinct Search Entry Name values in the database.
         /// </summary>
         /// <param name="pContext"></param>

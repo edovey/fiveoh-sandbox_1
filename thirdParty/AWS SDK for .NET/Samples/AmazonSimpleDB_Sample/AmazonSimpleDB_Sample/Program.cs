@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************
-* Copyright 2009-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+* Copyright 2009-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 * 
 * Licensed under the Apache License, Version 2.0 (the "License"). You may
 * not use this file except in compliance with the License. A copy of the
@@ -28,7 +28,7 @@ namespace AmazonSimpleDB_Sample
     {
         public static void Main(string[] args)
         {
-            AmazonSimpleDB sdb = AWSClientFactory.CreateAmazonSimpleDBClient();
+            AmazonSimpleDB sdb = AWSClientFactory.CreateAmazonSimpleDBClient(RegionEndpoint.USWest2);
 
             try
             {

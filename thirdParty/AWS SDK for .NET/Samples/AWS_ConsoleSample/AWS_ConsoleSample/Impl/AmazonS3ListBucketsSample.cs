@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************
-* Copyright 2009-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+* Copyright 2009-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 * 
 * Licensed under the Apache License, Version 2.0 (the "License"). You may
 * not use this file except in compliance with the License. A copy of the
@@ -31,14 +31,15 @@ namespace AWS_ConsoleSample.Samples
 
             AmazonS3 s3Client = AWSClientFactory.CreateAmazonS3Client(
                 appConfig["AWSAccessKey"],
-                appConfig["AWSSecretKey"]
+                appConfig["AWSSecretKey"],
+                RegionEndpoint.USWest2
             );
 
             try
             {
                 ListBucketsResponse response = s3Client.ListBuckets();
                 int numBuckets = 0;
-                numBuckets = response.Bucket.Count;
+                numBuckets = response.Buckets.Count;
 
                 Console.WriteLine("You have " + numBuckets + " Amazon S3 bucket(s).");
             }

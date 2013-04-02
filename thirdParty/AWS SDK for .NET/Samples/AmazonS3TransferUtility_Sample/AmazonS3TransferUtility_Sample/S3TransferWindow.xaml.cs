@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************
-* Copyright 2009-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+* Copyright 2009-2013 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 * 
 * Licensed under the Apache License, Version 2.0 (the "License"). You may
 * not use this file except in compliance with the License. A copy of the
@@ -33,6 +33,7 @@ using System.Windows.Threading;
 using System.Threading;
 using Microsoft.Win32;
 
+using Amazon;
 using Amazon.S3;
 using Amazon.S3.Model;
 using Amazon.S3.Transfer;
@@ -81,7 +82,7 @@ namespace AmazonS3TransferUtility_Sample
                 return;
             }
 
-            this._transferUtility = new TransferUtility(appConfig["AWSAccessKey"], appConfig["AWSSecretKey"]);
+            this._transferUtility = new TransferUtility(appConfig["AWSAccessKey"], appConfig["AWSSecretKey"], RegionEndpoint.USWest2);
 
             // Update the Bucket to the optionally supplied Bucket from the App.config.
             this.Bucket = appConfig["Bucket"];

@@ -1094,12 +1094,13 @@ namespace BDEditor.Classes
                     }
                     break;
                 default:
-                    IQueryable<BDNode> nodeEntries = (from entry in pDataContext.BDNodes
+                    IQueryable<BDNode> nodeEntries = null;
+                    nodeEntries = (from entry in pDataContext.BDNodes
                                                 where entry.nodeType == (int)pNodeType
                                                 orderby entry.displayOrder
                                                 select entry);
 
-                    if (nodeEntries.Count() > 0)
+                    if (null != nodeEntries && nodeEntries.Count() > 0)
                     {
                         List<IBDNode> workingList = new List<IBDNode>(nodeEntries.ToList<BDNode>());
                         entryList.AddRange(workingList);

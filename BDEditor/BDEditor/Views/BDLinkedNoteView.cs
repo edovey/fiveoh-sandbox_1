@@ -473,5 +473,23 @@ namespace BDEditor.Views
                 RefreshListOfScopeNotes();
             }
         }
+
+        private void editIndexStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveCurrentNote();
+
+                // owner of the index/search entry at this point will be the linkedNoteAssociation
+                // this will be adjusted in post processing to point to the page where the linked note was rendered
+                BDLinkedNote currentNote = BDLinkedNote.RetrieveLinkedNoteWithId(dataContext, currentNoteAssociation.linkedNoteId.Value);
+                if (currentNote != null)
+                {
+                    BDSearchEntryEditView iEditView = new BDSearchEntryEditView();
+                    iEditView.AssignDataContext(dataContext);
+                    iEditView.AssignCurrentLinkedNoteAssociation(currentNoteAssociation);
+                    string contextString = BDUtilities.BuildHierarchyString(dataContext, currentNoteAssociation, ":");
+                    iEditView.DisplayContext = contextString;
+                    iEditView.ShowDialog(this);
+                }
+        }
     }
 }

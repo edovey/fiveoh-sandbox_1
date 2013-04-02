@@ -35,6 +35,8 @@
             this.tabPageLinks = new System.Windows.Forms.TabPage();
             this.chListLinks = new System.Windows.Forms.CheckedListBox();
             this.tabPageNotes = new System.Windows.Forms.TabPage();
+            this.lblScopeTitle = new System.Windows.Forms.Label();
+            this.btnChangeScope = new System.Windows.Forms.Button();
             this.btnAssignNote = new System.Windows.Forms.Button();
             this.chListNotes = new System.Windows.Forms.CheckedListBox();
             this.btnOK = new System.Windows.Forms.Button();
@@ -56,9 +58,9 @@
             this.panelInternalLink = new System.Windows.Forms.Panel();
             this.lblInternalLinkDescription = new System.Windows.Forms.Label();
             this.btnInternalLink = new System.Windows.Forms.Button();
-            this.btnChangeScope = new System.Windows.Forms.Button();
-            this.lblScopeTitle = new System.Windows.Forms.Label();
             this.bdLinkedNoteControl1 = new BDEditor.Views.BDLinkedNoteControl();
+            this.editIndexStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPageLinks.SuspendLayout();
@@ -92,8 +94,8 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPageLinks);
             this.tabControl1.Controls.Add(this.tabPageNotes);
             this.tabControl1.Location = new System.Drawing.Point(12, 2);
@@ -110,7 +112,7 @@
             this.tabPageLinks.Location = new System.Drawing.Point(4, 22);
             this.tabPageLinks.Name = "tabPageLinks";
             this.tabPageLinks.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLinks.Size = new System.Drawing.Size(611, 143);
+            this.tabPageLinks.Size = new System.Drawing.Size(606, 144);
             this.tabPageLinks.TabIndex = 0;
             this.tabPageLinks.Text = "Links to Current Note";
             this.tabPageLinks.UseVisualStyleBackColor = true;
@@ -122,7 +124,7 @@
             this.chListLinks.Location = new System.Drawing.Point(3, 3);
             this.chListLinks.Name = "chListLinks";
             this.chListLinks.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.chListLinks.Size = new System.Drawing.Size(605, 137);
+            this.chListLinks.Size = new System.Drawing.Size(600, 138);
             this.chListLinks.TabIndex = 6;
             this.chListLinks.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.linkedNoteView_ItemCheck);
             // 
@@ -140,10 +142,32 @@
             this.tabPageNotes.Text = "Attached Notes";
             this.tabPageNotes.UseVisualStyleBackColor = true;
             // 
+            // lblScopeTitle
+            // 
+            this.lblScopeTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblScopeTitle.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblScopeTitle.Location = new System.Drawing.Point(108, 116);
+            this.lblScopeTitle.Name = "lblScopeTitle";
+            this.lblScopeTitle.Size = new System.Drawing.Size(396, 20);
+            this.lblScopeTitle.TabIndex = 10;
+            this.lblScopeTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnChangeScope
+            // 
+            this.btnChangeScope.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnChangeScope.Location = new System.Drawing.Point(6, 115);
+            this.btnChangeScope.Name = "btnChangeScope";
+            this.btnChangeScope.Size = new System.Drawing.Size(96, 23);
+            this.btnChangeScope.TabIndex = 9;
+            this.btnChangeScope.Text = "Change Scope";
+            this.btnChangeScope.UseVisualStyleBackColor = true;
+            this.btnChangeScope.Click += new System.EventHandler(this.btnChangeScope_Click);
+            // 
             // btnAssignNote
             // 
-            this.btnAssignNote.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAssignNote.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAssignNote.Enabled = false;
             this.btnAssignNote.Location = new System.Drawing.Point(521, 116);
             this.btnAssignNote.Name = "btnAssignNote";
@@ -156,9 +180,9 @@
             // 
             // chListNotes
             // 
-            this.chListNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.chListNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.chListNotes.FormattingEnabled = true;
             this.chListNotes.Location = new System.Drawing.Point(3, 3);
             this.chListNotes.Name = "chListNotes";
@@ -251,8 +275,8 @@
             // 
             // rtfContextInfo
             // 
-            this.rtfContextInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtfContextInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rtfContextInfo.Location = new System.Drawing.Point(150, 5);
             this.rtfContextInfo.Name = "rtfContextInfo";
             this.rtfContextInfo.ReadOnly = true;
@@ -270,9 +294,11 @@
             this.deleteNoteToolStripMenuItem,
             this.toolStripMenuItem2,
             this.movePreviousToolStripMenuItem,
-            this.moveNextToolStripMenuItem});
+            this.moveNextToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.editIndexStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(172, 126);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(172, 176);
             // 
             // deleteToolStripMenuItem
             // 
@@ -358,28 +384,6 @@
             this.btnInternalLink.UseVisualStyleBackColor = true;
             this.btnInternalLink.Click += new System.EventHandler(this.btnInternalLink_Click);
             // 
-            // btnChangeScope
-            // 
-            this.btnChangeScope.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnChangeScope.Location = new System.Drawing.Point(6, 115);
-            this.btnChangeScope.Name = "btnChangeScope";
-            this.btnChangeScope.Size = new System.Drawing.Size(96, 23);
-            this.btnChangeScope.TabIndex = 9;
-            this.btnChangeScope.Text = "Change Scope";
-            this.btnChangeScope.UseVisualStyleBackColor = true;
-            this.btnChangeScope.Click += new System.EventHandler(this.btnChangeScope_Click);
-            // 
-            // lblScopeTitle
-            // 
-            this.lblScopeTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblScopeTitle.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblScopeTitle.Location = new System.Drawing.Point(108, 116);
-            this.lblScopeTitle.Name = "lblScopeTitle";
-            this.lblScopeTitle.Size = new System.Drawing.Size(396, 20);
-            this.lblScopeTitle.TabIndex = 10;
-            this.lblScopeTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // bdLinkedNoteControl1
             // 
             this.bdLinkedNoteControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -396,6 +400,19 @@
             this.bdLinkedNoteControl1.ShowChildren = true;
             this.bdLinkedNoteControl1.Size = new System.Drawing.Size(817, 230);
             this.bdLinkedNoteControl1.TabIndex = 1;
+            // 
+            // editIndexStripMenuItem
+            // 
+            this.editIndexStripMenuItem.Image = global::BDEditor.Properties.Resources.edit_24x24;
+            this.editIndexStripMenuItem.Name = "editIndexStripMenuItem";
+            this.editIndexStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.editIndexStripMenuItem.Text = "&Edit Index Entries";
+            this.editIndexStripMenuItem.Click += new System.EventHandler(this.editIndexStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(168, 6);
             // 
             // BDLinkedNoteView
             // 
@@ -455,6 +472,8 @@
         private System.Windows.Forms.Button btnInternalLink;
         private System.Windows.Forms.Button btnChangeScope;
         private System.Windows.Forms.Label lblScopeTitle;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem editIndexStripMenuItem;
 
     }
 }

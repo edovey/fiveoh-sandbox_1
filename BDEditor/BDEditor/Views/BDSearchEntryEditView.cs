@@ -106,6 +106,7 @@ namespace BDEditor.Views
             foreach (BDSearchEntry entry in selectedSearchEntries)
                 tmpAvailable.Remove(entry);
             availableSearchEntries = new BDSearchEntryBindingList(tmpAvailable);
+            lbExistingSearchEntries.DataSource = availableSearchEntries;
         }
 
         private void reloadSelectedEntries()
@@ -120,6 +121,7 @@ namespace BDEditor.Views
                 tmpSelected.AddRange(BDSearchEntry.RetrieveSearchEntriesForDisplayParent(dataContext, htmlPageUuid));
 
                 selectedSearchEntries = new BDSearchEntryBindingList(tmpSelected.Distinct().ToList());
+                lbSelectedSearchEntries.DataSource = selectedSearchEntries;
             }
             else if (null != currentLinkedNoteAssociation)
             {
@@ -129,6 +131,7 @@ namespace BDEditor.Views
                 htmlPageUuid = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(dataContext, currentLinkedNoteAssociation.Uuid);
                 tmpSelected.AddRange(BDSearchEntry.RetrieveSearchEntriesForDisplayParent(dataContext, htmlPageUuid));
                 selectedSearchEntries = new BDSearchEntryBindingList(tmpSelected.Distinct().ToList());
+                lbSelectedSearchEntries.DataSource = selectedSearchEntries;
             }
         }
 
@@ -158,6 +161,7 @@ namespace BDEditor.Views
                     if (string.IsNullOrEmpty(nodeAssn.editorContext))
                         nodeAssn.editorContext = nodeAssn.displayContext;
                 }
+
                 if (null != currentSearchEntryAssociation)
                 {
                     if (currentSearchEntryAssociation.editorContext != this.editorContext)
@@ -174,6 +178,8 @@ namespace BDEditor.Views
                         currentSearchEntryAssociation.editorContext = currentSearchEntryAssociation.editorContext.Insert(0, "*");
 
                     BDSearchEntryAssociation.Save(dataContext, currentSearchEntryAssociation);
+                    lbSearchEntryAssociations.DataSource = searchEntryAssociations;
+                    lbSearchEntryAssociations.DisplayMember = "editorContext";
                     lbSearchEntryAssociations.SetSelected(searchEntryAssociations.IndexOf(currentSearchEntryAssociation), true);
                 }
                 else
@@ -322,22 +328,22 @@ namespace BDEditor.Views
                 {
                     MessageBox.Show("No entries found with that name");
                     cbFilterList.CheckState = CheckState.Unchecked;
+                    reloadAvailableEntries();
                 }
                 else
                 {
-                    availableSearchEntries.Clear();
-                    foreach (BDSearchEntry entry in filtered)
-                        availableSearchEntries.Add(entry);
+                    BDSearchEntryBindingList filteredEntries = new BDSearchEntryBindingList(filtered);
+                    lbExistingSearchEntries.DataSource = filteredEntries;
                 }
             }
             else
             {
-                availableSearchEntries.Clear();
-                foreach (BDSearchEntry entry in allSearchEntries)
-                {
-                    if (!selectedSearchEntries.Contains(entry))
-                        availableSearchEntries.Add(entry);
-                }
+                lbSearchEntryAssociations.ClearSelected();
+                lbExistingSearchEntries.ClearSelected();
+
+                reloadAvailableEntries();
+                resetButtons();
+
                 tbEntryName.Text = string.Empty;
                 cbFilterList.Enabled = false;
             }

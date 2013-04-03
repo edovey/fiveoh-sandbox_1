@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BDEditView));
             this.headerPanel = new System.Windows.Forms.Panel();
+            this.btnDebug = new System.Windows.Forms.Button();
             this.btnShowLayoutEditor = new System.Windows.Forms.Button();
             this.btnRestore = new System.Windows.Forms.Button();
             this.btnMove = new System.Windows.Forms.Button();
@@ -38,7 +39,7 @@
             this.btnPublish = new System.Windows.Forms.Button();
             this.lbLastSyncDateTime = new System.Windows.Forms.Label();
             this.btnSync = new System.Windows.Forms.Button();
-            this.loadSeedDataButton = new System.Windows.Forms.Button();
+            this.btnIndexManager = new System.Windows.Forms.Button();
             this.chapterDropDown = new System.Windows.Forms.ComboBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -53,7 +54,6 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.entitiesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.entitiesBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.btnDebug = new System.Windows.Forms.Button();
             this.headerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -74,13 +74,23 @@
             this.headerPanel.Controls.Add(this.btnPublish);
             this.headerPanel.Controls.Add(this.lbLastSyncDateTime);
             this.headerPanel.Controls.Add(this.btnSync);
-            this.headerPanel.Controls.Add(this.loadSeedDataButton);
+            this.headerPanel.Controls.Add(this.btnIndexManager);
             this.headerPanel.Controls.Add(this.chapterDropDown);
             this.headerPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.headerPanel.Location = new System.Drawing.Point(0, 0);
             this.headerPanel.Name = "headerPanel";
             this.headerPanel.Size = new System.Drawing.Size(1192, 39);
             this.headerPanel.TabIndex = 0;
+            // 
+            // btnDebug
+            // 
+            this.btnDebug.Location = new System.Drawing.Point(660, 10);
+            this.btnDebug.Name = "btnDebug";
+            this.btnDebug.Size = new System.Drawing.Size(75, 23);
+            this.btnDebug.TabIndex = 11;
+            this.btnDebug.Text = "Debug";
+            this.btnDebug.UseVisualStyleBackColor = true;
+            this.btnDebug.Click += new System.EventHandler(this.btnDebug_Click);
             // 
             // btnShowLayoutEditor
             // 
@@ -152,16 +162,16 @@
             this.btnSync.UseVisualStyleBackColor = true;
             this.btnSync.Click += new System.EventHandler(this.btnSync_Click);
             // 
-            // loadSeedDataButton
+            // btnIndexManager
             // 
-            this.loadSeedDataButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.loadSeedDataButton.Location = new System.Drawing.Point(984, 10);
-            this.loadSeedDataButton.Name = "loadSeedDataButton";
-            this.loadSeedDataButton.Size = new System.Drawing.Size(104, 23);
-            this.loadSeedDataButton.TabIndex = 1;
-            this.loadSeedDataButton.Text = "Load Seed Data";
-            this.loadSeedDataButton.UseVisualStyleBackColor = true;
-            this.loadSeedDataButton.Click += new System.EventHandler(this.loadSeedData_Click);
+            this.btnIndexManager.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnIndexManager.Location = new System.Drawing.Point(995, 10);
+            this.btnIndexManager.Name = "btnIndexManager";
+            this.btnIndexManager.Size = new System.Drawing.Size(93, 23);
+            this.btnIndexManager.TabIndex = 1;
+            this.btnIndexManager.Text = "Index Manager";
+            this.btnIndexManager.UseVisualStyleBackColor = true;
+            this.btnIndexManager.Click += new System.EventHandler(this.btnIndexManager_Click);
             // 
             // chapterDropDown
             // 
@@ -296,16 +306,6 @@
             // 
             this.entitiesBindingSource1.DataSource = typeof(BDEditor.DataModel.Entities);
             // 
-            // btnDebug
-            // 
-            this.btnDebug.Location = new System.Drawing.Point(660, 10);
-            this.btnDebug.Name = "btnDebug";
-            this.btnDebug.Size = new System.Drawing.Size(75, 23);
-            this.btnDebug.TabIndex = 11;
-            this.btnDebug.Text = "Debug";
-            this.btnDebug.UseVisualStyleBackColor = true;
-            this.btnDebug.Click += new System.EventHandler(this.btnDebug_Click);
-            // 
             // BDEditView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -343,7 +343,7 @@
         private System.Windows.Forms.TreeView chapterTree;
         private System.Windows.Forms.BindingSource entitiesBindingSource;
         private System.Windows.Forms.BindingSource entitiesBindingSource1;
-        private System.Windows.Forms.Button loadSeedDataButton;
+        private System.Windows.Forms.Button btnIndexManager;
         private System.Windows.Forms.Label lbLastSyncDateTime;
         private System.Windows.Forms.Button btnSync;
         private System.Windows.Forms.Button btnPublish;

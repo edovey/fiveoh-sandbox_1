@@ -1,6 +1,6 @@
 ﻿namespace BDEditor.Views
 {
-    partial class BDSearchEntryEditView
+    partial class BDSearchEntryManagerView
     {
         /// <summary>
         /// Required designer variable.
@@ -30,19 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             this.lbExistingSearchEntries = new System.Windows.Forms.ListBox();
-            this.lbSelectedSearchEntries = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lblName = new System.Windows.Forms.Label();
-            this.lblSelectedSearchEntry = new System.Windows.Forms.Label();
             this.pnlSelectTerms = new System.Windows.Forms.Panel();
             this.cbFilterList = new System.Windows.Forms.CheckBox();
             this.tbEntryName = new System.Windows.Forms.TextBox();
             this.btnEditSearchEntry = new System.Windows.Forms.Button();
             this.btnDeleteSearchEntry = new System.Windows.Forms.Button();
             this.btnAddNewSearchEntry = new System.Windows.Forms.Button();
-            this.btnRemoveFromSelected = new System.Windows.Forms.Button();
-            this.btnAddToSelected = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.lbSearchEntryAssociations = new System.Windows.Forms.ListBox();
             this.btnOk = new System.Windows.Forms.Button();
@@ -59,64 +53,22 @@
             this.lbExistingSearchEntries.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.lbExistingSearchEntries.FormattingEnabled = true;
-            this.lbExistingSearchEntries.Location = new System.Drawing.Point(19, 90);
+            this.lbExistingSearchEntries.Location = new System.Drawing.Point(19, 77);
             this.lbExistingSearchEntries.Name = "lbExistingSearchEntries";
             this.lbExistingSearchEntries.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbExistingSearchEntries.Size = new System.Drawing.Size(233, 303);
+            this.lbExistingSearchEntries.Size = new System.Drawing.Size(534, 290);
             this.lbExistingSearchEntries.TabIndex = 0;
             this.lbExistingSearchEntries.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbExistingIndexEntries_MouseDown);
-            // 
-            // lbSelectedSearchEntries
-            // 
-            this.lbSelectedSearchEntries.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.lbSelectedSearchEntries.FormattingEnabled = true;
-            this.lbSelectedSearchEntries.Location = new System.Drawing.Point(316, 90);
-            this.lbSelectedSearchEntries.Name = "lbSelectedSearchEntries";
-            this.lbSelectedSearchEntries.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbSelectedSearchEntries.Size = new System.Drawing.Size(233, 303);
-            this.lbSelectedSearchEntries.TabIndex = 2;
-            this.lbSelectedSearchEntries.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbSelectedSearchEntries_MouseDown);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(16, 43);
+            this.label1.Location = new System.Drawing.Point(15, 19);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(163, 17);
+            this.label1.Size = new System.Drawing.Size(102, 17);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Existing Index Entries";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(313, 62);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(170, 17);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Selected Index Entries";
-            // 
-            // lblName
-            // 
-            this.lblName.AutoSize = true;
-            this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblName.Location = new System.Drawing.Point(13, 13);
-            this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(95, 20);
-            this.lblName.TabIndex = 7;
-            this.lblName.Text = "nodeName";
-            // 
-            // lblSelectedSearchEntry
-            // 
-            this.lblSelectedSearchEntry.AutoSize = true;
-            this.lblSelectedSearchEntry.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSelectedSearchEntry.Location = new System.Drawing.Point(150, 417);
-            this.lblSelectedSearchEntry.Name = "lblSelectedSearchEntry";
-            this.lblSelectedSearchEntry.Size = new System.Drawing.Size(132, 17);
-            this.lblSelectedSearchEntry.TabIndex = 8;
-            this.lblSelectedSearchEntry.Text = "index entry name";
+            this.label1.Text = "Index Entries";
             // 
             // pnlSelectTerms
             // 
@@ -124,14 +76,9 @@
             this.pnlSelectTerms.Controls.Add(this.tbEntryName);
             this.pnlSelectTerms.Controls.Add(this.btnEditSearchEntry);
             this.pnlSelectTerms.Controls.Add(this.btnDeleteSearchEntry);
-            this.pnlSelectTerms.Controls.Add(this.lblName);
             this.pnlSelectTerms.Controls.Add(this.btnAddNewSearchEntry);
             this.pnlSelectTerms.Controls.Add(this.label1);
-            this.pnlSelectTerms.Controls.Add(this.label2);
-            this.pnlSelectTerms.Controls.Add(this.btnRemoveFromSelected);
-            this.pnlSelectTerms.Controls.Add(this.btnAddToSelected);
             this.pnlSelectTerms.Controls.Add(this.lbExistingSearchEntries);
-            this.pnlSelectTerms.Controls.Add(this.lbSelectedSearchEntries);
             this.pnlSelectTerms.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlSelectTerms.Location = new System.Drawing.Point(0, 0);
             this.pnlSelectTerms.Name = "pnlSelectTerms";
@@ -143,7 +90,7 @@
             this.cbFilterList.AutoSize = true;
             this.cbFilterList.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbFilterList.Image = global::BDEditor.Properties.Resources.filter_16x16;
-            this.cbFilterList.Location = new System.Drawing.Point(221, 67);
+            this.cbFilterList.Location = new System.Drawing.Point(220, 43);
             this.cbFilterList.Name = "cbFilterList";
             this.cbFilterList.Size = new System.Drawing.Size(31, 16);
             this.cbFilterList.TabIndex = 20;
@@ -153,7 +100,7 @@
             // tbEntryName
             // 
             this.tbEntryName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbEntryName.Location = new System.Drawing.Point(19, 63);
+            this.tbEntryName.Location = new System.Drawing.Point(18, 39);
             this.tbEntryName.Name = "tbEntryName";
             this.tbEntryName.Size = new System.Drawing.Size(196, 23);
             this.tbEntryName.TabIndex = 18;
@@ -161,10 +108,9 @@
             // 
             // btnEditSearchEntry
             // 
-            this.btnEditSearchEntry.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnEditSearchEntry.Enabled = false;
             this.btnEditSearchEntry.Image = global::BDEditor.Properties.Resources.edit_24x24;
-            this.btnEditSearchEntry.Location = new System.Drawing.Point(267, 216);
+            this.btnEditSearchEntry.Location = new System.Drawing.Point(260, 373);
             this.btnEditSearchEntry.Name = "btnEditSearchEntry";
             this.btnEditSearchEntry.Size = new System.Drawing.Size(34, 34);
             this.btnEditSearchEntry.TabIndex = 4;
@@ -174,22 +120,20 @@
             // 
             // btnDeleteSearchEntry
             // 
-            this.btnDeleteSearchEntry.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDeleteSearchEntry.Enabled = false;
             this.btnDeleteSearchEntry.Image = global::BDEditor.Properties.Resources.del_16x16;
-            this.btnDeleteSearchEntry.Location = new System.Drawing.Point(267, 330);
+            this.btnDeleteSearchEntry.Location = new System.Drawing.Point(314, 373);
             this.btnDeleteSearchEntry.Name = "btnDeleteSearchEntry";
             this.btnDeleteSearchEntry.Size = new System.Drawing.Size(34, 34);
             this.btnDeleteSearchEntry.TabIndex = 6;
             this.toolTip1.SetToolTip(this.btnDeleteSearchEntry, "Remove Index Entry");
             this.btnDeleteSearchEntry.UseVisualStyleBackColor = true;
-            this.btnDeleteSearchEntry.Visible = false;
             this.btnDeleteSearchEntry.Click += new System.EventHandler(this.btnDeleteSearchEntry_Click);
             // 
             // btnAddNewSearchEntry
             // 
             this.btnAddNewSearchEntry.Image = global::BDEditor.Properties.Resources.new_24x24;
-            this.btnAddNewSearchEntry.Location = new System.Drawing.Point(267, 290);
+            this.btnAddNewSearchEntry.Location = new System.Drawing.Point(220, 373);
             this.btnAddNewSearchEntry.Name = "btnAddNewSearchEntry";
             this.btnAddNewSearchEntry.Size = new System.Drawing.Size(34, 34);
             this.btnAddNewSearchEntry.TabIndex = 5;
@@ -197,38 +141,15 @@
             this.btnAddNewSearchEntry.UseVisualStyleBackColor = true;
             this.btnAddNewSearchEntry.Click += new System.EventHandler(this.btnAddNewSearchEntry_Click);
             // 
-            // btnRemoveFromSelected
-            // 
-            this.btnRemoveFromSelected.Enabled = false;
-            this.btnRemoveFromSelected.Image = global::BDEditor.Properties.Resources.arrow_180;
-            this.btnRemoveFromSelected.Location = new System.Drawing.Point(267, 151);
-            this.btnRemoveFromSelected.Name = "btnRemoveFromSelected";
-            this.btnRemoveFromSelected.Size = new System.Drawing.Size(34, 34);
-            this.btnRemoveFromSelected.TabIndex = 3;
-            this.toolTip1.SetToolTip(this.btnRemoveFromSelected, "Remove from list");
-            this.btnRemoveFromSelected.UseVisualStyleBackColor = true;
-            this.btnRemoveFromSelected.Click += new System.EventHandler(this.btnRemoveFromSelected_Click);
-            // 
-            // btnAddToSelected
-            // 
-            this.btnAddToSelected.Enabled = false;
-            this.btnAddToSelected.Image = global::BDEditor.Properties.Resources.arrow;
-            this.btnAddToSelected.Location = new System.Drawing.Point(267, 115);
-            this.btnAddToSelected.Name = "btnAddToSelected";
-            this.btnAddToSelected.Size = new System.Drawing.Size(34, 34);
-            this.btnAddToSelected.TabIndex = 1;
-            this.toolTip1.SetToolTip(this.btnAddToSelected, "Add to list");
-            this.btnAddToSelected.UseVisualStyleBackColor = true;
-            this.btnAddToSelected.Click += new System.EventHandler(this.btnAddToSelected_Click);
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(12, 421);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(132, 13);
+            this.label4.Size = new System.Drawing.Size(136, 17);
             this.label4.TabIndex = 11;
-            this.label4.Text = "Locations associated with:";
+            this.label4.Text = "Linked Locations:";
             // 
             // lbSearchEntryAssociations
             // 
@@ -241,6 +162,7 @@
             this.lbSearchEntryAssociations.Name = "lbSearchEntryAssociations";
             this.lbSearchEntryAssociations.Size = new System.Drawing.Size(536, 264);
             this.lbSearchEntryAssociations.TabIndex = 1;
+            this.lbSearchEntryAssociations.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbSearchEntryAssociations_MouseDown);
             // 
             // btnOk
             // 
@@ -268,26 +190,25 @@
             // 
             // btnDeleteAssociation
             // 
-            this.btnDeleteAssociation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDeleteAssociation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnDeleteAssociation.Enabled = false;
             this.btnDeleteAssociation.Image = global::BDEditor.Properties.Resources.delete_record_16;
-            this.btnDeleteAssociation.Location = new System.Drawing.Point(312, 711);
+            this.btnDeleteAssociation.Location = new System.Drawing.Point(314, 711);
             this.btnDeleteAssociation.Name = "btnDeleteAssociation";
-            this.btnDeleteAssociation.Size = new System.Drawing.Size(40, 30);
+            this.btnDeleteAssociation.Size = new System.Drawing.Size(34, 34);
             this.btnDeleteAssociation.TabIndex = 4;
             this.toolTip1.SetToolTip(this.btnDeleteAssociation, "Delete selected association");
             this.btnDeleteAssociation.UseVisualStyleBackColor = true;
-            this.btnDeleteAssociation.Visible = false;
             this.btnDeleteAssociation.Click += new System.EventHandler(this.btnDeleteAssociation_Click);
             // 
             // btnMoveAssnNext
             // 
-            this.btnMoveAssnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMoveAssnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnMoveAssnNext.Enabled = false;
             this.btnMoveAssnNext.Image = global::BDEditor.Properties.Resources.arrow_270;
-            this.btnMoveAssnNext.Location = new System.Drawing.Point(242, 711);
+            this.btnMoveAssnNext.Location = new System.Drawing.Point(260, 711);
             this.btnMoveAssnNext.Name = "btnMoveAssnNext";
-            this.btnMoveAssnNext.Size = new System.Drawing.Size(40, 30);
+            this.btnMoveAssnNext.Size = new System.Drawing.Size(34, 34);
             this.btnMoveAssnNext.TabIndex = 3;
             this.toolTip1.SetToolTip(this.btnMoveAssnNext, "Move Next");
             this.btnMoveAssnNext.UseVisualStyleBackColor = true;
@@ -295,18 +216,18 @@
             // 
             // btnMoveAssnPrevious
             // 
-            this.btnMoveAssnPrevious.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMoveAssnPrevious.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnMoveAssnPrevious.Enabled = false;
             this.btnMoveAssnPrevious.Image = global::BDEditor.Properties.Resources.arrow_090;
-            this.btnMoveAssnPrevious.Location = new System.Drawing.Point(193, 711);
+            this.btnMoveAssnPrevious.Location = new System.Drawing.Point(220, 711);
             this.btnMoveAssnPrevious.Name = "btnMoveAssnPrevious";
-            this.btnMoveAssnPrevious.Size = new System.Drawing.Size(40, 30);
+            this.btnMoveAssnPrevious.Size = new System.Drawing.Size(34, 34);
             this.btnMoveAssnPrevious.TabIndex = 2;
             this.toolTip1.SetToolTip(this.btnMoveAssnPrevious, "Move Previous");
             this.btnMoveAssnPrevious.UseVisualStyleBackColor = true;
             this.btnMoveAssnPrevious.Click += new System.EventHandler(this.btnMoveAssnPrevious_Click);
             // 
-            // BDSearchEntryEditView
+            // BDSearchEntryManagerView
             // 
             this.AcceptButton = this.btnOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -321,10 +242,9 @@
             this.Controls.Add(this.lbSearchEntryAssociations);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.pnlSelectTerms);
-            this.Controls.Add(this.lblSelectedSearchEntry);
-            this.Name = "BDSearchEntryEditView";
+            this.Name = "BDSearchEntryManagerView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Index Entry Editor";
+            this.Text = "Index Entry Manager";
             this.Load += new System.EventHandler(this.BDSearchEntryEditView_Load);
             this.pnlSelectTerms.ResumeLayout(false);
             this.pnlSelectTerms.PerformLayout();
@@ -336,14 +256,8 @@
         #endregion
 
         private System.Windows.Forms.ListBox lbExistingSearchEntries;
-        private System.Windows.Forms.ListBox lbSelectedSearchEntries;
-        private System.Windows.Forms.Button btnAddToSelected;
-        private System.Windows.Forms.Button btnRemoveFromSelected;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnAddNewSearchEntry;
-        private System.Windows.Forms.Label lblName;
-        private System.Windows.Forms.Label lblSelectedSearchEntry;
         private System.Windows.Forms.Panel pnlSelectTerms;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ListBox lbSearchEntryAssociations;

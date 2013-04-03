@@ -1034,22 +1034,6 @@ namespace BDEditor.Views
             }
         }
 
-        private void loadSeedData_Click(object sender, EventArgs e)
-        {
-            this.Cursor = Cursors.WaitCursor;
-            BDDataLoader dataLoader = new BDDataLoader();
-
-            //dataLoader.ImportData(dataContext, @"Resources\Chapter_1a.txt", BDDataLoader.baseDataDefinitionType.chapter1a);
-            //LoadChapterDropDown();
-            //BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
-            //DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
-
-            //loadSeedDataButton.Visible = isSeedDataLoadAvailable;
-            //loadSeedDataButton.Enabled = false;
-
-            this.Cursor = Cursors.Default;
-        }
-
         private void LoadChapterDropDown()
         {
             splitContainer1.Panel2.Controls.Clear();
@@ -1086,12 +1070,7 @@ namespace BDEditor.Views
         {
             this.Text = string.Format("{0} - {1}" , "Bugs & Drugs Editor", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
-            // Loading Seed Data:  set the following variables
-
-            isSeedDataLoadAvailable = false;
-            
 #if DEBUG
-            isSeedDataLoadAvailable = false;
             this.Text = this.Text + @" < DEVELOPMENT >";
             this.btnPublish.Visible = true;
             this.btnMove.Visible = !isSeedDataLoadAvailable && moveButtonVisible;
@@ -1108,7 +1087,6 @@ namespace BDEditor.Views
 
             BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
             DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
-            loadSeedDataButton.Visible = isSeedDataLoadAvailable;
             UpdateSyncLabel();
 
             AuthenticationInputBox authenticationForm = new AuthenticationInputBox();
@@ -1201,6 +1179,15 @@ namespace BDEditor.Views
             DialogResult result = build.ShowDialog(this);
             if (result == DialogResult.OK)
                 MessageBox.Show(this, "Close the application before publishing again.", "Publish Is Complete", MessageBoxButtons.OK);
+        }
+
+        private void btnIndexManager_Click(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.WaitCursor;
+            BDSearchEntryManagerView mgrView = new BDSearchEntryManagerView();
+            mgrView.AssignDataContext(dataContext);
+            mgrView.ShowDialog(this);
+            this.Cursor = Cursors.Default;
         }
 
         private void btnSearch_Click(object sender, EventArgs e)

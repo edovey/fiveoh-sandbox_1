@@ -216,7 +216,7 @@ namespace BDEditor.DataModel
                                                             where entities.searchEntryId == pSearchEntryId
                                                             orderby entities.displayOrder ascending
                                                             select entities);
-            resultList = entries.ToList<BDSearchEntryAssociation>();
+            resultList.AddRange(entries.ToList<BDSearchEntryAssociation>());
             return resultList;
         }
 

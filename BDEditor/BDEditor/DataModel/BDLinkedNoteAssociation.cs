@@ -306,6 +306,24 @@ namespace BDEditor.DataModel
             return RetrieveLinkedNoteAssociationForParentKeyPropertyName(pContext, pKeyNameValue, false);
         }
 
+        /// <summary>
+        /// Retrieve all linked note associations for the specified note, of the specified linked note type
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pLinkedNoteUuid"></param>
+        /// <param name="pLinkedNoteType"></param>
+        /// <returns>List of BDLinkedNoteAssociations</returns>
+        public static List<BDLinkedNoteAssociation> RetrieveLinkedNoteAssociationsForLinkedNoteUuidOfType(Entities pContext, Guid pLinkedNoteUuid, BDConstants.LinkedNoteType pLinkedNoteType)
+        {
+            IQueryable<BDLinkedNoteAssociation> linkedNoteAssociations = (from bdLinkedNoteAssociations in pContext.BDLinkedNoteAssociations
+                                                                          where bdLinkedNoteAssociations.linkedNoteId == pLinkedNoteUuid &&
+                                                                          bdLinkedNoteAssociations.linkedNoteType == (int)pLinkedNoteType
+                                                                          orderby bdLinkedNoteAssociations.displayOrder ascending
+                                                                          select bdLinkedNoteAssociations);
+            List<BDLinkedNoteAssociation> resultList = linkedNoteAssociations.ToList<BDLinkedNoteAssociation>();
+            return resultList;
+        }
+
 
         /// <summary>
         /// Returns all the LinkedNoteAssociations for a linkedNote uuid 

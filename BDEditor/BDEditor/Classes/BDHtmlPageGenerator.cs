@@ -929,101 +929,16 @@ namespace BDEditor.Classes
                 }
                 bodyHTML.Append(@"</table>");
 
-                List<BDLinkedNote> legendNotes = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Legend);
-                string legendHTML = buildTextFromNotes(legendNotes, objectsOnPage);
+                List<Guid> legendAssociations;
+                List<BDLinkedNote> legendNotes = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Legend, out legendAssociations);
+                string legendHTML = buildTextFromNotes(legendNotes);
                 if (!string.IsNullOrEmpty(legendHTML))
+                {
                     bodyHTML.Append(legendHTML);
-
+                    objectsOnPage.AddRange(legendAssociations);
+                }
             }
             return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage, null);
-        }
-
-        #endregion
-
-        #region Treatment Recommendations sections
-
-        private BDHtmlPage generatePageForEmpiricTherapyOfFungalInfections(Entities pContext, IBDNode pNode)
-        {
-            // in the case where this method is called from the wrong node type 
-            if (pNode.NodeType != BDConstants.BDNodeType.BDTopic)
-            {
-#if DEBUG
-                throw new InvalidOperationException();
-#else
-                return null;
-#endif
-            }
-
-            //metadataLayoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, pNode.LayoutVariant);
-            StringBuilder bodyHTML = new StringBuilder();
-            List<BDLinkedNote> footnotesOnPage = new List<BDLinkedNote>();
-            List<Guid> objectsOnPage = new List<Guid>();
-
-            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1", footnotesOnPage, objectsOnPage));
-
-            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
-            foreach(IBDNode child in childNodes)
-            {
-                bodyHTML.Append(buildAttachmentHTML(pContext,child,footnotesOnPage,objectsOnPage));
-            }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
-        }
-
-        #endregion
-
-        #region Prophylaxis sections
-        private BDHtmlPage generatePageforProphylaxisSurgical(Entities pContext, IBDNode pNode)
-        {
-            // in the case where this method is called from the wrong node type 
-            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
-            {
-#if DEBUG
-                throw new InvalidOperationException();
-#else
-                return null;
-#endif
-            }
-
-            //metadataLayoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, pNode.LayoutVariant);
-            StringBuilder bodyHTML = new StringBuilder();
-            List<BDLinkedNote> footnotesOnPage = new List<BDLinkedNote>();
-            List<Guid> objectsOnPage = new List<Guid>();
-
-            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1", footnotesOnPage, objectsOnPage));
-
-            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
-            if (childNodes.Count > 0)
-            {
-                //Append HTML for child layout
-            }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
-        }
-        
-        private BDHtmlPage generatePageForProhylaxisImmunization(Entities pContext, IBDNode pNode)
-        {
-            // in the case where this method is called from the wrong node type 
-            if (pNode.NodeType != BDConstants.BDNodeType.BDSubcategory)
-            {
-#if DEBUG
-                throw new InvalidOperationException();
-#else
-                return null;
-#endif
-            }
-
-            //metadataLayoutColumns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, pNode.LayoutVariant);
-            StringBuilder bodyHTML = new StringBuilder();
-            List<BDLinkedNote> footnotesOnPage = new List<BDLinkedNote>();
-            List<Guid> objectsOnPage = new List<Guid>();
-
-            bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h1", footnotesOnPage, objectsOnPage));
-
-            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
-            if (childNodes.Count > 0)
-            {
-                //Append HTML for child layout
-            }
-            return writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotesOnPage, objectsOnPage, null);
         }
 
         #endregion
@@ -1050,16 +965,19 @@ namespace BDEditor.Classes
             bodyHTML.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, "h2", footnotesOnPage, objectsOnPage));
 
             // retrieve 'inline' type of linked note, draw in a box
-            List<BDLinkedNote> topicNotes = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, BDNode.PROPERTYNAME_NAME,BDConstants.LinkedNoteType.Inline);
+            List<Guid> topicAssociations;
+            List<BDLinkedNote> topicNotes = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, BDNode.PROPERTYNAME_NAME,BDConstants.LinkedNoteType.Inline, out topicAssociations);
             StringBuilder noteText = new StringBuilder();
             foreach (BDLinkedNote note in topicNotes)
             {
                 noteText.Append(note.documentText);
                 objectsOnPage.Add(note.Uuid);
             }
-            if(topicNotes.Count > 0 && noteText.Length > 0)
+            if (topicNotes.Count > 0 && noteText.Length > 0)
+            {
                 bodyHTML.AppendFormat("<div style=\"border:1px dotted black;padding:2em;\">{0}</div>", noteText);
-
+                objectsOnPage.AddRange(topicAssociations);
+            }
             List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
             foreach(IBDNode table in childNodes)
             {
@@ -1137,13 +1055,11 @@ namespace BDEditor.Classes
         /// <param name="pLayoutColumn"></param>
         /// <param name="pMarkedNotes"></param>
         /// <param name="pUnmarkedNotes"></param>
-        /// <param name="pObjectsOnPage"></param>
+        /// <param name="pObjectsOnLinkedNotePage">List of LinkedNoteAssociations whose Uuid are represented by this page</param>
         /// <returns></returns>
-        private BDHtmlPage generatePageForLinkedNotesLayoutColumn(Entities pContext, BDLayoutMetadataColumn pLayoutColumn, List<BDLinkedNote> pMarkedNotes, List<BDLinkedNote> pUnmarkedNotes)
+        private BDHtmlPage generatePageForLinkedNotesOnLayoutColumn(Entities pContext, BDLayoutMetadataColumn pLayoutColumn, List<BDLinkedNote> pMarkedNotes, List<BDLinkedNote> pUnmarkedNotes, List<Guid> pObjectsOnLinkedNotePage)
         {
             StringBuilder noteHtml = new StringBuilder();
-
-            List<Guid> objectsOnPage = new List<Guid>();
 
             if (null != pMarkedNotes && notesListHasContent(pContext, pMarkedNotes))
             {
@@ -1153,7 +1069,6 @@ namespace BDEditor.Classes
                     if (!string.IsNullOrEmpty(documentText))
                     {
                         noteHtml.Append(documentText);
-                       // objectsOnPage.Add(mNote.Uuid);
                     }
                 }
             }
@@ -1166,7 +1081,6 @@ namespace BDEditor.Classes
                     if (!string.IsNullOrEmpty(documentText))
                     {
                         noteHtml.Append(documentText);
-                        //objectsOnPage.Add(uNote.Uuid);
                     }
                 }
             }
@@ -1184,16 +1098,26 @@ namespace BDEditor.Classes
             string noteHtmlText = BDUtilities.CleanseStringOfEmptyTag(noteHtml.ToString(), "p");
             if (!string.IsNullOrEmpty(noteHtmlText) && resultPage == null)
             {
-                resultPage = writeLayoutBDHtmlPage(pContext, pLayoutColumn, noteHtml.ToString(), objectsOnPage, BDConstants.BDHtmlPageType.Comments);
+                resultPage = writeLayoutBDHtmlPage(pContext, pLayoutColumn, noteHtml.ToString(), pObjectsOnLinkedNotePage, BDConstants.BDHtmlPageType.Comments);
             }
 
             return resultPage;
         }
 
-        private BDHtmlPage generatePageForLinkedNotes(Entities pContext, Guid pParentId, BDConstants.BDNodeType pParentType, List<BDLinkedNote> pMarkedNotes, List<BDLinkedNote> pUnmarkedNotes, string pParentKeyPropertyName)
+        /// <summary>
+        /// Generate an HMTL page for the specified notes
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pParentId"></param>
+        /// <param name="pParentType"></param>
+        /// <param name="pMarkedNotes"></param>
+        /// <param name="pUnmarkedNotes"></param>
+        /// <param name="pParentKeyPropertyName"></param>
+        /// <param name="pObjectsOnPage">List of LinkedNoteAssociation Guids that are represented on the page</param>
+        /// <returns></returns>
+        private BDHtmlPage generatePageForLinkedNotes(Entities pContext, Guid pParentId, BDConstants.BDNodeType pParentType, List<BDLinkedNote> pMarkedNotes, List<BDLinkedNote> pUnmarkedNotes, string pParentKeyPropertyName, List<Guid> pObjectsOnPage)
         {
             StringBuilder noteHtml = new StringBuilder();
-            List<Guid> objectsOnPage = new List<Guid>();
 
             if (null != pMarkedNotes && notesListHasContent(pContext, pMarkedNotes))
             {
@@ -1203,7 +1127,6 @@ namespace BDEditor.Classes
                     if (!string.IsNullOrEmpty(documentText))
                     {
                         noteHtml.Append(documentText);
-                       //objectsOnPage.Add(mNote.Uuid);
                     }
                 }
             }
@@ -1216,12 +1139,11 @@ namespace BDEditor.Classes
                     if (!String.IsNullOrEmpty(documentText))
                     {
                         noteHtml.Append(documentText);
-                        //objectsOnPage.Add(uNote.Uuid);
                     }
                 }
             }
 
-            return generatePageForLinkedNotes(pContext, pParentId, pParentType, noteHtml.ToString(), BDConstants.BDHtmlPageType.Comments, objectsOnPage, pParentKeyPropertyName);
+            return generatePageForLinkedNotes(pContext, pParentId, pParentType, noteHtml.ToString(), BDConstants.BDHtmlPageType.Comments, pObjectsOnPage, pParentKeyPropertyName);
         }
 
         private BDHtmlPage generatePageForLinkedNotes(Entities pContext, Guid pDisplayParentId, BDConstants.BDNodeType pDisplayParentType, string pPageHtml, BDConstants.BDHtmlPageType pPageType, List<Guid> pObjectsOnPage, string pParentKeyPropertyName)
@@ -2446,14 +2368,15 @@ namespace BDEditor.Classes
             if (null == pNode) return string.Empty;
 
             StringBuilder html = new StringBuilder();
-            List<BDLinkedNote> legendNotes = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Legend);
+            List<Guid> legendAssociations;
+            List<BDLinkedNote> legendNotes = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Legend, out legendAssociations);
 
-            foreach (BDLinkedNote note in legendNotes)
-                pObjectsOnPage.Add(note.Uuid);
-
-            string legendHTML = buildTextFromNotes(legendNotes, pObjectsOnPage);
+            string legendHTML = buildTextFromNotes(legendNotes);
             if (!string.IsNullOrEmpty(legendHTML))
+            {
                 html.Append(legendHTML);
+                pObjectsOnPage.AddRange(legendAssociations);
+            }
 
             return html.ToString();
         }
@@ -2620,11 +2543,13 @@ namespace BDEditor.Classes
                                     break;
                                 case BDConstants.BDNodeType.BDTopic:
                                     //HACK
-                                    List<BDLinkedNote> immediate = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, child.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Immediate);
-                                    string immediateText = BDUtilities.BuildTextFromInlineNotes(immediate, pObjectsOnPage);
+                                    List<Guid> immedAssociations;
+                                    List<BDLinkedNote> immediate = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, child.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Immediate, out immedAssociations);
+                                    string immediateText = BDUtilities.BuildTextFromInlineNotes(immediate);
                                     //end hack
 
                                     clinical.AppendFormat(@"{0}{1}", child.Name, immediateText);
+                                    pObjectsOnPage.AddRange(immedAssociations);
                                     
                                     pObjectsOnPage.Add(child.Uuid);
                                     string inlineText = buildTextForParentAndPropertyFromLinkedNotes(pContext, BDNode.PROPERTYNAME_NAME, child, BDConstants.LinkedNoteType.Inline, pObjectsOnPage);
@@ -2745,11 +2670,14 @@ namespace BDEditor.Classes
                                 html.Append(@"</table>");
                             }
                         }
-
-                        List<BDLinkedNote> legendNotes = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.ParentId.Value, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Legend);
-                        string legendHTML = buildTextFromNotes(legendNotes, pObjectsOnPage);
+                        List<Guid> legendAssociations;
+                        List<BDLinkedNote> legendNotes = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.ParentId.Value, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Legend, out legendAssociations);
+                        string legendHTML = buildTextFromNotes(legendNotes);
                         if (!string.IsNullOrEmpty(legendHTML))
+                        {
                             html.Append(legendHTML);
+                            pObjectsOnPage.AddRange(legendAssociations);
+                        }
                         break;
 
                     case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Adult:
@@ -2819,11 +2747,14 @@ namespace BDEditor.Classes
                                         html.Append(therapyHTML);
                                         html.Append(@"</table>");
                                     }
-
-                                    List<BDLinkedNote> lgndNotes = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.ParentId.Value, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Legend);
-                                    string lgndHtml = buildTextFromNotes(lgndNotes, pObjectsOnPage);
+                                    List<Guid> lgndAssociations;
+                                    List<BDLinkedNote> lgndNotes = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.ParentId.Value, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Legend, out lgndAssociations);
+                                    string lgndHtml = buildTextFromNotes(lgndNotes);
                                     if (!string.IsNullOrEmpty(lgndHtml))
+                                    {
                                         html.Append(lgndHtml);
+                                        pObjectsOnPage.AddRange(lgndAssociations);
+                                    }
                                     break;
                             }
                         }
@@ -3500,13 +3431,15 @@ namespace BDEditor.Classes
                             mHTML.AppendFormat("<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>", columnHtml[5], p.maskAcute, p.maskLongTerm);
                             mHTML.Append("</table>");
 
-                            List<BDLinkedNote> durationNotes = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, p.Uuid, BDPrecaution.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.MarkedComment);
+                            List<Guid> durationAssociations;
+                            List<BDLinkedNote> durationNotes = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, p.Uuid, BDPrecaution.PROPERTYNAME_DURATION, BDConstants.LinkedNoteType.MarkedComment, out durationAssociations);
                             StringBuilder durationText = new StringBuilder();
                             foreach (BDLinkedNote note in durationNotes)
                             {
                                 durationText.Append(note.documentText);
-                                mObjectsOnPage.Add(note.Uuid);
                             }
+                            if (durationText.Length > 0)
+                                mObjectsOnPage.AddRange(durationAssociations);
                             mHTML.AppendFormat("<{0}>{1}</{0}>{2}", HtmlHeaderTagLevelString(pLevel + 3), columnHtml[6], durationText);
                         }
                         currentPageMasterObject = microorganism;
@@ -4405,13 +4338,16 @@ namespace BDEditor.Classes
                             string fieldNoteText2 = retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field02_fieldNote", BDConfiguredEntry.PROPERTYNAME_FIELD02, pObjectsOnPage, true, pFootnotes);
                             string fieldNoteText3 = retrieveNoteTextForConfiguredEntryField(pContext, entry.Uuid, "Field03_fieldNote", BDConfiguredEntry.PROPERTYNAME_FIELD03, pObjectsOnPage, true, pFootnotes);
 
-                            List<BDLinkedNote> fieldFootnoteList1 = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, entry.Uuid, BDConfiguredEntry.PROPERTYNAME_FIELD01, BDConstants.LinkedNoteType.Footnote);
-                            List<BDLinkedNote> fieldFootnoteList2 = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, entry.Uuid, BDConfiguredEntry.PROPERTYNAME_FIELD02, BDConstants.LinkedNoteType.Footnote);
-                            List<BDLinkedNote> fieldFootnoteList3 = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, entry.Uuid, BDConfiguredEntry.PROPERTYNAME_FIELD03, BDConstants.LinkedNoteType.Footnote);
+                            List<Guid> f1Associations;
+                            List<Guid> f2Associations;
+                            List<Guid> f3Associations;
+                            List<BDLinkedNote> fieldFootnoteList1 = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, entry.Uuid, BDConfiguredEntry.PROPERTYNAME_FIELD01, BDConstants.LinkedNoteType.Footnote, out f1Associations);
+                            List<BDLinkedNote> fieldFootnoteList2 = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, entry.Uuid, BDConfiguredEntry.PROPERTYNAME_FIELD02, BDConstants.LinkedNoteType.Footnote, out f2Associations);
+                            List<BDLinkedNote> fieldFootnoteList3 = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, entry.Uuid, BDConfiguredEntry.PROPERTYNAME_FIELD03, BDConstants.LinkedNoteType.Footnote, out f3Associations);
 
-                            string fieldNoteFootnote1 = buildFooterMarkerForList(fieldFootnoteList1, true, pFootnotes, pObjectsOnPage);
-                            string fieldNoteFootnote2 = buildFooterMarkerForList(fieldFootnoteList2, true, pFootnotes, pObjectsOnPage);
-                            string fieldNoteFootnote3 = buildFooterMarkerForList(fieldFootnoteList3, true, pFootnotes, pObjectsOnPage);
+                            string fieldNoteFootnote1 = buildFooterMarkerForList(fieldFootnoteList1, true, pFootnotes);
+                            string fieldNoteFootnote2 = buildFooterMarkerForList(fieldFootnoteList2, true, pFootnotes);
+                            string fieldNoteFootnote3 = buildFooterMarkerForList(fieldFootnoteList3, true, pFootnotes);
 
                             html.AppendFormat("<tr><td>{0}{1}</td><td>{2}{3}</td><td>{4}{5}</td></tr>",
                                 fieldNoteText1,
@@ -4423,6 +4359,9 @@ namespace BDEditor.Classes
 
                             html.Append("</table>");
                             pObjectsOnPage.Add(entry.Uuid);
+                            pObjectsOnPage.AddRange(f1Associations);
+                            pObjectsOnPage.AddRange(f2Associations);
+                            pObjectsOnPage.AddRange(f3Associations);
                         }
                         break;
 
@@ -5128,9 +5067,11 @@ namespace BDEditor.Classes
         private string buildTextForParentAndPropertyFromLinkedNotes(Entities pContext, string pPropertyName, IBDNode pNode, BDConstants.LinkedNoteType pNoteType, List<Guid> pObjectsOnPage)
         {
             StringBuilder notesHTML = new StringBuilder();
-            List<BDLinkedNote> notes = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, pPropertyName, pNoteType);
+            List<Guid> noteAssociations;
+            List<BDLinkedNote> notes = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, pPropertyName, pNoteType, out noteAssociations);
 
-            notesHTML.Append(buildTextFromNotes(notes, pObjectsOnPage));
+            notesHTML.Append(buildTextFromNotes(notes));
+            pObjectsOnPage.AddRange(noteAssociations);
             return notesHTML.ToString();
         }
 
@@ -5140,7 +5081,7 @@ namespace BDEditor.Classes
         /// <param name="pNotes"></param>
         /// <param name="pObjectsOnPage"></param>
         /// <returns></returns>
-        private string buildTextFromNotes(List<BDLinkedNote> pNotes, List<Guid> pObjectsOnPage)
+        private string buildTextFromNotes(List<BDLinkedNote> pNotes)
         {
             StringBuilder noteString = new StringBuilder();
             foreach (BDLinkedNote note in pNotes)
@@ -5149,7 +5090,6 @@ namespace BDEditor.Classes
                 if (!string.IsNullOrEmpty(documentText))
                 {
                     noteString.Append(note.documentText);
-                    pObjectsOnPage.Add(note.Uuid);
                 }
             }
             return noteString.ToString();
@@ -5207,7 +5147,15 @@ namespace BDEditor.Classes
             return refHTML.ToString();
         }
 
-        private string buildFooterMarkerForList(List<BDLinkedNote> pItemFootnotes, bool addToPageFooter, List<BDLinkedNote> pPageFootnotes, List<Guid> pObjectsOnPage)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pItemFootnotes"></param>
+        /// <param name="addToPageFooter"></param>
+        /// <param name="pPageFootnotes"></param>
+        /// <param name="pObjectsOnPage">if not null, add Uuid of note to objects on page </param>
+        /// <returns></returns>
+        private string buildFooterMarkerForList(List<BDLinkedNote> pItemFootnotes, bool addToPageFooter, List<BDLinkedNote> pPageFootnotes)
         {
             StringBuilder footerMarker = new StringBuilder();
             if (pItemFootnotes.Count > 0)
@@ -5219,7 +5167,6 @@ namespace BDEditor.Classes
                         pPageFootnotes.Add(footer);
 
                     footerMarker.AppendFormat(@"{0},", pPageFootnotes.IndexOf(footer) + 1);
-                    pObjectsOnPage.Add(footer.Uuid);
                 }
                 // trim last comma
                 if(footerMarker.Length > 5)
@@ -5271,13 +5218,15 @@ namespace BDEditor.Classes
         private string buildHtmlForMetadataColumn(Entities pContext, IBDNode pPageDisplayParent, BDLayoutMetadataColumn pMetadataColumn, BDConstants.BDNodeType pNodeType, string pPropertyName, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
         {
             StringBuilder columnHtml = new StringBuilder();
+            List<Guid> objectsOnLinkedNotePage = new List<Guid>();
             string cLabel = retrieveMetadataLabelForPropertyName(pContext, pNodeType, pPropertyName, pMetadataColumn);
-            List<BDLinkedNote> immediate = retrieveNotesForLayoutColumn(pContext, pMetadataColumn, BDConstants.LinkedNoteType.Immediate);
-            List<BDLinkedNote> inline = retrieveNotesForLayoutColumn(pContext, pMetadataColumn, BDConstants.LinkedNoteType.Inline);
+            List<BDLinkedNote> immediate = retrieveNotesForLayoutColumn(pContext, pMetadataColumn, BDConstants.LinkedNoteType.Immediate, pObjectsOnPage);
+            List<BDLinkedNote> inline = retrieveNotesForLayoutColumn(pContext, pMetadataColumn, BDConstants.LinkedNoteType.Inline, pObjectsOnPage);
+            List<BDLinkedNote> cFootnotes = retrieveNotesForLayoutColumn(pContext, pMetadataColumn, BDConstants.LinkedNoteType.Footnote, pObjectsOnPage);
 
-            List<BDLinkedNote> marked = retrieveNotesForLayoutColumn(pContext, pMetadataColumn, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> unmarked = retrieveNotesForLayoutColumn(pContext, pMetadataColumn, BDConstants.LinkedNoteType.UnmarkedComment);
-            List<BDLinkedNote> cFootnotes = retrieveNotesForLayoutColumn(pContext, pMetadataColumn, BDConstants.LinkedNoteType.Footnote);
+            // these have a new list for the objects represented as they are written to a separate page
+            List<BDLinkedNote> marked = retrieveNotesForLayoutColumn(pContext, pMetadataColumn, BDConstants.LinkedNoteType.MarkedComment, objectsOnLinkedNotePage);
+            List<BDLinkedNote> unmarked = retrieveNotesForLayoutColumn(pContext, pMetadataColumn, BDConstants.LinkedNoteType.UnmarkedComment, objectsOnLinkedNotePage);
             
             // Specific for Hack (Treatment recommendations)
             //Hack cont'd
@@ -5304,16 +5253,14 @@ namespace BDEditor.Classes
             // end hack
 
             pFootnotes.AddRange(cFootnotes);
-            string footnoteMarker = buildFooterMarkerForList(cFootnotes, true, pFootnotes, pObjectsOnPage);
+            string footnoteMarker = buildFooterMarkerForList(cFootnotes, true, pFootnotes); 
 
-            string inlineText = BDUtilities.BuildTextFromNotes(inline, pObjectsOnPage); // In approx 50% of cases, "inline" notes have been used like an "overview"
-            string immediateText = BDUtilities.BuildTextFromInlineNotes(immediate, pObjectsOnPage);
+            string inlineText = BDUtilities.BuildTextFromNotes(inline); // In approx 50% of cases, "inline" notes have been used like an "overview"
+            string immediateText = BDUtilities.BuildTextFromInlineNotes(immediate);
 
             cLabel = string.Format("{0}{1}{2}{3}", (retrieveMetadataLabelForPropertyName(pContext, pNodeType, pPropertyName, pMetadataColumn)).Trim(), footnoteMarker, immediateText, inlineText);
 
-            //pObjectsOnPage.Add(pMetadataColumn.Uuid);
-
-            BDHtmlPage notePage = generatePageForLinkedNotesLayoutColumn(pContext, pMetadataColumn, marked, unmarked);
+            BDHtmlPage notePage = generatePageForLinkedNotesOnLayoutColumn(pContext, pMetadataColumn, marked, unmarked, objectsOnLinkedNotePage);
 
             if (notePage != null)
                 columnHtml.AppendFormat(@"<a class=""aa"" href=""{0}"">{1}{2}</a>", notePage.Uuid.ToString().ToUpper(), cLabel, footnoteMarker);
@@ -5400,13 +5347,19 @@ namespace BDEditor.Classes
             }
 
             StringBuilder propertyHTML = new StringBuilder();
-            List<BDLinkedNote> propertyFooters = (BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.Footnote));
-            string footerMarker = buildFooterMarkerForList(propertyFooters, true, pFootnotes, pObjectsOnPage);
+            List<Guid> footerAssociations;
+            List<BDLinkedNote> propertyFooters = (BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.Footnote, out footerAssociations));
+            string footerMarker = buildFooterMarkerForList(propertyFooters, true, pFootnotes);
 
-            List<BDLinkedNote> inline = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.Inline);
-            List<BDLinkedNote> marked = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.MarkedComment);
-            List<BDLinkedNote> unmarked = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.UnmarkedComment);
-            List<BDLinkedNote> immediate = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.Immediate);
+            List<Guid> inlineAssociations;
+            List<Guid> markedAssociations;
+            List<Guid> unmarkedAssociations;
+            List<Guid> immediateAssociations;
+
+            List<BDLinkedNote> inline = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.Inline, out inlineAssociations);
+            List<BDLinkedNote> marked = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.MarkedComment, out markedAssociations);
+            List<BDLinkedNote> unmarked = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.UnmarkedComment, out unmarkedAssociations);
+            List<BDLinkedNote> immediate = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNoteParentId, pPropertyName, BDConstants.LinkedNoteType.Immediate, out immediateAssociations);
 
 
             #region BF Hack that makes me grumpy
@@ -5423,7 +5376,7 @@ namespace BDEditor.Classes
                 if ((null != legendList) && (legendList.Count >= 3))
                 {
                     BDLayoutMetadataColumn column = legendList[pNode.DisplayOrder.Value];
-                    List<BDLinkedNote> legendMarkedList = retrieveNotesForLayoutColumn(pContext, column, BDConstants.LinkedNoteType.MarkedComment);
+                    List<BDLinkedNote> legendMarkedList = retrieveNotesForLayoutColumn(pContext, column, BDConstants.LinkedNoteType.MarkedComment, markedAssociations);
                     marked.AddRange(legendMarkedList);
                 }
             }
@@ -5443,12 +5396,16 @@ namespace BDEditor.Classes
 
             pObjectsOnPage.Add(pNode.Uuid);
 
-            BDHtmlPage notePage = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.NodeType, marked, unmarked, pPropertyName);
+            List<Guid> objectsOnChildPage = new List<Guid>();
+            objectsOnChildPage.AddRange(markedAssociations);
+            objectsOnChildPage.AddRange(unmarkedAssociations);
+            BDHtmlPage notePage = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.NodeType, marked, unmarked, pPropertyName, objectsOnChildPage);
 
-            string inlineOverviewText = BDUtilities.BuildTextFromNotes(inline, pObjectsOnPage); // In approx 50% of cases, "inline" notes have been used like an "overview"
-            string immediateText = BDUtilities.BuildTextFromInlineNotes(immediate, pObjectsOnPage);
+            string inlineOverviewText = BDUtilities.BuildTextFromNotes(inline); // In approx 50% of cases, "inline" notes have been used like an "overview"
+            string immediateText = BDUtilities.BuildTextFromInlineNotes(immediate);
 
             pResolvedValue = string.Format("{0}{1}{2}", pPropertyValue.Trim(), footerMarker, immediateText);
+            pObjectsOnPage.AddRange(immediateAssociations);
 
             if (pHtmlTag.ToLower() == "td")
             {
@@ -5507,7 +5464,7 @@ namespace BDEditor.Classes
                         propertyHTML.AppendFormat(@"{0}{1}", inlineOverviewText, overviewHTML);
                 }
             }
-
+            pObjectsOnPage.AddRange(inlineAssociations);
             pResolvedValue = string.Format("{0}{1}", pResolvedValue, inlineOverviewText);
 
             if (pResolvedValue.Trim().Length == 0) pResolvedValue = null;
@@ -5553,7 +5510,8 @@ namespace BDEditor.Classes
         private string retrieveNoteTextForConfiguredEntryField(Entities pContext, Guid pParentId, string pNotePropertyName, string pFieldPropertyName, List<Guid> pObjectsOnPage, bool trimTags, List<BDLinkedNote> pFootnotesOnPage)
         {
             StringBuilder noteText = new StringBuilder();
-            List<BDLinkedNote> notes = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pParentId, pNotePropertyName, BDConstants.LinkedNoteType.Inline);
+            List<Guid> inlineAssociations;
+            List<BDLinkedNote> notes = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pParentId, pNotePropertyName, BDConstants.LinkedNoteType.Inline, out inlineAssociations);
             foreach (BDLinkedNote note in notes)
             {
                 string documentText = BDUtilities.CleanseStringOfEmptyTag(note.documentText, "p");
@@ -5572,17 +5530,28 @@ namespace BDEditor.Classes
                     else
                         resultText = note.documentText;
                     noteText.Append(resultText);
+                    pObjectsOnPage.AddRange(inlineAssociations);
                 }
                 // retrieve any linked notes for the named property; add to footnote collection and mark the text
                 if (pFieldPropertyName != string.Empty)
                 {
                     //TODO:Remove connection of ALL notes as footnotes. UI must not allow linked note button when overview editor is visible on ConfiguredEntries
-                    List<BDLinkedNote> fieldNotes = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pParentId, pFieldPropertyName, BDConstants.LinkedNoteType.Footnote);
-                    fieldNotes.AddRange(BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pParentId, pFieldPropertyName, BDConstants.LinkedNoteType.Inline));
-                    fieldNotes.AddRange(BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pParentId, pFieldPropertyName, BDConstants.LinkedNoteType.MarkedComment));
-                    fieldNotes.AddRange(BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pParentId, pFieldPropertyName, BDConstants.LinkedNoteType.UnmarkedComment));
+                    List<Guid> fieldNoteAssociations;
+                    List<BDLinkedNote> fieldNotes = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pParentId, pFieldPropertyName, BDConstants.LinkedNoteType.Footnote, out fieldNoteAssociations);
+                    List<Guid> inlineFieldAssociations;
+                    fieldNotes.AddRange(BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pParentId, pFieldPropertyName, BDConstants.LinkedNoteType.Inline, out inlineFieldAssociations));
+                    List<Guid> markedAssociations;
+                    fieldNotes.AddRange(BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pParentId, pFieldPropertyName, BDConstants.LinkedNoteType.MarkedComment, out markedAssociations));
+                    List<Guid> unmarkedAssociations;
+                    fieldNotes.AddRange(BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pParentId, pFieldPropertyName, BDConstants.LinkedNoteType.UnmarkedComment, out unmarkedAssociations));
+
+                    pObjectsOnPage.AddRange(fieldNoteAssociations);
+                    pObjectsOnPage.AddRange(inlineFieldAssociations);
+                    pObjectsOnPage.AddRange(markedAssociations);
+                    pObjectsOnPage.AddRange(unmarkedAssociations);
+
                     List<string> footnoteMarkers = new List<string>();
-                    noteText.Append(buildFooterMarkerForList(fieldNotes, true, pFootnotesOnPage, pObjectsOnPage));
+                    noteText.Append(buildFooterMarkerForList(fieldNotes, true, pFootnotesOnPage));
                 }
 
             }
@@ -5898,19 +5867,26 @@ namespace BDEditor.Classes
         /// <param name="pContext"></param>
         /// <param name="pColumn"></param>
         /// <param name="pNoteType">if null, will return all the notes</param>
+        /// <param name="pObjectsOnPage">if null, no objects will be added to ObjectsOnPage for BDHtmlPageMap</param>
         /// <returns></returns>
-        private List<BDLinkedNote> retrieveNotesForLayoutColumn(Entities pContext, BDLayoutMetadataColumn pColumn, BDConstants.LinkedNoteType? pNoteType)
+        private List<BDLinkedNote> retrieveNotesForLayoutColumn(Entities pContext, BDLayoutMetadataColumn pColumn, BDConstants.LinkedNoteType? pNoteType, List<Guid> pObjectsOnPage)
         {
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(pContext, pColumn.Uuid);
             List<BDLinkedNote> notes = new List<BDLinkedNote>();
             foreach (BDLinkedNoteAssociation link in links)
+            {
                 if (pNoteType != null)
                 {
                     if (link.LinkedNoteType == pNoteType)
+                    {
                         notes.Add(BDLinkedNote.RetrieveLinkedNoteWithId(pContext, link.linkedNoteId));
+                        if(pObjectsOnPage != null)
+                            pObjectsOnPage.Add(link.Uuid);
+                    }
                 }
                 else
                     notes.Add(BDLinkedNote.RetrieveLinkedNoteWithId(pContext, link.linkedNoteId));
+            }
             return notes;
         }
 
@@ -6029,21 +6005,18 @@ namespace BDEditor.Classes
 
             BDHtmlPage.Save(pContext, newPage);
 
-            if (newPage.HtmlPageType == BDConstants.BDHtmlPageType.Data)
-            {
+            // bypassing this filter for page types, since search entries can be created and should be honored for all output.
+            //if (newPage.HtmlPageType == BDConstants.BDHtmlPageType.Data)
+            //{
                 List<Guid> filteredObjects = pObjectsOnPage.Distinct().ToList();
                 foreach (Guid objectId in filteredObjects)
                     BDHtmlPageMap.CreateOrRetrieveBDHtmlPageMap(pContext, Guid.NewGuid(), newPage.Uuid, objectId);
-            }
+            //}
             return newPage;
         }
 
         #endregion
     }
-
-
-
-
     public class BDHtmlPageGeneratorLogEntry
     {
         public Guid Uuid { get; set;}

@@ -2050,7 +2050,7 @@ namespace BDEditor.Classes
             return resultText;
         }
 
-        public static string BuildTextFromInlineNotes(List<BDLinkedNote> pNotes, List<Guid> pObjectsOnPage)
+        public static string BuildTextFromInlineNotes(List<BDLinkedNote> pNotes)
         {
             StringBuilder noteString = new StringBuilder();
             if (null != pNotes)
@@ -2071,7 +2071,6 @@ namespace BDEditor.Classes
                             }
 
                             noteString.AppendFormat(" {0}", documentText);
-                            if (null != pObjectsOnPage) pObjectsOnPage.Add(note.Uuid);
                         }
                     }
                 }
@@ -2079,7 +2078,7 @@ namespace BDEditor.Classes
             return noteString.ToString();
         }
 
-        public static string BuildTextFromNotes(List<BDLinkedNote> pNotes, List<Guid> pObjectsOnPage)
+        public static string BuildTextFromNotes(List<BDLinkedNote> pNotes)
         {
             StringBuilder noteString = new StringBuilder();
             foreach (BDLinkedNote note in pNotes)
@@ -2090,7 +2089,6 @@ namespace BDEditor.Classes
                     if (!string.IsNullOrEmpty(documentText))
                     {
                         noteString.Append(note.documentText);
-                        pObjectsOnPage.Add(note.Uuid);
                     } 
                 }
             }
@@ -2147,9 +2145,10 @@ namespace BDEditor.Classes
             return resultValue;
         }
 
-        public static List<BDLinkedNote> RetrieveNotesForParentAndPropertyOfLinkedNoteType(Entities pContext, Guid pParentId, string pPropertyName, BDConstants.LinkedNoteType pNoteType)
+        public static List<BDLinkedNote> RetrieveNotesForParentAndPropertyOfLinkedNoteType(Entities pContext, Guid pParentId, string pPropertyName, BDConstants.LinkedNoteType pNoteType, out List<Guid> pLinkedNoteAssociations)
         {
             List<BDLinkedNote> noteList = new List<BDLinkedNote>();
+            pLinkedNoteAssociations = new List<Guid>();
             if (null != pPropertyName && pPropertyName.Length > 0)
             {
                 List<BDLinkedNoteAssociation> list = BDLinkedNoteAssociation.GetLinkedNoteAssociationListForParentIdAndProperty(pContext, pParentId, pPropertyName);
@@ -2159,7 +2158,10 @@ namespace BDEditor.Classes
                     {
                         BDLinkedNote linkedNote = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, assn.linkedNoteId);
                         if (null != linkedNote)
+                        {
                             noteList.Add(linkedNote);
+                            pLinkedNoteAssociations.Add(assn.Uuid);
+                        }
                     }
                 }
             }

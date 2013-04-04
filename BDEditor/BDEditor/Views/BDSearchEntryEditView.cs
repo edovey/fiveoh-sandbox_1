@@ -445,6 +445,9 @@ namespace BDEditor.Views
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            if (currentSearchEntryAssociation != null && currentSearchEntryAssociation.editorContext.IndexOf("*") == 0)
+                currentSearchEntryAssociation.editorContext = currentSearchEntryAssociation.editorContext.Substring(1);
+
             this.DialogResult = DialogResult.OK;
         }
 

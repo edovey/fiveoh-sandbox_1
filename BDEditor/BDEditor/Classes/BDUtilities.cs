@@ -2246,5 +2246,37 @@ namespace BDEditor.Classes
             }
             return pTextToProcess;
         }
+
+        public static void RepairSearchEntryAssociationsForMissingData(Entities pContext)
+        {
+            List<BDNode> nodeList = BDNode.RetrieveAll(pContext);
+            foreach (BDNode currentNode in nodeList)
+            {
+                List<BDSearchEntry> searchEntries = BDSearchEntry.RetrieveSearchEntriesForAnchorNode(pContext, currentNode.Uuid);
+                // search entries generated but never edited may not have the anchor id 
+                // so any entries found by backtracking through the HTML page are added
+                Guid htmlPageUuid = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pContext, currentNode.Uuid);
+                if (htmlPageUuid != null)
+                    searchEntries.AddRange(BDSearchEntry.RetrieveSearchEntriesForDisplayParent(pContext, htmlPageUuid));
+
+                foreach (BDSearchEntry entry in searchEntries)
+                {
+                    List<BDSearchEntryAssociation> associations = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryId(pContext, entry.Uuid);
+
+                    foreach (BDSearchEntryAssociation nodeAssn in associations)
+                    {
+                        if (nodeAssn.displayOrder == -1)
+                            nodeAssn.displayOrder = associations.IndexOf(nodeAssn);
+                        if (!nodeAssn.anchorNodeId.HasValue)
+                        {
+                            nodeAssn.anchorNodeId = currentNode.Uuid;
+                        }
+                        BDSearchEntryAssociation.Save(pContext, nodeAssn);
+                    }
+                }
+            }
+        }
+
+
     }
 }

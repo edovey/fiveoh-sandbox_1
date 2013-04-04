@@ -27,13 +27,13 @@ namespace BDEditor.Classes
         /// </summary>
         public void Generate(Entities pDataContext, IBDNode pNode)
         {
+            searchEntryList = BDSearchEntry.RetrieveAll(pDataContext);
+            htmlPages = BDHtmlPage.RetrieveAll(pDataContext);
+
             BDHtmlPageGeneratorLogEntry.AppendToFile("BDSearchGeneratorLog.txt", string.Format("Start: {0} -------------------------------", DateTime.Now));
 
             // reset Id of display parent in search entry association records
             BDSearchEntryAssociation.ResetForRegeneration(pDataContext);
-
-            searchEntryList = BDSearchEntry.RetrieveAll(pDataContext);
-            htmlPages = BDHtmlPage.RetrieveAll(pDataContext);
 
             foreach (BDSearchEntry entry in searchEntryList)
             {
@@ -43,9 +43,10 @@ namespace BDEditor.Classes
                 {
                     // determine the displayParentId : (the HTML page Id where the anchorNode has been rendered)
                     // NB: this may change at any time, so it is always repopulated on a Build.
-                    Guid htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pDataContext, seAssociation.anchorNodeId.Value);
-                    if (htmlPageId != Guid.Empty)
+                    Guid htmlPageId = Guid.Empty;
+                    if (seAssociation.anchorNodeId.HasValue)
                     {
+                        htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pDataContext, seAssociation.anchorNodeId.Value);
                         BDHtmlPage htmlPage = BDHtmlPage.RetrieveWithId(pDataContext, htmlPageId);
                         if (htmlPage != null)
                         {
@@ -64,11 +65,12 @@ namespace BDEditor.Classes
                             }
                         }
                     }
+                    else
+                    {
+                        BDHtmlPageGeneratorLogEntry.AppendToFile("BDSearchGeneratorLog.txt", string.Format("Unable to link BDSearchEntryAssociation to HTML page.  Uuid :{0}", seAssociation.Uuid));
+                    }
                 }
             }
-
-            //[Obsolete] generateSearchEntries(pDataContext, pNode);  
-
             BDHtmlPageGeneratorLogEntry.AppendToFile("BDSearchGeneratorLog.txt", string.Format("End: {0} -------------------------------", DateTime.Now));
         }
 

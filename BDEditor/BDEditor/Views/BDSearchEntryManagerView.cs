@@ -255,15 +255,15 @@ namespace BDEditor.Views
 
                 BDSearchEntryAssociation.Save(dataContext, searchEntryAssociations[requestedPosition]);
                 BDSearchEntryAssociation.Save(dataContext, searchEntryAssociations[selectedPosition]);
+
+                searchEntryAssociations.Sort("displayOrder", ListSortDirection.Ascending);
+                lbSearchEntryAssociations.BeginUpdate();
+                lbSearchEntryAssociations.SetSelected(requestedPosition, true);
+                lbSearchEntryAssociations.EndUpdate();
+
+                formHasChanges = true;
+                resetButtons();
             }
-
-            searchEntryAssociations.Sort("displayOrder", ListSortDirection.Ascending);
-            lbSearchEntryAssociations.BeginUpdate();
-            lbSearchEntryAssociations.SetSelected(requestedPosition, true);
-            lbSearchEntryAssociations.EndUpdate();
-
-            formHasChanges = true;
-            resetButtons();
         }
 
         private void btnMoveAssnNext_Click(object sender, EventArgs e)
@@ -278,15 +278,15 @@ namespace BDEditor.Views
 
                 BDSearchEntryAssociation.Save(dataContext, searchEntryAssociations[requestedPosition]);
                 BDSearchEntryAssociation.Save(dataContext, searchEntryAssociations[selectedPosition]);
+                searchEntryAssociations.Sort("displayOrder", ListSortDirection.Ascending);
+
+                lbSearchEntryAssociations.BeginUpdate();
+                lbSearchEntryAssociations.SetSelected(requestedPosition, true);
+                lbSearchEntryAssociations.EndUpdate();
+
+                formHasChanges = true;
+                resetButtons();
             }
-            searchEntryAssociations.Sort("displayOrder", ListSortDirection.Ascending);
-
-            lbSearchEntryAssociations.BeginUpdate();
-            lbSearchEntryAssociations.SetSelected(requestedPosition, true);
-            lbSearchEntryAssociations.EndUpdate();
-
-            formHasChanges = true;
-            resetButtons();
         }
 
         private void btnDeleteAssociation_Click(object sender, EventArgs e)

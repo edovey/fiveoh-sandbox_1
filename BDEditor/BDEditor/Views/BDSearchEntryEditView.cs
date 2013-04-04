@@ -388,7 +388,6 @@ namespace BDEditor.Views
 
                 BDSearchEntryAssociation.Save(dataContext, searchEntryAssociations[requestedPosition]);
                 BDSearchEntryAssociation.Save(dataContext, searchEntryAssociations[selectedPosition]);
-            }
 
             searchEntryAssociations.Sort("displayOrder", ListSortDirection.Ascending);
             lbSearchEntryAssociations.BeginUpdate();
@@ -397,6 +396,7 @@ namespace BDEditor.Views
 
             formHasChanges = true;
             resetButtons();
+            }
         }
 
         private void btnMoveAssnNext_Click(object sender, EventArgs e)
@@ -411,7 +411,6 @@ namespace BDEditor.Views
 
                 BDSearchEntryAssociation.Save(dataContext, searchEntryAssociations[requestedPosition]);
                 BDSearchEntryAssociation.Save(dataContext, searchEntryAssociations[selectedPosition]);
-            }
             searchEntryAssociations.Sort("displayOrder", ListSortDirection.Ascending);
 
             lbSearchEntryAssociations.BeginUpdate();
@@ -420,6 +419,7 @@ namespace BDEditor.Views
 
             formHasChanges = true;
             resetButtons();
+            }
         }
 
         private void btnDeleteAssociation_Click(object sender, EventArgs e)
@@ -437,6 +437,9 @@ namespace BDEditor.Views
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            if (currentSearchEntryAssociation != null && currentSearchEntryAssociation.editorContext.IndexOf("*") == 0)
+                currentSearchEntryAssociation.editorContext = currentSearchEntryAssociation.editorContext.Substring(1);
+
             this.DialogResult = DialogResult.Cancel;
         }
 

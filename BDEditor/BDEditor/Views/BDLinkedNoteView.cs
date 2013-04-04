@@ -486,7 +486,7 @@ namespace BDEditor.Views
                     BDSearchEntryEditView iEditView = new BDSearchEntryEditView();
                     iEditView.AssignDataContext(dataContext);
                     iEditView.AssignCurrentLinkedNoteAssociation(currentNoteAssociation);
-                    string contextString = BDUtilities.BuildHierarchyString(dataContext, currentNoteAssociation, ":");
+                    string contextString = BDUtilities.BuildHierarchyString(dataContext, currentNoteAssociation, " : ");
                     iEditView.DisplayContext = contextString;
                     iEditView.ShowDialog(this);
                 }

@@ -278,6 +278,10 @@ namespace BDEditor.DataModel
             return result;
         }
 
+ /// <summary>
+ /// Reset the value of the displayParentId (the html page Uuid) during Publish
+ /// </summary>
+ /// <param name="pContext"></param>
         public static void ResetForRegeneration(Entities pContext)
         {
             List<BDSearchEntryAssociation> allEntries = new List<BDSearchEntryAssociation>();

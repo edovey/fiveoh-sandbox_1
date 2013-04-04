@@ -888,7 +888,7 @@ namespace BDEditor.Views
                     BDSearchEntryEditView indexEditView = new BDSearchEntryEditView();
                     indexEditView.AssignDataContext(dataContext);
                     indexEditView.AssignCurrentNode(nodeWrapper.Node);
-                    string contextString = BDUtilities.BuildHierarchyString(dataContext, nodeWrapper.Node, ":");
+                    string contextString = BDUtilities.BuildHierarchyString(dataContext, nodeWrapper.Node, " : ");
                     indexEditView.DisplayContext = contextString;
                     indexEditView.ShowDialog(this);
 

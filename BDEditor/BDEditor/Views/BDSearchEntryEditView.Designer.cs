@@ -112,7 +112,7 @@
             // 
             this.lblSelectedSearchEntry.AutoSize = true;
             this.lblSelectedSearchEntry.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSelectedSearchEntry.Location = new System.Drawing.Point(150, 417);
+            this.lblSelectedSearchEntry.Location = new System.Drawing.Point(118, 417);
             this.lblSelectedSearchEntry.Name = "lblSelectedSearchEntry";
             this.lblSelectedSearchEntry.Size = new System.Drawing.Size(132, 17);
             this.lblSelectedSearchEntry.TabIndex = 8;
@@ -226,9 +226,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(12, 421);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(132, 13);
+            this.label4.Size = new System.Drawing.Size(99, 13);
             this.label4.TabIndex = 11;
-            this.label4.Text = "Locations associated with:";
+            this.label4.Text = "Locations linked to:";
             // 
             // lbSearchEntryAssociations
             // 

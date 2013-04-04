@@ -206,6 +206,13 @@ namespace BDEditor.DataModel
 
         }
 
+        public static List<BDNode> RetrieveAll(Entities pContext)
+        {
+            IQueryable<BDNode> nodes = (from entry in pContext.BDNodes
+                                        select entry);
+            return nodes.ToList<BDNode>();
+        }
+
         /// <summary>
         /// Retrieve Node with the specified ID
         /// </summary>

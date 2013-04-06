@@ -57,7 +57,6 @@ namespace BDEditor.Views
             if (cbGeneratePages.CheckState == CheckState.Checked)
             {
                 gbSelectHtmlPages.Enabled = true;
-                btn_OK.Enabled = true;
                 isPagesSelected = true;
             }
             else
@@ -85,12 +84,12 @@ namespace BDEditor.Views
 
                 isSearchSelected = false;
             }
+            btn_OK.Enabled = (cbGeneratePages.CheckState == CheckState.Checked || cbGenerateSearch.CheckState == CheckState.Checked || cbSyncWithAws.CheckState == CheckState.Checked);
         }
 
         private void rbSelectedUuids_CheckedChanged(object sender, EventArgs e)
         {
             selectedNodeList.Clear();
-            tbUUIDsToGenerate.Enabled = rbSelectedUuids.Checked;
             clbChaptersToGenerate.Enabled = rbSelectedChapters.Checked;
         }
 
@@ -98,13 +97,11 @@ namespace BDEditor.Views
         {
             selectedNodeList.Clear();
             clbChaptersToGenerate.Enabled = rbSelectedChapters.Checked;
-            tbUUIDsToGenerate.Enabled = rbSelectedUuids.Checked;
         }
 
         private void rbAllChapters_CheckedChanged(object sender, EventArgs e)
         {
             selectedNodeList.Clear();
-            tbUUIDsToGenerate.Enabled = rbSelectedUuids.Checked;
             clbChaptersToGenerate.Enabled = rbSelectedChapters.Checked;
             if (rbAllChapters.Checked)
                 selectedNodeList.AddRange(chapterList);
@@ -155,6 +152,7 @@ namespace BDEditor.Views
                 gbSyncRecordTypes.Enabled = false;
                 isSyncSelected = false;
             }
+            btn_OK.Enabled = (cbGeneratePages.CheckState == CheckState.Checked || cbGenerateSearch.CheckState == CheckState.Checked || cbSyncWithAws.CheckState == CheckState.Checked);
         }
 
         private void maskedTextBox1_TextChanged(object sender, EventArgs e)
@@ -162,6 +160,26 @@ namespace BDEditor.Views
             flagGreen.Visible = BDCommon.Settings.Validate(maskedTextBox1.Text);
             cbSyncWithAws.Enabled = flagGreen.Visible;
             BDCommon.Settings.Authenticate(maskedTextBox1.Text);
+        }
+
+        private void cbSelectedUuids_CheckedChanged(object sender, EventArgs e)
+        {
+            tbUUIDsToGenerate.Enabled = cbSelectedUuids.Checked;
+
+            if (cbSelectedUuids.CheckState != CheckState.Checked)
+            {
+                foreach (string textLine in tbUUIDsToGenerate.Lines)
+                {
+                    Guid nodeUuid = Guid.Parse(textLine);
+                    if (null != nodeUuid)
+                    {
+                        BDNode selectedNode = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
+                        // if the Uuid is for something other than a BDNode, it won't be processed.
+                        if (null != selectedNode && selectedNodeList.Contains(selectedNode))
+                            selectedNodeList.Remove(selectedNode);
+                    }
+                }
+            }
         }
 
         private void btn_OK_Click(object sender, EventArgs e)

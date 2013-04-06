@@ -55,15 +55,12 @@ namespace BDEditor.Classes
                             {
                                 // determine the masterNode for the HTML page; generate the display context from that. 
                                 seAssociation.displayContext = BDUtilities.BuildHierarchyString(pDataContext, masterNode, " : ");
-                                BDSearchEntryAssociation.Save(pDataContext, seAssociation);
                             }
-                            else
-                            {
-                                BDLinkedNoteAssociation masterAssn = BDLinkedNoteAssociation.RetrieveLinkedNoteAssociationWithId(pDataContext, htmlPage.displayParentId.Value);
-                                seAssociation.displayContext = BDUtilities.BuildHierarchyString(pDataContext, masterAssn, " : ");
-                                BDSearchEntryAssociation.Save(pDataContext, seAssociation);
-                            }
+                            seAssociation.displayParentId = htmlPage.Uuid;
+                            BDSearchEntryAssociation.Save(pDataContext, seAssociation);
                         }
+                        else
+                            BDHtmlPageGeneratorLogEntry.AppendToFile("BDSearchGeneratorLog.txt", string.Format("Unable to find HTML page containing anchor node.  Uuid :{0}", seAssociation.anchorNodeId));
                     }
                     else
                     {

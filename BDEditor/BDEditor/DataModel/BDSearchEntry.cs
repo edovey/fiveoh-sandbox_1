@@ -167,7 +167,7 @@ namespace BDEditor.DataModel
                                                  on e.uuid equals a.searchEntryId
                                                  select e);
 
-            entryList = new List<IBDObject>(entries.ToList<BDSearchEntry>());
+            entryList = new List<IBDObject>(entries.ToList<BDSearchEntry>().Distinct<BDSearchEntry>());
             return entryList;
         }
 

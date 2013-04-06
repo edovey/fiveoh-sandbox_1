@@ -2249,34 +2249,151 @@ namespace BDEditor.Classes
 
         public static void RepairSearchEntryAssociationsForMissingData(Entities pContext)
         {
-            List<BDNode> nodeList = BDNode.RetrieveAll(pContext);
-            foreach (BDNode currentNode in nodeList)
+            List<IBDNode> chapters = new List<IBDNode>();
+            StringBuilder editorContext = new StringBuilder();
+            chapters.AddRange(BDNode.RetrieveNodesForType(pContext, BDConstants.BDNodeType.BDChapter));
+            processNodeList(pContext, chapters, editorContext);
+        }
+
+        private static void processNodeList(Entities pDataContext, List<IBDNode> pNodes, StringBuilder pNodeContext)
+        {
+            string resolvedName = string.Empty;
+            foreach (IBDNode ibdNode in pNodes)
             {
-                List<BDSearchEntry> searchEntries = BDSearchEntry.RetrieveSearchEntriesForAnchorNode(pContext, currentNode.Uuid);
-                // search entries generated but never edited may not have the anchor id 
-                // so any entries found by backtracking through the HTML page are added
-                Guid htmlPageUuid = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pContext, currentNode.Uuid);
-                if (htmlPageUuid != null)
-                    searchEntries.AddRange(BDSearchEntry.RetrieveSearchEntriesForDisplayParent(pContext, htmlPageUuid));
-
-                foreach (BDSearchEntry entry in searchEntries)
+                if (ibdNode.Name.IndexOf("DO NOT INCLUDE", StringComparison.OrdinalIgnoreCase) < 0)
                 {
-                    List<BDSearchEntryAssociation> associations = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryId(pContext, entry.Uuid);
-
-                    foreach (BDSearchEntryAssociation nodeAssn in associations)
+                    resolvedName = string.Empty;
+                    switch (ibdNode.NodeType)
                     {
-                        if (nodeAssn.displayOrder == -1)
-                            nodeAssn.displayOrder = associations.IndexOf(nodeAssn);
-                        if (!nodeAssn.anchorNodeId.HasValue)
-                        {
-                            nodeAssn.anchorNodeId = currentNode.Uuid;
-                        }
-                        BDSearchEntryAssociation.Save(pContext, nodeAssn);
+                        case BDConstants.BDNodeType.BDAttachment:
+                            resolvedName = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDAttachment.PROPERTYNAME_NAME);
+                            break;
+                        case BDConstants.BDNodeType.BDCombinedEntry:
+                            resolvedName = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDCombinedEntry.PROPERTYNAME_NAME);
+                            break;
+                        case BDConstants.BDNodeType.BDConfiguredEntry:
+                            resolvedName = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDConfiguredEntry.PROPERTYNAME_NAME);
+                            break;
+                        case BDConstants.BDNodeType.BDDosage:
+                            // no valid properties
+                            break;
+                        case BDConstants.BDNodeType.BDLinkedNote:
+                            break;
+                        case BDConstants.BDNodeType.BDPrecaution:
+                            resolvedName = buildResolvedNameForNode(pDataContext, ibdNode, (ibdNode as BDPrecaution).Description, BDPrecaution.PROPERTYNAME_ORGANISM_1);
+                            break;
+                        case BDConstants.BDNodeType.BDTableCell:
+                            resolvedName = buildResolvedNameForNode(pDataContext, ibdNode, (ibdNode as BDTableCell).value, BDTableCell.PROPERTYNAME_CONTENTS);
+                            break;
+                        case BDConstants.BDNodeType.BDTherapy:
+                            resolvedName = buildResolvedNameForNode(pDataContext, ibdNode, (ibdNode as BDTherapy).Description, BDTherapy.PROPERTYNAME_THERAPY);
+                            break;
+                        case BDConstants.BDNodeType.BDTherapyGroup:
+                            resolvedName = buildResolvedNameForNode(pDataContext, ibdNode, (ibdNode as BDTherapyGroup).Description, BDTherapyGroup.PROPERTYNAME_NAME);
+                            break;
+                        default:
+                            // process all BDNodes, any type
+                            resolvedName = buildResolvedNameForNode(pDataContext, ibdNode, ibdNode.Name, BDNode.PROPERTYNAME_NAME);
+                            break;
                     }
+
+                    List<IBDNode> childnodes = BDFabrik.GetChildrenForParent(pDataContext, ibdNode);
+                    Guid htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pDataContext, ibdNode.Uuid);
+                    StringBuilder newContext = new StringBuilder();
+
+                    // build a string representation of the search entry's location in the hierarchy
+                    if (!string.IsNullOrEmpty(resolvedName))
+                    {
+                        if (!string.IsNullOrEmpty(pNodeContext.ToString()))
+                            newContext.AppendFormat("{0} : {1}", pNodeContext, resolvedName);
+                        else
+                            newContext.Append(resolvedName);
+                    }
+                    else
+                        newContext.Append(pNodeContext);
+
+                    // recurse to process the next child layer
+                    if (childnodes.Count > 0)
+                        processNodeList(pDataContext, childnodes, newContext);
+
+                    editSearchEntryLink(pDataContext, htmlPageId, ibdNode, resolvedName, pNodeContext.ToString());
                 }
             }
         }
 
+        private static void editSearchEntryLink(Entities pDataContext, Guid pOriginalNodeId, IBDNode pNode, string pResolvedName, string pDisplayContext)
+        {
+            List<string> allSearchEntries = BDSearchEntry.RetrieveSearchEntryNames(pDataContext);
+            string entryName = pNode.Name.Trim();
+            List<BDSearchEntry> matchingSearchEntries = new List<BDSearchEntry>();
+            if (!string.IsNullOrEmpty(pResolvedName))
+            {
+                pDisplayContext = pDisplayContext.Replace(":  :", ":");
+
+                foreach (string searchEntryTerm in allSearchEntries)
+                {
+                    if (pResolvedName.IndexOf(searchEntryTerm, StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        BDSearchEntry matchedSearchEntry = BDSearchEntry.RetrieveWithName(pDataContext, searchEntryTerm);
+                        matchingSearchEntries.Add(matchedSearchEntry);
+                        matchedSearchEntry.show = true;
+                    }
+                    else
+                    {
+                        string shortName = pResolvedName.Replace(" ", "");
+                        string shortSearchTerm = searchEntryTerm.Replace(" ", "");
+                        if (shortName.IndexOf(shortSearchTerm, StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            BDSearchEntry matchedSearchEntry = BDSearchEntry.RetrieveWithName(pDataContext, searchEntryTerm);
+                            matchingSearchEntries.Add(matchedSearchEntry);
+                            matchedSearchEntry.show = true;
+                        }
+                    }
+                }
+                pDataContext.SaveChanges();
+            }
+            
+            foreach (BDSearchEntry entry in matchingSearchEntries)
+            {
+                Guid htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pDataContext, pNode.Uuid);
+                List<BDSearchEntryAssociation> associations = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryIdAndDisplayParentid(pDataContext, entry.uuid, pNode.Uuid);
+                associations.AddRange(BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryIdAndDisplayParentid(pDataContext, entry.uuid, htmlPageId));
+
+                if (associations.Count() == 0)
+                {
+                    BDSearchEntryAssociation assn = BDSearchEntryAssociation.CreateBDSearchEntryAssociation(pDataContext, entry.Uuid, pNode.Uuid, pDisplayContext);
+                    associations.Add(assn);
+                }
+                    foreach (BDSearchEntryAssociation assn in associations)
+                    {
+                        if(!assn.anchorNodeId.HasValue) assn.anchorNodeId = pNode.Uuid;
+                        if(string.IsNullOrEmpty(assn.editorContext)) assn.editorContext = string.Format("{0} : {1}",pDisplayContext, pResolvedName);
+                        BDSearchEntryAssociation.Save(pDataContext, assn);
+                }
+            }
+        }
+
+        private static string buildResolvedNameForNode(Entities pContext, IBDNode pNode, string pPropertyValue, string pPropertyName)
+        {
+            List<Guid> immedAssociations;
+            List<BDLinkedNote> immediate = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, pPropertyName, BDConstants.LinkedNoteType.Immediate, out immedAssociations);
+
+            //ks: added "New " prefix to permit the use of terms like "Table A" to appear in the name of a BDTable instance
+            string namePlaceholderText = string.Format(@"New {0}", BDUtilities.GetEnumDescription(pNode.NodeType));
+            if (pPropertyValue.Contains(namePlaceholderText) || pPropertyValue == "SINGLE PRESENTATION" || pPropertyValue == "(Header)")
+                pPropertyValue = string.Empty;
+
+            if (pNode.NodeType == BDConstants.BDNodeType.BDConfiguredEntry && (pNode.Name.Length >=5 && pNode.Name.Substring(0, 5) == "Entry"))
+                pPropertyValue = string.Empty;
+
+            string immediateText = BDUtilities.BuildTextFromInlineNotes(immediate);
+
+            string resolvedName = string.Format("{0}{1}",pPropertyValue.Trim(), immediateText.Trim());
+
+            if (resolvedName.Length == 0) resolvedName = null;
+
+            return BDUtilities.ProcessTextToPlainText(pContext, resolvedName);
+        }
 
     }
 }

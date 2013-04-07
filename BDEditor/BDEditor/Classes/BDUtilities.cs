@@ -6,6 +6,7 @@ using System.IO;
 
 using System.Reflection;
 using System.ComponentModel;
+using System.Diagnostics;
 using BDEditor.DataModel;
 using BDEditor.Classes;
 
@@ -316,6 +317,476 @@ namespace BDEditor.Classes
             }
         }
 
+        /// <summary>
+        /// Manual (non-UI) move of nodes from one parent to the parent's sibling
+        /// Does not change the node type
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pNodeId"></param>
+        /// <param name="pNewParentId"></param>
+        /// <returns></returns>
+        public static void MoveNode(Entities pContext, Guid pNodeId, Guid pNewParentId)
+        {
+            BDNode nodeToMove = BDNode.RetrieveNodeWithId(pContext, pNodeId);
+            BDNode currentParent = BDNode.RetrieveNodeWithId(pContext, nodeToMove.ParentId.Value);
+
+            BDNode newParent = BDNode.RetrieveNodeWithId(pContext, pNewParentId);
+
+            nodeToMove.SetParent(newParent);
+            nodeToMove.LayoutVariant = newParent.LayoutVariant;
+            BDNode.Save(pContext, nodeToMove);
+        }
+
+        /// <summary>
+        /// Manual (non-UI) move of nodes from one parent to the parent's sibling
+        /// Does not change the node type
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pNode"></param>
+        /// <param name="pNewParentName"></param>
+        /// <returns></returns>
+        public static void MoveNode(Entities pContext, BDNode pNode, string pNewParentName)
+        {
+            BDNode currentParent = BDNode.RetrieveNodeWithId(pContext, pNode.ParentId.Value);
+
+            List<IBDNode> parentSiblings = BDFabrik.GetChildrenForParent(pContext, BDNode.RetrieveNodeWithId(pContext, currentParent.parentId.Value));
+            BDNode newParent = null;
+            foreach (BDNode n in parentSiblings)
+            {
+                if (n.Name == pNewParentName)
+                    newParent = n;
+            }
+            if (newParent != null)
+                MoveNode(pContext, pNode.Uuid, newParent.Uuid);
+        }
+
+        /// <summary>
+        /// Move all children from one parent node to another - parent nodes should be siblings
+        /// Does not change the node type
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pCurrentParentId"></param>
+        /// <param name="pNewParentId"></param>
+        public static void MoveAllChildren(Entities pContext, Guid pCurrentParentId, Guid pNewParentId)
+        {
+            // check that parents are siblings
+            BDNode currentParent = BDNode.RetrieveNodeWithId(pContext, pCurrentParentId);
+            List<IBDNode> siblings = BDFabrik.GetChildrenForParent(pContext, BDNode.RetrieveNodeWithId(pContext, currentParent.parentId.Value));
+            bool isSibling = false;
+            foreach (BDNode s in siblings)
+                if (s.Uuid == pNewParentId)
+                    isSibling = true;
+
+            if (isSibling)
+            {
+                List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, BDNode.RetrieveNodeWithId(pContext, pCurrentParentId));
+                foreach (BDNode n in children)
+                    MoveNode(pContext, n.Uuid, pNewParentId);
+            }
+        }
+
+        /// <summary>
+        /// Move all children from one parent node to another - parent nodes should be siblings
+        /// Does not change the node type
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pCurrentParentId"></param>
+        /// <param name="pNewParentId"></param>
+        public static void MoveAllChildrenExcept(Entities pContext, Guid pCurrentParentId, Guid pNewParentId, List<Guid>pExceptionList)
+        {
+            // check that parents are siblings
+            BDNode currentParent = BDNode.RetrieveNodeWithId(pContext, pCurrentParentId);
+            BDNode newParent = BDNode.RetrieveNodeWithId(pContext, pNewParentId);
+
+            List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, currentParent);
+            foreach (BDNode n in children)
+            {
+                if(!pExceptionList.Contains(n.Uuid)) 
+                    MoveNode(pContext, n.Uuid, pNewParentId);
+            }
+        }
+
+        /// <summary>
+        /// Reset the node type for BDTableCell which was set incorrectly by LoadFromAttributes
+        /// </summary>
+        /// <param name="pNodeType"></param>
+        /// <param name="?"></param>
+        public static void SetTableCellNodeType(Entities pContext)
+        {
+            List<IBDObject> entryList = new List<IBDObject>();
+            IQueryable<BDTableCell> entries;
+
+            // get ALL entries
+            entries = (from entry in pContext.BDTableCells
+                       select entry);
+
+            //if (entries.Count() > 0)
+            //    entryList = new List<IBDObject>(entries.ToList<BDTableCell>());
+
+            foreach (BDTableCell cell in entries)
+            {
+                cell.nodeType = (int)BDConstants.BDNodeType.BDTableCell;
+                BDTableCell.Save(pContext, cell);
+            }
+        }
+
+        /// <summary>
+        /// Reset layout variant for children of specified node.  Does not reset layout variant of parent.
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pStartNode"></param>
+        /// <param name="pNewLayoutVariant"></param>
+        public static void ResetLayoutVariantWithChildren(Entities pContext, IBDNode pStartNode, BDConstants.LayoutVariantType pNewLayoutVariant, bool pResetParent)
+        {
+            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pStartNode);
+
+            if (childNodes.Count > 0)
+            foreach (IBDNode child in childNodes)
+            {
+                ResetLayoutVariantWithChildren(pContext, child, pNewLayoutVariant, true);
+                BDFabrik.SaveNode(pContext, child);
+            }
+
+            if (pResetParent)
+            {
+                pStartNode.LayoutVariant = pNewLayoutVariant;
+                BDFabrik.SaveNode(pContext, pStartNode);
+            }
+        }
+
+        public static void ResetLayoutVariantInTable3RowsForParent(Entities pContext, BDNode pParentNode, BDConstants.LayoutVariantType pNewLayoutVariant)
+        {
+            List<BDTableRow> tableRows = BDTableRow.RetrieveTableRowsForParentId(pContext, pParentNode.Uuid);
+            pParentNode.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_NameListing;
+            BDNode.Save(pContext, pParentNode);
+            foreach (BDTableRow row in tableRows)
+            {
+                List<BDTableCell> nameTableCells = BDTableCell.RetrieveTableCellsForParentId(pContext, row.Uuid);
+                row.Name = string.Empty;
+                row.LayoutVariant = (row.LayoutVariant == BDConstants.LayoutVariantType.Table_3_Column_ContentRow ? BDConstants.LayoutVariantType.Antibiotics_NameListing_ContentRow : BDConstants.LayoutVariantType.Antibiotics_NameListing_HeaderRow);
+                BDTableRow.Save(pContext, row);
+                foreach (BDTableCell nameTableCell in nameTableCells)
+                {
+                    nameTableCell.LayoutVariant = row.LayoutVariant;
+                    BDTableCell.Save(pContext, nameTableCell);
+                }
+            }
+        }
+
+        public static void ResetLayoutVariantInTable5RowsForParent(Entities pContext, BDNode pParentNode, BDConstants.LayoutVariantType pNewLayoutVariant)
+        {
+            List<BDTableRow> tableRows = BDTableRow.RetrieveTableRowsForParentId(pContext, pParentNode.Uuid);
+            pParentNode.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity;
+            BDNode.Save(pContext, pParentNode);
+            foreach (BDTableRow row in tableRows)
+            {
+                List<BDTableCell> nameTableCells = BDTableCell.RetrieveTableCellsForParentId(pContext, row.Uuid);
+                row.Name = string.Empty;
+                row.LayoutVariant = (row.LayoutVariant == BDConstants.LayoutVariantType.Table_5_Column_ContentRow ? BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity_ContentRow : BDConstants.LayoutVariantType.Undefined);
+                BDTableRow.Save(pContext, row);
+                foreach (BDTableCell nameTableCell in nameTableCells)
+                {
+                    nameTableCell.LayoutVariant = row.LayoutVariant;
+                    BDTableCell.Save(pContext, nameTableCell);
+                }
+            }
+        }
+
+        public static void MoveNodeToParentSibling(Entities pContext, Guid pNodeToMove, Guid pParentSibling, string nodeNameForRename, BDConstants.BDNodeType nodeTypeOfChildren)
+        {
+            BDNode parentSiblingNode = BDNode.RetrieveNodeWithId(pContext, pParentSibling);
+
+            // move Adults > SSTI > Fournier's Gangrene to presentation level of Rapidly progressive SSTI
+            BDNode nodeToMove = BDNode.RetrieveNodeWithId(pContext, pNodeToMove);
+            //  find 'SINBLE PRESENTATION' and rename it with name of parent
+            List<BDNode> childrenToMove = BDNode.RetrieveNodesForParentIdAndChildNodeType(pContext, nodeToMove.Uuid, nodeTypeOfChildren);
+            foreach (BDNode childToMove in childrenToMove)
+            {
+                if (childToMove.Name == nodeNameForRename)
+                {
+                    {
+                        childToMove.name = nodeToMove.name;
+                        // change parent to parent's sibling
+                        childToMove.SetParent(parentSiblingNode);
+                        BDNode.Save(pContext, childToMove);
+                    }
+                }
+            }
+            // delete parent
+            BDNode.Delete(pContext, nodeToMove, false);
+        }
+
+        public static void ConfigureLayoutMetadata(Entities pContext, BDConstants.LayoutVariantType pLayoutVariant, int pColumnDisplayOrder, string pColumnLabel, BDConstants.BDNodeType pNodeType, string pPropertyName, int pPropertyDisplayOrder, string pLinkedNoteText)
+        {
+            BDLayoutMetadata.Rebuild(pContext);
+            // turn on the Layout metadata:  find the entry, set included to True
+            BDLayoutMetadata layout = BDLayoutMetadata.Retrieve(pContext, pLayoutVariant);
+            layout.included = true;
+            BDLayoutMetadata.Save(pContext, layout);
+            
+            // check if columns exist
+            // create columns for the layout
+            BDLayoutMetadataColumn layoutC1 = BDLayoutMetadataColumn.Retrieve(pContext, pLayoutVariant, pNodeType, pPropertyName);
+            if (layoutC1 == null)
+                layoutC1 = BDLayoutMetadataColumn.Create(pContext, layout, pColumnDisplayOrder,pColumnLabel);
+            
+            // create linked note for column
+            //TODO:  adjust this to deal with > 1 
+            if (pLinkedNoteText.Length > 0)
+            {
+                StringBuilder noteText = new StringBuilder();
+                noteText.AppendFormat(@"<p>{0}</p>", pLinkedNoteText);
+                BDLinkedNote note = BDLinkedNote.CreateBDLinkedNote(pContext, Guid.NewGuid());
+                note.documentText = noteText.ToString();
+                BDLinkedNoteAssociation lna = BDLinkedNoteAssociation.CreateBDLinkedNoteAssociation(pContext, BDConstants.LinkedNoteType.Footnote, note.Uuid, BDConstants.BDNodeType.BDLayoutColumn, layoutC1.Uuid, BDLayoutMetadataColumn.PROPERTYNAME_LABEL);
+                pContext.SaveChanges();
+            }
+
+            // associate properties with the column
+            BDLayoutMetadataColumnNodeType layoutC1T1 = BDLayoutMetadataColumnNodeType.Retrieve(pContext, pLayoutVariant, pNodeType, layoutC1.Uuid);
+            if(layoutC1T1 == null)
+                layoutC1T1 = BDLayoutMetadataColumnNodeType.Create(pContext, layoutC1,pNodeType, pPropertyName, pPropertyDisplayOrder);
+
+        }
+
+        public static void CreateFootnoteForLayoutColumn(Entities pContext, BDConstants.LayoutVariantType pLayoutVariant, int pColumnDisplayOrder, string pFootnoteText)
+        {
+            BDLayoutMetadata.Rebuild(pContext);
+            BDLayoutMetadata layout = BDLayoutMetadata.Retrieve(pContext, pLayoutVariant);
+            if (layout != null)
+            {
+                List<BDLayoutMetadataColumn> columns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, layout);
+                foreach (BDLayoutMetadataColumn col in columns)
+                {
+                    if (col.displayOrder == pColumnDisplayOrder)
+                    {
+                        StringBuilder noteText = new StringBuilder();
+                        noteText.AppendFormat(@"<p>{0}</p>", pFootnoteText);
+                        BDLinkedNote note = BDLinkedNote.CreateBDLinkedNote(pContext, Guid.NewGuid());
+                        note.documentText = noteText.ToString();
+                        BDLinkedNoteAssociation lna = BDLinkedNoteAssociation.CreateBDLinkedNoteAssociation(pContext, BDConstants.LinkedNoteType.Footnote, note.Uuid, BDConstants.BDNodeType.BDLayoutColumn, col.Uuid, BDLayoutMetadataColumn.PROPERTYNAME_LABEL);
+                        pContext.SaveChanges();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Replaces p tags with br.
+        /// </summary>
+        /// <param name="pNoteText"></param>
+        /// <returns></returns>
+        public static string CleanNoteText(string pNoteText)
+        {
+            string resultText = string.Empty;
+            string noteText = CleanseStringOfEmptyTag(pNoteText, "p");
+            if (!string.IsNullOrEmpty(noteText))
+            {
+                resultText = pNoteText.Replace("<p>", string.Empty);
+                resultText = resultText.Replace("</p>", "<br>");
+
+                if (resultText.EndsWith("<br>")) resultText = resultText.Substring(0, resultText.Length - 4);
+            }
+            return resultText;
+        }
+
+        public static string BuildTextFromInlineNotes(List<BDLinkedNote> pNotes)
+        {
+            StringBuilder noteString = new StringBuilder();
+            if (null != pNotes)
+            {
+                foreach (BDLinkedNote note in pNotes)
+                {
+                    if (null != note)
+                    {
+                        string documentText = CleanseStringOfEmptyTag(note.documentText, "p");
+                        if (!string.IsNullOrEmpty(documentText))
+                        {
+                            documentText = documentText.Replace("<p>", string.Empty);
+                            documentText = documentText.Replace("</p>", "<br>");
+
+                            if (documentText.EndsWith("<br>"))
+                            {
+                                documentText = documentText.Substring(0, documentText.Length - 4);
+                            }
+
+                            noteString.AppendFormat(" {0}", documentText);
+                        }
+                    }
+                }
+            }
+            return noteString.ToString();
+        }
+
+        public static string BuildTextFromNotes(List<BDLinkedNote> pNotes)
+        {
+            StringBuilder noteString = new StringBuilder();
+            foreach (BDLinkedNote note in pNotes)
+            {
+                if (null != note)
+                {
+                    string documentText = CleanseStringOfEmptyTag(note.documentText, "p");
+                    if (!string.IsNullOrEmpty(documentText))
+                    {
+                        noteString.Append(note.documentText);
+                    } 
+                }
+            }
+
+            return noteString.ToString();
+        }
+
+        /// <summary>
+        /// Test for and cleanse if necessary, a string containing only a start and end tag. 
+        /// Returns original string if not "empty" or string.Empty if cleansed
+        /// </summary>
+        /// <param name="pString"></param>
+        /// <param name="pTagRoot"></param>
+        /// <returns>Returns original string if not "empty" or string.Empty if cleansed</returns>
+        public static string CleanseStringOfEmptyTag(string pString, string pTagRoot)
+        {
+            string result = pString;
+
+            if (!String.IsNullOrEmpty(pTagRoot))
+            {
+                string startTag = string.Format("<{0}>", pTagRoot);
+                string endTag = string.Format("</{0}>", pTagRoot);
+                result = CleanseStringOfEmptyTag(pString, startTag, endTag);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Test for and cleanse if necessary, a string containing only a start and end tag.
+        /// Returns original string if not "empty" or string.Empty if cleansed
+        /// </summary>
+        /// <param name="pString"></param>
+        /// <param name="pStartTag"></param>
+        /// <param name="pEndTag"></param>
+        /// <returns>Returns original string if not "empty" or string.Empty if cleansed</returns>
+        public static string CleanseStringOfEmptyTag(string pString, string pStartTag, string pEndTag)
+        {
+            string resultValue = pString;
+            if (!String.IsNullOrEmpty(pStartTag) && !String.IsNullOrEmpty(pEndTag))
+            {
+                string startTag = pStartTag.ToLower();
+                string endTag = pEndTag.ToLower();
+
+                string testValue = pString.ToLower();
+                testValue = testValue.Replace(startTag, string.Empty);
+                testValue = testValue.Replace(endTag, string.Empty);
+
+                if (string.IsNullOrEmpty(testValue))
+                {
+                    resultValue = string.Empty;
+                }
+            }
+
+            return resultValue;
+        }
+
+        public static List<BDLinkedNote> RetrieveNotesForParentAndPropertyOfLinkedNoteType(Entities pContext, Guid pParentId, string pPropertyName, BDConstants.LinkedNoteType pNoteType, out List<Guid> pLinkedNoteAssociations)
+        {
+            List<BDLinkedNote> noteList = new List<BDLinkedNote>();
+            pLinkedNoteAssociations = new List<Guid>();
+            if (null != pPropertyName && pPropertyName.Length > 0)
+            {
+                List<BDLinkedNoteAssociation> list = BDLinkedNoteAssociation.GetLinkedNoteAssociationListForParentIdAndProperty(pContext, pParentId, pPropertyName);
+                foreach (BDLinkedNoteAssociation assn in list)
+                {
+                    if (assn.linkedNoteType == (int)pNoteType)
+                    {
+                        BDLinkedNote linkedNote = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, assn.linkedNoteId);
+                        if (null != linkedNote)
+                        {
+                            noteList.Add(linkedNote);
+                            pLinkedNoteAssociations.Add(assn.Uuid);
+                        }
+                    }
+                }
+            }
+            return noteList;
+        }
+
+        public static string ProcessTextForCarriageReturn(Entities pContext, string pTextToProcess)
+        {
+            if (pTextToProcess.Contains("\n"))
+                pTextToProcess.Replace("\n", "<br>");
+            return pTextToProcess;
+        }
+
+        public static string ProcessTextForSubscriptAndSuperscriptMarkup(Entities pContext, string pTextToProcess)
+        {
+            string superscriptStart = @"{";
+            string superscriptEnd = @"}";
+            string subscriptStart = @"{{";
+            string subscriptEnd = @"}}";
+            string htmlSuperscriptStart = @"<sup>";
+            string htmlSuperscriptEnd = @"</sup>";
+            string htmlSubscriptStart = @"<sub>";
+            string htmlSubscriptEnd = @"</sub>";
+
+            if(!string.IsNullOrEmpty(pTextToProcess))
+            {
+                // do subscripts first because of double braces
+                while (pTextToProcess.Contains(subscriptStart))
+                {
+                    int tStartIndex = pTextToProcess.IndexOf(subscriptStart);
+                    pTextToProcess = pTextToProcess.Remove(tStartIndex, subscriptStart.Length);
+                    pTextToProcess = pTextToProcess.Insert(tStartIndex, htmlSubscriptStart);
+                    int tEndIndex = pTextToProcess.IndexOf(subscriptEnd, tStartIndex);
+                    pTextToProcess = pTextToProcess.Remove(tEndIndex, subscriptEnd.Length);
+                    pTextToProcess = pTextToProcess.Insert(tEndIndex, htmlSubscriptEnd);
+                }
+
+                while (pTextToProcess.Contains(superscriptStart))
+                {
+                    int tStartIndex = pTextToProcess.IndexOf(superscriptStart);
+                    pTextToProcess = pTextToProcess.Remove(tStartIndex, superscriptStart.Length);
+                    pTextToProcess = pTextToProcess.Insert(tStartIndex, htmlSuperscriptStart);
+                    int tEndIndex = pTextToProcess.IndexOf(superscriptEnd, tStartIndex);
+                    pTextToProcess = pTextToProcess.Remove(tEndIndex, superscriptEnd.Length);
+                    pTextToProcess = pTextToProcess.Insert(tEndIndex, htmlSuperscriptEnd);
+                }
+            }
+
+            return pTextToProcess;
+        }
+
+        public static string ProcessTextToPlainText(Entities pContext, string pTextToProcess)
+        {
+            string superscriptStart = @"{";
+            string superscriptEnd = @"}";
+            string subscriptStart = @"{{";
+            string subscriptEnd = @"}}";
+            string htmlSuperscriptStart = @"<sup>";
+            string htmlSuperscriptEnd = @"</sup>";
+            string htmlSubscriptStart = @"<sub>";
+            string htmlSubscriptEnd = @"</sub>";
+            string boldStart = @"<b>";
+            string boldEnd = @"</b>";
+
+            if (!string.IsNullOrEmpty(pTextToProcess))
+            {
+                // do subscripts first because of double braces
+                pTextToProcess = pTextToProcess.Replace(subscriptStart, "");
+                pTextToProcess = pTextToProcess.Replace(subscriptEnd, "");
+                pTextToProcess = pTextToProcess.Replace(superscriptStart, "");
+                pTextToProcess = pTextToProcess.Replace(superscriptEnd, "");
+                pTextToProcess = pTextToProcess.Replace(htmlSuperscriptStart, "");
+                pTextToProcess = pTextToProcess.Replace(htmlSuperscriptEnd, "");
+                pTextToProcess = pTextToProcess.Replace(htmlSubscriptStart, "");
+                pTextToProcess = pTextToProcess.Replace(htmlSubscriptEnd, "");
+                pTextToProcess = pTextToProcess.Replace(boldStart, "");
+                pTextToProcess = pTextToProcess.Replace(boldEnd, "");
+                pTextToProcess = pTextToProcess.Replace("<br>", " ");
+                pTextToProcess = pTextToProcess.Replace("<hr>", "");
+                pTextToProcess = pTextToProcess.Replace("[", "");
+                pTextToProcess = pTextToProcess.Replace("]", "");
+            }
+            return pTextToProcess;
+        }
+
         public static void ExecuteBatchMove(Entities pContext)
         {
             // These operations are CUSTOM, ** BY REQUEST ONLY **
@@ -534,10 +1005,10 @@ namespace BDEditor.Classes
 
             // move related tables to new antimicrobialSection & assign new layout variant
             // get culture-proven pneumonia table
-            BDNode table1 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("391bd1a4-daca-44e8-8fda-863f22128f1f"));
-            table1.SetParent(newSection);
-            table1.DisplayOrder = 0;
-            BDNode.Save(dataContext, table1);
+            BDNode tables = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("391bd1a4-daca-44e8-8fda-863f22128f1f"));
+            tables.SetParent(newSection);
+            tables.DisplayOrder = 0;
+            BDNode.Save(dataContext, tables);
 
             // get culture-proven PD Peritonitis table
             BDNode table2 = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("5b8548c8-0e54-4cb5-910e-2f55a41f9ecc"));
@@ -940,8 +1411,8 @@ namespace BDEditor.Classes
             #endregion
             #region v.1.6.27
             /*
-            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation, 0, "Bacterial Morphology", BDConstants.BDNodeType.BDSubcategory, BDNode.PROPERTYNAME_NAME, 0, "");
-            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation, 1, "Probable Organisms", BDConstants.BDNodeType.BDMicroorganism, BDNode.PROPERTYNAME_NAME, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Organisms_GramStainInterpretation, 0, "Bacterial Morphology", BDConstants.BDNodeType.BDSubcategory, BDNode.PROPERTYNAME_NAME, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Organisms_GramStainInterpretation, 1, "Probable Organisms", BDConstants.BDNodeType.BDMicroorganism, BDNode.PROPERTYNAME_NAME, 0, "");
 
             BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation, 0, "DRUG", BDConstants.BDNodeType.BDAntimicrobial, BDNode.PROPERTYNAME_NAME, 0, "");
             BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation, 1, "RISK CATEGORY", BDConstants.BDNodeType.BDAntimicrobialRisk, BDAntimicrobialRisk.PROPERTYNAME_LACTATIONRISK, 0, "");
@@ -1527,8 +1998,8 @@ namespace BDEditor.Classes
             //foreach (IBDNode section in tablesections)
             //{
             //    List<IBDNode> tableRows = BDFabrik.GetChildrenForParent(pContext, section);
-            //    foreach (IBDNode row in tableRows)
-            //        BDUtilities.ResetLayoutVariantWithChildren(pContext, row, BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity_ContentRow, true);
+            //    foreach (IBDNode tableRows in tableRows)
+            //        BDUtilities.ResetLayoutVariantWithChildren(pContext, tableRows, BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity_ContentRow, true);
 
             //    section.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity;
             //    BDNode.Save(pContext, section as BDNode);
@@ -1774,479 +2245,88 @@ namespace BDEditor.Classes
             //node.name = "S. lugdunensis";
             //pContext.SaveChanges();
             #endregion
-            // LoadSearchEntries(pContext);
-        }
 
-        /// <summary>
-        /// Manual (non-UI) move of nodes from one parent to the parent's sibling
-        /// Does not change the node type
-        /// </summary>
-        /// <param name="pContext"></param>
-        /// <param name="pNodeId"></param>
-        /// <param name="pNewParentId"></param>
-        /// <returns></returns>
-        public static void MoveNode(Entities pContext, Guid pNodeId, Guid pNewParentId)
-        {
-            BDNode nodeToMove = BDNode.RetrieveNodeWithId(pContext, pNodeId);
-            BDNode currentParent = BDNode.RetrieveNodeWithId(pContext, nodeToMove.ParentId.Value);
-
-            BDNode newParent = BDNode.RetrieveNodeWithId(pContext, pNewParentId);
-
-            nodeToMove.SetParent(newParent);
-            nodeToMove.LayoutVariant = newParent.LayoutVariant;
-            BDNode.Save(pContext, nodeToMove);
-        }
-
-        /// <summary>
-        /// Manual (non-UI) move of nodes from one parent to the parent's sibling
-        /// Does not change the node type
-        /// </summary>
-        /// <param name="pContext"></param>
-        /// <param name="pNode"></param>
-        /// <param name="pNewParentName"></param>
-        /// <returns></returns>
-        public static void MoveNode(Entities pContext, BDNode pNode, string pNewParentName)
-        {
-            BDNode currentParent = BDNode.RetrieveNodeWithId(pContext, pNode.ParentId.Value);
-
-            List<IBDNode> parentSiblings = BDFabrik.GetChildrenForParent(pContext, BDNode.RetrieveNodeWithId(pContext, currentParent.parentId.Value));
-            BDNode newParent = null;
-            foreach (BDNode n in parentSiblings)
+            #region v1.6.49
+            // clean hierarchy for Organisms_Therapy (remove microorganism, microorganism group
+            BDNode organismTherapies = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("472244a0-f8a3-43b2-b6dd-c23902e5ee28"));
+            List<IBDNode> categories = BDFabrik.GetChildrenForParent(pContext, organismTherapies);
+            foreach (IBDNode category in categories)
             {
-                if (n.Name == pNewParentName)
-                    newParent = n;
-            }
-            if (newParent != null)
-                MoveNode(pContext, pNode.Uuid, newParent.Uuid);
-        }
-
-        /// <summary>
-        /// Move all children from one parent node to another - parent nodes should be siblings
-        /// Does not change the node type
-        /// </summary>
-        /// <param name="pContext"></param>
-        /// <param name="pCurrentParentId"></param>
-        /// <param name="pNewParentId"></param>
-        public static void MoveAllChildren(Entities pContext, Guid pCurrentParentId, Guid pNewParentId)
-        {
-            // check that parents are siblings
-            BDNode currentParent = BDNode.RetrieveNodeWithId(pContext, pCurrentParentId);
-            List<IBDNode> siblings = BDFabrik.GetChildrenForParent(pContext, BDNode.RetrieveNodeWithId(pContext, currentParent.parentId.Value));
-            bool isSibling = false;
-            foreach (BDNode s in siblings)
-                if (s.Uuid == pNewParentId)
-                    isSibling = true;
-
-            if (isSibling)
-            {
-                List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, BDNode.RetrieveNodeWithId(pContext, pCurrentParentId));
-                foreach (BDNode n in children)
-                    MoveNode(pContext, n.Uuid, pNewParentId);
-            }
-        }
-
-        /// <summary>
-        /// Move all children from one parent node to another - parent nodes should be siblings
-        /// Does not change the node type
-        /// </summary>
-        /// <param name="pContext"></param>
-        /// <param name="pCurrentParentId"></param>
-        /// <param name="pNewParentId"></param>
-        public static void MoveAllChildrenExcept(Entities pContext, Guid pCurrentParentId, Guid pNewParentId, List<Guid>pExceptionList)
-        {
-            // check that parents are siblings
-            BDNode currentParent = BDNode.RetrieveNodeWithId(pContext, pCurrentParentId);
-            BDNode newParent = BDNode.RetrieveNodeWithId(pContext, pNewParentId);
-
-            List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, currentParent);
-            foreach (BDNode n in children)
-            {
-                if(!pExceptionList.Contains(n.Uuid)) 
-                    MoveNode(pContext, n.Uuid, pNewParentId);
-            }
-        }
-
-        /// <summary>
-        /// Reset the node type for BDTableCell which was set incorrectly by LoadFromAttributes
-        /// </summary>
-        /// <param name="pNodeType"></param>
-        /// <param name="?"></param>
-        public static void SetTableCellNodeType(Entities pContext)
-        {
-            List<IBDObject> entryList = new List<IBDObject>();
-            IQueryable<BDTableCell> entries;
-
-            // get ALL entries
-            entries = (from entry in pContext.BDTableCells
-                       select entry);
-
-            //if (entries.Count() > 0)
-            //    entryList = new List<IBDObject>(entries.ToList<BDTableCell>());
-
-            foreach (BDTableCell cell in entries)
-            {
-                cell.nodeType = (int)BDConstants.BDNodeType.BDTableCell;
-                BDTableCell.Save(pContext, cell);
-            }
-        }
-
-        /// <summary>
-        /// Reset layout variant for children of specified node.  Does not reset layout variant of parent.
-        /// </summary>
-        /// <param name="pContext"></param>
-        /// <param name="pStartNode"></param>
-        /// <param name="pNewLayoutVariant"></param>
-        public static void ResetLayoutVariantWithChildren(Entities pContext, IBDNode pStartNode, BDConstants.LayoutVariantType pNewLayoutVariant, bool pResetParent)
-        {
-            List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pStartNode);
-
-            if (childNodes.Count > 0)
-            foreach (IBDNode child in childNodes)
-            {
-                ResetLayoutVariantWithChildren(pContext, child, pNewLayoutVariant, true);
-                BDFabrik.SaveNode(pContext, child);
-            }
-
-            if (pResetParent)
-            {
-                pStartNode.LayoutVariant = pNewLayoutVariant;
-                BDFabrik.SaveNode(pContext, pStartNode);
-            }
-        }
-
-        public static void ResetLayoutVariantInTable3RowsForParent(Entities pContext, BDNode pParentNode, BDConstants.LayoutVariantType pNewLayoutVariant)
-        {
-            List<BDTableRow> tableRows = BDTableRow.RetrieveTableRowsForParentId(pContext, pParentNode.Uuid);
-            pParentNode.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_NameListing;
-            BDNode.Save(pContext, pParentNode);
-            foreach (BDTableRow row in tableRows)
-            {
-                List<BDTableCell> nameTableCells = BDTableCell.RetrieveTableCellsForParentId(pContext, row.Uuid);
-                row.Name = string.Empty;
-                row.LayoutVariant = (row.LayoutVariant == BDConstants.LayoutVariantType.Table_3_Column_ContentRow ? BDConstants.LayoutVariantType.Antibiotics_NameListing_ContentRow : BDConstants.LayoutVariantType.Antibiotics_NameListing_HeaderRow);
-                BDTableRow.Save(pContext, row);
-                foreach (BDTableCell nameTableCell in nameTableCells)
+                List<IBDNode> microorganismGroups = BDFabrik.GetChildrenForParent(pContext, category);
+                foreach (IBDNode mGroup in microorganismGroups)
                 {
-                    nameTableCell.LayoutVariant = row.LayoutVariant;
-                    BDTableCell.Save(pContext, nameTableCell);
-                }
-            }
-        }
-
-        public static void ResetLayoutVariantInTable5RowsForParent(Entities pContext, BDNode pParentNode, BDConstants.LayoutVariantType pNewLayoutVariant)
-        {
-            List<BDTableRow> tableRows = BDTableRow.RetrieveTableRowsForParentId(pContext, pParentNode.Uuid);
-            pParentNode.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity;
-            BDNode.Save(pContext, pParentNode);
-            foreach (BDTableRow row in tableRows)
-            {
-                List<BDTableCell> nameTableCells = BDTableCell.RetrieveTableCellsForParentId(pContext, row.Uuid);
-                row.Name = string.Empty;
-                row.LayoutVariant = (row.LayoutVariant == BDConstants.LayoutVariantType.Table_5_Column_ContentRow ? BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity_ContentRow : BDConstants.LayoutVariantType.Undefined);
-                BDTableRow.Save(pContext, row);
-                foreach (BDTableCell nameTableCell in nameTableCells)
-                {
-                    nameTableCell.LayoutVariant = row.LayoutVariant;
-                    BDTableCell.Save(pContext, nameTableCell);
-                }
-            }
-        }
-
-        public static void MoveNodeToParentSibling(Entities pContext, Guid pNodeToMove, Guid pParentSibling, string nodeNameForRename, BDConstants.BDNodeType nodeTypeOfChildren)
-        {
-            BDNode parentSiblingNode = BDNode.RetrieveNodeWithId(pContext, pParentSibling);
-
-            // move Adults > SSTI > Fournier's Gangrene to presentation level of Rapidly progressive SSTI
-            BDNode nodeToMove = BDNode.RetrieveNodeWithId(pContext, pNodeToMove);
-            //  find 'SINBLE PRESENTATION' and rename it with name of parent
-            List<BDNode> childrenToMove = BDNode.RetrieveNodesForParentIdAndChildNodeType(pContext, nodeToMove.Uuid, nodeTypeOfChildren);
-            foreach (BDNode childToMove in childrenToMove)
-            {
-                if (childToMove.Name == nodeNameForRename)
-                {
+                    List<IBDNode> micros = BDFabrik.GetChildrenForParent(pContext, mGroup);
+                    foreach (IBDNode m in micros)
                     {
-                        childToMove.name = nodeToMove.name;
-                        // change parent to parent's sibling
-                        childToMove.SetParent(parentSiblingNode);
-                        BDNode.Save(pContext, childToMove);
+                        if (m.NodeType == BDConstants.BDNodeType.BDMicroorganism)
+                            BDNode.Delete(pContext, m.Uuid, false);
+                        else
+                            Debug.WriteLine("Node is not a Microorganism: {0}", m.Uuid);
                     }
+                    if (mGroup.NodeType == BDConstants.BDNodeType.BDMicroorganismGroup)
+                        BDNode.Delete(pContext, mGroup, false);
+                    else
+                        Debug.WriteLine("Node is not a Microorganism Group: {0}", mGroup.Uuid);
                 }
-            }
-            // delete parent
-            BDNode.Delete(pContext, nodeToMove, false);
-        }
+                if (category.Uuid == Guid.Parse("8f959f69-fd2d-4074-bf0d-4a257a23828b"))
+                {
+                    category.LayoutVariant = BDConstants.LayoutVariantType.Organisms_Therapy_with_Subcategory;
+                    category.Name = "GRAM NEGATIVE BACILLI";
+                    BDNode subcat1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubcategory, Guid.NewGuid());
+                    subcat1.SetParent(category);
+                    subcat1.Name = "Enterobacteriaceae";
+                    subcat1.layoutVariant = (int)category.LayoutVariant;
+                    subcat1.DisplayOrder = 0;
+                    subcat1.nodeKeyName = BDConstants.BDNodeType.BDSubcategory.ToString();
 
-        public static void ConfigureLayoutMetadata(Entities pContext, BDConstants.LayoutVariantType pLayoutVariant, int pColumnDisplayOrder, string pColumnLabel, BDConstants.BDNodeType pNodeType, string pPropertyName, int pPropertyDisplayOrder, string pLinkedNoteText)
-        {
-            BDLayoutMetadata.Rebuild(pContext);
-            // turn on the Layout metadata:  find the entry, set included to True
-            BDLayoutMetadata layout = BDLayoutMetadata.Retrieve(pContext, pLayoutVariant);
-            layout.included = true;
-            BDLayoutMetadata.Save(pContext, layout);
-            
-            // check if columns exist
-            // create columns for the layout
-            BDLayoutMetadataColumn layoutC1 = BDLayoutMetadataColumn.Retrieve(pContext, pLayoutVariant, pNodeType, pPropertyName);
-            if (layoutC1 == null)
-                layoutC1 = BDLayoutMetadataColumn.Create(pContext, layout, pColumnDisplayOrder,pColumnLabel);
-            
-            // create linked note for column
-            //TODO:  adjust this to deal with > 1 
-            if (pLinkedNoteText.Length > 0)
+                    BDNode subcat2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubcategory, Guid.NewGuid());
+                    subcat2.SetParent(category);
+                    subcat2.Name = "Fermentative (other)";
+                    subcat2.layoutVariant = (int)category.LayoutVariant;
+                    subcat2.DisplayOrder = 0;
+                    subcat2.nodeKeyName = BDConstants.BDNodeType.BDSubcategory.ToString();
+
+                    BDNode subcat3 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubcategory, Guid.NewGuid());
+                    subcat3.SetParent(category);
+                    subcat3.Name = "Non-Fermentative";
+                    subcat3.layoutVariant = (int)category.LayoutVariant;
+                    subcat3.DisplayOrder = 0;
+                    subcat3.nodeKeyName = BDConstants.BDNodeType.BDSubcategory.ToString();
+                }
+                if (category.Uuid == Guid.Parse("1de822f9-49b7-4e0c-a32f-fc0cb94fa619") || category.Uuid == Guid.Parse("af07c9f5-579a-4092-8acd-6c14fcc80cc5"))
+                    BDNode.Delete(pContext, category.Uuid, false);
+
+            }
+            pContext.SaveChanges();
+
+            // refactoring & cleanup of Surgical prophylaxis
+            BDNode preOp = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("6490c259-0188-4e1a-9ff1-001bb24db3c4"));
+            List<IBDNode> tables = BDFabrik.GetChildrenForParent(pContext, preOp);
+            // delete children of table 1 -- switching to a configured entry
+            foreach (BDNode table in tables)
             {
-                StringBuilder noteText = new StringBuilder();
-                noteText.AppendFormat(@"<p>{0}</p>", pLinkedNoteText);
-                BDLinkedNote note = BDLinkedNote.CreateBDLinkedNote(pContext, Guid.NewGuid());
-                note.documentText = noteText.ToString();
-                BDLinkedNoteAssociation lna = BDLinkedNoteAssociation.CreateBDLinkedNoteAssociation(pContext, BDConstants.LinkedNoteType.Footnote, note.Uuid, BDConstants.BDNodeType.BDLayoutColumn, layoutC1.Uuid, BDLayoutMetadataColumn.PROPERTYNAME_LABEL);
+                List<BDTableRow> tableRows = BDTableRow.RetrieveTableRowsForParentId(pContext, table.Uuid);
+                foreach (BDTableRow row in tableRows)
+                {
+                    List<BDTableCell> cells = BDTableCell.RetrieveTableCellsForParentId(pContext, row.Uuid);
+                    foreach (BDTableCell cell in cells)
+                        BDTableCell.Delete(pContext, cell, false);
+                    BDTableRow.DeleteLocal(pContext, row.Uuid);
+                }
+                BDNode surgical = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("da1fcc78-d169-45a8-a391-2b3db6247075"));
+                if (table.Uuid == Guid.Parse("aba7ff59-63b6-41a6-afcb-1e5b2683ea9f"))
+                {
+                    table.SetParent(surgical);
+                }
+                surgical.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical;
                 pContext.SaveChanges();
             }
 
-            // associate properties with the column
-            BDLayoutMetadataColumnNodeType layoutC1T1 = BDLayoutMetadataColumnNodeType.Retrieve(pContext, pLayoutVariant, pNodeType, layoutC1.Uuid);
-            if(layoutC1T1 == null)
-                layoutC1T1 = BDLayoutMetadataColumnNodeType.Create(pContext, layoutC1,pNodeType, pPropertyName, pPropertyDisplayOrder);
-
+            BDNode.Delete(pContext, preOp, false);
+            #endregion
         }
 
-        public static void CreateFootnoteForLayoutColumn(Entities pContext, BDConstants.LayoutVariantType pLayoutVariant, int pColumnDisplayOrder, string pFootnoteText)
-        {
-            BDLayoutMetadata.Rebuild(pContext);
-            BDLayoutMetadata layout = BDLayoutMetadata.Retrieve(pContext, pLayoutVariant);
-            if (layout != null)
-            {
-                List<BDLayoutMetadataColumn> columns = BDLayoutMetadataColumn.RetrieveListForLayout(pContext, layout);
-                foreach (BDLayoutMetadataColumn col in columns)
-                {
-                    if (col.displayOrder == pColumnDisplayOrder)
-                    {
-                        StringBuilder noteText = new StringBuilder();
-                        noteText.AppendFormat(@"<p>{0}</p>", pFootnoteText);
-                        BDLinkedNote note = BDLinkedNote.CreateBDLinkedNote(pContext, Guid.NewGuid());
-                        note.documentText = noteText.ToString();
-                        BDLinkedNoteAssociation lna = BDLinkedNoteAssociation.CreateBDLinkedNoteAssociation(pContext, BDConstants.LinkedNoteType.Footnote, note.Uuid, BDConstants.BDNodeType.BDLayoutColumn, col.Uuid, BDLayoutMetadataColumn.PROPERTYNAME_LABEL);
-                        pContext.SaveChanges();
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Replaces p tags with br.
-        /// </summary>
-        /// <param name="pNoteText"></param>
-        /// <returns></returns>
-        public static string CleanNoteText(string pNoteText)
-        {
-            string resultText = string.Empty;
-            string noteText = CleanseStringOfEmptyTag(pNoteText, "p");
-            if (!string.IsNullOrEmpty(noteText))
-            {
-                resultText = pNoteText.Replace("<p>", string.Empty);
-                resultText = resultText.Replace("</p>", "<br>");
-
-                if (resultText.EndsWith("<br>")) resultText = resultText.Substring(0, resultText.Length - 4);
-            }
-            return resultText;
-        }
-
-        public static string BuildTextFromInlineNotes(List<BDLinkedNote> pNotes)
-        {
-            StringBuilder noteString = new StringBuilder();
-            if (null != pNotes)
-            {
-                foreach (BDLinkedNote note in pNotes)
-                {
-                    if (null != note)
-                    {
-                        string documentText = CleanseStringOfEmptyTag(note.documentText, "p");
-                        if (!string.IsNullOrEmpty(documentText))
-                        {
-                            documentText = documentText.Replace("<p>", string.Empty);
-                            documentText = documentText.Replace("</p>", "<br>");
-
-                            if (documentText.EndsWith("<br>"))
-                            {
-                                documentText = documentText.Substring(0, documentText.Length - 4);
-                            }
-
-                            noteString.AppendFormat(" {0}", documentText);
-                        }
-                    }
-                }
-            }
-            return noteString.ToString();
-        }
-
-        public static string BuildTextFromNotes(List<BDLinkedNote> pNotes)
-        {
-            StringBuilder noteString = new StringBuilder();
-            foreach (BDLinkedNote note in pNotes)
-            {
-                if (null != note)
-                {
-                    string documentText = CleanseStringOfEmptyTag(note.documentText, "p");
-                    if (!string.IsNullOrEmpty(documentText))
-                    {
-                        noteString.Append(note.documentText);
-                    } 
-                }
-            }
-
-            return noteString.ToString();
-        }
-
-        /// <summary>
-        /// Test for and cleanse if necessary, a string containing only a start and end tag. 
-        /// Returns original string if not "empty" or string.Empty if cleansed
-        /// </summary>
-        /// <param name="pString"></param>
-        /// <param name="pTagRoot"></param>
-        /// <returns>Returns original string if not "empty" or string.Empty if cleansed</returns>
-        public static string CleanseStringOfEmptyTag(string pString, string pTagRoot)
-        {
-            string result = pString;
-
-            if (!String.IsNullOrEmpty(pTagRoot))
-            {
-                string startTag = string.Format("<{0}>", pTagRoot);
-                string endTag = string.Format("</{0}>", pTagRoot);
-                result = CleanseStringOfEmptyTag(pString, startTag, endTag);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Test for and cleanse if necessary, a string containing only a start and end tag.
-        /// Returns original string if not "empty" or string.Empty if cleansed
-        /// </summary>
-        /// <param name="pString"></param>
-        /// <param name="pStartTag"></param>
-        /// <param name="pEndTag"></param>
-        /// <returns>Returns original string if not "empty" or string.Empty if cleansed</returns>
-        public static string CleanseStringOfEmptyTag(string pString, string pStartTag, string pEndTag)
-        {
-            string resultValue = pString;
-            if (!String.IsNullOrEmpty(pStartTag) && !String.IsNullOrEmpty(pEndTag))
-            {
-                string startTag = pStartTag.ToLower();
-                string endTag = pEndTag.ToLower();
-
-                string testValue = pString.ToLower();
-                testValue = testValue.Replace(startTag, string.Empty);
-                testValue = testValue.Replace(endTag, string.Empty);
-
-                if (string.IsNullOrEmpty(testValue))
-                {
-                    resultValue = string.Empty;
-                }
-            }
-
-            return resultValue;
-        }
-
-        public static List<BDLinkedNote> RetrieveNotesForParentAndPropertyOfLinkedNoteType(Entities pContext, Guid pParentId, string pPropertyName, BDConstants.LinkedNoteType pNoteType, out List<Guid> pLinkedNoteAssociations)
-        {
-            List<BDLinkedNote> noteList = new List<BDLinkedNote>();
-            pLinkedNoteAssociations = new List<Guid>();
-            if (null != pPropertyName && pPropertyName.Length > 0)
-            {
-                List<BDLinkedNoteAssociation> list = BDLinkedNoteAssociation.GetLinkedNoteAssociationListForParentIdAndProperty(pContext, pParentId, pPropertyName);
-                foreach (BDLinkedNoteAssociation assn in list)
-                {
-                    if (assn.linkedNoteType == (int)pNoteType)
-                    {
-                        BDLinkedNote linkedNote = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, assn.linkedNoteId);
-                        if (null != linkedNote)
-                        {
-                            noteList.Add(linkedNote);
-                            pLinkedNoteAssociations.Add(assn.Uuid);
-                        }
-                    }
-                }
-            }
-            return noteList;
-        }
-
-        public static string ProcessTextForCarriageReturn(Entities pContext, string pTextToProcess)
-        {
-            if (pTextToProcess.Contains("\n"))
-                pTextToProcess.Replace("\n", "<br>");
-            return pTextToProcess;
-        }
-
-        public static string ProcessTextForSubscriptAndSuperscriptMarkup(Entities pContext, string pTextToProcess)
-        {
-            string superscriptStart = @"{";
-            string superscriptEnd = @"}";
-            string subscriptStart = @"{{";
-            string subscriptEnd = @"}}";
-            string htmlSuperscriptStart = @"<sup>";
-            string htmlSuperscriptEnd = @"</sup>";
-            string htmlSubscriptStart = @"<sub>";
-            string htmlSubscriptEnd = @"</sub>";
-
-            if(!string.IsNullOrEmpty(pTextToProcess))
-            {
-                // do subscripts first because of double braces
-                while (pTextToProcess.Contains(subscriptStart))
-                {
-                    int tStartIndex = pTextToProcess.IndexOf(subscriptStart);
-                    pTextToProcess = pTextToProcess.Remove(tStartIndex, subscriptStart.Length);
-                    pTextToProcess = pTextToProcess.Insert(tStartIndex, htmlSubscriptStart);
-                    int tEndIndex = pTextToProcess.IndexOf(subscriptEnd, tStartIndex);
-                    pTextToProcess = pTextToProcess.Remove(tEndIndex, subscriptEnd.Length);
-                    pTextToProcess = pTextToProcess.Insert(tEndIndex, htmlSubscriptEnd);
-                }
-
-                while (pTextToProcess.Contains(superscriptStart))
-                {
-                    int tStartIndex = pTextToProcess.IndexOf(superscriptStart);
-                    pTextToProcess = pTextToProcess.Remove(tStartIndex, superscriptStart.Length);
-                    pTextToProcess = pTextToProcess.Insert(tStartIndex, htmlSuperscriptStart);
-                    int tEndIndex = pTextToProcess.IndexOf(superscriptEnd, tStartIndex);
-                    pTextToProcess = pTextToProcess.Remove(tEndIndex, superscriptEnd.Length);
-                    pTextToProcess = pTextToProcess.Insert(tEndIndex, htmlSuperscriptEnd);
-                }
-            }
-
-            return pTextToProcess;
-        }
-
-        public static string ProcessTextToPlainText(Entities pContext, string pTextToProcess)
-        {
-            string superscriptStart = @"{";
-            string superscriptEnd = @"}";
-            string subscriptStart = @"{{";
-            string subscriptEnd = @"}}";
-            string htmlSuperscriptStart = @"<sup>";
-            string htmlSuperscriptEnd = @"</sup>";
-            string htmlSubscriptStart = @"<sub>";
-            string htmlSubscriptEnd = @"</sub>";
-            string boldStart = @"<b>";
-            string boldEnd = @"</b>";
-
-            if (!string.IsNullOrEmpty(pTextToProcess))
-            {
-                // do subscripts first because of double braces
-                pTextToProcess = pTextToProcess.Replace(subscriptStart, "");
-                pTextToProcess = pTextToProcess.Replace(subscriptEnd, "");
-                pTextToProcess = pTextToProcess.Replace(superscriptStart, "");
-                pTextToProcess = pTextToProcess.Replace(superscriptEnd, "");
-                pTextToProcess = pTextToProcess.Replace(htmlSuperscriptStart, "");
-                pTextToProcess = pTextToProcess.Replace(htmlSuperscriptEnd, "");
-                pTextToProcess = pTextToProcess.Replace(htmlSubscriptStart, "");
-                pTextToProcess = pTextToProcess.Replace(htmlSubscriptEnd, "");
-                pTextToProcess = pTextToProcess.Replace(boldStart, "");
-                pTextToProcess = pTextToProcess.Replace(boldEnd, "");
-                pTextToProcess = pTextToProcess.Replace("<br>", " ");
-                pTextToProcess = pTextToProcess.Replace("<hr>", "");
-                pTextToProcess = pTextToProcess.Replace("[", "");
-                pTextToProcess = pTextToProcess.Replace("]", "");
-            }
-            return pTextToProcess;
-        }
-
+        #region data repair for V2 implementation
         public static void RepairSearchEntryAssociationsForMissingData(Entities pContext)
         {
             List<IBDNode> chapters = new List<IBDNode>();
@@ -2394,6 +2474,6 @@ namespace BDEditor.Classes
 
             return BDUtilities.ProcessTextToPlainText(pContext, resolvedName);
         }
-
+        #endregion
     }
 }

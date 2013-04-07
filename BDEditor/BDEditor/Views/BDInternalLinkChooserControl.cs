@@ -202,7 +202,7 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
                             case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
                             case BDConstants.LayoutVariantType.Dental_Prophylaxis:
-                            case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
+                            case BDConstants.LayoutVariantType.Organisms_Therapy:
                             case BDConstants.LayoutVariantType.Prophylaxis_IERecommendation:
                             case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
                                 if (!pInterrogateOnly)
@@ -330,8 +330,8 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms:
                             case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
                             case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
-                            case BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation:
-                            case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
+                            case BDConstants.LayoutVariantType.Organisms_GramStainInterpretation:
+                            case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic:
                                 if (!pInterrogateOnly)
                                 {
                                     showChildControls = true;

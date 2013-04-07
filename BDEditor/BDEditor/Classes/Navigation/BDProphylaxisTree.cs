@@ -34,7 +34,7 @@ namespace BDEditor.Classes.Navigation
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Prophylaxis:
-                        case BDConstants.LayoutVariantType.Prophylaxis_PreOp:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_PreOp:
                         case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
                         case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical:

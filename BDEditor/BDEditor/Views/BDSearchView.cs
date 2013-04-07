@@ -347,7 +347,7 @@ namespace BDEditor.Views
 
         private void showMessage(IBDNode pNode)
         {
-            MessageBox.Show(this, "No editor is currently available for the selected row", "Edit Requested");
+            MessageBox.Show(this, "No editor is currently available for the selected tableRows", "Edit Requested");
         }
 
         private void openEditorForNode(IBDNode pNode)

@@ -161,7 +161,7 @@ namespace BDEditor.Classes
             //        //    case BDConstants.BDNodeType.BDMicroorganism:
             //        //        switch (ibdNode.LayoutVariant)
             //        //        {
-            //        //            case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
+            //        //            case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic:
             //        //                generateSearchAssociation = true;
             //        //                break;
             //        //            default:

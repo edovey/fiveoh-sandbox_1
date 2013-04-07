@@ -253,7 +253,7 @@ namespace BDEditor.Classes
                                 case BDConstants.LayoutVariantType.Dental:
                                     paintChipFileName = PAINT_CHIP_DENTISTRY;
                                     break;
-                                case BDConstants.LayoutVariantType.Microbiology:
+                                case BDConstants.LayoutVariantType.Organisms:
                                     paintChipFileName = PAINT_CHIP_ORGANISMS;
                                     break;
                                 case BDConstants.LayoutVariantType.TreatmentRecommendation00:
@@ -306,9 +306,7 @@ namespace BDEditor.Classes
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
                             currentPageMasterObject = pNode;
-                            //nodeChildPages.Add(generatePageForAntibioticsClinicalGuidelines(pContext, pNode as BDNode));
                             nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
-
                             isPageGenerated = true;
                             break;
                         default:
@@ -333,9 +331,6 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDCategory:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
-                           isPageGenerated = false;
-                            break;
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional:
                             currentPageMasterObject = pNode;
                             //nodeChildPages.Add(generatePageForAntibioticsDosingAndMonitoring(pContext, pNode as BDNode));
@@ -392,27 +387,41 @@ namespace BDEditor.Classes
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_IERecommendation:
                         case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                             currentPageMasterObject = pNode;
-                            //nodeChildPages.Add(generatePageForProphylaxisEndocarditis(pContext, pNode));
                             nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
                             break;
-                        case BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation:
+                        case BDConstants.LayoutVariantType.Organisms_GramStainInterpretation:
                             currentPageMasterObject = pNode;
                             //nodeChildPages.Add(generatePageForOrganismGramStain(pContext, pNode));
                             nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
                             break;
-                        case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
+                        case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic:
                             currentPageMasterObject = pNode;
                             //nodeChildPages.Add(generatePageForMicrobiologyOrganisms(pContext, pNode));
                             nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
                             break;
-                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                         default:
                             isPageGenerated = false;
                             break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDConfiguredEntry:
+                    {
+                        switch (pNode.LayoutVariant)
+                        {
+                            case BDConstants.LayoutVariantType.Organisms_Therapy:
+                                currentPageMasterObject = pNode;
+                                nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
+                                isPageGenerated = true;
+                                break;
+                            default:
+                                isPageGenerated = false;
+                                break;
+                        }
                     }
                     break;
                 case BDConstants.BDNodeType.BDDisease:
@@ -580,41 +589,16 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
-                             currentPageMasterObject = pNode;
-                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
-                            isPageGenerated = true;
-                        break;
                         case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
-                            currentPageMasterObject = pNode;
-                            //nodeChildPages.Add(generatePageForAntibioticsStepdown(pContext, pNode as BDNode));
-                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
-                            isPageGenerated = true;
-                            break;
                         case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
-                            currentPageMasterObject = pNode;
-                            //nodeChildPages.Add(generatePageforAntibioticsBLactam(pContext, pNode as BDNode));
-                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
-                            isPageGenerated = true;
-                            break;
                         case BDConstants.LayoutVariantType.Antibiotics_NameListing:
-                            currentPageMasterObject = pNode;
-                            //nodeChildPages.Add(generatePageForAntibioticsNameListing(pContext, pNode as BDNode));
-                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
-                            isPageGenerated = true;
-                            break;
-                        case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
-                            currentPageMasterObject = pNode;
-                            //nodeChildPages.Add(generatePageForProphylaxisInfectionPrevention(pContext, pNode));
-                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
-                            isPageGenerated = true;
-                            break;
                         case BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases:
+                        case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                             currentPageMasterObject = pNode;
-                            //nodeChildPages.Add(generatePageForPLCommunicableDiseases(pContext, pNode));
                             nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
                             break;
-                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                         default:
                             isPageGenerated = false;
                             break;
@@ -629,6 +613,7 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal_Amphotericin_B:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation17_Pneumonia:
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
+                        case BDConstants.LayoutVariantType.Organisms_Therapy_with_Subcategory:
                             currentPageMasterObject = pNode;
                             nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
@@ -696,51 +681,15 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_HepaticImpairment_Grading:
-                            currentPageMasterObject = pNode;
-                            //nodeChildPages.Add(generatePageForAntibiotics_HepaticImpairmentGrading(pContext, pNode));
-                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
-                            isPageGenerated = true;
-                            break;
                         case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration_Dosages:
-                            currentPageMasterObject = pNode;
-                            //nodeChildPages.Add(generatePageForAntibioticsCSFPenetration(pContext, pNode as BDNode));
-                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
-                            isPageGenerated = true;
-                            break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
-                            currentPageMasterObject = pNode;
-                            //ks:
-                            //nodeChildPages.Add(generatepageForEmpiricTherapyOfGenitalUlcers(pContext, pNode as BDNode));
-                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
-                            isPageGenerated = true;
-                            break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics:
-                            currentPageMasterObject = pNode;
-                            //nodeChildPages.Add(generatePageForEmpiricTherapyOfEndocarditisPaediatrics(pContext, pNode as BDNode));
-                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
-                            isPageGenerated = true;
-                            break;
                         case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure_Risk:
-                            currentPageMasterObject = pNode;
-                            //nodeChildPages.Add(generatePageForProphylaxisFluidExposureRiskOfInfection(pContext, pNode));
-                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
-                            isPageGenerated = true;
-                            break;
                         case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure_Followup_I:
-                            currentPageMasterObject = pNode;
-                            //nodeChildPages.Add(generatePageForProphylaxisFluidExposureFollowupProtocolI(pContext, pNode));
-                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
-                            isPageGenerated = true;
-                            break;
                         case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure_Followup_II:
-                            currentPageMasterObject = pNode;
-                            //nodeChildPages.Add(generatePageForProphylaxisFluidExposureFollowupProtocolII(pContext, pNode));
-                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
-                            isPageGenerated = true;
-                            break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_PreOp:
                         case BDConstants.LayoutVariantType.Dental_RecommendedTherapy_AntimicrobialActivity:
                             currentPageMasterObject = pNode;
-                            //nodeChildPages.Add(generatePageForAntimicrobialAgentsForOralMicroorganisms(pContext, pNode));
                             nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
                             break;
@@ -808,6 +757,14 @@ namespace BDEditor.Classes
         {
             if (null == pNode) return null;
 
+            // bypass specific sections of the data - sections not yet published
+            if (pNode.LayoutVariant == BDConstants.LayoutVariantType.Prophylaxis_Immunization ||
+                pNode.LayoutVariant == BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk ||
+                pNode.LayoutVariant == BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine ||
+                pNode.LayoutVariant == BDConstants.LayoutVariantType.Prophylaxis_Immunization_VaccineDetail ||
+                pNode.LayoutVariant == BDConstants.LayoutVariantType.Organisms_Antibiogram)
+                return null;
+
             StringBuilder bodyHTML = new StringBuilder();
             List<BDLinkedNote> footnotes = new List<BDLinkedNote>();
             List<Guid> objectsOnPage = new List<Guid>();
@@ -822,6 +779,9 @@ namespace BDEditor.Classes
                     break;
                 case BDConstants.BDNodeType.BDCategory:
                     bodyHTML.Append(BuildBDCategoryHtml(pContext, pNode, footnotes, objectsOnPage, 1));
+                    break;
+                case BDConstants.BDNodeType.BDConfiguredEntry:
+                    bodyHTML.Append(BuildBDConfiguredEntryHtml(pContext, pNode, footnotes, objectsOnPage, 1));
                     break;
                 case BDConstants.BDNodeType.BDDisease:
                     bodyHTML.Append(BuildBDDiseaseHtml(pContext, pNode, footnotes, objectsOnPage, 1));
@@ -922,7 +882,7 @@ namespace BDEditor.Classes
                 bodyHTML.AppendFormat(@"<table class=""v{0}""><tr><th>Antimicrobial</th><th>Dosage Adjustment</th></tr>", (int)pNode.layoutVariant);
                 foreach (IBDNode child in childNodes)
                 {
-                    //child is antimicrobial with overview:  add a row
+                    //child is antimicrobial with overview:  add a tableRows
                     BDNode node = child as BDNode;
 
                     bodyHTML.AppendFormat(@"<tr><td>{0}</td><td>{1}</td></tr>", child.Name, retrieveNoteTextForOverview(pContext, child.Uuid, objectsOnPage));
@@ -1245,8 +1205,8 @@ namespace BDEditor.Classes
                                     //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDosageGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
                                     //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDosage, new BDConstants.LayoutVariantType[] { layoutVariant }));
 
-                                    //add topic on its own row
-                                    // if this is the first row, put antimicrobial in the first column
+                                    //add topic on its own tableRows
+                                    // if this is the first tableRows, put antimicrobial in the first column
                                     string cellHtml = buildCellHTML(pContext, child, BDNode.PROPERTYNAME_NAME, child.Name, false, pFootnotes, pObjectsOnPage);
                                     if (isFirstChild)
                                         html.AppendFormat("<tr {0}><td>{1}</td><td><b><u>{2}</u></b></td><td /></tr>", TABLEROWSTYLE_NO_BORDERS, amHtml, cellHtml);
@@ -1255,7 +1215,7 @@ namespace BDEditor.Classes
 
                                     bool isLastTopicChild = false;
 
-                                    // a row has been written to the table for the topic, so isFirstRow is false
+                                    // a tableRows has been written to the table for the topic, so isFirstRow is false
                                     bool isFirstRow = false;
 
                                     List<IBDNode> topicChildren = BDFabrik.GetChildrenForParent(pContext, child);
@@ -1518,7 +1478,7 @@ namespace BDEditor.Classes
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogen, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         break;
 
-                    case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
+                    case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubcategory, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         foreach (IBDNode child in children)
                         {
@@ -1526,7 +1486,7 @@ namespace BDEditor.Classes
                         }
                         break;
 
-                    case BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation:
+                    case BDConstants.LayoutVariantType.Organisms_GramStainInterpretation:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubcategory, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         if (children.Count > 0) // subcategory - column 1 values
                         {
@@ -1628,7 +1588,7 @@ namespace BDEditor.Classes
                     case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSurgeryClassification, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         break;
-                    case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
+                    case BDConstants.LayoutVariantType.Organisms_Therapy:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDMicroorganismGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         break;
                     case BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics:
@@ -1686,7 +1646,7 @@ namespace BDEditor.Classes
                             html.AppendFormat(@"<table class=""v{0}""><tr><th>Antimicrobial</th><th>Dosage Adjustment</th></tr>", (int)pNode.LayoutVariant);
                             foreach (IBDNode child in children)
                             {
-                                //child is antimicrobial with overview:  add a row
+                                //child is antimicrobial with overview:  add a tableRows
                                 BDNode node = child as BDNode;
 
                                 // this is more convenient than calling buildBDAntimicrobial
@@ -2331,7 +2291,7 @@ namespace BDEditor.Classes
             {
                 case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Adult:
                 case BDConstants.LayoutVariantType.Antibiotics_DosingAndCosts_Paediatric:
-                    // append a row for the DosageGroup
+                    // append a tableRows for the DosageGroup
                     string dosageGroupHtml = buildCellHTML(pContext, pNode, BDNode.PROPERTYNAME_NAME, pNode.Name, false, pFootnotes, pObjectsOnPage);
                     if (pIsFirstRow) // add parent to first column (antimicrobial)
                         html.AppendFormat("<tr {0}><td>{1}</td><td><u>{2}</u></td><td /></tr>", TABLEROWSTYLE_NO_BORDERS, pParentHtml, dosageGroupHtml);
@@ -2339,14 +2299,14 @@ namespace BDEditor.Classes
                         html.AppendFormat("<tr {0}><td /><td><u>{1}</u></td><td /></tr>", TABLEROWSTYLE_NO_BORDERS, dosageGroupHtml);
 
                     bool isLastDosage = false;
-                    // a row is now written to the table for this group, so anything following is not the first row.
+                    // a tableRows is now written to the table for this group, so anything following is not the first tableRows.
                     bool isFirstRow = false;
                     List<IBDNode> dosageGroupChildren = BDFabrik.GetChildrenForParent(pContext, pNode);
                     for (int i = 0; i < dosageGroupChildren.Count; i++)
                     {
                         if (i == dosageGroupChildren.Count - 1)
                             isLastDosage = true;
-                        // add row for BDDosage
+                        // add tableRows for BDDosage
                         html.Append(BuildBDDosageHtml(pContext, dosageGroupChildren[i], pFootnotes, pObjectsOnPage, pLevel, isFirstRow, (isLastDosage && pIsLastDosageGroup), pParentHtml));
                     }
                     break;
@@ -2394,7 +2354,7 @@ namespace BDEditor.Classes
 
                 switch (pNode.LayoutVariant)
                 {
-                    case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
+                    case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic:
                         html.Append(buildNodePropertyHTML(pContext, pNode, pNode.Uuid, pNode.Name, BDNode.PROPERTYNAME_NAME, HtmlHeaderTagLevelString(pLevel + 2), pFootnotes, pObjectsOnPage));
                         html.Append("<p>");
                         foreach (IBDNode child in children)
@@ -2415,7 +2375,7 @@ namespace BDEditor.Classes
                         html.Append("</ul>");
                         break;
                     case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
-                    case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
+                    case BDConstants.LayoutVariantType.Organisms_Therapy:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDMicroorganism, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         //break;
                     default:
@@ -3621,7 +3581,7 @@ namespace BDEditor.Classes
                                             if(!string.IsNullOrEmpty(pedsDosageString))
                                             pedsDosageHTML.AppendFormat("<li>{0} {1}", buildNodePropertyHTML(pContext, therapy, therapy.Uuid, therapy.Name, BDTherapy.PROPERTYNAME_THERAPY, pFootnotes, pObjectsOnPage), pedsDosageString);
                                         }
-                                        // check for conjunctions and add a row for any that are found
+                                        // check for conjunctions and add a tableRows for any that are found
                                         switch (therapy.therapyJoinType)
                                         {
                                             case (int)BDConstants.BDJoinType.OrWithNext:
@@ -3690,9 +3650,9 @@ namespace BDEditor.Classes
                     case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation:
                     case BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy:
                     case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
-                    case BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation:
-                    case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
-                    case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
+                    case BDConstants.LayoutVariantType.Organisms_GramStainInterpretation:
+                    case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic:
+                    case BDConstants.LayoutVariantType.Organisms_Therapy:
                     case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDCategory, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         break;
@@ -3767,7 +3727,7 @@ namespace BDEditor.Classes
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine, BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk }));
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Prophylaxis_Immunization_VaccineDetail }));
                         break;
-                    case BDConstants.LayoutVariantType.Prophylaxis_PreOp:
+                    case BDConstants.LayoutVariantType.Prophylaxis_Surgical_PreOp:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         break;
                     case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure:
@@ -3818,7 +3778,7 @@ namespace BDEditor.Classes
                             html.AppendFormat(navListAnchorTag, generatedPages[i].Uuid.ToString().ToUpper(), children[i].Name);
                         html.Append(navListDivSuffix);
                         break;
-                    case BDConstants.LayoutVariantType.Microbiology_Antibiogram:
+                    case BDConstants.LayoutVariantType.Organisms_Antibiogram:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDAttachment, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         break;
                     default:
@@ -3968,7 +3928,7 @@ namespace BDEditor.Classes
                             html.Append(BuildBDMicroorganismGroupHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
                         }
                         break;
-                    case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
+                    case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDMicroorganismGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         foreach (IBDNode child in children)
                         {
@@ -3976,12 +3936,12 @@ namespace BDEditor.Classes
                         }
 
                         break;
-                    case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
+                    case BDConstants.LayoutVariantType.Organisms_Therapy:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDMicroorganismGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
 
 
                         break;
-                    case BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation:
+                    case BDConstants.LayoutVariantType.Organisms_GramStainInterpretation:
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDMicroorganism, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         break;
                     case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
@@ -4266,9 +4226,9 @@ namespace BDEditor.Classes
                         }
                         break;
 
-                    case BDConstants.LayoutVariantType.Prophylaxis_PreOp:
-                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Prophylaxis_PreOp_HeaderRow }));
-                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                    case BDConstants.LayoutVariantType.Prophylaxis_Surgical_PreOp:
+                        foreach (IBDNode child in children)
+                            html.Append(BuildBDConfiguredEntryHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1));
                         break;
 
                     // Common generic render
@@ -4729,9 +4689,9 @@ namespace BDEditor.Classes
             StringBuilder therapyHtml = new StringBuilder();
             string styleString = string.Empty;
 
-            // check join type - if none, then draw the bottom border on the table row
+            // check join type - if none, then draw the bottom border on the table tableRows
             if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.Next)
-                styleString = TABLEROWSTYLE_BOTTOM_BORDER;  // row has bottom border
+                styleString = TABLEROWSTYLE_BOTTOM_BORDER;  // tableRows has bottom border
             else
                 styleString = TABLEROWSTYLE_NO_BORDERS;  // NO bottom border
 
@@ -4792,7 +4752,7 @@ namespace BDEditor.Classes
             string styleString = string.Empty;
             string resolvedValue = null;
 
-            // check join type - if none, then draw the bottom border on the table row
+            // check join type - if none, then draw the bottom border on the table tableRows
             if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.Next)
                 styleString = TABLEROWSTYLE_BOTTOM_BORDER;
             else
@@ -4844,7 +4804,7 @@ namespace BDEditor.Classes
                 if (null != resolvedValue) therapiesHaveDuration = true;
             }
             therapyHtml.Append(@"</tr>");
-            // build row for conjunction string
+            // build tableRows for conjunction string
             therapyHtml.AppendFormat(@"<tr><td> {0}</td><td /><td /><td /></tr>", retrieveConjunctionString((int)pTherapy.therapyJoinType));
             
             return therapyHtml.ToString();
@@ -4854,9 +4814,9 @@ namespace BDEditor.Classes
         {
             StringBuilder therapyHtml = new StringBuilder();
 
-            // check join type - if none, then draw the bottom border on the table row
+            // check join type - if none, then draw the bottom border on the table tableRows
             if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.Next)
-                therapyHtml.AppendFormat(@"<tr {0}><td>", TABLEROWSTYLE_BOTTOM_BORDER);  // row has bottom border
+                therapyHtml.AppendFormat(@"<tr {0}><td>", TABLEROWSTYLE_BOTTOM_BORDER);  // tableRows has bottom border
             else
                 therapyHtml.AppendFormat(@"<tr {0}><td>", TABLEROWSTYLE_NO_BORDERS);  // NO bottom border
 
@@ -4918,9 +4878,9 @@ namespace BDEditor.Classes
             StringBuilder therapyHtml = new StringBuilder();
             string styleString = string.Empty;
 
-            // check join type - if none, then draw the bottom border on the table row
+            // check join type - if none, then draw the bottom border on the table tableRows
             if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.Next)
-                styleString = TABLEROWSTYLE_BOTTOM_BORDER;  // row has bottom border
+                styleString = TABLEROWSTYLE_BOTTOM_BORDER;  // tableRows has bottom border
             else
                 styleString = TABLEROWSTYLE_NO_BORDERS;  // NO bottom border
 
@@ -5793,7 +5753,7 @@ namespace BDEditor.Classes
         private string retrieveConjunctionString(int pBDJoinType, IBDNode pNode)
         {
             string joinString = string.Empty;
-            // check for conjunctions and add a row for any that are found
+            // check for conjunctions and add a tableRows for any that are found
 
             switch (pBDJoinType)
             {

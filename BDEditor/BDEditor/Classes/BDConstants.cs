@@ -146,9 +146,9 @@ namespace BDEditor.Classes
             [Description("Treatment Recommendations - Pneumonia Risk and Recommendation")]
             TreatmentRecommendation04_Pneumonia_II = 105,  // table 3 - bottom antimicrobialSection
             [Description("Treatment Recommendations - Pneumonia Risk and Recommendation Header Row")]
-            TreatmentRecommendation04_Pneumonia_II_HeaderRow = 1051,  // table 3 - bottom antimicrobialSection header row
+            TreatmentRecommendation04_Pneumonia_II_HeaderRow = 1051,  // table 3 - bottom antimicrobialSection header tableRows
             [Description("Treatment Recommendations - Pneumonia Risk and Recommendation Content Row")]
-            TreatmentRecommendation04_Pneumonia_II_ContentRow = 1052,  // table 3 - bottom antimicrobialSection content row
+            TreatmentRecommendation04_Pneumonia_II_ContentRow = 1052,  // table 3 - bottom antimicrobialSection content tableRows
 
             [Description("Treatment Recommendations - Culture-Proven Peritonitis")]
             TreatmentRecommendation05_CultureProvenPeritonitis = 106,  // table 4
@@ -263,11 +263,7 @@ namespace BDEditor.Classes
             [Description("Prophylaxis - Recommendations")]
             Prophylaxis = 300,
             [Description("Prophylaxis - Pre-Op Antibiotic Administration")]
-            Prophylaxis_PreOp = 301,
-            [Description("Prophylaxis - Pre-Op Antibiotic Administration Header Row")]
-            Prophylaxis_PreOp_HeaderRow = 3011,
-            [Description("Prophylaxis - Pre-Op Antibiotic Administration Content Row")]
-            Prophylaxis_PreOp_ContentRow = 3012,
+            Prophylaxis_Surgical_PreOp = 301,
 
             [Description("Prophylaxis - Surgical")]
             Prophylaxis_Surgical = 302,
@@ -350,16 +346,18 @@ namespace BDEditor.Classes
             [Description("P/L - Perinatal HIV Protocol")]
             PregnancyLactation_Perinatal_HIVProtocol = 505,
 
-            [Description("Microbiology")]
-            Microbiology = 600,
-            [Description("Microbiology - Gram Stain Interpretation")]
-            Microbiology_GramStainInterpretation = 601,
-            [Description("Microbiology - Organisms for Specific Body Sites")]
-            Microbiology_CommensalAndPathogenicOrganisms = 602,
-            [Description("Microbiology - Empiric Therapy of Specific Organisms")]
-            Microbiology_EmpiricTherapy = 603,
-            [Description("Microbiology - Antibiogram")]
-            Microbiology_Antibiogram = 604,
+            [Description("Organisms")]
+            Organisms = 600,
+            [Description("Organisms - Gram Stain Interpretation")]
+            Organisms_GramStainInterpretation = 601,
+            [Description("Organisms - Specific Body Sites")]
+            Organisms_CommensalAndPathogenic = 602,
+            [Description("Organisms - Therapy of Specific Organisms")]
+            Organisms_Therapy = 603,
+            [Description("Organisms - Therapy of Specific Organisms, with Subcategory")]
+            Organisms_Therapy_with_Subcategory = 6031,
+            [Description("Organisms - Antibiogram")]
+            Organisms_Antibiogram = 604,
 
             [Description("2-column Table")]
             Table_2_Column = 900,

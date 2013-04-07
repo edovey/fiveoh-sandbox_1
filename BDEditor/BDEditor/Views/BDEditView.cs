@@ -117,8 +117,8 @@ namespace BDEditor.Views
                     case BDConstants.LayoutVariantType.PregancyLactation:
                         node = BDPregnancyLactationTree.BuildBranch(dataContext, pNode);
                         break;
-                    case BDConstants.LayoutVariantType.Microbiology:
-                        node = BDMicrobiologyTree.BuildBranch(dataContext, pNode);
+                    case BDConstants.LayoutVariantType.Organisms:
+                        node = BDOrganismsTree.BuildBranch(dataContext, pNode);
                         break;
                     default:
                         throw new NotImplementedException();
@@ -479,7 +479,7 @@ namespace BDEditor.Views
                                 }
                                 break;
                             case BDConstants.LayoutVariantType.Prophylaxis:
-                            case BDConstants.LayoutVariantType.Prophylaxis_PreOp:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_PreOp:
                             case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
                             case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                             case BDConstants.LayoutVariantType.Prophylaxis_IERecommendation:
@@ -533,12 +533,12 @@ namespace BDEditor.Views
                                     showChildControls = true;
                                 break;
 
-                            case BDConstants.LayoutVariantType.Microbiology:
-                            case BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation:
-                            case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
-                            case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
-                            case BDConstants.LayoutVariantType.Microbiology_Antibiogram:
-                                childTreeNode = BDMicrobiologyTree.BuildBranch(dataContext, node);
+                            case BDConstants.LayoutVariantType.Organisms:
+                            case BDConstants.LayoutVariantType.Organisms_GramStainInterpretation:
+                            case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic:
+                            case BDConstants.LayoutVariantType.Organisms_Therapy:
+                            case BDConstants.LayoutVariantType.Organisms_Antibiogram:
+                                childTreeNode = BDOrganismsTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
                                     graftTreeNode(selectedNode, childTreeNode);
@@ -583,7 +583,7 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
                             case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
                             case BDConstants.LayoutVariantType.Dental_Prophylaxis:
-                            case BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy:
+                            case BDConstants.LayoutVariantType.Organisms_Therapy:
                             case BDConstants.LayoutVariantType.Prophylaxis_IERecommendation:
                             case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
                                 if (!pInterrogateOnly)
@@ -653,9 +653,10 @@ namespace BDEditor.Views
                                     showChildControls = false;
                                 }
                                 break;
-                            case BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms:
-                            case BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation:
-                                childTreeNode = BDMicrobiologyTree.BuildBranch(dataContext, node);
+                            case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic:
+                            case BDConstants.LayoutVariantType.Organisms_GramStainInterpretation:
+                            case BDConstants.LayoutVariantType.Organisms_Therapy_with_Subcategory:
+                                childTreeNode = BDOrganismsTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
                                     graftTreeNode(selectedNode, childTreeNode);
@@ -1324,8 +1325,8 @@ namespace BDEditor.Views
 
         private void btnMove_Click(object sender, EventArgs e)
         {
-           // BDUtilities.ExecuteBatchMove(dataContext);
-            BDUtilities.RepairSearchEntryAssociationsForMissingData(dataContext);
+           BDUtilities.ExecuteBatchMove(dataContext);
+           // BDUtilities.RepairSearchEntryAssociationsForMissingData(dataContext);
         }
 
         private void btnDebug_Click(object sender, EventArgs e)

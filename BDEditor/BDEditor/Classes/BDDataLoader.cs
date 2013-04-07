@@ -58,7 +58,7 @@ namespace BDEditor.Classes
 //            chapter5d,
 //            chapter5e,
 
-//            chapter6a, //Microbiology
+//            chapter6a, //Organisms
 //            chapter6b,
 //            chapter6c,
 //            chapter6d
@@ -81,7 +81,7 @@ namespace BDEditor.Classes
         //BDNode table;
         //BDNode tableSection;
         //BDNode tableSubsection;
-        //BDTableRow tableRow;
+        //BDTableRow row;
         //BDTableRow tableHeaderRow;
         //BDTableCell tableCell;
         //BDTableCell tableHeaderCell;
@@ -340,7 +340,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            uuidData = string.Empty;
 //            chapterData = string.Empty;
@@ -441,7 +441,7 @@ namespace BDEditor.Classes
 //                layoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal;
 
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            uuidData = string.Empty;
 //            chapterData = string.Empty;
@@ -523,7 +523,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            uuidData = string.Empty;
 //            chapterData = string.Empty;
@@ -619,7 +619,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            uuidData = string.Empty;
 //            chapterData = string.Empty;
@@ -704,7 +704,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation01;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation01;
@@ -878,7 +878,7 @@ namespace BDEditor.Classes
         //{
         //    string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-        //    //Expectation that a row contains only one element with data
+        //    //Expectation that a tableRows contains only one element with data
 
         //    uuidData = string.Empty;
         //    chapterData = string.Empty;
@@ -1000,7 +1000,7 @@ namespace BDEditor.Classes
         //{
         //    string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-        //    //Expectation that a row contains only one element with data
+        //    //Expectation that a tableRows contains only one element with data
         //    BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Antibiotics;
         //    BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Antibiotics_Pharmacodynamics;
         //    BDConstants.LayoutVariantType categoryLayoutVariant = sectionLayoutVariant;
@@ -1116,7 +1116,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            uuidData = string.Empty;
 //            chapterData = string.Empty;
@@ -1228,7 +1228,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            uuidData = string.Empty;
 //            chapterData = string.Empty;
@@ -1315,7 +1315,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            uuidData = string.Empty;
 //            chapterData = string.Empty;
@@ -1467,7 +1467,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            uuidData = string.Empty;
 //            chapterData = string.Empty;
@@ -1574,7 +1574,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            uuidData = string.Empty;
 //            chapterData = string.Empty;
@@ -1625,7 +1625,7 @@ namespace BDEditor.Classes
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
 //                tableSection = null;
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 //            }
 
@@ -1655,7 +1655,7 @@ namespace BDEditor.Classes
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
 //                tableSection = null;
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 //            }
 //            if ((null != tableData && tableData != string.Empty) && ((null == table) || (table.name != tableData)))
@@ -1683,7 +1683,7 @@ namespace BDEditor.Classes
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
 //                tableSection = null;
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 //            }
 
@@ -1711,7 +1711,7 @@ namespace BDEditor.Classes
 //                }
 //                tableHeaderCell = null;
 //                tableSection = null;
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 //            }
 
@@ -1750,7 +1750,7 @@ namespace BDEditor.Classes
 //                    idxTableHeaderCell++;
 //                }
 //                tableSection = null;
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 
 //            }
@@ -1767,7 +1767,7 @@ namespace BDEditor.Classes
 //                    tableSection.LayoutVariant = BDConstants.LayoutVariantType.Table_3_Column;
 //                    BDNode.Save(dataContext, tableSection);
 
-//                    // do not reset table row counter - otherwise child tableRows will not sort correctly with header row
+//                    // do not reset table tableRows counter - otherwise child tableRows will not sort correctly with header tableRows
 //                    idxTableCell = 0;
 //                }
 //                else
@@ -1776,7 +1776,7 @@ namespace BDEditor.Classes
 //                    idxTableChildren++;
 //                }
 
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 //            }
 //            if ((null != tableSubsectionData && tableSubsectionData != string.Empty) && ((null == tableSubsection) || (tableSubsection.name != tableSubsectionData)))
@@ -1792,7 +1792,7 @@ namespace BDEditor.Classes
 //                    tableSubsection.LayoutVariant = BDConstants.LayoutVariantType.Table_3_Column;
 //                    BDNode.Save(dataContext, tableSubsection);
 
-//                    // do not reset table row counter - otherwise child tableRows will not sort correctly with header row
+//                    // do not reset table tableRows counter - otherwise child tableRows will not sort correctly with header tableRows
 //                    idxTableCell = 0;
 //                }
 //                else
@@ -1801,7 +1801,7 @@ namespace BDEditor.Classes
 //                    idxTableChildren++;
 //                }
 
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 //            }
 //            if ((null != tableCellData && tableCellData != string.Empty) && ((null == tableCell) || tableCell.Uuid.ToString() != uuidData))
@@ -1809,21 +1809,21 @@ namespace BDEditor.Classes
 //                BDTableCell tmpCell = BDTableCell.RetrieveWithId(dataContext, Guid.Parse(uuidData));
 //                if (null == tmpCell)
 //                {
-//                    if (null == tableRow)
+//                    if (null == row)
 //                    {
-//                        tableRow = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow);
-//                        tableRow.LayoutVariant = BDConstants.LayoutVariantType.Table_3_Column_ContentRow;
+//                        row = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow);
+//                        row.LayoutVariant = BDConstants.LayoutVariantType.Table_3_Column_ContentRow;
 //                        if (null == tableSubsectionData || tableSubsectionData == string.Empty)
-//                            tableRow.SetParent(tableSection);
+//                            row.SetParent(tableSection);
 //                        else
-//                            tableRow.SetParent(tableSubsection);
-//                        tableRow.displayOrder = idxTableChildren++;
-//                        BDTableRow.Save(dataContext, tableRow);
+//                            row.SetParent(tableSubsection);
+//                        row.displayOrder = idxTableChildren++;
+//                        BDTableRow.Save(dataContext, row);
 //                        idxTableCell = 0;
 //                    }
 //                    tableCell = BDTableCell.CreateBDTableCell(dataContext, Guid.Parse(uuidData));
 //                    tableCell.displayOrder = idxTableCell++;
-//                    tableCell.SetParent(tableRow);
+//                    tableCell.SetParent(row);
 //                    tableCell.alignment = (int)BDConstants.TableCellAlignment.LeftJustified;
 
 //                    BDTableCell.Save(dataContext, tableCell);
@@ -1836,7 +1836,7 @@ namespace BDEditor.Classes
 
 //                    BDTableCell cell2 = BDTableCell.CreateBDTableCell(dataContext);
 //                    cell2.displayOrder = idxTableCell++;
-//                    cell2.SetParent(tableRow);
+//                    cell2.SetParent(row);
 //                    cell2.alignment = (int)BDConstants.TableCellAlignment.LeftJustified;
 //                    BDTableCell.Save(dataContext, cell2);
 
@@ -1848,7 +1848,7 @@ namespace BDEditor.Classes
 
 //                    BDTableCell cell3 = BDTableCell.CreateBDTableCell(dataContext);
 //                    cell3.displayOrder = idxTableCell++;
-//                    cell3.SetParent(tableRow);
+//                    cell3.SetParent(row);
 //                    cell3.alignment = (int)BDConstants.TableCellAlignment.LeftJustified;
 //                    BDTableCell.Save(dataContext, cell3);
 
@@ -1858,7 +1858,7 @@ namespace BDEditor.Classes
 //                    cell3Value.value = string.Empty;
 //                    BDString.Save(dataContext, cell3Value);
 //                }
-//                //tableRow = null;
+//                //row = null;
 //                //tableCell = null;
 //            }
 //        }
@@ -1871,7 +1871,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            uuidData = string.Empty;
 //            chapterData = string.Empty;
@@ -2034,7 +2034,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Antibiotics;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Antibiotics_CSFPenetration;
 //            BDConstants.LayoutVariantType topicLayoutVariant = sectionLayoutVariant;
@@ -2210,7 +2210,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            uuidData = string.Empty;
 //            chapterData = string.Empty;
@@ -2264,7 +2264,7 @@ namespace BDEditor.Classes
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
 //                tableSection = null;
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 //            }
 
@@ -2294,7 +2294,7 @@ namespace BDEditor.Classes
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
 //                tableSection = null;
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 //            }
 //            if ((subsectionData != string.Empty) && ((null == subsection) || (subsection.name != subsectionData)))
@@ -2325,7 +2325,7 @@ namespace BDEditor.Classes
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
 //                tableSection = null;
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 //            }
 //            if ((topicData != string.Empty) && ((null == subsection) || (subsection.name != topicData)))
@@ -2354,7 +2354,7 @@ namespace BDEditor.Classes
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
 //                tableSection = null;
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 //            }
 //            if ((null != tableData && tableData != string.Empty) && ((null == table) || (table.name != tableData)))
@@ -2382,7 +2382,7 @@ namespace BDEditor.Classes
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
 //                tableSection = null;
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 //            }
 
@@ -2410,7 +2410,7 @@ namespace BDEditor.Classes
 //                }
 //                tableHeaderCell = null;
 //                tableSection = null;
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 //            }
 
@@ -2449,7 +2449,7 @@ namespace BDEditor.Classes
 //                    idxTableHeaderCell++;
 //                }
 //                tableSection = null;
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 
 //            }
@@ -2466,7 +2466,7 @@ namespace BDEditor.Classes
 //                    tableSection.LayoutVariant = BDConstants.LayoutVariantType.Table_3_Column;
 //                    BDNode.Save(dataContext, tableSection);
 
-//                    // do not reset table row counter - otherwise child tableRows will not sort correctly with header row
+//                    // do not reset table tableRows counter - otherwise child tableRows will not sort correctly with header tableRows
 //                    idxTableCell = 0;
 //                }
 //                else
@@ -2475,7 +2475,7 @@ namespace BDEditor.Classes
 //                    idxTableChildren++;
 //                }
 
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 //            }
 //            if ((null != tableCellData && tableCellData != string.Empty) && ((null == tableCell) || tableCell.Uuid.ToString() != uuidData))
@@ -2483,18 +2483,18 @@ namespace BDEditor.Classes
 //                BDTableCell tmpCell = BDTableCell.RetrieveWithId(dataContext, Guid.Parse(uuidData));
 //                if (null == tmpCell)
 //                {
-//                    if (null == tableRow)
+//                    if (null == row)
 //                    {
-//                        tableRow = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow);
-//                        tableRow.LayoutVariant = BDConstants.LayoutVariantType.Table_3_Column_ContentRow;
-//                        tableRow.SetParent(tableSection);
-//                        tableRow.displayOrder = idxTableChildren++;
-//                        BDTableRow.Save(dataContext, tableRow);
+//                        row = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow);
+//                        row.LayoutVariant = BDConstants.LayoutVariantType.Table_3_Column_ContentRow;
+//                        row.SetParent(tableSection);
+//                        row.displayOrder = idxTableChildren++;
+//                        BDTableRow.Save(dataContext, row);
 //                        idxTableCell = 0;
 //                    }
 //                    tableCell = BDTableCell.CreateBDTableCell(dataContext, Guid.Parse(uuidData));
 //                    tableCell.displayOrder = idxTableCell++;
-//                    tableCell.SetParent(tableRow);
+//                    tableCell.SetParent(row);
 //                    tableCell.alignment = (int)BDConstants.TableCellAlignment.LeftJustified;
 
 //                    BDTableCell.Save(dataContext, tableCell);
@@ -2507,7 +2507,7 @@ namespace BDEditor.Classes
 
 //                    BDTableCell cell2 = BDTableCell.CreateBDTableCell(dataContext);
 //                    cell2.displayOrder = idxTableCell++;
-//                    cell2.SetParent(tableRow);
+//                    cell2.SetParent(row);
 //                    cell2.alignment = (int)BDConstants.TableCellAlignment.LeftJustified;
 //                    BDTableCell.Save(dataContext, cell2);
 
@@ -2519,7 +2519,7 @@ namespace BDEditor.Classes
 
 //                    BDTableCell cell3 = BDTableCell.CreateBDTableCell(dataContext);
 //                    cell3.displayOrder = idxTableCell++;
-//                    cell3.SetParent(tableRow);
+//                    cell3.SetParent(row);
 //                    cell3.alignment = (int)BDConstants.TableCellAlignment.LeftJustified;
 //                    BDTableCell.Save(dataContext, cell3);
 
@@ -2529,7 +2529,7 @@ namespace BDEditor.Classes
 //                    cell3Value.value = string.Empty;
 //                    BDString.Save(dataContext, cell3Value);
 //                }
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 //            }
 //        }
@@ -2542,7 +2542,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Dental;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Dental_Prophylaxis;
@@ -2663,7 +2663,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Dental;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis;
@@ -2808,7 +2808,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Dental;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Dental_Prophylaxis_Endocarditis_AntibioticRegimen;
@@ -2955,7 +2955,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Dental;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Dental_Prophylaxis_Prosthetics;
@@ -3133,7 +3133,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Dental;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens;
@@ -3281,7 +3281,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Dental;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Dental_RecommendedTherapy;
@@ -3335,7 +3335,7 @@ namespace BDEditor.Classes
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
 //                tableSection = null;
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 //            }
 
@@ -3364,7 +3364,7 @@ namespace BDEditor.Classes
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
 //                tableSection = null;
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 //            }
 //            if ((null != tableData && tableData != string.Empty) && ((null == table) || (table.name != tableData)))
@@ -3391,7 +3391,7 @@ namespace BDEditor.Classes
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
 //                tableSection = null;
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 //            }
 
@@ -3417,7 +3417,7 @@ namespace BDEditor.Classes
 //                }
 //                tableHeaderCell = null;
 //                tableSection = null;
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 //            }
 
@@ -3456,28 +3456,28 @@ namespace BDEditor.Classes
 //                    idxTableHeaderCell++;
 //                }
 //                tableSection = null;
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 //            }
 
-//            if ((null != tableRowData && tableRowData != string.Empty) && ((null == tableRow) || (tableRow.name != tableRowData)))
+//            if ((null != tableRowData && tableRowData != string.Empty) && ((null == row) || (row.name != tableRowData)))
 //            {
 //                BDTableRow tmpRow = BDTableRow.RetrieveTableRowWithId(dataContext, Guid.Parse(uuidData));
 //                if (null == tmpRow)
 //                {
-//                    tableRow = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow, Guid.Parse(uuidData));
+//                    row = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow, Guid.Parse(uuidData));
 
-//                    tableRow.name = (tableRowData == @"(Data)") ? string.Empty : tableRowData;
-//                    tableRow.SetParent(table);
-//                    tableRow.displayOrder = idxTableChildren++;
-//                    tableRow.LayoutVariant = contentRowLayoutVariant;
-//                    BDTableRow.Save(dataContext, tableRow);
+//                    row.name = (tableRowData == @"(Data)") ? string.Empty : tableRowData;
+//                    row.SetParent(table);
+//                    row.displayOrder = idxTableChildren++;
+//                    row.LayoutVariant = contentRowLayoutVariant;
+//                    BDTableRow.Save(dataContext, row);
 
 //                    idxTableCell = 0;
 //                }
 //                else
 //                {
-//                    tableRow = tmpRow;
+//                    row = tmpRow;
 //                    idxTableChildren++;
 //                }
 
@@ -3489,23 +3489,23 @@ namespace BDEditor.Classes
 //                BDTableCell tmpCell = BDTableCell.RetrieveWithId(dataContext, Guid.Parse(uuidData));
 //                if (null == tmpCell)
 //                {
-//                    if (null == tableRow)
+//                    if (null == row)
 //                    {
-//                        tableRow = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow);
-//                        tableRow.LayoutVariant = contentRowLayoutVariant;
+//                        row = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow);
+//                        row.LayoutVariant = contentRowLayoutVariant;
 //                        if (null == tableSubsectionData || tableSubsectionData == string.Empty)
-//                            tableRow.SetParent(tableSection);
+//                            row.SetParent(tableSection);
 //                        else
-//                            tableRow.SetParent(tableSubsection);
-//                        tableRow.displayOrder = idxTableChildren++;
-//                        BDTableRow.Save(dataContext, tableRow);
+//                            row.SetParent(tableSubsection);
+//                        row.displayOrder = idxTableChildren++;
+//                        BDTableRow.Save(dataContext, row);
 //                        idxTableCell = 0;
 //                    }
-//                    //BDFabrik.GetTableColumnCount() defines this row layoutVariant as having 8 cells
+//                    //BDFabrik.GetTableColumnCount() defines this tableRows layoutVariant as having 8 cells
 //                    // 1
 //                    tableCell = BDTableCell.CreateBDTableCell(dataContext, Guid.Parse(uuidData));
 //                    tableCell.displayOrder = idxTableCell++;
-//                    tableCell.SetParent(tableRow);
+//                    tableCell.SetParent(row);
 //                    tableCell.alignment = (int)BDConstants.TableCellAlignment.LeftJustified;
 //                    BDTableCell.Save(dataContext, tableCell);
 
@@ -3520,7 +3520,7 @@ namespace BDEditor.Classes
 //                    {
 //                        BDTableCell idxCell = BDTableCell.CreateBDTableCell(dataContext);
 //                        idxCell.displayOrder = idxTableCell++;
-//                        idxCell.SetParent(tableRow);
+//                        idxCell.SetParent(row);
 //                        idxCell.alignment = (int)BDConstants.TableCellAlignment.LeftJustified;
 //                        BDTableCell.Save(dataContext, idxCell);
 
@@ -3542,7 +3542,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Dental;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Dental_RecommendedTherapy_Microorganisms;
@@ -3664,7 +3664,7 @@ namespace BDEditor.Classes
 //            BDConstants.LayoutVariantType diseaseLayoutVariant = categoryLayoutVariant;
 //            BDConstants.LayoutVariantType presentationLayoutVariant = diseaseLayoutVariant;
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            uuidData = string.Empty;
 //            chapterData = string.Empty;
@@ -3763,7 +3763,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.PregancyLactation;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy;
@@ -3921,7 +3921,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.PregancyLactation;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation;
@@ -4128,7 +4128,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.PregancyLactation;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases;
@@ -4242,7 +4242,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.PregancyLactation;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection;
@@ -4330,7 +4330,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.PregancyLactation;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.PregnancyLactation_Perinatal_HIVProtocol;
@@ -4386,17 +4386,17 @@ namespace BDEditor.Classes
 //        }
 
 //        /// <summary>
-//        /// Microbiology - Gram Stain Interpretation
+//        /// Organisms - Gram Stain Interpretation
 //        /// </summary>
 //        /// <param name="pInputLine"></param>
 //        private void ProcessChapter6aInputLine(string pInputLine)
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
-//            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Microbiology;
-//            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Microbiology_GramStainInterpretation;
+//            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Organisms;
+//            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Organisms_GramStainInterpretation;
 //            BDConstants.LayoutVariantType categoryLayoutVariant = sectionLayoutVariant;
 //            BDConstants.LayoutVariantType subcategoryLayoutVariant = sectionLayoutVariant;
 //            BDConstants.LayoutVariantType microorganismLayoutVariant = sectionLayoutVariant;
@@ -4533,17 +4533,17 @@ namespace BDEditor.Classes
 //        }
 
 //        /// <summary>
-//        /// Microbiology - commensal and pathogenic
+//        /// Organisms - commensal and pathogenic
 //        /// </summary>
 //        /// <param name="pInputLine"></param>
 //        private void ProcessChapter6bInputLine(string pInputLine)
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
-//            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Microbiology;
-//            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Microbiology_CommensalAndPathogenicOrganisms;
+//            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Organisms;
+//            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic;
 //            BDConstants.LayoutVariantType categoryLayoutVariant = sectionLayoutVariant;
 //            BDConstants.LayoutVariantType subcategoryLayoutVariant = sectionLayoutVariant;
 //            BDConstants.LayoutVariantType microorganismGroupLayoutVariant = sectionLayoutVariant;
@@ -4721,17 +4721,17 @@ namespace BDEditor.Classes
 //        }
 
 //        /// <summary>
-//        /// Microbiology - Empiric Therapy
+//        /// Organisms - Empiric Therapy
 //        /// </summary>
 //        /// <param name="pInputLine"></param>
 //        private void ProcessChapter6cInputLine(string pInputLine)
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
-//            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Microbiology;
-//            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Microbiology_EmpiricTherapy;
+//            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Organisms;
+//            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Organisms_Therapy;
 //            BDConstants.LayoutVariantType categoryLayoutVariant = sectionLayoutVariant;
 //            BDConstants.LayoutVariantType microorganismGroupLayoutVariant = sectionLayoutVariant;
 //            BDConstants.LayoutVariantType microorganismLayoutVariant = sectionLayoutVariant;
@@ -4868,17 +4868,17 @@ namespace BDEditor.Classes
 //        }
 
 //        /// <summary>
-//        /// Microbiology - Antibiogram
+//        /// Organisms - Antibiogram
 //        /// </summary>
 //        /// <param name="pInputLine"></param>
 //        private void ProcessChapter6dInputLine(string pInputLine)
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
-//            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Microbiology;
-//            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Microbiology_Antibiogram;
+//            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Organisms;
+//            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Organisms_Antibiogram;
 
 //            uuidData = string.Empty;
 //            chapterData = string.Empty;
@@ -4937,11 +4937,11 @@ namespace BDEditor.Classes
 //        private void ProcessChapter3aInputLine(string pInputLine) {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
-//            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_PreOp;
-//            BDConstants.LayoutVariantType tableLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_PreOp;
+//            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_PreOp;
+//            BDConstants.LayoutVariantType tableLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_PreOp;
 //            BDConstants.LayoutVariantType tableSectionLayoutVariant = sectionLayoutVariant;
 //            BDConstants.LayoutVariantType headerRowLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_PreOp_HeaderRow;
 //            BDConstants.LayoutVariantType contentRowLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_PreOp_ContentRow;
@@ -4986,7 +4986,7 @@ namespace BDEditor.Classes
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
 //                tableSection = null;
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 
 //                idxSection = 0;
@@ -5026,7 +5026,7 @@ namespace BDEditor.Classes
 //                tableHeaderRow = null;
 //                tableHeaderCell = null;
 //                tableSection = null;
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 
 //                idxTableChildren = 0;
@@ -5053,7 +5053,7 @@ namespace BDEditor.Classes
 //                }
 //                tableHeaderCell = null;
 //                tableSection = null;
-//                tableRow = null;
+//                row = null;
 //                tableCell = null;
 
 //                idxTableHeaderCell = 0;
@@ -5110,7 +5110,7 @@ namespace BDEditor.Classes
 //                    tableSection.LayoutVariant = tableSectionLayoutVariant;
 //                    BDNode.Save(dataContext, tableSection);
 
-//                    // do not reset table row counter - otherwise child tableRows will not sort correctly with header row
+//                    // do not reset table tableRows counter - otherwise child tableRows will not sort correctly with header tableRows
 //                    idxTableCell = 0;
 //                }
 //                else
@@ -5120,23 +5120,23 @@ namespace BDEditor.Classes
 //                }
 //            }
 
-//            if ((null != tableRowData && tableRowData != string.Empty) && ((null == tableRow) || (tableRow.name != tableRowData)))
+//            if ((null != tableRowData && tableRowData != string.Empty) && ((null == row) || (row.name != tableRowData)))
 //            {
-//                // ignore the seed data - will create a row below.
+//                // ignore the seed data - will create a tableRows below.
 //                //BDTableRow tmpRow = BDTableRow.RetrieveTableRowWithId(dataContext, Guid.Parse(uuidData));
 //                //if (null == tmpRow)
 //                //{
-//                //    tableRow = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow, Guid.Parse(uuidData));
+//                //    row = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow, Guid.Parse(uuidData));
 
-//                //    tableRow.name = string.Empty;
-//                //    tableRow.SetParent(tableSection);
-//                //    tableRow.displayOrder = idxTableChildren++;
-//                //    tableRow.LayoutVariant = contentRowLayoutVariant;
-//                //    BDTableRow.Save(dataContext, tableRow);
+//                //    row.name = string.Empty;
+//                //    row.SetParent(tableSection);
+//                //    row.displayOrder = idxTableChildren++;
+//                //    row.LayoutVariant = contentRowLayoutVariant;
+//                //    BDTableRow.Save(dataContext, row);
 //                //}
 //                //else
 //                //{
-//                //    tableRow = tmpRow;
+//                //    row = tmpRow;
 //                //    idxTableChildren++;
 //                //}
 
@@ -5147,13 +5147,13 @@ namespace BDEditor.Classes
 //                tableCell = null;
 //                idxTableCell = 0;
 
-//                tableRow = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow, Guid.NewGuid());
+//                row = BDTableRow.CreateBDTableRow(dataContext, BDConstants.BDNodeType.BDTableRow, Guid.NewGuid());
 
-//                tableRow.name = string.Empty;
-//                tableRow.SetParent(tableSection);
-//                tableRow.displayOrder = idxTableChildren++;
-//                tableRow.LayoutVariant = contentRowLayoutVariant;
-//                BDTableRow.Save(dataContext, tableRow);
+//                row.name = string.Empty;
+//                row.SetParent(tableSection);
+//                row.displayOrder = idxTableChildren++;
+//                row.LayoutVariant = contentRowLayoutVariant;
+//                BDTableRow.Save(dataContext, row);
 
 //                BDTableCell tmpCell = BDTableCell.RetrieveWithId(dataContext, Guid.Parse(uuidData));
 //                if (null == tmpCell)
@@ -5161,7 +5161,7 @@ namespace BDEditor.Classes
 //                    //BDFabrik.GetTableColumnCount() defines the number of cells for the layout variant
 //                    tableCell = BDTableCell.CreateBDTableCell(dataContext, Guid.Parse(uuidData));
 //                    tableCell.displayOrder = idxTableCell++;
-//                    tableCell.SetParent(tableRow);
+//                    tableCell.SetParent(row);
 //                    tableCell.alignment = (int)BDConstants.TableCellAlignment.LeftJustified;
 //                    BDTableCell.Save(dataContext, tableCell);
 
@@ -5176,7 +5176,7 @@ namespace BDEditor.Classes
 //                    {
 //                        BDTableCell idxCell = BDTableCell.CreateBDTableCell(dataContext);
 //                        idxCell.displayOrder = idxTableCell++;
-//                        idxCell.SetParent(tableRow);
+//                        idxCell.SetParent(row);
 //                        idxCell.alignment = (int)BDConstants.TableCellAlignment.LeftJustified;
 //                        BDTableCell.Save(dataContext, idxCell);
 
@@ -5197,7 +5197,7 @@ namespace BDEditor.Classes
 //        private void ProcessChapter3bInputLine(string pInputLine) {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
@@ -5372,7 +5372,7 @@ namespace BDEditor.Classes
 //        private void ProcessChapter3cInputLine(string pInputLine) {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
@@ -5487,7 +5487,7 @@ namespace BDEditor.Classes
 //        private void ProcessChapter3dInputLine(string pInputLine) {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage;
@@ -5611,7 +5611,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_FluidExposure;
@@ -5821,7 +5821,7 @@ namespace BDEditor.Classes
 //        private void ProcessChapter3fInputLine(string pInputLine) {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_SexualAssault;
@@ -6079,7 +6079,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine;
@@ -6269,7 +6269,7 @@ namespace BDEditor.Classes
 //        {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Immunization;
@@ -6471,7 +6471,7 @@ namespace BDEditor.Classes
 //        private void ProcessChapter3iInputLine(string pInputLine) {
 //            string[] elements = pInputLine.Split(delimiters, StringSplitOptions.None);
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Immunization;
@@ -6564,7 +6564,7 @@ namespace BDEditor.Classes
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Communicable;
 //            BDConstants.LayoutVariantType diseaseLayoutVariant = BDConstants.LayoutVariantType.Undefined;
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 
 //            uuidData = string.Empty;
 //            chapterData = string.Empty;
@@ -6729,7 +6729,7 @@ namespace BDEditor.Classes
 //            microorganismGroupData = string.Empty;
 //            microorganismData = string.Empty;
 
-//            //Expectation that a row contains only one element with data
+//            //Expectation that a tableRows contains only one element with data
 //            if (elements.Length > 0) uuidData = elements[0];
 //            if (elements.Length > 1) chapterData = elements[1];
 //            if (elements.Length > 2) sectionData = elements[2];

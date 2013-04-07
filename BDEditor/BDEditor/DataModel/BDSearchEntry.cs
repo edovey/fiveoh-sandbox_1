@@ -147,8 +147,9 @@ namespace BDEditor.DataModel
         public static List<BDSearchEntry> RetrieveAll(Entities pContext)
         {
             List<BDSearchEntry> entryList;
-            IQueryable<BDSearchEntry> entries = (from bdNodes in pContext.BDSearchEntries
-                                                    select bdNodes);
+            IQueryable<BDSearchEntry> entries = (from entry in pContext.BDSearchEntries
+                                                 orderby entry.name
+                                                    select entry);
             entryList = new List<BDSearchEntry>(entries.ToList<BDSearchEntry>());
             return entryList;
         }
@@ -165,6 +166,7 @@ namespace BDEditor.DataModel
             IQueryable<BDSearchEntry> entries = (from e in pContext.BDSearchEntries
                                                  join a in pContext.BDSearchEntryAssociations
                                                  on e.uuid equals a.searchEntryId
+                                                 orderby e.name
                                                  select e);
 
             entryList = new List<IBDObject>(entries.ToList<BDSearchEntry>().Distinct<BDSearchEntry>());
@@ -207,6 +209,7 @@ namespace BDEditor.DataModel
                                                  join searchEntries in pContext.BDSearchEntries
                                                  on assns.searchEntryId equals searchEntries.uuid
                                                  where assns.displayParentId == pDisplayParentId
+                                                 orderby searchEntries.name
                                                  select searchEntries );
             resultList = new List<BDSearchEntry>(entries.ToList<BDSearchEntry>());
             return resultList;
@@ -225,6 +228,7 @@ namespace BDEditor.DataModel
                                                  join searchEntries in pContext.BDSearchEntries
                                                  on assns.searchEntryId equals searchEntries.uuid
                                                  where assns.anchorNodeId == pAnchorNodeUuid
+                                                 orderby searchEntries.name
                                                  select searchEntries);
             resultList = new List<BDSearchEntry>(entries.ToList<BDSearchEntry>());
             return resultList;

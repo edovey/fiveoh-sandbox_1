@@ -78,6 +78,14 @@ namespace BDEditor.Views
             lbSearchEntryAssociations.BeginUpdate();
             searchEntryAssociations.Clear();
 
+            if (null == currentSearchEntry)
+            {
+                if (lbExistingSearchEntries.SelectedIndices.Count > 0)
+                {
+                    currentSearchEntry = searchEntries[lbExistingSearchEntries.SelectedIndices[0]];
+                }
+            }
+
             if (null != currentSearchEntry)
             {
                 currentSearchEntryAssociation = null;
@@ -103,12 +111,8 @@ namespace BDEditor.Views
                     // repair any missing data : needed for converting from fully generated associations to managed associations
                     if (string.IsNullOrEmpty(currentSearchEntryAssociation.editorContext))
                         currentSearchEntryAssociation.editorContext = currentSearchEntryAssociation.displayContext;
-                    
-                    // if the anchor id is empty we can't assume what it might be - it has to be determined from the UI at the node
-                    //if (currentSearchEntryAssociation.anchorNodeId == Guid.Empty)
-                    //    currentSearchEntryAssociation.anchorNodeId = ownerUuid;
 
-                   // adjust editorContext for visibility
+                    // adjust editorContext for visibility
                     if (currentSearchEntryAssociation.editorContext.IndexOf("*") != 0)
                         currentSearchEntryAssociation.editorContext = currentSearchEntryAssociation.editorContext.Insert(0, "*");
 
@@ -136,16 +140,38 @@ namespace BDEditor.Views
             btnEditSearchEntry.Enabled = (lbExistingSearchEntries.SelectedIndices.Count > 0) ? true : false;
             
             btnOk.Enabled = formHasChanges;
-            btnCancel.Enabled = !formHasChanges;
+            //btnCancel.Enabled = !formHasChanges;
         }
 
         private void btnDeleteSearchEntry_Click(object sender, EventArgs e)
         {
-            entriesToDelete.Add(currentSearchEntry);
-            allSearchEntries.Remove(currentSearchEntry);
-            reloadAvailableEntries();
+            if (null != currentSearchEntry)
+            {
+                bool okToDelete = false;
+                List<BDSearchEntryAssociation> assns = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryId(dataContext, currentSearchEntry.Uuid);
+                if (assns.Count > 0)
+                {
+                    DialogResult confirm = MessageBox.Show("This entry has existing links.  Are you sure?", "Confirm Delete", MessageBoxButtons.OKCancel);
+                    if (confirm == DialogResult.OK)
+                        okToDelete = true;
+                }
+                else
+                    okToDelete = true;
 
-            formHasChanges = true;
+                if(okToDelete)
+                {
+                    entriesToDelete.Add(currentSearchEntry);
+                    allSearchEntries.Remove(currentSearchEntry);
+                    currentSearchEntry = null;
+                    currentSearchEntryAssociation = null;
+
+                    reloadAvailableEntries();
+                    reloadAssociatedLocations();
+
+                    formHasChanges = true;
+                    resetButtons();
+                }
+            }
         }
 
         private void btnAddNewSearchEntry_Click(object sender, EventArgs e)
@@ -296,6 +322,7 @@ namespace BDEditor.Views
             {
                 BDSearchEntryAssociation selected = searchEntryAssociations[lbSearchEntryAssociations.SelectedIndex];
                 associationsToDelete.Add(selected);
+                searchEntryAssociations.Remove(selected);
 
                 formHasChanges = true;
                 resetButtons();

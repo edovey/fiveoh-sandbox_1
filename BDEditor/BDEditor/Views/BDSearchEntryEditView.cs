@@ -115,21 +115,12 @@ namespace BDEditor.Views
             if (null != currentNode)
             {
                 List<BDSearchEntry> tmpSelected = BDSearchEntry.RetrieveSearchEntriesForAnchorNode(dataContext, currentNode.Uuid);
-                // search entries generated but never edited may not have the anchor id 
-                // so any entries found by backtracking through the HTML page are added
-                htmlPageUuid = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(dataContext, currentNode.Uuid);
-                tmpSelected.AddRange(BDSearchEntry.RetrieveSearchEntriesForDisplayParent(dataContext, htmlPageUuid));
-
                 selectedSearchEntries = new BDSearchEntryBindingList(tmpSelected.Distinct().ToList());
                 lbSelectedSearchEntries.DataSource = selectedSearchEntries;
             }
             else if (null != currentLinkedNoteAssociation)
             {
                 List<BDSearchEntry> tmpSelected = BDSearchEntry.RetrieveSearchEntriesForAnchorNode(dataContext, currentLinkedNoteAssociation.Uuid);
-                // search entries generated but never edited may not have the anchor id 
-                // so any entries found by backtracking through the HTML page are added
-                htmlPageUuid = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(dataContext, currentLinkedNoteAssociation.Uuid);
-                tmpSelected.AddRange(BDSearchEntry.RetrieveSearchEntriesForDisplayParent(dataContext, htmlPageUuid));
                 selectedSearchEntries = new BDSearchEntryBindingList(tmpSelected.Distinct().ToList());
                 lbSelectedSearchEntries.DataSource = selectedSearchEntries;
             }
@@ -155,7 +146,7 @@ namespace BDEditor.Views
                         nodeAssn.displayOrder = searchEntryAssociations.IndexOf(nodeAssn);
                         BDSearchEntryAssociation.Save(dataContext, nodeAssn);
                     }
-                    if (nodeAssn.anchorNodeId == ownerUuid || nodeAssn.displayParentId == htmlPageUuid)
+                    if (nodeAssn.anchorNodeId == ownerUuid)
                         currentSearchEntryAssociation = nodeAssn;
                     // repair if empty so there is something to display on the UI
                     if (string.IsNullOrEmpty(nodeAssn.editorContext))
@@ -197,13 +188,10 @@ namespace BDEditor.Views
 
             cbFilterList.Enabled = tbEntryName.TextLength > 0 ? true : false;
 
-            //btnDeleteAssociation.Enabled = lbSearchEntryAssociations.SelectedItems.Count > 0 ? true : false;
-
             btnRemoveFromSelected.Enabled = lbSelectedSearchEntries.SelectedIndices.Count > 0 ? true : false;
             btnAddToSelected.Enabled = lbExistingSearchEntries.SelectedIndices.Count > 0 ? true : false;
 
-            //btnDeleteSearchEntry.Enabled = (lbExistingSearchEntries.SelectedIndices.Count > 0 || lbSelectedSearchEntries.SelectedIndices.Count > 0) ? true : false;
-            btnEditSearchEntry.Enabled = (lbExistingSearchEntries.SelectedIndices.Count > 0 || lbSelectedSearchEntries.SelectedIndices.Count > 0) ? true : false;
+            btnEditSearchEntry.Enabled = (lbSelectedSearchEntries.SelectedIndices.Count > 0) ? true : false;
             
             btnOk.Enabled = formHasChanges;
             btnCancel.Enabled = !formHasChanges;
@@ -251,7 +239,7 @@ namespace BDEditor.Views
             {
                 availableSearchEntries.Add(entry);
                 selectedSearchEntries.Remove(entry);
-                List<BDSearchEntryAssociation> assns = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryIdAndDisplayParentid(dataContext, entry.Uuid, currentNode.Uuid);
+                List<BDSearchEntryAssociation> assns = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryIdAndAnchorNodeId(dataContext, entry.Uuid, currentNode.Uuid);
                 
                 foreach (BDSearchEntryAssociation assn in assns)
                 {
@@ -352,28 +340,33 @@ namespace BDEditor.Views
         
         private void btnEditSearchEntry_Click(object sender, EventArgs e)
         {
-            BDSearchEntry selected = availableSearchEntries[lbExistingSearchEntries.SelectedIndex];
-            using (BDEditNameDialog editDialog = new BDEditNameDialog())
+            if (lbSelectedSearchEntries.SelectedIndex >= 0)
             {
-                editDialog.IndexEntryName = selected.name;
-                DialogResult result = editDialog.ShowDialog();
-                string newName = editDialog.IndexEntryName;
-                if (result == DialogResult.OK && !string.IsNullOrEmpty(newName))
+                BDSearchEntry selected = selectedSearchEntries[lbSelectedSearchEntries.SelectedIndex];
+                using (BDEditNameDialog editDialog = new BDEditNameDialog())
                 {
-                    BDSearchEntry existingMatch = BDSearchEntry.RetrieveWithName(dataContext, newName);
-                    if (null == existingMatch || existingMatch.name != newName)
+                    editDialog.IndexEntryName = selected.name;
+                    DialogResult result = editDialog.ShowDialog();
+                    string newName = editDialog.IndexEntryName;
+                    if (result == DialogResult.OK && !string.IsNullOrEmpty(newName))
                     {
-                        selected.name = newName;
-                        BDSearchEntry.Save(dataContext, selected);
-                        reloadAssociatedLocations();
+                        BDSearchEntry existingMatch = BDSearchEntry.RetrieveWithName(dataContext, newName);
+                        if (null == existingMatch || existingMatch.name != newName)
+                        {
+                            selected.name = newName;
+                            BDSearchEntry.Save(dataContext, selected);
+                            reloadAssociatedLocations();
 
-                        availableSearchEntries.Sort("name", ListSortDirection.Ascending);
-                        formHasChanges = true;
+                            selectedSearchEntries.Sort("name", ListSortDirection.Ascending);
+                            formHasChanges = true;
+                        }
+                        else
+                            MessageBox.Show("An entry with that name already exists");
                     }
-                    else
-                        MessageBox.Show("An entry with that name already exists");
                 }
             }
+            else
+                MessageBox.Show("Please select an entry to edit");
         }
 
         private void btnMoveAssnPrevious_Click(object sender, EventArgs e)
@@ -438,7 +431,10 @@ namespace BDEditor.Views
         private void btnCancel_Click(object sender, EventArgs e)
         {
             if (currentSearchEntryAssociation != null && currentSearchEntryAssociation.editorContext.IndexOf("*") == 0)
+            {
                 currentSearchEntryAssociation.editorContext = currentSearchEntryAssociation.editorContext.Substring(1);
+                BDSearchEntryAssociation.Save(dataContext, currentSearchEntryAssociation);
+            }
 
             this.DialogResult = DialogResult.Cancel;
         }
@@ -446,7 +442,10 @@ namespace BDEditor.Views
         private void btnOk_Click(object sender, EventArgs e)
         {
             if (currentSearchEntryAssociation != null && currentSearchEntryAssociation.editorContext.IndexOf("*") == 0)
+            {
                 currentSearchEntryAssociation.editorContext = currentSearchEntryAssociation.editorContext.Substring(1);
+                BDSearchEntryAssociation.Save(dataContext, currentSearchEntryAssociation);
+            }
 
             this.DialogResult = DialogResult.OK;
         }
@@ -459,8 +458,11 @@ namespace BDEditor.Views
             if (lbSelectedSearchEntries.SelectedIndices.Count > 0)
             {
                 currentSearchEntry = selectedSearchEntries[lbSelectedSearchEntries.SelectedIndices[0]];
-                if (currentSearchEntryAssociation.editorContext.IndexOf("*") == 0)
+                if (null != currentSearchEntryAssociation && currentSearchEntryAssociation.editorContext.IndexOf("*") == 0)
+                {
                     currentSearchEntryAssociation.editorContext = currentSearchEntryAssociation.editorContext.Substring(1);
+                    BDSearchEntryAssociation.Save(dataContext, currentSearchEntryAssociation);
+                }
                 reloadAssociatedLocations();
             }
             resetButtons();

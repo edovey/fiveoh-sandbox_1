@@ -2373,5 +2373,197 @@ namespace BDEditor.Classes
 
             return propertyList;
         }
+
+        public static bool LayoutHasFirstDosage(BDConstants.LayoutVariantType pLayoutVariant)
+        {
+            bool returnValue = true;
+            return returnValue;
+        }
+
+        public static bool LayoutHasFirstDuration(BDConstants.LayoutVariantType pLayoutVariant)
+        {
+            bool returnValue = true;
+
+            switch (pLayoutVariant)
+            {
+                // layouts with no duration
+                case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Adult:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Paediatric:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics:
+                case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
+                case BDConstants.LayoutVariantType.Dental_Prophylaxis:
+                    returnValue = false;
+                    break;
+            }
+            return returnValue;
+        }
+        public static bool LayoutHasSecondDosage(BDConstants.LayoutVariantType pLayoutVariant)
+        {
+            bool returnValue = false;
+
+            switch (pLayoutVariant)
+            {
+                // layouts without second dosage
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic:
+                case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
+                case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
+                case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
+                case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
+                case BDConstants.LayoutVariantType.Organisms_Therapy:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_ViridansStrep:
+                    returnValue = false;
+                    break;
+            }
+            return returnValue;
+        }
+
+        public static bool LayoutHasSecondDuration(BDConstants.LayoutVariantType pLayoutVariant)
+        {
+            bool returnValue = true;
+
+            switch (pLayoutVariant)
+            {
+                // layouts wihout second duration
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic:
+                case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
+                case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
+                case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
+                case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
+                case BDConstants.LayoutVariantType.Organisms_Therapy:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Adult:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Paediatric:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics:
+                case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation05_CultureProvenPeritonitis:
+                case BDConstants.LayoutVariantType.Dental_Prophylaxis:
+                    returnValue = false;
+                    break;
+            }
+            return returnValue;
+        }
+        public static bool LayoutHasThirdDosage(BDConstants.LayoutVariantType pLayoutVariant)
+        {
+            bool returnValue = true;
+
+            switch (pLayoutVariant)
+            {
+                // layouts without third dosage
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic:
+                case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
+                case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
+                case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
+                case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
+                case BDConstants.LayoutVariantType.Organisms_Therapy:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Adult:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Paediatric:
+                case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics:
+                case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation05_CultureProvenPeritonitis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_ViridansStrep:
+                case BDConstants.LayoutVariantType.Dental_Prophylaxis:
+                    returnValue = false;
+                    break;
+            }
+            return returnValue;
+        }
+        public static bool LayoutHasThirdDuration(BDConstants.LayoutVariantType pLayoutVariant)
+        {
+            bool returnValue = true;
+
+            switch (pLayoutVariant)
+            {
+                // layouts without third duration
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic:
+                case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
+                case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
+                case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
+                case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
+                case BDConstants.LayoutVariantType.Organisms_Therapy:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Adult:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Paediatric:
+                case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics:
+                case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation05_CultureProvenPeritonitis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
+                case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_ViridansStrep:
+                case BDConstants.LayoutVariantType.Dental_Prophylaxis:
+                    returnValue = false;
+                    break;
+            }
+            return returnValue;
+        }
     }
 }

@@ -720,157 +720,67 @@ namespace BDEditor.Views
 
             switch (DefaultLayoutVariantType)
             {
-                case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation06_CultureProvenMeningitis:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation13_VesicularLesions:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation15_CultureProvenPneumonia:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic:
-                case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
-                case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
-                case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
-                case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
-                case BDConstants.LayoutVariantType.Organisms_Therapy:
-                    // remove dosage1, dosage2, duration1, duration2
-                    pnlMain.Controls.Remove(tbDosage1);
-                    pnlMain.Controls.Remove(chkPreviousDose1);
-                    pnlMain.Controls.Remove(btnDosage1Link);
-                    pnlMain.Controls.Remove(tbDosage2);
-                    pnlMain.Controls.Remove(chkPreviousDose2);
-                    pnlMain.Controls.Remove(btnDosage2Link);
-                    pnlMain.Controls.Remove(tbDuration1);
-                    pnlMain.Controls.Remove(chkPreviousDuration1);
-                    pnlMain.Controls.Remove(btnDuration1Link);
-                    pnlMain.Controls.Remove(tbDuration2);
-                    pnlMain.Controls.Remove(chkPreviousDuration2);
-                    pnlMain.Controls.Remove(btnDuration2Link);
-                    break;
                 case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Adult:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Paediatric:
-                    // remove dosage2, duration, duration1, duration2
-                    pnlMain.Controls.Remove(tbDosage2);
-                    pnlMain.Controls.Remove(chkPreviousDose2);
-                    pnlMain.Controls.Remove(btnDosage2Link);
-                    pnlMain.Controls.Remove(tbDuration);
-                    pnlMain.Controls.Remove(chkPreviousDuration);
-                    pnlMain.Controls.Remove(btnDurationLink);
-                    pnlMain.Controls.Remove(tbDuration1);
-                    pnlMain.Controls.Remove(chkPreviousDuration1);
-                    pnlMain.Controls.Remove(btnDuration1Link);
-                    pnlMain.Controls.Remove(chkPreviousDuration2);
-                    pnlMain.Controls.Remove(btnDuration2Link);
-                    pnlMain.Controls.Remove(tbDuration2);
                     toolTip1.SetToolTip(tbDosage, "Intermittent Dose");
                     toolTip1.SetToolTip(tbDosage1, "Continuous Dose (per L bag)");
                     break;
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
-                    // remove dosage2, duration2
-                    pnlMain.Controls.Remove(tbDosage2);
-                    pnlMain.Controls.Remove(chkPreviousDose2);
-                    pnlMain.Controls.Remove(btnDosage2Link);
-                    pnlMain.Controls.Remove(tbDuration2);
-                    pnlMain.Controls.Remove(chkPreviousDuration2);
-                    pnlMain.Controls.Remove(btnDuration2Link);
                     toolTip1.SetToolTip(tbDosage, "Adult Dose");
                     toolTip1.SetToolTip(tbDosage1, "Paediatric Dose");
                     toolTip1.SetToolTip(tbDuration, "Adult Route/Duration");
                     toolTip1.SetToolTip(tbDuration1, "Paediatric Route/Duration");
                     break;
-                case BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics:
-                    // remove dosage1, dosage2, duration, duration1, duration2
-                    pnlMain.Controls.Remove(tbDosage1);
-                    pnlMain.Controls.Remove(chkPreviousDose1);
-                    pnlMain.Controls.Remove(btnDosage1Link);
-                    pnlMain.Controls.Remove(tbDosage2);
-                    pnlMain.Controls.Remove(chkPreviousDose2);
-                    pnlMain.Controls.Remove(btnDosage2Link);
-                    pnlMain.Controls.Remove(tbDuration);
-                    pnlMain.Controls.Remove(chkPreviousDuration);
-                    pnlMain.Controls.Remove(btnDurationLink);
-                    pnlMain.Controls.Remove(tbDuration1);
-                    pnlMain.Controls.Remove(chkPreviousDuration1);
-                    pnlMain.Controls.Remove(btnDuration1Link);
-                    pnlMain.Controls.Remove(chkPreviousDuration2);
-                    pnlMain.Controls.Remove(btnDuration2Link);
-                    pnlMain.Controls.Remove(tbDuration2);
-                    break;
                 case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
-                    // remove dosage2, duration, duration1, duration2
-                    pnlMain.Controls.Remove(tbDuration);
-                    pnlMain.Controls.Remove(chkPreviousDuration);
-                    pnlMain.Controls.Remove(btnDurationLink);
-                    pnlMain.Controls.Remove(tbDosage2);
-                    pnlMain.Controls.Remove(chkPreviousDose2);
-                    pnlMain.Controls.Remove(btnDosage2Link);
-                    pnlMain.Controls.Remove(tbDuration1);
-                    pnlMain.Controls.Remove(chkPreviousDuration1);
-                    pnlMain.Controls.Remove(btnDuration1Link);
-                    pnlMain.Controls.Remove(chkPreviousDuration2);
-                    pnlMain.Controls.Remove(btnDuration2Link);
-                    pnlMain.Controls.Remove(tbDuration2);
                     toolTip1.SetToolTip(tbDosage, "Adult");
                     toolTip1.SetToolTip(tbDosage1, "Paediatric");
                     break;
-                case BDConstants.LayoutVariantType.TreatmentRecommendation05_CultureProvenPeritonitis:
-                    // remove dosage2, duration1, duration2
-                    pnlMain.Controls.Remove(tbDosage2);
-                    pnlMain.Controls.Remove(chkPreviousDose2);
-                    pnlMain.Controls.Remove(btnDosage2Link);
-                    pnlMain.Controls.Remove(tbDuration1);
-                    pnlMain.Controls.Remove(chkPreviousDuration1);
-                    pnlMain.Controls.Remove(btnDuration1Link);
-                    pnlMain.Controls.Remove(chkPreviousDuration2);
-                    pnlMain.Controls.Remove(btnDuration2Link);
-                    pnlMain.Controls.Remove(tbDuration2);
-                    break;
-                case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_ViridansStrep:
-                    // remove dosage1, dosage2, duration2
-                    pnlMain.Controls.Remove(tbDosage1);
-                    pnlMain.Controls.Remove(chkPreviousDose1);
-                    pnlMain.Controls.Remove(btnDosage1Link);
-                    pnlMain.Controls.Remove(tbDosage2);
-                    pnlMain.Controls.Remove(chkPreviousDose2);
-                    pnlMain.Controls.Remove(btnDosage2Link);
-                    pnlMain.Controls.Remove(tbDuration2);
-                    pnlMain.Controls.Remove(chkPreviousDuration2);
-                    pnlMain.Controls.Remove(btnDuration2Link);
-                    break;
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis:
-                    // remove dosage2, duration, duration1, duration2
-                    pnlMain.Controls.Remove(tbDosage2);
-                    pnlMain.Controls.Remove(chkPreviousDose2);
-                    pnlMain.Controls.Remove(btnDosage2Link);
-                    pnlMain.Controls.Remove(tbDuration);
-                    pnlMain.Controls.Remove(chkPreviousDuration);
-                    pnlMain.Controls.Remove(btnDurationLink);
-                    pnlMain.Controls.Remove(tbDuration1);
-                    pnlMain.Controls.Remove(chkPreviousDuration1);
-                    pnlMain.Controls.Remove(btnDuration1Link);
-                    pnlMain.Controls.Remove(tbDuration2);
-                    pnlMain.Controls.Remove(chkPreviousDuration2);
-                    pnlMain.Controls.Remove(btnDuration2Link);
                     toolTip1.SetToolTip(tbDosage, "Adult Dose");
                     toolTip1.SetToolTip(tbDosage1, "Paediatric Dose");
                     break;
-                case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
-                case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II:
-                case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
                 default:
-                    // no changes - all controls are displayed
+                    // no changes
                     break;
+            }
+
+            if (!BDFabrik.LayoutHasFirstDosage(DefaultLayoutVariantType))
+            {
+                pnlMain.Controls.Remove(tbDosage);
+                pnlMain.Controls.Remove(chkPreviousDose);
+                pnlMain.Controls.Remove(btnDosageLink);
+            }
+            if (!BDFabrik.LayoutHasFirstDuration(DefaultLayoutVariantType))
+            {
+                pnlMain.Controls.Remove(tbDuration);
+                pnlMain.Controls.Remove(chkPreviousDuration);
+                pnlMain.Controls.Remove(btnDurationLink);
+            }
+            if(!BDFabrik.LayoutHasSecondDosage(DefaultLayoutVariantType))
+            {
+                pnlMain.Controls.Remove(tbDosage2);
+                pnlMain.Controls.Remove(chkPreviousDose2);
+                pnlMain.Controls.Remove(btnDosage2Link);
+            }
+            if (!BDFabrik.LayoutHasSecondDuration(DefaultLayoutVariantType))
+            {
+                pnlMain.Controls.Remove(tbDuration1);
+                pnlMain.Controls.Remove(chkPreviousDuration1);
+                pnlMain.Controls.Remove(btnDuration1Link);
+            }
+            if (!BDFabrik.LayoutHasThirdDuration(DefaultLayoutVariantType))
+            {
+                pnlMain.Controls.Remove(tbDuration2);
+                pnlMain.Controls.Remove(chkPreviousDuration2);
+                pnlMain.Controls.Remove(btnDuration2Link);
+
+            }
+            if (!BDFabrik.LayoutHasThirdDosage(DefaultLayoutVariantType))
+            {
+                pnlMain.Controls.Remove(tbDosage2);
+                pnlMain.Controls.Remove(chkPreviousDose2);
+                pnlMain.Controls.Remove(btnDosage2Link);
+
             }
             pnlMain.Refresh();
 

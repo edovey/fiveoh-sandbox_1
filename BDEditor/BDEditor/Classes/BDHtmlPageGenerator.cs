@@ -41,6 +41,8 @@ namespace BDEditor.Classes
         private const string RIGHT_SQUARE_BRACKET = "&#93;";
         private const string TABLEROWSTYLE_NO_BORDERS = @"class=""d1""";  
         private const string TABLEROWSTYLE_BOTTOM_BORDER = @"class=""d0""";
+        private const string TABLECELLSTYLE_LEFT_BRACKET = @"class=""leftBracket""";
+        private const string TABLECELLSTYLE_RIGHT_BRACKET = @"class=""rightBracket""";
         private const string PUBLICATION_NOTES_UUID = "a6d03c7e-a095-4c04-b0e7-ffe74bcfa8e6";
         private const string TREATMENT_RECOMMENDATION_PEDS_UUID = "c0ecedc1-70cf-4422-b998-7e5f2bb986b1";
         private const string TREATMENT_RECOMMENDATION_ADULT_UUID = "757409a4-9446-4aa5-ac23-03fb7660759b";
@@ -1817,9 +1819,15 @@ namespace BDEditor.Classes
                             List<IBDNode> therapies = BDFabrik.GetChildrenForParent(pContext, tGroup);
                             if (therapies.Count > 0)
                             {
+                                bool isTherapyInBrackets = false;
                                 foreach (BDTherapy therapy in therapies)
                                 {
-                                    html.Append(buildTherapyWithCombinedColumnHtml(pContext, therapy, pFootnotes, pObjectsOnPage));
+                                    if (therapy.leftBracket.HasValue && therapy.leftBracket.Value == true)
+                                        isTherapyInBrackets = true;
+                                    html.Append(buildTherapyWithCombinedColumnHtml(pContext, therapy, pFootnotes, pObjectsOnPage, isTherapyInBrackets));
+
+                                    if (therapy.rightBracket.HasValue && therapy.rightBracket.Value == true)
+                                        isTherapyInBrackets = false;
 
                                     if (!string.IsNullOrEmpty(therapy.Name) && therapy.nameSameAsPrevious == false)
                                         previousTherapyName = therapy.Name;
@@ -4638,22 +4646,38 @@ namespace BDEditor.Classes
         {
 
             StringBuilder therapyHtml = new StringBuilder();
-            string styleString = string.Empty;
+            string rowStyleString = string.Empty;
             string resolvedValue = null;
+            StringBuilder conjunctionRowHtml = new StringBuilder();
 
             // check join type - if none, then draw the bottom border on the table tableRows
             if (pTherapy.therapyJoinType == (int)BDConstants.BDJoinType.Next)
-                styleString = TABLEROWSTYLE_BOTTOM_BORDER;  // tableRows has bottom border
+                rowStyleString = TABLEROWSTYLE_BOTTOM_BORDER;  // tableRows has bottom border
             else
-                styleString = TABLEROWSTYLE_NO_BORDERS;  // NO bottom border
+            {
+                rowStyleString = TABLEROWSTYLE_NO_BORDERS;  // NO bottom border
+                if(pIsInBracketGroup)
+                    conjunctionRowHtml.AppendFormat(@"<tr><td /><td colspan=2> {0}</td>", retrieveConjunctionString((int)pTherapy.therapyJoinType));
+                else
+                    conjunctionRowHtml.AppendFormat(@"<tr><td colspan=3> {0}</td>", retrieveConjunctionString((int)pTherapy.therapyJoinType));
+            }
+            therapyHtml.AppendFormat(@"<tr {0}>", rowStyleString);
 
-            therapyHtml.AppendFormat(@"<tr {0}>", styleString);
-
-            if (pTherapy.leftBracket.Value == true)
-                therapyHtml.AppendFormat("<td>{0}</td>",LEFT_SQUARE_BRACKET);
-            if (pIsInBracketGroup && pTherapy.leftBracket.Value == false) // add the first column to indent the therapy name
-                therapyHtml.Append("<td />");
-
+            if (pTherapy.leftBracket.HasValue && pTherapy.leftBracket.Value == true)
+                therapyHtml.AppendFormat("<td {0}><strong>{1}</strong></td>", TABLECELLSTYLE_LEFT_BRACKET, LEFT_SQUARE_BRACKET);
+            else
+            {
+                if (pIsInBracketGroup) 
+                {
+                    therapyHtml.Append("<td />");  // add the first column to indent the therapy name
+                    if (pTherapy.rightBracket == true)
+                        therapyHtml.Append("<td>");
+                    else
+                        therapyHtml.Append("<td colspan=2>");  // no right bracket so therapy name will span 2 columns
+                }
+                else
+                    therapyHtml.Append("<td colspan=3>");  // no brackets so therapy name begins in column 1 and spans 3 columns
+            }
             if (pTherapy.nameSameAsPrevious.Value == true)
                 therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, previousTherapyId, previousTherapyName, BDTherapy.PROPERTYNAME_THERAPY, "b", pFootnotes, pObjectsOnPage, out resolvedValue));
             else
@@ -4661,10 +4685,11 @@ namespace BDEditor.Classes
 
             if (null != resolvedValue) therapiesHaveName = true;
 
-            if (pTherapy.rightBracket.Value == true || pAddEndBracket)
-                therapyHtml.Append(RIGHT_SQUARE_BRACKET);
-
             therapyHtml.Append(@"</td>");
+
+            if ((pTherapy.rightBracket.HasValue && pTherapy.rightBracket.Value == true) || pAddEndBracket)
+                therapyHtml.AppendFormat("<td {0}><strong>{1}</strong></td>", TABLECELLSTYLE_RIGHT_BRACKET, RIGHT_SQUARE_BRACKET);
+
 
             // Dosage
             if (BDFabrik.LayoutHasFirstDosage(pTherapy.LayoutVariant))
@@ -4674,7 +4699,8 @@ namespace BDEditor.Classes
                     therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, previousTherapyId, previousTherapyDosage, BDTherapy.PROPERTYNAME_DOSAGE, "td", pFootnotes, pObjectsOnPage, out resolvedValue));
                 else
                     therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.dosage, BDTherapy.PROPERTYNAME_DOSAGE, "td", pFootnotes, pObjectsOnPage, out resolvedValue));
-            if (null != resolvedValue) therapiesHaveDosage = true;
+                if (null != resolvedValue) therapiesHaveDosage = true;
+                conjunctionRowHtml.Append("<td />");
             }
 
             // Duration
@@ -4688,6 +4714,7 @@ namespace BDEditor.Classes
                     therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.duration, BDTherapy.PROPERTYNAME_DURATION, "td", pFootnotes, pObjectsOnPage, out resolvedValue));
 
                 if (null != resolvedValue) therapiesHaveDuration = true;
+                conjunctionRowHtml.Append("<td />");
             }
 
             // Dosage 1
@@ -4699,6 +4726,7 @@ namespace BDEditor.Classes
                     therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.dosage1, BDTherapy.PROPERTYNAME_DOSAGE_1, "td", pFootnotes, pObjectsOnPage, out resolvedValue));
 
                 if (null != resolvedValue) therapiesHaveDosage = true;
+                conjunctionRowHtml.Append("<td />");
             }
 
             // Duration 1
@@ -4711,6 +4739,7 @@ namespace BDEditor.Classes
                     therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.duration1, BDTherapy.PROPERTYNAME_DURATION_1, "td", pFootnotes, pObjectsOnPage, out resolvedValue));
 
                 if (null != resolvedValue) therapiesHaveDuration = true;
+                conjunctionRowHtml.Append("<td />");
             }
 
             // Dosage 2
@@ -4722,6 +4751,7 @@ namespace BDEditor.Classes
                     therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.dosage2, BDTherapy.PROPERTYNAME_DOSAGE_2, "td", pFootnotes, pObjectsOnPage, out resolvedValue));
 
                 if (null != resolvedValue) therapiesHaveDosage = true;
+                conjunctionRowHtml.Append("<td />");
             }
 
             // Duration 2
@@ -4733,15 +4763,21 @@ namespace BDEditor.Classes
                 else
                     therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.duration2, BDTherapy.PROPERTYNAME_DURATION_2, "td", pFootnotes, pObjectsOnPage, out resolvedValue));
 
+                conjunctionRowHtml.Append("<td />");
                 if (null != resolvedValue) therapiesHaveDuration = true;
             }
 
             therapyHtml.Append(@"</tr>");
-            therapyHtml.AppendFormat(@"<tr><td> {0}</td><td /><td /></tr>", retrieveConjunctionString((int)pTherapy.therapyJoinType));
+            conjunctionRowHtml.Append("</tr>");
+
+            if (pTherapy.therapyJoinType != (int)BDConstants.BDJoinType.Next)
+            {
+                therapyHtml.Append(conjunctionRowHtml);
+            }
             return therapyHtml.ToString();
         }
 
-        private string buildTherapyWithCombinedColumnHtml(Entities pContext, BDTherapy pTherapy, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
+        private string buildTherapyWithCombinedColumnHtml(Entities pContext, BDTherapy pTherapy, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, bool pIsInBracketGroup)
         {
             string resolvedValue = null;
 

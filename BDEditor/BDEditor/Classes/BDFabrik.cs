@@ -1682,6 +1682,7 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure_Followup_I:
                         case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure_Followup_II:
                         case BDConstants.LayoutVariantType.Organisms_Therapy:
+                        case BDConstants.LayoutVariantType.Organisms_Therapy_with_Subcategory:
                             BDConfiguredEntry configuredWithOverview = pNode as BDConfiguredEntry;
                             nodeControl = new BDConfiguredEntryControl(pContext, configuredWithOverview, null);
                             ((BDConfiguredEntryControl)nodeControl).showOverview = true;

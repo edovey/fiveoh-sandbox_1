@@ -744,38 +744,38 @@ namespace BDEditor.Views
                     break;
             }
 
-            if (!BDFabrik.LayoutHasFirstDosage(DefaultLayoutVariantType))
+            if (!BDFabrik.TherapyLayoutHasFirstDosage(DefaultLayoutVariantType))
             {
                 pnlMain.Controls.Remove(tbDosage);
                 pnlMain.Controls.Remove(chkPreviousDose);
                 pnlMain.Controls.Remove(btnDosageLink);
             }
-            if (!BDFabrik.LayoutHasFirstDuration(DefaultLayoutVariantType))
+            if (!BDFabrik.TherapyLayoutHasFirstDuration(DefaultLayoutVariantType))
             {
                 pnlMain.Controls.Remove(tbDuration);
                 pnlMain.Controls.Remove(chkPreviousDuration);
                 pnlMain.Controls.Remove(btnDurationLink);
             }
-            if(!BDFabrik.LayoutHasSecondDosage(DefaultLayoutVariantType))
+            if(!BDFabrik.TherapyLayoutHasSecondDosage(DefaultLayoutVariantType))
             {
-                pnlMain.Controls.Remove(tbDosage2);
-                pnlMain.Controls.Remove(chkPreviousDose2);
-                pnlMain.Controls.Remove(btnDosage2Link);
+                pnlMain.Controls.Remove(tbDosage1);
+                pnlMain.Controls.Remove(chkPreviousDose1);
+                pnlMain.Controls.Remove(btnDosage1Link);
             }
-            if (!BDFabrik.LayoutHasSecondDuration(DefaultLayoutVariantType))
+            if (!BDFabrik.TherapyLayoutHasSecondDuration(DefaultLayoutVariantType))
             {
                 pnlMain.Controls.Remove(tbDuration1);
                 pnlMain.Controls.Remove(chkPreviousDuration1);
                 pnlMain.Controls.Remove(btnDuration1Link);
             }
-            if (!BDFabrik.LayoutHasThirdDuration(DefaultLayoutVariantType))
+            if (!BDFabrik.TherapyLayoutHasThirdDuration(DefaultLayoutVariantType))
             {
                 pnlMain.Controls.Remove(tbDuration2);
                 pnlMain.Controls.Remove(chkPreviousDuration2);
                 pnlMain.Controls.Remove(btnDuration2Link);
 
             }
-            if (!BDFabrik.LayoutHasThirdDosage(DefaultLayoutVariantType))
+            if (!BDFabrik.TherapyLayoutHasThirdDosage(DefaultLayoutVariantType))
             {
                 pnlMain.Controls.Remove(tbDosage2);
                 pnlMain.Controls.Remove(chkPreviousDose2);

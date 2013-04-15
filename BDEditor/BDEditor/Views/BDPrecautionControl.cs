@@ -115,7 +115,6 @@ namespace BDEditor.Views
         public void ShowLinksInUse(bool pPropagateToChildren)
         {
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentPrecaution) ? this.currentPrecaution.uuid : Guid.Empty);
-            btnPrecautionLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnPrecautionLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
         }
 
         public void AssignScopeId(Guid? pScopeId)
@@ -330,17 +329,11 @@ namespace BDEditor.Views
             bool enabled = ((rtbInfectiveMaterial.Text.Length > 0) || (rtbModeOfTransmission.Text.Length > 0) || (rtbSingleRoomAcute.Text.Length > 0) || (rtbSingleRoomLongTerm.Text.Length > 0) ||
             (rtbGlovesAcute.Text.Length > 0) || (rtbGlovesLongTerm.Text.Length > 0) || (rtbGownsAcute.Text.Length > 0) || (rtbGownsLongTerm.Text.Length > 0) ||
             (rtbMaskAcute.Text.Length > 0) || (rtbMaskLongTerm.Text.Length > 0));
-            btnPrecautionLink.Enabled = enabled;
         }
 
         private void textBox_TextChanged(object sender, EventArgs e)
         {
             toggleLinkButtonEnablement();
-        }
-
-        private void btnPrecautionsLink_Click(object sender, EventArgs e)
-        {
-            createLink(BDPrecaution.VIRTUALPROPERTYNAME_PRECAUTIONS);
         }
 
         private void bToolStripMenuItem_Click(object sender, EventArgs e)

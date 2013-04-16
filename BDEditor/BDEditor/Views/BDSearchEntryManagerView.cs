@@ -63,7 +63,7 @@ namespace BDEditor.Views
             lbSearchEntryAssociations.DataSource = searchEntryAssociations;
             lbSearchEntryAssociations.DisplayMember = "editorContext";
 
-            lbExistingSearchEntries.SetSelected(0, true);
+            lbExistingSearchEntries.ClearSelected();
             lbExistingSearchEntries.EndUpdate();
         }
 

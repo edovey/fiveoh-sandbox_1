@@ -14,8 +14,8 @@ namespace BDEditor.Views
     public partial class BDSearchView : Form
     {
         private BDEditor.DataModel.Entities dataContext;
-        List<IBDNode> nodeList;
-        List<BDLinkedNote> linkedNoteList;
+        List<IBDNode> nodeList = new List<IBDNode>();
+        List<BDLinkedNote> linkedNoteList = new List<BDLinkedNote>();
         string locationString = string.Empty;
         string searchTerm = string.Empty;
 
@@ -26,9 +26,6 @@ namespace BDEditor.Views
 
         private void BDSearchView_Load(object sender, EventArgs e)
         {
-            nodeList = new List<IBDNode>();
-            linkedNoteList = new List<BDLinkedNote>();
-
             DataGridViewTextBoxColumn col0 = new DataGridViewTextBoxColumn();
             col0.DataPropertyName = "nodeType";
             col0.HeaderText = "Type";

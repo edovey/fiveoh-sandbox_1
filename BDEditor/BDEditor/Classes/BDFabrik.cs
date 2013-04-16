@@ -2375,13 +2375,13 @@ namespace BDEditor.Classes
             return propertyList;
         }
 
-        public static bool LayoutHasFirstDosage(BDConstants.LayoutVariantType pLayoutVariant)
+        public static bool TherapyLayoutHasFirstDosage(BDConstants.LayoutVariantType pLayoutVariant)
         {
             bool returnValue = true;
             return returnValue;
         }
 
-        public static bool LayoutHasFirstDuration(BDConstants.LayoutVariantType pLayoutVariant)
+        public static bool TherapyLayoutHasFirstDuration(BDConstants.LayoutVariantType pLayoutVariant)
         {
             bool returnValue = true;
 
@@ -2398,9 +2398,9 @@ namespace BDEditor.Classes
             }
             return returnValue;
         }
-        public static bool LayoutHasSecondDosage(BDConstants.LayoutVariantType pLayoutVariant)
+        public static bool TherapyLayoutHasSecondDosage(BDConstants.LayoutVariantType pLayoutVariant)
         {
-            bool returnValue = false;
+            bool returnValue = true;
 
             switch (pLayoutVariant)
             {
@@ -2431,13 +2431,13 @@ namespace BDEditor.Classes
                 case BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_ViridansStrep:
-                    returnValue = false;
+                returnValue = false;
                     break;
             }
             return returnValue;
         }
 
-        public static bool LayoutHasSecondDuration(BDConstants.LayoutVariantType pLayoutVariant)
+        public static bool TherapyLayoutHasSecondDuration(BDConstants.LayoutVariantType pLayoutVariant)
         {
             bool returnValue = true;
 
@@ -2478,7 +2478,7 @@ namespace BDEditor.Classes
             }
             return returnValue;
         }
-        public static bool LayoutHasThirdDosage(BDConstants.LayoutVariantType pLayoutVariant)
+        public static bool TherapyLayoutHasThirdDosage(BDConstants.LayoutVariantType pLayoutVariant)
         {
             bool returnValue = true;
 
@@ -2522,7 +2522,7 @@ namespace BDEditor.Classes
             }
             return returnValue;
         }
-        public static bool LayoutHasThirdDuration(BDConstants.LayoutVariantType pLayoutVariant)
+        public static bool TherapyLayoutHasThirdDuration(BDConstants.LayoutVariantType pLayoutVariant)
         {
             bool returnValue = true;
 
@@ -2562,6 +2562,23 @@ namespace BDEditor.Classes
                 case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_ViridansStrep:
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis:
                     returnValue = false;
+                    break;
+            }
+            return returnValue;
+        }
+
+        public static bool TherapyLayoutHasCombinedDoseAndDuration(BDConstants.LayoutVariantType pLayoutVariant)
+        {
+            //NB:  the logic here is the REVERSE of the other like methods in this class, where the default is to return FALSE
+            //      and only the TRUE conditions are listed here.
+            bool returnValue = false;
+
+            switch (pLayoutVariant)
+            {
+                case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
+                    returnValue = true;
+                    break;
+                default:
                     break;
             }
             return returnValue;

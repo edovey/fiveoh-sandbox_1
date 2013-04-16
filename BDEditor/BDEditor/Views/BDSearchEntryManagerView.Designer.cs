@@ -110,7 +110,7 @@
             // 
             this.btnEditSearchEntry.Enabled = false;
             this.btnEditSearchEntry.Image = global::BDEditor.Properties.Resources.edit_24x24;
-            this.btnEditSearchEntry.Location = new System.Drawing.Point(260, 373);
+            this.btnEditSearchEntry.Location = new System.Drawing.Point(235, 373);
             this.btnEditSearchEntry.Name = "btnEditSearchEntry";
             this.btnEditSearchEntry.Size = new System.Drawing.Size(34, 34);
             this.btnEditSearchEntry.TabIndex = 4;
@@ -122,7 +122,7 @@
             // 
             this.btnDeleteSearchEntry.Enabled = false;
             this.btnDeleteSearchEntry.Image = global::BDEditor.Properties.Resources.del_16x16;
-            this.btnDeleteSearchEntry.Location = new System.Drawing.Point(314, 373);
+            this.btnDeleteSearchEntry.Location = new System.Drawing.Point(289, 373);
             this.btnDeleteSearchEntry.Name = "btnDeleteSearchEntry";
             this.btnDeleteSearchEntry.Size = new System.Drawing.Size(34, 34);
             this.btnDeleteSearchEntry.TabIndex = 6;
@@ -132,13 +132,15 @@
             // 
             // btnAddNewSearchEntry
             // 
+            this.btnAddNewSearchEntry.Enabled = false;
             this.btnAddNewSearchEntry.Image = global::BDEditor.Properties.Resources.new_24x24;
-            this.btnAddNewSearchEntry.Location = new System.Drawing.Point(220, 373);
+            this.btnAddNewSearchEntry.Location = new System.Drawing.Point(195, 373);
             this.btnAddNewSearchEntry.Name = "btnAddNewSearchEntry";
             this.btnAddNewSearchEntry.Size = new System.Drawing.Size(34, 34);
             this.btnAddNewSearchEntry.TabIndex = 5;
             this.toolTip1.SetToolTip(this.btnAddNewSearchEntry, "New Index Entry");
             this.btnAddNewSearchEntry.UseVisualStyleBackColor = true;
+            this.btnAddNewSearchEntry.Visible = false;
             this.btnAddNewSearchEntry.Click += new System.EventHandler(this.btnAddNewSearchEntry_Click);
             // 
             // label4

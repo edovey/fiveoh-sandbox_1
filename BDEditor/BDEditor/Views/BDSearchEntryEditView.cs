@@ -94,7 +94,7 @@ namespace BDEditor.Views
             }
             else
             {
-                lbExistingSearchEntries.SetSelected(0, true);
+                lbExistingSearchEntries.ClearSelected();
             }
             lbExistingSearchEntries.EndUpdate();
             lbSelectedSearchEntries.EndUpdate();
@@ -288,7 +288,12 @@ namespace BDEditor.Views
                         availableSearchEntries.Sort("name", ListSortDirection.Ascending);
 
                         currentSearchEntry = newEntry;
+
+                        lbExistingSearchEntries.BeginUpdate();
+                        lbExistingSearchEntries.ClearSelected();
                         lbExistingSearchEntries.SetSelected(availableSearchEntries.IndexOf(newEntry), true);
+                        lbExistingSearchEntries.EndUpdate();
+
                         reloadAssociatedLocations();
 
                         formHasChanges = true;

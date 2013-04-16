@@ -105,6 +105,7 @@
             this.tbEntryName.Size = new System.Drawing.Size(196, 23);
             this.tbEntryName.TabIndex = 18;
             this.tbEntryName.TextChanged += new System.EventHandler(this.tbEntryName_TextChanged);
+            this.tbEntryName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbEntryName_MouseDown);
             // 
             // btnEditSearchEntry
             // 

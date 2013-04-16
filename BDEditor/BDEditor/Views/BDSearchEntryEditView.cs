@@ -316,17 +316,20 @@ namespace BDEditor.Views
             if (null != cb && cb.CheckState == CheckState.Checked)
             {
                 string searchTerm = tbEntryName.Text;
-                List<BDSearchEntry> filtered = availableSearchEntries.Where(x => x.name.Contains(searchTerm)).ToList<BDSearchEntry>();
-                if (filtered.Count <= 0)
+                if (!string.IsNullOrEmpty(tbEntryName.Text))
                 {
-                    MessageBox.Show("No entries found with that name");
-                    cbFilterList.CheckState = CheckState.Unchecked;
-                    reloadAvailableEntries();
-                }
-                else
-                {
-                    BDSearchEntryBindingList filteredEntries = new BDSearchEntryBindingList(filtered);
-                    lbExistingSearchEntries.DataSource = filteredEntries;
+                    List<BDSearchEntry> filtered = availableSearchEntries.Where(x => x.name.IndexOf(searchTerm, StringComparison.InvariantCultureIgnoreCase) != -1).ToList<BDSearchEntry>();
+                    if (filtered.Count <= 0)
+                    {
+                        MessageBox.Show("No entries found with that name");
+                        cbFilterList.CheckState = CheckState.Unchecked;
+                        reloadAvailableEntries();
+                    }
+                    else
+                    {
+                        BDSearchEntryBindingList filteredEntries = new BDSearchEntryBindingList(filtered);
+                        lbExistingSearchEntries.DataSource = filteredEntries;
+                    }
                 }
             }
             else
@@ -337,8 +340,8 @@ namespace BDEditor.Views
                 reloadAvailableEntries();
                 resetButtons();
 
-                tbEntryName.Text = string.Empty;
-                cbFilterList.Enabled = false;
+                //tbEntryName.Text = string.Empty;
+                //cbFilterList.Enabled = false;
             }
             lbExistingSearchEntries.EndUpdate();
         }
@@ -484,6 +487,12 @@ namespace BDEditor.Views
                 reloadAssociatedLocations();
             }
             resetButtons();
+        }
+
+        private void tbEntryName_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (cbFilterList.CheckState != CheckState.Unchecked)
+                cbFilterList.CheckState = CheckState.Unchecked;
         }
 
     }    

@@ -2392,6 +2392,7 @@ namespace BDEditor.Classes
                 case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Paediatric:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics:
                 case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
+                case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis:
                     returnValue = false;
                     break;

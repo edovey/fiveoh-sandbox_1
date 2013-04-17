@@ -1211,9 +1211,9 @@ namespace BDEditor.Classes
                                     // if this is the first tableRows, put antimicrobial in the first column
                                     string cellHtml = buildCellHTML(pContext, child, BDNode.PROPERTYNAME_NAME, child.Name, false, pFootnotes, pObjectsOnPage);
                                     if (isFirstChild)
-                                        html.AppendFormat("<tr {0}><td>{1}</td><td><b><u>{2}</u></b></td><td /></tr>", TABLEROWSTYLE_NO_BORDERS, amHtml, cellHtml);
+                                        html.AppendFormat("<tr {0}><td>{1}</td><td><b><u>{2}</u></b></td><td></td></tr>", TABLEROWSTYLE_NO_BORDERS, amHtml, cellHtml);
                                     else
-                                        html.AppendFormat("<tr {0}><td /><td><b><u>{1}</u></b></td><td /></tr>", TABLEROWSTYLE_NO_BORDERS, cellHtml);
+                                        html.AppendFormat("<tr {0}><td></td><td><b><u>{1}</u></b></td><td></td></tr>", TABLEROWSTYLE_NO_BORDERS, cellHtml);
 
                                     bool isLastTopicChild = false;
 
@@ -1257,7 +1257,7 @@ namespace BDEditor.Classes
                         html.AppendFormat(@"<tr class=""v{0}""><td>{1}</td>", (int)pNode.LayoutVariant, antimicrobialHtml);
 
                         string dosageGroupName = string.Empty;
-                        string rowStartTag = string.Format(@"<tr class=""v{0}""><td />", (int)pNode.LayoutVariant);
+                        string rowStartTag = string.Format(@"<tr class=""v{0}""><td></td>", (int)pNode.LayoutVariant);
                         const string ROWENDTAG = "</tr>";
 
                         foreach (IBDNode child in children)
@@ -1770,26 +1770,19 @@ namespace BDEditor.Classes
                         // therapy group is handled here as the layout differs from standard: the therapy group does NOT imply the start of a new table in this layout variant.
 
                         List<string> columnHtml = new List<string>();
-                        columnHtml.Add(buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[0], BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_THERAPY, pFootnotes, pObjectsOnPage));
-                        columnHtml.Add(buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[1], BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, pFootnotes, pObjectsOnPage));
+                        string nameColumnTitle = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[0], BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_THERAPY, pFootnotes, pObjectsOnPage);
+                        string dosageColumnTitle = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[1], BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, pFootnotes, pObjectsOnPage);
 
                         int columnCount = metadataLayoutColumns.Count + 2;
 
                         html.AppendFormat(@"<table class=""v{0}""><tr>", (int)pNode.LayoutVariant);
-                        for (int i = 0; i < columnCount; i++)
-                        {
-                            if (i == 0)
-                                html.AppendFormat("<th colspan=3>{0}</th>", columnHtml[i]);  // allow for columns for therapy brackets
-                            else
-                                html.AppendFormat("<th>{0}</th>", columnHtml[i]);
-                        }
-                        html.Append("</tr>");
+                        html.AppendFormat("<th colspan=3>{0}</th><th>{1}</th></tr>",nameColumnTitle, dosageColumnTitle);
 
                         List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
                         foreach (IBDNode tGroup in childNodes)
                         {
                             if (tGroup.Name.Length > 0 && !tGroup.Name.Contains(BDUtilities.GetEnumDescription(tGroup.NodeType)))
-                                html.AppendFormat("<tr><td colspan={0}><b>{0}</b></td></tr>", columnCount, buildNodePropertyHTML(pContext, tGroup, tGroup.Name, BDTherapyGroup.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage));
+                                html.AppendFormat("<tr><td colspan={0}><b>{1}</b></td></tr>", columnCount, buildNodePropertyHTML(pContext, tGroup, tGroup.Name, BDTherapyGroup.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage));
 
                             List<IBDNode> therapies = BDFabrik.GetChildrenForParent(pContext, tGroup);
                             if (therapies.Count > 0)
@@ -2273,7 +2266,7 @@ namespace BDEditor.Classes
                     if (pIsFirstChildRow) // append parent html for first column
                         html.AppendFormat("<tr {0}><td>{1}</td>", rowStyle, pParentHtml);
                     else // append empty column
-                        html.AppendFormat("<tr {0}><td />", rowStyle);
+                        html.AppendFormat("<tr {0}><td></td>", rowStyle);
 
                     string dosageCellHtml = buildCellHTML(pContext, dosage, BDDosage.PROPERTYNAME_DOSAGE, dosage.dosage, false, pFootnotes, pObjectsOnPage);
                     if (dosage.joinType == (int)BDConstants.BDJoinType.Next)
@@ -2304,9 +2297,9 @@ namespace BDEditor.Classes
                     // append a tableRows for the DosageGroup
                     string dosageGroupHtml = buildCellHTML(pContext, pNode, BDNode.PROPERTYNAME_NAME, pNode.Name, false, pFootnotes, pObjectsOnPage);
                     if (pIsFirstRow) // add parent to first column (antimicrobial)
-                        html.AppendFormat("<tr {0}><td>{1}</td><td><u>{2}</u></td><td /></tr>", TABLEROWSTYLE_NO_BORDERS, pParentHtml, dosageGroupHtml);
+                        html.AppendFormat("<tr {0}><td>{1}</td><td><u>{2}</u></td><td></td></tr>", TABLEROWSTYLE_NO_BORDERS, pParentHtml, dosageGroupHtml);
                     else
-                        html.AppendFormat("<tr {0}><td /><td><u>{1}</u></td><td /></tr>", TABLEROWSTYLE_NO_BORDERS, dosageGroupHtml);
+                        html.AppendFormat("<tr {0}><td></td><td><u>{1}</u></td><td></td></tr>", TABLEROWSTYLE_NO_BORDERS, dosageGroupHtml);
 
                     bool isLastDosage = false;
                     // a tableRows is now written to the table for this group, so anything following is not the first tableRows.
@@ -4705,19 +4698,19 @@ namespace BDEditor.Classes
             {
                 rowStyleString = TABLEROWSTYLE_NO_BORDERS;  // NO bottom border
                 if (pIsInBracketGroup)
-                    conjunctionRowHtml.AppendFormat(@"<tr><td /><td colspan=2> {0}</td>", retrieveConjunctionString((int)pTherapy.therapyJoinType));
+                    conjunctionRowHtml.AppendFormat(@"<tr><td></td><td colspan=2> {0}</td>", retrieveConjunctionString((int)pTherapy.therapyJoinType));
                 else
                     conjunctionRowHtml.AppendFormat(@"<tr><td colspan=3> {0}</td>", retrieveConjunctionString((int)pTherapy.therapyJoinType));
             }
             therapyHtml.AppendFormat(@"<tr {0}>", rowStyleString);
 
             if (pTherapy.leftBracket.HasValue && pTherapy.leftBracket.Value == true)
-                therapyHtml.AppendFormat("<td {0}><strong>{1}</strong></td>", TABLECELLSTYLE_LEFT_BRACKET, LEFT_SQUARE_BRACKET);
+                therapyHtml.AppendFormat("<td {0}><strong>{1}</strong></td><td colspan=2>", TABLECELLSTYLE_LEFT_BRACKET, LEFT_SQUARE_BRACKET);
             else
             {
                 if (pIsInBracketGroup)
                 {
-                    therapyHtml.Append("<td />");  // add the first column to indent the therapy name
+                    therapyHtml.Append("<td></td>");  // add the first column to indent the therapy name
                     if (pTherapy.rightBracket == true)
                         therapyHtml.Append("<td>");
                     else
@@ -4727,13 +4720,11 @@ namespace BDEditor.Classes
                     therapyHtml.Append("<td colspan=3>");  // no brackets so therapy name begins in column 1 and spans 3 columns
             }
             if (pTherapy.nameSameAsPrevious.Value == true && previousTherapyNameId != Guid.Empty)
-                therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, previousTherapyNameId,
+                therapyHtml.AppendFormat("{0}</td>",buildNodePropertyHTML(pContext, pTherapy, previousTherapyNameId,
                     BDTherapy.RetrieveTherapyWithId(pContext, previousTherapyNameId).Name,
                     BDTherapy.PROPERTYNAME_THERAPY, "b", pFootnotes, pObjectsOnPage, out resolvedValue));
             else
-                therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.Name, BDTherapy.PROPERTYNAME_THERAPY, "b", pFootnotes, pObjectsOnPage, out resolvedValue));
-
-            therapyHtml.Append(@"</td>");
+                therapyHtml.AppendFormat("{0}</td>",buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.Name, BDTherapy.PROPERTYNAME_THERAPY, "b", pFootnotes, pObjectsOnPage, out resolvedValue));
 
             if ((pTherapy.rightBracket.HasValue && pTherapy.rightBracket.Value == true) || pAddEndBracket)
                 therapyHtml.AppendFormat("<td {0}><strong>{1}</strong></td>", TABLECELLSTYLE_RIGHT_BRACKET, RIGHT_SQUARE_BRACKET);
@@ -4750,7 +4741,7 @@ namespace BDEditor.Classes
                 else
                     therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.dosage, BDTherapy.PROPERTYNAME_DOSAGE, "td", pFootnotes, pObjectsOnPage, out resolvedValue));
                 if (null != resolvedValue) therapiesHaveDosage = true;
-                conjunctionRowHtml.Append("<td />");
+                conjunctionRowHtml.Append("<td></td>");
             }
 
             // Duration
@@ -4766,7 +4757,7 @@ namespace BDEditor.Classes
                     therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.duration, BDTherapy.PROPERTYNAME_DURATION, "td", pFootnotes, pObjectsOnPage, out resolvedValue));
 
                 if (null != resolvedValue) therapiesHaveDuration = true;
-                conjunctionRowHtml.Append("<td />");
+                conjunctionRowHtml.Append("<td></td>");
             }
 
             // Dosage 1
@@ -4780,7 +4771,7 @@ namespace BDEditor.Classes
                     therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.dosage1, BDTherapy.PROPERTYNAME_DOSAGE_1, "td", pFootnotes, pObjectsOnPage, out resolvedValue));
 
                 if (null != resolvedValue) therapiesHaveDosage = true;
-                conjunctionRowHtml.Append("<td />");
+                conjunctionRowHtml.Append("<td></td>");
             }
 
             // Duration 1
@@ -4795,7 +4786,7 @@ namespace BDEditor.Classes
                     therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.duration1, BDTherapy.PROPERTYNAME_DURATION_1, "td", pFootnotes, pObjectsOnPage, out resolvedValue));
 
                 if (null != resolvedValue) therapiesHaveDuration = true;
-                conjunctionRowHtml.Append("<td />");
+                conjunctionRowHtml.Append("<td></td>");
             }
 
             // Dosage 2
@@ -4809,7 +4800,7 @@ namespace BDEditor.Classes
                     therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.dosage2, BDTherapy.PROPERTYNAME_DOSAGE_2, "td", pFootnotes, pObjectsOnPage, out resolvedValue));
 
                 if (null != resolvedValue) therapiesHaveDosage = true;
-                conjunctionRowHtml.Append("<td />");
+                conjunctionRowHtml.Append("<td></td>");
             }
 
             // Duration 2
@@ -4823,24 +4814,24 @@ namespace BDEditor.Classes
                 else
                     therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.duration2, BDTherapy.PROPERTYNAME_DURATION_2, "td", pFootnotes, pObjectsOnPage, out resolvedValue));
 
-                conjunctionRowHtml.Append("<td />");
+                conjunctionRowHtml.Append("<td></td>");
                 if (null != resolvedValue) therapiesHaveDuration = true;
             }
 
-            // Combined Dosage and Duration in one column
-            if (BDFabrik.TherapyLayoutHasCombinedDoseAndDuration(pTherapy.LayoutVariant))
-            {
-                // Dosage + Duration are entered into the Dosage property & only one column is rendered
-                resolvedValue = null;
-                if (pTherapy.dosageSameAsPrevious.Value == true && previousTherapyDosageId != Guid.Empty)
-                    therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, previousTherapyDosageId,
-                        BDTherapy.RetrieveTherapyWithId(pContext, previousTherapyDosageId).dosage,
-                        BDTherapy.PROPERTYNAME_DOSAGE, "td", pFootnotes, pObjectsOnPage, out resolvedValue));
-                else
-                    therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.dosage, BDTherapy.PROPERTYNAME_DOSAGE, "td", pFootnotes, pObjectsOnPage, out resolvedValue));
-                conjunctionRowHtml.Append("<td />");
-                if (null != resolvedValue) therapiesHaveDosage = true;
-            }
+            //// Combined Dosage and Duration in one column
+            //if (BDFabrik.TherapyLayoutHasCombinedDoseAndDuration(pTherapy.LayoutVariant))
+            //{
+            //    // Dosage + Duration are entered into the Dosage property & only one column is rendered
+            //    resolvedValue = null;
+            //    if (pTherapy.dosageSameAsPrevious.Value == true && previousTherapyDosageId != Guid.Empty)
+            //        therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, previousTherapyDosageId,
+            //            BDTherapy.RetrieveTherapyWithId(pContext, previousTherapyDosageId).dosage,
+            //            BDTherapy.PROPERTYNAME_DOSAGE, "td", pFootnotes, pObjectsOnPage, out resolvedValue));
+            //    else
+            //        therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, pTherapy.Uuid, pTherapy.dosage, BDTherapy.PROPERTYNAME_DOSAGE, "td", pFootnotes, pObjectsOnPage, out resolvedValue));
+            //    conjunctionRowHtml.Append("<td></td>");
+            //    if (null != resolvedValue) therapiesHaveDosage = true;
+            //}
 
             therapyHtml.Append(@"</tr>");
             conjunctionRowHtml.Append("</tr>");
@@ -4920,7 +4911,7 @@ namespace BDEditor.Classes
                 if (!string.IsNullOrEmpty(dxHtml))
                     dosageHTML.AppendFormat(@"<td{0}>{1}</td>", spanTag, dxHtml);
                 else
-                    dosageHTML.Append(@"<td />");
+                    dosageHTML.Append(@"<td></td>");
             }
 
             if (!dosageNode.dosage3SameAsPrevious)
@@ -4931,7 +4922,7 @@ namespace BDEditor.Classes
                 if (!string.IsNullOrEmpty(dxHtml))
                     dosageHTML.AppendFormat(@"<td{0}>{1}</td>", spanTag, dxHtml);
                 else
-                    dosageHTML.Append(@"<td />");
+                    dosageHTML.Append(@"<td></td>");
             }
 
             if (!dosageNode.dosage4SameAsPrevious)
@@ -4940,7 +4931,7 @@ namespace BDEditor.Classes
                 if (!string.IsNullOrEmpty(dxHtml))
                     dosageHTML.AppendFormat(@"<td>{0}</td>", dxHtml);
                 else
-                    dosageHTML.Append(@"<td />");
+                    dosageHTML.Append(@"<td></td>");
             }
             return dosageHTML.ToString();
         }
@@ -5287,7 +5278,7 @@ namespace BDEditor.Classes
 
             //ks: added "New " prefix to permit the use of terms like "Table A" to appear in the name of a BDTable instance
             string namePlaceholderText = string.Format(@"New {0}", BDUtilities.GetEnumDescription(pNode.NodeType));
-            if (pPropertyValue.Contains(namePlaceholderText) || pPropertyValue == "SINGLE PRESENTATION")
+            if (string.IsNullOrEmpty(pPropertyValue) || pPropertyValue.Contains(namePlaceholderText) || pPropertyValue == "SINGLE PRESENTATION")
                 pPropertyValue = string.Empty;
 
             // overview
@@ -5309,10 +5300,11 @@ namespace BDEditor.Classes
 
             if (pHtmlTag.ToLower() == "td")
             {
-                inlineOverviewText = string.Format("<br>{0}", BDUtilities.CleanNoteText(inlineOverviewText)); // strip the p tags. prefix with a br inorder to preserve intended newline start of "inline"
+                if(!string.IsNullOrEmpty(inlineOverviewText))
+                    inlineOverviewText = string.Format("<br>{0}", BDUtilities.CleanNoteText(inlineOverviewText)); // strip the p tags. prefix with a br inorder to preserve intended newline start of "inline"
                 if (notePage != null)
                 {
-                    if (pPropertyValue.Length > 0)
+                    if (!string.IsNullOrEmpty(pPropertyValue))
                         propertyHTML.AppendFormat(@"{1}<a class=""aa"" href=""{0}"">{2}{3}</a>{4}{5}{6}{7}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), immediateText, footerMarker, inlineOverviewText, overviewHTML, endTag);
                     else
                     {
@@ -5336,7 +5328,7 @@ namespace BDEditor.Classes
             {
                 if (notePage != null)
                 {
-                    if (pPropertyValue.Length > 0)
+                    if (!string.IsNullOrEmpty(pPropertyValue))
                         propertyHTML.AppendFormat(@"{1}<a class=""aa"" href=""{0}"">{2}{3}</a>{4}{5}{6}{7}", notePage.Uuid.ToString().ToUpper(), startTag, pPropertyValue.Trim(), immediateText, footerMarker, endTag, inlineOverviewText, overviewHTML);
                     else
                     {

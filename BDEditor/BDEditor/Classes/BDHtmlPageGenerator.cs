@@ -2889,8 +2889,8 @@ namespace BDEditor.Classes
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         break;
 
-                    case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis:
-                    case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_ViridansStrep:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis: // [108]
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_ViridansStrep: // [1082]
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
                         // custom-built - Therapy has 2 durations and a custom header
 
@@ -2918,49 +2918,9 @@ namespace BDEditor.Classes
                         resetGlobalVariablesForTherapies();
                         StringBuilder endoTherapyHTML = new StringBuilder();
 
-                        bool isLastEndoTherapyGroup = false;
-                        bool isLastEndoTherapy = false;
-
-                        for (int idxEndoTherapyGroups = 0; idxEndoTherapyGroups < children.Count; idxEndoTherapyGroups++)
+                        foreach (BDTherapyGroup endoTherapyGroup in children)
                         {
-                            IBDNode endoTherapyGroup = children[idxEndoTherapyGroups];
-                            endoTherapyHTML.AppendFormat(@"<tr {0}><td>{1}</td></tr>", TABLEROWSTYLE_NO_BORDERS, (buildNodeWithReferenceAndOverviewHTML(pContext, endoTherapyGroup, "u", pFootnotes, pObjectsOnPage)));
-
-                            List<BDTherapy> endoTherapies = BDTherapy.RetrieveTherapiesForParentId(pContext, endoTherapyGroup.Uuid);
-                            if (endoTherapies.Count > 0)
-                            {
-                                if (idxEndoTherapyGroups == children.Count - 1)
-                                    isLastEndoTherapyGroup = true;
-                                for (int idxEndoTherapies = 0; idxEndoTherapies < endoTherapies.Count; idxEndoTherapies++)
-                                {
-                                    if (idxEndoTherapies == endoTherapies.Count)
-                                        isLastEndoTherapy = true;
-
-                                    BDTherapy therapy = endoTherapies[idxEndoTherapies];
-                                    bool addEndBracket = false;
-                                    // check the name on the following therapy - if empty and the right bracket is set, addEndBracket
-                                    if (idxEndoTherapies < endoTherapies.Count - 1 && string.IsNullOrEmpty(endoTherapies[idxEndoTherapies + 1].name) && endoTherapies[idxEndoTherapies + 1].rightBracket.Value == true)
-                                        addEndBracket = true;
-                                    string rowStyle = (isLastEndoTherapyGroup && isLastEndoTherapy) ? TABLEROWSTYLE_BOTTOM_BORDER : TABLEROWSTYLE_NO_BORDERS;
-
-                                    endoTherapyHTML.Append(buildTherapyHtml(pContext, therapy, pFootnotes, pObjectsOnPage, addEndBracket));
-
-                                    if (!string.IsNullOrEmpty(therapy.Name) && therapy.nameSameAsPrevious == false)
-                                        previousTherapyNameId = therapy.uuid;
-                                    if (!string.IsNullOrEmpty(therapy.dosage) && therapy.dosageSameAsPrevious == false)
-                                    {
-                                        if (therapy.dosageSameAsPrevious == false)
-                                            previousTherapyDosageId = therapy.uuid;
-                                        therapiesHaveDosage = true;
-                                    }
-                                    if (!string.IsNullOrEmpty(therapy.duration))
-                                    {
-                                        if (therapy.durationSameAsPrevious == false)
-                                            previousTherapyDurationId = therapy.uuid;
-                                        therapiesHaveDuration = true;
-                                    }
-                                }
-                            }
+                            endoTherapyHTML.Append(BuildBDTherapyGroupHTML(pContext, endoTherapyGroup, pFootnotes, pObjectsOnPage, pLevel, null));
                         }
                         // build table header
                         html.AppendFormat(@"<table class=""v{0}"">", (int)pNode.LayoutVariant);
@@ -2982,9 +2942,9 @@ namespace BDEditor.Classes
                         html.Append(endoTherapyHTML);
                         html.Append(@"</table>");
                         break;
-                    case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration:
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration: // [1081]
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                        // custom-built - Therapy has 1 duration and a custom header
+                        // custom-built: Therapy groups all appear within the same table, and two duration columns have a spanned title at the column header
 
                         string t1therapyNameTitleHtml = string.Empty;
                         string t1therapyDosage1TitleHtml = string.Empty;
@@ -3001,57 +2961,14 @@ namespace BDEditor.Classes
 
                         resetGlobalVariablesForTherapies();
                         StringBuilder therapyHTML = new StringBuilder();
-                        bool isLastTherapyGroup = false;
-                        bool isLastTherapy = false;
 
-                        for (int idxTherapyGroups = 0; idxTherapyGroups < children.Count; idxTherapyGroups++)
-                        {
-                            IBDNode therapyGroup = children[idxTherapyGroups];
-                            therapyHTML.AppendFormat(@"<tr {0}><td>{1}</td></tr>", TABLEROWSTYLE_NO_BORDERS, (buildNodeWithReferenceAndOverviewHTML(pContext, therapyGroup, "u", pFootnotes, pObjectsOnPage)));
+                        foreach (BDTherapyGroup tGroup in children) 
+                            therapyHTML.Append(BuildBDTherapyGroupHTML(pContext, tGroup, pFootnotes, pObjectsOnPage, pLevel, null));
 
-                            List<BDTherapy> therapies = BDTherapy.RetrieveTherapiesForParentId(pContext, therapyGroup.Uuid);
-                            if (therapies.Count > 0)
-                            {
-                                if (idxTherapyGroups == children.Count - 1)
-                                    isLastTherapyGroup = true;
-
-                                for (int idxTherapies = 0; idxTherapies < therapies.Count; idxTherapies++)
-                                {
-                                    if (idxTherapies == therapies.Count)
-                                        isLastTherapy = true;
-
-                                    BDTherapy therapy = therapies[idxTherapies];
-                                    bool addEndBracket = false;
-
-                                    // check the name on the following therapy - if empty and the right bracket is set, addEndBracket
-                                    if (idxTherapies < therapies.Count - 1 && string.IsNullOrEmpty(therapies[idxTherapies + 1].name) && therapies[idxTherapies + 1].rightBracket.Value == true)
-                                        addEndBracket = true;
-                                    string rowStyle = (isLastTherapyGroup && isLastTherapy) ? TABLEROWSTYLE_BOTTOM_BORDER : TABLEROWSTYLE_NO_BORDERS;
-
-
-                                    therapyHTML.Append(buildTherapyHtml(pContext, therapy, pFootnotes, pObjectsOnPage, addEndBracket));
-
-                                    if (!string.IsNullOrEmpty(therapy.Name) && therapy.nameSameAsPrevious == false)
-                                        previousTherapyNameId = therapy.uuid;
-                                    if (!string.IsNullOrEmpty(therapy.dosage))
-                                    {
-                                        if (therapy.dosageSameAsPrevious == false)
-                                            previousTherapyDosageId = therapy.uuid;
-                                        therapiesHaveDosage = true;
-                                    }
-                                    if (!string.IsNullOrEmpty(therapy.duration))
-                                    {
-                                        if (therapy.durationSameAsPrevious == false)
-                                            previousTherapyDurationId = therapy.uuid;
-                                        therapiesHaveDuration = true;
-                                    }
-                                }
-                            }
-                        }
 
                         // build table header
                         html.AppendFormat(@"<table class=""v{0}"">", (int)pNode.LayoutVariant);
-                        html.AppendFormat(@"<tr colspan=3><th>{0}</th>", t1therapyNameTitleHtml);  // colspan added to accommodate bracket columns
+                        html.AppendFormat(@"<tr><th colspan=3>{0}</th>", t1therapyNameTitleHtml);  // colspan added to accommodate bracket columns
                         if (therapiesHaveDosage)
                         {
                             html.AppendFormat(@"<th>{0}</th>", t1therapyDosage1TitleHtml);
@@ -3263,8 +3180,6 @@ namespace BDEditor.Classes
             List<BDTherapy> therapies = BDTherapy.RetrieveTherapiesForParentId(pContext, pTherapyGroup.Uuid);
             if (therapies.Count > 0)
             {
-                therapyGroupHtml.AppendFormat(@"<table class=""v{0}"">", (int)pTherapyGroup.LayoutVariant);
-
                 StringBuilder therapyHTML = new StringBuilder();
                 resetGlobalVariablesForTherapies();
                 bool isTherapyInBrackets = false;
@@ -3283,14 +3198,14 @@ namespace BDEditor.Classes
                     {
                         if (therapy.dosageSameAsPrevious == false)
                             previousTherapyDosageId = therapy.uuid;
-                        //therapiesHaveDosage = true;
+                            // therapiesHaveDosage = true;
                     }
 
                     if (!string.IsNullOrEmpty(therapy.duration))
                     {
                         if (therapy.durationSameAsPrevious == false)
                             previousTherapyDurationId = therapy.uuid;
-                        //therapiesHaveDuration = true;
+                            // therapiesHaveDuration = true;
                     }
                 }
 
@@ -3298,6 +3213,8 @@ namespace BDEditor.Classes
                 switch (pTherapyGroup.LayoutVariant)
                 {
                     case BDConstants.LayoutVariantType.TreatmentRecommendation01:
+                        therapyGroupHtml.AppendFormat(@"<table class=""v{0}"">", (int)pTherapyGroup.LayoutVariant);
+
                         // use default titles if layout configuration data is misssing
                         if (therapyNameTitleHtml.Length == 0) therapyNameTitleHtml = "Recommended Empiric Therapy";
                         if (therapyDosageTitleHtml.Length == 0) therapyDosageTitleHtml = "Recommended Dose";
@@ -3319,9 +3236,16 @@ namespace BDEditor.Classes
                         therapyGroupHtml.Append(therapyHTML);
                         therapyGroupHtml.Append(@"</table>");
                         break;
-
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis: // [108]
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_ViridansStrep: // [1082]
+                    case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration: // [1081]
+                        therapyGroupHtml.Append(therapyHTML);
+                        therapyGroupHtml.AppendFormat(@"<tr {0}><td colspan=5>{1}</td></tr>", TABLEROWSTYLE_NO_BORDERS, (buildNodeWithReferenceAndOverviewHTML(pContext, pTherapyGroup, "u", pFootnotes, pObjectsOnPage)));
+                        break;
                     case BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics:
                     case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
+                        therapyGroupHtml.AppendFormat(@"<table class=""v{0}"">", (int)pTherapyGroup.LayoutVariant);
+
                         therapyGroupHtml.AppendFormat(@"<tr><th colspan=3>{0}</th><th>{1}</th><tr>", therapyNameTitleHtml, therapyDosageTitleHtml);  // colspan added to accommodate bracket columns
                         therapyGroupHtml.Append(therapyHTML);
                         therapyGroupHtml.Append(@"</table>");
@@ -3329,10 +3253,11 @@ namespace BDEditor.Classes
 
                     case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
                         // not handled here: Category handler
-
                         break;
 
                     case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
+                        therapyGroupHtml.AppendFormat(@"<table class=""v{0}"">", (int)pTherapyGroup.LayoutVariant);
+
                         List<IBDNode> therpyList = BDFabrik.GetChildrenForParent(pContext, pTherapyGroup);
                         therapyGroupHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pTherapyGroup, HtmlHeaderTagLevelString(pLevel + 2), pFootnotes, pObjectsOnPage));
 
@@ -3359,6 +3284,7 @@ namespace BDEditor.Classes
                         if (therapyDosageTitleHtml.Length == 0) therapyDosageTitleHtml = "Dose";
                         if (therapyDurationTitleHtml.Length == 0) therapyDurationTitleHtml = "Duration";
 
+                        therapyGroupHtml.AppendFormat(@"<table class=""v{0}"">", (int)pTherapyGroup.LayoutVariant);
                         therapyGroupHtml.AppendFormat(@"<tr><th colspan=3>{0}</th>", therapyNameTitleHtml); // colspan added to accommodate bracket columns
 
                         if (therapiesHaveDosage)

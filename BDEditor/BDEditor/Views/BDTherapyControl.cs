@@ -731,7 +731,7 @@ namespace BDEditor.Views
                     toolTip1.SetToolTip(tbDuration, "Adult Route/Duration");
                     toolTip1.SetToolTip(tbDuration1, "Paediatric Route/Duration");
                     break;
-                case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
+                case BDConstants.LayoutVariantType.Prophylaxis_IE_AntibioticRegimen:
                     toolTip1.SetToolTip(tbDosage, "Adult");
                     toolTip1.SetToolTip(tbDosage1, "Paediatric");
                     break;

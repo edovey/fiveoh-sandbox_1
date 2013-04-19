@@ -203,7 +203,7 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
                             case BDConstants.LayoutVariantType.Dental_Prophylaxis:
                             case BDConstants.LayoutVariantType.Organisms_Therapy:
-                            case BDConstants.LayoutVariantType.Prophylaxis_IERecommendation:
+                            case BDConstants.LayoutVariantType.Prophylaxis_IE:
                             case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
                                 if (!pInterrogateOnly)
                                 {

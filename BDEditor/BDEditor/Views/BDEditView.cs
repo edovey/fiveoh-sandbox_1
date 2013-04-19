@@ -482,8 +482,8 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Prophylaxis_Surgical_PreOp:
                             case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
                             case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
-                            case BDConstants.LayoutVariantType.Prophylaxis_IERecommendation:
-                            case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
+                            case BDConstants.LayoutVariantType.Prophylaxis_IE:
+                            case BDConstants.LayoutVariantType.Prophylaxis_IE_AntibioticRegimen:
                             case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure:
                             case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
                             case BDConstants.LayoutVariantType.Prophylaxis_Immunization:
@@ -584,7 +584,7 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
                             case BDConstants.LayoutVariantType.Dental_Prophylaxis:
                             case BDConstants.LayoutVariantType.Organisms_Therapy:
-                            case BDConstants.LayoutVariantType.Prophylaxis_IERecommendation:
+                            case BDConstants.LayoutVariantType.Prophylaxis_IE:
                             case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
                                 if (!pInterrogateOnly)
                                 {
@@ -622,7 +622,7 @@ namespace BDEditor.Views
                                 }
                                 break;
                             case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
-                            case BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage:
+                            case BDConstants.LayoutVariantType.Prophylaxis_IE_AntibioticRegimen:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:
                                 childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
@@ -821,6 +821,7 @@ namespace BDEditor.Views
                                     showChildControls = false;
                                 }
                                 break;
+                            case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
                             case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
                                 childTreeNode = BDDentalTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)

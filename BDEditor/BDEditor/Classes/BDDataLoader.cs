@@ -5376,7 +5376,7 @@ namespace BDEditor.Classes
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
 //            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
-//            BDConstants.LayoutVariantType categoryLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_IERecommendation;
+//            BDConstants.LayoutVariantType categoryLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_IE;
 //            BDConstants.LayoutVariantType subcategoryLayoutVariant = categoryLayoutVariant;
 
 //            uuidData = string.Empty;
@@ -5490,8 +5490,8 @@ namespace BDEditor.Classes
 //            //Expectation that a tableRows contains only one element with data
 
 //            BDConstants.LayoutVariantType chapterLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis;
-//            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage;
-//            BDConstants.LayoutVariantType therapyGroupLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage;
+//            BDConstants.LayoutVariantType sectionLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_IE_AntibioticRegimen;
+//            BDConstants.LayoutVariantType therapyGroupLayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_IE_AntibioticRegimen;
 //            BDConstants.LayoutVariantType therapyLayoutVariant = therapyGroupLayoutVariant;
 
 //            uuidData = string.Empty;

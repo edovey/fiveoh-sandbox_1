@@ -268,9 +268,9 @@ namespace BDEditor.Classes
             [Description("Prophylaxis - Surgical")]
             Prophylaxis_Surgical = 302,
             [Description("Prophylaxis - Infective Endocarditis")]
-            Prophylaxis_IERecommendation = 303,
+            Prophylaxis_IE = 303,
             [Description("Prophylaxis - Infective Endocarditis Antibiotic Regimen")]
-            Prophylaxis_IEDrugAndDosage = 304,
+            Prophylaxis_IE_AntibioticRegimen = 304,
             [Description("Prophylaxis - Blood/Body Fluid Exposure")]
             Prophylaxis_FluidExposure = 305,
             [Description("Prophylaxis - Blood/Body Fluid Exposure - Risk of Infection")]

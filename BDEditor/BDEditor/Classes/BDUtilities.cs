@@ -1426,13 +1426,13 @@ namespace BDEditor.Classes
             BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection, 0, "Antimicrobial Regimen", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_THERAPY, 0, "");
             BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection, 1, "Dose & Duration", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, 0, "");
 
-            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage, 0, "SITUATION", BDConstants.BDNodeType.BDTherapyGroup, BDTherapyGroup.PROPERTYNAME_NAME, 0, "");
-            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage, 1, "DRUG", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_THERAPY, 0, "");
-            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage, 2, "ADULT DOSE", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, 0, "");
-            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage, 3, "PAEDIATRIC DOSE", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE_1, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Prophylaxis_IE_AntibioticRegimen, 0, "SITUATION", BDConstants.BDNodeType.BDTherapyGroup, BDTherapyGroup.PROPERTYNAME_NAME, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Prophylaxis_IE_AntibioticRegimen, 1, "DRUG", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_THERAPY, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Prophylaxis_IE_AntibioticRegimen, 2, "ADULT DOSE", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(dataContext, BDConstants.LayoutVariantType.Prophylaxis_IE_AntibioticRegimen, 3, "PAEDIATRIC DOSE", BDConstants.BDNodeType.BDTherapy, BDTherapy.PROPERTYNAME_DOSAGE_1, 0, "");
 
             BDNode ieProphylaxis = BDNode.RetrieveNodeWithId(dataContext, Guid.Parse("376b287e-1d80-40f5-bb0b-512e52720687"));
-            ieProphylaxis.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_IERecommendation;
+            ieProphylaxis.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_IE;
             BDNode.Save(dataContext, ieProphylaxis);
             
             BDNode intro = BDNode.CreateBDNode(dataContext, BDConstants.BDNodeType.BDChapter, Guid.NewGuid());
@@ -2157,7 +2157,7 @@ namespace BDEditor.Classes
             #region v.1.6.44
             BDNode section = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("376b287e-1d80-40f5-bb0b-512e52720687"));
             //BDNode category = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDCategory, Guid.Parse("93e36f86-d472-49de-b002-843e12f7366b"));
-            //category.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_IEDrugAndDosage;
+            //category.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_IE_AntibioticRegimen;
             //category.displayOrder = 2;
             //category.SetParent(section);
             //category.Name = "Antimicrobial Regimens for Endocarditis Prophylaxis";

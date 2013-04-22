@@ -1622,29 +1622,7 @@ namespace BDEditor.Classes
                         List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
                         foreach (IBDNode tGroup in childNodes)
                         {
-                            html.Append(BuildBDTherapyGroupHTML(pContext, tGroup as BDTherapyGroup, pFootnotes, pObjectsOnPage, pLevel, null));
-                        //    if (tGroup.Name.Length > 0 && !tGroup.Name.Contains(BDUtilities.GetEnumDescription(tGroup.NodeType)))
-                        //        html.AppendFormat("<tr><td colspan={0}><b>{1}</b></td></tr>", columnCount, buildNodePropertyHTML(pContext, tGroup, tGroup.Name, BDTherapyGroup.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage));
-
-                        //    List<IBDNode> therapies = BDFabrik.GetChildrenForParent(pContext, tGroup);
-                        //    if (therapies.Count > 0)
-                        //    {
-                        //        bool isTherapyInBrackets = false;
-                        //        foreach (BDTherapy therapy in therapies)
-                        //        {
-                        //            if (therapy.leftBracket.HasValue && therapy.leftBracket.Value == true)
-                        //                isTherapyInBrackets = true;
-                        //            html.Append(buildTherapyHtml(pContext, therapy, pFootnotes, pObjectsOnPage, isTherapyInBrackets));
-
-                        //            if (therapy.rightBracket.HasValue && therapy.rightBracket.Value == true)
-                        //                isTherapyInBrackets = false;
-
-                        //            if (!string.IsNullOrEmpty(therapy.Name) && therapy.nameSameAsPrevious == false)
-                        //                previousTherapyNameId = therapy.uuid;
-                        //            if (!string.IsNullOrEmpty(therapy.dosage) && therapy.dosageSameAsPrevious == false)
-                        //                previousTherapyDosageId = therapy.uuid;
-                        //        }
-                        //    }
+                            html.Append(BuildBDTherapyGroupHTML(pContext, tGroup as BDTherapyGroup, pFootnotes, pObjectsOnPage, pLevel + 1, null));
                         }
                         html.Append("</table>");
                         break;
@@ -2353,20 +2331,20 @@ namespace BDEditor.Classes
                                     string immediateText = BDUtilities.BuildTextFromInlineNotes(immediate);
                                     //end hack
 
-                                    clinical.AppendFormat(@"{0}{1}", child.Name, immediateText);
+                                    //clinical.AppendFormat(@"<p>{0}{1}</p>", child.Name, immediateText);
                                     pObjectsOnPage.AddRange(immedAssociations);
-
                                     pObjectsOnPage.Add(child.Uuid);
+
                                     string inlineText = buildTextForParentAndPropertyFromLinkedNotes(pContext, BDNode.PROPERTYNAME_NAME, child, BDConstants.LinkedNoteType.Inline, pObjectsOnPage);
                                     inlineText = BDUtilities.CleanNoteText(inlineText);
-                                    clinical.AppendFormat(@" {0}", inlineText);
+                                    clinical.AppendFormat(@"<p>{0}{1} {2}</p>", child.Name, immediateText, inlineText);
                                     // overview contains the 'Diagnosis' column data
                                     diagnosis.Append(retrieveNoteTextForOverview(pContext, child.Uuid, pObjectsOnPage));
                                     break;
                             }
                         }
 
-                        html.AppendFormat(@"<p>{0}<br>{1}<br>{2}</p>", clinical, diagnosis, therapy);
+                        html.AppendFormat(@"{0}<br>{1}<br>{2}", clinical, diagnosis, therapy);
 
                         break;
                     case BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases:
@@ -2417,6 +2395,9 @@ namespace BDEditor.Classes
             if (null != pNode && pNode.NodeType == BDConstants.BDNodeType.BDPathogenGroup)
             {
                 List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pathogenGroup);
+
+                StringBuilder pathogenHtml = new StringBuilder();
+                StringBuilder therapyGroupHtml = new StringBuilder();
 
                 switch (pNode.LayoutVariant)
                 {
@@ -2477,14 +2458,6 @@ namespace BDEditor.Classes
                                 html.Append(@"</table>");
                             }
                         }
-                        List<Guid> legendAssociations;
-                        List<BDLinkedNote> legendNotes = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.ParentId.Value, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Legend, out legendAssociations);
-                        string legendHTML = buildTextFromNotes(legendNotes);
-                        if (!string.IsNullOrEmpty(legendHTML))
-                        {
-                            html.Append(legendHTML);
-                            pObjectsOnPage.AddRange(legendAssociations);
-                        }
                         break;
 
                     case BDConstants.LayoutVariantType.TreatmentRecommendation19_Peritonitis_PD_Adult:
@@ -2499,19 +2472,18 @@ namespace BDEditor.Classes
                         html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel + 1), pFootnotes, pObjectsOnPage));
 
                         //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                        html.Append("<p>"); // ld for css
+
                         foreach (IBDNode child in children)
                         {
                             switch (child.NodeType)
                             {
                                 case BDConstants.BDNodeType.BDPathogen:
-                                    html.AppendFormat("{0}<br>", (buildNodeWithReferenceAndOverviewHTML(pContext, child, "", pFootnotes, pObjectsOnPage)));
+                                    pathogenHtml.AppendFormat("{0}<br>", (buildNodeWithReferenceAndOverviewHTML(pContext, child, "", pFootnotes, pObjectsOnPage)));
                                     break;
                                 case BDConstants.BDNodeType.BDTherapyGroup:
-                                    BDTherapyGroup therapyGroup = child as BDTherapyGroup;
                                     string tgHtml = buildNodePropertyHTML(pContext, child, child.Name, BDTherapyGroup.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage);
                                     if (!string.IsNullOrEmpty(tgHtml))
-                                        html.AppendFormat("<{0}>{1}</{0}><br>", HtmlHeaderTagLevelString(pLevel + 1), tgHtml);
+                                        therapyGroupHtml.AppendFormat("<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel + 1), tgHtml);
 
                                     // Therapy has 2 dosages, no duration and a custom header
                                     string therapyNameTitleHtml = string.Empty;
@@ -2534,7 +2506,7 @@ namespace BDEditor.Classes
                                     List<BDTherapy> therapies = BDTherapy.RetrieveTherapiesForParentId(pContext, child.Uuid);
                                     if (therapies.Count > 0)
                                     {
-                                        html.AppendFormat(@"<table class=""v{0}"">", (int)child.LayoutVariant);
+                                        therapyGroupHtml.AppendFormat(@"<table class=""v{0}"">", (int)child.LayoutVariant);
 
                                         resetGlobalVariablesForTherapies();
                                         StringBuilder therapyHTML = new StringBuilder();
@@ -2553,26 +2525,31 @@ namespace BDEditor.Classes
                                                 previousTherapyDosageId = therapy.uuid;
                                             if (!string.IsNullOrEmpty(therapy.dosage1) && therapy.dosage1SameAsPrevious == false)
                                                 previousTherapyDosage1Id = therapy.uuid;
+                                            if (!string.IsNullOrEmpty(therapy.dosage2) && therapy.dosage2SameAsPrevious == false)
+                                                previousTherapyDosage2Id = therapy.uuid;
+                                            if (!string.IsNullOrEmpty(therapy.duration) && therapy.durationSameAsPrevious == false)
+                                                previousTherapyDurationId = therapy.uuid;
+                                            if (!string.IsNullOrEmpty(therapy.duration1) && therapy.duration1SameAsPrevious == false)
+                                                previousTherapyDuration1Id = therapy.uuid;
+                                            if (!string.IsNullOrEmpty(therapy.duration2) && therapy.duration2SameAsPrevious == false)
+                                                previousTherapyDuration2Id = therapy.uuid;
                                         }
-                                        html.AppendFormat(@"<tr><th rowspan=2 colspan=3>{0}</th>", therapyNameTitleHtml); // colspan added to accommodate bracket columns
-                                        html.AppendFormat(@"<th colspan=2>{0}</th></tr>", therapyDosageSpanTitle);
-                                        html.AppendFormat(@"<tr><th class=""inner"">{0}</th><th class=""inner"">{1}</th></tr>", therapyDosage1TitleHtml, therapyDosage2TitleHtml);
+                                        therapyGroupHtml.AppendFormat(@"<tr><th rowspan=2 colspan=3>{0}</th>", therapyNameTitleHtml); // colspan added to accommodate bracket columns
+                                        therapyGroupHtml.AppendFormat(@"<th colspan=2>{0}</th></tr>", therapyDosageSpanTitle);
+                                        therapyGroupHtml.AppendFormat(@"<tr><th class=""inner"">{0}</th><th class=""inner"">{1}</th></tr>", therapyDosage1TitleHtml, therapyDosage2TitleHtml);
 
-                                        html.Append(therapyHTML);
-                                        html.Append(@"</table>");
-                                    }
-                                    List<Guid> lgndAssociations;
-                                    List<BDLinkedNote> lgndNotes = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.ParentId.Value, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Legend, out lgndAssociations);
-                                    string lgndHtml = buildTextFromNotes(lgndNotes);
-                                    if (!string.IsNullOrEmpty(lgndHtml))
-                                    {
-                                        html.Append(lgndHtml);
-                                        pObjectsOnPage.AddRange(lgndAssociations);
+                                        therapyGroupHtml.Append(therapyHTML);
+                                        therapyGroupHtml.Append(@"</table>");
                                     }
                                     break;
                             }
                         }
-                        html.Append("</p>"); // ld for css
+
+                            if (!string.IsNullOrEmpty(pathogenHtml.ToString()))
+                                html.AppendFormat("<p>{0}</p>", pathogenHtml);
+                            if (!string.IsNullOrEmpty(therapyGroupHtml.ToString()))
+                                html.Append(therapyGroupHtml);
+
                         break;
 
                     case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
@@ -2604,24 +2581,27 @@ namespace BDEditor.Classes
 
                         // describe the pathogen group
                         html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel + 1), pFootnotes, pObjectsOnPage));
-                        html.Append("<p>");
+                        
                         foreach (IBDNode child in children)
                         {
                             switch (child.NodeType)
                             {
                                 case BDConstants.BDNodeType.BDPathogen:
-                                    html.AppendFormat("{0}<br>", (buildNodeWithReferenceAndOverviewHTML(pContext, child, "div", pFootnotes, pObjectsOnPage)));
+                                    pathogenHtml.AppendFormat("{0}<br>", (buildNodeWithReferenceAndOverviewHTML(pContext, child, "div", pFootnotes, pObjectsOnPage)));
                                     break;
                                 case BDConstants.BDNodeType.BDTherapyGroup:
                                     BDTherapyGroup therapyGroup = child as BDTherapyGroup;
                                     if (null != therapyGroup)
                                     {
-                                        html.AppendFormat("{0}<br>", (BuildBDTherapyGroupHTML(pContext, therapyGroup, pFootnotes, pObjectsOnPage, pLevel + 2, null)));
+                                        therapyGroupHtml.AppendFormat("{0}", (BuildBDTherapyGroupHTML(pContext, therapyGroup, pFootnotes, pObjectsOnPage, pLevel + 2, null)));
                                     }
                                     break;
                             }
                         }
-                        html.Append("</p>");
+                            if (!string.IsNullOrEmpty(pathogenHtml.ToString()))
+                                html.AppendFormat("<p>{0}</p>", pathogenHtml);
+                            if (!string.IsNullOrEmpty(therapyGroupHtml.ToString()))
+                                html.Append(therapyGroupHtml);
                         break;
                     case BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis:
                         if (pHasUsualPathogenTitle)
@@ -2636,24 +2616,29 @@ namespace BDEditor.Classes
 
                         // describe the pathogen group
                         html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel + 1), pFootnotes, pObjectsOnPage));
-                        html.Append("<p>");
+
                         foreach (IBDNode child in children)
                         {
                             switch (child.NodeType)
                             {
                                 case BDConstants.BDNodeType.BDPathogen:
-                                    html.AppendFormat("{0}<br>", (buildNodeWithReferenceAndOverviewHTML(pContext, child, "div", pFootnotes, pObjectsOnPage)));
+                                    pathogenHtml.AppendFormat("{0}", (buildNodeWithReferenceAndOverviewHTML(pContext, child, "div", pFootnotes, pObjectsOnPage)));
                                     break;
                                 case BDConstants.BDNodeType.BDTherapyGroup:
                                     BDTherapyGroup therapyGroup = child as BDTherapyGroup;
                                     if (null != therapyGroup)
                                     {
-                                        html.AppendFormat("{0}<br>", (BuildBDTherapyGroupHTML(pContext, therapyGroup, pFootnotes, pObjectsOnPage, pLevel + 2, null)));
+                                        therapyGroupHtml.Append(BuildBDTherapyGroupHTML(pContext, therapyGroup, pFootnotes, pObjectsOnPage, pLevel + 2, null));
                                     }
+                                    break;
+                                default:
                                     break;
                             }
                         }
-                        html.Append("</p>");
+                        if (!string.IsNullOrEmpty(pathogenHtml.ToString()))
+                            html.Append(pathogenHtml);
+                        if (!string.IsNullOrEmpty(therapyGroupHtml.ToString()))
+                            html.AppendFormat("{0}<br>", therapyGroupHtml);
                         break;
                     default:
                         bool childrenHavePathogens = false;
@@ -2687,13 +2672,12 @@ namespace BDEditor.Classes
                             // describe the pathogen group
                             html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel + 1), pFootnotes, pObjectsOnPage));
 
-                        html.Append("<p>");
                         foreach (IBDNode child in children)
                         {
                             switch (child.NodeType)
                             {
                                 case BDConstants.BDNodeType.BDPathogen:
-                                    html.AppendFormat("{0}<br>", (buildNodeWithReferenceAndOverviewHTML(pContext, child, "", pFootnotes, pObjectsOnPage)));
+                                    pathogenHtml.AppendFormat("{0}<br>", (buildNodeWithReferenceAndOverviewHTML(pContext, child, "", pFootnotes, pObjectsOnPage)));
                                     break;
                                 case BDConstants.BDNodeType.BDTherapyGroup:
                                     BDTherapyGroup therapyGroup = child as BDTherapyGroup;
@@ -2702,13 +2686,24 @@ namespace BDEditor.Classes
                                         int level = pLevel + 2;
                                         if (child.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic)
                                             level = pLevel + 1;
-                                        html.AppendFormat("{0}<br>", (BuildBDTherapyGroupHTML(pContext, therapyGroup, pFootnotes, pObjectsOnPage, level, null)));
+                                        therapyGroupHtml.AppendFormat("{0}", (BuildBDTherapyGroupHTML(pContext, therapyGroup, pFootnotes, pObjectsOnPage, level, null)));
                                     }
                                     break;
                             }
                         }
-                        html.Append("</p>");
+                        if (!string.IsNullOrEmpty(pathogenHtml.ToString()))
+                            html.AppendFormat("<p>{0}</p>", pathogenHtml);
+                        if (!string.IsNullOrEmpty(therapyGroupHtml.ToString()))
+                            html.Append(therapyGroupHtml);
                         break;
+                }
+                List<Guid> lgndAssociations;
+                List<BDLinkedNote> lgndNotes = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.ParentId.Value, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Legend, out lgndAssociations);
+                string lgndHtml = buildTextFromNotes(lgndNotes);
+                if (!string.IsNullOrEmpty(lgndHtml))
+                {
+                    html.Append(lgndHtml);
+                    pObjectsOnPage.AddRange(lgndAssociations);
                 }
             }
             return html.ToString();
@@ -2762,7 +2757,7 @@ namespace BDEditor.Classes
 
                         foreach (BDTherapyGroup endoTherapyGroup in children)
                         {
-                            endoTherapyHTML.Append(BuildBDTherapyGroupHTML(pContext, endoTherapyGroup, pFootnotes, pObjectsOnPage, pLevel, null));
+                            endoTherapyHTML.Append(BuildBDTherapyGroupHTML(pContext, endoTherapyGroup, pFootnotes, pObjectsOnPage, pLevel + 1, null));
                         }
                         // build table header
                         html.AppendFormat(@"<table class=""v{0}"">", (int)pNode.LayoutVariant);
@@ -2805,7 +2800,7 @@ namespace BDEditor.Classes
                         StringBuilder therapyHTML = new StringBuilder();
 
                         foreach (BDTherapyGroup tGroup in children)
-                            therapyHTML.Append(BuildBDTherapyGroupHTML(pContext, tGroup, pFootnotes, pObjectsOnPage, pLevel, null));
+                            therapyHTML.Append(BuildBDTherapyGroupHTML(pContext, tGroup, pFootnotes, pObjectsOnPage, pLevel + 1, null));
 
 
                         // build table header
@@ -2962,8 +2957,8 @@ namespace BDEditor.Classes
 
             // represent TherapyGroup name wrapped in different tags for use in rows vs. headers
             string rowTGNameHtml = buildNodeWithReferenceAndOverviewHTML(pContext, pTherapyGroup, "u", pFootnotes, pObjectsOnPage);
-            string headerTGNameHtml = buildNodeWithReferenceAndOverviewHTML(pContext, pTherapyGroup, HtmlHeaderTagLevelString(pLevel + 1), pFootnotes, pObjectsOnPage);
-            
+            string headerTGNameHtml = buildNodeWithReferenceAndOverviewHTML(pContext, pTherapyGroup, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage);
+
             string therapyNameTitleHtml = string.Empty;
             string therapyDosageTitleHtml = string.Empty;
             string therapyDurationTitleHtml = string.Empty;
@@ -3031,26 +3026,26 @@ namespace BDEditor.Classes
                 {
                     if (therapy.leftBracket.HasValue && therapy.leftBracket == true)
                         isTherapyInBrackets = true;
+
                     therapyHTML.Append(buildTherapyHtml(pContext, therapy, pFootnotes, pObjectsOnPage, isTherapyInBrackets));
+                    
                     if (therapy.rightBracket.HasValue && therapy.rightBracket.Value == true)
                         isTherapyInBrackets = false;
 
                     if (!string.IsNullOrEmpty(therapy.Name) && therapy.nameSameAsPrevious == false)
                         previousTherapyNameId = therapy.uuid;
-
-                    if (!string.IsNullOrEmpty(therapy.dosage))
-                    {
-                        if (therapy.dosageSameAsPrevious == false)
-                            previousTherapyDosageId = therapy.uuid;
-                        // therapiesHaveDosage = true;
-                    }
-
-                    if (!string.IsNullOrEmpty(therapy.duration))
-                    {
-                        if (therapy.durationSameAsPrevious == false)
-                            previousTherapyDurationId = therapy.uuid;
-                        // therapiesHaveDuration = true;
-                    }
+                    if (!string.IsNullOrEmpty(therapy.dosage) && therapy.dosageSameAsPrevious == false)
+                        previousTherapyDosageId = therapy.uuid;
+                    if (!string.IsNullOrEmpty(therapy.dosage1) && therapy.dosage1SameAsPrevious == false)
+                        previousTherapyDosage1Id = therapy.uuid;
+                    if (!string.IsNullOrEmpty(therapy.dosage2) && therapy.dosage2SameAsPrevious == false)
+                        previousTherapyDosage2Id = therapy.uuid;
+                    if (!string.IsNullOrEmpty(therapy.duration) && therapy.durationSameAsPrevious == false)
+                        previousTherapyDurationId = therapy.uuid;
+                    if (!string.IsNullOrEmpty(therapy.duration1) && therapy.duration1SameAsPrevious == false)
+                        previousTherapyDuration1Id = therapy.uuid;
+                    if (!string.IsNullOrEmpty(therapy.duration2) && therapy.duration2SameAsPrevious == false)
+                        previousTherapyDuration2Id = therapy.uuid;
                 }
 
                 // Add TherapyGroup and in some cases, HTML table 
@@ -3059,7 +3054,7 @@ namespace BDEditor.Classes
                 switch (pTherapyGroup.LayoutVariant)
                 {
                     case BDConstants.LayoutVariantType.TreatmentRecommendation01:
-                        if(!string.IsNullOrEmpty(headerTGNameHtml))
+                        if (!string.IsNullOrEmpty(headerTGNameHtml))
                             therapyGroupHtml.Append(headerTGNameHtml);
 
                         therapyGroupHtml.AppendFormat(@"<table class=""v{0}"">", (int)pTherapyGroup.LayoutVariant);
@@ -3088,7 +3083,7 @@ namespace BDEditor.Classes
                     case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis: // [108]
                     case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_ViridansStrep: // [1082]
                     case BDConstants.LayoutVariantType.TreatmentRecommendation07_CultureProvenEndocarditis_SingleDuration: // [1081]
-                        if(!string.IsNullOrEmpty(rowTGNameHtml))
+                        if (!string.IsNullOrEmpty(rowTGNameHtml))
                             therapyGroupHtml.AppendFormat(@"<tr {0}><td colspan=6>{1}</td></tr>", TABLEROWSTYLE_NO_BORDERS, rowTGNameHtml);
                         therapyGroupHtml.Append(therapyHTML);
                         break;
@@ -3104,7 +3099,7 @@ namespace BDEditor.Classes
                         break;
 
                     case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
-                        if(!string.IsNullOrEmpty(rowTGNameHtml))
+                        if (!string.IsNullOrEmpty(rowTGNameHtml))
                             therapyGroupHtml.AppendFormat("<tr><td colspan=4><b>{0}</b></td></tr>", rowTGNameHtml);
                         therapyGroupHtml.Append(therapyHTML);
                         break;
@@ -3238,8 +3233,8 @@ namespace BDEditor.Classes
                         {
                             mObjectsOnPage.Add(precaution.Uuid);
                             BDPrecaution p = precaution as BDPrecaution;
-                            mHTML.AppendFormat("<{0}>{1}</{0}>{2}", HtmlHeaderTagLevelString(pLevel + 3), columnHtml[0], p.infectiveMaterial);
-                            mHTML.AppendFormat("<{0}>{1}</{0}>{2}", HtmlHeaderTagLevelString(pLevel + 3), columnHtml[1], p.modeOfTransmission);
+                            mHTML.AppendFormat("<{0}>{1}</{0}><p>{2}</p>", HtmlHeaderTagLevelString(pLevel + 3), columnHtml[0], p.infectiveMaterial);
+                            mHTML.AppendFormat("<{0}>{1}</{0}><p>{2}</p>", HtmlHeaderTagLevelString(pLevel + 3), columnHtml[1], p.modeOfTransmission);
                             // build table
                             mHTML.AppendFormat(@"<table class=""v{0}""><tr><th>{1}</th><th class=""v{0}"">Acute Care</th><th class=""v{0}"">Long Term Care</th></tr>", (int)precaution.LayoutVariant, precautionTitle);
                             mHTML.AppendFormat("<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>", columnHtml[2], p.singleRoomAcute, p.singleRoomLongTerm);
@@ -3389,12 +3384,18 @@ namespace BDEditor.Classes
 
                                         if (!string.IsNullOrEmpty(therapy.Name) && therapy.nameSameAsPrevious == false)
                                             previousTherapyNameId = therapy.uuid;
-
                                         if (!string.IsNullOrEmpty(therapy.dosage) && therapy.dosageSameAsPrevious == false)
                                             previousTherapyDosageId = therapy.uuid;
-
                                         if (!string.IsNullOrEmpty(therapy.dosage1) && therapy.dosage1SameAsPrevious == false)
                                             previousTherapyDosage1Id = therapy.uuid;
+                                        if (!string.IsNullOrEmpty(therapy.dosage2) && therapy.dosage2SameAsPrevious == false)
+                                            previousTherapyDosage2Id = therapy.uuid;
+                                        if (!string.IsNullOrEmpty(therapy.duration) && therapy.durationSameAsPrevious == false)
+                                            previousTherapyDurationId = therapy.uuid;
+                                        if (!string.IsNullOrEmpty(therapy.duration1) && therapy.duration1SameAsPrevious == false)
+                                            previousTherapyDuration1Id = therapy.uuid;
+                                        if (!string.IsNullOrEmpty(therapy.duration2) && therapy.duration2SameAsPrevious == false)
+                                            previousTherapyDuration2Id = therapy.uuid;
                                     }
                                     #endregion
                                     adultDosageHTML.Append("</ul>");

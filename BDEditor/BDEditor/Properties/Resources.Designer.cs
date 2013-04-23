@@ -158,6 +158,13 @@ namespace BDEditor.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap confg_24x24 {
+            get {
+                object obj = ResourceManager.GetObject("confg_24x24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap del_16 {
             get {
                 object obj = ResourceManager.GetObject("del_16", resourceCulture);

@@ -2425,7 +2425,6 @@ namespace BDEditor.Classes
                 case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic:
-                case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                 case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
                 case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
                 case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
@@ -2464,7 +2463,6 @@ namespace BDEditor.Classes
                 case BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopic:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic:
-                case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                 case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
                 case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
                 case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:

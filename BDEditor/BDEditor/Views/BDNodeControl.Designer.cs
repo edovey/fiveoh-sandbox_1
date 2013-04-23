@@ -38,9 +38,6 @@
             this.publishToDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generateSearchEntriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblNode = new System.Windows.Forms.Label();
-            this.btnMenuRight = new System.Windows.Forms.Button();
-            this.btnMenuLeft = new System.Windows.Forms.Button();
-            this.btnLinkedNote = new System.Windows.Forms.Button();
             this.tbName = new System.Windows.Forms.TextBox();
             this.contextMenuStripTextBox = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.bToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,18 +56,22 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.selectAllToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStripEvents = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.editIndexStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.reorderPreviousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.reorderNextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.addSiblingNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addChildNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.deleteNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlDetail = new System.Windows.Forms.Panel();
             this.pnlOverview = new System.Windows.Forms.Panel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnMenuRight = new System.Windows.Forms.Button();
+            this.btnMenuLeft = new System.Windows.Forms.Button();
+            this.btnLinkedNote = new System.Windows.Forms.Button();
+            this.editIndexStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editLayoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reorderPreviousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reorderNextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addSiblingNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addChildNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelHeader.SuspendLayout();
             this.contextMenuStripDebug.SuspendLayout();
             this.contextMenuStripTextBox.SuspendLayout();
@@ -101,7 +102,7 @@
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(870, 56);
+            this.panelHeader.Size = new System.Drawing.Size(853, 56);
             this.panelHeader.TabIndex = 7;
             // 
             // lblInfo
@@ -110,7 +111,7 @@
             this.lblInfo.AutoSize = true;
             this.lblInfo.ContextMenuStrip = this.contextMenuStripDebug;
             this.lblInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblInfo.Location = new System.Drawing.Point(826, 10);
+            this.lblInfo.Location = new System.Drawing.Point(809, 10);
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Size = new System.Drawing.Size(32, 13);
             this.lblInfo.TabIndex = 34;
@@ -160,42 +161,6 @@
             this.lblNode.TabIndex = 33;
             this.lblNode.Text = "Node";
             // 
-            // btnMenuRight
-            // 
-            this.btnMenuRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMenuRight.Enabled = false;
-            this.btnMenuRight.Image = global::BDEditor.Properties.Resources.apps_16;
-            this.btnMenuRight.Location = new System.Drawing.Point(830, 26);
-            this.btnMenuRight.Name = "btnMenuRight";
-            this.btnMenuRight.Size = new System.Drawing.Size(28, 28);
-            this.btnMenuRight.TabIndex = 32;
-            this.btnMenuRight.UseVisualStyleBackColor = true;
-            this.btnMenuRight.Visible = false;
-            this.btnMenuRight.Click += new System.EventHandler(this.btnMenu_Click);
-            // 
-            // btnMenuLeft
-            // 
-            this.btnMenuLeft.Enabled = false;
-            this.btnMenuLeft.Image = global::BDEditor.Properties.Resources.apps_16;
-            this.btnMenuLeft.Location = new System.Drawing.Point(7, 26);
-            this.btnMenuLeft.Name = "btnMenuLeft";
-            this.btnMenuLeft.Size = new System.Drawing.Size(28, 28);
-            this.btnMenuLeft.TabIndex = 30;
-            this.btnMenuLeft.UseVisualStyleBackColor = true;
-            this.btnMenuLeft.Visible = false;
-            this.btnMenuLeft.Click += new System.EventHandler(this.btnMenu_Click);
-            // 
-            // btnLinkedNote
-            // 
-            this.btnLinkedNote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLinkedNote.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkedNote.Image")));
-            this.btnLinkedNote.Location = new System.Drawing.Point(796, 26);
-            this.btnLinkedNote.Name = "btnLinkedNote";
-            this.btnLinkedNote.Size = new System.Drawing.Size(28, 28);
-            this.btnLinkedNote.TabIndex = 29;
-            this.btnLinkedNote.UseVisualStyleBackColor = true;
-            this.btnLinkedNote.Click += new System.EventHandler(this.btnLinkedNote_Click);
-            // 
             // tbName
             // 
             this.tbName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -204,7 +169,7 @@
             this.tbName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbName.Location = new System.Drawing.Point(39, 28);
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(751, 24);
+            this.tbName.Size = new System.Drawing.Size(734, 24);
             this.tbName.TabIndex = 1;
             this.tbName.Leave += new System.EventHandler(this.tbName_Leave);
             // 
@@ -341,6 +306,7 @@
             // 
             this.contextMenuStripEvents.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editIndexStripMenuItem,
+            this.editLayoutToolStripMenuItem,
             this.toolStripSeparator4,
             this.reorderPreviousToolStripMenuItem,
             this.reorderNextToolStripMenuItem,
@@ -351,7 +317,78 @@
             this.deleteNodeToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
             this.contextMenuStripEvents.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(164, 176);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(164, 198);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(160, 6);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(160, 6);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(160, 6);
+            // 
+            // pnlDetail
+            // 
+            this.pnlDetail.AutoSize = true;
+            this.pnlDetail.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.pnlDetail.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlDetail.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlDetail.Location = new System.Drawing.Point(0, 58);
+            this.pnlDetail.MinimumSize = new System.Drawing.Size(600, 5);
+            this.pnlDetail.Name = "pnlDetail";
+            this.pnlDetail.Size = new System.Drawing.Size(853, 5);
+            this.pnlDetail.TabIndex = 8;
+            // 
+            // pnlOverview
+            // 
+            this.pnlOverview.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlOverview.Location = new System.Drawing.Point(0, 56);
+            this.pnlOverview.Name = "pnlOverview";
+            this.pnlOverview.Size = new System.Drawing.Size(853, 2);
+            this.pnlOverview.TabIndex = 10;
+            // 
+            // btnMenuRight
+            // 
+            this.btnMenuRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMenuRight.Enabled = false;
+            this.btnMenuRight.Image = global::BDEditor.Properties.Resources.apps_16;
+            this.btnMenuRight.Location = new System.Drawing.Point(813, 26);
+            this.btnMenuRight.Name = "btnMenuRight";
+            this.btnMenuRight.Size = new System.Drawing.Size(28, 28);
+            this.btnMenuRight.TabIndex = 32;
+            this.btnMenuRight.UseVisualStyleBackColor = true;
+            this.btnMenuRight.Visible = false;
+            this.btnMenuRight.Click += new System.EventHandler(this.btnMenu_Click);
+            // 
+            // btnMenuLeft
+            // 
+            this.btnMenuLeft.Enabled = false;
+            this.btnMenuLeft.Image = global::BDEditor.Properties.Resources.apps_16;
+            this.btnMenuLeft.Location = new System.Drawing.Point(7, 26);
+            this.btnMenuLeft.Name = "btnMenuLeft";
+            this.btnMenuLeft.Size = new System.Drawing.Size(28, 28);
+            this.btnMenuLeft.TabIndex = 30;
+            this.btnMenuLeft.UseVisualStyleBackColor = true;
+            this.btnMenuLeft.Visible = false;
+            this.btnMenuLeft.Click += new System.EventHandler(this.btnMenu_Click);
+            // 
+            // btnLinkedNote
+            // 
+            this.btnLinkedNote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLinkedNote.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkedNote.Image")));
+            this.btnLinkedNote.Location = new System.Drawing.Point(779, 26);
+            this.btnLinkedNote.Name = "btnLinkedNote";
+            this.btnLinkedNote.Size = new System.Drawing.Size(28, 28);
+            this.btnLinkedNote.TabIndex = 29;
+            this.btnLinkedNote.UseVisualStyleBackColor = true;
+            this.btnLinkedNote.Click += new System.EventHandler(this.btnLinkedNote_Click);
             // 
             // editIndexStripMenuItem
             // 
@@ -361,10 +398,13 @@
             this.editIndexStripMenuItem.Text = "&Edit Index Entries";
             this.editIndexStripMenuItem.Click += new System.EventHandler(this.editIndexStripMenuItem_Click);
             // 
-            // toolStripSeparator4
+            // editLayoutToolStripMenuItem
             // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(160, 6);
+            this.editLayoutToolStripMenuItem.Image = global::BDEditor.Properties.Resources.confg_24x24;
+            this.editLayoutToolStripMenuItem.Name = "editLayoutToolStripMenuItem";
+            this.editLayoutToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.editLayoutToolStripMenuItem.Text = "Edit &Layout";
+            this.editLayoutToolStripMenuItem.Click += new System.EventHandler(this.editLayoutToolStripMenuItem_Click);
             // 
             // reorderPreviousToolStripMenuItem
             // 
@@ -382,11 +422,6 @@
             this.reorderNextToolStripMenuItem.Text = "Move &Next";
             this.reorderNextToolStripMenuItem.Click += new System.EventHandler(this.btnReorderToNext_Click);
             // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(160, 6);
-            // 
             // addSiblingNodeToolStripMenuItem
             // 
             this.addSiblingNodeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.add_16x16;
@@ -402,11 +437,6 @@
             this.addChildNodeToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.addChildNodeToolStripMenuItem.Text = "Add Child";
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(160, 6);
-            // 
             // deleteNodeToolStripMenuItem
             // 
             this.deleteNodeToolStripMenuItem.Image = global::BDEditor.Properties.Resources.remove;
@@ -414,26 +444,6 @@
             this.deleteNodeToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.deleteNodeToolStripMenuItem.Text = "Delete";
             this.deleteNodeToolStripMenuItem.Click += new System.EventHandler(this.btnDeleteNode_Click);
-            // 
-            // pnlDetail
-            // 
-            this.pnlDetail.AutoSize = true;
-            this.pnlDetail.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.pnlDetail.BackColor = System.Drawing.SystemColors.Control;
-            this.pnlDetail.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlDetail.Location = new System.Drawing.Point(0, 58);
-            this.pnlDetail.MinimumSize = new System.Drawing.Size(600, 5);
-            this.pnlDetail.Name = "pnlDetail";
-            this.pnlDetail.Size = new System.Drawing.Size(870, 5);
-            this.pnlDetail.TabIndex = 8;
-            // 
-            // pnlOverview
-            // 
-            this.pnlOverview.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlOverview.Location = new System.Drawing.Point(0, 56);
-            this.pnlOverview.Name = "pnlOverview";
-            this.pnlOverview.Size = new System.Drawing.Size(870, 2);
-            this.pnlOverview.TabIndex = 10;
             // 
             // BDNodeControl
             // 
@@ -448,7 +458,7 @@
             this.DoubleBuffered = true;
             this.MinimumSize = new System.Drawing.Size(870, 50);
             this.Name = "BDNodeControl";
-            this.Size = new System.Drawing.Size(870, 87);
+            this.Size = new System.Drawing.Size(853, 87);
             this.Load += new System.EventHandler(this.BDNodeControl_Load);
             this.Leave += new System.EventHandler(this.BDNodeControl_Leave);
             this.panelHeader.ResumeLayout(false);
@@ -504,5 +514,6 @@
         private System.Windows.Forms.ToolStripMenuItem generateSearchEntriesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editIndexStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem editLayoutToolStripMenuItem;
     }
 }

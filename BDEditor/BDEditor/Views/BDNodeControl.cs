@@ -556,6 +556,17 @@ namespace BDEditor.Views
             }
         }
 
+        private void editLayoutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (currentNode != null)
+            {
+                BDLayoutColumnMetadataEditor layoutEditView = new BDLayoutColumnMetadataEditor();
+                layoutEditView.AssignDataContext(dataContext);
+                layoutEditView.AssignCurrentLayout(currentNode.LayoutVariant);
+                layoutEditView.ShowDialog(this);
+            }
+        }
+
         private void btnReorderToPrevious_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem menuItem = sender as ToolStripMenuItem;

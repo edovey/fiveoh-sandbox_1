@@ -5405,7 +5405,7 @@ namespace BDEditor.Classes
                                                 {
                                                     List<Guid> objectsOnPage = new List<Guid>();
                                                     objectsOnPage.Add(linkTargetAssn.linkedNoteId.Value);
-                                                    BDHtmlPage newPage = generatePageForLinkedNotes(pContext, linkTargetAssn.linkedNoteId.Value, BDConstants.BDNodeType.BDLinkedNote, targetNote.documentText, BDConstants.BDHtmlPageType.Data, objectsOnPage, linkTargetAssn.parentKeyPropertyName);
+                                                    BDHtmlPage newPage = generatePageForLinkedNotes(pContext, linkTargetAssn.linkedNoteId.Value, BDConstants.BDNodeType.BDLinkedNote, targetNote.documentText, BDConstants.BDHtmlPageType.Comments, objectsOnPage, linkTargetAssn.parentKeyPropertyName);
 
                                                     string newText = pPage.documentText.Replace(anchorGuid.ToString(), newPage.Uuid.ToString().ToUpper());
                                                     pPage.documentText = newText;
@@ -5680,7 +5680,7 @@ namespace BDEditor.Classes
             newPage.displayParentType = (int)BDConstants.BDNodeType.BDLayoutColumn;
             newPage.displayParentId = pLayoutColumn.Uuid;
             newPage.documentText = pageHtml;
-            newPage.htmlPageType = (int)BDConstants.BDHtmlPageType.Undefined;
+            newPage.htmlPageType = (int)BDConstants.BDHtmlPageType.Comments;
             newPage.layoutVariant = currentChapter != null ? (int)currentChapter.LayoutVariant : postProcessingPageLayoutVariant;
 
             newPage.pageTitle = pLayoutColumn.label;

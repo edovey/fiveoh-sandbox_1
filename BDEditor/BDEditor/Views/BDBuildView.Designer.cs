@@ -282,7 +282,7 @@
             this.cbSelectedUuids.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbSelectedUuids.Location = new System.Drawing.Point(36, 281);
             this.cbSelectedUuids.Name = "cbSelectedUuids";
-            this.cbSelectedUuids.Size = new System.Drawing.Size(138, 20);
+            this.cbSelectedUuids.Size = new System.Drawing.Size(144, 20);
             this.cbSelectedUuids.TabIndex = 17;
             this.cbSelectedUuids.Text = "Selected UUIDs";
             this.cbSelectedUuids.UseVisualStyleBackColor = true;
@@ -319,7 +319,6 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Publish";
-            this.TopMost = true;
             this.Load += new System.EventHandler(this.BDBuildView_Load);
             this.gbSelectHtmlPages.ResumeLayout(false);
             this.gbSelectHtmlPages.PerformLayout();

@@ -16,6 +16,7 @@ namespace BDEditor.Views
         private Entities dataContext;
         private BDConstants.BDNodeType parentType;
         private string contextPropertyName;
+        private Guid? displayContextParentUuid;
         private Guid? parentId;
         private Guid? scopeId;
         private bool isRendering = false;
@@ -70,6 +71,11 @@ namespace BDEditor.Views
         {
             scopeId = pScopeId;
             bdLinkedNoteControl1.AssignScopeId(pScopeId);
+        }
+
+        public void AssignDisplayContextParent(Guid pDisplayContextParentUuid)
+        {
+            displayContextParentUuid = pDisplayContextParentUuid;
         }
 
         private void RefreshListOfAssociatedLinks()
@@ -375,13 +381,8 @@ namespace BDEditor.Views
                 }
 
                 rtfContextInfo.Text = BDLinkedNoteAssociation.GetDescription(dataContext, parentId, parentType, contextPropertyName);
-                //if (null != this.currentNoteAssociation)
-                //    this.linkedNoteTypeCombo.SelectedIndex = this.currentNoteAssociation.linkedNoteType.Value;
-                //else
-                //    this.linkedNoteTypeCombo.SelectedIndex = (int)BDConstants.LinkedNoteType.MarkedComment;
             }
             
-            //RefreshListOfAssociatedLinks();
             DisplayLinkedNote(this.currentNoteAssociation, true);
         }
 
@@ -480,14 +481,19 @@ namespace BDEditor.Views
 
                 // owner of the index/search entry at this point will be the linkedNoteAssociation
                 // this will be adjusted in post processing to point to the page where the linked note was rendered
+                // display Context in the index/search entry is always determined by the last IBDNode in the hierarchy
                 BDLinkedNote currentNote = BDLinkedNote.RetrieveLinkedNoteWithId(dataContext, currentNoteAssociation.linkedNoteId.Value);
                 if (currentNote != null)
                 {
                     BDSearchEntryEditView iEditView = new BDSearchEntryEditView();
                     iEditView.AssignDataContext(dataContext);
                     iEditView.AssignCurrentLinkedNoteAssociation(currentNoteAssociation);
-                    string contextString = BDUtilities.BuildHierarchyString(dataContext, currentNoteAssociation, " : ");
-                    iEditView.DisplayContext = contextString;
+                    if (null != displayContextParentUuid)
+                        iEditView.AssignDisplayContextParent(displayContextParentUuid.Value);
+                    else
+                        iEditView.AssignDisplayContextParent(parentId.Value);
+                   // string contextString = BDUtilities.BuildHierarchyString(dataContext, BDFabrik.RetrieveNode(dataContext, parentId), " : ");
+                    //iEditView.DisplayContext = contextString;
                     iEditView.ShowDialog(this);
                 }
         }

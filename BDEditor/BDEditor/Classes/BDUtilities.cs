@@ -59,38 +59,10 @@ namespace BDEditor.Classes
             return string.Format("{0} [{1}]",value.ToString(), number);
         }
 
-        /// <summary>
-        /// Determine the parent hierarchy of the selected Linked Note Association
-        /// </summary>
-        /// <param name="pStartNode"></param>
-        /// <returns></returns>
-        public static string BuildHierarchyString(Entities pContext, BDLinkedNoteAssociation pNoteAssociation, string pSeparationString)
+        public static string BuildHierarchyString(Entities pContext, Guid pStartNodeUuid, string pSeparationString)
         {
-            StringBuilder hStringBuilder = new StringBuilder();
-
-            if (pNoteAssociation != null)
-            {
-                IBDNode parentNode = BDFabrik.RetrieveNode(pContext, pNoteAssociation.parentId.Value);
-                if (parentNode != null)
-                {
-                    getParentName(pContext, parentNode, hStringBuilder, pSeparationString).ToString();
-                    hStringBuilder.Append(parentNode.Name);
-                    return hStringBuilder.ToString();
-                }
-                else
-                {
-                    // parent is a linked note
-                    // TODO:  what needs to be rendered in this case??
-                    //BDLinkedNote parentNote = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, pNoteAssociation.parentId.Value);
-                    //BDLinkedNoteAssociation parentAssn = BDLinkedNoteAssociation.Ret
-                    //getParentName(pContext, pParentNode, hStringBuilder, pSeparationString).ToString();
-                    //hStringBuilder.Append(pStartNode.Name);
-                    //return hStringBuilder.ToString();
-                    return string.Empty;
-                }
-            }
-            else
-                return string.Empty;
+            IBDNode startNode = BDFabrik.RetrieveNode(pContext, pStartNodeUuid);
+            return BuildHierarchyString(pContext, startNode, pSeparationString);
         }
 
         /// <summary>

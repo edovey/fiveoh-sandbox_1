@@ -18,6 +18,7 @@ namespace BDEditor.Views
         private BDLinkedNoteAssociation currentLinkedNoteAssociation;
         private BDSearchEntry currentSearchEntry;
         private BDSearchEntryAssociation currentSearchEntryAssociation;
+        private Guid displayContextParentUuid;
 
         private List<BDSearchEntry> allSearchEntries;
         private BDSearchEntryBindingList selectedSearchEntries;
@@ -51,6 +52,18 @@ namespace BDEditor.Views
         public void AssignCurrentNode(IBDNode pCurrentNode)
         {
             currentNode = pCurrentNode;
+        }
+
+        /// <summary>
+        /// Assign the node which is the lowest in the IBDNode hierarchy that is a parent to the note being edited
+        /// This value is needed to build path for display context for search/index entries, esp where linked notes are nested.  
+        /// (in such a case the heirarchy cannot be built from a lookup as we don't necessarily know which parent of a 
+        /// linked note is the correct one for the current context.)
+        /// </summary>
+        /// <param name="pNode">IBDNode that is parent or grandparent of linked note</param>
+        public void AssignDisplayContextParent(Guid pDisplayContextParentUuid)
+        {
+            displayContextParentUuid = pDisplayContextParentUuid;
         }
 
         public void AssignCurrentLinkedNoteAssociation(BDLinkedNoteAssociation pLinkedNoteAssociation)
@@ -160,7 +173,17 @@ namespace BDEditor.Views
 
                     // repair any missing data : needed for converting from fully generated associations to managed associations
                     if (string.IsNullOrEmpty(currentSearchEntryAssociation.editorContext))
-                        currentSearchEntryAssociation.editorContext = currentSearchEntryAssociation.displayContext;
+                    {
+                        if (!string.IsNullOrEmpty(currentSearchEntryAssociation.displayContext))
+                            currentSearchEntryAssociation.editorContext = currentSearchEntryAssociation.displayContext;
+                        else
+                        {
+                            if (null != displayContextParentUuid && displayContextParentUuid != Guid.Empty)
+                                currentSearchEntryAssociation.editorContext = BDUtilities.BuildHierarchyString(dataContext, displayContextParentUuid, ":");
+                            else
+                                currentSearchEntryAssociation.editorContext = "ERROR: current context could not be generated.";
+                        }
+                    }
                     if (currentSearchEntryAssociation.anchorNodeId == Guid.Empty)
                         currentSearchEntryAssociation.anchorNodeId = ownerUuid;
 
@@ -239,8 +262,11 @@ namespace BDEditor.Views
             {
                 availableSearchEntries.Add(entry);
                 selectedSearchEntries.Remove(entry);
-                List<BDSearchEntryAssociation> assns = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryIdAndAnchorNodeId(dataContext, entry.Uuid, currentNode.Uuid);
-                
+                List<BDSearchEntryAssociation> assns = new List<BDSearchEntryAssociation>();
+                if(null != currentNode)
+                    assns.AddRange(BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryIdAndAnchorNodeId(dataContext, entry.Uuid, currentNode.Uuid));
+                if (null != currentLinkedNoteAssociation)
+                    assns.AddRange(BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryIdAndAnchorNodeId(dataContext, entry.Uuid, currentLinkedNoteAssociation.Uuid));
                 foreach (BDSearchEntryAssociation assn in assns)
                 {
                     searchEntryAssociations.Remove(assn);

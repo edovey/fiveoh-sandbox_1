@@ -18,6 +18,7 @@ namespace BDEditor.Views
         private Guid? scopeId;
         private Guid? parentId;
         private BDConstants.BDNodeType parentType;
+        private IBDNode displayContextParent;
         private string contextPropertyName;
         private bool saveOnLeave = true;
         private string linkValue = string.Empty;
@@ -115,6 +116,11 @@ namespace BDEditor.Views
         public void AssignScopeId(Guid? pScopeId)
         {
             scopeId = pScopeId;
+        }
+
+        public void AssignDisplayContextParent(IBDNode pDisplayContextParent)
+        {
+            displayContextParent = pDisplayContextParent;
         }
 
         private void notesChanged_Action(object sender, NodeEventArgs e)
@@ -754,6 +760,11 @@ namespace BDEditor.Views
         }
         #endregion
 
+        /// <summary>
+        /// Opening a new linked note editor:  this is a note-within-note situation
+        /// The displayContextParent is assigned from the current note's parent.
+        /// </summary>
+        /// <param name="pProperty"></param>
         private void openLinkEditor(string pProperty)
         {
             Save();
@@ -766,6 +777,7 @@ namespace BDEditor.Views
             linkView.AssignDataContext(dataContext);
             linkView.AssignScopeId(scopeId);
             linkView.AssignContextPropertyName(linkValue);
+            linkView.AssignDisplayContextParent(parentId.Value);
 
             linkView.NotesChanged += new EventHandler<NodeEventArgs>(notesChanged_Action);
             linkView.ShowDialog(this);

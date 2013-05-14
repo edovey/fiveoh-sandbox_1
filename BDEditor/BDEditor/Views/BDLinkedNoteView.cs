@@ -190,20 +190,21 @@ namespace BDEditor.Views
             {
                 // If the currentNoteAssociation is null, the note *should* also have been null and the note control should have created a new note + association
                 if (null == currentNoteAssociation)
-                    currentNoteAssociation = bdLinkedNoteControl1.CreatedLinkedNoteAssociation();
-
-                if (null != currentNoteAssociation)
                 {
-                    currentNoteAssociation.linkedNoteType = (int)Enum.Parse(typeof(BDConstants.LinkedNoteType), this.linkedNoteTypeCombo.GetItemText(this.linkedNoteTypeCombo.SelectedItem));
+                    currentNoteAssociation = bdLinkedNoteControl1.CreatedLinkedNoteAssociation();
+                    hasNewLink = true;
+                }
+                // set or reset values based on current UI parameters
+                int currentLinkedNoteType = (int)Enum.Parse(typeof(BDConstants.LinkedNoteType), this.linkedNoteTypeCombo.GetItemText(this.linkedNoteTypeCombo.SelectedItem));
+                if (currentNoteAssociation.linkedNoteType != currentLinkedNoteType)
+                    currentNoteAssociation.linkedNoteType = currentLinkedNoteType;
+                if(currentNoteAssociation.internalLinkNodeId != internalLinkNodeId)
                     currentNoteAssociation.internalLinkNodeId = internalLinkNodeId;
+                if(currentNoteAssociation.internalLinkNodeType != (int)internalLinkNodeType)
                     currentNoteAssociation.internalLinkNodeType = (int)internalLinkNodeType;
 
-                    dataContext.SaveChanges();
-                    lblNoteCounter.Text = currentNoteAssociation.displayOrder.ToString();
-
-
-                }
-                hasNewLink = true;
+                dataContext.SaveChanges();
+                lblNoteCounter.Text = currentNoteAssociation.displayOrder.ToString();
             }
             else
             {

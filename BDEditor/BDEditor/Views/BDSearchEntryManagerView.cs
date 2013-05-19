@@ -20,6 +20,7 @@ namespace BDEditor.Views
         private List<BDSearchEntry> allSearchEntries;
         private BDSearchEntryBindingList searchEntries;
         private BDSearchEntryAssociationBindingList searchEntryAssociations;
+        private List<BDSearchEntry> filteredSearchEntryList;
 
         private List<BDSearchEntry> entriesToDelete;
         private List<BDSearchEntryAssociation> associationsToDelete;
@@ -80,10 +81,7 @@ namespace BDEditor.Views
 
             if (null == currentSearchEntry)
             {
-                if (lbExistingSearchEntries.SelectedIndices.Count > 0)
-                {
-                    currentSearchEntry = searchEntries[lbExistingSearchEntries.SelectedIndices[0]];
-                }
+                currentSearchEntry = lbExistingSearchEntries.SelectedItems[0] as BDSearchEntry;
             }
 
             if (null != currentSearchEntry)
@@ -140,7 +138,6 @@ namespace BDEditor.Views
             btnEditSearchEntry.Enabled = (lbExistingSearchEntries.SelectedIndices.Count > 0) ? true : false;
             
             btnOk.Enabled = formHasChanges;
-            //btnCancel.Enabled = !formHasChanges;
         }
 
         private void btnDeleteSearchEntry_Click(object sender, EventArgs e)
@@ -210,14 +207,19 @@ namespace BDEditor.Views
         private void cbFilterList_CheckedChanged(object sender, EventArgs e)
         {
             lbExistingSearchEntries.BeginUpdate();
+            currentSearchEntry = null;
+            currentSearchEntryAssociation = null;
+            lbSearchEntryAssociations.ClearSelected();
+            lbExistingSearchEntries.ClearSelected();
+            
             CheckBox cb = sender as CheckBox;
             if (null != cb && cb.CheckState == CheckState.Checked)
             {
                 string searchTerm = tbEntryName.Text;
                 if (!string.IsNullOrEmpty(tbEntryName.Text))
                 {
-                    List<BDSearchEntry> filtered = searchEntries.Where(x => x.name.IndexOf(searchTerm, StringComparison.InvariantCultureIgnoreCase) != -1).ToList<BDSearchEntry>();
-                    if (filtered.Count <= 0)
+                    filteredSearchEntryList = searchEntries.Where(x => x.name.IndexOf(searchTerm, StringComparison.InvariantCultureIgnoreCase) != -1).ToList<BDSearchEntry>();
+                    if (filteredSearchEntryList.Count <= 0)
                     {
                         MessageBox.Show("No entries found with that name");
                         cbFilterList.CheckState = CheckState.Unchecked;
@@ -225,30 +227,24 @@ namespace BDEditor.Views
                     }
                     else
                     {
-                        BDSearchEntryBindingList filteredEntries = new BDSearchEntryBindingList(filtered);
+                        BDSearchEntryBindingList filteredEntries = new BDSearchEntryBindingList(filteredSearchEntryList);
                         lbExistingSearchEntries.DataSource = filteredEntries;
                     }
                 }
             }
             else
             {
-                lbSearchEntryAssociations.ClearSelected();
-                lbExistingSearchEntries.ClearSelected();
-                currentSearchEntryAssociation = null;
-                currentSearchEntry = null;
-
-                reloadAvailableEntries();
                 resetButtons();
 
-                //tbEntryName.Text = string.Empty;
-                //cbFilterList.Enabled = false;
+                tbEntryName.Text = string.Empty;
+                cbFilterList.Enabled = false;
             }
             lbExistingSearchEntries.EndUpdate();
         }
         
         private void btnEditSearchEntry_Click(object sender, EventArgs e)
         {
-            BDSearchEntry selected = searchEntries[lbExistingSearchEntries.SelectedIndex];
+            BDSearchEntry selected = lbExistingSearchEntries.SelectedItems[0] as BDSearchEntry;
             using (BDEditNameDialog editDialog = new BDEditNameDialog())
             {
                 editDialog.IndexEntryName = selected.name;
@@ -358,10 +354,11 @@ namespace BDEditor.Views
         private void lbExistingIndexEntries_MouseDown(object sender, MouseEventArgs e)
         {
             lbSearchEntryAssociations.ClearSelected();
+            currentSearchEntry = null;
 
             if (lbExistingSearchEntries.SelectedIndices.Count > 0)
             {
-                currentSearchEntry = searchEntries[lbExistingSearchEntries.SelectedIndices[0]];
+                currentSearchEntry = lbExistingSearchEntries.SelectedItems[0] as BDSearchEntry;
                 reloadAssociatedLocations();
             }
             resetButtons();
@@ -370,7 +367,7 @@ namespace BDEditor.Views
         private void lbSearchEntryAssociations_MouseDown(object sender, MouseEventArgs e)
         {
             if (lbSearchEntryAssociations.SelectedItems.Count > 0)
-                currentSearchEntryAssociation = searchEntryAssociations[lbSearchEntryAssociations.SelectedIndices[0]];
+                currentSearchEntryAssociation = lbSearchEntryAssociations.SelectedItems[0] as BDSearchEntryAssociation;
             resetButtons();
         }
 

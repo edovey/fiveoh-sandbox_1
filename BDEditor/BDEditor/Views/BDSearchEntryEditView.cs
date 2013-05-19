@@ -376,7 +376,7 @@ namespace BDEditor.Views
         {
             if (lbSelectedSearchEntries.SelectedIndex >= 0)
             {
-                BDSearchEntry selected = selectedSearchEntries[lbSelectedSearchEntries.SelectedIndex];
+                BDSearchEntry selected = lbSelectedSearchEntries.SelectedItems[0] as BDSearchEntry;
                 using (BDEditNameDialog editDialog = new BDEditNameDialog())
                 {
                     editDialog.IndexEntryName = selected.name;

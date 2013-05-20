@@ -767,6 +767,7 @@ namespace BDEditor.Classes
             StringBuilder bodyHTML = new StringBuilder();
             List<BDLinkedNote> footnotes = new List<BDLinkedNote>();
             List<Guid> objectsOnPage = new List<Guid>();
+            BDConstants.BDHtmlPageType htmlPageType = BDConstants.BDHtmlPageType.Data;
 
             switch (pNode.NodeType)
             {
@@ -778,6 +779,9 @@ namespace BDEditor.Classes
                     break;
                 case BDConstants.BDNodeType.BDCategory:
                     bodyHTML.Append(BuildBDCategoryHtml(pContext, pNode, footnotes, objectsOnPage, 1));
+                    // for the noted layout variants, the page being built is navigation due to empty layers in the hierarchy
+                    if (pNode.LayoutVariant == BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Lactation || pNode.LayoutVariant == BDConstants.LayoutVariantType.PregnancyLactation_Antimicrobials_Pregnancy)
+                        htmlPageType = BDConstants.BDHtmlPageType.Navigation;
                     break;
                 case BDConstants.BDNodeType.BDConfiguredEntry:
                     bodyHTML.Append(BuildBDConfiguredEntryHtml(pContext, pNode, footnotes, objectsOnPage, 1));
@@ -799,6 +803,9 @@ namespace BDEditor.Classes
                     break;
                 case BDConstants.BDNodeType.BDSection:
                     bodyHTML.Append(BuildBDSectionHtml(pContext, pNode, footnotes, objectsOnPage, 1));
+                    // for the noted layout variants, the page being built is navigation
+                    if (pNode.LayoutVariant == BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases)
+                        htmlPageType = BDConstants.BDHtmlPageType.Navigation;
                     break;
                 case BDConstants.BDNodeType.BDSubcategory:
                     bodyHTML.Append(BuildBDSubcategoryHtml(pContext, pNode, footnotes, objectsOnPage, 1));
@@ -822,7 +829,7 @@ namespace BDEditor.Classes
             //TODO: Verify that this assignment is correct
             currentPageMasterObject = pNode;
 
-            BDHtmlPage htmlPage = writeBDHtmlPage(pContext, pNode, bodyHTML, BDConstants.BDHtmlPageType.Data, footnotes, objectsOnPage, null);
+            BDHtmlPage htmlPage = writeBDHtmlPage(pContext, pNode, bodyHTML, htmlPageType, footnotes, objectsOnPage, null);
 
             return htmlPage;
         }

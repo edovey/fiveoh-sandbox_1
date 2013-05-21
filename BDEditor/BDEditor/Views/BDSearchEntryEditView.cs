@@ -216,8 +216,7 @@ namespace BDEditor.Views
 
             btnEditSearchEntry.Enabled = (lbSelectedSearchEntries.SelectedIndices.Count > 0) ? true : false;
             
-            btnOk.Enabled = formHasChanges;
-            btnCancel.Enabled = !formHasChanges;
+            btnSave.Enabled = formHasChanges;
         }
 
         private void btnAddToSelected_Click(object sender, EventArgs e)
@@ -473,7 +472,7 @@ namespace BDEditor.Views
             this.DialogResult = DialogResult.Cancel;
         }
 
-        private void btnOk_Click(object sender, EventArgs e)
+        private void btnSave_Click(object sender, EventArgs e)
         {
             if (currentSearchEntryAssociation != null && currentSearchEntryAssociation.editorContext.IndexOf("*") == 0)
             {
@@ -481,7 +480,8 @@ namespace BDEditor.Views
                 BDSearchEntryAssociation.Save(dataContext, currentSearchEntryAssociation);
             }
 
-            this.DialogResult = DialogResult.OK;
+            if (null != currentSearchEntry)
+                BDSearchEntry.Save(dataContext, currentSearchEntry);
         }
 
         private void lbSelectedSearchEntries_MouseDown(object sender, MouseEventArgs e)

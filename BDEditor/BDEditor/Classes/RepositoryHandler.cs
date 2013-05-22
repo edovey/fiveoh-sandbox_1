@@ -642,7 +642,9 @@ namespace BDEditor.Classes
                 string path = uri.AbsolutePath.Replace("%20", " ");
                 FileInfo targetFi = new FileInfo(Path.Combine(path, BDConstants.DB_FILENAME));
 
-                if (MessageBox.Show(string.Format("Overwrite local data with file dated:\n\n{0}\n\"{1}\"\n\nfrom the repository?\n\n{2}", pArchiveRecord.CreateDate.ToString("u"), pArchiveRecord.Comment, pArchiveRecord.Key), "Restore Database", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.OK)
+                if (MessageBox.Show(string.Format("Overwrite local data with file dated:\n\n{0}\n\"{1}\"\n\nfrom the repository?\n\n{2}", 
+                    pArchiveRecord.CreateDate.ToString("u"), pArchiveRecord.Comment, pArchiveRecord.Key), "Restore Database", 
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.OK)
                 {
                     Archive(pDataContext, AWS_BACKUP, "", "Backup prior to restore", true);
 

@@ -22,8 +22,8 @@ namespace BDEditor.Views
         private BDSearchEntryAssociationBindingList searchEntryAssociations;
         private List<BDSearchEntry> filteredSearchEntryList;
 
-        private List<BDSearchEntry> entriesToDelete;
-        private List<BDSearchEntryAssociation> associationsToDelete;
+        //private List<BDSearchEntry> entriesToDelete;
+        //private List<BDSearchEntryAssociation> associationsToDelete;
 
         private bool formHasChanges = false;
 
@@ -55,9 +55,6 @@ namespace BDEditor.Views
             allSearchEntries = BDSearchEntry.RetrieveAll(dataContext);
             searchEntryAssociations = new BDSearchEntryAssociationBindingList();
             searchEntries = new BDSearchEntryBindingList();
-
-            entriesToDelete = new List<BDSearchEntry>();
-            associationsToDelete = new List<BDSearchEntryAssociation>();
 
             reloadAvailableEntries();
 
@@ -136,37 +133,35 @@ namespace BDEditor.Views
 
             btnDeleteSearchEntry.Enabled = (lbExistingSearchEntries.SelectedIndices.Count > 0) ? true : false;
             btnEditSearchEntry.Enabled = (lbExistingSearchEntries.SelectedIndices.Count > 0) ? true : false;
-            
-            btnSave.Enabled = formHasChanges;
         }
 
         private void btnDeleteSearchEntry_Click(object sender, EventArgs e)
         {
-            if (null != currentSearchEntry)
+            if (lbExistingSearchEntries.SelectedItems.Count > 0)
             {
-                bool okToDelete = false;
-                List<BDSearchEntryAssociation> assns = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryId(dataContext, currentSearchEntry.Uuid);
-                if (assns.Count > 0)
+                DialogResult confirm = MessageBox.Show("This will delete the selected search entries and all existing links.  Are you sure?", "Confirm Delete", MessageBoxButtons.OKCancel);
+                if (confirm == DialogResult.OK)
                 {
-                    DialogResult confirm = MessageBox.Show("This entry has existing links.  Are you sure?", "Confirm Delete", MessageBoxButtons.OKCancel);
-                    if (confirm == DialogResult.OK)
-                        okToDelete = true;
-                }
-                else
-                    okToDelete = true;
+                    List<BDSearchEntry> selectedSearchEntries = new List<BDSearchEntry>();
+                    selectedSearchEntries.AddRange(lbExistingSearchEntries.SelectedItems.Cast<BDSearchEntry>());
+                    foreach (BDSearchEntry entry in selectedSearchEntries)
+                    {
 
-                if(okToDelete)
-                {
-                    entriesToDelete.Add(currentSearchEntry);
-                    allSearchEntries.Remove(currentSearchEntry);
-                    currentSearchEntry = null;
-                    currentSearchEntryAssociation = null;
+                        List<BDSearchEntryAssociation> assns = BDSearchEntryAssociation.RetrieveSearchEntryAssociationsForSearchEntryId(dataContext, entry.Uuid);
+                        foreach (BDSearchEntryAssociation assn in assns)
+                            BDSearchEntryAssociation.Delete(dataContext, assn);
 
-                    reloadAvailableEntries();
-                    reloadAssociatedLocations();
+                        allSearchEntries.Remove(entry);
+                        BDSearchEntry.Delete(dataContext, entry, false);
+                        currentSearchEntry = null;
+                        currentSearchEntryAssociation = null;
 
-                    formHasChanges = true;
-                    resetButtons();
+                        reloadAvailableEntries();
+                        reloadAssociatedLocations();
+
+                        formHasChanges = true;
+                        resetButtons();
+                    }
                 }
             }
         }
@@ -316,24 +311,30 @@ namespace BDEditor.Views
 
         private void btnDeleteAssociation_Click(object sender, EventArgs e)
         {
-            int index = lbSearchEntryAssociations.SelectedIndex;
+            List<BDSearchEntryAssociation> associationsToDelete = new List<BDSearchEntryAssociation>();
+            int index = lbSearchEntryAssociations.SelectedIndices[0];
             if (index >= 0)
             {
-                BDSearchEntryAssociation selected = searchEntryAssociations[lbSearchEntryAssociations.SelectedIndex];
-                associationsToDelete.Add(selected);
-                searchEntryAssociations.Remove(selected);
+                associationsToDelete.AddRange(lbSearchEntryAssociations.SelectedItems.Cast<BDSearchEntryAssociation>());
 
-                formHasChanges = true;
-                resetButtons();
+                if (MessageBox.Show(string.Format("This will delete all the selected search links.  Are you sure?"), "Confirm Delete",
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.OK)
+                {
+                    foreach (BDSearchEntryAssociation entry in associationsToDelete)
+                        searchEntryAssociations.Remove(entry);
+
+                    formHasChanges = true;
+                    resetButtons();
+                }
             }
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void btnOk_Click(object sender, EventArgs e)
         {
             if (currentSearchEntryAssociation != null && currentSearchEntryAssociation.editorContext.IndexOf("*") == 0)
                 currentSearchEntryAssociation.editorContext = currentSearchEntryAssociation.editorContext.Substring(1);
 
-            this.DialogResult = DialogResult.Cancel;
+            this.DialogResult = DialogResult.OK;
         }
 
         private void lbExistingIndexEntries_MouseDown(object sender, MouseEventArgs e)
@@ -362,23 +363,6 @@ namespace BDEditor.Views
                 cbFilterList.CheckState = CheckState.Unchecked;
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            if (currentSearchEntryAssociation != null && currentSearchEntryAssociation.editorContext.IndexOf("*") == 0)
-                currentSearchEntryAssociation.editorContext = currentSearchEntryAssociation.editorContext.Substring(1);
-            
-            // save from lists
-            foreach (BDSearchEntry entry in entriesToDelete)
-                BDSearchEntry.Delete(dataContext, entry, false);
-
-            foreach (BDSearchEntryAssociation assn in associationsToDelete)
-                BDSearchEntryAssociation.Delete(dataContext, assn, false);
-            
-            if(null != currentSearchEntry)
-                BDSearchEntry.Save(dataContext, currentSearchEntry);
-            if(null != currentSearchEntryAssociation)
-                BDSearchEntryAssociation.Save(dataContext, currentSearchEntryAssociation);
-        }
     }    
 }
 

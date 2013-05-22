@@ -39,12 +39,11 @@
             this.btnAddNewSearchEntry = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.lbSearchEntryAssociations = new System.Windows.Forms.ListBox();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnOk = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnDeleteAssociation = new System.Windows.Forms.Button();
             this.btnMoveAssnNext = new System.Windows.Forms.Button();
             this.btnMoveAssnPrevious = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
             this.pnlSelectTerms.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -167,17 +166,17 @@
             this.lbSearchEntryAssociations.TabIndex = 1;
             this.lbSearchEntryAssociations.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbSearchEntryAssociations_MouseDown);
             // 
-            // btnCancel
+            // btnOk
             // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(478, 755);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 6;
-            this.btnCancel.Text = "Close";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnOk.Location = new System.Drawing.Point(478, 755);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(75, 23);
+            this.btnOk.TabIndex = 6;
+            this.btnOk.Text = "OK";
+            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // btnDeleteAssociation
             // 
@@ -218,25 +217,13 @@
             this.btnMoveAssnPrevious.UseVisualStyleBackColor = true;
             this.btnMoveAssnPrevious.Click += new System.EventHandler(this.btnMoveAssnPrevious_Click);
             // 
-            // btnSave
-            // 
-            this.btnSave.Enabled = false;
-            this.btnSave.Location = new System.Drawing.Point(397, 755);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 12;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
             // BDSearchEntryManagerView
             // 
+            this.AcceptButton = this.btnOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(565, 788);
-            this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnOk);
             this.Controls.Add(this.btnDeleteAssociation);
             this.Controls.Add(this.btnMoveAssnNext);
             this.Controls.Add(this.btnMoveAssnPrevious);
@@ -265,12 +252,11 @@
         private System.Windows.Forms.Button btnMoveAssnPrevious;
         private System.Windows.Forms.Button btnMoveAssnNext;
         private System.Windows.Forms.Button btnDeleteAssociation;
-        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button btnEditSearchEntry;
         private System.Windows.Forms.Button btnDeleteSearchEntry;
         private System.Windows.Forms.TextBox tbEntryName;
         private System.Windows.Forms.CheckBox cbFilterList;
-        private System.Windows.Forms.Button btnSave;
     }
 }

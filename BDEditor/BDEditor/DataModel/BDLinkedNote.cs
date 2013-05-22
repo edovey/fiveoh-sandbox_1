@@ -107,9 +107,9 @@ namespace BDEditor.DataModel
         /// </summary>
         /// <param name="pContext">the data context</param>
         /// <param name="pEntity">the entry to be deleted</param>
-        public static void Delete(Entities pContext, BDLinkedNote pEntity, bool pCreateDeletion)
+        public static void Delete(Entities pContext, BDLinkedNote pEntity)
         {
-            BDLinkedNoteAssociation.DeleteForNote(pContext, pEntity, pCreateDeletion);
+            BDLinkedNoteAssociation.DeleteForNote(pContext, pEntity);
             BDSearchEntryAssociation.DeleteForAnchorNodeUuid(pContext, pEntity.Uuid);
 
             // delete record from local data store
@@ -123,10 +123,10 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pUuid">Guid of record to delete</param>
         /// <param name="pCreateDeletion">create entry in deletion table (bool)</param>
-        public static void Delete(Entities pContext, Guid pUuid, bool pCreateDeletion)
+        public static void Delete(Entities pContext, Guid pUuid)
         {
             BDLinkedNote entity = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, pUuid);
-            Delete(pContext, entity, pCreateDeletion);
+            Delete(pContext, entity);
         }
 
         /// <summary>

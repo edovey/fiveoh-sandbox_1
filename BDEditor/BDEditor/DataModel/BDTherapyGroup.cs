@@ -117,7 +117,7 @@ namespace BDEditor.DataModel
         {
             if (null == pEntity) return;
 
-            BDLinkedNoteAssociation.DeleteForParentId(pContext, pEntity.Uuid, pCreateDeletion);
+            BDLinkedNoteAssociation.DeleteForParentId(pContext, pEntity.Uuid);
             BDSearchEntryAssociation.DeleteForAnchorNodeUuid(pContext, pEntity.Uuid);
 
             BDTherapy.DeleteForParentId(pContext, pEntity.Uuid, pCreateDeletion);

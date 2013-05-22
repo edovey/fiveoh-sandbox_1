@@ -48,7 +48,7 @@ namespace BDEditor.DataModel
         {
             if (null == pEntry) return;
 
-            BDLinkedNoteAssociation.DeleteForParentId(pContext, pEntry.Uuid, false);
+            BDLinkedNoteAssociation.DeleteForParentId(pContext, pEntry.Uuid);
             
             // delete record from local data store
             pContext.DeleteObject(pEntry);

@@ -211,11 +211,10 @@ namespace BDEditor.Views
                 if (null != bdLinkedNoteControl1.CurrentLinkedNote)
                 {
                     // DELETE linked notes & associations if they exist
-                    BDLinkedNote.Delete(dataContext, bdLinkedNoteControl1.CurrentLinkedNote, true);
+                    BDLinkedNote.Delete(dataContext, bdLinkedNoteControl1.CurrentLinkedNote);
                     dataContext.SaveChanges();
                 }
             }
-
             OnNotesChanged(new NodeEventArgs());
         }
 
@@ -328,7 +327,7 @@ namespace BDEditor.Views
             {
                 if (MessageBox.Show("This will also delete all linked associations.", "Delete Note", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.OK)
                 {
-                    BDLinkedNote.Delete(dataContext, currentNoteAssociation.linkedNoteId.Value, true);
+                    BDLinkedNote.Delete(dataContext, currentNoteAssociation.linkedNoteId.Value);
 
                     this.currentNoteAssociation = null;
                     DisplayLinkedNote(null, true);
@@ -383,7 +382,6 @@ namespace BDEditor.Views
 
                 rtfContextInfo.Text = BDLinkedNoteAssociation.GetDescription(dataContext, parentId, parentType, contextPropertyName);
             }
-            
             DisplayLinkedNote(this.currentNoteAssociation, true);
         }
 
@@ -479,7 +477,8 @@ namespace BDEditor.Views
         private void editIndexStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveCurrentNote();
-
+            if (null != currentNoteAssociation)
+            {
                 // owner of the index/search entry at this point will be the linkedNoteAssociation
                 // this will be adjusted in post processing to point to the page where the linked note was rendered
                 // display Context in the index/search entry is always determined by the last IBDNode in the hierarchy
@@ -493,10 +492,13 @@ namespace BDEditor.Views
                         iEditView.AssignDisplayContextParent(displayContextParentUuid.Value);
                     else
                         iEditView.AssignDisplayContextParent(parentId.Value);
-                   // string contextString = BDUtilities.BuildHierarchyString(dataContext, BDFabrik.RetrieveNode(dataContext, parentId), " : ");
+                    // string contextString = BDUtilities.BuildHierarchyString(dataContext, BDFabrik.RetrieveNode(dataContext, parentId), " : ");
                     //iEditView.DisplayContext = contextString;
                     iEditView.ShowDialog(this);
                 }
+            }
+            else
+                MessageBox.Show("Please enter some text before adding the index entry.", "Unable to Edit Index Entry");
         }
     }
 }

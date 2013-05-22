@@ -110,6 +110,8 @@ namespace BDEditor.DataModel
         public static void Delete(Entities pContext, BDLinkedNote pEntity, bool pCreateDeletion)
         {
             BDLinkedNoteAssociation.DeleteForNote(pContext, pEntity, pCreateDeletion);
+            BDSearchEntryAssociation.DeleteForAnchorNodeUuid(pContext, pEntity.Uuid);
+
             // delete record from local data store
             pContext.DeleteObject(pEntity);
             pContext.SaveChanges();
@@ -125,23 +127,6 @@ namespace BDEditor.DataModel
         {
             BDLinkedNote entity = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, pUuid);
             Delete(pContext, entity, pCreateDeletion);
-        }
-
-        /// <summary>
-        /// Delete from the local datastore without creating a deletion record nor deleting any children. Does not save.
-        /// </summary>
-        /// <param name="pContext"></param>
-        /// <param name="pUuid"></param>
-        public static void DeleteLocal(Entities pContext, Guid? pUuid)
-        {
-            if (null != pUuid)
-            {
-                BDLinkedNote entry = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, pUuid.Value);
-                if (null != entry)
-                {
-                    pContext.DeleteObject(entry);
-                }
-            }
         }
 
         /// <summary>

@@ -87,23 +87,6 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Delete from the local datastore without creating a deletion record nor deleting any children. Does not save.
-        /// </summary>
-        /// <param name="pContext"></param>
-        /// <param name="pUuid"></param>
-        public static void DeleteLocal(Entities pContext, Guid? pUuid)
-        {
-            if (null != pUuid)
-            {
-                BDTableCell entry = BDTableCell.RetrieveWithId(pContext, pUuid.Value);
-                if (null != entry)
-                {
-                    pContext.DeleteObject(entry);
-                }
-            }
-        }
-
-        /// <summary>
         /// Delete all records from local store
         /// </summary>
         public static void DeleteAll(Entities pContext)
@@ -132,6 +115,8 @@ namespace BDEditor.DataModel
         /// <param name="pCreateDeletion">Create entry in the deletion table (bool)</param>
         public static void Delete(Entities pContext, BDTableCell pEntity, bool pCreateDeletion)
         {
+            BDSearchEntryAssociation.DeleteForAnchorNodeUuid(pContext, pEntity.Uuid);
+
             // Don't delete the iNote from here. Deletion of a iNote will delete all association entries
             if (null == pEntity) return;
 

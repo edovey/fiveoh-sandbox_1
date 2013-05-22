@@ -111,6 +111,8 @@ namespace BDEditor.DataModel
         public static void Delete(Entities pContext, BDAttachment pEntity, bool pCreateDeletion)
         {
             BDLinkedNoteAssociation.DeleteForParentId(pContext, pEntity.uuid, pCreateDeletion);
+            BDSearchEntryAssociation.DeleteForAnchorNodeUuid(pContext, pEntity.Uuid);
+
             // delete record from local data store
             pContext.DeleteObject(pEntity);
             pContext.SaveChanges();

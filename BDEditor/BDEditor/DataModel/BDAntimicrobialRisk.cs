@@ -121,6 +121,8 @@ namespace BDEditor.DataModel
 
             BDLinkedNoteAssociation.DeleteForParentId(pContext, pNode.Uuid, pCreateDeletion);
 
+            BDSearchEntryAssociation.DeleteForAnchorNodeUuid(pContext, pNode.Uuid);
+
             List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
             foreach (IBDNode child in children)
             {

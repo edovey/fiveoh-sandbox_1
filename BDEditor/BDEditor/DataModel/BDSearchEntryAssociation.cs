@@ -189,6 +189,16 @@ namespace BDEditor.DataModel
             }
         }
 
+        public static void DeleteForAnchorNodeUuid(Entities pContext, Guid pAnchorNodeUuid)
+        {
+            List<BDSearchEntryAssociation> associationList = RetrieveForAnchorNodeUuid(pContext, pAnchorNodeUuid);
+            foreach (BDSearchEntryAssociation association in associationList)
+            {
+                Delete(pContext, association, false);
+            }
+        }
+
+
         /// <summary>
         /// Retrieve all Search Entry Association Nodes
         /// </summary>
@@ -201,6 +211,17 @@ namespace BDEditor.DataModel
                                                     select bdNodes);
             entryList = new List<IBDObject>(entries.ToList<BDSearchEntryAssociation>());
             return entryList;
+        }
+
+        public static List<BDSearchEntryAssociation> RetrieveForAnchorNodeUuid(Entities pContext, Guid pAnchorNodeUuid)
+        {
+            List<BDSearchEntryAssociation> resultList = new List<BDSearchEntryAssociation>();
+            IQueryable<BDSearchEntryAssociation> entries = (from entities in pContext.BDSearchEntryAssociations
+                                                            where entities.anchorNodeId == pAnchorNodeUuid
+                                                            orderby entities.displayOrder ascending
+                                                            select entities);
+            resultList.AddRange(entries.ToList<BDSearchEntryAssociation>());
+            return resultList;
         }
 
         /// <summary>

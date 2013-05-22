@@ -113,6 +113,7 @@ namespace BDEditor.DataModel
             if (null == pNode) return;
 
             BDLinkedNoteAssociation.DeleteForParentId(pContext, pNode.Uuid, pCreateDeletion);
+            BDSearchEntryAssociation.DeleteForAnchorNodeUuid(pContext, pNode.Uuid);
 
             List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
             foreach (IBDNode child in children)
@@ -172,23 +173,6 @@ namespace BDEditor.DataModel
         {
             BDNode entity = BDNode.RetrieveNodeWithId(pContext, pUuid);
             BDNode.Delete(pContext, entity, pCreateDeletion);
-        }
-
-        /// <summary>
-        /// Delete from the local datastore without creating a deletion record nor deleting any children. Does not save.
-        /// </summary>
-        /// <param name="pContext"></param>
-        /// <param name="pUuid"></param>
-        public static void DeleteLocal(Entities pContext, Guid? pUuid)
-        {
-            if (null != pUuid)
-            {
-                BDNode entry = BDNode.RetrieveNodeWithId(pContext, pUuid.Value);
-                if (null != entry)
-                {
-                    pContext.DeleteObject(entry);
-                }
-            }
         }
 
         public static bool HasHtmlPage(Entities pContext, BDNode pNode)

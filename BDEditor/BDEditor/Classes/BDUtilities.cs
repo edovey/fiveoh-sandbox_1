@@ -2283,7 +2283,7 @@ namespace BDEditor.Classes
                     List<BDTableCell> cells = BDTableCell.RetrieveTableCellsForParentId(pContext, row.Uuid);
                     foreach (BDTableCell cell in cells)
                         BDTableCell.Delete(pContext, cell, false);
-                    BDTableRow.DeleteLocal(pContext, row.Uuid);
+                    BDTableRow.Delete(pContext, row.Uuid, false);
                 }
                 BDNode surgical = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("da1fcc78-d169-45a8-a391-2b3db6247075"));
                 if (table.Uuid == Guid.Parse("aba7ff59-63b6-41a6-afcb-1e5b2683ea9f"))

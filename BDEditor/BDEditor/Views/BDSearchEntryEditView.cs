@@ -475,9 +475,9 @@ namespace BDEditor.Views
             lbExistingSearchEntries.ClearSelected();
             lbSearchEntryAssociations.ClearSelected();
 
-            if (lbSelectedSearchEntries.SelectedIndices.Count > 0)
+            if (lbSelectedSearchEntries.SelectedItems.Count > 0)
             {
-                currentSearchEntry = selectedSearchEntries[lbSelectedSearchEntries.SelectedIndices[0]];
+                currentSearchEntry = lbSelectedSearchEntries.SelectedItems[0] as BDSearchEntry;
                 if (null != currentSearchEntryAssociation && currentSearchEntryAssociation.editorContext.IndexOf("*") == 0)
                 {
                     currentSearchEntryAssociation.editorContext = currentSearchEntryAssociation.editorContext.Substring(1);
@@ -493,9 +493,9 @@ namespace BDEditor.Views
             lbSelectedSearchEntries.ClearSelected();
             lbSearchEntryAssociations.ClearSelected();
 
-            if (lbExistingSearchEntries.SelectedIndices.Count > 0)
+            if (lbExistingSearchEntries.SelectedItems.Count > 0)
             {
-                currentSearchEntry = availableSearchEntries[lbExistingSearchEntries.SelectedIndices[0]];
+                currentSearchEntry = lbExistingSearchEntries.SelectedItems[0] as BDSearchEntry;
                 reloadAssociatedLocations();
             }
             resetButtons();

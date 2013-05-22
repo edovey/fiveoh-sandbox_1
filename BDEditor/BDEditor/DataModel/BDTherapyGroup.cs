@@ -118,6 +118,7 @@ namespace BDEditor.DataModel
             if (null == pEntity) return;
 
             BDLinkedNoteAssociation.DeleteForParentId(pContext, pEntity.Uuid, pCreateDeletion);
+            BDSearchEntryAssociation.DeleteForAnchorNodeUuid(pContext, pEntity.Uuid);
 
             BDTherapy.DeleteForParentId(pContext, pEntity.Uuid, pCreateDeletion);
 
@@ -135,23 +136,6 @@ namespace BDEditor.DataModel
         {
             BDTherapyGroup entity = BDTherapyGroup.RetrieveTherapyGroupWithId(pContext, pUuid);
             BDTherapyGroup.Delete(pContext, entity, pCreateDeletion);
-        }
-
-        /// <summary>
-        /// Delete from the local datastore without creating a deletion record nor deleting any children. Does not save.
-        /// </summary>
-        /// <param name="pContext"></param>
-        /// <param name="pUuid"></param>
-        public static void DeleteLocal(Entities pContext, Guid? pUuid)
-        {
-            if (null != pUuid)
-            {
-                BDTherapyGroup entry = BDTherapyGroup.RetrieveTherapyGroupWithId(pContext, pUuid.Value);
-                if (null != entry)
-                {
-                    pContext.DeleteObject(entry);
-                }
-            }
         }
 
         /// <summary>

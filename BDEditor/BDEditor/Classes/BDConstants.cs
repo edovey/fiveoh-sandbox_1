@@ -359,6 +359,9 @@ namespace BDEditor.Classes
             [Description("Organisms - Antibiogram")]
             Organisms_Antibiogram = 604,
 
+            [Description("References")]
+            References = 700,
+
             [Description("2-column Table")]
             Table_2_Column = 900,
             [Description("2-column Table Header Row")]

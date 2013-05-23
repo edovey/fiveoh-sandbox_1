@@ -191,7 +191,6 @@ namespace BDEditor.Classes
                 List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
                 foreach (IBDNode child in children)
                 {
-                    //if((int)child.NodeType < (int)BDConstants.BDNodeType.BDCategory)  // - for debugging recursive call
                     generateOverviewAndChildrenForNode(pContext, child, childDetailPages, childNavPages);
                 }
                 // we are NOT on a leaf node, still on a navigation level
@@ -594,6 +593,7 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.PregnancyLactation_Exposure_CommunicableDiseases:
                         case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
+                        case BDConstants.LayoutVariantType.References:
                             currentPageMasterObject = pNode;
                             nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;

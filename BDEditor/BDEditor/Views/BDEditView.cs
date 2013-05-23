@@ -99,8 +99,8 @@ namespace BDEditor.Views
                     case BDConstants.LayoutVariantType.FrontMatter:
                         node = BDFrontMatterTree.BuildBranch(dataContext, pNode);
                         break;
-                    case BDConstants.LayoutVariantType.BackMatter:
-                        node = BDBackMatterTree.BuildBranch(dataContext, pNode);
+                    case BDConstants.LayoutVariantType.References:
+                        node = BDReferencesTree.BuildBranch(dataContext, pNode);
                         break;
                     case BDConstants.LayoutVariantType.TreatmentRecommendation00:
                         node = BDTreatmentRecommendationTree.BuildBranch(dataContext, pNode);
@@ -433,8 +433,8 @@ namespace BDEditor.Views
                                     showChildControls = false;
                                 }
                                 break;
-                            case BDConstants.LayoutVariantType.BackMatter:
-                                childTreeNode = BDBackMatterTree.BuildBranch(dataContext, node);
+                            case BDConstants.LayoutVariantType.References:
+                                childTreeNode = BDReferencesTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
                                     graftTreeNode(selectedNode, childTreeNode);
@@ -1328,6 +1328,7 @@ namespace BDEditor.Views
         {
            // BDUtilities.ExecuteBatchMove(dataContext);
            // BDUtilities.RepairSearchEntryAssociationsForMissingData(dataContext);
+            BDUtilities.InjectNodeIntoHierarhy(dataContext);
         }
 
         private void btnDebug_Click(object sender, EventArgs e)

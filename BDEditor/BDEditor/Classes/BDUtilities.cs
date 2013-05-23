@@ -106,40 +106,22 @@ namespace BDEditor.Classes
 
         public static void InjectNodeIntoHierarhy(Entities pContext)
         {
-            BDNode disease = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("96cbc7d0-c4ba-4593-a1d9-0e7908deeffd"));
-            BDNode newTable = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDTable, Guid.NewGuid());
-            newTable.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation11_GenitalUlcers;
-            newTable.SetParent(disease);
-            newTable.name = "Genital ulcers / lesions table";
-            BDNode.Save(pContext, newTable);
+            //BDNode chapter = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDChapter, Guid.NewGuid());
+            //BDNode section = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSection, Guid.NewGuid());
 
-            BDNode gTopic1 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("32379749-9852-46f4-884b-e2443dd02805"));
-            gTopic1.SetParent(newTable);
-            BDNode.Save(pContext, gTopic1);
+            //chapter.parentId = Guid.Empty;
+            //chapter.parentType = 0;
+            //chapter.parentKeyName = @"None";
+            //chapter.name = "References";
+            //chapter.layoutVariant = (int)BDConstants.LayoutVariantType.References;
+            //chapter.displayOrder = 7;
+            //BDNode.Save(pContext, chapter);
 
-            BDNode gTopic2 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("8b3f3d30-3be9-4aef-89d3-acbbd2c1e147"));
-            gTopic2.SetParent(newTable);
-            BDNode.Save(pContext, gTopic2);
-
-            BDNode gTopic3 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("9cf8dbb0-817f-4c3d-9228-c02d959f02c7"));
-            gTopic3.SetParent(newTable);
-            BDNode.Save(pContext, gTopic3);
-
-            BDNode gTopic4 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("a0e6a20b-c494-4a98-b6dc-00dea74da92d"));
-            gTopic4.SetParent(newTable);
-            BDNode.Save(pContext, gTopic4);
-
-            BDNode gTopic5 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("d2b8a93f-eda0-40ef-8e3c-368321689d16"));
-            gTopic5.SetParent(newTable);
-            BDNode.Save(pContext, gTopic5);
-
-            BDNode gTopic6 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("e5ebc317-d83c-4bb3-bc66-df1404bbed25"));
-            gTopic6.SetParent(newTable);
-            BDNode.Save(pContext, gTopic6);
-
-            BDNode gTopic7 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("f9b33cc4-122b-4f27-bc8e-8dd20d31e94f"));
-            gTopic7.SetParent(newTable);
-            BDNode.Save(pContext, gTopic7);
+            //section.SetParent(chapter);
+            //section.name = "";
+            //section.layoutVariant = (int)BDConstants.LayoutVariantType.References;
+            //section.displayOrder = 0;
+            //BDNode.Save(pContext, section);
         }
 
         public static byte[] ReadFileAsByteArray(string fullFilenameAndPath)

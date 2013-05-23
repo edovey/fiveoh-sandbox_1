@@ -305,6 +305,7 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Dental: // Catch all for dental
                         case BDConstants.LayoutVariantType.PregancyLactation:
                         case BDConstants.LayoutVariantType.Organisms:
+                        case BDConstants.LayoutVariantType.References:
                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis:

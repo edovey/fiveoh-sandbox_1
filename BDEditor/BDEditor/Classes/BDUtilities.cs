@@ -2202,81 +2202,81 @@ namespace BDEditor.Classes
 
             #region v1.6.49
             // clean hierarchy for Organisms_Therapy (remove microorganism, microorganism group
-            BDNode organismTherapies = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("472244a0-f8a3-43b2-b6dd-c23902e5ee28"));
-            List<IBDNode> categories = BDFabrik.GetChildrenForParent(pContext, organismTherapies);
-            foreach (IBDNode category in categories)
-            {
-                List<IBDNode> microorganismGroups = BDFabrik.GetChildrenForParent(pContext, category);
-                foreach (IBDNode mGroup in microorganismGroups)
-                {
-                    List<IBDNode> micros = BDFabrik.GetChildrenForParent(pContext, mGroup);
-                    foreach (IBDNode m in micros)
-                    {
-                        if (m.NodeType == BDConstants.BDNodeType.BDMicroorganism)
-                            BDNode.Delete(pContext, m.Uuid, false);
-                        else
-                            Debug.WriteLine("Node is not a Microorganism: {0}", m.Uuid);
-                    }
-                    if (mGroup.NodeType == BDConstants.BDNodeType.BDMicroorganismGroup)
-                        BDNode.Delete(pContext, mGroup, false);
-                    else
-                        Debug.WriteLine("Node is not a Microorganism Group: {0}", mGroup.Uuid);
-                }
-                if (category.Uuid == Guid.Parse("8f959f69-fd2d-4074-bf0d-4a257a23828b"))
-                {
-                    category.LayoutVariant = BDConstants.LayoutVariantType.Organisms_Therapy_with_Subcategory;
-                    category.Name = "GRAM NEGATIVE BACILLI";
-                    BDNode subcat1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubcategory, Guid.NewGuid());
-                    subcat1.SetParent(category);
-                    subcat1.Name = "Enterobacteriaceae";
-                    subcat1.layoutVariant = (int)category.LayoutVariant;
-                    subcat1.DisplayOrder = 0;
-                    subcat1.nodeKeyName = BDConstants.BDNodeType.BDSubcategory.ToString();
+            //BDNode organismTherapies = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("472244a0-f8a3-43b2-b6dd-c23902e5ee28"));
+            //List<IBDNode> categories = BDFabrik.GetChildrenForParent(pContext, organismTherapies);
+            //foreach (IBDNode category in categories)
+            //{
+            //    List<IBDNode> microorganismGroups = BDFabrik.GetChildrenForParent(pContext, category);
+            //    foreach (IBDNode mGroup in microorganismGroups)
+            //    {
+            //        List<IBDNode> micros = BDFabrik.GetChildrenForParent(pContext, mGroup);
+            //        foreach (IBDNode m in micros)
+            //        {
+            //            if (m.NodeType == BDConstants.BDNodeType.BDMicroorganism)
+            //                BDNode.Delete(pContext, m.Uuid, false);
+            //            else
+            //                Debug.WriteLine("Node is not a Microorganism: {0}", m.Uuid);
+            //        }
+            //        if (mGroup.NodeType == BDConstants.BDNodeType.BDMicroorganismGroup)
+            //            BDNode.Delete(pContext, mGroup, false);
+            //        else
+            //            Debug.WriteLine("Node is not a Microorganism Group: {0}", mGroup.Uuid);
+            //    }
+            //    if (category.Uuid == Guid.Parse("8f959f69-fd2d-4074-bf0d-4a257a23828b"))
+            //    {
+            //        category.LayoutVariant = BDConstants.LayoutVariantType.Organisms_Therapy_with_Subcategory;
+            //        category.Name = "GRAM NEGATIVE BACILLI";
+            //        BDNode subcat1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubcategory, Guid.NewGuid());
+            //        subcat1.SetParent(category);
+            //        subcat1.Name = "Enterobacteriaceae";
+            //        subcat1.layoutVariant = (int)category.LayoutVariant;
+            //        subcat1.DisplayOrder = 0;
+            //        subcat1.nodeKeyName = BDConstants.BDNodeType.BDSubcategory.ToString();
 
-                    BDNode subcat2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubcategory, Guid.NewGuid());
-                    subcat2.SetParent(category);
-                    subcat2.Name = "Fermentative (other)";
-                    subcat2.layoutVariant = (int)category.LayoutVariant;
-                    subcat2.DisplayOrder = 0;
-                    subcat2.nodeKeyName = BDConstants.BDNodeType.BDSubcategory.ToString();
+            //        BDNode subcat2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubcategory, Guid.NewGuid());
+            //        subcat2.SetParent(category);
+            //        subcat2.Name = "Fermentative (other)";
+            //        subcat2.layoutVariant = (int)category.LayoutVariant;
+            //        subcat2.DisplayOrder = 0;
+            //        subcat2.nodeKeyName = BDConstants.BDNodeType.BDSubcategory.ToString();
 
-                    BDNode subcat3 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubcategory, Guid.NewGuid());
-                    subcat3.SetParent(category);
-                    subcat3.Name = "Non-Fermentative";
-                    subcat3.layoutVariant = (int)category.LayoutVariant;
-                    subcat3.DisplayOrder = 0;
-                    subcat3.nodeKeyName = BDConstants.BDNodeType.BDSubcategory.ToString();
-                }
-                if (category.Uuid == Guid.Parse("1de822f9-49b7-4e0c-a32f-fc0cb94fa619") || category.Uuid == Guid.Parse("af07c9f5-579a-4092-8acd-6c14fcc80cc5"))
-                    BDNode.Delete(pContext, category.Uuid, false);
+            //        BDNode subcat3 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubcategory, Guid.NewGuid());
+            //        subcat3.SetParent(category);
+            //        subcat3.Name = "Non-Fermentative";
+            //        subcat3.layoutVariant = (int)category.LayoutVariant;
+            //        subcat3.DisplayOrder = 0;
+            //        subcat3.nodeKeyName = BDConstants.BDNodeType.BDSubcategory.ToString();
+            //    }
+            //    if (category.Uuid == Guid.Parse("1de822f9-49b7-4e0c-a32f-fc0cb94fa619") || category.Uuid == Guid.Parse("af07c9f5-579a-4092-8acd-6c14fcc80cc5"))
+            //        BDNode.Delete(pContext, category.Uuid, false);
 
-            }
-            pContext.SaveChanges();
+            //}
+            //pContext.SaveChanges();
 
-            // refactoring & cleanup of Surgical prophylaxis
-            BDNode preOp = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("6490c259-0188-4e1a-9ff1-001bb24db3c4"));
-            List<IBDNode> tables = BDFabrik.GetChildrenForParent(pContext, preOp);
-            // delete children of table 1 -- switching to a configured entry
-            foreach (BDNode table in tables)
-            {
-                List<BDTableRow> tableRows = BDTableRow.RetrieveTableRowsForParentId(pContext, table.Uuid);
-                foreach (BDTableRow row in tableRows)
-                {
-                    List<BDTableCell> cells = BDTableCell.RetrieveTableCellsForParentId(pContext, row.Uuid);
-                    foreach (BDTableCell cell in cells)
-                        BDTableCell.Delete(pContext, cell, false);
-                    BDTableRow.Delete(pContext, row.Uuid, false);
-                }
-                BDNode surgical = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("da1fcc78-d169-45a8-a391-2b3db6247075"));
-                if (table.Uuid == Guid.Parse("aba7ff59-63b6-41a6-afcb-1e5b2683ea9f"))
-                {
-                    table.SetParent(surgical);
-                }
-                surgical.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical;
-                pContext.SaveChanges();
-            }
+            //// refactoring & cleanup of Surgical prophylaxis
+            //BDNode preOp = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("6490c259-0188-4e1a-9ff1-001bb24db3c4"));
+            //List<IBDNode> tables = BDFabrik.GetChildrenForParent(pContext, preOp);
+            //// delete children of table 1 -- switching to a configured entry
+            //foreach (BDNode table in tables)
+            //{
+            //    List<BDTableRow> tableRows = BDTableRow.RetrieveTableRowsForParentId(pContext, table.Uuid);
+            //    foreach (BDTableRow row in tableRows)
+            //    {
+            //        List<BDTableCell> cells = BDTableCell.RetrieveTableCellsForParentId(pContext, row.Uuid);
+            //        foreach (BDTableCell cell in cells)
+            //            BDTableCell.Delete(pContext, cell, false);
+            //        BDTableRow.Delete(pContext, row.Uuid, false);
+            //    }
+            //    BDNode surgical = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("da1fcc78-d169-45a8-a391-2b3db6247075"));
+            //    if (table.Uuid == Guid.Parse("aba7ff59-63b6-41a6-afcb-1e5b2683ea9f"))
+            //    {
+            //        table.SetParent(surgical);
+            //    }
+            //    surgical.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical;
+            //    pContext.SaveChanges();
+            //}
 
-            BDNode.Delete(pContext, preOp, false);
+            //BDNode.Delete(pContext, preOp, false);
             #endregion
         }
 

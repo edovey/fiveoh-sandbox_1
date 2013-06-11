@@ -17,15 +17,14 @@ namespace BDEditor.Classes
     /// </summary>
     public class BDSearchEntryGenerator
     {
-        private List<BDSearchEntry> searchEntryList;
         private List<BDHtmlPage> htmlPages;
 
         public BDSearchEntryGenerator() { }
         
         /// <summary>
-        /// Generate new Search Entries from the data
+        /// Process search entry associations - update the displayParentId with the id of the html page of the target
         /// </summary>
-        public void Generate(Entities pDataContext, IBDNode pNode)
+        public void Generate(Entities pDataContext)
         {
             htmlPages = BDHtmlPage.RetrieveAll(pDataContext);
             List<IBDObject> associations = BDSearchEntryAssociation.RetrieveAll(pDataContext);

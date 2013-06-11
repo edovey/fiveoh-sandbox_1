@@ -495,6 +495,8 @@ namespace BDEditor.Views
                     // string contextString = BDUtilities.BuildHierarchyString(dataContext, BDFabrik.RetrieveNode(dataContext, parentId), " : ");
                     //iEditView.DisplayContext = contextString;
                     iEditView.ShowDialog(this);
+
+                    iEditView.Dispose();
                 }
             }
             else

@@ -311,6 +311,7 @@
             this.Name = "BDSearchEntryEditView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Index Entry Editor";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BDSearchEntryEditView_FormClosing);
             this.Load += new System.EventHandler(this.BDSearchEntryEditView_Load);
             this.pnlSelectTerms.ResumeLayout(false);
             this.pnlSelectTerms.PerformLayout();

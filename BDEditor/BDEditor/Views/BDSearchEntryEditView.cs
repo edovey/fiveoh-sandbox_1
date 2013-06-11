@@ -113,6 +113,18 @@ namespace BDEditor.Views
             lbSelectedSearchEntries.EndUpdate();
         }
 
+        private void BDSearchEntryEditView_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            lbExistingSearchEntries.DataSource = null;
+            lbSelectedSearchEntries.DataSource = null;
+            lbSearchEntryAssociations.DataSource = null;
+
+            allSearchEntries.Clear();
+            searchEntryAssociations.Clear();
+            selectedSearchEntries.Clear();
+            availableSearchEntries.Clear();
+        }
+
         private void reloadAvailableEntries()
         {
             List<BDSearchEntry> tmpAvailable = new List<BDSearchEntry>(allSearchEntries);

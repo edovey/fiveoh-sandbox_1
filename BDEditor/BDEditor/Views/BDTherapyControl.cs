@@ -802,6 +802,7 @@ namespace BDEditor.Views
                     indexEditView.DisplayContext = contextString;
                     indexEditView.ShowDialog(this);
 
+                    indexEditView.Dispose();
                 }
             }
         }

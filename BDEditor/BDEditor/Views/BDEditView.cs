@@ -1105,6 +1105,7 @@ namespace BDEditor.Views
                 btnSync.Text = "Overwrite";
                 this.Text = string.Format("{0} < OVERWRITE REPOSITORY >", this.Text);
             }
+            authenticationForm.Dispose();
         }
 
         private void btnSync_Click(object sender, EventArgs e)
@@ -1190,6 +1191,7 @@ namespace BDEditor.Views
             mgrView.AssignDataContext(dataContext);
             mgrView.ShowDialog(this);
             this.Cursor = Cursors.Default;
+            mgrView.Dispose();
         }
 
         private void btnSearch_Click(object sender, EventArgs e)

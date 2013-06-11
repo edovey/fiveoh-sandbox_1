@@ -214,8 +214,7 @@ namespace BDEditor.Views
                 Debug.WriteLine(string.Format("Search Gen Start {0}", DateTime.Now));
                 BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Search Gen Start\t{0}", DateTime.Now));
                 BDSearchEntryGenerator searchGenerator = new BDSearchEntryGenerator();
-                foreach(IBDNode selectedNode in selectedNodeList)
-                    searchGenerator.Generate(dataContext, selectedNode as IBDNode);
+                searchGenerator.Generate(dataContext);
                 Debug.WriteLine("Search entry generation complete. {0}", DateTime.Now);
 
                 BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("Search Generation Complete\t{0}", DateTime.Now));

@@ -335,7 +335,8 @@ namespace BDEditor.Views
                     string contextString = BDUtilities.BuildHierarchyString(dataContext, nodeWrapper.Node, " : ");
                     indexEditView.DisplayContext = contextString;
                     indexEditView.ShowDialog(this);
-                
+
+                    indexEditView.Dispose();
                 }
             }
         }

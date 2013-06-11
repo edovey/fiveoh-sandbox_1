@@ -551,7 +551,8 @@ namespace BDEditor.Views
                     string contextString = BDUtilities.BuildHierarchyString(dataContext, nodeWrapper.Node, " : ");
                     indexEditView.DisplayContext = contextString;
                     indexEditView.ShowDialog(this);
-                
+
+                    indexEditView.Dispose();
                 }
             }
         }
@@ -927,7 +928,7 @@ namespace BDEditor.Views
             Debug.WriteLine("HTML page generation complete");
 
             BDSearchEntryGenerator searchGenerator = new BDSearchEntryGenerator();
-            searchGenerator.Generate(dataContext, currentNode);
+            searchGenerator.Generate(dataContext);
             
             this.Cursor = Cursors.Default;
             MessageBox.Show(this, "Search Entry generation complete", "Notice", MessageBoxButtons.OK);

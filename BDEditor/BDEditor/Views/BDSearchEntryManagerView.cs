@@ -42,13 +42,14 @@ namespace BDEditor.Views
         public string DisplayContext
         {
             get { return editorContext; }
-            set { 
-                if(!string.IsNullOrEmpty(value))
-                    editorContext = value; 
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                    editorContext = value;
             }
         }
 
-        private void BDSearchEntryEditView_Load(object sender, EventArgs e)
+        private void BDSearchEntryManagerView_Load(object sender, EventArgs e)
         {
             lbExistingSearchEntries.BeginUpdate();
 
@@ -63,6 +64,13 @@ namespace BDEditor.Views
 
             lbExistingSearchEntries.ClearSelected();
             lbExistingSearchEntries.EndUpdate();
+        }
+
+        private void BDSearchEntryManagerView_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            allSearchEntries.Clear();
+            searchEntryAssociations.Clear();
+            searchEntries.Clear();
         }
 
         private void reloadAvailableEntries()
@@ -124,12 +132,12 @@ namespace BDEditor.Views
 
         private void resetButtons()
         {
-            btnMoveAssnNext.Enabled = (lbSearchEntryAssociations.SelectedItems.Count > 0  && searchEntryAssociations.Count > 1)? true : false;
+            btnMoveAssnNext.Enabled = (lbSearchEntryAssociations.SelectedItems.Count > 0 && searchEntryAssociations.Count > 1) ? true : false;
             btnMoveAssnPrevious.Enabled = (lbSearchEntryAssociations.SelectedItems.Count > 0 && searchEntryAssociations.Count > 1) ? true : false;
 
             cbFilterList.Enabled = tbEntryName.TextLength > 0 ? true : false;
 
-            btnDeleteAssociation.Enabled = currentSearchEntryAssociation != null ? true : false; 
+            btnDeleteAssociation.Enabled = currentSearchEntryAssociation != null ? true : false;
 
             btnDeleteSearchEntry.Enabled = (lbExistingSearchEntries.SelectedIndices.Count > 0) ? true : false;
             btnEditSearchEntry.Enabled = (lbExistingSearchEntries.SelectedIndices.Count > 0) ? true : false;
@@ -206,7 +214,7 @@ namespace BDEditor.Views
             currentSearchEntryAssociation = null;
             lbSearchEntryAssociations.ClearSelected();
             lbExistingSearchEntries.ClearSelected();
-            
+
             CheckBox cb = sender as CheckBox;
             if (null != cb && cb.CheckState == CheckState.Checked)
             {
@@ -236,7 +244,7 @@ namespace BDEditor.Views
             }
             lbExistingSearchEntries.EndUpdate();
         }
-        
+
         private void btnEditSearchEntry_Click(object sender, EventArgs e)
         {
             BDSearchEntry selected = lbExistingSearchEntries.SelectedItems[0] as BDSearchEntry;
@@ -362,7 +370,6 @@ namespace BDEditor.Views
             if (cbFilterList.CheckState != CheckState.Unchecked)
                 cbFilterList.CheckState = CheckState.Unchecked;
         }
-
-    }    
+    }
 }
 

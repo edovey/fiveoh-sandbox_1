@@ -112,6 +112,9 @@ namespace BDEditor.Classes
 
             #endregion
 
+            pages.Clear();
+            displayParentIds.Clear();
+            pageIds.Clear();
         }
 
         private void generatePages(Entities pContext, List<BDNode> pNodeList /* IBDNode pNode */)
@@ -154,6 +157,13 @@ namespace BDEditor.Classes
             List<BDHtmlPage> infoChildPages = new List<BDHtmlPage>();
             currentChapter = infoNode;
             generateOverviewAndChildrenForNode(pContext, infoNode, infoChildPages, infoChildPages);
+
+            allPages.Clear();
+            chapters.Clear();
+            childDetailPages.Clear();
+            childNavPages.Clear();
+            chapterPages.Clear();
+            infoChildPages.Clear();
         }
 
         /// <summary>
@@ -200,13 +210,14 @@ namespace BDEditor.Classes
                     Debug.WriteLine("Detail page with {0} children for: {1}: {2}", childDetailPages.Count, pNode.NodeType.ToString(), pNode.Name);
                     pNodeDetailPages.Add(generateNavigationPage(pContext, pNode, childDetailPages));
                 }
+                childNavPages.Clear();
+                childDetailPages.Clear();
+                children.Clear();
             }
         }
 
         private BDHtmlPage generateNavigationPage(Entities pContext, IBDNode pNode, List<BDHtmlPage> pChildPages)
         {
-
-
             currentPageMasterObject = pNode;
             StringBuilder pageHTML = new StringBuilder();
             List<Guid> objectsOnPage = new List<Guid>();

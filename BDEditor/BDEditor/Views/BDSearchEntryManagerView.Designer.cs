@@ -233,7 +233,8 @@
             this.Name = "BDSearchEntryManagerView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Index Entry Manager";
-            this.Load += new System.EventHandler(this.BDSearchEntryEditView_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BDSearchEntryManagerView_FormClosing);
+            this.Load += new System.EventHandler(this.BDSearchEntryManagerView_Load);
             this.pnlSelectTerms.ResumeLayout(false);
             this.pnlSelectTerms.PerformLayout();
             this.ResumeLayout(false);

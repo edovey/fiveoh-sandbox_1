@@ -329,8 +329,10 @@ namespace BDEditor.Views
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.OK)
                 {
                     foreach (BDSearchEntryAssociation entry in associationsToDelete)
+                    {
                         searchEntryAssociations.Remove(entry);
-
+                        BDSearchEntryAssociation.Delete(dataContext, entry);
+                    }
                     formHasChanges = true;
                     resetButtons();
                 }

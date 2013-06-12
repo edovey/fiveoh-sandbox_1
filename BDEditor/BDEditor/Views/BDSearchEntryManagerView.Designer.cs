@@ -162,6 +162,7 @@
             this.lbSearchEntryAssociations.HorizontalScrollbar = true;
             this.lbSearchEntryAssociations.Location = new System.Drawing.Point(17, 437);
             this.lbSearchEntryAssociations.Name = "lbSearchEntryAssociations";
+            this.lbSearchEntryAssociations.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lbSearchEntryAssociations.Size = new System.Drawing.Size(536, 264);
             this.lbSearchEntryAssociations.TabIndex = 1;
             this.lbSearchEntryAssociations.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbSearchEntryAssociations_MouseDown);

@@ -115,6 +115,12 @@ namespace BDEditor.Views
 
         private void BDSearchEntryEditView_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (currentSearchEntryAssociation != null && currentSearchEntryAssociation.editorContext.IndexOf("*") == 0)
+            {
+                currentSearchEntryAssociation.editorContext = currentSearchEntryAssociation.editorContext.Substring(1);
+                BDSearchEntryAssociation.Save(dataContext, currentSearchEntryAssociation);
+            }
+
             lbExistingSearchEntries.DataSource = null;
             lbSelectedSearchEntries.DataSource = null;
             lbSearchEntryAssociations.DataSource = null;

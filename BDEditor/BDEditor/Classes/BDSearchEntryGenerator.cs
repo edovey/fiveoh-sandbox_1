@@ -47,7 +47,12 @@ namespace BDEditor.Classes
                     else
                         BDHtmlPageGeneratorLogEntry.AppendToFile("BDSearchGeneratorLog.txt", string.Format("Unable to find HTML page containing anchor node:{0}  from SEAssociation: {1}", seAssociation.anchorNodeId, seAssociation.Uuid));
                     if (!string.IsNullOrEmpty(seAssociation.editorContext))
+                    {
                         seAssociation.displayContext = seAssociation.editorContext;
+
+                        if (seAssociation.editorContext.IndexOf("*") == 0)
+                            seAssociation.editorContext = seAssociation.editorContext.Substring(1);
+                    }
                     BDSearchEntryAssociation.Save(pDataContext, seAssociation);  // will only save if there are changes.
                 }
                 else

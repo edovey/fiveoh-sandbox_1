@@ -1249,9 +1249,9 @@ namespace BDEditor.Classes
                         {
                             if (!string.IsNullOrEmpty(child.Name))
                             {
-                                // create a page and add to collection
                                 string amHtml = BuildBDAntimicrobialHtml(pContext, child, childFootnotes, childObjects, pLevel);
                                 currentPageMasterObject = child;
+                                // create a page and add to collection : page has no children
                                 childPages.Add(writeBDHtmlPage(pContext, child, amHtml, BDConstants.BDHtmlPageType.Data, childFootnotes, childObjects, null));
                             }
                             else
@@ -1554,9 +1554,10 @@ namespace BDEditor.Classes
                         {
                             if (!string.IsNullOrEmpty(child.Name))
                             {
-                                // need to create a page and add to collection for parent
+                                // the next line builds child pages
                                 string childHtml = BuildBDSubcategoryHtml(pContext, child, childFootnotes, childObjectsOnPage, pLevel);
                                 currentPageMasterObject = child;
+                                // create a page and add to collection for parent : page has children -> navigation type
                                 childPages.Add(writeBDHtmlPage(pContext, child, childHtml, BDConstants.BDHtmlPageType.Navigation, childFootnotes, childObjectsOnPage, null));
                             }
                             else
@@ -1569,10 +1570,10 @@ namespace BDEditor.Classes
                                 {
                                     if (!string.IsNullOrEmpty(gChild.Name))
                                     {
-                                        // create a page and add to collection
                                         string gcHtml = BuildBDAntimicrobialHtml(pContext, gChild, gcFootnotes, gcObjects, pLevel);
                                         currentPageMasterObject = gChild;
-                                        childPages.Add(writeBDHtmlPage(pContext, gChild, gcHtml, BDConstants.BDHtmlPageType.Navigation, gcFootnotes, gcObjects, null));
+                                        // create a page and add to collection:  gcHtml is a Data type of HTML page (has no children)
+                                        childPages.Add(writeBDHtmlPage(pContext, gChild, gcHtml, BDConstants.BDHtmlPageType.Data, gcFootnotes, gcObjects, null));
                                     }
                                 }
                             }
@@ -1596,9 +1597,9 @@ namespace BDEditor.Classes
                         {
                             if (!string.IsNullOrEmpty(child.Name))
                             {
-                                // need to create a page and add to collection for parent
                                 string childHtml = BuildBDSubcategoryHtml(pContext, child, l_childFootnotes, l_childObjectsOnPage, pLevel);
                                 currentPageMasterObject = child;
+                                // create a page and add to collection for parent : page has children
                                 l_childPages.Add(writeBDHtmlPage(pContext, child, childHtml, BDConstants.BDHtmlPageType.Navigation, l_childFootnotes, l_childObjectsOnPage, null));
                             }
                             else
@@ -1611,9 +1612,9 @@ namespace BDEditor.Classes
                                 {
                                     if (!string.IsNullOrEmpty(gChild.Name))
                                     {
-                                        // create a page and add to collection
                                         string gcHtml = BuildBDAntimicrobialGroupHtmlAndPage(pContext, gChild, gcFootnotes, gcObjects, pLevel);
                                         currentPageMasterObject = gChild;
+                                        // create a page and add to collection : page has children
                                         l_childPages.Add(writeBDHtmlPage(pContext, gChild, gcHtml, BDConstants.BDHtmlPageType.Navigation, gcFootnotes, gcObjects, null));
                                     }
                                     else // name is empty - build pages and navigation for next layer
@@ -1627,9 +1628,9 @@ namespace BDEditor.Classes
                                         {
                                             if (!string.IsNullOrEmpty(ggChild.Name))
                                             {
-                                                // create a page and add to collection
                                                 string ggHtml = BuildBDAntimicrobialHtml(pContext, ggChild, ggFootnotes, ggObjects, pLevel);
                                                 currentPageMasterObject = ggChild;
+                                                // create a page and add to collection : page has no children
                                                 l_childPages.Add(writeBDHtmlPage(pContext, ggChild, ggHtml, BDConstants.BDHtmlPageType.Data, ggFootnotes, ggObjects, null));
                                             }
                                         }
@@ -3753,19 +3754,18 @@ namespace BDEditor.Classes
                             switch (child.NodeType)
                             {
                                 case BDConstants.BDNodeType.BDAntimicrobial:
-
-                                    // create a page and add to collection
                                     string childHtml = BuildBDAntimicrobialHtml(pContext, child, childFootnotes, childObjects, pLevel);
                                     currentPageMasterObject = child;
+                                    // create a page and add to collection : page has no children
                                     childPages.Add(writeBDHtmlPage(pContext, child, childHtml, BDConstants.BDHtmlPageType.Data, childFootnotes, childObjects, null));
 
                                     break;
                                 case BDConstants.BDNodeType.BDAntimicrobialGroup:
                                     if (!string.IsNullOrEmpty(childName))
                                     {
-                                        // create a page and add to collection
                                         string agHtml = BuildBDAntimicrobialGroupHtmlAndPage(pContext, child, childFootnotes, childObjects, pLevel);
                                         currentPageMasterObject = child;
+                                        // create a page and add to collection : page has children
                                         childPages.Add(writeBDHtmlPage(pContext, child, agHtml, BDConstants.BDHtmlPageType.Navigation, childFootnotes, childObjects, null));
                                     }
                                     else // antimicrobial group name is empty - move to next layer and build pages + links
@@ -3777,9 +3777,9 @@ namespace BDEditor.Classes
                                         {
                                             if (!string.IsNullOrEmpty(gChild.Name))
                                             {
-                                                // create a page and add to collection
                                                 string gcHtml = BuildBDAntimicrobialHtml(pContext, gChild, gcFootnotes, gcObjects, pLevel);
                                                 currentPageMasterObject = gChild;
+                                                // create a page and add to collection:  page has no children
                                                 childPages.Add(writeBDHtmlPage(pContext, gChild, gcHtml, BDConstants.BDHtmlPageType.Data, gcFootnotes, gcObjects, null));
                                             }
                                         }
@@ -3856,7 +3856,7 @@ namespace BDEditor.Classes
 
                             string childHtml = BuildBDTopicHtml(pContext, child, footnoteList, objectsOnChildPage, pLevel + 1);
                             currentPageMasterObject = child;
-                            BDHtmlPage childPage = writeBDHtmlPage(pContext, child, childHtml, BDConstants.BDHtmlPageType.Navigation, footnoteList, objectsOnChildPage, null);
+                            BDHtmlPage childPage = writeBDHtmlPage(pContext, child, childHtml, BDConstants.BDHtmlPageType.Data, footnoteList, objectsOnChildPage, null);
                             html.AppendFormat(navListAnchorTag, childPage.Uuid.ToString().ToUpper(), childPage.pageTitle);
                         }
                         html.Append(navListDivSuffix);
@@ -5635,6 +5635,10 @@ namespace BDEditor.Classes
                 List<Guid> filteredObjects = pObjectsOnPage.Distinct().ToList();
                 foreach (Guid objectId in filteredObjects)
                     BDHtmlPageMap.CreateOrRetrieveBDHtmlPageMap(pContext, Guid.NewGuid(), newPage.Uuid, objectId);
+            }
+            else
+            {
+                BDHtmlPageMap.CreateOrRetrieveBDHtmlPageMap(pContext, Guid.NewGuid(), newPage.Uuid, currentPageMasterObject.Uuid);
             }
             return newPage;
         }

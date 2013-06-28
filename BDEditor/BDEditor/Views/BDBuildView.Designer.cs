@@ -319,6 +319,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Publish";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.BDBuildView_Load);
             this.gbSelectHtmlPages.ResumeLayout(false);
             this.gbSelectHtmlPages.PerformLayout();

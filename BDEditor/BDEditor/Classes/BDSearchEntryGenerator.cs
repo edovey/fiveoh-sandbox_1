@@ -42,10 +42,10 @@ namespace BDEditor.Classes
                 {
                     htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pDataContext, seAssociation.anchorNodeId.Value);
                     BDHtmlPage htmlPage = BDHtmlPage.RetrieveWithId(pDataContext, htmlPageId);
-                    if (null != htmlPage)
+                    if (null != htmlPage && htmlPageId != Guid.Empty)
                         seAssociation.displayParentId = htmlPage.Uuid;
                     else
-                        BDHtmlPageGeneratorLogEntry.AppendToFile("BDSearchGeneratorLog.txt", string.Format("Unable to find HTML page containing anchor node.  Uuid :{0}", seAssociation.anchorNodeId));
+                        BDHtmlPageGeneratorLogEntry.AppendToFile("BDSearchGeneratorLog.txt", string.Format("Unable to find HTML page containing anchor node:{0}  from SEAssociation: {1}", seAssociation.anchorNodeId, seAssociation.Uuid));
                     if (!string.IsNullOrEmpty(seAssociation.editorContext))
                         seAssociation.displayContext = seAssociation.editorContext;
                     BDSearchEntryAssociation.Save(pDataContext, seAssociation);  // will only save if there are changes.

@@ -5636,7 +5636,7 @@ namespace BDEditor.Classes
                 foreach (Guid objectId in filteredObjects)
                     BDHtmlPageMap.CreateOrRetrieveBDHtmlPageMap(pContext, Guid.NewGuid(), newPage.Uuid, objectId);
             }
-            else
+            else if(currentPageMasterObject != null && currentPageMasterObject.Uuid != Guid.Empty)
             {
                 BDHtmlPageMap.CreateOrRetrieveBDHtmlPageMap(pContext, Guid.NewGuid(), newPage.Uuid, currentPageMasterObject.Uuid);
             }

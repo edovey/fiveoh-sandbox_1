@@ -42,8 +42,8 @@ namespace BDEditor.Classes
         public const string APPVERSION_METADATA = @"x-amz-meta-appversion";
         public const string MIMETYPE_METADATA = @"x-amz-meta-mimetype";
 
-        private const string BD_ACCESS_KEY = @"AKIAJ6SRLQLH2ALT7ZBQ";
-        private const string BD_SECRET_KEY = @"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";
+        private const string BD_ACCESS_KEY = @"AKIAJDR46ZTGMYHAG6NA";
+        private const string BD_SECRET_KEY = @"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";
 
         static private readonly RepositoryHandler aws = new RepositoryHandler();
 

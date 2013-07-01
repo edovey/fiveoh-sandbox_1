@@ -2278,6 +2278,27 @@ namespace BDEditor.Classes
 
             //BDNode.Delete(pContext, preOp, false);
             #endregion
+
+
+            #region data clean for 1.6.63
+            //List<IBDObject> associations = BDSearchEntryAssociation.RetrieveAll(pContext);
+
+            //foreach (IBDObject entry in associations)
+            //{
+            //    BDSearchEntryAssociation seAssociation = entry as BDSearchEntryAssociation;
+
+            //            if (seAssociation.editorContext.IndexOf("*") == 0)
+            //                seAssociation.editorContext = seAssociation.editorContext.Substring(1);
+            //            if (!string.IsNullOrEmpty(seAssociation.editorContext))
+            //            {
+            //                seAssociation.displayContext = seAssociation.editorContext;
+            //            }
+            //        BDSearchEntryAssociation.Save(pContext, seAssociation);  // will only save if there are changes.
+                
+            //}
+
+            #endregion
+
         }
 
         #region data repair for V2 implementation

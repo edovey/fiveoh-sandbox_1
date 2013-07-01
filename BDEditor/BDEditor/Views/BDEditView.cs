@@ -1330,7 +1330,7 @@ namespace BDEditor.Views
         {
            // BDUtilities.ExecuteBatchMove(dataContext);
            // BDUtilities.RepairSearchEntryAssociationsForMissingData(dataContext);
-            BDUtilities.InjectNodeIntoHierarhy(dataContext);
+           // BDUtilities.InjectNodeIntoHierarhy(dataContext);
         }
 
         private void btnDebug_Click(object sender, EventArgs e)

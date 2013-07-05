@@ -114,6 +114,9 @@ namespace BDEditor.DataModel
             {
                 if (pAssociation.schemaVersion != ENTITY_SCHEMAVERSION)
                     pAssociation.schemaVersion = ENTITY_SCHEMAVERSION;
+                
+                if(pAssociation.editorContext.IndexOf("*") == 0)
+                    pAssociation.editorContext = pAssociation.editorContext.Substring(1);
 
                 // System.Diagnostics.Debug.WriteLine(@"SearchEntryAssociation Save");
                 pContext.SaveChanges();

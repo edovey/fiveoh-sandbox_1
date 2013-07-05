@@ -48,6 +48,9 @@ namespace BDEditor.Classes
                         BDHtmlPageGeneratorLogEntry.AppendToFile("BDSearchGeneratorLog.txt", string.Format("Unable to find HTML page containing anchor node:{0}  from SEAssociation: {1}", seAssociation.anchorNodeId, seAssociation.Uuid));
                     if (!string.IsNullOrEmpty(seAssociation.editorContext))
                     {
+                        // BDViewer uses "diplayContext" for populating cell data - does not have editorContext in the data
+                        // SearchEntryEditor creates "editorContext" & SearchEntryManager also displays "editorContext"
+                        //TODO:  Refactor out to use the same field??
                         seAssociation.displayContext = seAssociation.editorContext;
 
                         if (seAssociation.editorContext.IndexOf("*") == 0)

@@ -96,7 +96,8 @@ namespace BDEditor.Classes
                 IBDNode parentNode = BDFabrik.RetrieveNode(pContext, pNode.ParentType, pNode.ParentId);
                 if (null != parentNode)
                 {
-                    pHierarchyValue.Insert(0, string.Format("{0}{1}", parentNode.Name, pSeparationString));
+                    string cleanedName = ProcessTextToPlainText(pContext, parentNode.Name);
+                    pHierarchyValue.Insert(0, string.Format("{0}{1}", cleanedName, pSeparationString));
                     if (parentNode.ParentId != Guid.Empty)
                         pHierarchyValue = getParentName(pContext, parentNode, pHierarchyValue, pSeparationString);
                 }

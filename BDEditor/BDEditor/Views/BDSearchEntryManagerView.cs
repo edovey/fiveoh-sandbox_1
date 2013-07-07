@@ -286,6 +286,7 @@ namespace BDEditor.Views
 
                 searchEntryAssociations.Sort("displayOrder", ListSortDirection.Ascending);
                 lbSearchEntryAssociations.BeginUpdate();
+                lbSearchEntryAssociations.ClearSelected();
                 lbSearchEntryAssociations.SetSelected(requestedPosition, true);
                 lbSearchEntryAssociations.EndUpdate();
 
@@ -309,6 +310,7 @@ namespace BDEditor.Views
                 searchEntryAssociations.Sort("displayOrder", ListSortDirection.Ascending);
 
                 lbSearchEntryAssociations.BeginUpdate();
+                lbSearchEntryAssociations.ClearSelected();
                 lbSearchEntryAssociations.SetSelected(requestedPosition, true);
                 lbSearchEntryAssociations.EndUpdate();
 

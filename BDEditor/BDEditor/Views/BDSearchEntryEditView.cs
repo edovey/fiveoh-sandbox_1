@@ -25,7 +25,6 @@ namespace BDEditor.Views
         private BDSearchEntryBindingList availableSearchEntries;
         private BDSearchEntryAssociationBindingList searchEntryAssociations;
         
-        private bool formHasChanges = false;
         private Guid htmlPageUuid;
 
         string editorContext = string.Empty;
@@ -172,16 +171,13 @@ namespace BDEditor.Views
                 foreach (BDSearchEntryAssociation nodeAssn in tmpList)
                 {
                     searchEntryAssociations.Add(nodeAssn);
-                    if (nodeAssn.displayOrder == -1)
-                    {
                         nodeAssn.displayOrder = searchEntryAssociations.IndexOf(nodeAssn);
-                        BDSearchEntryAssociation.Save(dataContext, nodeAssn);
-                    }
                     if (nodeAssn.anchorNodeId == ownerUuid)
                         currentSearchEntryAssociation = nodeAssn;
                     // repair if empty so there is something to display on the UI
                     if (string.IsNullOrEmpty(nodeAssn.editorContext))
                         nodeAssn.editorContext = nodeAssn.displayContext;
+                    BDSearchEntryAssociation.Save(dataContext, nodeAssn);
                 }
 
                 if (null != currentSearchEntryAssociation)
@@ -205,7 +201,7 @@ namespace BDEditor.Views
                     if (currentSearchEntryAssociation.anchorNodeId == Guid.Empty)
                         currentSearchEntryAssociation.anchorNodeId = ownerUuid;
 
-                   // adjust editorContext for visibility
+                    // adjust editorContext for visibility
                     if (currentSearchEntryAssociation.editorContext.IndexOf("*") != 0)
                         currentSearchEntryAssociation.editorContext = currentSearchEntryAssociation.editorContext.Insert(0, "*");
 
@@ -267,7 +263,6 @@ namespace BDEditor.Views
 
             lbSelectedSearchEntries.SetSelected(selectedSearchEntries.IndexOf(currentSearchEntry), true);
             reloadAssociatedLocations();
-            formHasChanges = true;
 
             resetButtons();
         }
@@ -309,7 +304,6 @@ namespace BDEditor.Views
             lblSelectedSearchEntry.Text = string.Empty;
 
             reloadAssociatedLocations();
-            formHasChanges = true;
             resetButtons();
         }
 
@@ -344,8 +338,6 @@ namespace BDEditor.Views
                         lbExistingSearchEntries.EndUpdate();
 
                         reloadAssociatedLocations();
-
-                        formHasChanges = true;
                     }
                     else
                         MessageBox.Show("Index entry already exists");
@@ -418,7 +410,6 @@ namespace BDEditor.Views
                             reloadAssociatedLocations();
 
                             selectedSearchEntries.Sort("name", ListSortDirection.Ascending);
-                            formHasChanges = true;
                         }
                         else
                             MessageBox.Show("An entry with that name already exists");
@@ -439,17 +430,25 @@ namespace BDEditor.Views
                 searchEntryAssociations[requestedPosition].displayOrder = selectedPosition;
                 searchEntryAssociations[selectedPosition].displayOrder = requestedPosition;
 
+                BDSearchEntryAssociation selectedEntry = (BDSearchEntryAssociation)lbSearchEntryAssociations.SelectedItem;
+                if (selectedEntry != currentSearchEntryAssociation && selectedEntry.editorContext.IndexOf("*") == 0)
+                {
+                    selectedEntry.editorContext = selectedEntry.editorContext.Substring(1);
+                    BDSearchEntryAssociation.Save(dataContext, selectedEntry);
+                }
+
                 BDSearchEntryAssociation.Save(dataContext, searchEntryAssociations[requestedPosition]);
                 BDSearchEntryAssociation.Save(dataContext, searchEntryAssociations[selectedPosition]);
 
-            searchEntryAssociations.Sort("displayOrder", ListSortDirection.Ascending);
-            lbSearchEntryAssociations.BeginUpdate();
-            lbSearchEntryAssociations.SetSelected(requestedPosition, true);
-            lbSearchEntryAssociations.EndUpdate();
+                searchEntryAssociations.Sort("displayOrder", ListSortDirection.Ascending);
+                lbSearchEntryAssociations.BeginUpdate();
+                lbSearchEntryAssociations.ClearSelected();
+                lbSearchEntryAssociations.SetSelected(requestedPosition, true);
+                lbSearchEntryAssociations.EndUpdate();
 
-            formHasChanges = true;
-            resetButtons();
+                resetButtons();
             }
+            btnOk.Focus();
         }
 
         private void btnMoveAssnNext_Click(object sender, EventArgs e)
@@ -462,32 +461,32 @@ namespace BDEditor.Views
                 searchEntryAssociations[requestedPosition].displayOrder = selectedPosition;
                 searchEntryAssociations[selectedPosition].displayOrder = requestedPosition;
 
+                BDSearchEntryAssociation selectedEntry = (BDSearchEntryAssociation)lbSearchEntryAssociations.SelectedItem;
+                if (selectedEntry != currentSearchEntryAssociation && selectedEntry.editorContext.IndexOf("*") == 0)
+                {
+                    selectedEntry.editorContext = selectedEntry.editorContext.Substring(1);
+                    BDSearchEntryAssociation.Save(dataContext, selectedEntry);
+                }
+
                 BDSearchEntryAssociation.Save(dataContext, searchEntryAssociations[requestedPosition]);
                 BDSearchEntryAssociation.Save(dataContext, searchEntryAssociations[selectedPosition]);
-            searchEntryAssociations.Sort("displayOrder", ListSortDirection.Ascending);
+                searchEntryAssociations.Sort("displayOrder", ListSortDirection.Ascending);
 
-            lbSearchEntryAssociations.BeginUpdate();
-            lbSearchEntryAssociations.SetSelected(requestedPosition, true);
-            lbSearchEntryAssociations.EndUpdate();
+                lbSearchEntryAssociations.BeginUpdate();
+                lbSearchEntryAssociations.ClearSelected();
+                lbSearchEntryAssociations.SetSelected(requestedPosition, true);
+                lbSearchEntryAssociations.EndUpdate();
 
-            formHasChanges = true;
-            resetButtons();
+                resetButtons();
             }
+            btnOk.Focus();
         }
 
         private void btnDeleteAssociation_Click(object sender, EventArgs e)
         {
-            //int index = lbSearchEntryAssociations.SelectedIndex;
-            //if (index >= 0)
-            //{
-            //    BDSearchEntryAssociation selected = searchEntryAssociations[lbSearchEntryAssociations.SelectedIndex];
-            //    BDSearchEntryAssociation.Delete(dataContext, selected);
-
-            //    formHasChanges = true;
-            //    resetButtons();
-            //}
+            // NOT implemented in this editor: see BDSearchEntryManagerView
         }
-
+        
         private void btnOk_Click(object sender, EventArgs e)
         {
             if (currentSearchEntryAssociation != null && currentSearchEntryAssociation.editorContext.IndexOf("*") == 0)

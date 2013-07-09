@@ -81,10 +81,12 @@ namespace BDEditor.Views
 
         private void reloadAssociatedLocations()
         {
+            BDSearchEntryAssociation selectedAssn = lbSearchEntryAssociations.SelectedItems.Count > 0 ? (BDSearchEntryAssociation)lbSearchEntryAssociations.SelectedItem : null;
             lbSearchEntryAssociations.BeginUpdate();
+            lbSearchEntryAssociations.ClearSelected();
             searchEntryAssociations.Clear();
 
-            if (null == currentSearchEntry)
+            if (null == currentSearchEntry && lbExistingSearchEntries.SelectedItems.Count > 0)
             {
                 currentSearchEntry = lbExistingSearchEntries.SelectedItems[0] as BDSearchEntry;
             }
@@ -97,34 +99,16 @@ namespace BDEditor.Views
                 foreach (BDSearchEntryAssociation nodeAssn in tmpList)
                 {
                     searchEntryAssociations.Add(nodeAssn);
-                    if (nodeAssn.displayOrder == -1)
-                    {
-                        nodeAssn.displayOrder = searchEntryAssociations.IndexOf(nodeAssn);
-                        BDSearchEntryAssociation.Save(dataContext, nodeAssn);
-                    }
-                    // repair if empty so there is something to display on the UI
+                    nodeAssn.displayOrder = searchEntryAssociations.IndexOf(nodeAssn);
+                    // repair any missing data : needed for converting from fully generated associations to managed associations
                     if (string.IsNullOrEmpty(nodeAssn.editorContext))
                         nodeAssn.editorContext = nodeAssn.displayContext;
+                    BDSearchEntryAssociation.Save(dataContext, nodeAssn);
                 }
-                if (null != currentSearchEntryAssociation)
-                {
-                    if (currentSearchEntryAssociation.editorContext != this.editorContext)
-                        currentSearchEntryAssociation.editorContext = this.editorContext; // update to current location
-
-                    // repair any missing data : needed for converting from fully generated associations to managed associations
-                    if (string.IsNullOrEmpty(currentSearchEntryAssociation.editorContext))
-                        currentSearchEntryAssociation.editorContext = currentSearchEntryAssociation.displayContext;
-
-                    // adjust editorContext for visibility
-                    if (currentSearchEntryAssociation.editorContext.IndexOf("*") != 0)
-                        currentSearchEntryAssociation.editorContext = currentSearchEntryAssociation.editorContext.Insert(0, "*");
-
-                    BDSearchEntryAssociation.Save(dataContext, currentSearchEntryAssociation);
-                    lbSearchEntryAssociations.SetSelected(searchEntryAssociations.IndexOf(currentSearchEntryAssociation), true);
-                }
-                else
-                    lbSearchEntryAssociations.ClearSelected();
+                if (null != selectedAssn && tmpList.Contains(selectedAssn))
+                    lbSearchEntryAssociations.SetSelected(searchEntryAssociations.IndexOf(selectedAssn), true);
             }
+
             lbSearchEntryAssociations.EndUpdate();
 
             resetButtons();
@@ -293,6 +277,7 @@ namespace BDEditor.Views
                 formHasChanges = true;
                 resetButtons();
             }
+            btnOk.Focus();
         }
 
         private void btnMoveAssnNext_Click(object sender, EventArgs e)
@@ -317,6 +302,7 @@ namespace BDEditor.Views
                 formHasChanges = true;
                 resetButtons();
             }
+            btnOk.Focus();
         }
 
         private void btnDeleteAssociation_Click(object sender, EventArgs e)
@@ -327,7 +313,7 @@ namespace BDEditor.Views
             {
                 associationsToDelete.AddRange(lbSearchEntryAssociations.SelectedItems.Cast<BDSearchEntryAssociation>());
 
-                if (MessageBox.Show(string.Format("This will delete all the selected search links.  Are you sure?"), "Confirm Delete",
+                if (MessageBox.Show(string.Format("This will delete the selected search link.  Are you sure?"), "Confirm Delete",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.OK)
                 {
                     foreach (BDSearchEntryAssociation entry in associationsToDelete)
@@ -339,13 +325,20 @@ namespace BDEditor.Views
                     resetButtons();
                 }
             }
+            // renumber the display order
+            foreach (BDSearchEntryAssociation nodeAssn in searchEntryAssociations)
+            {
+                nodeAssn.displayOrder = searchEntryAssociations.IndexOf(nodeAssn);
+            }
         }
 
         private void btnOk_Click(object sender, EventArgs e)
         {
             if (currentSearchEntryAssociation != null && currentSearchEntryAssociation.editorContext.IndexOf("*") == 0)
+            {
                 currentSearchEntryAssociation.editorContext = currentSearchEntryAssociation.editorContext.Substring(1);
-
+                BDSearchEntryAssociation.Save(dataContext, currentSearchEntryAssociation);
+            }
             this.DialogResult = DialogResult.OK;
         }
 

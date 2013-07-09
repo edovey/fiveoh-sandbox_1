@@ -177,6 +177,8 @@ namespace BDEditor.Views
                     // repair if empty so there is something to display on the UI
                     if (string.IsNullOrEmpty(nodeAssn.editorContext))
                         nodeAssn.editorContext = nodeAssn.displayContext;
+                    if (nodeAssn.editorContext.IndexOf("*") == 0)
+                        nodeAssn.editorContext = nodeAssn.editorContext.Substring(1);
                     BDSearchEntryAssociation.Save(dataContext, nodeAssn);
                 }
 

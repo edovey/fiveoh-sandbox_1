@@ -103,6 +103,10 @@ namespace BDEditor.Views
                     // repair any missing data : needed for converting from fully generated associations to managed associations
                     if (string.IsNullOrEmpty(nodeAssn.editorContext))
                         nodeAssn.editorContext = nodeAssn.displayContext;
+
+                    if (nodeAssn.editorContext.IndexOf("*") == 0)
+                        nodeAssn.editorContext = nodeAssn.editorContext.Substring(1);
+
                     BDSearchEntryAssociation.Save(dataContext, nodeAssn);
                 }
                 if (null != selectedAssn && tmpList.Contains(selectedAssn))

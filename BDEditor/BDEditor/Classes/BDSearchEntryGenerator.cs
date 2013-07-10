@@ -40,7 +40,17 @@ namespace BDEditor.Classes
                 Guid htmlPageId = Guid.Empty;
                 if (seAssociation.anchorNodeId.HasValue)
                 {
-                    htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pDataContext, seAssociation.anchorNodeId.Value);
+                    htmlPageId = BDNodeToHtmlPageIndex.RetrieveHtmlPageIdForIBDNodeId(pDataContext, seAssociation.anchorNodeId.Value, BDConstants.BDHtmlPageType.Data);
+                    // HERE BE DRAGONS... the order of these last two is arbitrary - potential for misdirection
+                    if (htmlPageId == Guid.Empty)  // link points to a node on a 'navigation' page
+                    {
+                        htmlPageId = BDNodeToHtmlPageIndex.RetrieveHtmlPageIdForIBDNodeId(pDataContext, seAssociation.anchorNodeId.Value, BDConstants.BDHtmlPageType.Navigation);
+                    }
+                    if (htmlPageId == Guid.Empty)  // link points to a node on a 'comment' page
+                    {
+                        htmlPageId = BDNodeToHtmlPageIndex.RetrieveHtmlPageIdForIBDNodeId(pDataContext, seAssociation.anchorNodeId.Value, BDConstants.BDHtmlPageType.Comments);
+                    }
+                    //htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pDataContext, seAssociation.anchorNodeId.Value);
                     BDHtmlPage htmlPage = BDHtmlPage.RetrieveWithId(pDataContext, htmlPageId);
                     if (null != htmlPage && htmlPageId != Guid.Empty)
                         seAssociation.displayParentId = htmlPage.Uuid;

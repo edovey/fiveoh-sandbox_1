@@ -5677,9 +5677,9 @@ namespace BDEditor.Classes
 
             BDHtmlPage.Save(pContext, newPage);
 
-            // bypassing this filter for page types, since search entries can be created and should be honored for all output.
-            //if (newPage.HtmlPageType == BDConstants.BDHtmlPageType.Data)
-            //{
+           // bypassing this filter for page types, since search entries can be created and should be honored for all output.
+           //if (newPage.HtmlPageType == BDConstants.BDHtmlPageType.Data)
+           //{
             List<Guid> filteredObjects = pObjectsOnPage.Distinct().ToList();
             foreach (Guid objectId in filteredObjects)
                 BDHtmlPageMap.CreateOrRetrieveBDHtmlPageMap(pContext, Guid.NewGuid(), newPage.Uuid, objectId);

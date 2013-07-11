@@ -76,7 +76,7 @@ namespace BDEditor.Classes
             if (pStartNode != null)
             {
                 getParentName(pContext, pStartNode, hStringBuilder, pSeparationString).ToString();
-                hStringBuilder.Append(pStartNode.Name);
+                hStringBuilder.Append(ProcessTextToPlainText(pContext,pStartNode.Name));
                 return hStringBuilder.ToString();
             }
             else

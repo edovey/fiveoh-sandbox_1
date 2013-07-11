@@ -92,6 +92,27 @@ namespace BDEditor.DataModel
             return returnValue;
         }
 
+        public static Guid RetrieveHtmlPageIdForOriginalIBDNodeId(Entities pContext, Guid pOriginalIBDObjectId, BDConstants.BDHtmlPageType pPageType )
+        {
+            Guid returnValue = Guid.Empty;
+            if (pOriginalIBDObjectId != null && pOriginalIBDObjectId != Guid.Empty)
+            {
+                IQueryable<BDHtmlPageMap> entries;
+
+                entries = (from entry in pContext.BDHtmlPageMap
+                           from page in pContext.BDHtmlPages
+                           where (entry.originalIbdObjectId == pOriginalIBDObjectId && page.uuid == entry.htmlPageId) &&
+                           page.htmlPageType == (int)pPageType
+                           select entry);
+
+                BDHtmlPageMap indexEntry = entries.FirstOrDefault<BDHtmlPageMap>();
+                if (null != indexEntry)
+                    returnValue = indexEntry.htmlPageId;
+            }
+            return returnValue;
+        }
+         
+        
         public static Guid RetrieveOriginaIBDNodeIdForHtmlPageId(Entities pContext, Guid pHtmlPageId)
         {
             Guid returnValue = Guid.Empty;
@@ -100,7 +121,7 @@ namespace BDEditor.DataModel
                 IQueryable<BDHtmlPageMap> entries;
 
                 entries = (from entry in pContext.BDHtmlPageMap
-                           where (entry.htmlPageId == pHtmlPageId)
+                           where (entry.htmlPageId == pHtmlPageId) 
                            select entry);
 
                 BDHtmlPageMap indexEntry = entries.FirstOrDefault<BDHtmlPageMap>();

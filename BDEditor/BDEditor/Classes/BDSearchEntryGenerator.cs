@@ -40,15 +40,15 @@ namespace BDEditor.Classes
                 Guid htmlPageId = Guid.Empty;
                 if (seAssociation.anchorNodeId.HasValue)
                 {
-                    htmlPageId = BDNodeToHtmlPageIndex.RetrieveHtmlPageIdForIBDNodeId(pDataContext, seAssociation.anchorNodeId.Value, BDConstants.BDHtmlPageType.Data);
+                    htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pDataContext, seAssociation.anchorNodeId.Value, BDConstants.BDHtmlPageType.Data);
                     // HERE BE DRAGONS... the order of these last two is arbitrary - potential for misdirection
                     if (htmlPageId == Guid.Empty)  // link points to a node on a 'navigation' page
                     {
-                        htmlPageId = BDNodeToHtmlPageIndex.RetrieveHtmlPageIdForIBDNodeId(pDataContext, seAssociation.anchorNodeId.Value, BDConstants.BDHtmlPageType.Navigation);
+                        htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pDataContext, seAssociation.anchorNodeId.Value, BDConstants.BDHtmlPageType.Navigation);
                     }
                     if (htmlPageId == Guid.Empty)  // link points to a node on a 'comment' page
                     {
-                        htmlPageId = BDNodeToHtmlPageIndex.RetrieveHtmlPageIdForIBDNodeId(pDataContext, seAssociation.anchorNodeId.Value, BDConstants.BDHtmlPageType.Comments);
+                        htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pDataContext, seAssociation.anchorNodeId.Value, BDConstants.BDHtmlPageType.Comments);
                     }
                     //htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pDataContext, seAssociation.anchorNodeId.Value);
                     BDHtmlPage htmlPage = BDHtmlPage.RetrieveWithId(pDataContext, htmlPageId);
@@ -58,13 +58,17 @@ namespace BDEditor.Classes
                         BDHtmlPageGeneratorLogEntry.AppendToFile("BDSearchGeneratorLog.txt", string.Format("Unable to find HTML page containing anchor node:{0}  from SEAssociation: {1}", seAssociation.anchorNodeId, seAssociation.Uuid));
                     if (!string.IsNullOrEmpty(seAssociation.editorContext))
                     {
+                        if (seAssociation.editorContext.IndexOf("*") == 0)
+                            seAssociation.editorContext = seAssociation.editorContext.Substring(1);
+                        if (seAssociation.editorContext.IndexOf("{{") >= 0)
+                            seAssociation.editorContext = seAssociation.editorContext.Replace("{{", "");
+                        if (seAssociation.editorContext.IndexOf("}}") >= 0)
+                            seAssociation.editorContext = seAssociation.editorContext.Replace("}}", "");
+                        
                         // BDViewer uses "diplayContext" for populating cell data - does not have editorContext in the data
                         // SearchEntryEditor creates "editorContext" & SearchEntryManager also displays "editorContext"
                         //TODO:  Refactor out to use the same field??
                         seAssociation.displayContext = seAssociation.editorContext;
-
-                        if (seAssociation.editorContext.IndexOf("*") == 0)
-                            seAssociation.editorContext = seAssociation.editorContext.Substring(1);
                     }
                     BDSearchEntryAssociation.Save(pDataContext, seAssociation);  // will only save if there are changes.
                 }

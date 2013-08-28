@@ -3215,7 +3215,9 @@ namespace BDEditor.Classes
                         therapyGroupHtml.Append(@"</table>");
                         break;
                 }
-            }
+            } else
+                therapyGroupHtml.Append(headerTGNameHtml);
+
             return therapyGroupHtml;
         }
 

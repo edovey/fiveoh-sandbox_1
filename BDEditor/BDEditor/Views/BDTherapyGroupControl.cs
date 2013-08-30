@@ -215,7 +215,10 @@ namespace BDEditor.Views
                 if (null != currentTherapyGroup)
                 {
                     if(currentTherapyGroup.name != tbName.Text) currentTherapyGroup.name = tbName.Text;
-                    if (currentTherapyGroup.displayOrder != DisplayOrder) currentTherapyGroup.displayOrder = DisplayOrder;
+                    if (null != DisplayOrder)
+                    {
+                        if (currentTherapyGroup.displayOrder != DisplayOrder) currentTherapyGroup.displayOrder = DisplayOrder;
+                    }
 
                     if (andRadioButton.Checked)
                     {

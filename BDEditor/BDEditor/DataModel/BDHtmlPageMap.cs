@@ -80,9 +80,9 @@ namespace BDEditor.DataModel
         /// <param name="pContext"></param>
         /// <param name="pOriginalIBDObjectId"></param>
         /// <returns></returns>
-        public static List<Guid> RetrieveHtmlPageIdForInternalLinkByOriginalIBDNodeId(Entities pContext, Guid pOriginalIBDObjectId)
+        public static Guid RetrieveHtmlPageIdForInternalLinkByOriginalIBDNodeId(Entities pContext, Guid pOriginalIBDObjectId)
         {
-            List<Guid> returnValue = new List<Guid>();
+            List<Guid> pageList = new List<Guid>();
             if (pOriginalIBDObjectId != null && pOriginalIBDObjectId != Guid.Empty)
             {
                 IQueryable<BDHtmlPageMap> entries;
@@ -95,11 +95,20 @@ namespace BDEditor.DataModel
                 foreach (BDHtmlPageMap mapEntry in indexEntries)
                 {
                     BDHtmlPage page = BDHtmlPage.RetrieveWithId(pContext, mapEntry.htmlPageId);
-                    if (page.HtmlPageType == BDConstants.BDHtmlPageType.Data)
-                        returnValue.Add(mapEntry.htmlPageId);
+                    if (page.HtmlPageType == BDConstants.BDHtmlPageType.Data
+                        && !pageList.Contains(mapEntry.htmlPageId))
+                        pageList.Add(mapEntry.htmlPageId);
+                    else if (page.HtmlPageType == BDConstants.BDHtmlPageType.Navigation 
+                        && page.displayParentId == pOriginalIBDObjectId
+                        && !pageList.Contains(mapEntry.htmlPageId))
+                        pageList.Add(mapEntry.htmlPageId);
                 }
             }
-            return returnValue;
+
+            if (pageList.Count > 1)
+                throw new BDException("Multiple matching HTML pages were found.");
+            else
+                return pageList.FirstOrDefault<Guid>();
         }
 
         public static Guid RetrieveHtmlPageIdForOriginalIBDNodeId(Entities pContext, Guid pOriginalIBDObjectId)

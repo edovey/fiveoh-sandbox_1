@@ -909,7 +909,7 @@ namespace BDEditor.Views
             List<BDNode> nodeList = new List<BDNode>();
             nodeList.Add(currentNode as BDNode);
 
-            generator.Generate(dataContext, nodeList);
+            generator.GenerateForDebug(dataContext, nodeList);
             this.Cursor = Cursors.Default;
             MessageBox.Show(this, "HTML page generation complete", "Notice", MessageBoxButtons.OK);
 #endif

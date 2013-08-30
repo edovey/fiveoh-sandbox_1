@@ -71,6 +71,37 @@ namespace BDEditor.Classes
         //ks
         private List<BDHtmlPageGeneratorLogEntry> referencePageUuidList = new List<BDHtmlPageGeneratorLogEntry>();
 
+        public void GenerateForDebug(Entities pContext, List<BDNode> pNodeList)
+        {
+            generatePages(pContext, pNodeList);
+
+            List<BDHtmlPage> pages = BDHtmlPage.RetrieveAll(pContext);
+            List<Guid> displayParentIds = BDHtmlPage.RetrieveAllDisplayParentIDs(pContext);
+            List<Guid> pageIds = BDHtmlPage.RetrieveAllIds(pContext);
+            BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditPageMap.txt", "----------------------");
+            BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkToSelfLog.txt", "---------");
+
+            Debug.WriteLine("Post-processing HTML pages");
+            foreach (BDHtmlPage page in pages)
+            {
+                postProcessPage(pContext, page, pageIds);
+            }
+
+            #region Output logs
+
+            //ks: Write out all the verbose logs
+            string mydocpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            // Reference Pages
+            BDHtmlPageGeneratorLogEntry.WriteToFile(this.referencePageUuidList, mydocpath, @"ReferencePageUuidList.txt");
+
+            #endregion
+
+            pages.Clear();
+            displayParentIds.Clear();
+            pageIds.Clear();
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -5301,36 +5332,51 @@ namespace BDEditor.Classes
                                     //Internal Link
                                     if (linkTargetAssn.internalLinkNodeId.HasValue)
                                     {
-                                        // this is an internal link - first check the pagesMap for the HTML page containing that object
-                                        Guid htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pContext, linkTargetAssn.internalLinkNodeId.Value);
-
-                                        if (htmlPageId == Guid.Empty) // page does not exist.
+                                        // this is an internal link - first check the pagesMap for the HTML Data-page containing that object
+                                        Guid htmlPageId = Guid.Empty;
+                                        List<Guid> htmlPages = BDHtmlPageMap.RetrieveHtmlPageIdForInternalLinkByOriginalIBDNodeId(pContext, linkTargetAssn.internalLinkNodeId.Value);
+                                        if (htmlPages.Count > 1)
                                         {
+                                            BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("Unresolved internal link - multiple matches found:  {0}\tHtml page Uuid {1}\tAnchor Uuid {2}\tLNA {3}", DateTime.Now, pPage.Uuid, anchorGuid.ToString(), linkTargetAssn.Uuid.ToString()));
+                                            Debug.WriteLine("*****CAUTION:  Internal link issue was not resolved.  Multiple matches found; Investigation recommended - see output log BDInternalLinkIssueLog.txt");
+                                        }
+                                        else if (htmlPages.Count == 1)
+                                        {
+                                            htmlPageId = htmlPages[0];
+                                            if (null != BDHtmlPage.RetrieveWithId(pContext, htmlPageId))
+                                            {
+                                                // modify anchor tag to point to the html page generated for the targeted node
+                                                string newText = pPage.documentText.Replace(anchorGuid.ToString(), htmlPageId.ToString().ToUpper());
+                                                pPage.documentText = newText;
+                                                BDHtmlPage.Save(pContext, pPage);
+
+                                                if (htmlPageId == pPage.Uuid)
+                                                {
+                                                    BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkToSelfLog.txt", string.Format("{0}\tHtml page Uuid {1}\tObjId={2}\tTitle={3}", DateTime.Now, pPage.Uuid, pPage.displayParentId, pPage.pageTitle));
+                                                }
+                                            }
+                                            else // if this is an internal link there should be a page for it
+                                            {
+                                                Debug.WriteLine("Unable to map link in {0} showing {1}: no data page found", pPage.Uuid, anchorGuid);
+                                                BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("{0}\tHtml page Uuid {1}\tAnchor Uuid {2}\tLNA {3}", DateTime.Now, pPage.Uuid, anchorGuid.ToString(), linkTargetAssn.Uuid.ToString()));
+                                            }
+                                        }
+                                        else
+                                        {
+                                            // htmlPage count was zero:  data page does not exist.
+
                                             //ks: Expectation that internal links will always link to "data" pages rather than "linked note" pages
                                             htmlPageId = BDNodeToHtmlPageIndex.RetrieveHtmlPageIdForIBDNodeId(pContext, linkTargetAssn.internalLinkNodeId.Value, BDConstants.BDHtmlPageType.Data);
 
-                                            if (htmlPageId == Guid.Empty)  // link points to a node on a 'navigation' page
+                                            if (htmlPageId == Guid.Empty)  // link points to a node on a 'navigation' page?
                                             {
                                                 htmlPageId = BDNodeToHtmlPageIndex.RetrieveHtmlPageIdForIBDNodeId(pContext, linkTargetAssn.internalLinkNodeId.Value, BDConstants.BDHtmlPageType.Navigation);
                                             }
-                                        }
-
-                                        if (htmlPageId != Guid.Empty && null != BDHtmlPage.RetrieveWithId(pContext, htmlPageId))
-                                        {
-                                            // modify anchor tag to point to the html page generated for the targeted node
-                                            string newText = pPage.documentText.Replace(anchorGuid.ToString(), htmlPageId.ToString().ToUpper());
-                                            pPage.documentText = newText;
-                                            BDHtmlPage.Save(pContext, pPage);
-
-                                            if (htmlPageId == pPage.Uuid)
+                                            if (htmlPageId == Guid.Empty)
                                             {
-                                                BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkToSelfLog.txt", string.Format("{0}\tHtml page Uuid {1}\tObjId={2}\tTitle={3}", DateTime.Now, pPage.Uuid, pPage.displayParentId, pPage.pageTitle));
-                                            }
-                                        }
-                                        else // if this is an internal link there should be a page for it
-                                        {
-                                            Debug.WriteLine("Unable to map link in {0} showing {1}", pPage.Uuid, anchorGuid);
-                                            BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("{0}\tHtml page Uuid {1}\tAnchor Uuid {2}\tLNA {3}", DateTime.Now, pPage.Uuid, anchorGuid.ToString(), linkTargetAssn.Uuid.ToString()));
+                                                Debug.WriteLine("Unable to map link in {0} showing {1}: page no nav page found.", pPage.Uuid, anchorGuid);
+                                                BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("{0}\tHtml page Uuid {1}\tAnchor Uuid {2}\tLNA {3}", DateTime.Now, pPage.Uuid, anchorGuid.ToString(), linkTargetAssn.Uuid.ToString()));
+                                             }
                                         }
                                     }
                                     //Standard Link Note

@@ -73,6 +73,34 @@ namespace BDEditor.DataModel
             pContext.ExecuteStoreCommand("DELETE FROM BDHtmlPageMap");
         }
 
+        /// <summary>
+        /// Internal Links can only be targeted at nodes (not other links), so this list is filtered to include only
+        /// data pages.  (Navigation pages are checked through another path.)
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pOriginalIBDObjectId"></param>
+        /// <returns></returns>
+        public static List<Guid> RetrieveHtmlPageIdForInternalLinkByOriginalIBDNodeId(Entities pContext, Guid pOriginalIBDObjectId)
+        {
+            List<Guid> returnValue = new List<Guid>();
+            if (pOriginalIBDObjectId != null && pOriginalIBDObjectId != Guid.Empty)
+            {
+                IQueryable<BDHtmlPageMap> entries;
+
+                entries = (from entry in pContext.BDHtmlPageMap
+                           where (entry.originalIbdObjectId == pOriginalIBDObjectId)
+                           select entry);
+
+                List<BDHtmlPageMap> indexEntries = entries.Distinct<BDHtmlPageMap>().ToList<BDHtmlPageMap>();
+                foreach (BDHtmlPageMap mapEntry in indexEntries)
+                {
+                    BDHtmlPage page = BDHtmlPage.RetrieveWithId(pContext, mapEntry.htmlPageId);
+                    if (page.HtmlPageType == BDConstants.BDHtmlPageType.Data)
+                        returnValue.Add(mapEntry.htmlPageId);
+                }
+            }
+            return returnValue;
+        }
 
         public static Guid RetrieveHtmlPageIdForOriginalIBDNodeId(Entities pContext, Guid pOriginalIBDObjectId)
         {
@@ -91,7 +119,6 @@ namespace BDEditor.DataModel
             }
             return returnValue;
         }
-
         public static Guid RetrieveHtmlPageIdForOriginalIBDNodeId(Entities pContext, Guid pOriginalIBDObjectId, BDConstants.BDHtmlPageType pPageType )
         {
             Guid returnValue = Guid.Empty;

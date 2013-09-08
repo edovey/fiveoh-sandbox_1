@@ -824,6 +824,8 @@ namespace BDEditor.Classes
                 pNode.LayoutVariant == BDConstants.LayoutVariantType.Prophylaxis_Immunization_HighRisk ||
                 pNode.LayoutVariant == BDConstants.LayoutVariantType.Prophylaxis_Immunization_Routine ||
                 pNode.LayoutVariant == BDConstants.LayoutVariantType.Prophylaxis_Immunization_VaccineDetail ||
+                pNode.LayoutVariant == BDConstants.LayoutVariantType.Prophylaxis_Surgical ||
+                pNode.LayoutVariant == BDConstants.LayoutVariantType.Prophylaxis_Surgical_PreOp ||
                 pNode.LayoutVariant == BDConstants.LayoutVariantType.Organisms_Antibiogram)
                 return null;
 
@@ -2251,9 +2253,15 @@ namespace BDEditor.Classes
             StringBuilder html = new StringBuilder();
             List<Guid> legendAssociations;
             List<BDLinkedNote> legendNotes = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, BDNode.PROPERTYNAME_NAME, BDConstants.LinkedNoteType.Legend, out legendAssociations);
-
+            
+            bool hasLegend = false;
+            foreach(Guid legendId in legendAssociations)
+            {
+                if(pObjectsOnPage.Contains(legendId))
+                    hasLegend = true;
+            }
             string legendHTML = buildTextFromNotes(legendNotes);
-            if (!string.IsNullOrEmpty(legendHTML))
+            if (!string.IsNullOrEmpty(legendHTML) && !hasLegend)
             {
                 html.Append(legendHTML);
                 pObjectsOnPage.AddRange(legendAssociations);
@@ -5325,7 +5333,7 @@ namespace BDEditor.Classes
                                         BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("Unresolved internal link - no match found:  {0}\tHtml page Uuid {1}\tAnchor Uuid {2}\tLNA LinkedNoteAssociation is NULL", DateTime.Now, pPage.Uuid, anchorGuid.ToString()));
                                     }
                                     else
-                                        BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("Unresolved internal link - multiple matches found:  {0}\tHtml page Uuid {1}\tAnchor Uuid {2}\tLNA {3}", DateTime.Now, pPage.Uuid, anchorGuid.ToString(), linkTargetAssn.Uuid.ToString()));
+                                        BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("Unresolved internal link - multiple LinkedNoteAssociation matches found:  {0}\tHtml page Uuid {1}\tAnchor Uuid {2}\tLNA {3}", DateTime.Now, pPage.Uuid, anchorGuid.ToString(), linkTargetAssn.Uuid.ToString()));
                                 }
                                 if (linkTargetAssn != null)
                                 {

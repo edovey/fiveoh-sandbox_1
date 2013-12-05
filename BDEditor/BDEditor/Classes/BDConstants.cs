@@ -494,6 +494,8 @@ namespace BDEditor.Classes
         }
 
         public const string DATETIMEFORMAT = @"yyyy-MM-dd'T'HH:mm:ss";
+        public const string DATETIMEFORMAT_ZULU = @"yyyy-MM-dd'T'HH:mm:ss.ffff zzz";
+
         public static readonly Color ACTIVELINK_COLOR = Color.LightSteelBlue;
         public static readonly Color INACTIVELINK_COLOR = SystemColors.Control;
 

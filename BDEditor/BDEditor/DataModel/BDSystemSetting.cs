@@ -8,6 +8,10 @@ namespace BDEditor.DataModel
     public partial class BDSystemSetting
     {
         public const string LASTSYNC_TIMESTAMP = @"lastSync";
+        public const string ARCHIVE_TIMESTAMP = @"archiveTimestamp";
+        public const string SERIAL_NUMBER = @"serialNumber";
+        public const string INDEX_NUMBER = @"indexNumber";
+        public const string CONTROL_NUMBER = @"controlNumber";
 
         public static BDSystemSetting RetrieveSetting(Entities pDataContext, string pSettingName)
         {
@@ -28,6 +32,19 @@ namespace BDEditor.DataModel
             }
 
             return setting;
+        }
+
+        public static string RetrieveSettingValue(Entities pDataContext, string pSettingName)
+        {
+            BDSystemSetting setting = RetrieveSetting(pDataContext, pSettingName);
+            return setting.settingValue;
+        }
+
+        public static void WriteSettingValue(Entities pDataContext, string pSettingName, string value)
+        {
+            BDSystemSetting setting = RetrieveSetting(pDataContext, pSettingName);
+            setting.settingValue = value;
+            pDataContext.SaveChanges();
         }
 
         //public static DateTime? GetTimestamp(Entities pDataContext, string pTimestampName)

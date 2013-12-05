@@ -20,10 +20,20 @@ namespace BDEditor.Classes
 {
     public class RepositoryHandler
     {
-        public const string AWS_PROD_ARCHIVE = @"bdProdArchive";
+        public const string AWS_PROD_ARCHIVE = @"bdProdArchive"; //@"bdTestArchive"; 
         public const string AWS_DEV_ARCHIVE = @"bdDevArchive";
         public const string AWS_PROD_BACKUP = @"bdProdRestoreBackup";
         public const string AWS_DEV_BACKUP = @"bdDevRestoreBackup";
+
+        public const string AWS_PROD_COLD_STORAGE_BUCKET = @"bdColdStorageProd";
+        public const string AWS_DEV_COLD_STORAGE_BUCKET = @"bdColdStorageDev";
+
+        public const string REPOSITORY_CONTROL_NUMBER_PUBLISHINFO_DOMAIN = @"bd_dev_2_publishInfo";
+        public const string REPOSITORY_PUBLISHINFO_ITEMNAME = @"publishInfo";
+        public const string REPOSITORY_PUBLISHINFO_CONTROLNUMBER_ATTRIBUTE = @"pi_controlNumber";
+        public const string REPOSITORY_PUBLISHINFO_CONTENTDATE_ATTRIBUTE = @"pi_contentDate";
+        public const string REPOSITORY_PUBLISHINFO_INDEXDATE_ATTRIBUTE = @"pi_indexDate";
+
 #if DEBUG
         public const string AWS_ARCHIVE = AWS_DEV_ARCHIVE;
         public const string AWS_BACKUP = AWS_DEV_BACKUP;
@@ -41,6 +51,7 @@ namespace BDEditor.Classes
         public const string CREATEDATE_METADATA = @"x-amz-meta-createdate";
         public const string APPVERSION_METADATA = @"x-amz-meta-appversion";
         public const string MIMETYPE_METADATA = @"x-amz-meta-mimetype";
+        public const string CONTROLNUMBER_METADATA = @"x-amz-meta-controlnumber";
 
         private const string BD_ACCESS_KEY = @"AKIAJDR46ZTGMYHAG6NA";
         private const string BD_SECRET_KEY = @"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";
@@ -82,6 +93,53 @@ namespace BDEditor.Classes
                 if (null == s3) { s3 = Amazon.AWSClientFactory.CreateAmazonS3Client(BD_ACCESS_KEY, BD_SECRET_KEY, s3Config); }
                 return s3;
             }
+        }
+
+        private RepositoryControlNumber ControlNumberRetrieveLatest(Int32 serialNumber, Boolean forceProduction)
+        {
+            RepositoryControlNumber cn = null;
+            string sdbQueryString = string.Format("select * from {0} where {1} is not null order by {1} desc limit 1",
+                RepositoryControlNumber.REPOSITORY_CONTROL_NUMBER_DOMAIN, 
+                RepositoryControlNumber.CONTROL_NUMBER);
+
+            if (serialNumber > RepositoryControlNumber.SERIAL_NUMBER_UNDEFINED)
+            {
+                sdbQueryString = string.Format("select * from {0} where {1} = '{2}' and {3} >= '0' order by {3} desc limit 1",
+                    RepositoryControlNumber.REPOSITORY_CONTROL_NUMBER_DOMAIN, 
+                    RepositoryControlNumber.SERIAL_NUMBER, 
+                    RepositoryControlNumber.SerialNumberString(serialNumber), 
+                    RepositoryControlNumber.CONTROL_NUMBER);        
+            }
+
+            SelectRequest selectRequestAction = new SelectRequest().WithSelectExpression(sdbQueryString);
+            try
+            {
+                SelectResponse selectResponse = SimpleDb.Select(selectRequestAction);
+
+                if (selectResponse.IsSetSelectResult())
+                {
+                    SelectResult selectResult = selectResponse.SelectResult;
+                    // There should only ever be 0|1 row returned
+                    if (selectResult.Item.Count > 0)
+                    {
+                        Amazon.SimpleDB.Model.Item item = selectResult.Item[0];
+                        cn = RepositoryControlNumber.LoadFromSdbItem(item);
+                    }
+                }
+            }
+            catch (Amazon.SimpleDB.AmazonSimpleDBException ex)
+            {
+                throw ex;
+            }
+
+            
+
+            return cn;
+        }
+
+        private void ControlNumberWrite(RepositoryControlNumber controlNumber)
+        {
+            SimpleDb.PutAttributes(controlNumber.PutAttributes());        
         }
 
         private SyncInfoDictionary InitializeSyncDictionary(Entities pDataContext, Boolean pCreateMissing, BDConstants.SyncType pSyncType)
@@ -173,6 +231,7 @@ namespace BDEditor.Classes
         public SyncInfoDictionary Sync(Entities pDataContext, DateTime? pLastSyncDate, BDConstants.SyncType pSyncType)
         {
             DateTime? currentSyncDate = DateTime.Now;
+            string comment = string.Format("Publish start: {0}", currentSyncDate.Value.ToString(BDConstants.DATETIMEFORMAT));
 
             // Create the SyncInfo instance and update the modified date of all the changed records to be the currentSyncDate
             SyncInfoDictionary syncDictionary = InitializeSyncDictionary(pDataContext,true, pSyncType);
@@ -246,7 +305,7 @@ namespace BDEditor.Classes
                             }
                         }
                     }
-
+                    comment = string.Format("{0}{1}Pushed {2} Records for {3}", comment, Environment.NewLine, syncInfoEntry.RowsPushed, syncInfoEntry.RemoteEntityName);
                     System.Diagnostics.Debug.WriteLine("Pushed {0} Records for {1}", syncInfoEntry.RowsPushed, syncInfoEntry.RemoteEntityName);
                 }
                 pLastSyncDate = currentSyncDate;
@@ -254,6 +313,26 @@ namespace BDEditor.Classes
                 BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(pDataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
                 systemSetting.settingDateTimeValue = currentSyncDate;
                 pDataContext.SaveChanges();
+                comment = string.Format("{0}{1}Completed: {2}", comment, Environment.NewLine, DateTime.Now.ToString(BDConstants.DATETIMEFORMAT));
+                try
+                {
+                    string embeddedComment = comment.Replace(Environment.NewLine, ", ");
+                    RepositoryControlNumber controlNumber = Archive(pDataContext, @"Publisher", embeddedComment, true);
+
+                    PutAttributesRequest putAttributeRequest = new PutAttributesRequest().WithDomainName(RepositoryHandler.REPOSITORY_CONTROL_NUMBER_PUBLISHINFO_DOMAIN).WithItemName(RepositoryHandler.REPOSITORY_PUBLISHINFO_ITEMNAME);
+                    List<ReplaceableAttribute> attributeList = putAttributeRequest.Attribute;
+                    attributeList.Add(new ReplaceableAttribute().WithName(RepositoryHandler.REPOSITORY_PUBLISHINFO_CONTROLNUMBER_ATTRIBUTE).WithValue(controlNumber.ControlNumberText).WithReplace(true));
+                    attributeList.Add(new ReplaceableAttribute().WithName(RepositoryHandler.REPOSITORY_PUBLISHINFO_CONTENTDATE_ATTRIBUTE).WithValue(controlNumber.ContentDateText).WithReplace(true));
+                    attributeList.Add(new ReplaceableAttribute().WithName(RepositoryHandler.REPOSITORY_PUBLISHINFO_INDEXDATE_ATTRIBUTE).WithValue(controlNumber.IndexDateText).WithReplace(true));
+                    SimpleDb.PutAttributes(putAttributeRequest);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("*** ERROR UPDATING CONTROL NUMBER ***");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    System.Diagnostics.Debug.WriteLine("*********");
+                }
+                
             }
 
             return syncDictionary;
@@ -318,15 +397,15 @@ namespace BDEditor.Classes
         {
             try
             {
-                DeleteObjectsRequest s3DeleteHtmlPages = new DeleteObjectsRequest()
-                    .WithBucketName(BDHtmlPage.AWS_BUCKET);
-               ListObjectsRequest request = new ListObjectsRequest().WithBucketName(BDHtmlPage.AWS_BUCKET).WithPrefix(@"bdhp~");
+               ListObjectsRequest listObjectsRequest = new ListObjectsRequest().WithBucketName(BDHtmlPage.AWS_BUCKET).WithPrefix(@"bdhp~").WithMaxKeys(1000);
 
                 do
                 {
-                    ListObjectsResponse response = S3.ListObjects(request);
+                    DeleteObjectsRequest s3DeleteHtmlPages = new DeleteObjectsRequest().WithBucketName(BDHtmlPage.AWS_BUCKET);
 
-                    foreach (S3Object entry in response.S3Objects)
+                    ListObjectsResponse listObjectsResponse = S3.ListObjects(listObjectsRequest);
+
+                    foreach (S3Object entry in listObjectsResponse.S3Objects)
                     {
                         s3DeleteHtmlPages.AddKey(entry.Key);
                     }
@@ -335,7 +414,7 @@ namespace BDEditor.Classes
                     {
                         try
                         {
-                            S3.DeleteObjects(s3DeleteHtmlPages);
+                            DeleteObjectsResponse deleteObjectsResponse = S3.DeleteObjects(s3DeleteHtmlPages);
                         }
                         catch (DeleteObjectsException e)
                         {
@@ -349,18 +428,19 @@ namespace BDEditor.Classes
                             }
                         }
                     }
-                    DeleteDomainRequest htDomain = new DeleteDomainRequest().WithDomainName(BDHtmlPage.AWS_DOMAIN);
-                    SimpleDb.DeleteDomain(htDomain);
 
-                    if (response.IsTruncated)
+                    if (listObjectsResponse.IsTruncated)
                     {
-                        request.Marker = response.NextMarker;
+                        listObjectsRequest.Marker = listObjectsResponse.NextMarker;
                     }
                     else
                     {
-                        request = null;
+                        listObjectsRequest = null;
                     }
-                } while (request != null);
+                } while (listObjectsRequest != null);
+
+                DeleteDomainRequest htDomain = new DeleteDomainRequest().WithDomainName(BDHtmlPage.AWS_DOMAIN);
+                SimpleDb.DeleteDomain(htDomain);
                 System.Diagnostics.Debug.WriteLine("Remote HTML Deleted");
             }
 
@@ -502,14 +582,90 @@ namespace BDEditor.Classes
             }
         }
 
-        public void Archive(Entities pDataContext, string pUserName, string pComment)
+        public RepositoryControlNumber Archive(Entities pDataContext, string pUserName, string pComment, Boolean postRender)
         {
-            Archive(pDataContext, AWS_ARCHIVE, pUserName, pComment, false);
+            string bucket = (postRender) ? AWS_PROD_ARCHIVE : AWS_ARCHIVE;
+            RepositoryControlNumber cn = null;
+            try
+            {
+                cn = Archive(pDataContext, bucket, pUserName, pComment, false, postRender);
+            }
+            catch (Amazon.SimpleDB.AmazonSimpleDBException ex)
+            {
+                throw ex;
+            }
+            
+            return cn;
         }
 
-        public void Archive(Entities pDataContext, string pBucketName, string pUserName, string pComment, Boolean pIsBackup)
+        public RepositoryControlNumber Archive(Entities pDataContext, string pBucketName, string pUserName, string pComment, Boolean pIsBackup, Boolean postRender)
         {
             DateTime archiveDateTime = DateTime.Now;
+            RepositoryControlNumber controlNumber = null;
+
+            Int32 serialNumber = 0;
+            Int32 indexNumber = 0;
+
+            // Retrieve what the db thinks it understands as a control number
+            string serialNumberString = BDSystemSetting.RetrieveSettingValue(pDataContext, BDSystemSetting.SERIAL_NUMBER);
+            string indexNumberString = BDSystemSetting.RetrieveSettingValue(pDataContext, BDSystemSetting.INDEX_NUMBER);
+
+            serialNumber = (null == serialNumberString) ? RepositoryControlNumber.SERIAL_NUMBER_UNDEFINED : Int32.Parse(serialNumberString);
+            indexNumber = (null == indexNumberString) ? RepositoryControlNumber.INDEX_NUMBER_BASE : Int32.Parse(indexNumberString);
+
+            // Backup prior to a restore? Don't mess with the control number
+            // Regular Archive? Is it "User initiated" or "Post Render"?
+            // Post Render: only change the index date and number -- Use the serial number from the database
+            // User Initiated: New serial number, index number reset to 0
+
+            if (!pIsBackup)
+            {
+                
+                DateTime? contentDate = archiveDateTime;
+                DateTime? indexDate = null;
+                if (postRender)
+                {
+                    indexNumber++;  // INCREMENT INDEX NUMBER
+                    indexDate = archiveDateTime;
+                }
+                else
+                {
+                    indexNumber = 0;
+                }
+                RepositoryControlNumber previousControlNumber    = null;
+                try
+                {
+                    previousControlNumber = ControlNumberRetrieveLatest(serialNumber, postRender);
+                }
+                catch(Amazon.SimpleDB.AmazonSimpleDBException ex)
+                {
+                    throw ex;
+                }
+                
+                if (null == previousControlNumber)
+                {
+                    serialNumber = RepositoryControlNumber.SERIAL_NUMBER_BASE;
+                }
+                else
+                {
+                    if (postRender)
+                        contentDate = previousControlNumber.contentDate;
+                    else
+                        serialNumber = previousControlNumber.serialNumber + 1;  // INCREMENT SERIAL NUMBER
+                } 
+
+                controlNumber = RepositoryControlNumber.Create(serialNumber, indexNumber);
+                controlNumber.userName = pUserName;
+                controlNumber.comment = pComment;
+                controlNumber.bucketName = pBucketName;
+
+                controlNumber.contentDate = contentDate;
+                controlNumber.indexDate = indexDate;
+         
+                BDSystemSetting.WriteSettingValue(pDataContext, BDSystemSetting.SERIAL_NUMBER, RepositoryControlNumber.SerialNumberString(controlNumber.serialNumber));
+                BDSystemSetting.WriteSettingValue(pDataContext, BDSystemSetting.INDEX_NUMBER, RepositoryControlNumber.IndexNumberString(controlNumber.indexNumber));
+                BDSystemSetting.WriteSettingValue(pDataContext, BDSystemSetting.CONTROL_NUMBER, controlNumber.ControlNumberText);
+            }
 
             Uri uri = new Uri(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase));
             DirectoryInfo di = new DirectoryInfo(uri.AbsolutePath);
@@ -523,9 +679,32 @@ namespace BDEditor.Classes
 #if DEBUG
                 context = "DEBUG";
 #endif
+                if (postRender)
+                {
+                    context = "PUBLISH";
+                }
                 if (pIsBackup) context = string.Format("{0}.backup", context);
+                string controlNumberString = RepositoryControlNumber.ControlNumberString(serialNumber, indexNumber);
+                filename = string.Format("{0}.{1}.{2}.{3}{4}.gz", filename, context, archiveDateTime.ToString("yyyMMdd-HHmmss"),  controlNumberString, sourceFi.Extension);
 
-                filename = string.Format("{0}.{1}.{2}{3}.gz", filename, context, archiveDateTime.ToString("yyyMMdd-HHmmss"), sourceFi.Extension);
+                
+
+                if (!pIsBackup)
+                {
+                    // WRITE THE NEW CONTROL NUMBER
+                    controlNumber.archiveName = filename;
+                    controlNumber.appVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                    controlNumber.machineName = Environment.MachineName;
+                    controlNumber.machinePath = sourceFi.DirectoryName;
+                    controlNumber.machineFilename = sourceFi.Name;
+
+                    ControlNumberWrite(controlNumber);
+
+                    // UPDATE ARCHIVE DATE BEFORE SAVE
+                    BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(pDataContext, BDSystemSetting.ARCHIVE_TIMESTAMP);
+                    systemSetting.settingDateTimeValue = archiveDateTime;
+                }
+
                 pDataContext.SaveChanges();
                 pDataContext.Connection.Close();
 
@@ -563,7 +742,7 @@ namespace BDEditor.Classes
                                 metadata.Add(TAG_METADATA, @"");
                                 metadata.Add(CREATEDATE_METADATA, archiveDateTime.ToString("s"));
                                 metadata.Add(APPVERSION_METADATA, System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
-
+                                metadata.Add(CONTROLNUMBER_METADATA, RepositoryControlNumber.ControlNumberString(serialNumber, indexNumber));
                                 try
                                 {
                                     PutObjectRequest putObjectRequest = new PutObjectRequest();
@@ -614,20 +793,22 @@ namespace BDEditor.Classes
                 {
                     pDataContext.Connection.Open();
                 }
-                if (!pIsBackup)
-                {
-                    try
-                    {
-                        BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(pDataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
-                        systemSetting.settingDateTimeValue = archiveDateTime;
-                        pDataContext.SaveChanges();
-                    }
-                    catch (Exception ex)
-                    {
-                        string errorMessage = string.Format("Notification on updating event date [{0}]", ex.Message);
-                    }
-                }
+                //if (!pIsBackup)
+                //{
+                //    try
+                //    {
+                //        BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(pDataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+                //        systemSetting.settingDateTimeValue = archiveDateTime;
+                //        pDataContext.SaveChanges();
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        string errorMessage = string.Format("Notification on updating event date [{0}]", ex.Message);
+                //    }
+                //}
             }
+
+            return controlNumber;
         }
 
         public void Restore(Entities pDataContext, BDArchiveRecord pArchiveRecord)
@@ -646,7 +827,7 @@ namespace BDEditor.Classes
                     pArchiveRecord.CreateDate.ToString("u"), pArchiveRecord.Comment, pArchiveRecord.Key), "Restore Database", 
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.OK)
                 {
-                    Archive(pDataContext, AWS_BACKUP, "", "Backup prior to restore", true);
+                    Archive(pDataContext, AWS_BACKUP, "", "Backup prior to restore", true, false);
 
                     GetObjectRequest getObjectRequest = new GetObjectRequest().WithBucketName(AWS_ARCHIVE).WithKey(pArchiveRecord.Key);
 

@@ -224,22 +224,22 @@ namespace BDEditor.Views
             {
                 BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
                 DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
-                Debug.WriteLine("Begin sync with AWS");
+                Debug.WriteLine("Begin publish to AWS");
                 BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("AWS Push Start\t{0}", DateTime.Now));
                 SyncInfoDictionary syncResultList = null;
                 if (cbSyncSearch.CheckState == CheckState.Checked && cbSyncHtml.CheckState != CheckState.Checked)
                 {
-                    Debug.WriteLine("Sync Search Only");
+                    Debug.WriteLine("Publish Search Only");
                     syncResultList = RepositoryHandler.Aws.Sync(dataContext, null, BDConstants.SyncType.SearchOnly);
                 }
                 else if (cbSyncSearch.CheckState != CheckState.Checked && cbSyncHtml.CheckState == CheckState.Checked)
                 {
-                    Debug.WriteLine("Sync Html Only");
+                    Debug.WriteLine("Publish Html Only");
                     syncResultList = RepositoryHandler.Aws.Sync(dataContext, null, BDConstants.SyncType.HtmlOnly);
                 }
                 else if (cbSyncSearch.CheckState == CheckState.Checked && cbSyncHtml.CheckState == CheckState.Checked)
                 {
-                    Debug.WriteLine("Sync All");
+                    Debug.WriteLine("Publish All");
                     syncResultList = RepositoryHandler.Aws.Sync(dataContext, null, BDConstants.SyncType.All);
                 }
 
@@ -252,12 +252,12 @@ namespace BDEditor.Views
                             resultMessage = string.Format("{0}{1}{4}: Pulled {2}, Pushed {3}", resultMessage, (string.IsNullOrEmpty(resultMessage) ? "" : "\n"), syncInfo.RowsPulled, syncInfo.RowsPushed, syncInfo.FriendlyName);
                     }
 
-                    Debug.WriteLine(string.Format("Sync Complete at {0}", DateTime.Now));
+                    Debug.WriteLine(string.Format("Publish Complete at {0}", DateTime.Now));
                     BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("AWS Push (Publish) Complete\t{0}", DateTime.Now));
 
                     if (string.IsNullOrEmpty(resultMessage)) resultMessage = "No changes";
 
-                    MessageBox.Show(resultMessage, "Synchronization");
+                    MessageBox.Show(resultMessage, "Publish");
                 }
             }
 

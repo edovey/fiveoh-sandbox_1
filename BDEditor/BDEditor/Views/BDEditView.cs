@@ -1055,16 +1055,16 @@ namespace BDEditor.Views
 
         private void UpdateSyncLabel()
         {
-            BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
-
-            DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
-            if (null == lastSyncDate)
+            BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.ARCHIVE_TIMESTAMP);
+            string controlNumberString = BDSystemSetting.RetrieveSettingValue(dataContext, BDSystemSetting.CONTROL_NUMBER);
+            DateTime? archiveDate = systemSetting.settingDateTimeValue;
+            if (null == archiveDate)
             {
-                lbLastSyncDateTime.Text = @"<Never Archived>";
+                lbLastSyncDateTime.Text = @"<Not Archived>";
             }
             else
             {
-                lbLastSyncDateTime.Text = lastSyncDate.Value.ToString(BDConstants.DATETIMEFORMAT);
+                lbLastSyncDateTime.Text = string.Format("{0} [{1}]", archiveDate.Value.ToString(BDConstants.DATETIMEFORMAT), controlNumberString);
             }
         }
 
@@ -1117,8 +1117,19 @@ namespace BDEditor.Views
             {
                 this.Cursor = Cursors.WaitCursor;
                 Application.DoEvents();
-                RepositoryHandler.Aws.Archive(dataContext, archiveDialog.Username, archiveDialog.Comment);
-                MessageBox.Show("Archive complete", "Archive to Repository", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                try
+                {
+                    RepositoryControlNumber controlNumber = RepositoryHandler.Aws.Archive(dataContext, archiveDialog.Username, archiveDialog.Comment, false);
+                    string message = @"Archive to Repository";
+                    if (null != controlNumber)
+                        message = string.Format("{0}{1}Control Number:{2}", message, Environment.NewLine, controlNumber.ControlNumberText);
+                    MessageBox.Show(message, "Archive complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Archive Issue", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 UpdateSyncLabel();
             }
             this.Cursor = Cursors.Default;
@@ -1182,6 +1193,7 @@ namespace BDEditor.Views
             DialogResult result = build.ShowDialog(this);
             if (result == DialogResult.OK)
                 MessageBox.Show(this, "Close the application before publishing again.", "Publish Is Complete", MessageBoxButtons.OK);
+            UpdateSyncLabel();
         }
 
         private void btnIndexManager_Click(object sender, EventArgs e)

@@ -197,6 +197,7 @@
     <Compile Include="Classes\BDSearchEntryAssociationBindingList.cs" />
     <Compile Include="Classes\BDSearchEntryBindingList.cs" />
     <Compile Include="Classes\Navigation\BDReferencesTree.cs" />
+    <Compile Include="Classes\RepositoryControlNumber.cs" />
     <Compile Include="DataModel\BDHtmlPageMap.cs" />
     <Compile Include="Classes\BDNodeWrapper.cs" />
     <Compile Include="Classes\BDTreeNode.cs" />
@@ -706,7 +707,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
+      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

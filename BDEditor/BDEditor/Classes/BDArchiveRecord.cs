@@ -12,6 +12,7 @@ namespace BDEditor.Classes
         public string Comment { get; set; }
         public string Filename { get; set; }
         public string Username { get; set; }
+        public string ControlNumber { get; set; }
 
         public BDArchiveRecord() { }
 
@@ -29,7 +30,7 @@ namespace BDEditor.Classes
 
         public override string ToString()
         {
-            return string.Format("[{0}][{1}] {2}", CreateDate.ToString("ddd yyy MMM dd, HH:mm:ss"), Username, Comment);
+            return string.Format("{3} [{0}] {1} : {2}", CreateDate.ToString("ddd yyy MMM dd, HH:mm:ss"), Username, Comment, ControlNumber);
         }
     }
 }

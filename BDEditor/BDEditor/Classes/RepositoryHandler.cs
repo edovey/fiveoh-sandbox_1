@@ -908,6 +908,9 @@ namespace BDEditor.Classes
                                 case USER_METADATA:
                                     archiveRecord.Username = metadataResponse.Metadata[key];
                                     break;
+                                case CONTROLNUMBER_METADATA:
+                                    archiveRecord.ControlNumber = metadataResponse.Metadata[key];
+                                    break;
                                 default:
                                     break;
                             }

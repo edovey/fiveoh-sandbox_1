@@ -1058,13 +1058,29 @@ namespace BDEditor.Views
             BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.ARCHIVE_TIMESTAMP);
             string controlNumberString = BDSystemSetting.RetrieveSettingValue(dataContext, BDSystemSetting.CONTROL_NUMBER);
             DateTime? archiveDate = systemSetting.settingDateTimeValue;
-            if (null == archiveDate)
+
+            if (null == archiveDate) // Determine if it is the legacy 'lastSync' entry
             {
-                lbLastSyncDateTime.Text = @"<Not Archived>";
+                BDSystemSetting lastSyncEntry = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+                archiveDate = lastSyncEntry.settingDateTimeValue;
+                if (null == archiveDate)
+                {
+                    lbLastSyncDateTime.Text = @"<Not Archived>";
+                }
+                else
+                {
+                    lbLastSyncDateTime.Text = string.Format("{0} [{1}]", archiveDate.Value.ToString(BDConstants.DATETIMEFORMAT), "00000.000");
+                }
             }
             else
             {
                 lbLastSyncDateTime.Text = string.Format("{0} [{1}]", archiveDate.Value.ToString(BDConstants.DATETIMEFORMAT), controlNumberString);
+                BDSystemSetting lastSyncEntry = BDSystemSetting.RetrieveRawSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
+                if (null != lastSyncEntry)
+                {
+                    dataContext.DeleteObject(lastSyncEntry);
+                    dataContext.SaveChanges();
+                }
             }
         }
 
@@ -1151,6 +1167,7 @@ namespace BDEditor.Views
                     RepositoryHandler.Aws.Restore(dataContext, archiveRecord);
                     UpdateSyncLabel();
                     LoadChapterDropDown();
+                    MessageBox.Show("Please restart the application", "Data Restore", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 }
             }
             this.Cursor = Cursors.Default;

@@ -34,6 +34,19 @@ namespace BDEditor.DataModel
             return setting;
         }
 
+        public static BDSystemSetting RetrieveRawSetting(Entities pDataContext, string pSettingName)
+        {
+            BDSystemSetting setting = null;
+            IQueryable<BDSystemSetting> entries = (from entry in pDataContext.BDSystemSettings
+                                                   where entry.settingName == pSettingName
+                                                   select entry);
+            if (entries.Count<BDSystemSetting>() > 0)
+            {
+                setting = entries.AsQueryable().First<BDSystemSetting>();
+            }
+
+            return setting;
+        }
         public static string RetrieveSettingValue(Entities pDataContext, string pSettingName)
         {
             BDSystemSetting setting = RetrieveSetting(pDataContext, pSettingName);

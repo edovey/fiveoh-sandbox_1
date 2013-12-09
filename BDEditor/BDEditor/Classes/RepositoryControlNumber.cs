@@ -94,12 +94,12 @@ namespace BDEditor.Classes
 
         public string ContentDateText
         {
-            get { return (contentDate.HasValue) ? contentDate.Value.ToString("MMMM dd, yyyy") : @""; }    
+            get { return (contentDate.HasValue) ? contentDate.Value.ToString("MMMM dd, yyyy HH:mm") : @""; }    
         }
 
         public string IndexDateText
         {
-            get { return (indexDate.HasValue) ? indexDate.Value.ToString("MMMM dd, yyyy") : @""; }
+            get { return (indexDate.HasValue) ? indexDate.Value.ToString("MMMM dd, yyyy HH:mm") : @""; }
         }
 
         public static string SerialNumberString(Int32 pSerialNumber)

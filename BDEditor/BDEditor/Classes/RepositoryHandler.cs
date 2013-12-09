@@ -676,6 +676,7 @@ namespace BDEditor.Classes
             {
                 string filename = sourceFi.Name.Replace(sourceFi.Extension, "");
                 string context = "prod";
+                string tag = "";
 #if DEBUG
                 context = "DEBUG";
 #endif
@@ -683,9 +684,13 @@ namespace BDEditor.Classes
                 {
                     context = "PUBLISH";
                 }
-                if (pIsBackup) context = string.Format("{0}.backup", context);
+                if (pIsBackup)
+                {
+                    context = string.Format("{0}.backup", context);
+                    tag = "based.on.";
+                }
                 string controlNumberString = RepositoryControlNumber.ControlNumberString(serialNumber, indexNumber);
-                filename = string.Format("{0}.{1}.{2}.{3}{4}.gz", filename, context, archiveDateTime.ToString("yyyMMdd-HHmmss"),  controlNumberString, sourceFi.Extension);
+                filename = string.Format("{0}.{1}.{2}.{3}{4}{5}.gz", filename, context, archiveDateTime.ToString("yyyMMdd-HHmmss"),  tag, controlNumberString,  sourceFi.Extension);
 
                 
 

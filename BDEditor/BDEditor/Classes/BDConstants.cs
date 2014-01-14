@@ -262,11 +262,25 @@ namespace BDEditor.Classes
             
             [Description("Prophylaxis - Recommendations")]
             Prophylaxis = 300,
-            [Description("Prophylaxis - Pre-Op Antibiotic Administration")]
-            Prophylaxis_Surgical_PreOp = 301,
 
             [Description("Prophylaxis - Surgical")]
-            Prophylaxis_Surgical = 302,
+            Prophylaxis_Surgical = 301,
+            [Description("Prophylaxis - Pre-Op Antibiotic Administration")]
+            Prophylaxis_Surgical_PreOp = 3011,
+            [Description("Prophylaxis - Intraoperative Antibiotic Administration")]
+            Prophylaxis_Surgical_Intraoperative = 3012,
+            
+            [Description("Prophylaxis - Surgery")]
+            Prophylaxis_Surgical_Surgery = 3013,
+            [Description("Prophylaxis - Surgeries")]
+            Prophylaxis_Surgical_Surgeries = 3014,
+            [Description("Prophylaxis - Surgery with Classification")]
+            Prophylaxis_Surgical_Surgery_With_Classification = 3015,
+            [Description("Prophylaxis - Surgeries with Classification")]
+            Prophylaxis_Surgical_Surgeries_With_Classification = 3016,
+
+            Prophylaxis_Surgical_version1 = 302,
+
             [Description("Prophylaxis - Infective Endocarditis")]
             Prophylaxis_IE = 303,
             [Description("Prophylaxis - Infective Endocarditis Antibiotic Regimen")]

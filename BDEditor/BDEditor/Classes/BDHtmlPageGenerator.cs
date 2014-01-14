@@ -46,7 +46,7 @@ namespace BDEditor.Classes
         private const string PUBLICATION_NOTES_UUID = "a6d03c7e-a095-4c04-b0e7-ffe74bcfa8e6";
         private const string TREATMENT_RECOMMENDATION_PEDS_UUID = "c0ecedc1-70cf-4422-b998-7e5f2bb986b1";
         private const string TREATMENT_RECOMMENDATION_ADULT_UUID = "757409a4-9446-4aa5-ac23-03fb7660759b";
-        private const string PROPHYLAXIS_SURGICAL_SECTION_UUID = @"da1fcc78-d169-45a8-a391-2b3db6247075";
+        //private const string PROPHYLAXIS_SURGICAL_SECTION_UUID = @"da1fcc78-d169-45a8-a391-2b3db6247075";
         private const string ORGANISMS_THERAPY_SECTION_UUID = @"472244a0-f8a3-43b2-b6dd-c23902e5ee28";
         private const string PROPHYLAXIS_IMMUNIZATION_SECTION_UUID = @"63a99294-dc8a-4ae3-be63-24b8eb7c578d";
 
@@ -161,7 +161,7 @@ namespace BDEditor.Classes
             List<BDHtmlPage> childDetailPages = new List<BDHtmlPage>();
             List<BDHtmlPage> childNavPages = new List<BDHtmlPage>();
 
-            // remove the info chapter 
+            // remove the info chapter  from the collection so that there is no link to it on the main page
             chapters.Remove(BDNode.RetrieveNodeWithId(pContext, Guid.Parse(PUBLICATION_NOTES_UUID)));
 
             foreach (BDNode chapter in chapters)
@@ -175,11 +175,6 @@ namespace BDEditor.Classes
                 allPages.AddRange(childNavPages);
 
             List<BDHtmlPage> chapterPages = allPages.Distinct().ToList();
-
-            //// Remove the info page from the collection of pages so that there is no link to it on the main page
-            //List<BDHtmlPage> infoPages = BDHtmlPage.RetrieveHtmlPageForDisplayParentId(pContext, Guid.Parse(PUBLICATION_NOTES_UUID));
-            //foreach(BDHtmlPage page in infoPages)
-            //    chapterPages.Remove(page);
 
             Debug.WriteLine("Creating home page with filtered distinct list");
             if (chapterPages.Count > 0)
@@ -208,7 +203,6 @@ namespace BDEditor.Classes
         private void generateOverviewAndChildrenForNode(Entities pContext, IBDNode pNode, List<BDHtmlPage> pNodeDetailPages, List<BDHtmlPage> pNodeNavPages)
         {
             // bypass incomplete sections 
-            if (pNode.Uuid == Guid.Parse(PROPHYLAXIS_SURGICAL_SECTION_UUID)) return;
             if (pNode.Uuid == Guid.Parse(PROPHYLAXIS_IMMUNIZATION_SECTION_UUID)) return;
             if (pNode.Uuid == Guid.Parse(ORGANISMS_THERAPY_SECTION_UUID)) return;
             

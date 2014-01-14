@@ -2200,7 +2200,6 @@ namespace BDEditor.Classes
             //node.name = "S. lugdunensis";
             //pContext.SaveChanges();
             #endregion
-
             #region v1.6.49
             // clean hierarchy for Organisms_Therapy (remove microorganism, microorganism group
             //BDNode organismTherapies = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("472244a0-f8a3-43b2-b6dd-c23902e5ee28"));
@@ -2279,8 +2278,7 @@ namespace BDEditor.Classes
 
             //BDNode.Delete(pContext, preOp, false);
             #endregion
-
-
+            
             #region data clean for 1.6.63
             //List<IBDObject> associations = BDSearchEntryAssociation.RetrieveAll(pContext);
 
@@ -2298,6 +2296,36 @@ namespace BDEditor.Classes
                 
             //}
 
+            #endregion
+
+            #region Surgical Proplylaxis : remove v1 data structures for 1.6.73
+            // clean hierarchy for Surgical Prophylaxis 
+             // preserve existing section
+            BDNode prophylaxis = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("da1fcc78-d169-45a8-a391-2b3db6247075"));
+            prophylaxis.layoutVariant = 3999;
+            pContext.SaveChanges();
+
+            IQueryable<BDNode> nodes = (from bdNodes in pContext.BDNodes
+                                                                          where bdNodes.layoutVariant == 301 || bdNodes.layoutVariant == 302
+                                                                          select bdNodes);
+
+            List<BDNode> resultList = nodes.ToList<BDNode>();
+            foreach (BDNode node in nodes)
+            {
+                BDNode nodeToDelete = BDNode.RetrieveNodeWithId(pContext, node.uuid);
+                if (nodeToDelete.layoutVariant == 301 || nodeToDelete.layoutVariant == 302)
+                {
+                    BDNode.Delete(pContext, nodeToDelete.uuid, false);
+
+                    pContext.SaveChanges();
+                }
+            }
+
+            prophylaxis.layoutVariant = 301;
+            pContext.SaveChanges();
+
+            BDConfiguredEntry tableConfig = BDConfiguredEntry.RetrieveConfiguredEntryWithId(pContext, Guid.Parse("44a54d1c-c472-47f6-85e5-76a9d7ad5ca1"));
+            BDConfiguredEntry.Delete(pContext, tableConfig.uuid);
             #endregion
 
         }

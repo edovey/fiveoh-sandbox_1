@@ -28,16 +28,25 @@ namespace BDEditor.Classes.Navigation
                 case BDConstants.BDNodeType.BDSubcategory:
                 case BDConstants.BDNodeType.BDDisease:
                 case BDConstants.BDNodeType.BDTopic:
+                case BDConstants.BDNodeType.BDSurgery:
+                case BDConstants.BDNodeType.BDSurgeryClassification:
                 case BDConstants.BDNodeType.BDSurgeryGroup:
+                case BDConstants.BDNodeType.BDRegimen:
                 case BDConstants.BDNodeType.BDMicroorganismGroup:
                 case BDConstants.BDNodeType.BDTable:
                     switch (pNode.LayoutVariant)
                     {
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_version1:
                         case BDConstants.LayoutVariantType.Prophylaxis:
-                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_PreOp:
                         case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
                         case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_PreOp:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Intraoperative:
                         case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure:
                         case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure_Followup_I:
                         case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure_Followup_II:

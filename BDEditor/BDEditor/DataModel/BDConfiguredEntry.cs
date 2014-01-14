@@ -132,6 +132,32 @@ namespace BDEditor.DataModel
 
         }
 
+        /// <summary>
+        /// Get object to delete using provided uuid
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pUuid">Guid of record to delete</param>
+        public static void Delete(Entities pContext, Guid pUuid)
+        {
+            BDConfiguredEntry entity = BDConfiguredEntry.RetrieveConfiguredEntryWithId(pContext, pUuid);
+            pContext.DeleteObject(entity);
+            pContext.SaveChanges();
+        }
+
+        public static bool HasHtmlPage(Entities pContext, BDNode pNode)
+        {
+            Guid parentPageId = Guid.Empty;
+            if (pNode != null)
+                parentPageId = pNode.uuid;
+            bool returnValue = false;
+            IQueryable<BDHtmlPage> entries = (from entry in pContext.BDHtmlPages
+                                              where entry.displayParentId == parentPageId
+                                              select entry);
+            if (entries.Count<BDHtmlPage>() > 0)
+                returnValue = true;
+            return returnValue;
+
+        }
         static public string FieldNotePropertyNameForIndex(int pIndex)
         {
             string result = string.Format("{0}_fieldNote", PropertyNameForIndex(pIndex));

@@ -25,7 +25,7 @@ namespace BDEditor.Views
         private bool isSeedDataLoadAvailable = false;
         private string seedDataFileName = string.Empty;
         // enable & show move button when data move is required
-        private bool moveButtonVisible = false;
+        private bool moveButtonVisible = true;
 
         public BDEditView()
         {
@@ -49,7 +49,7 @@ namespace BDEditor.Views
                 case BDNotificationEventArgs.BDNotificationType.Addition:
                 case BDNotificationEventArgs.BDNotificationType.Deletion:
                     TreeNode childTreeNode = showNavSelection(chapterTree.SelectedNode, true);
-                    if( (null != childTreeNode) && (chapterTree.SelectedNode.Nodes.Count != childTreeNode.Nodes.Count))
+                    if ((null != childTreeNode) && (chapterTree.SelectedNode.Nodes.Count != childTreeNode.Nodes.Count))
                     {
                         Debug.WriteLine("Refresh child tree nodes");
                         showNavSelection(chapterTree.SelectedNode, false);
@@ -57,7 +57,7 @@ namespace BDEditor.Views
                     break;
             }
         }
-        
+
         public DataModel.Entities DataContext
         {
             get
@@ -86,7 +86,7 @@ namespace BDEditor.Views
         {
             Cursor _cursor = this.Cursor;
             this.Cursor = Cursors.WaitCursor;
-            
+
             splitContainer1.Panel2.Controls.Clear();
 
             chapterTree.Nodes.Clear();
@@ -171,7 +171,7 @@ namespace BDEditor.Views
                     toolStripMenuItem1.Visible = true;
 
                     string childNodeTypeName = BDUtilities.GetEnumDescription(childTypeInfoList[0].Item1);
-                    
+
 
                     if (childTypeInfoList[0].Item2.Length == 1)
                     {
@@ -181,7 +181,7 @@ namespace BDEditor.Views
                     }
                     else
                     {
-                        
+
                         addChildNodeToolStripMenuItem.Text = string.Format("Add {0}", childNodeTypeName);
 
                         for (int idx = 0; idx < childTypeInfoList[0].Item2.Length; idx++)
@@ -230,7 +230,7 @@ namespace BDEditor.Views
                                 layoutItem.Image = global::BDEditor.Properties.Resources.add_16x16;
                                 layoutItem.Name = string.Format("dynamicAddChildLayoutVariant{0}", idy);
                                 layoutItem.Size = new System.Drawing.Size(179, 22);
-                                layoutItem.Text = string.Format("Add {0} [{1}]",BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item1), BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item2[idy]));
+                                layoutItem.Text = string.Format("Add {0} [{1}]", BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item1), BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item2[idy]));
                                 layoutItem.Tag = new BDNodeWrapper(pBDNode, childTypeInfoList[idx].Item1, childTypeInfoList[idx].Item2[idy], pTreeNode);
                                 layoutItem.Click += new System.EventHandler(this.addChildNode_Click);
                                 item.DropDownItems.Add(layoutItem);
@@ -348,12 +348,12 @@ namespace BDEditor.Views
                         }
                         IBDNode bdNode = treeNode.Tag as IBDNode;
                         buildNavContextMenuStrip(treeNode, bdNode);
-                            navTreeContextMenuStrip.Show(tree, pt);
+                        navTreeContextMenuStrip.Show(tree, pt);
                     }
                 }
-            } 
+            }
         }
-        
+
         private void sectionTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
             switch (e.Action)
@@ -479,7 +479,6 @@ namespace BDEditor.Views
                                 }
                                 break;
                             case BDConstants.LayoutVariantType.Prophylaxis:
-                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_PreOp:
                             case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
                             case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                             case BDConstants.LayoutVariantType.Prophylaxis_IE:
@@ -622,6 +621,10 @@ namespace BDEditor.Views
                                 }
                                 break;
                             case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
                             case BDConstants.LayoutVariantType.Prophylaxis_IE_AntibioticRegimen:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:
@@ -712,13 +715,13 @@ namespace BDEditor.Views
                         }
                         break;
                     case BDConstants.BDNodeType.BDMicroorganism:
-                        switch(node.LayoutVariant)
+                        switch (node.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
                                 if (!pInterrogateOnly)
                                     showChildControls = true;
                                 break;
-                        }           
+                        }
                         break;
                     case BDConstants.BDNodeType.BDMicroorganismGroup:
                         switch (node.LayoutVariant)
@@ -875,6 +878,7 @@ namespace BDEditor.Views
                         switch (node.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery:
                                 if (!pInterrogateOnly)
                                 {
                                     showChildControls = true;
@@ -885,7 +889,7 @@ namespace BDEditor.Views
                     case BDConstants.BDNodeType.BDSurgeryClassification:
                         switch (node.LayoutVariant)
                         {
-                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
                                 childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
@@ -898,9 +902,12 @@ namespace BDEditor.Views
                     case BDConstants.BDNodeType.BDSurgeryGroup:
                         switch (node.LayoutVariant)
                         {
-                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
+                                childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
+                                    graftTreeNode(selectedNode, childTreeNode);
                                     showChildControls = true;
                                 }
                                 break;
@@ -921,6 +928,8 @@ namespace BDEditor.Views
                                     showChildControls = false;
                                 }
                                 break;
+                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_PreOp:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Intraoperative:
                             default:
                                 if (!pInterrogateOnly)
                                 {
@@ -1018,17 +1027,17 @@ namespace BDEditor.Views
         void nodeControl_NameChanged(object sender, NodeEventArgs e)
         {
 
-                IBDNode node = chapterTree.SelectedNode.Tag as IBDNode;
-                if (node.Uuid == e.Uuid)
-                {
-                    chapterTree.SelectedNode.Text = e.Text;
-                }
+            IBDNode node = chapterTree.SelectedNode.Tag as IBDNode;
+            if (node.Uuid == e.Uuid)
+            {
+                chapterTree.SelectedNode.Text = e.Text;
+            }
         }
 
         void siblingNodeCreateRequest(object sender, NodeEventArgs e)
         {
             IBDNode siblingNode = BDFabrik.RetrieveNode(e.DataContext, e.NodeType, e.Uuid);
-            if(null != siblingNode)
+            if (null != siblingNode)
             {
                 IBDNode parentNode = BDFabrik.RetrieveNode(e.DataContext, siblingNode.ParentType, siblingNode.ParentId);
                 BDFabrik.CreateChildNode(DataContext, parentNode, e.NodeType, e.LayoutVariant);
@@ -1043,7 +1052,7 @@ namespace BDEditor.Views
             chapterTree.Nodes.Clear();
 
             chapterDropDown.Items.Clear();
-            foreach(IBDNode entry in BDFabrik.GetAllForNodeType(dataContext, BDConstants.BDNodeType.BDChapter))
+            foreach (IBDNode entry in BDFabrik.GetAllForNodeType(dataContext, BDConstants.BDNodeType.BDChapter))
             {
                 chapterDropDown.Items.Add(entry);
             }
@@ -1086,7 +1095,7 @@ namespace BDEditor.Views
 
         private void BDEditView_Load(object sender, EventArgs e)
         {
-            this.Text = string.Format("{0} - {1}" , "Bugs & Drugs Editor", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            this.Text = string.Format("{0} - {1}", "Bugs & Drugs Editor", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
@@ -1140,7 +1149,7 @@ namespace BDEditor.Views
                     if (null != controlNumber)
                         message = string.Format("{0}{1}Control Number:{2}", message, Environment.NewLine, controlNumber.ControlNumberText);
                     MessageBox.Show(message, "Archive complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -1199,9 +1208,9 @@ namespace BDEditor.Views
         public void setStatusText(string newText)
         {
             if (newText.Length > 0)
-            toolStripStatusLabel1.Text = newText;
+                toolStripStatusLabel1.Text = newText;
             toolStripStatusLabel1.ToolTipText = newText;
-            }
+        }
 
         private void btnPublish_Click(object sender, EventArgs e)
         {
@@ -1260,7 +1269,7 @@ namespace BDEditor.Views
             if (targetTreeNode != null)
             {
                 targetNode = targetTreeNode.Tag as IBDNode;
-                
+
 
                 if (null != targetNode)
                 {
@@ -1278,7 +1287,7 @@ namespace BDEditor.Views
             {
                 IBDNode parentNode = BDFabrik.RetrieveNode(this.DataContext, sourceNode.ParentType, sourceNode.ParentId);
                 List<IBDNode> siblingList = BDFabrik.GetChildrenForParent(this.DataContext, parentNode);
-                Debug.WriteLine("sibling count is: {0}",siblingList.Count());
+                Debug.WriteLine("sibling count is: {0}", siblingList.Count());
 
                 siblingList.Remove(sourceNode);
                 int targetIdx = (targetNode.Uuid == sourceNode.ParentId) ? 0 : siblingList.IndexOf(targetNode) + 1;
@@ -1326,7 +1335,7 @@ namespace BDEditor.Views
                     {
                         TreeNode source = (TreeNode)e.Data.GetData("System.Windows.Forms.TreeNode");
                         IBDNode sourceNode = source.Tag as IBDNode;
-                        validTarget = (((sourceNode.Uuid != targetNode.Uuid) &&  (sourceNode.ParentId == targetNode.ParentId)) || (targetNode.Uuid == sourceNode.ParentId) );
+                        validTarget = (((sourceNode.Uuid != targetNode.Uuid) && (sourceNode.ParentId == targetNode.ParentId)) || (targetNode.Uuid == sourceNode.ParentId));
                     }
                 }
             }
@@ -1357,9 +1366,9 @@ namespace BDEditor.Views
 
         private void btnMove_Click(object sender, EventArgs e)
         {
-           // BDUtilities.ExecuteBatchMove(dataContext);
-           // BDUtilities.RepairSearchEntryAssociationsForMissingData(dataContext);
-           // BDUtilities.InjectNodeIntoHierarhy(dataContext);
+            BDUtilities.ExecuteBatchMove(dataContext);
+            // BDUtilities.RepairSearchEntryAssociationsForMissingData(dataContext);
+            // BDUtilities.InjectNodeIntoHierarhy(dataContext);
         }
 
         private void btnDebug_Click(object sender, EventArgs e)
@@ -1410,23 +1419,23 @@ namespace BDEditor.Views
                         }
              */
 
-                        /// this section generates to HTML page in database, used for hierarchy of pages
-                        // simulates the publish operation for the nodes specified.
-                        Debug.WriteLine("-- DEBUG GENERATION --");
-                        List<BDNode> nodeList = new List<BDNode>();
-                        List<Guid> guidList = new List<Guid>();
-                        guidList.Add(Guid.Parse("0264e99b-20ad-4abf-b349-a8202582326e"));
-                        guidList.Add(Guid.Parse("9fe2fc95-d340-4586-9f1b-b7a6adcfb95b"));
-                        guidList.Add(Guid.Parse("17905052-f5e7-475e-987e-fc4dbe80bfbd"));
-                        //guidList.Add(Guid.Parse("12c6c370-b63b-4b3c-9dc1-5cb9fa988918"));
-                        //guidList.Add(Guid.Parse("c0cf6533-c4c9-480b-ad85-c7d187672849"));
-                        foreach (Guid guid in guidList)
-                        {
-                            nodeList.Add(BDNode.RetrieveNodeWithId(dataContext, guid));
-                        }
+            /// this section generates to HTML page in database, used for hierarchy of pages
+            // simulates the publish operation for the nodes specified.
+            Debug.WriteLine("-- DEBUG GENERATION --");
+            List<BDNode> nodeList = new List<BDNode>();
+            List<Guid> guidList = new List<Guid>();
+            guidList.Add(Guid.Parse("0264e99b-20ad-4abf-b349-a8202582326e"));
+            guidList.Add(Guid.Parse("9fe2fc95-d340-4586-9f1b-b7a6adcfb95b"));
+            guidList.Add(Guid.Parse("17905052-f5e7-475e-987e-fc4dbe80bfbd"));
+            //guidList.Add(Guid.Parse("12c6c370-b63b-4b3c-9dc1-5cb9fa988918"));
+            //guidList.Add(Guid.Parse("c0cf6533-c4c9-480b-ad85-c7d187672849"));
+            foreach (Guid guid in guidList)
+            {
+                nodeList.Add(BDNode.RetrieveNodeWithId(dataContext, guid));
+            }
 
-                        generator.Generate(dataContext, nodeList);
-         
+            generator.Generate(dataContext, nodeList);
+
             Debug.WriteLine("-- Complete --");
         }
 

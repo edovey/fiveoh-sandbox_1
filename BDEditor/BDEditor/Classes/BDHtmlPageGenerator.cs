@@ -3549,31 +3549,35 @@ namespace BDEditor.Classes
                     case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery:
                     case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
                         // children are pathogens, regimens (configured entry)
-                            StringBuilder pathogenHtml = new StringBuilder();
-                            StringBuilder regimenHtml = new StringBuilder();
-                            bool hasPathogens = false;
-                            bool hasConfiguredEntries = false;
-                            foreach (IBDNode child in surgeryChildren)
+                        string pathogenTitle = @"";
+                        if (metadataLayoutColumns.Count > 1)
+                            pathogenTitle = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[0], BDConstants.BDNodeType.BDMetaDecoration, BDNode.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage);
+                        StringBuilder pathogenHtml = new StringBuilder();
+                        StringBuilder regimenHtml = new StringBuilder();
+                        bool hasPathogens = false;
+                        bool hasConfiguredEntries = false;
+
+                        pathogenHtml.AppendFormat("<{0}>{1}</{0}><ul>", HtmlHeaderTagLevelString(pLevel + 1), pathogenTitle);
+
+                        foreach (IBDNode child in surgeryChildren)
+                        {
+                            if (child.NodeType == BDConstants.BDNodeType.BDPathogen)
                             {
-                                pathogenHtml.Append("<ul>");
-                                if (child.NodeType == BDConstants.BDNodeType.BDPathogen)
-                                {
-                                    hasPathogens = true;
-                                    pathogenHtml.Append("<li>");
-                                    pathogenHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
-                                }
-                                else if (child.NodeType == BDConstants.BDNodeType.BDConfiguredEntry)
-                                {
-                                    hasConfiguredEntries = true;
-                                    // lay out the configured entry in a table?
-                                    html.Append(BuildBDConfiguredEntryHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1, true, false));
-                                }
+                                hasPathogens = true;
+                                pathogenHtml.Append("<li>");
+                                pathogenHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
                             }
-                            pathogenHtml.Append("</ul>");
-                            if (hasPathogens)
-                                html.Append(pathogenHtml.ToString());
-                            if (hasConfiguredEntries)
-                                html.Append(regimenHtml.ToString());
+                            else if (child.NodeType == BDConstants.BDNodeType.BDConfiguredEntry)
+                            {
+                                hasConfiguredEntries = true;
+                                html.Append(BuildBDConfiguredEntryHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1, true, false));
+                            }
+                        }
+                        pathogenHtml.Append("</ul>");
+                        if (hasPathogens)
+                            html.Append(pathogenHtml.ToString());
+                        if (hasConfiguredEntries)
+                            html.Append(regimenHtml.ToString());
                         break;
                     case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
                     case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
@@ -3601,10 +3605,36 @@ namespace BDEditor.Classes
                 html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
                
                 List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
+                string pathogenTitle = @"";
+                if (metadataLayoutColumns.Count > 1)
+                    pathogenTitle = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[0], BDConstants.BDNodeType.BDMetaDecoration, BDNode.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage);
+                StringBuilder pathogenHtml = new StringBuilder();
+                StringBuilder regimenHtml = new StringBuilder();
+                bool hasPathogens = false;
+                bool hasConfiguredEntries = false;
+
+                pathogenHtml.AppendFormat("<{0}>{1}</{0}><ul>", HtmlHeaderTagLevelString(pLevel + 1), pathogenTitle);
+
                 foreach (IBDNode child in children)
                 {
-                    html.Append(BuildBDConfiguredEntryHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1, true, false));
+                    if (child.NodeType == BDConstants.BDNodeType.BDPathogen)
+                    {
+                        hasPathogens = true;
+                        pathogenHtml.Append("<li>");
+                        pathogenHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+                    }
+                    else if (child.NodeType == BDConstants.BDNodeType.BDConfiguredEntry)
+                    {
+                        hasConfiguredEntries = true;
+                        html.Append(BuildBDConfiguredEntryHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1, true, false));
+                    }
                 }
+                pathogenHtml.Append("</ul>");
+                if (hasPathogens)
+                    html.Append(pathogenHtml.ToString());
+                if (hasConfiguredEntries)
+                    html.Append(regimenHtml.ToString());
+
             }
             return html.ToString();
         }

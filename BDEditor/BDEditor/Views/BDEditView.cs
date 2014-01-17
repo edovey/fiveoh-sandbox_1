@@ -621,10 +621,10 @@ namespace BDEditor.Views
                                 }
                                 break;
                             case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
-                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery:
-                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
-                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
-                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
+                            //case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery:
+                            //case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
+                            //case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
+                            //case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
                             case BDConstants.LayoutVariantType.Prophylaxis_IE_AntibioticRegimen:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:
@@ -878,10 +878,18 @@ namespace BDEditor.Views
                         switch (node.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
-                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
                                 if (!pInterrogateOnly)
                                 {
                                     showChildControls = true;
+                                }
+                                break;
+                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
+                                childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
+                                if (!pInterrogateOnly)
+                                {
+                                    graftTreeNode(selectedNode, childTreeNode);
+                                    showChildControls = false;
                                 }
                                 break;
                         }
@@ -890,10 +898,10 @@ namespace BDEditor.Views
                         switch (node.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
-                                childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
+                               // childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
-                                    graftTreeNode(selectedNode, childTreeNode);
+                                    //graftTreeNode(selectedNode, childTreeNode);
                                     showChildControls = true;
                                 }
                                 break;
@@ -904,10 +912,10 @@ namespace BDEditor.Views
                         {
                             case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
                             case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
-                                childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
+                                //childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
-                                    graftTreeNode(selectedNode, childTreeNode);
+                                    //graftTreeNode(selectedNode, childTreeNode);
                                     showChildControls = true;
                                 }
                                 break;

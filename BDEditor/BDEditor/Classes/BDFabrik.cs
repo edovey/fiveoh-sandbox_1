@@ -570,6 +570,7 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDCategory, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Prophylaxis_Surgical_PreOp, BDConstants.LayoutVariantType.Prophylaxis_Surgical_Intraoperative }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Prophylaxis_Surgical_Topic }));
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation08_Opthalmic:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDisease, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -745,9 +746,14 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSurgeryClassification, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDConfiguredEntry, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogen, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDConfiguredEntry, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDConfiguredEntry, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         default:
@@ -1997,21 +2003,12 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDSurgeryGroup:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
-                            {
-                                nodeControl = new BDNodeOverviewControl(pContext, pNode);
-                                BDNodeOverviewControl newOverviewControl = nodeControl as BDNodeOverviewControl;
-                                newOverviewControl.ShowAsChild = false;
-                                newOverviewControl.ShowSiblingAdd = false;
-                            }
-                            break;
-
                         default:
                             {
-                                nodeControl = new BDNodeOverviewControl(pContext, pNode);
-                                BDNodeOverviewControl newOverviewControl = nodeControl as BDNodeOverviewControl;
-                                newOverviewControl.ShowAsChild = true;
-                                newOverviewControl.ShowSiblingAdd = true;
+                                nodeControl = new BDNodeControl(pContext, pNode);
+                                BDNodeControl newNodeControl = nodeControl as BDNodeControl;
+                                newNodeControl.ShowAsChild = false;
+                                newNodeControl.ShowSiblingAdd = false;
                             }
                             break;
                     }
@@ -2019,7 +2016,8 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDSurgery:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
                             {
                                 nodeControl = new BDNodeControl(pContext, pNode);
                                 BDNodeControl newNodeControl = nodeControl as BDNodeControl;
@@ -2027,6 +2025,8 @@ namespace BDEditor.Classes
                                 newNodeControl.ShowSiblingAdd = true;
                             }
                             break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
                         default:
                             nodeControl = new BDNodeControl(pContext, pNode);
                             BDNodeControl newControl = nodeControl as BDNodeControl;
@@ -2039,8 +2039,8 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         default:
-                            nodeControl = new BDNodeControl(pContext, pNode);
-                            BDNodeControl newControl = nodeControl as BDNodeControl;
+                            nodeControl = new BDNodeOverviewControl(pContext, pNode);
+                            BDNodeOverviewControl newControl = nodeControl as BDNodeOverviewControl;
                             newControl.ShowAsChild = false;
                             newControl.ShowSiblingAdd = false;
                             break;
@@ -2205,6 +2205,7 @@ namespace BDEditor.Classes
                             txControl.ShowAsChild = true;
                             txControl.ShowSiblingAdd = true;
                             break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Topic:
                         default:
                             {
                                 nodeControl = new BDNodeOverviewControl(pContext, pNode);

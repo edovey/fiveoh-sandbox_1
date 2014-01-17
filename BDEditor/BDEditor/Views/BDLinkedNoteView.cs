@@ -137,7 +137,10 @@ namespace BDEditor.Views
             if (null != scopeId)
             {
                 IBDNode scopeNode = BDFabrik.RetrieveNode(dataContext, scopeId);
-                lblScopeTitle.Text = scopeNode.Name;
+                if (null != scopeNode)
+                    lblScopeTitle.Text = scopeNode.Name;
+                else
+                    lblScopeTitle.Text = "";
             }
             else
             {

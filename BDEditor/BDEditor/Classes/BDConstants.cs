@@ -278,6 +278,8 @@ namespace BDEditor.Classes
             Prophylaxis_Surgical_Surgery_With_Classification = 3015,
             [Description("Prophylaxis - Surgeries with Classification")]
             Prophylaxis_Surgical_Surgeries_With_Classification = 3016,
+            [Description("Prophylaxis - Surgery Topic")]
+            Prophylaxis_Surgical_Topic = 3017,
 
             Prophylaxis_Surgical_version1 = 302,
 
@@ -287,7 +289,7 @@ namespace BDEditor.Classes
             Prophylaxis_IE_AntibioticRegimen = 304,
             [Description("Prophylaxis - Blood/Body Fluid Exposure")]
             Prophylaxis_FluidExposure = 305,
-            [Description("Prophylaxis - Blood/Body Fluid Exposure - Risk of Infection")]
+            [Description("Prophylaxis - Blood/Body Fluid Exposure - Risk of Infection")]    
             Prophylaxis_FluidExposure_Risk = 3051,
             [Description("Prophylaxis - Blood/Body Fluid Exposure - Followup Protocol I")]
             Prophylaxis_FluidExposure_Followup_I = 3052,

@@ -34,6 +34,7 @@ namespace BDEditor.Classes.Navigation
                 case BDConstants.BDNodeType.BDRegimen:
                 case BDConstants.BDNodeType.BDMicroorganismGroup:
                 case BDConstants.BDNodeType.BDTable:
+                case BDConstants.BDNodeType.BDConfiguredEntry:
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical_version1:

@@ -222,6 +222,12 @@ namespace BDEditor.Views
 
             if (isSyncSelected && BDCommon.Settings.SyncPushEnabled)
             {
+                RepositoryHandler.RepositoryHandlerPublishType publishTarget = RepositoryHandler.RepositoryHandlerPublishType.RepositoryHandlerPublishType_Development;
+                if (rbPublishTypeProd.Checked)
+                {
+                    publishTarget = RepositoryHandler.RepositoryHandlerPublishType.RepositoryHandlerPublishType_Production;
+                }
+
                 BDSystemSetting systemSetting = BDSystemSetting.RetrieveSetting(dataContext, BDSystemSetting.LASTSYNC_TIMESTAMP);
                 DateTime? lastSyncDate = systemSetting.settingDateTimeValue;
                 Debug.WriteLine("Begin publish to AWS");
@@ -230,17 +236,17 @@ namespace BDEditor.Views
                 if (cbSyncSearch.CheckState == CheckState.Checked && cbSyncHtml.CheckState != CheckState.Checked)
                 {
                     Debug.WriteLine("Publish Search Only");
-                    syncResultList = RepositoryHandler.Aws.Sync(dataContext, null, BDConstants.SyncType.SearchOnly);
+                    syncResultList = RepositoryHandler.Aws.Sync(dataContext, null, BDConstants.SyncType.SearchOnly, publishTarget);
                 }
                 else if (cbSyncSearch.CheckState != CheckState.Checked && cbSyncHtml.CheckState == CheckState.Checked)
                 {
                     Debug.WriteLine("Publish Html Only");
-                    syncResultList = RepositoryHandler.Aws.Sync(dataContext, null, BDConstants.SyncType.HtmlOnly);
+                    syncResultList = RepositoryHandler.Aws.Sync(dataContext, null, BDConstants.SyncType.HtmlOnly, publishTarget);
                 }
                 else if (cbSyncSearch.CheckState == CheckState.Checked && cbSyncHtml.CheckState == CheckState.Checked)
                 {
                     Debug.WriteLine("Publish All");
-                    syncResultList = RepositoryHandler.Aws.Sync(dataContext, null, BDConstants.SyncType.All);
+                    syncResultList = RepositoryHandler.Aws.Sync(dataContext, null, BDConstants.SyncType.All, publishTarget);
                 }
 
                 if (syncResultList != null)

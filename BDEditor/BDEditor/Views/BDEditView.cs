@@ -1152,7 +1152,7 @@ namespace BDEditor.Views
                 Application.DoEvents();
                 try
                 {
-                    RepositoryControlNumber controlNumber = RepositoryHandler.Aws.Archive(dataContext, archiveDialog.Username, archiveDialog.Comment, false);
+                    RepositoryControlNumber controlNumber = RepositoryHandler.Aws.Archive(dataContext, archiveDialog.Username, archiveDialog.Comment, false, RepositoryHandler.RepositoryHandlerPublishType.RepositoryHandlerPublishType_CompilerDirective);
                     string message = @"Archive to Repository";
                     if (null != controlNumber)
                         message = string.Format("{0}{1}Control Number:{2}", message, Environment.NewLine, controlNumber.ControlNumberText);

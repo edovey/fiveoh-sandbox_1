@@ -51,10 +51,14 @@
             this.flagRed = new System.Windows.Forms.PictureBox();
             this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
             this.cbSelectedUuids = new System.Windows.Forms.CheckBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rbPublishTypeDev = new System.Windows.Forms.RadioButton();
+            this.rbPublishTypeProd = new System.Windows.Forms.RadioButton();
             this.gbSelectHtmlPages.SuspendLayout();
             this.gbSyncRecordTypes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.flagGreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flagRed)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_OK
@@ -85,7 +89,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(33, 15);
+            this.label1.Location = new System.Drawing.Point(31, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(173, 17);
             this.label1.TabIndex = 0;
@@ -94,7 +98,7 @@
             // cbGeneratePages
             // 
             this.cbGeneratePages.AutoSize = true;
-            this.cbGeneratePages.Location = new System.Drawing.Point(12, 18);
+            this.cbGeneratePages.Location = new System.Drawing.Point(10, 9);
             this.cbGeneratePages.Name = "cbGeneratePages";
             this.cbGeneratePages.Size = new System.Drawing.Size(15, 14);
             this.cbGeneratePages.TabIndex = 0;
@@ -130,7 +134,7 @@
             this.gbSelectHtmlPages.Controls.Add(this.rbAllChapters);
             this.gbSelectHtmlPages.Controls.Add(this.rbSelectedChapters);
             this.gbSelectHtmlPages.Enabled = false;
-            this.gbSelectHtmlPages.Location = new System.Drawing.Point(20, 75);
+            this.gbSelectHtmlPages.Location = new System.Drawing.Point(18, 51);
             this.gbSelectHtmlPages.Name = "gbSelectHtmlPages";
             this.gbSelectHtmlPages.Size = new System.Drawing.Size(249, 34);
             this.gbSelectHtmlPages.TabIndex = 2;
@@ -141,7 +145,7 @@
             this.clbChaptersToGenerate.CheckOnClick = true;
             this.clbChaptersToGenerate.Enabled = false;
             this.clbChaptersToGenerate.FormattingEnabled = true;
-            this.clbChaptersToGenerate.Location = new System.Drawing.Point(49, 136);
+            this.clbChaptersToGenerate.Location = new System.Drawing.Point(47, 107);
             this.clbChaptersToGenerate.Name = "clbChaptersToGenerate";
             this.clbChaptersToGenerate.Size = new System.Drawing.Size(327, 124);
             this.clbChaptersToGenerate.TabIndex = 3;
@@ -150,7 +154,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(38, 116);
+            this.label2.Location = new System.Drawing.Point(31, 88);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(151, 13);
             this.label2.TabIndex = 8;
@@ -159,7 +163,7 @@
             // tbUUIDsToGenerate
             // 
             this.tbUUIDsToGenerate.Enabled = false;
-            this.tbUUIDsToGenerate.Location = new System.Drawing.Point(49, 335);
+            this.tbUUIDsToGenerate.Location = new System.Drawing.Point(47, 291);
             this.tbUUIDsToGenerate.Multiline = true;
             this.tbUUIDsToGenerate.Name = "tbUUIDsToGenerate";
             this.tbUUIDsToGenerate.Size = new System.Drawing.Size(327, 157);
@@ -169,7 +173,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(38, 312);
+            this.label3.Location = new System.Drawing.Point(36, 268);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(305, 13);
             this.label3.TabIndex = 10;
@@ -179,7 +183,7 @@
             // 
             this.cbSyncWithAws.AutoSize = true;
             this.cbSyncWithAws.Enabled = false;
-            this.cbSyncWithAws.Location = new System.Drawing.Point(12, 520);
+            this.cbSyncWithAws.Location = new System.Drawing.Point(11, 472);
             this.cbSyncWithAws.Name = "cbSyncWithAws";
             this.cbSyncWithAws.Size = new System.Drawing.Size(15, 14);
             this.cbSyncWithAws.TabIndex = 5;
@@ -190,7 +194,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(33, 517);
+            this.label4.Location = new System.Drawing.Point(32, 469);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(115, 17);
             this.label4.TabIndex = 11;
@@ -199,7 +203,7 @@
             // cbGenerateSearch
             // 
             this.cbGenerateSearch.AutoSize = true;
-            this.cbGenerateSearch.Location = new System.Drawing.Point(12, 46);
+            this.cbGenerateSearch.Location = new System.Drawing.Point(10, 34);
             this.cbGenerateSearch.Name = "cbGenerateSearch";
             this.cbGenerateSearch.Size = new System.Drawing.Size(15, 14);
             this.cbGenerateSearch.TabIndex = 1;
@@ -210,7 +214,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(33, 46);
+            this.label5.Location = new System.Drawing.Point(31, 34);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(188, 17);
             this.label5.TabIndex = 13;
@@ -251,7 +255,7 @@
             // flagGreen
             // 
             this.flagGreen.Image = ((System.Drawing.Image)(resources.GetObject("flagGreen.Image")));
-            this.flagGreen.Location = new System.Drawing.Point(348, 517);
+            this.flagGreen.Location = new System.Drawing.Point(347, 469);
             this.flagGreen.Name = "flagGreen";
             this.flagGreen.Size = new System.Drawing.Size(22, 26);
             this.flagGreen.TabIndex = 14;
@@ -261,7 +265,7 @@
             // flagRed
             // 
             this.flagRed.Image = global::BDEditor.Properties.Resources.Flag_Red;
-            this.flagRed.Location = new System.Drawing.Point(348, 517);
+            this.flagRed.Location = new System.Drawing.Point(347, 469);
             this.flagRed.Name = "flagRed";
             this.flagRed.Size = new System.Drawing.Size(22, 26);
             this.flagRed.TabIndex = 15;
@@ -269,7 +273,7 @@
             // 
             // maskedTextBox1
             // 
-            this.maskedTextBox1.Location = new System.Drawing.Point(154, 519);
+            this.maskedTextBox1.Location = new System.Drawing.Point(153, 471);
             this.maskedTextBox1.Name = "maskedTextBox1";
             this.maskedTextBox1.PasswordChar = '*';
             this.maskedTextBox1.Size = new System.Drawing.Size(188, 20);
@@ -280,13 +284,46 @@
             // 
             this.cbSelectedUuids.AutoSize = true;
             this.cbSelectedUuids.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbSelectedUuids.Location = new System.Drawing.Point(36, 281);
+            this.cbSelectedUuids.Location = new System.Drawing.Point(34, 237);
             this.cbSelectedUuids.Name = "cbSelectedUuids";
-            this.cbSelectedUuids.Size = new System.Drawing.Size(144, 20);
+            this.cbSelectedUuids.Size = new System.Drawing.Size(138, 20);
             this.cbSelectedUuids.TabIndex = 17;
             this.cbSelectedUuids.Text = "Selected UUIDs";
             this.cbSelectedUuids.UseVisualStyleBackColor = true;
             this.cbSelectedUuids.CheckedChanged += new System.EventHandler(this.cbSelectedUuids_CheckedChanged);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.rbPublishTypeProd);
+            this.groupBox1.Controls.Add(this.rbPublishTypeDev);
+            this.groupBox1.Location = new System.Drawing.Point(20, 497);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(356, 37);
+            this.groupBox1.TabIndex = 18;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Target of final archive";
+            // 
+            // rbPublishTypeDev
+            // 
+            this.rbPublishTypeDev.AutoSize = true;
+            this.rbPublishTypeDev.Checked = true;
+            this.rbPublishTypeDev.Location = new System.Drawing.Point(10, 14);
+            this.rbPublishTypeDev.Name = "rbPublishTypeDev";
+            this.rbPublishTypeDev.Size = new System.Drawing.Size(184, 17);
+            this.rbPublishTypeDev.TabIndex = 0;
+            this.rbPublishTypeDev.TabStop = true;
+            this.rbPublishTypeDev.Text = "Development / Compiler Directive";
+            this.rbPublishTypeDev.UseVisualStyleBackColor = true;
+            // 
+            // rbPublishTypeProd
+            // 
+            this.rbPublishTypeProd.AutoSize = true;
+            this.rbPublishTypeProd.Location = new System.Drawing.Point(215, 14);
+            this.rbPublishTypeProd.Name = "rbPublishTypeProd";
+            this.rbPublishTypeProd.Size = new System.Drawing.Size(134, 17);
+            this.rbPublishTypeProd.TabIndex = 1;
+            this.rbPublishTypeProd.Text = "Production / App Store";
+            this.rbPublishTypeProd.UseVisualStyleBackColor = true;
             // 
             // BDBuildView
             // 
@@ -295,6 +332,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btn_Cancel;
             this.ClientSize = new System.Drawing.Size(413, 672);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.cbSelectedUuids);
             this.Controls.Add(this.maskedTextBox1);
             this.Controls.Add(this.flagGreen);
@@ -327,6 +365,8 @@
             this.gbSyncRecordTypes.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.flagGreen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.flagRed)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -356,5 +396,8 @@
         private System.Windows.Forms.PictureBox flagRed;
         private System.Windows.Forms.MaskedTextBox maskedTextBox1;
         private System.Windows.Forms.CheckBox cbSelectedUuids;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton rbPublishTypeDev;
+        private System.Windows.Forms.RadioButton rbPublishTypeProd;
     }
 }

@@ -20,6 +20,13 @@ namespace BDEditor.Classes
 {
     public class RepositoryHandler
     {
+        public enum RepositoryHandlerPublishType
+        {
+            RepositoryHandlerPublishType_CompilerDirective = 0,
+            RepositoryHandlerPublishType_Production = 1,
+            RepositoryHandlerPublishType_Development = 2
+        }
+
         public const string AWS_PROD_ARCHIVE = @"bdProdArchive"; //@"bdTestArchive"; 
         public const string AWS_DEV_ARCHIVE = @"bdDevArchive";
         public const string AWS_PROD_BACKUP = @"bdProdRestoreBackup";
@@ -228,7 +235,7 @@ namespace BDEditor.Classes
         /// <param name="pDataContext"></param>
         /// <param name="pLastSyncDate"></param>
         /// <returns></returns>
-        public SyncInfoDictionary Sync(Entities pDataContext, DateTime? pLastSyncDate, BDConstants.SyncType pSyncType)
+        public SyncInfoDictionary Sync(Entities pDataContext, DateTime? pLastSyncDate, BDConstants.SyncType pSyncType, RepositoryHandlerPublishType pPublishType)
         {
             DateTime? currentSyncDate = DateTime.Now;
             string comment = string.Format("Publish start: {0}", currentSyncDate.Value.ToString(BDConstants.DATETIMEFORMAT));
@@ -317,7 +324,7 @@ namespace BDEditor.Classes
                 try
                 {
                     string embeddedComment = comment.Replace(Environment.NewLine, ", ");
-                    RepositoryControlNumber controlNumber = Archive(pDataContext, @"Publisher", embeddedComment, true);
+                    RepositoryControlNumber controlNumber = Archive(pDataContext, @"Publisher", embeddedComment, true, pPublishType);
 
                     PutAttributesRequest putAttributeRequest = new PutAttributesRequest().WithDomainName(RepositoryHandler.REPOSITORY_CONTROL_NUMBER_PUBLISHINFO_DOMAIN).WithItemName(RepositoryHandler.REPOSITORY_PUBLISHINFO_ITEMNAME);
                     List<ReplaceableAttribute> attributeList = putAttributeRequest.Attribute;
@@ -582,9 +589,24 @@ namespace BDEditor.Classes
             }
         }
 
-        public RepositoryControlNumber Archive(Entities pDataContext, string pUserName, string pComment, Boolean postRender)
+        public RepositoryControlNumber Archive(Entities pDataContext, string pUserName, string pComment, Boolean postRender, RepositoryHandlerPublishType pPublishType)
         {
             string bucket = (postRender) ? AWS_PROD_ARCHIVE : AWS_ARCHIVE;
+
+            switch (pPublishType)
+            {
+                    case RepositoryHandlerPublishType.RepositoryHandlerPublishType_CompilerDirective:
+                    bucket = AWS_ARCHIVE;
+                    break;
+                case RepositoryHandlerPublishType.RepositoryHandlerPublishType_Production:
+                    bucket = (postRender) ? AWS_PROD_ARCHIVE : AWS_ARCHIVE;
+                    break;
+                case RepositoryHandlerPublishType.RepositoryHandlerPublishType_Development:
+                    bucket = (postRender) ? AWS_DEV_ARCHIVE : AWS_ARCHIVE;
+                    break;
+                default:
+                    break;
+            }
             RepositoryControlNumber cn = null;
             try
             {

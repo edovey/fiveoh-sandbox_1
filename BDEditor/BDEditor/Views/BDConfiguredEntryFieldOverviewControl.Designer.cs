@@ -38,7 +38,7 @@
             // 
             // lblFieldLabel
             // 
-            this.lblFieldLabel.Size = new System.Drawing.Size(148, 23);
+            this.lblFieldLabel.Size = new System.Drawing.Size(650, 23);
             // 
             // btnLinkedNote
             // 

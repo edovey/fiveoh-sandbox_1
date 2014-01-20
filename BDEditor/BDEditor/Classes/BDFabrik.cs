@@ -2026,6 +2026,11 @@ namespace BDEditor.Classes
                             }
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery:
+                            nodeControl = new BDNodeOverviewControl(pContext, pNode);
+                            BDNodeOverviewControl ovControl = nodeControl as BDNodeOverviewControl;
+                            ovControl.ShowAsChild = false;
+                            ovControl.ShowSiblingAdd = false;
+                            break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
                         default:
                             nodeControl = new BDNodeControl(pContext, pNode);

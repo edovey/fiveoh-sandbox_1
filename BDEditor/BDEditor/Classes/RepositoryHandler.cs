@@ -27,9 +27,9 @@ namespace BDEditor.Classes
             RepositoryHandlerPublishType_Development = 2
         }
 
-        public const string AWS_PROD_ARCHIVE = @"bdProdArchive"; //@"bdTestArchive"; 
+        public const string AWS_PROD_ARCHIVE =  @"bdProdArchive"; // @"bdTestArchive";
         public const string AWS_DEV_ARCHIVE = @"bdDevArchive";
-        public const string AWS_PROD_BACKUP = @"bdProdRestoreBackup";
+        public const string AWS_PROD_BACKUP = @"bdProdRestoreBackup"; // @"bdTestRestoreBackup";
         public const string AWS_DEV_BACKUP = @"bdDevRestoreBackup";
 
         public const string AWS_PROD_COLD_STORAGE_BUCKET = @"bdColdStorageProd";
@@ -59,6 +59,7 @@ namespace BDEditor.Classes
         public const string APPVERSION_METADATA = @"x-amz-meta-appversion";
         public const string MIMETYPE_METADATA = @"x-amz-meta-mimetype";
         public const string CONTROLNUMBER_METADATA = @"x-amz-meta-controlnumber";
+        public const string BASEDONCONTROLNUMBER_METADATA = @"x-amz-meta-basedoncontrolnumber";
 
         private const string BD_ACCESS_KEY = @"AKIAJDR46ZTGMYHAG6NA";
         private const string BD_SECRET_KEY = @"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";
@@ -109,7 +110,7 @@ namespace BDEditor.Classes
                 RepositoryControlNumber.REPOSITORY_CONTROL_NUMBER_DOMAIN, 
                 RepositoryControlNumber.CONTROL_NUMBER);
 
-            if (serialNumber > RepositoryControlNumber.SERIAL_NUMBER_UNDEFINED)
+            if (serialNumber != RepositoryControlNumber.SERIAL_NUMBER_UNDEFINED)
             {
                 sdbQueryString = string.Format("select * from {0} where {1} = '{2}' and {3} >= '0' order by {3} desc limit 1",
                     RepositoryControlNumber.REPOSITORY_CONTROL_NUMBER_DOMAIN, 
@@ -632,7 +633,9 @@ namespace BDEditor.Classes
             string serialNumberString = BDSystemSetting.RetrieveSettingValue(pDataContext, BDSystemSetting.SERIAL_NUMBER);
             string indexNumberString = BDSystemSetting.RetrieveSettingValue(pDataContext, BDSystemSetting.INDEX_NUMBER);
 
-            serialNumber = (null == serialNumberString) ? RepositoryControlNumber.SERIAL_NUMBER_UNDEFINED : Int32.Parse(serialNumberString);
+            string baseVersionInfo = string.Format("Based upon: {0}.{1}", serialNumberString, indexNumberString);
+
+            serialNumber = (null == serialNumberString) || !postRender ? RepositoryControlNumber.SERIAL_NUMBER_UNDEFINED : Int32.Parse(serialNumberString);
             indexNumber = (null == indexNumberString) ? RepositoryControlNumber.INDEX_NUMBER_BASE : Int32.Parse(indexNumberString);
 
             // Backup prior to a restore? Don't mess with the control number
@@ -645,15 +648,7 @@ namespace BDEditor.Classes
                 
                 DateTime? contentDate = archiveDateTime;
                 DateTime? indexDate = null;
-                if (postRender)
-                {
-                    indexNumber++;  // INCREMENT INDEX NUMBER
-                    indexDate = archiveDateTime;
-                }
-                else
-                {
-                    indexNumber = 0;
-                }
+
                 RepositoryControlNumber previousControlNumber    = null;
                 try
                 {
@@ -667,13 +662,21 @@ namespace BDEditor.Classes
                 if (null == previousControlNumber)
                 {
                     serialNumber = RepositoryControlNumber.SERIAL_NUMBER_BASE;
+                    indexNumber = postRender ? 1 : 0;
                 }
                 else
                 {
+                    indexNumber = previousControlNumber.indexNumber;
                     if (postRender)
+                    {
+                        indexNumber++;
                         contentDate = previousControlNumber.contentDate;
+                    }
                     else
-                        serialNumber = previousControlNumber.serialNumber + 1;  // INCREMENT SERIAL NUMBER
+                    {
+                        serialNumber = previousControlNumber.serialNumber + 1; // INCREMENT SERIAL NUMBER
+                        indexNumber = 0;
+                    }
                 } 
 
                 controlNumber = RepositoryControlNumber.Create(serialNumber, indexNumber);
@@ -683,6 +686,7 @@ namespace BDEditor.Classes
 
                 controlNumber.contentDate = contentDate;
                 controlNumber.indexDate = indexDate;
+                controlNumber.baseVersionInfo = baseVersionInfo;
          
                 BDSystemSetting.WriteSettingValue(pDataContext, BDSystemSetting.SERIAL_NUMBER, RepositoryControlNumber.SerialNumberString(controlNumber.serialNumber));
                 BDSystemSetting.WriteSettingValue(pDataContext, BDSystemSetting.INDEX_NUMBER, RepositoryControlNumber.IndexNumberString(controlNumber.indexNumber));
@@ -713,8 +717,6 @@ namespace BDEditor.Classes
                 }
                 string controlNumberString = RepositoryControlNumber.ControlNumberString(serialNumber, indexNumber);
                 filename = string.Format("{0}.{1}.{2}.{3}{4}{5}.gz", filename, context, archiveDateTime.ToString("yyyMMdd-HHmmss"),  tag, controlNumberString,  sourceFi.Extension);
-
-                
 
                 if (!pIsBackup)
                 {
@@ -770,6 +772,7 @@ namespace BDEditor.Classes
                                 metadata.Add(CREATEDATE_METADATA, archiveDateTime.ToString("s"));
                                 metadata.Add(APPVERSION_METADATA, System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
                                 metadata.Add(CONTROLNUMBER_METADATA, RepositoryControlNumber.ControlNumberString(serialNumber, indexNumber));
+                                metadata.Add(BASEDONCONTROLNUMBER_METADATA, baseVersionInfo);
                                 try
                                 {
                                     PutObjectRequest putObjectRequest = new PutObjectRequest();

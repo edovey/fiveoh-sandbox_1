@@ -37,6 +37,7 @@ namespace BDEditor.Classes
         public const string MACHINE_NAME = @"cn_machine_name";
         public const string MACHINE_PATH = @"cn_machine_path";
         public const string MACHINE_FILENAME = @"cn_machine_filename";
+        public const string BASE_VERSION_INFO = @"cn_base_version_info";
 
         public Guid uuid;
         public string environment;
@@ -52,7 +53,7 @@ namespace BDEditor.Classes
         public string machineName;
         public string machinePath;
         public string machineFilename;
-
+        public string baseVersionInfo;
 
         public void increment(Boolean incSerialNumber, Boolean incIndexNumber)
         {
@@ -83,6 +84,8 @@ namespace BDEditor.Classes
             attributeList.Add(new ReplaceableAttribute().WithName(RepositoryControlNumber.SERIAL_NUMBER).WithValue(SerialNumberString(serialNumber)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(RepositoryControlNumber.INDEX_NUMBER).WithValue(IndexNumberString(indexNumber)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(RepositoryControlNumber.CONTROL_NUMBER).WithValue(ControlNumberText).WithReplace(true));
+
+            attributeList.Add(new ReplaceableAttribute().WithName(RepositoryControlNumber.BASE_VERSION_INFO).WithValue(baseVersionInfo).WithReplace(true));
 
             return putAttributeRequest;
         }
@@ -194,6 +197,9 @@ namespace BDEditor.Classes
                             break;
                         case CONTROL_NUMBER:
                             // do nothing
+                            break;
+                        case BASE_VERSION_INFO:
+                            cn.baseVersionInfo = attribute.Value;
                             break;
                     }
                 }

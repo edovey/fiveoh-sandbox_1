@@ -5424,7 +5424,7 @@ namespace BDEditor.Classes
         {
             // in some cases there are nodes where the name is empty but link text is needed for the navigation page.
             StringBuilder titleText = new StringBuilder();
-            if (pDisplayParent.NodeType == BDConstants.BDNodeType.BDSurgeryGroup && (
+            if (null != pDisplayParent && pDisplayParent.NodeType == BDConstants.BDNodeType.BDSurgeryGroup && (
                 pDisplayParent.LayoutVariant == BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries ||
                   pDisplayParent.LayoutVariant == BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification))
             {

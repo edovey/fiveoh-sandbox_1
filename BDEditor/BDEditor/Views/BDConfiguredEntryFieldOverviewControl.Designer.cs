@@ -73,8 +73,8 @@
             this.Size = new System.Drawing.Size(688, 180);
             this.Controls.SetChildIndex(this.btnLinkedNote, 0);
             this.Controls.SetChildIndex(this.txtFieldData, 0);
-            this.Controls.SetChildIndex(this.lblFieldLabel, 0);
             this.Controls.SetChildIndex(this.bdLinkedNoteControl1, 0);
+            this.Controls.SetChildIndex(this.lblFieldLabel, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 

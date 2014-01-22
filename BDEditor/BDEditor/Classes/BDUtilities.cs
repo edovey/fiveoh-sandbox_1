@@ -2103,11 +2103,11 @@ namespace BDEditor.Classes
             //}
             #endregion
             #region v.1.5.43
-            BDNode amphoB = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("3dc48109-147a-47a7-99c9-118373374784"));
-            amphoB.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal_Amphotericin_B;
-            amphoB.nodeType = (int)BDConstants.BDNodeType.BDCategory;
-            amphoB.nodeKeyName = BDConstants.BDNodeType.BDCategory.ToString();
-            pContext.SaveChanges();
+            //BDNode amphoB = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("3dc48109-147a-47a7-99c9-118373374784"));
+            //amphoB.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal_Amphotericin_B;
+            //amphoB.nodeType = (int)BDConstants.BDNodeType.BDCategory;
+            //amphoB.nodeKeyName = BDConstants.BDNodeType.BDCategory.ToString();
+            //pContext.SaveChanges();
             #endregion
             #region v.1.6.44
             BDNode section = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("376b287e-1d80-40f5-bb0b-512e52720687"));
@@ -2301,7 +2301,7 @@ namespace BDEditor.Classes
             #region Surgical Proplylaxis : remove v1 data structures for 1.6.73
             // clean hierarchy for Surgical Prophylaxis 
              // preserve existing section
-            BDNode prophylaxis = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("da1fcc78-d169-45a8-a391-2b3db6247075"));
+/*            BDNode prophylaxis = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("da1fcc78-d169-45a8-a391-2b3db6247075"));
             prophylaxis.layoutVariant = 3999;
             pContext.SaveChanges();
 
@@ -2326,6 +2326,165 @@ namespace BDEditor.Classes
 
             BDConfiguredEntry tableConfig = BDConfiguredEntry.RetrieveConfiguredEntryWithId(pContext, Guid.Parse("44a54d1c-c472-47f6-85e5-76a9d7ad5ca1"));
             BDConfiguredEntry.Delete(pContext, tableConfig.uuid);
+
+            // create metadata for new layout variants: 3011, 3012, 3013, 3014, 3015, 3016
+            string colTitle_1 = "COMMON PATHOGENS";
+            string colTitle_2 = "REGIMEN(S) OF CHOICE";
+            string colTitle_3 = "ALTERNATIVE REGIMENS FOR CEPHALOSPORIN ALLERGY or SEVERE PENICILLIN ALLERGY/ANAPHYLAXIS";
+            string inlineNote = "(See General Principles)";
+
+            // 3011
+            BDUtilities.ConfigureLayoutMetadata(pContext, BDConstants.LayoutVariantType.Prophylaxis_Surgical_PreOp, 0, "Prophylactic Antibiotic", BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD01, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(pContext, BDConstants.LayoutVariantType.Prophylaxis_Surgical_PreOp, 1, "Recommended Adult Dose", BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD02, 1, "");
+            BDUtilities.ConfigureLayoutMetadata(pContext, BDConstants.LayoutVariantType.Prophylaxis_Surgical_PreOp, 2, "Recommended Administration", BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD03, 2, "");
+
+            // 3012
+            BDUtilities.ConfigureLayoutMetadata(pContext, BDConstants.LayoutVariantType.Prophylaxis_Surgical_Intraoperative, 0, "Prophylactic Antibiotic", BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD01, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(pContext, BDConstants.LayoutVariantType.Prophylaxis_Surgical_Intraoperative, 1, "Recommended intraoperative redosing interval (from time of administration of pre-op dose):", BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD02, 1, "");
+
+            // 3013
+            BDUtilities.ConfigureLayoutMetadata(pContext, BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery, 0, colTitle_1, BDConstants.BDNodeType.BDMetaDecoration, BDNode.PROPERTYNAME_NAME, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(pContext, BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery, 1, colTitle_2, BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD01, 1, inlineNote);
+            BDUtilities.ConfigureLayoutMetadata(pContext, BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery, 2, colTitle_3, BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD02, 2, inlineNote);
+
+            // 3014
+            BDUtilities.ConfigureLayoutMetadata(pContext, BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries, 0, colTitle_1, BDConstants.BDNodeType.BDMetaDecoration, BDNode.PROPERTYNAME_NAME, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(pContext, BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries, 1, colTitle_2, BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD01, 1, inlineNote);
+            BDUtilities.ConfigureLayoutMetadata(pContext, BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries, 2, colTitle_3, BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD02, 2, inlineNote);
+
+            // 3015
+            BDUtilities.ConfigureLayoutMetadata(pContext, BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification, 0, colTitle_1, BDConstants.BDNodeType.BDMetaDecoration, BDNode.PROPERTYNAME_NAME, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(pContext, BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification, 1, colTitle_2, BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD01, 1, inlineNote);
+            BDUtilities.ConfigureLayoutMetadata(pContext, BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification, 2, colTitle_3, BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD02, 2, inlineNote);
+
+            // 3016
+            BDUtilities.ConfigureLayoutMetadata(pContext, BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification, 0, colTitle_1, BDConstants.BDNodeType.BDMetaDecoration, BDNode.PROPERTYNAME_NAME, 0, "");
+            BDUtilities.ConfigureLayoutMetadata(pContext, BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification, 1, colTitle_2, BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD01, 1, inlineNote);
+            BDUtilities.ConfigureLayoutMetadata(pContext, BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification, 2, colTitle_3, BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD02, 2, inlineNote);
+
+            // Add new topic 'GENERAL PRINCIPLES'
+            BDNode topic = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDTopic);
+            topic.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Topic;
+            topic.displayOrder = 0;
+            topic.SetParent(prophylaxis);
+            topic.Name = "GENERAL PRINCIPLES";
+            topic.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+            pContext.SaveChanges();
+            
+            // Add new table 
+            BDNode table_1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDTable);
+            table_1.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_PreOp;
+            table_1.displayOrder = 1;
+            table_1.SetParent(prophylaxis);
+            table_1.Name = "Table 1:  Pre-Op Antibiotic Administration";
+            table_1.nodeKeyName = BDConstants.BDNodeType.BDTable.ToString();
+            pContext.SaveChanges();
+
+            // Add new table
+            BDNode table_2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDTable);
+            table_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Intraoperative;
+            table_2.displayOrder = 2;
+            table_2.SetParent(prophylaxis);
+            table_2.Name = "Table 2:  Intraoperative Antibiotic Administration";
+            table_2.nodeKeyName = BDConstants.BDNodeType.BDTable.ToString();
+            pContext.SaveChanges();
+            
+            // Add new categories
+            BDNode cat_1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDCategory);
+            cat_1.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical;
+            cat_1.displayOrder = 3;
+            cat_1.SetParent(prophylaxis);
+            cat_1.Name = "GENERAL";
+            cat_1.nodeKeyName = BDConstants.BDNodeType.BDCategory.ToString();
+            pContext.SaveChanges();
+
+            BDNode cat_2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDCategory);
+            cat_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical;
+            cat_2.displayOrder = 4;
+            cat_2.SetParent(prophylaxis);
+            cat_2.Name = "OBSTETRICAL/GYNECOLOGICAL";
+            cat_2.nodeKeyName = BDConstants.BDNodeType.BDCategory.ToString();
+            pContext.SaveChanges();
+
+            BDNode cat_3 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDCategory);
+            cat_3.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical;
+            cat_3.displayOrder = 5;
+            cat_3.SetParent(prophylaxis);
+            cat_3.Name = "UROLOGY";
+            cat_3.nodeKeyName = BDConstants.BDNodeType.BDCategory.ToString();
+            pContext.SaveChanges();
+
+            BDNode cat_4 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDCategory);
+            cat_4.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical;
+            cat_4.displayOrder = 6;
+            cat_4.SetParent(prophylaxis);
+            cat_4.Name = "CARDIAC";
+            cat_4.nodeKeyName = BDConstants.BDNodeType.BDCategory.ToString();
+            pContext.SaveChanges();
+
+            BDNode cat_5 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDCategory);
+            cat_5.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical;
+            cat_5.displayOrder = 7;
+            cat_5.SetParent(prophylaxis);
+            cat_5.Name = "THORACIC";
+            cat_5.nodeKeyName = BDConstants.BDNodeType.BDCategory.ToString();
+            pContext.SaveChanges();
+
+            BDNode cat_6 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDCategory);
+            cat_6.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical;
+            cat_6.displayOrder = 8;
+            cat_6.SetParent(prophylaxis);
+            cat_6.Name = "VASCULAR";
+            cat_6.nodeKeyName = BDConstants.BDNodeType.BDCategory.ToString();
+            pContext.SaveChanges();
+
+            BDNode cat_7 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDCategory);
+            cat_7.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical;
+            cat_7.displayOrder = 9;
+            cat_7.SetParent(prophylaxis);
+            cat_7.Name = "PLASTICS";
+            cat_7.nodeKeyName = BDConstants.BDNodeType.BDCategory.ToString();
+            pContext.SaveChanges();
+
+            BDNode cat_8 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDCategory);
+            cat_8.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical;
+            cat_8.displayOrder = 10;
+            cat_8.SetParent(prophylaxis);
+            cat_8.Name = "ORTHOPAEDIC";
+            cat_8.nodeKeyName = BDConstants.BDNodeType.BDCategory.ToString();
+            pContext.SaveChanges();
+
+            BDNode cat_9 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDCategory);
+            cat_9.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical;
+            cat_9.displayOrder = 11;
+            cat_9.SetParent(prophylaxis);
+            cat_9.Name = "SPINAL SURGERY";
+            cat_9.nodeKeyName = BDConstants.BDNodeType.BDCategory.ToString();
+            pContext.SaveChanges();
+
+            BDNode cat_10 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDCategory);
+            cat_10.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical;
+            cat_10.displayOrder = 12;
+            cat_10.SetParent(prophylaxis);
+            cat_10.Name = "NEUROSURGERY";
+            cat_10.nodeKeyName = BDConstants.BDNodeType.BDCategory.ToString();
+            pContext.SaveChanges();
+
+            BDNode cat_11 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDCategory);
+            cat_11.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical;
+            cat_11.displayOrder = 13;
+            cat_11.SetParent(prophylaxis);
+            cat_11.Name = "HEAD AND NECK SURGERY";
+            cat_11.nodeKeyName = BDConstants.BDNodeType.BDCategory.ToString();
+            pContext.SaveChanges();
+
+            BDNode cat_12 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDCategory);
+            cat_12.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical;
+            cat_12.displayOrder = 14;
+            cat_12.SetParent(prophylaxis);
+            cat_12.Name = "OPHTHALMOLOGY";
+            cat_12.nodeKeyName = BDConstants.BDNodeType.BDCategory.ToString();
+            pContext.SaveChanges(); */
             #endregion
 
         }

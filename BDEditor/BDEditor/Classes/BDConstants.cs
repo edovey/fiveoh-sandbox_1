@@ -99,6 +99,7 @@ namespace BDEditor.Classes
             BDResponse = 35,
             [Description("Infection Frequency")]
             BDFrequency = 36,
+            // BDRegimen Class
             [Description("Regimen")]
             BDRegimen = 37,
             //BDConfiguredEntry Class
@@ -107,6 +108,9 @@ namespace BDEditor.Classes
             //BDCombinedEntry Class
             [Description("Combined Entry")]
             BDCombinedEntry = 39,
+            // BDRegimenGroup Class
+            [Description("Regimen Group")]
+            BDRegimenGroup = 40,
             [Description("Meta Decoration")]
             BDMetaDecoration = 888,
             [Description("Layout Column")]
@@ -281,8 +285,6 @@ namespace BDEditor.Classes
             Prophylaxis_Surgical_Surgeries_With_Classification = 3016,
             [Description("Prophylaxis - Surgery Topic")]
             Prophylaxis_Surgical_Topic = 3017,
-
-            Prophylaxis_Surgical_version1 = 302,
 
             [Description("Prophylaxis - Infective Endocarditis")]
             Prophylaxis_IE = 303,

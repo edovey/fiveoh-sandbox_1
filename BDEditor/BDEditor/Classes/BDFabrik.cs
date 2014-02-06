@@ -1904,10 +1904,28 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         default:
-                            nodeControl = new BDNodeControl(pContext, pNode);
-                            BDNodeControl newControl = nodeControl as BDNodeControl;
-                            newControl.ShowAsChild = false;
-                            newControl.ShowSiblingAdd = true;
+                            {
+                                nodeControl = new BDRegimenControl();
+                                BDRegimenControl regimenControl = nodeControl as BDRegimenControl;
+                                regimenControl.AssignTypeaheadSource(BDTypeahead.TherapyNames, BDRegimen.PROPERTYNAME_NAME);
+                                regimenControl.AssignTypeaheadSource(BDTypeahead.TherapyDosages, BDRegimen.PROPERTYNAME_DOSAGE);
+                                regimenControl.AssignTypeaheadSource(BDTypeahead.TherapyDurations, BDRegimen.PROPERTYNAME_DURATION);
+                            }
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDRegimenGroup:
+                    switch (pNode.LayoutVariant)
+                    {
+                        default:
+                            {
+                                nodeControl = new BDRegimenGroupControl();
+                                BDRegimenGroupControl newControl = nodeControl as BDRegimenGroupControl;
+                                newControl.AssignTypeaheadSource(BDTypeahead.TherapyGroups);
+                                newControl.CurrentRegimenGroup = pNode as BDRegimenGroup;
+                                newControl.AssignDataContext(pContext);
+                                newControl.DefaultLayoutVariantType = pNode.LayoutVariant;
+                            }
                             break;
                     }
                     break;

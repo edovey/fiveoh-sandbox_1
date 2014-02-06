@@ -54,6 +54,8 @@ namespace BDEditor.Classes
                 {
                     therapyGroups = new AutoCompleteStringCollection();
                     string[] names = BDTherapyGroup.RetrieveTherapyGroupNames(new BDEditor.DataModel.Entities());
+                    string[] regimenGroups = BDRegimenGroup.RetrieveRegimenGroupNames(new BDEditor.DataModel.Entities());
+                    therapyGroups.AddRange(names);
                     therapyGroups.AddRange(names);
                 }
                 return therapyGroups;
@@ -68,7 +70,9 @@ namespace BDEditor.Classes
                 {
                     therapyNames = new AutoCompleteStringCollection();
                     string[] names = BDTherapy.RetrieveTherapyNames(new BDEditor.DataModel.Entities());
+                    string[] regimens = BDRegimen.RetrieveBDRegimenNames(new BDEditor.DataModel.Entities());
                     therapyNames.AddRange(names);
+                    therapyNames.AddRange(regimens);
                 }
                 return therapyNames;
             }
@@ -82,6 +86,8 @@ namespace BDEditor.Classes
                 {
                     therapyDosages = new AutoCompleteStringCollection();
                     string[] names = BDTherapy.RetrieveTherapyDosages(new BDEditor.DataModel.Entities());
+                    string[] regimens = BDRegimen.RetrieveBDRegimenDosages(new BDEditor.DataModel.Entities());
+                    therapyDosages.AddRange(names);
                     therapyDosages.AddRange(names);
                 }
                 return therapyDosages;
@@ -96,7 +102,9 @@ namespace BDEditor.Classes
                 {
                     therapyDurations = new AutoCompleteStringCollection();
                     string[] names = BDTherapy.RetrieveTherapyDurations(new BDEditor.DataModel.Entities());
+                    string[] regimens = BDRegimen.RetrieveBDRegimenDurations(new BDEditor.DataModel.Entities());
                     therapyDurations.AddRange(names);
+                    therapyDurations.AddRange(regimens);
                 }
                 return therapyDurations;
             }
@@ -147,6 +155,7 @@ namespace BDEditor.Classes
                         }
                         break;
                     case BDConstants.BDNodeType.BDTherapyGroup:
+                    case BDConstants.BDNodeType.BDRegimenGroup:
                         {
                             if (null == therapyGroups)
                                 therapyGroups = new AutoCompleteStringCollection();
@@ -155,6 +164,7 @@ namespace BDEditor.Classes
                         }
                         break;
                     case BDConstants.BDNodeType.BDTherapy:
+                    case BDConstants.BDNodeType.BDRegimen:
                         {
                             if (null == therapyNames)
                                 therapyNames = new AutoCompleteStringCollection();
@@ -163,7 +173,8 @@ namespace BDEditor.Classes
                             if (null == therapyDurations)
                                 therapyDurations = new AutoCompleteStringCollection();
 
-                            if ((pEntityMember == string.Empty || pEntityMember == BDTherapy.PROPERTYNAME_THERAPY) && !therapyNames.Contains(pValue))
+                            if ((pEntityMember == string.Empty || pEntityMember == BDTherapy.PROPERTYNAME_THERAPY || pEntityMember == BDRegimen.PROPERTYNAME_NAME) 
+                                && !therapyNames.Contains(pValue))
                                 therapyNames.Add(pValue);
                             else if (pEntityMember == BDTherapy.PROPERTYNAME_DOSAGE && !therapyDosages.Contains(pValue))
                                 therapyDosages.Add(pValue);
@@ -178,6 +189,8 @@ namespace BDEditor.Classes
                             else if (pEntityMember == BDTherapy.PROPERTYNAME_DURATION_2 && !therapyDurations.Contains(pValue))
                                 therapyDurations.Add(pValue);
                         }
+                        break;
+                    default:
                         break;
                 }
             }

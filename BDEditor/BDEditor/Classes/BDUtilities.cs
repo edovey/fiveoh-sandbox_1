@@ -240,6 +240,7 @@ namespace BDEditor.Classes
             List<string> diseases = BDNode.RetrieveNodeNamesForType(pContext, BDConstants.BDNodeType.BDDisease).ToList<string>();
             List<string> antimicrobials = BDNode.RetrieveNodeNamesForType(pContext, BDConstants.BDNodeType.BDAntimicrobial).ToList<string>();
             List<string> microorganisms = BDNode.RetrieveNodeNamesForType(pContext, BDConstants.BDNodeType.BDMicroorganism).ToList<string>();
+            List<string> regimens = BDRegimen.RetrieveBDRegimenNames(pContext).ToList<string>();
 
             List<string> searchEntries = new List<string>();
             searchEntries.AddRange(pathogens);
@@ -247,6 +248,7 @@ namespace BDEditor.Classes
             searchEntries.AddRange(diseases);
             searchEntries.AddRange(antimicrobials);
             searchEntries.AddRange(microorganisms);
+            searchEntries.AddRange(regimens);
 
             foreach (string node in searchEntries)
             {
@@ -990,16 +992,16 @@ namespace BDEditor.Classes
             BDNode.Save(dataContext, table5);
 
             // change pathogen groups in Antimicrobial_ClinicalGuidelines  to topics
-            List<BDNode> therapyGroups = BDNode.RetrieveNodesForType(dataContext, BDConstants.BDNodeType.BDPathogenGroup);
-            foreach(BDNode therapyGroup in therapyGroups)
+            List<BDNode> regimenGroups = BDNode.RetrieveNodesForType(dataContext, BDConstants.BDNodeType.BDPathogenGroup);
+            foreach(BDNode regimenGroup in regimenGroups)
             {
-                if (therapyGroup.LayoutVariant == BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines)
+                if (regimenGroup.LayoutVariant == BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines)
                 {
-                    if (therapyGroup.Name == "Predictable Activity" || therapyGroup.Name == "Unpredictable Activity" || therapyGroup.Name == "No/insufficient Activity")
+                    if (regimenGroup.Name == "Predictable Activity" || regimenGroup.Name == "Unpredictable Activity" || regimenGroup.Name == "No/insufficient Activity")
                     {
-                        therapyGroup.nodeType = (int)BDConstants.BDNodeType.BDTopic;
-                        therapyGroup.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
-                        BDNode.Save(dataContext, therapyGroup);
+                        regimenGroup.nodeType = (int)BDConstants.BDNodeType.BDTopic;
+                        regimenGroup.nodeKeyName = BDConstants.BDNodeType.BDTopic.ToString();
+                        BDNode.Save(dataContext, regimenGroup);
                     }
                 }
             }
@@ -1190,19 +1192,19 @@ namespace BDEditor.Classes
                     List<IBDNode> pathogenResistances = BDFabrik.GetChildrenForParent(dataContext, pathogen);
                     foreach(IBDNode pathogenResistance in pathogenResistances)
                      {
-                        List<IBDNode> therapyGroups = BDFabrik.GetChildrenForParent(dataContext, pathogenResistance);
-                        foreach (IBDNode therapyGroup in therapyGroups)
+                        List<IBDNode> regimenGroups = BDFabrik.GetChildrenForParent(dataContext, pathogenResistance);
+                        foreach (IBDNode regimenGroup in regimenGroups)
                         {
-                            List<IBDNode> therapies = BDFabrik.GetChildrenForParent(dataContext, therapyGroup);
-                            foreach (IBDNode therapy in therapies)
+                            List<IBDNode> regimens = BDFabrik.GetChildrenForParent(dataContext, regimenGroup);
+                            foreach (IBDNode regimen in regimens)
                             {
-                                therapy.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics;
-                                BDFabrik.SaveNode(dataContext, therapy);
+                                regimen.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics;
+                                BDFabrik.SaveNode(dataContext, regimen);
                             }
-                            therapyGroup.Name = string.Empty;
-                            therapyGroup.SetParent(xxtable);
-                            therapyGroup.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics;
-                            BDFabrik.SaveNode(dataContext, therapyGroup);
+                            regimenGroup.Name = string.Empty;
+                            regimenGroup.SetParent(xxtable);
+                            regimenGroup.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation18_CultureProvenEndocarditis_Paediatrics;
+                            BDFabrik.SaveNode(dataContext, regimenGroup);
                         }
                         BDFabrik.DeleteNode(dataContext, pathogenResistance);
                     }
@@ -2086,16 +2088,16 @@ namespace BDEditor.Classes
             //            tGroup.Name = pgChild.Name;
             //            pContext.SaveChanges();
 
-            //            List<BDTherapy> therapies = BDTherapy.RetrieveTherapiesForParentId(pContext, pgChild.Uuid);
-            //            for (int idxTherapies = 0; idxTherapies < therapies.Count; idxTherapies++)
+            //            List<BDTherapy> regimens = BDTherapy.RetrieveTherapiesForParentId(pContext, pgChild.Uuid);
+            //            for (int idxTherapies = 0; idxTherapies < regimens.Count; idxTherapies++)
             //            {
-            //                BDTherapy lr_Therapy = therapies[idxTherapies];
-            //                BDTherapy therapy = BDTherapy.CreateBDTherapy(pContext, tGroup.Uuid);
-            //                therapy.DisplayOrder = idxTherapies;
-            //                therapy.name = lr_Therapy.name;
-            //                therapy.dosage = lr_Therapy.dosage;
-            //                therapy.duration = lr_Therapy.duration;
-            //                therapy.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk;
+            //                BDTherapy lr_Therapy = regimens[idxTherapies];
+            //                BDTherapy regimen = BDTherapy.CreateBDTherapy(pContext, tGroup.Uuid);
+            //                regimen.DisplayOrder = idxTherapies;
+            //                regimen.name = lr_Therapy.name;
+            //                regimen.dosage = lr_Therapy.dosage;
+            //                regimen.duration = lr_Therapy.duration;
+            //                regimen.LayoutVariant = BDConstants.LayoutVariantType.TreatmentRecommendation01_Sepsis_Without_Focus_WithRisk;
             //                pContext.SaveChanges();
             //            }
             //        }

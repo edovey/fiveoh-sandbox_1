@@ -240,6 +240,8 @@
     <Compile Include="DataModel\BDNode.cs" />
     <Compile Include="DataModel\BDNodeToHtmlPageIndex.cs" />
     <Compile Include="DataModel\BDPrecaution.cs" />
+    <Compile Include="DataModel\BDRegimen.cs" />
+    <Compile Include="DataModel\BDRegimenGroup.cs" />
     <Compile Include="DataModel\BDSearchEntry.cs" />
     <Compile Include="DataModel\BDSearchEntryAssociation.cs" />
     <Compile Include="DataModel\BDModel1.Designer.cs">
@@ -398,6 +400,18 @@
     <Compile Include="Views\BDPrecautionControl.Designer.cs">
       <DependentUpon>BDPrecautionControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\BDRegimenControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDRegimenControl.Designer.cs">
+      <DependentUpon>BDRegimenControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BDRegimenGroupControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BDRegimenGroupControl.Designer.cs">
+      <DependentUpon>BDRegimenGroupControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\BDRestoreDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -538,6 +552,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDPrecautionControl.resx">
       <DependentUpon>BDPrecautionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDRegimenControl.resx">
+      <DependentUpon>BDRegimenControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDRegimenGroupControl.resx">
+      <DependentUpon>BDRegimenGroupControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BDRestoreDialog.resx">
       <DependentUpon>BDRestoreDialog.cs</DependentUpon>
@@ -707,7 +727,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UseGlobalSettings="True" BuildVersion_ConfigurationName="Release" />
+      <UserProperties BuildVersion_ConfigurationName="Release" BuildVersion_UseGlobalSettings="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

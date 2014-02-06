@@ -1,0 +1,56 @@
+-- Creating table 'BDRegimenGroups'
+CREATE TABLE [BDRegimenGroups] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [displayOrder] int  NOT NULL,
+    [createdDate] datetime  NOT NULL,
+    [modifiedBy] datetime  NULL,
+    [name] nvarchar(1000)  NULL,
+    [schemaVersion] int  NULL,
+    [regimenGroupJoinType] int  NULL,
+    [parentId] uniqueidentifier  NULL,
+    [parentKeyName] nvarchar(4000)  NULL,
+    [parentType] int  NULL,
+    [layoutVariant] int  NULL,
+    [columnOrder] int  NOT NULL
+);
+GO
+
+-- Creating table 'BDRegimens'
+CREATE TABLE [BDRegimens] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [createdDate] datetime  NULL,
+    [displayOrder] int  NOT NULL,
+    [modifiedDate] datetime  NULL,
+    [name] nvarchar(1000)  NULL,
+    [schemaVersion] int  NULL,
+    [regimenJoinType] int  NULL,
+    [leftBracket] bit  NULL,
+    [rightBracket] bit  NULL,
+    [nameSameAsPrevious] bit  NULL,
+    [parentId] uniqueidentifier  NULL,
+    [parentKeyName] nvarchar(4000)  NULL,
+    [parentType] int  NULL,
+    [layoutVariant] int  NULL,
+    [dosage0] nvarchar(1000)  NULL,
+    [dosage1] nvarchar(1000)  NULL,
+    [duration0] nvarchar(1000)  NULL,
+    [duration1] nvarchar(1000)  NULL,
+    [duration1SameAsPrevious] bit  NULL,
+    [duration0SameAsPrevious] bit  NULL,
+    [dosage0SameAsPrevious] bit  NULL,
+    [dosage1SameAsPrevious] bit  NULL,
+    [columnOrder] int  NULL
+);
+GO
+
+-- Creating primary key on [uuid] in table 'BDRegimenGroups'
+ALTER TABLE [BDRegimenGroups]
+ADD CONSTRAINT [PK_BDRegimenGroups]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDRegimens'
+ALTER TABLE [BDRegimens]
+ADD CONSTRAINT [PK_BDRegimens]
+    PRIMARY KEY ([uuid] );
+GO

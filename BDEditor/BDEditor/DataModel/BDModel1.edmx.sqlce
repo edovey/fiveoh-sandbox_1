@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server Compact Edition
 -- --------------------------------------------------
--- Date Created: 07/18/2012 10:28:21
+-- Date Created: 02/05/2014 10:16:17
 -- Generated from EDMX file: C:\Users\Liz Dovey\Documents\Git-SS\fiveoh-sandbox_1\BDEditor\BDEditor\DataModel\BDModel1.edmx
 -- --------------------------------------------------
 
@@ -22,29 +22,35 @@
 GO
     DROP TABLE [BDAttachments];
 GO
-    DROP TABLE [BDDeletions];
+    DROP TABLE [BDCombinedEntry];
+GO
+    DROP TABLE [BDConfiguredEntry];
 GO
     DROP TABLE [BDDosages];
 GO
+    DROP TABLE [BDHtmlPageMap];
+GO
     DROP TABLE [BDHtmlPages];
+GO
+    DROP TABLE [BDLayoutMetadata];
+GO
+    DROP TABLE [BDLayoutMetadataColumn];
+GO
+    DROP TABLE [BDLayoutMetadataColumnNodeType];
 GO
     DROP TABLE [BDLinkedNoteAssociations];
 GO
     DROP TABLE [BDLinkedNotes];
 GO
-    DROP TABLE [BDMetadatas];
-GO
-    DROP TABLE [BDNodeAssociations];
-GO
     DROP TABLE [BDNodes];
+GO
+    DROP TABLE [BDNodeToHtmlPageIndex];
 GO
     DROP TABLE [BDPrecautions];
 GO
     DROP TABLE [BDSearchEntries];
 GO
     DROP TABLE [BDSearchEntryAssociations];
-GO
-    DROP TABLE [BDStrings];
 GO
     DROP TABLE [BDSystemSettings];
 GO
@@ -81,90 +87,12 @@ CREATE TABLE [BDAntimicrobialRisks] (
 );
 GO
 
--- Creating table 'BDAttachments'
-CREATE TABLE [BDAttachments] (
-    [uuid] uniqueidentifier  NOT NULL,
-    [nodeType] int  NULL,
-    [parentId] uniqueidentifier  NULL,
-    [parentType] int  NULL,
-    [modifiedDate] datetime  NULL,
-    [attachmentMimeType] int  NULL,
-    [storageKey] nvarchar(256)  NULL,
-    [schemaVersion] int  NULL,
-    [name] nvarchar(750)  NULL,
-    [displayOrder] int  NULL,
-    [nodeKeyName] nvarchar(100)  NULL,
-    [parentKeyName] nvarchar(100)  NULL,
-    [attachmentData] varbinary(8000)  NULL,
-    [filename] nvarchar(750)  NULL,
-    [filesize] int  NULL
-);
-GO
-
--- Creating table 'BDDeletions'
-CREATE TABLE [BDDeletions] (
-    [uuid] uniqueidentifier  NOT NULL,
-    [createdBy] uniqueidentifier  NULL,
-    [createdDate] datetime  NULL,
-    [modifiedBy] uniqueidentifier  NULL,
-    [modifiedDate] datetime  NULL,
-    [schemaVersion] int  NULL,
-    [targetId] uniqueidentifier  NULL,
-    [targetName] nvarchar(100)  NULL,
-    [targetType] int  NULL,
-    [targetLayoutVariant] int  NULL
-);
-GO
-
--- Creating table 'BDDosages'
-CREATE TABLE [BDDosages] (
-    [uuid] uniqueidentifier  NOT NULL,
-    [displayOrder] int  NULL,
-    [modifiedDate] datetime  NULL,
-    [cost] nvarchar(750)  NULL,
-    [dosage] nvarchar(750)  NULL,
-    [name] nvarchar(750)  NULL,
-    [joinType] int  NULL,
-    [parentId] uniqueidentifier  NULL,
-    [parentType] int  NULL,
-    [layoutVariant] int  NULL,
-    [schemaVersion] int  NULL,
-    [parentKeyName] nvarchar(100)  NULL,
-    [dosage2] nvarchar(4000)  NULL,
-    [dosage3] nvarchar(4000)  NULL,
-    [dosage4] nvarchar(4000)  NULL
-);
-GO
-
--- Creating table 'BDHtmlPages'
-CREATE TABLE [BDHtmlPages] (
-    [uuid] uniqueidentifier  NOT NULL,
-    [createdDate] datetime  NULL,
-    [createdBy] uniqueidentifier  NULL,
-    [schemaVersion] int  NULL,
-    [documentText] nvarchar(4000)  NULL,
-    [storageKey] nvarchar(256)  NULL,
-    [displayParentType] int  NULL,
-    [displayParentId] uniqueidentifier  NULL
-);
-GO
-
--- Creating table 'BDLinkedNoteAssociations'
-CREATE TABLE [BDLinkedNoteAssociations] (
-    [linkedNoteId] uniqueidentifier  NULL,
-    [parentId] uniqueidentifier  NULL,
-    [uuid] uniqueidentifier  NOT NULL,
-    [schemaVersion] int  NULL,
-    [createdBy] uniqueidentifier  NULL,
-    [createdDate] datetime  NULL,
-    [modifiedBy] uniqueidentifier  NULL,
-    [modifiedDate] datetime  NULL,
-    [displayOrder] int  NULL,
-    [linkedNoteType] int  NULL,
-    [deprecated] bit  NOT NULL,
-    [parentKeyName] nvarchar(100)  NULL,
-    [parentKeyPropertyName] nvarchar(100)  NULL,
-    [parentType] int  NULL
+-- Creating table 'BDLayoutMetadatas'
+CREATE TABLE [BDLayoutMetadatas] (
+    [layoutVariant] int  NOT NULL,
+    [included] bit  NOT NULL,
+    [descrip] nvarchar(255)  NULL,
+    [displayOrder] int  NOT NULL
 );
 GO
 
@@ -184,37 +112,6 @@ CREATE TABLE [BDLinkedNotes] (
     [previewText] nvarchar(128)  NULL,
     [scopeId] uniqueidentifier  NULL,
     [singleUse] bit  NULL
-);
-GO
-
--- Creating table 'BDMetadatas'
-CREATE TABLE [BDMetadatas] (
-    [uuid] uniqueidentifier  NOT NULL,
-    [demographic] nvarchar(100)  NULL,
-    [schemaVersion] int  NULL,
-    [createdBy] uniqueidentifier  NULL,
-    [createdDate] datetime  NULL,
-    [modifiedBy] uniqueidentifier  NULL,
-    [modifiedDate] datetime  NULL,
-    [itemId] uniqueidentifier  NULL,
-    [displayParentId] uniqueidentifier  NULL,
-    [displayParentKeyName] nvarchar(100)  NULL,
-    [itemKeyName] nvarchar(100)  NULL,
-    [displayParentType] int  NULL,
-    [itemType] int  NULL
-);
-GO
-
--- Creating table 'BDNodeAssociations'
-CREATE TABLE [BDNodeAssociations] (
-    [uuid] uniqueidentifier  NOT NULL,
-    [nodeId] uniqueidentifier  NULL,
-    [nodeKeyName] nvarchar(100)  NULL,
-    [childKeyName] nvarchar(100)  NULL,
-    [schemaVersion] int  NULL,
-    [createdDate] datetime  NULL,
-    [childNodeType] int  NULL,
-    [nodeType] int  NULL
 );
 GO
 
@@ -261,43 +158,6 @@ CREATE TABLE [BDPrecautions] (
     [maskAcute] nvarchar(750)  NULL,
     [maskLongTerm] nvarchar(750)  NULL,
     [duration] nvarchar(750)  NULL
-);
-GO
-
--- Creating table 'BDSearchEntries'
-CREATE TABLE [BDSearchEntries] (
-    [uuid] uniqueidentifier  NOT NULL,
-    [createdBy] uniqueidentifier  NULL,
-    [createdDate] datetime  NULL,
-    [name] nvarchar(750)  NULL,
-    [schemaVersion] int  NULL
-);
-GO
-
--- Creating table 'BDSearchEntryAssociations'
-CREATE TABLE [BDSearchEntryAssociations] (
-    [uuid] uniqueidentifier  NOT NULL,
-    [createdBy] uniqueidentifier  NULL,
-    [createdDate] datetime  NULL,
-    [searchEntryId] uniqueidentifier  NULL,
-    [displayOrder] int  NULL,
-    [schemaVersion] int  NULL,
-    [displayParentId] uniqueidentifier  NULL,
-    [displayContext] nvarchar(500)  NULL,
-    [displayParentType] int  NULL,
-    [layoutVariant] int  NULL,
-    [searchEntryType] int  NULL
-);
-GO
-
--- Creating table 'BDStrings'
-CREATE TABLE [BDStrings] (
-    [uuid] uniqueidentifier  NOT NULL,
-    [parentId] uniqueidentifier  NULL,
-    [displayOrder] int  NULL,
-    [modifiedDate] datetime  NULL,
-    [value] nvarchar(1000)  NULL,
-    [schemaVersion] int  NULL
 );
 GO
 
@@ -404,6 +264,262 @@ CREATE TABLE [BDTherapyGroups] (
 );
 GO
 
+-- Creating table 'BDAttachments'
+CREATE TABLE [BDAttachments] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [nodeType] int  NULL,
+    [parentId] uniqueidentifier  NULL,
+    [parentType] int  NULL,
+    [modifiedDate] datetime  NULL,
+    [attachmentMimeType] int  NULL,
+    [storageKey] nvarchar(256)  NULL,
+    [schemaVersion] int  NULL,
+    [name] nvarchar(750)  NULL,
+    [displayOrder] int  NULL,
+    [nodeKeyName] nvarchar(100)  NULL,
+    [parentKeyName] nvarchar(100)  NULL,
+    [attachmentData] varbinary(8000)  NULL,
+    [filename] nvarchar(750)  NULL,
+    [filesize] int  NULL
+);
+GO
+
+-- Creating table 'BDLayoutMetadataColumns'
+CREATE TABLE [BDLayoutMetadataColumns] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [layoutVariant] int  NOT NULL,
+    [displayOrder] int  NOT NULL,
+    [label] nvarchar(750)  NULL
+);
+GO
+
+-- Creating table 'BDLayoutMetadataColumnNodeTypes'
+CREATE TABLE [BDLayoutMetadataColumnNodeTypes] (
+    [layoutVariant] int  NOT NULL,
+    [columnId] uniqueidentifier  NOT NULL,
+    [nodeType] int  NOT NULL,
+    [propertyName] nvarchar(255)  NULL,
+    [uuid] uniqueidentifier  NOT NULL,
+    [orderOfPrecedence] int  NULL
+);
+GO
+
+-- Creating table 'BDConfiguredEntries'
+CREATE TABLE [BDConfiguredEntries] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [name] nvarchar(750)  NULL,
+    [parentId] uniqueidentifier  NULL,
+    [parentKeyName] nvarchar(100)  NULL,
+    [nodeType] int  NULL,
+    [layoutVariant] int  NULL,
+    [displayOrder] int  NULL,
+    [schemaVersion] int  NULL,
+    [createdDate] datetime  NULL,
+    [modifiedDate] datetime  NULL,
+    [field01] nvarchar(750)  NULL,
+    [field02] nvarchar(750)  NULL,
+    [field03] nvarchar(750)  NULL,
+    [field04] nvarchar(750)  NULL,
+    [field05] nvarchar(750)  NULL,
+    [field06] nvarchar(750)  NULL,
+    [field07] nvarchar(750)  NULL,
+    [field08] nvarchar(750)  NULL,
+    [field09] nvarchar(750)  NULL,
+    [field10] nvarchar(750)  NULL,
+    [field11] nvarchar(750)  NULL,
+    [field12] nvarchar(750)  NULL,
+    [field13] nvarchar(750)  NULL,
+    [field14] nvarchar(750)  NULL,
+    [field15] nvarchar(750)  NULL,
+    [parentType] int  NULL
+);
+GO
+
+-- Creating table 'BDCombinedEntries'
+CREATE TABLE [BDCombinedEntries] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [nodeType] int  NULL,
+    [layoutVariant] int  NULL,
+    [parentId] uniqueidentifier  NULL,
+    [parentType] int  NULL,
+    [parentKeyName] nvarchar(100)  NULL,
+    [displayOrder] int  NULL,
+    [createdDate] datetime  NULL,
+    [modifiedDate] datetime  NULL,
+    [schemaVersion] int  NULL,
+    [groupTitle] nvarchar(750)  NULL,
+    [name] nvarchar(750)  NULL,
+    [groupJoinType] int  NULL,
+    [entryTitle01] nvarchar(750)  NULL,
+    [entryDetail01] nvarchar(750)  NULL,
+    [entryJoinType01] int  NULL,
+    [entryTitle02] nvarchar(750)  NULL,
+    [entryDetail02] nvarchar(750)  NULL,
+    [entryJoinType02] int  NULL,
+    [entryTitle03] nvarchar(750)  NULL,
+    [entryDetail03] nvarchar(750)  NULL,
+    [entryJoinType03] int  NULL,
+    [entryTitle04] nvarchar(750)  NULL,
+    [entryDetail04] nvarchar(750)  NULL,
+    [entryJoinType04] int  NULL
+);
+GO
+
+-- Creating table 'BDLinkedNoteAssociations'
+CREATE TABLE [BDLinkedNoteAssociations] (
+    [linkedNoteId] uniqueidentifier  NULL,
+    [parentId] uniqueidentifier  NULL,
+    [uuid] uniqueidentifier  NOT NULL,
+    [schemaVersion] int  NULL,
+    [createdBy] uniqueidentifier  NULL,
+    [createdDate] datetime  NULL,
+    [modifiedBy] uniqueidentifier  NULL,
+    [modifiedDate] datetime  NULL,
+    [displayOrder] int  NULL,
+    [linkedNoteType] int  NULL,
+    [deprecated] bit  NOT NULL,
+    [parentKeyName] nvarchar(100)  NULL,
+    [parentKeyPropertyName] nvarchar(100)  NULL,
+    [parentType] int  NULL,
+    [internalLinkNodeId] uniqueidentifier  NULL,
+    [internalLinkNodeType] int  NULL
+);
+GO
+
+-- Creating table 'BDDosages'
+CREATE TABLE [BDDosages] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [displayOrder] int  NULL,
+    [modifiedDate] datetime  NULL,
+    [cost] nvarchar(750)  NULL,
+    [dosage] nvarchar(750)  NULL,
+    [name] nvarchar(750)  NULL,
+    [joinType] int  NULL,
+    [parentId] uniqueidentifier  NULL,
+    [parentType] int  NULL,
+    [layoutVariant] int  NULL,
+    [schemaVersion] int  NULL,
+    [parentKeyName] nvarchar(100)  NULL,
+    [dosage2] nvarchar(4000)  NULL,
+    [dosage3] nvarchar(4000)  NULL,
+    [dosage4] nvarchar(4000)  NULL,
+    [cost2] nvarchar(750)  NULL,
+    [dosage2SameAsPrevious] bit  NOT NULL,
+    [dosage3SameAsPrevious] bit  NOT NULL,
+    [dosage4SameAsPrevious] bit  NOT NULL
+);
+GO
+
+-- Creating table 'BDNodeToHtmlPageIndexes'
+CREATE TABLE [BDNodeToHtmlPageIndexes] (
+    [ibdNodeId] uniqueidentifier  NOT NULL,
+    [htmlPageId] uniqueidentifier  NULL,
+    [chapterId] uniqueidentifier  NULL,
+    [wasGenerated] bit  NOT NULL,
+    [htmlPageType] int  NOT NULL,
+    [parentKeyPropertyName] nvarchar(100)  NOT NULL
+);
+GO
+
+-- Creating table 'BDHtmlPageMap'
+CREATE TABLE [BDHtmlPageMap] (
+    [htmlPageId] uniqueidentifier  NOT NULL,
+    [uuid] uniqueidentifier  NOT NULL,
+    [originalIbdObjectId] uniqueidentifier  NOT NULL
+);
+GO
+
+-- Creating table 'BDHtmlPages'
+CREATE TABLE [BDHtmlPages] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [createdDate] datetime  NULL,
+    [createdBy] uniqueidentifier  NULL,
+    [schemaVersion] int  NULL,
+    [documentText] nvarchar(4000)  NULL,
+    [storageKey] nvarchar(256)  NULL,
+    [displayParentType] int  NULL,
+    [displayParentId] uniqueidentifier  NULL,
+    [htmlPageType] int  NULL,
+    [layoutVariant] int  NULL,
+    [pageTitle] nvarchar(999)  NULL,
+    [name] nvarchar(750)  NULL
+);
+GO
+
+-- Creating table 'BDSearchEntries'
+CREATE TABLE [BDSearchEntries] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [createdBy] uniqueidentifier  NULL,
+    [createdDate] datetime  NULL,
+    [name] nvarchar(750)  NULL,
+    [schemaVersion] int  NULL,
+    [show] bit  NULL
+);
+GO
+
+-- Creating table 'BDSearchEntryAssociations'
+CREATE TABLE [BDSearchEntryAssociations] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [createdBy] uniqueidentifier  NULL,
+    [createdDate] datetime  NULL,
+    [searchEntryId] uniqueidentifier  NULL,
+    [displayOrder] int  NULL,
+    [schemaVersion] int  NULL,
+    [displayParentId] uniqueidentifier  NULL,
+    [displayContext] nvarchar(500)  NULL,
+    [displayParentType] int  NULL,
+    [layoutVariant] int  NULL,
+    [searchEntryType] int  NULL,
+    [anchorNodeId] uniqueidentifier  NULL,
+    [editorContext] nvarchar(500)  NULL
+);
+GO
+
+-- Creating table 'BDRegimenGroups'
+CREATE TABLE [BDRegimenGroups] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [displayOrder] int  NOT NULL,
+    [createdDate] datetime  NOT NULL,
+    [modifiedBy] datetime  NULL,
+    [name] nvarchar(1000)  NULL,
+    [schemaVersion] int  NULL,
+    [regimenGroupJoinType] int  NULL,
+    [parentId] uniqueidentifier  NULL,
+    [parentKeyName] nvarchar(4000)  NULL,
+    [parentType] int  NULL,
+    [layoutVariant] int  NULL,
+    [columnOrder] int  NOT NULL
+);
+GO
+
+-- Creating table 'BDRegimens'
+CREATE TABLE [BDRegimens] (
+    [uuid] uniqueidentifier  NOT NULL,
+    [createdDate] datetime  NULL,
+    [displayOrder] int  NOT NULL,
+    [modifiedDate] datetime  NULL,
+    [name] nvarchar(1000)  NULL,
+    [schemaVersion] int  NULL,
+    [regimenJoinType] int  NULL,
+    [leftBracket] bit  NULL,
+    [rightBracket] bit  NULL,
+    [nameSameAsPrevious] bit  NULL,
+    [parentId] uniqueidentifier  NULL,
+    [parentKeyName] nvarchar(4000)  NULL,
+    [parentType] int  NULL,
+    [layoutVariant] int  NULL,
+    [dosage0] nvarchar(1000)  NULL,
+    [dosage1] nvarchar(1000)  NULL,
+    [duration0] nvarchar(1000)  NULL,
+    [duration1] nvarchar(1000)  NULL,
+    [duration1SameAsPrevious] bit  NULL,
+    [duration0SameAsPrevious] bit  NULL,
+    [dosage0SameAsPrevious] bit  NULL,
+    [dosage1SameAsPrevious] bit  NULL,
+    [columnOrder] int  NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -414,51 +530,15 @@ ADD CONSTRAINT [PK_BDAntimicrobialRisks]
     PRIMARY KEY ([uuid] );
 GO
 
--- Creating primary key on [uuid] in table 'BDAttachments'
-ALTER TABLE [BDAttachments]
-ADD CONSTRAINT [PK_BDAttachments]
-    PRIMARY KEY ([uuid] );
-GO
-
--- Creating primary key on [uuid] in table 'BDDeletions'
-ALTER TABLE [BDDeletions]
-ADD CONSTRAINT [PK_BDDeletions]
-    PRIMARY KEY ([uuid] );
-GO
-
--- Creating primary key on [uuid] in table 'BDDosages'
-ALTER TABLE [BDDosages]
-ADD CONSTRAINT [PK_BDDosages]
-    PRIMARY KEY ([uuid] );
-GO
-
--- Creating primary key on [uuid] in table 'BDHtmlPages'
-ALTER TABLE [BDHtmlPages]
-ADD CONSTRAINT [PK_BDHtmlPages]
-    PRIMARY KEY ([uuid] );
-GO
-
--- Creating primary key on [uuid] in table 'BDLinkedNoteAssociations'
-ALTER TABLE [BDLinkedNoteAssociations]
-ADD CONSTRAINT [PK_BDLinkedNoteAssociations]
-    PRIMARY KEY ([uuid] );
+-- Creating primary key on [layoutVariant] in table 'BDLayoutMetadatas'
+ALTER TABLE [BDLayoutMetadatas]
+ADD CONSTRAINT [PK_BDLayoutMetadatas]
+    PRIMARY KEY ([layoutVariant] );
 GO
 
 -- Creating primary key on [uuid] in table 'BDLinkedNotes'
 ALTER TABLE [BDLinkedNotes]
 ADD CONSTRAINT [PK_BDLinkedNotes]
-    PRIMARY KEY ([uuid] );
-GO
-
--- Creating primary key on [uuid] in table 'BDMetadatas'
-ALTER TABLE [BDMetadatas]
-ADD CONSTRAINT [PK_BDMetadatas]
-    PRIMARY KEY ([uuid] );
-GO
-
--- Creating primary key on [uuid] in table 'BDNodeAssociations'
-ALTER TABLE [BDNodeAssociations]
-ADD CONSTRAINT [PK_BDNodeAssociations]
     PRIMARY KEY ([uuid] );
 GO
 
@@ -471,24 +551,6 @@ GO
 -- Creating primary key on [uuid] in table 'BDPrecautions'
 ALTER TABLE [BDPrecautions]
 ADD CONSTRAINT [PK_BDPrecautions]
-    PRIMARY KEY ([uuid] );
-GO
-
--- Creating primary key on [uuid] in table 'BDSearchEntries'
-ALTER TABLE [BDSearchEntries]
-ADD CONSTRAINT [PK_BDSearchEntries]
-    PRIMARY KEY ([uuid] );
-GO
-
--- Creating primary key on [uuid] in table 'BDSearchEntryAssociations'
-ALTER TABLE [BDSearchEntryAssociations]
-ADD CONSTRAINT [PK_BDSearchEntryAssociations]
-    PRIMARY KEY ([uuid] );
-GO
-
--- Creating primary key on [uuid] in table 'BDStrings'
-ALTER TABLE [BDStrings]
-ADD CONSTRAINT [PK_BDStrings]
     PRIMARY KEY ([uuid] );
 GO
 
@@ -519,6 +581,90 @@ GO
 -- Creating primary key on [uuid] in table 'BDTherapyGroups'
 ALTER TABLE [BDTherapyGroups]
 ADD CONSTRAINT [PK_BDTherapyGroups]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDAttachments'
+ALTER TABLE [BDAttachments]
+ADD CONSTRAINT [PK_BDAttachments]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDLayoutMetadataColumns'
+ALTER TABLE [BDLayoutMetadataColumns]
+ADD CONSTRAINT [PK_BDLayoutMetadataColumns]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDLayoutMetadataColumnNodeTypes'
+ALTER TABLE [BDLayoutMetadataColumnNodeTypes]
+ADD CONSTRAINT [PK_BDLayoutMetadataColumnNodeTypes]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDConfiguredEntries'
+ALTER TABLE [BDConfiguredEntries]
+ADD CONSTRAINT [PK_BDConfiguredEntries]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDCombinedEntries'
+ALTER TABLE [BDCombinedEntries]
+ADD CONSTRAINT [PK_BDCombinedEntries]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDLinkedNoteAssociations'
+ALTER TABLE [BDLinkedNoteAssociations]
+ADD CONSTRAINT [PK_BDLinkedNoteAssociations]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDDosages'
+ALTER TABLE [BDDosages]
+ADD CONSTRAINT [PK_BDDosages]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [ibdNodeId], [htmlPageType], [parentKeyPropertyName] in table 'BDNodeToHtmlPageIndexes'
+ALTER TABLE [BDNodeToHtmlPageIndexes]
+ADD CONSTRAINT [PK_BDNodeToHtmlPageIndexes]
+    PRIMARY KEY ([ibdNodeId], [htmlPageType], [parentKeyPropertyName] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDHtmlPageMap'
+ALTER TABLE [BDHtmlPageMap]
+ADD CONSTRAINT [PK_BDHtmlPageMap]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDHtmlPages'
+ALTER TABLE [BDHtmlPages]
+ADD CONSTRAINT [PK_BDHtmlPages]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDSearchEntries'
+ALTER TABLE [BDSearchEntries]
+ADD CONSTRAINT [PK_BDSearchEntries]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDSearchEntryAssociations'
+ALTER TABLE [BDSearchEntryAssociations]
+ADD CONSTRAINT [PK_BDSearchEntryAssociations]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDRegimenGroups'
+ALTER TABLE [BDRegimenGroups]
+ADD CONSTRAINT [PK_BDRegimenGroups]
+    PRIMARY KEY ([uuid] );
+GO
+
+-- Creating primary key on [uuid] in table 'BDRegimens'
+ALTER TABLE [BDRegimens]
+ADD CONSTRAINT [PK_BDRegimens]
     PRIMARY KEY ([uuid] );
 GO
 

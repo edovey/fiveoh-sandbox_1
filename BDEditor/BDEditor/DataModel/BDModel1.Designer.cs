@@ -420,22 +420,6 @@ namespace BDEditor.DataModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<BDRegimen> BDRegimens
-        {
-            get
-            {
-                if ((_BDRegimens == null))
-                {
-                    _BDRegimens = base.CreateObjectSet<BDRegimen>("BDRegimens");
-                }
-                return _BDRegimens;
-            }
-        }
-        private ObjectSet<BDRegimen> _BDRegimens;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<BDRegimenGroup> BDRegimenGroups
         {
             get
@@ -448,6 +432,22 @@ namespace BDEditor.DataModel
             }
         }
         private ObjectSet<BDRegimenGroup> _BDRegimenGroups;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BDRegimen> BDRegimens
+        {
+            get
+            {
+                if ((_BDRegimens == null))
+                {
+                    _BDRegimens = base.CreateObjectSet<BDRegimen>("BDRegimens");
+                }
+                return _BDRegimens;
+            }
+        }
+        private ObjectSet<BDRegimen> _BDRegimens;
 
         #endregion
         #region AddTo Methods
@@ -629,19 +629,19 @@ namespace BDEditor.DataModel
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the BDRegimens EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToBDRegimens(BDRegimen bDRegimen)
-        {
-            base.AddObject("BDRegimens", bDRegimen);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the BDRegimenGroups EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToBDRegimenGroups(BDRegimenGroup bDRegimenGroup)
         {
             base.AddObject("BDRegimenGroups", bDRegimenGroup);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BDRegimens EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBDRegimens(BDRegimen bDRegimen)
+        {
+            base.AddObject("BDRegimens", bDRegimen);
         }
 
         #endregion
@@ -6559,6 +6559,30 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Int32> _columnOrder;
         partial void OncolumnOrderChanging(Nullable<global::System.Int32> value);
         partial void OncolumnOrderChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> nodeType
+        {
+            get
+            {
+                return _nodeType;
+            }
+            set
+            {
+                OnnodeTypeChanging(value);
+                ReportPropertyChanging("nodeType");
+                _nodeType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("nodeType");
+                OnnodeTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _nodeType;
+        partial void OnnodeTypeChanging(Nullable<global::System.Int32> value);
+        partial void OnnodeTypeChanged();
 
         #endregion
     
@@ -6686,30 +6710,6 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Int32> _displayOrder;
         partial void OndisplayOrderChanging(Nullable<global::System.Int32> value);
         partial void OndisplayOrderChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> columnOrder
-        {
-            get
-            {
-                return _columnOrder;
-            }
-            set
-            {
-                OncolumnOrderChanging(value);
-                ReportPropertyChanging("columnOrder");
-                _columnOrder = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("columnOrder");
-                OncolumnOrderChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _columnOrder;
-        partial void OncolumnOrderChanging(Nullable<global::System.Int32> value);
-        partial void OncolumnOrderChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -6884,24 +6884,72 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> sameAsPreviousColumn
+        public Nullable<global::System.Int32> nodeType
         {
             get
             {
-                return _sameAsPreviousColumn;
+                return _nodeType;
             }
             set
             {
-                OnsameAsPreviousColumnChanging(value);
-                ReportPropertyChanging("sameAsPreviousColumn");
-                _sameAsPreviousColumn = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("sameAsPreviousColumn");
-                OnsameAsPreviousColumnChanged();
+                OnnodeTypeChanging(value);
+                ReportPropertyChanging("nodeType");
+                _nodeType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("nodeType");
+                OnnodeTypeChanged();
             }
         }
-        private Nullable<global::System.Boolean> _sameAsPreviousColumn;
-        partial void OnsameAsPreviousColumnChanging(Nullable<global::System.Boolean> value);
-        partial void OnsameAsPreviousColumnChanged();
+        private Nullable<global::System.Int32> _nodeType;
+        partial void OnnodeTypeChanging(Nullable<global::System.Int32> value);
+        partial void OnnodeTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> regimenOfChoice
+        {
+            get
+            {
+                return _regimenOfChoice;
+            }
+            set
+            {
+                OnregimenOfChoiceChanging(value);
+                ReportPropertyChanging("regimenOfChoice");
+                _regimenOfChoice = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("regimenOfChoice");
+                OnregimenOfChoiceChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _regimenOfChoice;
+        partial void OnregimenOfChoiceChanging(Nullable<global::System.Boolean> value);
+        partial void OnregimenOfChoiceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> alternativeRegimen
+        {
+            get
+            {
+                return _alternativeRegimen;
+            }
+            set
+            {
+                OnalternativeRegimenChanging(value);
+                ReportPropertyChanging("alternativeRegimen");
+                _alternativeRegimen = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("alternativeRegimen");
+                OnalternativeRegimenChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _alternativeRegimen;
+        partial void OnalternativeRegimenChanging(Nullable<global::System.Boolean> value);
+        partial void OnalternativeRegimenChanged();
 
         #endregion
     

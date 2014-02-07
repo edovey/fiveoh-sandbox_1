@@ -76,7 +76,6 @@ namespace BDEditor.Views
         public BDRegimenGroupControl()
         {
             InitializeComponent();
-            btnRegimenGroupLink.Tag = BDRegimenGroup.PROPERTYNAME_NAME;
         }
 
         public BDRegimenGroup CurrentRegimenGroup
@@ -136,6 +135,12 @@ namespace BDEditor.Views
                         noneRadioButton.Checked = true;
                         break;
                 }
+
+                if(currentRegimenGroup.regimenOfChoice.Value)
+                    cbRegimenOfChoice.Checked = true;
+
+                if (currentRegimenGroup.alternativeRegimen.Value)
+                    cbAlternativeRegimen.Checked = true;
 
                 if (pShowChildren)
                 {
@@ -220,11 +225,6 @@ namespace BDEditor.Views
                         if (currentRegimenGroup.displayOrder != DisplayOrder) currentRegimenGroup.displayOrder = DisplayOrder;
                     }
 
-                    if (rbColumnOrder_0.Checked)
-                        currentRegimenGroup.columnOrder = 0;
-                    else if (rbColumnOrder_1.Checked)
-                        currentRegimenGroup.columnOrder = 1;
-
                     if (andRadioButton.Checked)
                     {
                         if (currentRegimenGroup.regimenGroupJoinType != (int)BDRegimenGroup.RegimenGroupJoinType.AndWithNext)
@@ -240,6 +240,12 @@ namespace BDEditor.Views
                         if (currentRegimenGroup.regimenGroupJoinType != (int)BDRegimenGroup.RegimenGroupJoinType.None)
                             currentRegimenGroup.regimenGroupJoinType = (int)BDRegimenGroup.RegimenGroupJoinType.None;
                     }
+
+                    if (cbRegimenOfChoice.Checked != currentRegimenGroup.regimenOfChoice)
+                        currentRegimenGroup.regimenOfChoice = cbRegimenOfChoice.Checked;
+
+                    if (cbAlternativeRegimen.Checked != currentRegimenGroup.alternativeRegimen)
+                        currentRegimenGroup.alternativeRegimen = cbAlternativeRegimen.Checked;
 
                     BDRegimenGroup.Save(dataContext, currentRegimenGroup);
                     BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDRegimenGroup, BDRegimenGroup.PROPERTYNAME_NAME, currentRegimenGroup.name);
@@ -277,7 +283,6 @@ namespace BDEditor.Views
                     currentRegimenGroup.SetParent(parentType, parentId);
                     currentRegimenGroup.displayOrder = (null == DisplayOrder) ? -1 : DisplayOrder;
                     currentRegimenGroup.LayoutVariant = DefaultLayoutVariantType;
-                    currentRegimenGroup.columnOrder = (null == ColumnOrder) ? -1 : ColumnOrder;
                 }
             }
 
@@ -312,7 +317,7 @@ namespace BDEditor.Views
 
         private void toggleLinkButton()
         {
-            bool enabled = ((cbSameAsPreviousColumn.Checked || tbName.Text.Length > 0));
+            bool enabled = (tbName.Text.Length > 0);
         }
 
         public override string ToString()
@@ -337,8 +342,6 @@ namespace BDEditor.Views
                 regimenControl.AssignTypeaheadSource(BDTypeahead.TherapyNames, BDRegimen.PROPERTYNAME_NAME);
                 regimenControl.AssignTypeaheadSource(BDTypeahead.TherapyDosages, BDRegimen.PROPERTYNAME_DOSAGE);
                 regimenControl.AssignTypeaheadSource(BDTypeahead.TherapyDurations, BDRegimen.PROPERTYNAME_DURATION);
-                //regimenControl.AssignTypeaheadSource(BDTypeahead.TherapyDosages, BDTherapy.PROPERTYNAME_DOSAGE_1);
-                //regimenControl.AssignTypeaheadSource(BDTypeahead.TherapyDurations, BDTherapy.PROPERTYNAME_DURATION_1);
                 regimenControl.CurrentRegimen = pRegimen;
                 regimenControl.DefaultLayoutVariantType = this.DefaultLayoutVariantType;
                 regimenControl.RequestItemAdd += new EventHandler<NodeEventArgs>(Regimen_RequestItemAdd);
@@ -619,6 +622,8 @@ namespace BDEditor.Views
 
         private void BDRegimenGroupControl_Load(object sender, EventArgs e)
         {
+            btnRegimenGroupLink.Tag = BDRegimenGroup.PROPERTYNAME_NAME;
+
             lblInfo.Visible = false;
 #if DEBUG
             lblInfo.Visible = true;
@@ -642,29 +647,6 @@ namespace BDEditor.Views
 
                     indexEditView.Dispose();
                 }
-            }
-        }
-
-        private void cbSameAsPreviousColumn_CheckedChanged(object sender, EventArgs e)
-        {
-            toggleLinkButton();
-        }
-
-        private void rbColumnOrder_0_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbColumnOrder_0.Checked)
-            {
-                currentRegimenGroup.columnOrder = 0;
-                //rbColumnOrder_1.Checked = false;
-            }
-        }
-
-        private void rbColumnOrder_1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbColumnOrder_1.Checked)
-            {
-                currentRegimenGroup.columnOrder = 1;
-                //rbColumnOrder_0.Checked = false;
             }
         }
 

@@ -95,6 +95,7 @@
             this.addTherapyToolStripMenuItem.Name = "addTherapyToolStripMenuItem";
             this.addTherapyToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.addTherapyToolStripMenuItem.Text = "&Add Regimen";
+            this.addTherapyToolStripMenuItem.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // pnlMain
             // 
@@ -124,13 +125,13 @@
             this.pnlMain.Location = new System.Drawing.Point(0, 0);
             this.pnlMain.MinimumSize = new System.Drawing.Size(866, 10);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(872, 85);
+            this.pnlMain.Size = new System.Drawing.Size(866, 85);
             this.pnlMain.TabIndex = 32;
             // 
             // rbColumnOrder_0
             // 
             this.rbColumnOrder_0.AutoSize = true;
-            this.rbColumnOrder_0.Location = new System.Drawing.Point(149, 4);
+            this.rbColumnOrder_0.Location = new System.Drawing.Point(601, 7);
             this.rbColumnOrder_0.Name = "rbColumnOrder_0";
             this.rbColumnOrder_0.Size = new System.Drawing.Size(115, 17);
             this.rbColumnOrder_0.TabIndex = 27;
@@ -142,7 +143,7 @@
             // rbColumnOrder_1
             // 
             this.rbColumnOrder_1.AutoSize = true;
-            this.rbColumnOrder_1.Location = new System.Drawing.Point(270, 4);
+            this.rbColumnOrder_1.Location = new System.Drawing.Point(722, 7);
             this.rbColumnOrder_1.Name = "rbColumnOrder_1";
             this.rbColumnOrder_1.Size = new System.Drawing.Size(120, 17);
             this.rbColumnOrder_1.TabIndex = 28;
@@ -211,6 +212,7 @@
             this.tbName.TabIndex = 1;
             this.tbName.Tag = "";
             this.tbName.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.tbName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbName_MouseDown);
             // 
             // contextMenuStrip1
             // 
@@ -300,16 +302,18 @@
             this.tbDosage.TabIndex = 4;
             this.tbDosage.Tag = "";
             this.tbDosage.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.tbDosage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDosage_MouseDown);
             // 
             // tbDuration
             // 
             this.tbDuration.ContextMenuStrip = this.contextMenuStrip1;
             this.tbDuration.Location = new System.Drawing.Point(605, 48);
             this.tbDuration.Name = "tbDuration";
-            this.tbDuration.Size = new System.Drawing.Size(174, 20);
+            this.tbDuration.Size = new System.Drawing.Size(151, 20);
             this.tbDuration.TabIndex = 7;
             this.tbDuration.Tag = "";
             this.tbDuration.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.tbDuration.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDuration_MouseDown);
             // 
             // btnNameLink
             // 
@@ -337,7 +341,7 @@
             // 
             this.btnDurationLink.Enabled = false;
             this.btnDurationLink.Image = ((System.Drawing.Image)(resources.GetObject("btnDurationLink.Image")));
-            this.btnDurationLink.Location = new System.Drawing.Point(785, 47);
+            this.btnDurationLink.Location = new System.Drawing.Point(762, 47);
             this.btnDurationLink.Name = "btnDurationLink";
             this.btnDurationLink.Size = new System.Drawing.Size(28, 28);
             this.btnDurationLink.TabIndex = 8;
@@ -380,7 +384,7 @@
             // btnMenu
             // 
             this.btnMenu.Image = global::BDEditor.Properties.Resources.apps_16;
-            this.btnMenu.Location = new System.Drawing.Point(837, 0);
+            this.btnMenu.Location = new System.Drawing.Point(821, 48);
             this.btnMenu.Name = "btnMenu";
             this.btnMenu.Size = new System.Drawing.Size(28, 28);
             this.btnMenu.TabIndex = 14;
@@ -392,7 +396,7 @@
             this.lblRightBracket.AutoSize = true;
             this.lblRightBracket.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRightBracket.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.lblRightBracket.Location = new System.Drawing.Point(810, 30);
+            this.lblRightBracket.Location = new System.Drawing.Point(787, 30);
             this.lblRightBracket.Name = "lblRightBracket";
             this.lblRightBracket.Size = new System.Drawing.Size(38, 55);
             this.lblRightBracket.TabIndex = 16;
@@ -442,6 +446,7 @@
             this.editIndexStripMenuItem.Name = "editIndexStripMenuItem";
             this.editIndexStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.editIndexStripMenuItem.Text = "&Edit Index Entries";
+            this.editIndexStripMenuItem.Click += new System.EventHandler(this.editIndexStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -490,7 +495,7 @@
             this.pnlRadioButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlRadioButtons.Location = new System.Drawing.Point(0, 87);
             this.pnlRadioButtons.Name = "pnlRadioButtons";
-            this.pnlRadioButtons.Size = new System.Drawing.Size(872, 23);
+            this.pnlRadioButtons.Size = new System.Drawing.Size(860, 23);
             this.pnlRadioButtons.TabIndex = 31;
             // 
             // aoRadioButton
@@ -566,7 +571,7 @@
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.pnlRadioButtons);
             this.Name = "BDRegimenControl";
-            this.Size = new System.Drawing.Size(872, 110);
+            this.Size = new System.Drawing.Size(860, 110);
             this.Load += new System.EventHandler(this.BDRegimenControl_Load);
             this.Leave += new System.EventHandler(this.BDRegimenControl_Leave);
             this.pnlMain.ResumeLayout(false);

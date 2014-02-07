@@ -161,6 +161,7 @@ namespace BDEditor.Views
                 tbDosage.Text = @"";
                 tbDuration.Text = @"";
                 nextRegimenRadioButton.Checked = true;
+                rbColumnOrder_0.Checked = true;
                 lblLeftBracket.ForeColor = SystemColors.ControlLight;
                 lblRightBracket.ForeColor = SystemColors.ControlLight;
                 chkPreviousName.Checked = false;
@@ -272,12 +273,15 @@ namespace BDEditor.Views
                     if (currentRegimen.dosage0 != tbDosage.Text) currentRegimen.dosage0 = tbDosage.Text;
                     if (currentRegimen.duration0 != tbDuration.Text) currentRegimen.duration0 = tbDuration.Text;
                     if (currentRegimen.displayOrder != DisplayOrder) currentRegimen.displayOrder = DisplayOrder;
-
+                    
+                    int columnOrder = 0;
                     if (rbColumnOrder_0.Checked)
-                        currentRegimen.columnOrder = 0;
+                        columnOrder = 0;
                     else if (rbColumnOrder_1.Checked)
-                        currentRegimen.columnOrder = 1;
-
+                        columnOrder = 1;
+                    if (columnOrder != currentRegimen.columnOrder)
+                        currentRegimen.columnOrder = columnOrder;
+                    
                     if (andRadioButton.Checked)
                     {
                         if (currentRegimen.regimenJoinType != (int)BDConstants.BDJoinType.AndWithNext)

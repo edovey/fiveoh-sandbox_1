@@ -39,10 +39,11 @@ namespace BDEditor.DataModel
         private const string CREATEDDATE = @"rg_createdDate";
         private const string MODIFIEDDATE = @"rg_modifiedDate";
         private const string DISPLAYORDER = @"rg_displayOrder";
-        private const string COLUMNORDER = @"rg_columnOrder";
         private const string REGIMENGROUPJOINTYPE = @"rg_regimenGroupJoinType";
         private const string NAME = @"rg_name";
-        private const string SAMEASPREVIOUSCOLUMN = @"rg_sameAsPreviousColumn";
+        private const string NODETYPE = @"rg_nodeType";
+        private const string REGIMENOFCHOICE = @"rg_regimenOfChoice";
+        private const string ALTERNATIVEREGIMEN = @"rg_alternativeRegimen";
 
         private const string PARENTID = @"rg_parentId";
         private const string PARENTTYPE = @"rg_parentType";
@@ -76,10 +77,10 @@ namespace BDEditor.DataModel
             regimenGroup.schemaVersion = ENTITY_SCHEMAVERSION;
             regimenGroup.regimenGroupJoinType = (int)RegimenGroupJoinType.None;
             regimenGroup.displayOrder = -1;
-            regimenGroup.columnOrder = -1;
             regimenGroup.name = string.Empty;
             regimenGroup.parentId = pParentId;
-            regimenGroup.sameAsPreviousColumn = false;
+            regimenGroup.regimenOfChoice = false;
+            regimenGroup.alternativeRegimen = false;
 
             pContext.AddObject(ENTITYNAME, regimenGroup);
 
@@ -249,7 +250,7 @@ namespace BDEditor.DataModel
 
         public BDConstants.BDNodeType NodeType
         {
-            get { return BDConstants.BDNodeType.BDTherapyGroup; }
+            get { return BDConstants.BDNodeType.BDRegimenGroup; }
         }
 
         public string Description
@@ -277,12 +278,6 @@ namespace BDEditor.DataModel
         {
             get { return displayOrder; }
             set { displayOrder = value; }
-        }
-
-        public int? ColumnOrder
-        {
-            get { return columnOrder; }
-            set { columnOrder = value; }
         }
 
         public BDConstants.BDNodeType ParentType
@@ -386,12 +381,12 @@ namespace BDEditor.DataModel
             short schemaVersion = short.Parse(pAttributeDictionary[SCHEMAVERSION]);
             entry.schemaVersion = schemaVersion;
             entry.displayOrder = (null == pAttributeDictionary[DISPLAYORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[DISPLAYORDER]); ;
-            entry.columnOrder = (null == pAttributeDictionary[COLUMNORDER]) ? (short)-1 : short.Parse(pAttributeDictionary[COLUMNORDER]); ;
             entry.createdDate = DateTime.Parse(pAttributeDictionary[CREATEDDATE]);
             entry.modifiedDate = DateTime.Parse(pAttributeDictionary[MODIFIEDDATE]);
             entry.regimenGroupJoinType = int.Parse(pAttributeDictionary[REGIMENGROUPJOINTYPE]);
             entry.name = pAttributeDictionary[NAME];
-            entry.sameAsPreviousColumn = bool.Parse(pAttributeDictionary[SAMEASPREVIOUSCOLUMN]);
+            entry.regimenOfChoice = bool.Parse(pAttributeDictionary[REGIMENOFCHOICE]);
+            entry.alternativeRegimen = bool.Parse(pAttributeDictionary[ALTERNATIVEREGIMEN]);
 
             entry.parentId = Guid.Parse(pAttributeDictionary[PARENTID]);
             entry.parentType = (null == pAttributeDictionary[PARENTTYPE]) ? (short)-1 : short.Parse(pAttributeDictionary[PARENTTYPE]);
@@ -412,13 +407,13 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDRegimenGroup.UUID).WithValue(uuid.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDRegimenGroup.SCHEMAVERSION).WithValue(string.Format(@"{0}", schemaVersion)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDRegimenGroup.DISPLAYORDER).WithValue(string.Format(@"{0}", displayOrder)).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDRegimenGroup.COLUMNORDER).WithValue(string.Format(@"{0}", columnOrder)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDRegimenGroup.CREATEDDATE).WithValue((null == createdDate) ? string.Empty : createdDate.Value.ToString(BDConstants.DATETIMEFORMAT)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDRegimenGroup.MODIFIEDDATE).WithValue((null == modifiedDate) ? string.Empty : modifiedDate.Value.ToString(BDConstants.DATETIMEFORMAT)).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDRegimenGroup.REGIMENGROUPJOINTYPE).WithValue(regimenGroupJoinType.ToString()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDRegimenGroup.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDRegimenGroup.SAMEASPREVIOUSCOLUMN).WithValue(sameAsPreviousColumn.ToString()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDRegimenGroup.REGIMENOFCHOICE).WithValue(regimenOfChoice.ToString()).WithReplace(true));
+            attributeList.Add(new ReplaceableAttribute().WithName(BDRegimenGroup.ALTERNATIVEREGIMEN).WithValue(alternativeRegimen.ToString()).WithReplace(true));
 
             attributeList.Add(new ReplaceableAttribute().WithName(BDRegimenGroup.PARENTID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDRegimenGroup.PARENTTYPE).WithValue(string.Format(@"{0}", parentType)).WithReplace(true));

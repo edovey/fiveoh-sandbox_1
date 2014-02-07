@@ -317,7 +317,6 @@
           <Property Name="createdDate" Type="datetime" />
           <Property Name="modifiedDate" Type="datetime" />
           <Property Name="displayOrder" Type="int" />
-          <Property Name="columnOrder" Type="int" />
           <Property Name="name" Type="nvarchar" MaxLength="1000" />
           <Property Name="schemaVersion" Type="int" />
           <Property Name="regimenGroupJoinType" Type="int" />
@@ -325,7 +324,9 @@
           <Property Name="parentKeyName" Type="nvarchar" MaxLength="100" />
           <Property Name="parentType" Type="int" />
           <Property Name="layoutVariant" Type="int" />
-          <Property Name="sameAsPreviousColumn" Type="bit" />
+          <Property Name="nodeType" Type="int" />
+          <Property Name="regimenOfChoice" Type="bit" />
+          <Property Name="alternativeRegimen" Type="bit" />
         </EntityType>
         <EntityType Name="BDRegimens">
           <Key>
@@ -354,6 +355,7 @@
           <Property Name="dosage0SameAsPrevious" Type="bit" />
           <Property Name="dosage1SameAsPrevious" Type="bit" />
           <Property Name="columnOrder" Type="int" />
+          <Property Name="nodeType" Type="int" />
         </EntityType>
         <EntityType Name="BDSearchEntries">
           <Key>
@@ -514,8 +516,8 @@
           <EntitySet Name="BDHtmlPages" EntityType="BDDataModel.BDHtmlPage" />
           <EntitySet Name="BDSearchEntries" EntityType="BDDataModel.BDSearchEntry" />
           <EntitySet Name="BDSearchEntryAssociations" EntityType="BDDataModel.BDSearchEntryAssociation" />
-          <EntitySet Name="BDRegimens" EntityType="BDDataModel.BDRegimen" />
           <EntitySet Name="BDRegimenGroups" EntityType="BDDataModel.BDRegimenGroup" />
+          <EntitySet Name="BDRegimens" EntityType="BDDataModel.BDRegimen" />
         </EntityContainer>
         <EntityType Name="BDAntimicrobialRisk">
           <Key>
@@ -927,6 +929,25 @@
           <Property Type="Guid" Name="anchorNodeId" />
           <Property Type="String" Name="editorContext" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="BDRegimenGroup">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Type="Guid" Name="uuid" Nullable="false" />
+          <Property Type="DateTime" Name="createdDate" />
+          <Property Type="DateTime" Name="modifiedDate" />
+          <Property Type="Int32" Name="displayOrder" />
+          <Property Type="String" Name="name" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="schemaVersion" />
+          <Property Type="Int32" Name="regimenGroupJoinType" />
+          <Property Type="Guid" Name="parentId" />
+          <Property Type="String" Name="parentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="parentType" />
+          <Property Type="Int32" Name="layoutVariant" />
+          <Property Type="Int32" Name="nodeType" />
+          <Property Type="Boolean" Name="regimenOfChoice" />
+          <Property Type="Boolean" Name="alternativeRegimen" />
+        </EntityType>
         <EntityType Name="BDRegimen">
           <Key>
             <PropertyRef Name="uuid" />
@@ -954,24 +975,7 @@
           <Property Type="Boolean" Name="dosage0SameAsPrevious" />
           <Property Type="Boolean" Name="dosage1SameAsPrevious" />
           <Property Type="Int32" Name="columnOrder" />
-        </EntityType>
-        <EntityType Name="BDRegimenGroup">
-          <Key>
-            <PropertyRef Name="uuid" />
-          </Key>
-          <Property Type="Guid" Name="uuid" Nullable="false" />
-          <Property Type="DateTime" Name="createdDate" />
-          <Property Type="DateTime" Name="modifiedDate" />
-          <Property Type="Int32" Name="displayOrder" />
-          <Property Type="Int32" Name="columnOrder" />
-          <Property Type="String" Name="name" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="schemaVersion" />
-          <Property Type="Int32" Name="regimenGroupJoinType" />
-          <Property Type="Guid" Name="parentId" />
-          <Property Type="String" Name="parentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="parentType" />
-          <Property Type="Int32" Name="layoutVariant" />
-          <Property Type="Boolean" Name="sameAsPreviousColumn" />
+          <Property Type="Int32" Name="nodeType" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1409,9 +1413,30 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BDRegimenGroups">
+            <EntityTypeMapping TypeName="BDDataModel.BDRegimenGroup">
+              <MappingFragment StoreEntitySet="BDRegimenGroups">
+                <ScalarProperty Name="alternativeRegimen" ColumnName="alternativeRegimen" />
+                <ScalarProperty Name="regimenOfChoice" ColumnName="regimenOfChoice" />
+                <ScalarProperty Name="nodeType" ColumnName="nodeType" />
+                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
+                <ScalarProperty Name="parentType" ColumnName="parentType" />
+                <ScalarProperty Name="parentKeyName" ColumnName="parentKeyName" />
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
+                <ScalarProperty Name="regimenGroupJoinType" ColumnName="regimenGroupJoinType" />
+                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
+                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="BDRegimens">
             <EntityTypeMapping TypeName="BDDataModel.BDRegimen">
               <MappingFragment StoreEntitySet="BDRegimens">
+                <ScalarProperty Name="nodeType" ColumnName="nodeType" />
                 <ScalarProperty Name="columnOrder" ColumnName="columnOrder" />
                 <ScalarProperty Name="dosage1SameAsPrevious" ColumnName="dosage1SameAsPrevious" />
                 <ScalarProperty Name="dosage0SameAsPrevious" ColumnName="dosage0SameAsPrevious" />
@@ -1433,25 +1458,6 @@
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
                 <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
-                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
-                <ScalarProperty Name="uuid" ColumnName="uuid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BDRegimenGroups">
-            <EntityTypeMapping TypeName="BDDataModel.BDRegimenGroup">
-              <MappingFragment StoreEntitySet="BDRegimenGroups">
-                <ScalarProperty Name="sameAsPreviousColumn" ColumnName="sameAsPreviousColumn" />
-                <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
-                <ScalarProperty Name="parentType" ColumnName="parentType" />
-                <ScalarProperty Name="parentKeyName" ColumnName="parentKeyName" />
-                <ScalarProperty Name="parentId" ColumnName="parentId" />
-                <ScalarProperty Name="regimenGroupJoinType" ColumnName="regimenGroupJoinType" />
-                <ScalarProperty Name="schemaVersion" ColumnName="schemaVersion" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="columnOrder" ColumnName="columnOrder" />
-                <ScalarProperty Name="displayOrder" ColumnName="displayOrder" />
-                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
                 <ScalarProperty Name="createdDate" ColumnName="createdDate" />
                 <ScalarProperty Name="uuid" ColumnName="uuid" />
               </MappingFragment>
@@ -1499,8 +1505,8 @@
         <EntityTypeShape EntityType="BDDataModel.BDHtmlPage" Width="1.5" PointX="2.75" PointY="0.875" Height="3.3263964843750102" />
         <EntityTypeShape EntityType="BDDataModel.BDSearchEntry" Width="1.5" PointX="10.25" PointY="0.875" Height="2.1725878906250102" />
         <EntityTypeShape EntityType="BDDataModel.BDSearchEntryAssociation" Width="1.75" PointX="10.25" PointY="3.125" Height="3.5186979166666674" />
-        <EntityTypeShape EntityType="BDDataModel.BDRegimen" Width="1.5" PointX="12.125" PointY="14.125" Height="5.4417122395833246" />
-        <EntityTypeShape EntityType="BDDataModel.BDRegimenGroup" Width="1.5" PointX="10.375" PointY="14.125" Height="3.5186979166666674" />
+        <EntityTypeShape EntityType="BDDataModel.BDRegimenGroup" Width="1.5" PointX="10.25" PointY="14.125" Height="3.7109993489583246" />
+        <EntityTypeShape EntityType="BDDataModel.BDRegimen" Width="1.5" PointX="12" PointY="14.125" Height="5.63401367187501" />
       </Diagram>
     </Diagrams>
   </Designer>

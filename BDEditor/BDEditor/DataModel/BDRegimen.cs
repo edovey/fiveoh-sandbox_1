@@ -46,6 +46,7 @@ namespace BDEditor.DataModel
         private const string COLUMNORDER = @"re_columnOrder";
 
         private const string LAYOUTVARIANT = @"re_layoutVariant";
+        private const string NODETYPE = @"re_nodeType";
         private const string PARENTUUID = @"re_parentId";
         private const string PARENTTYPE = @"re_parentType";
         private const string PARENTKEYNAME = @"re_parentKeyName";

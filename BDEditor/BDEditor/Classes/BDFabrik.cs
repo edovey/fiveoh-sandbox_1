@@ -65,6 +65,14 @@ namespace BDEditor.Classes
                         BDPrecaution precaution = pNode as BDPrecaution;
                         BDPrecaution.Save(pDataContext, precaution);
                         break;
+                    case BDConstants.BDNodeType.BDRegimenGroup:
+                        BDRegimenGroup regimenGroup = pNode as BDRegimenGroup;
+                        BDRegimenGroup.Save(pDataContext, regimenGroup);
+                        break;
+                    case BDConstants.BDNodeType.BDRegimen:
+                        BDRegimen regimen = pNode as BDRegimen;
+                        BDRegimen.Save(pDataContext, regimen);
+                        break;
                     case BDConstants.BDNodeType.BDTherapy:
                         BDTherapy therapy = pNode as BDTherapy;
                         BDTherapy.Save(pDataContext, therapy);
@@ -141,6 +149,14 @@ namespace BDEditor.Classes
                         break;
                     case (int)BDConstants.BDNodeType.BDCombinedEntry:
                         nodeList.AddRange(BDCombinedEntry.RetrieveCombinedEntryContainingString(pDataContext, pText));
+                        break;
+                    case (int)BDConstants.BDNodeType.BDRegimenGroup:
+                        nodeList.AddRange(BDRegimenGroup.RetrieveRegimenGroupsWithNameContainingString(pDataContext, pText));
+                        break;
+                    case (int)BDConstants.BDNodeType.BDRegimen:
+                        nodeList.AddRange(BDRegimen.RetrieveBDRegimensWithNameContainingString(pDataContext, pText));
+                        nodeList.AddRange(BDRegimen.RetrieveBDRegimensWithDosageContainingString(pDataContext, pText));
+                        nodeList.AddRange(BDRegimen.RetrieveBDRegimensWithDurationContainingString(pDataContext, pText));
                         break;
                     default:
                         {
@@ -744,17 +760,22 @@ namespace BDEditor.Classes
                     switch (layoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSurgeryClassification, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSurgeryClassification, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDConfiguredEntry, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDRegimenGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDRegimen, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogen, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDConfiguredEntry, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDRegimenGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDRegimen, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDConfiguredEntry, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDRegimenGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDRegimen, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         default:
                             break;
@@ -766,12 +787,13 @@ namespace BDEditor.Classes
                     {
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSurgery, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDConfiguredEntry, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogen, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDRegimenGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDRegimen, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSurgery, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSurgeryClassification, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSurgery, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         default:
                             break;
@@ -782,8 +804,9 @@ namespace BDEditor.Classes
                     {
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDConfiguredEntry, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogen, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDRegimenGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDRegimen, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -1112,6 +1135,26 @@ namespace BDEditor.Classes
                         entryList.AddRange(workingList);
                     }
                     break;
+                case BDConstants.BDNodeType.BDRegimen:
+                    IQueryable<BDRegimen> regimens = (from entry in pDataContext.BDRegimens
+                                                      orderby entry.displayOrder
+                                                      select entry);
+                    if (regimens.Count() > 0)
+                    {
+                        List<IBDNode> workingList = new List<IBDNode>(regimens.ToList<BDRegimen>());
+                        entryList.AddRange(workingList);
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDRegimenGroup:
+                    IQueryable<BDRegimenGroup> regimenGroups = (from entry in pDataContext.BDRegimenGroups
+                                                            orderby entry.displayOrder
+                                                            select entry);
+                    if (regimenGroups.Count() > 0)
+                    {
+                        List<IBDNode> workingList = new List<IBDNode>(regimenGroups.ToList<BDRegimenGroup>());
+                        entryList.AddRange(workingList);
+                    }
+                    break;
                 default:
                     IQueryable<BDNode> nodeEntries = null;
                     nodeEntries = (from entry in pDataContext.BDNodes
@@ -1190,7 +1233,12 @@ namespace BDEditor.Classes
                     case BDConstants.BDNodeType.BDAttachment:
                         entryList.AddRange(new List<IBDNode>(BDAttachment.RetrieveAttachmentForParentId(pContext, pParentId)));
                         break;
-
+                    case BDConstants.BDNodeType.BDRegimenGroup:
+                        entryList.AddRange(new List<IBDNode>(BDRegimenGroup.RetrieveRegimenGroupsForParentUuid(pContext, pParentId)));
+                        break;
+                    case BDConstants.BDNodeType.BDRegimen:
+                        entryList.AddRange(new List<IBDNode>(BDRegimen.RetrieveBDRegimensForParentUuid(pContext, pParentId)));
+                        break;
                     case BDConstants.BDNodeType.BDTherapyGroup:
                         entryList.AddRange(new List<IBDNode>(BDTherapyGroup.RetrieveTherapyGroupsForParentId(pContext, pParentId)));
                         break;
@@ -1331,6 +1379,22 @@ namespace BDEditor.Classes
                     BDPrecaution.Save(pContext, precaution);
                     result = precaution;
                     break;
+                case BDConstants.BDNodeType.BDRegimenGroup:
+                    BDRegimenGroup regimenGroup = BDRegimenGroup.CreateBDRegimenGroup(pContext, pParentNode.Uuid);
+                    regimenGroup.DisplayOrder = siblingList.Count;
+                    regimenGroup.SetParent(pParentNode);
+                    regimenGroup.LayoutVariant = pLayoutVariant;
+                    BDRegimenGroup.Save(pContext, regimenGroup);
+                    result = regimenGroup;
+                    break;
+                case BDConstants.BDNodeType.BDRegimen:
+                    BDRegimen regimen = BDRegimen.CreateBDRegimen(pContext, pParentNode.Uuid);
+                    regimen.DisplayOrder = siblingList.Count;
+                    regimen.SetParent(pParentNode);
+                    regimen.LayoutVariant = pLayoutVariant;
+                    BDRegimen.Save(pContext, regimen);
+                    result = regimen;
+                    break;
                 case BDConstants.BDNodeType.BDTherapyGroup:
                     BDTherapyGroup therapyGroup = BDTherapyGroup.CreateBDTherapyGroup(pContext, pParentNode.Uuid);
                     therapyGroup.displayOrder = siblingList.Count;
@@ -1412,6 +1476,14 @@ namespace BDEditor.Classes
                     BDDosage dosage = pNode as BDDosage;
                     BDDosage.Delete(pContext, dosage, pCreateDeletionRecord);
                     break;
+                case BDConstants.BDNodeType.BDRegimenGroup:
+                    BDRegimenGroup regimenGroup = pNode as BDRegimenGroup;
+                    BDRegimenGroup.Delete(pContext, regimenGroup, pCreateDeletionRecord);
+                    break;
+                case BDConstants.BDNodeType.BDRegimen:
+                    BDRegimen regimen = pNode as BDRegimen;
+                    BDRegimen.Delete(pContext, regimen, pCreateDeletionRecord);
+                    break;
                 case BDConstants.BDNodeType.BDTherapyGroup:
                     BDTherapyGroup therapyGroup = pNode as BDTherapyGroup;
                     BDTherapyGroup.Delete(pContext, therapyGroup, pCreateDeletionRecord);
@@ -1463,6 +1535,12 @@ namespace BDEditor.Classes
                     case BDConstants.BDNodeType.BDPrecaution:
                         result = BDPrecaution.RetrievePrecautionWithId(pContext, pUuid.Value);
                         break;
+                    case BDConstants.BDNodeType.BDRegimen:
+                        result = BDRegimen.RetrieveBDRegimenWithUuid(pContext, pUuid.Value);
+                        break;
+                    case BDConstants.BDNodeType.BDRegimenGroup:
+                        result = BDRegimenGroup.RetrieveRegimenGroupWithUuid(pContext, pUuid.Value);
+                        break;
                    case BDConstants.BDNodeType.BDTherapyGroup:
                         result = BDTherapyGroup.RetrieveTherapyGroupWithId(pContext, pUuid.Value);
                         break;
@@ -1507,40 +1585,50 @@ namespace BDEditor.Classes
                     if (result != null) return result;
                     else
                     {
-                        result = RetrieveNode(pContext, BDConstants.BDNodeType.BDLinkedNote, pUuid);
+                        result = RetrieveNode(pContext, BDConstants.BDNodeType.BDRegimen, pUuid);
                         if (result != null) return result;
                         else
                         {
-                            result = RetrieveNode(pContext, BDConstants.BDNodeType.BDAntimicrobialRisk, pUuid);
+                            result = RetrieveNode(pContext, BDConstants.BDNodeType.BDRegimenGroup, pUuid);
                             if (result != null) return result;
                             else
                             {
-                                result = RetrieveNode(pContext, BDConstants.BDNodeType.BDDosage, pUuid);
+                                result = RetrieveNode(pContext, BDConstants.BDNodeType.BDLinkedNote, pUuid);
                                 if (result != null) return result;
                                 else
                                 {
-                                    result = RetrieveNode(pContext, BDConstants.BDNodeType.BDTableRow, pUuid);
+                                    result = RetrieveNode(pContext, BDConstants.BDNodeType.BDAntimicrobialRisk, pUuid);
                                     if (result != null) return result;
                                     else
                                     {
-                                        result = RetrieveNode(pContext, BDConstants.BDNodeType.BDTableCell, pUuid);
+                                        result = RetrieveNode(pContext, BDConstants.BDNodeType.BDDosage, pUuid);
                                         if (result != null) return result;
                                         else
                                         {
-                                            result = RetrieveNode(pContext, BDConstants.BDNodeType.BDPrecaution, pUuid);
+                                            result = RetrieveNode(pContext, BDConstants.BDNodeType.BDTableRow, pUuid);
                                             if (result != null) return result;
                                             else
                                             {
-                                                result = RetrieveNode(pContext, BDConstants.BDNodeType.BDConfiguredEntry, pUuid);
+                                                result = RetrieveNode(pContext, BDConstants.BDNodeType.BDTableCell, pUuid);
                                                 if (result != null) return result;
                                                 else
                                                 {
-                                                    result = RetrieveNode(pContext, BDConstants.BDNodeType.BDCombinedEntry, pUuid);
+                                                    result = RetrieveNode(pContext, BDConstants.BDNodeType.BDPrecaution, pUuid);
                                                     if (result != null) return result;
                                                     else
                                                     {
-                                                        result = RetrieveNode(pContext, BDConstants.BDNodeType.BDAttachment, pUuid);
-                                                        return result;
+                                                        result = RetrieveNode(pContext, BDConstants.BDNodeType.BDConfiguredEntry, pUuid);
+                                                        if (result != null) return result;
+                                                        else
+                                                        {
+                                                            result = RetrieveNode(pContext, BDConstants.BDNodeType.BDCombinedEntry, pUuid);
+                                                            if (result != null) return result;
+                                                            else
+                                                            {
+                                                                result = RetrieveNode(pContext, BDConstants.BDNodeType.BDAttachment, pUuid);
+                                                                return result;
+                                                            }
+                                                        }
                                                     }
                                                 }
                                             }
@@ -1584,6 +1672,12 @@ namespace BDEditor.Classes
                     break;
                 case BDConstants.BDNodeType.BDPrecaution:
                     entry = BDPrecaution.CreateBDPrecaution(pContext, pParentUuid.Value);
+                    break;
+                case BDConstants.BDNodeType.BDRegimenGroup:
+                    entry = BDRegimenGroup.CreateBDRegimenGroup(pContext, pParentUuid.Value);
+                    break;
+                case BDConstants.BDNodeType.BDRegimen:
+                    entry = BDRegimen.CreateBDRegimen(pContext, pParentUuid.Value);
                     break;
                 default:
                     entry = BDNode.CreateBDNode(pContext, pNodeType);
@@ -2446,10 +2540,6 @@ namespace BDEditor.Classes
                 case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
                 case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
                 case BDConstants.LayoutVariantType.Dental_Prophylaxis:
-                case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery:
-                case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
-                case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
-                case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
                     returnValue = false;
                     break;
             }
@@ -2647,10 +2737,6 @@ namespace BDEditor.Classes
             switch (pLayoutVariant)
             {
                 case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
-                case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
-                case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery:
-                case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
-                case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
                     returnValue = true;
                     break;
                 default:

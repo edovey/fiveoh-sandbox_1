@@ -156,7 +156,6 @@ namespace BDEditor.Classes
                     case (int)BDConstants.BDNodeType.BDRegimen:
                         nodeList.AddRange(BDRegimen.RetrieveBDRegimensWithNameContainingString(pDataContext, pText));
                         nodeList.AddRange(BDRegimen.RetrieveBDRegimensWithDosageContainingString(pDataContext, pText));
-                        nodeList.AddRange(BDRegimen.RetrieveBDRegimensWithDurationContainingString(pDataContext, pText));
                         break;
                     default:
                         {
@@ -2003,7 +2002,6 @@ namespace BDEditor.Classes
                                 BDRegimenControl regimenControl = nodeControl as BDRegimenControl;
                                 regimenControl.AssignTypeaheadSource(BDTypeahead.TherapyNames, BDRegimen.PROPERTYNAME_NAME);
                                 regimenControl.AssignTypeaheadSource(BDTypeahead.TherapyDosages, BDRegimen.PROPERTYNAME_DOSAGE);
-                                regimenControl.AssignTypeaheadSource(BDTypeahead.TherapyDurations, BDRegimen.PROPERTYNAME_DURATION);
                             }
                             break;
                     }

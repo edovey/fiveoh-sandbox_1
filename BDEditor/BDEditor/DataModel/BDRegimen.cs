@@ -31,12 +31,7 @@ namespace BDEditor.DataModel
 
         public const int ENTITY_SCHEMAVERSION = 1;
         public const string PROPERTYNAME_NAME = @"Name";
-        public const string PROPERTYNAME_DOSAGE = @"Dosage0";
-        public const string PROPERTYNAME_DOSAGE_1 = @"Dosage1";
-        // const string PROPERTYNAME_DOSAGE_2 = @"Dosage2";
-        public const string PROPERTYNAME_DURATION = @"Duration0";
-        public const string PROPERTYNAME_DURATION_1 = @"Duration1";
-        //public const string PROPERTYNAME_DURATION_2 = @"Duration2";
+        public const string PROPERTYNAME_DOSAGE = @"Dosage";
 
         private const string UUID = @"re_uuid";
         private const string SCHEMAVERSION = @"re_schemaVersion";
@@ -46,7 +41,6 @@ namespace BDEditor.DataModel
         private const string COLUMNORDER = @"re_columnOrder";
 
         private const string LAYOUTVARIANT = @"re_layoutVariant";
-        private const string NODETYPE = @"re_nodeType";
         private const string PARENTUUID = @"re_parentId";
         private const string PARENTTYPE = @"re_parentType";
         private const string PARENTKEYNAME = @"re_parentKeyName";
@@ -55,16 +49,8 @@ namespace BDEditor.DataModel
         private const string LEFTBRACKET = @"re_leftBracket";
         private const string RIGHTBRACKET = @"re_rightBracket";
         private const string NAME = @"re_name";
-        private const string DOSAGE_0 = @"re_dosage0";
-        private const string DOSAGE_1 = @"re_dosage1";
-        private const string DURATION_0 = @"re_duration";
-        private const string DURATION_1 = @"re_duration1";
-        private const string NAMEPREVIOUS = @"re_nameSameAsPrevious";
-        private const string DOSAGE_0_PREVIOUS = @"re_dosage0SameAsPrevious";
-        private const string DOSAGE_1_PREVIOUS = @"re_dosage1SameAsPrevious";
-        private const string DURATION_0_PREVIOUS = @"re_duration0SameAsPrevious";
-        private const string DURATION_1_PREVIOUS = @"re_duration1SameAsPrevious";
-
+        private const string DOSAGE = @"re_dosage";
+        
         /// <summary>
         /// Extended Create method that sets created date and schema version
         /// </summary>
@@ -88,16 +74,8 @@ namespace BDEditor.DataModel
             regimen.rightBracket = false;
             regimen.displayOrder = -1;
             regimen.name = string.Empty;
-            regimen.dosage0 = string.Empty;
-            regimen.dosage1 = string.Empty;
-            regimen.duration0 = string.Empty;
-            regimen.duration1 = string.Empty;
+            regimen.dosage = string.Empty;
             regimen.parentId = pParentId;
-            regimen.nameSameAsPrevious = false;
-            regimen.dosage0SameAsPrevious = false;
-            regimen.dosage1SameAsPrevious = false;
-            regimen.duration0SameAsPrevious = false;
-            regimen.duration1SameAsPrevious = false;
 
             pContext.AddObject(ENTITYNAME, regimen);
 
@@ -162,10 +140,10 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Gets all Therapies in the model with the specified Therapy Group ID
+        /// Gets all Regimens in the model with the specified Regimen Group ID
         /// </summary>
         /// <param name="pParentUuid"></param>
-        /// <returns>List of Therapies</returns>
+        /// <returns>List of Regimens</returns>
         public static List<BDRegimen> RetrieveBDRegimensForParentUuid(Entities pContext, Guid pParentUuid)
         {
             IQueryable<BDRegimen> regimens = (from entry in pContext.BDRegimens
@@ -209,26 +187,11 @@ namespace BDEditor.DataModel
         /// <returns></returns>
         public static string[] RetrieveBDRegimenDosages(Entities pContext)
         {
-            var dosages = pContext.BDRegimens.Where(x => (!string.IsNullOrEmpty(x.dosage0))).Select(pg => pg.dosage0).Distinct();
-            var dosage1 = pContext.BDRegimens.Where(x => (!string.IsNullOrEmpty(x.dosage1))).Select(pg => pg.dosage1).Distinct();
+            var dosages = pContext.BDRegimens.Where(x => (!string.IsNullOrEmpty(x.dosage))).Select(pg => pg.dosage).Distinct();
             // return the results into a distinct array
-            string[] dosageArray = dosage1.Distinct().ToArray();
+            string[] dosageArray = dosages.Distinct().ToArray();
 
             return dosageArray;
-        }
-
-        /// <summary>
-        /// Get a string array of all the distinct Duration values in the database.
-        /// </summary>
-        /// <param name="pContext"></param>
-        /// <returns></returns>
-        public static string[] RetrieveBDRegimenDurations(Entities pContext)
-        {
-            var durations = pContext.BDRegimens.Where(x => (!string.IsNullOrEmpty(x.duration0))).Select(pg => pg.duration0).Distinct();
-            var duration1 = pContext.BDRegimens.Where(x => (!string.IsNullOrEmpty(x.duration1))).Select(pg => pg.duration1).Distinct();
-            // return results into a distinct array
-            string[] durationArray = duration1.Distinct().ToArray();
-            return durationArray;
         }
 
         public static List<BDRegimen> RetrieveBDRegimensWithNameContainingString(Entities pContext, string pString)
@@ -250,20 +213,7 @@ namespace BDEditor.DataModel
             if (null != pString && pString.Length > 0)
             {
                 IQueryable<BDRegimen> entries = (from entry in pContext.BDRegimens
-                                                 where entry.dosage0.Contains(pString) || entry.dosage1.Contains(pString)
-                                                 select entry);
-                returnList = entries.ToList<BDRegimen>();
-            }
-            return returnList;
-        }
-
-        public static List<BDRegimen> RetrieveBDRegimensWithDurationContainingString(Entities pContext, string pString)
-        {
-            List<BDRegimen> returnList = new List<BDRegimen>();
-            if (null != pString && pString.Length > 0)
-            {
-                IQueryable<BDRegimen> entries = (from entry in pContext.BDRegimens
-                                                 where entry.duration0.Contains(pString) || entry.duration1.Contains(pString) 
+                                                 where entry.dosage.Contains(pString)
                                                  select entry);
                 returnList = entries.ToList<BDRegimen>();
             }
@@ -313,12 +263,12 @@ namespace BDEditor.DataModel
 
         public string Description
         {
-            get { return string.Format("[{0}][{1}][{2}]", this.name, this.dosage0, this.duration0); }
+            get { return string.Format("[{0}][{1}]", this.name, this.dosage); }
         }
 
         public string DescriptionForLinkedNote
         {
-            get { return string.Format("Regimen - {0} Dosage:{1} Duration:{2}", this.name, this.dosage0, this.duration0); }
+            get { return string.Format("Regimen - {0} Dosage:{1}", this.name, this.dosage); }
         }
 
         public string Name
@@ -369,9 +319,7 @@ namespace BDEditor.DataModel
             if (!BDCommon.Settings.IsSyncLoad)
                 switch (property)
                 {
-                    case "createdBy":
                     case "createdDate":
-                    case "modifiedBy":
                     case "modifiedDate":
                         break;
                     default:
@@ -463,21 +411,7 @@ namespace BDEditor.DataModel
             entry.leftBracket = Boolean.Parse(pAttributeDictionary[LEFTBRACKET]);
             entry.rightBracket = Boolean.Parse(pAttributeDictionary[RIGHTBRACKET]);
             entry.name = pAttributeDictionary[NAME];
-            entry.nameSameAsPrevious = Boolean.Parse(pAttributeDictionary[NAMEPREVIOUS]);
-            entry.dosage0 = pAttributeDictionary[DOSAGE_0];
-            entry.duration0 = pAttributeDictionary[DURATION_0];
-            entry.dosage0SameAsPrevious = Boolean.Parse(pAttributeDictionary[DOSAGE_0_PREVIOUS]);
-            entry.duration0SameAsPrevious = Boolean.Parse(pAttributeDictionary[DURATION_0_PREVIOUS]);
-
-            if (entry.schemaVersion > 0)
-            {
-                entry.dosage1 = pAttributeDictionary[DOSAGE_1];
-                entry.duration1 = pAttributeDictionary[DURATION_1];
-
-                entry.dosage1SameAsPrevious = Boolean.Parse(pAttributeDictionary[DOSAGE_1_PREVIOUS]);
-                entry.duration1SameAsPrevious = Boolean.Parse(pAttributeDictionary[DURATION_1_PREVIOUS]);
-            }
-
+            entry.dosage = pAttributeDictionary[DOSAGE];
 
             if (pSaveChanges)
                 pDataContext.SaveChanges();
@@ -499,17 +433,8 @@ namespace BDEditor.DataModel
             attributeList.Add(new ReplaceableAttribute().WithName(BDRegimen.LEFTBRACKET).WithValue(leftBracket.ToString()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDRegimen.RIGHTBRACKET).WithValue(rightBracket.ToString()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDRegimen.NAME).WithValue((null == name) ? string.Empty : name).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDRegimen.DOSAGE_0).WithValue((null == dosage0) ? string.Empty : dosage0).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDRegimen.DOSAGE_1).WithValue((null == dosage1) ? string.Empty : dosage1).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDRegimen.DURATION_0).WithValue((null == duration0) ? string.Empty : duration0).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDRegimen.DURATION_1).WithValue((null == duration1) ? string.Empty : duration1).WithReplace(true));
-
-            attributeList.Add(new ReplaceableAttribute().WithName(BDRegimen.NAMEPREVIOUS).WithValue(nameSameAsPrevious.ToString()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDRegimen.DOSAGE_0_PREVIOUS).WithValue(dosage0SameAsPrevious.ToString()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDRegimen.DOSAGE_1_PREVIOUS).WithValue(dosage1SameAsPrevious.ToString()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDRegimen.DURATION_0_PREVIOUS).WithValue(duration0SameAsPrevious.ToString()).WithReplace(true));
-            attributeList.Add(new ReplaceableAttribute().WithName(BDRegimen.DURATION_1_PREVIOUS).WithValue(duration1SameAsPrevious.ToString()).WithReplace(true));
-
+            attributeList.Add(new ReplaceableAttribute().WithName(BDRegimen.DOSAGE).WithValue((null == dosage) ? string.Empty : dosage).WithReplace(true));
+            
             attributeList.Add(new ReplaceableAttribute().WithName(BDRegimen.PARENTUUID).WithValue((null == parentId) ? Guid.Empty.ToString() : parentId.ToString().ToUpper()).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDRegimen.PARENTTYPE).WithValue(string.Format(@"{0}", parentType)).WithReplace(true));
             attributeList.Add(new ReplaceableAttribute().WithName(BDRegimen.PARENTKEYNAME).WithValue((null == parentKeyName) ? string.Empty : parentKeyName).WithReplace(true));

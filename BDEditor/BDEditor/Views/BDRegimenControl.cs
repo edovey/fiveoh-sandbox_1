@@ -112,7 +112,6 @@ namespace BDEditor.Views
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentRegimen) ? this.currentRegimen.uuid : Guid.Empty);
             btnNameLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnNameLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
             btnDosageLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnDosageLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
-            btnDurationLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnDurationLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
         }
 
         public void AssignScopeId(Guid? pScopeId)
@@ -134,12 +133,6 @@ namespace BDEditor.Views
                 tbDosage.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
                 tbDosage.AutoCompleteSource = AutoCompleteSource.CustomSource;
             }
-            else if (pProperty == BDRegimen.PROPERTYNAME_DURATION)
-            {
-                tbDuration.AutoCompleteCustomSource = pSource;
-                tbDuration.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                tbDuration.AutoCompleteSource = AutoCompleteSource.CustomSource;
-            }
         }
 
         #region IBDControl
@@ -159,24 +152,24 @@ namespace BDEditor.Views
             {
                 tbName.Text = @"";
                 tbDosage.Text = @"";
-                tbDuration.Text = @"";
                 nextRegimenRadioButton.Checked = true;
                 rbColumnOrder_0.Checked = true;
                 lblLeftBracket.ForeColor = SystemColors.ControlLight;
                 lblRightBracket.ForeColor = SystemColors.ControlLight;
-                chkPreviousName.Checked = false;
-                chkPreviousDose.Checked = false;
-                chkPreviousDuration.Checked = false;
             }
             else
             {
                 this.BackColor = SystemColors.Control;
 
                 tbName.Text = currentRegimen.name;
-                tbDosage.Text = currentRegimen.dosage0;
-                tbDuration.Text = currentRegimen.duration0;
+                tbDosage.Text = currentRegimen.dosage;
                 DisplayOrder = currentRegimen.displayOrder;
                 ColumnOrder = currentRegimen.columnOrder;
+                
+                if (currentRegimen.columnOrder == 0)
+                    rbColumnOrder_0.Checked = true;
+                else if (currentRegimen.columnOrder == 1)
+                    rbColumnOrder_1.Checked = true;
 
                 switch ((BDConstants.BDJoinType)currentRegimen.regimenJoinType)
                 {
@@ -211,11 +204,8 @@ namespace BDEditor.Views
 
                 displayRightBracket = currentRegimen.rightBracket.Value;
                 lblRightBracket.ForeColor = (displayRightBracket) ? SystemColors.ControlText : SystemColors.ControlLight;
-
-                chkPreviousName.Checked = currentRegimen.nameSameAsPrevious.Value;
-                chkPreviousDose.Checked = currentRegimen.dosage0SameAsPrevious.Value;
-                chkPreviousDuration.Checked = currentRegimen.duration0SameAsPrevious.Value;
             }
+
             ShowLinksInUse(false);
             ControlHelper.ResumeDrawing(this);
 
@@ -258,11 +248,7 @@ namespace BDEditor.Views
             {
                 if ((null == currentRegimen) &&
                     ((tbName.Text != string.Empty) ||
-                    (tbDosage.Text != string.Empty) ||
-                    (tbDuration.Text != string.Empty) ||
-                    chkPreviousName.Checked ||
-                    chkPreviousDose.Checked ||
-                    chkPreviousDuration.Checked))
+                    (tbDosage.Text != string.Empty)))
                 {
                     CreateCurrentObject();
                 }
@@ -270,8 +256,7 @@ namespace BDEditor.Views
                 if (null != currentRegimen)
                 {
                     if (currentRegimen.name != tbName.Text) currentRegimen.name = tbName.Text;
-                    if (currentRegimen.dosage0 != tbDosage.Text) currentRegimen.dosage0 = tbDosage.Text;
-                    if (currentRegimen.duration0 != tbDuration.Text) currentRegimen.duration0 = tbDuration.Text;
+                    if (currentRegimen.dosage != tbDosage.Text) currentRegimen.dosage = tbDosage.Text;
                     if (currentRegimen.displayOrder != DisplayOrder) currentRegimen.displayOrder = DisplayOrder;
                     
                     int columnOrder = 0;
@@ -321,19 +306,13 @@ namespace BDEditor.Views
                     if (currentRegimen.leftBracket != this.displayLeftBracket) currentRegimen.leftBracket = this.displayLeftBracket;
                     if (currentRegimen.rightBracket != this.displayRightBracket) currentRegimen.rightBracket = this.displayRightBracket;
 
-                    if (currentRegimen.nameSameAsPrevious != this.chkPreviousName.Checked) currentRegimen.nameSameAsPrevious = this.chkPreviousName.Checked;
-                    if (currentRegimen.dosage0SameAsPrevious != this.chkPreviousDose.Checked) currentRegimen.dosage0SameAsPrevious = this.chkPreviousDose.Checked;
-                    if (currentRegimen.duration0SameAsPrevious != this.chkPreviousDuration.Checked) currentRegimen.duration0SameAsPrevious = this.chkPreviousDuration.Checked;
-
                     BDRegimen.Save(dataContext, currentRegimen);
                     result = true;
 
                     if (currentRegimen.name.Length > 0)
                         BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDRegimen, BDRegimen.PROPERTYNAME_NAME, currentRegimen.name);
-                    if (currentRegimen.dosage0.Length > 0)
-                        BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDRegimen, BDRegimen.PROPERTYNAME_DOSAGE, currentRegimen.dosage0);
-                    if (currentRegimen.duration0.Length > 0)
-                        BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDRegimen, BDRegimen.PROPERTYNAME_DURATION, currentRegimen.duration0);
+                    if (currentRegimen.dosage.Length > 0)
+                        BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDRegimen, BDRegimen.PROPERTYNAME_DOSAGE, currentRegimen.dosage);
                 }
             }
 
@@ -386,22 +365,14 @@ namespace BDEditor.Views
                 tbDosage.Text = tbDosage.Text.Insert(tbDosage.SelectionStart, textToInsert);
                 tbDosage.SelectionStart = textToInsert.Length + position;
             }
-            else if (currentControlName == DURATION_TEXTBOX)
-            {
-                int position = tbDuration.SelectionStart;
-                tbDuration.Text = tbDuration.Text.Insert(tbDuration.SelectionStart, textToInsert);
-                tbDuration.SelectionStart = textToInsert.Length + position;
-            }
         }
 
         private void toggleLinkButtonEnablement()
         {
-            bool enabled = ((chkPreviousDose.Checked || chkPreviousDuration.Checked || chkPreviousName.Checked) ||
-                ((tbDosage.Text.Length > 0) || (tbDuration.Text.Length > 0) || (tbName.Text.Length > 0)));
+            bool enabled = ((tbDosage.Text.Length > 0) || (tbName.Text.Length > 0));
 
             btnNameLink.Enabled = enabled;
             btnDosageLink.Enabled = enabled;
-            btnDurationLink.Enabled = enabled;
         }
 
         private void textBox_TextChanged(object sender, EventArgs e)
@@ -495,7 +466,7 @@ namespace BDEditor.Views
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            OnItemAddRequested(new NodeEventArgs(dataContext, BDConstants.BDNodeType.BDTherapy, DefaultLayoutVariantType));
+            OnItemAddRequested(new NodeEventArgs(dataContext, BDConstants.BDNodeType.BDRegimen, DefaultLayoutVariantType));
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -574,28 +545,10 @@ namespace BDEditor.Views
 
             tbName.Tag = btnNameLink;
             tbDosage.Tag = btnDosageLink;
-            tbDuration.Tag = btnDurationLink;
-
-            chkPreviousName.Tag = btnNameLink;
-            chkPreviousDose.Tag = btnDosageLink;
-            chkPreviousDuration.Tag = btnDurationLink;
 
             btnNameLink.Tag = BDRegimen.PROPERTYNAME_NAME;
             btnDosageLink.Tag = BDRegimen.PROPERTYNAME_DOSAGE;
-            btnDurationLink.Tag = BDRegimen.PROPERTYNAME_DURATION;
 
-            if (!BDFabrik.TherapyLayoutHasFirstDosage(DefaultLayoutVariantType))
-            {
-                pnlMain.Controls.Remove(tbDosage);
-                pnlMain.Controls.Remove(chkPreviousDose);
-                pnlMain.Controls.Remove(btnDosageLink);
-            }
-            if (!BDFabrik.TherapyLayoutHasFirstDuration(DefaultLayoutVariantType))
-            {
-                pnlMain.Controls.Remove(tbDuration);
-                pnlMain.Controls.Remove(chkPreviousDuration);
-                pnlMain.Controls.Remove(btnDurationLink);
-            }
             pnlMain.Refresh();
 
             BDCommon.Settings.IsUpdating = origState;

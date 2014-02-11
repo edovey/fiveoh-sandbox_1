@@ -37,7 +37,6 @@
             this.rbColumnOrder_1 = new System.Windows.Forms.RadioButton();
             this.label4 = new System.Windows.Forms.Label();
             this.lblInfo = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
@@ -51,13 +50,8 @@
             this.sOneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trademarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tbDosage = new System.Windows.Forms.TextBox();
-            this.tbDuration = new System.Windows.Forms.TextBox();
             this.btnNameLink = new System.Windows.Forms.Button();
             this.btnDosageLink = new System.Windows.Forms.Button();
-            this.btnDurationLink = new System.Windows.Forms.Button();
-            this.chkPreviousName = new System.Windows.Forms.CheckBox();
-            this.chkPreviousDose = new System.Windows.Forms.CheckBox();
-            this.chkPreviousDuration = new System.Windows.Forms.CheckBox();
             this.btnMenu = new System.Windows.Forms.Button();
             this.lblRightBracket = new System.Windows.Forms.Label();
             this.lblLeftBracket = new System.Windows.Forms.Label();
@@ -106,18 +100,12 @@
             this.pnlMain.Controls.Add(this.rbColumnOrder_1);
             this.pnlMain.Controls.Add(this.label4);
             this.pnlMain.Controls.Add(this.lblInfo);
-            this.pnlMain.Controls.Add(this.label3);
             this.pnlMain.Controls.Add(this.label1);
             this.pnlMain.Controls.Add(this.label2);
             this.pnlMain.Controls.Add(this.tbName);
             this.pnlMain.Controls.Add(this.tbDosage);
-            this.pnlMain.Controls.Add(this.tbDuration);
             this.pnlMain.Controls.Add(this.btnNameLink);
             this.pnlMain.Controls.Add(this.btnDosageLink);
-            this.pnlMain.Controls.Add(this.btnDurationLink);
-            this.pnlMain.Controls.Add(this.chkPreviousName);
-            this.pnlMain.Controls.Add(this.chkPreviousDose);
-            this.pnlMain.Controls.Add(this.chkPreviousDuration);
             this.pnlMain.Controls.Add(this.btnMenu);
             this.pnlMain.Controls.Add(this.lblRightBracket);
             this.pnlMain.Controls.Add(this.lblLeftBracket);
@@ -131,7 +119,7 @@
             // rbColumnOrder_0
             // 
             this.rbColumnOrder_0.AutoSize = true;
-            this.rbColumnOrder_0.Location = new System.Drawing.Point(601, 7);
+            this.rbColumnOrder_0.Location = new System.Drawing.Point(608, 7);
             this.rbColumnOrder_0.Name = "rbColumnOrder_0";
             this.rbColumnOrder_0.Size = new System.Drawing.Size(115, 17);
             this.rbColumnOrder_0.TabIndex = 27;
@@ -143,7 +131,7 @@
             // rbColumnOrder_1
             // 
             this.rbColumnOrder_1.AutoSize = true;
-            this.rbColumnOrder_1.Location = new System.Drawing.Point(722, 7);
+            this.rbColumnOrder_1.Location = new System.Drawing.Point(729, 7);
             this.rbColumnOrder_1.Name = "rbColumnOrder_1";
             this.rbColumnOrder_1.Size = new System.Drawing.Size(120, 17);
             this.rbColumnOrder_1.TabIndex = 28;
@@ -173,21 +161,11 @@
             this.lblInfo.Text = "INFO";
             this.lblInfo.Visible = false;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(602, 30);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(62, 15);
-            this.label3.TabIndex = 29;
-            this.label3.Text = "Duration";
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(43, 30);
+            this.label1.Location = new System.Drawing.Point(25, 30);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(45, 15);
             this.label1.TabIndex = 27;
@@ -197,18 +175,18 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(324, 30);
+            this.label2.Location = new System.Drawing.Point(390, 30);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 15);
+            this.label2.Size = new System.Drawing.Size(153, 15);
             this.label2.TabIndex = 28;
-            this.label2.Text = "Dosage";
+            this.label2.Text = "Dosage (and Duration)";
             // 
             // tbName
             // 
             this.tbName.ContextMenuStrip = this.contextMenuStrip1;
-            this.tbName.Location = new System.Drawing.Point(46, 48);
+            this.tbName.Location = new System.Drawing.Point(28, 48);
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(218, 20);
+            this.tbName.Size = new System.Drawing.Size(302, 20);
             this.tbName.TabIndex = 1;
             this.tbName.Tag = "";
             this.tbName.TextChanged += new System.EventHandler(this.textBox_TextChanged);
@@ -296,30 +274,19 @@
             // tbDosage
             // 
             this.tbDosage.ContextMenuStrip = this.contextMenuStrip1;
-            this.tbDosage.Location = new System.Drawing.Point(327, 48);
+            this.tbDosage.Location = new System.Drawing.Point(393, 48);
             this.tbDosage.Name = "tbDosage";
-            this.tbDosage.Size = new System.Drawing.Size(211, 20);
+            this.tbDosage.Size = new System.Drawing.Size(354, 20);
             this.tbDosage.TabIndex = 4;
             this.tbDosage.Tag = "";
             this.tbDosage.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             this.tbDosage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDosage_MouseDown);
             // 
-            // tbDuration
-            // 
-            this.tbDuration.ContextMenuStrip = this.contextMenuStrip1;
-            this.tbDuration.Location = new System.Drawing.Point(605, 48);
-            this.tbDuration.Name = "tbDuration";
-            this.tbDuration.Size = new System.Drawing.Size(151, 20);
-            this.tbDuration.TabIndex = 7;
-            this.tbDuration.Tag = "";
-            this.tbDuration.TextChanged += new System.EventHandler(this.textBox_TextChanged);
-            this.tbDuration.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDuration_MouseDown);
-            // 
             // btnNameLink
             // 
             this.btnNameLink.Enabled = false;
             this.btnNameLink.Image = ((System.Drawing.Image)(resources.GetObject("btnNameLink.Image")));
-            this.btnNameLink.Location = new System.Drawing.Point(270, 47);
+            this.btnNameLink.Location = new System.Drawing.Point(336, 48);
             this.btnNameLink.Name = "btnNameLink";
             this.btnNameLink.Size = new System.Drawing.Size(28, 28);
             this.btnNameLink.TabIndex = 2;
@@ -330,56 +297,12 @@
             // 
             this.btnDosageLink.Enabled = false;
             this.btnDosageLink.Image = ((System.Drawing.Image)(resources.GetObject("btnDosageLink.Image")));
-            this.btnDosageLink.Location = new System.Drawing.Point(544, 47);
+            this.btnDosageLink.Location = new System.Drawing.Point(753, 43);
             this.btnDosageLink.Name = "btnDosageLink";
             this.btnDosageLink.Size = new System.Drawing.Size(28, 28);
             this.btnDosageLink.TabIndex = 5;
             this.btnDosageLink.UseVisualStyleBackColor = true;
             this.btnDosageLink.Click += new System.EventHandler(this.btnLink_Click);
-            // 
-            // btnDurationLink
-            // 
-            this.btnDurationLink.Enabled = false;
-            this.btnDurationLink.Image = ((System.Drawing.Image)(resources.GetObject("btnDurationLink.Image")));
-            this.btnDurationLink.Location = new System.Drawing.Point(762, 47);
-            this.btnDurationLink.Name = "btnDurationLink";
-            this.btnDurationLink.Size = new System.Drawing.Size(28, 28);
-            this.btnDurationLink.TabIndex = 8;
-            this.btnDurationLink.UseVisualStyleBackColor = true;
-            this.btnDurationLink.Click += new System.EventHandler(this.btnLink_Click);
-            // 
-            // chkPreviousName
-            // 
-            this.chkPreviousName.AutoSize = true;
-            this.chkPreviousName.Location = new System.Drawing.Point(29, 52);
-            this.chkPreviousName.Name = "chkPreviousName";
-            this.chkPreviousName.Size = new System.Drawing.Size(15, 14);
-            this.chkPreviousName.TabIndex = 0;
-            this.toolTip1.SetToolTip(this.chkPreviousName, "Same as previous");
-            this.chkPreviousName.UseVisualStyleBackColor = true;
-            this.chkPreviousName.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
-            // 
-            // chkPreviousDose
-            // 
-            this.chkPreviousDose.AutoSize = true;
-            this.chkPreviousDose.Location = new System.Drawing.Point(310, 52);
-            this.chkPreviousDose.Name = "chkPreviousDose";
-            this.chkPreviousDose.Size = new System.Drawing.Size(15, 14);
-            this.chkPreviousDose.TabIndex = 3;
-            this.toolTip1.SetToolTip(this.chkPreviousDose, "Same as previous");
-            this.chkPreviousDose.UseVisualStyleBackColor = true;
-            this.chkPreviousDose.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
-            // 
-            // chkPreviousDuration
-            // 
-            this.chkPreviousDuration.AutoSize = true;
-            this.chkPreviousDuration.Location = new System.Drawing.Point(587, 52);
-            this.chkPreviousDuration.Name = "chkPreviousDuration";
-            this.chkPreviousDuration.Size = new System.Drawing.Size(15, 14);
-            this.chkPreviousDuration.TabIndex = 6;
-            this.toolTip1.SetToolTip(this.chkPreviousDuration, "Same as previous");
-            this.chkPreviousDuration.UseVisualStyleBackColor = true;
-            this.chkPreviousDuration.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
             // 
             // btnMenu
             // 
@@ -601,14 +524,9 @@
         private System.Windows.Forms.ToolStripMenuItem sOneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem trademarkToolStripMenuItem;
         private System.Windows.Forms.TextBox tbDosage;
-        private System.Windows.Forms.TextBox tbDuration;
         private System.Windows.Forms.Button btnNameLink;
         private System.Windows.Forms.Button btnDosageLink;
-        private System.Windows.Forms.Button btnDurationLink;
-        private System.Windows.Forms.CheckBox chkPreviousName;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.CheckBox chkPreviousDose;
-        private System.Windows.Forms.CheckBox chkPreviousDuration;
         private System.Windows.Forms.Button btnMenu;
         private System.Windows.Forms.Label lblRightBracket;
         private System.Windows.Forms.Label lblLeftBracket;
@@ -628,7 +546,6 @@
         private System.Windows.Forms.RadioButton orRadioButton;
         private System.Windows.Forms.RadioButton thenRadioButton;
         private System.Windows.Forms.Label lblInfo;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;

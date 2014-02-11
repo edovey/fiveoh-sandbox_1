@@ -715,6 +715,18 @@ namespace BDEditor.Classes
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery:
+                            currentPageMasterObject = pNode;
+                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
+                            isPageGenerated = true;
+                            break;
+                        default:
+                            isPageGenerated = false;
+                            break;
+                    }
+                    break;
+                case BDConstants.BDNodeType.BDSurgeryClassification:
+                    switch (pNode.LayoutVariant)
+                    {
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
                             currentPageMasterObject = pNode;
                             nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
@@ -728,13 +740,13 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDSurgeryGroup:
                     switch (pNode.LayoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
                             currentPageMasterObject = pNode;
                             nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;
                             break;
-                        default:
+                       default:
                             isPageGenerated = false;
                             break;
                     }
@@ -895,6 +907,8 @@ namespace BDEditor.Classes
                     break;
                 case BDConstants.BDNodeType.BDTopic:
                     bodyHTML.Append(BuildBDTopicHtml(pContext, pNode, footnotes, objectsOnPage, 1));
+                    break;
+                default:
                     break;
             }
 
@@ -1781,25 +1795,6 @@ namespace BDEditor.Classes
                         {
                             switch (pNode.LayoutVariant)
                             {
-                                case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery:
-                                case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
-                                case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
-                                case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
-                                    {
-                                        string firstTitle = @"";
-                                        string secondTitle = @"";
-                                        if (metadataLayoutColumns.Count > 1)
-                                            firstTitle = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[1], BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD01, pFootnotes, pObjectsOnPage);
-                                        if (metadataLayoutColumns.Count > 2)
-                                            secondTitle = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[2], BDConstants.BDNodeType.BDConfiguredEntry, BDConfiguredEntry.PROPERTYNAME_FIELD02, pFootnotes, pObjectsOnPage);
-                                        html.AppendFormat("<{0}>{1}</{0}>", "b", firstTitle);
-                                        // the input from the UI is complex and may contain formatting, so it is stored in an attached linked note.  
-                                        // the extended retrieveNoteTextForConfiguredEntryField method signature is used to direct the lookup to the linked note.
-                                        html.Append(retrieveNoteTextForConfiguredEntryField(pContext, configuredEntry.Uuid,BDConfiguredEntry.FieldNotePropertyNameForIndex(1),BDConfiguredEntry.PROPERTYNAME_FIELD01,pObjectsOnPage,false,pFootnotes));
-                                        html.AppendFormat("<{0}>{1}</{0}>", "b", secondTitle);
-                                        html.Append(retrieveNoteTextForConfiguredEntryField(pContext, configuredEntry.Uuid, BDConfiguredEntry.FieldNotePropertyNameForIndex(2),BDConfiguredEntry.PROPERTYNAME_FIELD02,pObjectsOnPage,false,pFootnotes));
-                                    }
-                                    break;
                                 default:
                                     // create the header with the note contents
                                     string header = retrieveNoteTextForConfiguredEntryField(pContext, pNode.Uuid, BDConfiguredEntry.FieldNotePropertyNameForIndex(0), pObjectsOnPage, pFootnotes);
@@ -2501,12 +2496,6 @@ namespace BDEditor.Classes
                         currentPageMasterObject = pNode;
                         pGeneratedPages.Add(writeBDHtmlPage(pContext, pNode, localHtml, BDConstants.BDHtmlPageType.Data, localFootnotes, localObjectsOnPage, null));
 
-                        break;
-                    case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery:
-                    case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
-                    case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
-                    case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
-                        html.AppendFormat("<li>{0}</li>", buildNodeWithReferenceAndOverviewHTML(pContext, pNode, string.Empty, pFootnotes, pObjectsOnPage));
                         break;
                     default:
                         break;
@@ -3294,6 +3283,54 @@ namespace BDEditor.Classes
             return therapyGroupHtml;
         }
 
+        /// <summary>
+        /// Builds Regimen Group information into a table row, inclusive of child (Regimen) information.
+        /// Assumes that caller is responsible for building the enclosing table.
+        /// Layout is the same for all layout variants.
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pRegimenGroup"></param>
+        /// <param name="pFootnotes"></param>
+        /// <param name="pObjectsOnPage"></param>
+        /// <param name="pLevel">HTML as a string, to represent the BDRegimenGroup and its children</param>
+        /// <returns></returns>
+        public string BuildBDRegimenGroupHTML(Entities pContext, BDRegimenGroup pRegimenGroup, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel)
+        {
+            StringBuilder html = new StringBuilder();
+            Guid previousRegimenNameUuid = Guid.Empty;
+            Guid previousRegimenDosage1Uuid = Guid.Empty;
+            Guid previousRegimenDuration1Uuid = Guid.Empty;
+
+            if(null != pRegimenGroup)
+            {
+                string regimenGroupHtml = buildNodeWithReferenceAndOverviewHTML(pContext, pRegimenGroup, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage);
+                
+                List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pRegimenGroup);
+                StringBuilder firstColumnHtml = new StringBuilder();
+                StringBuilder secondColumnHtml = new StringBuilder();
+
+                if (children.Count > 0)
+                {
+                    firstColumnHtml.Append("<td>");
+                    secondColumnHtml.Append("<td>");
+                    foreach (BDRegimen regimen in children)
+                    {
+                        if (regimen.columnOrder == 0)
+                        {
+                                firstColumnHtml.Append(buildNodePropertyHTML(pContext, regimen, regimen.Uuid, regimen.name, BDRegimen.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage));
+                        }
+                        else if (regimen.columnOrder == 1)
+                        {
+                        }
+                    }
+                    firstColumnHtml.Append("</td>");
+                    secondColumnHtml.Append("</td>");
+                }
+                html.AppendFormat("<tr>{0}{1}</tr>", firstColumnHtml, secondColumnHtml);
+            }
+            return html.ToString();
+        }
+
         public string BuildBDResponseHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel)
         {
             // gated on layout variant
@@ -3552,13 +3589,26 @@ namespace BDEditor.Classes
                     #endregion
 
                     case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery:
-                        html.Append(buildRegimenHtml(pContext, pNode, pLevel + 2,pFootnotes, pObjectsOnPage));
-                        break;
+                            html.Append(buildRegimenHtml(pContext, pNode, pLevel, pFootnotes, pObjectsOnPage));
+                        break; // page is created by caller
                     case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
-                         List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
+                         List<Guid> childObjects = new List<Guid>();
+                         List<BDLinkedNote> childFootnotes = new List<BDLinkedNote>();
+                         List<BDHtmlPage> childPages = new List<BDHtmlPage>();
 
-                        foreach (IBDNode child in children)
-                            html.Append(BuildBDSurgeryClassificationHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 2));
+                         foreach (IBDNode child in surgeryChildren)
+                         {
+                             string childHtml = BuildBDSurgeryClassificationHtml(pContext, child, childFootnotes, childObjects, pLevel);
+                             childPages.Add(writeBDHtmlPage(pContext, child, childHtml, BDConstants.BDHtmlPageType.Data, childFootnotes, childObjects, null));
+                         }
+                        html.Append(navListDivPrefix);
+
+                        for (int i = 0; i < childPages.Count; i++)
+                        {
+                            html.AppendFormat(navListAnchorTag, childPages[i].Uuid.ToString().ToUpper(), childPages[i].pageTitle);
+                        }
+                        html.Append(navListDivSuffix);
+                        
                         break;
                     case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
                     case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
@@ -3570,68 +3620,129 @@ namespace BDEditor.Classes
             return html.ToString();
         }
 
+        /// <summary>
+        /// Build an HTML page for the SurgeryClassification
+        /// The caller will handle building the link and inserting the guid
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <param name="pNode"></param>
+        /// <param name="pFootnotes"></param>
+        /// <param name="pObjectsOnPage"></param>
+        /// <param name="pLevel"></param>
+        /// <returns>The generated HTML page</returns>
         public string BuildBDSurgeryClassificationHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel)
         {
             StringBuilder html = new StringBuilder();
-            int childHeaderLevel = pLevel + 2;
 
             if ((null != pNode) && (pNode.NodeType == BDConstants.BDNodeType.BDSurgeryClassification))
             {
                 html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
-                html.Append(buildRegimenHtml(pContext, pNode, childHeaderLevel, pFootnotes, pObjectsOnPage));
+                html.Append(buildRegimenHtml(pContext, pNode, pLevel, pFootnotes, pObjectsOnPage));
             }
-            return html.ToString();
+            return html.ToString(); 
         }
-
 
         public string BuildBDSurgeryGroupHtml(Entities pContext, IBDNode pNode, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage, int pLevel)
         {
             StringBuilder html = new StringBuilder();
-            int childHeaderLevel = pLevel + 3;
 
             if ((null != pNode) && (pNode.NodeType == BDConstants.BDNodeType.BDSurgeryGroup))
             {
                 switch (pNode.LayoutVariant)
                 {
                     case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
+                        {
+                            StringBuilder pageTitleHtml = new StringBuilder();
+                            StringBuilder surgeryHtml = new StringBuilder();
+                            List<BDHtmlPage> childPages = new List<BDHtmlPage>();
+
+                            if (pNode.Name.Length > 0) // surgery group has a name
+                                pageTitleHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+
+                            List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
+
+                            foreach (IBDNode child in children)
+                            {
+                                if (child.NodeType == BDConstants.BDNodeType.BDSurgery)
+                                {
+                                    // add list of surgeries either as the title or a list that will follow the title
+                                    if (surgeryHtml.Length > 0)
+                                        surgeryHtml.Append("<br>");
+                                    if (pNode.Name.Length > 0)
+                                        surgeryHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child, "b", pFootnotes, pObjectsOnPage));
+                                    else  // list of surgeries as the title on the page
+                                        pageTitleHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+                                }
+                            }
+
+                            html.Append(pageTitleHtml);
+
+                            if (surgeryHtml.Length > 0)
+                                html.Append(surgeryHtml);
+                            if (childPages.Count > 0)
+                            {
+                                html.Append(navListDivPrefix);
+
+                                for (int i = 0; i < childPages.Count; i++)
+                                {
+                                    html.AppendFormat(navListAnchorTag, childPages[i].Uuid.ToString().ToUpper(), childPages[i].pageTitle);
+                                }
+                                html.Append(navListDivSuffix);
+                            }
+
+                            html.Append(buildRegimenHtml(pContext, pNode, pLevel, pFootnotes, pObjectsOnPage));
+                        }
+                        break;
                     case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
+                        StringBuilder groupTitleHtml = new StringBuilder();
+                        StringBuilder surgeriesHtml = new StringBuilder();
+                        List<BDHtmlPage> classificationPages = new List<BDHtmlPage>();
 
-                        StringBuilder surgeryGroupHtml = new StringBuilder();
-                        StringBuilder classificationHtml = new StringBuilder();
-                        StringBuilder surgeryHtml = new StringBuilder();
+                       if(pNode.Name.Length > 0)
+                           groupTitleHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+                        
+                        List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
 
-                        bool hasGroupTitle = false;
-                        surgeryGroupHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
-                        if (surgeryGroupHtml.Length > 0)
-                            hasGroupTitle = true;
-
-                        List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
-
-                        foreach (IBDNode child in children)
+                        foreach (IBDNode child in childNodes)
                         {
                             if (child.NodeType == BDConstants.BDNodeType.BDSurgery)
                             {
-                                if (hasGroupTitle)
-                                    surgeryHtml.Append(BuildBDSurgeryHtml(pContext, child, pFootnotes, pObjectsOnPage, childHeaderLevel));
+                                // add list of surgeries either as the title or a list that will follow the title
+                                if (surgeriesHtml.Length > 0)
+                                    surgeriesHtml.Append("<br>");
+                                if (pNode.Name.Length > 0)
+                                    surgeriesHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child, "b", pFootnotes, pObjectsOnPage));
                                 else  // list of surgeries as the title on the page
-                                    surgeryGroupHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+                                    groupTitleHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
                             }
                             else if (child.NodeType == BDConstants.BDNodeType.BDSurgeryClassification)
-                                classificationHtml.Append(BuildBDSurgeryClassificationHtml(pContext, child, pFootnotes, pObjectsOnPage, childHeaderLevel));
+                            {
+                                // build a child page, add classification name as a link
+                                string childHtml = BuildBDSurgeryClassificationHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel);
+                                classificationPages.Add(writeBDHtmlPage(pContext, child, childHtml, BDConstants.BDHtmlPageType.Data, pFootnotes, pObjectsOnPage, null));
+                            }
                         }
                            
-                        html.Append(surgeryGroupHtml);
+                        html.Append(groupTitleHtml);
 
-                        if (surgeryHtml.Length > 0)
-                            html.Append(surgeryHtml);
-                        if (classificationHtml.Length > 0)
-                            html.Append(classificationHtml);
+                        if (surgeriesHtml.Length > 0)
+                            html.Append(surgeriesHtml);
+                        if (classificationPages.Count > 0)
+                        {
+                            html.Append(navListDivPrefix);
+
+                            for (int i = 0; i < classificationPages.Count; i++)
+                            {
+                                html.AppendFormat(navListAnchorTag, classificationPages[i].Uuid.ToString().ToUpper(), classificationPages[i].pageTitle);
+                            }
+                            html.Append(navListDivSuffix);
+                        }
+
+                        html.Append(buildRegimenHtml(pContext, pNode, pLevel, pFootnotes, pObjectsOnPage));
                         break;
-                    default:
+                   default:
                         break;
                 }
-                html.Append(buildRegimenHtml(pContext, pNode, childHeaderLevel, pFootnotes, pObjectsOnPage));
-
             }
             return html.ToString();
         }
@@ -4878,16 +4989,13 @@ namespace BDEditor.Classes
             bool hasConfiguredEntry = false;
 
             List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
-            pathogenHtml.AppendFormat("<{0}>{1}</{0}><ul>", HtmlHeaderTagLevelString(pLevel), pathogenTitle);
+            pathogenHtml.AppendFormat("<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel), pathogenTitle);
             foreach (IBDNode child in children)
             {
                 if (child.NodeType == BDConstants.BDNodeType.BDPathogen)
                 {
                     hasPathogens = true;
-                    pathogenHtml.Append(BuildBDPathogenHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel));
-                    //pathogenHtml.Append("<li>");
-                    //pathogenHtml.Append(buildNodeWithReferenceAndOverviewHTML(pContext, child, string.Empty, pFootnotes, pObjectsOnPage));
-                    //pathogenHtml.Append("</li>");
+                    pathogenHtml.AppendFormat("{0}<br>", (buildNodeWithReferenceAndOverviewHTML(pContext, child, "", pFootnotes, pObjectsOnPage)));
                 }
 
                 if (child.NodeType == BDConstants.BDNodeType.BDConfiguredEntry)
@@ -4896,7 +5004,6 @@ namespace BDEditor.Classes
                     hasConfiguredEntry = true;
                 }
             }
-            pathogenHtml.Append("</ul>");
 
             if (hasPathogens)
                 html.Append(pathogenHtml.ToString());

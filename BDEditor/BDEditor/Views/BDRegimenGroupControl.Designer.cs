@@ -448,7 +448,7 @@
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
-            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.Regimen_RequestItemDelete);
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.RegimenGroup_RequestItemDelete);
             // 
             // BDRegimenGroupControl
             // 
@@ -460,7 +460,7 @@
             this.Controls.Add(this.panelHeader);
             this.MinimumSize = new System.Drawing.Size(860, 100);
             this.Name = "BDRegimenGroupControl";
-            this.Size = new System.Drawing.Size(860, 100);
+            this.Size = new System.Drawing.Size(860, 114);
             this.Load += new System.EventHandler(this.BDRegimenGroupControl_Load);
             this.Leave += new System.EventHandler(this.BDRegimenGroupControl_Leave);
             this.panelHeader.ResumeLayout(false);

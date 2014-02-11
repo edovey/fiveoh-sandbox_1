@@ -341,7 +341,6 @@ namespace BDEditor.Views
                 regimenControl.AssignScopeId(scopeId);
                 regimenControl.AssignTypeaheadSource(BDTypeahead.TherapyNames, BDRegimen.PROPERTYNAME_NAME);
                 regimenControl.AssignTypeaheadSource(BDTypeahead.TherapyDosages, BDRegimen.PROPERTYNAME_DOSAGE);
-                regimenControl.AssignTypeaheadSource(BDTypeahead.TherapyDurations, BDRegimen.PROPERTYNAME_DURATION);
                 regimenControl.CurrentRegimen = pRegimen;
                 regimenControl.DefaultLayoutVariantType = this.DefaultLayoutVariantType;
                 regimenControl.RequestItemAdd += new EventHandler<NodeEventArgs>(Regimen_RequestItemAdd);
@@ -448,12 +447,7 @@ namespace BDEditor.Views
 
         private void Regimen_RequestItemDelete(object sender, EventArgs e)
         {
-            BDRegimenControl control = sender as BDRegimenControl;
-            if (null != control)
-            {
-                if (MessageBox.Show("Delete Regimen?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
-                    removeRegimenControl(control, true);
-            }
+
         }
 
         private void Regimen_ReorderToNext(object sender, NodeEventArgs e)

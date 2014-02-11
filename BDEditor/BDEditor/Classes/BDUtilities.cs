@@ -2279,8 +2279,7 @@ namespace BDEditor.Classes
             //}
 
             //BDNode.Delete(pContext, preOp, false);
-            #endregion
-            
+            #endregion           
             #region data clean for 1.6.63
             //List<IBDObject> associations = BDSearchEntryAssociation.RetrieveAll(pContext);
 
@@ -2299,7 +2298,6 @@ namespace BDEditor.Classes
             //}
 
             #endregion
-
             #region Surgical Proplylaxis : remove v1 data structures for 1.6.73
             // clean hierarchy for Surgical Prophylaxis 
              // preserve existing section

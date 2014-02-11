@@ -6229,30 +6229,6 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> nameSameAsPrevious
-        {
-            get
-            {
-                return _nameSameAsPrevious;
-            }
-            set
-            {
-                OnnameSameAsPreviousChanging(value);
-                ReportPropertyChanging("nameSameAsPrevious");
-                _nameSameAsPrevious = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("nameSameAsPrevious");
-                OnnameSameAsPreviousChanged();
-            }
-        }
-        private Nullable<global::System.Boolean> _nameSameAsPrevious;
-        partial void OnnameSameAsPreviousChanging(Nullable<global::System.Boolean> value);
-        partial void OnnameSameAsPreviousChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
         public Nullable<global::System.Guid> parentId
         {
             get
@@ -6349,198 +6325,6 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String dosage0
-        {
-            get
-            {
-                return _dosage0;
-            }
-            set
-            {
-                Ondosage0Changing(value);
-                ReportPropertyChanging("dosage0");
-                _dosage0 = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("dosage0");
-                Ondosage0Changed();
-            }
-        }
-        private global::System.String _dosage0;
-        partial void Ondosage0Changing(global::System.String value);
-        partial void Ondosage0Changed();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String dosage1
-        {
-            get
-            {
-                return _dosage1;
-            }
-            set
-            {
-                Ondosage1Changing(value);
-                ReportPropertyChanging("dosage1");
-                _dosage1 = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("dosage1");
-                Ondosage1Changed();
-            }
-        }
-        private global::System.String _dosage1;
-        partial void Ondosage1Changing(global::System.String value);
-        partial void Ondosage1Changed();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String duration0
-        {
-            get
-            {
-                return _duration0;
-            }
-            set
-            {
-                Onduration0Changing(value);
-                ReportPropertyChanging("duration0");
-                _duration0 = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("duration0");
-                Onduration0Changed();
-            }
-        }
-        private global::System.String _duration0;
-        partial void Onduration0Changing(global::System.String value);
-        partial void Onduration0Changed();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String duration1
-        {
-            get
-            {
-                return _duration1;
-            }
-            set
-            {
-                Onduration1Changing(value);
-                ReportPropertyChanging("duration1");
-                _duration1 = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("duration1");
-                Onduration1Changed();
-            }
-        }
-        private global::System.String _duration1;
-        partial void Onduration1Changing(global::System.String value);
-        partial void Onduration1Changed();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> duration0SameAsPrevious
-        {
-            get
-            {
-                return _duration0SameAsPrevious;
-            }
-            set
-            {
-                Onduration0SameAsPreviousChanging(value);
-                ReportPropertyChanging("duration0SameAsPrevious");
-                _duration0SameAsPrevious = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("duration0SameAsPrevious");
-                Onduration0SameAsPreviousChanged();
-            }
-        }
-        private Nullable<global::System.Boolean> _duration0SameAsPrevious;
-        partial void Onduration0SameAsPreviousChanging(Nullable<global::System.Boolean> value);
-        partial void Onduration0SameAsPreviousChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> duration1SameAsPrevious
-        {
-            get
-            {
-                return _duration1SameAsPrevious;
-            }
-            set
-            {
-                Onduration1SameAsPreviousChanging(value);
-                ReportPropertyChanging("duration1SameAsPrevious");
-                _duration1SameAsPrevious = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("duration1SameAsPrevious");
-                Onduration1SameAsPreviousChanged();
-            }
-        }
-        private Nullable<global::System.Boolean> _duration1SameAsPrevious;
-        partial void Onduration1SameAsPreviousChanging(Nullable<global::System.Boolean> value);
-        partial void Onduration1SameAsPreviousChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> dosage0SameAsPrevious
-        {
-            get
-            {
-                return _dosage0SameAsPrevious;
-            }
-            set
-            {
-                Ondosage0SameAsPreviousChanging(value);
-                ReportPropertyChanging("dosage0SameAsPrevious");
-                _dosage0SameAsPrevious = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("dosage0SameAsPrevious");
-                Ondosage0SameAsPreviousChanged();
-            }
-        }
-        private Nullable<global::System.Boolean> _dosage0SameAsPrevious;
-        partial void Ondosage0SameAsPreviousChanging(Nullable<global::System.Boolean> value);
-        partial void Ondosage0SameAsPreviousChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> dosage1SameAsPrevious
-        {
-            get
-            {
-                return _dosage1SameAsPrevious;
-            }
-            set
-            {
-                Ondosage1SameAsPreviousChanging(value);
-                ReportPropertyChanging("dosage1SameAsPrevious");
-                _dosage1SameAsPrevious = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("dosage1SameAsPrevious");
-                Ondosage1SameAsPreviousChanged();
-            }
-        }
-        private Nullable<global::System.Boolean> _dosage1SameAsPrevious;
-        partial void Ondosage1SameAsPreviousChanging(Nullable<global::System.Boolean> value);
-        partial void Ondosage1SameAsPreviousChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
         public Nullable<global::System.Int32> columnOrder
         {
             get
@@ -6565,24 +6349,24 @@ namespace BDEditor.DataModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> nodeType
+        public global::System.String dosage
         {
             get
             {
-                return _nodeType;
+                return _dosage;
             }
             set
             {
-                OnnodeTypeChanging(value);
-                ReportPropertyChanging("nodeType");
-                _nodeType = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("nodeType");
-                OnnodeTypeChanged();
+                OndosageChanging(value);
+                ReportPropertyChanging("dosage");
+                _dosage = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("dosage");
+                OndosageChanged();
             }
         }
-        private Nullable<global::System.Int32> _nodeType;
-        partial void OnnodeTypeChanging(Nullable<global::System.Int32> value);
-        partial void OnnodeTypeChanged();
+        private global::System.String _dosage;
+        partial void OndosageChanging(global::System.String value);
+        partial void OndosageChanged();
 
         #endregion
     

@@ -898,7 +898,7 @@ namespace BDEditor.Views
                         switch (node.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
-                               // childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
+                                //childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
                                     //graftTreeNode(selectedNode, childTreeNode);
@@ -911,12 +911,17 @@ namespace BDEditor.Views
                         switch (node.LayoutVariant)
                         {
                             case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
-                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
-                                //childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {
-                                    //graftTreeNode(selectedNode, childTreeNode);
                                     showChildControls = true;
+                                }
+                                break;
+                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
+                                childTreeNode = BDProphylaxisTree.BuildBranch(dataContext, node);
+                                if (!pInterrogateOnly)
+                                {
+                                    graftTreeNode(selectedNode, childTreeNode);
+                                    showChildControls = false;
                                 }
                                 break;
                         }

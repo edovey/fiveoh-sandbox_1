@@ -341,21 +341,12 @@
           <Property Name="regimenJoinType" Type="int" />
           <Property Name="leftBracket" Type="bit" />
           <Property Name="rightBracket" Type="bit" />
-          <Property Name="nameSameAsPrevious" Type="bit" />
           <Property Name="parentId" Type="uniqueidentifier" />
           <Property Name="parentKeyName" Type="nvarchar" MaxLength="1000" />
           <Property Name="parentType" Type="int" />
           <Property Name="layoutVariant" Type="int" />
-          <Property Name="dosage0" Type="nvarchar" MaxLength="1000" />
-          <Property Name="dosage1" Type="nvarchar" MaxLength="1000" />
-          <Property Name="duration0" Type="nvarchar" MaxLength="1000" />
-          <Property Name="duration1" Type="nvarchar" MaxLength="1000" />
-          <Property Name="duration0SameAsPrevious" Type="bit" />
-          <Property Name="duration1SameAsPrevious" Type="bit" />
-          <Property Name="dosage0SameAsPrevious" Type="bit" />
-          <Property Name="dosage1SameAsPrevious" Type="bit" />
           <Property Name="columnOrder" Type="int" />
-          <Property Name="nodeType" Type="int" />
+          <Property Name="dosage" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="BDSearchEntries">
           <Key>
@@ -961,21 +952,12 @@
           <Property Type="Int32" Name="regimenJoinType" />
           <Property Type="Boolean" Name="leftBracket" />
           <Property Type="Boolean" Name="rightBracket" />
-          <Property Type="Boolean" Name="nameSameAsPrevious" />
           <Property Type="Guid" Name="parentId" />
           <Property Type="String" Name="parentKeyName" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="parentType" />
           <Property Type="Int32" Name="layoutVariant" />
-          <Property Type="String" Name="dosage0" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="dosage1" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="duration0" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="duration1" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="duration0SameAsPrevious" />
-          <Property Type="Boolean" Name="duration1SameAsPrevious" />
-          <Property Type="Boolean" Name="dosage0SameAsPrevious" />
-          <Property Type="Boolean" Name="dosage1SameAsPrevious" />
           <Property Type="Int32" Name="columnOrder" />
-          <Property Type="Int32" Name="nodeType" />
+          <Property Type="String" Name="dosage" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1436,21 +1418,12 @@
           <EntitySetMapping Name="BDRegimens">
             <EntityTypeMapping TypeName="BDDataModel.BDRegimen">
               <MappingFragment StoreEntitySet="BDRegimens">
-                <ScalarProperty Name="nodeType" ColumnName="nodeType" />
+                <ScalarProperty Name="dosage" ColumnName="dosage" />
                 <ScalarProperty Name="columnOrder" ColumnName="columnOrder" />
-                <ScalarProperty Name="dosage1SameAsPrevious" ColumnName="dosage1SameAsPrevious" />
-                <ScalarProperty Name="dosage0SameAsPrevious" ColumnName="dosage0SameAsPrevious" />
-                <ScalarProperty Name="duration1SameAsPrevious" ColumnName="duration1SameAsPrevious" />
-                <ScalarProperty Name="duration0SameAsPrevious" ColumnName="duration0SameAsPrevious" />
-                <ScalarProperty Name="duration1" ColumnName="duration1" />
-                <ScalarProperty Name="duration0" ColumnName="duration0" />
-                <ScalarProperty Name="dosage1" ColumnName="dosage1" />
-                <ScalarProperty Name="dosage0" ColumnName="dosage0" />
                 <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
                 <ScalarProperty Name="parentType" ColumnName="parentType" />
                 <ScalarProperty Name="parentKeyName" ColumnName="parentKeyName" />
                 <ScalarProperty Name="parentId" ColumnName="parentId" />
-                <ScalarProperty Name="nameSameAsPrevious" ColumnName="nameSameAsPrevious" />
                 <ScalarProperty Name="rightBracket" ColumnName="rightBracket" />
                 <ScalarProperty Name="leftBracket" ColumnName="leftBracket" />
                 <ScalarProperty Name="regimenJoinType" ColumnName="regimenJoinType" />
@@ -1505,8 +1478,8 @@
         <EntityTypeShape EntityType="BDDataModel.BDHtmlPage" Width="1.5" PointX="2.75" PointY="0.875" Height="3.3263964843750102" />
         <EntityTypeShape EntityType="BDDataModel.BDSearchEntry" Width="1.5" PointX="10.25" PointY="0.875" Height="2.1725878906250102" />
         <EntityTypeShape EntityType="BDDataModel.BDSearchEntryAssociation" Width="1.75" PointX="10.25" PointY="3.125" Height="3.5186979166666674" />
-        <EntityTypeShape EntityType="BDDataModel.BDRegimenGroup" Width="1.5" PointX="10.25" PointY="14.125" Height="3.7109993489583246" />
-        <EntityTypeShape EntityType="BDDataModel.BDRegimen" Width="1.5" PointX="12" PointY="14.125" Height="5.63401367187501" />
+        <EntityTypeShape EntityType="BDDataModel.BDRegimenGroup" Width="1.5" PointX="10.375" PointY="14.125" Height="3.7109993489583246" />
+        <EntityTypeShape EntityType="BDDataModel.BDRegimen" Width="1.5" PointX="12.125" PointY="14.125" Height="3.9033007812500102" />
       </Diagram>
     </Diagrams>
   </Designer>

@@ -539,15 +539,20 @@ namespace BDEditor.Classes
                             break;
                     }
                     break;
+                case BDConstants.BDNodeType.BDRegimenGroup:
+                    switch (layoutVariant)
+                    {
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDRegimen, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
                 case BDConstants.BDNodeType.BDRegimen:
                     switch (layoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery:
-                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
-                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
-                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                            break;
                         default:
                             break;
                     }
@@ -763,8 +768,8 @@ namespace BDEditor.Classes
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSurgeryClassification, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDRegimenGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDRegimen, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDRegimenGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDRegimen, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPathogen, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -772,10 +777,10 @@ namespace BDEditor.Classes
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDRegimen, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
-                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDRegimenGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDRegimen, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
                         default:
                             break;
                     }

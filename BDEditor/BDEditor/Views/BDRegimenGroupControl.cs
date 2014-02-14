@@ -447,6 +447,12 @@ namespace BDEditor.Views
 
         private void Regimen_RequestItemDelete(object sender, EventArgs e)
         {
+            BDRegimenControl control = sender as BDRegimenControl;
+            if (null != control)
+            {
+                if (MessageBox.Show("Delete Regimen?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                    removeRegimenControl(control, true);
+            }
 
         }
 

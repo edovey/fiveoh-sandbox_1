@@ -279,9 +279,9 @@ namespace BDEditor.Classes
             Prophylaxis_Surgical_Surgery = 3013,
             [Description("Prophylaxis - Surgeries")]
             Prophylaxis_Surgical_Surgeries = 3014,
-            [Description("Prophylaxis - Surgery with Classification")]
+            [Description("Prophylaxis - Surgery with Risk Classification")]
             Prophylaxis_Surgical_Surgery_With_Classification = 3015,
-            [Description("Prophylaxis - Surgeries with Classification")]
+            [Description("Prophylaxis - Surgeries with Risk Classification")]
             Prophylaxis_Surgical_Surgeries_With_Classification = 3016,
             [Description("Prophylaxis - Surgery Topic")]
             Prophylaxis_Surgical_Topic = 3017,

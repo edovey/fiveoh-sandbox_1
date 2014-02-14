@@ -361,7 +361,7 @@
             this.toolStripMenuItem2,
             this.deleteToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(164, 132);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(164, 154);
             // 
             // editIndexStripMenuItem
             // 

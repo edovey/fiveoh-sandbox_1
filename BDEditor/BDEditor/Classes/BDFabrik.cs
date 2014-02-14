@@ -542,11 +542,8 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDRegimenGroup:
                     switch (layoutVariant)
                     {
-                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
-                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDRegimen, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                            break;
-                        default:
+                         default:
+                           childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDRegimen, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                     }
                     break;

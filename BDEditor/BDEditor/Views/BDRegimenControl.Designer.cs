@@ -187,7 +187,7 @@
             this.tbName.Location = new System.Drawing.Point(28, 48);
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(302, 20);
-            this.tbName.TabIndex = 1;
+            this.tbName.TabIndex = 0;
             this.tbName.Tag = "";
             this.tbName.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             this.tbName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbName_MouseDown);
@@ -277,7 +277,7 @@
             this.tbDosage.Location = new System.Drawing.Point(393, 48);
             this.tbDosage.Name = "tbDosage";
             this.tbDosage.Size = new System.Drawing.Size(354, 20);
-            this.tbDosage.TabIndex = 4;
+            this.tbDosage.TabIndex = 2;
             this.tbDosage.Tag = "";
             this.tbDosage.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             this.tbDosage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDosage_MouseDown);
@@ -289,7 +289,7 @@
             this.btnNameLink.Location = new System.Drawing.Point(336, 48);
             this.btnNameLink.Name = "btnNameLink";
             this.btnNameLink.Size = new System.Drawing.Size(28, 28);
-            this.btnNameLink.TabIndex = 2;
+            this.btnNameLink.TabIndex = 1;
             this.btnNameLink.UseVisualStyleBackColor = true;
             this.btnNameLink.Click += new System.EventHandler(this.btnLink_Click);
             // 
@@ -300,7 +300,7 @@
             this.btnDosageLink.Location = new System.Drawing.Point(753, 43);
             this.btnDosageLink.Name = "btnDosageLink";
             this.btnDosageLink.Size = new System.Drawing.Size(28, 28);
-            this.btnDosageLink.TabIndex = 5;
+            this.btnDosageLink.TabIndex = 3;
             this.btnDosageLink.UseVisualStyleBackColor = true;
             this.btnDosageLink.Click += new System.EventHandler(this.btnLink_Click);
             // 
@@ -310,7 +310,7 @@
             this.btnMenu.Location = new System.Drawing.Point(821, 48);
             this.btnMenu.Name = "btnMenu";
             this.btnMenu.Size = new System.Drawing.Size(28, 28);
-            this.btnMenu.TabIndex = 14;
+            this.btnMenu.TabIndex = 5;
             this.btnMenu.UseVisualStyleBackColor = true;
             this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
             // 
@@ -322,7 +322,7 @@
             this.lblRightBracket.Location = new System.Drawing.Point(787, 30);
             this.lblRightBracket.Name = "lblRightBracket";
             this.lblRightBracket.Size = new System.Drawing.Size(38, 55);
-            this.lblRightBracket.TabIndex = 16;
+            this.lblRightBracket.TabIndex = 4;
             this.lblRightBracket.Text = "]";
             this.lblRightBracket.Click += new System.EventHandler(this.lblRightBracket_Click);
             // 
@@ -344,7 +344,7 @@
             this.andOrRadioButton.Location = new System.Drawing.Point(426, 3);
             this.andOrRadioButton.Name = "andOrRadioButton";
             this.andOrRadioButton.Size = new System.Drawing.Size(84, 17);
-            this.andOrRadioButton.TabIndex = 13;
+            this.andOrRadioButton.TabIndex = 4;
             this.andOrRadioButton.TabStop = true;
             this.andOrRadioButton.Text = "+/-  (w/next)";
             this.andOrRadioButton.UseVisualStyleBackColor = true;
@@ -427,7 +427,7 @@
             this.aoRadioButton.Location = new System.Drawing.Point(525, 3);
             this.aoRadioButton.Name = "aoRadioButton";
             this.aoRadioButton.Size = new System.Drawing.Size(102, 17);
-            this.aoRadioButton.TabIndex = 15;
+            this.aoRadioButton.TabIndex = 5;
             this.aoRadioButton.TabStop = true;
             this.aoRadioButton.Text = "And/Or (w/next)";
             this.aoRadioButton.UseVisualStyleBackColor = true;
@@ -438,7 +438,7 @@
             this.otherRadioButton.Location = new System.Drawing.Point(630, 3);
             this.otherRadioButton.Name = "otherRadioButton";
             this.otherRadioButton.Size = new System.Drawing.Size(51, 17);
-            this.otherRadioButton.TabIndex = 14;
+            this.otherRadioButton.TabIndex = 6;
             this.otherRadioButton.TabStop = true;
             this.otherRadioButton.Text = "Other";
             this.otherRadioButton.UseVisualStyleBackColor = true;
@@ -449,7 +449,7 @@
             this.nextRegimenRadioButton.Location = new System.Drawing.Point(28, 3);
             this.nextRegimenRadioButton.Name = "nextRegimenRadioButton";
             this.nextRegimenRadioButton.Size = new System.Drawing.Size(92, 17);
-            this.nextRegimenRadioButton.TabIndex = 9;
+            this.nextRegimenRadioButton.TabIndex = 0;
             this.nextRegimenRadioButton.TabStop = true;
             this.nextRegimenRadioButton.Text = "Next Regimen";
             this.nextRegimenRadioButton.UseVisualStyleBackColor = true;
@@ -460,7 +460,7 @@
             this.andRadioButton.Location = new System.Drawing.Point(123, 3);
             this.andRadioButton.Name = "andRadioButton";
             this.andRadioButton.Size = new System.Drawing.Size(86, 17);
-            this.andRadioButton.TabIndex = 10;
+            this.andRadioButton.TabIndex = 1;
             this.andRadioButton.TabStop = true;
             this.andRadioButton.Text = "And (w/next)";
             this.andRadioButton.UseVisualStyleBackColor = true;
@@ -471,7 +471,7 @@
             this.orRadioButton.Location = new System.Drawing.Point(224, 3);
             this.orRadioButton.Name = "orRadioButton";
             this.orRadioButton.Size = new System.Drawing.Size(78, 17);
-            this.orRadioButton.TabIndex = 11;
+            this.orRadioButton.TabIndex = 2;
             this.orRadioButton.TabStop = true;
             this.orRadioButton.Text = "Or (w/next)";
             this.orRadioButton.UseVisualStyleBackColor = true;
@@ -482,7 +482,7 @@
             this.thenRadioButton.Location = new System.Drawing.Point(318, 3);
             this.thenRadioButton.Name = "thenRadioButton";
             this.thenRadioButton.Size = new System.Drawing.Size(92, 17);
-            this.thenRadioButton.TabIndex = 12;
+            this.thenRadioButton.TabIndex = 3;
             this.thenRadioButton.TabStop = true;
             this.thenRadioButton.Text = "Then (w/next)";
             this.thenRadioButton.UseVisualStyleBackColor = true;

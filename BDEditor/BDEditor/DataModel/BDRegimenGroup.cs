@@ -137,7 +137,7 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Gets all Regimen Groups in the model with the specified Pathogen ID
+        /// Gets all Regimen Groups in the model with the specified Regimen ID
         /// </summary>
         /// <param name="pPathogenId"></param>
         /// <returns>List of BDRegimenGroups</returns>

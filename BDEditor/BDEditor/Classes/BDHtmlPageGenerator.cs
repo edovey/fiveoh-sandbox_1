@@ -5000,9 +5000,9 @@ namespace BDEditor.Classes
             if (children.Count > 0)
             {
                 choiceRegimenTable.AppendFormat(@"<table class=""v{0}""><tr>", (int)pNode.LayoutVariant);
-                choiceRegimenTable.AppendFormat("<th>{0}</th>", choiceRegimenTitle);
+                choiceRegimenTable.AppendFormat("<th colspan=2>{0}</th>", choiceRegimenTitle);
                 alternateRegimenTable.AppendFormat(@"<table class=""v{0}""><tr>", (int)pNode.LayoutVariant);
-                alternateRegimenTable.AppendFormat("<th>{0}</th>", alternateRegimenTitle);
+                alternateRegimenTable.AppendFormat("<th colspan=2>{0}</th>", alternateRegimenTitle);
 
                 pathogenHtml.AppendFormat("<{0}>{1}</{0}><p>", "h3", pathogenTitle);
                 foreach (IBDNode child in children)
@@ -5028,7 +5028,7 @@ namespace BDEditor.Classes
                                 hasChoiceRegimens = true;
                             }
                             if (grpConjunction.Length > 0)
-                                choiceRegimenTable.AppendFormat("<tr><td>{0}</td></tr>", grpConjunction);
+                                choiceRegimenTable.AppendFormat("<tr><td colspan=2>{0}</td></tr>", grpConjunction);
                         }
                         if (group.alternativeRegimen.Value == true)
                         {
@@ -5039,7 +5039,7 @@ namespace BDEditor.Classes
                                 hasAlternateRegimens = true;
                             }
                             if (grpConjunction.Length > 0)
-                                alternateRegimenTable.AppendFormat("<tr><td>{0}</td></tr>", grpConjunction);
+                                alternateRegimenTable.AppendFormat("<tr><td colspan=2>{0}</td></tr>", grpConjunction);
                         }
                     }
                     if (child.NodeType == BDConstants.BDNodeType.BDRegimen)
@@ -5051,14 +5051,14 @@ namespace BDEditor.Classes
                         {
                             choiceRegimenTable.AppendFormat("<tr>{0}</tr>", cellHtml);
                             if (conjunction.Length > 0)
-                                choiceRegimenTable.AppendFormat("<tr><td>{0}</td></tr>", conjunction);
+                                choiceRegimenTable.AppendFormat("<tr><td></td><td>{0}</td></tr>", conjunction);
                             hasChoiceRegimens = true;
                         }
                         if (regimen.columnOrder.Value == 1 && cellHtml.Length > 0)
                         {
                             alternateRegimenTable.AppendFormat("<tr>{0}</tr>", cellHtml);
                             if (conjunction.Length > 0)
-                                choiceRegimenTable.AppendFormat("<tr><td>{0}</td></tr>", conjunction);
+                                choiceRegimenTable.AppendFormat("<tr><td></td><td>{0}</td></tr>", conjunction);
                             hasAlternateRegimens = true;
                         }
                     }
@@ -5090,7 +5090,7 @@ namespace BDEditor.Classes
 
             if (pRegimen != null)
             {
-                cellHtml.Append("<td>");
+                cellHtml.Append("<td></td><td>");
                 cellHtml.AppendFormat("{0} {1}", buildNodePropertyHTML(pContext, pRegimen, pRegimen.Name, BDRegimen.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage),
                     buildNodePropertyHTML(pContext, pRegimen, pRegimen.dosage, BDRegimen.PROPERTYNAME_DOSAGE, pFootnotes, pObjectsOnPage));
 
@@ -5108,7 +5108,7 @@ namespace BDEditor.Classes
             {
                 // add row for group name
                 if(pGroup.Name.Length > 0)
-                    groupHtml.AppendFormat("<tr><td><b>{0}</b></td></tr>", buildNodePropertyHTML(pContext, pGroup, pGroup.Name, BDRegimenGroup.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage));
+                    groupHtml.AppendFormat("<tr><td colspan=2><b>{0}</b></td></tr>", buildNodePropertyHTML(pContext, pGroup, pGroup.Name, BDRegimenGroup.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage));
                 
                 // get children
                 List<IBDNode> regimens = BDFabrik.GetChildrenForParent(pContext, pGroup);
@@ -5118,9 +5118,11 @@ namespace BDEditor.Classes
                     string conjunction = retrieveConjunctionString(regimen.regimenJoinType.Value, regimen);
 
                     if (columnType == regimen.columnOrder)
+                    {
                         groupHtml.AppendFormat("<tr>{0}</tr>", buildRegimenCellHtml(pContext, regimen, pFootnotes, pObjectsOnPage));
-                    if (conjunction.Length > 0)
-                        groupHtml.AppendFormat("<tr><td>{0}</td></tr>", conjunction);
+                        if (conjunction.Length > 0)
+                            groupHtml.AppendFormat("<tr><td></td><td>{0}</td></tr>", conjunction);
+                    }
                 }
             }
 

@@ -118,7 +118,7 @@ namespace BDEditor.DataModel
             BDLinkedNoteAssociation.DeleteForParentId(pContext, pEntity.Uuid);
             BDSearchEntryAssociation.DeleteForAnchorNodeUuid(pContext, pEntity.Uuid);
 
-            BDTherapy.DeleteForParentId(pContext, pEntity.Uuid, pCreateDeletion);
+            BDRegimen.DeleteForParentId(pContext, pEntity.Uuid, pCreateDeletion);
 
             pContext.DeleteObject(pEntity);
             pContext.SaveChanges();

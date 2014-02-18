@@ -104,7 +104,7 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Extended Delete method that creates a deletion record as well as deleting the local record
+        /// Extended Delete method that deletes the requested record as well as children and associated search, linked note records.
         /// </summary>
         /// <param name="pContext">the data context</param>
         /// <param name="pNode">the entry to be deleted</param>
@@ -151,6 +151,14 @@ namespace BDEditor.DataModel
                     case BDConstants.BDNodeType.BDAntimicrobialRisk:
                         BDAntimicrobialRisk risk = child as BDAntimicrobialRisk;
                         BDAntimicrobialRisk.Delete(pContext, risk, pCreateDeletion);
+                        break;
+                    case BDConstants.BDNodeType.BDRegimenGroup:
+                        BDRegimenGroup rGroup = child as BDRegimenGroup;
+                        BDRegimenGroup.Delete(pContext, rGroup, pCreateDeletion);
+                        break;
+                    case BDConstants.BDNodeType.BDRegimen:
+                        BDRegimen regimen = child as BDRegimen;
+                        BDRegimen.Delete(pContext, regimen, pCreateDeletion);
                         break;
                     default:
                         BDNode.Delete(pContext, child, pCreateDeletion);
@@ -278,7 +286,7 @@ namespace BDEditor.DataModel
         public static int? RetrieveMaximumDisplayOrderForChildren(Entities pContext, BDNode pParent)
         {
             var maxDisplayorder = pContext.BDNodes.Where(x => (x.parentId == pParent.Uuid)).Select(node => node.displayOrder).Max();
-            return (null == maxDisplayorder)? 0 : maxDisplayorder;
+            return (null == maxDisplayorder)? 0 : maxDisplayorder.Value;
         }
 
         public static int? RetrieveChildCountForNode(Entities pContext, BDNode pParent)

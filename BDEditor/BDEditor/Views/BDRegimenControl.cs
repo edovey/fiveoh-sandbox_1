@@ -163,7 +163,7 @@ namespace BDEditor.Views
 
                 tbName.Text = currentRegimen.name;
                 tbDosage.Text = currentRegimen.dosage;
-                // DisplayOrder = currentRegimen.displayOrder; WTF?  NO!!! sets everything to zero.
+                // DisplayOrder = currentRegimen.displayOrder; Not good! sets everything to zero.
                 ColumnOrder = currentRegimen.columnOrder;
                 
                 if (currentRegimen.columnOrder == 0)

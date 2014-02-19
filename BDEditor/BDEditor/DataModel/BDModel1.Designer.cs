@@ -6367,6 +6367,30 @@ namespace BDEditor.DataModel
         private global::System.String _dosage;
         partial void OndosageChanging(global::System.String value);
         partial void OndosageChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String duration
+        {
+            get
+            {
+                return _duration;
+            }
+            set
+            {
+                OndurationChanging(value);
+                ReportPropertyChanging("duration");
+                _duration = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("duration");
+                OndurationChanged();
+            }
+        }
+        private global::System.String _duration;
+        partial void OndurationChanging(global::System.String value);
+        partial void OndurationChanged();
 
         #endregion
     
@@ -6662,30 +6686,6 @@ namespace BDEditor.DataModel
         private Nullable<global::System.Int32> _layoutVariant;
         partial void OnlayoutVariantChanging(Nullable<global::System.Int32> value);
         partial void OnlayoutVariantChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> nodeType
-        {
-            get
-            {
-                return _nodeType;
-            }
-            set
-            {
-                OnnodeTypeChanging(value);
-                ReportPropertyChanging("nodeType");
-                _nodeType = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("nodeType");
-                OnnodeTypeChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _nodeType;
-        partial void OnnodeTypeChanging(Nullable<global::System.Int32> value);
-        partial void OnnodeTypeChanged();
     
         /// <summary>
         /// No Metadata Documentation available.

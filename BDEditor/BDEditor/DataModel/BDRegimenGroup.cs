@@ -41,7 +41,6 @@ namespace BDEditor.DataModel
         private const string DISPLAYORDER = @"rg_displayOrder";
         private const string REGIMENGROUPJOINTYPE = @"rg_regimenGroupJoinType";
         private const string NAME = @"rg_name";
-        private const string NODETYPE = @"rg_nodeType";
         private const string REGIMENOFCHOICE = @"rg_regimenOfChoice";
         private const string ALTERNATIVEREGIMEN = @"rg_alternativeRegimen";
 

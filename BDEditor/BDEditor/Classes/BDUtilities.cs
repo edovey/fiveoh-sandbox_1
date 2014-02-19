@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Data.SqlClient;
+using System.Configuration;
 
 using System.Reflection;
 using System.ComponentModel;
@@ -2492,7 +2494,12 @@ namespace BDEditor.Classes
 
             #region v1.6.74
 
-            #region clean existing structures (part 1)
+            #region update schema: part 1
+            // could not get this to work from code : execute manually in SQL Mgmt Studio.
+            //BDUtilities.updateSchema("Schema.v1.6.74.txt");
+            #endregion
+
+            #region clean existing structures (part 2)
             // clean BDConfigured Entries from data (structure change -> BDRegimenGroup, BDRegimen)
             // Gastroesphageal low risk
             BDUtilities.deleteConfiguredEntryChildrenForNode(pContext, Guid.Parse("b88f77cb-f142-4181-9a2e-4a004e289764"));
@@ -2507,26 +2514,26 @@ namespace BDEditor.Classes
             s1.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
             BDUtilities.ResetLayoutVariantWithChildren(pContext, s1, BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery, true);
             BDUtilities.MoveNode(pContext, s1.Uuid, Guid.Parse("de6dfcce-cd3e-46b4-8dd7-468aa63ccdf7"));
-            
+
             // hepatobiliary liver resection
             BDNode s2 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("04c2ad30-3453-4c11-b8eb-8bc9cb9ea4f8"));
             s2.nodeType = (int)BDConstants.BDNodeType.BDSurgery;
             s2.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
             BDUtilities.ResetLayoutVariantWithChildren(pContext, s2, BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery, true);
             BDUtilities.MoveNode(pContext, s2.Uuid, Guid.Parse("de6dfcce-cd3e-46b4-8dd7-468aa63ccdf7"));
-            
+
             // hepatobiliary
             BDUtilities.deleteConfiguredEntryChildrenForNode(pContext, Guid.Parse("f3efab98-3dc5-44e0-8b83-829d8e0ed970"));
             //BDNode s3 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("f3efab98-3dc5-44e0-8b83-829d8e0ed970")); // hepatobiliary 
 
             // bowel small intestine -- reclassify and move up to parent
             BDUtilities.deleteConfiguredEntryChildrenForNode(pContext, Guid.Parse("82964846-20a9-425d-97fc-f3876b59bb23"));
-            BDNode s4 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("82964846-20a9-425d-97fc-f3876b59bb23")); 
+            BDNode s4 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("82964846-20a9-425d-97fc-f3876b59bb23"));
             s4.nodeType = (int)BDConstants.BDNodeType.BDSurgery;
             s4.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
             BDUtilities.ResetLayoutVariantWithChildren(pContext, s4, BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery, true);
             BDUtilities.MoveNode(pContext, s4.Uuid, Guid.Parse("de6dfcce-cd3e-46b4-8dd7-468aa63ccdf7"));
-            
+
             // bowel surgeries
             BDUtilities.deleteConfiguredEntryChildrenForNode(pContext, Guid.Parse("3db49314-cab9-4830-90dd-3d68ea40773a"));
             BDNode s5 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("3db49314-cab9-4830-90dd-3d68ea40773a"));
@@ -2544,15 +2551,15 @@ namespace BDEditor.Classes
             s6.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
             BDUtilities.ResetLayoutVariantWithChildren(pContext, s6, BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery, true);
             BDUtilities.MoveNode(pContext, s6.Uuid, Guid.Parse("de6dfcce-cd3e-46b4-8dd7-468aa63ccdf7"));
-            
+
             // Anal Surgery - low risk
             BDUtilities.deleteConfiguredEntryChildrenForNode(pContext, Guid.Parse("cae21114-bb50-4b5b-b27d-30d23da54920"));
             //BDNode s7 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("cae21114-bb50-4b5b-b27d-30d23da54920")); // Anal Surgery - low risk
-            
+
             // anal surgery - high risk
             BDUtilities.deleteConfiguredEntryChildrenForNode(pContext, Guid.Parse("c56d1557-a07c-4985-9827-36d35ff8b102 "));
             //BDNode s8 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("c56d1557-a07c-4985-9827-36d35ff8b102 ")); // anal surgery - high risk
-            
+
             // Herniorraphy...
             // delete child surgery classification
             // reclassify as surgery (from surgery group)
@@ -2577,54 +2584,54 @@ namespace BDEditor.Classes
             // Therapeutic termination of pregnancy
             BDUtilities.deleteConfiguredEntryChildrenForNode(pContext, Guid.Parse("c6152d2f-3824-476e-b912-2e349050b28b"));
             //BDNode s10 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("c6152d2f-3824-476e-b912-2e349050b28b")); // Therapeutic termination of pregnancy
-            
+
             // c section
             BDUtilities.deleteConfiguredEntryChildrenForNode(pContext, Guid.Parse("c9a6b538-24d4-46cf-83c1-aca068036f6d"));
             //BDNode s11 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("c9a6b538-24d4-46cf-83c1-aca068036f6d")); // c section
-            
+
             // Hysterectomy
             BDUtilities.deleteConfiguredEntryChildrenForNode(pContext, Guid.Parse("9be19021-b01a-4384-981d-9bfbe1ccf936"));
             //BDNode s12 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("9be19021-b01a-4384-981d-9bfbe1ccf936")); // Hysterectomy
-            
+
             // endometrial ablation
             BDUtilities.deleteConfiguredEntryChildrenForNode(pContext, Guid.Parse("fe19c17f-3121-4109-8591-2cca9258c9d9"));
             //BDNode s13 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("fe19c17f-3121-4109-8591-2cca9258c9d9")); // endometrial ablation
-            
+
             // dilatation and curettage
             BDUtilities.deleteConfiguredEntryChildrenForNode(pContext, Guid.Parse("4aa907b8-45ab-4f15-902f-fd43b67bb3f0"));
             //BDNode s14 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("4aa907b8-45ab-4f15-902f-fd43b67bb3f0")); // dilatation and curettage
-            
+
             // laparoscopic...
             BDUtilities.deleteConfiguredEntryChildrenForNode(pContext, Guid.Parse("4479c873-987f-4ed4-9563-f0b71d117620"));
             //BDNode s15 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("4479c873-987f-4ed4-9563-f0b71d117620")); // laparoscopic...
-            
+
             // open or laparoscopic...
             BDUtilities.deleteConfiguredEntryChildrenForNode(pContext, Guid.Parse("bc42f59a-cd92-43a5-8067-12cc5301ee1f"));
             //BDNode s16 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("bc42f59a-cd92-43a5-8067-12cc5301ee1f")); // open or laparoscopic...
-            
+
             // open or laparoscopic... with risk
             BDUtilities.deleteConfiguredEntryChildrenForNode(pContext, Guid.Parse("441c1c3c-a154-4b7b-96be-9911d1ea12b1"));
             //BDNode s17 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("441c1c3c-a154-4b7b-96be-9911d1ea12b1")); // open or laparoscopic... with risk
-            
+
             // cystoscopy.. low risk
             BDUtilities.deleteConfiguredEntryChildrenForNode(pContext, Guid.Parse("149f37be-88e9-4158-b8af-736a1d3d564f"));
             //BDNode s18 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("149f37be-88e9-4158-b8af-736a1d3d564f")); // cystoscopy.. low risk
-            
+
             // cystoscopy .. high risk
             BDUtilities.deleteConfiguredEntryChildrenForNode(pContext, Guid.Parse("ece29577-d224-4839-80a4-0b212037d630"));
             //BDNode s19 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("ece29577-d224-4839-80a4-0b212037d630")); // cystoscopy .. high risk
-            
+
             // shock wave lithotripsy
             BDUtilities.deleteConfiguredEntryChildrenForNode(pContext, Guid.Parse("68baf6dc-3b18-42d8-943f-c69fba8b1d43"));
             //BDNode s20 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("68baf6dc-3b18-42d8-943f-c69fba8b1d43")); // shock wave lithotripsy
-            
+
             // '' with risk factors
             BDUtilities.deleteConfiguredEntryChildrenForNode(pContext, Guid.Parse("3512c95b-3688-49bd-8cf1-a40878f36eac"));
             //BDNode s21 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("3512c95b-3688-49bd-8cf1-a40878f36eac")); // '' with risk factors
-            
+
             // surgery: adrenalectomy, nephrectomy
             BDUtilities.deleteConfiguredEntryChildrenForNode(pContext, Guid.Parse("1cf37708-6290-4a2a-81a7-9e279dc71e8b"));
-            BDNode s22 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("1cf37708-6290-4a2a-81a7-9e279dc71e8b")); 
+            BDNode s22 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("1cf37708-6290-4a2a-81a7-9e279dc71e8b"));
             // change to surgery group, make name blank, change layout type to surgeries
             s22.nodeType = (int)BDConstants.BDNodeType.BDSurgeryGroup;
             s22.nodeKeyName = BDConstants.BDNodeType.BDSurgeryGroup.ToString();
@@ -2644,14 +2651,14 @@ namespace BDEditor.Classes
             s22_2.SetParent(s22);
             s22_2.Name = "Nephrectomy";
             s22_2.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
-          
+
             pContext.SaveChanges();
 
             BDUtilities.ResetLayoutVariantWithChildren(pContext, s22, BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries, true);
 
-            // surgery: cystoscopy, Urethral dilation
+            // surgery: cystoscopy, Urethral dilation 
             BDUtilities.deleteConfiguredEntryChildrenForNode(pContext, Guid.Parse("b7a5aa78-5d51-42a7-8657-74d8716c714f"));
-            BDNode s23 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("b7a5aa78-5d51-42a7-8657-74d8716c714f")); 
+            BDNode s23 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("b7a5aa78-5d51-42a7-8657-74d8716c714f"));
             // change nodetype to surgery group, change layout to surgeries with risk classification, add surgeries
             s23.nodeType = (int)BDConstants.BDNodeType.BDSurgeryGroup;
             s23.nodeKeyName = BDConstants.BDNodeType.BDSurgeryGroup.ToString();
@@ -2665,31 +2672,45 @@ namespace BDEditor.Classes
                 cfn.parentKeyName = BDConstants.BDNodeType.BDSurgeryGroup.ToString();
             }
 
-            // add surgeries: Cystoscopy, Urethral dilation
+            // add surgeries: Cystoscopy, Urethral dilatation
             BDNode s23_1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
             s23_1.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification;
-            s23_1.displayOrder = 1;
+            s23_1.displayOrder = 0;
             s23_1.SetParent(s23);
             s23_1.Name = "Cystoscopy";
             s23_1.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
 
             BDNode s23_2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
             s23_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification;
-            s23_2.displayOrder = 2;
+            s23_2.displayOrder = 1;
             s23_2.SetParent(s23);
-            s23_2.Name = "Urethral dilation";
+            s23_2.Name = "Urethral dilatation";
             s23_2.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
 
+            BDNode s23_3 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgeryClassification);
+            s23_3.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification;
+            s23_3.displayOrder = 2;
+            s23_3.SetParent(s23);
+            s23_3.Name = "Low risk";
+            s23_3.nodeKeyName = BDConstants.BDNodeType.BDSurgeryClassification.ToString();
+
+            BDNode s23_4 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgeryClassification);
+            s23_4.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification;
+            s23_4.displayOrder = 2;
+            s23_4.SetParent(s23);
+            s23_4.Name = "High risk";
+            s23_4.nodeKeyName = BDConstants.BDNodeType.BDSurgeryClassification.ToString();
             pContext.SaveChanges();
 
             #endregion
-            #region add new layer to hierarchy (part 2)
+
+            #region add new layer to hierarchy (part 3)
             // Urology
             BDNode c1 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("fcd5c270-6bd8-40b1-a31e-030350fa069c"));
             int d_order = BDNode.RetrieveMaximumDisplayOrderForChildren(pContext, c1).Value;
             BDNode c1_1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
             c1_1.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery;
-            c1_1.DisplayOrder = d_order + 1;
+            c1_1.DisplayOrder = d_order + 1; // retrieve initial value - some data exists.
             d_order++;
             c1_1.SetParent(c1);
             c1_1.Name = "Ureteroscopy";
@@ -2698,7 +2719,7 @@ namespace BDEditor.Classes
 
             BDNode c1_2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgeryGroup);
             c1_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
-            c1_2.DisplayOrder = d_order + 1;
+            c1_2.DisplayOrder = d_order;
             d_order++;
             c1_2.SetParent(c1);
             c1_2.Name = String.Empty;
@@ -2723,7 +2744,7 @@ namespace BDEditor.Classes
 
             BDNode c1_3 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgeryGroup);
             c1_3.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
-            c1_3.DisplayOrder = d_order + 1;
+            c1_3.DisplayOrder = d_order;
             d_order++;
             c1_3.SetParent(c1);
             c1_3.Name = String.Empty;
@@ -2734,7 +2755,7 @@ namespace BDEditor.Classes
             c1_3_1.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
             c1_3_1.DisplayOrder = 0;
             c1_3_1.SetParent(c1_3);
-            c1_3_1.Name = "Ileal conduit/urinary diversion";
+            c1_3_1.Name = "Ileal conduit / urinary diversion";
             c1_3_1.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
             pContext.SaveChanges();
 
@@ -2789,10 +2810,10 @@ namespace BDEditor.Classes
             pContext.SaveChanges();
 
             BDNode c2_2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
-            c2_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            c2_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery;
             c2_2.DisplayOrder = 1;
             c2_2.SetParent(c2);
-            c2_2.Name = "Placement of eletrophysiologic devices";
+            c2_2.Name = "Placement of electrophysiologic devices";
             c2_2.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
             pContext.SaveChanges();
 
@@ -2823,7 +2844,7 @@ namespace BDEditor.Classes
             // Thoracic
             BDNode c3 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("04dc812f-4fb0-4cc2-95e2-a7666f0a35c2")); 
             BDNode c3_1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
-            c3_1.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            c3_1.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery;
             c3_1.DisplayOrder = 0;
             c3_1.SetParent(c3);
             c3_1.Name = "Esophageal resection";
@@ -2972,10 +2993,26 @@ namespace BDEditor.Classes
             c4_4.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery;
             c4_4.DisplayOrder = 3;
             c4_4.SetParent(c4);
-            c4_4.Name = "Peritoneal dialysis";
+            c4_4.Name = "Renal access procedures - native AV fistula";
             c4_4.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
             pContext.SaveChanges();
-            
+
+            BDNode c4_5 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            c4_5.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery;
+            c4_5.DisplayOrder = 4;
+            c4_5.SetParent(c4);
+            c4_5.Name = "Renal access procedures - artificial AV graft";
+            c4_5.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            pContext.SaveChanges();
+
+            BDNode c4_6 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            c4_6.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery;
+            c4_6.DisplayOrder = 5;
+            c4_6.SetParent(c4);
+            c4_6.Name = "Peritoneal dialysis";
+            c4_6.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            pContext.SaveChanges();
+
             // Plastics
             BDNode c5 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("3f55e087-6046-4278-8649-7692a1303d43"));
             BDNode c5_1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
@@ -3003,7 +3040,7 @@ namespace BDEditor.Classes
             pContext.SaveChanges();
 
             BDNode c5_2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
-            c5_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification;
+            c5_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery;
             c5_2.DisplayOrder = 1;
             c5_2.SetParent(c5);
             c5_2.Name = "Clean-contaminated procedures";
@@ -3035,7 +3072,7 @@ namespace BDEditor.Classes
             pContext.SaveChanges();
 
             BDNode c5_4 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
-            c5_4.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification;
+            c5_4.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery;
             c5_4.DisplayOrder = 3;
             c5_4.SetParent(c5);
             c5_4.Name = "Autologous breast reconstruction";
@@ -3090,12 +3127,12 @@ namespace BDEditor.Classes
             c5_6_2.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
             pContext.SaveChanges();
 
-            BDNode c5_7 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgeryGroup);
-            c5_6.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification;
-            c5_6.DisplayOrder = 5;
-            c5_6.SetParent(c5);
-            c5_6.Name = "Carpal tunnel";
-            c5_6.nodeKeyName = BDConstants.BDNodeType.BDSurgeryGroup.ToString();
+            BDNode c5_7 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            c5_7.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification;
+            c5_7.DisplayOrder = 6;
+            c5_7.SetParent(c5);
+            c5_7.Name = "Carpal tunnel";
+            c5_7.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
             pContext.SaveChanges();
 
             BDNode c5_7_1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgeryClassification);
@@ -3120,7 +3157,7 @@ namespace BDEditor.Classes
             c6_1.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery;
             c6_1.DisplayOrder = 0;
             c6_1.SetParent(c6);
-            c6_1.Name = "Diagnostic or operative arthorscopy";
+            c6_1.Name = "Diagnostic or operative arthroscopy";
             c6_1.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
             pContext.SaveChanges();
 
@@ -3192,7 +3229,7 @@ namespace BDEditor.Classes
 
             BDNode c7_2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgeryGroup);
             c7_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
-            c7_2.DisplayOrder = 2;
+            c7_2.DisplayOrder = 1;
             c7_2.SetParent(c7);
             c7_2.Name = "";
             c7_2.nodeKeyName = BDConstants.BDNodeType.BDSurgeryGroup.ToString();
@@ -3216,14 +3253,186 @@ namespace BDEditor.Classes
             
 
             // Neuro
-            BDNode c8 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("f6c6e10f-2609-44b8-ae63-d58a40ab6642")); 
+            BDNode c8 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("f6c6e10f-2609-44b8-ae63-d58a40ab6642"));
+            BDNode c8_1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgeryGroup);
+            c8_1.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            c8_1.DisplayOrder = 0;
+            c8_1.SetParent(c8);
+            c8_1.Name = "";
+            c8_1.nodeKeyName = BDConstants.BDNodeType.BDSurgeryGroup.ToString();
+            pContext.SaveChanges();
+
+            BDNode c8_1_1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            c8_1_1.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            c8_1_1.DisplayOrder = 0;
+            c8_1_1.SetParent(c8_1);
+            c8_1_1.Name = "Craniotomy";
+            c8_1_1.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            pContext.SaveChanges();
+
+            BDNode c8_1_2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            c8_1_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            c8_1_2.DisplayOrder = 1;
+            c8_1_2.SetParent(c8_1);
+            c8_1_2.Name = "Stereotactic brain biopsy / procedure";
+            c8_1_2.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            pContext.SaveChanges();
+
+            BDNode c8_2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            c8_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery;
+            c8_2.DisplayOrder = 1;
+            c8_2.SetParent(c8);
+            c8_2.Name = "Cerebrospinal fluid shunting operations";
+            c8_2.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            pContext.SaveChanges();
+
+            BDNode c8_3 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgeryGroup);
+            c8_3.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            c8_3.DisplayOrder = 2;
+            c8_3.SetParent(c8);
+            c8_3.Name = "";
+            c8_3.nodeKeyName = BDConstants.BDNodeType.BDSurgeryGroup.ToString();
+            pContext.SaveChanges();
+
+            BDNode c8_3_1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            c8_3_1.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            c8_3_1.DisplayOrder = 0;
+            c8_3_1.SetParent(c8_3);
+            c8_3_1.Name = "External ventricular drain (EVD)";
+            c8_3_1.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            pContext.SaveChanges();
+
+            BDNode c8_3_2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            c8_3_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            c8_3_2.DisplayOrder = 1;
+            c8_3_2.SetParent(c8_3);
+            c8_3_2.Name = "Intracranial pressure (ICP) monitor";
+            c8_3_2.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            pContext.SaveChanges();
+
+            BDNode c8_4 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            c8_4.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery;
+            c8_4.DisplayOrder = 3;
+            c8_4.SetParent(c8);
+            c8_4.Name = "Contaminated procedures";
+            c8_4.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            pContext.SaveChanges();
 
             // Head and Neck
-            BDNode c9 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("3355a333-238e-47d4-a1e4-8203b9ebfa74")); 
+            BDNode c9 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("3355a333-238e-47d4-a1e4-8203b9ebfa74"));
+            BDNode c9_1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            c9_1.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification;
+            c9_1.DisplayOrder = 0;
+            c9_1.SetParent(c9);
+            c9_1.Name = "Clean procedures";
+            c9_1.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            pContext.SaveChanges();
+
+            BDNode c9_1_1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgeryClassification);
+            c9_1_1.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification;
+            c9_1_1.DisplayOrder = 0;
+            c9_1_1.SetParent(c9_1);
+            c9_1_1.Name = "Low risk";
+            c9_1_1.nodeKeyName = BDConstants.BDNodeType.BDSurgeryClassification.ToString();
+            pContext.SaveChanges();
+
+            BDNode c9_1_2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgeryClassification);
+            c9_1_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification;
+            c9_1_2.DisplayOrder = 1;
+            c9_1_2.SetParent(c9_1);
+            c9_1_2.Name = "High risk";
+            c9_1_2.nodeKeyName = BDConstants.BDNodeType.BDSurgeryClassification.ToString();
+            pContext.SaveChanges();
+
+            BDNode c9_2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            c9_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification;
+            c9_2.DisplayOrder = 0;
+            c9_2.SetParent(c9);
+            c9_2.Name = "Clean contaminated procedures with incision through oral / nasal / pharyngeal mucosa";
+            c9_2.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            pContext.SaveChanges();
+
+            BDNode c9_2_1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgeryClassification);
+            c9_2_1.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification;
+            c9_2_1.DisplayOrder = 0;
+            c9_2_1.SetParent(c9_2);
+            c9_2_1.Name = "Low risk";
+            c9_2_1.nodeKeyName = BDConstants.BDNodeType.BDSurgeryClassification.ToString();
+            pContext.SaveChanges();
+
+            BDNode c9_2_2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgeryClassification);
+            c9_2_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification;
+            c9_2_2.DisplayOrder = 1;
+            c9_2_2.SetParent(c9_2);
+            c9_2_2.Name = "High risk";
+            c9_2_2.nodeKeyName = BDConstants.BDNodeType.BDSurgeryClassification.ToString();
+            pContext.SaveChanges(); 
 
             // Ophthalmology
-            BDNode c10 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("f44eea82-567b-4244-aa17-28d5be89e39a")); 
+            BDNode c10 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("f44eea82-567b-4244-aa17-28d5be89e39a"));
+            BDNode c10_1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgeryGroup);
+            c10_1.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            c10_1.DisplayOrder = 0;
+            c10_1.SetParent(c10);
+            c10_1.Name = "";
+            c10_1.nodeKeyName = BDConstants.BDNodeType.BDSurgeryGroup.ToString();
+            pContext.SaveChanges();
 
+            BDNode c10_1_1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            c10_1_1.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            c10_1_1.DisplayOrder = 0;
+            c10_1_1.SetParent(c10_1);
+            c10_1_1.Name = "Cataract extraction";
+            c10_1_1.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            pContext.SaveChanges();
+
+            BDNode c10_1_2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            c10_1_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            c10_1_2.DisplayOrder = 1;
+            c10_1_2.SetParent(c10_1);
+            c10_1_2.Name = "Corneal transplant";
+            c10_1_2.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            pContext.SaveChanges();
+
+            BDNode c10_1_3 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            c10_1_3.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            c10_1_3.DisplayOrder = 2;
+            c10_1_3.SetParent(c10_1);
+            c10_1_3.Name = "Retinal detachment";
+            c10_1_3.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            pContext.SaveChanges();
+
+            BDNode c10_1_4 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            c10_1_4.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            c10_1_4.DisplayOrder = 3;
+            c10_1_4.SetParent(c10_1);
+            c10_1_4.Name = "Vitrectomy";
+            c10_1_4.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            pContext.SaveChanges();
+
+            BDNode c10_1_5 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            c10_1_5.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            c10_1_5.DisplayOrder = 4;
+            c10_1_5.SetParent(c10_1);
+            c10_1_5.Name = "Dacryocystorhinostomy";
+            c10_1_5.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            pContext.SaveChanges();
+
+            BDNode c10_1_6 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            c10_1_6.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            c10_1_6.DisplayOrder = 5;
+            c10_1_6.SetParent(c10_1);
+            c10_1_6.Name = "Eyelid surgery";
+            c10_1_6.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            pContext.SaveChanges();
+
+            BDNode c10_1_7 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            c10_1_7.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            c10_1_7.DisplayOrder = 6;
+            c10_1_7.SetParent(c10_1);
+            c10_1_7.Name = "Enucleation";
+            c10_1_7.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            pContext.SaveChanges();
 
             #endregion
             #endregion
@@ -3238,6 +3447,39 @@ namespace BDEditor.Classes
                 BDConfiguredEntry.Delete(pContext, child.uuid);
 
             pContext.SaveChanges();
+        }
+
+        [Obsolete]
+        private static void updateSchema(String pFileName)
+        {
+            // could not get this to work - not successful in reading connectionString from app.config and opening the connection.
+
+           // String currentPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+           // String fileWithPath = currentPath + @"\Resources\" + pFileName; 
+
+           //if (!File.Exists(fileWithPath))
+           //{
+           //    Console.WriteLine("{0} does not exist.", pFileName);
+           //    return;
+           //}
+           // String sqlScript = String.Empty;
+
+           // using (StreamReader sr = File.OpenText(fileWithPath))
+           // {
+           //     sqlScript = sr.ReadToEnd();
+           // }
+
+           // if (sqlScript.Length > 0)
+           // {
+           //     using (SqlConnection cxn = new SqlConnection(ConfigurationManager.ConnectionStrings["Entities"].ConnectionString))
+           //     {
+           //         cxn.Open();
+           //         SqlCommand cmd = new SqlCommand(sqlScript, cxn);
+           //         cmd.ExecuteNonQuery();
+           //     }
+           // }
+           // else
+           //     Console.WriteLine("File contents not read");
         }
 
         #region data repair for V2 implementation

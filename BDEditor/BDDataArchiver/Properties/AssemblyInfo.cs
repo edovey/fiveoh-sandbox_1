@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Bugs & Drugs Data Archiver")]
 [assembly: AssemblyDescription("Archiving Tool for Bugs & Drugs Content Editor")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Electric Typewriter Corporation")]
+[assembly: AssemblyCompany("Resonant Apps Inc.")]
 [assembly: AssemblyProduct("BDDataArchiver")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
+[assembly: AssemblyCopyright("Copyright ©  2012-2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

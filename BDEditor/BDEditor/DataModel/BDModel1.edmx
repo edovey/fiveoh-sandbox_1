@@ -324,7 +324,6 @@
           <Property Name="parentKeyName" Type="nvarchar" MaxLength="100" />
           <Property Name="parentType" Type="int" />
           <Property Name="layoutVariant" Type="int" />
-          <Property Name="nodeType" Type="int" />
           <Property Name="regimenOfChoice" Type="bit" />
           <Property Name="alternativeRegimen" Type="bit" />
         </EntityType>
@@ -347,6 +346,7 @@
           <Property Name="layoutVariant" Type="int" />
           <Property Name="columnOrder" Type="int" />
           <Property Name="dosage" Type="nvarchar" MaxLength="1000" />
+          <Property Name="duration" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="BDSearchEntries">
           <Key>
@@ -935,7 +935,6 @@
           <Property Type="String" Name="parentKeyName" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="parentType" />
           <Property Type="Int32" Name="layoutVariant" />
-          <Property Type="Int32" Name="nodeType" />
           <Property Type="Boolean" Name="regimenOfChoice" />
           <Property Type="Boolean" Name="alternativeRegimen" />
         </EntityType>
@@ -958,6 +957,7 @@
           <Property Type="Int32" Name="layoutVariant" />
           <Property Type="Int32" Name="columnOrder" />
           <Property Type="String" Name="dosage" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="duration" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1400,7 +1400,6 @@
               <MappingFragment StoreEntitySet="BDRegimenGroups">
                 <ScalarProperty Name="alternativeRegimen" ColumnName="alternativeRegimen" />
                 <ScalarProperty Name="regimenOfChoice" ColumnName="regimenOfChoice" />
-                <ScalarProperty Name="nodeType" ColumnName="nodeType" />
                 <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
                 <ScalarProperty Name="parentType" ColumnName="parentType" />
                 <ScalarProperty Name="parentKeyName" ColumnName="parentKeyName" />
@@ -1418,6 +1417,7 @@
           <EntitySetMapping Name="BDRegimens">
             <EntityTypeMapping TypeName="BDDataModel.BDRegimen">
               <MappingFragment StoreEntitySet="BDRegimens">
+                <ScalarProperty Name="duration" ColumnName="duration" />
                 <ScalarProperty Name="dosage" ColumnName="dosage" />
                 <ScalarProperty Name="columnOrder" ColumnName="columnOrder" />
                 <ScalarProperty Name="layoutVariant" ColumnName="layoutVariant" />
@@ -1436,7 +1436,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
@@ -1478,8 +1478,8 @@
         <EntityTypeShape EntityType="BDDataModel.BDHtmlPage" Width="1.5" PointX="2.75" PointY="0.875" Height="3.3263964843750102" />
         <EntityTypeShape EntityType="BDDataModel.BDSearchEntry" Width="1.5" PointX="10.25" PointY="0.875" Height="2.1725878906250102" />
         <EntityTypeShape EntityType="BDDataModel.BDSearchEntryAssociation" Width="1.75" PointX="10.25" PointY="3.125" Height="3.5186979166666674" />
-        <EntityTypeShape EntityType="BDDataModel.BDRegimenGroup" Width="1.5" PointX="10.375" PointY="14.125" Height="3.7109993489583246" />
-        <EntityTypeShape EntityType="BDDataModel.BDRegimen" Width="1.5" PointX="12.125" PointY="14.125" Height="3.9033007812500102" />
+        <EntityTypeShape EntityType="BDDataModel.BDRegimenGroup" Width="1.5" PointX="10.375" PointY="14.125" Height="3.5186979166666674" />
+        <EntityTypeShape EntityType="BDDataModel.BDRegimen" Width="1.5" PointX="12.125" PointY="14.125" Height="4.0956022135416674" />
       </Diagram>
     </Diagrams>
   </Designer>

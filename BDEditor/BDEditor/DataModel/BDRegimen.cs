@@ -50,6 +50,7 @@ namespace BDEditor.DataModel
         private const string RIGHTBRACKET = @"re_rightBracket";
         private const string NAME = @"re_name";
         private const string DOSAGE = @"re_dosage";
+        private const string DURATION = @"re_duration";
         
         /// <summary>
         /// Extended Create method that sets created date and schema version
@@ -75,6 +76,7 @@ namespace BDEditor.DataModel
             regimen.displayOrder = -1;
             regimen.name = string.Empty;
             regimen.dosage = string.Empty;
+            regimen.duration = string.Empty;
             regimen.parentId = pParentId;
 
             pContext.AddObject(ENTITYNAME, regimen);

@@ -3091,27 +3091,27 @@ namespace BDEditor.Classes
             pContext.SaveChanges();
 
             BDNode c5_7 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgeryGroup);
-            c5_6.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification;
+            c5_6.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification;
             c5_6.DisplayOrder = 5;
             c5_6.SetParent(c5);
             c5_6.Name = "Carpal tunnel";
             c5_6.nodeKeyName = BDConstants.BDNodeType.BDSurgeryGroup.ToString();
             pContext.SaveChanges();
 
-            BDNode c5_7_1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
-            c5_7_1.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification;
+            BDNode c5_7_1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgeryClassification);
+            c5_7_1.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification;
             c5_7_1.DisplayOrder = 0;
             c5_7_1.SetParent(c5_7);
             c5_7_1.Name = "Low risk";
-            c5_7_1.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            c5_7_1.nodeKeyName = BDConstants.BDNodeType.BDSurgeryClassification.ToString();
             pContext.SaveChanges();
 
-            BDNode c5_7_2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
-            c5_7_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification;
+            BDNode c5_7_2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgeryClassification);
+            c5_7_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification;
             c5_7_2.DisplayOrder = 1;
             c5_7_2.SetParent(c5_7);
             c5_7_2.Name = "High risk";
-            c5_7_2.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            c5_7_2.nodeKeyName = BDConstants.BDNodeType.BDSurgeryClassification.ToString();
             pContext.SaveChanges(); 
             
             // Orthopaedic
@@ -3165,7 +3165,55 @@ namespace BDEditor.Classes
             pContext.SaveChanges();
 
             // Spinal
-            BDNode c7 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("58734f9a-c070-49a7-9369-fb2328d81694")); 
+            BDNode c7 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("58734f9a-c070-49a7-9369-fb2328d81694"));
+            BDNode c7_1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgeryGroup);
+            c7_1.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            c7_1.DisplayOrder = 0;
+            c7_1.SetParent(c7);
+            c7_1.Name = "";
+            c7_1.nodeKeyName = BDConstants.BDNodeType.BDSurgeryGroup.ToString();
+            pContext.SaveChanges();
+
+            BDNode c7_1_1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            c7_1_1.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            c7_1_1.DisplayOrder = 0;
+            c7_1_1.SetParent(c7_1);
+            c7_1_1.Name = "Laminectomy";
+            c7_1_1.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            pContext.SaveChanges();
+
+            BDNode c7_1_2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            c7_1_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            c7_1_2.DisplayOrder = 1;
+            c7_1_2.SetParent(c7_1);
+            c7_1_2.Name = "Microdiscectomy";
+            c7_1_2.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            pContext.SaveChanges();
+
+            BDNode c7_2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgeryGroup);
+            c7_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            c7_2.DisplayOrder = 2;
+            c7_2.SetParent(c7);
+            c7_2.Name = "";
+            c7_2.nodeKeyName = BDConstants.BDNodeType.BDSurgeryGroup.ToString();
+            pContext.SaveChanges();
+
+            BDNode c7_2_1 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            c7_2_1.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            c7_2_1.DisplayOrder = 0;
+            c7_2_1.SetParent(c7_2);
+            c7_2_1.Name = "Spinal fusion";
+            c7_2_1.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            pContext.SaveChanges();
+
+            BDNode c7_2_2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            c7_2_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            c7_2_2.DisplayOrder = 1;
+            c7_2_2.SetParent(c7_2);
+            c7_2_2.Name = "Insertion of foreign material";
+            c7_2_2.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            pContext.SaveChanges(); 
+            
 
             // Neuro
             BDNode c8 = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("f6c6e10f-2609-44b8-ae63-d58a40ab6642")); 

@@ -2911,9 +2911,9 @@ namespace BDEditor.DataModel
             set
             {
                 OnjoinTypeChanging(value);
-                ReportPropertyChanging("joinType");
+                ReportPropertyChanging("groupJoinType");
                 _joinType = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("joinType");
+                ReportPropertyChanged("groupJoinType");
                 OnjoinTypeChanged();
             }
         }

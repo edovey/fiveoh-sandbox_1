@@ -5041,7 +5041,7 @@ namespace BDEditor.Classes
                     else if (child.NodeType == BDConstants.BDNodeType.BDRegimenGroup)
                     {
                         BDRegimenGroup group = child as BDRegimenGroup;
-                        string grpConjunction = retrieveConjunctionString(group.regimenGroupJoinType.Value, group);
+                       // string grpConjunction = retrieveConjunctionString(group.regimenGroupJoinType.Value, group);
 
                         if (group.regimenOfChoice.Value == true)
                         {
@@ -5051,8 +5051,8 @@ namespace BDEditor.Classes
                                 choiceRegimenTable.Append(choiceRowsHtml);                                
                                 hasChoiceRegimens = true;
                             }
-                            if (grpConjunction.Length > 0)
-                                choiceRegimenTable.AppendFormat("<tr><td colspan=2>{0}</td></tr>", grpConjunction);
+                            //if (grpConjunction.Length > 0)
+                            //    choiceRegimenTable.AppendFormat("<tr><td colspan=2>{0}</td></tr>", grpConjunction);
                         }
                         if (group.alternativeRegimen.Value == true)
                         {
@@ -5062,29 +5062,31 @@ namespace BDEditor.Classes
                                 alternateRegimenTable.Append(altRowsHtml);
                                 hasAlternateRegimens = true;
                             }
-                            if (grpConjunction.Length > 0)
-                                alternateRegimenTable.AppendFormat("<tr><td colspan=2>{0}</td></tr>", grpConjunction);
+                            //if (grpConjunction.Length > 0)
+                            //    alternateRegimenTable.AppendFormat("<tr><td colspan=2>{0}</td></tr>", grpConjunction);
                         }
                     }
                     else if (child.NodeType == BDConstants.BDNodeType.BDRegimen)
                     {
-                        BDRegimen regimen = child as BDRegimen;
-                        string conjunction = retrieveConjunctionString(regimen.regimenJoinType.Value, child);
-                        string cellHtml = (buildRegimenCellHtml(pContext, regimen, pFootnotes, pObjectsOnPage)).ToString();
-                        if (regimen.columnOrder.Value == 0 && cellHtml.Length > 0)
-                        {
-                            choiceRegimenTable.AppendFormat("<tr>{0}</tr>", cellHtml);
-                            if (conjunction.Length > 0)
-                                choiceRegimenTable.AppendFormat("<tr><td></td><td>{0}</td></tr>", conjunction);
-                            hasChoiceRegimens = true;
-                        }
-                        if (regimen.columnOrder.Value == 1 && cellHtml.Length > 0)
-                        {
-                            alternateRegimenTable.AppendFormat("<tr>{0}</tr>", cellHtml);
-                            if (conjunction.Length > 0)
-                                choiceRegimenTable.AppendFormat("<tr><td></td><td>{0}</td></tr>", conjunction);
-                            hasAlternateRegimens = true;
-                        }
+                        // should not fall into here.
+                        Console.WriteLine("Attempt to write Regimen data outside of Regimen Group");
+                        //BDRegimen regimen = child as BDRegimen;
+                        //string conjunction = retrieveConjunctionString(regimen.regimenJoinType.Value, child);
+                        //string cellHtml = (buildRegimenCellHtml(pContext, regimen, pFootnotes, pObjectsOnPage)).ToString();
+                        //if (regimen.columnOrder.Value == 0 && cellHtml.Length > 0)
+                        //{
+                        //    choiceRegimenTable.AppendFormat("<tr>{0}</tr>", cellHtml);
+                        //    if (conjunction.Length > 0)
+                        //        choiceRegimenTable.AppendFormat("<tr><td></td><td>{0}</td></tr>", conjunction);
+                        //    hasChoiceRegimens = true;
+                        //}
+                        //if (regimen.columnOrder.Value == 1 && cellHtml.Length > 0)
+                        //{
+                        //    alternateRegimenTable.AppendFormat("<tr>{0}</tr>", cellHtml);
+                        //    if (conjunction.Length > 0)
+                        //        choiceRegimenTable.AppendFormat("<tr><td></td><td>{0}</td></tr>", conjunction);
+                        //    hasAlternateRegimens = true;
+                        //}
                     }
                 }
             }
@@ -5108,52 +5110,81 @@ namespace BDEditor.Classes
             return html.ToString();
         }
 
-        private string buildRegimenCellHtml(Entities pContext, BDRegimen pRegimen, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
-        {
-            StringBuilder cellHtml = new StringBuilder();
-
-            if (pRegimen != null)
-            {
-                cellHtml.Append("<td></td><td>");
-                cellHtml.AppendFormat("{0} {1}", buildNodePropertyHTML(pContext, pRegimen, pRegimen.Name, BDRegimen.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage),
-                    buildNodePropertyHTML(pContext, pRegimen, pRegimen.dosage, BDRegimen.PROPERTYNAME_DOSAGE, pFootnotes, pObjectsOnPage));
-
-                cellHtml.Append("</td>");
-            }
-
-            return cellHtml.ToString();
-        }
-
-        private string buildRegimenGroupRowsHtml(Entities pContext, BDRegimenGroup pGroup, int columnType, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
+        private string buildRegimenGroupRowsHtml(Entities pContext, BDRegimenGroup pGroup, int pColumnType, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
         {
             StringBuilder groupHtml = new StringBuilder();
+            StringBuilder groupConjunctionHtml = new StringBuilder();
 
             if (pGroup != null)
             {
                 // add row for group name
                 string groupName = buildNodePropertyHTML(pContext, pGroup, pGroup.Name, BDRegimenGroup.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage);
                 if(groupName.Length > 0)
-                    groupHtml.AppendFormat("<tr><td colspan=2><b>{0}</b></td></tr>", groupName);
+                    groupHtml.AppendFormat("<tr><td colspan=5>{0}</td></tr>", groupName);
+
+                BDConstants.BDJoinType groupJoinType = (BDConstants.BDJoinType)pGroup.regimenGroupJoinType.Value;
+                groupConjunctionHtml.AppendFormat("<tr><td colspan=5>{0}</td></tr>", buildConjunctionHTML(pContext, pGroup, groupJoinType, BDRegimenGroup.PROPERTYNAME_CONJUNCTION, pFootnotes, pObjectsOnPage));
                 
                 // get children
                 List<IBDNode> regimens = BDFabrik.GetChildrenForParent(pContext, pGroup);
-                // add cell for each child (within a row)
-                foreach (BDRegimen regimen in regimens)
-                {
-                    string regimenConjunction = retrieveConjunctionString(regimen.regimenJoinType.Value, regimen);
-
-                    if (columnType == regimen.columnOrder)
-                    {
-                        string cellHtml =  buildRegimenCellHtml(pContext, regimen, pFootnotes, pObjectsOnPage);
-                        if(cellHtml.Length > 0)
-                            groupHtml.AppendFormat("<tr>{0}</tr>", cellHtml);
-                        if (regimenConjunction.Length > 0 && cellHtml.Length > 0)
-                            groupHtml.AppendFormat("<tr><td></td><td>{0}</td></tr>", regimenConjunction);
-                    }
-                }
+                groupHtml.Append(buildRegimenRowsHtml(pContext, regimens, pColumnType, pFootnotes, pObjectsOnPage));
+                
+                if(pGroup.regimenGroupJoinType != (int)BDConstants.BDJoinType.Next)
+                    groupHtml.Append(groupConjunctionHtml);
             }
 
             return groupHtml.ToString();
+        }
+
+        private string buildRegimenRowsHtml(Entities pContext, List<IBDNode> regimens, int pColumnType, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
+        {
+            StringBuilder nameColumn = new StringBuilder();
+            StringBuilder dosageColumn = new StringBuilder();
+            StringBuilder durationColumn = new StringBuilder();
+            StringBuilder rowHtml = new StringBuilder();
+            // add info from each child to row cells
+            BDRegimen lastRegimen = (BDRegimen)regimens.Last();
+            for (int i = 0; i < regimens.Count; i++)
+            {
+                BDRegimen regimen = (BDRegimen)regimens[i];
+                BDConstants.BDJoinType regimenJoinType = (BDConstants.BDJoinType)regimen.regimenJoinType.Value;
+
+                string regimenConjunction = buildConjunctionHTML(pContext, regimen, regimenJoinType, BDRegimen.PROPERTYNAME_CONJUNCTION, pFootnotes, pObjectsOnPage);
+                string nextTag = string.Empty;
+                if (i == 0)
+                    nextTag = "<td>";
+                else
+                    nextTag = "<br>";
+
+                if (pColumnType == regimen.columnOrder)
+                {
+                    dosageColumn.Append(nextTag);
+                    durationColumn.Append(nextTag);
+
+                    if (regimen.leftBracket.Value == true && i == 0)
+                        nameColumn.Append("<td class=\"leftBracket\"><strong>[</strong></td>");
+                    else
+                        nameColumn.Append(nextTag);
+
+                    nameColumn.Append(buildNodePropertyHTML(pContext, regimen, regimen.Name, BDRegimen.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage));
+                    dosageColumn.Append(buildNodePropertyHTML(pContext, regimen, regimen.dosage, BDRegimen.PROPERTYNAME_DOSAGE, pFootnotes, pObjectsOnPage));
+                    durationColumn.Append(buildNodePropertyHTML(pContext, regimen, regimen.duration, BDRegimen.PROPERTYNAME_DURATION, pFootnotes, pObjectsOnPage));
+
+                    if (lastRegimen != null && regimen.Equals(lastRegimen))
+                    {
+                        if (regimen.rightBracket.Value == true)
+                            nameColumn.Append("</td><td class=\"rightBracket\"><strong>]</strong></td>");
+                        else
+                            nameColumn.Append("</td>");
+                        dosageColumn.Append("</td>");
+                        durationColumn.Append("</td>");
+                    }
+
+                    if (regimenJoinType != (int)BDConstants.BDJoinType.Next)
+                        rowHtml.AppendFormat("<tr>{0}{1}{2}</tr>", nameColumn, dosageColumn, durationColumn);
+                }
+            }
+            return rowHtml.ToString();
         }
 
         private string buildNodeWithReferenceAndOverviewHTML(Entities pContext, IBDNode pNode, string pHeaderTagLevel, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
@@ -5584,6 +5615,79 @@ namespace BDEditor.Classes
             return propertyHTML.ToString().Trim();
         }
 
+        private string buildConjunctionHTML(Entities pContext, IBDNode pNode, BDConstants.BDJoinType pJoinType, string pPropertyName, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
+        {
+            string resolvedValue = null;
+
+            StringBuilder propertyHTML = new StringBuilder();
+            List<Guid> footerAssociations;
+            List<BDLinkedNote> propertyFooters = (BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, pPropertyName, BDConstants.LinkedNoteType.Footnote, out footerAssociations));
+            string footerMarker = buildFooterMarkerForList(propertyFooters, true, pFootnotes);
+
+            List<Guid> inlineAssociations;
+            List<Guid> markedAssociations;
+            List<Guid> unmarkedAssociations;
+            List<Guid> immediateAssociations;
+
+            List<BDLinkedNote> inline = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, pPropertyName, BDConstants.LinkedNoteType.Inline, out inlineAssociations);
+            List<BDLinkedNote> marked = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, pPropertyName, BDConstants.LinkedNoteType.MarkedComment, out markedAssociations);
+            List<BDLinkedNote> unmarked = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, pPropertyName, BDConstants.LinkedNoteType.UnmarkedComment, out unmarkedAssociations);
+            List<BDLinkedNote> immediate = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pNode.Uuid, pPropertyName, BDConstants.LinkedNoteType.Immediate, out immediateAssociations);
+
+            string propertyValue = string.Empty;
+            propertyValue = retrieveConjunctionString(pJoinType);
+
+            // overview
+            string overviewHTML = retrieveNoteTextForOverview(pContext, pNode.Uuid, pObjectsOnPage);
+
+            pObjectsOnPage.Add(pNode.Uuid);
+
+            List<Guid> objectsOnChildPage = new List<Guid>();
+            objectsOnChildPage.AddRange(markedAssociations);
+            objectsOnChildPage.AddRange(unmarkedAssociations);
+            BDHtmlPage notePage = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.NodeType, marked, unmarked, pPropertyName, objectsOnChildPage);
+
+            string inlineOverviewText = BDUtilities.BuildTextFromNotes(inline); // In approx 50% of cases, "inline" notes have been used like an "overview"
+            string immediateText = BDUtilities.BuildTextFromInlineNotes(immediate);
+
+            resolvedValue = string.Format("{0}{1}{2}", propertyValue, footerMarker, immediateText);
+            pObjectsOnPage.AddRange(immediateAssociations);
+
+                if (notePage != null)
+                {
+                    if (!string.IsNullOrEmpty(propertyValue))
+                        propertyHTML.AppendFormat(@"<a class=""aa"" href=""{0}"">{1}{2}</a>{3}{4}{5}", notePage.Uuid.ToString().ToUpper(), propertyValue, immediateText, footerMarker, inlineOverviewText, overviewHTML);
+                    else
+                    {
+                        if (immediateText.Length > 0)
+                        {
+                            resolvedValue = string.Format(@"<a class=""aa"" href=""{0}"">{1}</a>", notePage.Uuid.ToString().ToUpper(), immediateText);
+                        }
+                        else
+                        {
+                            resolvedValue = string.Format(@"<a class=""aa"" href=""{0}"">See Comments.</a>", notePage.Uuid.ToString().ToUpper());
+                        }
+                        if (!string.IsNullOrEmpty(resolvedValue))
+                            propertyHTML.AppendFormat(@"{0}{1}{2}{3}{4}", resolvedValue, inlineOverviewText, overviewHTML);
+                        else
+                            propertyHTML.AppendFormat(@"{0}{1}", inlineOverviewText, overviewHTML);
+                    }
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(resolvedValue))
+                        propertyHTML.AppendFormat(@"{0}{1}{2}", resolvedValue, inlineOverviewText, overviewHTML);
+                    else
+                        propertyHTML.AppendFormat(@"{0}{1}", inlineOverviewText, overviewHTML);
+                }
+            //}
+            pObjectsOnPage.AddRange(inlineAssociations);
+            resolvedValue = string.Format("{0}{1}", resolvedValue, inlineOverviewText);
+
+            if (resolvedValue.Trim().Length == 0) resolvedValue = null;
+
+            return propertyHTML.ToString().Trim();
+        }
         #endregion
 
         #region Utility methods
@@ -5936,6 +6040,17 @@ namespace BDEditor.Classes
             return retrieveConjunctionString(pBDJoinType, null);
         }
 
+        private string retrieveConjunctionStringWithNote(Entities pContext, IBDNode pParent, string pNotePropertyName, List<Guid> pObjectsOnPage, List<BDLinkedNote> pFootnotesOnPage, BDConstants.BDJoinType pBDJoinType)
+        {
+            StringBuilder returnString = new StringBuilder();
+                returnString.Append(retrieveConjunctionString((int)pBDJoinType, null));
+                List<Guid> inlineAssociations = new List<Guid>();
+
+                List<BDLinkedNote> inline = BDUtilities.RetrieveNotesForParentAndPropertyOfLinkedNoteType(pContext, pParent.Uuid, pNotePropertyName, BDConstants.LinkedNoteType.Inline, out inlineAssociations);
+
+                return returnString.ToString();
+        }
+        
         private string retrieveConjunctionString(int pBDJoinType, IBDNode pNode)
         {
             string joinString = string.Empty;

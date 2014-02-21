@@ -33,6 +33,7 @@ namespace BDEditor.DataModel
         public const string PROPERTYNAME_NAME = @"Name";
         public const string PROPERTYNAME_DOSAGE = @"Dosage";
         public const string PROPERTYNAME_DURATION = @"Duration";
+        public const string PROPERTYNAME_CONJUNCTION = @"RegimenJoinType";
 
         private const string UUID = @"re_uuid";
         private const string SCHEMAVERSION = @"re_schemaVersion";

@@ -33,6 +33,7 @@ namespace BDEditor.DataModel
 
         public const int ENTITY_SCHEMAVERSION = 0;
         public const string PROPERTYNAME_NAME = @"Name";
+        public const string PROPERTYNAME_CONJUNCTION = @"RegimenGroupJoinType";
 
         private const string UUID = @"rg_uuid";
         private const string SCHEMAVERSION = @"rg_schemaVersion";

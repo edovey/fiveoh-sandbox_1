@@ -2004,6 +2004,7 @@ namespace BDEditor.Classes
                                 BDRegimenControl regimenControl = nodeControl as BDRegimenControl;
                                 regimenControl.AssignTypeaheadSource(BDTypeahead.TherapyNames, BDRegimen.PROPERTYNAME_NAME);
                                 regimenControl.AssignTypeaheadSource(BDTypeahead.TherapyDosages, BDRegimen.PROPERTYNAME_DOSAGE);
+                                regimenControl.AssignTypeaheadSource(BDTypeahead.TherapyDurations, BDRegimen.PROPERTYNAME_DURATION);
                             }
                             break;
                     }

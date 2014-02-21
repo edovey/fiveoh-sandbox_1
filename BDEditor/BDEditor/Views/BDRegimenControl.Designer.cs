@@ -33,13 +33,9 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.addTherapyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlMain = new System.Windows.Forms.Panel();
-            this.rbColumnOrder_0 = new System.Windows.Forms.RadioButton();
-            this.rbColumnOrder_1 = new System.Windows.Forms.RadioButton();
-            this.label4 = new System.Windows.Forms.Label();
-            this.lblInfo = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tbName = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btnDurationLink = new System.Windows.Forms.Button();
+            this.tbDuration = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.bToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,6 +45,13 @@
             this.µToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sOneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trademarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rbColumnOrder_0 = new System.Windows.Forms.RadioButton();
+            this.rbColumnOrder_1 = new System.Windows.Forms.RadioButton();
+            this.label4 = new System.Windows.Forms.Label();
+            this.lblInfo = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tbName = new System.Windows.Forms.TextBox();
             this.tbDosage = new System.Windows.Forms.TextBox();
             this.btnNameLink = new System.Windows.Forms.Button();
             this.btnDosageLink = new System.Windows.Forms.Button();
@@ -96,6 +99,9 @@
             this.pnlMain.AutoSize = true;
             this.pnlMain.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pnlMain.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlMain.Controls.Add(this.label3);
+            this.pnlMain.Controls.Add(this.btnDurationLink);
+            this.pnlMain.Controls.Add(this.tbDuration);
             this.pnlMain.Controls.Add(this.rbColumnOrder_0);
             this.pnlMain.Controls.Add(this.rbColumnOrder_1);
             this.pnlMain.Controls.Add(this.label4);
@@ -114,83 +120,38 @@
             this.pnlMain.MinimumSize = new System.Drawing.Size(866, 10);
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(866, 85);
-            this.pnlMain.TabIndex = 32;
+            this.pnlMain.TabIndex = 0;
             // 
-            // rbColumnOrder_0
+            // label3
             // 
-            this.rbColumnOrder_0.AutoSize = true;
-            this.rbColumnOrder_0.Location = new System.Drawing.Point(608, 7);
-            this.rbColumnOrder_0.Name = "rbColumnOrder_0";
-            this.rbColumnOrder_0.Size = new System.Drawing.Size(115, 17);
-            this.rbColumnOrder_0.TabIndex = 27;
-            this.rbColumnOrder_0.TabStop = true;
-            this.rbColumnOrder_0.Text = "Regimen of Choice";
-            this.rbColumnOrder_0.UseVisualStyleBackColor = true;
-            this.rbColumnOrder_0.CheckedChanged += new System.EventHandler(this.rbColumnOrder_0_CheckedChanged);
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(605, 30);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(62, 15);
+            this.label3.TabIndex = 34;
+            this.label3.Text = "Duration";
             // 
-            // rbColumnOrder_1
+            // btnDurationLink
             // 
-            this.rbColumnOrder_1.AutoSize = true;
-            this.rbColumnOrder_1.Location = new System.Drawing.Point(729, 7);
-            this.rbColumnOrder_1.Name = "rbColumnOrder_1";
-            this.rbColumnOrder_1.Size = new System.Drawing.Size(120, 17);
-            this.rbColumnOrder_1.TabIndex = 28;
-            this.rbColumnOrder_1.TabStop = true;
-            this.rbColumnOrder_1.Text = "Alternative Regimen";
-            this.rbColumnOrder_1.UseVisualStyleBackColor = true;
-            this.rbColumnOrder_1.CheckedChanged += new System.EventHandler(this.rbColumnOrder_1_CheckedChanged);
+            this.btnDurationLink.Enabled = false;
+            this.btnDurationLink.Image = ((System.Drawing.Image)(resources.GetObject("btnDurationLink.Image")));
+            this.btnDurationLink.Location = new System.Drawing.Point(743, 44);
+            this.btnDurationLink.Name = "btnDurationLink";
+            this.btnDurationLink.Size = new System.Drawing.Size(28, 28);
+            this.btnDurationLink.TabIndex = 5;
+            this.btnDurationLink.UseVisualStyleBackColor = true;
+            this.btnDurationLink.Click += new System.EventHandler(this.btnLink_Click);
             // 
-            // label4
+            // tbDuration
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(41, 3);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(74, 18);
-            this.label4.TabIndex = 31;
-            this.label4.Text = "Regimen";
-            // 
-            // lblInfo
-            // 
-            this.lblInfo.AutoSize = true;
-            this.lblInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblInfo.Location = new System.Drawing.Point(3, 3);
-            this.lblInfo.Name = "lblInfo";
-            this.lblInfo.Size = new System.Drawing.Size(32, 13);
-            this.lblInfo.TabIndex = 30;
-            this.lblInfo.Text = "INFO";
-            this.lblInfo.Visible = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(25, 30);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(45, 15);
-            this.label1.TabIndex = 27;
-            this.label1.Text = "Name";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(390, 30);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(153, 15);
-            this.label2.TabIndex = 28;
-            this.label2.Text = "Dosage (and Duration)";
-            // 
-            // tbName
-            // 
-            this.tbName.ContextMenuStrip = this.contextMenuStrip1;
-            this.tbName.Location = new System.Drawing.Point(28, 48);
-            this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(302, 20);
-            this.tbName.TabIndex = 0;
-            this.tbName.Tag = "";
-            this.tbName.TextChanged += new System.EventHandler(this.textBox_TextChanged);
-            this.tbName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbName_MouseDown);
+            this.tbDuration.ContextMenuStrip = this.contextMenuStrip1;
+            this.tbDuration.Location = new System.Drawing.Point(608, 48);
+            this.tbDuration.Name = "tbDuration";
+            this.tbDuration.Size = new System.Drawing.Size(129, 20);
+            this.tbDuration.TabIndex = 4;
+            this.tbDuration.Tag = "";
+            this.tbDuration.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbDuration_MouseDown);
             // 
             // contextMenuStrip1
             // 
@@ -271,12 +232,88 @@
             this.trademarkToolStripMenuItem.ToolTipText = "Insert ®";
             this.trademarkToolStripMenuItem.Click += new System.EventHandler(this.trademarkToolStripMenuItem_Click);
             // 
+            // rbColumnOrder_0
+            // 
+            this.rbColumnOrder_0.AutoSize = true;
+            this.rbColumnOrder_0.Location = new System.Drawing.Point(608, 7);
+            this.rbColumnOrder_0.Name = "rbColumnOrder_0";
+            this.rbColumnOrder_0.Size = new System.Drawing.Size(115, 17);
+            this.rbColumnOrder_0.TabIndex = 27;
+            this.rbColumnOrder_0.TabStop = true;
+            this.rbColumnOrder_0.Text = "Regimen of Choice";
+            this.rbColumnOrder_0.UseVisualStyleBackColor = true;
+            this.rbColumnOrder_0.CheckedChanged += new System.EventHandler(this.rbColumnOrder_0_CheckedChanged);
+            // 
+            // rbColumnOrder_1
+            // 
+            this.rbColumnOrder_1.AutoSize = true;
+            this.rbColumnOrder_1.Location = new System.Drawing.Point(729, 7);
+            this.rbColumnOrder_1.Name = "rbColumnOrder_1";
+            this.rbColumnOrder_1.Size = new System.Drawing.Size(120, 17);
+            this.rbColumnOrder_1.TabIndex = 28;
+            this.rbColumnOrder_1.TabStop = true;
+            this.rbColumnOrder_1.Text = "Alternative Regimen";
+            this.rbColumnOrder_1.UseVisualStyleBackColor = true;
+            this.rbColumnOrder_1.CheckedChanged += new System.EventHandler(this.rbColumnOrder_1_CheckedChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(41, 3);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(74, 18);
+            this.label4.TabIndex = 31;
+            this.label4.Text = "Regimen";
+            // 
+            // lblInfo
+            // 
+            this.lblInfo.AutoSize = true;
+            this.lblInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInfo.Location = new System.Drawing.Point(3, 3);
+            this.lblInfo.Name = "lblInfo";
+            this.lblInfo.Size = new System.Drawing.Size(32, 13);
+            this.lblInfo.TabIndex = 30;
+            this.lblInfo.Text = "INFO";
+            this.lblInfo.Visible = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(25, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(45, 15);
+            this.label1.TabIndex = 27;
+            this.label1.Text = "Name";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(316, 30);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(56, 15);
+            this.label2.TabIndex = 28;
+            this.label2.Text = "Dosage";
+            // 
+            // tbName
+            // 
+            this.tbName.ContextMenuStrip = this.contextMenuStrip1;
+            this.tbName.Location = new System.Drawing.Point(28, 48);
+            this.tbName.Name = "tbName";
+            this.tbName.Size = new System.Drawing.Size(251, 20);
+            this.tbName.TabIndex = 0;
+            this.tbName.Tag = "";
+            this.tbName.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.tbName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbName_MouseDown);
+            // 
             // tbDosage
             // 
             this.tbDosage.ContextMenuStrip = this.contextMenuStrip1;
-            this.tbDosage.Location = new System.Drawing.Point(393, 48);
+            this.tbDosage.Location = new System.Drawing.Point(319, 48);
             this.tbDosage.Name = "tbDosage";
-            this.tbDosage.Size = new System.Drawing.Size(354, 20);
+            this.tbDosage.Size = new System.Drawing.Size(247, 20);
             this.tbDosage.TabIndex = 2;
             this.tbDosage.Tag = "";
             this.tbDosage.TextChanged += new System.EventHandler(this.textBox_TextChanged);
@@ -286,7 +323,7 @@
             // 
             this.btnNameLink.Enabled = false;
             this.btnNameLink.Image = ((System.Drawing.Image)(resources.GetObject("btnNameLink.Image")));
-            this.btnNameLink.Location = new System.Drawing.Point(336, 48);
+            this.btnNameLink.Location = new System.Drawing.Point(285, 44);
             this.btnNameLink.Name = "btnNameLink";
             this.btnNameLink.Size = new System.Drawing.Size(28, 28);
             this.btnNameLink.TabIndex = 1;
@@ -297,7 +334,7 @@
             // 
             this.btnDosageLink.Enabled = false;
             this.btnDosageLink.Image = ((System.Drawing.Image)(resources.GetObject("btnDosageLink.Image")));
-            this.btnDosageLink.Location = new System.Drawing.Point(753, 43);
+            this.btnDosageLink.Location = new System.Drawing.Point(572, 44);
             this.btnDosageLink.Name = "btnDosageLink";
             this.btnDosageLink.Size = new System.Drawing.Size(28, 28);
             this.btnDosageLink.TabIndex = 3;
@@ -307,10 +344,10 @@
             // btnMenu
             // 
             this.btnMenu.Image = global::BDEditor.Properties.Resources.apps_16;
-            this.btnMenu.Location = new System.Drawing.Point(821, 48);
+            this.btnMenu.Location = new System.Drawing.Point(821, 44);
             this.btnMenu.Name = "btnMenu";
             this.btnMenu.Size = new System.Drawing.Size(28, 28);
-            this.btnMenu.TabIndex = 5;
+            this.btnMenu.TabIndex = 7;
             this.btnMenu.UseVisualStyleBackColor = true;
             this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
             // 
@@ -319,10 +356,10 @@
             this.lblRightBracket.AutoSize = true;
             this.lblRightBracket.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRightBracket.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.lblRightBracket.Location = new System.Drawing.Point(787, 30);
+            this.lblRightBracket.Location = new System.Drawing.Point(777, 30);
             this.lblRightBracket.Name = "lblRightBracket";
             this.lblRightBracket.Size = new System.Drawing.Size(38, 55);
-            this.lblRightBracket.TabIndex = 4;
+            this.lblRightBracket.TabIndex = 6;
             this.lblRightBracket.Text = "]";
             this.lblRightBracket.Click += new System.EventHandler(this.lblRightBracket_Click);
             // 
@@ -361,7 +398,7 @@
             this.toolStripMenuItem2,
             this.deleteToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(164, 154);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(164, 132);
             // 
             // editIndexStripMenuItem
             // 
@@ -419,7 +456,7 @@
             this.pnlRadioButtons.Location = new System.Drawing.Point(0, 87);
             this.pnlRadioButtons.Name = "pnlRadioButtons";
             this.pnlRadioButtons.Size = new System.Drawing.Size(860, 23);
-            this.pnlRadioButtons.TabIndex = 31;
+            this.pnlRadioButtons.TabIndex = 1;
             // 
             // aoRadioButton
             // 
@@ -551,5 +588,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RadioButton rbColumnOrder_0;
         private System.Windows.Forms.RadioButton rbColumnOrder_1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnDurationLink;
+        private System.Windows.Forms.TextBox tbDuration;
     }
 }

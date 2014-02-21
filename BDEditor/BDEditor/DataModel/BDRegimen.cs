@@ -32,6 +32,7 @@ namespace BDEditor.DataModel
         public const int ENTITY_SCHEMAVERSION = 1;
         public const string PROPERTYNAME_NAME = @"Name";
         public const string PROPERTYNAME_DOSAGE = @"Dosage";
+        public const string PROPERTYNAME_DURATION = @"Duration";
 
         private const string UUID = @"re_uuid";
         private const string SCHEMAVERSION = @"re_schemaVersion";

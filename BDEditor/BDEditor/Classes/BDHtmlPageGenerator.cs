@@ -1846,6 +1846,27 @@ namespace BDEditor.Classes
                                 }
 
                                 break;
+                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Intraoperative:
+                            case BDConstants.LayoutVariantType.Prophylaxis_Surgical_PreOp:
+                                // center all but first columns
+                                if (null != metadataLayoutColumns)
+                                {
+                                    for (int idx = 0; idx < metadataLayoutColumns.Count; idx++)
+                                    {
+                                        string propertyName = metadataLayoutColumns[idx].FieldNameForColumnOfNodeType(pContext, BDConstants.BDNodeType.BDConfiguredEntry);
+                                        string propertyValue = configuredEntry.PropertyValueForName(propertyName);
+
+                                        string propertyHtml = buildNodePropertyHTML(pContext, configuredEntry, propertyValue, propertyName, pFootnotes, pObjectsOnPage);
+                                        if (string.IsNullOrEmpty(propertyHtml))
+                                            propertyHtml = buildNodePropertyHTML(pContext, configuredEntry, propertyValue, string.Format("{0}{1}", propertyName, BDConfiguredEntry.FIELDNOTE_SUFFIX), pFootnotes, pObjectsOnPage);
+
+                                        if (idx == 0)
+                                            html.AppendFormat("<td>{0}</td>", propertyHtml);
+                                        else
+                                            html.AppendFormat("<td class=\"ctrAlign\">{0}</td>", propertyHtml);
+                                    }
+                                }
+                                break;
                             default:
                                 if (null != metadataLayoutColumns)
                                 {

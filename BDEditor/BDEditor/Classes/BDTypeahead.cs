@@ -171,7 +171,7 @@ namespace BDEditor.Classes
                             if (null == therapyDurations)
                                 therapyDurations = new AutoCompleteStringCollection();
 
-                            if ((pEntityMember == string.Empty || pEntityMember == BDTherapy.PROPERTYNAME_THERAPY || pEntityMember == BDRegimen.PROPERTYNAME_NAME) 
+                            if ((pEntityMember == string.Empty || pEntityMember == BDTherapy.PROPERTYNAME_THERAPY || pEntityMember == BDRegimen.PROPERTYNAME_NAME)
                                 && !therapyNames.Contains(pValue))
                                 therapyNames.Add(pValue);
                             else if (pEntityMember == BDTherapy.PROPERTYNAME_DOSAGE && !therapyDosages.Contains(pValue))
@@ -185,6 +185,10 @@ namespace BDEditor.Classes
                             else if (pEntityMember == BDTherapy.PROPERTYNAME_DURATION_1 && !therapyDurations.Contains(pValue))
                                 therapyDurations.Add(pValue);
                             else if (pEntityMember == BDTherapy.PROPERTYNAME_DURATION_2 && !therapyDurations.Contains(pValue))
+                                therapyDurations.Add(pValue);
+                            else if (pEntityMember == BDRegimen.PROPERTYNAME_DOSAGE && !therapyDosages.Contains(pValue))
+                                therapyDosages.Add(pValue);
+                            else if (pEntityMember == BDRegimen.PROPERTYNAME_DURATION && !therapyDurations.Contains(pValue))
                                 therapyDurations.Add(pValue);
                         }
                         break;

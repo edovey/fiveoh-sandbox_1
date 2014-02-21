@@ -133,6 +133,12 @@ namespace BDEditor.Views
                 tbDosage.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
                 tbDosage.AutoCompleteSource = AutoCompleteSource.CustomSource;
             }
+            else if (pProperty == BDRegimen.PROPERTYNAME_DURATION)
+            {
+                tbDuration.AutoCompleteCustomSource = pSource;
+                tbDuration.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                tbDuration.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            }
         }
 
         #region IBDControl
@@ -163,6 +169,7 @@ namespace BDEditor.Views
 
                 tbName.Text = currentRegimen.name;
                 tbDosage.Text = currentRegimen.dosage;
+                tbDuration.Text = currentRegimen.duration;
                 // DisplayOrder = currentRegimen.displayOrder; Not good! sets everything to zero.
                 ColumnOrder = currentRegimen.columnOrder;
                 
@@ -257,6 +264,7 @@ namespace BDEditor.Views
                 {
                     if (currentRegimen.name != tbName.Text) currentRegimen.name = tbName.Text;
                     if (currentRegimen.dosage != tbDosage.Text) currentRegimen.dosage = tbDosage.Text;
+                    if (currentRegimen.duration != tbDuration.Text) currentRegimen.duration = tbDuration.Text;
                     if (currentRegimen.displayOrder != DisplayOrder) currentRegimen.displayOrder = DisplayOrder;
                     
                     int columnOrder = 0;
@@ -313,6 +321,8 @@ namespace BDEditor.Views
                         BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDRegimen, BDRegimen.PROPERTYNAME_NAME, currentRegimen.name);
                     if (currentRegimen.dosage.Length > 0)
                         BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDRegimen, BDRegimen.PROPERTYNAME_DOSAGE, currentRegimen.dosage);
+                    if (currentRegimen.duration.Length > 0)
+                        BDTypeahead.AddToCollection(BDConstants.BDNodeType.BDRegimen, BDRegimen.PROPERTYNAME_DURATION, currentRegimen.duration);
                 }
             }
 
@@ -369,10 +379,11 @@ namespace BDEditor.Views
 
         private void toggleLinkButtonEnablement()
         {
-            bool enabled = ((tbDosage.Text.Length > 0) || (tbName.Text.Length > 0));
+            bool enabled = ((tbDosage.Text.Length > 0) || (tbName.Text.Length > 0) || (tbDuration.Text.Length > 0));
 
             btnNameLink.Enabled = enabled;
             btnDosageLink.Enabled = enabled;
+            btnDurationLink.Enabled = enabled;
         }
 
         private void textBox_TextChanged(object sender, EventArgs e)
@@ -545,9 +556,11 @@ namespace BDEditor.Views
 
             tbName.Tag = btnNameLink;
             tbDosage.Tag = btnDosageLink;
+            tbDuration.Tag = btnDurationLink;
 
             btnNameLink.Tag = BDRegimen.PROPERTYNAME_NAME;
             btnDosageLink.Tag = BDRegimen.PROPERTYNAME_DOSAGE;
+            btnDurationLink.Tag = BDRegimen.PROPERTYNAME_DURATION;
 
             pnlMain.Refresh();
 
@@ -585,5 +598,6 @@ namespace BDEditor.Views
             if (rbColumnOrder_1.Checked)
                 currentRegimen.columnOrder = 1;
         }
+
     }
 }

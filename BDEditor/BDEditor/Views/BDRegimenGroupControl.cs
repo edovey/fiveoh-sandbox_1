@@ -176,7 +176,7 @@ namespace BDEditor.Views
         {
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentRegimenGroup) ? this.currentRegimenGroup.uuid : Guid.Empty);
             btnRegimenGroupLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnRegimenGroupLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
-
+            btnRegimenGroupConjunctionLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnRegimenGroupConjunctionLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
             if (pPropagateToChildren)
             {
                 for (int idx = 0; idx < regimenControlList.Count; idx++)
@@ -623,7 +623,7 @@ namespace BDEditor.Views
         private void BDRegimenGroupControl_Load(object sender, EventArgs e)
         {
             btnRegimenGroupLink.Tag = BDRegimenGroup.PROPERTYNAME_NAME;
-
+            btnRegimenGroupConjunctionLink.Tag = BDRegimenGroup.PROPERTYNAME_CONJUNCTION;
             lblInfo.Visible = false;
 #if DEBUG
             lblInfo.Visible = true;

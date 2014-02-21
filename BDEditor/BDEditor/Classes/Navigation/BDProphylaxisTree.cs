@@ -41,11 +41,6 @@ namespace BDEditor.Classes.Navigation
                         case BDConstants.LayoutVariantType.Prophylaxis:
                         case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault:
                         case BDConstants.LayoutVariantType.Prophylaxis_SexualAssault_Prophylaxis:
-                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
-                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery:
-                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
-                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
-                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical_PreOp:
                         case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Intraoperative:
                         case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure:
@@ -75,6 +70,37 @@ namespace BDEditor.Classes.Navigation
                                 childTreeNode.Tag = childNode;
                                 branchTreeNode.Nodes.Add(childTreeNode);
                             }
+                            break;
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
+                        case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
+                            foreach (IBDNode childNode in childList)
+                            {
+                                StringBuilder name = new StringBuilder(); //childNode.Name;
+                                if ((null == childNode.Name) || (childNode.Name.Length == 0))
+                                {
+                                    List<IBDNode> children = BDFabrik.GetChildrenForParent(pDataContext, childNode);
+                                    StringBuilder tmpName = new StringBuilder();
+                                    foreach (IBDNode n in children)
+                                    {
+                                        if (n.NodeType == BDConstants.BDNodeType.BDSurgery)
+                                            tmpName.AppendFormat("{0}; ",n.Name);
+                                    }
+                                    if (tmpName.Length > 0)
+                                        name.AppendFormat("< {0} >", tmpName.ToString());
+                                    else
+                                        name.Append("< intentionally blank >");
+                                }
+                                else
+                                    name.Append(childNode.Name);
+                                TreeNode childTreeNode = new TreeNode(name.ToString());
+                                childTreeNode.Tag = childNode;
+                                branchTreeNode.Nodes.Add(childTreeNode);
+                            }
+                            break;
+                        default:
                             break;
                     }
                     break;

@@ -70,6 +70,7 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnRegimenGroupConjunctionLink = new System.Windows.Forms.Button();
             this.panelHeader.SuspendLayout();
             this.gbColumn.SuspendLayout();
             this.gbJoin.SuspendLayout();
@@ -82,6 +83,7 @@
             this.panelHeader.AutoSize = true;
             this.panelHeader.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panelHeader.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panelHeader.Controls.Add(this.btnRegimenGroupConjunctionLink);
             this.panelHeader.Controls.Add(this.btnMenu);
             this.panelHeader.Controls.Add(this.lblInfo);
             this.panelHeader.Controls.Add(this.label1);
@@ -110,7 +112,7 @@
             // 
             this.lblInfo.AutoSize = true;
             this.lblInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblInfo.Location = new System.Drawing.Point(498, 19);
+            this.lblInfo.Location = new System.Drawing.Point(438, 16);
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Size = new System.Drawing.Size(32, 13);
             this.lblInfo.TabIndex = 33;
@@ -141,7 +143,7 @@
             // 
             this.tbName.Location = new System.Drawing.Point(42, 52);
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(454, 20);
+            this.tbName.Size = new System.Drawing.Size(394, 20);
             this.tbName.TabIndex = 7;
             this.tbName.TextChanged += new System.EventHandler(this.tbName_TextChanged);
             this.tbName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbName_MouseDown);
@@ -150,7 +152,7 @@
             // 
             this.gbColumn.Controls.Add(this.cbAlternativeRegimen);
             this.gbColumn.Controls.Add(this.cbRegimenOfChoice);
-            this.gbColumn.Location = new System.Drawing.Point(536, 0);
+            this.gbColumn.Location = new System.Drawing.Point(476, 1);
             this.gbColumn.Name = "gbColumn";
             this.gbColumn.Size = new System.Drawing.Size(315, 43);
             this.gbColumn.TabIndex = 29;
@@ -181,7 +183,7 @@
             this.gbJoin.Controls.Add(this.andRadioButton);
             this.gbJoin.Controls.Add(this.noneRadioButton);
             this.gbJoin.Controls.Add(this.orRadioButton);
-            this.gbJoin.Location = new System.Drawing.Point(536, 37);
+            this.gbJoin.Location = new System.Drawing.Point(476, 37);
             this.gbJoin.Name = "gbJoin";
             this.gbJoin.Size = new System.Drawing.Size(315, 45);
             this.gbJoin.TabIndex = 30;
@@ -223,7 +225,7 @@
             // btnRegimenGroupLink
             // 
             this.btnRegimenGroupLink.Image = global::BDEditor.Properties.Resources.link_16;
-            this.btnRegimenGroupLink.Location = new System.Drawing.Point(502, 48);
+            this.btnRegimenGroupLink.Location = new System.Drawing.Point(442, 47);
             this.btnRegimenGroupLink.Name = "btnRegimenGroupLink";
             this.btnRegimenGroupLink.Size = new System.Drawing.Size(28, 28);
             this.btnRegimenGroupLink.TabIndex = 19;
@@ -450,6 +452,15 @@
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.RegimenGroup_RequestItemDelete);
             // 
+            // btnRegimenGroupConjunctionLink
+            // 
+            this.btnRegimenGroupConjunctionLink.Image = global::BDEditor.Properties.Resources.link_16;
+            this.btnRegimenGroupConjunctionLink.Location = new System.Drawing.Point(797, 49);
+            this.btnRegimenGroupConjunctionLink.Name = "btnRegimenGroupConjunctionLink";
+            this.btnRegimenGroupConjunctionLink.Size = new System.Drawing.Size(28, 28);
+            this.btnRegimenGroupConjunctionLink.TabIndex = 34;
+            this.btnRegimenGroupConjunctionLink.UseVisualStyleBackColor = false;
+            // 
             // BDRegimenGroupControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -460,7 +471,7 @@
             this.Controls.Add(this.panelHeader);
             this.MinimumSize = new System.Drawing.Size(860, 100);
             this.Name = "BDRegimenGroupControl";
-            this.Size = new System.Drawing.Size(860, 114);
+            this.Size = new System.Drawing.Size(860, 100);
             this.Load += new System.EventHandler(this.BDRegimenGroupControl_Load);
             this.Leave += new System.EventHandler(this.BDRegimenGroupControl_Leave);
             this.panelHeader.ResumeLayout(false);
@@ -519,5 +530,6 @@
         private System.Windows.Forms.Label lblInfo;
         private System.Windows.Forms.CheckBox cbAlternativeRegimen;
         private System.Windows.Forms.CheckBox cbRegimenOfChoice;
+        private System.Windows.Forms.Button btnRegimenGroupConjunctionLink;
     }
 }

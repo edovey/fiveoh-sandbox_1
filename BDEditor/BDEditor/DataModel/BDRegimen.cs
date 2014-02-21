@@ -184,7 +184,7 @@ namespace BDEditor.DataModel
         }
 
         /// <summary>
-        /// Get a string array of all the distinct Therapy Dose values in the database.
+        /// Get a string array of all the distinct Regimen Dose values in the database.
         /// </summary>
         /// <param name="pContext"></param>
         /// <returns></returns>
@@ -195,6 +195,20 @@ namespace BDEditor.DataModel
             string[] dosageArray = dosages.Distinct().ToArray();
 
             return dosageArray;
+        }
+
+        /// <summary>
+        /// Get a string array of all the distinct Regimen Duration values in the database.
+        /// </summary>
+        /// <param name="pContext"></param>
+        /// <returns></returns>
+        public static string[] RetrieveBDRegimenDurations(Entities pContext)
+        {
+            var durations = pContext.BDRegimens.Where(x => (!string.IsNullOrEmpty(x.duration))).Select(pg => pg.duration).Distinct();
+            // return the results into a distinct array
+            string[] dArray = durations.Distinct().ToArray();
+
+            return dArray;
         }
 
         public static List<BDRegimen> RetrieveBDRegimensWithNameContainingString(Entities pContext, string pString)

@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panelHeader = new System.Windows.Forms.Panel();
+            this.btnRegimenGroupConjunctionLink = new System.Windows.Forms.Button();
             this.btnMenu = new System.Windows.Forms.Button();
             this.lblInfo = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -70,7 +71,6 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.btnRegimenGroupConjunctionLink = new System.Windows.Forms.Button();
             this.panelHeader.SuspendLayout();
             this.gbColumn.SuspendLayout();
             this.gbJoin.SuspendLayout();
@@ -97,6 +97,17 @@
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(860, 85);
             this.panelHeader.TabIndex = 24;
+            // 
+            // btnRegimenGroupConjunctionLink
+            // 
+            this.btnRegimenGroupConjunctionLink.Image = global::BDEditor.Properties.Resources.link_16;
+            this.btnRegimenGroupConjunctionLink.Location = new System.Drawing.Point(797, 49);
+            this.btnRegimenGroupConjunctionLink.Name = "btnRegimenGroupConjunctionLink";
+            this.btnRegimenGroupConjunctionLink.Size = new System.Drawing.Size(28, 28);
+            this.btnRegimenGroupConjunctionLink.TabIndex = 34;
+            this.toolTip1.SetToolTip(this.btnRegimenGroupConjunctionLink, "Conjunction linked note");
+            this.btnRegimenGroupConjunctionLink.UseVisualStyleBackColor = false;
+            this.btnRegimenGroupConjunctionLink.Click += new System.EventHandler(this.btnLink_Click);
             // 
             // btnMenu
             // 
@@ -154,7 +165,7 @@
             this.gbColumn.Controls.Add(this.cbRegimenOfChoice);
             this.gbColumn.Location = new System.Drawing.Point(476, 1);
             this.gbColumn.Name = "gbColumn";
-            this.gbColumn.Size = new System.Drawing.Size(315, 43);
+            this.gbColumn.Size = new System.Drawing.Size(358, 43);
             this.gbColumn.TabIndex = 29;
             this.gbColumn.TabStop = false;
             // 
@@ -185,9 +196,10 @@
             this.gbJoin.Controls.Add(this.orRadioButton);
             this.gbJoin.Location = new System.Drawing.Point(476, 37);
             this.gbJoin.Name = "gbJoin";
-            this.gbJoin.Size = new System.Drawing.Size(315, 45);
+            this.gbJoin.Size = new System.Drawing.Size(358, 45);
             this.gbJoin.TabIndex = 30;
             this.gbJoin.TabStop = false;
+            this.toolTip1.SetToolTip(this.gbJoin, "Regimen Group conjunctions");
             // 
             // andRadioButton
             // 
@@ -229,6 +241,7 @@
             this.btnRegimenGroupLink.Name = "btnRegimenGroupLink";
             this.btnRegimenGroupLink.Size = new System.Drawing.Size(28, 28);
             this.btnRegimenGroupLink.TabIndex = 19;
+            this.toolTip1.SetToolTip(this.btnRegimenGroupLink, "Name linked note");
             this.btnRegimenGroupLink.UseVisualStyleBackColor = false;
             this.btnRegimenGroupLink.Click += new System.EventHandler(this.btnLink_Click);
             // 
@@ -451,15 +464,6 @@
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.RegimenGroup_RequestItemDelete);
-            // 
-            // btnRegimenGroupConjunctionLink
-            // 
-            this.btnRegimenGroupConjunctionLink.Image = global::BDEditor.Properties.Resources.link_16;
-            this.btnRegimenGroupConjunctionLink.Location = new System.Drawing.Point(797, 49);
-            this.btnRegimenGroupConjunctionLink.Name = "btnRegimenGroupConjunctionLink";
-            this.btnRegimenGroupConjunctionLink.Size = new System.Drawing.Size(28, 28);
-            this.btnRegimenGroupConjunctionLink.TabIndex = 34;
-            this.btnRegimenGroupConjunctionLink.UseVisualStyleBackColor = false;
             // 
             // BDRegimenGroupControl
             // 

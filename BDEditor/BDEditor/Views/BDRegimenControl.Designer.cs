@@ -140,6 +140,7 @@
             this.btnDurationLink.Name = "btnDurationLink";
             this.btnDurationLink.Size = new System.Drawing.Size(28, 28);
             this.btnDurationLink.TabIndex = 5;
+            this.toolTip1.SetToolTip(this.btnDurationLink, "Duration linked note");
             this.btnDurationLink.UseVisualStyleBackColor = true;
             this.btnDurationLink.Click += new System.EventHandler(this.btnLink_Click);
             // 
@@ -327,6 +328,7 @@
             this.btnNameLink.Name = "btnNameLink";
             this.btnNameLink.Size = new System.Drawing.Size(28, 28);
             this.btnNameLink.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.btnNameLink, "Name linked note");
             this.btnNameLink.UseVisualStyleBackColor = true;
             this.btnNameLink.Click += new System.EventHandler(this.btnLink_Click);
             // 
@@ -338,6 +340,7 @@
             this.btnDosageLink.Name = "btnDosageLink";
             this.btnDosageLink.Size = new System.Drawing.Size(28, 28);
             this.btnDosageLink.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.btnDosageLink, "Dosage linked note");
             this.btnDosageLink.UseVisualStyleBackColor = true;
             this.btnDosageLink.Click += new System.EventHandler(this.btnLink_Click);
             // 
@@ -457,6 +460,7 @@
             this.pnlRadioButtons.Name = "pnlRadioButtons";
             this.pnlRadioButtons.Size = new System.Drawing.Size(860, 23);
             this.pnlRadioButtons.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.pnlRadioButtons, "Regimen conjunctions");
             // 
             // aoRadioButton
             // 

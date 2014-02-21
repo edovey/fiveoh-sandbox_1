@@ -88,7 +88,7 @@ namespace BDEditor.Classes
                     string[] names = BDTherapy.RetrieveTherapyDosages(new BDEditor.DataModel.Entities());
                     string[] regimens = BDRegimen.RetrieveBDRegimenDosages(new BDEditor.DataModel.Entities());
                     therapyDosages.AddRange(names);
-                    therapyDosages.AddRange(names);
+                    therapyDosages.AddRange(regimens);
                 }
                 return therapyDosages;
             }
@@ -102,7 +102,9 @@ namespace BDEditor.Classes
                 {
                     therapyDurations = new AutoCompleteStringCollection();
                     string[] names = BDTherapy.RetrieveTherapyDurations(new BDEditor.DataModel.Entities());
+                    string[] regimens = BDRegimen.RetrieveBDRegimenDurations(new BDEditor.DataModel.Entities());
                     therapyDurations.AddRange(names);
+                    therapyDurations.AddRange(regimens);
                 }
                 return therapyDurations;
             }

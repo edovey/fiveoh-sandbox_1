@@ -68,6 +68,7 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.pnlRadioButtons = new System.Windows.Forms.Panel();
+            this.btnConjunctionLink = new System.Windows.Forms.Button();
             this.aoRadioButton = new System.Windows.Forms.RadioButton();
             this.otherRadioButton = new System.Windows.Forms.RadioButton();
             this.nextRegimenRadioButton = new System.Windows.Forms.RadioButton();
@@ -381,7 +382,7 @@
             // andOrRadioButton
             // 
             this.andOrRadioButton.AutoSize = true;
-            this.andOrRadioButton.Location = new System.Drawing.Point(426, 3);
+            this.andOrRadioButton.Location = new System.Drawing.Point(426, 8);
             this.andOrRadioButton.Name = "andOrRadioButton";
             this.andOrRadioButton.Size = new System.Drawing.Size(84, 17);
             this.andOrRadioButton.TabIndex = 4;
@@ -448,6 +449,7 @@
             // pnlRadioButtons
             // 
             this.pnlRadioButtons.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlRadioButtons.Controls.Add(this.btnConjunctionLink);
             this.pnlRadioButtons.Controls.Add(this.aoRadioButton);
             this.pnlRadioButtons.Controls.Add(this.otherRadioButton);
             this.pnlRadioButtons.Controls.Add(this.andOrRadioButton);
@@ -456,16 +458,28 @@
             this.pnlRadioButtons.Controls.Add(this.orRadioButton);
             this.pnlRadioButtons.Controls.Add(this.thenRadioButton);
             this.pnlRadioButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlRadioButtons.Location = new System.Drawing.Point(0, 87);
+            this.pnlRadioButtons.Location = new System.Drawing.Point(0, 88);
             this.pnlRadioButtons.Name = "pnlRadioButtons";
-            this.pnlRadioButtons.Size = new System.Drawing.Size(860, 23);
+            this.pnlRadioButtons.Size = new System.Drawing.Size(860, 32);
             this.pnlRadioButtons.TabIndex = 1;
             this.toolTip1.SetToolTip(this.pnlRadioButtons, "Regimen conjunctions");
+            // 
+            // btnConjunctionLink
+            // 
+            this.btnConjunctionLink.Enabled = false;
+            this.btnConjunctionLink.Image = ((System.Drawing.Image)(resources.GetObject("btnConjunctionLink.Image")));
+            this.btnConjunctionLink.Location = new System.Drawing.Point(687, 2);
+            this.btnConjunctionLink.Name = "btnConjunctionLink";
+            this.btnConjunctionLink.Size = new System.Drawing.Size(28, 28);
+            this.btnConjunctionLink.TabIndex = 7;
+            this.toolTip1.SetToolTip(this.btnConjunctionLink, "Duration linked note");
+            this.btnConjunctionLink.UseVisualStyleBackColor = true;
+            this.btnConjunctionLink.Click += new System.EventHandler(this.btnLink_Click);
             // 
             // aoRadioButton
             // 
             this.aoRadioButton.AutoSize = true;
-            this.aoRadioButton.Location = new System.Drawing.Point(525, 3);
+            this.aoRadioButton.Location = new System.Drawing.Point(525, 8);
             this.aoRadioButton.Name = "aoRadioButton";
             this.aoRadioButton.Size = new System.Drawing.Size(102, 17);
             this.aoRadioButton.TabIndex = 5;
@@ -476,7 +490,7 @@
             // otherRadioButton
             // 
             this.otherRadioButton.AutoSize = true;
-            this.otherRadioButton.Location = new System.Drawing.Point(630, 3);
+            this.otherRadioButton.Location = new System.Drawing.Point(630, 8);
             this.otherRadioButton.Name = "otherRadioButton";
             this.otherRadioButton.Size = new System.Drawing.Size(51, 17);
             this.otherRadioButton.TabIndex = 6;
@@ -487,7 +501,7 @@
             // nextRegimenRadioButton
             // 
             this.nextRegimenRadioButton.AutoSize = true;
-            this.nextRegimenRadioButton.Location = new System.Drawing.Point(28, 3);
+            this.nextRegimenRadioButton.Location = new System.Drawing.Point(28, 8);
             this.nextRegimenRadioButton.Name = "nextRegimenRadioButton";
             this.nextRegimenRadioButton.Size = new System.Drawing.Size(92, 17);
             this.nextRegimenRadioButton.TabIndex = 0;
@@ -498,7 +512,7 @@
             // andRadioButton
             // 
             this.andRadioButton.AutoSize = true;
-            this.andRadioButton.Location = new System.Drawing.Point(123, 3);
+            this.andRadioButton.Location = new System.Drawing.Point(123, 8);
             this.andRadioButton.Name = "andRadioButton";
             this.andRadioButton.Size = new System.Drawing.Size(86, 17);
             this.andRadioButton.TabIndex = 1;
@@ -509,7 +523,7 @@
             // orRadioButton
             // 
             this.orRadioButton.AutoSize = true;
-            this.orRadioButton.Location = new System.Drawing.Point(224, 3);
+            this.orRadioButton.Location = new System.Drawing.Point(224, 8);
             this.orRadioButton.Name = "orRadioButton";
             this.orRadioButton.Size = new System.Drawing.Size(78, 17);
             this.orRadioButton.TabIndex = 2;
@@ -520,7 +534,7 @@
             // thenRadioButton
             // 
             this.thenRadioButton.AutoSize = true;
-            this.thenRadioButton.Location = new System.Drawing.Point(318, 3);
+            this.thenRadioButton.Location = new System.Drawing.Point(318, 8);
             this.thenRadioButton.Name = "thenRadioButton";
             this.thenRadioButton.Size = new System.Drawing.Size(92, 17);
             this.thenRadioButton.TabIndex = 3;
@@ -535,7 +549,7 @@
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.pnlRadioButtons);
             this.Name = "BDRegimenControl";
-            this.Size = new System.Drawing.Size(860, 110);
+            this.Size = new System.Drawing.Size(860, 120);
             this.Load += new System.EventHandler(this.BDRegimenControl_Load);
             this.Leave += new System.EventHandler(this.BDRegimenControl_Leave);
             this.pnlMain.ResumeLayout(false);
@@ -595,5 +609,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnDurationLink;
         private System.Windows.Forms.TextBox tbDuration;
+        private System.Windows.Forms.Button btnConjunctionLink;
     }
 }

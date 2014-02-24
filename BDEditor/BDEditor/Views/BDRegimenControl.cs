@@ -112,6 +112,7 @@ namespace BDEditor.Views
             List<BDLinkedNoteAssociation> links = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForParentId(dataContext, (null != this.currentRegimen) ? this.currentRegimen.uuid : Guid.Empty);
             btnNameLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnNameLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
             btnDosageLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnDosageLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
+            btnConjunctionLink.BackColor = links.Exists(x => x.parentKeyPropertyName == (string)btnConjunctionLink.Tag) ? BDConstants.ACTIVELINK_COLOR : BDConstants.INACTIVELINK_COLOR;
         }
 
         public void AssignScopeId(Guid? pScopeId)
@@ -384,6 +385,7 @@ namespace BDEditor.Views
             btnNameLink.Enabled = enabled;
             btnDosageLink.Enabled = enabled;
             btnDurationLink.Enabled = enabled;
+            btnConjunctionLink.Enabled = enabled;
         }
 
         private void textBox_TextChanged(object sender, EventArgs e)
@@ -561,6 +563,7 @@ namespace BDEditor.Views
             btnNameLink.Tag = BDRegimen.PROPERTYNAME_NAME;
             btnDosageLink.Tag = BDRegimen.PROPERTYNAME_DOSAGE;
             btnDurationLink.Tag = BDRegimen.PROPERTYNAME_DURATION;
+            btnConjunctionLink.Tag = BDRegimen.PROPERTYNAME_CONJUNCTION;
 
             pnlMain.Refresh();
 
@@ -598,6 +601,5 @@ namespace BDEditor.Views
             if (rbColumnOrder_1.Checked)
                 currentRegimen.columnOrder = 1;
         }
-
     }
 }

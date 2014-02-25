@@ -5003,8 +5003,8 @@ namespace BDEditor.Classes
             if (metadataLayoutColumns.Count > 1)
             {
                 pathogenTitle = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[0], BDConstants.BDNodeType.BDMetaDecoration, BDNode.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage);
-                choiceRegimenTitle = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[1], BDConstants.BDNodeType.BDRegimen, BDRegimen.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage);
-                alternateRegimenTitle = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[2], BDConstants.BDNodeType.BDRegimen, BDRegimen.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage);
+                choiceRegimenTitle = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[1], BDConstants.BDNodeType.BDRegimenGroup, BDRegimenGroup.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage);
+                alternateRegimenTitle = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[2], BDConstants.BDNodeType.BDRegimenGroup, BDRegimenGroup.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage);
             }
             StringBuilder pathogenHtml = new StringBuilder();
             StringBuilder regimenHtml = new StringBuilder();
@@ -5021,9 +5021,9 @@ namespace BDEditor.Classes
             if (children.Count > 0)
             {
                 choiceRegimenTable.AppendFormat(@"<table class=""v{0}""><tr>", (int)pNode.LayoutVariant);
-                choiceRegimenTable.AppendFormat("<th colspan=2>{0}</th>", choiceRegimenTitle);
+                choiceRegimenTable.AppendFormat("<th colspan=5>{0}</th>", choiceRegimenTitle);
                 alternateRegimenTable.AppendFormat(@"<table class=""v{0}""><tr>", (int)pNode.LayoutVariant);
-                alternateRegimenTable.AppendFormat("<th colspan=2>{0}</th>", alternateRegimenTitle);
+                alternateRegimenTable.AppendFormat("<th colspan=5>{0}</th>", alternateRegimenTitle);
 
                 pathogenHtml.AppendFormat("<{0}>{1}</{0}><p>", "h3", pathogenTitle);
                 foreach (IBDNode child in children)
@@ -5051,8 +5051,6 @@ namespace BDEditor.Classes
                                 choiceRegimenTable.Append(choiceRowsHtml);                                
                                 hasChoiceRegimens = true;
                             }
-                            //if (grpConjunction.Length > 0)
-                            //    choiceRegimenTable.AppendFormat("<tr><td colspan=2>{0}</td></tr>", grpConjunction);
                         }
                         if (group.alternativeRegimen.Value == true)
                         {
@@ -5062,31 +5060,12 @@ namespace BDEditor.Classes
                                 alternateRegimenTable.Append(altRowsHtml);
                                 hasAlternateRegimens = true;
                             }
-                            //if (grpConjunction.Length > 0)
-                            //    alternateRegimenTable.AppendFormat("<tr><td colspan=2>{0}</td></tr>", grpConjunction);
                         }
                     }
                     else if (child.NodeType == BDConstants.BDNodeType.BDRegimen)
                     {
                         // should not fall into here.
                         Console.WriteLine("Attempt to write Regimen data outside of Regimen Group");
-                        //BDRegimen regimen = child as BDRegimen;
-                        //string conjunction = retrieveConjunctionString(regimen.regimenJoinType.Value, child);
-                        //string cellHtml = (buildRegimenCellHtml(pContext, regimen, pFootnotes, pObjectsOnPage)).ToString();
-                        //if (regimen.columnOrder.Value == 0 && cellHtml.Length > 0)
-                        //{
-                        //    choiceRegimenTable.AppendFormat("<tr>{0}</tr>", cellHtml);
-                        //    if (conjunction.Length > 0)
-                        //        choiceRegimenTable.AppendFormat("<tr><td></td><td>{0}</td></tr>", conjunction);
-                        //    hasChoiceRegimens = true;
-                        //}
-                        //if (regimen.columnOrder.Value == 1 && cellHtml.Length > 0)
-                        //{
-                        //    alternateRegimenTable.AppendFormat("<tr>{0}</tr>", cellHtml);
-                        //    if (conjunction.Length > 0)
-                        //        choiceRegimenTable.AppendFormat("<tr><td></td><td>{0}</td></tr>", conjunction);
-                        //    hasAlternateRegimens = true;
-                        //}
                     }
                 }
             }
@@ -5120,14 +5099,15 @@ namespace BDEditor.Classes
                 // add row for group name
                 string groupName = buildNodePropertyHTML(pContext, pGroup, pGroup.Name, BDRegimenGroup.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage);
                 if(groupName.Length > 0)
-                    groupHtml.AppendFormat("<tr><td colspan=5>{0}</td></tr>", groupName);
+                    groupHtml.AppendFormat("<tr><td colspan=\"5\">{0}</td></tr>", groupName);
 
                 BDConstants.BDJoinType groupJoinType = (BDConstants.BDJoinType)pGroup.regimenGroupJoinType.Value;
                 groupConjunctionHtml.AppendFormat("<tr><td colspan=5>{0}</td></tr>", buildConjunctionHTML(pContext, pGroup, groupJoinType, BDRegimenGroup.PROPERTYNAME_CONJUNCTION, pFootnotes, pObjectsOnPage));
                 
                 // get children
                 List<IBDNode> regimens = BDFabrik.GetChildrenForParent(pContext, pGroup);
-                groupHtml.Append(buildRegimenRowsHtml(pContext, regimens, pColumnType, pFootnotes, pObjectsOnPage));
+                if(regimens.Count > 0)
+                    groupHtml.Append(buildRegimenRowsHtml(pContext, regimens, pColumnType, pFootnotes, pObjectsOnPage));
                 
                 if(pGroup.regimenGroupJoinType != (int)BDConstants.BDJoinType.Next)
                     groupHtml.Append(groupConjunctionHtml);
@@ -5138,55 +5118,50 @@ namespace BDEditor.Classes
 
         private string buildRegimenRowsHtml(Entities pContext, List<IBDNode> regimens, int pColumnType, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
         {
-            StringBuilder nameColumn = new StringBuilder();
-            StringBuilder dosageColumn = new StringBuilder();
-            StringBuilder durationColumn = new StringBuilder();
+            if (regimens.Count == 0)
+                return string.Empty;
+
+            string lBracketHtml = "<td class=\"leftBracket\"><strong>[</strong></td>";
+            string rBracketHtml = "<td class=\"rightBracket\"><strong>]</strong></td>";
+            string emptyCell = "<td></td>";
+
             StringBuilder rowHtml = new StringBuilder();
-            // add info from each child to row cells
+
+            // build a row for each child & for each child conjunction that is not 'Next'
             BDRegimen lastRegimen = (BDRegimen)regimens.Last();
             for (int i = 0; i < regimens.Count; i++)
             {
+                if (regimens[i].NodeType != BDConstants.BDNodeType.BDRegimen)
+                    break;
+
                 BDRegimen regimen = (BDRegimen)regimens[i];
+                
                 BDConstants.BDJoinType regimenJoinType = (BDConstants.BDJoinType)regimen.regimenJoinType.Value;
-
                 string regimenConjunction = buildConjunctionHTML(pContext, regimen, regimenJoinType, BDRegimen.PROPERTYNAME_CONJUNCTION, pFootnotes, pObjectsOnPage);
-                string nextTag = string.Empty;
-                if (i == 0)
-                    nextTag = "<td>";
-                else
-                    nextTag = "<br>";
-
+                
+                // if the regimen belongs in the column / table that is being built
+                // (it can be a child of the regimen group, but in the other table)
                 if (pColumnType == regimen.columnOrder)
-                {
-                    dosageColumn.Append(nextTag);
-                    durationColumn.Append(nextTag);
+                {                   
+                    string name = buildNodePropertyHTML(pContext, regimen, regimen.Name, BDRegimen.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage);
+                    string dosage = buildNodePropertyHTML(pContext, regimen, regimen.dosage, BDRegimen.PROPERTYNAME_DOSAGE, pFootnotes, pObjectsOnPage);
+                    string duration = buildNodePropertyHTML(pContext, regimen, regimen.duration, BDRegimen.PROPERTYNAME_DURATION, pFootnotes, pObjectsOnPage);
 
-                    if (regimen.leftBracket.Value == true && i == 0)
-                        nameColumn.Append("<td class=\"leftBracket\"><strong>[</strong></td>");
+                    if (i == 0 && regimen.leftBracket.Value)
+                        rowHtml.AppendFormat("<tr>{0}<td colspan=\"2\">{1}</td><td>{2}</td><td>{3}</td></tr>", lBracketHtml, name, dosage, duration);
+                    else if (lastRegimen != null && regimen.Equals(lastRegimen) && regimen.rightBracket.Value)
+                        rowHtml.AppendFormat("<tr>{0}<td>{1}</td>{2}<td>{3}</td><td>{4}</td></tr>", emptyCell, name, rBracketHtml, dosage, duration);
                     else
-                        nameColumn.Append(nextTag);
+                        rowHtml.AppendFormat("<tr>{0}<td colspan=\"2\">{1}</td><td>{2}</td><td>{3}</td></tr>", emptyCell, name, dosage, duration);
 
-                    nameColumn.Append(buildNodePropertyHTML(pContext, regimen, regimen.Name, BDRegimen.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage));
-                    dosageColumn.Append(buildNodePropertyHTML(pContext, regimen, regimen.dosage, BDRegimen.PROPERTYNAME_DOSAGE, pFootnotes, pObjectsOnPage));
-                    durationColumn.Append(buildNodePropertyHTML(pContext, regimen, regimen.duration, BDRegimen.PROPERTYNAME_DURATION, pFootnotes, pObjectsOnPage));
-
-                    if (lastRegimen != null && regimen.Equals(lastRegimen))
-                    {
-                        if (regimen.rightBracket.Value == true)
-                            nameColumn.Append("</td><td class=\"rightBracket\"><strong>]</strong></td>");
-                        else
-                            nameColumn.Append("</td>");
-                        dosageColumn.Append("</td>");
-                        durationColumn.Append("</td>");
-                    }
-
-                    if (regimenJoinType != (int)BDConstants.BDJoinType.Next)
-                        rowHtml.AppendFormat("<tr>{0}{1}{2}</tr>", nameColumn, dosageColumn, durationColumn);
+                    if (regimenJoinType != BDConstants.BDJoinType.Next)
+                        rowHtml.AppendFormat("<tr>{0}<td colspan=\"4\">{1}</td>", emptyCell, regimenConjunction);
                 }
             }
             return rowHtml.ToString();
         }
 
+        
         private string buildNodeWithReferenceAndOverviewHTML(Entities pContext, IBDNode pNode, string pHeaderTagLevel, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
         {
             StringBuilder nodeHTML = new StringBuilder();

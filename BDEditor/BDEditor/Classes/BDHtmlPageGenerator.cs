@@ -4996,6 +4996,7 @@ namespace BDEditor.Classes
         {
             StringBuilder html = new StringBuilder();
 
+            int surgicalProphylaxisLayout = (int)BDConstants.LayoutVariantType.Prophylaxis_Surgical;
             string pathogenTitle = @"";
             string choiceRegimenTitle = @"";
             string alternateRegimenTitle = @"";
@@ -5020,9 +5021,9 @@ namespace BDEditor.Classes
 
             if (children.Count > 0)
             {
-                choiceRegimenTable.AppendFormat(@"<table class=""v{0}""><tr>", (int)pNode.LayoutVariant);
+                choiceRegimenTable.AppendFormat(@"<table class=""v{0}""><tr>", surgicalProphylaxisLayout);
                 choiceRegimenTable.AppendFormat("<th colspan=5>{0}</th>", choiceRegimenTitle);
-                alternateRegimenTable.AppendFormat(@"<table class=""v{0}""><tr>", (int)pNode.LayoutVariant);
+                alternateRegimenTable.AppendFormat(@"<table class=""v{0}""><tr>", surgicalProphylaxisLayout);
                 alternateRegimenTable.AppendFormat("<th colspan=5>{0}</th>", alternateRegimenTitle);
 
                 pathogenHtml.AppendFormat("<{0}>{1}</{0}><p>", "h3", pathogenTitle);
@@ -5121,6 +5122,8 @@ namespace BDEditor.Classes
             if (regimens.Count == 0)
                 return string.Empty;
 
+            int surgicalProphylaxisLayout = (int)BDConstants.LayoutVariantType.Prophylaxis_Surgical;
+
             string lBracketHtml = "<td class=\"leftBracket\"><strong>[</strong></td>";
             string rBracketHtml = "<td class=\"rightBracket\"><strong>]</strong></td>";
             string emptyCell = "<td></td>";
@@ -5147,12 +5150,14 @@ namespace BDEditor.Classes
                     string dosage = buildNodePropertyHTML(pContext, regimen, regimen.dosage, BDRegimen.PROPERTYNAME_DOSAGE, pFootnotes, pObjectsOnPage);
                     string duration = buildNodePropertyHTML(pContext, regimen, regimen.duration, BDRegimen.PROPERTYNAME_DURATION, pFootnotes, pObjectsOnPage);
 
-                    if (i == 0 && regimen.leftBracket.Value)
-                        rowHtml.AppendFormat("<tr>{0}<td colspan=\"2\">{1}</td><td>{2}</td><td>{3}</td></tr>", lBracketHtml, name, dosage, duration);
-                    else if (lastRegimen != null && regimen.Equals(lastRegimen) && regimen.rightBracket.Value)
-                        rowHtml.AppendFormat("<tr>{0}<td>{1}</td>{2}<td>{3}</td><td>{4}</td></tr>", emptyCell, name, rBracketHtml, dosage, duration);
+                    // table cell has CSS class of 'v301' which sets the width of the cell to 30%
+                    // it's used only on the last two columns and lets the first column float to 40%
+                    if (regimen.leftBracket.Value)
+                        rowHtml.AppendFormat("<tr>{0}<td colspan=\"2\">{1}</td><td class=\"v{4}\">{2}</td><td class=\"v{4}\">{3}</td></tr>", lBracketHtml, name, dosage, duration, surgicalProphylaxisLayout);
+                    else if (regimen.rightBracket.Value)  //lastRegimen != null && regimen.Equals(lastRegimen) && 
+                        rowHtml.AppendFormat("<tr>{0}<td>{1}</td>{2}<td class=\"v{5}\">{3}</td><td class=\"v{5}\">{4}</td></tr>", emptyCell, name, rBracketHtml, dosage, duration, surgicalProphylaxisLayout);
                     else
-                        rowHtml.AppendFormat("<tr>{0}<td colspan=\"2\">{1}</td><td>{2}</td><td>{3}</td></tr>", emptyCell, name, dosage, duration);
+                        rowHtml.AppendFormat("<tr>{0}<td colspan=\"2\">{1}</td><td class=\"v{4}\">{2}</td><td class=\"v{4}\">{3}</td></tr>", emptyCell, name, dosage, duration, surgicalProphylaxisLayout);
 
                     if (regimenJoinType != BDConstants.BDJoinType.Next)
                         rowHtml.AppendFormat("<tr>{0}<td colspan=\"4\">{1}</td>", emptyCell, regimenConjunction);

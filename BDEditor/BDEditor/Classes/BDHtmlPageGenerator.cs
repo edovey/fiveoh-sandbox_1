@@ -5098,16 +5098,21 @@ namespace BDEditor.Classes
 
             if (pGroup != null)
             {
-                // add row for group name, indicate indent is needed for child rows
+                // add row for group name 
                 string groupName = buildNodePropertyHTML(pContext, pGroup, pGroup.Name, BDRegimenGroup.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage);
                 if (groupName.Length > 0)
                 {
-                    hasIndent = true;
                     groupHtml.AppendFormat("<tr><td colspan=\"5\">{0}</td></tr>", groupName);
                 }
+                //indicate indent is needed for child rows
+                hasIndent = true;
 
                 BDConstants.BDJoinType groupJoinType = (BDConstants.BDJoinType)pGroup.regimenGroupJoinType.Value;
-                groupConjunctionHtml.AppendFormat("<tr><td colspan=5>{0}</td></tr>", buildConjunctionHTML(pContext, pGroup, groupJoinType, BDRegimenGroup.PROPERTYNAME_CONJUNCTION, pFootnotes, pObjectsOnPage));
+                StringBuilder conjunctionHtml = new StringBuilder();
+                conjunctionHtml.Append(buildConjunctionHTML(pContext, pGroup, groupJoinType, BDRegimenGroup.PROPERTYNAME_CONJUNCTION, pFootnotes, pObjectsOnPage));
+                groupConjunctionHtml.AppendFormat("<tr><td colspan=5>{0}</td></tr>",conjunctionHtml);
+                if (conjunctionHtml.Length > 4)
+                    hasIndent = true;
                 
                 // get children
                 List<IBDNode> regimens = BDFabrik.GetChildrenForParent(pContext, pGroup);
@@ -5155,23 +5160,24 @@ namespace BDEditor.Classes
 
                     // table cell has CSS class of 'v301' which sets the width of the cell to 30%
                     // it's used only on the last two columns and lets the remaining columns take up the remainder
+                    // in all cases the class of 'leftBracket' is used for the first column - even when it's empty - to force the same size
                     if (regimen.leftBracket.Value)
                         rowHtml.AppendFormat("<tr><td {0}</td><td colspan=\"2\">{1}</td><td class=\"v{4}\">{2}</td><td class=\"v{4}\">{3}</td></tr>", lBracketHtml, name, dosage, duration, surgicalProphylaxisLayout);
                     else if (regimen.rightBracket.Value)
-                        rowHtml.AppendFormat("<tr><td></td><td>{0}</td><td {1}</td><td class=\"v{4}\">{2}</td><td class=\"v{4}\">{3}</td></tr>", name, rBracketHtml, dosage, duration, surgicalProphylaxisLayout);
+                        rowHtml.AppendFormat("<tr><td class=\"leftBracket\"></td><td>{0}</td><td {1}</td><td class=\"v{4}\">{2}</td><td class=\"v{4}\">{3}</td></tr>", name, rBracketHtml, dosage, duration, surgicalProphylaxisLayout);
                     else
                         if (hasIndent) // first cell is defined and is empty if there is no bracket
                         {
-                            rowHtml.AppendFormat("<tr><td></td><td colspan=\"2\">{0}</td><td class=\"v{3}\">{1}</td><td class=\"v{3}\">{2}</td></tr>", name, dosage, duration, surgicalProphylaxisLayout);
+                            rowHtml.AppendFormat("<tr><td class=\"leftBracket\"></td><td colspan=\"2\">{0}</td><td class=\"v{3}\">{1}</td><td class=\"v{3}\">{2}</td></tr>", name, dosage, duration, surgicalProphylaxisLayout);
                         }
                         else // first cell has colspan = 2, displays the name ( group name is empty )
                         {
                             rowHtml.AppendFormat("<tr><td colspan=\"3\">{0}</td><td class=\"v{3}\">{1}</td><td class=\"v{3}\">{2}</td></tr>", name, dosage, duration, surgicalProphylaxisLayout);
                         }
-                    if (regimenJoinType != BDConstants.BDJoinType.Next)
+                    if (regimenConjunction.Length > 0)
                     {
                         if (hasIndent)
-                            rowHtml.AppendFormat("<tr><td></td><td colspan=\"4\">{0}</td>", regimenConjunction);
+                            rowHtml.AppendFormat("<tr><td class=\"leftBracket\"></td><td colspan=\"4\">{0}</td>", regimenConjunction);
                         else
                             rowHtml.AppendFormat("<tr><td colspan=\"5\">{0}</td>", regimenConjunction);
                     }

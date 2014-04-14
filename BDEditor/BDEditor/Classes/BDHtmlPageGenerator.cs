@@ -5094,7 +5094,6 @@ namespace BDEditor.Classes
         {
             StringBuilder groupHtml = new StringBuilder();
             StringBuilder groupConjunctionHtml = new StringBuilder();
-            bool hasIndent = false;
 
             if (pGroup != null)
             {
@@ -5102,22 +5101,18 @@ namespace BDEditor.Classes
                 string groupName = buildNodePropertyHTML(pContext, pGroup, pGroup.Name, BDRegimenGroup.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage);
                 if (groupName.Length > 0)
                 {
-                    groupHtml.AppendFormat("<tr><td colspan=\"5\">{0}</td></tr>", groupName);
+                    groupHtml.AppendFormat("<tr><td class=\"v301rg\" colspan=\"5\">{0}</td></tr>",groupName);
                 }
-                //indicate indent is needed for child rows
-                hasIndent = true;
-
+                
                 BDConstants.BDJoinType groupJoinType = (BDConstants.BDJoinType)pGroup.regimenGroupJoinType.Value;
                 StringBuilder conjunctionHtml = new StringBuilder();
                 conjunctionHtml.Append(buildConjunctionHTML(pContext, pGroup, groupJoinType, BDRegimenGroup.PROPERTYNAME_CONJUNCTION, pFootnotes, pObjectsOnPage));
                 groupConjunctionHtml.AppendFormat("<tr><td colspan=5>{0}</td></tr>",conjunctionHtml);
-                if (conjunctionHtml.Length > 4)
-                    hasIndent = true;
                 
                 // get children
                 List<IBDNode> regimens = BDFabrik.GetChildrenForParent(pContext, pGroup);
                 if(regimens.Count > 0)
-                    groupHtml.Append(buildRegimenRowsHtml(pContext, regimens, pColumnType, hasIndent, pFootnotes, pObjectsOnPage));
+                    groupHtml.Append(buildRegimenRowsHtml(pContext, regimens, pColumnType, pFootnotes, pObjectsOnPage));
                 
                 if(pGroup.regimenGroupJoinType != (int)BDConstants.BDJoinType.Next)
                     groupHtml.Append(groupConjunctionHtml);
@@ -5126,7 +5121,7 @@ namespace BDEditor.Classes
             return groupHtml.ToString();
         }
 
-        private string buildRegimenRowsHtml(Entities pContext, List<IBDNode> regimens, int pColumnType, bool hasIndent, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
+        private string buildRegimenRowsHtml(Entities pContext, List<IBDNode> regimens, int pColumnType, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
         {
             if (regimens.Count == 0)
                 return string.Empty;
@@ -5154,7 +5149,7 @@ namespace BDEditor.Classes
                 // (it can be a child of the regimen group, but in the other table)
                 if (pColumnType == regimen.columnOrder)
                 {
-                    string name = buildNodePropertyHTML(pContext, regimen, regimen.Name, BDRegimen.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage);
+                    string name = buildNodePropertyHTML(pContext, regimen, regimen.Uuid, regimen.name, BDRegimen.PROPERTYNAME_NAME, "b", pFootnotes, pObjectsOnPage);
                     string dosage = buildNodePropertyHTML(pContext, regimen, regimen.dosage, BDRegimen.PROPERTYNAME_DOSAGE, pFootnotes, pObjectsOnPage);
                     string duration = buildNodePropertyHTML(pContext, regimen, regimen.duration, BDRegimen.PROPERTYNAME_DURATION, pFootnotes, pObjectsOnPage);
 
@@ -5166,21 +5161,10 @@ namespace BDEditor.Classes
                     else if (regimen.rightBracket.Value)
                         rowHtml.AppendFormat("<tr><td class=\"leftBracket\"></td><td>{0}</td><td {1}</td><td class=\"v{4}\">{2}</td><td class=\"v{4}\">{3}</td></tr>", name, rBracketHtml, dosage, duration, surgicalProphylaxisLayout);
                     else
-                        if (hasIndent) // first cell is defined and is empty if there is no bracket
-                        {
-                            rowHtml.AppendFormat("<tr><td class=\"leftBracket\"></td><td colspan=\"2\">{0}</td><td class=\"v{3}\">{1}</td><td class=\"v{3}\">{2}</td></tr>", name, dosage, duration, surgicalProphylaxisLayout);
-                        }
-                        else // first cell has colspan = 2, displays the name ( group name is empty )
-                        {
-                            rowHtml.AppendFormat("<tr><td colspan=\"3\">{0}</td><td class=\"v{3}\">{1}</td><td class=\"v{3}\">{2}</td></tr>", name, dosage, duration, surgicalProphylaxisLayout);
-                        }
+                        rowHtml.AppendFormat("<tr><td colspan=\"3\">{0}</td><td class=\"v{3}\">{1}</td><td class=\"v{3}\">{2}</td></tr>", name, dosage, duration, surgicalProphylaxisLayout);
+                        
                     if (regimenConjunction.Length > 0)
-                    {
-                        if (hasIndent)
-                            rowHtml.AppendFormat("<tr><td class=\"leftBracket\"></td><td colspan=\"4\">{0}</td>", regimenConjunction);
-                        else
                             rowHtml.AppendFormat("<tr><td colspan=\"5\">{0}</td>", regimenConjunction);
-                    }
                 }
             }
             return rowHtml.ToString();

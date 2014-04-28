@@ -47,7 +47,7 @@ namespace BDEditor.Classes
         private const string TREATMENT_RECOMMENDATION_PEDS_UUID = "c0ecedc1-70cf-4422-b998-7e5f2bb986b1";
         private const string TREATMENT_RECOMMENDATION_ADULT_UUID = "757409a4-9446-4aa5-ac23-03fb7660759b";
         //private const string PROPHYLAXIS_SURGICAL_SECTION_UUID = @"da1fcc78-d169-45a8-a391-2b3db6247075";
-        private const string ORGANISMS_THERAPY_SECTION_UUID = @"472244a0-f8a3-43b2-b6dd-c23902e5ee28";
+        //private const string ORGANISMS_THERAPY_SECTION_UUID = @"472244a0-f8a3-43b2-b6dd-c23902e5ee28";
         private const string PROPHYLAXIS_IMMUNIZATION_SECTION_UUID = @"63a99294-dc8a-4ae3-be63-24b8eb7c578d";
 
         private IBDNode currentChapter = null;
@@ -204,7 +204,7 @@ namespace BDEditor.Classes
         {
             // bypass incomplete sections 
             if (pNode.Uuid == Guid.Parse(PROPHYLAXIS_IMMUNIZATION_SECTION_UUID)) return;
-            if (pNode.Uuid == Guid.Parse(ORGANISMS_THERAPY_SECTION_UUID)) return;
+            //if (pNode.Uuid == Guid.Parse(ORGANISMS_THERAPY_SECTION_UUID)) return;
 
             // hack to compensate for lack of differentiation in early layout variants
             if (pNode.Uuid == Guid.Parse(TREATMENT_RECOMMENDATION_PEDS_UUID))

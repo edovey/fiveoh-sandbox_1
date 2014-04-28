@@ -1046,21 +1046,34 @@ namespace BDEditor.Classes
 
         private BDHtmlPage generatePageForLinkedNotes(Entities pContext, Guid pDisplayParentId, BDConstants.BDNodeType pDisplayParentType, string pPageHtml, BDConstants.BDHtmlPageType pPageType, List<Guid> pObjectsOnPage, string pParentKeyPropertyName)
         {
+            // save the value of the parent page
+            IBDObject parentPageMasterObject = currentPageMasterObject;
             string testValue = BDUtilities.CleanseStringOfEmptyTag(pPageHtml, "p");
             if (!string.IsNullOrEmpty(testValue))
             {
                 // the linked note being processed will have a parent that is a BDNode OR another linked note
                 IBDNode node = BDFabrik.RetrieveNode(pContext, pDisplayParentId);
                 BDLinkedNote linkedNote = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, pDisplayParentId);
+    
                 if (node != null)
                 {
+                    // temporarily reset the master so the note page has a proper title
                     currentPageMasterObject = node;
-                    return writeBDHtmlPage(pContext, node, pPageHtml, pPageType, new List<BDLinkedNote>(), pObjectsOnPage, pParentKeyPropertyName);
+                    BDHtmlPage notePage = writeBDHtmlPage(pContext, node, pPageHtml, pPageType, new List<BDLinkedNote>(), pObjectsOnPage, pParentKeyPropertyName);
+                    // Debug.WriteLine("Page title changed for linked note on page for:  {0}", parentPageMasterObject.Uuid);
+                    // reset the master to the original (parent page) value
+                    currentPageMasterObject = parentPageMasterObject;
+                    return notePage;
                 }
                 else if (linkedNote != null)
                 {
+                    // temporarily reset the master so the note page has a proper title
                     currentPageMasterObject = linkedNote;
-                    return writeBDHtmlPage(pContext, linkedNote, pPageHtml, pPageType, new List<BDLinkedNote>(), pObjectsOnPage, pParentKeyPropertyName);
+                    BDHtmlPage notePage = writeBDHtmlPage(pContext, linkedNote, pPageHtml, pPageType, new List<BDLinkedNote>(), pObjectsOnPage, pParentKeyPropertyName);
+                    // Debug.WriteLine("Page title changed for linked note on page for:  {0}", parentPageMasterObject.Uuid);
+                    // reset the master to the original (parent page) value
+                    currentPageMasterObject = parentPageMasterObject;
+                    return notePage;
                 }
                 else
                     throw new NotSupportedException();

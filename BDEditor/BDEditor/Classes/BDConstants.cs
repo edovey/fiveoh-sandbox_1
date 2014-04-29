@@ -371,10 +371,8 @@ namespace BDEditor.Classes
             Organisms_GramStainInterpretation = 601,
             [Description("Organisms - Specific Body Sites")]
             Organisms_CommensalAndPathogenic = 602,
-            [Description("Organisms - Therapy of Specific Organisms")]
+            [Description("Organisms - Empiric Therapy of Specific Organisms")]
             Organisms_Therapy = 603,
-            [Description("Organisms - Therapy of Specific Organisms, with Subcategory")]
-            Organisms_Therapy_with_Subcategory = 6031,
             [Description("Organisms - Antibiogram")]
             Organisms_Antibiogram = 604,
 

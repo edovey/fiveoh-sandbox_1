@@ -582,7 +582,6 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Antibiotics_Dosing_HepaticImpairment:
                             case BDConstants.LayoutVariantType.Antibiotics_CSFPenetration:
                             case BDConstants.LayoutVariantType.Dental_Prophylaxis:
-                            case BDConstants.LayoutVariantType.Organisms_Therapy:
                             case BDConstants.LayoutVariantType.Prophylaxis_IE:
                             case BDConstants.LayoutVariantType.PregnancyLactation_Prevention_PerinatalInfection:
                                 if (!pInterrogateOnly)
@@ -621,10 +620,6 @@ namespace BDEditor.Views
                                 }
                                 break;
                             case BDConstants.LayoutVariantType.Prophylaxis_Surgical:
-                            //case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery:
-                            //case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgery_With_Classification:
-                            //case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries:
-                            //case BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries_With_Classification:
                             case BDConstants.LayoutVariantType.Prophylaxis_IE_AntibioticRegimen:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_Invasive:
                             case BDConstants.LayoutVariantType.Prophylaxis_Communicable_HaemophiliusInfluenzae:
@@ -658,7 +653,14 @@ namespace BDEditor.Views
                                 break;
                             case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic:
                             case BDConstants.LayoutVariantType.Organisms_GramStainInterpretation:
-                            case BDConstants.LayoutVariantType.Organisms_Therapy_with_Subcategory:
+                                childTreeNode = BDOrganismsTree.BuildBranch(dataContext, node);
+                                if (!pInterrogateOnly)
+                                {
+                                    graftTreeNode(selectedNode, childTreeNode);
+                                    showChildControls = false;
+                                }
+                                break;
+                            case BDConstants.LayoutVariantType.Organisms_Therapy:
                                 childTreeNode = BDOrganismsTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {

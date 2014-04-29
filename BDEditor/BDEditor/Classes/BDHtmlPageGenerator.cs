@@ -671,7 +671,6 @@ namespace BDEditor.Classes
                         case BDConstants.LayoutVariantType.TreatmentRecommendation10_Fungal_Amphotericin_B:
                         case BDConstants.LayoutVariantType.TreatmentRecommendation17_Pneumonia:
                         case BDConstants.LayoutVariantType.Dental_Prophylaxis_DrugRegimens:
-                        case BDConstants.LayoutVariantType.Organisms_Therapy_with_Subcategory:
                             currentPageMasterObject = pNode;
                             nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
                             isPageGenerated = true;

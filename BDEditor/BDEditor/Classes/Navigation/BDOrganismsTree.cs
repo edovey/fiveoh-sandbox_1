@@ -28,13 +28,13 @@ namespace BDEditor.Classes.Navigation
                 case BDConstants.BDNodeType.BDSubcategory:
                 case BDConstants.BDNodeType.BDAttachment:
                 case BDConstants.BDNodeType.BDConfiguredEntry:
+                case BDConstants.BDNodeType.BDMicroorganismGroup:
                     switch (pNode.LayoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Organisms:
                         case BDConstants.LayoutVariantType.Organisms_GramStainInterpretation:
                         case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic:
                         case BDConstants.LayoutVariantType.Organisms_Therapy:
-                        case BDConstants.LayoutVariantType.Organisms_Therapy_with_Subcategory:
                         case BDConstants.LayoutVariantType.Organisms_Antibiogram:
                             foreach (IBDNode childNode in childList)
                             {

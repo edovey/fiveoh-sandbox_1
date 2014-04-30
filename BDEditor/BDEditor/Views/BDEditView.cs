@@ -25,7 +25,7 @@ namespace BDEditor.Views
         private bool isSeedDataLoadAvailable = false;
         private string seedDataFileName = string.Empty;
         // enable & show move button when data move is required
-        private bool moveButtonVisible = false;
+        private bool moveButtonVisible = true;
 
         public BDEditView()
         {

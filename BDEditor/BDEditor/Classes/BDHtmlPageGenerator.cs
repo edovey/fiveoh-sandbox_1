@@ -530,6 +530,11 @@ namespace BDEditor.Classes
                 case BDConstants.BDNodeType.BDMicroorganismGroup:
                     switch (pNode.LayoutVariant)
                     {
+                        case BDConstants.LayoutVariantType.Organisms_Therapy:
+                            currentPageMasterObject = pNode;
+                            nodeChildPages.Add(GenerateBDHtmlPage(pContext, pNode));
+                            isPageGenerated = true;
+                            break;
                         default:
                             isPageGenerated = false;
                             break;
@@ -864,6 +869,9 @@ namespace BDEditor.Classes
                     break;
                 case BDConstants.BDNodeType.BDDisease:
                     bodyHTML.Append(BuildBDDiseaseHtml(pContext, pNode, footnotes, objectsOnPage, 1));
+                    break;
+                case BDConstants.BDNodeType.BDMicroorganismGroup:
+                    bodyHTML.Append(BuildBDMicroorganismGroupHtml(pContext, pNode, footnotes, objectsOnPage, 1));
                     break;
                 case BDConstants.BDNodeType.BDPathogen:
                     bodyHTML.Append(BuildBDPathogenHtml(pContext, pNode, footnotes, objectsOnPage, 1));
@@ -1807,6 +1815,27 @@ namespace BDEditor.Classes
                         {
                             switch (pNode.LayoutVariant)
                             {
+                                case BDConstants.LayoutVariantType.Organisms_Therapy:
+                                    // add header then paragraph for each configured field
+                                    for (int idx = 0; idx < metadataLayoutColumns.Count; idx++)
+                                    {
+                                        string propertyName = metadataLayoutColumns[idx].FieldNameForColumnOfNodeType(pContext, BDConstants.BDNodeType.BDConfiguredEntry);
+                                        string title = buildHtmlForMetadataColumn(pContext, pNode, metadataLayoutColumns[idx], BDConstants.BDNodeType.BDConfiguredEntry, propertyName, pFootnotes, pObjectsOnPage);
+                                        string content = retrieveNoteTextForConfiguredEntryField(pContext, pNode.Uuid, BDConfiguredEntry.FieldNotePropertyNameForIndex(idx + 1), pObjectsOnPage, pFootnotes);
+
+                                        if (title == "Organisms")
+                                            title = null; // always remove the Organisms title
+
+                                        if (content.Length == 0)
+                                            title = null; // remove the title when there is no content
+
+                                        if (!string.IsNullOrEmpty(title)) 
+                                            html.AppendFormat(@"<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel), title);
+                                     
+                                        if(!string.IsNullOrEmpty(content))
+                                            html.Append(content);
+                                    }
+                                    break;
                                 default:
                                     // create the header with the note contents
                                     string header = retrieveNoteTextForConfiguredEntryField(pContext, pNode.Uuid, BDConfiguredEntry.FieldNotePropertyNameForIndex(0), pObjectsOnPage, pFootnotes);
@@ -2358,8 +2387,27 @@ namespace BDEditor.Classes
                         }
                         html.Append("</ul>");
                         break;
-                    case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
                     case BDConstants.LayoutVariantType.Organisms_Therapy:
+                        // HTML page assembled here
+                        // add organism group to html
+                        html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+                        foreach(IBDNode child in children)
+                        {
+                            // add configured entry 
+                            if (child.NodeType == BDConstants.BDNodeType.BDConfiguredEntry)
+                            {
+                                BDConfiguredEntry configuredEntry = child as BDConfiguredEntry;
+                                html.Append(BuildBDConfiguredEntryHtml(pContext, configuredEntry, pFootnotes, pObjectsOnPage, pLevel + 1, true, false));
+                            }
+                            // add therapy group & therapy in 'Empiric Therapy' table
+                            if (child.NodeType == BDConstants.BDNodeType.BDTherapyGroup)
+                            {
+                                BDTherapyGroup therapyGroup = child as BDTherapyGroup;
+                                html.Append(BuildBDTherapyGroupHTML(pContext, therapyGroup, pFootnotes, pObjectsOnPage, pLevel + 1, null));
+                            }
+                        } 
+                        break;
+                    case BDConstants.LayoutVariantType.Prophylaxis_InfectionPrecautions:
                     //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDMicroorganism, new BDConstants.LayoutVariantType[] { layoutVariant }));
                     //break;
                     default:
@@ -3282,6 +3330,19 @@ namespace BDEditor.Classes
                         if (!string.IsNullOrEmpty(rowTGNameHtml))
                             therapyGroupHtml.AppendFormat("<tr><td colspan=5>{0}</td></tr>", rowTGNameHtml);
                         therapyGroupHtml.Append(therapyHTML);
+                        break;
+                    case BDConstants.LayoutVariantType.Organisms_Therapy:
+                        // could not use 'default' here due to lines that add the <th /> when dosage / duration are empty.
+                        // cost of regression testing for the change is too high, even though that code looks like a bug.
+                        if (!string.IsNullOrEmpty(headerTGNameHtml))
+                            therapyGroupHtml.Append(headerTGNameHtml);
+
+                        therapyGroupHtml.AppendFormat(@"<table class=""v{0}"">", (int)pTherapyGroup.LayoutVariant);
+                        therapyGroupHtml.AppendFormat(@"<tr><th colspan=3>{0}</th>", therapyNameTitleHtml); // colspan added to accommodate bracket columns
+
+                        therapyGroupHtml.Append(@"</tr>");
+                        therapyGroupHtml.Append(therapyHTML);
+                        therapyGroupHtml.Append(@"</table>");
                         break;
                     default:
                         if (!string.IsNullOrEmpty(headerTGNameHtml))

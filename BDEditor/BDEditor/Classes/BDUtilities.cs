@@ -3479,7 +3479,6 @@ namespace BDEditor.Classes
 
             #endregion
             #endregion
-
         }
 
         private static void deleteConfiguredEntryChildrenForNode(Entities pContext, Guid pNodeUuid)

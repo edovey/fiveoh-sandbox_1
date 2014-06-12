@@ -255,9 +255,12 @@ namespace BDEditor.Views
                     {
                         System.Diagnostics.Debug.WriteLine(syncInfo.FriendlyName);
                         if ((syncInfo.RowsPulled > 0) || (syncInfo.RowsPushed > 0))
+                        {
                             resultMessage = string.Format("{0}{1}{4}: Pulled {2}, Pushed {3}", resultMessage, (string.IsNullOrEmpty(resultMessage) ? "" : "\n"), syncInfo.RowsPulled, syncInfo.RowsPushed, syncInfo.FriendlyName);
+                        }
                     }
 
+                    BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", resultMessage);
                     Debug.WriteLine(string.Format("Publish Complete at {0}", DateTime.Now));
                     BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditTimeLog.txt", string.Format("AWS Push (Publish) Complete\t{0}", DateTime.Now));
 

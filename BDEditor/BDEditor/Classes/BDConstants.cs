@@ -111,6 +111,8 @@ namespace BDEditor.Classes
             // BDRegimenGroup Class
             [Description("Regimen Group")]
             BDRegimenGroup = 40,
+            [Description("Organism(s)")]
+            BDOrganism = 41,
             [Description("Meta Decoration")]
             BDMetaDecoration = 888,
             [Description("Layout Column")]
@@ -372,7 +374,7 @@ namespace BDEditor.Classes
             [Description("Organisms - Specific Body Sites")]
             Organisms_CommensalAndPathogenic = 602,
             [Description("Organisms - Empiric Therapy of Specific Organisms")]
-            Organisms_Therapy = 603,
+            Organisms_EmpiricTherapy = 603,
             [Description("Organisms - Antibiogram")]
             Organisms_Antibiogram = 604,
 

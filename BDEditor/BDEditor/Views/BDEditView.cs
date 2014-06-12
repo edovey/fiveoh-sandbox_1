@@ -25,7 +25,7 @@ namespace BDEditor.Views
         private bool isSeedDataLoadAvailable = false;
         private string seedDataFileName = string.Empty;
         // enable & show move button when data move is required
-        private bool moveButtonVisible = true;
+        private bool moveButtonVisible = false;
 
         public BDEditView()
         {
@@ -535,7 +535,7 @@ namespace BDEditor.Views
                             case BDConstants.LayoutVariantType.Organisms:
                             case BDConstants.LayoutVariantType.Organisms_GramStainInterpretation:
                             case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic:
-                            case BDConstants.LayoutVariantType.Organisms_Therapy:
+                            case BDConstants.LayoutVariantType.Organisms_EmpiricTherapy:
                             case BDConstants.LayoutVariantType.Organisms_Antibiogram:
                                 childTreeNode = BDOrganismsTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
@@ -660,7 +660,7 @@ namespace BDEditor.Views
                                     showChildControls = false;
                                 }
                                 break;
-                            case BDConstants.LayoutVariantType.Organisms_Therapy:
+                            case BDConstants.LayoutVariantType.Organisms_EmpiricTherapy:
                                 childTreeNode = BDOrganismsTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {

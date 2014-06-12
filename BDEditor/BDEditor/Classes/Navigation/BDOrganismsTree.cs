@@ -34,7 +34,7 @@ namespace BDEditor.Classes.Navigation
                         case BDConstants.LayoutVariantType.Organisms:
                         case BDConstants.LayoutVariantType.Organisms_GramStainInterpretation:
                         case BDConstants.LayoutVariantType.Organisms_CommensalAndPathogenic:
-                        case BDConstants.LayoutVariantType.Organisms_Therapy:
+                        case BDConstants.LayoutVariantType.Organisms_EmpiricTherapy:
                         case BDConstants.LayoutVariantType.Organisms_Antibiogram:
                             foreach (IBDNode childNode in childList)
                             {

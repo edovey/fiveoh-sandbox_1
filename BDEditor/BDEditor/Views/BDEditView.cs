@@ -849,7 +849,7 @@ namespace BDEditor.Views
                         {
                             case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
                             case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional:
-                            case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
+                            //case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
                                 childTreeNode = BDAntibioticsTree.BuildBranch(dataContext, node);
                                 if (!pInterrogateOnly)
                                 {

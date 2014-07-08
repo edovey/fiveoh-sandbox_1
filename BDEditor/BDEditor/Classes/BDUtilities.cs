@@ -3479,6 +3479,23 @@ namespace BDEditor.Classes
 
             #endregion
             #endregion
+
+            #region v1.6.76
+            /*
+            // remove subsection from hierarchy
+            
+            BDNode bLactamSection = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("5b51a8e7-8003-4f52-b038-7f8d4917de8b"));
+            BDNode subsection = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("e11afc50-d0e3-4b4a-98fd-1f8ca19ae9cc"));
+
+            List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, subsection);
+            foreach (IBDNode child in children)
+            {
+                child.SetParent(bLactamSection);
+                pContext.SaveChanges();
+            }
+            */
+            #endregion
+
         }
 
         private static void deleteConfiguredEntryChildrenForNode(Entities pContext, Guid pNodeUuid)

@@ -629,7 +629,7 @@ namespace BDEditor.Classes
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDDisease, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation12_Endocarditis_BCNE }));
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubsection, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTable, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity }));
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:
@@ -745,7 +745,7 @@ namespace BDEditor.Classes
                     {
                         case BDConstants.LayoutVariantType.FrontMatter:
                         case BDConstants.LayoutVariantType.BackMatter:
-                        case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
+                        //case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTopic, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring:

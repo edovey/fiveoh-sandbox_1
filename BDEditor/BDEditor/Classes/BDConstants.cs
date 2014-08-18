@@ -221,7 +221,7 @@ namespace BDEditor.Classes
 
             [Description("Antibiotics - Dosing and Monitoring")] // +Aminoglycoside 
             Antibiotics_DosingAndMonitoring = 204,
-            [Description("Antibiotics - Dosing and Monitoring: Conventional")]
+            [Description("Antibiotics - Dosing and Monitoring: Conventional")] // Aminoglycoside, conventional dosing
             Antibiotics_DosingAndMonitoring_Conventional = 2041,
             [Description("Antibiotics - Dosing and Monitoring: Vancomycin")]
             Antibiotics_DosingAndMonitoring_Vancomycin = 211,

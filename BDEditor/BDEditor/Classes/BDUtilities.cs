@@ -402,7 +402,17 @@ namespace BDEditor.Classes
             if (childNodes.Count > 0)
             foreach (IBDNode child in childNodes)
             {
-                ResetLayoutVariantWithChildren(pContext, child, pNewLayoutVariant, true);
+                if (child.NodeType == BDConstants.BDNodeType.BDTableRow)
+                {
+                    List<BDTableCell> cells = BDTableCell.RetrieveTableCellsForParentId(pContext, child.Uuid);
+                    foreach (BDTableCell cell in cells)
+                    {
+                        cell.LayoutVariant = pNewLayoutVariant;
+                        BDTableCell.Save(pContext, cell);
+                    }
+                }
+                else
+                    ResetLayoutVariantWithChildren(pContext, child, pNewLayoutVariant, true);
                 BDFabrik.SaveNode(pContext, child);
             }
 
@@ -410,25 +420,6 @@ namespace BDEditor.Classes
             {
                 pStartNode.LayoutVariant = pNewLayoutVariant;
                 BDFabrik.SaveNode(pContext, pStartNode);
-            }
-        }
-
-        public static void ResetLayoutVariantInTable3RowsForParent(Entities pContext, BDNode pParentNode, BDConstants.LayoutVariantType pNewLayoutVariant)
-        {
-            List<BDTableRow> tableRows = BDTableRow.RetrieveTableRowsForParentId(pContext, pParentNode.Uuid);
-            pParentNode.LayoutVariant = BDConstants.LayoutVariantType.Antibiotics_NameListing;
-            BDNode.Save(pContext, pParentNode);
-            foreach (BDTableRow row in tableRows)
-            {
-                List<BDTableCell> nameTableCells = BDTableCell.RetrieveTableCellsForParentId(pContext, row.Uuid);
-                row.Name = string.Empty;
-                row.LayoutVariant = (row.LayoutVariant == BDConstants.LayoutVariantType.Table_3_Column_ContentRow ? BDConstants.LayoutVariantType.Antibiotics_NameListing_ContentRow : BDConstants.LayoutVariantType.Antibiotics_NameListing_HeaderRow);
-                BDTableRow.Save(pContext, row);
-                foreach (BDTableCell nameTableCell in nameTableCells)
-                {
-                    nameTableCell.LayoutVariant = row.LayoutVariant;
-                    BDTableCell.Save(pContext, nameTableCell);
-                }
             }
         }
 
@@ -3494,6 +3485,17 @@ namespace BDEditor.Classes
                 pContext.SaveChanges();
             }
             */
+            #endregion
+
+            #region for v1.6.78 - adjust layout variant of selected tables to allow centering specific table columns
+           // Desired Trough Level:  Table UUID: d633e893-d76a-48d7-8a26-024b5f3d3b4c
+            BDNode tableNode = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("d633e893-d76a-48d7-8a26-024b5f3d3b4c"));
+
+            BDUtilities.ResetLayoutVariantWithChildren(pContext, tableNode, BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin,true);
+
+            // Desired Serum Levels - Conventional (not High Dose) Aminoglycoside Monitoring
+            BDNode serumTableNode = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("bfb101e7-5aaa-40c0-a29f-572e07426636"));
+            BDUtilities.ResetLayoutVariantWithChildren(pContext, serumTableNode, BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional, true);
             #endregion
 
         }

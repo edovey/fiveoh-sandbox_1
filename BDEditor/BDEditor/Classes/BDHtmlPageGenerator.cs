@@ -4318,8 +4318,8 @@ namespace BDEditor.Classes
                         break;
 
                     // Common generic render
-                    case BDConstants.LayoutVariantType.Antibiotics_NameListing:
                     case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
+                    case BDConstants.LayoutVariantType.Antibiotics_NameListing:
                     //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_Stepdown_HeaderRow }));
                     //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
                     case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity:
@@ -4959,6 +4959,8 @@ namespace BDEditor.Classes
 
         private string buildDosageHTML(Entities pContext, IBDNode pNode, string pDosageGroupName, List<BDLinkedNote> pFootnotes, List<Guid> pObjectsOnPage)
         {
+            // Used only for Adult Dosing in Renal Impairment
+
             BDDosage dosageNode = pNode as BDDosage;
             StringBuilder dosageHTML = new StringBuilder();
             string styleString = string.Empty;
@@ -4996,10 +4998,11 @@ namespace BDEditor.Classes
             }
 
             colSpanTag = (colSpanLength > 1) ? string.Format(@" class=""v{1}cs"" colspan={0}", colSpanLength, (int)dosageNode.LayoutVariant) : string.Empty;
+            string colCenterTag = @" class=""ctrAlign""";
 
             string dosage1Html = buildNodePropertyHTML(pContext, dosageNode, dosageNode.dosage, BDDosage.PROPERTYNAME_DOSAGE, pFootnotes, pObjectsOnPage);
 
-            string spanTag = (colSpanStart == 1) ? colSpanTag : string.Empty;
+            string spanTag = (colSpanStart == 1) ? colSpanTag : colCenterTag;
 
             if (!string.IsNullOrEmpty(pDosageGroupName))
                 dosageHTML.AppendFormat("<td{0}>{1}<br>{2}</td>", spanTag, pDosageGroupName, dosage1Html);
@@ -5010,7 +5013,7 @@ namespace BDEditor.Classes
 
             if (!dosageNode.dosage2SameAsPrevious)
             {
-                spanTag = (colSpanStart == 2) ? colSpanTag : string.Empty;
+                spanTag = (colSpanStart == 2) ? colSpanTag : colCenterTag;
 
                 dxHtml = buildNodePropertyHTML(pContext, dosageNode, dosageNode.dosage2, BDDosage.PROPERTYNAME_DOSAGE2, pFootnotes, pObjectsOnPage);
                 if (!string.IsNullOrEmpty(dxHtml))
@@ -5021,7 +5024,7 @@ namespace BDEditor.Classes
 
             if (!dosageNode.dosage3SameAsPrevious)
             {
-                spanTag = (colSpanStart == 3) ? colSpanTag : string.Empty;
+                spanTag = (colSpanStart == 3) ? colSpanTag : colCenterTag;
 
                 dxHtml = buildNodePropertyHTML(pContext, dosageNode, dosageNode.dosage3, BDDosage.PROPERTYNAME_DOSAGE3, pFootnotes, pObjectsOnPage);
                 if (!string.IsNullOrEmpty(dxHtml))
@@ -5034,7 +5037,7 @@ namespace BDEditor.Classes
             {
                 dxHtml = buildNodePropertyHTML(pContext, dosageNode, dosageNode.dosage4, BDDosage.PROPERTYNAME_DOSAGE4, pFootnotes, pObjectsOnPage);
                 if (!string.IsNullOrEmpty(dxHtml))
-                    dosageHTML.AppendFormat(@"<td>{0}</td>", dxHtml);
+                    dosageHTML.AppendFormat(@"<td{0}>{1}</td>", spanTag, dxHtml);
                 else
                     dosageHTML.Append(@"<td></td>");
             }
@@ -5275,6 +5278,7 @@ namespace BDEditor.Classes
             string startCellTag = @"<td>";
             string endCellTag = @"</td>";
             string firstCellStartTag = @"<td colspan=3>";
+            string startCenteredCellTag = @"<td class=""ctrAlign"">";
             if (pRow != null)
             {
                 if (BDFabrik.RowIsHeaderRow(pRow) || forceHeaderRow)
@@ -5291,8 +5295,11 @@ namespace BDEditor.Classes
                     pObjectsOnPage.Add(cells[i].Uuid);
                     BDTableCell tableCell = cells[i];
                     string startTag = startCellTag;
+
                     if (i == 0 && pRow.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I_ContentRow)
                         startTag = firstCellStartTag;
+                    if (i == 4 && pRow.LayoutVariant == BDConstants.LayoutVariantType.Antibiotics_Stepdown_ContentRow)
+                        startTag = startCenteredCellTag;
 
                     string cellHTML = buildNodePropertyHTML(pContext, tableCell, tableCell.Uuid, tableCell.value, BDTableCell.PROPERTYNAME_CONTENTS, pFootnotes, pObjectsOnPage);
                     tableRowHTML.AppendFormat(@"{0}{1}{2}", startTag, cellHTML, endCellTag);

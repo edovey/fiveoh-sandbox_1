@@ -3489,13 +3489,13 @@ namespace BDEditor.Classes
 
             #region for v1.6.78 - adjust layout variant of selected tables to allow centering specific table columns
            // Desired Trough Level:  Table UUID: d633e893-d76a-48d7-8a26-024b5f3d3b4c
-            BDNode tableNode = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("d633e893-d76a-48d7-8a26-024b5f3d3b4c"));
+            //BDNode tableNode = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("d633e893-d76a-48d7-8a26-024b5f3d3b4c"));
 
-            BDUtilities.ResetLayoutVariantWithChildren(pContext, tableNode, BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin,true);
+            //BDUtilities.ResetLayoutVariantWithChildren(pContext, tableNode, BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin,true);
 
-            // Desired Serum Levels - Conventional (not High Dose) Aminoglycoside Monitoring
-            BDNode serumTableNode = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("bfb101e7-5aaa-40c0-a29f-572e07426636"));
-            BDUtilities.ResetLayoutVariantWithChildren(pContext, serumTableNode, BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional, true);
+            //// Desired Serum Levels - Conventional (not High Dose) Aminoglycoside Monitoring
+            //BDNode serumTableNode = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("bfb101e7-5aaa-40c0-a29f-572e07426636"));
+            //BDUtilities.ResetLayoutVariantWithChildren(pContext, serumTableNode, BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional, true);
             #endregion
 
         }

@@ -4320,50 +4320,37 @@ namespace BDEditor.Classes
                     // Common generic render
                     case BDConstants.LayoutVariantType.Antibiotics_Stepdown:
                     case BDConstants.LayoutVariantType.Antibiotics_NameListing:
-                    //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_Stepdown_HeaderRow }));
-                    //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
                     case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity:
-                    //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity_ContentRow }));
+                    case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional:
+                    case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin:
                     case BDConstants.LayoutVariantType.Table_2_Column:
-
-                    //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Table_2_Column_HeaderRow }));
-                    //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
-
                     case BDConstants.LayoutVariantType.Table_3_Column:
-                    //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Table_3_Column_HeaderRow }));
-                    //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
-
                     case BDConstants.LayoutVariantType.Table_4_Column:
-                    //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Table_4_Column_HeaderRow }));
-                    //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
-
                     case BDConstants.LayoutVariantType.Table_5_Column:
-                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Table_5_Column_HeaderRow }));
-                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
-
-                        int columnCount = BDFabrik.GetTableColumnCount(pNode.LayoutVariant);
-                        if (children.Count > 0)
                         {
-                            html.AppendFormat(@"<table class=""v{0}"">", (int)pNode.LayoutVariant);
-                            foreach (IBDNode child in children)
+                            int columnCount = BDFabrik.GetTableColumnCount(pNode.LayoutVariant);
+                            if (children.Count > 0)
                             {
-                                switch (child.NodeType)
+                                html.AppendFormat(@"<table class=""v{0}"">", (int)pNode.LayoutVariant);
+                                foreach (IBDNode child in children)
                                 {
-                                    case BDConstants.BDNodeType.BDTableRow:
-                                        BDTableRow tableRow = child as BDTableRow;
-                                        if (tableRow != null)
-                                            html.Append(buildTableRowHtml(pContext, tableRow, false, true, pFootnotes, pObjectsOnPage));
-                                        break;
-                                    case BDConstants.BDNodeType.BDTableSection:
-                                        html.Append(BuildBDTableSectionHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1, columnCount));
-                                        break;
-                                    default:
-                                        break;
+                                    switch (child.NodeType)
+                                    {
+                                        case BDConstants.BDNodeType.BDTableRow:
+                                            BDTableRow tableRow = child as BDTableRow;
+                                            if (tableRow != null)
+                                                html.Append(buildTableRowHtml(pContext, tableRow, false, true, pFootnotes, pObjectsOnPage));
+                                            break;
+                                        case BDConstants.BDNodeType.BDTableSection:
+                                            html.Append(BuildBDTableSectionHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1, columnCount));
+                                            break;
+                                        default:
+                                            break;
+                                    }
                                 }
+                                html.Append(@"</table>");
                             }
-                            html.Append(@"</table>");
                         }
-
                         break;
 
                     case BDConstants.LayoutVariantType.Prophylaxis_FluidExposure_Followup_II:
@@ -4534,8 +4521,9 @@ namespace BDEditor.Classes
 
                 List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
 
-
-                html.AppendFormat(@"<tr><td colspan={0}>{1}</td></tr>", pColumnCount, buildNodeWithReferenceAndOverviewHTML(pContext, pNode as BDNode, "b", pFootnotes, pObjectsOnPage));
+                string nodeHtml = buildNodeWithReferenceAndOverviewHTML(pContext, pNode as BDNode, "b", pFootnotes, pObjectsOnPage);
+                if (nodeHtml.Length > 0)
+                    html.AppendFormat(@"<tr><td colspan={0}>{1}</td></tr>", pColumnCount,nodeHtml);
 
                 foreach (IBDNode child in children)
                 {
@@ -4547,7 +4535,9 @@ namespace BDEditor.Classes
                             break;
 
                         case BDConstants.BDNodeType.BDTableSubsection:
-                            html.AppendFormat(@"<tr><td colspan={0}>{1}</td></tr>", pColumnCount, buildNodeWithReferenceAndOverviewHTML(pContext, child as BDNode, "u", pFootnotes, pObjectsOnPage));
+                            string subsectionHtml = buildNodeWithReferenceAndOverviewHTML(pContext, child as BDNode, "u", pFootnotes, pObjectsOnPage);
+                            if(subsectionHtml.Length > 0)
+                                html.AppendFormat(@"<tr><td colspan={0}>{1}</td></tr>", pColumnCount, subsectionHtml);
                             List<IBDNode> subSectionChildren = BDFabrik.GetChildrenForParent(pContext, child);
                             foreach (IBDNode subSectionChild in subSectionChildren)
                             {
@@ -4572,7 +4562,9 @@ namespace BDEditor.Classes
             {
                 // describe the topic
                 //BDNode topic = pNode as BDNode;
-                html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+                string topicHtml = buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage);
+                if(topicHtml.Length > 0)
+                    html.Append(topicHtml);
 
                 List<IBDNode> children = BDFabrik.GetChildrenForParent(pContext, pNode);
                 bool isFirstChild = true;
@@ -5290,6 +5282,10 @@ namespace BDEditor.Classes
                 pObjectsOnPage.Add(pRow.Uuid);
                 tableRowHTML.Append(@"<tr>");
                 List<BDTableCell> cells = BDTableCell.RetrieveTableCellsForParentId(pContext, pRow.Uuid);
+
+                if (cells.Count == 0)
+                    return string.Empty;
+                
                 for (int i = 0; i < cells.Count; i++)
                 {
                     pObjectsOnPage.Add(cells[i].Uuid);
@@ -5300,6 +5296,11 @@ namespace BDEditor.Classes
                         startTag = firstCellStartTag;
                     if (i == 4 && pRow.LayoutVariant == BDConstants.LayoutVariantType.Antibiotics_Stepdown_ContentRow)
                         startTag = startCenteredCellTag;
+                    if (i == 1 && pRow.LayoutVariant == BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin_ContentRow)
+                        startTag = startCenteredCellTag;
+                    if ((i == 1 || i == 2) && pRow.LayoutVariant == BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional_ContentRow)
+                        startTag = startCenteredCellTag;
+
 
                     string cellHTML = buildNodePropertyHTML(pContext, tableCell, tableCell.Uuid, tableCell.value, BDTableCell.PROPERTYNAME_CONTENTS, pFootnotes, pObjectsOnPage);
                     tableRowHTML.AppendFormat(@"{0}{1}{2}", startTag, cellHTML, endCellTag);

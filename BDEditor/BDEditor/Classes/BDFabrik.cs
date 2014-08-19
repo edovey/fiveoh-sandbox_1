@@ -843,10 +843,17 @@ namespace BDEditor.Classes
                             break;
                         case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
                         case BDConstants.LayoutVariantType.Antibiotics_ClinicalGuidelines:
-                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin:
-                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin_HeaderRow }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional_HeaderRow }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+
                         case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_HeaderRow }));
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSection, new BDConstants.LayoutVariantType[] { layoutVariant }));
@@ -919,11 +926,11 @@ namespace BDEditor.Classes
                     switch (layoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin_ContentRow }));
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSubsection, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional_ContentRow }));
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_NameListing:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableSubsection, new BDConstants.LayoutVariantType[] {layoutVariant }));
@@ -963,7 +970,7 @@ namespace BDEditor.Classes
                     switch (layoutVariant)
                     {
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional:
-                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin_ContentRow }));
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_NameListing:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTableRow, new BDConstants.LayoutVariantType[] { BDConstants.LayoutVariantType.Antibiotics_NameListing_ContentRow }));
@@ -2403,14 +2410,16 @@ namespace BDEditor.Classes
 
         public static bool RowIsHeaderRow(IBDNode pNode)
         {
+            // functions correctly for a BDTableRow or BDTableCell.
             bool isHeader = false;
-            BDTableRow row = pNode as BDTableRow;
-            if (row != null)
+            if (pNode != null)
             {
-                switch (row.LayoutVariant)
+                switch (pNode.LayoutVariant)
                 {
                     case BDConstants.LayoutVariantType.Antibiotics_NameListing_HeaderRow:
                     case BDConstants.LayoutVariantType.Antibiotics_Stepdown_HeaderRow:
+                    case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional_HeaderRow:
+                    case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin_HeaderRow:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_HeaderRow:
                     case BDConstants.LayoutVariantType.Table_2_Column_HeaderRow:
                     case BDConstants.LayoutVariantType.Table_3_Column_HeaderRow:
@@ -2423,6 +2432,7 @@ namespace BDEditor.Classes
                         break;
                 }
             }
+            
             return isHeader;
         }
 
@@ -2434,6 +2444,9 @@ namespace BDEditor.Classes
                 case BDConstants.LayoutVariantType.Antibiotics_NameListing:
                 case BDConstants.LayoutVariantType.Antibiotics_NameListing_ContentRow:
                 case BDConstants.LayoutVariantType.Antibiotics_NameListing_HeaderRow:
+                case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin: 
+                case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin_ContentRow:
+                case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin_HeaderRow:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I:
                 case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_I_ContentRow:
                 case BDConstants.LayoutVariantType.Table_2_Column:
@@ -2451,6 +2464,9 @@ namespace BDEditor.Classes
                 case BDConstants.LayoutVariantType.TreatmentRecommendation04_Pneumonia_II_ContentRow:
                 case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity:
                 case BDConstants.LayoutVariantType.Antibiotics_BLactamAllergy_CrossReactivity_ContentRow:
+                case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional:
+                case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional_ContentRow:
+                case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional_HeaderRow:
                     maxColumns = 3;
                     break;
 

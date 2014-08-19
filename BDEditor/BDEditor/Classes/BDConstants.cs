@@ -223,8 +223,16 @@ namespace BDEditor.Classes
             Antibiotics_DosingAndMonitoring = 204,
             [Description("Antibiotics - Dosing and Monitoring: Conventional")] // Aminoglycoside, conventional dosing
             Antibiotics_DosingAndMonitoring_Conventional = 2041,
+             [Description("Antibiotics - Dosing and Monitoring: Conventional Header Row")]
+            Antibiotics_DosingAndMonitoring_Conventional_HeaderRow = 20411,
+             [Description("Antibiotics - Dosing and Monitoring: Conventional Content Row")]
+             Antibiotics_DosingAndMonitoring_Conventional_ContentRow = 20412,
             [Description("Antibiotics - Dosing and Monitoring: Vancomycin")]
             Antibiotics_DosingAndMonitoring_Vancomycin = 211,
+            [Description("Antibiotics - Dosing and Monitoring: Vancomycin Header Row")]
+            Antibiotics_DosingAndMonitoring_Vancomycin_HeaderRow = 2111,
+            [Description("Antibiotics - Dosing and Monitoring: Vancomycin Content Row")]
+            Antibiotics_DosingAndMonitoring_Vancomycin_ContentRow = 2112,
             [Description("Antibiotics - Dosing in Renal Impairment")]
             Antibiotics_Dosing_RenalImpairment = 205,
 

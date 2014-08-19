@@ -404,12 +404,24 @@ namespace BDEditor.Classes
             {
                 if (child.NodeType == BDConstants.BDNodeType.BDTableRow)
                 {
+                    BDConstants.LayoutVariantType lvForRow = BDConstants.LayoutVariantType.Undefined;
+                    
+                    if (pNewLayoutVariant == BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional)
+                        lvForRow = BDFabrik.RowIsHeaderRow(child) ? BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional_HeaderRow : BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional_ContentRow;
+                    
+                    if (pNewLayoutVariant == BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin)
+                            lvForRow = BDFabrik.RowIsHeaderRow(child) ? BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin_HeaderRow : BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin_ContentRow;
+
+                    if (lvForRow == BDConstants.LayoutVariantType.Undefined)
+                        lvForRow = pNewLayoutVariant;
+
                     List<BDTableCell> cells = BDTableCell.RetrieveTableCellsForParentId(pContext, child.Uuid);
                     foreach (BDTableCell cell in cells)
                     {
-                        cell.LayoutVariant = pNewLayoutVariant;
+                            cell.LayoutVariant = lvForRow;
                         BDTableCell.Save(pContext, cell);
                     }
+                    child.LayoutVariant = lvForRow;
                 }
                 else
                     ResetLayoutVariantWithChildren(pContext, child, pNewLayoutVariant, true);
@@ -3493,7 +3505,7 @@ namespace BDEditor.Classes
 
             //BDUtilities.ResetLayoutVariantWithChildren(pContext, tableNode, BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Vancomycin,true);
 
-            //// Desired Serum Levels - Conventional (not High Dose) Aminoglycoside Monitoring
+            // Desired Serum Levels - Conventional (not High Dose) Aminoglycoside Monitoring
             //BDNode serumTableNode = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("bfb101e7-5aaa-40c0-a29f-572e07426636"));
             //BDUtilities.ResetLayoutVariantWithChildren(pContext, serumTableNode, BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional, true);
             #endregion

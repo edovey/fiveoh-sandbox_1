@@ -21,7 +21,7 @@ namespace BDEditor.Classes
 
         private const bool sortData = false;
         private const int maxNodeType = 6;
-        private const string topHtml = @"<!DOCTYPE html PUBLIC ""-//W3C//DTD HTML 4.01//EN\""><html><head><meta http-equiv=""Content-type"" content=""text/html;charset=UTF-8\""/><meta name=""viewport"" content=""width=device-width; initial-scale=1.0; maximum-scale=10.0;""/><link rel=""stylesheet"" type=""text/css"" href=""ra_bd.base.css"" /><title>Bugs &amp; Drugs</title> </head><body><div id=""ra_bd""><div class=""current"">";
+        private const string topHtml = @"<!DOCTYPE html><html><head><meta http-equiv=""Content-type"" content=""text/html;charset=UTF-8\"" /><meta name=""viewport"" content=""width=device-width; initial-scale=1.0; maximum-scale=10.0;"" /><link rel=""stylesheet"" type=""text/css"" href=""ra_bd.base.css"" /><title>Bugs &amp; Drugs</title> </head><body><div id=""ra_bd""><div class=""current"">";
         private const string bottomHtml = @"</div></div></body></html>";
         private const string anchorTag = @"<p><a class=""aa"" href=""{0}""><b>{1}</b></a></p>";
         private const string navListDivPrefix = @"<div class=""scroll""><ul class=""rounded"">";
@@ -2322,7 +2322,7 @@ namespace BDEditor.Classes
             string legendHTML = buildTextFromNotes(legendNotes);
             if (!string.IsNullOrEmpty(legendHTML) && !hasLegend)
             {
-                html.AppendFormat(@"<span class=""legend"">{0}</span>",legendHTML);
+                html.AppendFormat(@"<div class=""legend"">{0}</div>",legendHTML);
                 pObjectsOnPage.AddRange(legendAssociations);
             }
 
@@ -2437,15 +2437,19 @@ namespace BDEditor.Classes
                         break;
                     case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
-                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDPresentation, new BDConstants.LayoutVariantType[] { layoutVariant }));
-                        //childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDTherapyGroup, new BDConstants.LayoutVariantType[] { layoutVariant }));
 
-                        string namePlaceholderText = string.Format(@"New {0}", BDUtilities.GetEnumDescription(pNode.NodeType));
-                        if (pNode.Name.Length > 0 && !pNode.Name.Contains(namePlaceholderText))
-                            html.AppendFormat(@"<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel), pNode.Name);
+                        // note:  overview text is bypassed for this layout in the called method, and is inserted by code below
+                        html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
+                        
+                    //string namePlaceholderText = string.Format(@"New {0}", BDUtilities.GetEnumDescription(pNode.NodeType));
+                        //if (pNode.Name.Length > 0 && !pNode.Name.Contains(namePlaceholderText))
+                        //    html.AppendFormat(@"<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel), pNode.Name);
 
-                        pObjectsOnPage.Add(pNode.Uuid);
-                        html.Append(buildReferenceHtml(pContext, pNode, pObjectsOnPage));
+                        //string pText = buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage);
+                        //BDHtmlPageGeneratorLogEntry.AppendToFile("BDPathogenHtml.txt",string.Format("New:\t{0}",pText));
+
+                        //pObjectsOnPage.Add(pNode.Uuid);
+                        //html.Append(buildReferenceHtml(pContext, pNode, pObjectsOnPage));
 
                         foreach (IBDNode child in children)
                         {
@@ -5615,8 +5619,11 @@ namespace BDEditor.Classes
                 pPropertyValue = string.Empty;
 
             // overview
-
             string overviewHTML = retrieveNoteTextForOverview(pContext, pNode.Uuid, pObjectsOnPage);
+
+            // for one layout variant, the overview is added elsewhere
+            if (pNode.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II)
+                overviewHTML = @"";
 
             pObjectsOnPage.Add(pNode.Uuid);
 

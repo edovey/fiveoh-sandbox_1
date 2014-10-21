@@ -124,10 +124,9 @@ namespace BDEditor.Classes
             List<Guid> pageIds = BDHtmlPage.RetrieveAllIds(pContext);
             BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditPageMap.txt", "----------------------");
             BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkToSelfLog.txt", "---------");
-            //foreach (BDHtmlPageMap pageMap in pagesMap)
-            //{
-            //    BDHtmlPageGeneratorLogEntry.AppendToFile("BDEditPageMap.txt", string.Format("{0}\t{1}", pageMap.originalIbdObjectId, pageMap.htmlPageId));
-            //}
+            BDHtmlPageGeneratorLogEntry.AppendToFile("BDPageChangeLog.txt", string.Format("{0} ------------", BDSystemSetting.RetrieveSettingValue(pContext, BDSystemSetting.CONTROL_NUMBER)));
+            // insert this line into the code where changes need to be tracked for review:
+            // BDHtmlPageGeneratorLogEntry.AppendToFile("BDPageChangeLog.txt", string.Format("{0} {1}","Page UUID", "Page name"));
 
             Debug.WriteLine("Post-processing HTML pages");
             foreach (BDHtmlPage page in pages)
@@ -1711,9 +1710,27 @@ namespace BDEditor.Classes
                         html.AppendFormat("<th colspan=3>{0}</th><th>{1}</th></tr>", nameColumnTitle, dosageColumnTitle);
 
                         List<IBDNode> childNodes = BDFabrik.GetChildrenForParent(pContext, pNode);
+                        StringBuilder conjunctionHTML = new StringBuilder();
+                        BDTherapyGroup owner = null;
                         foreach (IBDNode tGroup in childNodes)
                         {
-                            html.Append(BuildBDTherapyGroupHTML(pContext, tGroup as BDTherapyGroup, pFootnotes, pObjectsOnPage, pLevel + 1, null));
+                            BDTherapyGroup therapyGroup = tGroup as BDTherapyGroup;
+                            if (null != therapyGroup)
+                            {
+                                StringBuilder tgHTML = (BuildBDTherapyGroupHTML(pContext, therapyGroup, pFootnotes, pObjectsOnPage, pLevel + 1, null));
+                                html.AppendFormat("{0}{1}", conjunctionHTML, tgHTML);
+
+                                if (conjunctionHTML.Length > 0)
+                                    BDHtmlPageGeneratorLogEntry.AppendToFile("BDPageChangeLog.txt", string.Format("Conjunction written for: {0} {1}", owner.Uuid, owner.Name));
+
+                                conjunctionHTML.Clear();
+                                if (therapyGroup.therapyGroupJoinType > 0)
+                                {
+                                    conjunctionHTML.AppendFormat("<tr><td colspan=4>{0}</td></tr>", retrieveConjunctionString((BDConstants.BDJoinType)therapyGroup.therapyGroupJoinType));
+                                    owner = therapyGroup;
+                                }
+                            }
+                            // html.Append(BuildBDTherapyGroupHTML(pContext, tGroup as BDTherapyGroup, pFootnotes, pObjectsOnPage, pLevel + 1, null));
                         }
                         html.Append("</table>");
                         break;
@@ -2438,19 +2455,10 @@ namespace BDEditor.Classes
                     case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_I:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation09_Parasitic_II:
 
-                        // note:  overview text is bypassed for this layout in the called method, and is inserted by code below
                         html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage));
                         
-                    //string namePlaceholderText = string.Format(@"New {0}", BDUtilities.GetEnumDescription(pNode.NodeType));
-                        //if (pNode.Name.Length > 0 && !pNode.Name.Contains(namePlaceholderText))
-                        //    html.AppendFormat(@"<{0}>{1}</{0}>", HtmlHeaderTagLevelString(pLevel), pNode.Name);
-
-                        //string pText = buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel), pFootnotes, pObjectsOnPage);
-                        //BDHtmlPageGeneratorLogEntry.AppendToFile("BDPathogenHtml.txt",string.Format("New:\t{0}",pText));
-
-                        //pObjectsOnPage.Add(pNode.Uuid);
-                        //html.Append(buildReferenceHtml(pContext, pNode, pObjectsOnPage));
-
+                        StringBuilder conjunctionHTML = new StringBuilder();
+                        BDTherapyGroup owner = null;
                         foreach (IBDNode child in children)
                         {
                             switch (child.NodeType)
@@ -2463,7 +2471,22 @@ namespace BDEditor.Classes
                                     pObjectsOnPage.Add(child.Uuid);
                                     break;
                                 case BDConstants.BDNodeType.BDTherapyGroup:
-                                    html.Append(BuildBDTherapyGroupHTML(pContext, child as BDTherapyGroup, pFootnotes, pObjectsOnPage, pLevel + 1, null));
+                                    {
+                                        BDTherapyGroup therapyGroup = child as BDTherapyGroup;
+
+                                        StringBuilder tgHTML = (BuildBDTherapyGroupHTML(pContext, therapyGroup, pFootnotes, pObjectsOnPage, pLevel, null));
+                                        html.AppendFormat("{0}{1}", conjunctionHTML, tgHTML);
+
+                                        if (conjunctionHTML.Length > 0)
+                                            BDHtmlPageGeneratorLogEntry.AppendToFile("BDPageChangeLog.txt", string.Format("Conjunction written for: {0} {1}", owner.Uuid, owner.Name));
+
+                                        conjunctionHTML.Clear();
+                                        if (therapyGroup.therapyGroupJoinType > 0)
+                                        {
+                                            conjunctionHTML.AppendFormat("<p>{0}</p>", retrieveConjunctionString((BDConstants.BDJoinType)therapyGroup.therapyGroupJoinType));
+                                            owner = therapyGroup;
+                                        }
+                                    }
                                     break;
                             }
                         }
@@ -2873,6 +2896,7 @@ namespace BDEditor.Classes
                         if (!string.IsNullOrEmpty(therapyGroupHtml.ToString()))
                             html.AppendFormat("{0}<br>", therapyGroupHtml);
                         break;
+
                     default:
                         bool childrenHavePathogens = false;
                         foreach (IBDNode child in children)
@@ -2905,6 +2929,8 @@ namespace BDEditor.Classes
                             // describe the pathogen group
                             html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel + 1), pFootnotes, pObjectsOnPage));
 
+                        StringBuilder conjunctionHTML = new StringBuilder();
+                        BDTherapyGroup owner = null;
                         foreach (IBDNode child in children)
                         {
                             switch (child.NodeType)
@@ -2919,7 +2945,18 @@ namespace BDEditor.Classes
                                         int level = pLevel + 2;
                                         if (child.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation20_Adult_WithTopicAndSubtopic)
                                             level = pLevel + 1;
-                                        therapyGroupHtml.AppendFormat("{0}", (BuildBDTherapyGroupHTML(pContext, therapyGroup, pFootnotes, pObjectsOnPage, level, null)));
+                                       StringBuilder tgHTML = (BuildBDTherapyGroupHTML(pContext, therapyGroup, pFootnotes, pObjectsOnPage, level, null));
+                                       therapyGroupHtml.AppendFormat("{0}{1}", conjunctionHTML, tgHTML);
+
+                                        if(conjunctionHTML.Length > 0)
+                                            BDHtmlPageGeneratorLogEntry.AppendToFile("BDPageChangeLog.txt", string.Format("Conjunction written for: {0} {1}",owner.Uuid,owner.Name));
+
+                                        conjunctionHTML.Clear();
+                                        if (therapyGroup.therapyGroupJoinType > 0)
+                                        {
+                                            conjunctionHTML.AppendFormat("<p>{0}</p>", retrieveConjunctionString((BDConstants.BDJoinType)therapyGroup.therapyGroupJoinType));
+                                            owner = therapyGroup;
+                                        }
                                     }
                                     break;
                             }

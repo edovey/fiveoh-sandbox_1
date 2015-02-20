@@ -948,6 +948,7 @@ namespace BDEditor.Classes
                     if (!string.IsNullOrEmpty(documentText))
                     {
                         noteHtml.Append(documentText);
+                        pObjectsOnLinkedNotePage.Add(mNote.Uuid);
                     }
                 }
             }
@@ -960,6 +961,7 @@ namespace BDEditor.Classes
                     if (!string.IsNullOrEmpty(documentText))
                     {
                         noteHtml.Append(documentText);
+                        pObjectsOnLinkedNotePage.Add(uNote.Uuid);
                     }
                 }
             }
@@ -1006,6 +1008,7 @@ namespace BDEditor.Classes
                     if (!string.IsNullOrEmpty(documentText))
                     {
                         noteHtml.Append(documentText);
+                        pObjectsOnPage.Add(mNote.Uuid);
                     }
                 }
             }
@@ -1018,6 +1021,7 @@ namespace BDEditor.Classes
                     if (!String.IsNullOrEmpty(documentText))
                     {
                         noteHtml.Append(documentText);
+                        pObjectsOnPage.Add(uNote.Uuid);
                     }
                 }
             }
@@ -1040,6 +1044,7 @@ namespace BDEditor.Classes
                 {
                     // temporarily reset the master so the note page has a proper title
                     currentPageMasterObject = node;
+                    pObjectsOnPage.Add(node.Uuid);
                     BDHtmlPage notePage = writeBDHtmlPage(pContext, node, pPageHtml, pPageType, new List<BDLinkedNote>(), pObjectsOnPage, pParentKeyPropertyName);
                     // Debug.WriteLine("Page title changed for linked note on page for:  {0}", parentPageMasterObject.Uuid);
                     // reset the master to the original (parent page) value
@@ -1050,6 +1055,7 @@ namespace BDEditor.Classes
                 {
                     // temporarily reset the master so the note page has a proper title
                     currentPageMasterObject = linkedNote;
+                    pObjectsOnPage.Add(linkedNote.Uuid);
                     BDHtmlPage notePage = writeBDHtmlPage(pContext, linkedNote, pPageHtml, pPageType, new List<BDLinkedNote>(), pObjectsOnPage, pParentKeyPropertyName);
                     // Debug.WriteLine("Page title changed for linked note on page for:  {0}", parentPageMasterObject.Uuid);
                     // reset the master to the original (parent page) value
@@ -5456,6 +5462,7 @@ namespace BDEditor.Classes
                 imgHeight = 250;
 
             BDAttachment attachmentNode = pNode as BDAttachment;
+            pObjectsOnPage.Add(pNode.Uuid);
 
             attHtml.AppendFormat(imgFileTag, attachmentNode.uuid.ToString().ToUpper(), attachmentNode.MimeFileExtension(), imgWidth, imgHeight);
             attHtml.Append(BuildBDLegendHtml(pContext, pNode, pObjectsOnPage));
@@ -5977,136 +5984,161 @@ namespace BDEditor.Classes
                             if (!pExistingPages.Contains(anchorGuid))
                             {
                                 // none of the existing html pages has this guid so the existing link is invalid as its currently written
-                                // look up the linkedNoteAssociation with the provided guid in the'parentKeyPropertyName'
-                                // if returned object is null, then its either not found or collection was > 1 entry
-                                BDLinkedNoteAssociation linkTargetAssn = BDLinkedNoteAssociation.RetrieveLinkedNoteAssociationForParentKeyPropertyName(pContext, anchorGuid.ToString());
-                                if (linkTargetAssn == null)
+                                // look up the linkedNoteAssociation(s) with the provided guid in the'parentKeyPropertyName'
+                                List<BDLinkedNoteAssociation> assnList = BDLinkedNoteAssociation.RetrieveLinkedNoteAssociationsForParentKeyPropertyName(pContext, anchorGuid.ToString());
+                                if (null == assnList || assnList.Count == 0)
                                 {
-                                    // there may be multiple matches in the database - retrieve the first one only
-                                    linkTargetAssn = BDLinkedNoteAssociation.RetrieveLinkedNoteAssociationForParentKeyPropertyName(pContext, anchorGuid.ToString(), true);
-                                    if (linkTargetAssn == null)
-                                    {
-                                        // if we have null here, then we'll have a link that leads to a blank page.  Need to flag when this happens
-                                        BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("Unresolved internal link - no match found:  {0}\tHtml page Uuid {1}\tAnchor Uuid {2}\tLNA LinkedNoteAssociation is NULL", DateTime.Now, pPage.Uuid, anchorGuid.ToString()));
-                                    }
-                                    else
-                                        BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("Unresolved internal link - multiple LinkedNoteAssociation matches found:  {0}\tHtml page Uuid {1}\tAnchor Uuid {2}\tLNA {3}", DateTime.Now, pPage.Uuid, anchorGuid.ToString(), linkTargetAssn.Uuid.ToString()));
+                                    // if we have null here, then we'll have a link that leads to a blank page.  Need to flag when this happens
+                                    BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("Unresolved internal link - no match found:  {0}\tHtml page Uuid {1}\tAnchor Uuid {2}\tLNA LinkedNoteAssociation is NULL", DateTime.Now, pPage.Uuid, anchorGuid.ToString()));
                                 }
-                                if (linkTargetAssn != null)
+                                else if (assnList.Count == 1)
                                 {
-                                    //Internal Link
-                                    if (linkTargetAssn.internalLinkNodeId.HasValue)
+                                    BDLinkedNoteAssociation linkTargetAssn = assnList[0];
+                                    processLinkedNoteAssociation(pContext, anchorGuid, pPage, linkTargetAssn, pExistingPages);
+
+                                    #region - Logic moved to separate function 'processLinkedNoteAssociation'
+                                    /*
+                                    if (linkTargetAssn != null)
                                     {
-                                        // this is an internal link - first check the pagesMap for the HTML page containing that object
-                                        Guid htmlPageId = Guid.Empty;
-
-                                        try
+                                        //Internal Link
+                                        if (linkTargetAssn.internalLinkNodeId.HasValue)
                                         {
-                                            htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForInternalLinkByOriginalIBDNodeId(pContext, linkTargetAssn.internalLinkNodeId.Value);
+                                            // this is an internal link - first check the pagesMap for the HTML page containing that object
+                                            Guid htmlPageId = Guid.Empty;
 
-                                            if (htmlPageId == Guid.Empty) // page was not found - check the BDNodeToHtmlPageIndex table also
+                                            try
                                             {
-                                                //ks: Expectation that internal links will always link to "data" pages rather than "linked note" pages
-                                                htmlPageId = BDNodeToHtmlPageIndex.RetrieveHtmlPageIdForIBDNodeId(pContext, linkTargetAssn.internalLinkNodeId.Value, BDConstants.BDHtmlPageType.Data);
+                                                htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForInternalLinkByOriginalIBDNodeId(pContext, linkTargetAssn.internalLinkNodeId.Value);
 
-                                                if (htmlPageId == Guid.Empty)  // link points to a node on a 'navigation' page
+                                                if (htmlPageId == Guid.Empty) // page was not found - check the BDNodeToHtmlPageIndex table also
                                                 {
-                                                    htmlPageId = BDNodeToHtmlPageIndex.RetrieveHtmlPageIdForIBDNodeId(pContext, linkTargetAssn.internalLinkNodeId.Value, BDConstants.BDHtmlPageType.Navigation);
-                                                }
-                                            }
+                                                    //ks: Expectation that internal links will always link to "data" pages rather than "linked note" pages
+                                                    htmlPageId = BDNodeToHtmlPageIndex.RetrieveHtmlPageIdForIBDNodeId(pContext, linkTargetAssn.internalLinkNodeId.Value, BDConstants.BDHtmlPageType.Data);
 
-                                            if (htmlPageId != Guid.Empty && null != BDHtmlPage.RetrieveWithId(pContext, htmlPageId))
-                                            {
-                                                // modify anchor tag to point to the html page generated for the targeted node
-                                                string newText = pPage.documentText.Replace(anchorGuid.ToString(), htmlPageId.ToString().ToUpper());
-                                                pPage.documentText = newText;
-                                                BDHtmlPage.Save(pContext, pPage);
-
-                                                if (htmlPageId == pPage.Uuid)
-                                                {
-                                                    BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkToSelfLog.txt", string.Format("{0}\tHtml page Uuid {1}\tObjId={2}\tTitle={3}", DateTime.Now, pPage.Uuid, pPage.displayParentId, pPage.pageTitle));
-                                                }
-                                            }
-                                            else // if this is an internal link there should be a page for it
-                                            {
-                                                Debug.WriteLine("Unable to map link in {0} showing {1}", pPage.Uuid, anchorGuid);
-                                                BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("{0}\tHtml page Uuid {1}\tAnchor Uuid {2}\tLNA {3}", DateTime.Now, pPage.Uuid, anchorGuid.ToString(), linkTargetAssn.Uuid.ToString()));
-                                            }
-                                        }
-                                        catch (BDException bde)
-                                        {
-                                            BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("Unresolved internal link {0}:  {1}\tHtml page Uuid {2}\tAnchor Uuid {3}\tLNA {4}", DateTime.Now, bde.Message, pPage.Uuid, anchorGuid.ToString(), linkTargetAssn.Uuid.ToString()));
-                                            Debug.WriteLine("*****CAUTION:  Internal link issue was not resolved.  Multiple matches found; Investigation recommended - see output log BDInternalLinkIssueLog.txt");
-                                        }
-                                    }
-                                    //Standard Link Note
-                                    else if (linkTargetAssn.linkedNoteId.HasValue)
-                                    {
-                                        if (linkTargetAssn.LinkedNoteType == BDConstants.LinkedNoteType.External)
-                                        {
-                                            BDLinkedNote targetNote = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, linkTargetAssn.linkedNoteId);
-                                            string documentText = BDUtilities.CleanseStringOfEmptyTag(targetNote.documentText, "p");
-                                            if (!String.IsNullOrEmpty(documentText))
-                                            {
-                                                //Remove all the paragraph markers and such.
-                                                string externalLinkText = targetNote.documentText.Replace("<p>", string.Empty);
-                                                externalLinkText = externalLinkText.Replace("</p>", string.Empty);
-                                                externalLinkText = externalLinkText.Trim();
-
-                                                if (externalLinkText.StartsWith("<a"))  //Compensate for accidentally misentered external link
-                                                {
-                                                    //strip the anchor tags
-                                                    int anchorEndPos = externalLinkText.IndexOf(">");
-                                                    externalLinkText = externalLinkText.Substring(anchorEndPos + 1);
-                                                    externalLinkText = externalLinkText.Replace("</a>", "");
-                                                }
-                                                if (!externalLinkText.ToLower().StartsWith("mailto:"))
-                                                {
-
-                                                    if (!externalLinkText.ToLower().StartsWith("http://"))
+                                                    if (htmlPageId == Guid.Empty)  // link points to a node on a 'navigation' page
                                                     {
-                                                        externalLinkText = string.Format("http://{0}", externalLinkText);
+                                                        htmlPageId = BDNodeToHtmlPageIndex.RetrieveHtmlPageIdForIBDNodeId(pContext, linkTargetAssn.internalLinkNodeId.Value, BDConstants.BDHtmlPageType.Navigation);
                                                     }
                                                 }
 
-                                                string newDocumentText = pPage.documentText.Replace(anchorGuid.ToString(), externalLinkText);
-                                                pPage.documentText = newDocumentText;
-                                                BDHtmlPage.Save(pContext, pPage);
+                                                if (htmlPageId != Guid.Empty && null != BDHtmlPage.RetrieveWithId(pContext, htmlPageId))
+                                                {
+                                                    // modify anchor tag to point to the html page generated for the targeted node
+                                                    string newText = pPage.documentText.Replace(anchorGuid.ToString(), htmlPageId.ToString().ToUpper());
+                                                    pPage.documentText = newText;
+                                                    BDHtmlPage.Save(pContext, pPage);
+
+                                                    if (htmlPageId == pPage.Uuid)
+                                                    {
+                                                        BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkToSelfLog.txt", string.Format("{0}\tHtml page Uuid {1}\tObjId={2}\tTitle={3}", DateTime.Now, pPage.Uuid, pPage.displayParentId, pPage.pageTitle));
+                                                    }
+                                                }
+                                                else // if this is an internal link there should be a page for it
+                                                {
+                                                    Debug.WriteLine("Unable to map link in {0} showing {1}", pPage.Uuid, anchorGuid);
+                                                    BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("{0}\tHtml page Uuid {1}\tAnchor Uuid {2}\tLNA {3}", DateTime.Now, pPage.Uuid, anchorGuid.ToString(), linkTargetAssn.Uuid.ToString()));
+                                                }
+                                            }
+                                            catch (BDException bde)
+                                            {
+                                                BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("Unresolved internal link {0}:  {1}\tHtml page Uuid {2}\tAnchor Uuid {3}\tLNA {4}", DateTime.Now, bde.Message, pPage.Uuid, anchorGuid.ToString(), linkTargetAssn.Uuid.ToString()));
+                                                Debug.WriteLine("*****CAUTION:  Internal link issue was not resolved.  Multiple matches found; Investigation recommended - see output log BDInternalLinkIssueLog.txt");
                                             }
                                         }
-                                        else
+                                        //Standard Link Note
+                                        else if (linkTargetAssn.linkedNoteId.HasValue)
                                         {
-                                            Guid htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pContext, linkTargetAssn.linkedNoteId.Value);
-
-                                            if (htmlPageId != Guid.Empty && pExistingPages.Contains(htmlPageId))
+                                            if (linkTargetAssn.LinkedNoteType == BDConstants.LinkedNoteType.External)
                                             {
-                                                // modify anchor tag to point to the html page generated for the targeted node
-                                                string newText = pPage.documentText.Replace(anchorGuid.ToString(), htmlPageId.ToString().ToUpper());
-                                                pPage.documentText = newText;
-                                                BDHtmlPage.Save(pContext, pPage);
-                                            }
-
-                                            else
-                                            {
-                                                // create an html page for the linked note - if its a note-in-note it may not have been created yet
                                                 BDLinkedNote targetNote = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, linkTargetAssn.linkedNoteId);
                                                 string documentText = BDUtilities.CleanseStringOfEmptyTag(targetNote.documentText, "p");
                                                 if (!String.IsNullOrEmpty(documentText))
                                                 {
-                                                    List<Guid> objectsOnPage = new List<Guid>();
-                                                    objectsOnPage.Add(linkTargetAssn.linkedNoteId.Value);
-                                                    BDHtmlPage newPage = generatePageForLinkedNotes(pContext, linkTargetAssn.linkedNoteId.Value, BDConstants.BDNodeType.BDLinkedNote, targetNote.documentText, BDConstants.BDHtmlPageType.Comments, objectsOnPage, linkTargetAssn.parentKeyPropertyName);
+                                                    //Remove all the paragraph markers and such.
+                                                    string externalLinkText = targetNote.documentText.Replace("<p>", string.Empty);
+                                                    externalLinkText = externalLinkText.Replace("</p>", string.Empty);
+                                                    externalLinkText = externalLinkText.Trim();
 
-                                                    string newText = pPage.documentText.Replace(anchorGuid.ToString(), newPage.Uuid.ToString().ToUpper());
+                                                    if (externalLinkText.StartsWith("<a"))  //Compensate for accidentally misentered external link
+                                                    {
+                                                        //strip the anchor tags
+                                                        int anchorEndPos = externalLinkText.IndexOf(">");
+                                                        externalLinkText = externalLinkText.Substring(anchorEndPos + 1);
+                                                        externalLinkText = externalLinkText.Replace("</a>", "");
+                                                    }
+                                                    if (!externalLinkText.ToLower().StartsWith("mailto:"))
+                                                    {
+
+                                                        if (!externalLinkText.ToLower().StartsWith("http://"))
+                                                        {
+                                                            externalLinkText = string.Format("http://{0}", externalLinkText);
+                                                        }
+                                                    }
+
+                                                    string newDocumentText = pPage.documentText.Replace(anchorGuid.ToString(), externalLinkText);
+                                                    pPage.documentText = newDocumentText;
+                                                    BDHtmlPage.Save(pContext, pPage);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Guid htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pContext, linkTargetAssn.linkedNoteId.Value);
+
+                                                if (htmlPageId != Guid.Empty && pExistingPages.Contains(htmlPageId))
+                                                {
+                                                    // modify anchor tag to point to the html page generated for the targeted node
+                                                    string newText = pPage.documentText.Replace(anchorGuid.ToString(), htmlPageId.ToString().ToUpper());
                                                     pPage.documentText = newText;
                                                     BDHtmlPage.Save(pContext, pPage);
+                                                }
 
-                                                    pExistingPages.Add(newPage.Uuid);
+                                                else
+                                                {
+                                                    // create an html page for the linked note - if its a note-in-note it may not have been created yet
+                                                    BDLinkedNote targetNote = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, linkTargetAssn.linkedNoteId);
+                                                    string documentText = BDUtilities.CleanseStringOfEmptyTag(targetNote.documentText, "p");
+                                                    if (!String.IsNullOrEmpty(documentText))
+                                                    {
+                                                        List<Guid> objectsOnPage = new List<Guid>();
+                                                        objectsOnPage.Add(linkTargetAssn.linkedNoteId.Value);
+                                                        BDHtmlPage newPage = generatePageForLinkedNotes(pContext, linkTargetAssn.linkedNoteId.Value, BDConstants.BDNodeType.BDLinkedNote, targetNote.documentText, BDConstants.BDHtmlPageType.Comments, objectsOnPage, linkTargetAssn.parentKeyPropertyName);
 
-                                                    postProcessPage(pContext, newPage, pExistingPages);
+                                                        string newText = pPage.documentText.Replace(anchorGuid.ToString(), newPage.Uuid.ToString().ToUpper());
+                                                        pPage.documentText = newText;
+                                                        BDHtmlPage.Save(pContext, pPage);
+
+                                                        pExistingPages.Add(newPage.Uuid);
+
+                                                        postProcessPage(pContext, newPage, pExistingPages);
+                                                    }
                                                 }
                                             }
                                         }
+                                    }*/
+                                    #endregion
+                                } 
+
+                                else if (assnList.Count > 1)
+                                {
+                                    // there are multiple matches in the database 
+                                    // This is an error: check for indications that one of the assns is legitimate.
+                                    foreach (BDLinkedNoteAssociation assn in assnList)
+                                    {
+                                        bool hasValidLink = false;
+                                        
+                                        if (assn.LinkedNoteType == BDConstants.LinkedNoteType.InternalLink && assn.internalLinkNodeId.HasValue)
+                                        {
+                                            IBDNode targetNode = BDFabrik.RetrieveNode(pContext, assn.internalLinkNodeId);
+                                            if(null != targetNode)
+                                                hasValidLink = true;
+                                        }
+                                        else
+                                            hasValidLink = validOriginForLinkedNoteAssociation(pContext, assn, anchorGuid);
+
+                                        if (hasValidLink == true)
+                                            processLinkedNoteAssociation(pContext, anchorGuid, pPage, assn, pExistingPages);
+                                        else
+                                            Debug.WriteLine("*****CAUTION:  Internal link issue was not resolved.  Multiple matches found; Investigation recommended - see output log BDInternalLinkIssueLog.txt");
                                     }
                                 }
                             }
@@ -6115,6 +6147,187 @@ namespace BDEditor.Classes
                     }
                     else
                         startPosition = pPage.documentText.Length;
+                }
+            }
+        }
+
+        private bool validOriginForLinkedNoteAssociation(Entities pContext, BDLinkedNoteAssociation linkTargetAssn, Guid anchorGuid)
+        {
+            /*
+             *  c817f6bd-979f-4547-ae89-5682ddc6dcbf is the anchorId 
+             *  c817f is the parentKeyPropertyName in 2 lna
+             *  linkedNoteId in these 2 lna is used to look up a linkedNote: if linked note text does not contain anchorId
+             *  lookup next layer using parentId, parentType
+             */
+            bool validLinkExists = false;
+            bool emptyNote = false;
+            if (linkTargetAssn.ParentType == BDConstants.BDNodeType.BDLinkedNote)
+            {
+                BDLinkedNote parentNote = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, linkTargetAssn.linkedNoteId.Value);
+                if(linkTargetAssn.internalLinkNodeId.HasValue)
+                {
+                    IBDNode targetNode = BDFabrik.RetrieveNode(pContext, linkTargetAssn.internalLinkNodeId);
+                    if (null != targetNode)
+                        validLinkExists = true;
+                }
+                else if (parentNote.documentText.Length <= EMPTY_PARAGRAPH)
+                {
+                    emptyNote = true;
+                    BDLinkedNoteAssociation.DeleteForNote(pContext, parentNote);
+                    pContext.SaveChanges();
+
+                    BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("{0} Empty LinkedNote Deleted:  {1}\tLinkedNoteAssociation Uuid {2}", DateTime.Now, linkTargetAssn.linkedNoteId, linkTargetAssn.Uuid));
+
+                    return validLinkExists;  // false
+                }
+                else if (parentNote.documentText.Contains(anchorGuid.ToString()))
+                {
+                    validLinkExists = true;
+                    return validLinkExists;
+                }
+                else
+                {
+                    // look up next layer of linked notes
+                    List<BDLinkedNoteAssociation> parentAssnList = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForLinkedNoteId(pContext, linkTargetAssn.parentId.Value);
+                    foreach (BDLinkedNoteAssociation assn in parentAssnList)
+                    {
+                        validLinkExists = validOriginForLinkedNoteAssociation(pContext, assn, anchorGuid);
+                        if (validLinkExists == true)
+                            return validLinkExists;
+                    }
+                }
+            }
+            if(emptyNote == true)
+                BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("{0} Empty LinkedNote:  {1}\tLinkedNoteAssociation Uuid {2}", DateTime.Now, linkTargetAssn.linkedNoteId, linkTargetAssn.Uuid));
+            else if(validLinkExists == false)
+                BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("{0} Invalid LinkedNoteAssociation - link not found in original text \tLink Uuid {1}\tLinkedNoteAssociation Uuid {2}", DateTime.Now, anchorGuid, linkTargetAssn.Uuid));
+
+            return validLinkExists;                                
+        }
+
+        private void processLinkedNoteAssociation(Entities pContext, Guid anchorGuid, BDHtmlPage pPage, BDLinkedNoteAssociation linkTargetAssn, List<Guid> pExistingPages)
+        {
+            if (linkTargetAssn != null)
+            {
+
+                #region Internal Link
+                if (linkTargetAssn.internalLinkNodeId.HasValue)
+                {
+                    // this is an internal link - first check the pagesMap for the HTML page containing that object
+                    Guid htmlPageId = Guid.Empty;
+
+                    try
+                    {
+                        htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForInternalLinkByOriginalIBDNodeId(pContext, linkTargetAssn.internalLinkNodeId.Value);
+
+                        if (htmlPageId == Guid.Empty) // page was not found - check the BDNodeToHtmlPageIndex table also
+                        {
+                            //ks: Expectation that internal links will always link to "data" pages rather than "linked note" pages
+                            htmlPageId = BDNodeToHtmlPageIndex.RetrieveHtmlPageIdForIBDNodeId(pContext, linkTargetAssn.internalLinkNodeId.Value, BDConstants.BDHtmlPageType.Data);
+
+                            if (htmlPageId == Guid.Empty)  // link points to a node on a 'navigation' page
+                            {
+                                htmlPageId = BDNodeToHtmlPageIndex.RetrieveHtmlPageIdForIBDNodeId(pContext, linkTargetAssn.internalLinkNodeId.Value, BDConstants.BDHtmlPageType.Navigation);
+                            }
+                        }
+
+                        if (htmlPageId != Guid.Empty && null != BDHtmlPage.RetrieveWithId(pContext, htmlPageId))
+                        {
+                            // modify anchor tag to point to the html page generated for the targeted node
+                            string newText = pPage.documentText.Replace(anchorGuid.ToString(), htmlPageId.ToString().ToUpper());
+                            pPage.documentText = newText;
+                            BDHtmlPage.Save(pContext, pPage);
+
+                            if (htmlPageId == pPage.Uuid)
+                            {
+                                BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkToSelfLog.txt", string.Format("{0}\tHtml page Uuid {1}\tObjId={2}\tTitle={3}", DateTime.Now, pPage.Uuid, pPage.displayParentId, pPage.pageTitle));
+                            }
+                        }
+                        else // if this is an internal link there should be a page for it
+                        {
+                            Debug.WriteLine("Unable to map link in {0} showing {1}", pPage.Uuid, anchorGuid);
+                            BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("{0}\tHtml page Uuid {1}\tAnchor Uuid {2}\tLNA {3}", DateTime.Now, pPage.Uuid, anchorGuid.ToString(), linkTargetAssn.Uuid.ToString()));
+                        }
+                    }
+                    catch (BDException bde)
+                    {
+                        BDHtmlPageGeneratorLogEntry.AppendToFile("BDInternalLinkIssueLog.txt", string.Format("Unresolved internal link {0}:  {1}\tHtml page Uuid {2}\tAnchor Uuid {3}\tLNA {4}", DateTime.Now, bde.Message, pPage.Uuid, anchorGuid.ToString(), linkTargetAssn.Uuid.ToString()));
+                        Debug.WriteLine("*****CAUTION:  Internal link issue was not resolved.  Multiple matches found; Investigation recommended - see output log BDInternalLinkIssueLog.txt");
+                    }
+                #endregion
+
+                }
+                //Standard Linked Note
+                else if (linkTargetAssn.linkedNoteId.HasValue)
+                {
+                    #region External Link
+                    if (linkTargetAssn.LinkedNoteType == BDConstants.LinkedNoteType.External)
+                    {
+                        BDLinkedNote targetNote = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, linkTargetAssn.linkedNoteId);
+                        string documentText = BDUtilities.CleanseStringOfEmptyTag(targetNote.documentText, "p");
+                        if (!String.IsNullOrEmpty(documentText))
+                        {
+                            //Remove all the paragraph markers and such.
+                            string externalLinkText = targetNote.documentText.Replace("<p>", string.Empty);
+                            externalLinkText = externalLinkText.Replace("</p>", string.Empty);
+                            externalLinkText = externalLinkText.Trim();
+
+                            if (externalLinkText.StartsWith("<a"))  //Compensate for accidentally misentered external link
+                            {
+                                //strip the anchor tags
+                                int anchorEndPos = externalLinkText.IndexOf(">");
+                                externalLinkText = externalLinkText.Substring(anchorEndPos + 1);
+                                externalLinkText = externalLinkText.Replace("</a>", "");
+                            }
+                            if (!externalLinkText.ToLower().StartsWith("mailto:"))
+                            {
+
+                                if (!externalLinkText.ToLower().StartsWith("http://"))
+                                {
+                                    externalLinkText = string.Format("http://{0}", externalLinkText);
+                                }
+                            }
+
+                            string newDocumentText = pPage.documentText.Replace(anchorGuid.ToString(), externalLinkText);
+                            pPage.documentText = newDocumentText;
+                            BDHtmlPage.Save(pContext, pPage);
+                        }
+                    }
+                    #endregion
+
+                    else
+                    {
+                        Guid htmlPageId = BDHtmlPageMap.RetrieveHtmlPageIdForOriginalIBDNodeId(pContext, linkTargetAssn.linkedNoteId.Value);
+
+                        if (htmlPageId != Guid.Empty && pExistingPages.Contains(htmlPageId))
+                        {
+                            // modify anchor tag to point to the html page generated for the targeted node
+                            string newText = pPage.documentText.Replace(anchorGuid.ToString(), htmlPageId.ToString().ToUpper());
+                            pPage.documentText = newText;
+                            BDHtmlPage.Save(pContext, pPage);
+                        }
+
+                        else
+                        {
+                            // create an html page for the linked note - if its a note-in-note it may not have been created yet
+                            BDLinkedNote targetNote = BDLinkedNote.RetrieveLinkedNoteWithId(pContext, linkTargetAssn.linkedNoteId);
+                            string documentText = BDUtilities.CleanseStringOfEmptyTag(targetNote.documentText, "p");
+                            if (!String.IsNullOrEmpty(documentText))
+                            {
+                                List<Guid> objectsOnPage = new List<Guid>();
+                                objectsOnPage.Add(linkTargetAssn.linkedNoteId.Value);
+                                BDHtmlPage newPage = generatePageForLinkedNotes(pContext, linkTargetAssn.linkedNoteId.Value, BDConstants.BDNodeType.BDLinkedNote, targetNote.documentText, BDConstants.BDHtmlPageType.Comments, objectsOnPage, linkTargetAssn.parentKeyPropertyName);
+
+                                string newText = pPage.documentText.Replace(anchorGuid.ToString(), newPage.Uuid.ToString().ToUpper());
+                                pPage.documentText = newText;
+                                BDHtmlPage.Save(pContext, pPage);
+
+                                pExistingPages.Add(newPage.Uuid);
+
+                                postProcessPage(pContext, newPage, pExistingPages);
+                            }
+                        }
+                    }
                 }
             }
         }

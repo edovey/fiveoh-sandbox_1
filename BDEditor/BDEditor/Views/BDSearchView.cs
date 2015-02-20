@@ -141,10 +141,11 @@ namespace BDEditor.Views
         void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // Ignore clicks that are not on button cells. 
-            if (e.RowIndex < 0 ||( e.ColumnIndex !=
-                dataGridView1.Columns["Edit"].Index  &&
-            e.ColumnIndex !=
-                dataGridView1.Columns["Location"].Index)) return;
+            if (e.RowIndex < 0 ||
+                ( e.ColumnIndex != dataGridView1.Columns["Edit"].Index  &&
+                  (null != dataGridView1.Columns["Location"] &&
+                   e.ColumnIndex != dataGridView1.Columns["Location"].Index))) 
+                return;
 
             // Retrieve the node ID.
             if (dataGridView1.Tag.ToString() == "LinkedNote")
@@ -153,13 +154,18 @@ namespace BDEditor.Views
 
                 BDLinkedNote note = BDLinkedNote.RetrieveLinkedNoteWithId(dataContext, linkedNoteId);
                 List<BDLinkedNoteAssociation> assns = BDLinkedNoteAssociation.GetLinkedNoteAssociationsForLinkedNoteId(dataContext, linkedNoteId);
-                BDLinkedNoteView noteView = new BDLinkedNoteView();
-                noteView.AssignDataContext(dataContext);
-                noteView.AssignParentInfo(assns[0].parentId, assns[0].ParentType);
-                noteView.AssignContextPropertyName(assns[0].parentKeyPropertyName);
-                noteView.AssignScopeId(assns[0].parentId);
-                noteView.ShowDialog(this);
-                executeSearch();
+                if (assns.Count <= 0)
+                    MessageBox.Show(this, "Please report error to Resonant Apps", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                else
+                {
+                    BDLinkedNoteView noteView = new BDLinkedNoteView();
+                    noteView.AssignDataContext(dataContext);
+                    noteView.AssignParentInfo(assns[0].parentId, assns[0].ParentType);
+                    noteView.AssignContextPropertyName(assns[0].parentKeyPropertyName);
+                    noteView.AssignScopeId(assns[0].parentId);
+                    noteView.ShowDialog(this);
+                    executeSearch();
+                }
             }
             else if(dataGridView1.Columns["Edit"].Index == e.ColumnIndex)
             {

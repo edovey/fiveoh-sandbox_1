@@ -271,6 +271,15 @@ namespace BDEditor.DataModel
             return RetrieveLinkedNoteAssociationForParentKeyPropertyName(pContext, pKeyNameValue, false);
         }
 
+        public static List<BDLinkedNoteAssociation> RetrieveLinkedNoteAssociationsForParentKeyPropertyName(Entities pContext, string pKeyNameValue)
+        {
+            IQueryable<BDLinkedNoteAssociation> query = (from lna in pContext.BDLinkedNoteAssociations
+                                                         where lna.parentKeyPropertyName == pKeyNameValue
+                                                         select lna);
+
+            return query.ToList<BDLinkedNoteAssociation>();
+        }
+
         /// <summary>
         /// Retrieve all linked note associations for the specified note, of the specified linked note type
         /// </summary>

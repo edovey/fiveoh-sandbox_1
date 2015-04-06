@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.IO;
 using System.Data.SqlClient;
 using System.Configuration;
@@ -9,6 +10,7 @@ using System.Configuration;
 using System.Reflection;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Net;
 using BDEditor.DataModel;
 using BDEditor.Classes;
 
@@ -545,9 +547,9 @@ namespace BDEditor.Classes
             if (!string.IsNullOrEmpty(noteText))
             {
                 resultText = pNoteText.Replace("<p>", string.Empty);
-                resultText = resultText.Replace("</p>", "<br>");
+                resultText = resultText.Replace("</p>", "<br />");
 
-                if (resultText.EndsWith("<br>")) resultText = resultText.Substring(0, resultText.Length - 4);
+                if (resultText.EndsWith("<br />")) resultText = resultText.Substring(0, resultText.Length - 4);
             }
             return resultText;
         }
@@ -564,15 +566,17 @@ namespace BDEditor.Classes
                         string documentText = CleanseStringOfEmptyTag(note.documentText, "p");
                         if (!string.IsNullOrEmpty(documentText))
                         {
-                            documentText = documentText.Replace("<p>", string.Empty);
-                            documentText = documentText.Replace("</p>", "<br>");
+                            string lineBreakTag = @"<br />";
 
-                            if (documentText.EndsWith("<br>"))
+                            documentText = documentText.Replace("<p>", string.Empty);
+                            documentText = documentText.Replace("</p>", lineBreakTag);
+
+                            if (documentText.EndsWith(lineBreakTag))
                             {
-                                documentText = documentText.Substring(0, documentText.Length - 4);
+                                documentText = documentText.Substring(0, documentText.Length - (lineBreakTag.Length));
                             }
 
-                            noteString.AppendFormat(" {0}", documentText);
+                            noteString.AppendFormat(@" {0}", documentText);
                         }
                     }
                 }
@@ -611,8 +615,8 @@ namespace BDEditor.Classes
 
             if (!String.IsNullOrEmpty(pTagRoot))
             {
-                string startTag = string.Format("<{0}>", pTagRoot);
-                string endTag = string.Format("</{0}>", pTagRoot);
+                string startTag = string.Format(@"<{0}>", pTagRoot);
+                string endTag = string.Format(@"</{0}>", pTagRoot);
                 result = CleanseStringOfEmptyTag(pString, startTag, endTag);
             }
             return result;
@@ -673,8 +677,39 @@ namespace BDEditor.Classes
         public static string ProcessTextForCarriageReturn(Entities pContext, string pTextToProcess)
         {
             if (pTextToProcess.Contains("\n"))
-                pTextToProcess.Replace("\n", "<br>");
+                pTextToProcess.Replace("\n", "<br />");
             return pTextToProcess;
+        }
+
+        public static string ProcessTextForSymbols(Entities pContext, string pTextToProcess)
+        {
+            string firstPass = WebUtility.HtmlEncode(pTextToProcess);
+
+
+            if (BDUtilities.HasSymbols(firstPass))
+            {
+                StringBuilder result = new StringBuilder();
+                char[] chars = firstPass.ToCharArray();
+
+                foreach (char c in firstPass)
+                {
+                    int value = Convert.ToInt32(c);
+                    if (value > 127)
+                        result.AppendFormat(@"&#{0};", value);
+                    else
+                        result.Append(c);
+                }
+
+                return result.ToString();
+            }
+            else
+                return firstPass;
+        }
+
+
+        public static bool HasSymbols(string text)
+        {
+            return text.IndexOfAny(BDConstants.Symbols) >= 0;
         }
 
         public static string ProcessTextForSubscriptAndSuperscriptMarkup(Entities pContext, string pTextToProcess)
@@ -3614,7 +3649,7 @@ namespace BDEditor.Classes
                     if (!string.IsNullOrEmpty(resolvedName))
                     {
                         if (!string.IsNullOrEmpty(pNodeContext.ToString()))
-                            newContext.AppendFormat("{0} : {1}", pNodeContext, resolvedName);
+                            newContext.AppendFormat(@"{0} : {1}", pNodeContext, resolvedName);
                         else
                             newContext.Append(resolvedName);
                     }

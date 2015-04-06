@@ -68,7 +68,7 @@ namespace BDEditor.Classes
 
             //subDescription = (pBDNode.NodeType == BDConstants.BDNodeType.BDTableRow) ? string.Format(" ({0})", BDUtilities.GetEnumDescription(pBDNode.LayoutVariant)) : string.Empty;
             subDescription = BDUtilities.GetEnumDescription(pBDNode.LayoutVariant);
-            pSiblingAdd.Text = string.Format("&Add {0} [{1}]", BDUtilities.GetEnumDescription(pBDNode.NodeType), subDescription);
+            pSiblingAdd.Text = string.Format(@"&Add {0} [{1}]", BDUtilities.GetEnumDescription(pBDNode.NodeType), subDescription);
 
             // *****
             pSiblingAdd.Visible = pShowSiblingAdd;
@@ -80,7 +80,7 @@ namespace BDEditor.Classes
             if (null == handler)
                 pDelete.Visible = false;
             else
-                pDelete.Text = string.Format("Delete {0}: {1}", nodeTypeName, pBDNode.Name);
+                pDelete.Text = string.Format(@"Delete {0}: {1}", nodeTypeName, pBDNode.Name);
 
             List<Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>> childTypeInfoList = BDFabrik.ChildTypeDefinitionListForNode(pBDNode);
             if (null == childTypeInfoList || childTypeInfoList.Count == 0)
@@ -95,7 +95,7 @@ namespace BDEditor.Classes
                     string childNodeTypeName = BDUtilities.GetEnumDescription(childTypeInfoList[0].Item1);
                     //subDescription = (childTypeInfoList[0].Item1 == BDConstants.BDNodeType.BDTableRow) ? string.Format(" ({0})", BDUtilities.GetEnumDescription(childTypeInfoList[0].Item2[0])) : string.Empty;
                     subDescription = BDUtilities.GetEnumDescription(childTypeInfoList[0].Item2[0]);
-                    pChildAdd.Text = string.Format("Add {0} [{1}]", childNodeTypeName, subDescription);
+                    pChildAdd.Text = string.Format(@"Add {0} [{1}]", childNodeTypeName, subDescription);
 
                     if (childTypeInfoList[0].Item2.Length == 1)
                     {
@@ -110,11 +110,11 @@ namespace BDEditor.Classes
                             ToolStripMenuItem item = new ToolStripMenuItem();
 
                             item.Image = global::BDEditor.Properties.Resources.add_16x16;
-                            item.Name = string.Format("dynamicAddChildLayoutVariant{0}", idx);
+                            item.Name = string.Format(@"dynamicAddChildLayoutVariant{0}", idx);
                             item.Size = new System.Drawing.Size(179, 22);
                             //subDescription = (childTypeInfoList[0].Item1 == BDConstants.BDNodeType.BDTableRow) ? string.Format(" ({0})", BDUtilities.GetEnumDescription(childTypeInfoList[0].Item2[idx])) : string.Empty;
                             subDescription = BDUtilities.GetEnumDescription(childTypeInfoList[0].Item2[idx]);
-                            item.Text = string.Format("&Add {0} [{1}]", BDUtilities.GetEnumDescription(childTypeInfoList[0].Item1), subDescription);
+                            item.Text = string.Format(@"&Add {0} [{1}]", BDUtilities.GetEnumDescription(childTypeInfoList[0].Item1), subDescription);
                             item.Tag = new BDNodeWrapper(pBDNode, childTypeInfoList[0].Item1, childTypeInfoList[0].Item2[idx], null);
                             item.Click += pEventHandlerAddChild;
                             pChildAdd.DropDownItems.Add(item);
@@ -131,12 +131,12 @@ namespace BDEditor.Classes
                         ToolStripMenuItem item = new ToolStripMenuItem();
 
                         item.Image = global::BDEditor.Properties.Resources.add_16x16;
-                        item.Name = string.Format("dynamicAddChild{0}", idx);
+                        item.Name = string.Format(@"dynamicAddChild{0}", idx);
                         item.Size = new System.Drawing.Size(179, 22);
                         //subDescription = (pBDNode.NodeType == BDConstants.BDNodeType.BDTableRow) ? string.Format(" ({0})", BDUtilities.GetEnumDescription(((BDTableRow)pBDNode).NodeType)) : string.Empty;
                         //subDescription = (childTypeInfoList[idx].Item1 == BDConstants.BDNodeType.BDTableRow) ? string.Format(" ({0})", BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item2[0])) : string.Empty;
                         subDescription = BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item2[0]);
-                        item.Text = string.Format("&Add {0} [{1}]", BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item1), subDescription);
+                        item.Text = string.Format(@"&Add {0} [{1}]", BDUtilities.GetEnumDescription(childTypeInfoList[idx].Item1), subDescription);
                         item.Tag = new BDNodeWrapper(pBDNode, childTypeInfoList[idx].Item1, childTypeInfoList[idx].Item2[0], null);
                         item.Click += pEventHandlerAddChild;
 

@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using BDEditor.DataModel;
 using BDEditor.Classes;
+
 using TXTextControl;
 
 namespace BDEditor.Views
@@ -544,6 +545,12 @@ namespace BDEditor.Views
         {
             string stringToClean = GetBodyContents(pText);
 
+            // clean out extra line returns
+            stringToClean = stringToClean.Replace("\r\n", "");
+
+            // remove style tags
+            stringToClean = CleanTagFromText(stringToClean, " style=", ">", false);
+
             // remove table tags
             stringToClean = CleanTagFromText(stringToClean, "<td", ">", true);
             stringToClean = stringToClean.Replace("</td>", "");
@@ -555,21 +562,32 @@ namespace BDEditor.Views
             stringToClean = stringToClean.Replace("</table>", "");
 
             // replace span tags for bold and underline and italics
-            stringToClean = resetSelectedTags(stringToClean);
+            //stringToClean = resetSelectedTags(stringToClean);
 
             // remove remaining span tags
-            stringToClean = CleanTagFromText(stringToClean, "<span", ">", true);
-            stringToClean = stringToClean.Replace("</span>", "");
-
-            // remove style tags
-            stringToClean = CleanTagFromText(stringToClean, " style=", ">", false);
-
-            // clean out extra line returns
-            stringToClean = stringToClean.Replace("\r\n", "");
+           // stringToClean = CleanTagFromText(stringToClean, "<span", ">", true);
+            //stringToClean = stringToClean.Replace("</span>", "");
 
             // remove paragraph tags from inside list tags
-            stringToClean = stringToClean.Replace("<li><p>", "<li>");
-            stringToClean = stringToClean.Replace("</p></li>", "</li>");
+            //stringToClean = stringToClean.Replace("<li><p>", "<li>");
+            //stringToClean = stringToClean.Replace("</p></li>", "</li>");
+
+            string listParagraphStart = @"<li><p>";
+            string listStart = @"<li>";
+            string paragraphEnd = @"</p>";
+
+            if(!string.IsNullOrEmpty(stringToClean))
+            {
+                // do subscripts first because of double braces
+                while (stringToClean.Contains(listParagraphStart))
+                {
+                    int tStartIndex = stringToClean.IndexOf(listParagraphStart);
+                    stringToClean = stringToClean.Remove(tStartIndex, listParagraphStart.Length);
+                    stringToClean = stringToClean.Insert(tStartIndex, listStart);
+                    int tEndIndex = stringToClean.IndexOf(paragraphEnd, tStartIndex);
+                    stringToClean = stringToClean.Remove(tEndIndex, paragraphEnd.Length);
+                }
+            }
 
             //Remove the "converted bullet" character sequence
             string bulletSequence = Char.ConvertFromUtf32(194) + Char.ConvertFromUtf32(183) + Char.ConvertFromUtf32(160);
@@ -663,27 +681,27 @@ namespace BDEditor.Views
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = "ß";
+            textControl.Selection.Text = BDConstants.HTML_ENTITY_CODE_BETA;
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = "≥";
+            textControl.Selection.Text = BDConstants.HTML_ENTITY_CODE_GREATEROREQUALS;
         }
 
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = "≤";
+            textControl.Selection.Text = BDConstants.HTML_ENTITY_CODE_LESSOREQUALS;
         }
 
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = "±";
+            textControl.Selection.Text = BDConstants.HTML_ENTITY_CODE_PLUSMINUS;
         }
 
         private void toolStripButton5_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = "°";
+            textControl.Selection.Text = BDConstants.HTML_ENTITY_CODE_DEGREE;
         }
 
         private void toolStripButton6_Click(object sender, EventArgs e)
@@ -708,12 +726,12 @@ namespace BDEditor.Views
 
         private void toolStripButton9_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = "µ";
+            textControl.Selection.Text = BDConstants.HTML_ENTITY_CODE_MU;
         }
 
         private void toolStripButton11_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = "®";
+            textControl.Selection.Text = BDConstants.HTML_ENTITY_CODE_REG_MARK;
         }
 
         private void toolStripButton10_Click(object sender, EventArgs e)
@@ -726,27 +744,27 @@ namespace BDEditor.Views
 
         private void toolStripButton12_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = "↑";
+            textControl.Selection.Text = BDConstants.HTML_ENTITY_CODE_ARROW_UP;
         }
 
         private void toolStripButton13_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = "↓";
+            textControl.Selection.Text = BDConstants.HTML_ENTITY_CODE_ARROW_DOWN;
         }
 
         private void toolStripButton14_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = "→";
+            textControl.Selection.Text = BDConstants.HTML_ENTITY_CODE_ARROW_RIGHT;
         }
 
         private void toolStripButton15_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = "←";
+            textControl.Selection.Text = BDConstants.HTML_ENTITY_CODE_ARROW_LEFT;
         }
 
         private void toolStripButton16_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = "√";
+            textControl.Selection.Text = "√"; // BDConstants.HTML_ENTITY_CODE_CHECKMARK
         }
 
         private void textControl_HypertextLinkClicked(object sender, TXTextControl.HypertextLinkEventArgs e)

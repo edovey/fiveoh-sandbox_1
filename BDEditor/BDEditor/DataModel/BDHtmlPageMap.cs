@@ -32,7 +32,7 @@ namespace BDEditor.DataModel
             return pageMap;
         }
 
-        public static BDHtmlPageMap RetrieveByOriginalObjectIdAndHtmlPageId(Entities pContext, Guid pHtmlPageId, Guid pOriginalIBDObjectId)
+        public static BDHtmlPageMap RetrieveByHtmlPageIdAndOriginalObjectId(Entities pContext, Guid pHtmlPageId, Guid pOriginalIBDObjectId)
         {
             if (pOriginalIBDObjectId != null && pOriginalIBDObjectId != Guid.Empty)
             {
@@ -51,13 +51,28 @@ namespace BDEditor.DataModel
 
         public static BDHtmlPageMap CreateOrRetrieveBDHtmlPageMap(Entities pContext, Guid pHtmlPageId, Guid pPageMapId, Guid pOriginalIBDObjectId)
         {
-            BDHtmlPageMap pageMap = RetrieveByOriginalObjectIdAndHtmlPageId(pContext, pHtmlPageId, pOriginalIBDObjectId);
+            BDHtmlPageMap pageMap = RetrieveByHtmlPageIdAndOriginalObjectId(pContext, pHtmlPageId, pOriginalIBDObjectId);
             if (pageMap == null)
             {
-                pageMap = CreateBDHtmlPageMap(pPageMapId, pHtmlPageId, pOriginalIBDObjectId);
-                pContext.AddObject(ENTITYNAME,pageMap);
-                
-                pContext.SaveChanges();
+                BDHtmlPageMap entry = null;
+
+                if (null != pPageMapId)
+                {
+                    IQueryable<BDHtmlPageMap> entries = (from pageMaps in pContext.BDHtmlPageMap
+                                                         where pageMaps.uuid == pPageMapId
+                                                         select pageMaps);
+                    if (entries.Count<BDHtmlPageMap>() > 0)
+                        entry = entries.AsQueryable().First<BDHtmlPageMap>();
+                }
+                if (entry != null)
+                {
+                    pPageMapId = Guid.NewGuid();
+                }
+                //  CreateBDHtmlPageMap(global::System.Guid htmlPageId, global::System.Guid uuid, global::System.Guid originalIbdObjectId)
+                pageMap = CreateBDHtmlPageMap(pHtmlPageId, pPageMapId, pOriginalIBDObjectId);
+                pContext.AddObject(ENTITYNAME, pageMap);
+
+                    pContext.SaveChanges();
             }
             return pageMap;
         }
@@ -95,13 +110,16 @@ namespace BDEditor.DataModel
                 foreach (BDHtmlPageMap mapEntry in indexEntries)
                 {
                     BDHtmlPage page = BDHtmlPage.RetrieveWithId(pContext, mapEntry.htmlPageId);
-                    if (page.HtmlPageType == BDConstants.BDHtmlPageType.Data
-                        && !pageList.Contains(mapEntry.htmlPageId))
-                        pageList.Add(mapEntry.htmlPageId);
-                    else if (page.HtmlPageType == BDConstants.BDHtmlPageType.Navigation 
-                        && page.displayParentId == pOriginalIBDObjectId
-                        && !pageList.Contains(mapEntry.htmlPageId))
-                        pageList.Add(mapEntry.htmlPageId);
+                    if (null != page)
+                    {
+                        if (page.HtmlPageType == BDConstants.BDHtmlPageType.Data
+                            && !pageList.Contains(mapEntry.htmlPageId))
+                            pageList.Add(mapEntry.htmlPageId);
+                        else if (page.HtmlPageType == BDConstants.BDHtmlPageType.Navigation
+                            && page.displayParentId == pOriginalIBDObjectId
+                            && !pageList.Contains(mapEntry.htmlPageId))
+                            pageList.Add(mapEntry.htmlPageId);
+                    }
                 }
             }
 

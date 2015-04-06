@@ -11,6 +11,25 @@ namespace BDEditor.Classes
     {
         public const string DB_FILENAME = "BDDataStore.sdf";
 
+        //public readonly char[] HTML_ENTITY_CODE_LESSTHAN = "&lt;".ToCharArray();
+        //public const string HTML_ENTITY_CODE_GREATERTHAN = @"gt;";
+        public const string HTML_ENTITY_CODE_ARROW_UP = @"&#8593;";
+        public const string HTML_ENTITY_CODE_ARROW_DOWN = @"&#8595;";
+        public const string HTML_ENTITY_CODE_ARROW_LEFT = @"&#8592;";
+        public const string HTML_ENTITY_CODE_ARROW_RIGHT = @"&#8594;";
+        public const string HTML_ENTITY_CODE_PLUSMINUS = @"&#177;";
+        public const string HTML_ENTITY_CODE_LESSOREQUALS = @"&#8804;";
+        public const string HTML_ENTITY_CODE_GREATEROREQUALS = @"&#8805;";
+        public const string HTML_ENTITY_CODE_DEGREE = @"&#778;";
+        public const string HTML_ENTITY_CODE_REG_MARK = @"&#174;";
+        public const string HTML_ENTITY_CODE_MU = @"&#181;";
+        public const string HTML_ENTITY_CODE_BETA = @"&#223;";
+        public const string HTML_ENTITY_CODE_CHECKMARK = @"&#10003;";
+        public const string HTML_ENTITY_CODE_AMPERSAND = @"&amp;";
+
+        public static readonly char[] Symbols = "&<>↓↑←→≥≤±°®µß√".ToCharArray();
+
+
         public enum BDNodeType
         {
             [Description("Undefined")]

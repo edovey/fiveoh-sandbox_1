@@ -1385,14 +1385,14 @@ namespace BDEditor.Classes
                     result = attachment;
                     break;
                 case BDConstants.BDNodeType.BDConfiguredEntry:
-                    string configuredEntryName = string.Format("Entry-{0}", siblingList.Count);
+                    string configuredEntryName = string.Format(@"Entry-{0}", siblingList.Count);
                     BDConfiguredEntry configuredEntry = BDConfiguredEntry.Create(pContext, pLayoutVariant, pParentNode.Uuid, pParentNode.NodeType, configuredEntryName);
                     configuredEntry.DisplayOrder = siblingList.Count;
                     BDConfiguredEntry.Save(pContext, configuredEntry);
                     result = configuredEntry;
                     break;
                 case BDConstants.BDNodeType.BDCombinedEntry:
-                    string combinedEntryName = string.Format("Entry-{0}", siblingList.Count);
+                    string combinedEntryName = string.Format(@"Entry-{0}", siblingList.Count);
                     BDCombinedEntry combinedEntry = BDCombinedEntry.Create(pContext, pLayoutVariant, pParentNode.Uuid, pParentNode.NodeType, combinedEntryName);
                     BDCombinedEntry.Save(pContext, combinedEntry);
                     result = combinedEntry;
@@ -1434,7 +1434,7 @@ namespace BDEditor.Classes
                     therapyGroup.displayOrder = siblingList.Count;
                     therapyGroup.SetParent(pParentNode);
                     therapyGroup.LayoutVariant = pLayoutVariant;
-                    therapyGroup.Name = String.Format("New Therapy Group {0}", therapyGroup.displayOrder + 1);
+                    therapyGroup.Name = String.Format(@"New Therapy Group {0}", therapyGroup.displayOrder + 1);
                     BDTherapyGroup.Save(pContext, therapyGroup);
                     result = therapyGroup;
                     break;
@@ -1444,7 +1444,7 @@ namespace BDEditor.Classes
                     therapy.displayOrder = siblingList.Count;
                     therapy.SetParent(pParentNode);
                     therapy.LayoutVariant = pLayoutVariant;
-                    therapy.Name = String.Format("New Therapy {0}", therapy.displayOrder + 1);
+                    therapy.Name = String.Format(@"New Therapy {0}", therapy.displayOrder + 1);
                     BDTherapy.Save(pContext, therapy);
                     result = therapy;
                     break;
@@ -1454,7 +1454,7 @@ namespace BDEditor.Classes
                     tableRow.displayOrder = siblingList.Count;
                     tableRow.SetParent(pParentNode);
                     tableRow.LayoutVariant = pLayoutVariant;
-                    tableRow.Name = String.Format("New {0}-{1}", BDUtilities.GetEnumDescription(pChildType), tableRow.displayOrder + 1);
+                    tableRow.Name = String.Format(@"New {0}-{1}", BDUtilities.GetEnumDescription(pChildType), tableRow.displayOrder + 1);
                     tableRow.rowType = -1;
                     BDTableRow.Save(pContext, tableRow);
                     result = tableRow;
@@ -1478,7 +1478,7 @@ namespace BDEditor.Classes
                     node.displayOrder = siblingList.Count;
                     node.SetParent(pParentNode);
                     node.LayoutVariant = pLayoutVariant;
-                    node.Name = String.Format("New {0}-{1}", BDUtilities.GetEnumDescription(pChildType), node.displayOrder + 1);
+                    node.Name = String.Format(@"New {0}-{1}", BDUtilities.GetEnumDescription(pChildType), node.displayOrder + 1);
                     BDNode.Save(pContext, node);
                     result = node;
                     break;

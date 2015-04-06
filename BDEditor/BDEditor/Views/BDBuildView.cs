@@ -127,13 +127,16 @@ namespace BDEditor.Views
 
             foreach (string textLine in tbUUIDsToGenerate.Lines)
             {
-                Guid nodeUuid = Guid.Parse(textLine);
-                if (null != nodeUuid)
+                if (!String.IsNullOrEmpty(textLine))
                 {
-                    BDNode selectedNode = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
-                    // if the Uuid is for something other than a BDNode, it won't be processed.
-                    if(null != selectedNode) 
-                        selectedNodeList.Add(selectedNode);
+                    Guid nodeUuid = Guid.Parse(textLine);
+                    if (null != nodeUuid)
+                    {
+                        BDNode selectedNode = BDNode.RetrieveNodeWithId(dataContext, nodeUuid);
+                        // if the Uuid is for something other than a BDNode, it won't be processed.
+                        if (null != selectedNode)
+                            selectedNodeList.Add(selectedNode);
+                    }
                 }
             }
         }

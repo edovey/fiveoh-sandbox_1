@@ -28,6 +28,7 @@ namespace BDEditor.Classes
         private const string navListDivPrefix = @"<div class=""scroll""><ul class=""rounded"">";
         private const string navListDivSuffix = @"</ul></div>";
         private const string navListAnchorTag = @"<li class=""arrow""><a class=""nav"" href=""{0}""><strong>{1}</strong></a></li>";
+        private const string horizontalRuleTag = @"<hr />";
         public const int EMPTY_PARAGRAPH = 8;  // <p> </p>
         private const string imgFileTag = @"<img src=""images/{0}{1}"" alt="""" width=""{2}"" height=""{3}"" />";
         private const string paintChipTag = @"<img class=""paintChip"" src=""{0}"" alt="""" />";
@@ -49,7 +50,7 @@ namespace BDEditor.Classes
         private const string TREATMENT_RECOMMENDATION_ADULT_UUID = @"757409a4-9446-4aa5-ac23-03fb7660759b";
         private const string PROPHYLAXIS_IMMUNIZATION_SECTION_UUID = @"63a99294-dc8a-4ae3-be63-24b8eb7c578d";
 
-        private const string TAG_SPAN_UNDERLINE_START = @"<span style=""text-decoration:underline ;"">";
+        private const string TAG_SPAN_UNDERLINE_START = @"<span class=""underline"">";
         private const string TAG_SPAN_UNDERLINE_END = @"</span>";
 
         private IBDNode currentChapter = null;
@@ -256,7 +257,6 @@ namespace BDEditor.Classes
                 // generate page for 'n' level, with list of navigation children that was returned
                 if (childDetailPages.Count > 0)
                 {
-                    Debug.WriteLine("Detail page with {0} children for: {1}: {2}", childDetailPages.Count, pNode.NodeType.ToString(), pNode.Name);
                     pNodeDetailPages.Add(generateNavigationPage(pContext, pNode, childDetailPages));
                 }
                 childNavPages.Clear();
@@ -268,6 +268,7 @@ namespace BDEditor.Classes
         private BDHtmlPage generateNavigationPage(Entities pContext, IBDNode pNode, List<BDHtmlPage> pChildPages)
         {
             currentPageMasterObject = pNode;
+            bool logForReview = false;
             StringBuilder pageHTML = new StringBuilder();
             List<Guid> objectsOnPage = new List<Guid>();
             List<BDLinkedNote> footnotesOnPage = new List<BDLinkedNote>();
@@ -285,12 +286,20 @@ namespace BDEditor.Classes
                         IBDNode childNode = BDFabrik.RetrieveNode(pContext, page.displayParentId.Value);
                         if (childNode != null)
                         {
-                            pageHTML.AppendFormat(navListAnchorTag, page.Uuid.ToString().ToUpper(), page.Name);
+                            string pageName = page.Name;
+                            if (BDUtilities.HasSymbols(page.Name))
+                            {
+                                pageName = BDUtilities.ProcessTextForSymbols(pContext, page.Name);
+                                logForReview = true;
+                            }
+                            pageHTML.AppendFormat(navListAnchorTag, page.Uuid.ToString().ToUpper(), pageName);
                         }
                     }
                 }
                 pageHTML.Append(@"</ul></div>");
                 pageHTML.Append(BuildBDLegendHtml(pContext, pNode, objectsOnPage));
+                if (pNode.NodeType == BDConstants.BDNodeType.BDChapter)
+                    Debug.WriteLine("{1} Chapter generation complete", pNode.Name);
             }
             else  // this is the main page of the app
             {
@@ -339,6 +348,10 @@ namespace BDEditor.Classes
             }
 
             BDHtmlPage navPage = writeBDHtmlPage(pContext, pNode as BDNode, pageHTML, BDConstants.BDHtmlPageType.Navigation, footnotesOnPage, objectsOnPage, null);
+
+            if(logForReview)
+                BDHtmlPageGeneratorLogEntry.AppendToFile("BDHTMLPageReview.txt", string.Format("{0}\tReview page for symbol in navigation link\t{1}", DateTime.Now, navPage.Uuid.ToString()));
+
             // create a page map entry for search - only for the topmost node on this page.
             if (pNode != null)
             {
@@ -1102,7 +1115,8 @@ namespace BDEditor.Classes
             if (!string.IsNullOrEmpty(reference))
             {
                 StringBuilder referenceText = new StringBuilder();
-                referenceText.AppendFormat(@"<h2>{0} References</h2>", pNode.Name);
+                string pageTitle = BDUtilities.ProcessTextForSymbols(pContext, pNode.Name);
+                referenceText.AppendFormat(@"<h1>References</h1><h2>{0}</h2>", pageTitle);
                 referenceText.Append(reference);
                 BDHtmlPage footnotePage = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.ParentType, referenceText.ToString(), BDConstants.BDHtmlPageType.Reference, objectsOnPage, pPropertyName);
 
@@ -1586,6 +1600,9 @@ namespace BDEditor.Classes
                                 noteTextForCell = BDUtilities.CleanNoteText(noteTextForCell);
                                 html.AppendFormat(@"<tr><td>{0}</td><td>{1}</td></tr>", child.Name, noteTextForCell);
                                 pObjectsOnPage.Add(child.Uuid);
+
+                                if (noteTextForCell.Length > 0)
+                                    BDHtmlPageGeneratorLogEntry.AppendToFile("BDHTMLPageReview.txt", string.Format("{0}\tReview containing page for trailing break fragment:\t{1}\t{2}\tBuild Category", DateTime.Now, child.Uuid.ToString(),child.Name));
                             }
                             html.Append(@"</table>");
                         }
@@ -2557,6 +2574,10 @@ namespace BDEditor.Classes
 
                                     string inlineText = buildTextForParentAndPropertyFromLinkedNotes(pContext, BDNode.PROPERTYNAME_NAME, child, BDConstants.LinkedNoteType.Inline, pObjectsOnPage);
                                     inlineText = BDUtilities.CleanNoteText(inlineText);
+
+                                    if (inlineText.Length > 0)
+                                        BDHtmlPageGeneratorLogEntry.AppendToFile("BDHTMLPageReview.txt", string.Format("{0}\tReview containing page for trailing break fragment:\t{1}\t{2}\tBuild Pathogen", DateTime.Now, child.Uuid.ToString(),child.Name));
+
                                     clinical.AppendFormat(@"<p>{0}{1} {2}</p>", child.Name, immediateText, inlineText);
                                     // overview contains the 'Diagnosis' column data
                                     diagnosis.Append(retrieveNoteTextForOverview(pContext, child.Uuid, pObjectsOnPage));
@@ -2861,7 +2882,7 @@ namespace BDEditor.Classes
                         }
 
                         // separate the pathogen groups' data with a line
-                        html.Append(@"<hr>");
+                        html.Append(horizontalRuleTag);
 
                         // describe the pathogen group
                         html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel + 1), pFootnotes, pObjectsOnPage));
@@ -2871,7 +2892,7 @@ namespace BDEditor.Classes
                             switch (child.NodeType)
                             {
                                 case BDConstants.BDNodeType.BDPathogen:
-                                    pathogenHtml.AppendFormat(@"{0}<br />", (buildNodeWithReferenceAndOverviewHTML(pContext, child, "div", pFootnotes, pObjectsOnPage)));
+                                    pathogenHtml.AppendFormat(@"{0}", (buildNodeWithReferenceAndOverviewHTML(pContext, child, "span", pFootnotes, pObjectsOnPage)));
                                     break;
                                 case BDConstants.BDNodeType.BDTherapyGroup:
                                     BDTherapyGroup therapyGroup = child as BDTherapyGroup;
@@ -2882,8 +2903,15 @@ namespace BDEditor.Classes
                                     break;
                             }
                         }
+                        int firstParagraphStartIndex = pathogenHtml.ToString().IndexOf(@"<p>");
                         if (!string.IsNullOrEmpty(pathogenHtml.ToString()))
-                            html.AppendFormat(@"<p>{0}</p>", pathogenHtml);
+                        {
+                            if (firstParagraphStartIndex > 0)
+                                html.AppendFormat(@"<p>{0}</p>", pathogenHtml);
+                            else
+                                html.Append(pathogenHtml);
+                        }
+
                         if (!string.IsNullOrEmpty(therapyGroupHtml.ToString()))
                             html.Append(therapyGroupHtml);
                         break;
@@ -2896,7 +2924,7 @@ namespace BDEditor.Classes
                         }
 
                         // separate the pathogen groups' data with a line
-                        html.Append(@"<hr>");
+                        html.Append(horizontalRuleTag);
 
                         // describe the pathogen group
                         html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel + 1), pFootnotes, pObjectsOnPage));
@@ -2906,7 +2934,7 @@ namespace BDEditor.Classes
                             switch (child.NodeType)
                             {
                                 case BDConstants.BDNodeType.BDPathogen:
-                                    pathogenHtml.AppendFormat(@"{0}", (buildNodeWithReferenceAndOverviewHTML(pContext, child, "div", pFootnotes, pObjectsOnPage)));
+                                    pathogenHtml.AppendFormat(@"{0}", (buildNodeWithReferenceAndOverviewHTML(pContext, child, "span", pFootnotes, pObjectsOnPage)));
                                     break;
                                 case BDConstants.BDNodeType.BDTherapyGroup:
                                     BDTherapyGroup therapyGroup = child as BDTherapyGroup;
@@ -2950,7 +2978,7 @@ namespace BDEditor.Classes
                         // separate the pathogen groups' data with a line
                         if (pNode.LayoutVariant == BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis)
                         {
-                            html.Append(@"<hr>");
+                            html.Append(horizontalRuleTag);
                             html.Append(buildNodeWithReferenceAndOverviewHTML(pContext, pNode, HtmlHeaderTagLevelString(pLevel - 1), pFootnotes, pObjectsOnPage));
                         }
                         else
@@ -3879,7 +3907,7 @@ namespace BDEditor.Classes
                         foreach (IBDNode child in children)
                         {
                             string pageHtml = BuildBDCategoryHtml(pContext, child, pFootnotes, pObjectsOnPage, pLevel + 1);
-                            html.Append(@"<hr>");
+                            html.Append(horizontalRuleTag);
                             html.Append(pageHtml);
                         }
 
@@ -4719,7 +4747,7 @@ namespace BDEditor.Classes
                                 // handle configured entry for Amantadine with No renal impairment
                                 //html.AppendFormat("</table><{0}>Renal Impairment</{0}><table>", HtmlHeaderTagLevelString(pLevel + 1));
                                 html.AppendFormat(@"<table class=""v{0}"">", (int)child.LayoutVariant);
-                                html.AppendFormat(@"<tr><th rowspan=2>{0}</th><th colspan=""2"">Dosage with capsules</th><th class=""inner"">Daily dosage with solution (10mg/mL)</th></tr>", metadataLayoutColumns[0]);
+                                html.AppendFormat(@"<tr><th rowspan=""2"">{0}</th><th colspan=""2"">Dosage with capsules</th><th class=""inner"">Daily dosage with solution (10mg/mL)</th></tr>", metadataLayoutColumns[0]);
                                 html.AppendFormat(@"<tr><th class=""inner"">{0}</th><th class=""inner"">{1}</th><th class=""inner"">{2}</th></tr>", c2Html, c3Html, c4Html);
                             }
                             isFirstChild = false;
@@ -5575,13 +5603,16 @@ namespace BDEditor.Classes
                 endTag = TAG_SPAN_UNDERLINE_END;
             }
 
-            if (pHtmlTag == "div")
+            if (pHtmlTag == "span")
             {
                 switch (pNode.LayoutVariant)
                 {
                     case BDConstants.LayoutVariantType.TreatmentRecommendation01_Gastroenteritis_CultureDirected:
                     case BDConstants.LayoutVariantType.TreatmentRecommendation02_NecrotizingFasciitis:
-                        startTag = @"<div class=""emphasis"">";
+                        {
+                            startTag = @"<p><span class=""body-emphasis"">";
+                            endTag = @"</span></p>";
+                        }
                         break;
                     default:
                         break;
@@ -5655,6 +5686,8 @@ namespace BDEditor.Classes
             if (BDUtilities.HasSymbols(cleanPropertyValue))
             {
                 cleanPropertyValue = BDUtilities.ProcessTextForSymbols(pContext, pPropertyValue.Trim());
+                BDHtmlPageGeneratorLogEntry.AppendToFile("BDHTMLPageReview.txt", string.Format("{0}\tReview page for symbol in navigation link\t{1}", DateTime.Now, pNode.Uuid.ToString()));
+                cleanPropertyValue = BDUtilities.ProcessTextForStyleMarkup(cleanPropertyValue);
                 ibdNodeWithSymbolUuidList.Add(pNode.Uuid);
             }
 
@@ -5664,7 +5697,13 @@ namespace BDEditor.Classes
             if (pHtmlTag.ToLower() == "td")  // cell contents are being built:  replace what's in pREsolvedValue
             {
                 if (!string.IsNullOrEmpty(inlineOverviewText))
-                    inlineOverviewText = string.Format(@"<br />{0}", BDUtilities.CleanNoteText(inlineOverviewText)); // strip the p tags. prefix with a br inorder to preserve intended newline start of "inline"
+                {
+                    string cleanString = BDUtilities.CleanNoteText(inlineOverviewText);
+                    if (cleanString.Length > 0 && !String.Equals(cleanString, inlineOverviewText))
+                        BDHtmlPageGeneratorLogEntry.AppendToFile("BDHTMLPageReview.txt", string.Format("{0}\tReview containing page for trailing break fragment:\t{1}\t{2}\tBuild Node Property", DateTime.Now, pNode.Uuid.ToString(),pNode.ToString())); 
+                    
+                    inlineOverviewText = string.Format(@"<br />{0}", cleanString); // strip the p tags. prefix with a br inorder to preserve intended newline start of "inline"
+                }
 
                 if (notePage != null)
                 {

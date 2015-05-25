@@ -542,14 +542,18 @@ namespace BDEditor.Classes
         /// <returns></returns>
         public static string CleanNoteText(string pNoteText)
         {
+            string lineBreakTag = @"<br />";
             string resultText = string.Empty;
             string noteText = CleanseStringOfEmptyTag(pNoteText, "p");
+            noteText = ProcessTextForStyleMarkup(noteText);
+
             if (!string.IsNullOrEmpty(noteText))
             {
                 resultText = pNoteText.Replace("<p>", string.Empty);
-                resultText = resultText.Replace("</p>", "<br />");
+                resultText = resultText.Replace("</p>", lineBreakTag);
 
-                if (resultText.EndsWith("<br />")) resultText = resultText.Substring(0, resultText.Length - 4);
+                if (resultText.EndsWith(lineBreakTag))
+                    resultText = resultText.Substring(0, resultText.Length - (lineBreakTag.Length));
             }
             return resultText;
         }
@@ -564,6 +568,7 @@ namespace BDEditor.Classes
                     if (null != note)
                     {
                         string documentText = CleanseStringOfEmptyTag(note.documentText, "p");
+                        documentText = ProcessTextForStyleMarkup(documentText);
                         if (!string.IsNullOrEmpty(documentText))
                         {
                             string lineBreakTag = @"<br />";
@@ -750,6 +755,53 @@ namespace BDEditor.Classes
             return pTextToProcess;
         }
 
+        /// <summary>
+        /// For bold, italics and underline:  replace TXTextControl generated span tags with css span tags
+        /// </summary>
+        /// <param name="pStringToClean"></param>
+        /// <returns></returns>        
+        public static string ProcessTextForStyleMarkup(string pTextToProcess)
+        {
+            string spanUnderlineTag = "<span style=\"text-decoration:underline ;\">";
+            string spanBoldTag = "<span style=\"font-weight:bold;\">";
+            string spanItalicsTag = "<span style=\"font-style:italic;\">";
+
+            //  Not all combinations of the tags are coded specifically:  no matter what order the buttons are pressed,
+            // the tags are always generated to the same span tag sequence.  For example pressing Underline then Bold
+            // generates the same span tag as pressing Bold then Underline.
+
+            string spanUnderlineBoldTag = "<span style=\"font-weight:bold;text-decoration:underline ;\">";
+            string spanUnderlineItalicsTag = "<span style=\"font-style:italic;text-decoration:underline ;\">";
+            string spanBoldItalicsTag = "<span style=\"font-weight:bold;font-style:italic;\">";
+            string spanUnderlineBoldItalicsTag = "<span style=\"font-weight:bold;font-style:italic;text-decoration:underline ;\">";
+
+            string cssSpanUnderlineTag = "<span class=\"underline\">";
+            string cssSpanBoldTag = "<span class=\"body-bold\">";
+            string cssSpanItalicsTag = "<span class=\"body-italic\">";
+            string cssSpanUnderlineBoldTag = "<span class=\"body-underline-bold\">";
+            string cssSpanUnderlineItalicsTag = "<span class=\"body-underline-italic\">";
+            string cssSpanBoldItalicsTag = "<span class=\"body-bold-italic\">";
+            string cssSpanUnderlineBoldItalicsTag = "<span class=\"body-underline-bold-italic\">";
+
+
+            pTextToProcess = pTextToProcess.Replace(spanUnderlineTag, cssSpanUnderlineTag);
+
+            pTextToProcess = pTextToProcess.Replace(spanBoldTag, cssSpanBoldTag);
+
+            pTextToProcess = pTextToProcess.Replace(spanItalicsTag, cssSpanItalicsTag);
+
+            pTextToProcess = pTextToProcess.Replace(spanUnderlineBoldTag, cssSpanUnderlineBoldTag);
+
+            pTextToProcess = pTextToProcess.Replace(spanUnderlineItalicsTag, cssSpanUnderlineItalicsTag);
+
+            pTextToProcess = pTextToProcess.Replace(spanBoldItalicsTag, cssSpanBoldItalicsTag);
+
+            pTextToProcess = pTextToProcess.Replace(spanUnderlineBoldItalicsTag, cssSpanUnderlineBoldItalicsTag);
+
+
+            return pTextToProcess;
+        }
+
         public static string ProcessTextToPlainText(Entities pContext, string pTextToProcess)
         {
             string superscriptStart = @"{";
@@ -777,13 +829,16 @@ namespace BDEditor.Classes
                 pTextToProcess = pTextToProcess.Replace(boldStart, "");
                 pTextToProcess = pTextToProcess.Replace(boldEnd, "");
                 pTextToProcess = pTextToProcess.Replace("<br>", " ");
+                pTextToProcess = pTextToProcess.Replace("<br />", " ");
                 pTextToProcess = pTextToProcess.Replace("<hr>", "");
+                pTextToProcess = pTextToProcess.Replace("<hr />", "");
                 pTextToProcess = pTextToProcess.Replace("[", "");
                 pTextToProcess = pTextToProcess.Replace("]", "");
             }
             return pTextToProcess;
         }
 
+        [Obsolete]
         public static void ExecuteBatchMove(Entities pContext)
         {
             // These operations are CUSTOM, ** BY REQUEST ONLY **

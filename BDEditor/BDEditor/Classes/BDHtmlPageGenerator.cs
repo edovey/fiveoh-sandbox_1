@@ -5686,7 +5686,7 @@ namespace BDEditor.Classes
             if (BDUtilities.HasSymbols(cleanPropertyValue))
             {
                 cleanPropertyValue = BDUtilities.ProcessTextForSymbols(pContext, pPropertyValue.Trim());
-                BDHtmlPageGeneratorLogEntry.AppendToFile("BDHTMLPageReview.txt", string.Format("{0}\tReview page for symbol in navigation link\t{1}", DateTime.Now, pNode.Uuid.ToString()));
+                BDHtmlPageGeneratorLogEntry.AppendToFile("BDHTMLPageReview.txt", string.Format("{0}\tReview page for symbol in text\t{1}", DateTime.Now, pNode.Uuid.ToString()));
                 cleanPropertyValue = BDUtilities.ProcessTextForStyleMarkup(cleanPropertyValue);
                 ibdNodeWithSymbolUuidList.Add(pNode.Uuid);
             }

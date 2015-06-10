@@ -697,27 +697,27 @@ namespace BDEditor.Views
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = BDConstants.HTML_ENTITY_CODE_BETA;
+            textControl.Selection.Text = @"ß"; // BDConstants.HTML_ENTITY_CODE_BETA;
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = BDConstants.HTML_ENTITY_CODE_GREATEROREQUALS;
+            textControl.Selection.Text = @"≥"; //BDConstants.HTML_ENTITY_CODE_GREATEROREQUALS;
         }
 
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = BDConstants.HTML_ENTITY_CODE_LESSOREQUALS;
+            textControl.Selection.Text = @"≤"; // BDConstants.HTML_ENTITY_CODE_LESSOREQUALS;
         }
 
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = BDConstants.HTML_ENTITY_CODE_PLUSMINUS;
+            textControl.Selection.Text = @"±"; // BDConstants.HTML_ENTITY_CODE_PLUSMINUS;
         }
 
         private void toolStripButton5_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = BDConstants.HTML_ENTITY_CODE_DEGREE;
+            textControl.Selection.Text = @"°"; // BDConstants.HTML_ENTITY_CODE_DEGREE;
         }
 
         private void toolStripButton6_Click(object sender, EventArgs e)
@@ -742,12 +742,12 @@ namespace BDEditor.Views
 
         private void toolStripButton9_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = BDConstants.HTML_ENTITY_CODE_MU;
+            textControl.Selection.Text = @"µ"; //  BDConstants.HTML_ENTITY_CODE_MU;
         }
 
         private void toolStripButton11_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = BDConstants.HTML_ENTITY_CODE_REG_MARK;
+            textControl.Selection.Text = @"®"; // BDConstants.HTML_ENTITY_CODE_REG_MARK;
         }
 
         private void toolStripButton10_Click(object sender, EventArgs e)
@@ -760,22 +760,22 @@ namespace BDEditor.Views
 
         private void toolStripButton12_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = BDConstants.HTML_ENTITY_CODE_ARROW_UP;
+            textControl.Selection.Text = @"↑"; // BDConstants.HTML_ENTITY_CODE_ARROW_UP;
         }
 
         private void toolStripButton13_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = BDConstants.HTML_ENTITY_CODE_ARROW_DOWN;
+            textControl.Selection.Text = @"↓"; // BDConstants.HTML_ENTITY_CODE_ARROW_DOWN;
         }
 
         private void toolStripButton14_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = BDConstants.HTML_ENTITY_CODE_ARROW_RIGHT;
+            textControl.Selection.Text = @"→"; // BDConstants.HTML_ENTITY_CODE_ARROW_RIGHT;
         }
 
         private void toolStripButton15_Click(object sender, EventArgs e)
         {
-            textControl.Selection.Text = BDConstants.HTML_ENTITY_CODE_ARROW_LEFT;
+            textControl.Selection.Text = @"←"; // BDConstants.HTML_ENTITY_CODE_ARROW_LEFT
         }
 
         private void toolStripButton16_Click(object sender, EventArgs e)

@@ -574,6 +574,7 @@ namespace BDEditor.Classes
                             string lineBreakTag = @"<br />";
 
                             documentText = documentText.Replace("<p>", string.Empty);
+                            documentText = documentText.Replace("<p >", string.Empty);
                             documentText = documentText.Replace("</p>", lineBreakTag);
 
                             if (documentText.EndsWith(lineBreakTag))
@@ -687,18 +688,19 @@ namespace BDEditor.Classes
         }
 
         public static string ProcessTextForSymbols(Entities pContext, string pTextToProcess)
-        {
-            string firstPass = WebUtility.HtmlEncode(pTextToProcess);
+        {            
 
-
-            if (BDUtilities.HasSymbols(firstPass))
+            if (BDUtilities.HasSymbols(pTextToProcess))
             {
                 StringBuilder result = new StringBuilder();
-                char[] chars = firstPass.ToCharArray();
+                char[] chars = pTextToProcess.ToCharArray();
 
-                foreach (char c in firstPass)
+                foreach (char c in pTextToProcess)
                 {
                     int value = Convert.ToInt32(c);
+                    if (value == 8730)  // square root symbol
+                        value = 10003;  // convert to checkmark
+
                     if (value > 127)
                         result.AppendFormat(@"&#{0};", value);
                     else
@@ -708,7 +710,9 @@ namespace BDEditor.Classes
                 return result.ToString();
             }
             else
-                return firstPass;
+            {
+                return pTextToProcess;
+            }
         }
 
 

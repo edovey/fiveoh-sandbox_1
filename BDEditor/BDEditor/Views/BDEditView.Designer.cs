@@ -34,7 +34,7 @@
             this.btnDebug = new System.Windows.Forms.Button();
             this.btnShowLayoutEditor = new System.Windows.Forms.Button();
             this.btnRestore = new System.Windows.Forms.Button();
-            this.btnMove = new System.Windows.Forms.Button();
+            this.btnAudit = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.btnPublish = new System.Windows.Forms.Button();
             this.lbLastSyncDateTime = new System.Windows.Forms.Label();
@@ -69,7 +69,7 @@
             this.headerPanel.Controls.Add(this.btnDebug);
             this.headerPanel.Controls.Add(this.btnShowLayoutEditor);
             this.headerPanel.Controls.Add(this.btnRestore);
-            this.headerPanel.Controls.Add(this.btnMove);
+            this.headerPanel.Controls.Add(this.btnAudit);
             this.headerPanel.Controls.Add(this.btnSearch);
             this.headerPanel.Controls.Add(this.btnPublish);
             this.headerPanel.Controls.Add(this.lbLastSyncDateTime);
@@ -112,15 +112,15 @@
             this.btnRestore.UseVisualStyleBackColor = true;
             this.btnRestore.Click += new System.EventHandler(this.btnRestore_Click);
             // 
-            // btnMove
+            // btnAudit
             // 
-            this.btnMove.Location = new System.Drawing.Point(903, 10);
-            this.btnMove.Name = "btnMove";
-            this.btnMove.Size = new System.Drawing.Size(75, 23);
-            this.btnMove.TabIndex = 8;
-            this.btnMove.Text = "Move";
-            this.btnMove.UseVisualStyleBackColor = true;
-            this.btnMove.Click += new System.EventHandler(this.btnMove_Click);
+            this.btnAudit.Location = new System.Drawing.Point(903, 10);
+            this.btnAudit.Name = "btnAudit";
+            this.btnAudit.Size = new System.Drawing.Size(75, 23);
+            this.btnAudit.TabIndex = 8;
+            this.btnAudit.Text = "Audit";
+            this.btnAudit.UseVisualStyleBackColor = true;
+            this.btnAudit.Click += new System.EventHandler(this.btnAudit_Click);
             // 
             // btnSearch
             // 
@@ -355,7 +355,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.Button btnMove;
+        private System.Windows.Forms.Button btnAudit;
         private System.Windows.Forms.Button btnRestore;
         private System.Windows.Forms.Button btnShowLayoutEditor;
         private System.Windows.Forms.StatusStrip statusStrip1;

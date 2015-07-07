@@ -146,6 +146,23 @@ namespace BDEditor.DataModel
             }
             return returnValue;
         }
+
+        public static List<BDHtmlPageMap> RetrieveHtmlPageIdsForOriginalIBDNodeId(Entities pContext, Guid pOriginalIBDObjectId)
+        {
+            List<BDHtmlPageMap> resultList = new List<BDHtmlPageMap>();
+            if (pOriginalIBDObjectId != null && pOriginalIBDObjectId != Guid.Empty)
+            {
+                IQueryable<BDHtmlPageMap> entries;
+
+                entries = (from entry in pContext.BDHtmlPageMap
+                           where (entry.originalIbdObjectId == pOriginalIBDObjectId)
+                           select entry);
+
+                resultList = entries.ToList<BDHtmlPageMap>();
+            }
+            return resultList;
+        }
+
         public static Guid RetrieveHtmlPageIdForOriginalIBDNodeId(Entities pContext, Guid pOriginalIBDObjectId, BDConstants.BDHtmlPageType pPageType )
         {
             Guid returnValue = Guid.Empty;
@@ -165,8 +182,7 @@ namespace BDEditor.DataModel
             }
             return returnValue;
         }
-         
-        
+                 
         public static Guid RetrieveOriginaIBDNodeIdForHtmlPageId(Entities pContext, Guid pHtmlPageId)
         {
             Guid returnValue = Guid.Empty;

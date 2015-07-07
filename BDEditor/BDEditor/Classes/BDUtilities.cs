@@ -97,7 +97,14 @@ namespace BDEditor.Classes
         {
             if (null != pNode && pNode.ParentId != Guid.Empty)
             {
-                IBDNode parentNode = BDFabrik.RetrieveNode(pContext, pNode.ParentType, pNode.ParentId);
+                IBDNode parentNode = null;
+                if (null != pNode.ParentType)
+                {
+                    parentNode = BDFabrik.RetrieveNode(pContext, pNode.ParentType, pNode.ParentId);
+                }
+                else
+                    parentNode = BDFabrik.RetrieveNode(pContext, pNode.ParentId);
+
                 if (null != parentNode)
                 {
                     string cleanedName = ProcessTextToPlainText(pContext, parentNode.Name);
@@ -688,30 +695,30 @@ namespace BDEditor.Classes
         }
 
         public static string ProcessTextForSymbols(Entities pContext, string pTextToProcess)
-        {            
+        {
+            string firstPass = WebUtility.HtmlEncode(pTextToProcess);
 
-            if (BDUtilities.HasSymbols(pTextToProcess))
             {
-                StringBuilder result = new StringBuilder();
-                char[] chars = pTextToProcess.ToCharArray();
-
-                foreach (char c in pTextToProcess)
+                if (BDUtilities.HasSymbols(firstPass))
                 {
-                    int value = Convert.ToInt32(c);
-                    if (value == 8730)  // square root symbol
-                        value = 10003;  // convert to checkmark
+                    StringBuilder result = new StringBuilder();
+                    char[] chars = firstPass.ToCharArray();
 
-                    if (value > 127)
-                        result.AppendFormat(@"&#{0};", value);
-                    else
-                        result.Append(c);
+                    foreach (char c in firstPass)
+                    {
+                        int value = Convert.ToInt32(c);
+                        if (value == 8730)  // square root symbol
+                            value = 10003;  // convert to checkmark
+
+                        if (value > 127)
+                            result.AppendFormat(@"&#{0};", value);
+                        else
+                            result.Append(c);
+                    }
+                    return result.ToString();
                 }
-
-                return result.ToString();
-            }
-            else
-            {
-                return pTextToProcess;
+                else
+                    return firstPass;
             }
         }
 

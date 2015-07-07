@@ -21,11 +21,7 @@ namespace BDEditor.Views
 
         List<ToolStripMenuItem> addNodeToolStripMenuItemList = new List<ToolStripMenuItem>();
 
-        // reset the following on BDEditView_Load when adding seed data
-        private bool isSeedDataLoadAvailable = false;
-        private string seedDataFileName = string.Empty;
-        // enable & show move button when data move is required
-        private bool moveButtonVisible = false;
+        private bool auditButtonVisible = true;
 
         public BDEditView()
         {
@@ -128,6 +124,23 @@ namespace BDEditor.Views
                     TreeNode[] nodeList = new TreeNode[node.Nodes.Count];
                     node.Nodes.CopyTo(nodeList, 0);
                     chapterTree.Nodes.AddRange(nodeList);
+                }
+            }
+
+            if (pNode.NodeType == BDConstants.BDNodeType.BDChapter)
+            {
+                IBDControl control_tr01 = BDFabrik.CreateControlForNode(dataContext, pNode);
+                if (null != control_tr01)
+                {
+                    ((System.Windows.Forms.UserControl)control_tr01).Validated += new EventHandler(BDEditView_Validated);
+                    control_tr01.ShowChildren = false;
+                    control_tr01.AssignScopeId((null != pNode) ? pNode.Uuid : Guid.Empty);
+                    control_tr01.AssignParentInfo(pNode.ParentId, pNode.ParentType);
+                    ((System.Windows.Forms.UserControl)control_tr01).Dock = DockStyle.Fill;
+                    control_tr01.NameChanged += new EventHandler<NodeEventArgs>(nodeControl_NameChanged);
+                    control_tr01.RequestItemAdd += new EventHandler<NodeEventArgs>(siblingNodeCreateRequest);
+                    splitContainer1.Panel2.Controls.Add((System.Windows.Forms.UserControl)control_tr01);
+                    control_tr01.RefreshLayout(false);
                 }
             }
 
@@ -1075,6 +1088,7 @@ namespace BDEditor.Views
             if (chapterDropDown.Items.Count >= 1)
                 chapterDropDown.SelectedIndex = 0;
 
+            // splitContainer1.Panel2
         }
 
         private void UpdateSyncLabel()
@@ -1115,13 +1129,13 @@ namespace BDEditor.Views
 #if DEBUG
             this.Text = this.Text + @" < DEVELOPMENT >";
             this.btnPublish.Visible = true;
-            this.btnMove.Visible = !isSeedDataLoadAvailable && moveButtonVisible;
-            this.btnMove.Enabled = !isSeedDataLoadAvailable && moveButtonVisible;
+            this.btnAudit.Visible = auditButtonVisible;
+            this.btnAudit.Enabled = auditButtonVisible;
 #else
             this.btnPublish.Visible = false;
-            
-            this.btnMove.Visible = moveButtonVisible;
-            this.btnMove.Enabled = moveButtonVisible;
+
+            this.btnAudit.Visible = false;
+            this.btnAudit.Enabled = false;
 
             this.btnDebug.Visible = false;
             this.btnDebug.Enabled = false;
@@ -1379,11 +1393,9 @@ namespace BDEditor.Views
 
         }
 
-        private void btnMove_Click(object sender, EventArgs e)
+        private void btnAudit_Click(object sender, EventArgs e)
         {
-            BDUtilities.ExecuteBatchMove(dataContext);
-            // BDUtilities.RepairSearchEntryAssociationsForMissingData(dataContext);
-            // BDUtilities.InjectNodeIntoHierarhy(dataContext);
+            BDAuditReport.ReadAuditLog(dataContext);
         }
 
         private void btnDebug_Click(object sender, EventArgs e)

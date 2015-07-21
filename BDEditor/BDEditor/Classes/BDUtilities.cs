@@ -629,8 +629,9 @@ namespace BDEditor.Classes
             if (!String.IsNullOrEmpty(pTagRoot))
             {
                 string startTag = string.Format(@"<{0}>", pTagRoot);
+                string startTag2 = string.Format(@"<{0} >", pTagRoot);
                 string endTag = string.Format(@"</{0}>", pTagRoot);
-                result = CleanseStringOfEmptyTag(pString, startTag, endTag);
+                result = CleanseStringOfEmptyTag(pString, startTag, startTag2, endTag);
             }
             return result;
         }
@@ -643,16 +644,18 @@ namespace BDEditor.Classes
         /// <param name="pStartTag"></param>
         /// <param name="pEndTag"></param>
         /// <returns>Returns original string if not "empty" or string.Empty if cleansed</returns>
-        public static string CleanseStringOfEmptyTag(string pString, string pStartTag, string pEndTag)
+        public static string CleanseStringOfEmptyTag(string pString, string pStartTag, string pStartTag2, string pEndTag)
         {
             string resultValue = pString;
             if (!String.IsNullOrEmpty(pStartTag) && !String.IsNullOrEmpty(pEndTag))
             {
                 string startTag = pStartTag.ToLower();
+                string startTag2 = pStartTag2.ToLower();
                 string endTag = pEndTag.ToLower();
 
                 string testValue = pString.ToLower();
                 testValue = testValue.Replace(startTag, string.Empty);
+                testValue = testValue.Replace(startTag2, string.Empty);
                 testValue = testValue.Replace(endTag, string.Empty);
 
                 if (string.IsNullOrEmpty(testValue))

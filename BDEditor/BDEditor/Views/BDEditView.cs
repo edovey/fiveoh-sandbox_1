@@ -870,6 +870,14 @@ namespace BDEditor.Views
                                     showChildControls = false;
                                 }
                                 break;
+                            case BDConstants.LayoutVariantType.Organisms_EmpiricTherapy:
+                                childTreeNode = BDOrganismsTree.BuildBranch(dataContext, node);
+                                if (!pInterrogateOnly)
+                                {
+                                    graftTreeNode(selectedNode, childTreeNode);
+                                    showChildControls = false;
+                                }
+                                break;
                             default:
                                 if (!pInterrogateOnly)
                                 {
@@ -1134,8 +1142,8 @@ namespace BDEditor.Views
 #else
             this.btnPublish.Visible = false;
 
-            this.btnAudit.Visible = false;
-            this.btnAudit.Enabled = false;
+            this.btnAudit.Visible = auditButtonVisible;
+            this.btnAudit.Enabled = auditButtonVisible;
 
             this.btnDebug.Visible = false;
             this.btnDebug.Enabled = false;
@@ -1395,7 +1403,8 @@ namespace BDEditor.Views
 
         private void btnAudit_Click(object sender, EventArgs e)
         {
-            BDAuditReport.ReadAuditLog(dataContext);
+            //BDAuditReport.ReadAuditLog(dataContext);
+            BDUtilities.ExecuteBatchMove(dataContext);
         }
 
         private void btnDebug_Click(object sender, EventArgs e)

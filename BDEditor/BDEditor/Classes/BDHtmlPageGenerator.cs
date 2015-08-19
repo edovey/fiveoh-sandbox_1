@@ -4029,51 +4029,52 @@ namespace BDEditor.Classes
                         break;
                     case BDConstants.LayoutVariantType.Organisms_EmpiricTherapy:
                         {
-                            // preserve contents of current html string
-                            string sectionHtml = html.ToString();
-                            // clear contents of StringBuilder 'html'
-                            html.Clear();
-                            // inject a link to the top of the page
-                            html.Append(@"<a class=""pageTop"" id=""pageTop"" name=""pageTop"">top</a>");
-                            html.Append(sectionHtml);
-                           
-                           StringBuilder anchorTags = new StringBuilder();
-                           StringBuilder organismList = new StringBuilder();
-                            string lastLetter = @"";
-                            
-                           foreach (IBDNode child in children)
-                           {
-                               string sectionLetter = child.Name.Substring(0,1);
-                               bool result = sectionLetter.Equals(lastLetter, StringComparison.Ordinal);
-                               if (!result)
-                               {
-                                   // add a tag for the 'button' anchor to anchorTags
-                                   // add item to organismList with no list bullet, and special CSS class for anchor
-                                   anchorTags.AppendFormat(@"<a class=""bb"" href=""#{0}Section"">{1}</a>",sectionLetter.ToLower(),sectionLetter.ToUpper());
-                                   organismList.AppendFormat(@"<li class=""up""><a class=""navAlphabet"" id=""{0}Section"" name=""{0}Section"" href=""#pageTop"">{1}</a></li>",sectionLetter.ToLower(),sectionLetter.ToUpper());
-                                   lastLetter = sectionLetter;
-                               }
-                               
-                               List<Guid> localObjectsOnPage = new List<Guid>();
-                               List<BDLinkedNote> localFootnotes = new List<BDLinkedNote>();
-                               StringBuilder localHtml = new StringBuilder();
-                               // generate the child page
-                               localHtml.Append(BuildBDOrganismHtml(pContext, child, localFootnotes, localObjectsOnPage, pLevel));
-                               currentPageMasterObject = child;
-                               BDHtmlPage orgPage = (writeBDHtmlPage(pContext, child, localHtml, BDConstants.BDHtmlPageType.Data, localFootnotes, localObjectsOnPage, null));
-                               
-                               // add the anchor to the organismList
-                               organismList.AppendFormat(navListAnchorTag, orgPage.Uuid.ToString().ToUpper(), child.Name);
-                           }
-                            html.Append(anchorTags);
-                            
-                           html.Append(navListDivPrefix);
-                           
-                            // add links to child pages
-                           html.Append(organismList);
 
-                           html.Append(navListDivSuffix);
-                           currentPageMasterObject = pNode;
+                            StringBuilder anchorTags = new StringBuilder();
+                            StringBuilder subsectionHtml = new StringBuilder();
+                            StringBuilder organismList = new StringBuilder();
+
+                            // children as alphabet subsections
+                            foreach (IBDNode subsection in children)
+                            {
+                                List<IBDNode> organisms = BDFabrik.GetChildrenForParent(pContext, subsection);
+
+                                foreach (IBDNode organism in organisms)
+                                {
+                                    List<Guid> localObjectsOnPage = new List<Guid>();
+                                    List<BDLinkedNote> localFootnotes = new List<BDLinkedNote>();
+                                    StringBuilder localHtml = new StringBuilder();
+
+                                    // generate the child page for the Organism
+                                    localHtml.Append(BuildBDOrganismHtml(pContext, organism, localFootnotes, localObjectsOnPage, pLevel));
+                                    currentPageMasterObject = organism;
+                                    BDHtmlPage organismPage = (writeBDHtmlPage(pContext, organism, localHtml, BDConstants.BDHtmlPageType.Data, localFootnotes, localObjectsOnPage, null));
+
+                                    string cleanChildName = organism.Name;
+                                    if (BDUtilities.HasSymbols(cleanChildName))
+                                        cleanChildName = BDUtilities.ProcessTextForSymbols(pContext, organism.Name);
+
+                                    organismList.AppendFormat(navListAnchorTag, organismPage.Uuid.ToString().ToUpper(), cleanChildName);
+                                }
+
+                                // switch back
+                                currentPageMasterObject = subsection;
+
+                                subsectionHtml.AppendFormat(@"<h1>{0}</h1><h2>{1}</h2>{2}{3}{4}", pNode.Name, subsection.Name, navListDivPrefix, organismList, navListDivSuffix);
+
+                                // create page for subsection
+                                BDHtmlPage subsectionPage = (writeBDHtmlPage(pContext, subsection, subsectionHtml, BDConstants.BDHtmlPageType.Navigation, new List<BDLinkedNote>(), new List<Guid>(), null));
+
+                                // add a link on section page to the subsection page 
+                                anchorTags.AppendFormat(@"<a class=""bb"" href=""{0}"">{1}</a>", subsectionPage.Uuid.ToString().ToUpper(), subsection.Name);
+
+                                // clear organism list and add new item
+                                organismList.Clear();
+                                subsectionHtml.Clear();
+                            }
+
+                            html.Append(anchorTags);
+                            currentPageMasterObject = pNode;
                         }
                         break;
                     default:

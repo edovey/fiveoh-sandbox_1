@@ -685,6 +685,7 @@ namespace BDEditor.Classes
                             break;
                         case BDConstants.LayoutVariantType.Organisms_EmpiricTherapy:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDOrganism, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDSubsection, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         case BDConstants.LayoutVariantType.FrontMatter:
                         case BDConstants.LayoutVariantType.BackMatter:
@@ -753,6 +754,9 @@ namespace BDEditor.Classes
                             break;
                         case BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional:
                             childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDCategory, new BDConstants.LayoutVariantType[] { layoutVariant }));
+                            break;
+                        case BDConstants.LayoutVariantType.Organisms_EmpiricTherapy:
+                            childDefinitionList.Add(new Tuple<BDConstants.BDNodeType, BDConstants.LayoutVariantType[]>(BDConstants.BDNodeType.BDOrganism, new BDConstants.LayoutVariantType[] { layoutVariant }));
                             break;
                         default:
                             break;

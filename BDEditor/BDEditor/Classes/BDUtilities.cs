@@ -852,7 +852,6 @@ namespace BDEditor.Classes
             return pTextToProcess;
         }
 
-        [Obsolete]
         public static void ExecuteBatchMove(Entities pContext)
         {
             // These operations are CUSTOM, ** BY REQUEST ONLY **
@@ -2710,12 +2709,12 @@ namespace BDEditor.Classes
             //s9_1.Name = "Herniorrhaphy (suture repair)";
             //s9_1.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
 
-            //BDNode s9_2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
-            //s9_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
-            //s9_2.displayOrder = 1;
-            //s9_2.SetParent(s9);
-            //s9_2.Name = "Hernioplasty (mesh insertion)";
-            //s9_2.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
+            //BDNode s_2 = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSurgery);
+            //s_2.LayoutVariant = BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries;
+            //s_2.displayOrder = 1;
+            //s_2.SetParent(s9);
+            //s_2.Name = "Hernioplasty (mesh insertion)";
+            //s_2.nodeKeyName = BDConstants.BDNodeType.BDSurgery.ToString();
             
             //BDUtilities.ResetLayoutVariantWithChildren(pContext, s9, BDConstants.LayoutVariantType.Prophylaxis_Surgical_Surgeries, true);
 
@@ -3612,6 +3611,213 @@ namespace BDEditor.Classes
             // Desired Serum Levels - Conventional (not High Dose) Aminoglycoside Monitoring
             //BDNode serumTableNode = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("bfb101e7-5aaa-40c0-a29f-572e07426636"));
             //BDUtilities.ResetLayoutVariantWithChildren(pContext, serumTableNode, BDConstants.LayoutVariantType.Antibiotics_DosingAndMonitoring_Conventional, true);
+            #endregion
+
+            #region v2.0.2 patch
+            BDNode empTherapy = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("472244a0-f8a3-43b2-b6dd-c23902e5ee28"));
+           BDNode s_a = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubsection);
+           s_a.LayoutVariant = BDConstants.LayoutVariantType.Organisms_EmpiricTherapy;
+           s_a.displayOrder = 0;
+           s_a.SetParent(empTherapy);
+           s_a.Name = "A";
+           s_a.nodeKeyName = BDConstants.BDNodeType.BDSubsection.ToString();
+
+           BDNode s_b = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubsection);
+           s_b.LayoutVariant = BDConstants.LayoutVariantType.Organisms_EmpiricTherapy;
+            s_b.displayOrder = 1;
+            s_b.SetParent(empTherapy);
+            s_b.Name = "B";
+            s_b.nodeKeyName = BDConstants.BDNodeType.BDSubsection.ToString();
+
+            BDNode s_c = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubsection);
+            s_c.LayoutVariant = BDConstants.LayoutVariantType.Organisms_EmpiricTherapy;
+            s_c.displayOrder = 2;
+            s_c.SetParent(empTherapy);
+            s_c.Name = "C";
+            s_c.nodeKeyName = BDConstants.BDNodeType.BDSubsection.ToString();
+
+            BDNode s_d = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubsection);
+            s_d.LayoutVariant = BDConstants.LayoutVariantType.Organisms_EmpiricTherapy;
+            s_d.displayOrder = 3;
+            s_d.SetParent(empTherapy);
+            s_d.Name = "D";
+            s_d.nodeKeyName = BDConstants.BDNodeType.BDSubsection.ToString();
+
+            BDNode s_e = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubsection);
+            s_e.LayoutVariant = BDConstants.LayoutVariantType.Organisms_EmpiricTherapy;
+            s_e.displayOrder = 4;
+            s_e.SetParent(empTherapy);
+            s_e.Name = "E";
+            s_e.nodeKeyName = BDConstants.BDNodeType.BDSubsection.ToString();
+
+            BDNode s_f = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubsection);
+            s_f.LayoutVariant = BDConstants.LayoutVariantType.Organisms_EmpiricTherapy;
+            s_f.displayOrder = 5;
+            s_f.SetParent(empTherapy);
+            s_f.Name = "F";
+            s_f.nodeKeyName = BDConstants.BDNodeType.BDSubsection.ToString();
+
+            BDNode s_g = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubsection);
+            s_g.LayoutVariant = BDConstants.LayoutVariantType.Organisms_EmpiricTherapy;
+            s_g.displayOrder = 6;
+            s_g.SetParent(empTherapy);
+            s_g.Name = "G";
+            s_g.nodeKeyName = BDConstants.BDNodeType.BDSubsection.ToString();
+
+            BDNode s_h = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubsection);
+            s_h.LayoutVariant = BDConstants.LayoutVariantType.Organisms_EmpiricTherapy;
+            s_h.displayOrder = 7;
+            s_h.SetParent(empTherapy);
+            s_h.Name = "H";
+            s_h.nodeKeyName = BDConstants.BDNodeType.BDSubsection.ToString();
+
+            BDNode s_k = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubsection);
+            s_k.LayoutVariant = BDConstants.LayoutVariantType.Organisms_EmpiricTherapy;
+            s_k.displayOrder = 8;
+            s_k.SetParent(empTherapy);
+            s_k.Name = "K";
+            s_k.nodeKeyName = BDConstants.BDNodeType.BDSubsection.ToString();
+
+            BDNode s_l = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubsection);
+            s_l.LayoutVariant = BDConstants.LayoutVariantType.Organisms_EmpiricTherapy;
+            s_l.displayOrder = 9;
+            s_l.SetParent(empTherapy);
+            s_l.Name = "L";
+            s_l.nodeKeyName = BDConstants.BDNodeType.BDSubsection.ToString();
+
+            BDNode s_m = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubsection);
+            s_m.LayoutVariant = BDConstants.LayoutVariantType.Organisms_EmpiricTherapy;
+            s_m.displayOrder = 10;
+            s_m.SetParent(empTherapy);
+            s_m.Name = "M";
+            s_m.nodeKeyName = BDConstants.BDNodeType.BDSubsection.ToString();
+
+            BDNode s_n = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubsection);
+            s_n.LayoutVariant = BDConstants.LayoutVariantType.Organisms_EmpiricTherapy;
+            s_n.displayOrder = 11;
+            s_n.SetParent(empTherapy);
+            s_n.Name = "N";
+            s_n.nodeKeyName = BDConstants.BDNodeType.BDSubsection.ToString();
+
+            BDNode s_o = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubsection);
+            s_o.LayoutVariant = BDConstants.LayoutVariantType.Organisms_EmpiricTherapy;
+            s_o.displayOrder = 12;
+            s_o.SetParent(empTherapy);
+            s_o.Name = "O";
+            s_o.nodeKeyName = BDConstants.BDNodeType.BDSubsection.ToString();
+
+            BDNode s_p = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubsection);
+            s_p.LayoutVariant = BDConstants.LayoutVariantType.Organisms_EmpiricTherapy;
+            s_p.displayOrder = 13;
+            s_p.SetParent(empTherapy);
+            s_p.Name = "P";
+            s_p.nodeKeyName = BDConstants.BDNodeType.BDSubsection.ToString();
+
+            BDNode s_r = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubsection);
+            s_r.LayoutVariant = BDConstants.LayoutVariantType.Organisms_EmpiricTherapy;
+            s_r.displayOrder = 14;
+            s_r.SetParent(empTherapy);
+            s_r.Name = "R";
+            s_r.nodeKeyName = BDConstants.BDNodeType.BDSubsection.ToString();
+
+            BDNode s_s = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubsection);
+            s_s.LayoutVariant = BDConstants.LayoutVariantType.Organisms_EmpiricTherapy;
+            s_s.displayOrder = 15;
+            s_s.SetParent(empTherapy);
+            s_s.Name = "S";
+            s_s.nodeKeyName = BDConstants.BDNodeType.BDSubsection.ToString();
+
+            BDNode s_t = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubsection);
+            s_t.LayoutVariant = BDConstants.LayoutVariantType.Organisms_EmpiricTherapy;
+            s_t.displayOrder = 16;
+            s_t.SetParent(empTherapy);
+            s_t.Name = "T";
+            s_t.nodeKeyName = BDConstants.BDNodeType.BDSubsection.ToString();
+
+            BDNode s_v = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubsection);
+            s_v.LayoutVariant = BDConstants.LayoutVariantType.Organisms_EmpiricTherapy;
+            s_v.displayOrder = 17;
+            s_v.SetParent(empTherapy);
+            s_v.Name = "V";
+            s_v.nodeKeyName = BDConstants.BDNodeType.BDSubsection.ToString();
+
+            BDNode s_w = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubsection);
+            s_w.LayoutVariant = BDConstants.LayoutVariantType.Organisms_EmpiricTherapy;
+            s_w.displayOrder = 18;
+            s_w.SetParent(empTherapy);
+            s_w.Name = "W";
+            s_w.nodeKeyName = BDConstants.BDNodeType.BDSubsection.ToString();
+
+            BDNode s_y = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubsection);
+            s_y.LayoutVariant = BDConstants.LayoutVariantType.Organisms_EmpiricTherapy;
+            s_y.displayOrder = 19;
+            s_y.SetParent(empTherapy);
+            s_y.Name = "Y";
+            s_y.nodeKeyName = BDConstants.BDNodeType.BDSubsection.ToString();
+
+            pContext.SaveChanges();
+
+            int displayOrder = 0;
+            List<IBDNode> organisms = BDFabrik.GetChildrenForParent(pContext, empTherapy);
+            foreach (IBDNode organism in organisms)
+            {
+                if (organism.NodeType == BDConstants.BDNodeType.BDSubsection)
+                    continue;
+
+                BDNode oNode = organism as BDNode;
+                string sectionLetter = organism.Name.Substring(0, 1);
+                BDNode parentNode = empTherapy;
+
+                if (sectionLetter.Equals("A"))
+                    parentNode = s_a;
+                else if (sectionLetter.Equals("B"))
+                    parentNode = s_b;
+                else if (sectionLetter.Equals("C"))
+                    parentNode = s_c;
+                else if (sectionLetter.Equals("D"))
+                    parentNode = s_d;
+                else if (sectionLetter.Equals("E"))
+                    parentNode = s_e;
+                else if (sectionLetter.Equals("F"))
+                    parentNode = s_f;
+                else if (sectionLetter.Equals("G"))
+                    parentNode = s_g;
+                else if (sectionLetter.Equals("H"))
+                    parentNode = s_h;
+                else if (sectionLetter.Equals("K"))
+                    parentNode = s_k;
+                else if (sectionLetter.Equals("L"))
+                    parentNode = s_l;
+                else if (sectionLetter.Equals("M"))
+                    parentNode = s_m;
+                else if (sectionLetter.Equals("N"))
+                    parentNode = s_n;
+                else if (sectionLetter.Equals("O"))
+                    parentNode = s_o;
+                else if (sectionLetter.Equals("P"))
+                    parentNode = s_p;
+                else if (sectionLetter.Equals("R"))
+                    parentNode = s_r;
+                else if (sectionLetter.Equals("S"))
+                    parentNode = s_s;
+                else if (sectionLetter.Equals("T"))
+                    parentNode = s_t;
+                else if (sectionLetter.Equals("V"))
+                    parentNode = s_v;
+                else if (sectionLetter.Equals("W"))
+                    parentNode = s_w;
+                else if (sectionLetter.Equals("Y"))
+                    parentNode = s_y;
+
+                oNode.parentId = parentNode.Uuid;
+                oNode.parentType = parentNode.nodeType;
+                oNode.parentKeyName = parentNode.nodeKeyName;
+                oNode.displayOrder = displayOrder;
+
+                displayOrder++;
+            }
+            
+                pContext.SaveChanges();
             #endregion
 
         }

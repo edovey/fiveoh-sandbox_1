@@ -1142,8 +1142,8 @@ namespace BDEditor.Views
 #else
             this.btnPublish.Visible = false;
 
-            this.btnAudit.Visible = auditButtonVisible;
-            this.btnAudit.Enabled = auditButtonVisible;
+            this.btnAudit.Visible = false;
+            this.btnAudit.Enabled = false;
 
             this.btnDebug.Visible = false;
             this.btnDebug.Enabled = false;
@@ -1403,8 +1403,8 @@ namespace BDEditor.Views
 
         private void btnAudit_Click(object sender, EventArgs e)
         {
-            //BDAuditReport.ReadAuditLog(dataContext);
-            BDUtilities.ExecuteBatchMove(dataContext);
+            BDAuditReport.ReadAuditLog(dataContext);
+            //BDUtilities.ExecuteBatchMove(dataContext);
         }
 
         private void btnDebug_Click(object sender, EventArgs e)

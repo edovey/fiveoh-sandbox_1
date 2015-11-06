@@ -3614,6 +3614,7 @@ namespace BDEditor.Classes
             #endregion
 
             #region v2.0.2 patch
+            /*
             BDNode empTherapy = BDNode.RetrieveNodeWithId(pContext, Guid.Parse("472244a0-f8a3-43b2-b6dd-c23902e5ee28"));
            BDNode s_a = BDNode.CreateBDNode(pContext, BDConstants.BDNodeType.BDSubsection);
            s_a.LayoutVariant = BDConstants.LayoutVariantType.Organisms_EmpiricTherapy;
@@ -3818,6 +3819,7 @@ namespace BDEditor.Classes
             }
             
                 pContext.SaveChanges();
+             * */
             #endregion
 
         }

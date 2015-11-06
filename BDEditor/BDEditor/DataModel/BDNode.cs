@@ -198,6 +198,20 @@ namespace BDEditor.DataModel
 
         }
 
+        public static bool HasAttachedNotes(Entities pContext, BDNode pNode)
+        {
+            bool returnValue = false;
+            // find associations for node
+            IQueryable<BDLinkedNoteAssociation> linkedNoteAssociations = (from bdLinkedNoteAssociations in pContext.BDLinkedNoteAssociations
+                                                                          where bdLinkedNoteAssociations.parentId == pNode.uuid
+                                                                          && (bdLinkedNoteAssociations.linkedNoteType == 0 || bdLinkedNoteAssociations.linkedNoteType == 9)
+                                                                          select bdLinkedNoteAssociations);
+
+            if (linkedNoteAssociations.Count<BDLinkedNoteAssociation>() > 0)
+                returnValue = true;
+            return returnValue;
+        }
+
         public static List<BDNode> RetrieveAll(Entities pContext)
         {
             IQueryable<BDNode> nodes = (from entry in pContext.BDNodes

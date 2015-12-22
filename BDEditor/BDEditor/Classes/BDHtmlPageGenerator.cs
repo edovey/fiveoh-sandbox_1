@@ -3066,7 +3066,7 @@ namespace BDEditor.Classes
                                 else
                                     html.AppendFormat(@"<p>{0}</p>", pathogenHtml);
 
-                                BDHtmlPageGeneratorLogEntry.AppendToFile("BDHTMLPageReview.txt", string.Format("{0}\t{1}\tRESTRUCTURE: Pathogen list layout ", DateTime.Now, pNode.Uuid.ToString()));
+                                //BDHtmlPageGeneratorLogEntry.AppendToFile("BDHTMLPageReview.txt", string.Format("{0}\t{1}\tRESTRUCTURE: Pathogen list layout ", DateTime.Now, pNode.Uuid.ToString()));
 
                             }
                             if (!string.IsNullOrEmpty(therapyGroupHtml.ToString()))

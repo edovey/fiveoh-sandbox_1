@@ -736,7 +736,8 @@ namespace BDEditor.Views
 
         private void toolStripButton8_Click(object sender, EventArgs e)
         {
-            textControl.Paste();
+            // Paste text without formatting
+            textControl.Paste(ClipboardFormat.PlainText);
             ReformatTextControl(textControl);
         }
 

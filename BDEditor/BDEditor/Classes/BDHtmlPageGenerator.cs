@@ -4543,13 +4543,13 @@ namespace BDEditor.Classes
                             html.AppendFormat(@"<table class=""v{0}""><tr><th>Condition</th><th>Other Potential Pathogens</th></tr>", (int)pNode.LayoutVariant);
                             foreach (IBDNode child in children)
                             {
-                                html.AppendFormat(@"<tr><td>{0}</td><td>", child.Name);
-                                pObjectsOnPage.Add(child.Uuid);
+                                html.AppendFormat(@"<tr><td>{0}</td><td>", buildNodePropertyHTML(pContext, child, child.Name, BDNode.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage));
+                                //pObjectsOnPage.Add(child.Uuid);
                                 List<IBDNode> pathogens = BDFabrik.GetChildrenForParent(pContext, child);
                                 foreach (IBDNode node in pathogens) // Assuming that these are pathogens...
                                 {
-                                    html.Append(node.Name);
-                                    pObjectsOnPage.Add(node.Uuid);
+                                    html.Append(buildNodePropertyHTML(pContext, node, node.Name, BDNode.PROPERTYNAME_NAME, pFootnotes, pObjectsOnPage));
+                                    //pObjectsOnPage.Add(node.Uuid);
                                     if (node != pathogens.Last<IBDNode>())
                                         html.Append(@"<br />");
                                 }

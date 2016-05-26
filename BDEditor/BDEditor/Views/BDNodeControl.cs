@@ -934,5 +934,28 @@ namespace BDEditor.Views
             MessageBox.Show(this, "Search Entry generation complete", "Notice", MessageBoxButtons.OK);
 #endif
         }
+
+        private void previewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+#if DEBUG
+            //this.Cursor = Cursors.WaitCursor;
+            //Guid nodeUuid = Guid.Empty;
+            //BDHtmlPageGenerator generator = new BDHtmlPageGenerator();
+            //List<BDNode> nodeList = new List<BDNode>();
+            //nodeList.Add(currentNode as BDNode);
+
+            //string noteText = generator.GenerateForPreview(dataContext, nodeList);
+            //this.Cursor = Cursors.Default;
+           
+           
+
+            //BDWebPreviewView preview = new BDWebPreviewView();
+            //preview.previewHtml = noteText;
+
+            //preview.Show();
+
+//            MessageBox.Show(this, "HTML page generation complete", "Notice", MessageBoxButtons.OK);
+#endif
+        }
     }
 }

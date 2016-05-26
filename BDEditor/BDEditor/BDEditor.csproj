@@ -468,6 +468,12 @@
     <Compile Include="Views\BDSearchEntryManagerView.Designer.cs">
       <DependentUpon>BDSearchEntryManagerView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\BDWebPreviewView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\BDWebPreviewView.Designer.cs">
+      <DependentUpon>BDWebPreviewView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\IBDControl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -552,6 +558,9 @@
     <EmbeddedResource Include="Views\BDNodeEditView.resx">
       <DependentUpon>BDNodeEditView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDNodeOverviewControl.resx">
+      <DependentUpon>BDNodeOverviewControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\BDPrecautionControl.resx">
       <DependentUpon>BDPrecautionControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -604,6 +613,9 @@
     <EmbeddedResource Include="Views\BDSearchEntryManagerView.resx">
       <DependentUpon>BDSearchEntryManagerView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\BDWebPreviewView.resx">
+      <DependentUpon>BDWebPreviewView.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="App.Config">
       <SubType>Designer</SubType>
     </None>
@@ -625,7 +637,17 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <COMReference Include="MSHTML">
+      <Guid>{3050F1C5-98B5-11CF-BB82-00AA00BDCE0B}</Guid>
+      <VersionMajor>4</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
@@ -676,6 +698,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\search.ico" />
+    <Content Include="Resources\web.ico" />
+    <Content Include="Resources\web_16x16.png" />
     <Content Include="sqlceca35.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

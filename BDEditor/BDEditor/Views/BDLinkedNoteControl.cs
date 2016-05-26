@@ -784,6 +784,18 @@ namespace BDEditor.Views
             textControl.Selection.Text = "√"; // BDConstants.HTML_ENTITY_CODE_CHECKMARK
         }
 
+        private void toolStripButton17_Click(object sender, EventArgs e)
+        {
+            Save();
+
+            string noteText = currentLinkedNote.documentText;
+
+            BDWebPreviewView preview = new BDWebPreviewView();
+            preview.previewHtml = noteText;
+
+            preview.Show();
+        }
+
         private void textControl_HypertextLinkClicked(object sender, TXTextControl.HypertextLinkEventArgs e)
         {
             TXTextControl.HypertextLink link = textControl.HypertextLinks.GetItem();

@@ -72,6 +72,7 @@
             this.pnlDetail = new System.Windows.Forms.Panel();
             this.pnlOverview = new System.Windows.Forms.Panel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.previewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelHeader.SuspendLayout();
             this.contextMenuStripDebug.SuspendLayout();
             this.contextMenuStripTextBox.SuspendLayout();
@@ -123,9 +124,10 @@
             this.contextMenuStripDebug.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.copyUUIDToolStripMenuItem,
             this.publishToDatabaseToolStripMenuItem,
-            this.generateSearchEntriesToolStripMenuItem});
+            this.generateSearchEntriesToolStripMenuItem,
+            this.previewToolStripMenuItem});
             this.contextMenuStripDebug.Name = "contextMenuStrip1";
-            this.contextMenuStripDebug.Size = new System.Drawing.Size(198, 70);
+            this.contextMenuStripDebug.Size = new System.Drawing.Size(198, 114);
             // 
             // copyUUIDToolStripMenuItem
             // 
@@ -353,7 +355,7 @@
             this.deleteNodeToolStripMenuItem});
             this.contextMenuStripEvents.Name = "contextMenuStripEvents";
             this.contextMenuStripEvents.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.contextMenuStripEvents.Size = new System.Drawing.Size(164, 198);
+            this.contextMenuStripEvents.Size = new System.Drawing.Size(164, 176);
             // 
             // editIndexStripMenuItem
             // 
@@ -445,6 +447,13 @@
             this.pnlOverview.Size = new System.Drawing.Size(870, 2);
             this.pnlOverview.TabIndex = 10;
             // 
+            // previewToolStripMenuItem
+            // 
+            this.previewToolStripMenuItem.Name = "previewToolStripMenuItem";
+            this.previewToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.previewToolStripMenuItem.Text = "Preview";
+            this.previewToolStripMenuItem.Click += new System.EventHandler(this.previewToolStripMenuItem_Click);
+            // 
             // BDNodeControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -458,7 +467,7 @@
             this.DoubleBuffered = true;
             this.MinimumSize = new System.Drawing.Size(870, 50);
             this.Name = "BDNodeControl";
-            this.Size = new System.Drawing.Size(870, 63);
+            this.Size = new System.Drawing.Size(870, 87);
             this.Load += new System.EventHandler(this.BDNodeControl_Load);
             this.Leave += new System.EventHandler(this.BDNodeControl_Leave);
             this.panelHeader.ResumeLayout(false);
@@ -515,5 +524,6 @@
         private System.Windows.Forms.ToolStripMenuItem editIndexStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem editLayoutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem previewToolStripMenuItem;
     }
 }

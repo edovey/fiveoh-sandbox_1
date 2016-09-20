@@ -556,7 +556,8 @@ namespace BDEditor.Classes
 
             if (!string.IsNullOrEmpty(noteText))
             {
-                resultText = pNoteText.Replace("<p>", string.Empty);
+                resultText = noteText.Replace("<p>", string.Empty);
+                resultText = resultText.Replace("<p >", string.Empty);
                 resultText = resultText.Replace("</p>", lineBreakTag);
 
                 if (resultText.EndsWith(lineBreakTag))
@@ -567,6 +568,7 @@ namespace BDEditor.Classes
 
         public static string BuildTextFromInlineNotes(List<BDLinkedNote> pNotes)
         {
+            string lineBreakTag = @"<br />";
             StringBuilder noteString = new StringBuilder();
             if (null != pNotes)
             {
@@ -578,21 +580,27 @@ namespace BDEditor.Classes
                         documentText = ProcessTextForStyleMarkup(documentText);
                         if (!string.IsNullOrEmpty(documentText))
                         {
-                            string lineBreakTag = @"<br />";
 
+                            documentText = documentText.Replace("<li><p>", "<li>");
+                            documentText = documentText.Replace("<li><p >", "<li>"); 
                             documentText = documentText.Replace("<p>", string.Empty);
                             documentText = documentText.Replace("<p >", string.Empty);
+                            documentText = documentText.Replace("</p></li>", "</li>");
                             documentText = documentText.Replace("</p>", lineBreakTag);
-
-                            if (documentText.EndsWith(lineBreakTag))
-                            {
-                                documentText = documentText.Substring(0, documentText.Length - (lineBreakTag.Length));
-                            }
 
                             noteString.AppendFormat(@" {0}", documentText);
                         }
                     }
                 }
+
+                if (noteString.ToString().EndsWith(lineBreakTag))
+                {
+                    string newString = noteString.ToString();
+                    newString = newString.Substring(0, noteString.Length - (lineBreakTag.Length));
+                    noteString.Clear();
+                    noteString.Append(newString);
+                }
+
             }
             return noteString.ToString();
         }

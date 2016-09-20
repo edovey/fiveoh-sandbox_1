@@ -61,7 +61,7 @@ namespace BDEditor.Classes
                         IBDNode tmpNode = BDFabrik.RetrieveNode(dataContext, nodeUuid);
 
                         if (null == tmpNode)
-                            Console.WriteLine(string.Format("Node could not be found.\t{0}", tmpNode.Uuid.ToString()));
+                            Console.WriteLine(string.Format("Node could not be found.\t{0}", nodeUuid.ToString()));
                         else
                         {
                             string locationString = BDUtilities.BuildHierarchyString(dataContext, tmpNode.Uuid, " : ");

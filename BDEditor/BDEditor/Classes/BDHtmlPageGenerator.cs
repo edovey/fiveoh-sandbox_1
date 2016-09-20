@@ -1546,7 +1546,6 @@ namespace BDEditor.Classes
                         break;
                     case BDConstants.LayoutVariantType.Prophylaxis_IE_AntibioticRegimen:
                         html.Append(@"<h2>Dental, Oral, Respiratory Tract Procedures</h2>"); // there's no way to add this subtitle in the editor
-                        // BDHtmlPageGeneratorLogEntry.AppendToFile("BDHTMLPageReview.txt", string.Format("{0}\t{1}\tPAGE SUBTITLE: ", DateTime.Now, pNode.Uuid.ToString()));
 
                         foreach (IBDNode child in children)
                             html.Append(BuildBDTherapyGroupHTML(pContext, child as BDTherapyGroup, pFootnotes, pObjectsOnPage, pLevel + 2, BDConstants.LayoutVariantType.Undefined));
@@ -3065,9 +3064,6 @@ namespace BDEditor.Classes
                                     html.Append(pathogenHtml);
                                 else
                                     html.AppendFormat(@"<p>{0}</p>", pathogenHtml);
-
-                                //BDHtmlPageGeneratorLogEntry.AppendToFile("BDHTMLPageReview.txt", string.Format("{0}\t{1}\tRESTRUCTURE: Pathogen list layout ", DateTime.Now, pNode.Uuid.ToString()));
-
                             }
                             if (!string.IsNullOrEmpty(therapyGroupHtml.ToString()))
                                 html.Append(therapyGroupHtml);
@@ -5055,9 +5051,31 @@ namespace BDEditor.Classes
                         therapyInRow = BDTherapy.RetrieveTherapyWithId(pContext, previousTherapyNameId);
                     else
                         therapyInRow = pTherapy;
+                    
+                    string therapyNameHtml = buildNodePropertyHTML(pContext, pTherapy, therapyInRow.Uuid, therapyInRow.Name,
+                         BDTherapy.PROPERTYNAME_THERAPY, "strong", pFootnotes, pObjectsOnPage, out resolvedValue);
 
-                    therapyHtml.Append(buildNodePropertyHTML(pContext, pTherapy, therapyInRow.Uuid, therapyInRow.Name,
-                        BDTherapy.PROPERTYNAME_THERAPY, "strong", pFootnotes, pObjectsOnPage, out resolvedValue));
+                    if (!string.IsNullOrEmpty(therapyNameHtml) && (therapyNameHtml.Contains(@"<p>") || therapyNameHtml.Contains(@"<p >")))
+                    {
+                        //BDHtmlPageGeneratorLogEntry.AppendToFile("BDHTMLPageReview.txt", string.Format("{0}\t{1}\tLINKED NOTE: remove paragraph tag ", DateTime.Now, pTherapy.Uuid.ToString()));
+
+                        // Fix Alignment in cells:  if text contains paragraph tags, replace with simple line return ('<br />') 2016-09
+                        string lineBreakTag = @"<br />";
+
+                        therapyNameHtml = therapyNameHtml.Replace("<li><p>", "<li>");
+                        therapyNameHtml = therapyNameHtml.Replace("<li><p >", "<li>");
+                        therapyNameHtml = therapyNameHtml.Replace("<p>", lineBreakTag);
+                        therapyNameHtml = therapyNameHtml.Replace("<p >", lineBreakTag);
+                        therapyNameHtml = therapyNameHtml.Replace("</p></li>", "</li>");
+                        therapyNameHtml = therapyNameHtml.Replace("</p>", string.Empty);
+
+                        if (therapyNameHtml.StartsWith(lineBreakTag))
+                        {
+                            therapyNameHtml = therapyNameHtml.Substring(lineBreakTag.Length);
+                        }
+
+                    }
+                    therapyHtml.Append(therapyNameHtml);
 
                     therapyHtml.Append(TAG_CELL_END);
                     break;
@@ -5815,7 +5833,6 @@ namespace BDEditor.Classes
                     case BDConstants.LayoutVariantType.Dental_RecommendedTherapy:
                         {
                             startTag = @"<td class=""ctrAlign"">";
-                            // BDHtmlPageGeneratorLogEntry.AppendToFile("BDHTMLPageReview.txt", string.Format("{0}\t{1}\tCOL CTR: Review table row", DateTime.Now, pNode.Uuid.ToString()));
                         }
                         break;
                     default:
@@ -5933,13 +5950,27 @@ namespace BDEditor.Classes
             pResolvedValue = string.Format(@"{0}{1}{2}", cleanPropertyValue, footerMarker, immediateText);
             pObjectsOnPage.AddRange(immediateAssociations);
 
-            if (pHtmlTag.ToLower() == "td")  // cell contents are being built:  replace what's in pREsolvedValue
+            if (pHtmlTag.ToLower() == "td")  // cell contents are being built:  replace what's in pResolvedValue
             {
                 if (!string.IsNullOrEmpty(inlineOverviewText))
                 {
+                   // BDHtmlPageGeneratorLogEntry.AppendToFile("BDHTMLPageReview.txt", string.Format("{0}\t{1}\tLINKED NOTE: remove paragraph tag ", DateTime.Now, pNode.Uuid.ToString()));
+
                     string cleanString = BDUtilities.CleanNoteText(inlineOverviewText);
-                    
-                    inlineOverviewText = string.Format(@"<br />{0}", cleanString); // strip the p tags. prefix with a br inorder to preserve intended newline start of "inline"
+                    string nodeNamePlaceholderText = string.Format(@"New {0}", BDUtilities.GetEnumDescription(pNode.NodeType));
+                    string nodeName = pNode.Name;
+                    if (string.IsNullOrEmpty(nodeName) || nodeName.Contains(nodeNamePlaceholderText))
+                        nodeName = string.Empty;
+
+                    if (nodeName == string.Empty) {
+                        // if node name is empty, inline note needs no line break
+                        inlineOverviewText = cleanString;
+                        //BDHtmlPageGeneratorLogEntry.AppendToFile("BDHTMLPageReview.txt", string.Format("{0}\t{1}\tLINKED NOTE: property name empty ", DateTime.Now, pNode.Uuid.ToString()));
+
+                    } else {
+                        // if pNode has a name, insert a break before the note text
+                        inlineOverviewText = string.Format(@"<br />{0}", cleanString); 
+                    }
                 }
 
                 if (notePage != null)
@@ -6036,7 +6067,7 @@ namespace BDEditor.Classes
             objectsOnChildPage.AddRange(unmarkedAssociations);
             BDHtmlPage notePage = generatePageForLinkedNotes(pContext, pNode.Uuid, pNode.NodeType, marked, unmarked, pPropertyName, objectsOnChildPage);
 
-            string inlineOverviewText = BDUtilities.BuildTextFromNotes(inline); // In approx 50% of cases, "inline" notes have been used like an "overview"
+            string inlineOverviewText = BDUtilities.BuildTextFromInlineNotes(inline); // In approx 50% of cases, "inline" notes have been used like an "overview"
             string immediateText = BDUtilities.BuildTextFromInlineNotes(immediate);
 
             resolvedValue = string.Format(@"{0}{1}{2}", propertyValue, footerMarker, immediateText);
@@ -6065,7 +6096,7 @@ namespace BDEditor.Classes
             else
             {
                 if (!string.IsNullOrEmpty(resolvedValue))
-                    propertyHTML.AppendFormat(@"{0}{1}{2}", resolvedValue, inlineOverviewText, overviewHTML);
+                    propertyHTML.AppendFormat(@"{0}<br />{1}{2}", resolvedValue, inlineOverviewText, overviewHTML);
                 else
                     propertyHTML.AppendFormat(@"{0}{1}", inlineOverviewText, overviewHTML);
             }
@@ -6476,6 +6507,11 @@ namespace BDEditor.Classes
             BDHtmlPage.Save(pContext, pPage);
             pPage.documentText = BDUtilities.ProcessTextForCarriageReturn(pContext, pPage.documentText);
             BDHtmlPage.Save(pContext, pPage);
+
+            //if (pPage.documentText.Contains("<li><p"))  // Sept 2016
+            //{
+            //    BDHtmlPageGeneratorLogEntry.AppendToFile("BDHTMLPageReview.txt", string.Format("{0}\t{1}\tBULLETED LIST: contains paragraph", DateTime.Now, pPage.Uuid.ToString()));
+            //}
         }
 
         private bool notesListHasContent(Entities pContext, List<BDLinkedNote> pNotes)
